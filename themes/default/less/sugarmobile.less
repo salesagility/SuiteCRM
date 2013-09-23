@@ -1,0 +1,868 @@
+
+.navbar .nav-collapse {height: 0}
+
+/* Body and structure
+-------------------*/
+body {
+  position: relative;
+  padding: 47px 0;
+  background: @grayDarker url(../img/black_linen_v2.png);
+}
+
+// Modals
+ .modal {
+   position: absolute;
+   top:   10px;
+   left:  10px;
+   right: 10px;
+   width: auto;
+   margin: 0;
+   &.fade.in { top: auto; }
+ }
+ .modal-header .close {
+   padding: 10px;
+   margin: -10px;
+ }
+
+.container-fluid {
+  background: @white;
+  height: 100%;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+}
+
+.tcenter {
+	text-align: center;
+}
+.tleft {
+	text-align: left;
+}
+.tright {
+	text-align: right;
+}
+
+// Hide everything in the navbar save .brand and toggle button */
+.nav-collapse {
+  overflow: hidden;
+  height: 0;
+}
+.navbar-fixed-top .navbar-inner {
+  padding: 5px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", arial, sans-serif;
+  font-weight: 400;
+}
+
+h1 {font-size: 26px !important;}
+
+/* activity and twitter */
+
+article {
+  position: relative;
+	display: block;
+  padding: 8px 32px 8px 52px;
+  border-top: 1px solid darken(@grayLighter, 5%);
+  min-height: 52px;
+}
+article div {
+  display: table-cell;
+  vertical-align: middle;
+  height: 52px;
+}
+article [class^="icon-star"] {
+position: absolute;
+top: 24px;
+left: 16px;
+font-size: 24px;
+}
+
+#detailListing article {
+  padding: 8px 32px 8px 16px !important;
+}
+
+
+article [id^="listing-action"] i.grip {
+  position: absolute;
+  vertical-align: middle;
+  top: 0;
+  right: 0;
+  padding: 0 4px 0 8px;
+  line-height: 68px;
+  width: 16px;
+  letter-spacing: -4px;
+  z-index: 1;
+  font-style: normal;
+  height: 100%;
+  color: darken(@grayLight, 15%);
+}
+article [id^="listing-action"] i.on {
+  left: 0;
+  #gradient > .horizontal( darken(@grayDarker, 8%), darken(@grayDarker, 2%));
+  color: @black;
+  text-shadow: -1px 0 0 lighten(@grayDarker, 1%);
+  @shadow: 1px 0 4px rgba(0,0,0,.4);
+  .box-shadow(@shadow);
+}
+article [id^="listing-action"] span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: @grayDarker url(../img/black_linen_v2.png);
+  @shadow: inset 0 2px 4px @black, inset 0 -2px 4px @black;
+  .box-shadow(@shadow);
+  list-style: none;
+  text-align: center;
+}
+
+article [id^="listing-action"] a, #record-action a {
+padding: 4px 6%;
+ display: inline-block;
+ width: 26px;
+ height: 26px;
+ color: @white;
+ text-shadow: 0 1px 0 @black, 0 1px 4px @black;
+ text-decoration: none;
+ text-align: center;
+}
+article [id^="listing-action"] a {
+  padding: 26px 0 0 5%;
+}
+
+article p {
+	display: block;
+}
+article p:last-child {
+	margin: 0;
+}
+#activity article:nth-child(odd), #twitter article:nth-child(odd), #sActivity article:nth-child(odd), .modal article:nth-child(odd) {
+	background: @grayLighter;
+}
+
+/* Messages 
+------------*/
+
+
+/* Tweak navbar brand link to be super sleek
+-------------------------------------------------- */
+.cube {
+  background: url(../img/badge_256.png) 50% 50% no-repeat;
+  background-size: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: block;
+  height: 44px;
+  width: 44px;
+  @shadow: inset -1px 0 0 @black, 1px 0 0 lighten(@black, 20%);
+  .box-shadow(@shadow);
+  }
+.navbar .cube:hover {
+  text-decoration: none;
+  }
+.navbar-fixed-top .cube {
+  -webkit-transition: all .2s linear;
+     -moz-transition: all .2s linear;
+          transition: all .2s linear;
+}
+.navbar-fixed-top .cube:hover {
+  text-decoration: none;
+}
+
+.navbar .avatar, .block .avatar {
+  height: 32px;
+  width: 32px;
+}
+#activity .avatar {
+  height: 48px;
+  width: 48px;
+}
+.navbar .avatar {
+margin-top: -3px;
+	.border-radius(2px);
+}
+
+.navbar .btn {
+	margin-top: 8px;
+	min-width: 16px;
+	padding: 3px 4px !important;
+}
+
+.logo {
+  background: url(../img/sugar-red-sm.png) 0 0 no-repeat;
+  display: block;
+  margin: 14px 0 0 10px;
+  text-indent: -7000px;
+  height: 20px;
+  width: 150px;
+}
+
+date {
+	font-size: 85%;
+	color: #888;
+}
+
+.navbar .container-fluid {margin-top: 0;}
+.container-fluid {margin-top: 16px;}
+
+/* Icons
+------------------------- */
+[class^="icon-"] {
+  font-size: 16px;
+}
+.actions [class^="icon-"] {
+  .opacity(80);
+}
+a [class^="icon-"] {
+  .opacity(80);
+}
+a:hover [class^="icon-"]{
+  .opacity(90);
+}
+.the-icons {
+  margin-left: 0;
+  list-style: none;
+}
+.the-icons i:hover {
+  background-color: rgba(255,0,0,.25);
+}
+
+.icon-phone {
+  background: url('../img/phone.png') no-repeat 50% 50%;
+  background-size: 80%;
+  height: 26px;
+  width: 26px;
+  margin-bottom: -22px;
+}
+
+
+.navbar [class^="icon-"] {
+  margin-top: 2px;
+}
+
+.btn [class^="icon-"] {
+  margin-top: 1px;
+}
+
+.icon-star {
+  color: @orange;
+}
+.icon-star-empty {
+  color: @grayLight;
+}
+
+.btn-fixed {
+  width: 178px;
+  margin-right: 10px;
+}
+.wide {
+  width: 98%;
+  text-align: center;
+}
+
+body {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* mobile menu foo */
+
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.onL .navbar {
+  position: absolute;
+  left: 86%;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  @shadow: -1px 0 4px rgba(0,0,0,.4);
+  .box-shadow(@shadow);
+}
+.onR .navbar {
+  position: absolute;
+  left: -86%;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  @shadow: -1px 0 4px rgba(0,0,0,.4);
+  .box-shadow(@shadow);
+}
+.onL #listing *, .onL .bizcard *, .onR #listing *, .onR .bizcard * {
+  display: none;
+}
+.onL .navbar .nav-collapse  {
+  float: none;
+  position: absolute;
+  top: 0;
+  left: -86%;
+  display: block;
+  width:86%;
+  height: 100%;
+  background: @grayDarker url(../img/black_linen_v2.png);
+}
+.onR .navbar .nav-collapse {
+  float: none;
+  position: absolute;
+  top: 0;
+  right: -86%;
+  display: block;
+  width:86%;
+  height: 100%;
+  background: @grayDarker url(../img/black_linen_v2.png);
+}
+
+.onL .navbar .nav-collapse #moduleList, .onR .navbar .nav-collapse #createList {
+  overflow: scroll;
+  -webkit-overflow-scrolling:touch;
+  height: 100%;
+}
+.onR .navbar .nav-collapse #moduleList, .onL .navbar .nav-collapse #createList {
+  display: none;
+}
+
+#scroll {
+  margin: 10px 0;
+  height: 80%;
+  position: absolute;
+  left: 0;
+  top: 46px;
+  width: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom: 146px;
+  display: block;
+}
+
+#listing {
+  height: 90%;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+  display: block;
+}
+
+
+#detailListing #listing {
+  height: 40% !important;
+}
+
+#listing > article:first-child {
+	margin-top:33px;
+}
+
+#listing > article:last-child {
+	margin-bottom:20px;
+}
+
+#listing article {
+	-webkit-transition: all .25s ease-in-out;
+}
+
+#listing article.deleted {
+    opacity:0;
+}
+
+.navbar [class^="icon-"] {
+  color: @white;
+  text-shadow: 0 -1px 0 @black;
+}
+
+#backRecord {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2000;
+}
+
+#saveRecord {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2000;
+}
+
+.navbar #search, .navbar #back .icon-chevron-left {
+  position: absolute;
+  top: 11px;
+  left: 58px;
+}
+
+.navbar #create {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 34px;
+  width: 44px;
+  @shadow: inset 1px 0 0 lighten(@black, 20%), -1px 0 0 @black;
+  .box-shadow(@shadow);
+  text-align: center;
+  padding-top: 10px;
+}
+
+#detailListing #listing {
+/*
+  top: 202px; 
+  padding-bottom: 190px;
+*/
+}
+
+#detailListing #listing article:first-child {
+  margin-top:184px;
+}
+
+#searchForm {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  width: 100%;
+  height: 44px !important;
+  background: @grayDarker url(../img/black_linen_v2.png);
+}
+#searchForm .btn {
+  position: absolute;
+  top:1px;
+  right: 0px;
+  width: inherit;
+  }
+  
+.search-query {
+  border-color: #000;
+  color: @grayDarker;
+  position: absolute;
+  padding: 4px;
+  left: 10px;
+  top: 9px;
+  height: 28px;
+  width: 70% !important;
+  .border-radius(4px);
+  z-index: 1080;
+}
+
+.navbar h1 {
+  font-size: 16px !important;
+  text-align: center;
+  font-weight: 700;
+  width: auto !important;
+  overflow: hidden;
+  margin: 0 auto;
+  text-shadow: 0 -1px 0 @black;
+  z-index: 0;
+  color: @white;
+}
+
+.bizcard {
+  position: fixed;
+  top: 46px;
+  width: 100%;
+  z-index: 1000;
+  min-height: 70px;
+  overflow: auto;
+  padding: 16px 0 66px 0;
+  color: @white;
+  text-shadow: 0 -1px 0 @black;
+  #gradient > .vertical( darken(@grayDarker, 5%), darken(@grayDarker, 15%));
+  @shadow: 0 1px 4px rgba(0,0,0,.6);
+  .box-shadow(@shadow);  
+}
+.bizcard a { 
+  color: @white;
+}
+.bizcard .avatar {
+  height: 68px;
+  width: 68px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  .border-radius(6px);
+  @shadow:  0 -1px 0 rgba(255,255,255,.2), 0 1px 0 rgba(0,0,0,.9), 0 1px 4px rgba(0,0,0,.6);
+  .box-shadow(@shadow);
+}
+
+.bizcard h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: @white;
+  margin: 0;
+  padding: 0;
+  line-height: 20px;
+}
+.bizcard .card {
+  margin: 0 0 0 16px;
+}
+
+.bizcard #accountDescription{
+  margin: 10px 0 0;
+}
+
+#record-action {
+  text-align: center;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  #gradient > .vertical( darken(@grayDarker, 5%), darken(@grayDarker, 15%));
+   height: 52px;
+  @shadow: inset 0 -1px 0 @black, inset 0 1px 0 lighten(@black, 20%);
+  .box-shadow(@shadow);  
+}
+
+.tabs article {
+  #gradient > .vertical( darken(@grayDarker, 5%), darken(@grayDarker, 15%));
+   height: 52px;
+  @shadow: inset 0 -1px 0 @black, inset 0 1px 0 lighten(@black, 20%);
+  .box-shadow(@shadow);  
+}
+
+.onL .nav-collapse li {
+  .border-radius(0px);
+  background: @grayDarker url(../img/black_linen_v2.png);
+  @shadow: inset -2px 0 4px rgba(0,0,0,.8), inset 0 -2px 0 @grayDark;
+  .box-shadow(@shadow);  
+}
+
+.onR .nav-collapse li {
+  .border-radius(0px);
+  background: @grayDarker url(../img/black_linen_v2.png);
+  @shadow: inset 2px 0 4px rgba(0,0,0,.8), inset 0 -2px 0 @grayDark;
+  .box-shadow(@shadow);  
+}
+
+
+.navbar a {text-decoration: none;}
+
+.nav-collapse .nav > li > a {
+  margin: 0 !important;
+  .border-radius(0px);
+}
+
+.navbar .nav li.active a {
+#gradient > .vertical(darken(@grayDarker, 15%), darken(@grayDarker, 5%));
+color: @gray;
+@shadow: inset -2px 0 4px rgba(0,0,0,.8), inset 0 -2px 0 @grayDark;
+.box-shadow(@shadow);
+}
+
+.navbar .nav li a:hover {background: none !important;}
+
+.nav-collapse li a .btn {
+  margin: -2px 0 0 !important;
+  border-color: @black;
+  color: @white;
+}
+
+.nav-collapse li li a {
+ background: none;
+ margin: 0;
+} 
+
+.alert {
+ z-index: 2000;
+ position: absolute;
+ width: 100%;
+ height: 20px;
+ bottom: -1px;
+ left: -1px;
+ .border-radius(0px);
+ padding: 5px 10px;
+ .opacity(94);
+ color: @white;
+ text-shadow: none;
+ font-weight: bold;
+ margin: 0;
+ font-size: 11px;
+ background: @black;
+}
+
+.over {
+ z-index: 2000;
+ position: absolute;
+ width: 100%;
+ height: auto;
+ bottom: 0;
+ #gradient > .vertical( lighten(@grayDarker, 10%), darken(@grayDarker, 10%));
+ .border-radius(0px);
+ padding: 2% 0 2%;
+ font-weight: bold;
+ margin: 0;
+ text-align: center;
+ @shadow: inset 0 1px 0 rgba(0,0,0,.8), inset 0 3px 0 rgba(255,255,255,.1), 0 -1px 10px rgba(0,0,0,.8);
+ .box-shadow(@shadow);
+ -webkit-transition: all .2s linear;
+    -moz-transition: all .2s linear;
+         transition: all .2s linear;
+         
+}
+
+.over h4 {
+  color: @white;
+  margin: 1% 0
+}
+
+.over .btn:first-child {
+  width: 80%;
+  margin: 2% 0 1% 0;
+}
+
+.over .btn {
+  width: 80%;
+  margin: 1% 0;
+}
+
+.modal .brand {
+  background: url(../img/brand_256.png) 50% 50% no-repeat;
+  background-size: 70%;
+  text-indent: -7000px;
+  margin: 15px auto 15px;
+  width: 260px;
+  height: auto;
+  -webkit-transition: all .2s linear;
+     -moz-transition: all .2s linear;
+          transition: all .2s linear;
+  } 
+.navbar h1.brand {
+  background: url(../img/brand_256.png) 50% 50% no-repeat;
+  background-size: 80%;
+  text-indent: -7000px;
+  width: 100%;
+  margin: 0 auto;
+  } 
+
+
+/* edit record
+--------------*/
+.pad {
+  background: @white;
+  margin: 10px 10px;
+	.border-radius(3px);
+}
+#createRecord.form-horizontal .control-group > label  {
+  width: 25% !important;
+  margin-right: 2% !important;
+  float: left !important;
+  text-align: right !important;
+  font-weight: 600;
+  font-size: 11px;
+}
+#createRecord input, #createRecord textarea, #createRecord select, #createRecord .uneditable-input {
+  width: 75% !important;
+  border: none;
+  background: none;
+  box-shadow: none;
+  height: 26px;
+  display: block;
+}
+#createRecord.form-horizontal .controls {
+  margin-left: 26%;
+}
+#createRecord.form-horizontal .control-group:first-child {
+  border-top: none;
+}
+#createRecord.form-horizontal .control-group {
+  position: relative;
+	display: block;
+  padding: 10px;
+  margin: 0;
+  border-top: 1px solid darken(@grayLighter, 5%);
+}
+#createRecord .avatar {
+  height: 32px;
+  width: 32px;
+}
+
+li.divider-horizontal {
+  background: @black;
+  height: 10px;
+  display: block;
+  line-height: 10px;
+  padding: 10px;
+}
+
+/* Log In
+----------*/
+#login {
+	background: #E61718 url(../img/leather-red.png);
+  @shadow: inset 0 -4px 60px rgba(0,0,0,.8);
+  .box-shadow(@shadow);
+}
+#login .modal, #login .modal-header, #login .modal-footer, #login .modal-body {
+border: none;
+padding: 0 !important;
+margin: 0 !important;
+background: none;
+@shadow: none;
+.box-shadow(@shadow);
+}
+#login input, #login .btn {
+  width: 260px !important; 
+  margin: 0 auto !important;
+  padding: 10px !important; 
+  @shadow:  1px 2px 0 rgba(0,0,0,.2);
+  .box-shadow(@shadow);
+  border: none;
+}
+
+#login .btn {
+#gradient > .vertical( darken(@red, 15%), darken(@red, 35%));
+@shadow: 0 1px 0 rgba(0,0,0,.3), inset -1px -1px 0 rgba(0,0,0,.2), inset 1px 1px 0 rgba(0,0,0,.2);
+.box-shadow(@shadow);
+color: @white;
+text-shadow: 0 -1px 0 rgba(0,0,0,.6);
+}
+
+#login .modal input[type=submit] {  
+  @shadow:  1px 1px 0 rgba(0,0,0,.2);
+  .box-shadow(@shadow);
+  width: 260px !important;
+}
+#login .modal input:focus {
+  border: none;
+  @shadow: 2px 2px 0 lighten(@red, 20%), 2px 2px 0 lighten(@red, 20%);
+  .box-shadow(@shadow);
+  outline: 0;
+}
+
+#login {text-align: center;}
+#login .btn-sugar {
+  float: none;
+  margin-left:-80px !important;
+  position: absolute; 
+  bottom: 10%;
+  width: auto;
+  left: 50%;
+}
+#login .modal .btn {float: none !important;}
+#login .modal .pull-left {
+display: block;
+float: none !important;}
+
+#login .btn.btn-sugar {width: 140px!important;}
+
+/* Alert overrider */
+.alert-success {background: darken(@green, 20%); color: #fff; text-shadow: none;} 
+.alert-danger, .alert-error {background: @red;  color: #fff;} 
+
+
+/* TOUR */
+#tour {
+  background: url('../img/tour.png') no-repeat;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3000;
+}
+
+
+/* Navbar collapse */
+
+  .navbar-fixed-top .navbar-inner {
+    padding: 5px;
+  }
+
+  // Nav collapse clears brand
+  .navbar .nav-collapse {
+    clear: left;
+  }
+  // Block-level the nav
+  .navbar .nav {
+    float: none;
+    margin: 0 0 (@baseLineHeight / 2);
+  }
+  .navbar .nav > li {
+    float: none;
+  }
+  .navbar .nav > li > a {
+    margin-bottom: 2px;
+  }
+  .navbar .nav > .divider-vertical {
+    display: none;
+  }
+  .navbar .nav .nav-header {
+    color: @navbarText;
+    text-shadow: none;
+  }
+  // Nav and dropdown links in navbar
+  .navbar .nav > li > a,
+  .navbar .dropdown-menu a {
+    padding: 12px 15px;
+    font-weight: bold;
+    color: @navbarLinkColor;
+  }
+  .navbar .dropdown-menu li + li a {
+    margin-bottom: 2px;
+  }
+  .navbar .nav > li > a:hover,
+  .navbar .dropdown-menu a:hover {
+    background-color: @navbarBackground;
+  }
+  // Dropdowns in the navbar
+  .navbar .dropdown-menu {
+    position: static;
+    top: auto;
+    left: auto;
+    float: none;
+    display: block;
+    max-width: none;
+    margin: 0 15px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    .border-radius(0);
+    .box-shadow(none);
+  }
+  .navbar .dropdown-menu:before,
+  .navbar .dropdown-menu:after {
+    display: none;
+  }
+  .navbar .dropdown-menu .divider {
+    display: none;
+  }
+  // Forms in navbar
+  .navbar-form,
+  .navbar-search {
+    float: none;
+    padding: (@baseLineHeight / 2) 15px;
+    margin: (@baseLineHeight / 2) 0;
+    border-top: 1px solid @navbarBackground;
+    border-bottom: 1px solid @navbarBackground;
+    @shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.1);
+    .box-shadow(@shadow);
+  }
+  // Pull right (secondary) nav content
+  .navbar .nav.pull-right {
+    float: none;
+    margin-left: 0;
+  }
+  // Static navbar
+  .navbar-static .navbar-inner {
+    padding-left:  10px;
+    padding-right: 10px;
+  }
+  // Navbar button
+  .btn-navbar {
+    display: block;
+  }
+
+  // Hide everything in the navbar save .brand and toggle button */
+  .nav-collapse {
+    overflow: hidden;
+    height: 0;
+  }

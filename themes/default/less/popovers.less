@@ -1,0 +1,75 @@
+// POPOVERS
+// --------
+
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: @zindexPopover;
+  display: none;
+  padding: 5px;
+  &.top    { margin-top:  -5px; }
+  &.right  { margin-left:  5px; }
+  &.bottom { margin-top:   5px; }
+  &.left   { margin-left: -5px; }
+  &.top .arrow    { #popoverArrow > .top(); }
+  &.top.right .arrow    { #popoverArrow > .topright(); }
+  &.top.left .arrow    { #popoverArrow > .topleft(); }
+  &.right .arrow  { #popoverArrow > .right(); }
+  &.bottom .arrow { #popoverArrow > .bottom(); }
+  &.bottom.left .arrow { #popoverArrow > .bottomleft(); }
+  &.bottom.right .arrow { #popoverArrow > .bottomright(); }
+  &.left .arrow   { #popoverArrow > .left();  }
+  .arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+}
+.popover-inner {
+  padding: 2px;
+  width: 288px;
+  overflow: hide;
+  background: @grayDark; // has to be full background declaration for IE fallback
+  background: rgba(0,0,0,.8);
+  .border-radius(4px);
+  .box-shadow(0 3px 7px rgba(0,0,0,0.3));
+}
+.popover-title {
+  padding: 9px 15px;
+  line-height: 1;
+  background-color: @grayDark;
+  border-bottom:1px solid @black;
+  .border-radius(2px 2px 0 0);
+  font-size: 13px; 
+  color: #fff;
+}
+.popover-content {
+  padding: 16px;
+  background-color: @white;
+  .background-clip(padding-box);
+  p, ul, ol {
+    margin-bottom: 0;
+  }
+}
+.popover-footer {
+  padding: 14px 15px 15px;
+  #gradient > .vertical(@grayLighter, @white);
+  border-top: 1px solid darken(@grayLight, 10%);
+  .border-radius(0 0 2px 2px);
+  .background-clip(padding-box);
+  .box-shadow(inset 0 1px 2px rgba(0,0,0,.1));
+  p, ul, ol {
+    margin-bottom: 0;
+  }
+  .clearfix();
+  .btn {
+    float: right;
+    margin-left: 8px;
+    margin-bottom: 0; // account for input[type="submit"] which gets the bottom margin like all other inputs
+  }
+  .btn-link {
+  		position: relative;
+  		top: 9px;
+  	}
+}

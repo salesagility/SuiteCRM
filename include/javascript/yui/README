@@ -1,0 +1,338 @@
+YUI Library Release Notes
+
+*** version 2.6.0 ***
+
+The 2.6.0 release of YUI contains:
+
+- Two new components:
+  - Carousel 
+  - Paginator (code that handles navigation of chunked data previously released as a part of DataTable)
+- Seven components promoted from Beta to GA status
+  - Cookie
+  - DataTable
+  - DataSource
+  - Layout Manager
+  - Rich Text Editor
+  - Resize 
+  - Profiler
+- Many bug fixes to DataTable as well as a number of enhancements including:  
+  - CellEditor, BaseCellEditor, and associated subclasses which handle inline cell editing
+  - ScrollingDataTable, a new subclass which to isolates and manages the fixed scrolling architecture
+  - Pagination and sorting features that have been reworked to better support dynamically driven DataTables
+- The addition of Undo/Redo support to Rich Text Editor in addition to updates to indent/outdent processing, 
+  text attribute handling, toolbar button support.
+- New configuration properties in both Menu and Button.
+- An updated TreeView component that now includes support for keyboard navigation, delegated event listeners, 
+  tree serialization/deserialization and other new features.
+- Enhancements for Flash 10 support in the Uploader.
+- Fixes to more than 280 Source Forge bug reports.
+
+This list is a brief summary of some of the highlights of this release.  There are many enhancements and  
+bug fixes throughout the library. Please see the README file for each component in the build directory, or the  
+README Digest posted to ydn-javascript as part of the 2.6.0 release announcement, for specific updates since 
+version 2.5.2.
+
+
+*** version 2.5.2 ***
+
+This update contains the following:
+
+- Patches for DataTable and Menu posted to developer site following the release of 2.5.1 have been incorporated into the build.
+- FireFox 3 compatibility in advance of its release. 
+- Opera 9.5 beta compatibility in advance of its release.
+- ActionScript source for Charts and Uploader is now included.
+- Charts component now includes support for dynamically created legends, and new chart and series styles.
+- DataTable bug fixes in pagination, scrolling, and column handling.
+- Several Rich Text Editor bug fixes.
+- Approximately 15 Source Forge bug fixes.
+
+Please see the README file for each component in the build directory for specific updates since version 2.5.1.
+
+*** version 2.5.1 ***
+
+This update contains the following:
+
+- additions to the Yahoo, Uploader, Editor, and DataSource components to improve YUI support for Adobe AIR
+- Douglas Crockford's fix for a security vulnerability where the JSON parser could be tricked into processing
+an unquoted string as quoted which could allow unsafe scripts to be evaled
+- a new aggregate file Ñ yuiloader-dom-event.js that is the ideal baseline rollup to use to be able to 
+lazy-load any part of YUI on-demand
+- over 60 bug fixes
+
+Please see the README file for each component in the build directory for specific updates since version 2.5.0.
+
+*** version 2.5.0 ***
+
+This release introduces six new components into YUI:
+
+   * Cookie Utility
+   * ImageCropper
+   * Layout Manager
+   * Resize
+   * Uploader
+   * Profiler Viewer
+   
+These new components are introduced as "beta", with the exception of the Charts
+WidgeUploadert which is released as an experimental component.  Please see the YUI FAQ
+on the definition of beta and experimental at:
+http://developer.yahoo.com/yui/articles/faq/#beta
+
+In addition to new components, you'll find updates and bug fixes throughout the
+library.
+
+*** version 2.4.1 ***
+
+This update contains one change.  We have reverted the change to the way the Event Utility cleans up 
+events in its page unload handler that was introduced in 2.4.0. The change resulted in some events
+not being properly unloaded, which in turn resulted in IE-specific memory leaks in some YUI components
+including the Menu Control and controls in the Container Family.
+
+*** version 2.4.0 ***
+
+This release introduces five new components into YUI:
+
+   * Selector
+   * Charts Widget
+   * Get Utility
+   * Profiler
+   * JSON Utility
+   
+These new components are introduced as "beta", with the exception of the Charts
+Widget which is released as an experimental component.  Please see the YUI FAQ
+on the definition of beta and experimental at:
+http://developer.yahoo.com/yui/articles/faq/#beta
+
+In addition to new components, you'll find updates and bug fixes throughout the
+library.
+
+*** version 2.3.1 ***
+
+This update contains general fixes to the YUI library.  Please see the README
+file for each component in the build directory for specific updates since
+version 2.3.0.
+
+*** version 2.3.0 ***
+
+This release introduces six new components into YUI:
+
+   * Base CSS
+   * Color Picker Control
+   * ImageLoader Utility
+   * Rich Text Editor
+   * YUI Loader Utility
+   * YUI Test Utility
+   
+These new components are introduced as "beta", with the exception of ImageLoader
+Utility which is released as an experimental component.  Please see the YUI 
+FAQ on the definition of beta and experimental at:
+http://developer.yahoo.com/yui/articles/faq/#beta
+
+In addition to new components, you'll find updates and bug fixes throughout the
+library.
+
+*** version 2.2.2 ***
+
+This update contains general fixes to the YUI library.  Please see the
+README file for each component in the build directory for specific updates since
+version 2.2.1.
+
+*** version 2.2.1 ***
+
+This update contains general fixes to the YUI library.  Please see the
+README file for each component in the build directory for specific updates since
+version 2.2.0.
+
+*** version 2.2.0 ***
+
+This release synchronizes the SourceForge version with Yahoo!'s version of YUI
+-- version number 2.2.0.  Please see the following blog article for information
+on this specific version increment at:
+http://www.yuiblog.com/blog/2007/02/20/yui-220-released
+
+The following new components are introduced with this release:
+
+   * Button
+   * DataTable
+   * Browser History Manager
+
+   The following components are now available as utilities:
+
+   * Element
+   * DataSource
+
+These new components are introduced as "beta", with the exception of Browser
+History Manager as an experimental component.  Please see the YUI FAQ on the
+definition of beta and experimental at:
+http://developer.yahoo.com/yui/articles/faq/#beta
+
+* CSS customizations *
+Calendar, Container, and Menu have been revised to allow image customizations
+through their respective CSS files.  Please refer to each component's README to
+see the full details on affected properties.
+
+Additional details for fixes and updates can be found in the README files for
+each updated component.  All YUI API cheatsheets have been updated for the
+current version and can be found at: yui/docs/assets/cheatsheets.zip.
+
+*** version 0.12.2 ***
+
+This update contains general fixes to the YUI library.  Please see the
+README file for each component in the build directory for specific updates since
+version 0.12.1.  As part of the 0.12.2 update, a number of corrections have been
+made to functional examples that were configured incorrectly in 0.12.1.
+
+*** version 0.12.1 ***
+
+This update contains general fixes to the YUI library.  Please see the
+README file for each component in the build directory for specific updates since
+version 0.12.0.
+
+Beginning with this release, all YUI minification will be performed with JSMin(
+http://www.crockford.com/javascript/jsmin.html).  Line breaks will be preserved.
+
+*** version 0.12.0 ***
+
+This version introduces the Tabview widget as well as general fixes to the YUI
+library.  Additional details can be found in the README files for each updated
+component.  All YUI API cheatsheets have been updated for the current version
+and can be found at: yui/docs/assets/cheatsheets.zip.
+
+* documentation *
+The YUI API documentation format is revised with this release.  This new
+format -- now a flat file structure under yui/docs/ -- implements the YUI
+AutoComplete widget on the main landing page to allow keyword searching of YUI.
+It also contains the full API documentation for all YUI components along with
+the following categories of data for each component(if applicable):
+
+* Inheritance hierarchy for extensions and subclasses.
+* YUI dependencies
+* Properties and methods
+* Events
+* Configuration attributes.
+
+* concatenated files *
+For convenience, three additional, minified variations of YUI are now available
+for your use:
+
+* reset-fonts-grids.css
+* yahoo-dom-event.js
+* utilities.js
+
+* API changes *
+There are interface changes to the Calendar widget.  Please see the 0.12.0
+Calendar upgrade guide at http:// developer.yahoo.com/yui/calendar/upgrade.html
+to see if this update affects your Calendar implementation and instructions on
+upgrading to version 0.12.0.
+
+
+*** version 0.11.4 ***
+
+This update contains some priority bug fixes to the following components:
+
+* Yahoo
+* Container
+* Drag and Drop
+* Event
+
+Additional details can be found in the README files for each updated component.
+
+*** version 0.11.3 ***
+
+This update contains general fixes to the YUI library.  Please see the
+README file for each component in the build directory for updates and fixes
+since version 0.11.2.
+
+*** version 0.11.2 ***
+
+This update contains a high-priority fix to Drag and Drop that prevents text
+selection.  Additional details can be found in the README file for:
+
+* Drag and Drop
+
+*** version 0.11.1 ***
+
+Release 0.11.1 addresses some high-priority bugs reported in the recently
+released version 0.11.0. Additional details can be found in the README files for
+each updated component:
+
+* Animation
+* Dom
+* Drag and Drop
+* Connection Manager
+* Container
+
+*** version 0.11.0 ***
+
+This version introduces the Logger widget.  The YUI cheatsheets for version
+0.11.0 and 0.10.0 are also included in this distribution under docs/assets.
+
+Please see the README file for each component in the build directory for
+updates and fixes since version 0.10.0.
+
+*** version 0.10.0 ***
+
+In this release, the directory structure has been modified to provide more
+component organization.  This is the new format:
+
+yui/
+  |
+  -- build/
+  | |
+  | -- dom/
+  | |
+  | | -- assets/
+  | |
+  | | -- dom.js
+  | |
+  -- docs/
+  | |
+  | -- dom/
+  | |
+  -- examples/
+  | |
+  | -- dom/
+  | |
+  | | -- img/
+
+Notice there are three immediate directories under the
+root YUI.  They are:
+
+*build/*
+This directory contains the source files for each YUI component, and each
+component is presented as a sub-directory under build/.  Notice that there are
+generally two source files: component.js and component-min.js.  The "component"
+source is the raw, commented build and "component-min" is the minified version
+of the same file with comments and whitespace removed.  With some components,
+there is an assets sub-directory.  CSS and image dependencies for each
+component are stored in its assets sub-directory.
+
+Note: If a component makes use of images, the image source path in the
+component's CSS file will point to Akamai.  The physical images are also
+available in the assets/ directory for local availability.  Please modify the
+CSS image references if you wish to use your own image assets.
+
+*docs/*
+This directory contains the jsdoc-generated API reference for every YUI
+component.  Each component is presented as a sub-directory under docs/.
+
+*examples/*
+This directory contains functional examples for each component in the YUI
+Library.  The examples are not part of the formal distribution; rather,
+they provide demonstrations of each component in use.  Each example uses YUI
+Library source files from the build/ directory, while all example-specific
+dependencies are stored in sub-directories (e.g. examples/dom/img).
+Some components, including the AutoComplete Control and Connection Manager,
+make use of PHP to implement certain examples.
+
+For example:
+In yui/examples/dom, the dom.js source file and all YUI .js dependencies
+are drawn from yui/build/ directories.  All other example-specific sources are
+stored as sub-directories: yui/examples/dom/css and yui/examples/dom/img.
+
+Each functional example is also available and functional on
+developer.yahoo.com/yui/.  They reproduced here as part of the distribution
+for your convenience.
+
+
+
+

@@ -1,0 +1,50 @@
+YUI 3.x Library Source
+
+* Documentation: http://developer.yahoo.com/yui/3/
+* License: http://developer.yahoo.com/yui/license.html
+* Latest Stable Release: http://yuilibrary.com/downloads/
+* Discuss: http://yuilibrary.com/forum/
+* Contributor Info: http://developer.yahoo.com/yui/community/contribute.html
+
+Welcome to YUI.
+
+The YUI Library is a set of utilities and controls, written in JavaScript,
+for building richly interactive web applications using techniques such 
+as DOM scripting, DHTML and AJAX. YUI is available under a BSD license 
+and is free for all uses.
+
+This is the source tree for YUI's 3.x codeline which is has been released
+as a technical preview and is not considered ready for production use.
+The production codeline for YUI is YUI 2.x; http://developer.yahoo.com/yui/
+is the main YUI website.
+
+The source tree for YUI includes the following directories:
+
+* api: Generated API docs for the entire library in HTML format.  These
+     documents are build using YUI Doc from the contents of the src
+     directory.
+* build: Generated/built YUI files.  The built files are generated from 
+     the contents of the src directory.  Files are provided in full,
+     commented form (suitable for debugging) and in minified form 
+     (suitable for deployment and use).
+* sandbox: The sandbox directory contains works-in-progress, including
+     unreleased future components, as well as experimental and/or
+     demonstration code created by library authors.
+* src: This directory contains the source code (JavaScript, CSS, image
+     assets, ActionScript files) for the library. src also contains (or
+     will contain) all module-specific documentation, tests and examples.
+     All modifications to the library and its documentation should take 
+     place in this directory.
+
+     The src directory also contains build.xml files, which can be 
+     used to build individual modules using the YUI component build 
+     tool. The YUI component build tool is part of the YUI "builder" 
+     project, also available on GitHub:
+
+         http://github.com/yui/builder
+
+     The README in the componentbuild directory of the builder project
+     covers installation and use of the build tool.
+
+Code found in the development head is always a work in progress and
+should be treated as experimental.

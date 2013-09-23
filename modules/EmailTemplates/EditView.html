@@ -1,0 +1,259 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<style>
+	#subjectfield { height: 1.6em; }
+</style>
+{JAVASCRIPT}
+<script type="text/javascript" src="cache/include/javascript/sugar_grp1.js?v={VERSION_MARK}"></script>
+{JSLANG}
+<script type="text/javascript" language="Javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" language="Javascript" src="modules/EmailTemplates/EmailTemplate.js?v={VERSION_MARK}"></script>
+<script type="text/javascript">
+	{FIELD_DEFS_JS}
+</script>
+
+<form name="EditView" id="EditView" method="POST" action="index.php" enctype="multipart/form-data">
+	<input type="hidden" name="module" value="EmailTemplates">
+	<input type="hidden" name="record" value="{ID}">
+	<input type="hidden" name="action">
+	<input type="hidden" name="form">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_id" value="{RETURN_ID}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<input type="hidden" name="inpopupwindow" value="{INPOPUPWINDOW}">
+	<input type="hidden" name="old_id" value="{OLD_ID}">
+    <input type="hidden" name="type" value="campaign">
+
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td>
+				<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accesskey="{APP.LBL_SAVE_BUTTON_KEY}" class="button primary"
+					onclick="	this.form.action.value='Save';
+<!-- BEGIN: NoInbound1 -->
+								addUploadFiles('EditView');
+								addUploadDocs('EditView');
+<!-- END: NoInbound1 -->
+								return check_form('EditView');"
+					type="submit" name="button" value="{APP.LBL_SAVE_BUTTON_LABEL}" id="SAVE">
+				<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accesskey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="{CANCEL_SCRIPT}" type="submit" name="button" value="{APP.LBL_CANCEL_BUTTON_LABEL}" id="CANCEL">
+			</td>
+			<td align="right" nowrap>
+				<span class="required">
+					{APP.LBL_REQUIRED_SYMBOL}
+				</span>
+				{APP.NTC_REQUIRED}
+			</td>
+			<td align='right'>
+				{ADMIN_EDIT}
+			</td>
+		</tr>
+	</table>
+    <div class="edit view">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="15%" scope="row">
+							{MOD.LBL_NAME}
+							<span class="required">
+								{APP.LBL_REQUIRED_SYMBOL}
+							</span>
+						</td>
+						<td width="30%" >
+							<input id='name' name='name' tabindex="0" type="text" size='30' maxlength="255" value="{NAME}">
+						</td>
+						<td width="15%" scope="row">
+						</td>
+						<td width="30%" >
+						</td>
+					</tr>
+                    <tr>
+                        <td width="15%" scope="row">
+                         {MOD.LBL_TYPE}
+                        </td>
+                        <td width="30%" >
+                            <select name='type' tabindex="11">{TYPEDROPDOWN}</select>
+                        </td>
+                    </tr>
+					<tr>
+						<td width="15%" scope="row">
+							{MOD.LBL_DESCRIPTION}
+						</td>
+						<td colspan="3" >
+							<textarea name='description' tabindex='0' cols="90" rows="1" style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" id="description">{DESCRIPTION}</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							&nbsp;
+						</td>
+					</tr>
+<!-- BEGIN: NoInbound -->
+					<tr>
+						<td width="15%" scope="row" align='left'>
+							{MOD.LBL_INSERT_VARIABLE}&nbsp;
+						</td>
+						<td width="30%"  colspan="3">
+							<select name='variable_module' tabindex="0" onchange="addVariables(document.EditView.variable_name,this.options[this.selectedIndex].value);">
+  							  {DROPDOWN}
+ 							</select>
+							<select name='variable_name' tabindex="0" onchange="showVariable();">
+							</select>
+							<span scope="row">
+								{MOD.LBL_USE}:
+							</span>
+							<input type="text" size="30" tabindex="0" name="variable_text" />
+<!-- BEGIN: variable_button -->
+							<input type='button' tabindex="0" onclick='{INSERT_VARIABLE_ONCLICK}' class='button' value='{MOD.LBL_INSERT}'>
+<!-- END: variable_button -->
+						</td>
+					</tr>
+<!-- BEGIN: tracker_url -->
+					<tr>
+						<td width="15%" scope="row" align='left'>
+							{MOD.LBL_INSERT_TRACKER_URL}&nbsp;
+						</td>
+						<td width="85%" colspan="3" valign="top" >
+							<select tabindex='0' name='tracker_url' onchange='this.form.url_text.value=this.value'>
+								{TRACKER_KEY_OPTIONS}
+							</select>
+							<input type="text" size="30" id="url_text" name="url_text" value="{DEFAULT_URL_TEXT}" />
+							<input type='button' tabindex="0" onclick='{INSERT_URL_ONCLICK}' class='button' value='{MOD.LBL_INSERT_URL_REF}'>
+						</td>
+					</tr>
+<!-- END: tracker_url -->
+<!-- END: NoInbound -->
+					<tr>
+						<td width="15%" scope="row">
+							{MOD.LBL_SUBJECT}
+						</td>
+						<td colspan='4' >
+							<textarea onblur="remember_place(this);" name='subject' tabindex='0' cols="90" rows="1" style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" id="subjectfield">{SUBJECT}</textarea>
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td colspan='4'>
+						<input  name="toggle_textonly"  id="toggle_textonly" onclick="toggle_text_only();" type="checkbox" {TEXTONLY_CHECKED}/>
+						<input  name="text_only"  id="text_only"  type="hidden" value='{TEXTONLY_VALUE}'/>
+							&nbsp;{MOD.LBL_SEND_AS_TEXT}
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" scope="row">
+							{MOD.LBL_BODY}
+						</td>
+
+<!-- BEGIN: textarea -->
+						<td colspan="4" >
+							<div id='body_text_div'>
+							<textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="20">{BODY_HTML}</textarea>
+							</div>
+                            <br>
+							<div id='toggle_textarea_option'>
+                                <input id='toggle_textarea_elem' onclick="toggle_textarea_edit(this);" type="button" name="toggle_html" value="{MOD.LBL_EDIT_ALT_TEXT}" />
+                            </div>
+                            <br>
+                            <div id="text_div" style="display: none">
+                                <textarea tabindex='0' name='body' cols="100" rows="20" >{BODY}</textarea>
+                            </div>
+						</td>
+<!-- END: textarea -->
+					</tr>
+<!-- BEGIN: NoInbound2 -->
+					<tr>
+						<td valign="top" scope="row">
+							{MOD.LBL_ATTACHMENTS}:
+						</td>
+						<td colspan="2" nowrap>
+							{ATTACHMENTS_JAVASCRIPT} {ATTACHMENTS}
+						</td>
+					</tr>
+<!-- END: NoInbound2 -->
+				</table>
+			</td>
+		</tr>
+	</table>
+    </div>
+</form>
+<!-- BEGIN: NoInbound3 -->
+<form id="upload_form" name="upload_form" method="POST" action='AttachDocuments.php' enctype="multipart/form-data">
+	<div id="upload_div">
+		<input type="file" id="my_file" name="file_1" size="40" />
+		<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
+		<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
+		<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
+		<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
+		<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{MOD.LBL_SUGAR_DOCUMENT}' class="button" />
+	</div>
+	<div id="attachments_div">
+	</div>
+</form>
+<!-- END: NoInbound3 -->
+{tiny}
+<script type="text/javascript" language="javascript">
+<!-- BEGIN: NoInbound4 -->
+toggle_textarea_elem_values = ['{MOD.LBL_EDIT_ALT_TEXT}', '{MOD.LBL_HIDE_ALT_TEXT}'];
+
+if(document.getElementById('upload_form') != null){
+    var multi_selector = new multiFiles(document.getElementById('upload_div'));
+    multi_selector.addElement( document.getElementById('my_file'));
+}
+<!-- END: NoInbound4 -->
+//call the function on load, this will hide the tinyMCE editor if needed
+toggle_text_only(true);
+
+function toggle_portal_flag() {
+	{TOGGLE_JS}
+}
+<!-- BEGIN: NoInbound5 -->
+addVariables(document.EditView.variable_name,'{DEFAULT_MODULE}');
+<!-- END: NoInbound5 -->
+focus_obj = document.EditView.body;
+toggle_portal_flag();
+update_textarea_button();
+</script>
+
+
+
+<!-- END: main -->

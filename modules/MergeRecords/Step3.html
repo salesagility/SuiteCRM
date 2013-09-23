@@ -1,0 +1,239 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+<!-- BEGIN: main -->
+<p>
+<form name="EditView" id="EditView" method="POST" action="index.php">
+	<input type="hidden" name="module" value="MergeRecords">
+	<input type="hidden" name="record" value="{ID}">
+	<input type="hidden" name="merge_module" value="{MERGE_MODULE}">
+	<input type="hidden" name="action">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_id" value="{RETURN_ID}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<input type="hidden" name="change_parent" value="0">
+	<input type="hidden" name="change_parent_id" value="">
+	<input type="hidden" name="remove" value="0">
+	<input type="hidden" name="remove_id" value="">
+	<input type="hidden" name="merged_links" value="{MERGED_LINKS}">
+	{MERGED_IDS}
+	
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td align="left" style="padding-bottom: 2px;"><input title="{MOD.LBL_SAVE_MERGED_RECORD_BUTTON_TITLE}" class="button" onclick="return merge_verify();" type="submit" name="button" value="  {MOD.LBL_SAVE_MERGED_RECORD_BUTTON_LABEL}  " id="save_merged_record_button" >&nbsp;
+		<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  " id="cancel_merge_button"></td>
+		<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+	</tr>
+	</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+<tr height="20">
+<td>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabform">
+	{DIFF_HEADER}
+<!-- BEGIN: merge_row_diff -->
+	<tr height="20">{FILE "modules/MergeRecords/MergeField.html"}</tr>
+<!-- END: merge_row_diff -->
+	{GROUP_PARTITION}
+	{SIMILAR_HEADER}
+<!-- BEGIN: merge_row_similar -->
+	<tr height="20">{FILE "modules/MergeRecords/MergeField.html"}</tr>
+<!-- END: merge_row_similar -->
+</table>
+</td>
+</tr>
+</table>
+<br/>
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td align="left" style="padding-bottom: 2px;"><input title="{MOD.LBL_SAVE_MERGED_RECORD_BUTTON_TITLE}" class="button" onclick="return merge_verify();" type="submit" name="button" value="  {MOD.LBL_SAVE_MERGED_RECORD_BUTTON_LABEL}  " >&nbsp;
+		<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "></td>
+	</tr>
+	</table>
+</form>
+<p>
+
+<script type="text/javascript">
+function merge_verify() {
+	if (!check_form('EditView')) {
+		return false;
+	}
+
+	var message="{MERGE_VERIFY}";
+	if (confirm(message)) {
+		document.EditView.action.value='SaveMerge';
+		return true;
+	} else {
+		return false;
+	}
+}
+function copy_value(json_array)
+{
+	var target_element = document.getElementById(json_array['field_name']);
+	if(json_array['field_type'] == 'enum')
+	{
+		for(i=0; i < target_element.options.length; i++)
+		{
+			if(target_element.options[i].value == json_array['field_value'])
+			{
+				target_element.options[i].selected=true;
+				i=target_element.options.length+1;
+			}
+		}
+	}
+	else if(json_array['field_type'] == 'bool')
+	{
+		if(json_array['field_value'] == '1' || json_array['field_value'] == 'on')
+			target_element.checked=true;
+		else
+			target_element.checked=false;
+	}
+	else if(json_array['field_type'] == 'relate' || json_array['field_type'] == 'link')
+	{
+		for(popup_field in json_array['popup_fields'])
+		{
+			var target_element = document.getElementById(popup_field);
+			target_element.value = json_array['popup_fields'][popup_field];
+			//alert("Field:"+popup_field+"\nValue:"+json_array['popup_fields'][popup_field]);
+		}
+	}
+	else if(json_array['field_type'] == 'teamset')
+	{
+		var teams = json_array['field_value2'];
+		var isFirstFieldEmpty = collection['EditView_team_name'].clean_up();
+		var index = 0;
+		
+		//expand the list
+		collection['EditView_team_name'].js_more();
+	    collection['EditView_team_name'].show_arrow_label(true);
+
+		for(team_id in teams) {
+			 if(teams[team_id]['id']) {
+				 var temp_array = []; 
+				 temp_array['name'] = teams[team_id]['display_name'];
+		         temp_array['id'] = teams[team_id]['id'];
+		         if(isFirstFieldEmpty && index == 0){
+		         	collection['EditView_team_name'].replace_first(temp_array);
+		         }else{
+		         	collection['EditView_team_name'].add(temp_array);
+		         }
+		         index++;
+			 }
+		}
+	}
+	else if(json_array['field_type'] == 'datetimecombo'){
+		dt = json_array['field_value'];
+		date = dt.substr(0,10);
+		 //Get hours and minutes and adjust as necessary
+	    var hrs = parseInt(dt.substring(11,13), 10);
+	    var mins = parseInt(dt.substring(14,16), 10);
+	
+	    //A safety scan to make sure hrs and minutes are formatted correctly
+		if (mins > 0 && mins < 15) {
+			mins = 15;
+		} else if (mins > 15 && mins < 30) {
+			mins = 30;
+		} else if (mins > 30 && mins < 45) {
+			mins = 45;
+		} else if (mins > 45) {
+			hrs += 1;
+			mins = 0;
+		} //if-else
+		
+	    document.getElementById(json_array['field_name']+'_date').value=date;
+	    var hourObj = document.getElementById(json_array['field_name']+'_hours');
+	    for(var i=0; i< hourObj.length; i++){
+	    	if(hourObj.options[i].value == hrs){
+	    		hourObj.options[i].selected='checked';
+	    	}
+	    }
+
+	    
+	    var minuteObj = document.getElementById(json_array['field_name']+'_minutes');
+	    for(var i=0; i< minuteObj.length; i++){
+	    	if(minuteObj.options[i].value == mins){
+	    		minuteObj.options[i].selected='checked';
+	    	}
+	    }
+	    
+		var hasMeridiem = /am|pm/i.test("{USER_DATEFORMAT}");		
+	    if(hasMeridiem){
+	    	meridiem = trim(dt.substring(16));
+		    var meridiemObj = document.getElementById(json_array['field_name'] + "_meridiem");
+		    for(var i=0; i< meridiemObj.length; i++){
+		    	if(meridiemObj.options[i].value == meridiem){
+		    		meridiemObj.options[i].selected='checked';
+		    	}
+		    }
+	    }
+	    target_element.value = json_array['field_value'];
+	}
+	else if(json_array['field_type'] == 'multienum'){
+	    var multienumObj = document.getElementById(json_array['field_name']);
+	    for(var i=0; i< multienumObj.length; i++){
+	        
+            if ( json_array['field_value'].indexOf(multienumObj.options[i].value) != -1 ) {
+                multienumObj.options[i].selected='checked';
+            }
+            else {
+                multienumObj.options[i].selected = '';
+            }
+        }
+	}
+	else
+	{
+		target_element.value = json_array['field_value'];
+	} 
+	return true;
+}
+
+function change_primary(button, new_id) {
+	document.EditView.change_parent.value='1';
+	document.EditView.change_parent_id.value=new_id;
+	document.EditView.action.value='Step3';
+	
+	document.EditView.submit();
+}
+function remove_me(button, new_id) {
+	document.EditView.remove.value='1';
+	document.EditView.remove_id.value=new_id;
+	document.EditView.action.value='Step3';
+	
+	document.EditView.submit();
+}
+</script>
+{VALIDATION_JS}
+<!-- END: main -->

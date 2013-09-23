@@ -1,0 +1,73 @@
+// ALERT STYLES
+// ------------
+
+// Base alert styles
+.alert {
+  padding: 10px 20px 10px 10px;
+  margin-bottom: @baseLineHeight;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  background-color: @warningBackground;
+  border: 1px solid @warningBorder;
+  .border-radius(4px);
+}
+.alert [class^=icon-] {
+  margin: 0 5px 0 0;
+}
+.alert,
+.alert-heading {
+  color:  darken(@warningBackground, 70%)
+}
+
+// Adjust close link position
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -10px;
+  line-height: 18px;
+}
+
+// Alternate styles
+// ----------------
+
+.alert-success {
+  background-color: @successBackground;
+  border-color: @successBorder;  
+}
+.alert-success,
+.alert-success .alert-heading {
+  color:  darken(@successBackground, 70%);
+}
+.alert-danger,
+.alert-error {
+  background-color: @errorBackground;
+  border-color: @errorBorder;
+}
+.alert-danger,
+.alert-error,
+.alert-danger .alert-heading,
+.alert-error .alert-heading {
+  color:  darken(@errorBackground, 70%);
+}
+.alert-info {
+  background-color: @infoBackground;
+  border-color: @infoBorder;
+}
+.alert-info,
+.alert-info .alert-heading {
+  color:  darken(@infoBackground, 70%);
+}
+
+
+// Block alerts
+// ------------------------
+.alert-block {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.alert-block > p,
+.alert-block > ul {
+  margin-bottom: 0;
+}
+.alert-block p + p {
+  margin-top: 5px;
+}

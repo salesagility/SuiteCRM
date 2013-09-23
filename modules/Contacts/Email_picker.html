@@ -1,0 +1,173 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+<!-- BEGIN: SearchHeader -->
+<script type="text/javascript" src="modules/Emails/javascript/email_popup_helper.js?v={VERSION_MARK}"></script>
+<form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td scope="row" nowrap="nowrap">
+							{MOD.LBL_FIRST_NAME}
+						</td>
+						<td  nowrap="nowrap">
+							<input type="text" size="20" name="first_name"  value="{LAST_SEARCH.FIRST_NAME}" />
+						</td>
+						<td scope="row" nowrap="nowrap">
+							{MOD.LBL_LAST_NAME}
+						</td>
+						<td  nowrap="nowrap">
+							<input type="text" size="20" name="last_name"  value="{LAST_SEARCH.LAST_NAME}" />
+						</td>
+						<td valign="top" align="right">
+							<input type="hidden" name="module" value="{MODULE_NAME}" />
+							<input type="hidden" name="action" value="Popup" />
+							<input type="hidden" name="query" value="true" />
+							<input type="hidden" name="func_name" value="" />
+							<input type="hidden" name="request_data" value="{request_data}" />
+							<input type="hidden" name="populate_parent" value="false" />
+							<input type="hidden" name="record_id" value="" />
+							<input type="hidden" name="html" value="Email_picker" />
+							<input type="submit" name="button" class="button" id="search_form_submit" title="{APP.LBL_SEARCH_BUTTON_TITLE}" value="{APP.LBL_SEARCH_BUTTON_LABEL}" />
+						</td>
+					</tr>
+					<tr>
+						<td scope="row" nowrap="nowrap">
+							{MOD.LBL_ACCOUNT_NAME}
+						</td>
+						<td >
+							<input type="text" size="20" name="account_name"  value="{LAST_SEARCH.ACCOUNT_NAME}{ACCOUNT_NAME}" />
+						</td>
+						<td>
+							&nbsp;
+						</td>
+						<td>
+							&nbsp;
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<p>
+<div id='addformlink'>
+	{CREATECONTACT}
+</div>
+<div id='addform' style='display:none;position:relative;z-index:2;left:0px;top:0px;'>
+<form name="ContactSave" onsubmit="return check_form('ContactSave');" method="post" action="index.php">
+	{ADDFORMHEADER}
+	<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+		<tr>
+			<td>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>
+							<input type="hidden" name="module" value="{MODULE_NAME}" />
+							<input type="hidden" name="action" value="Popup" />
+							<input type="hidden" name="doAction" value="save" />
+							<input type="hidden" name="query" value="true" />
+							<input type="hidden" name="html" value="Email_picker" />
+							{ADDFORM}
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</form>
+</div>
+</p>
+<!-- END: SearchHeader -->
+<!-- BEGIN: list_nav_row -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list view">
+	{PAGINATION}
+<!-- END: list_nav_row -->
+	<tr height="20">
+		<td scope="col"  nowrap>
+			{CHECKALL}
+		</td>
+		<td scope="col" width="40%"  nowrap="nowrap">
+			<a href="{ORDER_BY}last_name" class="listViewThLinkS1">
+				{MOD.LBL_LIST_CONTACT_NAME}{arrow_start}{last_name_arrow}{arrow_end}
+			</a>
+		</td>
+		<td scope="col" width="20%"  nowrap="nowrap">
+			<a href="{ORDER_BY}email1" class="listViewThLinkS1">
+				{MOD.LBL_LIST_EMAIL_ADDRESS}{arrow_start}{email1_arrow}{arrow_end}
+			</a>
+		</td>
+		<td scope="col" width="40%"  nowrap="nowrap">
+			{MOD.LBL_LIST_ACCOUNT_NAME}
+		</td>
+	</tr>
+<!-- BEGIN: row -->
+	<tr height="20" class="{ROW_COLOR}S1">
+		<td valign="top">
+			{PREROW}
+		</td>
+		<td scope='row' valign="top">
+			<a href="#"  onclick="send_back('Contacts','{CONTACT.ID}');">
+				{CONTACT.FULL_NAME}
+			</a>
+		</td>
+		<td valign="top">
+			<a href="#"  onclick="send_back('Contacts','{CONTACT.ID}');">
+				{CONTACT.EMAIL1}
+			</a>
+			<br />
+			<a href="#"  onclick="send_back('Contacts','{CONTACT.ID}');">
+				{CONTACT.EMAIL2}
+			</a>
+		</td>
+		<td valign="top">
+			{CONTACT.ACCOUNT_NAME}
+		</td>
+	</tr>
+	<tr>
+		<td colspan="20" class="listViewHRS1">
+		</td>
+	</tr>
+<!-- END: row -->
+	{ASSOCIATED_JAVASCRIPT_DATA}
+</table>
+<!-- END: main -->

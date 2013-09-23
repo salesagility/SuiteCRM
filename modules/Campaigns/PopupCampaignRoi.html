@@ -1,0 +1,71 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+	<tr>
+		<td>
+
+			<form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
+<TABLE width="70%" border="1"
+          summary="This table gives some statistics about fruit
+                   flies: average height and weight, and percentage
+                   with red eyes (for both males and females).">
+<td>
+<TABLE WIDTH="30%">
+ <!--<CAPTION>ROI details for the Campaign</CAPTION> -->
+  <TR><TH ALIGN=LEFT>Planned Budget<TD><TH ALIGN=RIGHT>{PLANNED_BUDGET}{CURRENCY}<TD></BR>
+  <TR><TH ALIGN=LEFT>Actual Cost<TD><TH ALIGN=RIGHT>{ACTUAL_COST}{CURRENCY}<TD></BR>
+  <TR><TH ALIGN=LEFT>Expected Revenue<TD><TH ALIGN=RIGHT>{EXPECTED_REVENUE}{CURRENCY}<TD>
+  <TR><TH ALIGN=LEFT>Opportunities Closed<TD><TH ALIGN=RIGHT>{OPP_COUNT}<TD>
+  <TR><TH ALIGN=LEFT>Cost per Impression<TD><TH ALIGN=RIGHT>{COST_OF_IMPRESSION}<TD>
+  <TR><TH ALIGN=LEFT>Cost per Click Through<TD><TH ALIGN=RIGHT>{COST_PER_CLICK_THROUGH}<TD>
+</TABLE>
+</td>
+<td>
+<TABLE width="20%">
+  {MY_CHART_ROI}
+</TABLE>
+</td>
+
+</TABLE>
+</form>
+		</td>
+	</tr>
+</table>
+<!-- END: main -->

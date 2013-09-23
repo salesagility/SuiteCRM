@@ -1,0 +1,32 @@
+// ACCORDION
+// ---------
+
+
+// Parent container
+.accordion {
+  margin-bottom: @baseLineHeight;
+  width: 100%;
+}
+
+// Group == heading + body
+
+.accordion-heading {
+  border-bottom: 0;
+  .border-radius(4px);
+  margin-top: 10px;
+  border: darken(@grayLighter, 5%) solid 1px;
+}
+.accordion-heading .accordion-toggle {
+  display: block;
+  padding: 10px;
+}
+
+.accordion-inner {
+  padding: 10px;
+  border: darken(@grayLighter, 5%) solid 1px;
+  border-top: darken(@grayLighter, 5%) solid 2px;
+  margin-top: -2px;
+  outline: 0;
+  .border-radius(0 0 4px 4px);
+  z-index: 2000;
+}

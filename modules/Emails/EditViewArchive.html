@@ -1,0 +1,319 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+
+<style>
+	#to_addrs_field { height: 1.6em; }
+	#cc_addrs_field { height: 1.6em; }
+	#bcc_addrs_field { height: 1.6em; }
+	#subjectfield { height: 1.6em; }
+	#from_addr_field { height: 1.6em; }
+</style>
+
+<script type="text/javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
+{MESSAGE}
+
+<form action="index.php" method="post" name="EditView" id="EditView" enctype="multipart/form-data">
+	<input type="hidden" name="module" value="Emails" />
+	<input type="hidden" name="action" value="Save" />
+	<input type="hidden" name="contact_id" value="{CONTACT_ID}" />
+	<input type="hidden" name="user_id" value="{USER_ID}" />
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}" />
+	<input type="hidden" name="return_id" value="{RETURN_ID}" />
+	<input type="hidden" name="send" value="" />
+	<input type="hidden" name="type" value="archived" />
+	<input type="hidden" name="record" value="{ID}" />
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}" />
+	<input type="hidden" name="object_type" value="{OBJECT_TYPE}" />
+	<input type="hidden" name="object_id" value="{OBJECT_ID}" />
+	<input type="hidden" name="group" value="{GROUP}" />
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+			<input type="submit" name="button" id="SAVE_HEADER" class="button primary"
+				title="{APP.LBL_SAVE_BUTTON_TITLE}"
+				accesskey="{APP.LBL_SAVE_BUTTON_KEY}"
+				value="  {APP.LBL_SAVE_BUTTON_LABEL}  "
+				onclick="this.form.action.value='Save'; return check_form('EditView');" />
+			<input type="submit" name="button" id="CANCEL_HEADER" class="button"
+				title="{APP.LBL_CANCEL_BUTTON_TITLE}"
+				accesskey="{APP.LBL_CANCEL_BUTTON_KEY}"
+				value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "
+				onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" />		</td>
+		<td align="right" nowrap></td>
+		<td align='right'>{ADMIN_EDIT}</td>
+	</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+	<tr>
+		<td>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="15%" scope="row">
+						<slot>{MOD.LBL_DATE_AND_TIME}&nbsp;<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot>
+					</td>
+					<td width="25%"  nowrap colspan="4">
+						<slot>
+							<table cellpadding="0" cellspacing="0">
+								<tr>
+									<td nowrap>
+										<slot><input name='date_start' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" id='date_start_date' tabindex='1' maxlength='10' size='11' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{APP.LBL_ENTER_DATE}"  id="jscal_trigger" align="absmiddle">&nbsp;</slot>
+									</td>
+									<td nowrap>
+										<slot><input name='time_start' size='5' maxlength='5' tabindex='1' type="text" value='{TIME_START}'>{TIME_MERIDIEM}</slot>
+									</td>
+								</tr>
+								<tr>
+									<td nowrap>
+										<slot><span class="dateFormat">{USER_DATEFORMAT}</span></slot>
+									</td>
+									<td nowrap>
+										<slot><span class="dateFormat">{TIME_FORMAT}</span></slot>
+									</td>
+								</tr>
+							</table>
+						</slot>
+					</td>
+				</tr>
+
+				<tr>
+
+<!-- BEGIN: open_source_1 -->
+					<td colspan="2"><slot></slot></td>
+<!-- END: open_source_1 -->
+
+					<td width="25%" scope="row" valign="top" align="left"><slot>
+						<select tabindex='2' id='parent_type' name='parent_type' onchange="document.EditView.parent_name.value=''; parent_typechangeQS(); checkParentType(document.EditView.parent_type.value, document.EditView.change_parent);">{TYPE_OPTIONS}</select>&nbsp;
+					
+						<input id='parent_id' name='parent_id' type="hidden" value='{PARENT_ID}'>
+						<input class="sqsEnabled" id='parent_name' name='parent_name' tabindex='2' type='text' value="{PARENT_NAME}">&nbsp;{CHANGE_PARENT_BUTTON}
+					</slot></td>
+				</tr>
+				<tr>
+					<td scope="row" width="15%">
+						<slot>{APP.LBL_ASSIGNED_TO}</slot>
+					</td>
+					<td >
+						<slot>
+							<input class="sqsEnabled" tabindex='1' id="assigned_user_name" name='assigned_user_name' type="text" value="{ASSIGNED_USER_NAME}">
+							<input id='assigned_user_id' name='assigned_user_id' type="hidden" value="{ASSIGNED_USER_ID}" />
+							<input title="{APP.LBL_SELECT_BUTTON_TITLE}" accessKey="{APP.LBL_SELECT_BUTTON_KEY}" type="button" tabindex='1' class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
+								onclick='open_popup("Users", 600, 400, "", true, false, {encoded_users_popup_request_data});' />
+						</slot>
+					</td>
+<!-- BEGIN: pro -->
+					<script type="text/javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
+					<td scope="row" valign="top" align="right"><slot>
+						{MOD.LBL_USE_TEMPLATE}&nbsp;
+					</slot></td>
+					<td  nowrap colspan="2">
+						<slot>
+							<select tabindex='2' name='email_template' onchange="fill_email(this.options[this.selectedIndex].value);">{EMAIL_TEMPLATE_OPTIONS}</select>
+						</slot>
+					</td>
+<!-- END: pro -->
+<!-- BEGIN: open_source -->
+					<td colspan="3"><slot></slot></td>
+<!-- END: open_source -->
+				</tr>
+				<tr>
+					<td colspan="5">&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td colspan="1">&nbsp;</td>
+					<td colspan="4">{MOD.LBL_NOTE_SEMICOLON}</td>
+				</tr>
+
+				<tr valign="top">
+					<td scope="row"><slot>{MOD.LBL_TO}</slot></td>
+					<td colspan="4"  nowrap="nowrap"><slot>
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td>
+									<textarea id="to_addrs_field" name='to_addrs' tabindex='3' cols="80" rows="1"
+										style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" value="{TO_ADDRS}">{TO_ADDRS}</textarea>
+									<input type="hidden" id="to_addrs_ids" name="to_addrs_ids" value="{TO_ADDRS_IDS}" />
+									<input type="hidden" id="to_addrs_emails" name="to_addrs_emails" value="{TO_ADDRS_EMAILS}" />
+									<input type="hidden" id="to_addrs_names" name="to_addrs_names" value="{TO_ADDRS_NAMES}" />
+								</td>
+								<td style="padding-left: 4px;">{CHANGE_TO_ADDRS_BUTTON}</td>
+							</tr>
+						</table>
+					</slot></td>
+				</tr>
+
+				<tr>
+					<td scope="row"><slot>{MOD.LBL_CC}</slot></td>
+					<td  colspan="4" nowrap="nowrap"><slot>
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td>
+									<textarea id="cc_addrs_field" name='cc_addrs' tabindex='3' cols="80" rows="1"
+										style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" value="{CC_ADDRS}">{CC_ADDRS}</textarea>
+									<input type="hidden" id="cc_addrs_ids" name="cc_addrs_ids" value="{CC_ADDRS_IDS}" />
+									<input type="hidden" id="cc_addrs_emails" name="cc_addrs_emails" value="{CC_ADDRS_EMAILS}" />
+									<input type="hidden" id="cc_addrs_names" name="cc_addrs_names" value="{CC_ADDRS_NAMES}" />
+								</td>
+								<td style="padding-left: 4px;">{CHANGE_CC_ADDRS_BUTTON}</td>
+							</tr>
+						</table>
+					</slot></td>
+				</tr>
+
+				<tr valign="top">
+					<td scope="row"><slot>{MOD.LBL_BCC}</slot></td>
+					<td  colspan="4" nowrap="nowrap"><slot>
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td>
+									<textarea id="bcc_addrs_field" name='bcc_addrs' tabindex='3' cols="80" rows="1"
+										style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" value="{BCC_ADDRS}">{BCC_ADDRS}</textarea>
+									<input type="hidden" id="bcc_addrs_ids" name="bcc_addrs_ids" value="{BCC_ADDRS_IDS}" />
+									<input type="hidden" id="bcc_addrs_emails" name="bcc_addrs_emails" value="{BCC_ADDRS_EMAILS}" />
+									<input type="hidden" id="bcc_addrs_names" name="bcc_addrs_names" value="{BCC_ADDRS_NAMES}" />
+								</td>
+								<td style="padding-left: 4px;">{CHANGE_BCC_ADDRS_BUTTON}</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr valign="top">
+					<td scope="row"><slot>
+						{MOD.LBL_FROM}
+					</slot></td>
+					<td  colspan="4" nowrap="nowrap"><slot>
+						<table cellspacing="0" cellpadding="0" border="0">
+							<tr>
+								<td>
+								<textarea id="from_addr_field" name='from_addr' tabindex='3' cols="80" rows="1"
+									style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" value="{FROM_ADDR}">{FROM_ADDR}</textarea>
+								{FROM_ADDR_GROUP}
+								<input type="hidden" id="from_addr_email" name="from_addr_email" />
+								<input type="hidden" id="from_addr_name" name="from_addr_name" />
+								</td>
+							</tr>
+						</table>
+					</slot></td>
+				</tr>
+				<tr>
+					<td colspan=5>&nbsp;</td>
+				</tr>
+				<tr>
+					<td scope="row"><slot>{MOD.LBL_SUBJECT}</slot></td>
+					<td colspan='4' ><slot>
+						<textarea name='name' tabindex='4' cols="100" rows="1"  style="height: 1.6.em; overflow-y:auto; font-family:sans-serif,monospace; font-size:inherit;" id="subjectfield">{NAME}</textarea>
+					</slot></td>
+				</tr>
+				<tr>
+					<td  valign="top" scope="row"><slot>{MOD.LBL_BODY}</td>
+<!-- BEGIN: textarea -->
+					<td colspan="4" ><slot>
+						<div id="html_div"><textarea tabindex='4' name='description_html' cols="100" rows="20">{DESCRIPTION_HTML}</textarea></div>
+						<input onclick="toggle_textarea(this);" type="checkbox" name="toggle_html"> {MOD.LBL_EDIT_ALT_TEXT}<br>
+						<div id="text_div" style="display: none"><textarea tabindex='4' name='description' cols="100" rows="20">{DESCRIPTION}</textarea></div>
+					</slot></td>
+<!-- END: textarea -->
+<!-- BEGIN: htmlarea -->
+					<td colspan="4" ><slot>
+						<textarea name="description_html" id="description_html">{DESCRIPTION_HTML}</textarea>
+
+						<div id="alt_text_div">
+							<input id="toggle_textarea_elem" onclick="toggle_textarea();" type="checkbox" name="toggle_html"> {MOD.LBL_EDIT_ALT_TEXT}
+						</div>
+
+						<div id="text_div" style="display: none;">
+							<textarea tabindex='5' name='description' cols="100" rows="20">
+								{DESCRIPTION}
+							</textarea>
+						</div>
+					</slot></td>
+<!-- END: htmlarea -->
+				</tr>
+				<tr>
+					<td  valign="top" scope="row"><slot>{MOD.LBL_ATTACHMENTS}</td>
+					<td colspan="4">
+						{ATTACHMENTS}
+						<div id="uploads_div">
+							<div style="display: none" id="file0"><input id = 'email_attachment0' name='email_attachment0' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('0');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file1"><input id = 'email_attachment1' name='email_attachment1' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('1');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file2"><input id = 'email_attachment2' name='email_attachment2' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('2');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file3"><input id = 'email_attachment3' name='email_attachment3' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('3');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file4"><input id = 'email_attachment4' name='email_attachment4' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('4');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file5"><input id = 'email_attachment5' name='email_attachment5' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('5');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file6"><input id = 'email_attachment6' name='email_attachment6' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('6');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file7"><input id = 'email_attachment7' name='email_attachment7' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('7');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file8"><input id = 'email_attachment8' name='email_attachment8' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('8');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="file9"><input id = 'email_attachment9' name='email_attachment9' tabindex='0' size='40' type='file'/>&nbsp;<input type="button" onclick="deleteFile('9');" class="button" value="{APP.LBL_REMOVE}"/></div>
+
+							<div style="display: none" id="document0"><input name='documentId0' id='documentId0' tabindex='0' type='hidden'/><input name='documentName0' id='documentName0' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('0');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('0');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document1"><input name='documentId1' id='documentId1' tabindex='1' type='hidden'/><input name='documentName1' id='documentName1' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('1');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('1');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document2"><input name='documentId2' id='documentId2' tabindex='2' type='hidden'/><input name='documentName2' id='documentName2' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('2');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('2');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document3"><input name='documentId3' id='documentId3' tabindex='3' type='hidden'/><input name='documentName3' id='documentName3' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('3');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('3');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document4"><input name='documentId4' id='documentId4' tabindex='4' type='hidden'/><input name='documentName4' id='documentName4' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('4');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('4');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document5"><input name='documentId5' id='documentId5' tabindex='5' type='hidden'/><input name='documentName5' id='documentName5' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('5');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('5');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document6"><input name='documentId6' id='documentId6' tabindex='6' type='hidden'/><input name='documentName6' id='documentName6' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('6');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('6');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document7"><input name='documentId7' id='documentId7' tabindex='7' type='hidden'/><input name='documentName7' id='documentName7' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('7');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('7');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document8"><input name='documentId8' id='documentId8' tabindex='8' type='hidden'/><input name='documentName8' id='documentName8' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('8');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('8');" class="button" value="{APP.LBL_REMOVE}"/></div>
+							<div style="display: none" id="document9"><input name='documentId9' id='documentId9' tabindex='9' type='hidden'/><input name='documentName9' id='documentName9' DISABLED size='40' type='text'/>&nbsp;<input type="button" onclick="selectDocument('9');" class="button" value="{APP.LBL_SELECT_BUTTON_LABEL}"/><input type="button" onclick="deleteDocument('9');" class="button" value="{APP.LBL_REMOVE}"/></div>
+						</div>
+						<input type="button" name="add_file_button" onclick="addFile();" value="{MOD.LBL_ADD_FILE}" class="button" />
+						<input type="button" name="add_document_button" onclick="addDocument();" value="{MOD.LBL_ADD_DOCUMENT}" class="button" />
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</form>
+<script type="text/javascript">
+Calendar.setup ({
+        inputField : "date_start_date", ifFormat : "{CALENDAR_DATEFORMAT}", showsTime : false, button : "jscal_trigger", singleClick : true, step : 1
+});
+</script>
+{TINY}
+{JAVASCRIPT}
+{INITIALIZE_IE_RESPONSE}
+
+<!-- END: main -->
+
+
+

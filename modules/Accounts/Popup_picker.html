@@ -1,0 +1,128 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+<!-- BEGIN: SearchHeader -->
+<script type="text/javascript" src="include/javascript/popup_helper.js?v={VERSION_MARK}"></script>
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+<tr>
+<td>
+<form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td scope="row" nowrap="nowrap">{MOD.LBL_ACCOUNT_NAME}</td>
+<td  nowrap="nowrap"><input type="text" size="20" name="name"  value="{NAME}" /></td>
+<td scope="row" nowrap="nowrap">{MOD.LBL_CITY}</td>
+<td  nowrap="nowrap"><input type="text" size="20" name="billing_address_city"  value="{BILLING_ADDRESS_CITY}" /></td>
+</tr>
+<tr>
+<td scope="row" nowrap="nowrap">{MOD.LBL_PHONE_OFFICE}</td>
+<td  nowrap="nowrap"><input type="text" size="20" name="phone_office"  value="{PHONE_OFFICE}" /></td>
+<td>
+</td>
+<td width="20%" align="right">
+<input type="hidden" name="module" value="{MODULE_NAME}" />
+<input type="hidden" name="action" value="Popup" />
+<input type="hidden" name="query" value="true" />
+<input type="hidden" name="func_name" value="" />
+<input type="hidden" name="request_data" value="{request_data}" />
+<input type="hidden" name="populate_parent" value="false" />
+<input type="hidden" name="hide_clear_button" value="true" />
+<input type="hidden" name="record_id" value="" />
+<input type="submit" name="button" class="button"
+    id="search_form_submit"
+	title="{APP.LBL_SEARCH_BUTTON_TITLE}"
+	accessKey="{APP.LBL_SEARCH_BUTTON_KEY}"
+	value="{APP.LBL_SEARCH_BUTTON_LABEL}" />
+<input type="hidden" name="mode" value="{MULTI_SELECT}" />
+<input type="hidden" name="create" value="{CREATE}">
+</td>
+</tr>
+</table>
+</form>
+</td>
+</tr>
+</table>
+
+<p>
+<div id='addformlink'>{CREATEBUTTON}</div>
+<div id='addform' style='display:none;position:relative;z-index:2;left:0px;top:0px;'>
+<form name="AccountSave" onsubmit="return check_form('AccountSave');" method="post" action="index.php">
+{ADDFORMHEADER}
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+<tr>
+<td>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr><td>
+<input type="hidden" name="module" value="{MODULE_NAME}" />
+<input type="hidden" name="action" value="Popup" />
+<input type="hidden" name="doAction" value="save" />
+<input type="hidden" name="query" value="true" />
+{ADDFORM}
+</td></tr>
+</table></td></tr></table>
+</form>
+</div>
+</p>
+
+<!-- END: SearchHeader -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list view">
+<!-- BEGIN: list_nav_row -->
+{PAGINATION}
+<!-- END: list_nav_row -->
+<tr height="20">
+<th scope="col" nowrap="nowrap">{CHECKALL}</th>
+<th scope="col" width="45%"><a href="{ORDER_BY}name">{MOD.LBL_LIST_ACCOUNT_NAME}{arrow_start}{name_arrow}{arrow_end}</a></th>
+<th scope="col" width="35%"><a href="{ORDER_BY}BILLING_ADDRESS_CITY">{MOD.LBL_LIST_CITY}{arrow_start}{BILLING_ADDRESS_CITY_arrow}{arrow_end}</a></th>
+<th scope="col" width="30%"><a href="{ORDER_BY}PHONE_OFFICE">{MOD.LBL_PHONE_OFFICE}{arrow_start}{PHONE_OFFICE_arrow}{arrow_end}</a></th>
+</tr>
+<!-- BEGIN: row -->
+<tr height="20" class="{ROW_COLOR}S1">
+<td valign='top'>{PREROW}</td>
+<td scope='row' valign="top"><{TAG_TYPE} href="javascript:void(0)" onclick="send_back('Accounts','{ACCOUNT.ID}');" >{ACCOUNT.NAME}</{TAG_TYPE}></td>
+<td valign="top">{ACCOUNT.CITY}</td>
+<td valign="top">{ACCOUNT.PHONE_OFFICE}</td>
+</tr>
+
+<!-- END: row -->
+{PAGINATION}
+</table>
+{ASSOCIATED_JAVASCRIPT_DATA}
+<!-- END: main -->

@@ -1,0 +1,155 @@
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+button, .button {
+	overflow:visible;
+}
+
+.mbTable{
+	width:100%
+}
+.mbTd{
+	vertical-align:top
+}
+.mbLBL{
+	vertical-align:top;
+	text-align:right;
+	width:1%;
+	font-weight: bold;
+	white-space:nowrap;
+}
+.mbLBLL{
+	vertical-align:top;
+	text-align:left;
+	width:1%;
+	font-weight: bold;
+	white-space:nowrap;
+}
+.crumbLink {
+	color: #444;
+}
+a.crumbLink {
+	text-decoration: none;
+}
+.wizardButton {
+border:0px;
+
+}
+.relTable{
+border:0px solid white;
+padding: 4px 8px 4px 8px;
+}
+
+.relform .edit tr td[scope="row"] {
+    text-align:right;	
+}
+
+.wizardButton TD{
+border:1px solid white;
+padding: 0px 0px 0px 0px;
+background-color:white;
+}
+.wizardButton TD:hover    {
+border:1px solid darkgray;
+background-color:white;
+cursor:pointer
+}
+.wizardButtonDown TD   {
+border:1px solid black;
+background-color:lightgray;
+cursor:pointer
+}
+a.studiolink {font-weight: normal; text-decoration:none; text-align:center}
+div.bodywrapper{padding: 4px 4px 4px 4px}
+
+img.left_icon {
+    float:left;
+    margin:0px 2px;
+}
+
+img.right_icon {
+    float:right;
+    margin:0px 2px;
+}
+
+.oddListRowS1{
+	background-color:WhiteSmoke;
+}
+
+#mbfooter .yui-layout-hd, #mbfooter .yui-layout-hd td {
+    border-bottom-width: 1px;
+    background-image:url(../../../index.php?entryPoint=getImage&themeName=Sugar&imageName=tabRowBg.png);
+    background-position:0 -9px;
+    border-width: 1px;
+    height: 30px;
+    font-size:8px;
+    font-weight:normal;
+}
+
+#mbfooter .yui-layout-hd td a.copyRightLink {
+    font-size:8px;
+}
+
+#mbfooter div.yui-layout-hd h2 {
+    padding-top: 0;	
+}
+
+#mbhelp {
+    padding-left: 5px;
+}
+
+#yui-history-iframe { 
+    position:absolute; 
+    top:0; left:0; 
+    width:1px; height:1px; 
+    visibility:hidden; 
+}
+
+#mblayout .yui-content {
+	padding: 0;
+	background-image: none;
+}
+
+#mblayout .yui-navset {
+    overflow-y: hidden;
+}
+
+#mblayout .yui-dt-scrollable .yui-dt-hd {
+    position: static;
+}
+
+input[disabled], select[disabled]{
+    background-color: #EEE;
+}

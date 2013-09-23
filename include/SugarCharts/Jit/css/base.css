@@ -1,0 +1,110 @@
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ * Description:  Contains a variety of utility functions used to display UI 
+ * components such as form headers and footers.  Intended to be modified on a per 
+ * theme basis.
+ ********************************************************************************/
+ 
+.chartContainer {
+	float: left;
+	margin:auto;
+	width: 100%
+	}
+	
+.chartContainer .scrollBars {
+	overflow: auto;
+	max-height: 600px;	
+	position: relative;
+}
+
+.chartCanvas {
+    position:relative;
+    margin:auto;
+    overflow:hidden;
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=chartBg.png);
+	background-repeat:repeat-x;
+}
+
+.query-color {
+width: 16px;
+height: 16px;
+display: inline-block;
+margin-right: 10px;
+border: 1px solid #999;
+}
+
+.legend {
+padding: 10px 20px;
+float: left;
+}
+
+.legend table td.label {
+padding: 0px 20px 5px 0px;
+text-align: left;
+}
+/*TOOLTIPS*/
+.tip {
+    color: #111;
+    width: auto;
+    background-color: white;
+    border:1px solid #ccc;
+    -moz-box-shadow:#555 2px 2px 8px;
+    -webkit-box-shadow:#555 2px 2px 8px;
+    -o-box-shadow:#555 2px 2px 8px;
+    box-shadow:#555 2px 2px 8px;
+    opacity:0.9;
+    filter:alpha(opacity=90);
+    font-size:11px;
+    font-family: Arial, Helvetica, sans-serif;
+    padding:7px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+
+}
+.rotatedLabel {
+-webkit-transform: rotate(-90deg); 
+-moz-transform: rotate(-90deg);	
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.rotatedLabelReverse {
+-webkit-transform: rotate(-0deg); 
+-moz-transform: rotate(90deg);	
+filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+}

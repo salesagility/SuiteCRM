@@ -1,0 +1,126 @@
+/*!
+ * Bootstrap Responsive v2.0.1
+ *
+ * Copyright 2012 Twitter, Inc
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Designed and built with all the love in the world @twitter by @mdo and @fat.
+ */
+
+
+// RESPONSIVE CLASSES
+// ------------------
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+
+
+// UP TO LANDSCAPE PHONE
+// ---------------------
+
+@media (max-width: 480px) {
+
+  // Smooth out the collapsing/expanding nav
+  .nav-collapse {
+    -webkit-transform: translate3d(0, 0, 0); // activate the GPU
+  }
+
+  // Block level the page header small tag for readability
+  .page-header h1 small {
+    display: block;
+    line-height: @baseLineHeight;
+  }
+
+  // Make span* classes full width
+  input[class*="span"],
+  select[class*="span"],
+  textarea[class*="span"],
+  .uneditable-input {
+    display: block;
+    width: 100%;
+    min-height: 28px; /* Make inputs at least the height of their button counterpart */
+    /* Makes inputs behave like true block-level elements */
+    -webkit-box-sizing: border-box; /* Older Webkit */
+       -moz-box-sizing: border-box; /* Older FF */
+        -ms-box-sizing: border-box; /* IE8 */
+            box-sizing: border-box; /* CSS3 spec*/
+  }
+  // But don't let it screw up prepend/append inputs
+  .input-prepend input[class*="span"],
+  .input-append input[class*="span"] {
+    width: auto;
+  }
+
+  // Update checkboxes for iOS
+  input[type="checkbox"],
+  input[type="radio"] {
+    border: 1px solid #ccc;
+  }
+
+  // Remove the horizontal form styles
+  .form-horizontal .control-group > label {
+    float: none;
+    width: auto;
+    padding-top: 0;
+    text-align: left;
+  }
+  // Move over all input controls and content
+  .form-horizontal .controls {
+    margin-left: 0;
+  }
+  // Move the options list down to align with labels
+  .form-horizontal .control-list {
+    padding-top: 0; // has to be padding because margin collaspes
+  }
+  // Move over buttons in .form-actions to align with .controls
+  .form-horizontal .form-actions {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  // Carousel
+  .carousel-caption {
+    position: static;
+  }
+  
+}
+
+@media (max-width: 768px) {  
+  
+  body {padding-top: 30px;}
+  
+  // GRID & CONTAINERS
+  // -----------------
+  // Remove width from containers
+  .container, .container-fluid {
+    width: auto;
+    padding: 0;
+  }
+  // Fluid rows
+  .container-fluid .row-fluid {
+    width: 100%;
+  }
+  // Undo negative margin on rows
+  .row {
+    margin-left: 0;
+  }
+  // Make all columns even
+  .row > [class*="span"],
+  .container-fluid .row-fluid > [class*="span"] {
+    float: none;
+    display: block;
+    width: auto;
+    margin: 10px;
+  }
+  
+  .thumbnail {
+    .border-radius(0px);
+  }
+}
+
+
+

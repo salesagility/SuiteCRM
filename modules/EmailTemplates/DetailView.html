@@ -1,0 +1,135 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<form action="index.php" method="post" name="form" id="form">
+		<table cellpadding="0" cellspacing="0" border="0" width='100%'>
+			<input type="hidden" name="module" value="EmailTemplates">
+			<input type="hidden" name="record" value="{ID}">
+			<input type="hidden" name="isDuplicate" value=false>
+			<input type="hidden" name="action">
+			<input type="hidden" name="return_module">
+			<input type="hidden" name="return_action">
+			<input type="hidden" name="return_id">
+			{PORTAL_ON}
+		<tr>
+		<td>
+            {ACTION_BUTTON}
+        </td>
+		<td align='right'>{ADMIN_EDIT}</td>
+		</tr></table>
+
+	</form>
+
+<div class="detail view">
+<table width="100%" border="0" cellspacing="{GRIDLINE}" cellpadding="0">
+{PAGINATION}
+    <tr>
+    <td scope="row" width='15%'><slot>{MOD.LBL_TYPE}</slot></td>
+    <td colspan="3"><slot>{TYPE}</slot></td>
+    </tr>
+	<tr>
+	<td scope="row" width='15%'><slot>{MOD.LBL_NAME}</slot></td>
+	<td><slot>{NAME}&nbsp;</slot></td>
+	<td scope="row"><slot>{APP.LBL_DATE_MODIFIED}</slot></td>
+	<td><slot>{DATE_MODIFIED} {APP.LBL_BY} {MODIFIED_BY}&nbsp;</slot></td>
+	<!--
+	<td><slot>{MOD.LBL_PUBLISH}</slot></td>
+	<td><slot><input type="checkbox" name="published" disabled {PUBLISHED}></slot></td>
+	-->
+	</tr>
+	<tr>
+	<td scope="row" width='15%'><slot>{MOD.LBL_DESCRIPTION}</slot></td>
+	<td><slot>{DESCRIPTION}&nbsp;</slot></td>
+	<td scope="row"><slot>{APP.LBL_DATE_ENTERED}</slot></td>
+	<td><slot>{DATE_ENTERED} {APP.LBL_BY} {CREATED_BY}&nbsp;</slot></td>
+	</tr>
+<!--
+	<tr>
+	<td scope="row" valign="top"><slot></slot></td>
+	<td><slot></slot></td>
+	</tr>
+-->
+	<tr>
+	<td scope="row" valign="top"><slot>{MOD.LBL_SUBJECT}</slot></td>
+	<td><slot>{SUBJECT}&nbsp;</slot></td>
+	<td scope="row" valign="top">
+	</td>
+	<td><slot>{TEAM}&nbsp;</slot></td>
+	</tr>
+	<tr>
+	<td scope="row" width='15%'><slot>{MOD.LBL_SEND_AS_TEXT}</slot></td>
+	<td><slot><input id='text_only' type="checkbox" disabled="disabled" {TEXT_ONLY_CHECKED} /></slot></td>
+	
+	<td scope="row" width='15%'><slot>{APP.LBL_ASSIGNED_TO}</slot></td>
+	<td><slot>{ASSIGNED_USER_NAME}</slot></td>
+	
+	</tr>
+	<tr>
+	<td scope="row" valign="top"><slot>{MOD.LBL_BODY}</slot></td>
+        <td colspan="3"  style="background-color: #ffffff;" ><slot><div id="html_div" style="background-color: #ffffff;padding: 5px"><iframe id="html_frame" src="" style="width:100%; height:500px"></iframe></div>
+<input id='toggle_textarea_elem' onclick="toggle_textarea(this);" type="button" name="toggle_html" value="{MOD.LBL_SHOW_ALT_TEXT}"/><br>
+<div id="text_div" style="display: none;background-color: #ffffff;padding: 5px"><pre>{BODY}</pre></div></slot>
+<script>
+function toggle_textarea(obj)
+{
+ if(document.getElementById('text_div').style.display == 'none')
+ {
+        document.getElementById('text_div').style.display = 'block';
+        document.getElementById('toggle_textarea_elem').value = '{MOD.LBL_HIDE_ALT_TEXT}'
+ } else
+ {
+        document.getElementById('text_div').style.display = 'none';
+        document.getElementById('toggle_textarea_elem').value = '{MOD.LBL_SHOW_ALT_TEXT}'
+ }
+}
+document.getElementById("html_frame").contentWindow.document.write({BODY_HTML});
+document.getElementById("html_frame").contentWindow.document.close();
+</script>
+
+	</tr>
+	<tr>
+		<td scope="row" valign="top"><slot>{MOD.LBL_ATTACHMENTS}</td>
+		<td colspan="3"><slot>{ATTACHMENTS}&nbsp;</slot></td>
+	</tr>
+
+</table>
+</div>
+<!-- END: main -->

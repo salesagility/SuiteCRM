@@ -1,0 +1,94 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+ * {APP.LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/modules/Emails/SubPanelViewRecipients.html,v 1.2 2004/06/29 07:22:26 sugarclint Exp {APP.LBL_CURRENCY_SYM}
+ ********************************************************************************/
+-->
+<!-- BEGIN: users -->
+<h3>{APP.LBL_USER_LIST}</h3>
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+	<tr height="20" >
+	<td scope="col" width="25%" ><slot>{APP.LBL_LIST_NAME}</slot></td>
+	<td scope="col" width="20%" ><slot>{APP.LBL_LIST_USER_NAME}</slot></td>
+	<td scope="col" width="30%" ><slot>{APP.LBL_LIST_EMAIL}</slot></td>
+	<td scope="col" width="15%" ><slot>{APP.LBL_LIST_PHONE}</slot></td>
+	<td scope="col" width="10%" ><slot><img src="include/images/blank.gif" widht="1" height="1" alt=""></slot></td>
+	</tr>
+
+
+
+<!-- BEGIN: row -->
+<tr height="20"  class="{ROW_COLOR}S1">
+		<td scope='row' valign=TOP><slot><a  href="{URL_PREFIX}index.php?action=DetailView&module=Users&record={USER.ID}">{USER.FIRST_NAME}&nbsp;{USER.LAST_NAME}</a></slot></td>
+    	<td valign=TOP><slot>{USER.USER_NAME}</slot></td>
+    	<td valign=TOP><slot><A HREF="mailto:{USER.EMAIL1}"  >{USER.EMAIL1}</A></slot></td>
+    	<td valign=TOP  nowrap><slot>{USER.PHONE_WORK}</slot></td>
+    	<td nowrap align="center" valign=TOP><slot><a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_REMOVE_INVITEE}')" href="{URL_PREFIX}index.php?action=DeleteEmailUserRelationship&module=Emails&user_id={USER.ID}&email_id={RECORD_ID}{RETURN_URL}">{REMOVE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_REMOVE_INVITEE}')" href="{URL_PREFIX}index.php?action=DeleteEmailUserRelationship&module=Emails&user_id={USER.ID}&email_id={RECORD_ID}{RETURN_URL}">{APP.LNK_REMOVE}</a></slot></td>
+
+</tr>
+
+<!-- END: row -->
+
+</table>
+
+<!-- END: users -->
+<!-- BEGIN: contacts -->
+<h3>{APP.LBL_CONTACT_LIST}</h3>
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+	<tr height="20" >
+	<td width="25%" ><slot>{APP.LBL_LIST_CONTACT_NAME}</slot></td>
+	<td width="20%" ><slot>{APP.LBL_LIST_ACCOUNT_NAME}</slot></td>
+	<td width="30%" ><slot>{APP.LBL_LIST_EMAIL}</slot></td>
+	<td width="15%" ><slot>{APP.LBL_LIST_PHONE}</slot></td>
+	<td width="10%" ><slot>&nbsp;</slot></td>
+	</tr>
+
+
+<!-- BEGIN: row -->
+<tr height="20"  class="{ROW_COLOR}S1">
+		<td valign=TOP><slot><a href="{URL_PREFIX}index.php?action=DetailView&module=Contacts&record={CONTACT.ID}" >{CONTACT.FIRST_NAME}&nbsp;{CONTACT.LAST_NAME}</a></slot></td>
+    	<td valign=TOP><slot>{CONTACT.ACCOUNT_NAME}</slot></td>
+    	<td valign=TOP><slot><A HREF="mailto:{CONTACT.EMAIL1}" >{CONTACT.EMAIL1}</A></slot></td>
+    	<td valign=TOP  nowrap><slot>{CONTACT.PHONE_WORK}</slot></td>
+    	<td nowrap align="center" valign=TOP><slot><a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Contacts&record={CONTACT.ID}{RETURN_URL}">{EDIT_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" href="{URL_PREFIX}index.php?action=EditView&module=Contacts&record={CONTACT.ID}{RETURN_URL}">{APP.LNK_EDIT}</a>&nbsp;&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_REMOVE_INVITEE}')" href="{URL_PREFIX}index.php?action=DeleteEmailContactRelationship&module=Emails&contact_id={CONTACT.ID}&email_id={RECORD_ID}{RETURN_URL}">{REMOVE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return confirm('{MOD.NTC_REMOVE_INVITEE}')" href="{URL_PREFIX}index.php?action=DeleteEmailContactRelationship&module=Emails&contact_id={CONTACT.ID}&email_id={RECORD_ID}{RETURN_URL}">{APP.LNK_REMOVE}</a></slot></td>
+
+</tr>
+
+<!-- END: row -->
+
+</table>
+<!-- END: contacts -->

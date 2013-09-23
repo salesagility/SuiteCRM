@@ -1,0 +1,155 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+ * {APP.LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/modules/Contacts/EditView.html,v 1.22 2004/07/16 04:04:42 sugarclint Exp {APP.LBL_CURRENCY_SYM}
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+
+
+			<form enctype="multipart/form-data" name="MailMerge" method="POST" action="index.php">
+			<input type="hidden" name="module" value="MailMerge">
+			<input type="hidden" name="step" id="step" value="{STEP}">
+			<input type="hidden" name="action" value="index">
+			<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+			<input type="hidden" name="return_id" value="{RETURN_ID}">
+			<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+			<input type="hidden" name="record" value="{RECORD}">	
+			<input type="hidden" name="selected_objects" value="{SELECTED_OBJECTS}">
+			<input type="hidden" name="selected_objects_def" value="{SELECTED_OBJECTS_DEF}">				
+<p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+<tr>
+<td>
+	<table border="0"  width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+	<th align="left" scope="row" colspan="5"><h4 class="">{MOD.LBL_STEP_1}</h4></th>
+	</tr>
+	<tr><td width="5%"><slot>&nbsp;</slot></td></tr>
+	<tr>
+	<td scope="row" width="20%"><slot>{MODULE_SELECT}</slot>
+	</td>
+	<td ><slot><select tabindex='2' name='mailmerge_module' id='mailmerge_module'" style="width: 100px;" onChange="javascript:clearSpan();">{MAILMERGE_MODULE_OPTIONS}</select></slot></td>
+	<td align="right" colspan='2'><slot><em>{ADDIN_NOTICE}</em></slot></td>
+	</tr>
+	<tr>
+			<td >&nbsp;&nbsp;<slot><em><span id="numObjects">{MAILMERGE_NUM_SELECTED_OBJECTS}</span></em></slot></td>
+			<td ><slot>&nbsp;</slot></td>
+			<td ><slot>&nbsp;</slot></td>
+			<td ><slot>&nbsp;</slot></td>
+		</tr>
+			<tr>
+			<td ><slot>&nbsp;</slot></td>
+			<td ><slot>&nbsp;</slot></td>
+			<td ><slot>&nbsp;</slot></td>
+			<td ><slot>&nbsp;</slot></td>
+		</tr>
+			<tr>
+				<td scope="row" width="5%"><slot>{MOD.LBL_MAILMERGE_TEMPLATES}</slot></td>
+				<td ><slot><select id="document_id" name="document_id" style="width: 200px;">{MAILMERGE_TEMPLATES}</select></slot></td>
+				<td><slot>&nbsp;</slot></td>
+					<td align="right"><slot>&nbsp;</slot></td>
+			</tr>
+			<tr><td colspan"4"><slot>&nbsp;</slot></td></tr>
+		</table>
+	</td>
+</tr>
+</table>
+</p>
+
+<p><table width="100%" cellpadding="2" cellspacing="0" border="0"><tr> 
+	<td align="right">
+	<input title="{MOD.LBL_NEXT}"  class="button" type="submit" id="btnNext" name="button" value="  {MOD.LBL_NEXT}" onClick="return validateForm();" {DISABLE_NEXT_BUTTON}></td>
+</tr>
+</table> </p>
+	</form>
+{JAVASCRIPT}
+<script type="text/javascript">{JSON_CONFIG_JAVASCRIPT}</script>
+<script type="text/javascript" src="include/javascript/jsclass_base.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="include/javascript/jsclass_async.js?v={VERSION_MARK}"></script>
+<script>
+var mOffset = 0;
+var max = 10;
+
+//browserCheck();
+function browserCheck()
+{
+	if(document.layers)
+	{
+		button = document.getElementById("btnNext");
+		button.disabled = true;
+        alert(SUGAR.language.get('MailMerge', 'LBL_BROWSER_REQUIREMENT'));
+	}
+	else if(document.layers || (!document.all && document.getElementById))
+	{
+		button = document.getElementById("btnNext");
+		button.disabled = true;
+        alert(SUGAR.language.get('MailMerge', 'LBL_BROWSER_REQUIREMENT'));
+	}	
+}
+function clearSpan()
+{
+	document.getElementById("numObjects").innerHTML = "";
+	document.getElementById("step").value = "2";
+}
+
+
+function validateForm()
+{
+	var templates = document.getElementById("document_id");
+	for (i=0;i<templates.options.length;i++)
+	{
+		if(templates[i].selected)
+		{
+			if(templates[i].value != "None")
+			{
+				return true;
+			}
+		}
+	}
+	alert(SUGAR.language.get('MailMerge', 'LBL_FORM_SELECT_TEMPLATE'));
+	return false;	
+}
+
+function disableModuleDropDown(){
+	var selectBox = document.getElementById("mailmerge_module");
+	selectBox.disabled = true;
+}
+
+{MAILMERGE_DISABLE_DROP_DOWN}
+</script>
+<!-- END: main -->

@@ -1,0 +1,130 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+{MOD.LBL_STEP1_DIRECTIONS}
+<br><br>
+<script type="text/javascript">
+	var bean_data={BEANDATA};
+	var site_url="{URL}";
+	var delete_inline_image="{DELETE_INLINE_IMAGE}";
+	var operator_options={OPERATOR_OPTIONS};
+</script>
+<script src="include/javascript/quicksearch.js?v={VERSION_MARK}" type="text/javascript"></script>
+<form name="DedupSetup" id="DedupSetup" method="POST" action="index.php">
+	<input type="hidden" name="module" value="MergeRecords"/>
+	<input type="hidden" name="merge_module" value="{MERGE_MODULE}"/>
+	<input type="hidden" name="record" value="{ID}"/>
+	<input type="hidden" name="action" value="Step2"/>
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}"/>
+	<input type="hidden" name="return_id" value="{RETURN_ID}"/>
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}"/>
+	<input type="hidden" name="dedup_fields" value=""/>
+	<input type="hidden" name="num_fields" value="0"/>
+
+	<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<tr>
+			<td><input title="{MOD.LBL_NEXT_STEP_TITLE}" class="button" onclick="this.form.action.value='Step2';" type="submit" name="button" value="  {MOD.LBL_NEXT_STEP_BUTTON_LABEL}  " id="next_step_button"> <input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}';" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  " id="cancel_merge_button"></td>
+			<td align='right'>{ADMIN_EDIT}</td>
+		</tr>
+	</table>
+
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="list view">
+	<!-- BEGIN: select_module -->
+		<tr>
+			<td width="45%"><slot>{MOD.LBL_SELECT_MODULE}:</slot></td>
+			<td width="5%"><slot>&nbsp;</slot></td>
+			<td width="50%"><slot>&nbsp;</slot></td>
+		</tr>
+		<tr>
+			<td width="45%"><slot><select name="selected_module" id="selected_module" onchange="grab_fields();">{MIGRATION_MODULE_OPTIONS}</select></slot></td>
+			<td width="5%"><slot>&nbsp;</slot></td>
+			<td width="50%"><slot>&nbsp;</slot></td>
+		</tr>
+	<!-- END: select_module -->
+		<tr>
+			<td width="100%" class="edit view" colspan="3">
+				<div id="field_select_block">
+	<!-- BEGIN: field_select_block -->
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="25%" align="left"  >{MOD.LBL_AVAIL_FIELDS}:</td>
+							<td width="2%"  >&nbsp;</td>
+							<td width="73%"  >{MOD.LBL_FILTER_COND}:</td>
+						</tr>
+						<tr id="multi_select_row">
+							<td id="field_avail_list_td"><slot><div align="left"><select name="field_avail_list[]" id="field_avail_list" multiple="multiple" size="10" >{FIELD_AVAIL_OPTIONS}</select></div></slot></td>
+							<td valign="top" style="padding-right: 2px; padding-left: 2px;">
+							<div align="center">
+								<a onclick="javascript:setselected('field_include_list','field_avail_list');">
+									<img src='{RIGHTARROW_BIG_IMAGE}' width='16' height='16' border="0" style="margin-left: 1px;" alt="{LBL_ADD_BUTTON}">
+								</a>
+							</div>
+							</td>
+							<td align="left"><div  id='filter_def' width="100%" align="left">{PRE_LOADED_FIELDS}</div>
+							</td>
+						</tr>
+				</table>
+	<!-- END: field_select_block -->
+				</div>
+			</td>
+		</tr>
+	</table>
+
+</form>
+
+{JAVASCRIPT}
+<script type="text/javascript">
+
+function check_selected_module()
+{
+	if(document.StartDedup.selected_module.value =='') {
+		alert("Please select a module to work with.");
+		document.StartDedup.selected_module.focus();
+		return false;
+	} else { return true; }
+}
+
+function grab_fields()
+{
+}
+</script>
+<script type="text/javascript" src="modules/MergeRecords/Merge.js?v={VERSION_MARK}"></script>
+<!-- END: main -->

@@ -1,0 +1,11 @@
+body{background:#ccc;}.ui-mobile #HomePage{background-color:#ccc;}.IconWrapper{list-style-type: none;width:100%;padding:0px;margin:0;text-align:center;}
+.IconContainer{position:relative;display:inline-block;vertical-align:top;width:93px;text-align:center;padding-bottom:10px;padding-top:10px;}.IconContainer .ui-link{text-decoration:none;color:#111;text-shadow:0 1px 1px #fff;font-weight:normal;}
+.HomeIcon{background-repeat:no-repeat;background-position:0px 0;height:48px;width:48px;margin-left:auto;margin-right:auto;text-align:center;}
+.AllModulesIcon{background-image:url('../images/icon_BasicSearch.gif');}.ActivitiesIcon{background-image:url('../images/icon_Activities.gif');}.LastViewedIcon{background-image:url('../images/icon_Dashlet.gif');}.AdminIcon{background-image:url('../images/icon_Application.gif');}.NSEmailIcon{background-image:url('../images/icon_Emails.gif');}
+em{color:red;font-weight:bold;padding-right:.25em;}
+.ui-footer p{text-align:center;}
+.ui-header .ui-title {
+margin-left: 0;
+margin-right: 0;
+   /* text-overflow:visible;  */ /* -Uncomment - to disable Ellipsis completely use with Caution- !*/ 
+}

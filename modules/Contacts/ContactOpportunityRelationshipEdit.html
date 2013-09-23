@@ -1,0 +1,103 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+<form action="index.php" method="post" name="EditView" onsubmit="return check_form('EditView')">
+<input type="hidden" name="module" value="Contacts" />
+<input type="hidden" name="record" value="{ID}" />
+<input type="hidden" name="return_module" value="{RETURN_MODULE}" />
+<input type="hidden" name="return_action" value="{RETURN_ACTION}" />
+<input type="hidden" name="return_id" value="{RETURN_ID}" />
+<input type="hidden" name="action" value="" />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td>
+	<input id="save_btn_48516" type="submit" name="button" class="button"
+		title="{APP.LBL_SAVE_BUTTON_TITLE}"
+		accesskey="{APP.LBL_SAVE_BUTTON_KEY}"
+		onclick="this.form.action.value='SaveContactOpportunityRelationship';"
+		value="  {APP.LBL_SAVE_BUTTON_LABEL}  "
+	/>
+	<input id="cancel_btn_48516" type="submit" name="button" class="button"
+		title="{APP.LBL_CANCEL_BUTTON_TITLE}"
+		accessKey="{APP.LBL_CANCEL_BUTTON_KEY}"
+		onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'"
+		value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "
+	/>
+</td>
+<td align="right" nowrap="nowrap"><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+<tr><td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<td width="15%" scope="row"><slot>{MOD.LBL_CONTACT_NAME}</slot></td>
+	<td width="35%" ><slot>
+		<input type="text" name='contact_name' rows="1" cols="30" value="{CONTACT.NAME}" readonly="readonly" />
+		<input type="hidden" name='contact_id' value='{CONTACT.ID}'>
+		<input type="button" name="btn1" class="button"
+			title="{APP.LBL_SELECT_BUTTON_TITLE}"
+			value='{APP.LBL_SELECT_BUTTON_LABEL}'
+			onclick='open_popup("Contacts",600,400,"",true,false,{"call_back_function":"set_return","form_name":"EditView","field_to_name_array":{"id":"contact_id","name":"contact_name"}});' />
+	</slot></td>
+	<td width="15%" scope="row"><slot>{MOD.LBL_OPP_NAME}</slot></td>
+	<td width="35%" ><slot>
+		<input type="text" class='sqsEnabled' id='opportunity_name' name='opportunity_name' rows="2" cols="30" value="{OPPORTUNITY.NAME}" />
+		<input id='opportunity_id' name='opportunity_id' type="hidden" value='{OPPORTUNITY.ID}'>
+		<input type="button" name="btn1" class="button"
+			title="{APP.LBL_SELECT_BUTTON_TITLE}"
+			accesskey="{APP.LBL_SELECT_BUTTON_KEY}"
+			value='{APP.LBL_SELECT_BUTTON_LABEL}'
+			onclick='open_popup("Opportunities",600,400,"",true,false,{"call_back_function":"set_return","form_name":"EditView","field_to_name_array":{"id":"opportunity_id","name":"opportunity_name"}});' />
+	</slot></td>
+	</tr>
+
+	<tr>
+	<td scope="row"><slot>{MOD.LBL_CONTACT_ROLE}</slot></td>
+	<td ><slot><select name='contact_role'>{CONTACT_ROLE_OPTIONS}</select></slot></td>
+	<td scope="row"><slot>&nbsp;</slot></td>
+	<td ><slot>&nbsp;</slot></td>
+	</tr>
+	</table>
+</td></tr></table>
+
+</form>
+{JAVASCRIPT}
+<!-- END: main -->

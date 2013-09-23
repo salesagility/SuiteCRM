@@ -1,0 +1,106 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<script language="JavaScript">
+  function delete_version(currentversion) {
+
+	if (currentversion == '{DOCUMENT_REVISION}') {
+		window.alert('{MOD.ERR_DELETE_LATEST_VERSION}');
+		return false;
+	}
+	else {
+  		return confirm('{MOD.ERR_DELETE_CONFIRM}');
+	}
+  }
+</script>
+  
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td>
+		<form name="EditView" method="POST" action="index.php">
+			<input type="hidden" name="module" value="Documents">
+			<input type="hidden" name="record">
+			<input type="hidden" name="action">
+			<input type="hidden" name="form">
+			<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+			<input type="hidden" name="return_id" value="{RETURN_ID}">
+			<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+			<input type="hidden" name="document_name" value="{DOCUMENT_NAME}">
+			<input type="hidden" name="document_revision" value="{DOCUMENT_REVISION}">
+			<input type="hidden" name="document_filename" value="{DOCUMENT_FILENAME}">
+			<input type="hidden" name="document_revision_id" value="{DOCUMENT_REVISION_ID}">
+			
+			<input title="{APP.LBL_NEW_BUTTON_TITLE}" class="button" onclick="this.form.return_module.value='Documents'; this.form.return_action.value='DetailView'; this.form.return_id.value='{ID}'; this.form.action.value='DocumentRevisionEditView'" type="submit" name="button" value="  {APP.LBL_NEW_BUTTON_LABEL}  ">
+		</form>
+	</td>
+	<td align="right">{ADMIN_EDIT}</td>
+</tr>
+</table>
+
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+<!-- BEGIN: list_nav_row -->
+{PAGINATION}
+<!-- END: list_nav_row -->
+	<tr height="20" >
+		<td scope="col" width="2%"  NOWRAP><slot>&nbsp;</slot></td>
+		<td scope="col" width="10%"  NOWRAP><slot>{MOD.LBL_REV_LIST_REVISION}</slot></td>
+		<td scope="col" width="15%"  NOWRAP><slot>{MOD.LBL_REV_LIST_ENTERED}</slot></td>
+		<td scope="col" width="10%"  NOWRAP><slot>{MOD.LBL_REV_LIST_CREATED}</slot></td>
+		<td scope="col" width="55%"  NOWRAP><slot>{MOD.LBL_REV_LIST_LOG}</slot></td>
+		<td width="8%" ><img src="include/images/blank.gif" width="1" height="1" alt=""></td>
+	</tr>
+
+<!-- BEGIN: row -->
+	<tr height="20"  class="{ROW_COLOR}S1">
+    	<td valign=TOP ><slot>{DOCREVISION.FILE_URL}</slot></td>	
+		<td scope="row" valign=TOP ><slot>{DOCREVISION.REVISION}</slot></td>
+    	<td valign=TOP ><slot>{DOCREVISION.DATE_ENTERED}</slot></td>
+    	<td valign=TOP ><slot>{DOCREVISION.FIRST_NAME} {DOCREVISION.LAST_NAME}</slot></td>
+    	<td valign=TOP ><slot>{DOCREVISION.CHANGE_LOG}</slot></td>
+     	<td nowrap align="center" valign=TOP bgcolor="{BG_COLOR}" class="{ROW_COLOR}S1"><a class="listViewTdToolsS1" onclick="return delete_version('{DOCREVISION.REVISION}')" href="{URL_PREFIX}index.php?action=Delete&module=Documents&record={DOCREVISION.ID}&revision_id={DOCREVISION.ID}&filename={DOCREVISION.FILENAME}&object=documentrevision&{RETURN_URL}">{DELETE_INLINE_PNG}</a>&nbsp;<a class="listViewTdToolsS1" onclick="return delete_version('{DOCREVISION.REVISION}')" href="{URL_PREFIX}index.php?action=Delete&module=Documents&record={DOCREVISION.ID}&revision_id={DOCREVISION.ID}&filename={DOCREVISION.FILENAME}&{RETURN_URL}">{APP.LNK_DELETE}</a></td>
+	</tr>
+	<tr>
+		<td colspan="20" class="listViewHRS1"></td>
+	</tr>
+<!-- END: row -->
+</table>
+<!-- END: main -->

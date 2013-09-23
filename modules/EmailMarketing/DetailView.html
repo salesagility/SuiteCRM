@@ -1,0 +1,101 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+{ERROR_STRING}
+<form name="DetailView" method="POST" action="index.php">
+	<input type="hidden" name="module" value="EmailMarketing">
+	<input type="hidden" name="record" value="{ID}">
+	<input type="hidden" name="action" value="DetailView">
+	<input type="hidden" name="campaign_id" value="{CAMPAIGN_ID}">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_id" value="{RETURN_ID}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<input type="hidden" name="isDuplicate" value="">	
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td>
+				<input title="{APP.LBL_EDIT_BUTTON_TITLE}" accessKey="{APP.LBL_EDIT_BUTTON_KEY}" class="button" onclick="this.form.return_module.value='EmailMarketing'; this.form.return_action.value='DetailView'; this.form.return_id.value='{ID}'; this.form.action.value='EditView'" type="submit" name="Edit" value="  {APP.LBL_EDIT_BUTTON_LABEL}  ">
+				<input title="{APP.LBL_DUPLICATE_BUTTON_TITLE}" accessKey="{APP.LBL_DUPLICATE_BUTTON_KEY}" class="button" onclick="this.form.return_module.value='Campaigns'; this.form.return_action.value='DetailView'; this.form.return_id.value='{CAMPAIGN_ID}';this.form.isDuplicate.value=true; this.form.action.value='EditView';" type="submit" name="Duplicate" value=" {APP.LBL_DUPLICATE_BUTTON_LABEL} ">
+				<input title="{APP.LBL_DELETE_BUTTON_TITLE}" accessKey="{APP.LBL_DELETE_BUTTON_KEY}" class="button" onclick="this.form.return_module.value='Campaigns'; this.form.return_action.value='DetailView'; this.form.return_id.value='{CAMPAIGN_ID}';this.form.action.value='Delete'; return confirm('{APP.NTC_DELETE_CONFIRMATION}')" type="submit" name="Delete" value=" {APP.LBL_DELETE_BUTTON_LABEL} ">
+			</td>
+			<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+			<td align='right'>{ADMIN_EDIT}</td>
+		</tr>
+	</table>
+
+
+<div class="detail view">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<td width="15%" scope="row"><slot>{MOD.LBL_NAME}</slot></td>
+	<td width="35%"><slot>{NAME}&nbsp;</slot></td>
+	<td scope="row"><slot>{MOD.LBL_STATUS_TEXT}</slot></td>
+	<td><slot>{STATUS}&nbsp;</slot></td>
+	</tr>
+	<tr>
+	<td scope="row"><slot>{MOD.LBL_FROM_MAILBOX_NAME}</slot></td>
+	<td><slot>{FROM_MAILBOX_NAME}&nbsp;</slot></td>
+	<td scope="row"><slot>{MOD.LBL_FROM_NAME}</slot></td>
+	<td><slot>{FROM_NAME}&nbsp;</slot></td>
+	</tr>
+	<tr>
+	<td scope="row"><slot>{MOD.LBL_START_DATE_TIME}</slot></td>
+	<td><slot>{DATE_START}&nbsp;{TIME_START}</slot></td>
+	<td scope="row"><slot>{MOD.LBL_FROM_ADDR}</slot></td>
+	<td>{FROM_ADDR}&nbsp;</td>
+	</tr>
+	<tr>
+	<td scope="row"><slot>{MOD.LBL_TEMPLATE}</slot></td>
+	<td><slot>{EMAIL_TEMPLATE}&nbsp;{TIME_START}</slot></td>
+	<td scope="row"><slot>{MOD.LBL_REPLY_NAME}</slot></td>
+	<td>{REPLY_TO_NAME}&nbsp;</td>
+	</tr>
+    <tr>
+	<td scope="row"><slot>{MOD.LBL_MESSAGE_FOR}</slot></td>
+	<td><slot>{MESSAGE_FOR}&nbsp;</slot></td>
+	<td scope="row"><slot>{MOD.LBL_REPLY_ADDR}</slot></td>
+	<td><slot>{REPLY_TO_ADDR}&nbsp;</slot></td>
+	</tr>	
+</table>
+</div>
+</form>
+{JAVASCRIPT}
+<!-- END: main -->

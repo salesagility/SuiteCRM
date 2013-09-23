@@ -1,0 +1,103 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+ * {APP.LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/modules/Cases/SearchForm.html,v 1.4 2004/07/02 04:34:05 sugarjacob Exp {APP.LBL_CURRENCY_SYM}
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+<tr><td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+<form>
+		<td scope="row" noWrap><slot>{MOD.LBL_NUMBER}</slot>&nbsp;&nbsp;<slot><input type=text size="15" name="case_number" class=dataField  value="{CASE_NUMBER}" /></slot>
+		</td>
+		<td scope="row" noWrap><slot>{MOD.LBL_SUBJECT}</slot>&nbsp;&nbsp;<slot><input type=text size="20" name="name" class=dataField  value="{NAME}" /></slot></td>
+		<td scope="row" noWrap><slot>{MOD.LBL_ACCOUNT_NAME}</slot>&nbsp;&nbsp;<slot><input type=text size="20" name="account_name" class=dataField  value="{ACCOUNT_NAME}" /></slot></td>
+		<td scope="row">{APP.LBL_CURRENT_USER_FILTER}&nbsp;&nbsp;<input name='current_user_only' onchange='this.form.submit();' class="checkbox" type="checkbox" {CURRENT_USER_ONLY}></td>
+		<td align="right"><input type="hidden" name="action" value="index"/>
+			<input type="hidden" name="query" value="true"/>
+			<input type="hidden" name="module" value="Cases" />
+		<input title="{APP.LBL_SEARCH_BUTTON_TITLE}"  class="button" type="submit" name="button" value="{APP.LBL_SEARCH_BUTTON_LABEL}" id="search_form_submit"/>
+		<input title="{APP.LBL_CLEAR_BUTTON_TITLE}"  onclick="clear_form(this.form);" class="button" type="button" name="clear" value=" {APP.LBL_CLEAR_BUTTON_LABEL} " id="search_form_clear"/>
+		<br>
+		<a href='index.php?module=Cases&action=index&advanced=true' class="tabFormAdvLink">{ADVANCED_SEARCH_PNG}</a>&nbsp;<a href='index.php?module=Cases&action=index&advanced=true' class="tabFormAdvLink">{APP.LNK_ADVANCED_SEARCH}</a>
+		</td>
+	</tr>
+
+</form>
+	</table>
+</td></tr></table>
+{JAVASCRIPT}
+<!-- END: main -->
+
+<!-- BEGIN: advanced -->
+
+			<form>
+			<input type="hidden" name="module" value="Cases">
+			<input type="hidden" name="action" value='index'>
+			<input type="hidden" name="query" value="true"/>
+			<input type="hidden" name="advanced" value="true"/>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0"   class="edit view">
+<tr>
+<td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<td width="20%" scope="row"><slot>{MOD.LBL_SUBJECT}</slot></td>
+	<td width="25%" ><slot><input name='name' type="text" tabindex='1' size='25' maxlength='50' value="{NAME}"></slot></td>
+	<td width="20%" scope="row"><slot>{MOD.LBL_CASE_NUMBER}</slot></td>
+	<td width="25%" ><slot><input name='case_number' tabindex='2' size='15' type="text" value='{CASE_NUMBER}'></slot></td>
+	<td width="10%" rowspan="3" scope="row" align="right" ><slot><input title="{APP.LBL_SEARCH_BUTTON_TITLE}" class="button" type="submit" name="button" value="{APP.LBL_SEARCH_BUTTON_LABEL}"/>&nbsp;<input title="{APP.LBL_CLEAR_BUTTON_TITLE}" onclick="clear_form(this.form);" class="button" type="button" name="clear" value=" {APP.LBL_CLEAR_BUTTON_LABEL} "/>
+		<br><a href='index.php?module=Cases&action=index&query=true' class="tabFormAdvLink">{BASIC_SEARCH_PNG}</a>&nbsp;<a href='index.php?module=Cases&action=index&query=true' class="tabFormAdvLink">{APP.LNK_BASIC_SEARCH}</a>
+		</slot></td>
+	</tr><tr>
+	<td scope="row"><slot>{MOD.LBL_ACCOUNT_NAME}</slot></td>
+	<td ><slot><input name='account_name' tabindex='1' type='text' value="{ACCOUNT_NAME}"></slot></td>
+	<td scope="row"><slot>{MOD.LBL_STATUS}</slot></td>
+	<td ><slot><select tabindex='2' size="3" name='status[]' multiple="true">{STATUS_OPTIONS}</select></slot></td>
+	</tr><tr>
+	<td scope="row"><slot>{APP.LBL_ASSIGNED_TO}</slot></td>
+	<td ><slot><select size="3" tabindex='1' name='assigned_user_id[]' multiple="multiple">{USER_FILTER}</select></slot></td>
+	<td scope="row"><slot>{MOD.LBL_PRIORITY}</slot></td>
+	<td ><slot><select tabindex='2' size="3" name='priority[]' multiple="true">{PRIORITY_OPTIONS}</select></slot></td>
+</tr></table>
+</td></tr></table>
+	</form>
+{JAVASCRIPT}
+<!-- END: advanced -->

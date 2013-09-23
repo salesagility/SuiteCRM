@@ -1,0 +1,90 @@
+===========================
+mPDF 5.5
+11/06/2012
+===========================
+
+Files changed
+-------------
+mpdf.php
+classes/ttfontsuni.php
+classes/svg.php
+classes/tocontents.php
+config.php
+config_fonts.php
+utils/font_collections.php
+utils/font_coverage.php
+utils/font_dump.php
+
+Files added
+-----------
+classes/ttfontsuni_analysis.php
+
+config.php changes
+------------------
+To avoid just the border/background-color of the (empty) end of a block being moved on to next page (</div></div>)
+$this->margBuffer = 0;		// Allow an (empty) end of block to extend beyond the bottom margin by this amount (mm)
+
+config_fonts.php changes
+------------------------
+Added to (arabic) fonts to allow "use non-mapped Arabic Glyphs" e.g. for Pashto
+	'unAGlyphs' => true,
+
+Arabic text
+-----------
+Arabic text (RTL) rewritten with improved support for Pashto/Sindhi/Urdu/Kurdish
+	Presentation forms added:
+	U+0649, U+0681, U+0682, U+0685, U+069A-U+069E, U+06A0, U+06A2, U+06A3, U+06A5, U+06AB-U+06AE, 
+	U+06B0-U+06B4, U+06B5-U+06B9, U+06BB, U+06BC, U+06BE, U+06BF, U+06C0, U+06CD, U+06CE, U+06D1, U+06D3, U+0678
+	Joining improved:
+	U+0672, U+0675, U+0676, U+0677, U+0679-U+067D, U+067F, U+0680, U+0683, U+0684, U+0687, U+0687, U+0688-U+0692, 
+	U+0694, U+0695, U+0697, U+0699, U+068F, U+06A1, U+06A4, U+06A6, U+06A7, U+06A8, U+06AA, U+06BA, U+06C2-U+06CB, U+06CF
+
+Note -
+Some characters in Pashto/Sindhi/Urdu/Kurdish do not have Unicode values for the final/initial/medial forms of the characters.
+However, some fonts include these characters "un-mapped" to Unicode (including XB Zar and XB Riyaz, which are bundled with mPDF).
+	'unAGlyphs' => true,
+added to the config_fonts.php file for appropriate fonts will allow mPDF to use these characters.
+
+This requires the font file to include a Format 2.0 POST table which references the glyphs as e.g. uni067C.med or uni067C.medi:
+	e.g. XB Riyaz, XB Zar, Arabic Typesetting (MS), Arial (MS)
+NB If you want to know if a font file is suitable, you can open a .ttf file in a text editor and search for "uni067C.med"
+	- if it exists, it may work!
+Using "unAGlyphs" forces subsetting of fonts, and will not work with SIP/SMP fonts (using characters beyond the Unicode BMP Plane).
+
+mPDF maps these characters to part of the Private Use Area allocated by Unicode U+F500-F7FF. This could interfere with correct use
+	if the font already utilises these codes (unlikely).
+
+mPDF now deletes U+200C,U+200D,U+200E,U+200F zero-widthjoiner/non-joiner, LTR and RTL marks so they will not appear
+	even though some fonts contain glyphs for these characters.
+
+
+Other New features / Improvements
+---------------------------------
+Avoid just the border/background-color of the (empty) end of a block being moved on to next page (</div></div>)
+	using configurable variable: $this->margBuffer;
+
+
+The TTFontsUni class contained a long function (extractcoreinfo) which is not used routinely in mPDF
+	This has been moved to a new file: classes/ttfontsuni_analysis.php
+	The 3 utility scripts have been updated to use the new extended class:
+	- utils/font_collections.php
+	- utils/font_coverage.php
+	- utils/font_dump.php
+
+
+Bug fixes
+---------
+- Border & background when closing 2 blocks (e.g. </div></div>) incorrectly being moved to next page because incorrectly
+	calculating how much space required
+- Fixed/Absolute-positioned elements not inheriting letter-spacing style
+- Rotated cell - error if text-rotate set on a table cell, but no text content in cell
+- SVG images, text-anchor not working
+- Nested table - not resetting cell style (font, color etc) after nested table, if text follows immediately
+- Nested table - font-size 70% set in extenal style sheet; if repeated nested tables, sets 70% of 70% etc etc
+- SVG setting font-size as percent on successive <text> elements gives progressively smaller text
+- mPDF will check if magic_quotes_runtime set ON even >= PHP 5.3 (will now cause an error message)
+- not resetting after 2 nested tags of same type e.g. <b><b>bold</b></b> still bold
+- When using charset_in other than utf-8, HTML Footers using tags e.g. <htmlpageheader> do not decode correctly
+- ToC if nested > 3 levels, line spacing reduces and starts to overlap
+
+

@@ -1,0 +1,211 @@
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+ 
+#cal-grid {
+	border-left: 1px solid silver;	 
+	overflow: hidden;	
+}
+
+#cal-scrollable {
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#cal-grid .col {
+	width: 14.2%; 
+	float: left; 
+	border-bottom: 0px solid silver;
+}
+
+#cal-grid .left_col {
+	width: 52px; 
+	float: left; 
+	border-bottom: 0px solid silver;
+}
+
+#cal-grid .week {
+	float: left;
+}
+
+#cal-grid .slot {
+	height: 14px;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid #e5e5e5;
+	background-color: transparent;	
+}
+#cal-grid .slot_over {
+	background-color: #D1DCFF;
+}
+
+#cal-grid .left_slot {	
+	height: 14px;
+	font-size: 10px;
+	text-align: center;	
+	border-right: 1px solid silver;	
+	border-bottom: 1px solid #e5e5e5;	
+	vertical-align: middle;
+	line-height: 15px;	
+}
+
+#cal-grid .col_head {
+	height: 14px;	
+	text-align: center;
+	font-size: 13px;
+	border-bottom: 1px solid silver;
+	border-top: 1px solid silver;
+	border-right: 1px solid silver;	
+	white-space: nowrap;	
+}
+
+#cal-grid .col_head a {
+	text-decoration: none;
+}
+
+#cal-grid .odd {
+	background-color: transparent;
+}
+
+#cal-grid .odd_border {
+	border-bottom: 1px solid silver;
+}
+
+#cal-grid div.slot_active {
+	background-color: gray;
+}
+	
+#cal-grid .today {
+	font-weight: bold;
+	background-color: #FCD372;
+}
+
+#cal-grid .cal-basic .basic_slot, #cal-grid .cal-basic .left_basic_slot {
+	border-bottom: 1px solid silver;
+	border-right: 1px solid silver;
+	white-space: nowrap;
+}
+
+.act_item {
+	width: 92%;
+	min-width: 0px;	
+	font-size: 10px;
+	position : relative;	
+	vertical-align: top;
+	display: inline-block;
+	border: 1px solid;
+	border-top-width: 1px;
+	overflow: hidden;
+	cursor: default;
+}
+
+.act_item.empty {
+	border-color: transparent;
+}
+
+.act_item, #cal-grid .col {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: -moz-none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.act_item .head {
+	height: 13px;
+	padding-left: 2px;
+	overflow: hidden;
+}
+.act_item .head div {
+	overflow: hidden;
+}
+.act_item .content {
+	padding-top: 1px;
+	padding-left: 2px;
+	padding-right: 2px;
+	overflow: hidden;
+	height: 13px;	
+	padding-top: 1px;
+	font-size: 11px;
+}
+
+.adicon {
+	float: right;	
+	color: black;
+	width: 10px;
+	font-size: 9px;
+	height: 12px;
+	line-height: 11px;
+	text-align: center;
+	background-image: url(../../index.php?entryPoint=getImage&imageName=calendar_info.png);
+	background-repeat: no-repeat;
+	margin-top: 1px;
+	cursor: pointer;
+}
+
+.act_item .head div {
+	font-size: 11px;	
+}
+
+
+.act_item .head .start_time {
+	font-weight: bold;
+}
+
+.act_item .head a, .act_item .head a:visited, .act_item .head a:hover {
+	text-decoration: none;
+}
+
+
+.act_item .yui-resize-handle-inner-b {
+    width: 16px;  
+    margin-left: auto;
+    margin-right: auto;    
+    border-top: 0px double;
+    background-image: none;
+    position: relative;
+    left: 0;
+}
+
+.act_item:hover .yui-resize-handle-inner-b {
+	border-top: 3px double;
+}
+
+#cal-edit-buttons {
+	padding: 7px 5px 5px 5px;
+}
+
+#edit_all_recurrences_block button {
+	margin: 4px;
+}

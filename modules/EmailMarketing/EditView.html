@@ -1,0 +1,267 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+{ERROR_STRING}
+<form name="EditView" method="POST" action="index.php">
+	<input type="hidden" name="module" value="EmailMarketing">
+	<input type="hidden" name="record" value="{ID}">
+	<input type="hidden" name="action">
+	<input type="hidden" name="campaign_id" value="{CAMPAIGN_ID}">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_id" value="{RETURN_ID}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+			<td>
+				<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='Save'; return verify_data(this.form,'EditView')" type="submit" name="button" value="  {APP.LBL_SAVE_BUTTON_LABEL}  " >
+				<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  ">
+			</td>
+			<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+			<td align='right'>{ADMIN_EDIT}</td>
+		</tr>
+	</table>
+
+
+<div class="edit view">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<td width="15%" scope="row"><slot>{MOD.LBL_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td width="35%" ><slot><input name='name' {DISABLED} tabindex='1' size='25' maxlength='25' type="text" value="{NAME}"></slot></td>
+	<td scope="row"><slot>{MOD.LBL_STATUS_TEXT} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td ><slot><select tabindex='2' id='status' name='status'>{STATUS_OPTIONS}</select></slot></td>
+	</tr>
+	<tr>
+	<td scope="row"><slot>{MOD.LBL_START_DATE_TIME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td class="datafield"><slot><table  cellpadding="0" cellspacing="0"><tr><td nowrap><input name='date_start' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" id='date_start_date' size='11' tabindex='1' maxlength='10' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="jscal_trigger" align="absmiddle">&nbsp;</td>
+    <td nowrap><input type="text" size='5' maxlength='5' name='time_start' tabindex="1" value="{TIME_START}"/>{TIME_MERIDIEM}</td></tr><tr><td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td><td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td></tr></table></slot></td>
+	<td scope="row"><slot>{MOD.LBL_TEMPLATE} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td class="datafield">
+		<slot>
+			<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);">{EMAIL_TEMPLATE_OPTIONS}</select>
+			&nbsp;
+			<A href="javascript:open_email_template_form()"   >{MOD.LBL_CREATE_EMAIL_TEMPLATE}</A>
+			<span name='edit_template' id='edit_template' style="{EDIT_TEMPLATE}">&nbsp;<A href="javascript:edit_email_template_form()"   >{MOD.LBL_EDIT_EMAIL_TEMPLATE}</A>
+			</span>		
+		</slot>
+	</td>
+	</tr>
+	<tr>
+	<td width="15%" scope="row"><slot>{MOD.LBL_MESSAGE_FOR} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+	<td width="35%" class="datafield"><slot><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists'>{MOD.LBL_ALL_PROSPECT_LISTS}</slot></td>
+	<td scope="row"><slot>&nbsp;</slot></td>
+	<td><slot>&nbsp;</slot></td>
+	</tr>
+    <tr>
+        <td scope="row"><slot>{MOD.LBL_FROM_MAILBOX_NAME}</slot></td>
+        <td ><slot><select  id='inbound_email_id' tabindex='1' onchange='set_from_email_and_name(this);' name='inbound_email_id'>{MAILBOXES}</select>&nbsp;<SPAN id='from_email' style="font-style:italic">{DEFAULT_FROM_EMAIL}</SPAN></slot></td>
+        <td scope="row"><slot>&nbsp;</slot></td>
+        <td class="datafield"><slot>&nbsp;</slot></td>
+    </tr>
+    <tr>
+        <td scope="row"><slot>{MOD.LBL_FROM_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+        <td ><slot><input name='from_name' id='from_name' tabindex='2' size='25' maxlength='100' type="text" value="{FROM_NAME}"></slot></td>
+        <td scope="row"><slot>{MOD.LBL_FROM_ADDR}</slot></td>
+        <td class="datafield"><slot><input name='from_addr' id='from_addr' title='{MOD.LBL_FROM_ADDR}' tabindex='2' size='25' maxlength='100' type="text" value="{FROM_ADDR}"></slot></td>
+    </tr>
+    <tr>
+        <td width="15%" scope="row"><slot>{MOD.LBL_REPLY_NAME}</slot></td>
+        <td width="35%" class="datafield"><slot><input name='reply_to_name' id='reply_to_name' title='{MOD.LBL_REPLY_NAME}' tabindex='2' size='25' maxlength='100' type="text" value="{REPLY_NAME}"></slot></td>
+        <td scope="row"><slot>{MOD.LBL_REPLY_ADDR}</slot></td>
+        <td class="datafield"><slot><input name='reply_to_addr' id='reply_to_addr' title='{MOD.LBL_REPLY_ADDR}' tabindex='2' size='25' maxlength='100' type="text" value="{REPLY_ADDR}"></slot></td>
+    </tr>
+
+	<tr>
+	<td scope="row"><slot>&nbsp;</slot></td>
+	<td width="35%" class="datafield"><slot><select {MESSAGE_FOR_DISABLED}  tabindex='1' multiple size="5" id="message_for" name='message_for[]'>{SCOPE_OPTIONS}</select></slot></td>
+	<td scope="row"><slot>&nbsp;</slot></td>
+	<td><slot>&nbsp;</slot></td>
+	</tr>
+
+	<tr>
+	<td scope="row"><slot>&nbsp;</slot></td>
+	<td><slot>&nbsp;</slot></td>
+	<td scope="row"><slot>&nbsp;</slot></td>
+	<td><slot>&nbsp;</slot></td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+</div>
+
+</form>
+<script type="text/javascript">
+Calendar.setup ({
+	inputField : "date_start_date", ifFormat : "{CALENDAR_DATEFORMAT}", showsTime : false, button : "jscal_trigger", singleClick : true, step : 1
+});
+
+function show_edit_template_link(field) {
+
+	var field1=document.getElementById('edit_template');
+	if (field.selectedIndex == 0) {
+		field1.style.visibility="hidden";
+	}
+	else {
+		field1.style.visibility="visible";
+	}
+}
+
+function refresh_email_template_list(template_id, template_name) {
+
+
+	var field=document.getElementById('template_id');
+	var bfound=0;
+	for (var i=0; i < field.options.length; i++) {
+			if (field.options[i].value == template_id) {
+				if (field.options[i].selected==false) {
+					field.options[i].selected=true;
+				}
+				field.options[i].text = template_name;
+				bfound=1;
+			}
+	}
+	//add item to selection list.
+	if (bfound == 0) {
+		var newElement=document.createElement('option');
+		newElement.text=template_name;
+		newElement.value=template_id;
+		field.options.add(newElement);
+		newElement.selected=true;
+	}	
+
+	//enable the edit button.
+	var field1=document.getElementById('edit_template');
+	field1.style.visibility="visible";
+}
+
+function open_email_template_form() {
+	URL="index.php?module=EmailTemplates&action=EditView&campaign_id={CAMPAIGN_ID}";
+	URL+="&show_js=1";
+
+	windowName = 'email_template';
+	windowFeatures = 'width=800' + ',height=600' 	+ ',resizable=1,scrollbars=1';
+
+	win = window.open(URL, windowName, windowFeatures);
+	if(window.focus)
+	{
+		// put the focus on the popup if the browser supports the focus() method
+		win.focus();
+	}
+}
+function edit_email_template_form() {
+	var field=document.getElementById('template_id');
+	URL="index.php?module=EmailTemplates&action=EditView&campaign_id={CAMPAIGN_ID}";
+	if (field.options[field.selectedIndex].value != 'undefined') {	
+		URL+="&record="+field.options[field.selectedIndex].value;
+	}
+	URL+="&show_js=1";
+	
+	windowName = 'email_template';
+	windowFeatures = 'width=800' + ',height=600' 	+ ',resizable=1,scrollbars=1';
+
+	win = window.open(URL, windowName, windowFeatures);
+	if(window.focus)
+	{
+		// put the focus on the popup if the browser supports the focus() method
+		win.focus();
+	}
+}
+
+function toggle_message_for(all_prospects_checkbox) {
+	message_for = document.getElementById('message_for');
+	if (all_prospects_checkbox.checked) {
+		message_for.disabled=true;
+	} else {
+		message_for.disabled=false;
+	}
+}
+
+//get values to populate from and reply boxes on change of mail box dropdown
+var ie_stored_options = {IEStoredOptions};
+var from_emails=new Array({FROM_EMAILS});
+
+function set_from_email_and_name(mailbox) {
+    var fn = document.getElementById('from_name');
+    var fa = document.getElementById('from_addr');
+    var rn = document.getElementById('reply_to_name');
+    var ra = document.getElementById('reply_to_addr');
+
+    if(mailbox.value != '') {
+        if(ie_stored_options[mailbox.value]) {
+            var focusIe = ie_stored_options[mailbox.value];
+            // from name
+            if(focusIe.from_name && focusIe.from_name != "")
+                fn.value = focusIe.from_name;
+            else
+                fn.value = '';
+
+            // from addr
+            if(focusIe.from_addr && focusIe.from_addr != "")
+                fa.value = focusIe.from_addr;
+            else
+                fa.value = '';
+
+            // reply name
+            if(focusIe.reply_to_name && focusIe.reply_to_name != "")
+                rn.value = focusIe.reply_to_name;
+            else
+                rn.value = '';
+
+            // reply add
+            if(focusIe.reply_to_addr && focusIe.reply_to_addr != "")
+                ra.value = focusIe.reply_to_addr;
+            else
+                ra.value = '';
+        }
+    } else {
+        fn.value = '';
+        fa.value = '';
+        rn.value = '';
+        ra.value = '';
+    }
+}
+</script>
+{JAVASCRIPT}
+
+<!-- END: main -->

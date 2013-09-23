@@ -1,0 +1,386 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ * Description:
+ ********************************************************************************/
+-->
+
+<!-- BEGIN: main -->
+{ERROR_STRING}
+{ROLLOVER}
+<form name="EditView" id="EditView" method="GET" action="index.php">
+	<input type="hidden" name="module" value="Schedulers">
+	<input type="hidden" name="record" value="{ID}">
+	<input type="hidden" name="action">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_id" value="{RETURN_ID}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<input type="hidden" name="use_adv" id="use_adv" value="{USE_ADV_BOOL}">
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='Save'; return checkFormPre('EditView')" type="submit" name="button" value="  {APP.LBL_SAVE_BUTTON_LABEL}  " >
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='index'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  ">
+		</td>
+		<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+		<td align='right'>{ADMIN_EDIT}</td>
+	</tr>
+</table>
+
+<table cellspacing="1" cellpadding="0" border="0" class="edit view" width="100%">
+	<tr>
+		<th align="left" scope="row" colspan="4">
+			<h4>{MOD.LBL_BASIC_OPTIONS}</h4>
+		</th>
+	</tr>
+		<tr>
+			<td width="15%" scope="row"><slot>{MOD.LBL_NAME} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+			<td width="35%"><slot><input name='name' tabindex='1' size='35' maxlength='50' type="text" value="{NAME}"></slot></td>
+			<td width="15%" scope="row"><slot>{MOD.LBL_STATUS} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+			<td width="35%"><slot><select name='status' tabindex='8'>{STATUS_OPTIONS}</select></slot></td>
+		</tr><tr>
+			<td scope="row">&nbsp;</td>
+			<td>&nbsp;</td>
+			<td scope="row">&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr><tr>
+			<td scope="row"><slot>{MOD.LBL_JOB} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+			<td><slot><select name='job_function' tabindex='2' size='1'>{JOB_FUNCTION}</select></slot></td>
+			<td colspan="2"><slot> OR <input name='job_url' tabindex='2' size='30' maxlength='255' type="text" value="{JOB_URL}"></td>
+
+		</tr><tr>
+			<td scope="row"><slot>{MOD.LBL_INTERVAL} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+			<td colspan="3"><slot>
+				<div id="crontab" style="display:none;">
+				<table cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="5"><slot>
+							<a href="javascript:void(0);" onClick="toggleAdv('false');">{MOD.LBL_TOGGLE_BASIC}</a>
+						</slot></td>
+					</tr>
+					<tr>
+						<td><slot>{MOD.LBL_MINS}</slot></td>
+						<td><slot>{MOD.LBL_HOURS}</slot></td>
+						<td><slot>{MOD.LBL_DAY_OF_MONTH}</slot></td>
+						<td><slot>{MOD.LBL_MONTHS}</slot></td>
+						<td><slot>{MOD.LBL_DAY_OF_WEEK}</slot></td>
+					</tr><tr>
+						<td><slot><input name="mins" tabindex="3" maxlength="25" type="text" size="3" value="{MINS}"></slot></td>
+						<td><slot><input name="hours" tabindex="4" maxlength="25" type="text" size="3" value="{HOURS}"></slot></td>
+						<td><slot><input name="day_of_month" tabindex="5" maxlength="25" type="text" size="3" value="{DAY_OF_MONTH}"></slot></td>
+						<td><slot><input name="months" tabindex="6" maxlength="25" type="text" size="3" value="{MONTHS}"></slot></td>
+						<td><slot><input name="day_of_week" tabindex="7" maxlength="25" type="text" size="3" value="{DAY_OF_WEEK}"></slot></td>
+					</tr><tr>
+                        <td colspan="5"><slot>
+                            <i>{MOD.LBL_CRONTAB_EXAMPLES}</i>
+                        </slot></td>
+					</tr>
+				</table>
+				</div>
+
+				<div id="simple">
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td colspan=5><slot>
+							<a href="javascript:void(0);" onClick="toggleAdv('false');">{MOD.LBL_TOGGLE_ADV}</a>
+						</slot></td>
+					</tr>
+
+					<tr>
+						<td valign="top" width="25%">
+							&nbsp;{MOD.LBL_EVERY}&nbsp;
+							<select name="basic_interval" {ONLY_ADV}>{BASIC_INTERVAL}</select>&nbsp;
+							<select name="basic_period" {ONLY_ADV}>{BASIC_PERIOD}</select>
+						</td>
+
+
+						<td valign="top" width="25%">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td><slot><input type="checkbox" name="all" value="true" id="all" {ONLY_ADV} {ALL} onClick="allDays();">&nbsp;<i>{MOD.LBL_ALL}</i></slot></td>
+							</tr>
+							<tr>
+								<td><slot><input type="checkbox" name="mon" value="true" id="mon" {ONLY_ADV} {MON}>&nbsp;{MOD.LBL_MON}</slot></td>
+							</tr>
+							<tr>
+								<td><slot><input type="checkbox" name="tue" value="true" id="tue" {ONLY_ADV} {TUE}>&nbsp;{MOD.LBL_TUE}</slot></td>
+							</tr>
+							<tr>
+								<td><slot><input type="checkbox" name="wed" value="true" id="wed" {ONLY_ADV} {WED}>&nbsp;{MOD.LBL_WED}</slot></td>
+							</tr>
+						</table>
+						</td>
+
+						<td valign="top" width="25%">
+						<table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td><slot><input type="checkbox" name="thu" value="true" id="thu" {ONLY_ADV} {THU}>&nbsp;{MOD.LBL_THU}</slot></td>
+							</tr>
+							<tr>
+								<td><slot><input type="checkbox" name="fri" value="true" id="fri" {ONLY_ADV} {FRI}>&nbsp;{MOD.LBL_FRI}</slot></td>
+							</tr>
+							<tr>
+								<td><slot><input type="checkbox" name="sat" value="true" id="sat" {ONLY_ADV} {SAT}>&nbsp;{MOD.LBL_SAT}</slot></td>
+							</tr>
+							<tr>
+								<td><slot><input type="checkbox" name="sun" value="true" id="sun" {ONLY_ADV} {SUN}>&nbsp;{MOD.LBL_SUN}</slot></td>
+							</tr>
+						</table>
+						</td>
+
+
+					</tr>
+				</table>
+				</div>
+
+			</slot></td>
+		</tr>
+	</td>
+</tr>
+</table>
+
+<div id="advTable" style="display:none;">
+<br>
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+	<tr>
+		<th align="left" scope="row" colspan="4">
+			<h4>{MOD.LBL_ADV_OPTIONS}</h4>
+		</th>
+	</tr>
+	<tr>
+		<td scope="row" width="15%"><slot>{MOD.LBL_CATCH_UP}</slot></td>
+		<td width="35%"><slot>
+			<div id="rollover"><a href="#" class="rollover"><span>{MOD.LBL_CATCH_UP_WARNING}</span><img border="0" src="index.php?entryPoint=getImage&themeName={THEME}&imageName=helpInline.gif"></a></div>
+			<input name='catch_up' tabindex='16' type='checkbox' value='1' {CATCH_UP_CHECKED}>
+
+		</slot></td>
+		<td scope="row" width="15%">&nbsp;</td>
+		<td width="35%">&nbsp;</td>
+	</tr>
+
+	<tr>
+		<td scope="row"><slot>{MOD.LBL_DATE_TIME_START} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+		<td><slot>
+		<table  cellpadding="0" cellspacing="0">
+			<tr>
+				<td nowrap><input name='date_start' id='jscal_start_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='8' size='11' maxlength='10' type="text" value="{DATE_START}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="start_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><select name='time_hour_start' tabindex="9">{TIME_START_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_start' tabindex="10">{TIME_START_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_START}</td>
+			</tr><tr>
+				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>
+				<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
+			</tr>
+		</table>
+		</slot></td>
+
+		<td scope="row"><slot>{MOD.LBL_TIME_FROM}</slot></td>
+		<td><slot>
+		<table  cellpadding="0" cellspacing="0">
+			<tr>
+				<td nowrap><select name='time_hour_from' tabindex="15">{TIME_FROM_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_from' tabindex="16">{TIME_FROM_MIN_OPTIONS}</select>{TIME_MERIDIEM_FROM}</td>
+			</tr><tr>
+				<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
+			</tr>
+		</table>
+		</slot></td>
+
+	</tr>
+	<tr>
+		<td scope="row"><slot>{MOD.LBL_DATE_TIME_END}</slot></td>
+		<td><slot>
+		<table  cellpadding="0" cellspacing="0">
+			<tr>
+				<td nowrap><input name='date_end' id='jscal_end_date' onblur="parseDate(this, '{CALENDAR_DATEFORMAT}');" tabindex='12' size='11' maxlength='10' type="text" value="{DATE_END}"> <img src="index.php?entryPoint=getImage&themeName={THEME}&imageName=jscalendar.gif" alt="{CALENDAR_DATEFORMAT}"  id="end_date_jscal_trigger" align="absmiddle">&nbsp;</td>
+				<td nowrap><select name='time_hour_end' tabindex="13">{TIME_END_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_end' tabindex="14">{TIME_END_MINUTE_OPTIONS}</select>{TIME_MERIDIEM_END}</td>
+			</tr><tr>
+				<td nowrap><span class="dateFormat">{USER_DATEFORMAT}</span></td>
+				<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
+			</tr>
+		</table>
+		</slot></td>
+
+		<td scope="row"><slot>{MOD.LBL_TIME_TO}</slot></td>
+		<td><slot>
+			<table  cellpadding="0" cellspacing="0">
+				<tr>
+					<td nowrap><select name='time_hour_to' tabindex="17">{TIME_TO_HOUR_OPTIONS}</select>{TIME_SEPARATOR}<select name='time_minute_to' tabindex="18">{TIME_TO_MIN_OPTIONS}</select>{TIME_MERIDIEM_TO}</td>
+				</tr><tr>
+					<td nowrap><span class="dateFormat">{TIME_FORMAT}</span></td>
+				</tr>
+			</table>
+		</slot></td>
+
+	</tr>
+</table>
+</div>
+<div style="padding-top:2px;">
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='Save'; return checkFormPre('EditView')" type="submit" name="button" value="  {APP.LBL_SAVE_BUTTON_LABEL}  " />
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='index'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'" type="submit" name="button" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  " />
+</div>
+
+
+
+
+</form>
+<script type="text/javascript">
+	Calendar.setup ({
+		inputField : "jscal_start_date", ifFormat : "{CALENDAR_DATEFORMAT}", showsTime : false, button : "start_date_jscal_trigger", singleClick : true, step : 1
+	});
+
+	Calendar.setup ({
+		inputField : "jscal_end_date", ifFormat : "{CALENDAR_DATEFORMAT}", showsTime : false, button : "end_date_jscal_trigger", singleClick : true, step : 1
+	});
+
+
+// this will pop open the Advanced settings if the DATE_START field (required) is empty
+function checkFormPre(formId) {
+	validateCronInterval(formId);
+	var noError = check_form(formId);
+
+	if(noError) {
+		return true;
+	} else {
+		toggleAdv('true');
+		return false;
+	}
+}
+
+function validateCronInterval(formId) {
+	var fieldIsValid = function(value, min, max) {
+		var inRange = function(value, min, max) {
+			return (value >= min && value <= max);
+		}
+		//Check for *
+		if (value == "*") {
+			return true;
+		}
+		//Check for interval syntax
+		var result = /^\*\/(\d+)$/.exec(value);
+		if (result && result[0] && inRange(result[1], min, max)) {
+			return true;
+		}
+		//Check for ranges/lists
+		var sets = value.split(',');
+		var valid = true;
+		for (var i = 0; i < sets.length; i++) {
+			result = /^(\d+)(-(\d+))?$/.exec(sets[i])
+			if (!result || !result[0] || !inRange(result[1], min, max) || (result[3] && !inRange(result[3], min, max))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	var cronFields = {
+		mins: 		  {min:0, max:59},
+		hours: 		  {min:0, max:23},
+		day_of_month: {min:1, max:31},
+		months:		  {min:1, max:12},
+		day_of_week:  {min:0, max:7}
+	}
+	var valid = true;
+	for (field in cronFields) {
+		removeFromValidate(formId, field);
+		if (document[formId][field] && !fieldIsValid(document[formId][field].value, cronFields[field].min, cronFields[field].max)) {
+			valid = false;
+			addToValidate(formId, field, 'error', true, "{MOD.ERR_CRON_SYNTAX}");
+		} else {
+			addToValidate(formId, field, 'verified', true, "{MOD.ERR_CRON_SYNTAX}");
+		}
+	}
+	return valid;
+}
+
+function toggleAdv(onlyAdv) {
+	var thisForm = document.getElementById("EditView");
+	var crontab = document.getElementById("crontab");
+	var simple = document.getElementById("simple");
+	var adv = document.getElementById("advTable");
+	var use = document.getElementById("use_adv");
+
+	if(crontab.style.display == "none" || onlyAdv == 'true') { // show advanced
+		crontab.style.display = "";
+		adv.style.display = "";
+		simple.style.display = "none";
+		use.value = "true";
+	} else {
+		crontab.style.display = "none";
+		adv.style.display = "none";
+		simple.style.display = "";
+		use.value = "false";
+	}
+
+	for(i=0; i<thisForm.elements.length; i++) {
+		if(thisForm.elements[i].disabled) {
+			thisForm.elements[i].disabled = false;
+		}
+	}
+}
+
+function allDays() {
+	var toggle = document.getElementById("all");
+	var m = document.getElementById("mon");
+	var t = document.getElementById("tue");
+	var w = document.getElementById("wed");
+	var h = document.getElementById("thu");
+	var f = document.getElementById("fri");
+	var s = document.getElementById("sat");
+	var u = document.getElementById("sun");
+
+	if(toggle.checked) {
+		m.checked = true;
+		t.checked = true;
+		w.checked = true;
+		h.checked = true;
+		f.checked = true;
+		s.checked = true;
+		u.checked = true;
+	} else {
+		m.checked = false;
+		t.checked = false;
+		w.checked = false;
+		h.checked = false;
+		f.checked = false;
+		s.checked = false;
+		u.checked = false;
+	}
+
+}
+
+</script>
+{JAVASCRIPT}
+<!-- END: main -->

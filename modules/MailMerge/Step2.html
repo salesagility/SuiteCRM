@@ -1,0 +1,407 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+ * {APP.LBL_CURRENCY_SYM}Header: /cvsroot/sugarcrm/sugarcrm/modules/Contacts/EditView.html,v 1.22 2004/07/16 04:04:42 sugarclint Exp {APP.LBL_CURRENCY_SYM}
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+<!-- BEGIN: error -->
+<span class="error">{ERROR}</span>
+<!-- END: error -->
+
+
+			<form enctype="multipart/form-data" name="MailMerge" method="POST" action="index.php" onsubmit='return false'>
+			<input type="hidden" name="module" value="MailMerge">
+			<input type="hidden" name="step" id="step" value="{STEP}">
+			<input type="hidden" name="action" value="index">
+			<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+			<input type="hidden" name="return_id" value="{RETURN_ID}">
+			<input type="hidden" name="return_action" value="{RETURN_ACTION}">		
+			<input type="hidden" name="selected_objects" id="selected_objects">
+<p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+<tr>
+<td>
+	<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<th align="left" scope="row" colspan="2"><h4 class="">{MAIL_MERGE_HEADER_STEP_2}</h4></th>
+	</tr>
+	<tr><td><slot>&nbsp;</slot></td></tr>
+	<tr>
+	<td><input type='text' id="searchText" name="searchText" ONKEYDOWN="javascript:return displayKeyCode(event)"></td>
+	<td><input type="submit" id="searchSubmit" value="Search"  onClick="search();" class='button'></td>
+	</tr>
+	<tr><td>{MAIL_MERGE_CAMPAIGN_PROSPECT_SELECTOR}</td></tr>
+	</table>
+	<table>
+	<tr>
+		<td>
+		{MAILMERGE_PREV}
+		<span id="result_count"></span>
+		{MAILMERGE_NEXT}
+		</td>
+		</tr>
+	<tr>
+	<td  colspan='1'>
+	
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td scope="row">{MOD.LBL_AVAILABLE}
+					<table>
+						<tr>
+							<td><slot><select id="display_objs" name="display_objs[]" size="10" multiple="multiple" ></select></slot></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+	<td>
+	{MAILMERGE_LEFT_TO_RIGHT}
+	<br>
+	{MAILMERGE_RIGHT_TO_LEFT}
+	</td>
+	<td  colspan='1'>
+	
+		<table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td scope="row">{MOD.LBL_SELECTED}
+					<table>
+						<tr>
+							<td><slot><select id="selected_objs" name="selected_objs[]" size="10" multiple="multiple" >{MAILMERGE_PRESELECTED_OBJECTS}</select></slot></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+	</tr>
+</table>
+</td>
+</tr>
+<tr><td>{MAIL_MERGE_CONTAINS_CONTACT_INFO}</td></tr>
+</table>
+</p>
+<p><table width="100%" cellpadding="2" cellspacing="0" border="0"><tr> 
+	<td align="left"><input id="prevButton" title="{MOD.LBL_BACK}"  class="button" type="submit" name="button" value="  {MOD.LBL_BACK}  "  onclick="this.form.step.value='1'; return submit_form();"></td>
+	<td align="right"><input id="nextButton" title="{MOD.LBL_NEXT}"  class="button" type="submit" name="button" value="  {MOD.LBL_NEXT}  "  onclick="set_selected_items();return validateForm();"></td>
+</tr>
+</table>  </p>
+	</form>
+{JAVASCRIPT}
+<script type="text/javascript">{JSON_CONFIG_JAVASCRIPT}</script>
+<script type="text/javascript" src="include/javascript/jsclass_base.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" src="include/javascript/jsclass_async.js?v={VERSION_MARK}"></script>
+
+<script>
+var module = "{MAILMERGE_MODULE}";
+var mOffset = 0;
+var max = 20;
+var mWhere = "{MAILMERGE_WHERE}";
+var orderBy = '';
+var relModule = '';
+var mTerm = '';
+YAHOO.namespace("mailmerge");
+YAHOO.mailmerge.cObj = null;
+
+function submit_form()
+{
+	document.MailMerge.submit();
+}
+
+function ResponseObj()
+{
+}
+
+function ajaxSuccess(data)
+{	 
+    var result = YAHOO.lang.JSON.parse(data.responseText);
+    result = result.result;
+	var prevButton = document.getElementById("prevButton");
+	var nextButton = document.getElementById("nextButton");
+	
+	var prevItems = document.getElementById("prevItems");
+	var nextItems= document.getElementById("nextItems");
+	var dispCount = max;
+	var dispMin = mOffset;
+	if(result.result_count < max)
+	{
+		dispCount = result.result_count;
+		nextItems_disabled = true;
+	}
+	if(result.result_count <= (mOffset + max))
+	{
+		nextItems_disabled = true;
+	}
+	else
+	{
+		nextItems_disabled = false;
+	}
+	if(mOffset == 0)
+	{
+		prevItems_disabled = true;
+	}
+	else
+	{
+		prevItems_disabled = false;
+	}
+	if(result.result_count > 0)
+	{
+		dispMin = mOffset + 1;
+	}
+    var spanMax = 0 + parseInt(mOffset,10) + parseInt(dispCount,10);
+    if ( spanMax > parseInt(result.result_count,10) ) {
+        spanMax = parseInt(result.result_count);
+    }
+	var spanText = "("+(dispMin) + " - " + spanMax + " of " + result.result_count+")";
+	document.getElementById("result_count").innerHTML = spanText;
+	var displayObjs = document.getElementById("display_objs");
+	displayObjs.options.length = 0;
+	var isLeadOrContact = false;
+	if(module == 'Contacts' || module == 'Leads' || module == 'CampaignProspects')
+	{
+		isLeadOrContact = true;
+	}
+	for (i = 0; i < result.entry_list.length; i++)
+	{
+		var id = '';
+		var name = '';
+		var name1 = '';
+		var name2 = '';
+		id = result.entry_list[i]['name_value_list'].id.value;
+		if(isLeadOrContact)
+		{
+			name1 = result.entry_list[i]['name_value_list'].first_name.value;
+			name2 = result.entry_list[i]['name_value_list'].last_name.value;
+		}
+		else
+		{
+			name1 = '';
+			name2 = result.entry_list[i]['name_value_list'].name.value;
+		}
+		name = name1 + ' ' + name2;
+		displayObjs.options[displayObjs.length] = new Option(name, id);
+	}
+	    
+   	prevButton.disabled = false;
+	nextButton.disabled = false;
+}
+function increaseOffset()
+{
+    if(isCallInProgress())
+        return;
+
+    if(!nextItems_disabled) {
+        mOffset += 20;
+        getObjects();
+    }
+}
+
+function decreaseOffset()
+{
+    if(isCallInProgress())
+        return;
+
+    if(!prevItems_disabled) {
+	    mOffset -= 20;
+        getObjects();
+    }
+}
+
+function isCallInProgress()
+{
+    if(YAHOO.mailmerge.cObj)
+        return YAHOO.util.Connect.isCallInProgress(YAHOO.mailmerge.cObj);
+    else
+        return false;
+}
+
+function getObjects()
+{
+	var prevButton = document.getElementById("prevButton");
+	var nextButton = document.getElementById("nextButton");
+	
+	prevButton.disabled = true;
+	nextButton.disabled = true;
+	getOrderBy();
+	
+	//rrs
+    var qs = 'index.php?module=MailMerge&action=search&qModule='+module+'&rel_module='+relModule+'&term='+mTerm+'&max='+max+'&order_by='+orderBy+'&offset='+mOffset;
+	YAHOO.mailmerge.cObj = YAHOO.util.Connect.asyncRequest('GET', qs,{success: ajaxSuccess, failure: ajaxSuccess}, null);
+}
+
+function moveRight()
+{
+	var displayObjs =  document.getElementById("display_objs");
+	var selObjs = document.getElementById("selected_objs");
+	
+	for (i=0;i<displayObjs.options.length;i++)
+	{
+		if(displayObjs[i].selected)
+		{
+			var current = displayObjs.options[i];
+			selObjs.options.add(new Option(current.text, current.value));
+		}
+	}
+	//remove them now
+	for (i = displayObjs.length - 1; i>=0; i--) {
+	try
+	{
+		if(displayObjs.options[i].selected)
+		{
+			displayObjs.remove(i);		
+		}
+	}
+		catch(e){}
+		
+	}
+}
+
+function moveLeft()
+{
+	var selObjs = document.getElementById("selected_objs");
+	var displayObjs =  document.getElementById("display_objs");
+	for (i=0;i<selObjs.options.length;i++)
+	{
+		if(selObjs[i].selected)
+		{
+			var current = selObjs.options[i];
+			displayObjs.options.add(new Option(current.text, current.value));
+		}
+	}
+	for (i = selObjs.length - 1; i>=0; i--) {
+	try
+	{
+		if(selObjs.options[i].selected)
+		{
+			selObjs.remove(i);
+
+		}
+	}
+		catch(e){}
+		
+	}
+}
+
+function set_selected_items()
+{
+var selObjs = document.getElementById("selected_objs");
+
+var containsContactInfo = document.getElementById("contains_contact_info");
+var step = document.getElementById("step");
+var selected_objects = '';
+
+for(i=0; i < selObjs.options.length ;i++)
+{
+         selected_objects += selObjs.options[i].value+"="+selObjs.options[i].text.replace(/&/g, "##")+"&";
+}
+
+	document.MailMerge.selected_objects.value = selected_objects;
+//BEGIN CHANGE 38959 -- raagaard
+	if(containsContactInfo != null && containsContactInfo.options[containsContactInfo.selectedIndex].value)
+//END CHANGE 38959 -- raagaard
+	{
+		step.value = "3";
+	}
+	else
+	{
+		step.value = "4";
+	}
+
+}
+
+function displayKeyCode(evt)
+ {
+	 var charCode = (evt.which) ? evt.which : event.keyCode;
+	 if(charCode=='13')
+	 {
+		 search();
+	 }
+ }
+
+function search(searchText)
+{
+	var searchInput = document.getElementById("searchText");
+	mTerm = searchInput.value;
+    if(module == 'CampaignProspects'){
+			var prospectType = document.getElementById("campaign_prospect_type");
+			var lmodule = prospectType.value.toLowerCase();
+            relModule = lmodule;
+    }
+    mOffset = 0;
+	getObjects();
+}
+
+function getOrderBy()
+{
+	var order = '';
+    var tmpModule = module.toLowerCase();
+    if(module == 'CampaignProspects'){
+        tmpModule = document.getElementById("campaign_prospect_type").value.toLowerCase();
+    }
+
+	if(tmpModule == 'contacts' || tmpModule == 'leads' || tmpModule == 'prospects')
+	{
+		order = tmpModule+".last_name";
+	}
+	else
+	{
+		order = tmpModule+".name";
+	}
+	
+	orderBy = order.toLowerCase();
+}
+function validateForm()
+{
+	var selObjs = document.getElementById("selected_objs");
+	
+	if(selObjs.options.length > 0)
+	{
+		document.MailMerge.submit();
+		return true;
+	}
+	else
+	{
+        alert(SUGAR.language.get('MailMerge', 'LBL_SELECT_ONE'));
+		return false;
+	}	
+}
+if({MAILMERGE_GET_OBJECTS}){
+	getObjects();
+}
+</script>
+<!-- END: main -->

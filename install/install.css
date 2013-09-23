@@ -1,0 +1,372 @@
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ * Description:  Defines the stylesheet used for the application installation.
+ ********************************************************************************/
+
+ /* Default style*/
+BODY {
+	margin: 0px 0px 0px 0px;
+	background-color : #cccccc ;
+	color : #333333;
+	}
+img {
+	behavior:	url("themes/SugarIE6/js/pngbehavior.htc");
+}
+tr,td,th,table {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333333;
+	vertical-align: top;
+	}
+	
+h1 {
+	color: #EA1313;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 8px;
+	}
+
+h2 {
+	color: #137DED;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 18px; 
+	font-weight: bold; 
+	margin-bottom: 6px;
+	}
+
+h3 {
+	color: #333333; 
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 16px; 
+	font-weight: bold; 
+	margin-bottom: 4px;
+	}
+
+h4 {
+	color: #333333; 
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 14px; 
+	font-weight: bold; 
+	margin-bottom: 2px;
+	}
+
+h5 {
+	color: #333333; 
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 13px; 
+	font-weight: bold; 
+	margin-bottom: 1px;
+	}
+	
+p {MARGIN-TOP: 0px; MARGIN-BOTTOM: 10px}
+
+hr  { 
+	color: #888888;
+	width: 100%;
+	height: 1px;
+	margin: 0px;
+	}
+
+a:link, a:visited {
+	font-size: 12px; color: #333333; text-decoration: none;
+	font-family:  Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: underline;
+	}
+
+a:hover {
+	color: #EA1313;	text-decoration: none;
+    text-decoration: underline;
+	}
+
+LI {LIST-STYLE-TYPE: square; margin-left: 6px; MARGIN-BOTTOM: 2px;}
+
+
+	
+form {
+	margin: 0px;
+	}
+	
+input,select {
+	border: 1px solid #888888;
+	font-size: 11px;
+	background-color: #ffffff;
+	}
+
+input[type="radio"] {
+	border: none;
+	background-color: transparent;
+	}
+	
+textarea {
+	border: 1px solid #888888;
+	color: #222222;
+	font-size: 11px;
+	background-color: #ffffff;
+	}
+	
+.checkbox {
+	border:0px;
+	background-color: transparent;
+	}
+	
+.button {
+	border: 1px solid #000000;
+	font-size: 12px;
+	color: #ffffff;
+	background-color: #c60c30;
+	font-weight: bold;
+	}
+/* custom */
+
+.acceptButton {
+	
+	border: 1px solid #000000;
+	font-size: 12px;
+	color: #ffffff;
+	background-color: #c60c30;
+	font-weight: bold;
+	}
+
+table.shell {
+	background-color: #ffffff;
+	width: 700px;
+	height: 230px;
+	margin-bottom: 100px;
+	border: 1px solid #111111;
+	}
+table.shell td#help {
+background: #c60c30;
+border-bottom: 1px solid #000000;
+text-align: right;
+padding: 6px 15px;
+font-weight: bold;
+}
+table.shell td a {color: #c60c30;}
+
+
+table.shell td#help a:link, table.shell td#help a:visited, table.shell td#help a:hover {color: #eee;}
+
+table.shell td#ready_image {
+background: #666666;
+border-bottom: 1px solid #000000;
+text-align: center;
+padding: 0;
+}
+table.shell td#ready {
+background: #666666;
+border-bottom: 1px solid #000000;
+text-align: center;
+color: #ffffff;
+font-size: 24px;
+padding: 8px;
+}
+table.shell th {
+	border-bottom: 1px solid #ccc;
+	background-color: #ffffff;
+	color: #888888;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 15px 15px 10px 15px;
+	text-align: left;
+	}
+table.shell th h2 {
+	color: #888888;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;
+margin-top: 20px;
+margin-bottom: 0;
+}
+
+table.shell td {
+	padding: 15px;
+	
+	}
+	
+table.post_install {
+	background-color: #ffffff;
+	width: 600px;
+	height: 300px;
+	margin-top: 20px;
+	margin-bottom: 100px;
+	border: 1px solid #111111;
+	}
+
+table.post_install th {
+	border-bottom: 1px solid #888888;
+	background-color: #ffffff;
+	color: #888888;
+	font-size: 16px;
+	font-weight: bold;
+	padding: 6px;
+	text-align: left;
+	}
+	
+table.stdTable td {
+	padding: 5px 0 2px 5px;
+	}
+table.stdTable th {
+
+	padding: 2px;
+
+	}
+
+table.StyleDottedHr a:link, a:visited  {
+	color: #c60c30;
+}	
+
+
+table.Welcome td, table.StyleDottedHr td {
+border-bottom: 1px  #cccccc;
+	padding: 5px 0px 5px 0px;
+	}
+table.Welcome th {
+	color: #c60c30;
+	padding: 5px;
+	font-size: 14px;
+border-top: 2px solid  #c60c30;
+border-bottom: 1px solid #dddddd;;
+	}
+	
+table.StyleDottedHr th {
+	color: #444444;
+	padding: 5px 0;
+	font-size: 14px;
+	}
+table.Welcome a:link, a:visited  {
+	color: #cc0000;
+	text-decoration: underline;
+	}	
+
+.small {
+	font-size: 10px;
+	}
+.stop {
+	color: #cc0000;
+	text-align: left;
+	}
+.stop a:link, a:visited  {
+	color: #cc0000;
+	text-decoration: underline;
+	text-align: left;
+	}
+.go {
+	color: #00cc00;
+	}
+.required {
+	color: #ff2222;
+	font-weight: bold;
+	}
+.error{
+	color: #ff2222;
+	font-weight: bold;
+	font-size: 12px;
+}	
+	
+ul.tablist
+{
+padding: 4px 0;
+margin: 10px 0 0 0;
+border-bottom: 1px solid #999;
+font: 12px Arial, Verdana, Helvetica, sans-serif;
+}
+ 
+ul.tablist li
+{
+list-style: none;
+margin: 0;
+display: inline;
+}
+ul.tablist li a
+{
+padding: 4px 8px;
+margin: 0px;
+border-top: 1px solid #ccc;
+border-right: 1px solid #ccc;
+border-bottom: 1px solid #999;
+text-decoration: none;
+	color: #666666;
+}
+
+ul.tablist li a:link, ul.tablist li a:visited { text-decoration: none; 
+	color: #444444;}
+
+ul.tablist li a:hover
+{
+border-color: #666;
+color: #000;
+}
+
+ul.tablist li a.current, ul.tablist li a.current:hover
+{
+padding: 4px 8px;
+border-top: 1px solid #999;
+border-right: 1px solid #999;
+border-bottom: 1px solid #fff;
+font-weight: bold;
+background-color: #ffffff;
+	color: #000000;
+}
+a.other{
+	color: #000000;
+}
+
+/* fixes to yui classes */
+
+.yui-panel .hd 
+{
+	background-color:#DDDDDD !important;
+	border-left:medium none !important;
+	border-right:medium none !important;
+	border-top:1px solid #FFFFFF;
+	color:#444444 !important;
+	font-size:13px !important;
+	font-weight:bold !important;
+	line-height:normal !important;
+	overflow:hidden;
+	padding:4px 4px 4px 8px !important;
+}
+.yui-panel .bd
+{
+	padding:6px 8px 10px !important;
+}
+.yui-panel .bd p 
+{
+	margin:0 !important;
+}

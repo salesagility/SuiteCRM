@@ -1,0 +1,71 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: history -->
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+    <tr height="20">
+    <th width="2%"><img src="include/images/blank.gif" width="1" height="1" alt=""></th>
+    <th width="28%">{MOD.LBL_LIST_SUBJECT}</th>
+    <th width="10%">{MOD.LBL_LIST_STATUS}</th>
+    <th width="20%">{MOD.LBL_LIST_CONTACT}</th>
+    <th width="10%" nowrap="nowrap">{MOD.LBL_LIST_DATE}</th>
+
+    </tr>
+
+<!-- BEGIN: row -->
+<tr height="20" class="{ROW_COLOR}S1">
+        <td nowrap="nowrap" valign="top">{ACTIVITY_MODULE_PNG}</td>
+        <td nowrap="nowrap" valign="top">{ACTIVITY.NAME}  {ACTIVITY.ATTACHMENT}</td>
+        <td nowrap="nowrap" valign="top">{ACTIVITY.TYPE} {ACTIVITY.STATUS}</td>
+        <td valign="top">{ACTIVITY.CONTACT_NAME}</td>
+        <td nowrap="nowrap" valign="top">{ACTIVITY.DATE_TYPE}<img src="include/images/blank.gif" width="3" height="1" alt="">{ACTIVITY.DATE}</td>
+
+</tr>
+<!--  BEGIN: description -->
+<tr class="{ROW_COLOR}S1">
+    <td colspan="1" valign="top"></td>
+    <td colspan="4" valign="top">
+        <table><tr class="{ROW_COLOR}S1"><td valign="top"><img src="include/images/blank.gif" width="3" height="1" alt=""></td><td valign="top">{ACTIVITY.DESCRIPTION}
+        </td></tr></table>
+    </td>
+</tr>
+<!--  END: description -->
+
+<!-- END: row -->
+</table>
+<!-- END: history -->

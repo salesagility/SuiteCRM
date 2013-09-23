@@ -1,0 +1,69 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+<!-- BEGIN: main -->
+<form name="EditView" method="POST" action="index.php">
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+	<td><input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" type="submit" name="button" value="  {APP.LBL_SAVE_BUTTON_LABEL}  " > &nbsp;<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" type="submit" name="button" onclick="document.getElementById('action').value=document.getElementById('return_action').value;document.getElementById('return_module').value=document.getElementById('return_module').value;" value="  {APP.LBL_CANCEL_BUTTON_LABEL}  " ></td>
+	<td align="right" nowrap><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+	<td align='right'>{ADMIN_EDIT}</td>
+</tr>
+</table>
+
+<input type="hidden" name="module" id='module' value="LabelEditor">
+<input type="hidden" name="action" id='action' value="Save">
+<input type="hidden" name="return_module" id='return_module' value="LabelEditor">
+<input type="hidden" name="return_action" id='return_action' value="LabelList">
+<input type="hidden" name="module_name" value="{MODULE_NAME}">
+<input type="hidden" name="style" value="{STYLE}">
+<input type="hidden" name="sugar_body_only" value="{SUGAR_BODY_ONLY}">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+<tr>
+	<td scope="row">{MOD.LBL_KEY} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></td>
+	<td><input type="text" name="record" value = '{KEY}' {NO_EDIT}/></td>
+	<!-- BEGIN: popup -->
+	</tr><tr>
+	<!-- END: popup -->
+	<td scope="row">{MOD.LBL_VALUE} <span class="required">{APP.LBL_REQUIRED_SYMBOL}</span></td>
+	<td><input type="text" name="value" value='{VALUE}'/></td>
+
+</tr>
+</table>
+</form>
+<!-- END: main -->

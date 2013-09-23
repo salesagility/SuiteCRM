@@ -1,0 +1,110 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+-->
+
+<!-- BEGIN: main -->
+<script type="text/javascript" src="include/javascript/sugar_3.js?v={VERSION_MARK}"></script>
+<script type="text/javascript" language="Javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
+
+<!-- BEGIN: SearchHeader -->
+<table cellpadding="0" cellspacing="0" border="0" width="100%" class="edit view">
+	<tr>
+		<td>
+			<form action="index.php" method="post" name="popup_query_form" id="popup_query_form">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td scope="row" nowrap="nowrap">{MOD.LBL_DOC_NAME}</td>
+					<td  nowrap="nowrap"><input type="text" name="document_name"  size="10" value="{DOCUMENT_NAME}"/></td>
+					<td scope="row" nowrap="nowrap">{MOD.LBL_DET_IS_TEMPLATE}</td>
+					<td  nowrap="nowrap"><select name="is_template"  >{IS_TEMPLATE_OPTIONS}</select></td>
+				</tr>
+				<tr>
+					<td scope="row" nowrap="nowrap">{MOD.LBL_DET_TEMPLATE_TYPE}</td>
+					<td  nowrap="nowrap"><select name="template_type"  >{TEMPLATE_TYPE_OPTIONS}</select></td>
+					<td scope="row" nowrap="nowrap">{MOD.LBL_CATEGORY_VALUE}</td>
+					<td  nowrap="nowrap"><select name="category_id"  >{CATEGORY_OPTIONS}</select></td>
+				</tr>
+				<tr>
+					<td scope="row" nowrap="nowrap">{MOD.LBL_SUBCATEGORY_VALUE}</td>
+					<td  nowrap="nowrap"><select name="subcategory_id"  >{SUB_CATEGORY_OPTIONS}</select></td>
+					<td align="right" colspan=2>
+						<input type="hidden" name="module" value="EmailTemplates" />
+						<input type="hidden" name="action" value="PopupDocumentsCampaignTemplate" />
+						<input type="hidden" name="to_pdf" value="true" />
+						<input type="hidden" name="query" value="true" />
+						<input type="hidden" name="record_id" value="" />
+						<input type="hidden" name="target" value="{DOCUMENT_TARGET}" />
+						<input type="submit" name="button" class="button"
+                            id="search_form_submit"
+							title="{APP.LBL_SEARCH_BUTTON_TITLE}"
+							value="{APP.LBL_SEARCH_BUTTON_LABEL}" />
+					</td>
+				</tr>
+			</table>
+			</form>
+		</td>
+	</tr>
+</table>
+<!-- END: SearchHeader -->
+
+
+
+
+
+
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+<!-- BEGIN: list_nav_row -->
+{PAGINATION}
+<!-- END: list_nav_row -->
+	<tr height="20" >
+		<td scope="col" width="33%"  nowrap="nowrap"><a href="{ORDER_BY}document_name" class="listViewThLinkS1">{MOD.LBL_LIST_DOCUMENT}{arrow_start}{document_name_arrow}{arrow_end}</a></td>
+		<td scope="col" width="33%"  nowrap="nowrap">{MOD.LBL_LIST_REVISION}</td>
+		<td scope="col" width="34%"  nowrap="nowrap">{MOD.LBL_LIST_STATUS}</td>
+	</tr>
+<!-- BEGIN: row -->
+	<tr height="20" class="{ROW_COLOR}S1">
+		<td scope="row" valign="top">
+			<a href="javascript:void(0);" onclick="setDocumentToCampaignTemplate('{DOCUMENT_TARGET}','{DOCUMENT.ID}', '{DOCUMENT.DOCUMENT_NAME}','{DOCUMENT.DOCUMENT_REVISION_ID}','{DOCUMENT.LAST_REV_MIME_TYPE}');" >{DOCUMENT.DOCUMENT_NAME}</a>
+		</td>
+		<td valign="top">{DOCUMENT.LATEST_REVISION}</td>
+		<td valign="top">{DOCUMENT.STATUS_ID}</td>
+	</tr>
+	<tr>
+		<td colspan="20" class="listViewHRS1"></td>
+	</tr>
+<!-- END: row -->
+</table>

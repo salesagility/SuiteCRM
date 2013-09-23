@@ -1,0 +1,83 @@
+<!--
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ ********************************************************************************/
+-->
+<!-- BEGIN: main -->
+
+
+{CHECK_MAIL}
+<script type="text/javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
+
+<span class="error"><b>{ERROR}</b></span>
+<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
+<!-- BEGIN: list_nav_row -->
+{PAGINATION}
+<!-- END: list_nav_row -->
+
+	<tr height="20">
+	<td scope="col"  NOWRAP>{CHECKALL}</td>
+	<td scope="col" width="1%"  NOWRAP><slot>{ATTACHMENT_HEADER}</slot></td>
+	<td scope="col" width="41%"  NOWRAP><slot><a href="{ORDER_BY}name" class="listViewThLinkS1">{MOD.LBL_LIST_SUBJECT}{arrow_start}{name_arrow}{arrow_end}</a></slot></td>
+	<td scope="col" width="18%"  NOWRAP>{MOD.LBL_LIST_CONTACT}</td>
+	<td scope="col" width="20%"  NOWRAP><slot>{MOD.LBL_LIST_RELATED_TO}</slot></td>
+	<td scope="col" width="10%"  NOWRAP><slot>{MOD.LBL_QUICK_REPLY}</slot></td>
+	<td scope="col" width="10%"  NOWRAP><slot><a href="{ORDER_BY}assigned_user_name" class="listViewThLinkS1">{MOD.LBL_LIST_ASSIGNED}{arrow_start}{assigned_user_name_arrow}{arrow_end}</a></slot></td>
+	<td scope="col" width="10%"  NOWRAP><slot><a href="{ORDER_BY}date_sent" class="listViewThLinkS1">{MOD.LBL_LIST_DATE_SENT}{arrow_start}{date_sent_arrow}{arrow_end}</a></slot></td>
+	</tr>
+
+
+<!-- BEGIN: row -->
+<tr height="20"  class="{ROW_COLOR}S1">
+		<td valign="top">{PREROW}</td>
+		<td valign=TOP  nowrap><slot>{EMAIL.ATTACHMENT_IMAGE}</slot></td>
+		<td scope='row' valign=TOP><slot>
+			<div id="rollover"><a href="#" class="rollover">{EMAIL.PREVIEW_IMAGE}<span>{EMAIL.ROLLOVER}</span></a></div>&nbsp;
+			<{TAG.MAIN} href="{URL_PREFIX}index.php?action={EMAIL.LINK_ACTION}&module=Emails&record={EMAIL.ID}&offset={EMAIL.OFFSET}&stamp={EMAIL.STAMP}" >{EMAIL.NAME}</{TAG.MAIN}></slot></td>
+		<td valign=TOP><slot><{TAG.CONTACT} href="{URL_PREFIX}index.php?action=DetailView&module=Contacts&record={EMAIL.CONTACT_ID}" >{EMAIL.CONTACT_NAME}</{TAG.CONTACT}></slot></td>
+		<td valign=TOP><slot>{EMAIL.CREATE_RELATED}<{TAG.PARENT} href="{URL_PREFIX}index.php?action=DetailView&module={EMAIL.PARENT_MODULE}&record={EMAIL.PARENT_ID}" >{EMAIL.PARENT_NAME}</{TAG.PARENT}></slot></td>
+		<td valign=TOP  nowrap><slot>{EMAIL.QUICK_REPLY}</slot></td>
+		<td valign=TOP  nowrap><slot>{EMAIL.ASSIGNED_USER_NAME}</slot></td>
+		<td nowrap valign=TOP><slot>{EMAIL.DATE_SENT}</slot></td>
+
+</tr>
+
+<!-- END: row -->
+{PAGINATION}
+</table>
+<!-- END: main -->

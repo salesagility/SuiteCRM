@@ -1,0 +1,1628 @@
+html, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+    font-weight:normal;
+}
+
+body {
+
+	font-family: Arial, Sans-Serif;
+	font-size: 12px;
+	margin: 92px 0 10px 0;
+	color: #444;
+    background-url: http://api.thumbr.it/whitenoise-361x370.png?background=ddddddff&noise=626262&density=67&opacity=6
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #f10202;
+}
+
+h2 {font-size:1.5em;padding:10px 000;}
+
+p, fieldset, table, pre, blockquote, ul, ol, dl {
+	margin: 0;
+}
+a:hover {-webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;}
+
+th[align=left] {
+	text-align: left;
+	padding-left: 5px;
+}
+
+fieldset {
+	border: solid 1px #eee;
+	border-radius: 2px;
+}
+
+select,
+textarea {
+	padding: 2px 6px;
+	font-size: 12px;
+	color: #333;
+	border: solid 1px #a1dbff;
+	border-radius: 2px;
+    background-color:#ffffff;
+}
+
+select:active,
+select:focus {
+	border: solid 1px #fc786a;
+}
+
+a:link, 
+a:visited {
+	color: #15c;
+	text-decoration: none;
+}
+
+.clear {
+	clear: both;
+}
+
+span.required {
+	color: #dd4b39;
+	font-size: 15px;
+	line-height: 15px;
+}
+
+#header {
+	position: fixed;
+	top: 0px; left: 0px;
+	width: 100%;
+	z-index: 18;
+}
+
+ul {
+	-webkit-padding-start: 0;
+	padding: 0;
+	margin-left: 0 0 0 5px;
+}
+
+#sub_header {
+	background: #ffffff;
+	border-top: solid 1px #e5e5e5;
+	border-bottom: solid 1px #e5e5e5;
+	height: 45px;
+	padding-top: 12px;
+}
+
+#topNav {
+    background: #333333; /* Old browsers */
+    background: -moz-linear-gradient(top, #333333 0%, #222222 40%, #121212 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(40%,#222222), color-stop(100%,#121212)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #333333 0%,#222222 40%,#121212 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #333333 0%,#222222 40%,#121212 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #333333 0%,#222222 40%,#121212 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #333333 0%,#222222 40%,#121212 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#121212',GradientType=0 ); /* IE6-9 */
+	height: 33px;
+	line-height: 29px;
+	font-size: 13px;
+    border-bottom:3px solid #f10202;
+}
+
+#topNav a:link,
+#topNav a:visited {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+	color: #ccc;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#topNav a:hover,
+#topNav a:focus,
+#topNav a:active {
+	background-color: #4c4c4c;
+}
+
+#main {
+	padding: 0 20px;
+	margin-top: -2px;
+}
+
+#moduleList {
+	float: left;
+	margin-left: 5px;
+}
+
+#moduleList ul,
+#moduleList ul li {
+	display: inline;
+	list-style-type: none;
+	float: left;
+	margin: 0;
+}
+
+#moduleList a:link,
+#moduleList a:visited {
+	color: #ccc;
+	text-decoration: none;
+	cursor: pointer;
+	padding: 0 6px;
+	border-top: solid 2px #333;
+	float: left;
+}
+
+#admin_options a:link {border:none;}
+#admin_options a:hover {padding:0;}
+
+#moduleList ul li a:hover,
+#moduleList ul li a:focus,
+#moduleList ul li a:active {
+	background-color: #4c4c4c;
+	border-top: solid 2px #4c4c4c;
+}
+
+#moduleList ul li.current a:link,
+#moduleList ul li.current a:visited {
+	color: #fff;
+	font-weight: bold;
+
+	border-top: solid 2px #f10202;
+}
+
+#moduleList ul li ul li a:link,
+#moduleList ul li ul li a:visited {
+	font-weight: normal;
+	color: #ccc;
+    padding: 8px;
+}
+
+.yuimenu {
+	width: 397px;
+	padding: 10px 6px 15px 1px;
+	background: #4c4c4c;
+	color: #ccc;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.yuimenuitemlabel {font-weight:normal;}
+
+#MoreAll .yuimenu {
+	width: 375px !important;
+}
+
+.bd ul li a {padding:10px;}
+
+ul.shortCutsUl {
+	border-right: solid 1px #555;
+}
+
+ul.lastViewdUl {
+	border-left: solid 1px #555;
+	margin-left: -1px;
+}
+
+ul.shortCutsUl,
+ul.shortCutsUl li,
+ul.lastViewedUl,
+ul.lastViewedUl li {
+	width: 190px !important;
+	padding-left: 8px;
+	float: left;
+}
+
+.yuimenu .bd ul li a:link,
+.yuimenu .bd ul li a:visited {
+	border-top: none !important;
+	display: block;
+	width: 160px;
+	overflow: hidden;
+}
+
+.yuimenu .bd ul li a:hover,
+.yuimenu .bd ul li a:focus,
+.yuimenu .bd ul li a:active {
+	border-radius: 2px;
+	padding: 3px 7px;
+	background: #f10202 !important;
+	color: #fff !important;
+}
+
+li.yuimenuitem span {
+	font-size: 14px;
+	color: #fff;
+
+}
+
+.login {padding:0; margin:0;}
+
+#search, #sitemapLink, #colorPicker, #welcome, #globalLinks
+{
+    float: right;
+}
+#welcome
+{
+    font-weight: normal;
+    padding:2px 10px 0 10px;
+    color:#ffffff;
+    border-left: solid 1px #555;
+}
+
+#topNav #welcome a {color:#ffffff;}
+
+#topNav #welcome a:hover {color:#565656;background:none;}
+
+#user_info {
+	float: right;
+	margin-right: 5px;
+}
+
+#user_link.active,
+#gear_link.active {
+	background-color: #fff;
+	color: #15c;
+
+}
+
+#user_link.active:hover,
+#gear_link.active:hover {
+	background-color: #fff;
+}
+
+
+#user_link {
+	color: #ccc;
+	cursor: pointer;
+	background-image: url('../../../../themes/SuiteCRM/images/arrow_down.png');
+	background-repeat: no-repeat;
+	background-position: 125px center;
+	padding: 2px 10px 0 10px;
+	width: 120px;
+	border-right: solid 1px #555;
+    border-left: solid 1px #555;
+    margin-left:10px;
+	float: right;
+}
+
+#user_link:hover {
+	background-color: #4c4c4c;
+}
+
+#user_options {
+	display: none;
+	background: #fff;
+	width: 140px;
+	padding: 10px 25px 13px 12px;
+	position: fixed;
+	top: 31px; right: 5px;
+	border-top: none;
+	box-shadow: 1px 1px 3px #999;
+}
+
+#user_options a:link,
+#user_options a:visited {
+	padding: 7px 12px;
+	color: #15c;
+	border: none;
+}
+
+#user_options a:hover {
+	background: #eff3fb;
+	padding: 7px 12px;
+	border: none;
+}
+
+#gear_link {
+    width:100%;
+	background-image: url('../../../../themes/SuiteCRM/images/gear_white.png');
+	background-repeat: no-repeat;
+	background-position: right;
+    border-left: solid 1px #555;
+	float: right;
+	cursor: pointer;
+    color:#ffffff;
+    padding:2px 5px 0 5px;
+}
+
+.user_id {padding: 0 5px 0 0px;}
+
+#gear_link.active {
+	background-image: url('../../../../themes/SuiteCRM/images/gear_blue.png');
+}
+
+#gear_link:hover {
+	background-color: #4c4c4c;
+
+}
+
+#admin_options {
+	display: none;
+	background: #fff;
+	width: 70px;
+	padding: 10px 25px 13px 12px;
+	position: fixed;
+	top: 31px; right: 5px;
+	border: solid 1px #ddd;
+	border-top: none;
+	box-shadow: 1px 1px 3px #999;
+}
+
+#admin_options a:link,
+#admin_options a:visited {
+	color: #15c;
+}
+
+#admin_options a:hover {
+	background: #eff3fb;
+	padding: 7px 12px;
+}
+
+
+#companyLogo {
+
+	margin-right: 5px;
+	float: left;
+    padding:0 25px 0 25px;
+}
+
+/* detail view tabs stuff */
+.yui-hidden {
+	display: none;
+}
+
+.yui3-widget-positioned {
+	top: 90px !important;
+	width: 90%;
+}
+
+table#tabListContainerTable {
+	margin-top: -2px;
+}
+
+td#tabListContainerTD {
+	padding: 0 !important;
+}
+
+ul.yui-nav {
+	margin-top: 6px;
+}
+
+ul.yui-nav,
+ul.yui-nav li {
+	display: inline;
+	list-style-type: none;
+	-webkit-margin-before: 0;
+}
+
+ul.yui-nav li a:link,
+ul.yui-nav li a:visited {
+	color: #777;
+}
+
+ul.yui-nav li {
+	padding: 4px 12px;
+	border-bottom-color: #fc786a;
+	background: #f5f5f5;
+	margin-left: 2px;
+	margin-bottom: -1px;
+	float: left;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+ul.yui-nav li.selected {
+	background: rgba(250, 250, 250, 0.8);
+	font-weight: bold;
+	border-color: #fc786a;
+	border-bottom-color: rgba(250, 250, 250, 0.8);
+}
+
+ul.subpanelTablist,
+ul.subpanelTablist li {
+	display: inline;
+	list-style-type: none;
+}
+
+ul.subpanelTablist li a:link,
+ul.subpanelTablist li a:visited {
+	color: #777;
+}
+
+#addPage a,
+ul.subpanelTablist li {
+	padding: 4px 12px;
+	border: solid 1px #ccc;
+	border-top: none;
+	margin-left: 2px;
+	float: left;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#addPage a {
+	padding-top: 3px !important;
+}
+
+ul.subpanelTablist li.active {
+	background: #f5f5f5;
+	font-weight: bold;
+}
+
+.yui-hd {
+	display: none;
+}
+
+#dcboxbody {
+	background: rgba(255,255,255,.95);
+	border: solid 1px #999;
+	border-radius: 2px;
+	padding: 10px;
+	z-index: 26;
+}
+
+/* search form stuff */
+#dcmenuSearchDiv, #query_string {
+	float: left;
+}
+
+#glblSearchBtn {
+	float: left;
+}
+
+#dcmenuContainer {
+	float: right;
+	margin: -5px 5px 0 0;
+}
+
+ul#dcmenuitems,
+ul#dcmenuitems li {
+	display: inline;
+	list-style-type: none;
+	margin-left: 25px;
+}
+
+#sugar_spot_search, #query_string {
+margin-top:4px;
+	width: 200px;
+	font-size: 12px;
+	color: #333;
+	border: solid 1px #d9d9d9;
+	border-top-color: #c0c0c0;
+	outline: none;
+}
+
+.sugar_spot_search {
+	width: 350px;
+}
+
+.sugar_spot_search .dashletPanel {
+	border: none !important;
+}
+
+.yui3-widget-positioned div#dcboxbody.sugar_spot_search {
+	top: 20px !important;
+}
+
+input[type=text],
+input[type=password] {
+	padding: 2px 6px;
+    border-radius:2px;
+	height: 18px;
+	font-size: 12px;
+	color: #333;
+	border: solid 1px #a1dbff;
+	outline: none;
+}
+
+select {
+	color: #333;
+	border: solid 1px #d9d9d9;
+	border-top-color: #c0c0c0;
+	outline: none;
+	margin-left: 2px;
+}
+
+input[type=checkbox], input[type=radio] {
+	border: 0px;
+	background-color: transparent;
+	margin: 0px;
+	vertical-align: bottom;
+	border-image: initial;
+	display: inline-block;
+}
+
+#user_name,
+#user_password {
+	width: 175px;
+}
+
+.selectCol {
+	width: 40px;
+}
+
+div.dashletPanel {
+	border: solid 1px #888;
+	border-radius: 5px;
+}
+
+ul.noBullet {
+	list-style-type: none;
+}
+
+ul.noBullet li {
+	margin-bottom: 20px;	
+}
+
+ul.noBullet2:first-child {
+	height: 0;
+	margin: 0;
+}
+
+div.hd {
+    background: #777;
+}
+
+div.hd h3 span {
+	color: #ffffff;
+    font-size:14px;
+}
+
+.dashletToolSet a{width:12px; height:12px;}
+
+table.formHeader td {
+	padding: 2px 5px 2px 10px !important;
+}
+
+input[type=button], 
+input[type=submit], 
+input[type=reset],
+button {
+	padding: 1px 8px 1px 8px;
+    margin: 0 3px 0 3px;
+    background: #ffffff; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+    border: solid 1px #999;
+	color: #121212;
+	border-radius: 2px;
+	cursor: pointer;
+    font-size:12px;
+}
+
+input[type=button],
+input[type=submit],
+input[type=reset],
+button
+{-webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;}
+
+span.id-ff button {
+vertical-align: middle;
+}
+span.id-ff button,
+.pagination button  {
+
+}
+
+.pagination td {
+
+}
+
+ul.clickMenu {
+    list-style: none;
+    padding: 0px 0px 0px 0px;
+    margin: 0 !important;
+    vertical-align: bottom;
+    color: #000000;
+    display: inline-block;
+}
+ul.clickMenu form{
+    float:left;
+    display:block;
+}
+ul.SugarActionMenuIESub {
+}
+
+#globalLinksModule ul.clickMenu.SugarActionMenu li a:hover,
+#globalLinksModule ul.clickMenu li:hover span,
+ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
+ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
+ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
+
+    background-color: #4e8ccf;
+    border-color: #4e8ccf;
+    color: #fff;
+}
+ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
+ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
+    /*color: #fff !important;*/
+}
+
+ul.clickMenu li span.ab:hover {
+    background-position: 6px 0px;
+}
+ul.clickMenu>li, ul.SugarActionMenuIESub li {
+    background: #ffffff; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+    border-radius:2px;
+    padding:5px;
+    border: 1px solid #ABC3D7;
+    float: left;
+    margin: 0;
+    list-style: none;
+    position: relative; /*--Declare X and Y axis base--*/
+    cursor: pointer;
+}
+ul.SugarActionMenuIESub li a,
+ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a{
+    display: block;
+    text-decoration: none;
+    float: left;
+    font-weight: normal !important;
+    padding: 1px 10px 1px 10px !important;
+    color: #000;
+    font-size: 12px;
+}
+
+.list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
+    color: #fff;
+}
+
+ul.clickMenu li.single a{
+    padding-right: 8px !important;
+}
+
+ul.clickMenu li a:hover{
+    text-decoration: none !important;
+}
+ul.clickMenu li span { /*--Drop down trigger styles--*/
+    width: 22px;
+    height: 16px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    cursor: pointer;
+}
+
+ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
+    border-left: 1px #aaa solid;
+    /* Remove the padding, not needed when we select records */
+    /* padding-left: 5px; */
+}
+ul.clickMenu li span.subhover {
+    cursor: pointer;
+} /*--Hover effect for trigger--*/
+ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub {
+    list-style: none;
+    position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+    left: 0; top: 18px;
+    background: #fff;
+    margin: 0;
+    display: none;
+    float: left;
+    width: auto;
+    border: 1px solid #ccc;
+    box-shadow: #999 0px 5px 10px;
+    -moz-box-shadow: #999 0px 5px 10px;
+    -webkit-box-shadow: #999 0px 5px 10px;
+    padding: 8px 0px;
+    z-index: 10;
+    overflow:hidden;
+}
+
+ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li{
+    margin: 0;
+    padding: 0px;
+    clear: both;
+    /*width: 170px;*/
+    width:100%;
+    white-space: nowrap;
+
+}
+ul.clickMenu.subpanel.records {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    background-image: none;
+}
+
+/*
+ul.clickMenu.subpanel.records:hover {
+	background-color: #4e8ccf !important;
+	background-image: none !important;
+	border-color: #4e8ccf !important;
+}
+*/
+
+
+ul.clickMenu.subpanel.records li a{
+    color: #aaa;
+}
+ul.clickMenu.subpanel.records > li div:hover a{
+    color: #fff !important;
+}
+
+ul.clickMenu.subpanel.records li > span{
+    opacity: .5;
+    height: 16px;
+    width: 17px;
+    padding:0 5px 0 0 !important;
+    background-position: 50% -28px;
+}
+
+ul.clickMenu.subpanel.records:hover li > span{
+
+}
+
+ul.clickMenu.subpanel.records li ul.subnav li a span {
+    height: 0px;
+    width: 0px;
+    background-image: none;
+}
+ul.clickMenu.button li span.ab:hover {
+    background-position: 50% 0px;
+
+}
+ul.clickMenu.button li > span {
+    width: auto;
+    background-position: 50% -20px;
+    padding: 3px 15px 3px 10px !important;
+    height: auto;
+}
+
+ul.clickMenu.button:hover li > span {
+
+}
+
+ul.clickMenu.button li > span a {
+    padding: 0px !important;
+}
+
+ul.clickMenu.button span {
+    padding-right: 5px;
+}
+
+ul.clickMenu.button li ul.subnav {
+    width: auto;
+}
+
+ul.clickMenu li a.disabled {
+    color:gray !important;
+    cursor:default !important;
+}
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records , .evenListRowS1:hover td ul.clickMenu.subpanel.records {
+    background-image: -moz-linear-gradient(center top,
+    #ffffff 0%,
+    #eeeeee 10%,
+    #dfdfdf 100%
+    );
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #ffffff),
+        color-stop(.10, #eeeeee),
+        color-stop(1, #dfdfdf)
+    );
+    border: 1px solid #AAAAAA;
+}
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records li a, .evenListRowS1:hover td ul.clickMenu.subpanel.records li a {
+    color: #000;
+}
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records li span, .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
+    opacity: 1;
+}
+
+ul.clickMenu li ul.subnav li a,ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
+    float: left;
+    background: #fff;
+    padding: 1px 10px !important;
+    border: 0px !important;
+    /*width: 150px;*/
+    width:100%;
+    text-align: left;
+    font-size: 12px !important;
+    color: #000;
+
+}
+
+ul.clickMenu li ul.subnav li input {
+    padding: 2px 10px !important;
+    /*width: 170px;*/
+    width:100%
+}
+ul.SugarActionMenuIESub li a:hover,
+ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
+    background-color: #4e8ccf;
+    color: #fff;
+    font-weight: normal !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    text-shadow: none;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+
+}
+
+div.action_buttons form {float:left;}
+
+td.paginationActionButtons ul.clickMenu .massall,
+ul#selectLink.clickMenu .massall, td.selectCol .massall{
+    float: left;
+    margin: 2px 0 0 4px;
+}
+
+td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
+    padding: 0px !important;
+}
+ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
+    display:none;
+}
+
+#globalLinksDivider {
+    float: right;
+    margin-right: 0px;
+}
+ul#globalLinksSubnav, ul#quickCreateULSubnav{
+    font-family: Arial;
+}
+ul#globalLinks.clickMenu {
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
+}
+
+ul#globalLinks.clickMenu li > span {
+    height: 43px;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=tabDownArrowOff.png');
+    background-position: right center;
+    width: auto;
+    margin-right: 10px;
+    padding-right: 8px;
+}
+
+ul#globalLinks.clickMenu li > span a {
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-top: 13px;
+    padding: 0px 10px !important;
+}
+
+
+ul#globalLinks.clickMenu li ul.subnav {
+    top: 43px;
+    right: 0px;
+    left: auto;
+}
+
+ul#globalLinks.clickMenu > li > a {
+    color: #fff;
+    font-size: 14px;
+    padding: 14px 7px !important;
+}
+
+ul#selectLink.clickMenu {
+    height: 17px;
+    min-width: 20px;
+    background-image: none;
+}
+
+td.paginationActionButtons ul.clickMenu #massall,
+ul#selectLink.clickMenu #massall{
+    float: left;
+    margin: 1px 4px;
+}
+.selectActions.clickMenu {
+    display: none;
+}
+
+ul.clickMenu.show {
+    display:inline-block;
+}
+
+ul#selectLink.clickMenu > li > a{
+    padding-left: 0px !important;
+}
+
+ul#selectLink.clickMenu li span {
+    height: 17px;
+}
+
+ul#selectLink.clickMenu li ul.subnav {
+
+}
+
+ul#detailViewActions.clickMenu {
+    margin-top: 2px !important;
+}
+
+#selectActions.clickMenu {
+    display: none;
+}
+
+.selectActionsDisabled {
+    display: inline-block;
+    border: 1px solid #ABC3D7;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: bottom;
+    background-color: #eee;
+    background: #ffffff; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-8 */
+    border-radius:2px;
+    padding:5px;
+}
+
+.selectActionsDisabled span {
+    width: 17px;
+    height: 17px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    opacity: .5;
+}
+
+.selectActionsDisabled span.ab {
+    border-left: 1px #ccc solid;
+    margin-left: 10px;
+    padding-left: 5px;
+}
+
+.selectActionsDisabled a, #selectActionsDisabled a:hover {
+    float: left;
+    display: block;
+    text-decoration: none !important;
+    color: #999 !important;
+    padding: 1px 0px 0px 0px!important;
+    text-shadow: 1px 1px #FFFFFF;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+#quickCreate {
+    float: right;
+}
+
+#quickCreate ul.clickMenu {
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
+}
+
+
+#quickCreate ul.clickMenu > li {
+    width: 50px;
+    height: 43px;
+
+}
+#quickCreate ul.clickMenu li > span {
+    background: url('../../../../index.php?entryPoint=getImage&imageName=quick-create.png') no-repeat center center;
+    height: 43px;
+    width: 50px;
+}
+
+#quickCreate ul.clickMenu > li:hover {
+    background-color: #f10202;
+}
+ul#globalLinksSubnav li { min-width: 120px;}
+ul#globalLinksSubnav, ul#quickCreateULSubnav,
+#quickCreate ul.clickMenu li ul.subnav, #globalLinksModule ul.clickMenu li ul.subnav{
+    top: 43px;
+    right: 0;
+    left: auto;
+    padding: 10px 0px;
+    border: 1px solid #999;
+    width: 100%;
+}
+
+#quickCreate ul.clickMenu li ul.subnav {
+    width: auto;
+}
+
+#globalLinksSubnav li a, #quickCreateULSubnav li a,
+#quickCreate ul.clickMenu li ul.subnav li a, #globalLinksModule ul.clickMenu li ul.subnav li a {
+    padding: 4px 10px !important;
+    font-size: 13px !important;
+    color: #666666 !important;
+    line-height: 1.45;
+}
+#quickCreateULSubnav li.moduleMenuOverFlowLess a, #quickCreateULSubnav li.moduleMenuOverFlowMore a,
+#quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a {
+    color: #999 !important;
+}
+
+#quickCreate ul.clickMenu li ul.subnav li a:hover, #globalLinksModule ul.clickMenu li ul.subnav li a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a:hover {
+    color: #fff !important;
+}
+
+ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav li a:hover .showMoreArrow {
+    background-position: center 8px;
+    opacity: 1;
+}
+
+
+#quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img
+{
+    opacity: .6;
+}
+
+
+input[type=button]:hover,
+input[type=button]:focus,
+input[type=button]:active,
+input[type=submit]:hover,
+input[type=submit]:focus,
+input[type=submit]:active {
+	border-color: #565656;
+    background:#f10202;
+    color:#ffffff;
+}
+
+input[type=button].primary, input[type=submit].primary {
+    background: #616365;
+	border: solid 1px #c00;
+	color: #fff;
+	font-weight: bold;
+}
+
+input[type=button].primary:hover, input[type=submit].primary:hover {
+
+    background: #f10202;
+}
+	
+input[type=button].search {
+	background-image: url('../../../../themes/SuiteCRM/images/search_mag.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: #ffffff;
+	padding: 0px 10px !important;
+    color:#ffffff;
+    width:30px;
+}
+
+input[type=button].search:hover {opacity:0.6;}
+
+
+div.global_search_btn{
+	background-image: url('../../../../themes/SuiteCRM/images/search_mag.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: #ffffff;
+	border-radius: 2px;
+	cursor: pointer;
+    margin-top:3px;
+    MARGIN-RIGHT:5PX;
+    height:20px;
+	padding: 2px 15px !important;
+    color:#ffffff;
+}
+
+input[type=submit].rmv_btn_css,
+button.rmv_btn_css {
+	padding: 0 !important;
+	background: transparent !important;
+	border: none !important;
+	margin: 0 !important;
+	border-radius: 2px;
+}
+
+.moduleTitle h2 {
+	display: block;
+	float: left;
+}
+
+.moduleTitle h2 span.pointer {
+	padding: 0px 8px;
+	font-size: 18px;
+	line-height: 16px;
+}
+
+a.utilsLink {
+border:none;
+}
+
+.moduleTitle span.utils {
+	display: block;
+    font-weight:bold;
+    background: #4096ee; /* Old browsers */
+	float: right;
+	margin-top: 6px;
+	padding: 3px;
+    border-radius: 2px;
+    cursor: pointer;
+    border:1px solid #666666;
+
+}
+
+.moduleTitle span.utils a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+.moduleTitle span.utils a img {
+	margin-bottom: -2px;
+}
+
+.moduleTitle img {
+	margin-right: 0px;
+	border: 0;
+	border-image: initial;
+}
+
+.search {
+	border: solid 1px #e5e5e5;
+	border-radius: 2px;
+	clear: both;
+	padding: 8px;
+	background: rgb(250,250,250);
+}
+
+table {
+	border-collapse: collapse;
+	border: none;
+}
+
+th {
+	text-align: left;
+}
+
+th, td {
+	border: none;
+	vertical-align: middle;
+}
+
+td[valign=top] {
+	vertical-align: top !important;
+}
+
+th, th a:link, th a:visited {
+	background: none;
+	color: #333333;
+	font-weight: bold;
+}
+
+.oddListRowS1 {
+
+}
+
+.evenListRowS1 {
+	background: #f7f7f7;
+}
+
+#ConfigureTabs {overflow:auto;}
+
+#content{padding:25px 000;}
+
+#contentTable{overflow:visible;padding:25px;}
+
+#contentTable td {
+	padding: 0;
+
+}
+
+#contentTable tr td table tr td {
+	vertical-align: middle;
+	padding: 6px 8px 6px 5px;
+}
+
+#dashletCtrls,
+#bottomLinks {
+	padding-left: 25px;
+	float: right;
+	color: #444;
+}
+
+#bottomLinks {
+	padding-right: 20px;
+}
+
+#dashletCtrls img {
+	margin-left: 5px;
+}
+
+#bottomLinks img {
+	border: 0px;
+	margin-bottom: -3px;
+	margin-left: 5px;
+	border-image: initial;
+}
+
+#dashletCtrls a,
+#bottomLinks a {
+	color: #666;
+	text-decoration: none;
+}
+
+#footer {
+	padding: 10px 20px;
+	text-align: center;
+	clear: both;
+}
+
+.yui-ac-container {
+	float: left;
+}
+
+.yui-ac-container button#btn_parent_name {
+	float: left;
+	height: 18px !important;
+	padding: 2px 8px !important;
+}
+
+.yui-overlay, .yui-panel-container {
+	visibility: hidden;
+	position: absolute;
+}
+
+.yui-overlay-hidden {
+	display: none;
+}
+
+.visible {
+	display: block;
+	top: 31px !important;
+}
+
+div.close {
+	position: absolute;
+	right: 15px; top: 10px;
+	width: 24px;
+}
+
+#dctitle {
+	width: 100px;
+}
+
+.dccontent {
+	padding: 12px;
+}
+
+/* Clean this junk up -- add/configure dashlet stuff */
+.yui-panel {
+position: relative;
+left: 0;
+top: 0;
+border-style: solid;
+border-width: 1px 0;
+border-color: #808080;
+z-index: 1;
+border-width: 1px;
+zoom: 1;
+background: #fff;
+}
+
+.yui-panel-container.shadow .underlay {
+position: absolute;
+top: 4px;
+left: -1px;
+right: -1px;
+bottom: -1px;
+}
+
+/* search popup header */
+#dchead {
+	height: 15px;
+}
+
+.yui-panel-container{
+	z-index: 19 !important;
+}
+
+.yui-panel-container .container-close {
+overflow: hidden;
+text-indent: -10000em;
+text-decoration: none;
+}
+
+.yui-panel table.edit.view {
+	border: none !important;
+	background: #fff;
+
+}
+
+#dashletsList {
+background: #fff;
+overflow: auto;
+}
+.container-close {
+position: absolute;
+top: 3px;
+right: 6px;
+width: 16px;
+height: 16px;
+background: transparent url('../../../../themes/SuiteCRM/images/dashletclose.png') no-repeat;
+background-position: center middle;
+cursor: pointer;
+}
+
+.dashletToolSet a img:hover {opacity:0.6;-webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;}
+
+.dashletToolSet a {
+	margin-left: 3px;
+    margin-right: 3px;
+}
+
+#dashletsDialogHeader, .hd {
+	color: #ffffff;
+	font-size: 12px;
+}
+#dashletSearch {
+	background-color: #efefef;
+	border-bottom: solid 1px #ccc;
+}
+#moduleDashlets,
+#chartDashlets,
+#toolsDashlets,
+#webDashlets {
+	padding: 8px;
+}
+
+#dashletsList h3 {
+	display: block;
+	clear: both;
+	padding-top: 15px;
+}
+.mask {
+z-index: 19 !important;
+display: none;
+position: fixed !important;
+top: 0
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #000;
+opacity: .6;
+}
+
+
+#dashletsDialog_c {
+	position: absolute;
+	z-index: 100 !important;
+	top: 120px !important;
+	background: #eee;
+	border: solid 1px #888;
+    overflow:auto;
+}
+
+/* help popup */
+#overDiv {
+	background: #fff;
+	border: solid 1px #888;
+	border-radius: 2px;
+}
+.olFontClass ul {
+	margin: 5px 20px;
+}
+
+td.helpIcon {
+	padding: 0 !important;
+	vertical-align: top !important;
+}
+
+.helpIcon img {
+	float: right;
+}
+
+ul#subpanel_list {
+	/*border-top: solid 2px #d94a38;
+	margin-top: 8px;
+	padding-top: 8px;*/
+	margin-top: 20px;
+}
+
+/*div.view table {
+
+}*/
+
+.detail.view,
+.edit.view {
+	border: solid 1px #ccc !important;
+	border-radius: 2px;
+	margin: 10px 0;
+	clear: both;
+	padding: 6px 8px 8px;
+box-shadow:0px 0px 2px #999;
+}
+
+table.detail {
+	border-collapse: separate;
+}
+
+table.detail th {
+	background: transparent;
+}
+
+.view h4 {
+	margin: 0 0 3px 3px;
+}
+
+/* Listview styles */
+.list
+{
+    border: 1px solid;
+}
+
+a.listViewThLinkS1{ background: #ebebed !important;}
+.list tr.pagination td table td
+{
+
+    color:#666666;
+    padding:0;
+}
+.td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col]
+{
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+    background: #ebebed !important;
+}
+
+.list {
+	border: solid 1px #ccc;
+}
+table.list {
+	border-collapse: separate;
+}
+
+table.list td[valign=top] {
+	vertical-align: middle !important;
+}
+
+.list, .edit .list {
+	padding: 0 !important;
+}
+
+div.listViewBody tr.pagination td {
+	border-top: solid 1px #ccc;
+	border-bottom: solid 1px #ccc;
+	border-collapse: collapse;
+}
+
+div.listViewBody table.paginationTable,
+div.listViewBody table.paginationTable td {
+	border: 0;
+}
+
+div.listViewBody .list {
+	border-top: none;
+	border-bottom: none;
+}
+
+.detail.view tr td[scope=row] {
+	color: #888;
+	background-color: #dedede;
+	border: solid 1px #ccc !important;
+}
+
+.detail.view tr td {
+	border: solid 1px #efefef !important;
+	background-color: #fff;
+}
+
+.detail.view tr td table tr td {
+	border: none !important;
+}
+
+.edit.view tr td[scope=row] {
+	color: #888;
+}
+
+.edit.view tr td {
+	background-color: #fff;
+}
+
+.edit.view tr th {
+	background: transparent;
+	padding: 0;
+}
+
+table.edit {
+	border-collapse: separate;
+}
+
+.search.view tr td[scope=row] {
+	background-color: #fff;
+}
+.search.view {
+	background: #fff;
+}
+
+/*Administration Area */
+iframe.teamNoticeBox {
+	display: none;
+}
+
+#collapse_tree, #collapse_help {color:#ffffff;background-color:#ffffff; border-radius:2px;margin-top:10px;}
+
+#mbhelp {padding:10px;}
+
+table.other {
+	width: 100%;
+	border: solid 1px #ccc;
+	border-radius: 2px !important;
+	border-collapse: separate;
+    -moz-box-shadow: 0 0 5px #999;
+    -webkit-box-shadow: 0 0 5px#999;
+    box-shadow: 0 0 5px #999;
+	margin-bottom: 8px;
+
+}
+
+table.other td {
+	padding: 12px;
+
+}
+
+div.buttons {
+	padding: 10px 0;
+}
+
+ul#subpanel_list li table.list {
+	box-shadow: 1px 1px 3px #999;
+}
+
+div.detail, 
+table.edit,
+table.list,
+div.search,
+.dashletPanel {
+	box-shadow: 1px 1px 3px #ccc;
+	margin-bottom: 8px;
+}
+
+table.edit fieldset table,
+div.dashletPanel table.list {
+	margin-bottom: 0 !important;
+}
+
+#page_0_hidden0b,
+#page_0_hidden1b {
+	display: none;
+}
+
+/* popup stuffs */
+body.popupBody {
+	padding: 10px;
+	margin-top: 0;
+}
+
+#addformlink {
+	float: left;
+}
+
+#search {float:right;padding: 0px 10px 0 10px;}
