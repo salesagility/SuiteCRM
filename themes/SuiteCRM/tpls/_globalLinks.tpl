@@ -5,6 +5,7 @@
 {/if}
 
 <div id="admin_options" style="display:none;">
+    <a id="welcome_link" href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>Profile</a>
     {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
         <a id="{$gcl_key}_link" href="{$GCL.URL}" {if $smarty.foreach.gcl.last}class="last"{/if}{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a><br/>
 

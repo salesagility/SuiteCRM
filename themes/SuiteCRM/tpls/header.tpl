@@ -8,8 +8,6 @@
 		{/if}
 
 		<div id="sub_header">
-			{include file="_companyLogo.tpl" theme_template=true}
-
 			{include file="_search.tpl" theme_template=true}
 
 			{$SUGAR_DCMENU}
@@ -18,6 +16,9 @@
 			<br /><br />
 			{/if}
 
+            {if $AUTHENTICATED}
+                {include file="_headerLastViewed.tpl" theme_template=true}
+            {/if}
 			<div class="clear"></div>
 		</div>
 

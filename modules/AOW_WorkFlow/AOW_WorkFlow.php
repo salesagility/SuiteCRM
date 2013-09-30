@@ -211,7 +211,7 @@ class AOW_WorkFlow extends Basic {
                                 $value = '(';
                                 foreach($multi_values as $multi_value){
                                     if($value != '(') $value .= $sep;
-                                    $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' "'.$multi_value.'"';
+                                    $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
                                 }
                                 $value .= ')';
                             }
@@ -221,7 +221,7 @@ class AOW_WorkFlow extends Basic {
 
                         case 'Value':
                         default:
-                            $value = '"'.$condition->value.'"';
+                            $value = "'".$condition->value."'";
                             break;
                     }
 
@@ -236,6 +236,8 @@ class AOW_WorkFlow extends Basic {
                 $where .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
             $query = $module->create_new_list_query('', $where, array(), array(), 0, '', false, $this);
+
+            echo '<br />'.$query.'<br />';
 
             return $module->process_full_list_query($query);
 
@@ -274,7 +276,7 @@ class AOW_WorkFlow extends Basic {
             $action = new AOW_Action();
             $action->retrieve($row['id']);
 
-            if($this->multiple_runs || !$processed->db->getOne('select id from aow_processed_aow_actions where aow_processed_id = "'.$processed->id.'" AND aow_action_id = "'.$action->id.'" AND status = "Complete"')){
+            if($this->multiple_runs || !$processed->db->getOne("select id from aow_processed_aow_actions where aow_processed_id = '".$processed->id."' AND aow_action_id = '".$action->id."' AND status = 'Complete'")){
                 $action_name = 'action'.$action->action;
 
                 if(file_exists('custom/modules/AOW_Actions/actions/'.$action_name.'.php')){

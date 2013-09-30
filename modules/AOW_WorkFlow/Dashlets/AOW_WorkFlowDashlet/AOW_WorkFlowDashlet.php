@@ -28,9 +28,9 @@ require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
 
 class AOW_WorkFlowDashlet extends DashletGeneric {
-    function FreeFlow_FreeFlowDashlet($id, $def = null) {
+    function AOW_WorkFlowDashlet($id, $def = null) {
 		global $current_user, $app_strings;
-		require('modules/FreeFlow/metadata/dashletviewdefs.php');
+		require('modules/AOW_WorkFlow/metadata/dashletviewdefs.php');
 
         parent::DashletGeneric($id, $def);
 
