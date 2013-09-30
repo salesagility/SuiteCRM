@@ -173,11 +173,11 @@
 }
 
 .yui-menu-button button {
-    background-image: url(menu-button-arrow.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=menu-button-arrow.png);
 }
 
 .yui-split-button button {
-    background-image: url(split-button-arrow.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=split-button-arrow.png);
 }
 
 .yui-button-focus {
@@ -195,7 +195,7 @@
 }
 
 .yui-split-button-focus button {
-    background-image: url(split-button-arrow-focus.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=split-button-arrow-focus.png);
 }
 
 .yui-button-hover {
@@ -213,7 +213,7 @@
 }
 
 .yui-split-button-hover button {
-    background-image: url(split-button-arrow-hover.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=split-button-arrow-hover.png);
 }
 
 .yui-button-active {
@@ -240,7 +240,7 @@
 }
 
 .yui-split-button-activeoption button {
-    background-image: url(split-button-arrow-active.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=split-button-arrow-active.png);
 }
 
 .yui-radio-button-checked, .yui-checkbox-button-checked
@@ -275,11 +275,11 @@
 }
 
 .yui-menu-button-disabled button {
-    background-image: url(menu-button-arrow-disabled.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=menu-button-arrow-disabled.png);
 }
 
 .yui-split-button-disabled button {
-    background-image: url(split-button-arrow-disabled.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=split-button-arrow-disabled.png);
 }
 
 .yui-calcontainer {
@@ -942,7 +942,7 @@ span.yui-carousel-first-button-disabled {
     left: 200px;
     height: 183px;
     width: 14px;
-    background: url(hue_bg.png) no-repeat;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=hue_bg.png) no-repeat;
     top: 4px;
 }
 
@@ -1164,7 +1164,7 @@ span.yui-carousel-first-button-disabled {
 .yui-module {
 
 }
-.yui-module .hd, .yui-panel .hd {
+.yui-module .hd, .yui-panel. hd {
 margin-bottom:5px;
 }
 
@@ -1178,7 +1178,7 @@ margin-bottom:5px;
     font-weight: bold;
     line-height: 2;
     line-height: 1.8;
-    color: #000;
+    color: #ffffff;
     background-color:#616365;
     background: #616365 none repeat scroll 0 0;
 }
@@ -3599,7 +3599,7 @@ height:auto;
 }
 
  .yuimenubarnav .yuimenubaritemlabel-hassubmenu {
-    background: url(menubaritem_submenuindicator.png) right center no-repeat
+    background: url(../../../../index.php?entryPoint=getImage&imageName=menubaritem_submenuindicator.png) right center no-repeat
         ;
 }
 
@@ -3619,7 +3619,7 @@ height:auto;
 }
 
  .yuimenubarnav .yuimenubaritemlabel-hassubmenu-disabled {
-    background-image: url(menubaritem_submenuindicator_disabled.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=menubaritem_submenuindicator_disabled.png);
 
 }
 
@@ -3716,7 +3716,7 @@ height:auto;
 }
 
  .yuimenuitem-checked {
-    background-image: url(menuitem_checkbox.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=menuitem_checkbox.png);
     background-position: left center;
     background-repeat: no-repeat;
 }
@@ -3731,11 +3731,11 @@ height:auto;
 }
 
  .yuimenuitem-hassubmenu-disabled {
-    background-image: url(menuitem_submenuindicator_disabled.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=menuitem_submenuindicator_disabled.png);
 }
 
  .yuimenuitem-checked-disabled {
-    background-image: url(menuitem_checkbox_disabled.png);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=menuitem_checkbox_disabled.png);
 }
 
 
@@ -3817,7 +3817,7 @@ height:auto;
 }
 
 .yui-pv .hd {
-    background: url(header_background.png) repeat-x;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=header_background.png) repeat-x;
     min-height: 30px;
     overflow: hidden;
     zoom: 1;
@@ -3907,11 +3907,11 @@ height:auto;
 }
 
 .yui-pv th.yui-dt-asc .yui-dt-liner {
-    background: transparent url(asc.gif) no-repeat scroll right center;
+    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=asc.gif) no-repeat scroll right center;
 }
 
 .yui-pv th.yui-dt-desc .yui-dt-liner {
-    background: transparent url(desc.gif) no-repeat scroll right center;
+    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=desc.gif) no-repeat scroll right center;
 }
 
 .yui-pv .yui-pv-table .yui-dt-hd th a {
@@ -5061,7 +5061,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-toolbar-container .yui-button-selected span.yui-toolbar-icon, .yui-toolbar-container .yui-button-hover span.yui-toolbar-icon
 {
-    background-image: url(editor-sprite-active.gif);
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=editor-sprite-active.gif);
 }
 
 .yui-toolbar-container .visible .yuimenuitemlabel {
@@ -5268,7 +5268,7 @@ div.yuimenu li.selected a.selected {
 .yui-toolbar-container .yui-toolbar-spinbutton a.up, .yui-toolbar-container .yui-toolbar-spinbutton a.down
 {
     right: 2px;
-    background: url(editor-sprite.gif) no-repeat 0 -1222px;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=editor-sprite.gif) no-repeat 0 -1222px;
     overflow: hidden;
     height: 6px;
     width: 7px;
@@ -5299,7 +5299,7 @@ div.yuimenu li.selected a.selected {
 
 .yui-toolbar-container .yui-toolbar-select span.yui-toolbar-icon
 {
-    background: url( editor-sprite.gif ) no-repeat 0 -1144px;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=editor-sprite.gif ) no-repeat 0 -1144px;
     overflow: hidden;
     right: -2px;
     top: 0px;
@@ -5496,7 +5496,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-panel .ft span.tip span.icon {
-    background: url( editor-sprite.gif ) no-repeat 0 -1260px;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=editor-sprite.gif ) no-repeat 0 -1260px;
     display: block;
     height: 20px;
     left: 2px;
@@ -5521,7 +5521,7 @@ div.yuimenu li.selected a.selected {
     left: 25px;
     text-indent: 9999px;
     overflow: hidden;
-    background: url( editor-knob.gif ) no-repeat 0 0;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=editor-knob.gif ) no-repeat 0 0;
 }
 
 .yui-editor-panel .yui-toolbar-container {
@@ -5536,7 +5536,7 @@ div.yuimenu li.selected a.selected {
 }
 
 .yui-editor-blankimage {
-    background-image: url( blankimage.png );
+    background-image: url(../../../../index.php?entryPoint=getImage&imageName=blankimage.png );
 }
 
 .yui-editor-container .yui-resize-handle-br {
@@ -5797,7 +5797,7 @@ div.yuimenu li.selected a.selected {
 .ygtvloading {
     width: 18px;
     height: 22px;
-    background: url(treeview-loading.gif) 0 0 no-repeat;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=treeview-loading.gif) 0 0 no-repeat;
 }
 
 .ygtvdepthcell {

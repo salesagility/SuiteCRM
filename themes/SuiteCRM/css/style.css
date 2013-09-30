@@ -20,28 +20,38 @@ html, h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
 }
 
+h3 {
+    font-weight:bold;
+}
+
 body {
 
     font-family: Arial, Sans-Serif;
     font-size: 12px;
     margin: 75px 0 10px 0;
     color: #444;
-    background-url: http://api.thumbr.it/whitenoise-361x370.png?background=ddddddff&noise=626262&density=67&opacity=6
-    }
+}
 
 h1, h2, h3, h4, h5, h6 {
     color: #f10202;
 }
 
-h2 {font-size:1.5em;padding:10px 000;}
+h2 {
+    font-size:1.5em;padding:10px 000;
+}
 
 p, fieldset, table, pre, blockquote, ul, ol, dl {
     margin: 0;
+    font-size: 12px;
 }
-a:hover {-webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;}
+
+div {
+    font-size: 12px;
+}
+
+table {
+    font-size: 12px;
+}
 
 th[align=left] {
     text-align: left;
@@ -70,11 +80,12 @@ select:focus {
 
 a:link,
 a:visited {
-    color: #15c;
     text-decoration: none;
 }
 
-#toolbarArea {margin:50px 000;}
+#toolbarArea {
+    margin:50px 000;
+}
 
 .clear {
     clear: both;
@@ -88,11 +99,31 @@ span.required {
 
 /* Header CSS */
 #header {
+
     position: fixed;
-    top: 0px; left: 0px;
-    width: 100%;
+    top: 0px; left: 0px;    width: 100%;
     z-index: 18;
+
+    width:100%;
+    height:40px;
+    background: #565656; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU2NTY1NiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMzMzMzMzMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #333333 0%, #121212 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333s), color-stop(100%,#121212)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #333333 0%,#121212 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #333333 0%,#121212 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #333333 0%,#121212 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #333333 0%,#121212 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#565656', endColorstr='#121212',GradientType=0 ); /* IE6-8 */
+    float: left;
+    border-bottom:2px solid #f10202;
+    margin-bottom:5px;
 }
+
+#header a:link, a:visited {color:#ccc;}
+
+#header a:hover {color:#565656;}
 
 ul {
     -webkit-padding-start: 0;
@@ -106,51 +137,1131 @@ ul {
     padding-bottom: 5px;
 }
 
-/* Top navigation css */
-
-#topNav {
-    background: #333333; /* Old browsers */
-    background: -moz-linear-gradient(top, #333333 0%, #222222 40%, #121212 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#333333), color-stop(40%,#222222), color-stop(100%,#121212)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #333333 0%,#222222 40%,#121212 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #333333 0%,#222222 40%,#121212 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #333333 0%,#222222 40%,#121212 100%); /* IE10+ */
-    background: linear-gradient(to bottom, #333333 0%,#222222 40%,#121212 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#121212',GradientType=0 ); /* IE6-9 */
-    height: 33px;
-    line-height: 29px;
-    font-size: 13px;
-    border-bottom:2px solid #f10202;
-    padding: 0 20px 0 10px;
-}
-
-
-#topNav a:link,
-#topNav a:visited {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    color: #ccc;
-    text-decoration: none;
-    cursor: pointer;
-
-}
-
-#topNav a:hover,
-#topNav a:focus,
-#topNav a:active {
-    background-color: #4c4c4c;
-}
-
-#main {
-    padding: 0 20px;
-    margin-top: -2px;
+input[type=text]:focus, input[type=password]:focus, textarea:focus {
+    border:1px solid #f10202;
 }
 
 #moduleList {
+
+}
+
+/* for subpanel tabs */
+.subpanelTabForm
+{
+    border-color: #abc3d7;
+    color: #000000;
+    background-color: #ffffff;
+}
+ul.tablist, ul.subpanelTablist
+{
+    border-bottom-color: #abc3d7;
+}
+ul.tablist li a:hover,
+ul.subpanelTablist li a:hover
+{
+    background: #fafafa;
+    border-color: #abc3d7;
+}
+ul.tablist li a,
+ul.subpanelTablist li a
+{
+    background-color: #fff;
+    border-color: #dddddd;
+}
+ul.tablist li a:link,
+ul.tablist li a:visited,
+ul.subpanelTablist li a:link,
+ul.subpanelTablist li a:visited
+{
+    color: #444444;
+}
+ul.tablist li a:hover,
+ul.subpanelTablist li a:hover
+{
+    background: #fafafa;
+}
+ul.subpanelTablist li a.current,
+ul.subpanelTablist li a.current:hover
+{
+    color: #4f4f4f;
+    background: #fff;
+    border-right-color: #abc3d7;
+    border-top-color: #abc3d7;
+    border-bottom-color: #fff;
+}
+
+ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.current:hover
+{
+    background: #f6f6f6;
+    border-bottom-color: #f6f6f6;
+    border-right-color: #abc3d7;
+    border-top-color: #abc3d7;
+}
+
+#change_layout
+{
+    border: 0;
+}
+
+/* for overlib js library */
+.olCgClass td
+{
+    border-bottom-color: #abc3d7;
+}
+.olBgClass
+{
+    background-color: #abc3d7;
+}
+
+/* sitemap */
+#sitemap .edit.view
+{
+    border-color: #4e8ccf !important;
+}
+
+/* for edit view like forms that need a smaller font size */
+.edit.view.small td
+{
+    color: #444;
+}
+
+/* YUI theme */
+.yui-dt th, .yui-dt-hd {
+    /*background: #D8D8DA url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x 0 -30px;*/
+    background:#EBEBED none repeat scroll 0 0;
+}
+
+.yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse
+{
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -110px;
+}
+
+.yui-layout .yui-layout-clip-left .collapse, .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse,
+.yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -90px;
+}
+
+.yui-layout .yui-layout-clip-right .collapse {
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -110px;
+}
+
+.yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -220px;
+}
+
+.yui-layout .yui-layout-clip-top .collapse {
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')no-repeat -20px -240px;
+}
+
+.yui-layout .yui-layout-clip-bottom .collapse {
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -180px;
+}
+
+.yui-layout .yui-layout-unit div.yui-layout-hd .close {
+    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -100px;
+}
+
+.yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav, .yui-layout .yui-layout-hd {
+    background:#DDD url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 0;
+    border-color: #ABC3D7;
+}
+
+.yui-layout .yui-layout-unit div.yui-layout-bd, .yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content {
+    border-color:#ABC3D7;
+}
+
+.yuimenuitem-hassubmenu > a{
+    background-image: url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png');
+}
+
+.yui-navset .yui-nav li a,.yui-navset-top .yui-nav li a, .yui-navset-bottom .yui-nav li a,
+.yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a
+{
+    background:#DDD url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 -131px;
+}
+
+.sugar-progress-bar, .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a:focus, .yui-navset .yui-nav .selected a:hover
+{
+    background:#666666 url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 -157px;
+
+}
+
+.yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em, .yui-navset .yui-nav a, .yui-navset .yui-nav a em, .yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a  {
+    border-color: #ABC3D7;
+}
+
+a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav .selected a.sugar-tab-close {
+    background : transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')  no-repeat scroll 0px -70px;
+}
+
+
+#basic_search_link
+{
+    margin-left:6px !important;
+}
+
+.star {
+    float:right;
+    zoom: 1;
+    display: inline;
+}
+.moduleTitle .star
+{
+    margin-top:4px;
+    padding-right:5px;
+}
+
+li div.star {float:none;}
+.star div {background-image:url('../../../../index.php?entryPoint=getImage&imageName=star-sheet.png');width:18px;height:18px;float:left;}
+.star div.on {background-position:0px 0px}
+.star div.off {background-position:0px -18px}
+.star div:hover {cursor:pointer;background-position:0px 0px;}
+
+#ajaxStatusDiv {
+    background : #ffffff;
+    color : #c60c30;
+    position : fixed;
+    opacity : .8;
+    filter : alpha(opacity=80);
+    z-index: 20;
+    top: 7px;
+    border: 1px solid #aaa;
+    padding: 5px;
+}
+
+div#chartDashlets
+{
+    overflow-y: auto;
+}
+
+
+/* miscellaneaous 508 classes */
+.detail508 tr td[scope="col"]
+{
+    background-color: #F6F6F6;
+    border-color: #CBDAE6;
+    color: #000000;
+    text-align: right;
+    white-space: nowrap;
+}
+
+td.teamset-row, .edit tr td.teamset-row, .edit tr td table tr td.teamset-row {
+    padding: 5px !important;
+}
+
+/* competible for SugarActionMenu */
+
+ul.clickMenu {
+    list-style: none;
+    padding: 0px 0px 0px 0px;
+    margin: 0 !important;
+    vertical-align: bottom;
+    color: #000000;
+    display: inline-block;
+}
+ul.clickMenu form{
+    float:left;
+    display:block;
+}
+ul.SugarActionMenuIESub {
+}
+
+#globalLinksModule ul.clickMenu.SugarActionMenu li a:hover,
+#globalLinksModule ul.clickMenu li:hover span,
+ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
+ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
+ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
+
+    background-color: #4e8ccf;
+    border-color: #4e8ccf;
+    color: #fff;
+}
+ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
+ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
+    /*color: #fff !important;*/
+}
+
+ul.clickMenu li span.ab:hover {
+    background-position: 6px 0px;
+}
+ul.clickMenu>li, ul.SugarActionMenuIESub li {
+    background-color: #ECF1F4;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
+    border: 1px solid #ABC3D7;
     float: left;
+    margin: 0;
+    padding: 0 0 0 0;
+    list-style: none;
+    position: relative; /*--Declare X and Y axis base--*/
+    cursor: pointer;
+}
+ul.SugarActionMenuIESub li a,
+ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a{
+    display: block;
+    text-decoration: none;
+    float: left;
+    font-weight: normal !important;
+    padding: 1px 10px 1px 10px !important;
+    color: #000;
+    font-size: 12px;
+}
+
+.list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
+    color: #fff;
+}
+
+ul.clickMenu li.single a{
+    padding-right: 8px !important;
+}
+
+ul.clickMenu li a:hover{
+    text-decoration: none !important;
+}
+ul.clickMenu li span { /*--Drop down trigger styles--*/
+    width: 22px;
+    height: 16px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    cursor: pointer;
+}
+
+ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
+    border-left: 1px #aaa solid;
+    /* Remove the padding, not needed when we select records */
+    /* padding-left: 5px; */
+}
+ul.clickMenu li span.subhover {
+    cursor: pointer;
+} /*--Hover effect for trigger--*/
+ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub {
+    list-style: none;
+    position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+    left: 0; top: 18px;
+    background: #fff;
+    margin: 0;
+    display: none;
+    float: left;
+    width: auto;
+    border: 1px solid #ccc;
+    box-shadow: #999 0px 5px 10px;
+    -moz-box-shadow: #999 0px 5px 10px;
+    -webkit-box-shadow: #999 0px 5px 10px;
+    padding: 8px 0px;
+    z-index: 10;
+    overflow:hidden;
+}
+
+ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li{
+    margin: 0;
+    padding: 0px;
+    clear: both;
+    /*width: 170px;*/
+    width:100%;
+    white-space: nowrap;
+
+}
+ul.clickMenu.subpanel.records {
+    background-color: #eee;
+    border: 1px solid #ddd;
+    background-image: none;
+}
+
+/*
+ul.clickMenu.subpanel.records:hover {
+	background-color: #4e8ccf !important;
+	background-image: none !important;
+	border-color: #4e8ccf !important;
+}
+*/
+
+ul.clickMenu.subpanel.records li a{
+    color: #aaa;
+}
+ul.clickMenu.subpanel.records > li div:hover a{
+    color: #fff !important;
+}
+
+ul.clickMenu.subpanel.records li > span{
+    opacity: .5;
+    height: 16px;
+    width: 17px;
+    padding:0 5px 0 0 !important;
+    background-position: 50% -28px;
+}
+
+ul.clickMenu.subpanel.records:hover li > span{
+
+}
+
+ul.clickMenu.subpanel.records li ul.subnav li a span {
+    height: 0px;
+    width: 0px;
+    background-image: none;
+}
+ul.clickMenu.button li span.ab:hover {
+    background-position: 50% 0px;
+
+}
+ul.clickMenu.button li > span {
+    width: auto;
+    background-position: 50% -20px;
+    padding: 3px 15px 3px 10px !important;
+    height: auto;
+}
+
+ul.clickMenu.button:hover li > span {
+
+}
+
+ul.clickMenu.button li > span a {
+    padding: 0px !important;
+}
+
+ul.clickMenu.button span {
+    padding-right: 5px;
+}
+
+ul.clickMenu.button li ul.subnav {
+    width: auto;
+}
+
+ul.clickMenu li a.disabled {
+    color:gray !important;
+    cursor:default !important;
+}
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records , .evenListRowS1:hover td ul.clickMenu.subpanel.records {
+    background-image: -moz-linear-gradient(center top,
+    #ffffff 0%,
+    #eeeeee 10%,
+    #dfdfdf 100%
+    );
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #ffffff),
+        color-stop(.10, #eeeeee),
+        color-stop(1, #dfdfdf)
+    );
+    border: 1px solid #AAAAAA;
+}
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records li a, .evenListRowS1:hover td ul.clickMenu.subpanel.records li a {
+    color: #000;
+}
+
+.oddListRowS1:hover td ul.clickMenu.subpanel.records li span, .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
+    opacity: 1;
+}
+
+ul.clickMenu li ul.subnav li a,ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
+    float: left;
+    background: #fff;
+    padding: 1px 10px !important;
+    border: 0px !important;
+    /*width: 150px;*/
+    width:100%;
+    text-align: left;
+    font-size: 12px !important;
+    color: #000;
+
+}
+
+ul.clickMenu li ul.subnav li input {
+    padding: 2px 10px !important;
+    /*width: 170px;*/
+    width:100%
+}
+ul.SugarActionMenuIESub li a:hover,
+ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
+    background-color: #4e8ccf;
+    color: #fff;
+    font-weight: normal !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    text-shadow: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+
+}
+
+td.paginationActionButtons ul.clickMenu .massall,
+ul#selectLink.clickMenu .massall, td.selectCol .massall{
+    float: left;
+    margin: 2px 0 0 4px;
+}
+
+td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
+    padding: 0px !important;
+}
+ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
+    display:none;
+}
+
+#globalLinksDivider {
+    float: right;
+    margin-right: 0px;
+}
+ul#globalLinksSubnav, ul#quickCreateULSubnav{
+    font-family: Arial;
+}
+ul#globalLinks.clickMenu {
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
+}
+
+ul#globalLinks.clickMenu li > span {
+    height: 43px;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=tabDownArrowOff.png');
+    background-position: right center;
+    width: auto;
+    margin-right: 10px;
+    padding-right: 8px;
+}
+
+ul#globalLinks.clickMenu li > span a {
+    color: #FFFFFF;
+    font-size: 14px;
+    margin-top: 13px;
+    padding: 0px 10px !important;
+}
+
+
+ul#globalLinks.clickMenu li ul.subnav {
+    top: 43px;
+    right: 0px;
+    left: auto;
+}
+
+ul#globalLinks.clickMenu > li > a {
+    color: #fff;
+    font-size: 14px;
+    padding: 14px 7px !important;
+}
+
+ul#selectLink.clickMenu {
+    height: 17px;
+    min-width: 20px;
+    background-image: none;
+}
+
+td.paginationActionButtons ul.clickMenu #massall,
+ul#selectLink.clickMenu #massall{
+    float: left;
+    margin: 1px 4px;
+}
+.selectActions.clickMenu {
+    display: none;
+}
+
+ul.clickMenu.show {
+    display:inline-block;
+}
+
+ul#selectLink.clickMenu > li > a{
+    padding-left: 0px !important;
+}
+
+ul#selectLink.clickMenu li span {
+    height: 17px;
+}
+
+ul#selectLink.clickMenu li ul.subnav {
+
+}
+
+ul#detailViewActions.clickMenu {
+    margin-top: 2px !important;
+}
+
+#selectActions.clickMenu {
+    display: none;
+}
+
+.selectActionsDisabled {
+    display: inline-block;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    vertical-align: bottom;
+    padding: 0 3px 0 10px;
+}
+
+.selectActionsDisabled span {
+    width: 17px;
+    height: 17px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    opacity: .5;
+}
+
+.selectActionsDisabled span.ab {
+    border-left: 1px #ccc solid;
+    margin-left: 10px;
+    padding-left: 5px;
+}
+
+.selectActionsDisabled a, #selectActionsDisabled a:hover {
+    float: left;
+    display: block;
+    text-decoration: none !important;
+    color: #999 !important;
+    padding: 1px 0px 0px 0px!important;
+    text-shadow: 1px 1px #FFFFFF;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+#quickCreate {
+    float: right;
+}
+
+#quickCreate ul.clickMenu {
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
+}
+
+
+#quickCreate ul.clickMenu > li {
+    width: 50px;
+    height: 43px;
+
+}
+#quickCreate ul.clickMenu li > span {
+    background: url('../../../../index.php?entryPoint=getImage&imageName=quick-create.png') no-repeat center center;
+    height: 43px;
+    width: 50px;
+}
+
+#quickCreate ul.clickMenu > li:hover {
+    background-color: #276499;
+}
+ul#globalLinksSubnav li { min-width: 120px;}
+ul#globalLinksSubnav, ul#quickCreateULSubnav,
+#quickCreate ul.clickMenu li ul.subnav, #globalLinksModule ul.clickMenu li ul.subnav{
+    top: 43px;
+    right: 0;
+    left: auto;
+    padding: 10px 0px;
+    border: 1px solid #999;
+    width: 100%;
+}
+
+#quickCreate ul.clickMenu li ul.subnav {
+    width: auto;
+}
+
+#globalLinksSubnav li a, #quickCreateULSubnav li a,
+#quickCreate ul.clickMenu li ul.subnav li a, #globalLinksModule ul.clickMenu li ul.subnav li a {
+    padding: 4px 10px !important;
+    font-size: 13px !important;
+    color: #666666 !important;
+    line-height: 1.45;
+}
+#quickCreateULSubnav li.moduleMenuOverFlowLess a, #quickCreateULSubnav li.moduleMenuOverFlowMore a,
+#quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a {
+    color: #999 !important;
+}
+
+#quickCreate ul.clickMenu li ul.subnav li a:hover, #globalLinksModule ul.clickMenu li ul.subnav li a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a:hover {
+    color: #fff !important;
+}
+
+ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav li a:hover .showMoreArrow {
+    background-position: center 8px;
+    opacity: 1;
+}
+
+
+#quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img
+{
+    opacity: .6;
+}
+
+div.action_buttons form {float:left;}
+.paginationWrapper { float:right; }
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+/*********************************************************************************
+
+ * Description:  Contains a variety of utility functions used to display UI
+ * components such as form headers and footers.  Intended to be modified on a per
+ * theme basis.
+ ********************************************************************************/
+
+/* from old default theme */
+/* MAIN NAV STYLES */
+.subDmenu {
+    position:absolute;
+    display:none;
+    visibility:hidden;
+}
+.menuItem, .menuItemHilite, .menuItemX, .menuItemHiliteX,
+.menuItem:visited, .menuItemHilite:visited, .menuItem:hover, .menuItemHilite:hover,
+.menuItem:active, .menuItemHilite:active, .menuItem:link, .menuItemHilite:link,
+.menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
+.menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
+    font-size: 11px;
+    font-style: normal;
+    line-height: 18px;
+    color: #000;
+    text-decoration: none;
+    width: 120px;
+    border-left: none;
+    border-right: none;
+    display: block;
+    padding: 1px 5px 1px 7px;
+    border-bottom: 1px solid #c0c0c0;
+}
+
+.menuItem:hover, .menuItemHilite:hover, .menuItem:active, .menuItemHilite:active,
+.menuItemX:hover, .menuItemHiliteX:hover, .menuItemX:active, .menuItemHiliteX:active {
+    color: #000;
+}
+
+.menuItem {
+    background-color:#f6f6f6;
+}
+
+.menuItemHilite {
+    background-color:#FFFFFF;
+}
+
+.menuItemX {
+    background-color:#CCCCCC;
+}
+
+.menuItemHiliteX {
+    background-color:#999999;
+}
+.menu
+{
+    position:absolute;
+    display:none;
+    visibility:hidden;
+    background-color:#f6f6f6;
+    z-index: 2;
+    border: #999999 solid 1px;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    opacity: 0.9;
+    /*	width:150px;*/
+}
+body
+{
+    margin: 0px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+}
+fieldset, table, pre
+{
+    margin-bottom:0;
+}
+p
+{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+form
+{
+    margin: 0px;
+}
+h1, h2
+{
+    margin: 0;
+    font-weight: bold;
+}
+h3
+{
+    margin:0;
+    margin-bottom: 3px;
+    padding-top: 3px;
+}
+textarea
+{
+    font-family: Arial,Verdana,Helvetica,sans-serif;
+}
+button,
+input[type="checkbox"],
+input[type="radio"],
+input[type="reset"],
+input[type="submit"]
+{
+    padding:0px;
+}
+
+input[type=text],input[type=password],textarea
+{
+    width: auto;
+}
+
+input[type=checkbox],input[type=radio]
+{
+    border:0px;
+    background-color: transparent;
+    margin: 0px;
+    vertical-align: bottom;
+}
+ul li
+{
+    list-style-type: none;
+    margin-left: 6px;
+    margin-bottom: 2px;
+}
+ul
+{
+    margin-top: 2px;
+    margin-right: 0;
+}
+hr
+{
+    height:1px;
+}
+
+div.clear
+{
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size:0;
+}
+th, td
+{
+    border: none;
+    padding: 0;
+}
+
+/* layout the header elements */
+#header div.line
+{
+    height: 4px;
+    margin: 0;
+    padding: 0;
+}
+#header ul li
+{
+    display:inline;
+}
+
+#companyLogo
+{
+    padding: 10px 10px 0px 15px;
+    vertical-align: bottom;
+    float:left;
+    margin-bottom:-8px;
+}
+#search, #sitemapLink, #colorPicker, #welcome, #globalLinks
+{
+    float: right;
+}
+#welcome
+{
+    font-weight: normal;
+    padding: 8px 10px 3px 10px;
+    vertical-align: middle;
+}
+/* global links */
+#globalLinks
+{
+    padding: 8px 10px 3px 10px;
+    vertical-align: middle;
+}
+#globalLinks ul
+{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+#globalLinks ul li
+{
+    float: left;
+    margin: 0 0.15em;
+    display:block;
+}
+#globalLinks ul li img
+{
+    margin-bottom: 1px;
+    margin-left:2px;
+    cursor: pointer;
+}
+#globalLinks ul li:hover ul,
+#globalLinks ul a:hover ul
+{
+    visibility:visible;
+}
+
+
+/* sitemap link */
+#sitemapLink span
+{
+    padding-right:5px;
+}
+#sitemapLink
+{
+    padding-top: 3px;
+}
+#search, #sitemapLink
+{
+    padding:0 3px 0 5px;
+    height: 23px;
+    vertical-align: bottom;
+}
+#unified_search_advanced_img{
+    cursor:pointer;
+}
+#unified_search_advanced_div
+{
+    height: 1px;
+    position: relative;
+    overflow: hidden;
+    width: 21em;
+    padding-top: 5px;
+}
+#unified_search_advanced_div .edit.view
+{
+    padding:6px 6px 6px 4px;
+}
+#unified_search_advanced_div .edit.view td
+{
+    padding: 0 0.5em !important;
+}
+#themeColors img, #themeFonts img
+{
+    margin-bottom: 0;
+}
+
+/* color and theme picker */
+.themePicker
+{
+    padding-top: 1em;
+}
+.themePicker td
+{
+    padding: 0 !important;
+}
+.themePicker > table > tbody > tr > td
+{
+    text-align: left;
+    vertical-align: top;
+    width: 100%;
+}
+.themePicker hr
+{
+    margin: 0;
+}
+#themepickerLinkSpan
+{
+    cursor:pointer;
+}
+#colorPicker
+{
+    padding: 8px 5px 0px 7px;
+}
+#colorPicker ul
+{
+    border: none;
+    padding: 3px 0 0 0;
+    margin: 0 0 0 10px;
+}
+#colorPicker ul li
+{
+    list-style-type: none;
+    display: inline;
+    padding: 0px;
+    cursor: pointer;
+    margin: 0;
+}
+#themeName
+{
+    font-weight: bold;
+}
+
+#moduleList ul li:hover ul,
+#moduleList ul a:hover ul
+{
+    visibility:visible;
+}
+#leftColumn
+{
+    left: 10px;
+    position: absolute;
+    float: left;
+    width: 14.5em;
+}
+div#content
+{
+    padding-top: 11px;
+    padding-left: 8px;
+    padding-bottom: 20px;
+    border: 0;
+    margin-left: 0;
+    margin-right: 5px;
+}
+div#content > table
+{
+    width: 100%;
+}
+/* put a bit of left margin in when the left column menu is hidden */
+div#content noLeftColumn
+{
     margin-left: 5px;
+    border-left: none;
+}
+#HideHandle
+{
+    padding-top: 5px;
+    cursor: pointer;
+}
+#HideMenu
+{
+    visibility: hidden;
+    position: absolute;
+    z-index:100;
+}
+#leftHandle
+{
+    float:left;
+    /*margin-top: 10px;*/
+}
+/* new record form */
+#newRecord form
+{
+    padding: 8px 8px 5px 8px;
+}
+#newRecord form input,
+#newRecord form select,
+#newRecord form textarea
+{
+    margin-bottom: 4px;
+    margin-top: 2px;
+    max-width: 140px;
+}
+#newRecord form button,
+#newRecord form input[type=button],
+#newRecord form input[type=submit],
+#newRecord form input[type=reset]
+{
+    padding-top: 0px;
+    vertical-align: bottom;
+}
+#newRecord form .dataLabel {
+    padding-bottom: 2px;
+    padding-top: 3px;
+    padding-left: 0px;
+    vertical-align: bottom;
+}
+#newRecord form .dataField
+{
+    padding-bottom: 3px;
+}
+#newRecord form #jscal_trigger
+{
+    margin-bottom: 4px;
+    margin-top: 2px;
+    vertical-align: bottom;
+}
+#newRecord form a:link,
+#newRecord form a:visited,
+#newRecord form a:hover
+{
+    text-decoration: underline;
+    border-bottom: 0px;
+    padding-left: 0px;
+}
+
+/* sub module list drop down */
+#subModuleList span
+{
+    display: none;
+}
+#subModuleList span.selected
+{
+    display: block;
+}
+#subModuleList li, #subModuleList ul{
+    padding:0px;
+    margin:0px;
+}
+
+#subModuleList li.subTabMore{
+    position:relative;
+}
+
+#subModuleList ul.cssmenu{
+    display:block;
+    position:absolute;
+    top:15px;
+    left:0;
+    width:127px;
+}
+
+#header ul.cssmenu li{
+    display:block;
+}
+
+#subModuleList ul.cssmenu li a,
+#subModuleList ul.cssmenu li a:hover{
+    color:#000;
+    border:none;
+    background:transparent none repeat scroll 0% 0%;
+}
+
+#subModuleList li.subTabMore ul.cssmenu{
+    visibility:hidden;
+}
+
+#subModuleList li.subTabMore:hover ul.cssmenu{
+    visibility:visible;
+}
+#subModuleList
+{
+    padding:0.4em 0 0.3em 0;
+}
+#subModuleList span a
+{
+    text-decoration: none;
+    padding: 0.2em 0.5em 0.3em 0.5em;
+    margin: 0 -3px 0 0;
+    white-space:nowrap;
 }
 
 #moduleList ul,
@@ -159,7 +1270,99 @@ ul {
     list-style-type: none;
     float: left;
     margin: 0;
+line-height:35px;
 }
+
+#content {margin:75px 000;}
+/* css dropdown menu */
+ul.cssmenu
+{
+    background-color:#333333;
+    border:1px solid #999999;
+    position:absolute;
+    visibility:hidden;
+    z-index:1;
+    margin-top: 10px;
+}
+ul.cssmenu li
+{
+    font-size: 11px !important;
+    font-weight: normal !important;
+    font-style: normal;
+    line-height:18px;
+    padding:1px 7px !important;
+    float: none !important;
+    display: block;
+    margin:0 0.15em;
+}
+ul.cssmenu li:hover
+{
+    background-color:#FFFFFF;
+    color: #000;
+}
+ul.cssmenu li a
+{
+    text-decoration: none;
+    font-size: 11px !important;
+}
+
+
+/* sub module list drop down */
+#subModuleList span
+{
+    display: none;
+}
+#subModuleList span.selected
+{
+    display: block;
+}
+#subModuleList li, #subModuleList ul{
+    padding:0px;
+    margin:0px;
+}
+
+#subModuleList li.subTabMore{
+    position:relative;
+}
+
+#subModuleList ul.cssmenu{
+    display:block;
+    position:absolute;
+    top:15px;
+    left:0;
+    width:127px;
+}
+
+#header ul.cssmenu li{
+    display:block;
+}
+
+#subModuleList ul.cssmenu li a,
+#subModuleList ul.cssmenu li a:hover{
+    color:#000;
+    border:none;
+    background:transparent none repeat scroll 0% 0%;
+}
+
+#subModuleList li.subTabMore ul.cssmenu{
+    visibility:hidden;
+}
+
+#subModuleList li.subTabMore:hover ul.cssmenu{
+    visibility:visible;
+}
+#subModuleList
+{
+    padding:0.4em 0 0.3em 0;
+}
+#subModuleList span a
+{
+    text-decoration: none;
+    padding: 0.2em 0.5em 0.3em 0.5em;
+    margin: 0 -3px 0 0;
+    white-space:nowrap;
+}
+
 
 #moduleList a:link,
 #moduleList a:visited {
@@ -167,7 +1370,6 @@ ul {
     text-decoration: none;
     cursor: pointer;
     padding: 0 6px;
-    border-top: solid 2px #333;
     float: left;
 }
 
@@ -187,7 +1389,6 @@ ul {
 #moduleList ul li.current a:visited {
     color: #fff;
     font-weight: bold;
-
     border-top: solid 2px #f10202;
 }
 
@@ -199,7 +1400,8 @@ ul {
 }
 
 .yuimenu {
-    width: 397px;
+    width: 200px;
+    max-height:inherit;
     padding: 10px 6px 15px 1px;
     background: #4c4c4c;
     color: #ccc;
@@ -207,25 +1409,29 @@ ul {
     border-bottom-right-radius: 5px;
 }
 
-.yuimenuitemlabel {font-weight:normal;}
+.yuimenuitemlabel {
+    font-weight:normal;
+}
 
 #MoreAll .yuimenu {
     width: 375px !important;
 }
 
-.bd ul li a {padding:5px;}
+.bd ul li a {
+    padding:5px;
+}
 
 ul.shortCutsUl {
     border-right: solid 1px #555;
 
 }
+
 #lastView {padding:0 20px 0px 20px;}
 #shortcuts {padding:0 10px 0px 10px;}
 
 ul.lastViewdUl {
     border-left: solid 1px #555;
     margin-left: -1px;
-
 }
 
 ul.shortCutsUl,
@@ -234,7 +1440,6 @@ ul.lastViewedUl,
 ul.lastViewedUl li {
     width: 190px !important;
     padding-left: 8px;
-
 }
 
 .yuimenu .bd ul li a:link,
@@ -265,17 +1470,6 @@ li.yuimenuitem span {
 {
     float: right;
 }
-#welcome
-{
-    font-weight: normal;
-    padding:2px 10px 0 10px;
-    color:#ffffff;
-    border-left: solid 1px #555;
-}
-
-#topNav #welcome a {color:#ffffff;}
-
-#topNav #welcome a:hover {color:#565656;background:none;}
 
 #user_info {
     float: right;
@@ -294,11 +1488,10 @@ li.yuimenuitem span {
     background-color: #ffffff;
 }
 
-
 #user_link {
     color: #ccc;
     cursor: pointer;
-    background-image: url('../../../../themes/SuiteCRM/images/arrow_down.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=arrow_down.png');
     background-repeat: no-repeat;
     background-position: 125px center;
     padding: 2px 10px 0 10px;
@@ -327,7 +1520,7 @@ li.yuimenuitem span {
 #user_options a:link,
 #user_options a:visited {
     padding: 7px 12px;
-    color: #15c;
+    color: #ffffff;
     border: none;
 }
 
@@ -339,7 +1532,7 @@ li.yuimenuitem span {
 
 #gear_link {
     width:100%;
-    background-image: url('../../../../themes/SuiteCRM/images/gear_white.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=gear_white.png');
     background-repeat: no-repeat;
     background-position: right;
     border-left: solid 1px #555555;
@@ -352,7 +1545,7 @@ li.yuimenuitem span {
 .user_id {padding: 0 5px 0 0px;}
 
 #gear_link.active {
-    background-image: url('../../../../themes/SuiteCRM/images/gear_blue.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=gear_blue.png');
 }
 
 #gear_link:hover {
@@ -375,7 +1568,7 @@ li.yuimenuitem span {
 
 #admin_options a:link,
 #admin_options a:visited {
-    color: #15c;
+    color: #ffffff;
     padding: 0 10px;
 }
 
@@ -669,9 +1862,13 @@ div.hd h3 span {
     font-size:1.1em;
 }
 
-li.active:hover {color:#f10202;}
+li.active:hover {
+    color:#f10202;
+}
 
-.dashletToolSet a{width:12px; height:12px;}
+.dashletToolSet a {
+    width:12px; height:12px;
+}
 
 table.formHeader td {
     padding: 2px 5px 2px 10px !important;
@@ -679,42 +1876,63 @@ table.formHeader td {
 
 /* Action/Recently viewed css */
 
-.headerList {padding:0 25px 0 25px; font-size:12px;float:left;}
+.headerList {
+    padding:0 25px 0 25px; font-size:12px;float:left;
+}
 
-.headerList a{padding:5px;}
+.headerList a{
+    padding:5px;
+}
 
-.headerList span {padding 0; border-radius:2px !important;}
+.headerList span {
+    padding 0; border-radius:2px !important;
+}
 
-.headerList span a{padding:0 10px 0 10px;color:#565656;}
+.headerList span a{
+    padding:0 10px 0 10px;color:#565656;
+}
 
-.headerList span a:hover {color:#565656;}
+.headerList span a:hover {
+    color:#565656;
+}
 
-.headerList b {color:#121212;}
+.headerList b {
+    color:#121212;
+}
 
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled],button[disabled]
-, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
-{
+, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover {
     border-color: #c1c1c1;
     background-color: #f0f0f0;
     color: #000;
-    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
+    background-image: url('/index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
 }
 
-.monthHeader {background:#eeeeee;margin:5px 0 0 0; padding: 10px;}
+.monthHeader {
+    background:#eeeeee;margin:5px 0 0 0; padding: 10px;
+}
 
-.monthHeader h3 {color:#121212;font-weight:bold;}
+.monthHeader h3 {
+    color:#121212;font-weight:bold;
+}
 
-.monthFooter {background:#eeeeee;margin:0 0 5px; 0; padding: 5px 10px 20px 10px;}
+.monthFooter {
+    background:#eeeeee;margin:0 0 5px; 0; padding: 5px 10px 20px 10px;
+}
 
-.monthFooter h3 {color:#121212;font-weight:bold;}
+.monthFooter h3 {
+    color:#121212;font-weight:bold;
+}
 
-
+table button {
+    padding: 3px 8px 2px 8px;
+}
 
 input[type=button],
 input[type=submit],
 input[type=reset],
 button {
-    padding: 1px 8px 1px 8px;
+    padding: 5px 8px 5px 8px;
     margin: 0 3px 0 3px;
     background: #ffffff; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -736,12 +1954,12 @@ button {
 input[type=button],
 input[type=submit],
 input[type=reset],
-button
-{-webkit-transition: all 0.3s ease-out;
+button {
+    -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
-    padding: 1px 8px 1px 8px;
+    padding: 5px 8px 5px 8px;
     margin: 0 3px 0 3px;
     background: #ffffff; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -757,11 +1975,13 @@ button
     color: #121212;
     border-radius: 2px;
     cursor: pointer;
-    font-size:12px;}
+    font-size:12px;
+}
 
 span.id-ff button {
     vertical-align: middle;
 }
+
 span.id-ff button,
 .pagination button  {
 
@@ -783,7 +2003,9 @@ ul.clickMenu form{
     float:left;
     display:block;
 }
+
 ul.SugarActionMenuIESub {
+
 }
 
 #globalLinksModule ul.clickMenu.SugarActionMenu li a:hover,
@@ -796,6 +2018,7 @@ ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, u
     border-color: #f10202;
     color: #fff;
 }
+
 ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
 ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
     /*color: #fff !important;*/
@@ -804,6 +2027,7 @@ ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
 ul.clickMenu li span.ab:hover {
     background-position: 6px 0px;
 }
+
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
     background: #ffffff; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -824,6 +2048,7 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
     position: relative; /*--Declare X and Y axis base--*/
     cursor: pointer;
 }
+
 ul.SugarActionMenuIESub li a,
 ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a{
     display: block;
@@ -907,7 +2132,6 @@ ul.clickMenu.subpanel.records:hover {
 	border-color: #4e8ccf !important;
 }
 */
-
 
 ul.clickMenu.subpanel.records li a{
     color: #aaa;
@@ -1247,21 +2471,37 @@ input[type=submit]:active {
 
 /* Dialog css */
 
-#settings_dialog .hd {background: #616365; color:#ffffff;}
+#settings_dialog .hd {
+    background: #616365; color:#ffffff;
+}
 
-#container_goto_date_trigger .hd {background: #616365; color:#ffffff;}
+#container_goto_date_trigger .hd {
+    background: #616365; color:#ffffff;
+}
 
-#cal-edit .hd {background: #616365; color:#ffffff;}
+#cal-edit .hd
+{background: #616365; color:#ffffff;
+}
 
-#addFileDialog_h {background: #616365; color:#ffffff;}
+#addFileDialog_h {
+    background: #616365; color:#ffffff;
+}
 
-#dlg {background: #616365; color:#ffffff;}
+#dlg {
+    background: #616365; color:#ffffff;
+}
 
-#dashletsDialogHeader {background: #616365; color:#ffffff;}
+#dashletsDialogHeader {
+    background: #616365; color:#ffffff;
+}
 
-#dashletCategories li {background: #616365; color:#ffffff;}
+#dashletCategories li {
+    background: #616365; color:#ffffff;
+}
 
-#sugarMsgWindow .hd {background: #616365; color:#ffffff;}
+#sugarMsgWindow .hd {
+    background: #616365; color:#ffffff;
+}
 
 /* Button styles */
 
@@ -1274,25 +2514,25 @@ input[type=button].primary, input[type=submit].primary {
 }
 
 input[type=button].primary:hover, input[type=submit].primary:hover {
-
     background: #f10202;
 }
 
 input[type=button].search {
-    background-image: url('../../../../themes/SuiteCRM/images/search_mag.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=search_mag.png');
     background-repeat: no-repeat;
     background-position: center;
     background-color: #ffffff;
-
     color:#ffffff;
     width:30px;
 }
 
-input[type=button].search:hover {opacity:0.6;}
+input[type=button].search:hover {
+    opacity:0.6;
+}
 
 
 div.global_search_btn{
-    background-image: url('../../../../themes/SuiteCRM/images/search_mag.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=search_mag.png');
     background-repeat: no-repeat;
     background-position: center;
     background-color: #ffffff;
@@ -1369,7 +2609,7 @@ a.utilsLink {
 /*Global Table Styles */
 
 table {
-    border-collapse: collapse;
+    border-collapse: separate;
     border: none;
 }
 
@@ -1400,11 +2640,17 @@ th, th a:link, th a:visited {
     background: #f7f7f7;
 }
 
-#ConfigureTabs {overflow:auto;}
+#ConfigureTabs {
+    overflow:auto;
+}
 
-#content{padding:0;}
+#content{
+    padding:0 25px 0 25px;
+}
 
-#contentTable{overflow:visible;padding:25px;}
+#contentTable{
+    overflow:visible;padding: 0 10px 0 10px;
+}
 
 #contentTable td {
     padding: 0;
@@ -1414,6 +2660,7 @@ th, th a:link, th a:visited {
 #contentTable tr td table tr td {
     padding:5px;
     vertical-align: middle;
+
 }
 
 #contentTable input {
@@ -1469,8 +2716,6 @@ th, th a:link, th a:visited {
     position: absolute;
 }
 
-
-
 #dctitle {
     width: 100px;
 }
@@ -1482,7 +2727,6 @@ th, th a:link, th a:visited {
 /* Clean this junk up -- add/configure dashlet stuff */
 .yui-panel {
     position: relative;
-
     top: 0;
     border-style: solid;
     border-width: 1px 0;
@@ -1522,42 +2766,43 @@ th, th a:link, th a:visited {
 
 }
 
-#moduleDashletsList {max-height:350px !important;}
+#moduleDashletsList {
+    max-height:350px !important;
+}
 
 #dashletsList {
     background: #fff;
     max-height:600px;
 }
+
 .container-close {
     position: absolute;
     top: 3px;
     right: 6px;
     width: 16px;
     height: 16px;
-    background: transparent url('../../../../themes/SuiteCRM/images/dashletclose.png') no-repeat;
+    background: transparent url('../../../../index.php?entryPoint=getImage&imageName=dashletclose.png') no-repeat;
     background-position: center middle;
     cursor: pointer;
 }
 
 /* More dashlets css */
-
-
-.dashletToolSet a img:hover {opacity:0.6;-webkit-transition: all 0.3s ease-out;
+.dashletToolSet a img:hover {
+    opacity:0.6;-webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;}
+    transition: all 0.3s ease-out;
+}
 
 .dashletToolSet a {
     margin-left: 3px;
     margin-right: 3px;
 }
 
-}
 #dashletsDialogHeader, .hd {
     color: #ffffff;
     font-size: 12px;
 }
-
 
 #dashletSearch {
     background-color: #ffffff;
@@ -1565,6 +2810,7 @@ th, th a:link, th a:visited {
     margin-bottom:5px;
     padding:0;
 }
+
 #moduleDashlets,
 #chartDashlets,
 #toolsDashlets,
@@ -1655,7 +2901,10 @@ table.detail th {
     border: 1px solid;
 }
 
-a.listViewThLinkS1{ background: #ebebed !important;}
+a.listViewThLinkS1 {
+    background: #ebebed !important;
+}
+
 .list tr.pagination td table td
 {
 
@@ -1676,6 +2925,8 @@ a.listViewThLinkS1{ background: #ebebed !important;}
 }
 table.list {
     border-collapse: separate;
+    margin:25px 000;
+
 }
 
 table.list td[valign=top] {
@@ -1729,7 +2980,9 @@ div.listViewBody .list {
     padding: 0;
 }
 
-.paginationWrapper {float:right;padding:0;}
+.paginationWrapper {
+    float:right;padding:0;
+}
 
 table.edit {
     border-collapse: separate;
@@ -1742,9 +2995,13 @@ table.edit {
     background: #fff;
 }
 
-#CalendarEditView {margin:25px 000;}
+#CalendarEditView {
+    margin:25px 000;
+}
 
-.schedulerDiv  {margin:25px 000;}
+.schedulerDiv  {
+    margin:25px 000;
+}
 
 /* for team notices and my portal dashlets */
 .teamNoticeBox
@@ -1765,7 +3022,9 @@ iframe.teamNoticeBox
     padding:0;
 }
 
-#collapse_tree, #collapse_help {color:#ffffff;background-color:#ffffff; border-radius:2px;margin-top:10px;}
+#collapse_tree, #collapse_help {
+    color:#ffffff;background-color:#ffffff; border-radius:2px;margin-top:10px;
+}
 
 #mbhelp {padding:10px;}
 
@@ -1823,7 +3082,9 @@ body.popupBody {
     float: left;
 }
 
-#search {padding: 0px 10px 0 10px;margin:0;}
+#search {
+    padding: 0px 10px 0 10px;margin:0;
+}
 
 /* Calendar/Scheduler Styles */
 #scheduler
@@ -1831,11 +3092,15 @@ body.popupBody {
     margin-top: 5px;
 }
 
-#composeOptionsForm1{margin:25px 000;}
+#composeOptionsForm1{
+    margin:25px 000;
+}
 
-#schedulerTable {font-size:11px;}
-#scheduler .schedulerDiv
-{
+#schedulerTable {
+    font-size:11px;
+}
+
+#scheduler .schedulerDiv {
     color: #000000;
     text-align: left;
     width: 100%;
@@ -1843,59 +3108,60 @@ body.popupBody {
     border-collapse: collapse;
     border-bottom: 1px solid #999;
 }
-#scheduler .schedulerDiv table
-{
+
+#scheduler .schedulerDiv table {
     width: 100%;
     border-collapse: collapse;
 }
-#scheduler .schedulerDiv table tr td
-{
+
+#scheduler .schedulerDiv table tr td {
 
     border: 1px solid #dddddd;
 }
-#scheduler .schedulerDiv table tr.schedulerTimeRow td
-{
+
+#scheduler .schedulerDiv table tr.schedulerTimeRow td {
     border-left: 0;
 }
+
 #scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col]
 {
     border-left:1px solid #DDDDDD;
     padding-left:4px;
 }
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td
-{
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td {
     background-color: #eeeeee;
     width: 15px;
 }
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row]
-{
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row] {
     overflow: hidden;
     padding-left: 4px;
     width: 125px;
     background: transparent;
     border-left: 0;
 }
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime
-{
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime {
     border-left: 4px solid #75AF4F !important;
     background-color:#FFFFFF;
 }
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime
-{
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime {
     border-left: 4px solid #ff0000 !important;
 }
-#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell
-{
+
+#scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell {
     background: transparent;
     border-left: 1px solid #dddddd;
     padding-left: 4px;
 }
-#scheduler .schedulerInvitees
-{
+
+#scheduler .schedulerInvitees {
     margin-top: 1em;
 }
-#scheduler .schedulerInvitees .tabForm
-{
+
+#scheduler .schedulerInvitees .tabForm {
     margin-bottom: 0;
 }
 
@@ -1924,7 +3190,9 @@ input[type="text"], input[type="password"], textarea {
 
 }
 
-.collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink { display:none; }
+.collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
+    display:none;
+}
 
 #recaptcha_image {
     height: 47.5px !important;
@@ -1954,14 +3222,15 @@ input[type="text"], input[type="password"], textarea {
     background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 60%,#f7f7f7 60%,#eeeeee 100%); /* IE10+ */
     background: linear-gradient(to bottom, #ffffff 0%,#f7f7f7 60%,#f7f7f7 60%,#eeeeee 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-9 */
-
 }
 
-.panelContainer{width:100%;}
+.panelContainer {
+    width:100%;
+}
 
 .password {
     padding: 5px 20px 5px 20px;
-    border: 0px none;
+    border: none;
     background-color: #fff;
 }
 
@@ -1977,7 +3246,9 @@ input[type="text"], input[type="password"], textarea {
     margin-right: 5px;
 }
 
-#create_image {display:none;padding:0;margin:0;}
+#create_image {
+    display:none;padding:0;margin:0;
+}
 
 #forgot_password_dialog table {
     margin-top: 10px;
@@ -1993,4 +3264,24 @@ input[type="text"], input[type="password"], textarea {
 
 .dashletPanelMenu .bd .bd-center {
     padding-top: 0px;
+}
+
+#login_button .button {
+    padding: 5px 8px 5px 8px;
+    margin: 0 3px 0 3px;
+    background: #ffffff; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+    border: solid 1px #999999;
+    color: #121212;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size:12px;
 }

@@ -80,7 +80,7 @@ input[type="text"], input[type="password"], textarea {
 
 .password {
     padding: 5px 20px 5px 20px;
-    border: 0px solid #999;
+    border: none;
     background-color: #fff;
 }
 
