@@ -36,7 +36,7 @@
 /**
  * Contains styling for the yui widget elements
  */
- 
+
  .yui-ac {
     position: relative;
     font-family: arial;
@@ -466,25 +466,25 @@ p#clear {
 }
 
  .yui-calendar .calnavleft {
-	background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -450px transparent; 
+	background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -450px transparent;
     width: 25px;
     height: 15px;
     top: 0;
     bottom: 0;
     left: -10px;
     margin-left: .4em;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
  .yui-calendar .calnavright {
-	background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -500px transparent; 
+	background: url("../../../../include/javascript/yui/build/assets/skins/sam/sprite.png") repeat scroll 0 -500px transparent;
     width: 25px;
     height: 15px;
     top: 0;
     bottom: 0;
     right: -10px;
     margin-right: .4em;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
  .yui-calendar .calweekdayrow {
@@ -695,14 +695,14 @@ p#clear {
 
  .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default {
     background-color: #426fd9;
-    border: 1px solid #326A9C; 
+    border: 1px solid #326A9C;
     -moz-border-radius :  4px 4px 4px 4px;
 }
 
  .yui-calcontainer .yui-cal-nav .yui-cal-nav-btn.yui-default button {
     color: #fff;
     background-color: #356EA1;
-    text-shadow: -1px -1px #254F74;    
+    text-shadow: -1px -1px #254F74;
 }
 
 
@@ -1193,7 +1193,7 @@ p#clear {
 }
 
  .yui-panel-container.focused .yui-panel .hd {
-    
+
 }
 
  .container-close {
@@ -1225,8 +1225,8 @@ p#clear {
     top: 2px;
     left: -3px;
     right: -3px;
-    bottom: -3px; 
-    top: 4px; 
+    bottom: -3px;
+    top: 4px;
     left: -1px;
     right: -1px;
     bottom: -1px;
@@ -2057,15 +2057,15 @@ tbody .yui-dt-editable {
 }
 
 .yui-editor-panel .yui-toolbar-group-padding {
-    
+
 }
 
 .yui-editor-panel .yui-toolbar-group-border {
-    
+
 }
 
 .yui-editor-panel .yui-toolbar-group-textflow {
-    
+
 }
 
 .yui-editor-panel .height-width {
@@ -2073,7 +2073,7 @@ tbody .yui-dt-editable {
 }
 
 .yui-editor-panel .height-width h3 {
-    
+
 }
 
 .yui-editor-panel .height-width span {
@@ -2820,7 +2820,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
  .yui-editor-panel .yuimenu {
-    
+
 }
 
  .yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont
@@ -3209,7 +3209,7 @@ body.yui-layout {
 }
 
  .yui-layout .yui-resize .yui-resize-handle-active {
-    
+
 }
 
  .yui-layout .yui-resize-proxy .yui-layout-handle-l {
@@ -3248,7 +3248,7 @@ body.yui-layout {
     right: 10px;
 }
 .yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse:hover {
-    border: 1px solid #666;	
+    border: 1px solid #666;
     right: 9px;
     top: 4px;
 }
@@ -3257,7 +3257,7 @@ body.yui-layout {
     background: transparent url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') no-repeat 0 -90px;
 }
  .yui-layout .yui-layout-clip-left .collapse:hover, .yui-layout .yui-layout-clip-right .collapse {
-    border: 1px solid #666; 
+    border: 1px solid #666;
     right: 5px;
     top: 4px;
  }
@@ -3267,7 +3267,7 @@ body.yui-layout {
     left: 5px;
 }
 .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse:hover {
-    border: 1px solid #666; 
+    border: 1px solid #666;
     left: 4px;
     top: 4px;
 }
@@ -3482,7 +3482,7 @@ body.yui-layout {
 }
 
  .yui-log .yui-log-ft .yui-log-categoryfilters {
-    
+
 }
 
  .yui-log .yui-log-ft .yui-log-sourcefilters {
@@ -3744,7 +3744,7 @@ body.yui-layout {
 }
 
 .yuimenuitem.first-of-type a, .yuimenuitem.first-of-type img{
-    padding-top: 3px;	
+    padding-top: 3px;
 }
 
 .yuimenuitemlabel, a.yuimenuitemlabel, a.yuimenuitemlabel:link, a.yuimenuitemlabel:visited {
@@ -3758,7 +3758,7 @@ body.yui-layout {
 }
 
 a.yuimenuitemlabel:hover {
-    background-color: #DDD;	
+    background-color: #DDD;
 }
  .yuimenuitemlabel img {
     border:none;
@@ -4668,15 +4668,15 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-editor-panel .yui-toolbar-group-padding {
-    
+
 }
 
 .yui-editor-panel .yui-toolbar-group-border {
-    
+
 }
 
 .yui-editor-panel .yui-toolbar-group-textflow {
-    
+
 }
 
 .yui-editor-panel .height-width {
@@ -4684,7 +4684,7 @@ a.yuimenuitemlabel:hover {
 }
 
 .yui-editor-panel .height-width h3 {
-    
+
 }
 
 .yui-editor-panel .height-width span {
@@ -5431,7 +5431,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
  .yui-editor-panel .yuimenu {
-    
+
 }
 
  .yui-editor-panel .yui-toolbar-container .yui-toolbar-subcont
@@ -5664,7 +5664,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     padding: 0 0 0 6em;
 }
 
-.yui-navset-right { 
+.yui-navset-right {
     padding: 0 6em 0 0;
 }
 
@@ -5724,7 +5724,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     display: -moz-inline-stack;
     vertical-align: bottom;
     zoom: 1;
-    background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -30px;   
+    background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -30px;
 }
 
 .yui-navset-left .yui-nav li a,.yui-navset-right .yui-nav li a {
@@ -5743,7 +5743,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 .yui-navset .yui-navset-left .yui-nav,.yui-navset .yui-navset-right .yui-nav,.yui-navset-left .yui-nav,.yui-navset-right .yui-nav
     {
     position: absolute;
-    
+
     z-index: 1;
 }
 
@@ -5763,7 +5763,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
 .yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav
 {
-	background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 0;   
+	background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 0;
     zoom: 1;
     white-space: nowrap;
     overflow-x:hidden;
@@ -5822,6 +5822,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
  .yui-navset .yui-nav .selected a em {
     padding: 2px 10px 1px;
     color: #333;
+     background:#ffffff;
 }
 
  .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em
@@ -5837,7 +5838,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .yui-layout-unit-center .yui-navset .yui-content, .yui-layout .yui-layout-unit.yui-layout-unit-center div.yui-layout-bd{
-    border-style:none;  
+    border-style:none;
 }
 
  .yui-navset-left .yui-nav, .yui-navset .yui-navset-left .yui-nav, .yui-navset .yui-navset-right .yui-nav, .yui-navset-right .yui-nav
@@ -5919,7 +5920,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 
  .yui-navset .yui-navset-bottom .yui-nav li a, .yui-navset-bottom .yui-nav li a
     {
-    
+
 }
 
  .yui-navset .yui-navset-bottom .yui-nav a em, .yui-navset-bottom .yui-nav a em
@@ -5936,7 +5937,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .ygtvitem {
-    
+
 }
 
 .ygtvitem table {
@@ -6039,7 +6040,7 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
 }
 
 .ygtvchildren {
-    
+
 }
 
 * html .ygtvchildren {
@@ -6152,11 +6153,11 @@ h2.yui-editor-skipheader,h3.yui-editor-skipheader {
     background-color: #FFF;
     border:1px solid #666;
     height: 16px;
-    width: 100%;	
+    width: 100%;
 }
 
 .sugar-progress-bar {
-    background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;   
+    background:#DDD url('../../../../index.php?entryPoint=getImage&imageName=sugar-yui-sprites-grey.png') repeat-x scroll 0 -50px;
     height: 16px;
     width: 0px;
 }

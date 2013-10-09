@@ -35,8 +35,9 @@
  ********************************************************************************/
 
 *}
+
 <div id="globalLinks">
-    <ul>
+    {* <ul>
     {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
     <li>
     {if !$smarty.foreach.gcl.first}<span>|</span>{/if}
@@ -53,5 +54,18 @@
     {/foreach}
     </li>
     {/foreach}
+    </ul> *}
+    <ul id="drop-nav">
+        <li> <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><img src="index.php?entryPoint=getImage&imageName=cog.png" class="iconed"> {$CURRENT_USER}</a>
+            <ul>
+                {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                    <li>
+                        <a id="{$gcl_key}_link" href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                    </li>
+                {/foreach}
+                <li><a id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+            </ul>
+
+        </li>
     </ul>
 </div>
