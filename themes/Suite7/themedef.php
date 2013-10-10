@@ -37,7 +37,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
  
 $themedef = array(
-    'name'  => "Suite7test",
+    'name'  => "Suite7",
     'description' => "SuiteCRM 7.0 Theme",
     'version' => array(
         'regex_matches' => array('6\.*.*'),

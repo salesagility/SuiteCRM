@@ -44,7 +44,9 @@
 <title>{$APP.LBL_BROWSER_TITLE}</title>
 {$SUGAR_CSS}
 {$SUGAR_JS}
-{literal}
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.atooltip.min.js"></script>
+    {literal}
 <script type="text/javascript">
 <!--
 SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
@@ -58,5 +60,4 @@ if ( YAHOO.env.ua )
 -->
 </script>
 {/literal}
-<script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
 </head>

@@ -39,22 +39,44 @@
         </td></tr></table>
     </div>
     <div class="clear"></div>
+
 </div>
+
 <div id="bottomLinks">
 {if $AUTHENTICATED}
-{$BOTTOMLINKS}
-{/if}
+{*{$BOTTOMLINKS}*}
+    {/if}
 </div>
+
 <div id="footer">
+    {if $AUTHENTICATED}
+    <div id="links">
+        <button id="backtotop">Back To Top</button>
+    </div>
+    {/if}
 	<div id="responseTime">
     	{$STATISTICS}
     </div>
-    <div id="copyright">
-        {$COPYRIGHT}
+    <div id="copyright_data">
+    <div id="dialog2" title="SuiteCRM - SugarCRM Supercharged!">
+        <p>SuiteCRM has been written and assembled by SalesAgility, one of the world's most knowledgeable SugarCRM consultancies.</p>
+        <br>
+        <p>SuiteCRM is intended to deliver on the promise of SugarCRM - a freely available open source CRM project that combines great functionality, with community and commitment.</p>
+        <br>
+        <p>There will be no licenced software as part of the project managed by SalesAgility. All the code is free. All the code is available for free download. There is no hidden agenda to charge for access to the code. It is and always will be free and open source. There will be no paid-for versions.</p>
     </div>
+    <div id="dialog" title="&copy; Powered by SugarCRM">
+        <p>{$COPYRIGHT}</p>
+    </div>
+
+    <button id="admin_options">Supercharged by SuiteCRM</button>
+    <button id="powered_by">&copy; Powered by SugarCRM</button>
+    </div>
+
 </div>
 <script>
 {literal}
+
 if(SUGAR.util.isTouchScreen()) {
         setTimeout(resizeHeader,10000);
 }
@@ -108,6 +130,43 @@ function qe_init(){
     if(SUGAR.ajaxUI)
     	YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
 </script>
+    <script>
+        $( "button" ).click(function() {
+            $( "#sugarcopy" ).toggle();
+
+        });
+
+        $(function() {
+            $( "#dialog, #dialog2" ).dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 100
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 1000
+                }
+            });
+            $( "#powered_by" ).click(function() {
+                $( "#dialog" ).dialog( "open" );
+                $("#overlay").show().css({"opacity": "0.5"});
+            });
+            $( "#admin_options" ).click(function() {
+                $( "#dialog2" ).dialog( "open" );
+            });
+        });
+
+        $("#read").click(function(){
+
+        });
+
+        // Back to top animation
+        $('#backtotop').click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop:0}, 500); // Scroll speed to the top
+        });
+    </script>
 {/literal}
 
 </body>
