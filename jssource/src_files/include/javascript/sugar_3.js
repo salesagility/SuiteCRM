@@ -857,7 +857,7 @@ var hexDigit=new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","
 function dec2hex(dec){return(hexDigit[dec>>4]+hexDigit[dec&15]);}
 
 function fade_error_style(normalStyle, percent) {
-	errorStyle = 'c60c30';
+	errorStyle = 'f10202';
 	var r1 = hex2dec(errorStyle.slice(0,2));
 	var g1 = hex2dec(errorStyle.slice(2,4));
 	var b1 = hex2dec(errorStyle.slice(4,6));
