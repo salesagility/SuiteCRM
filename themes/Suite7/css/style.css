@@ -1759,43 +1759,6 @@ table.reportlistView td, table.reportlistView th {
 	background-color: #dfdfdf;
 }
 
-/* acl role colors */
-.aclAll
-{
-    color: #008000;
-    font-weight: bold;
-}
-.aclOwner
-{
-    color: #000000;
-    font-weight: bold;
-}
-.aclNone
-{
-    color: #FF0000;
-    font-weight: bold;
-}
-.aclEnabled
-{
-    color: #008000;
-    font-weight: bold;
-}
-.aclDisabled
-{
-    color: #FF0000;
-    font-weight: bold;
-}
-.aclAdmin
-{
-    color: #0000FF;
-    font-weight: bold;
-}
-.aclNormal
-{
-    color: #008000;
-    font-weight: bold;
-}
-
 /* for lists where we don't want to have bullet points */
 ul.noBullet {
   list-style-type: none;
@@ -3053,18 +3016,21 @@ button, input[type=submit], input[type=reset], input[type=button], .button
 	background-color: #ecf1f4;
 	color: #000;
 }
-button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
-button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
-button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
-{
 
-}
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
 {
 	border-color: #c1c1c1;
 	background-color: #f0f0f0;
 	color: #000;
 	background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
+}
+
+button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
+{
+    border-color: #c1c1c1;
+    background-color: #f0f0f0;
+    color: #000;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
 }
 input,select
 {
@@ -4734,7 +4700,7 @@ div.moduleTitle
     margin-left: 1.5em;
 }
 /* editviews top buttons */
-#EditView > table {margin-bottom: 2px;}
+#EditView > table {overflow:auto;margin-bottom: 2px;}
 
 /* editviews */
 .edit
@@ -8285,6 +8251,23 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     box-shadow: 0 0 5px #999999;
 }
 
+
+
+/* login page*/
+.login table tr td
+{
+    padding:0px !important;
+    text-align:left;
+}
+.login
+{
+    padding:10px 6px 12px 10px !important;
+}
+.login .login_more
+{
+    text-align:right;
+}
+
 /* Dashlet CSS */
 
 .dashletPanel .h3Row {
@@ -8522,9 +8505,9 @@ ul.cssmenu li a{
 
 ul#drop-nav {
     position:relative;
-    z-index:50;
+    z-index:5;
     padding:0;
-    marign:0;
+    margin:0 50px 0 0;
 }
 
 #drop-nav ul {
@@ -8536,12 +8519,17 @@ ul#drop-nav {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    right:10px;
+    right:0px;
 }
 
 ul#drop-nav li {
     line-height:30px;
     padding: 0 5px 00;
+
+}
+
+ul#drop-nav li a {
+    line-height:25px;
 
 }
 
@@ -8779,10 +8767,6 @@ button #powered_by {
     text-align:center;
 }
 
-.single {
-    display:none;
-}
-
 #moduleDashletsList {
     overflow:visible;
     height:auto;
@@ -8795,4 +8779,162 @@ button #powered_by {
 
 .edit {
 
+}
+
+
+button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
+{
+    border-color: #c1c1c1;
+    background-color: #f0f0f0;
+    color: #000;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
+}
+
+button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
+{
+    border-color: #c1c1c1;
+    background-color: #f0f0f0;
+    color: #000;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
+}
+
+ul#quick-nav {
+    position:absolute;
+    right:0;
+    width:50px;
+    float:left;
+    z-index:55;
+    padding:0;
+    margin-bottom:2px;
+}
+
+#quick-nav ul {
+    border:1px solid #999999;
+    list-style: none;
+    margin: 0;
+    background:#333333;
+    padding:10px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    right:10px;
+}
+
+ul#quick-nav li {
+    line-height:25px;
+    padding: 0 5px 00;
+
+}
+
+ul#quick-nav li a:hover {
+    color:#ffffff;
+}
+
+#quick-nav ul li {
+    display: block;
+    position: relative;
+    float: left;
+}
+
+#quick-nav li:hover {
+    background:#565656;
+}
+
+#quick-nav li ul {
+    display: none;
+}
+
+#quick-nav ul li a {
+    display: block;
+    padding: 0px 10px 0px 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #cccccc;
+
+}
+
+ul#quick-nav ul li:hover {
+    background: #565656;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color:#ffffff;
+
+}
+
+#quick-nav li:hover ul {
+    display: block;
+    position: absolute;
+}
+
+#quick-nav li:hover li {
+    float: none;
+}
+
+#quick-nav li:hover a {
+    background:none;
+}
+
+#quick-nav li:hover li a:hover {
+    background: #565656;
+    color:#cccccc;
+}
+
+#quick-nav li ul li {
+    border-top: 0px;
+}
+
+.iconed_dull {
+
+    opacity:0.6;
+
+}
+
+input[type=button],
+input[type=submit],
+input[type=reset],
+.button {
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    padding: 3px 8px 3px 8px;
+    margin: 0 3px 0 3px;
+    background: #ffffff; /* Old browsers */
+    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f3f3f3 50%, #ededed 51%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f3f3f3), color-stop(51%,#ededed), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+    border: solid 1px #999999;
+    color: #121212;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size:12px;
+}
+
+input[type=button]:hover,
+input[type=submit]:hover,
+input[type=reset]:hover,
+.button:hover {
+    background:#f10202;
+    border:1px solid #999;
+}
+
+.quick_create {
+
+    margin-top:5px;
+}
+
+img {
+
+    border:none;
+}
+
+.dashletNonTable {
+    padding: 0 5px 0 10px;
 }
