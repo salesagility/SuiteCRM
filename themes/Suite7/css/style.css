@@ -44,65 +44,65 @@
 /* MAIN NAV STYLES */
 
 .subDmenu {
-	position:absolute;
-	display:none;
-	visibility:hidden;
+    position:absolute;
+    display:none;
+    visibility:hidden;
 }
 .menuItem, .menuItemHilite, .menuItemX, .menuItemHiliteX,
 .menuItem:visited, .menuItemHilite:visited, .menuItem:hover, .menuItemHilite:hover,
 .menuItem:active, .menuItemHilite:active, .menuItem:link, .menuItemHilite:link,
 .menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
 .menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
-	font-size: 11px;
-	font-style: normal;
-	line-height: 18px;
-	color: #000;
-	text-decoration: none;
-	width: 120px;
-	border-left: none;
-	border-right: none;
-	display: block;
-		padding: 1px 5px 1px 7px;
-		border-bottom: 1px solid #c0c0c0;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 18px;
+    color: #000;
+    text-decoration: none;
+    width: 120px;
+    border-left: none;
+    border-right: none;
+    display: block;
+    padding: 1px 5px 1px 7px;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 .menuItem:hover, .menuItemHilite:hover, .menuItem:active, .menuItemHilite:active,
 .menuItemX:hover, .menuItemHiliteX:hover, .menuItemX:active, .menuItemHiliteX:active {
-	color: #000;
+    color: #000;
 }
 
 .menuItem {
-	background-color:#f6f6f6;
+    background-color:#f6f6f6;
 }
 
 .menuItemHilite {
-	background-color:#FFFFFF;
+    background-color:#FFFFFF;
 }
 
 .menuItemX {
-	background-color:#CCCCCC;
+    background-color:#CCCCCC;
 }
 
 .menuItemHiliteX {
-	background-color:#999999;
+    background-color:#999999;
 }
 .menu
 {
-	position:absolute;
-	display:none;
-	visibility:hidden;
-	background-color:#f6f6f6;
-	z-index: 2;
-	border: #999999 solid 1px;
-	filter:alpha(opacity=90);
-	-moz-opacity:0.9;
-	opacity: 0.9;
-/*	width:150px;*/
+    position:absolute;
+    display:none;
+    visibility:hidden;
+    background-color:#f6f6f6;
+    z-index: 2;
+    border: #999999 solid 1px;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    opacity: 0.9;
+    /*	width:150px;*/
 }
 body
 {
-	margin: 0px;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin: 0px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 fieldset, table, pre
 {
@@ -110,23 +110,23 @@ fieldset, table, pre
 }
 p
 {
-	margin-top: 0px;
-	margin-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 form
 {
-	margin: 0px;
+    margin: 0px;
 }
 h1, h2
 {
     margin: 0;
-	font-weight: bold;
+    font-weight: bold;
 }
 h3
 {
-	margin:0;
-	margin-bottom: 3px;
-	padding-top: 3px;
+    margin:0;
+    margin-bottom: 3px;
+    padding-top: 3px;
 }
 textarea
 {
@@ -138,7 +138,7 @@ input[type="radio"],
 input[type="reset"],
 input[type="submit"]
 {
-	padding:0px;
+    padding:0px;
 }
 
 input[type=text],input[type=password],textarea
@@ -148,25 +148,25 @@ input[type=text],input[type=password],textarea
 
 input[type=checkbox],input[type=radio]
 {
-	border:0px;
-	background-color: transparent;
-	margin: 0px;
-	vertical-align: bottom;
+    border:0px;
+    background-color: transparent;
+    margin: 0px;
+    vertical-align: bottom;
 }
 ul li
 {
-	list-style-type: none;
-	margin-left: 6px;
-	margin-bottom: 2px;
+    list-style-type: none;
+    margin-left: 6px;
+    margin-bottom: 2px;
 }
 ul
 {
-	margin-top: 2px;
+    margin-top: 2px;
     margin-right: 0;
 }
 hr
 {
-	height:1px;
+    height:1px;
 }
 
 div.clear
@@ -196,7 +196,7 @@ th, td
 
 #companyLogo
 {
-    padding: 10px 10px 0px 15px;
+    padding: px 10px 0px 15px;
     vertical-align: bottom;
     float:left;
     margin-bottom:-8px;
@@ -214,12 +214,11 @@ th, td
 /* global links */
 #globalLinks
 {
-    padding: 8px 10px 3px 10px;
     vertical-align: middle;
 }
 #globalLinks ul
 {
-	list-style: none;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -258,13 +257,13 @@ th, td
     vertical-align: bottom;
 }
 #unified_search_advanced_img{
-cursor:pointer;
+    cursor:pointer;
 }
 #unified_search_advanced_div
 {
     height: 1px;
     position: relative;
-	overflow: hidden;
+    overflow: hidden;
     width: 21em;
     padding-top: 5px;
 }
@@ -350,7 +349,7 @@ div#content
 }
 div#content > table
 {
-	width: 100%;
+    width: 100%;
 }
 /* put a bit of left margin in when the left column menu is hidden */
 div#content noLeftColumn
@@ -372,7 +371,7 @@ div#content noLeftColumn
 #leftHandle
 {
     float:left;
-	/*margin-top: 10px;*/
+    /*margin-top: 10px;*/
 }
 /* new record form */
 #newRecord form
@@ -427,8 +426,8 @@ ul.cssmenu
     opacity:0.9;
     position:absolute;
     visibility:hidden;
-	z-index:1;
-	margin-top: 5px;
+    z-index:1;
+    margin-top: 5px;
 }
 ul.cssmenu li
 {
@@ -444,7 +443,7 @@ ul.cssmenu li
 ul.cssmenu li:hover
 {
     background-color:#FFFFFF;
-	color: #000;
+    color: #000;
 }
 ul.cssmenu li a
 {
@@ -463,39 +462,39 @@ ul.cssmenu li a
     display: block;
 }
 #subModuleList li, #subModuleList ul{
-padding:0px;
-margin:0px;
+    padding:0px;
+    margin:0px;
 }
 
 #subModuleList li.subTabMore{
-position:relative;
+    position:relative;
 }
 
 #subModuleList ul.cssmenu{
-display:block;
-position:absolute;
-top:15px;
-left:0;
-width:127px;
+    display:block;
+    position:absolute;
+    top:15px;
+    left:0;
+    width:127px;
 }
 
 #header ul.cssmenu li{
-display:block;
+    display:block;
 }
 
 #subModuleList ul.cssmenu li a,
 #subModuleList ul.cssmenu li a:hover{
-color:#000;
-border:none;
-background:transparent none repeat scroll 0% 0%;
+    color:#000;
+    border:none;
+    background:transparent none repeat scroll 0% 0%;
 }
 
 #subModuleList li.subTabMore ul.cssmenu{
-visibility:hidden;
+    visibility:hidden;
 }
 
 #subModuleList li.subTabMore:hover ul.cssmenu{
-visibility:visible;
+    visibility:visible;
 }
 #subModuleList
 {
@@ -505,8 +504,8 @@ visibility:visible;
 {
     text-decoration: none;
     padding: 0.2em 0.5em 0.3em 0.5em;
-	margin: 0 -3px 0 0;
-	white-space:nowrap;
+    margin: 0 -3px 0 0;
+    white-space:nowrap;
 }
 /* last viewed and shortcuts lists in the header */
 .headerList
@@ -595,8 +594,6 @@ div.moduleTitle
 /* DetailView/EditView/ListView styles */
 .view, table.view
 {
-    margin-bottom:3px;
-    margin-top:3px;
     padding:10px 6px 12px 10px;
     padding:20px 16px 22px 30px;
     width: 100%;
@@ -634,7 +631,7 @@ div.moduleTitle
 .detail tr td
 {
     border: none;
-	vertical-align: top;
+    vertical-align: top;
     padding: 5px 6px 5px 6px;
     vertical-align: top;
     text-align: left;
@@ -677,14 +674,14 @@ div.moduleTitle
 {
     font-weight: normal;
     padding: 0 !important;
-	vertical-align: top;
+    vertical-align: top;
     padding: 3px !important;
 }
 .edit tr td[scope=row]
 {
     padding: 5px 5px 5px 7px !important;
     text-align: left;
-	vertical-align: top;
+    vertical-align: top;
 }
 .edit tr th
 {
@@ -692,8 +689,8 @@ div.moduleTitle
 }
 table#tabFormPagination td,  #tabFormPagination, #EditView > table#tabFormPagination.detail.view
 {
-	border-bottom: none;
-	margin-bottom: 0;
+    border-bottom: none;
+    margin-bottom: 0;
 }
 .edit tr td table,
 .edit tr td table tr td
@@ -702,17 +699,31 @@ table#tabFormPagination td,  #tabFormPagination, #EditView > table#tabFormPagina
     padding: 0 !important;
 }
 table.edit.view {
-margin-top: 0;
+
+    width:100%;
+    position:relative;
+}
+
+.panelContainer {
+
+    box-shadow:none;
+
+}
+
+.view, table.view td {
+
+    padding:0 10px 0 10px;
+
 }
 /* search panel on top of list views ( extends .edit .view definition ) */
 .search
 {
-	margin: 0 0 4px 0 !important;
-	padding:10px 6px 12px 10px;
+    margin: 0 0 4px 0 !important;
+    padding:10px 6px 12px 10px;
 }
 .search > table
 {
-	padding: 0 !important;
+    padding: 0 !important;
     margin: 0;
 }
 .search td span
@@ -833,8 +844,8 @@ margin-top: 0;
 }
 
 .list td.inlineButtons {
-	text-align: right;
-	min-width: 75px;
+    text-align: right;
+    min-width: 75px;
 }
 /* style for page content tables */
 .other
@@ -857,26 +868,26 @@ margin-top: 0;
 }
 .other .edit td
 {
-	background: transparent !important;
+    background: transparent !important;
 }
 .other .edit
 {
-	margin-top: 0;
+    margin-top: 0;
 }
 
 /* Special for Campaigns Wizard */
 .other td.edit #wizard td
 {
-	background: transparent;
+    background: transparent;
 }
 .other td.edit #wizard h4
 {
-	padding-left: 0;
-	margin-top: 0;
+    padding-left: 0;
+    margin-top: 0;
 }
 #wizard td
 {
-	white-space: normal;
+    white-space: normal;
     word-wrap: break-word;
 }
 
@@ -892,7 +903,7 @@ table.detail
 {
     padding-top: 4px;
     text-align: right;
-	vertical-align: middle;
+    vertical-align: middle;
 }
 .detail table tr.pagination td
 {
@@ -924,15 +935,15 @@ table.detail
 /* for report wizard */
 .reportwizard
 {
-	padding: 10px 6px 12px 10px;
+    padding: 10px 6px 12px 10px;
 }
 .reportwizard > table
 {
-	padding: 0 !important;
+    padding: 0 !important;
 }
 .reportwizard tr td
 {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 /* for subpanel tabs */
 ul.tablist, ul.subpanelTablist
@@ -1110,7 +1121,7 @@ div.indent_right {
 .search_form
 {
     overflow: visible;
-	text-align: left;
+    text-align: left;
 }
 
 .search_form .view
@@ -1172,8 +1183,8 @@ div.indent_right {
 }
 
 #bottomLinks {
-	padding: 0 25px;
-	float: right;
+    padding: 0 25px;
+    float: right;
 }
 
 #bottomLinks a {
@@ -1183,9 +1194,9 @@ div.indent_right {
 }
 
 #bottomLinks img {
-	border: 0px;
-	margin-bottom: -3px;
-	margin-left: 5px;
+    border: 0px;
+    margin-bottom: -3px;
+    margin-left: 5px;
 }
 
 /* Footer styles */
@@ -1217,25 +1228,25 @@ div.indent_right {
 #scheduler .schedulerDiv
 {
     color: #000000;
-	text-align: left;
+    text-align: left;
     width: 100%;
     background-color: #FAFAFA;
-	border-collapse: collapse;
-	border-bottom: 1px solid #999;
+    border-collapse: collapse;
+    border-bottom: 1px solid #999;
 }
 #scheduler .schedulerDiv table
 {
     width: 100%;
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 #scheduler .schedulerDiv table tr td
 {
-	height: 18px;
+    height: 18px;
     border: 1px solid #dddddd;
 }
 #scheduler .schedulerDiv table tr.schedulerTimeRow td
 {
-	border-left: 0;
+    border-left: 0;
 }
 #scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col]
 {
@@ -1244,31 +1255,31 @@ div.indent_right {
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td
 {
-	background-color: #eeeeee;
+    background-color: #eeeeee;
     width: 15px;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row]
 {
     overflow: hidden;
     padding-left: 4px;
-	width: 125px;
+    width: 125px;
     background: transparent;
     border-left: 0;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime
 {
-	border-left: 4px solid #75AF4F !important;
+    border-left: 4px solid #75AF4F !important;
     background-color:#FFFFFF;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime
 {
-	border-left: 4px solid #ff0000 !important;
+    border-left: 4px solid #ff0000 !important;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell
 {
-	background: transparent;
+    background: transparent;
     border-left: 1px solid #dddddd;
-	padding-left: 4px;
+    padding-left: 4px;
 }
 #scheduler .schedulerInvitees
 {
@@ -1291,11 +1302,11 @@ div.indent_right {
 }
 .monthHeader
 {
-	padding: 6px 5px 4px 3px;
-	margin-top: 10px;
-	vertical-align: middle;
-	background-repeat: repeat-x;
-	background-position: top;
+    padding: 6px 5px 4px 3px;
+    margin-top: 10px;
+    vertical-align: middle;
+    background-repeat: repeat-x;
+    background-position: top;
 }
 .monthHeader td
 {
@@ -1354,16 +1365,16 @@ div.indent_right {
     text-align: left;
 }
 .monthCalBody td div table td {
-text-align: left!important;
+    text-align: left!important;
 }
 .monthCalBody
 {
-   padding: 0;
+    padding: 0;
 }
 .monthCalBody td.yearCalBody
 {
     padding: 0;
-	margin: 0;
+    margin: 0;
 }
 .yearCalBodyMonth
 {
@@ -1508,7 +1519,7 @@ text-align: left!important;
 .calendar thead .name
 {
     background: #dddddd;
-	border-color: #cccccc;
+    border-color: #cccccc;
 }
 .calendar thead .title
 {
@@ -1524,25 +1535,25 @@ text-align: left!important;
     font-weight: bold;
 }
 .listViewCalCurrentAppt {
-	background-color: #75AF4F;
+    background-color: #75AF4F;
 }
 .listViewCalOtherAppt {
-background-color: #4D5EAA;
+    background-color: #4D5EAA;
 }
 .listViewCalConflictAppt {
-background-color: #AA4D4D;
+    background-color: #AA4D4D;
 }
 .listViewCalCurrentApptLgnd {
-background-color: #75AF4F;
-border: 1px solid #444444;
+    background-color: #75AF4F;
+    border: 1px solid #444444;
 }
 .listViewCalOtherApptLgnd {
-background-color: #4D5EAA;
-border: 1px solid #444444;
+    background-color: #4D5EAA;
+    border: 1px solid #444444;
 }
 .listViewCalConflictApptLgnd {
-background-color: #AA4D4D;
-border: 1px solid #444444;
+    background-color: #AA4D4D;
+    border: 1px solid #444444;
 }
 
 /** report styles **/
@@ -1705,7 +1716,7 @@ table.reportDataChildtablelistView td {
 .reportlistView {
     border-top: 1px solid #000;
     border-left: 1px solid #000;
-    }
+}
 table.reportlistView td, table.reportlistView th {
     background: #fff;
     border-bottom: 1px solid #000;
@@ -1714,77 +1725,77 @@ table.reportlistView td, table.reportlistView th {
     padding: 4px;
     text-align: center;
     font-size: 11px;
-    }
-    table.reportlistView th, .reportlistView .reportlistViewMatrixRightEmptyData, .reportlistView .reportlistViewMatrixRightEmptyData1 {
+}
+table.reportlistView th, .reportlistView .reportlistViewMatrixRightEmptyData, .reportlistView .reportlistViewMatrixRightEmptyData1 {
     background: #dcdcdc;
     font-weight: bold;
-    }
+}
 
 /* End of matrix report classes */
 
 /* for overlib js library */
 .olCapFontClass {
-	font-weight: bold;
-	color: #444;
-	background-color: #dfdfdf;
+    font-weight: bold;
+    color: #444;
+    background-color: #dfdfdf;
 }
 .olCapFontClass A {
-	color: #dfdfdf;
-	font-size: 9px;
+    color: #dfdfdf;
+    font-size: 9px;
 }
 .olFgClass td, #forecastsWorksheet .olBgClass td.olFgClass {
-	background-color: #fff;
-	padding: 5px 7px 7px 10px !important;
-	line-height: 18px;
+    background-color: #fff;
+    padding: 5px 7px 7px 10px !important;
+    line-height: 18px;
 }
 .olCgClass td, #forecastsWorksheet .olBgClass td.olCgClass {
-	border-bottom: 2px solid #ddd;
-	background-color: #f6f6f6;
-	padding: 5px 3px 3px 10px !important;
+    border-bottom: 2px solid #ddd;
+    background-color: #f6f6f6;
+    padding: 5px 3px 3px 10px !important;
 }
 .olCgClass {
     padding: 0px;
     border: 0px;
 }
 .olBgClass {
-	background-color: #ddd;
-	padding: 2px !important;
+    background-color: #ddd;
+    padding: 2px !important;
 }
 #forecastsWorksheet .olBgClass td {
     padding: 0 !important;
 }
 .olCloseFontClass {
-	padding-bottom: 1px;
-	text-align: right;
-	background-color: #dfdfdf;
+    padding-bottom: 1px;
+    text-align: right;
+    background-color: #dfdfdf;
 }
 
 /* for lists where we don't want to have bullet points */
 ul.noBullet {
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 li.noBullet {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 table.tabForm td ul li {
-list-style-type: none;
-margin-bottom: 10px;
+    list-style-type: none;
+    margin-bottom: 10px;
 }
 
 .helpButton
 {
-	font-weight:700;
+    font-weight:700;
 }
 
 .helpShortcut
 {
-	font-weight:700;
+    font-weight:700;
 }
 /* for subpanels */
 #MorePanelHandle
@@ -1795,43 +1806,43 @@ margin-bottom: 10px;
     margin-bottom: 2px;
     text-align: center;
     background: url('../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
-	color: #444;
+    color: #444;
 }
 
 .sqsFloater {
-position:absolute;
-z-index:2;
-bottom:0;
-right:0;
-display:none;
-padding:0;
+    position:absolute;
+    z-index:2;
+    bottom:0;
+    right:0;
+    display:none;
+    padding:0;
 }
 
 .sqsFloater td {
-border:1px inset;
-color:black;
+    border:1px inset;
+    color:black;
 }
 
 .sqsMatchedSmartInputItem {
-font-size:11px;
-padding: 2px 5px 2px 5px;
-margin: 0;
-cursor: pointer;
+    font-size:11px;
+    padding: 2px 5px 2px 5px;
+    margin: 0;
+    cursor: pointer;
 }
 
 .sqsSelectedSmartInputItem {
-background-color:#DEEFFF;
+    background-color:#DEEFFF;
 }
 
 #sqsSmartInputResults {
-padding:0;margin:0;
+    padding:0;margin:0;
 }
 
 .sqsNoMatch {
-padding: 2px 5px 2px 5px;
-font-weight: bold;
-background-color:#eeeeee;
-color:#980000;
+    padding: 2px 5px 2px 5px;
+    font-weight: bold;
+    background-color:#eeeeee;
+    color:#980000;
 }
 /* misc font displays */
 .todaysTask
@@ -1869,8 +1880,8 @@ color:#980000;
 }
 /* list view page numbers */
 .pageNumbers {
-padding-right: 3px;
-padding-left: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
 }
 .contentBox {
     border-top: 1px solid #DDD;
@@ -1904,7 +1915,7 @@ padding-left: 3px;
 
 #dashletsList
 {
-	background: #fff;
+    background: #fff;
     min-height:500px;
 }
 
@@ -1915,13 +1926,13 @@ padding-left: 3px;
 
 ul#dashletCategories li a:link, ul#dashletCategories li a:visited
 {
-	color: #444;
-	background: #eee;
+    color: #444;
+    background: #eee;
 }
 ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover
 {
-	color: #444;
-	background: transparent;
+    color: #444;
+    background: transparent;
 }
 #moduleDashlets h3,#chartDashlets h3,#toolsDashlets h3
 {
@@ -1940,15 +1951,15 @@ ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover
 /* Bug 27478 - IE Hacks to make sure username/password boxes on login page are same length */
 td.edit.view td
 {
-	text-align: left;
+    text-align: left;
 }
 td.edit.view td[align=right]
 {
-	text-align: right;
+    text-align: right;
 }
 #user_password, #user_name
 {
-	width: 150px;
+    width: 150px;
 }
 
 /* if we have horizontal padding anywhere in the table, it will break the rollup tree */
@@ -2015,8 +2026,8 @@ td.edit.view td[align=right]
 
 /* override some of the detail view styles for show more detail option (KBDocument detail view)*/
 .detail td.subdetail{
-   padding:0px;
-   border-bottom:medium none;
+    padding:0px;
+    border-bottom:medium none;
 }
 .detail td.subdetail table tr td{
     padding: 5px 6px;
@@ -2054,35 +2065,35 @@ td.edit.view td[align=right]
 }
 
 #lastviewicon, #newrecordicon, #shortcuts_img,#lastviewicon_1, #newrecordicon_1, #shortcuts_img_1 {
-	display:none;
+    display:none;
 }
 
 #color_menu, #font_menu {
-	width:200px;
-	height:15px;
-	margin:0;
-	padding:0px;
+    width:200px;
+    height:15px;
+    margin:0;
+    padding:0px;
 }
 
 #color_menu li, #font_menu li{
     float:left;
-	height:15px;
-	width:15px;
+    height:15px;
+    width:15px;
 }
 
 #themepickerDialog div[class="ft"]{
-	display:none;
+    display:none;
 }
 
 #stylepicker{
-	   border-width:1px;
-	   margin:0px;
-	   padding:0px;
-	   width:auto;
+    border-width:1px;
+    margin:0px;
+    padding:0px;
+    width:auto;
 }
 
 #themepickerDialog_c{
-	right: 2em;
+    right: 2em;
     top: 3em;
 }
 
@@ -2113,89 +2124,89 @@ td.edit.view td[align=right]
 
 .sugarFeedDashlet
 {
-	overflow:auto;
-	max-height:375px;
+    overflow:auto;
+    max-height:375px;
 }
 
 .sugarFeedDashlet td.list th, .sugarFeedDashlet td.list td[scope=col]
 {
-	display:none;
+    display:none;
 }
 
 .sugarFeedDashlet tr
 {
-	height:auto;
+    height:auto;
 }
 
 .sugarFeedDashlet .byLineBox
 {
-	width:100%;
-	position:relative;
-	overflow: hidden;
+    width:100%;
+    position:relative;
+    overflow: hidden;
 }
 
 .sugarFeedDashlet .byLineBox .byLineLeft
 {
-	font-size:79%;
-	float:left;
+    font-size:79%;
+    float:left;
 }
 
 .sugarFeedDashlet .byLineBox .byLineRight
 {
-	display:inline;
-	float:right;
-	font-size:79%;
+    display:inline;
+    float:right;
+    font-size:79%;
 }
 
 iframe.teamNoticeBox
 {
-	width:99%;
-	padding:0;
+    width:99%;
+    padding:0;
 }
 
 .loading-indicator
 {
-	font-size:11px;
-	background-image:url('../default/ext/resources/images/default/grid/loading.gif');
-	background-repeat:no-repeat;
-	background-position:left;
-	padding-left:20px;
-	line-height:16px;
-	margin:3px;
+    font-size:11px;
+    background-image:url('../default/ext/resources/images/default/grid/loading.gif');
+    background-repeat:no-repeat;
+    background-position:left;
+    padding-left:20px;
+    line-height:16px;
+    margin:3px;
 }
 
 .x-sqs-list
 {
-	border:1px solid #d0d0d0;
-	background:#d0d0d0;
-	zoom:1;
-	overflow:hidden;
+    border:1px solid #d0d0d0;
+    background:#d0d0d0;
+    zoom:1;
+    overflow:hidden;
 }
 
 .x-sqs-list-inner
 {
-	overflow:auto;
-	background:#FFF;
-	position:relative;
-	zoom:1;
-	overflow-x:hidden;
+    overflow:auto;
+    background:#FFF;
+    position:relative;
+    zoom:1;
+    overflow-x:hidden;
 }
 
 .x-sqs-list-item
 {
-	font:normal 12px tahoma,arial,helvetica,sans-serif;
-	border:1px solid #fff;
-	white-space:nowrap;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	padding:1px;
+    font:normal 12px tahoma,arial,helvetica,sans-serif;
+    border:1px solid #fff;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    padding:1px;
 }
 
 .x-sqs-list .x-sqs-selected
 {
-	border:1px dotted #f6f6f6!important;
-	background:#d0d0d0;
-	cursor:pointer;
+    border:1px dotted #f6f6f6!important;
+    background:#d0d0d0;
+    cursor:pointer;
 }
 embed
 {
@@ -2220,11 +2231,11 @@ embed
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a{
-	padding: 0px 2px;
+    padding: 0px 2px;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child  {
-	padding-right: 0px;
+    padding-right: 0px;
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
@@ -2239,19 +2250,19 @@ embed
     background-color: #fff;
 }
 div.confirmTable {
-	    overflow: auto;
-	    width: 1056px;
-	    position: relative;
-	    margin-bottom: 20px;
-	}
+    overflow: auto;
+    width: 1056px;
+    position: relative;
+    margin-bottom: 20px;
+}
 /* Bug 19728 - Email Templates detail view is different with edit view */
 #html_div p
 {
-	margin: 12px 0px;
+    margin: 12px 0px;
 }
 
 #html_div p:first-child {
-	margin: 0px 0px 12px 0px;
+    margin: 0px 0px 12px 0px;
 }
 
 /* UNUSED STYLES */
@@ -2259,20 +2270,20 @@ div.confirmTable {
 /* Default Styles */
 
 .h3Row {
-	margin-top: 10px;
-	vertical-align: middle;
-	background-repeat: repeat-x;
-	background-position: top;
-	background-color: #fff;
+    margin-top: 10px;
+    vertical-align: middle;
+    background-repeat: repeat-x;
+    background-position: top;
+    background-color: #fff;
 }
 .h3Row td
 {
-	padding: 4px 5px 3px 3px;
+    padding: 4px 5px 3px 3px;
 }
 h4, h5
 {
-	margin-bottom: 2px;
-	padding-left: 4px;
+    margin-bottom: 2px;
+    padding-left: 4px;
 }
 hr
 {
@@ -2286,34 +2297,34 @@ hr
 }
 a:link, a:visited, a:hover
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .buttonSlide {
-	border: 0px;
+    border: 0px;
 }
 
 .buttonSlide .yui-hd {
-	border: 0px;
-	background-color: transparent;
-	padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    padding: 0px;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
-	background-repeat: no-repeat;
-	display: inline; /* prevent IE margin doubling */
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
+    background-repeat: no-repeat;
+    display: inline; /* prevent IE margin doubling */
     overflow:hidden;
     text-indent:9999px;
-	float: right;
+    float: right;
     overflow:hidden;
     text-align: right;
-	height: 14px;
-	width: 14px;
+    height: 14px;
+    width: 14px;
 }
 
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
 }
 
 .buttonSlide .yui-bd {
@@ -2321,17 +2332,17 @@ a:link, a:visited, a:hover
 
 input, select, textarea, button, .button
 {
-	border: 1px solid;
+    border: 1px solid;
 }
 button, input[type=submit], input[type=reset], input[type=button], .button
 {
-	font-weight: normal;
-	background-repeat: repeat-x;
-	background-position: top;
-	padding-bottom: 1px;
+    font-weight: normal;
+    background-repeat: repeat-x;
+    background-position: top;
+    padding-bottom: 1px;
     padding-right: 6px;
     padding-left: 6px;
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 .pagination button, .pagination input[type=submit], .pagination input[type=reset], .pagination input[type=button], .pagination .button
@@ -2343,10 +2354,10 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=butt
 button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
 button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
 {
-	color: #fff;
-	background-image: none;
-	cursor:pointer;
-	font-weight: normal;
+    color: #fff;
+    background-image: none;
+    cursor:pointer;
+    font-weight: normal;
 }
 
 /* set a minimum width for the header */
@@ -2356,8 +2367,8 @@ button[selected], input[type=submit][selected], input[type=reset][selected], inp
 }
 /* header */
 #header div.line {
-height: 2px;
-	border-bottom: 2px solid;
+    height: 2px;
+    border-bottom: 2px solid;
     color:#0046ad;
 }
 
@@ -2560,17 +2571,17 @@ ul.subTabs li a:link, ul.subTabs li a:visited
 #subModuleList
 {
     padding:0.4em 0 0.3em 1em;
-	border-bottom: none;
-	border-top: 2px solid;
+    border-bottom: none;
+    border-top: 2px solid;
 }
 #subModuleList span a
 {
     text-decoration: none;
     padding: 0.2em 0.5em 0.3em 0.5em;
-	margin: 0 -3px 0 0;
-	border-right: 1px solid;
-	border-left: 1px solid;
-	border-bottom: none;
+    margin: 0 -3px 0 0;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    border-bottom: none;
 }
 
 /* last viewed and shortcuts lists in the header */
@@ -2589,7 +2600,7 @@ ul.subTabs li a:link, ul.subTabs li a:visited
 }
 .headerList a:hover span
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 /* for lists of items in the left column ( such as the shortcuts or last view items lists ) */
 .leftList ul li
@@ -2608,7 +2619,7 @@ ul.subTabs li a:link, ul.subTabs li a:visited
     padding-left: 3px;
     padding-top: 8px;
     padding-bottom: 4px;
-	margin-bottom: 0;
+    margin-bottom: 0;
     border-bottom:2px solid;
     color:#444;
 }
@@ -2646,7 +2657,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover
 /* global links */
 
 #globalLinks {
-    padding:8px 2px 3px;
+
 }
 #globalLinks ul
 {
@@ -2662,7 +2673,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover
 }
 
 #welcome {
-border-right: 2px solid #ddd;
+    border-right: 2px solid #ddd;
 }
 
 /* themepicker */
@@ -2697,7 +2708,7 @@ ul.tablist li a:hover, ul.subpanelTablist li a:hover
 ul.tablist li a.current, ul.tablist li a.current:hover
 {
     border-bottom:2px solid #f6f6f6;
-	font-weight: bold;
+    font-weight: bold;
 }
 ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
 {
@@ -2707,7 +2718,7 @@ ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
 .subpanelTabForm .h3Row
 {
     border-top: 1px solid #dddddd;
-	background-image: none;
+    background-image: none;
 }
 
 /*Bug 29945 */
@@ -2747,27 +2758,27 @@ ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
 /* fonts */
 body
 {
-	font-size: 12px;
+    font-size: 12px;
 }
 table, div
 {
-	font-size: 11px;
+    font-size: 11px;
 }
 h1, h2
 {
-	font-size: 14px;
+    font-size: 14px;
 }
 h3
 {
-	font-size: 13px;
+    font-size: 13px;
 }
 h4, h5
 {
-	font-size: 12px;
+    font-size: 12px;
 }
 input, select, textarea, button
 {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 /* YUI styles */
@@ -2945,7 +2956,7 @@ ul.subpanelTablist li a,
 /* for overlib js library */
 .olCapFontClass A
 {
-	font-size: 9px;
+    font-size: 9px;
 }
 
 /* sitemap */
@@ -2973,7 +2984,7 @@ ul.subpanelTablist li a,
 /* to make the reportwizard button text smaller */
 .reportwizard .buttonText
 {
-	font-size: 11px;
+    font-size: 11px;
 }
 
 /* to fix the size of the fonts in the unified module search popup */
@@ -2991,16 +3002,16 @@ ul.subpanelTablist li a,
 /* colors */
 body
 {
-	color: #444444;
-	background-color: #ffffff;
+    color: #444444;
+    background-color: #ffffff;
 }
 h1, h2, h3
 {
-	color: #000000;
+    color: #000000;
 }
 h4, h5
 {
-	color: #444;
+    color: #444;
 }
 a:link, a:visited
 {
@@ -3012,17 +3023,17 @@ a:hover
 }
 button, input[type=submit], input[type=reset], input[type=button], .button
 {
-	border-color: #abc3d7;
-	background-color: #ecf1f4;
-	color: #000;
+    border-color: #abc3d7;
+    background-color: #ecf1f4;
+    color: #000;
 }
 
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
 {
-	border-color: #c1c1c1;
-	background-color: #f0f0f0;
-	color: #000;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
+    border-color: #c1c1c1;
+    background-color: #f0f0f0;
+    color: #000;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
 }
 
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
@@ -3034,19 +3045,19 @@ button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][di
 }
 input,select
 {
-	border-color: #94c1e8;
-	background-color: #ffffff;
+    border-color: #94c1e8;
+    background-color: #ffffff;
 }
 
 input:focus,textarea:focus, select:focus
 {
-	background-color: #fff;
-	border-color: #abc3d7;
+    background-color: #fff;
+    border-color: #abc3d7;
 }
 textarea
 {
-	border-color: #abc3d7;
-	background-color: #fff;
+    border-color: #abc3d7;
+    background-color: #fff;
 }
 
 /* for team notices dashlet */
@@ -3059,7 +3070,7 @@ textarea
 /* header */
 #header div.line {
     background-color:#f10202;
-	border-bottom-color: #0046ad;
+    border-bottom-color: #0046ad;
     color:#0046ad;
 }
 
@@ -3101,13 +3112,13 @@ textarea
 }
 #subModuleList
 {
-	background-color:#f10202;
-	border-color:#0046ad;
+    background-color:#f10202;
+    border-color:#0046ad;
 }
 #subModuleList span a
 {
-	border-right-color:#0046ad;
-	border-left-color:#79a7d8;
+    border-right-color:#0046ad;
+    border-left-color:#79a7d8;
 }
 #subModuleList span a:link,
 #subModuleList span a:visited
@@ -3117,7 +3128,7 @@ textarea
 #subModuleList span a:hover
 {
     background-color:#0046ad;
-	border-left-color:#0046ad;
+    border-left-color:#0046ad;
 }
 
 /* lists in the header */
@@ -3176,8 +3187,8 @@ ul.subpanelTablist li a.activeSubTab:hover
 /* search */
 #search input[name=query_string]
 {
-	border-color: #6fb0e4;
-	background-color: #f6fafd;
+    border-color: #6fb0e4;
+    background-color: #f6fafd;
 }
 
 /* new record form */
@@ -3208,7 +3219,7 @@ ul.subpanelTablist li a.activeSubTab:hover
 }
 .list
 {
-	border-color: #ABC3D7 !important;
+    border-color: #ABC3D7 !important;
 }
 .evenListRowS1 td,
 .oddListRowS1 td
@@ -3316,64 +3327,64 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited
 /* calendar styles */
 .monthCalBody
 {
-	background-color: #abc3d7;
+    background-color: #abc3d7;
 }
 .monthFooter td
 {
-	border-top-color: #abc3d7;
-	border-bottom-color: #abc3d7;
-	background-color: #ffffff;
+    border-top-color: #abc3d7;
+    border-bottom-color: #abc3d7;
+    background-color: #ffffff;
 }
 .monthHeader a:hover,
 .monthViewDayHeight a:hover
 {
-	color: #0b578f;
+    color: #0b578f;
 }
 .monthCalBodyTH th[scope=row],
 .monthViewDayHeight td[scope=row]
 {
-	background-color: #ebebeb;
+    background-color: #ebebeb;
 }
 .monthCalBodyTH th
 {
-	background-color: #fafafa;
-	color: #444444;
-	border-color: #abc3d7 !important;
+    background-color: #fafafa;
+    color: #444444;
+    border-color: #abc3d7 !important;
 }
 .monthViewDayHeight td
 {
-	border-color: #abc3d7;
-	background-color: #ffffff;
-	color: #444444;
+    border-color: #abc3d7;
+    background-color: #ffffff;
+    color: #444444;
 }
 .monthViewDayHeight td[class=weekEnd]
 {
-	background-color: #f6f6f6;
+    background-color: #f6f6f6;
 }
 .monthCalBodyDayItem
 {
-	background-color: #ffffff;
-	border-top-color: #abc3d7;
-	border-bottom-color: #ddd;
+    background-color: #ffffff;
+    border-top-color: #abc3d7;
+    border-bottom-color: #ddd;
 }
 .monthCalBody td
 {
-	background-color: #fff;
-	color: #444444;
+    background-color: #fff;
+    color: #444444;
 }
 .monthCalBody th a
 {
-	color: #000000;
+    color: #000000;
 }
 .yearCalBody
 {
-	border: none;
+    border: none;
 }
 .yearCalBodyMonth
 {
-	background-color: #abc3d7 !important;
-	border-top: 2px solid #f10202;
-	border-bottom: 2px solid #fff;
+    background-color: #abc3d7 !important;
+    border-top: 2px solid #f10202;
+    border-bottom: 2px solid #fff;
 }
 .yearCalBody .monthHeader
 {
@@ -3381,19 +3392,19 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited
 }
 .yearCalBodyMonth #daily_cal_table
 {
-	border-top: #abc3d7;
+    border-top: #abc3d7;
 }
 .yearCalBodyMonth #daily_cal_table .monthCalBodyTHDay
 {
-	border-color: #abc3d7;
+    border-color: #abc3d7;
 }
 .yearCalBodyMonth > a
 {
-	color: #000000;
+    color: #000000;
 }
 h5.calSharedUser
 {
-	color: #444444;
+    color: #444444;
 }
 .monthHeader
 {
@@ -3442,7 +3453,7 @@ ul.subpanelTablist li a.current,
 ul.subpanelTablist li a.current:hover
 {
     color: #4f4f4f;
-	background: #fff;
+    background: #fff;
     border-right-color: #abc3d7;
     border-top-color: #abc3d7;
     border-bottom-color: #fff;
@@ -3464,11 +3475,11 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
 /* for overlib js library */
 .olCgClass td
 {
-	border-bottom-color: #abc3d7;
+    border-bottom-color: #abc3d7;
 }
 .olBgClass
 {
-	background-color: #abc3d7;
+    background-color: #abc3d7;
 }
 
 /* sitemap */
@@ -3483,85 +3494,15 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
     color: #444;
 }
 
-/* YUI theme */
-.yui-dt th, .yui-dt-hd {
-    /*background: #D8D8DA url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x 0 -30px;*/
-    background:#EBEBED none repeat scroll 0 0;
-}
-
-.yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse
-{
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -110px;
-}
-
- .yui-layout .yui-layout-clip-left .collapse, .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse,
- .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -90px;
-}
-
- .yui-layout .yui-layout-clip-right .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -110px;
-}
-
- .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -220px;
-}
-
- .yui-layout .yui-layout-clip-top .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')no-repeat -20px -240px;
-}
-
- .yui-layout .yui-layout-clip-bottom .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -180px;
-}
-
- .yui-layout .yui-layout-unit div.yui-layout-hd .close {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -100px;
-}
-
-.yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav, .yui-layout .yui-layout-hd {
-    background:#DDD url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 0;
-    border-color: #ABC3D7;
-}
-
-.yui-layout .yui-layout-unit div.yui-layout-bd, .yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content {
-	border-color:#ABC3D7;
-}
-
-.yuimenuitem-hassubmenu > a{
-    background-image: url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png');
-}
-
- .yui-navset .yui-nav li a,.yui-navset-top .yui-nav li a, .yui-navset-bottom .yui-nav li a,
-.yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a
-    {
-    background:#DDD url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 -131px;
-}
-
- .sugar-progress-bar, .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a:focus, .yui-navset .yui-nav .selected a:hover
-{
-    background:#666666 url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 -157px;
-
-}
-
-.yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em, .yui-navset .yui-nav a, .yui-navset .yui-nav a em, .yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a  {
-    border-color: #ABC3D7;
-}
-
- a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav .selected a.sugar-tab-close {
-    background : transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')  no-repeat scroll 0px -70px;
- }
-
-
 #basic_search_link
 {
     margin-left:6px !important;
 }
 
 .star {
-	float:right;
-	zoom: 1;
-	display: inline;
+    float:right;
+    zoom: 1;
+    display: inline;
 }
 .moduleTitle .star
 {
@@ -3577,14 +3518,14 @@ li div.star {float:none;}
 
 #ajaxStatusDiv {
     background : #ffffff;
-	color : #f10202;
-	position : fixed;
-	opacity : .8;
-	filter : alpha(opacity=80);
+    color : #c60c30;
+    position : fixed;
+    opacity : .8;
+    filter : alpha(opacity=80);
     z-index: 20;
     top: 7px;
     border: 1px solid #aaa;
-	padding: 5px;
+    padding: 5px;
 }
 
 div#chartDashlets
@@ -3610,16 +3551,16 @@ td.teamset-row, .edit tr td.teamset-row, .edit tr td table tr td.teamset-row {
 /* competible for SugarActionMenu */
 
 ul.clickMenu {
-	list-style: none;
-	padding: 0px 0px 0px 0px;
-	margin: 0 !important;
-	vertical-align: bottom;
+    list-style: none;
+    padding: 0px 0px 0px 0px;
+    margin: 0 !important;
+    vertical-align: bottom;
     color: #000000;
-	display: inline-block;
+    display: inline-block;
 }
 ul.clickMenu form{
-	float:left;
-	display:block;
+    float:left;
+    display:block;
 }
 ul.SugarActionMenuIESub {
 }
@@ -3630,57 +3571,57 @@ ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
 
-   		background-color: #f10202;
-   		border-color: #f10202;
-		color: #fff;
+    background-color: #f10202;
+    border-color: #f10202;
+    color: #fff;
 }
 ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
 ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
-	/*color: #fff !important;*/
+    /*color: #fff !important;*/
 }
 
 ul.clickMenu li span.ab:hover {
-	background-position: 6px 0px;
+    background-position: 6px 0px;
 }
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
-	background-color: #ECF1F4;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
-	border: 1px solid #ABC3D7;
-	float: left;
-	margin: 0;
-	padding: 0 0 0 0;
-	list-style: none;
-	position: relative; /*--Declare X and Y axis base--*/
+    background-color: #ECF1F4;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
+    border: 1px solid #ABC3D7;
+    float: left;
+    margin: 0;
+    padding: 0 0 0 0;
+    list-style: none;
+    position: relative; /*--Declare X and Y axis base--*/
     cursor: pointer;
 }
 ul.SugarActionMenuIESub li a,
 ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a{
-	display: block;
-	text-decoration: none;
-	float: left;
-	font-weight: normal !important;
-	padding: 1px 10px 1px 10px !important;
-	color: #000;
-	font-size: 12px;
+    display: block;
+    text-decoration: none;
+    float: left;
+    font-weight: normal !important;
+    padding: 1px 10px 1px 10px !important;
+    color: #000;
+    font-size: 12px;
 }
 
 .list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
-	color: #fff;
+    color: #fff;
 }
 
 ul.clickMenu li.single a{
-	padding-right: 8px !important;
+    padding-right: 8px !important;
 }
 
 ul.clickMenu li a:hover{
-text-decoration: none !important;
+    text-decoration: none !important;
 }
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-	width: 22px;
-	height: 16px;
-	float: left;
-	background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
-	cursor: pointer;
+    width: 22px;
+    height: 16px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    cursor: pointer;
 }
 
 ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
@@ -3689,39 +3630,39 @@ ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
     /* padding-left: 5px; */
 }
 ul.clickMenu li span.subhover {
-	cursor: pointer;
-	} /*--Hover effect for trigger--*/
+    cursor: pointer;
+} /*--Hover effect for trigger--*/
 ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub {
-	list-style: none;
-	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
-	left: 0; top: 18px;
-	background: #fff;
-	margin: 0;
-	display: none;
-	float: left;
-	width: auto;
-	border: 1px solid #ccc;
-	box-shadow: #999 0px 5px 10px;
-	-moz-box-shadow: #999 0px 5px 10px;
-	-webkit-box-shadow: #999 0px 5px 10px;
-	padding: 8px 0px;
-	z-index: 10;
-	overflow:hidden;
+    list-style: none;
+    position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+    left: 0; top: 18px;
+    background: #fff;
+    margin: 0;
+    display: none;
+    float: left;
+    width: auto;
+    border: 1px solid #ccc;
+    box-shadow: #999 0px 5px 10px;
+    -moz-box-shadow: #999 0px 5px 10px;
+    -webkit-box-shadow: #999 0px 5px 10px;
+    padding: 8px 0px;
+    z-index: 10;
+    overflow:hidden;
 }
 
 ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li{
-	margin: 0;
-	padding: 0px;
-	clear: both;
-	/*width: 170px;*/
-	width:100%;
-	white-space: nowrap;
+    margin: 0;
+    padding: 0px;
+    clear: both;
+    /*width: 170px;*/
+    width:100%;
+    white-space: nowrap;
 
 }
 ul.clickMenu.subpanel.records {
-	background-color: #eee;
-	border: 1px solid #ddd;
-	background-image: none;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    background-image: none;
 }
 
 /*
@@ -3733,14 +3674,14 @@ ul.clickMenu.subpanel.records:hover {
 */
 
 ul.clickMenu.subpanel.records li a{
-	color: #aaa;
+    color: #aaa;
 }
 ul.clickMenu.subpanel.records > li div:hover a{
-	color: #fff !important;
+    color: #fff !important;
 }
 
 ul.clickMenu.subpanel.records li > span{
-	opacity: .5;
+    opacity: .5;
     height: 16px;
     width: 17px;
     padding:0 5px 0 0 !important;
@@ -3752,19 +3693,19 @@ ul.clickMenu.subpanel.records:hover li > span{
 }
 
 ul.clickMenu.subpanel.records li ul.subnav li a span {
-	height: 0px;
-	width: 0px;
-	background-image: none;
+    height: 0px;
+    width: 0px;
+    background-image: none;
 }
 ul.clickMenu.button li span.ab:hover {
     background-position: 50% 0px;
 
 }
 ul.clickMenu.button li > span {
-	width: auto;
-	background-position: 50% -20px;
-	padding: 3px 15px 3px 10px !important;
-	height: auto;
+    width: auto;
+    background-position: 50% -20px;
+    padding: 3px 15px 3px 10px !important;
+    height: auto;
 }
 
 ul.clickMenu.button:hover li > span {
@@ -3772,15 +3713,15 @@ ul.clickMenu.button:hover li > span {
 }
 
 ul.clickMenu.button li > span a {
-	padding: 0px !important;
+    padding: 0px !important;
 }
 
 ul.clickMenu.button span {
-	padding-right: 5px;
+    padding-right: 5px;
 }
 
 ul.clickMenu.button li ul.subnav {
-	width: auto;
+    width: auto;
 }
 
 ul.clickMenu li a.disabled {
@@ -3789,94 +3730,94 @@ ul.clickMenu li a.disabled {
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records , .evenListRowS1:hover td ul.clickMenu.subpanel.records {
-		background-image: -moz-linear-gradient(center top,
-		#ffffff 0%,
-		#eeeeee 10%,
-		#dfdfdf 100%
-		);
-		background-image: -webkit-gradient(
-	    linear,
-	    left top,
-	    left bottom,
-	    color-stop(0, #ffffff),
-	    color-stop(.10, #eeeeee),
-	    color-stop(1, #dfdfdf)
-	   );
-	   border: 1px solid #AAAAAA;
+    background-image: -moz-linear-gradient(center top,
+    #ffffff 0%,
+    #eeeeee 10%,
+    #dfdfdf 100%
+    );
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #ffffff),
+        color-stop(.10, #eeeeee),
+        color-stop(1, #dfdfdf)
+    );
+    border: 1px solid #AAAAAA;
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li a, .evenListRowS1:hover td ul.clickMenu.subpanel.records li a {
-	color: #000;
+    color: #000;
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li span, .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
-	opacity: 1;
+    opacity: 1;
 }
 
 ul.clickMenu li ul.subnav li a,ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
-	float: left;
-	background: #fff;
-	padding: 1px 10px !important;
-	border: 0px !important;
-	/*width: 150px;*/
-	width:100%;
-	text-align: left;
-	font-size: 12px !important;
-	color: #000;
+    float: left;
+    background: #fff;
+    padding: 1px 10px !important;
+    border: 0px !important;
+    /*width: 150px;*/
+    width:100%;
+    text-align: left;
+    font-size: 12px !important;
+    color: #000;
 
 }
 
 ul.clickMenu li ul.subnav li input {
-	padding: 2px 10px !important;
-	/*width: 170px;*/
-	width:100%
+    padding: 2px 10px !important;
+    /*width: 170px;*/
+    width:100%
 }
 ul.SugarActionMenuIESub li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-background-color: #f10202;
-color: #fff;
-font-weight: normal !important;
-font-size: 12px !important;
-cursor: pointer;
-text-shadow: none;
-border-radius: 0px;
--webkit-border-radius: 0px;
+    background-color: #f10202;
+    color: #fff;
+    font-weight: normal !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    text-shadow: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
 
 }
 
 td.paginationActionButtons ul.clickMenu .massall,
 ul#selectLink.clickMenu .massall, td.selectCol .massall{
-	float: left;
-	margin: 2px 0 0 4px;
+    float: left;
+    margin: 2px 0 0 4px;
 }
 
 td.paginationActionButtons ul.selectmenu > li > a, td.selectCol ul.selectmenu > li > a, ul#selectLink.clickMenu > li > a {
-	padding: 0px !important;
+    padding: 0px !important;
 }
 ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowLess, ul.clickMenu.showMore .moduleMenuOverFlowMore {
-	display:none;
+    display:none;
 }
 
 #globalLinksDivider {
-	float: right;
-	margin-right: 0px;
+    float: right;
+    margin-right: 0px;
 }
 ul#globalLinksSubnav, ul#quickCreateULSubnav{
     font-family: Arial;
 }
 ul#globalLinks.clickMenu {
-	background: none;
-	border: 0px none;
-	padding-right: 0px;
-	font-family: Arial;
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
 }
 
 ul#globalLinks.clickMenu li > span {
-	height: 43px;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=tabDownArrowOff.png');
-	background-position: right center;
-	width: auto;
-	margin-right: 10px;
+    height: 43px;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=tabDownArrowOff.png');
+    background-position: right center;
+    width: auto;
+    margin-right: 10px;
     padding-right: 8px;
 }
 
@@ -3884,32 +3825,32 @@ ul#globalLinks.clickMenu li > span a {
     color: #FFFFFF;
     font-size: 14px;
     margin-top: 13px;
-	padding: 0px 10px !important;
+    padding: 0px 10px !important;
 }
 
 
 ul#globalLinks.clickMenu li ul.subnav {
-	top: 43px;
-	right: 0px;
-	left: auto;
+    top: 43px;
+    right: 0px;
+    left: auto;
 }
 
 ul#globalLinks.clickMenu > li > a {
-	color: #fff;
-	font-size: 14px;
+    color: #fff;
+    font-size: 14px;
     padding: 14px 7px !important;
 }
 
 ul#selectLink.clickMenu {
-	height: 17px;
-	min-width: 20px;
-	background-image: none;
+    height: 17px;
+    min-width: 20px;
+    background-image: none;
 }
 
 td.paginationActionButtons ul.clickMenu #massall,
 ul#selectLink.clickMenu #massall{
-	float: left;
-	margin: 1px 4px;
+    float: left;
+    margin: 1px 4px;
 }
 .selectActions.clickMenu {
     display: none;
@@ -3920,11 +3861,11 @@ ul.clickMenu.show {
 }
 
 ul#selectLink.clickMenu > li > a{
-	padding-left: 0px !important;
+    padding-left: 0px !important;
 }
 
 ul#selectLink.clickMenu li span {
-	height: 17px;
+    height: 17px;
 }
 
 ul#selectLink.clickMenu li ul.subnav {
@@ -3932,31 +3873,31 @@ ul#selectLink.clickMenu li ul.subnav {
 }
 
 ul#detailViewActions.clickMenu {
-	margin-top: 2px !important;
+    margin-top: 2px !important;
 }
 
 #selectActions.clickMenu {
-	display: none;
+    display: none;
 }
 
 .selectActionsDisabled {
-	display: inline-block;
-	background-color: #eee;
-	border: 1px solid #ddd;
-	-webkit-border-radius: 1px;
-	-moz-border-radius: 1px;
-	border-radius: 1px;
-	vertical-align: bottom;
-	padding: 0 3px 0 10px;
+    display: inline-block;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    vertical-align: bottom;
+    padding: 0 3px 0 10px;
 }
 
 .selectActionsDisabled span {
-	width: 17px;
-	height: 17px;
-	float: left;
-	background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
-	opacity: .5;
-	}
+    width: 17px;
+    height: 17px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    opacity: .5;
+}
 
 .selectActionsDisabled span.ab {
     border-left: 1px #ccc solid;
@@ -3965,82 +3906,82 @@ ul#detailViewActions.clickMenu {
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
-	float: left;
-	display: block;
-	text-decoration: none !important;
-	color: #999 !important;
-	padding: 1px 0px 0px 0px!important;
-	text-shadow: 1px 1px #FFFFFF;
-	font-weight: normal;
-	font-size: 13px;
+    float: left;
+    display: block;
+    text-decoration: none !important;
+    color: #999 !important;
+    padding: 1px 0px 0px 0px!important;
+    text-shadow: 1px 1px #FFFFFF;
+    font-weight: normal;
+    font-size: 13px;
 }
 
 #quickCreate {
-	float: right;
+    float: right;
 }
 
 #quickCreate ul.clickMenu {
-	background: none;
-	border: 0px none;
-	padding-right: 0px;
-	font-family: Arial;
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
 }
 
 
 #quickCreate ul.clickMenu > li {
-	width: 50px;
-	height: 43px;
+    width: 50px;
+    height: 43px;
 
 }
 #quickCreate ul.clickMenu li > span {
-	background: url('../../../../index.php?entryPoint=getImage&imageName=quick-create.png') no-repeat center center;
-	height: 43px;
-	width: 50px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=quick-create.png') no-repeat center center;
+    height: 43px;
+    width: 50px;
 }
 
 #quickCreate ul.clickMenu > li:hover {
-	background-color: #276499;
+    background-color: #276499;
 }
 ul#globalLinksSubnav li { min-width: 120px;}
 ul#globalLinksSubnav, ul#quickCreateULSubnav,
 #quickCreate ul.clickMenu li ul.subnav, #globalLinksModule ul.clickMenu li ul.subnav{
-	top: 43px;
-	right: 0;
-	left: auto;
-	padding: 10px 0px;
-	border: 1px solid #999;
-	width: 100%;
+    top: 43px;
+    right: 0;
+    left: auto;
+    padding: 10px 0px;
+    border: 1px solid #999;
+    width: 100%;
 }
 
 #quickCreate ul.clickMenu li ul.subnav {
-	width: auto;
+    width: auto;
 }
 
 #globalLinksSubnav li a, #quickCreateULSubnav li a,
 #quickCreate ul.clickMenu li ul.subnav li a, #globalLinksModule ul.clickMenu li ul.subnav li a {
-	padding: 4px 10px !important;
-	font-size: 13px !important;
-	color: #666666 !important;
-	line-height: 1.45;
+    padding: 4px 10px !important;
+    font-size: 13px !important;
+    color: #666666 !important;
+    line-height: 1.45;
 }
 #quickCreateULSubnav li.moduleMenuOverFlowLess a, #quickCreateULSubnav li.moduleMenuOverFlowMore a,
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a {
-	color: #999 !important;
+    color: #999 !important;
 }
 
 #quickCreate ul.clickMenu li ul.subnav li a:hover, #globalLinksModule ul.clickMenu li ul.subnav li a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a:hover {
-	color: #fff !important;
+    color: #fff !important;
 }
 
 ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav li a:hover .showMoreArrow {
-	background-position: center 8px;
-	opacity: 1;
+    background-position: center 8px;
+    opacity: 1;
 }
 
 
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img
 {
-	opacity: .6;
+    opacity: .6;
 }
 
 div.action_buttons form {float:left;}
@@ -4090,65 +4031,65 @@ div.action_buttons form {float:left;}
 /* from old default theme */
 /* MAIN NAV STYLES */
 .subDmenu {
-	position:absolute;
-	display:none;
-	visibility:hidden;
+    position:absolute;
+    display:none;
+    visibility:hidden;
 }
 .menuItem, .menuItemHilite, .menuItemX, .menuItemHiliteX,
 .menuItem:visited, .menuItemHilite:visited, .menuItem:hover, .menuItemHilite:hover,
 .menuItem:active, .menuItemHilite:active, .menuItem:link, .menuItemHilite:link,
 .menuItemX:visited, .menuItemHiliteX:visited, .menuItemX:hover, .menuItemHiliteX:hover,
 .menuItemX:active, .menuItemHiliteX:active, .menuItemX:link, .menuItemHiliteX:link {
-	font-size: 11px;
-	font-style: normal;
-	line-height: 18px;
-	color: #000;
-	text-decoration: none;
-	width: 120px;
-	border-left: none;
-	border-right: none;
-	display: block;
-		padding: 1px 5px 1px 7px;
-		border-bottom: 1px solid #c0c0c0;
+    font-size: 11px;
+    font-style: normal;
+    line-height: 18px;
+    color: #000;
+    text-decoration: none;
+    width: 120px;
+    border-left: none;
+    border-right: none;
+    display: block;
+    padding: 1px 5px 1px 7px;
+    border-bottom: 1px solid #c0c0c0;
 }
 
 .menuItem:hover, .menuItemHilite:hover, .menuItem:active, .menuItemHilite:active,
 .menuItemX:hover, .menuItemHiliteX:hover, .menuItemX:active, .menuItemHiliteX:active {
-	color: #000;
+    color: #000;
 }
 
 .menuItem {
-	background-color:#f6f6f6;
+    background-color:#f6f6f6;
 }
 
 .menuItemHilite {
-	background-color:#FFFFFF;
+    background-color:#FFFFFF;
 }
 
 .menuItemX {
-	background-color:#CCCCCC;
+    background-color:#CCCCCC;
 }
 
 .menuItemHiliteX {
-	background-color:#999999;
+    background-color:#999999;
 }
 .menu
 {
-	position:absolute;
-	display:none;
-	visibility:hidden;
-	background-color:#f6f6f6;
-	z-index: 2;
-	border: #999999 solid 1px;
-	filter:alpha(opacity=90);
-	-moz-opacity:0.9;
-	opacity: 0.9;
-/*	width:150px;*/
+    position:absolute;
+    display:none;
+    visibility:hidden;
+    background-color:#f6f6f6;
+    z-index: 2;
+    border: #999999 solid 1px;
+    filter:alpha(opacity=90);
+    -moz-opacity:0.9;
+    opacity: 0.9;
+    /*	width:150px;*/
 }
 body
 {
-	margin: 0px;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+    margin: 0px;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
 }
 fieldset, table, pre
 {
@@ -4156,23 +4097,23 @@ fieldset, table, pre
 }
 p
 {
-	margin-top: 0px;
-	margin-bottom: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 form
 {
-	margin: 0px;
+    margin: 0px;
 }
 h1, h2
 {
     margin: 0;
-	font-weight: bold;
+    font-weight: bold;
 }
 h3
 {
-	margin:0;
-	margin-bottom: 3px;
-	padding-top: 3px;
+    margin:0;
+    margin-bottom: 3px;
+    padding-top: 3px;
 }
 textarea
 {
@@ -4184,7 +4125,7 @@ input[type="radio"],
 input[type="reset"],
 input[type="submit"]
 {
-	padding:0px;
+    padding:0px;
 }
 
 input[type=text],input[type=password],textarea
@@ -4194,25 +4135,25 @@ input[type=text],input[type=password],textarea
 
 input[type=checkbox],input[type=radio]
 {
-	border:0px;
-	background-color: transparent;
-	margin: 0px;
-	vertical-align: bottom;
+    border:0px;
+    background-color: transparent;
+    margin: 0px;
+    vertical-align: bottom;
 }
 ul li
 {
-	list-style-type: none;
-	margin-left: 6px;
-	margin-bottom: 2px;
+    list-style-type: none;
+    margin-left: 6px;
+    margin-bottom: 2px;
 }
 ul
 {
-	margin-top: 2px;
+    margin-top: 2px;
     margin-right: 0;
 }
 hr
 {
-	height:1px;
+    height:1px;
 }
 
 div.clear
@@ -4260,12 +4201,12 @@ th, td
 /* global links */
 #globalLinks
 {
-    padding: 8px 10px 3px 10px;
+
     vertical-align: middle;
 }
 #globalLinks ul
 {
-	list-style: none;
+    list-style: none;
     padding: 0;
     margin: 0;
 }
@@ -4304,13 +4245,13 @@ th, td
     vertical-align: bottom;
 }
 #unified_search_advanced_img{
-cursor:pointer;
+    cursor:pointer;
 }
 #unified_search_advanced_div
 {
     height: 1px;
     position: relative;
-	overflow: hidden;
+    overflow: hidden;
     width: 21em;
     padding-top: 5px;
 }
@@ -4397,7 +4338,7 @@ div#content
 }
 div#content > table
 {
-	width: 100%;
+    width: 100%;
 }
 /* put a bit of left margin in when the left column menu is hidden */
 div#content noLeftColumn
@@ -4419,7 +4360,7 @@ div#content noLeftColumn
 #leftHandle
 {
     float:left;
-	/*margin-top: 10px;*/
+    /*margin-top: 10px;*/
 }
 /* new record form */
 #newRecord form
@@ -4474,9 +4415,9 @@ ul.cssmenu
     opacity:0.9;
     position:absolute;
     visibility:hidden;
-	z-index:1;
+    z-index:1;
     font: 12px Arial, Verdana, Helvetica, sans-serif;
-	margin-top: 5px;
+    margin-top: 5px;
 }
 ul.cssmenu li
 {
@@ -4493,7 +4434,7 @@ ul.cssmenu li
 ul.cssmenu li:hover
 {
     background-color:#FFFFFF;
-	color: #000;
+    color: #000;
 }
 ul.cssmenu li a
 {
@@ -4512,39 +4453,39 @@ ul.cssmenu li a
     display: block;
 }
 #subModuleList li, #subModuleList ul{
-padding:0px;
-margin:0px;
+    padding:0px;
+    margin:0px;
 }
 
 #subModuleList li.subTabMore{
-position:relative;
+    position:relative;
 }
 
 #subModuleList ul.cssmenu{
-display:block;
-position:absolute;
-top:15px;
-left:0;
-width:127px;
+    display:block;
+    position:absolute;
+    top:15px;
+    left:0;
+    width:127px;
 }
 
 #header ul.cssmenu li{
-display:block;
+    display:block;
 }
 
 #subModuleList ul.cssmenu li a,
 #subModuleList ul.cssmenu li a:hover{
-color:#000;
-border:none;
-background:transparent none repeat scroll 0% 0%;
+    color:#000;
+    border:none;
+    background:transparent none repeat scroll 0% 0%;
 }
 
 #subModuleList li.subTabMore ul.cssmenu{
-visibility:hidden;
+    visibility:hidden;
 }
 
 #subModuleList li.subTabMore:hover ul.cssmenu{
-visibility:visible;
+    visibility:visible;
 }
 #subModuleList
 {
@@ -4554,8 +4495,8 @@ visibility:visible;
 {
     text-decoration: none;
     padding: 0.2em 0.5em 0.3em 0.5em;
-	margin: 0 -3px 0 0;
-	white-space:nowrap;
+    margin: 0 -3px 0 0;
+    white-space:nowrap;
 }
 /* last viewed and shortcuts lists in the header */
 .headerList
@@ -4683,7 +4624,7 @@ div.moduleTitle
 .detail tr td
 {
     border: none;
-	vertical-align: top;
+    vertical-align: top;
     padding: 5px 6px 5px 6px;
     vertical-align: top;
     text-align: left;
@@ -4726,14 +4667,14 @@ div.moduleTitle
 {
     font-weight: normal;
     padding: 0 !important;
-	vertical-align: top;
+    vertical-align: top;
     padding: 3px !important;
 }
 .edit tr td[scope=row]
 {
     padding: 5px 5px 5px 7px !important;
     text-align: left;
-	vertical-align: top;
+    vertical-align: top;
 }
 .edit tr th
 {
@@ -4741,8 +4682,8 @@ div.moduleTitle
 }
 table#tabFormPagination td,  #tabFormPagination, #EditView > table#tabFormPagination.detail.view
 {
-	border-bottom: none;
-	margin-bottom: 0;
+    border-bottom: none;
+    margin-bottom: 0;
 }
 .edit tr td table,
 .edit tr td table tr td
@@ -4751,17 +4692,17 @@ table#tabFormPagination td,  #tabFormPagination, #EditView > table#tabFormPagina
     padding: 0 !important;
 }
 table.edit.view {
-margin-top: 0;
+    margin-top: 0;
 }
 /* search panel on top of list views ( extends .edit .view definition ) */
 .search
 {
-	margin: 0 0 4px 0 !important;
-	padding:10px 6px 12px 10px;
+    margin: 0 0 4px 0 !important;
+    padding:10px 6px 12px 10px;
 }
 .search > table
 {
-	padding: 0 !important;
+    padding: 0 !important;
     margin: 0;
 }
 .search td span
@@ -4882,8 +4823,8 @@ margin-top: 0;
 }
 
 .list td.inlineButtons {
-	text-align: right;
-	min-width: 75px;
+    text-align: right;
+    min-width: 75px;
 }
 /* style for page content tables */
 .other
@@ -4906,26 +4847,26 @@ margin-top: 0;
 }
 .other .edit td
 {
-	background: transparent !important;
+    background: transparent !important;
 }
 .other .edit
 {
-	margin-top: 0;
+    margin-top: 0;
 }
 
 /* Special for Campaigns Wizard */
 .other td.edit #wizard td
 {
-	background: transparent;
+    background: transparent;
 }
 .other td.edit #wizard h4
 {
-	padding-left: 0;
-	margin-top: 0;
+    padding-left: 0;
+    margin-top: 0;
 }
 #wizard td
 {
-	white-space: normal;
+    white-space: normal;
     word-wrap: break-word;
 }
 
@@ -4941,7 +4882,7 @@ table.detail
 {
     padding-top: 4px;
     text-align: right;
-	vertical-align: middle;
+    vertical-align: middle;
 }
 .detail table tr.pagination td
 {
@@ -4973,15 +4914,15 @@ table.detail
 /* for report wizard */
 .reportwizard
 {
-	padding: 10px 6px 12px 10px;
+    padding: 10px 6px 12px 10px;
 }
 .reportwizard > table
 {
-	padding: 0 !important;
+    padding: 0 !important;
 }
 .reportwizard tr td
 {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 /* for subpanel tabs */
 ul.tablist, ul.subpanelTablist
@@ -5159,7 +5100,7 @@ div.indent_right {
 .search_form
 {
     overflow: visible;
-	text-align: left;
+    text-align: left;
 }
 
 .search_form .view
@@ -5222,8 +5163,8 @@ div.indent_right {
 }
 
 #bottomLinks {
-	padding: 0 25px;
-	float: right;
+    padding: 0 25px;
+    float: right;
 }
 
 #bottomLinks a {
@@ -5233,9 +5174,9 @@ div.indent_right {
 }
 
 #bottomLinks img {
-	border: 0px;
-	margin-bottom: -3px;
-	margin-left: 5px;
+    border: 0px;
+    margin-bottom: -3px;
+    margin-left: 5px;
 }
 
 /* Footer styles */
@@ -5267,25 +5208,25 @@ div.indent_right {
 #scheduler .schedulerDiv
 {
     color: #000000;
-	text-align: left;
+    text-align: left;
     width: 100%;
     background-color: #FAFAFA;
-	border-collapse: collapse;
-	border-bottom: 1px solid #999;
+    border-collapse: collapse;
+    border-bottom: 1px solid #999;
 }
 #scheduler .schedulerDiv table
 {
     width: 100%;
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 #scheduler .schedulerDiv table tr td
 {
-	height: 18px;
+    height: 18px;
     border: 1px solid #dddddd;
 }
 #scheduler .schedulerDiv table tr.schedulerTimeRow td
 {
-	border-left: 0;
+    border-left: 0;
 }
 #scheduler .schedulerDiv table tr.schedulerTimeRow th[scope=col]
 {
@@ -5294,31 +5235,31 @@ div.indent_right {
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td
 {
-	background-color: #eeeeee;
+    background-color: #eeeeee;
     width: 15px;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td[scope=row]
 {
     overflow: hidden;
     padding-left: 4px;
-	width: 125px;
+    width: 125px;
     background: transparent;
     border-left: 0;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellStartTime
 {
-	border-left: 4px solid #75AF4F !important;
+    border-left: 4px solid #75AF4F !important;
     background-color:#FFFFFF;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerSlotCellEndTime
 {
-	border-left: 4px solid #ff0000 !important;
+    border-left: 4px solid #ff0000 !important;
 }
 #scheduler .schedulerDiv table tr.schedulerAttendeeRow td.schedulerAttendeeDeleteCell
 {
-	background: transparent;
+    background: transparent;
     border-left: 1px solid #dddddd;
-	padding-left: 4px;
+    padding-left: 4px;
 }
 #scheduler .schedulerInvitees
 {
@@ -5341,11 +5282,11 @@ div.indent_right {
 }
 .monthHeader
 {
-	padding: 6px 5px 4px 3px;
-	margin-top: 10px;
-	vertical-align: middle;
-	background-repeat: repeat-x;
-	background-position: top;
+    padding: 6px 5px 4px 3px;
+    margin-top: 10px;
+    vertical-align: middle;
+    background-repeat: repeat-x;
+    background-position: top;
 }
 .monthHeader td
 {
@@ -5404,16 +5345,16 @@ div.indent_right {
     text-align: left;
 }
 .monthCalBody td div table td {
-text-align: left!important;
+    text-align: left!important;
 }
 .monthCalBody
 {
-   padding: 0;
+    padding: 0;
 }
 .monthCalBody td.yearCalBody
 {
     padding: 0;
-	margin: 0;
+    margin: 0;
 }
 .yearCalBodyMonth
 {
@@ -5558,7 +5499,7 @@ text-align: left!important;
 .calendar thead .name
 {
     background: #dddddd;
-	border-color: #cccccc;
+    border-color: #cccccc;
 }
 .calendar thead .title
 {
@@ -5574,25 +5515,25 @@ text-align: left!important;
     font-weight: bold;
 }
 .listViewCalCurrentAppt {
-	background-color: #75AF4F;
+    background-color: #75AF4F;
 }
 .listViewCalOtherAppt {
-background-color: #4D5EAA;
+    background-color: #4D5EAA;
 }
 .listViewCalConflictAppt {
-background-color: #AA4D4D;
+    background-color: #AA4D4D;
 }
 .listViewCalCurrentApptLgnd {
-background-color: #75AF4F;
-border: 1px solid #444444;
+    background-color: #75AF4F;
+    border: 1px solid #444444;
 }
 .listViewCalOtherApptLgnd {
-background-color: #4D5EAA;
-border: 1px solid #444444;
+    background-color: #4D5EAA;
+    border: 1px solid #444444;
 }
 .listViewCalConflictApptLgnd {
-background-color: #AA4D4D;
-border: 1px solid #444444;
+    background-color: #AA4D4D;
+    border: 1px solid #444444;
 }
 
 /** report styles **/
@@ -5755,7 +5696,7 @@ table.reportDataChildtablelistView td {
 .reportlistView {
     border-top: 1px solid #000;
     border-left: 1px solid #000;
-    }
+}
 table.reportlistView td, table.reportlistView th {
     background: #fff;
     border-bottom: 1px solid #000;
@@ -5764,49 +5705,49 @@ table.reportlistView td, table.reportlistView th {
     padding: 4px;
     text-align: center;
     font-size: 11px;
-    }
-    table.reportlistView th, .reportlistView .reportlistViewMatrixRightEmptyData, .reportlistView .reportlistViewMatrixRightEmptyData1 {
+}
+table.reportlistView th, .reportlistView .reportlistViewMatrixRightEmptyData, .reportlistView .reportlistViewMatrixRightEmptyData1 {
     background: #dcdcdc;
     font-weight: bold;
-    }
+}
 
 /* End of matrix report classes */
 
 /* for overlib js library */
 .olCapFontClass {
-	font-weight: bold;
-	color: #444;
-	background-color: #dfdfdf;
+    font-weight: bold;
+    color: #444;
+    background-color: #dfdfdf;
 }
 .olCapFontClass A {
-	color: #dfdfdf;
-	font-size: 9px;
+    color: #dfdfdf;
+    font-size: 9px;
 }
 .olFgClass td, #forecastsWorksheet .olBgClass td.olFgClass {
-	background-color: #fff;
-	padding: 5px 7px 7px 10px !important;
-	line-height: 18px;
+    background-color: #fff;
+    padding: 5px 7px 7px 10px !important;
+    line-height: 18px;
 }
 .olCgClass td, #forecastsWorksheet .olBgClass td.olCgClass {
-	border-bottom: 2px solid #ddd;
-	background-color: #f6f6f6;
-	padding: 5px 3px 3px 10px !important;
+    border-bottom: 2px solid #ddd;
+    background-color: #f6f6f6;
+    padding: 5px 3px 3px 10px !important;
 }
 .olCgClass {
     padding: 0px;
     border: 0px;
 }
 .olBgClass {
-	background-color: #ddd;
-	padding: 2px !important;
+    background-color: #ddd;
+    padding: 2px !important;
 }
 #forecastsWorksheet .olBgClass td {
     padding: 0 !important;
 }
 .olCloseFontClass {
-	padding-bottom: 1px;
-	text-align: right;
-	background-color: #dfdfdf;
+    padding-bottom: 1px;
+    text-align: right;
+    background-color: #dfdfdf;
 }
 
 /* acl role colors */
@@ -5848,30 +5789,30 @@ table.reportlistView td, table.reportlistView th {
 
 /* for lists where we don't want to have bullet points */
 ul.noBullet {
-  list-style-type: none;
-  margin-left: 0;
-  padding-left: 0;
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
 }
 
 li.noBullet {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 table.tabForm td ul li {
-list-style-type: none;
-margin-bottom: 10px;
+    list-style-type: none;
+    margin-bottom: 10px;
 }
 
 .helpButton
 {
-	font-weight:700;
+    font-weight:700;
 }
 
 .helpShortcut
 {
-	font-weight:700;
+    font-weight:700;
 }
 /* for subpanels */
 #MorePanelHandle
@@ -5882,43 +5823,43 @@ margin-bottom: 10px;
     margin-bottom: 2px;
     text-align: center;
     background: url('../../../../index.php?entryPoint=getImage&imageName=more.gif') no-repeat bottom left;
-	color: #444;
+    color: #444;
 }
 
 .sqsFloater {
-position:absolute;
-z-index:2;
-bottom:0;
-right:0;
-display:none;
-padding:0;
+    position:absolute;
+    z-index:2;
+    bottom:0;
+    right:0;
+    display:none;
+    padding:0;
 }
 
 .sqsFloater td {
-border:1px inset;
-color:black;
+    border:1px inset;
+    color:black;
 }
 
 .sqsMatchedSmartInputItem {
-font-size:11px;
-padding: 2px 5px 2px 5px;
-margin: 0;
-cursor: pointer;
+    font-size:11px;
+    padding: 2px 5px 2px 5px;
+    margin: 0;
+    cursor: pointer;
 }
 
 .sqsSelectedSmartInputItem {
-background-color:#DEEFFF;
+    background-color:#DEEFFF;
 }
 
 #sqsSmartInputResults {
-padding:0;margin:0;
+    padding:0;margin:0;
 }
 
 .sqsNoMatch {
-padding: 2px 5px 2px 5px;
-font-weight: bold;
-background-color:#eeeeee;
-color:#980000;
+    padding: 2px 5px 2px 5px;
+    font-weight: bold;
+    background-color:#eeeeee;
+    color:#980000;
 }
 /* misc font displays */
 .todaysTask
@@ -5956,8 +5897,8 @@ color:#980000;
 }
 /* list view page numbers */
 .pageNumbers {
-padding-right: 3px;
-padding-left: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
 }
 .contentBox {
     border-top: 1px solid #DDD;
@@ -5991,7 +5932,7 @@ padding-left: 3px;
 
 #dashletsList
 {
-	background: #fff;
+    background: #fff;
 }
 
 #dashletCtrls
@@ -6001,13 +5942,13 @@ padding-left: 3px;
 
 ul#dashletCategories li a:link, ul#dashletCategories li a:visited
 {
-	color: #444;
-	background: #eee;
+    color: #444;
+    background: #eee;
 }
 ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover
 {
-	color: #444;
-	background: transparent;
+    color: #444;
+    background: transparent;
 }
 #moduleDashlets h3,#chartDashlets h3,#toolsDashlets h3
 {
@@ -6026,15 +5967,15 @@ ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover
 /* Bug 27478 - IE Hacks to make sure username/password boxes on login page are same length */
 td.edit.view td
 {
-	text-align: left;
+    text-align: left;
 }
 td.edit.view td[align=right]
 {
-	text-align: right;
+    text-align: right;
 }
 #user_password, #user_name
 {
-	width: 150px;
+    width: 150px;
 }
 
 /* if we have horizontal padding anywhere in the table, it will break the rollup tree */
@@ -6101,8 +6042,8 @@ td.edit.view td[align=right]
 
 /* override some of the detail view styles for show more detail option (KBDocument detail view)*/
 .detail td.subdetail{
-   padding:0px;
-   border-bottom:medium none;
+    padding:0px;
+    border-bottom:medium none;
 }
 .detail td.subdetail table tr td{
     padding: 5px 6px;
@@ -6140,35 +6081,35 @@ td.edit.view td[align=right]
 }
 
 #lastviewicon, #newrecordicon, #shortcuts_img,#lastviewicon_1, #newrecordicon_1, #shortcuts_img_1 {
-	display:none;
+    display:none;
 }
 
 #color_menu, #font_menu {
-	width:200px;
-	height:15px;
-	margin:0;
-	padding:0px;
+    width:200px;
+    height:15px;
+    margin:0;
+    padding:0px;
 }
 
 #color_menu li, #font_menu li{
     float:left;
-	height:15px;
-	width:15px;
+    height:15px;
+    width:15px;
 }
 
 #themepickerDialog div[class="ft"]{
-	display:none;
+    display:none;
 }
 
 #stylepicker{
-	   border-width:1px;
-	   margin:0px;
-	   padding:0px;
-	   width:auto;
+    border-width:1px;
+    margin:0px;
+    padding:0px;
+    width:auto;
 }
 
 #themepickerDialog_c{
-	right: 2em;
+    right: 2em;
     top: 3em;
 }
 
@@ -6199,89 +6140,89 @@ td.edit.view td[align=right]
 
 .sugarFeedDashlet
 {
-	overflow:auto;
-	max-height:375px;
+    overflow:auto;
+    max-height:375px;
 }
 
 .sugarFeedDashlet td.list th, .sugarFeedDashlet td.list td[scope=col]
 {
-	display:none;
+    display:none;
 }
 
 .sugarFeedDashlet tr
 {
-	height:auto;
+    height:auto;
 }
 
 .sugarFeedDashlet .byLineBox
 {
-	width:100%;
-	position:relative;
-	overflow: hidden;
+    width:100%;
+    position:relative;
+    overflow: hidden;
 }
 
 .sugarFeedDashlet .byLineBox .byLineLeft
 {
-	font-size:79%;
-	float:left;
+    font-size:79%;
+    float:left;
 }
 
 .sugarFeedDashlet .byLineBox .byLineRight
 {
-	display:inline;
-	float:right;
-	font-size:79%;
+    display:inline;
+    float:right;
+    font-size:79%;
 }
 
 iframe.teamNoticeBox
 {
-	width:99%;
-	padding:0;
+    width:99%;
+    padding:0;
 }
 
 .loading-indicator
 {
-	font-size:11px;
-	background-image:url('../default/ext/resources/images/default/grid/loading.gif');
-	background-repeat:no-repeat;
-	background-position:left;
-	padding-left:20px;
-	line-height:16px;
-	margin:3px;
+    font-size:11px;
+    background-image:url('../default/ext/resources/images/default/grid/loading.gif');
+    background-repeat:no-repeat;
+    background-position:left;
+    padding-left:20px;
+    line-height:16px;
+    margin:3px;
 }
 
 .x-sqs-list
 {
-	border:1px solid #d0d0d0;
-	background:#d0d0d0;
-	zoom:1;
-	overflow:hidden;
+    border:1px solid #d0d0d0;
+    background:#d0d0d0;
+    zoom:1;
+    overflow:hidden;
 }
 
 .x-sqs-list-inner
 {
-	overflow:auto;
-	background:#FFF;
-	position:relative;
-	zoom:1;
-	overflow-x:hidden;
+    overflow:auto;
+    background:#FFF;
+    position:relative;
+    zoom:1;
+    overflow-x:hidden;
 }
 
 .x-sqs-list-item
 {
-	font:normal 12px tahoma,arial,helvetica,sans-serif;
-	border:1px solid #fff;
-	white-space:nowrap;
-	overflow:hidden;
-	text-overflow:ellipsis;
-	padding:1px;
+    font:normal 12px tahoma,arial,helvetica,sans-serif;
+    border:1px solid #fff;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    padding:1px;
 }
 
 .x-sqs-list .x-sqs-selected
 {
-	border:1px dotted #f6f6f6!important;
-	background:#d0d0d0;
-	cursor:pointer;
+    border:1px dotted #f6f6f6!important;
+    background:#d0d0d0;
+    cursor:pointer;
 }
 embed
 {
@@ -6307,11 +6248,11 @@ embed
 
 
 .dashletPanel .hd .hd-center .dashletToolSet a{
-	padding: 0px 2px;
+    padding: 0px 2px;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child  {
-	padding-right: 0px;
+    padding-right: 0px;
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
@@ -6326,19 +6267,19 @@ embed
     background-color: #fff;
 }
 div.confirmTable {
-	    overflow: auto;
-	    width: 1056px;
-	    position: relative;
-	    margin-bottom: 20px;
-	}
+    overflow: auto;
+    width: 1056px;
+    position: relative;
+    margin-bottom: 20px;
+}
 /* Bug 19728 - Email Templates detail view is different with edit view */
 #html_div p
 {
-	margin: 12px 0px;
+    margin: 12px 0px;
 }
 
 #html_div p:first-child {
-	margin: 0px 0px 12px 0px;
+    margin: 0px 0px 12px 0px;
 }
 
 /* UNUSED STYLES */
@@ -6346,20 +6287,20 @@ div.confirmTable {
 /* Default Styles */
 
 .h3Row {
-	margin-top: 10px;
-	vertical-align: middle;
-	background-repeat: repeat-x;
-	background-position: top;
-	background-color: #fff;
+    margin-top: 10px;
+    vertical-align: middle;
+    background-repeat: repeat-x;
+    background-position: top;
+    background-color: #fff;
 }
 .h3Row td
 {
-	padding: 4px 5px 3px 3px;
+    padding: 4px 5px 3px 3px;
 }
 h4, h5
 {
-	margin-bottom: 2px;
-	padding-left: 4px;
+    margin-bottom: 2px;
+    padding-left: 4px;
 }
 hr
 {
@@ -6373,34 +6314,34 @@ hr
 }
 a:link, a:visited, a:hover
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .buttonSlide {
-	border: 0px;
+    border: 0px;
 }
 
 .buttonSlide .yui-hd {
-	border: 0px;
-	background-color: transparent;
-	padding: 0px;
+    border: 0px;
+    background-color: transparent;
+    padding: 0px;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
-	background-repeat: no-repeat;
-	display: inline; /* prevent IE margin doubling */
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_more.png');
+    background-repeat: no-repeat;
+    display: inline; /* prevent IE margin doubling */
     overflow:hidden;
     text-indent:9999px;
-	float: right;
+    float: right;
     overflow:hidden;
     text-align: right;
-	height: 14px;
-	width: 14px;
+    height: 14px;
+    width: 14px;
 }
 
 .buttonSlide.yui-module.yui-closed .yui-hd .toggle em {
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
 }
 
 .buttonSlide .yui-bd {
@@ -6408,17 +6349,17 @@ a:link, a:visited, a:hover
 
 input, select, textarea, button, .button
 {
-	border: 1px solid;
+    border: 1px solid;
 }
 button, input[type=submit], input[type=reset], input[type=button], .button
 {
-	font-weight: normal;
-	background-repeat: repeat-x;
-	background-position: top;
-	padding-bottom: 1px;
+    font-weight: normal;
+    background-repeat: repeat-x;
+    background-position: top;
+    padding-bottom: 1px;
     padding-right: 6px;
     padding-left: 6px;
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 .pagination button, .pagination input[type=submit], .pagination input[type=reset], .pagination input[type=button], .pagination .button
@@ -6430,10 +6371,10 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=butt
 button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
 button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
 {
-	color: #fff;
-	background-image: none;
-	cursor:pointer;
-	font-weight: normal;
+    color: #fff;
+    background-image: none;
+    cursor:pointer;
+    font-weight: normal;
 }
 
 /* set a minimum width for the header */
@@ -6443,8 +6384,8 @@ button[selected], input[type=submit][selected], input[type=reset][selected], inp
 }
 /* header */
 #header div.line {
-height: 2px;
-	border-bottom: 2px solid;
+    height: 2px;
+    border-bottom: 2px solid;
     color:#0046ad;
 }
 
@@ -6650,17 +6591,17 @@ ul.subTabs li a:link, ul.subTabs li a:visited
 #subModuleList
 {
     padding:0.4em 0 0.3em 1em;
-	border-bottom: none;
-	border-top: 2px solid;
+    border-bottom: none;
+    border-top: 2px solid;
 }
 #subModuleList span a
 {
     text-decoration: none;
     padding: 0.2em 0.5em 0.3em 0.5em;
-	margin: 0 -3px 0 0;
-	border-right: 1px solid;
-	border-left: 1px solid;
-	border-bottom: none;
+    margin: 0 -3px 0 0;
+    border-right: 1px solid;
+    border-left: 1px solid;
+    border-bottom: none;
 }
 
 /* last viewed and shortcuts lists in the header */
@@ -6679,7 +6620,7 @@ ul.subTabs li a:link, ul.subTabs li a:visited
 }
 .headerList a:hover span
 {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 /* for lists of items in the left column ( such as the shortcuts or last view items lists ) */
 .leftList ul li
@@ -6698,7 +6639,7 @@ ul.subTabs li a:link, ul.subTabs li a:visited
     padding-left: 3px;
     padding-top: 8px;
     padding-bottom: 4px;
-	margin-bottom: 0;
+    margin-bottom: 0;
     border-bottom:2px solid;
     color:#444;
 }
@@ -6752,7 +6693,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover
 }
 
 #welcome {
-border-right: 2px solid #ddd;
+    border-right: 2px solid #ddd;
 }
 
 /* themepicker */
@@ -6787,7 +6728,7 @@ ul.tablist li a:hover, ul.subpanelTablist li a:hover
 ul.tablist li a.current, ul.tablist li a.current:hover
 {
     border-bottom:2px solid #f6f6f6;
-	font-weight: bold;
+    font-weight: bold;
 }
 ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
 {
@@ -6797,7 +6738,7 @@ ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
 .subpanelTabForm .h3Row
 {
     border-top: 1px solid #dddddd;
-	background-image: none;
+    background-image: none;
 }
 
 /*Bug 29945 */
@@ -6837,27 +6778,27 @@ ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover
 /* fonts */
 body
 {
-	font-size: 12px;
+    font-size: 12px;
 }
 table, div
 {
-	font-size: 11px;
+    font-size: 11px;
 }
 h1, h2
 {
-	font-size: 18px;
+    font-size: 18px;
 }
 h3
 {
-	font-size: 14px;
+    font-size: 14px;
 }
 h4, h5
 {
-	font-size: 12px;
+    font-size: 12px;
 }
 input, select, textarea, button
 {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 /* YUI styles */
@@ -7035,7 +6976,7 @@ ul.subpanelTablist li a,
 /* for overlib js library */
 .olCapFontClass A
 {
-	font-size: 9px;
+    font-size: 9px;
 }
 
 /* sitemap */
@@ -7063,7 +7004,7 @@ ul.subpanelTablist li a,
 /* to make the reportwizard button text smaller */
 .reportwizard .buttonText
 {
-	font-size: 11px;
+    font-size: 11px;
 }
 
 /* to fix the size of the fonts in the unified module search popup */
@@ -7081,12 +7022,12 @@ ul.subpanelTablist li a,
 /* colors */
 body
 {
-	color: #444444;
-	background-color: #ffffff;
+    color: #444444;
+    background-color: #ffffff;
 }
 h1, h2, h3
 {
-	color: #000000;
+    color: #000000;
 }
 .h3Row
 {
@@ -7095,7 +7036,7 @@ h1, h2, h3
 }
 h4, h5
 {
-	color: #444;
+    color: #444;
 }
 a:link, a:visited
 {
@@ -7107,40 +7048,40 @@ a:hover
 }
 button, input[type=submit], input[type=reset], input[type=button], .button
 {
-	border-color: #abc3d7;
-	background-color: #ecf1f4;
-	color: #000;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
+    border-color: #abc3d7;
+    background-color: #ecf1f4;
+    color: #000;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
 }
 button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
 button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
 button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
 {
-	background-color: #f10202;
-	border-color: #f10202;
+    background-color: #f10202;
+    border-color: #f10202;
 }
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
 {
-	border-color: #c1c1c1;
-	background-color: #f0f0f0;
-	color: #000;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
+    border-color: #c1c1c1;
+    background-color: #f0f0f0;
+    color: #000;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtnGray.gif');
 }
 input,select
 {
-	border-color: #94c1e8;
-	background-color: #ffffff;
+    border-color: #94c1e8;
+    background-color: #ffffff;
 }
 
 input:focus,textarea:focus, select:focus
 {
-	background-color: #fff;
-	border-color: #abc3d7;
+    background-color: #fff;
+    border-color: #abc3d7;
 }
 textarea
 {
-	border-color: #abc3d7;
-	background-color: #fff;
+    border-color: #abc3d7;
+    background-color: #fff;
 }
 
 /* for team notices dashlet */
@@ -7153,7 +7094,7 @@ textarea
 /* header */
 #header div.line {
     background-color:#f10202;
-	border-bottom-color: #0046ad;
+    border-bottom-color: #0046ad;
     color:#0046ad;
 }
 
@@ -7194,13 +7135,13 @@ textarea
 }
 #subModuleList
 {
-	background-color:#f10202;
-	border-color:#0046ad;
+    background-color:#f10202;
+    border-color:#0046ad;
 }
 #subModuleList span a
 {
-	border-right-color:#0046ad;
-	border-left-color:#79a7d8;
+    border-right-color:#0046ad;
+    border-left-color:#79a7d8;
 }
 #subModuleList span a:link,
 #subModuleList span a:visited
@@ -7210,7 +7151,7 @@ textarea
 #subModuleList span a:hover
 {
     background-color:#0046ad;
-	border-left-color:#0046ad;
+    border-left-color:#0046ad;
 }
 
 /* lists in the header */
@@ -7269,8 +7210,8 @@ ul.subpanelTablist li a.activeSubTab:hover
 /* search */
 #search input[name=query_string]
 {
-	border-color: #6fb0e4;
-	background-color: #f6fafd;
+    border-color: #6fb0e4;
+    background-color: #f6fafd;
 }
 
 /* new record form */
@@ -7301,7 +7242,7 @@ ul.subpanelTablist li a.activeSubTab:hover
 }
 .list
 {
-	border-color: #ABC3D7 !important;
+    border-color: #ABC3D7 !important;
 }
 .evenListRowS1 td,
 .oddListRowS1 td
@@ -7409,64 +7350,64 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited
 /* calendar styles */
 .monthCalBody
 {
-	background-color: #abc3d7;
+    background-color: #abc3d7;
 }
 .monthFooter td
 {
-	border-top-color: #abc3d7;
-	border-bottom-color: #abc3d7;
-	background-color: #ffffff;
+    border-top-color: #abc3d7;
+    border-bottom-color: #abc3d7;
+    background-color: #ffffff;
 }
 .monthHeader a:hover,
 .monthViewDayHeight a:hover
 {
-	color: #0b578f;
+    color: #0b578f;
 }
 .monthCalBodyTH th[scope=row],
 .monthViewDayHeight td[scope=row]
 {
-	background-color: #ebebeb;
+    background-color: #ebebeb;
 }
 .monthCalBodyTH th
 {
-	background-color: #fafafa;
-	color: #444444;
-	border-color: #abc3d7 !important;
+    background-color: #fafafa;
+    color: #444444;
+    border-color: #abc3d7 !important;
 }
 .monthViewDayHeight td
 {
-	border-color: #abc3d7;
-	background-color: #ffffff;
-	color: #444444;
+    border-color: #abc3d7;
+    background-color: #ffffff;
+    color: #444444;
 }
 .monthViewDayHeight td[class=weekEnd]
 {
-	background-color: #f6f6f6;
+    background-color: #f6f6f6;
 }
 .monthCalBodyDayItem
 {
-	background-color: #ffffff;
-	border-top-color: #abc3d7;
-	border-bottom-color: #ddd;
+    background-color: #ffffff;
+    border-top-color: #abc3d7;
+    border-bottom-color: #ddd;
 }
 .monthCalBody td
 {
-	background-color: #fff;
-	color: #444444;
+    background-color: #fff;
+    color: #444444;
 }
 .monthCalBody th a
 {
-	color: #000000;
+    color: #000000;
 }
 .yearCalBody
 {
-	border: none;
+    border: none;
 }
 .yearCalBodyMonth
 {
-	background-color: #abc3d7 !important;
-	border-top: 2px solid #f10202;
-	border-bottom: 2px solid #fff;
+    background-color: #abc3d7 !important;
+    border-top: 2px solid #f10202;
+    border-bottom: 2px solid #fff;
 }
 .yearCalBody .monthHeader
 {
@@ -7474,19 +7415,19 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited
 }
 .yearCalBodyMonth #daily_cal_table
 {
-	border-top: #abc3d7;
+    border-top: #abc3d7;
 }
 .yearCalBodyMonth #daily_cal_table .monthCalBodyTHDay
 {
-	border-color: #abc3d7;
+    border-color: #abc3d7;
 }
 .yearCalBodyMonth > a
 {
-	color: #000000;
+    color: #000000;
 }
 h5.calSharedUser
 {
-	color: #444444;
+    color: #444444;
 }
 .monthHeader
 {
@@ -7535,7 +7476,7 @@ ul.subpanelTablist li a.current,
 ul.subpanelTablist li a.current:hover
 {
     color: #4f4f4f;
-	background: #fff;
+    background: #fff;
     border-right-color: #abc3d7;
     border-top-color: #abc3d7;
     border-bottom-color: #fff;
@@ -7557,11 +7498,11 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
 /* for overlib js library */
 .olCgClass td
 {
-	border-bottom-color: #abc3d7;
+    border-bottom-color: #abc3d7;
 }
 .olBgClass
 {
-	background-color: #abc3d7;
+    background-color: #abc3d7;
 }
 
 /* sitemap */
@@ -7576,74 +7517,28 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
     color: #444;
 }
 
-/* YUI theme */
-.yui-dt th, .yui-dt-hd {
-    /*background: #D8D8DA url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x 0 -30px;*/
-    background:#EBEBED none repeat scroll 0 0;
-}
+div.bodywrapper {
 
-.yui-layout .yui-layout-unit-left div.yui-layout-hd .collapse
-{
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -110px;
-}
+    padding:10px;
 
- .yui-layout .yui-layout-clip-left .collapse, .yui-layout .yui-layout-unit-right div.yui-layout-hd .collapse,
- .yui-layout .yui-layout-unit-bottom div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -90px;
-}
-
- .yui-layout .yui-layout-clip-right .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat 0 -110px;
-}
-
- .yui-layout .yui-layout-unit-top div.yui-layout-hd .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -220px;
-}
-
- .yui-layout .yui-layout-clip-top .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')no-repeat -20px -240px;
-}
-
- .yui-layout .yui-layout-clip-bottom .collapse {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -180px;
-}
-
- .yui-layout .yui-layout-unit div.yui-layout-hd .close {
-    background: transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') no-repeat -20px -100px;
 }
 
 .yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav, .yui-layout .yui-layout-hd {
-    background:#DDD url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 0;
-    border-color: #ABC3D7;
+    border-bottom: 1px solid #ABC3D7;
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-bd, .yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content {
-	border-color:#ABC3D7;
+    border-color:#ABC3D7;
 }
 
-.yuimenuitem-hassubmenu > a{
-    background-image: url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png');
-}
-
- .yui-navset .yui-nav li a,.yui-navset-top .yui-nav li a, .yui-navset-bottom .yui-nav li a,
-.yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a
-    {
-    background:#DDD url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 -131px;
-}
-
- .sugar-progress-bar, .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a:focus, .yui-navset .yui-nav .selected a:hover
-{
-    background:#666666 url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png') repeat-x scroll 0 -157px;
-
-}
 
 .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em, .yui-navset .yui-nav a, .yui-navset .yui-nav a em, .yui-navset .yui-nav a, .yui-navset .yui-navset-top .yui-nav a  {
     border-color: #ABC3D7;
 }
 
- a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav .selected a.sugar-tab-close {
+a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav .selected a.sugar-tab-close {
     background : transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')  no-repeat scroll 0px -70px;
- }
+}
 
 
 #basic_search_link
@@ -7652,9 +7547,9 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
 }
 
 .star {
-	float:right;
-	zoom: 1;
-	display: inline;
+    float:right;
+    zoom: 1;
+    display: inline;
 }
 .moduleTitle .star
 {
@@ -7670,14 +7565,14 @@ li div.star {float:none;}
 
 #ajaxStatusDiv {
     background : #ffffff;
-	color : #f10202;
-	position : fixed;
-	opacity : .8;
-	filter : alpha(opacity=80);
+    color : #c60c30;
+    position : fixed;
+    opacity : .8;
+    filter : alpha(opacity=80);
     z-index: 20;
     top: 7px;
     border: 1px solid #aaa;
-	padding: 5px;
+    padding: 5px;
 }
 
 div#chartDashlets
@@ -7703,16 +7598,16 @@ td.teamset-row, .edit tr td.teamset-row, .edit tr td table tr td.teamset-row {
 /* competible for SugarActionMenu */
 
 ul.clickMenu {
-	list-style: none;
-	padding: 0px 0px 0px 0px;
-	margin: 0 !important;
-	vertical-align: bottom;
+    list-style: none;
+    padding: 0px 0px 0px 0px;
+    margin: 0 !important;
+    vertical-align: bottom;
     color: #000000;
-	display: inline-block;
+    display: inline-block;
 }
 ul.clickMenu form{
-	float:left;
-	display:block;
+    float:left;
+    display:block;
 }
 ul.SugarActionMenuIESub {
 }
@@ -7723,57 +7618,57 @@ ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
 
-   		background-color: #f10202;
-   		border-color: #f10202;
-		color: #fff;
+    background-color: #f10202;
+    border-color: #f10202;
+    color: #fff;
 }
 ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
 ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
-	/*color: #fff !important;*/
+    /*color: #fff !important;*/
 }
 
 ul.clickMenu li span.ab:hover {
-	background-position: 6px 0px;
+    background-position: 6px 0px;
 }
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
-	background-color: #ECF1F4;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
-	border: 1px solid #ABC3D7;
-	float: left;
-	margin: 0;
-	padding: 0 0 0 0;
-	list-style: none;
-	position: relative; /*--Declare X and Y axis base--*/
+    background-color: #ECF1F4;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
+    border: 1px solid #ABC3D7;
+    float: left;
+    margin: 0;
+    padding: 0 0 0 0;
+    list-style: none;
+    position: relative; /*--Declare X and Y axis base--*/
     cursor: pointer;
 }
 ul.SugarActionMenuIESub li a,
 ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a{
-	display: block;
-	text-decoration: none;
-	float: left;
-	font-weight: normal !important;
-	padding: 1px 10px 1px 10px !important;
-	color: #000;
-	font-size: 12px;
+    display: block;
+    text-decoration: none;
+    float: left;
+    font-weight: normal !important;
+    padding: 1px 10px 1px 10px !important;
+    color: #000;
+    font-size: 12px;
 }
 
 .list tr.pagination td.buttons ul.clickMenu:hover > li > a:link, .list tr.pagination td.buttons ul.clickMenu:hover > li > a{
-	color: #fff;
+    color: #fff;
 }
 
 ul.clickMenu li.single a{
-	padding-right: 8px !important;
+    padding-right: 8px !important;
 }
 
 ul.clickMenu li a:hover{
-text-decoration: none !important;
+    text-decoration: none !important;
 }
 ul.clickMenu li span { /*--Drop down trigger styles--*/
-	width: 22px;
-	height: 16px;
-	float: left;
-	background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
-	cursor: pointer;
+    width: 22px;
+    height: 16px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    cursor: pointer;
 }
 
 ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
@@ -7782,39 +7677,39 @@ ul.clickMenu li span.ab { /*--Drop down trigger styles--*/
     /* padding-left: 5px; */
 }
 ul.clickMenu li span.subhover {
-	cursor: pointer;
-	} /*--Hover effect for trigger--*/
+    cursor: pointer;
+} /*--Hover effect for trigger--*/
 ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub {
-	list-style: none;
-	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
-	left: 0; top: 18px;
-	background: #fff;
-	margin: 0;
-	display: none;
-	float: left;
-	width: auto;
-	border: 1px solid #ccc;
-	box-shadow: #999 0px 5px 10px;
-	-moz-box-shadow: #999 0px 5px 10px;
-	-webkit-box-shadow: #999 0px 5px 10px;
-	padding: 8px 0px;
-	z-index: 10;
-	overflow:hidden;
+    list-style: none;
+    position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+    left: 0; top: 18px;
+    background: #fff;
+    margin: 0;
+    display: none;
+    float: left;
+    width: auto;
+    border: 1px solid #ccc;
+    box-shadow: #999 0px 5px 10px;
+    -moz-box-shadow: #999 0px 5px 10px;
+    -webkit-box-shadow: #999 0px 5px 10px;
+    padding: 8px 0px;
+    z-index: 10;
+    overflow:hidden;
 }
 
 ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li{
-	margin: 0;
-	padding: 0px;
-	clear: both;
-	/*width: 170px;*/
-	width:100%;
-	white-space: nowrap;
+    margin: 0;
+    padding: 0px;
+    clear: both;
+    /*width: 170px;*/
+    width:100%;
+    white-space: nowrap;
 
 }
 ul.clickMenu.subpanel.records {
-	background-color: #eee;
-	border: 1px solid #ddd;
-	background-image: none;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    background-image: none;
 }
 
 /*
@@ -7826,14 +7721,14 @@ ul.clickMenu.subpanel.records:hover {
 */
 
 ul.clickMenu.subpanel.records li a{
-	color: #aaa;
+    color: #aaa;
 }
 ul.clickMenu.subpanel.records > li div:hover a{
-	color: #fff !important;
+    color: #fff !important;
 }
 
 ul.clickMenu.subpanel.records li > span{
-	opacity: .5;
+    opacity: .5;
     height: 16px;
     width: 17px;
     padding:0 5px 0 0 !important;
@@ -7845,19 +7740,19 @@ ul.clickMenu.subpanel.records:hover li > span{
 }
 
 ul.clickMenu.subpanel.records li ul.subnav li a span {
-	height: 0px;
-	width: 0px;
-	background-image: none;
+    height: 0px;
+    width: 0px;
+    background-image: none;
 }
 ul.clickMenu.button li span.ab:hover {
     background-position: 50% 0px;
 
 }
 ul.clickMenu.button li > span {
-	width: auto;
-	background-position: 50% -20px;
-	padding: 3px 15px 3px 10px !important;
-	height: auto;
+    width: auto;
+    background-position: 50% -20px;
+    padding: 3px 15px 3px 10px !important;
+    height: auto;
 }
 
 ul.clickMenu.button:hover li > span {
@@ -7865,15 +7760,15 @@ ul.clickMenu.button:hover li > span {
 }
 
 ul.clickMenu.button li > span a {
-	padding: 0px !important;
+    padding: 0px !important;
 }
 
 ul.clickMenu.button span {
-	padding-right: 5px;
+    padding-right: 5px;
 }
 
 ul.clickMenu.button li ul.subnav {
-	width: auto;
+    width: auto;
 }
 
 ul.clickMenu li a.disabled {
@@ -7882,58 +7777,58 @@ ul.clickMenu li a.disabled {
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records , .evenListRowS1:hover td ul.clickMenu.subpanel.records {
-		background-image: -moz-linear-gradient(center top,
-		#ffffff 0%,
-		#eeeeee 10%,
-		#dfdfdf 100%
-		);
-		background-image: -webkit-gradient(
-	    linear,
-	    left top,
-	    left bottom,
-	    color-stop(0, #ffffff),
-	    color-stop(.10, #eeeeee),
-	    color-stop(1, #dfdfdf)
-	   );
-	   border: 1px solid #AAAAAA;
+    background-image: -moz-linear-gradient(center top,
+    #ffffff 0%,
+    #eeeeee 10%,
+    #dfdfdf 100%
+    );
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        left bottom,
+        color-stop(0, #ffffff),
+        color-stop(.10, #eeeeee),
+        color-stop(1, #dfdfdf)
+    );
+    border: 1px solid #AAAAAA;
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li a, .evenListRowS1:hover td ul.clickMenu.subpanel.records li a {
-	color: #000;
+    color: #000;
 }
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li span, .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
-	opacity: 1;
+    opacity: 1;
 }
 
 ul.clickMenu li ul.subnav li a,ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
-	float: left;
-	background: #fff;
-	padding: 1px 10px !important;
-	border: 0px !important;
-	/*width: 150px;*/
-	width:100%;
-	text-align: left;
-	font-size: 12px !important;
-	color: #000;
+    float: left;
+    background: #fff;
+    padding: 1px 10px !important;
+    border: 0px !important;
+    /*width: 150px;*/
+    width:100%;
+    text-align: left;
+    font-size: 12px !important;
+    color: #000;
 
 }
 
 ul.clickMenu li ul.subnav li input {
-	padding: 2px 10px !important;
-	/*width: 170px;*/
-	width:100%
+    padding: 2px 10px !important;
+    /*width: 170px;*/
+    width:100%
 }
 ul.SugarActionMenuIESub li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
-background-color: #f10202;
-color: #fff;
-font-weight: normal !important;
-font-size: 12px !important;
-cursor: pointer;
-text-shadow: none;
-border-radius: 0px;
--webkit-border-radius: 0px;
+    background-color: #f10202;
+    color: #fff;
+    font-weight: normal !important;
+    font-size: 12px !important;
+    cursor: pointer;
+    text-shadow: none;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
 
 }
 
@@ -7951,25 +7846,25 @@ ul.clickMenu.showLess .moreOverflow , ul.clickMenu.showLess .moduleMenuOverFlowL
 }
 
 #globalLinksDivider {
-	float: right;
-	margin-right: 0px;
+    float: right;
+    margin-right: 0px;
 }
 ul#globalLinksSubnav, ul#quickCreateULSubnav{
     font-family: Arial;
 }
 ul#globalLinks.clickMenu {
-	background: none;
-	border: 0px none;
-	padding-right: 0px;
-	font-family: Arial;
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
 }
 
 ul#globalLinks.clickMenu li > span {
-	height: 43px;
-	background-image: url('../../../../index.php?entryPoint=getImage&imageName=tabDownArrowOff.png');
-	background-position: right center;
-	width: auto;
-	margin-right: 10px;
+    height: 43px;
+    background-image: url('../../../../index.php?entryPoint=getImage&imageName=tabDownArrowOff.png');
+    background-position: right center;
+    width: auto;
+    margin-right: 10px;
     padding-right: 8px;
 }
 
@@ -7977,32 +7872,32 @@ ul#globalLinks.clickMenu li > span a {
     color: #FFFFFF;
     font-size: 14px;
     margin-top: 13px;
-	padding: 0px 10px !important;
+    padding: 0px 10px !important;
 }
 
 
 ul#globalLinks.clickMenu li ul.subnav {
-	top: 43px;
-	right: 0px;
-	left: auto;
+    top: 43px;
+    right: 0px;
+    left: auto;
 }
 
 ul#globalLinks.clickMenu > li > a {
-	color: #fff;
-	font-size: 14px;
+    color: #fff;
+    font-size: 14px;
     padding: 14px 7px !important;
 }
 
 ul#selectLink.clickMenu {
-	height: 17px;
-	min-width: 20px;
-	background-image: none;
+    height: 17px;
+    min-width: 20px;
+    background-image: none;
 }
 
 td.paginationActionButtons ul.clickMenu #massall,
 ul#selectLink.clickMenu #massall{
-	float: left;
-	margin: 1px 4px;
+    float: left;
+    margin: 1px 4px;
 }
 .selectActions.clickMenu {
     display: none;
@@ -8013,11 +7908,11 @@ ul.clickMenu.show {
 }
 
 ul#selectLink.clickMenu > li > a{
-	padding-left: 0px !important;
+    padding-left: 0px !important;
 }
 
 ul#selectLink.clickMenu li span {
-	height: 17px;
+    height: 17px;
 }
 
 ul#selectLink.clickMenu li ul.subnav {
@@ -8025,31 +7920,31 @@ ul#selectLink.clickMenu li ul.subnav {
 }
 
 ul#detailViewActions.clickMenu {
-	margin-top: 2px !important;
+    margin-top: 2px !important;
 }
 
 #selectActions.clickMenu {
-	display: none;
+    display: none;
 }
 
 .selectActionsDisabled {
-	display: inline-block;
-	background-color: #eee;
-	border: 1px solid #ddd;
-	-webkit-border-radius: 1px;
-	-moz-border-radius: 1px;
-	border-radius: 1px;
-	vertical-align: bottom;
-	padding: 0 3px 0 10px;
+    display: inline-block;
+    background-color: #eee;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 1px;
+    border-radius: 1px;
+    vertical-align: bottom;
+    padding: 0 3px 0 10px;
 }
 
 .selectActionsDisabled span {
-	width: 17px;
-	height: 17px;
-	float: left;
-	background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
-	opacity: .5;
-	}
+    width: 17px;
+    height: 17px;
+    float: left;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=actionMenuArrow.png') no-repeat 6px -28px;
+    opacity: .5;
+}
 
 .selectActionsDisabled span.ab {
     border-left: 1px #ccc solid;
@@ -8058,82 +7953,82 @@ ul#detailViewActions.clickMenu {
 }
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
-	float: left;
-	display: block;
-	text-decoration: none !important;
-	color: #999 !important;
-	padding: 1px 0px 0px 0px!important;
-	text-shadow: 1px 1px #FFFFFF;
-	font-weight: normal;
-	font-size: 13px;
+    float: left;
+    display: block;
+    text-decoration: none !important;
+    color: #999 !important;
+    padding: 1px 0px 0px 0px!important;
+    text-shadow: 1px 1px #FFFFFF;
+    font-weight: normal;
+    font-size: 13px;
 }
 
 #quickCreate {
-	float: right;
+    float: right;
 }
 
 #quickCreate ul.clickMenu {
-	background: none;
-	border: 0px none;
-	padding-right: 0px;
-	font-family: Arial;
+    background: none;
+    border: 0px none;
+    padding-right: 0px;
+    font-family: Arial;
 }
 
 
 #quickCreate ul.clickMenu > li {
-	width: 50px;
-	height: 43px;
+    width: 50px;
+    height: 43px;
 
 }
 #quickCreate ul.clickMenu li > span {
-	background: url('../../../../index.php?entryPoint=getImage&imageName=quick-create.png') no-repeat center center;
-	height: 43px;
-	width: 50px;
+    background: url('../../../../index.php?entryPoint=getImage&imageName=quick-create.png') no-repeat center center;
+    height: 43px;
+    width: 50px;
 }
 
 #quickCreate ul.clickMenu > li:hover {
-	background-color: #276499;
+    background-color: #276499;
 }
 ul#globalLinksSubnav li { min-width: 120px;}
 ul#globalLinksSubnav, ul#quickCreateULSubnav,
 #quickCreate ul.clickMenu li ul.subnav, #globalLinksModule ul.clickMenu li ul.subnav{
-	top: 43px;
-	right: 0;
-	left: auto;
-	padding: 10px 0px;
-	border: 1px solid #999;
-	width: 100%;
+    top: 43px;
+    right: 0;
+    left: auto;
+    padding: 10px 0px;
+    border: 1px solid #999;
+    width: 100%;
 }
 
 #quickCreate ul.clickMenu li ul.subnav {
-	width: auto;
+    width: auto;
 }
 
 #globalLinksSubnav li a, #quickCreateULSubnav li a,
 #quickCreate ul.clickMenu li ul.subnav li a, #globalLinksModule ul.clickMenu li ul.subnav li a {
-	padding: 4px 10px !important;
-	font-size: 13px !important;
-	color: #666666 !important;
-	line-height: 1.45;
+    padding: 4px 10px !important;
+    font-size: 13px !important;
+    color: #666666 !important;
+    line-height: 1.45;
 }
 #quickCreateULSubnav li.moduleMenuOverFlowLess a, #quickCreateULSubnav li.moduleMenuOverFlowMore a,
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a {
-	color: #999 !important;
+    color: #999 !important;
 }
 
 #quickCreate ul.clickMenu li ul.subnav li a:hover, #globalLinksModule ul.clickMenu li ul.subnav li a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a:hover, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a:hover {
-	color: #fff !important;
+    color: #fff !important;
 }
 
 ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav li a:hover .showMoreArrow {
-	background-position: center 8px;
-	opacity: 1;
+    background-position: center 8px;
+    opacity: 1;
 }
 
 
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img
 {
-	opacity: .6;
+    opacity: .6;
 }
 
 div.action_buttons form {float:left;}
@@ -8170,7 +8065,6 @@ body {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-
     padding:25px;
 }
 
@@ -8250,8 +8144,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     -webkit-box-shadow: 0 0 5px#999999;
     box-shadow: 0 0 5px #999999;
 }
-
-
 
 /* login page*/
 .login table tr td
@@ -8364,7 +8256,7 @@ h1,h2,h3,h4 {
 }
 
 select {
-    padding:5px;
+    padding:4px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
@@ -8411,7 +8303,6 @@ iframe.teamNoticeBox {
     color:#cccccc;
     font-weight:normal;
     font-size:12px !important;
-
 }
 
 #moduleList ul li a:visited {
@@ -8446,7 +8337,6 @@ iframe.teamNoticeBox {
 }
 #moduleList ul li span.currentTab a {
     font-weight:bold;
-
 }
 
 #moduleList ul li ul.cssmenu {
@@ -8462,7 +8352,6 @@ iframe.teamNoticeBox {
 #moduleList ul li ul.cssmenu li{
     border:none;
     font-size:12px;
-
 }
 
 #moduleList ul li ul.cssmenu li:hover {
@@ -8507,7 +8396,7 @@ ul#drop-nav {
     position:relative;
     z-index:5;
     padding:0;
-    margin:0 50px 0 0;
+    margin:0 25px 0 0;
 }
 
 #drop-nav ul {
@@ -8530,7 +8419,6 @@ ul#drop-nav li {
 
 ul#drop-nav li a {
     line-height:25px;
-
 }
 
 ul#drop-nav li a:hover {
@@ -8557,7 +8445,6 @@ ul#drop-nav li a:hover {
     text-decoration: none;
     white-space: nowrap;
     color: #cccccc;
-
 }
 
 ul#drop-nav ul li:hover {
@@ -8566,7 +8453,6 @@ ul#drop-nav ul li:hover {
     -moz-border-radius: 2px;
     border-radius: 2px;
     color:#ffffff;
-
 }
 
 #drop-nav li:hover ul {
@@ -8602,14 +8488,13 @@ ul#drop-nav ul li:hover {
     float:left;
 }
 
-
 #search {
     padding:5px 5px 00;
     margin:0;
 }
 
 #search .button {
-    background: transparent url(../../../../index.php?entryPoint=getImage&imageName=search_mag.png) scroll no-repeat center;
+    background: url(../../../../index.php?entryPoint=getImage&imageName=search_mag.png) scroll no-repeat center;
     background-color:#ffffff;
     width:30px;
     height:25px;
@@ -8622,10 +8507,6 @@ ul#drop-nav ul li:hover {
 
 #query_string {
     margin:0;
-}
-
-table tr {
-
 }
 
 .dashletPanel {
@@ -8653,17 +8534,12 @@ table tr {
     border:1px solid #ccc;
 }
 
-#moduleList > ul > li#moduleTabExtraMenu
-{
+#moduleList > ul > li#moduleTabExtraMenu {
     padding:5px;
 }
 
 .evenListRowS1 {
     background:#efefef;
-}
-
-.oddListRowS1 {
-
 }
 
 table {
@@ -8677,7 +8553,15 @@ table {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-    margin: 10px 0 5px 0;
+    margin: 5px 0 5px 0;
+}
+
+table .edit.view {
+    margin:5px 0 5px 0;
+}
+
+.edit.view table {
+    box-shadow:none
 }
 
 table.view {
@@ -8696,8 +8580,7 @@ table.view {
     margin:10px;
 }
 
-.detail h4
-{
+.detail h4 {
     font-weight: bold;
     margin:10px;
     text-align: left;
@@ -8709,12 +8592,9 @@ table.view {
 }
 
 #main {
-    padding: 0 0 0 10px;
+    padding: 0 10px 0 10px;
 }
 
-#content {
-    padding-right:10px;
-}
 
 div#content > table {
     width:99%;
@@ -8744,7 +8624,6 @@ div#content > table {
 }
 
 button #powered_by {
-
     background:none;
     border:none;
 }
@@ -8758,10 +8637,6 @@ button #powered_by {
     float:right;
 }
 
-#admin_links {
-
-}
-
 #bottomLinks {
     margin:0 auto;
     text-align:center;
@@ -8770,18 +8645,11 @@ button #powered_by {
 #moduleDashletsList {
     overflow:visible;
     height:auto;
-
 }
 
 .dashletsList {
     min-height:500px;
 }
-
-.edit {
-
-}
-<<<<<<< HEAD
-
 
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
 {
@@ -8802,7 +8670,7 @@ button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][di
 ul#quick-nav {
     position:absolute;
     right:0;
-    width:50px;
+    width:35px;
     float:left;
     z-index:55;
     padding:0;
@@ -8812,23 +8680,23 @@ ul#quick-nav {
 #quick-nav ul {
     border:1px solid #999999;
     list-style: none;
-    margin: 0;
+    margin-top:5px;
     background:#333333;
     padding:10px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    right:10px;
+    right:5px;
 }
 
 ul#quick-nav li {
-    line-height:25px;
-    padding: 0 5px 00;
 
+    padding:0 5px 10px 5px;
 }
 
 ul#quick-nav li a:hover {
     color:#ffffff;
+
 }
 
 #quick-nav ul li {
@@ -8851,7 +8719,6 @@ ul#quick-nav li a:hover {
     text-decoration: none;
     white-space: nowrap;
     color: #cccccc;
-
 }
 
 ul#quick-nav ul li:hover {
@@ -8860,7 +8727,6 @@ ul#quick-nav ul li:hover {
     -moz-border-radius: 2px;
     border-radius: 2px;
     color:#ffffff;
-
 }
 
 #quick-nav li:hover ul {
@@ -8886,9 +8752,7 @@ ul#quick-nav ul li:hover {
 }
 
 .iconed_dull {
-
     opacity:0.6;
-
 }
 
 input[type=button],
@@ -8911,6 +8775,7 @@ input[type=reset],
     background: -ms-linear-gradient(top,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
+    filter:none !important;
     border: solid 1px #999999;
     color: #121212;
     border-radius: 2px;
@@ -8921,23 +8786,59 @@ input[type=reset],
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover,
-.button:hover {
+.button:focus {
+    filter:none !important;
     background:#f10202;
     border:1px solid #999;
 }
 
 .quick_create {
-
     margin-top:5px;
 }
 
 img {
-
     border:none;
 }
 
 .dashletNonTable {
     padding: 0 5px 0 10px;
 }
-=======
->>>>>>> bfac2168a6f4f29b53b32a7821520759cebfc238
+
+a.crumbLink {
+    font-size:14px;
+}
+
+span.crumbLink {
+    font-size:14px;
+}
+
+#settingsDialog table.view {
+    padding:10px;
+    margin:5px 0 5px 0;
+}
+
+.td_alt, .list tr th, .list tr td[scope="col"], .edit .list tr th, .edit .list tr td[scope="col"] {
+    border:none;
+}
+
+.view tr {
+    padding:5px 0 5px 0;
+}
+
+#mbfooter .yui-layout-hd td {
+    background:none;
+}
+
+select, textarea {
+    border:1px solid #ccc;
+    padding:4px;
+}
+
+select:focus {
+    border:1px solid #f10202;
+    padding:4px;
+}
+
+#main {
+    margin:0 10px 0 0;
+}

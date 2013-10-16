@@ -47,7 +47,7 @@
                     <li class="noBorder">
                         <span class="currentTabLeft">&nbsp;</span><span class="currentTab">
             <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
-        </span><span class="currentTabRight">&nbsp;</span>
+        </span><span class="currentTabRight">&nbsp;</span></li>
                         {assign var="groupSelected" value=true}
                         {else}
                     <li>
@@ -93,153 +93,137 @@
     <div id="moduleList">
         <ul>
             <li class="noBorder">&nbsp;</li>
-            {foreach from=$moduleTopMenu item=module key=name name=moduleList}
+                {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                 {if $name == $MODULE_TAB}
-                    <li class="noBorder">
-                        <span class="currentTabLeft">&nbsp;</span><span class="currentTab">{sugar_link id="moduleTab_$name" module=$name}</span><span class="currentTabRight">&nbsp;</span>
-                        <ul class="cssmenu">
-                            {if count($SHORTCUT_MENU) > 0}
-                                <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
+            <li>
+                <span class="currentTabLeft">&nbsp;</span>
+                <span class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                <ul class="cssmenu">
+                    {if count($shortcutTopMenu.$name) > 0}
+                    <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
                                 <span class="breaker">
-                        {foreach from=$SHORTCUT_MENU item=item}
-                            {if $item.URL == "-"}
-                                <li>  <a></a><span>&nbsp;</span></li>
+                            {foreach from=$shortcutTopMenu.$name item=item}
+                                {if $item.URL == "-"}
+                                    <li>  <a></a><span>&nbsp;</span></li>
                             {else}
                                 <li > <a href="{$item.URL}"><span>{$item.LABEL}</span></a><br></li>
-                            {/if}
-                        {/foreach}
-                    </span>
-                                <br>
-                            {/if}
-                            <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
-                            {foreach from=$recentRecords item=item name=lastViewed}
-                            {if $name == 'Home'}
-                            <table style="width:100%">
-                                <tr>
-                                    <td>
-                                        <li>
-                            <span>
-
-                                <a title="{$item.module_name}"
-                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                    <span>{$item.item_summary_short}</span>
-                                    </td>
-                                    {if $AUTHENTICATED && $CURRENT_USER}
-                                    <td align="right">
-                                        <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
-                                    </td>
-                                    {/if}
-                                    </a>
-                                    </span>
-                    </li>
-
-            </tr>
-            </table>
                                 {/if}
-                                {if $item.module_name == $name}
+                            {/foreach}
+                                    <br>
+                                    {/if}
+                                    <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
+                                    {foreach from=$recentRecords item=item name=lastViewed}
+                                    {if $name == 'Home'}
                                     <table style="width:100%">
                                         <tr>
                                             <td>
                                                 <li>
-                            <span>
-
-                                <a title="{$item.module_name}"
-                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                    <span>{$item.item_summary_short}</span>
+                                                    <span></span>
+                                                    <a title="{$item.module_name}"
+                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                                        <span>{$item.item_summary_short}</span>
+                                                    </a>
                                             </td>
                                             <td align="right">
                                                 <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
                                             </td>
-                                            </a>
                                             </span>
-                                    </li>
+            </li>
 
-                                    </tr>
-                                    </table>
-                                {/if}
-                                {foreachelse}
-                                {$APP.NTC_NO_ITEMS_DISPLAY}
-                                {/foreach}
-                                </span>
-                            </li>
-
-                            </span>
+            </tr>
+            </table>
+            {/if}
+            {if $item.module_name == $name}
+                <table style="width:100%">
+                    <tr>
+                        <td>
+                            <li>
+                                            <span>
+                                            <a title="{$item.module_name}"
+                                               accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                               href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                                <span>{$item.item_summary_short}</span>
+                                            </a>
+                        </td>
+                        <td align="right">
+                            <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                        </td>
+                        </span>
+                        </li>
+                        </td>
+                    </tr>
+                </table>
+            {/if}
+            {foreachelse}
+            {$APP.NTC_NO_ITEMS_DISPLAY}
+            {/foreach}
                         </ul>
                         {else}
-                    <li>
-                        <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>
-                        <ul class="cssmenu">
+                        <li>
+                            <span class="notCurrentTabLeft">&nbsp;</span>
+                            <span class="notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>
+                            <ul class="cssmenu">
                             {if count($shortcutTopMenu.$name) > 0}
                                 <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
                                 <span class="breaker">
-                        {foreach from=$shortcutTopMenu.$name item=item}
+                            {foreach from=$shortcutTopMenu.$name item=item}
                             {if $item.URL == "-"}
                                 <li>  <a></a><span>&nbsp;</span></li>
                             {else}
                                 <li > <a href="{$item.URL}"><span>{$item.LABEL}</span></a><br></li>
                             {/if}
-                        {/foreach}
-                    </span>
+                            {/foreach}
                                 <br>
                             {/if}
                             <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
                             {foreach from=$recentRecords item=item name=lastViewed}
-
                             {if $name == 'Home'}
                             <table style="width:100%">
                                 <tr>
                                     <td>
                                         <li>
-                            <span>
+                                            <span></span>
+                                            <a title="{$item.module_name}"
+                                            accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                            href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                            <span>{$item.item_summary_short}</span>
+                                            </a>
+                                            </td>
+                                            <td align="right">
+                                                <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                            </td>
+                                            </span>
+                                        </li>
 
-                                <a title="{$item.module_name}"
-                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                    <span>{$item.item_summary_short}</span>
-                                    </td>
-                                    <td align="right">
-                                        <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
-                                    </td>
-                                    </a>
-                                    </span>
-                    </li>
-
-        </tr>
-        </table>
-                                {/if}
-                                {if $item.module_name == $name}
+                                </tr>
+                            </table>
+                            {/if}
+                            {if $item.module_name == $name}
                             <table style="width:100%">
                                 <tr>
                                     <td>
-                            <li>
-                            <span>
-
-                                <a title="{$item.module_name}"
-                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                    <span>{$item.item_summary_short}</span>
+                                        <li>
+                                            <span>
+                                            <a title="{$item.module_name}"
+                                            accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                            href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                            <span>{$item.item_summary_short}</span>
+                                            </a>
+                                            </td>
+                                            <td align="right">
+                                            <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                            </td>
+                                            </span>
+                                        </li>
                                     </td>
-                                    <td align="right">
-                                    <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
-                                    </td>
-                                        </a>
-                            </span>
-                                </li>
-
                                 </tr>
-                                        </table>
-                                {/if}
-                                {foreachelse}
-                                {$APP.NTC_NO_ITEMS_DISPLAY}
-                                {/foreach}
-                                </span>
-                            </li>
-
-                            </span>
+                                </table>
+                            {/if}
+                            {foreachelse}
+                            {$APP.NTC_NO_ITEMS_DISPLAY}
+                            {/foreach}
                         </ul>
-
                     </li>
                 {/if}
             {/foreach}
@@ -253,10 +237,5 @@
                     </ul>
                 </li>
             {/if}
-        </ul>
     </div>
 {/if}
-<script>
-
-    var recentID = new Array();
-</script>
