@@ -288,7 +288,7 @@ $mod_strings = array (
 
 	'LBL_PSW_MODIFIED'                  => 'Password Last Changed',
     'LBL_PHONE'							=> 'Phone',
-	'LBL_PICK_TZ_WELCOME'				=> 'Welcome to Sugar.',
+	'LBL_PICK_TZ_WELCOME'				=> 'Welcome to SuiteCRM.',
 	'LBL_PICK_TZ_DESCRIPTION'           => 'Before continuing, please confirm your time zone.  Select the appropriate time zone from the list below, and click Save to continue. The time zone can be changed at any time in your user settings.',
 	'LBL_PORTAL_ONLY_DESC'				=> 'Use for the Portal API. This type cannot login through the Sugar web interface.',
 	'LBL_PORTAL_ONLY_USER'					=> 'Portal API User',
@@ -504,7 +504,7 @@ $mod_strings = array (
 	// Wizard
 	'LBL_WIZARD_TITLE' => 'User Wizard',
     'LBL_WIZARD_WELCOME_TAB' => 'Welcome',
-    'LBL_WIZARD_WELCOME_TITLE' => 'Welcome to Sugar!',
+    'LBL_WIZARD_WELCOME_TITLE' => 'Welcome to SuiteCRM!',
     'LBL_WIZARD_WELCOME' => 'Click <b>Next</b> to configure a few basic settings for using Sugar.',
     'LBL_WIZARD_WELCOME_NOSMTP' => 'Click <b>Next</b> to configure a few basic settings for using Sugar.',
     'LBL_WIZARD_NEXT_BUTTON' => 'Next >',
@@ -512,21 +512,15 @@ $mod_strings = array (
     'LBL_WIZARD_SKIP_BUTTON' => 'Skip',
     'LBL_WIZARD_FINISH_BUTTON' => 'Finish',
     'LBL_WIZARD_FINISH_TAB' => 'Finish',
-    'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use Sugar!',
+    'LBL_WIZARD_FINISH_TITLE' => 'You are ready to use SuiteCRM!',
 
-    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using Sugar. For more information on using Sugar:<br /><br />
+    'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
-<tr><td><!--not_in_theme!--><img src=include/images/university.png style="margin-right: 5px;"></td><td><a href="http://www.sugarcrm.com/university" target="_blank"><b>Sugar University</b></a><br>End-user and System Administrator Training and Resources</td></tr>
-<tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-<tr><td><!--not_in_theme!--><img src=include/images/docs.png style="margin-right: 5px;"></td><td><a href="http://docs.sugarcrm.com/" target="_blank"><b>Documentation</b></a><br>Product Guides and Release Notes</td></tr>
-<tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-<tr><td><!--not_in_theme!--><img src=include/images/kb.png style="margin-right: 5px;"></td><td><a href="http://kb.sugarcrm.com/" target="_blank"><b>Knowledge Base</b></a><br>Tips from SugarCRM Support for performing common tasks and processes in Sugar</td></tr>
-<tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
-<tr><td><!--not_in_theme!--><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="http://www.sugarcrm.com/forums" target="_blank"><b>Forums</b></a><br>Forums dedicated to the Sugar Community to discuss topics of interest with each other and with SugarCRM Developers</td></tr>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
 </table>',
 
     'LBL_WIZARD_FINISH1' => 'What would you like to do next?',
-    'LBL_WIZARD_FINISH2' => 'Start Using Sugar',
+    'LBL_WIZARD_FINISH2' => 'Start Using SuiteCRM',
     'LBL_WIZARD_FINISH3' => 'Import Data ',
     'LBL_WIZARD_FINISH4' => 'Import data from external sources into the application.',
     'LBL_WIZARD_FINISH5' => 'Create Users',
@@ -535,12 +529,12 @@ $mod_strings = array (
     'LBL_WIZARD_FINISH8' => 'Manage advanced settings, including default application settings.',
     'LBL_WIZARD_FINISH9' => 'Configure the Application ',
     'LBL_WIZARD_FINISH10' => 'Use Studio to create and manage application fields and layouts.',
-    'LBL_WIZARD_FINISH11' => 'Visit Sugar University ',
+    'LBL_WIZARD_FINISH11' => 'Visit SuiteCRM Site ',
     'LBL_WIZARD_FINISH12' => 'Find training materials and classes that will help you get started as a system administrator or end user of the application.',
     'LBL_WIZARD_FINISH14' => 'Documentation ',
     'LBL_WIZARD_FINISH15' => 'Product Guides and Release Notes ',
     'LBL_WIZARD_FINISH16' => 'Knowledge Base ',
-    'LBL_WIZARD_FINISH17' => 'Tips from SugarCRM Support for performing common tasks and processes in Sugar ',
+    'LBL_WIZARD_FINISH17' => 'Tips from SuiteCRM',
     'LBL_WIZARD_FINISH18' => 'Forums ',
     'LBL_WIZARD_FINISH19' => 'Forums dedicated to the Sugar Community to discuss topics of interest with each other and with SugarCRM Developers ',
     'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',

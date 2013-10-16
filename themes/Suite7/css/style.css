@@ -3577,7 +3577,7 @@ li div.star {float:none;}
 
 #ajaxStatusDiv {
     background : #ffffff;
-	color : #c60c30;
+	color : #f10202;
 	position : fixed;
 	opacity : .8;
 	filter : alpha(opacity=80);
@@ -7670,7 +7670,7 @@ li div.star {float:none;}
 
 #ajaxStatusDiv {
     background : #ffffff;
-	color : #c60c30;
+	color : #f10202;
 	position : fixed;
 	opacity : .8;
 	filter : alpha(opacity=80);
@@ -8780,6 +8780,7 @@ button #powered_by {
 .edit {
 
 }
+<<<<<<< HEAD
 
 
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
@@ -8938,3 +8939,5 @@ img {
 .dashletNonTable {
     padding: 0 5px 0 10px;
 }
+=======
+>>>>>>> bfac2168a6f4f29b53b32a7821520759cebfc238

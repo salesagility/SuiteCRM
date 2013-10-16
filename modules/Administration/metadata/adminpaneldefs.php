@@ -76,8 +76,8 @@ if(!empty($license->settings['license_latest_versions'])){
 }
 
 
-
-$admin_group_header[]= array('LBL_SUGAR_NETWORK_TITLE','',false,$admin_option_defs, 'LBL_SUGAR_NETWORK_DESC');
+//sugar connect void
+//$admin_group_header[]= array('LBL_SUGAR_NETWORK_TITLE','',false,$admin_option_defs, 'LBL_SUGAR_NETWORK_DESC');
 
 
 //system.

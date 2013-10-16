@@ -3,6 +3,7 @@
 /.htaccess
 # Ignore large parts of the annoying cache directory without breaking things.
 cache/*
+upload/*
 # Ignore some files and directories from the custom directory.
 custom/history/*
 custom/modulebuilder/*
