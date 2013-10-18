@@ -43,7 +43,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="X-UA-Compatible" content="IE=9"/>
     <title>{$APP.LBL_BROWSER_TITLE}</title>
-    {$SUGAR_CSS}
     {$SUGAR_JS}
     {literal}
     <script type="text/javascript">
@@ -59,5 +58,8 @@
         -->
     </script>
     {/literal}
+    {$SUGAR_CSS}
+
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
+
 </head>

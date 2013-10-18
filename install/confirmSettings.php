@@ -65,6 +65,7 @@ $yesNoDropCreate = $mod_strings['LBL_NO'];
 if ($_SESSION['setup_db_drop_tables']===true ||$_SESSION['setup_db_drop_tables'] == 'true'){
     $yesNoDropCreate = $mod_strings['LBL_YES'];
 }
+$_SESSION['setup_site_sugarbeet'] = false;
 $yesNoSugarUpdates = ($_SESSION['setup_site_sugarbeet']) ? $mod_strings['LBL_YES'] : $mod_strings['LBL_NO'];
 $yesNoCustomSession = ($_SESSION['setup_site_custom_session_path']) ? $mod_strings['LBL_YES'] : $mod_strings['LBL_NO'];
 $yesNoCustomLog = ($_SESSION['setup_site_custom_log_dir']) ? $mod_strings['LBL_YES'] : $mod_strings['LBL_NO'];
@@ -106,7 +107,7 @@ $out =<<<EOQ
 		<img src="{$sugar_md}" alt="SugarCRM" border="0">
 		</p>
 		{$mod_strings['LBL_CONFIRM_TITLE']}</th>
-        <th width="200" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank"><IMG src="$loginImage" alt="SugarCRM" border="0"></a>
+        <th width="200" style="text-align: right;">&nbsp;
         </th>
     </tr>
     <tr>
@@ -162,11 +163,11 @@ $out .=<<<EOQ
                 <td><b>{$mod_strings['LBL_SITECFG_URL']}</b></td>
                 <td>{$_SESSION['setup_site_url']}</td>
             </tr>
-            <tr>
-	   <tr><td colspan="3" align="left"></td></tr>
-            	<th colspan="3" align="left">{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</th>
+            <tr style='display:none'>
+	   <tr style='display:none'><td colspan="3" align="left"></td></tr>
+            	<th colspan="3" align="left" style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</th>
             </tr>
-            <tr>
+            <tr style='display:none'>
                 <td></td>
                 <td><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b></td>
                 <td>{$yesNoSugarUpdates}</td>
@@ -541,7 +542,7 @@ if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // IIS IUSR_xxx may no
 $cronString = '
 			<tr>
 			    <td align="left" colspan="2">
-			    <font color="red">
+			    <font style="color:#a10a3d;" >
 						'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'<br>
 				</font>
 						cd '.realpath('./').'<br>

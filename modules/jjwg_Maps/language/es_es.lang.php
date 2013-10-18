@@ -75,8 +75,8 @@ $mod_strings['LBL_DISABLED'] = 'Deshabilitada';
 $mod_strings['LBL_DEFAULT'] = 'Por Defecto:';
 $mod_strings['LBL_CONFIG_DEFAULT'] = 'Por Defecto:';
 
-$mod_strings['LBL_CONFIG_VALID_GEOCODE_MODULES'] = 'Valid Geocode Modules:';
-$mod_strings['LBL_CONFIG_VALID_GEOCODE_TABLES'] = 'Valid Geocode Tables:';
+$mod_strings['LBL_CONFIG_VALID_GEOCODE_MODULES'] = 'Módulos Geocodificar válidos:';
+$mod_strings['LBL_CONFIG_VALID_GEOCODE_TABLES'] = 'Tablas Geocodificar válidos:';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_SETTINGS_TITLE'] = "Configuración de tipo de Dirección: Esto define los tipos de direcciones en los módulos que se desean utilizar como dirección a geocodificar. Valores aceptables: 'billing'; 'shipping'; 'primary'; 'alt'; 'flex_relate'";
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR'] = 'Address Type for ';
 $mod_strings['LBL_CONFIG_ADDRESS_TYPE_FOR_ACCOUNTS'] = 'Tipos de direcciones para Cuentas:';

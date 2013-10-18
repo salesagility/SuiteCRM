@@ -1,275 +1,293 @@
 <?php
-// created: 2013-08-12 14:57:20
-$viewdefs = array (
-  'Contacts' => 
+/**
+ *
+ * @package Advanced OpenPortal
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+$viewdefs ['Contacts'] = 
+array (
+  'DetailView' => 
   array (
-    'DetailView' => 
+    'templateMeta' => 
     array (
-      'templateMeta' => 
+      'form' => 
       array (
-        'form' => 
+        'buttons' => 
         array (
-          'buttons' => 
-          array (
-            0 => 'EDIT',
-            1 => 'DUPLICATE',
-            2 => 'DELETE',
-            3 => 'FIND_DUPLICATES',
-            4 => 
-            array (
-              'customCode' => '<input type="submit" class="button" title="{$APP.LBL_MANAGE_SUBSCRIPTIONS}" onclick="this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'Subscriptions\'; this.form.module.value=\'Campaigns\'; this.form.module_tab.value=\'Contacts\';" name="Manage Subscriptions" value="{$APP.LBL_MANAGE_SUBSCRIPTIONS}"/>',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
-                'htmlOptions' => 
-                array (
-                  'class' => 'button',
-                  'id' => 'manage_subscriptions_button',
-                  'title' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
-                  'onclick' => 'this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'Subscriptions\'; this.form.module.value=\'Campaigns\'; this.form.module_tab.value=\'Contacts\';',
-                  'name' => 'Manage Subscriptions',
-                ),
-              ),
-            ),
-            5 => 
-            array (
-              'customCode' => '{if $fields.joomla_account_id.value == "" && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="Create Portal User"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => 'Create Portal User',
-                'htmlOptions' => 
-                array (
-                  'title' => 'Create Portal User',
-                  'accesskey' => 'Create Portal User',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'createPortalUser\';',
-                  'name' => 'buttonCreatePortalUser',
-                  'id' => 'createPortalUser_button',
-                ),
-                'template' => '{if $fields.joomla_account_id.value == "" && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
-          ),
-        ),
-        'maxColumns' => '2',
-        'widths' => 
-        array (
-          0 => 
-          array (
-            'label' => '10',
-            'field' => '30',
-          ),
-          1 => 
-          array (
-            'label' => '10',
-            'field' => '30',
-          ),
-        ),
-        'includes' => 
-        array (
-          0 => 
-          array (
-            'file' => 'modules/Leads/Lead.js',
-          ),
-        ),
-        'useTabs' => false,
-        'tabDefs' => 
-        array (
-          'LBL_CONTACT_INFORMATION' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ADVANCED' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ASSIGNMENT' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-        ),
-      ),
-      'panels' => 
-      array (
-        'lbl_contact_information' => 
-        array (
-          0 => 
-          array (
-            0 => 
-            array (
-              'name' => 'full_name',
-              'label' => 'LBL_NAME',
-            ),
-          ),
-          1 => 
-          array (
-            0 => 
-            array (
-              'name' => 'title',
-              'comment' => 'The title of the contact',
-              'label' => 'LBL_TITLE',
-            ),
-            1 => 
-            array (
-              'name' => 'phone_work',
-              'label' => 'LBL_OFFICE_PHONE',
-            ),
-          ),
-          2 => 
-          array (
-            0 => 
-            array (
-              'name' => 'department',
-              'label' => 'LBL_DEPARTMENT',
-            ),
-            1 => 
-            array (
-              'name' => 'phone_mobile',
-              'label' => 'LBL_MOBILE_PHONE',
-            ),
-          ),
-          3 => 
-          array (
-            0 => 
-            array (
-              'name' => 'account_name',
-              'label' => 'LBL_ACCOUNT_NAME',
-              'displayParams' => 
-              array (
-                'enableConnectors' => true,
-                'module' => 'Contacts',
-                'connectors' => 
-                array (
-                  0 => 'ext_rest_linkedin',
-                ),
-              ),
-            ),
-            1 => 
-            array (
-              'name' => 'phone_fax',
-              'label' => 'LBL_FAX_PHONE',
-            ),
-          ),
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+          3 => 'FIND_DUPLICATES',
           4 => 
           array (
-            0 => 
+            'customCode' => '<input type="submit" class="button" title="{$APP.LBL_MANAGE_SUBSCRIPTIONS}" onclick="this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'Subscriptions\'; this.form.module.value=\'Campaigns\'; this.form.module_tab.value=\'Contacts\';" name="Manage Subscriptions" value="{$APP.LBL_MANAGE_SUBSCRIPTIONS}"/>',
+            'sugar_html' => 
             array (
-              'name' => 'primary_address_street',
-              'label' => 'LBL_PRIMARY_ADDRESS',
-              'type' => 'address',
-              'displayParams' => 
+              'type' => 'submit',
+              'value' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
+              'htmlOptions' => 
               array (
-                'key' => 'primary',
-              ),
-            ),
-            1 => 
-            array (
-              'name' => 'alt_address_street',
-              'label' => 'LBL_ALTERNATE_ADDRESS',
-              'type' => 'address',
-              'displayParams' => 
-              array (
-                'key' => 'alt',
+                'class' => 'button',
+                'id' => 'manage_subscriptions_button',
+                'title' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
+                'onclick' => 'this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'Subscriptions\'; this.form.module.value=\'Campaigns\'; this.form.module_tab.value=\'Contacts\';',
+                'name' => 'Manage Subscriptions',
               ),
             ),
           ),
           5 => 
           array (
-            0 => 
+            'customCode' => '{if $fields.joomla_account_id.value == "" && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="Create Portal User"> {/if}',
+            'sugar_html' => 
             array (
-              'name' => 'email1',
-              'studio' => 'false',
-              'label' => 'LBL_EMAIL_ADDRESS',
+              'type' => 'submit',
+              'value' => 'Create Portal User',
+              'htmlOptions' => 
+              array (
+                'title' => 'Create Portal User',
+                'accesskey' => 'Create Portal User',
+                'class' => 'button',
+                'onclick' => 'this.form.action.value=\'createPortalUser\';',
+                'name' => 'buttonCreatePortalUser',
+                'id' => 'createPortalUser_button',
+              ),
+              'template' => '{if $fields.joomla_account_id.value == "" && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
             ),
           ),
-          6 => 
-          array (
-            0 => 
-            array (
-              'name' => 'description',
-              'comment' => 'Full text of the note',
-              'label' => 'LBL_DESCRIPTION',
-            ),
-            1 => 
-            array (
-              'name' => 'aop_case_updates_contacts_1_name',
-            ),
-          ),
+        ),
+      ),
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'includes' => 
+      array (
+        0 => 
+        array (
+          'file' => 'modules/Leads/Lead.js',
+        ),
+      ),
+      'useTabs' => false,
+      'tabDefs' => 
+      array (
+        'LBL_CONTACT_INFORMATION' => 
+        array (
+          'newTab' => false,
+          'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ADVANCED' => 
         array (
-          0 => 
-          array (
-            0 => 
-            array (
-              'name' => 'report_to_name',
-              'label' => 'LBL_REPORTS_TO',
-            ),
-            1 => 
-            array (
-              'name' => 'sync_contact',
-              'comment' => 'Synch to outlook?  (Meta-Data only)',
-              'label' => 'LBL_SYNC_CONTACT',
-            ),
-          ),
-          1 => 
-          array (
-            0 => 
-            array (
-              'name' => 'lead_source',
-              'comment' => 'How did the contact come about',
-              'label' => 'LBL_LEAD_SOURCE',
-            ),
-            1 => 
-            array (
-              'name' => 'do_not_call',
-              'comment' => 'An indicator of whether contact can be called',
-              'label' => 'LBL_DO_NOT_CALL',
-            ),
-          ),
-          2 => 
-          array (
-            0 => 
-            array (
-              'name' => 'campaign_name',
-              'label' => 'LBL_CAMPAIGN',
-            ),
-          ),
+          'newTab' => false,
+          'panelDefault' => 'expanded',
         ),
         'LBL_PANEL_ASSIGNMENT' => 
         array (
+          'newTab' => false,
+          'panelDefault' => 'expanded',
+        ),
+      ),
+    ),
+    'panels' => 
+    array (
+      'lbl_contact_information' => 
+      array (
+        0 => 
+        array (
           0 => 
           array (
-            0 => 
+            'name' => 'full_name',
+            'label' => 'LBL_NAME',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'title',
+            'comment' => 'The title of the contact',
+            'label' => 'LBL_TITLE',
+          ),
+          1 => 
+          array (
+            'name' => 'phone_work',
+            'label' => 'LBL_OFFICE_PHONE',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'department',
+            'label' => 'LBL_DEPARTMENT',
+          ),
+          1 => 
+          array (
+            'name' => 'phone_mobile',
+            'label' => 'LBL_MOBILE_PHONE',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'account_name',
+            'label' => 'LBL_ACCOUNT_NAME',
+            'displayParams' => 
             array (
-              'name' => 'assigned_user_name',
-              'label' => 'LBL_ASSIGNED_TO_NAME',
-            ),
-            1 => 
-            array (
-              'name' => 'date_modified',
-              'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-              'label' => 'LBL_DATE_MODIFIED',
+              'enableConnectors' => true,
+              'module' => 'Contacts',
+              'connectors' => 
+              array (
+                0 => 'ext_rest_linkedin',
+              ),
             ),
           ),
           1 => 
           array (
-            0 => 
+            'name' => 'phone_fax',
+            'label' => 'LBL_FAX_PHONE',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'primary_address_street',
+            'label' => 'LBL_PRIMARY_ADDRESS',
+            'type' => 'address',
+            'displayParams' => 
             array (
-              'name' => 'date_entered',
-              'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-              'label' => 'LBL_DATE_ENTERED',
+              'key' => 'primary',
             ),
+          ),
+          1 => 
+          array (
+            'name' => 'alt_address_street',
+            'label' => 'LBL_ALTERNATE_ADDRESS',
+            'type' => 'address',
+            'displayParams' => 
+            array (
+              'key' => 'alt',
+            ),
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'email1',
+            'studio' => 'false',
+            'label' => 'LBL_EMAIL_ADDRESS',
+          ),
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'description',
+            'comment' => 'Full text of the note',
+            'label' => 'LBL_DESCRIPTION',
+          ),
+          1 => 
+          array (
+            'name' => 'aop_case_updates_contacts_1_name',
+          ),
+        ),
+      ),
+      'LBL_PANEL_ADVANCED' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'report_to_name',
+            'label' => 'LBL_REPORTS_TO',
+          ),
+          1 => 
+          array (
+            'name' => 'sync_contact',
+            'comment' => 'Synch to outlook?  (Meta-Data only)',
+            'label' => 'LBL_SYNC_CONTACT',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'lead_source',
+            'comment' => 'How did the contact come about',
+            'label' => 'LBL_LEAD_SOURCE',
+          ),
+          1 => 
+          array (
+            'name' => 'do_not_call',
+            'comment' => 'An indicator of whether contact can be called',
+            'label' => 'LBL_DO_NOT_CALL',
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'campaign_name',
+            'label' => 'LBL_CAMPAIGN',
+          ),
+        ),
+      ),
+      'LBL_PANEL_ASSIGNMENT' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'assigned_user_name',
+            'label' => 'LBL_ASSIGNED_TO_NAME',
+          ),
+          1 => 
+          array (
+            'name' => 'date_modified',
+            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+            'label' => 'LBL_DATE_MODIFIED',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'date_entered',
+            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+            'label' => 'LBL_DATE_ENTERED',
           ),
         ),
       ),
     ),
   ),
 );
-$viewdefs['Contacts']['DetailView']['templateMeta']['form']['buttons']['AOS_GENLET'] = array('customCode'=>'<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">');
-
+?>

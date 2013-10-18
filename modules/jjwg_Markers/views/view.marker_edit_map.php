@@ -13,9 +13,19 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView {
     global $sugar_config;
     global $jjwg_config;
     global $currentModule;
+    global $current_user;
     global $theme;
     global $mod_strings;
     global $loc;
+
+    // Users local settings for decimal seperator and number grouping seperator
+    $dec_sep = $sugar_config['default_decimal_seperator'];
+    $user_dec_sep = $current_user->getPreference('dec_sep');
+    $dec_sep = (empty($user_dec_sep) ? $sugar_config['default_decimal_seperator'] : $user_dec_sep);
+
+    $num_grp_sep = $sugar_config['default_number_grouping_seperator'];
+    $user_num_grp_sep = $current_user->getPreference('num_grp_sep');
+    $num_grp_sep = (empty($user_num_grp_sep) ? $sugar_config['default_number_grouping_seperator'] : $user_num_grp_sep);
 
     $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
 
@@ -77,9 +87,9 @@ function updateMarkerStatus(str) {
 
 function updateMarkerPosition(latLng) {
   document.getElementById('info').innerHTML = [
-    latLng.lat(),
-    latLng.lng()
-  ].join(', ');
+    latLng.lat().toFixed(8).replace(/0+$/g, ""),
+    latLng.lng().toFixed(8).replace(/0+$/g, "")
+  ].join(',');
 }
 
 function updateMarkerAddress(str) {
@@ -88,8 +98,13 @@ function updateMarkerAddress(str) {
 }
 
 function updateEditFormLatLng(latLng) {
-  parent.document.getElementById('jjwg_maps_lat').value = latLng.lat();
-  parent.document.getElementById('jjwg_maps_lng').value = latLng.lng();
+    // For Users Locale Conversion
+    var dec_sep = '<?php echo $dec_sep; ?>';
+    var num_grp_sep = '<?php echo $num_grp_sep; ?>';
+    var local_lat = latLng.lat().toFixed(8).replace(/0+$/g, "").replace(/\,/, num_grp_sep).replace(/\./, dec_sep);
+    var local_lng = latLng.lng().toFixed(8).replace(/0+$/g, "").replace(/\,/, num_grp_sep).replace(/\./, dec_sep);
+    parent.document.getElementById('jjwg_maps_lat').value = local_lat;
+    parent.document.getElementById('jjwg_maps_lng').value = local_lng;
 }
 
 function initialize() {
@@ -162,12 +177,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
   
   <div id="mapCanvas"></div>
   <div id="infoPanel">
-    <b>Marker status:</b>
-
-    <div id="markerStatus"><i>Click and drag the marker.</i></div>
-    <b>Marker Position (Latitude, Longitude):</b>
+    <b><?php echo $mod_strings['LBL_MARKER_MARKER_STATUS']; ?></b>
+    <div id="markerStatus"><i><?php echo $mod_strings['LBL_MARKER_EDIT_DESCRIPTION']; ?></i></div>
+    <b><?php echo $mod_strings['LBL_MARKER_MARKER_POSITION']; ?></b>
     <div id="info"></div>
-    <b>Closest Matching Address:</b>
+    <b><?php echo $mod_strings['LBL_MARKER_CLOSEST_MATCHING_ADDRESS']; ?>!!!</b>
     <div id="address"></div>
   </div>
 

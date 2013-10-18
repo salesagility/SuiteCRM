@@ -277,6 +277,11 @@ EOQ;
 					$newNote->new_with_id = true;
 					$newNote->date_modified = '';
 					$newNote->date_entered = '';
+					/* BEGIN - SECURITY GROUPS */
+					//Need to do this so that attachments show under an EmailTemplate correctly for a normal user
+					global $current_user;
+					$newNote->assigned_user_id = $current_user->id;
+					/* END - SECURITY GROUPS */
 					$newNoteId = $newNote->save();
 
 					UploadFile::duplicate_file($note->id, $newNoteId, $note->filename);
@@ -286,6 +291,11 @@ EOQ;
 			$note->parent_id = $focus->id;
 			$note->parent_type = 'Emails';
 			$note->file_mime_type = $note->file->mime_type;
+			/* BEGIN - SECURITY GROUPS */
+			//Need to do this so that attachments show under an EmailTemplate correctly for a normal user
+			global $current_user;
+			$note->assigned_user_id = $current_user->id;
+			/* END - SECURITY GROUPS */
 			$note_id = $note->save();
 			array_push($focus->saved_attachments, $note);
 			$note->id = $note_id;

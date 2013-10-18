@@ -339,6 +339,17 @@ function get_subscription_lists_query($focus, $additional_fields = null) {
     $all_news_type_pl_query .= "and c.campaign_type = 'NewsLetter'  and pl.deleted = 0 and c.deleted=0 and plc.deleted=0 ";
     $all_news_type_pl_query .= "and (pl.list_type like 'exempt%' or pl.list_type ='default') ";
 
+	/* BEGIN - SECURITY GROUPS */
+	if($focus->bean_implements('ACL') && ACLController::requireSecurityGroup('Campaigns', 'list') )
+	{
+		require_once('modules/SecurityGroups/SecurityGroup.php');
+		global $current_user;
+		$owner_where = $focus->getOwnerWhere($current_user->id);
+		$group_where = SecurityGroup::getGroupWhere('c','Campaigns',$current_user->id);
+		$all_news_type_pl_query .= " AND ( c.assigned_user_id ='".$current_user->id."' or ".$group_where.") ";
+	}
+	/* END - SECURITY GROUPS */
+		
     $all_news_type_list =$focus->db->query($all_news_type_pl_query);
 
     //build array of all newsletter campaigns

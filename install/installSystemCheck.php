@@ -404,8 +404,7 @@ if($error_found){
   <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
     <tr>
       <th width="400">{$mod_strings['LBL_CHECKSYS_TITLE']}</th>
-      <th width="200" height="30" style="text-align: right;"><a href="http://www.sugarcrm.com" target=
-      "_blank"><IMG src="include/images/sugarcrm_login.png" alt="SugarCRM" border="0"></a>
+      <th width="200" height="30" style="text-align: right;">
        <br><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a>
        </th>
     </tr>
@@ -436,7 +435,7 @@ if($error_found){
 
         <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
           <tr>
-            <td><input class="button" type="button" onclick="window.open('http://www.sugarcrm.com/forums/');" value="{$mod_strings['LBL_HELP']}" /></td>
+            <td><input class="button" type="button" onclick="window.open('http://suitecrm.com/index.php/forum/index');" value="{$mod_strings['LBL_HELP']}" /></td>
             <td>
                 <input class="button" type="button" name="Re-check" value="{$mod_strings['LBL_CHECKSYS_RECHECK']}" onclick="callSysCheck();" id="button_next2"/>
             </td>

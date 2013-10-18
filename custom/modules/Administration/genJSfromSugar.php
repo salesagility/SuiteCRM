@@ -176,11 +176,28 @@ EOQ;
 				$jjwg_def_unit='miles';
 			}
 			$str .= 'jjwg_def_unit="'.$jjwg_def_unit.'",';
+			if (isset($administration->settings['jjwg_valid_geocode_modules'])){
+				$jjwg_modules=$administration->settings['jjwg_valid_geocode_modules'];
+			}
+			else {
+				$jjwg_modules='';
+			}
+			$str .= 'jjwg_modules="'.$jjwg_modules.'",';
+			if (isset($administration->settings['map_default_center_latitude'])){
+				$jjwg_c_lat=$administration->settings['map_default_center_latitude'];
+				$jjwg_c_lng=$administration->settings['map_default_center_longitude'];
+			}
+			else {
+				$jjwg_c_lat=39.5;
+				$jjwg_c_lng=-99.5;
+			}
+			$str .= 'jjwg_c_lat='.$jjwg_c_lat.',' . 'jjwg_c_lng='.$jjwg_c_lng.',';
+			
 		}
 		else {
 			$str .= ' jjwg_installed = false,jjwg_def_unit="",';
 		}
-		
+		$str .= ' securitysuite = '.(in_array ('SecurityGroups',$moduleList)?'true':'false').',';
         $str .= ' offline_max_days = 0;';
         $str .= 'var quickcrm_upd_time = "'.time().'";';
 		$str .= "var CustomHTML=".(file_exists("custom/QuickCRM/home.html")?"true":"false").";";

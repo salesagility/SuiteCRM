@@ -1,4 +1,5 @@
 <?php
+$mod_strings['LBL_SALESAGILITY_ADMIN'] = 'Advanced OpenAdmin';
 $mod_strings['LBL_AOS_ADMIN_CONTRACT_SETTINGS'] = 'Contract Settings';
 $mod_strings['LBL_AOS_ADMIN_CONTRACT_RENEWAL_REMINDER'] = 'Renewal Reminder period';
 $mod_strings['LBL_AOS_ADMIN_MANAGE_AOS'] = 'Advanced OpenSales Settings';

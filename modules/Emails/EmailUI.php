@@ -2107,6 +2107,19 @@ eoq;
 			$t .= "JOIN email_addresses ea ON (eabr.email_address_id = ea.id) ";
 			$t .= " WHERE {$where}";
 
+			/* BEGIN - SECURITY GROUPS */
+			//this function may not even be used anymore. Seems like findEmailFromBeanIds is preferred now
+			if($person->bean_implements('ACL') && ACLController::requireSecurityGroup($module, 'list') )
+			{
+				require_once('modules/SecurityGroups/SecurityGroup.php');
+				global $current_user;
+				$owner_where = $person->getOwnerWhere($current_user->id);
+				$group_where = SecurityGroup::getGroupWhere($table,$module,$current_user->id);
+				$t .= " AND (".  $owner_where." or ".$group_where.") ";
+			}
+			/* END - SECURITY GROUPS */
+    	
+
 			if(!empty($q)) {
 				$q .= "\n UNION ALL \n";
 			}
@@ -2245,6 +2258,18 @@ eoq;
 			$t .= "JOIN email_addr_bean_rel eabr ON ({$table}.id = eabr.bean_id and eabr.deleted=0) ";
 			$t .= "JOIN email_addresses ea ON (eabr.email_address_id = ea.id) ";
 			$t .= " WHERE {$where}";
+			/* BEGIN - SECURITY GROUPS */
+			//this function may not even be used anymore. Seems like findEmailFromBeanIds is preferred now
+			if($person->bean_implements('ACL') && ACLController::requireSecurityGroup($module, 'list') )
+			{
+				require_once('modules/SecurityGroups/SecurityGroup.php');
+				global $current_user;
+				$owner_where = $person->getOwnerWhere($current_user->id);
+				$group_where = SecurityGroup::getGroupWhere($table,$module,$current_user->id);
+				$t .= " AND (".  $owner_where." or ".$group_where.") ";
+			}
+			/* END - SECURITY GROUPS */
+
 		} // if
 		return $t;
     }

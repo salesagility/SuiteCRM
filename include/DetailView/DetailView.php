@@ -2,7 +2,7 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -161,7 +161,22 @@ class DetailView extends ListView {
        		}
        		$this->query_where .= $seed->getOwnerWhere($current_user->id);
 		}
-
+		/* BEGIN - SECURITY GROUPS */
+    	if(ACLController::requireSecurityGroup($seed->module_dir, 'view') )
+    	{
+			require_once('modules/SecurityGroups/SecurityGroup.php');
+    		global $current_user;
+    		$owner_where = $seed->getOwnerWhere($current_user->id);
+    		$group_where = SecurityGroup::getGroupWhere($seed->table_name,$seed->module_dir,$current_user->id);
+    		if(empty($this->query_where))
+    		{
+    			$this->query_where = " (".$owner_where." or ".$group_where.")";
+    		} else {
+    			$this->query_where .= " AND (".$owner_where." or ".$group_where.")";
+    		}
+    	}
+    	/* END - SECURITY GROUPS */
+        
         $order = $this->getLocalSessionVariable($seed->module_dir.'2_'.$html_varName, "ORDER_BY");
         $orderBy = '';
         if(!empty($order['orderBy']))

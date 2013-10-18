@@ -56,7 +56,7 @@
 	.ui-icon-pound , .ui-icon-apple , .ui-icon-chat , .ui-icon-trash , .ui-icon-bell , .ui-icon-mappin , .ui-icon-direction,
 	.ui-icon-heart , .ui-icon-wrench , .ui-icon-play , .ui-icon-pause , .ui-icon-stop , .ui-icon-person , .ui-icon-music,
 	.ui-icon-rss , .ui-icon-wifi , .ui-icon-phone , .ui-icon-power , .ui-icon-lock , .ui-icon-flag , .ui-icon-calendar,
-	.ui-icon-lightning , .ui-icon-drink , .ui-icon-android , .ui-icon-edit {
+	.ui-icon-lightning , .ui-icon-drink , .ui-icon-android , .ui-icon-edit, .ui-icon-attach, .ui-icon-bars {
 		background-image: url('images/icons-36-white-pack.png');
 		-moz-background-size: 774px 54px;
 		-o-background-size: 774px 54px;
@@ -130,3 +130,4 @@
 .ui-icon-android { background-position: -324px -36px; }
 .ui-icon-edit { background-position: -360px -36px; }
 .ui-icon-attach { background-position: -396px -36px; }
+.ui-icon-bars { background-position: -432px -36px; }

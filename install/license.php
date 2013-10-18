@@ -84,8 +84,7 @@ $out =<<<EOQ
 		<img src="{$sugar_md}" alt="SugarCRM" border="0">
 		</p>
       {$mod_strings['LBL_LICENSE_ACCEPTANCE']}</th>
-      <th width="200" height="30" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank">
-      	<IMG src="include/images/sugarcrm_login.png" alt="SugarCRM" border="0"></a>
+      <th width="200" height="30" style="text-align: right;">&nbsp;
       </th>
     </tr>
     <tr>

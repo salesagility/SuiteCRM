@@ -332,14 +332,14 @@ class EditView
                     }
                 }
 
-			    	$panel = $this->getPanelWithFillers($panel);
+                    $panel = $this->getPanelWithFillers($panel);
 
-			    	$this->sectionPanels[strtoupper($key)] = $panel;
-		        }
+                    $this->sectionPanels[strtoupper($key)] = $panel;
+                }
 
 
-		$panelCount++;
-		} //foreach
+        $panelCount++;
+        } //foreach
     }
 
     /**
@@ -456,49 +456,49 @@ class EditView
                 {
                     if(isset($GLOBALS['sugar_config']['enable_autocomplete']) && $GLOBALS['sugar_config']['enable_autocomplete'] == true)
                     {
-						$this->fieldDefs[$name]['autocomplete'] = true;
-	                	$this->fieldDefs[$name]['autocomplete_options'] = $this->fieldDefs[$name]['options']; // we need the name for autocomplete
-					} else {
+                        $this->fieldDefs[$name]['autocomplete'] = true;
+                        $this->fieldDefs[$name]['autocomplete_options'] = $this->fieldDefs[$name]['options']; // we need the name for autocomplete
+                    } else {
                         $this->fieldDefs[$name]['autocomplete'] = false;
-                   	}
-                   	// Bug 57472 - $this->fieldDefs[$name]['autocomplete_options' was set too late, it didn't retrieve the list's name, but the list itself (the developper comment show us that developper expected to retrieve list's name and not the options array)
-                   	$this->fieldDefs[$name]['options'] = $app_list_strings[$this->fieldDefs[$name]['options']];
+                    }
+                    // Bug 57472 - $this->fieldDefs[$name]['autocomplete_options' was set too late, it didn't retrieve the list's name, but the list itself (the developper comment show us that developper expected to retrieve list's name and not the options array)
+                    $this->fieldDefs[$name]['options'] = $app_list_strings[$this->fieldDefs[$name]['options']];
                 }
 
                 if(isset($this->fieldDefs[$name]['options']) && is_array($this->fieldDefs[$name]['options']) && isset($this->fieldDefs[$name]['default_empty']) && !isset($this->fieldDefs[$name]['options'][$this->fieldDefs[$name]['default_empty']])) {
                     $this->fieldDefs[$name]['options'] = array_merge(array($this->fieldDefs[$name]['default_empty']=>$this->fieldDefs[$name]['default_empty']), $this->fieldDefs[$name]['options']);
                 }
                                 
-	       	 	if(isset($this->fieldDefs[$name]['function'])) {
-	       	 		$function = $this->fieldDefs[$name]['function'];
-	       			if(is_array($function) && isset($function['name'])){
-	       				$function = $this->fieldDefs[$name]['function']['name'];
-	       			}else{
-	       				$function = $this->fieldDefs[$name]['function'];
-	       			}
+                if(isset($this->fieldDefs[$name]['function'])) {
+                    $function = $this->fieldDefs[$name]['function'];
+                    if(is_array($function) && isset($function['name'])){
+                        $function = $this->fieldDefs[$name]['function']['name'];
+                    }else{
+                        $function = $this->fieldDefs[$name]['function'];
+                    }
 
                     if(isset($this->fieldDefs[$name]['function']['include']) && file_exists($this->fieldDefs[$name]['function']['include']))
                     {
-                  		require_once($this->fieldDefs[$name]['function']['include']);
-                  	}
+                        require_once($this->fieldDefs[$name]['function']['include']);
+                    }
 
-	       	 		if(!empty($this->fieldDefs[$name]['function']['returns']) && $this->fieldDefs[$name]['function']['returns'] == 'html'){
-						if(!empty($this->fieldDefs[$name]['function']['include'])){
-								require_once($this->fieldDefs[$name]['function']['include']);
-						}
-						$value = call_user_func($function, $this->focus, $name, $value, $this->view);
-						$valueFormatted = true;
-					}else{
-						$this->fieldDefs[$name]['options'] = call_user_func($function, $this->focus, $name, $value, $this->view);
-					}
-	       	 	}
+                    if(!empty($this->fieldDefs[$name]['function']['returns']) && $this->fieldDefs[$name]['function']['returns'] == 'html'){
+                        if(!empty($this->fieldDefs[$name]['function']['include'])){
+                                require_once($this->fieldDefs[$name]['function']['include']);
+                        }
+                        $value = call_user_func($function, $this->focus, $name, $value, $this->view);
+                        $valueFormatted = true;
+                    }else{
+                        $this->fieldDefs[$name]['options'] = call_user_func($function, $this->focus, $name, $value, $this->view);
+                    }
+                }
 
-	       	 	if(isset($this->fieldDefs[$name]['type']) && $this->fieldDefs[$name]['type'] == 'function' && isset($this->fieldDefs[$name]['function_name'])){
-	       	 		$value = $this->callFunction($this->fieldDefs[$name]);
-	       	 		$valueFormatted = true;
-	       	 	}
+                if(isset($this->fieldDefs[$name]['type']) && $this->fieldDefs[$name]['type'] == 'function' && isset($this->fieldDefs[$name]['function_name'])){
+                    $value = $this->callFunction($this->fieldDefs[$name]);
+                    $valueFormatted = true;
+                }
 
-	       	 	if(!$valueFormatted) {
+                if(!$valueFormatted) {
                     // $this->focus->format_field($this->focus->field_defs[$name]);
                    $value = isset($this->focus->$name) ? $this->focus->$name : '';
                 }
@@ -737,6 +737,70 @@ class EditView
         $this->th->ss->load_filter('output', 'trimwhitespace');
         $str .= $this->th->displayTemplate($this->module, $form_name, $this->tpl, $ajaxSave, $this->defs);
 
+        /* BEGIN - SECURITY GROUPS */ 
+        //if popup select add panel if user is a member of multiple groups to metadataFile
+        global $sugar_config;
+        if(isset($sugar_config['securitysuite_popup_select']) && $sugar_config['securitysuite_popup_select'] == true
+            && empty($this->focus->fetched_row['id']) && $this->focus->module_dir != "Users" && $this->focus->module_dir != "SugarFeed") {
+
+            //there are cases such as uploading an attachment to an email template where the request module may
+            //not be the same as the current bean module. If that happens we can just skip it
+            //however...let quickcreate through
+            if($this->view != 'QuickCreate' && (empty($_REQUEST['module']) || $_REQUEST['module'] != $this->focus->module_dir)) return $str;
+
+            require_once('modules/SecurityGroups/SecurityGroup.php');
+            $groupFocus = new SecurityGroup();
+            $security_modules = $groupFocus->getSecurityModules();
+            if(in_array($this->focus->module_dir,array_keys($security_modules))) {
+                global $current_user;
+
+                $group_count = $groupFocus->getMembershipCount($current_user->id);
+                if($group_count > 1) {
+                
+                    $groups = $groupFocus->getUserSecurityGroups($current_user->id);
+                    $group_options = '';
+                    foreach($groups as $group) {
+                        $group_options .= '<option value="'.$group['id'].'" label="'.$group['name'].'" selected="selected">'.$group['name'].'</option>';
+                    }
+                    //multilingual support
+                    global $current_language;
+                    $ss_mod_strings = return_module_language($current_language, 'SecurityGroups');  
+                    
+                    $lbl_securitygroups_select = $ss_mod_strings['LBL_GROUP_SELECT'];
+                    $lbl_securitygroups = $ss_mod_strings['LBL_LIST_FORM_TITLE'];
+                    
+                    $group_panel = <<<EOQ
+<div class="edit view edit508 " id="detailpanel_securitygroups">
+    <h4>&nbsp;&nbsp;
+    $lbl_securitygroups_select
+    </h4>
+    <table width="100%" cellspacing="1" cellpadding="0" border="0" class="edit view panelContainer" id="LBL_PANEL_SECURITYGROUPS">
+    <tbody><tr>
+    <td width="12.5%" valign="top" scope="col" id="account_type_label">
+        $lbl_securitygroups:
+    </td>
+    <td width="37.5%" valign="top">
+        <select title="" id="securitygroup_list" name="securitygroup_list[]" multiple="multiple" size="${group_count}">
+        $group_options
+        </select>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+EOQ;
+                    $group_panel = preg_replace("/[\r\n]+/", "", $group_panel);
+
+                    $group_panel_append = <<<EOQ
+<script>
+    $('#${form_name}_tabs div:first').append($('${group_panel}'));
+</script>
+EOQ;
+                    $str .= $group_panel_append;
+                }
+            }
+        }
+        /* END - SECURITY GROUPS */  
+        
         return $str;
     }
 
@@ -863,11 +927,11 @@ class EditView
     }
 
 
-	/**
-	 * Allow Subviews to overwrite this method to show custom titles.
-	 * Examples: Projects & Project Templates.
-	 * params: $showTitle: boolean for backwards compatibility.
-	 */
+    /**
+     * Allow Subviews to overwrite this method to show custom titles.
+     * Examples: Projects & Project Templates.
+     * params: $showTitle: boolean for backwards compatibility.
+     */
     public function showTitle($showTitle = false)
     {
         global $mod_strings, $app_strings;

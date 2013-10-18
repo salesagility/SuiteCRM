@@ -17,7 +17,8 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView {
     global $mod_strings;
     global $loc;
     global $polygon;
-
+    $jsonObj = new JSON(JSON_LOOSE_TYPE);
+    
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
  
@@ -52,10 +53,14 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView {
     }
   </style>
   
-  <script src="//www.google.com/jsapi"></script>
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
 
   <script type="text/javascript">
+  
+// Define Map Data for Javascript
+var jjwg_config_defaults = <?php echo (!empty($jjwg_config_defaults)) ? $jsonObj->encode($jjwg_config_defaults) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($jjwg_config)) ? $jsonObj->encode($jjwg_config) : '[]'; ?>;
+var polygonPoints = <?php echo (!empty($polygon)) ? $jsonObj->encode($polygon) : '[]'; ?>;    
 
 function initialize() {
 
@@ -72,43 +77,42 @@ function initialize() {
   });
   
   var bounds = new google.maps.LatLngBounds();
-<?php
-  $i = 0;
-  if (count($polygon) > 0) {
-    foreach ($polygon as $coord) {
-?>
-      var myLatLng<?php echo $i; ?> = new google.maps.LatLng(<?php echo $coord['lat']; ?>,<?php echo $coord['lng']; ?>);
-      bounds.extend(myLatLng<?php echo $i; ?>);
-<?php
-      $i++;
-    }
-  }
-  if (count($polygon) > 0) {
-?>
-    var myCoords = [
-<?php
-    for($i=0;$i<count($polygon);$i++) {
-?>
-      myLatLng<?php echo $i; ?><?php if ($i != count($polygon)-1) echo ','; ?>
-<?php
-    }
-?>
-    ];
-  myAreaPolygon = new google.maps.Polygon({
-    paths: myCoords,
-    strokeColor: "#000099",
-    strokeOpacity: 0.8,
-    strokeWeight: 1,
-    fillColor: "#000099",
-    fillOpacity: 0.20
-  });  
-  myAreaPolygon.setMap(map);
+  
 
-  map.fitBounds(bounds);
+  // Define the Custom Area Polygons (jjwg_Areas Module)
+  var polygon = [];
+  var p = [];
+  var myAreaPolygon = [];
+  
+<?php
+  if (!empty($polygon)) {
+?>
+    // Define coordinates from objects
+    myCoords = [];
+    for (var j=0; j<polygonPoints.length; j++) {
+        p = polygonPoints[j];
+        myCoords[j] = new google.maps.LatLng(parseFloat(p.lat), parseFloat(p.lng)); // lat, lng
+        bounds.extend(myCoords[j]);
+    }
+    myAreaPolygon[0] = new google.maps.Polygon({
+        paths: myCoords,
+        strokeColor: "#000099",
+        strokeOpacity: 0.8,
+        strokeWeight: 1,
+        fillColor: "#000099",
+        fillOpacity: 0.15,
+        zIndex: 1
+    });
+    //console.log(myAreaPolygon[0]);
+    
+    myAreaPolygon[0].setMap(map);
 
+    map.fitBounds(bounds);
+    
 <?php
   }
 ?>
+
 
 }
 

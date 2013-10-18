@@ -17,11 +17,11 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
     /**
      * Constructor
      */
-    function jjwg_Address_Cache() {
+    function jjwg_Address_Cache($init=true) {
         
         parent::jjwg_Address_Cache_sugar();
         // Admin Config Setting
-        $this->configuration();
+        if($init) $this->configuration();
     }
     
     /**

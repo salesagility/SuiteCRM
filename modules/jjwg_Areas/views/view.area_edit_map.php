@@ -17,6 +17,7 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
     global $mod_strings;
     global $loc;
     global $polygon;
+    $jsonObj = new JSON(JSON_LOOSE_TYPE);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
@@ -99,73 +100,169 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
     .error { background-color: #ffcdd1; border-top: 2px solid #e10c0c; border-bottom: 2px solid #e10c0c; }
   </style>
 
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
-  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.4.2.min.js"></script>
-  <script type="text/javascript" src="modules/jjwg_Areas/javascript/polygon.js"></script>
-  
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
+  <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
+
   <script type="text/javascript">
-  $(function(){
-      //create map
-     var latLng = new google.maps.LatLng(
+
+// Define Map Data for Javascript
+var jjwg_config_defaults = <?php echo (!empty($jjwg_config_defaults)) ? $jsonObj->encode($jjwg_config_defaults) : '[]'; ?>;
+var jjwg_config = <?php echo (!empty($jjwg_config)) ? $jsonObj->encode($jjwg_config) : '[]'; ?>;
+var polygonPoints = <?php echo (!empty($polygon)) ? $jsonObj->encode($polygon) : '[]'; ?>;    
+
+$(function(){
+
+    //create map
+    var latLng = new google.maps.LatLng(
         <?php echo (!empty($loc['lat'])) ? $loc['lat'] : $jjwg_config['map_default_center_latitude']; ?>, 
         <?php echo (!empty($loc['lng'])) ? $loc['lng'] : $jjwg_config['map_default_center_longitude']; ?> 
-     );
-     var myOptions = {
+    );
+
+    var myOptions = {
         zoom: 4,
         center: latLng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-      }
-     map = new google.maps.Map(document.getElementById('main-map'), myOptions);
-     
-     var creator = new PolygonCreator(map);
-     
-     //reset polygon
-     $('#reset').click(function(){ 
-        creator.destroy();
-        creator=null;
-        creator = new PolygonCreator(map);
-     });
-     
-     //show paths / coordinates
-     var myCoords = Array();
-     var myDataString = '';
-     var myCoord = Array();
-     $('#showData').click(function(){ 
-        $('#dataPanel').empty();
-        if(null==creator.showData()){
-          $('#dataPanel').append('First Create a Polygon');
-        }else{
-          // Strange data format: (lat,lng)(lat,lng)(lat,lng)
-          myDataString = '';
-          myCoords = creator.showData().split(')(');
-          for (var i = 0; i < myCoords.length; i++) {
-            myCoord = myCoords[i].replace(/\(|\)/g, '').split(',');
-            // Return format: lng,lat,elv
-            if (myCoord[0] && myCoord[1]) {
-              myDataString += myCoord[1].replace(/\s/g,"")+','+myCoord[0].replace(/\s/g,"")+',0 ';
-            }
-          }
-          $('#dataPanel').append(myDataString);
-          // Update Parent Form Value
-          parent.document.getElementById('coordinates').value = myDataString.replace(/^\s+|\s+$/g,"");
+    }
+    map = new google.maps.Map(document.getElementById('main-map'), myOptions);
+
+    var bounds = new google.maps.LatLngBounds();
+
+    // Drawing Controls
+    var drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+        drawingControl: true,
+        drawingControlOptions: {
+            position: google.maps.ControlPosition.TOP_CENTER,
+            drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+        },
+        polygonOptions: {
+            strokeColor: "#000099",
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: "#000099",
+            fillOpacity: 0.20,
+            clickable: false,
+            editable: true,
+            zIndex: 1
         }
-     });
-     
-  });
-  </script>
+    });
+    drawingManager.setMap(map);
+
+
+    // Define the Area Polygon
+    var polygon = [];
+    var p = [];
+    var myAreaPolygon = [];
+
+    <?php
+    if (!empty($polygon)) {
+    ?>
+        // Define coordinates from objects
+        myCoords = [];
+        for (var j=0; j<polygonPoints.length; j++) {
+            p = polygonPoints[j];
+            myCoords[j] = new google.maps.LatLng(parseFloat(p.lat), parseFloat(p.lng)); // lat, lng
+            bounds.extend(myCoords[j]);
+        }
+        myAreaPolygon[0] = new google.maps.Polygon({
+            paths: myCoords,
+            editable: true,
+            strokeColor: "#000099",
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: "#000099",
+            fillOpacity: 0.15,
+            zIndex: 1
+        });
+        //console.log(myAreaPolygon[0]);
+        
+        // Set to global array for later reference and destroy
+        myAreaPolygon[0].setMap(map);
+        
+        
+        // Right click to remove vertex
+        myAreaPolygon[0].addListener('rightclick', function(mev){
+            if (mev.vertex != null && this.getPath().getLength() > 2) {
+                this.getPath().removeAt(mev.vertex);
+            }
+        });
+        
+        
+        map.fitBounds(bounds);
+
+    <?php
+    }
+    ?>
+    
+    
+    // Event listener on add new polygon
+    google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon) {
+        // Push to reference array
+        myAreaPolygon.push(polygon);
+    });
+    
+    
+    // Reset polygon(s)
+    $('#reset').click(function(){ 
+        // Destroy existing polygons on map
+        for (var i=0; i<myAreaPolygon.length; i++) {
+            myAreaPolygon[i].setMap(null);
+        }
+        // Destroy myAreaPolygon array of polygon objects
+        myAreaPolygon = [];
+    });
+
+
+    // Define polygon(s) coordinates as lng,lat,elv string and set to 'coordinates' field
+    $('#showData').click(function() {
+        
+        $('#dataPanel').empty();
+        var myCoords = Array();
+        var myDataString = '';
+        
+        for (var i=0; i<myAreaPolygon.length; i++) {
+            var polygon = myAreaPolygon[i];
+            if (polygon != '') {
+                myCoords = polygon.getPath().getArray();
+                if (myCoords.length > 1) {
+                    for (var j=0; j<myCoords.length; j++) {
+                        var myCoord = myCoords[j];
+                        // Return format: lng,lat,elv
+                        // Reduce percision to 8 after decimal and trim zeros
+                        var lng = myCoord.lng().toFixed(8).replace(/0+$/g, "");
+                        var lat = myCoord.lat().toFixed(8).replace(/0+$/g, "");
+                        myDataString += lng + ',' + lat + ',0 ';
+                    }
+                    myDataString = myDataString.replace(/^\s+|\s+$/g,"");
+                    myDataString += "\n\n";
+                }
+            }
+        }
+        
+        // Update Coordinates display
+        myDataString = myDataString.replace(/^[\s\n\r]+|[\s\n\r]+$/g,"");
+        $('#dataPanel').append(myDataString.replace(/[\n\r]/g,"<br />"));
+        // Update parent form 'coordinates' field
+        parent.document.getElementById('coordinates').value = myDataString;
+
+    });
+
+
+});
+
+</script>
 </head>
 <body>
   <div id="main-map">
   </div>
   <div id="side">
-    <div id="header"><b>Area Creation Instructions:</b><br />
-    Left click on the map, in a clockwise motion, to create marker points for the area.
-    Click on the first marker point to close the polygon area.<br />
-    <input id="reset" value="Reset" type="button" class="navi"/>
-    <input id="showData" value="Use Area Coordinates" type="button" class="navi"/>
+    <div id="header"><b><?php echo $mod_strings['LBL_AREA_EDIT_TITLE']; ?></b><br />
+        <?php echo $mod_strings['LBL_AREA_EDIT_DESC_1']; ?><br />
+        <?php echo $mod_strings['LBL_AREA_EDIT_DESC_2']; ?><br />
+    <input id="reset" value="<?php echo $mod_strings['LBL_AREA_EDIT_RESET']; ?>" type="button" class="navi"/>
+    <input id="showData" value="<?php echo $mod_strings['LBL_AREA_EDIT_USE_AREA_COORDINATES']; ?>" type="button" class="navi"/>
     <br />
-    Coordinate Results (lng,lat,elv):
-    <br />
+        <?php echo $mod_strings['LBL_AREA_EDIT_COORDINATE_RESULTS']; ?><br />
     </div>
     <div id="dataPanel">
     </div>

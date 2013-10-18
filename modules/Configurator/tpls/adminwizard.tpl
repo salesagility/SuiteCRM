@@ -509,7 +509,7 @@ function adjustEmailSettings(){
         user = document.getElementById('mail_smtpuser'),
         pass = document.getElementById('mail_smtppass'),
         port = document.getElementById('mail_smtpport');
-    if( !server.value || !user.value || !pass.value || !port.value)
+    if( !server.value || !port.value)
     {
             server.value = ""; 
             user.value = ""; 

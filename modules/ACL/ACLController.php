@@ -34,26 +34,44 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
-
+/* BEGIN - SECURITY GROUPS */
+if(file_exists("modules/ACLActions/actiondefs.override.php")){
+	require_once("modules/ACLActions/actiondefs.override.php");
+} else {
 require_once('modules/ACLActions/actiondefs.php');
+}
+/* END - SECURITY GROUPS */
 require_once('modules/ACL/ACLJSController.php');
 class ACLController {
 
-
+	/* BEGIN - SECURITY GROUPS - added $in_group */		
+	/**
 	function checkAccess($category, $action, $is_owner=false, $type='module'){
+	*/
+	function checkAccess($category, $action, $is_owner=false, $type='module',$in_group=false){
 
 		global $current_user;
 		if(is_admin($current_user))return true;
 		//calendar is a special case since it has 3 modules in it (calls, meetings, tasks)
 
 		if($category == 'Calendar'){
+			/**
 			return ACLAction::userHasAccess($current_user->id, 'Calls', $action,$type, $is_owner) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action,'module', $is_owner) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action,'module', $is_owner);
+			*/
+			return ACLAction::userHasAccess($current_user->id, 'Calls', $action,$type, $is_owner, $in_group) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action,'module', $is_owner, $in_group) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action,'module', $is_owner, $in_group);
 		}
 		if($category == 'Activities'){
+			/**
 			return ACLAction::userHasAccess($current_user->id, 'Calls', $action,$type, $is_owner) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action,'module', $is_owner) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action,'module', $is_owner)|| ACLAction::userHasAccess($current_user->id, 'Emails', $action,'module', $is_owner)|| ACLAction::userHasAccess($current_user->id, 'Notes', $action,'module', $is_owner);
+			*/
+			return ACLAction::userHasAccess($current_user->id, 'Calls', $action,$type, $is_owner, $in_group) || ACLAction::userHasAccess($current_user->id, 'Meetings', $action,'module', $is_owner, $in_group) || ACLAction::userHasAccess($current_user->id, 'Tasks', $action,'module', $is_owner, $in_group)|| ACLAction::userHasAccess($current_user->id, 'Emails', $action,'module', $is_owner, $in_group)|| ACLAction::userHasAccess($current_user->id, 'Notes', $action,'module', $is_owner, $in_group);
 		}
+		/**
 		return ACLAction::userHasAccess($current_user->id, $category, $action,$type, $is_owner);
+		*/
+		return ACLAction::userHasAccess($current_user->id, $category, $action,$type, $is_owner, $in_group);
 	}
+	/* END - SECURITY GROUPS */	
 
 	function requireOwner($category, $value, $type='module'){
 			global $current_user;
@@ -61,6 +79,14 @@ class ACLController {
 			return ACLAction::userNeedsOwnership($current_user->id, $category, $value,$type);
 	}
 
+	/* BEGIN - SECURITY GROUPS */
+	function requireSecurityGroup($category, $value, $type='module'){
+			global $current_user;
+			if(is_admin($current_user))return false;
+			return ACLAction::userNeedsSecurityGroup($current_user->id, $category, $value,$type);
+	}
+	/* END - SECURITY GROUPS */
+	
 	function filterModuleList(&$moduleList, $by_value=true){
 
 		global $aclModuleList, $current_user;

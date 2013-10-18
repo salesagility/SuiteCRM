@@ -127,6 +127,29 @@ class M2MRelationship extends SugarRelationship
     {
         $lhsLinkName = $this->lhsLink;
         $rhsLinkName = $this->rhsLink;
+        
+    	/* BEGIN - SECURITY GROUPS */
+    	//Need to hijack this as security groups will not contain a link on the module side
+    	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
+    	
+    	if(get_class($rhs) != 'User' && get_class($rhs) != 'ACLRole' && get_class($lhs) == 'SecurityGroup') {
+			$rhs->$rhsLinkName->addBean($lhs);			
+			$this->callBeforeAdd($rhs, $lhs, $rhsLinkName);
+
+			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+			$this->addRow($dataToInsert);
+    		$rhs->$rhsLinkName->addBean($lhs);
+    		$this->callAfterAdd($lhs, $rhs, $lhsLinkName);
+    	} else if(get_class($lhs) != 'User' && get_class($lhs) != 'ACLRole' && get_class($rhs) == 'SecurityGroup') {
+			$lhs->$lhsLinkName->addBean($rhs);			
+			$this->callBeforeAdd($lhs, $rhs, $lhsLinkName);
+
+			$dataToInsert = $this->getRowToInsert($lhs, $rhs, $additionalFields);
+			$this->addRow($dataToInsert);
+    		$lhs->$lhsLinkName->addBean($rhs);
+    		$this->callAfterAdd($rhs, $lhs, $rhsLinkName);
+    	} else {
+    	/* END - SECURITY GROUPS */
 
         if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
         {
@@ -160,6 +183,10 @@ class M2MRelationship extends SugarRelationship
 
             $this->callAfterAdd($lhs, $rhs, $lhsLinkName);
             $this->callAfterAdd($rhs, $lhs, $rhsLinkName);
+
+        /* BEGIN - SECURITY GROUPS */
+        } //end normal 
+        /* END - SECURITY GROUPS */
 
         return true;
     }
@@ -231,6 +258,51 @@ class M2MRelationship extends SugarRelationship
             $GLOBALS['log']->fatal("RHS is not a SugarBean object");
             return false;
         }
+        
+    	/* BEGIN - SECURITY GROUPS */
+    	//Need to hijack this as security groups will not contain a link on the module side
+    	//due to the way the module works. Plus it would remove the relative ease of adding custom module support
+    	
+    	if(get_class($lhs) == 'SecurityGroup' || get_class($rhs) == 'SecurityGroup') {
+			$dataToRemove = array(
+				$this->def['join_key_lhs'] => $lhs->id,
+				$this->def['join_key_rhs'] => $rhs->id
+			);
+
+
+              if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
+              {
+                  if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2)
+                  {
+                      $lhs->$lhsLinkName->load();
+                      $this->callBeforeDelete($lhs, $rhs, $lhsLinkName);
+                  }
+
+                  if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2)
+                  {
+                      $rhs->$rhsLinkName->load();
+                      $this->callBeforeDelete($rhs, $lhs, $rhsLinkName);
+                  }
+              }
+
+			$this->removeRow($dataToRemove);
+			
+			if (empty($_SESSION['disable_workflow']) || $_SESSION['disable_workflow'] != "Yes")
+			{
+				if (get_class($lhs) != 'SecurityGroup' && $lhs->$lhsLinkName instanceof Link2)
+				{
+					$lhs->$lhsLinkName->load();
+					$this->callAfterDelete($lhs, $rhs, $lhsLinkName);
+				}
+
+				if (get_class($rhs) != 'SecurityGroup' && $rhs->$rhsLinkName instanceof Link2)
+				{
+					$rhs->$rhsLinkName->load();
+					$this->callAfterDelete($rhs, $lhs, $rhsLinkName);
+				}
+			}
+		} else {
+    	/* END - SECURITY GROUPS */        
         if (empty($lhs->$lhsLinkName) && !$lhs->load_relationship($lhsLinkName))
         {
             $GLOBALS['log']->fatal("could not load LHS $lhsLinkName");
@@ -281,6 +353,9 @@ class M2MRelationship extends SugarRelationship
                 $this->callAfterDelete($rhs, $lhs, $rhsLinkName);
             }
         }
+        /* BEGIN - SECURITY GROUPS */
+        } //end normal 
+        /* END - SECURITY GROUPS */
 
         return true;
     }

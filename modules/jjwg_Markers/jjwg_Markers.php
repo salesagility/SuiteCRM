@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('sugarEntry') || !sugarEntry)
+    die('Not A Valid Entry Point');
+
+require_once('include/JSON.php');
 require_once('modules/jjwg_Markers/jjwg_Markers_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
@@ -11,11 +15,11 @@ class jjwg_Markers extends jjwg_Markers_sugar {
      */
     var $settings = array();
 
-    function jjwg_Markers() {
+    function jjwg_Markers($init=true) {
         
         parent::jjwg_Markers_sugar();
         // Admin Config Setting
-        $this->configuration();
+        if($init) $this->configuration();
     }
 
     /**

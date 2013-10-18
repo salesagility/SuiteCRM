@@ -162,11 +162,11 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     /**
      * Constructor
      */
-    function jjwg_Maps() {
+    function jjwg_Maps($init=true) {
 
         parent::jjwg_Maps_sugar();
         // Admin Config Setting
-        $this->configuration();
+        if($init)$this->configuration();
     }
 
     /**

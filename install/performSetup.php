@@ -86,7 +86,7 @@ $setup_site_url                     = $_SESSION['setup_site_url'];
 $parsed_url                         = parse_url($setup_site_url);
 $setup_site_host_name               = $parsed_url['host'];
 $setup_site_log_dir                 = isset($_SESSION['setup_site_custom_log_dir']) ? $_SESSION['setup_site_log_dir'] : '.';
-$setup_site_log_file                = 'sugarcrm.log';  // may be an option later
+$setup_site_log_file                = 'suitecrm.log';  // may be an option later
 $setup_site_session_path            = isset($_SESSION['setup_site_custom_session_path']) ? $_SESSION['setup_site_session_path'] : '';
 $setup_site_log_level				='fatal';
 
@@ -118,11 +118,11 @@ $out =<<<EOQ
     <tr>
       <th width="500">
 		<p>
-		<img src="{$sugar_md}" alt="SugarCRM" border="0">
+		<img src="{$sugar_md}" alt="SuiteCRM" border="0">
 		</p>
 		{$mod_strings['LBL_PERFORM_TITLE']}</th>
-    <th width="200" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank">
-    <IMG src="$loginImage" alt="SugarCRM" border="0"></a></th>
+    <th width="200" style="text-align: right;"><a href="http://www.suitecrm.com" target="_blank">
+    <IMG src="$loginImage" alt="SuiteCRM" border="0"></a></th>
 </tr>
 <tr>
    <td colspan="2">
@@ -174,7 +174,7 @@ if($setup_db_create_sugarsales_user){
 foreach( $beanFiles as $bean => $file ){
     require_once( $file );
 }
-
+echo "<br>";
 // load up the config_override.php file.
 // This is used to provide default user settings
 if( is_file("config_override.php") ){
@@ -204,7 +204,8 @@ $nonStandardModules = array (
  VardefManager::clearVardef();
 installerHook('pre_createAllModuleTables');
 foreach( $beanFiles as $bean => $file ) {
-	$doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask');
+    echo $bean.', ';
+	$doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
 
 	if(in_array($bean, $doNotInit)) {
 		$focus = new $bean(false);
@@ -341,8 +342,8 @@ enableSugarFeeds();
 
 
 // Enable the InsideView connector and add all modules
-installLog("Enable InsideView Connector");
-enableInsideViewConnector();
+//installLog("Enable InsideView Connector");
+//enableInsideViewConnector();
 
 // Install the logic hook for FTS
 installLog("Creating FTS logic hook");
@@ -427,7 +428,7 @@ $memoryUsed = '';
 
 
 $errTcpip = '';
-    $fp = @fsockopen("www.sugarcrm.com", 80, $errno, $errstr, 3);
+    $fp = @fsockopen("www.suitecrm.com", 80, $errno, $errstr, 3);
     if (!$fp) {
     $errTcpip = "<p>{$mod_strings['ERR_PERFORM_NO_TCPIP']}</p>";
     }
@@ -478,11 +479,11 @@ FP;
     // Bug 28601 - Set the default list of tabs to show
     $enabled_tabs = array();
     $enabled_tabs[] = 'Home';
-
     $enabled_tabs[] = 'Accounts';
     $enabled_tabs[] = 'Contacts';
     $enabled_tabs[] = 'Opportunities';
     $enabled_tabs[] = 'Leads';
+    $enabled_tabs[] = 'AOS_Quotes';
     $enabled_tabs[] = 'Calendar';
     $enabled_tabs[] = 'Documents';
     $enabled_tabs[] = 'Emails';
@@ -491,9 +492,20 @@ FP;
     $enabled_tabs[] = 'Meetings';
     $enabled_tabs[] = 'Tasks';
     $enabled_tabs[] = 'Notes';
+    $enabled_tabs[] = 'AOS_Invoices';
+    $enabled_tabs[] = 'AOS_Contracts';
     $enabled_tabs[] = 'Cases';
     $enabled_tabs[] = 'Prospects';
     $enabled_tabs[] = 'ProspectLists';
+    $enabled_tabs[] = 'Projects';
+    $enabled_tabs[] = 'AOS_Products';
+    $enabled_tabs[] = 'AOS_Product_Categories';
+    $enabled_tabs[] = 'AOS_PDF_Templates';
+    $enabled_tabs[] = 'jjwg_Maps';
+    $enabled_tabs[] = 'jjwg_Markers';
+    $enabled_tabs[] = 'jjwg_Areas';
+    $enabled_tabs[] = 'jjwg_Address_Cache';
+    $enabled_tabs[] = 'AOW_WorkFlow';
 
 
     installerHook('pre_setSystemTabs');
@@ -501,6 +513,8 @@ FP;
     $tabs = new TabController();
     $tabs->set_system_tabs($enabled_tabs);
     installerHook('post_setSystemTabs');
+
+    include_once('install/suite_install/suite_install.php');
 
 post_install_modules();
 

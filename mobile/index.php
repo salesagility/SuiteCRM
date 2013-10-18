@@ -27,12 +27,31 @@
 		
 		<script type="text/javascript" language="Javascript">
 			var QCRM={}, app_version="",mobile_app=false, loaded_scripts=false, proxy_url, QuickCRMAddress = '.', ServerAddress='../',myTimeZone,qusers, mobile_usr=new Array(),  init_module = '', init_record="";
+				QCRM={
+					OffLine:false,
+					JJWG:false,
+				};
 		</script>
         <script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
 		<script type="text/javascript" language="Javascript">
 $( document ).bind( "mobileinit", function() {
 	$.mobile.defaultPageTransition = 'none';
 	$.mobile.activeBtnClass = 'none';
+});
+$( document ).on( "pageinit", "#HomePage", function() {
+    $( document ).on( "swiperight swiperleft", "#HomePage", function( e ) {
+        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+            if ( e.type === "swiperight" ) {
+                $( "#HomePanel" ).panel( "open" );
+            }
+        }
+		else {
+            if ( e.type === "swipeleft" ) {
+                $( "#HomePanel" ).panel( "close" );
+            }
+        }
+
+    });
 });
 		</script>
 		<!-- Sugar strings and fields -->
@@ -51,13 +70,14 @@ EOQ;
         <link rel="stylesheet" href="lib/mobiscroll/mobiscroll-2.5.custom.min.css" />
         <script type="text/javascript" src="lib/jquerymobile/jquery.mobile-1.3.1.min.js"></script>
         <script type="text/javascript" src="lib/mobiscroll/mobiscroll-2.5.custom.min.js"></script>
-        <script type="text/javascript" src="js/quickcrm-utils.min.js"></script>
-        <script type="text/javascript" src="js/quicrcrm-ce-3.0.0.min.js"></script>
+        <script type="text/javascript" src="js/quickcrm-utils-ce-3.2.min.js"></script>
+        <script type="text/javascript" src="js/quicrcrm-ce-3.2.2.min.js"></script>
 		<?php
 		if (file_exists("../custom/QuickCRM/custom.js")) {
 			echo '<script type="text/javascript" src="../custom/QuickCRM/custom.js?v='.time().'"></script>';
 		}
 		?>
+
 
 
 
@@ -76,7 +96,7 @@ EOQ;
 		}
 		?>
 		<!-- Mobile language file and UI -->
-        <link rel="stylesheet" href="css/quickcrm2.css" />
+        <link rel="stylesheet" href="css/quickcrm3.css" />
         <title>QuickCRM CE</title>
     </head>
     <body>
@@ -113,7 +133,24 @@ EOQ;
         </div>
 
         <div id="HomePage" data-role="page" data-theme="b" data-title="Home">
+            <div data-role="panel" data-theme="a" id="HomePanel" data-display="reveal" data-dismissible="false">
+				<table width="100%"><tr>
+					<td><a href="#" onclick="OpenHelp()" data-icon="question"  data-theme="a" data-role="button"data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
+					<td align="center"><a href="#LockPage" data-rel="dialog" id="LockBtn" data-icon="lock"  data-theme="a" data-role="button" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
+					<td align="right"><a id="LogOutButton" href="javascript:Disconnect();LogOutUser();" data-theme="a" data-role="button" data-icon="power" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
+				</tr></table>
+				<input id="PanelSearchText" type="text" data-mini="true" data-clear-btn="true"></input>
+				<div>
+					<ul id="PanelSearchDiv" data-role="listview" data-theme="a" data-filter="false" />
+				</div>
+				<br>
+				<div>
+					<ul id="LastViewedPanelDiv" data-theme="a" data-role="listview" data-filter="false" style="list-style: none;margin: 0;padding: 0;">
+					</ul>
+				</div>
+			</div>
             <div data-role="header">
+				<a href="#HomePanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
                <h1>QuickCRM</h1>
  
             </div>
@@ -122,7 +159,7 @@ EOQ;
 				</div>
                 <ul class="IconWrapper" id="HomeMenu">
 
-                    <li class="IconContainer">
+                    <li id="ActivitiesContainer" class="IconContainer">
                         <a href="#ActivitiesListPage">
                             <div class="HomeIcon ActivitiesIcon"></div>
                             <div id="ActivitiesLinkLabel"></div>
@@ -157,18 +194,6 @@ EOQ;
                     </li>
                 </ul>
             </div><!-- /content -->
-            <div data-role="footer" data-position="fixed" data-theme="b" id="AboutPro">
-				<div id="HomeBar" data-role="navbar">
-					<ul>
-						<li><a href="http://www.quickcrm.fr/doc/mobile/QuickCRM_Manual_english.htm" target="_blank" data-role="button" data-icon="question" data-iconpos="notext"></a></li>
-						<li><a href="#GlobalSearch" data-rel="dialog" data-transition="none" data-role="button" data-icon="search" data-iconpos="notext"></a></li>
-						<li><a id="LogOutButton" href="javascript:Disconnect();LogOutUser();" data-role="button" data-icon="power" data-iconpos="notext"></a></li>
-					</ul>
-				</div>	
-<!--
-					<div align="center" ><a style="color: #FFFFFF;text-decoration:none;" target="_blank" href="http://www.quickcrm.fr/mobile/" id="HomePageFooter"><p>www.quickcrm.fr/mobile</p></a></div>
--->
-            </div>
         </div>
 
         <div id="ActivitiesListPage" data-role="page" data-theme="c">
@@ -315,6 +340,9 @@ EOQ;
 
 
 
+
+
+
 				<div style="margin:0 auto; margin-left:auto; margin-right:auto; align:center; text-align:center;">
 					<a id="OptionsCancelBottomBtn"  href="#HomePage" data-role="button" data-rel="back" data-inline="true" data-theme="c"></a>
 					<a id="OptionsConfirmBottomBtn" href="javascript:SaveOptions();" data-role="button" data-inline="true" ></a>
@@ -339,8 +367,56 @@ EOQ;
             </div>
             <div data-role="content">
 					<input id="GSSearchText" type="text"></input>
-					<a id="GSSubmit" href="javascript:GlobalSearch();" data-mini="true" data-role="button" data-theme="c"></a>  
+					<a id="GSSubmit" href="javascript:GlobalSearch('GSSearchText','GSListDiv','GSListPage',40);" data-mini="true" data-role="button" data-theme="c"></a>  
 			</div>
 		</div>
+		<div id="LockPage" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+                <h1 id="LockPageTitle"></h1>
+            </div>
+            <div data-role="content">
+				<div id="AppLocked">
+					<h3 id="AppUnlockTitle"></h3>
+					<fieldset data-role="controlgroup" data-mini="true">
+						<label id="RemoveLockLabel" for="RemoveLock"></label>
+						<input id="RemoveLock" type="password" />
+					</fieldset>
+				</div>
+				<div id="AppUnlocked">
+					<h3 id="AppDefLockTitle"></h3>
+					<fieldset data-role="controlgroup" data-mini="true">
+						<label id="DefPasswordLabel" for="DefPassword"></label>
+						<input id="DefPassword" type="password" />
+					</fieldset>
+					<fieldset data-role="controlgroup" data-mini="true">
+						<label id="DefPassword2Label" for="DefPassword2"></label>
+						<input id="DefPassword2" type="password" />
+					</fieldset>
+				</div>
+				<div >
+					<em id="LockErr"></em>
+				</div>
+				<div class="ui-grid-a">
+					<div class="ui-block-a"><a id="LockPageCancelBtn" href="#" data-role="button" data-rel="back" data-theme="c"></a></div>
+					<div class="ui-block-b"><a id="LockPageConfirmBtn" href="javascript:SaveLockPage();" data-role="button" ></a></div>
+				</div>
+			</div>
+		</div>
+
+		<div id="EnterPwdPage" data-role="page" data-theme="c">
+            <div data-role="content">
+				<div>
+					<fieldset data-role="controlgroup" data-mini="true">
+						<label id="EnterPasswordLabel" for="EnterPassword"></label>
+						<input id="EnterPassword" type="password" />
+					</fieldset>
+					<div >
+						<em id="PwdErr"></em>
+					</div>
+					<a id="EnterPwdConfirmBtn" href="javascript:PasswordEntered();" data-role="button" ></a>
+				</div>
+			</div>
+		</div>
+
     </body>
 </html>

@@ -2031,7 +2031,7 @@ function post_install_modules(){
 }
 
 function get_help_button_url(){
-    $help_url = 'http://www.sugarcrm.com/docs/Administration_Guides/CommunityEdition_Admin_Guide_5.0/toc.html';
+    $help_url = 'http://suitecrm.com/index.php/forum/index';
 
     return $help_url;
 }

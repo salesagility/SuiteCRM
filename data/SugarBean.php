@@ -1480,6 +1480,10 @@ class SugarBean
         }
 
 
+		/* BEGIN - SECURITY GROUPS - inheritance */ 
+		require_once('modules/SecurityGroups/SecurityGroup.php');
+		SecurityGroup::inherit($this,$isUpdate);
+		/* END - SECURITY GROUPS */ 
         //If we aren't in setup mode and we have a current user and module, then we track
         if(isset($GLOBALS['current_user']) && isset($this->module_dir))
         {
@@ -2650,6 +2654,26 @@ class SugarBean
                 $where .= ' AND '.  $owner_where;
             }
         }
+
+		/* BEGIN - SECURITY GROUPS */
+    	if($this->bean_implements('ACL') && ACLController::requireSecurityGroup($this->module_dir, 'list') )
+    	{
+			require_once('modules/SecurityGroups/SecurityGroup.php');
+    		global $current_user;
+    		$owner_where = $this->getOwnerWhere($current_user->id);
+    		$group_where = SecurityGroup::getGroupWhere($this->table_name,$this->module_dir,$current_user->id);
+	    	if(!empty($owner_where)){
+				if(empty($where))
+	    		{
+	    			$where = " (".  $owner_where." or ".$group_where.") ";
+	    		} else {
+	    			$where .= " AND (".  $owner_where." or ".$group_where.") ";
+	    		}
+			} else {
+				$where .= ' AND '.  $group_where;
+			}
+    	}
+    	/* END - SECURITY GROUPS */
         $query = $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted, $offset);
 
         //Add Limit and Offset to query
@@ -3098,6 +3122,41 @@ class SugarBean
                 $where .= ' AND '.  $owner_where;
             }
         }
+		/* BEGIN - SECURITY GROUPS */
+    	global $current_user, $sugar_config;
+    	if($this->module_dir == 'Users' && !is_admin($current_user)
+				&& isset($sugar_config['securitysuite_filter_user_list'])
+				&& $sugar_config['securitysuite_filter_user_list'] == true
+    	) {
+			require_once('modules/SecurityGroups/SecurityGroup.php');
+    		global $current_user;
+    		$group_where = SecurityGroup::getGroupUsersWhere($current_user->id);
+    		//$group_where = "user_name = 'admin'";
+    		if(empty($where))
+    		{
+    			$where = " (".$group_where.") ";
+    		} else {
+    			$where .= " AND (".$group_where.") ";
+    		}
+    	} else
+    	if($this->bean_implements('ACL') && ACLController::requireSecurityGroup($this->module_dir, 'list') )
+    	{
+			require_once('modules/SecurityGroups/SecurityGroup.php');
+    		global $current_user;
+    		$owner_where = $this->getOwnerWhere($current_user->id);
+    		$group_where = SecurityGroup::getGroupWhere($this->table_name,$this->module_dir,$current_user->id);
+	    	if(!empty($owner_where)){
+				if(empty($where))
+	    		{
+	    			$where = " (".  $owner_where." or ".$group_where.") ";
+	    		} else {
+	    			$where .= " AND (".  $owner_where." or ".$group_where.") ";
+	    		}
+			} else {
+				$where .= ' AND '.  $group_where;
+			}
+    	}
+    	/* END - SECURITY GROUPS */
         if(!empty($params['distinct']))
         {
             $distinct = ' DISTINCT ';
@@ -5320,20 +5379,73 @@ class SugarBean
     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
     * @param $is_owner bool optional, this is part of the ACL check if the current user is an owner they will receive different access
     */
+	/* BEGIN - SECURITY GROUPS - aclaccess */  
+	/**
     function ACLAccess($view,$is_owner='not_set')
+	*/
+    function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
     {
         global $current_user;
         if($current_user->isAdmin()) {
             return true;
         }
         $not_set = false;
+		/**
         if($is_owner == 'not_set')
+		*/
+    	if($is_owner === 'not_set') //eggsurplus: should be ===
         {
             $not_set = true;
             $is_owner = $this->isOwner($current_user->id);
         }
-
-        // If we don't implement ACLs, return true.
+		// DJM - OBS Customizations - May 2009
+		// Moved this code to convert to lowercase from below.
+		// Added new action variable.
+		$view = strtolower($view);
+		$action = '';
+		// DJM - OBS Customizations - END CHANGE
+    	if($in_group === 'not_set')
+    	{
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			// DJM - OBS Customizations - May 2009
+			// Added the following switch statement to convert the view
+			// into an action value.  As per the switch below.
+			// Added the action parameter to the groupHasAccess call.
+    			switch ($view)
+    			{
+    				case 'list':
+    				case 'index':
+    				case 'listview':
+    					$action = "list";
+					break;
+    				case 'edit':
+    				case 'save':
+		    		case 'popupeditview':
+ 		   		case 'editview':
+  		  			$action = "edit";
+					break;
+ 		   		case 'view':
+ 		   		case 'detail':
+ 		   		case 'detailview':
+ 		   			$action = "view";
+					break;
+ 		   		case 'delete':
+ 		   			$action = "delete" ;
+					break;
+ 		   		case 'export':
+ 		   			$action = "export";
+					break;
+ 		   		case 'import':
+  		  			$action = "import";
+					break;
+				default:
+					$action = "";
+					break;
+    			}
+			$in_group = SecurityGroup::groupHasAccess($this->module_dir,$this->id, $action); 
+			// DJM - OBS Customizations - END CHANGE
+    	}
+        //if we don't implent acls return true
         if(!$this->bean_implements('ACL'))
         return true;
         $view = strtolower($view);
@@ -5342,7 +5454,10 @@ class SugarBean
             case 'list':
             case 'index':
             case 'listview':
+				/**
                 return ACLController::checkAccess($this->module_dir,'list', true);
+				*/
+    			return ACLController::checkAccess($this->module_dir,'list', true, $this->acltype, $in_group);
             case 'edit':
             case 'save':
                 if( !$is_owner && $not_set && !empty($this->id)){
@@ -5357,21 +5472,37 @@ class SugarBean
                 }
             case 'popupeditview':
             case 'editview':
+				/**
                 return ACLController::checkAccess($this->module_dir,'edit', $is_owner, $this->acltype);
+				*/
+    			return ACLController::checkAccess($this->module_dir,'edit', $is_owner, $this->acltype, $in_group);
             case 'view':
             case 'detail':
             case 'detailview':
+				/**
                 return ACLController::checkAccess($this->module_dir,'view', $is_owner, $this->acltype);
+				*/
+    			return ACLController::checkAccess($this->module_dir,'view', $is_owner, $this->acltype, $in_group);
             case 'delete':
+				/**
                 return ACLController::checkAccess($this->module_dir,'delete', $is_owner, $this->acltype);
+				*/
+    			return ACLController::checkAccess($this->module_dir,'delete', $is_owner, $this->acltype, $in_group);
             case 'export':
+				/**
                 return ACLController::checkAccess($this->module_dir,'export', $is_owner, $this->acltype);
+				*/
+    			return ACLController::checkAccess($this->module_dir,'export', $is_owner, $this->acltype, $in_group);
             case 'import':
+				/**
                 return ACLController::checkAccess($this->module_dir,'import', true, $this->acltype);
+				*/
+    			return ACLController::checkAccess($this->module_dir,'import', true, $this->acltype, $in_group);
         }
         //if it is not one of the above views then it should be implemented on the page level
         return true;
     }
+    /* END - SECURITY GROUPS */
 
     /**
     * Get owner field

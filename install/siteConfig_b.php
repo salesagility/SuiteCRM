@@ -133,7 +133,7 @@ $out =<<<EOQ
 		<img src="{$sugar_md}" alt="SugarCRM" border="0">
 		</p>
    {$mod_strings['LBL_SITECFG_SECURITY_TITLE']}</th>
-   <th width="200" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank"><IMG src="include/images/sugarcrm_login.png" alt="SugarCRM" border="0"></a></th>
+   <th width="200" style="text-align: right;">&nbsp;</th>
    </tr>
 <tr>
     <td colspan="2">
@@ -144,18 +144,18 @@ $out =<<<EOQ
 
 EOQ;
 $checked = '';
-if(!empty($_SESSION['setup_site_sugarbeet_anonymous_stats'])) $checked = 'checked="checked"';
+//if(!empty($_SESSION['setup_site_sugarbeet_anonymous_stats'])) $checked = 'checked=""';
 $out .= "
-   <tr><td></td>
+   <tr style='display:none'><td></td>
        <td><input type='checkbox' class='checkbox' name='setup_site_sugarbeet_anonymous_stats' value='yes' $checked /></td>
        <td><b>{$mod_strings['LBL_SITECFG_ANONSTATS']}</b><br><i>{$mod_strings['LBL_SITECFG_ANONSTATS_DIRECTIONS']}</i></td></tr>
 
 ";
 $checked = '';
-if(!empty($_SESSION['setup_site_sugarbeet_automatic_checks'])) $checked = 'checked="checked"';
+//if(!empty($_SESSION['setup_site_sugarbeet_automatic_checks'])) $checked = 'checked=""';
 $out .= <<<EOQ
-   <tr><td></td>
-       <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" checked="checked" /></td>
+   <tr style='display:none'><td></td>
+       <td><input type="checkbox" class="checkbox" name="setup_site_sugarbeet_automatic_checks" value="yes" /></td>
        <td><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b><br><i>{$mod_strings['LBL_SITECFG_SUGAR_UP_DIRECTIONS']}</i><br>&nbsp;</td></tr>
    <tbody id="setup_site_session_section_pre">
    <tr><td></td>

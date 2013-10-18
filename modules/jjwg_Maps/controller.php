@@ -287,6 +287,10 @@ class jjwg_MapsController extends SugarController {
                     $geocoding_inc = $this->settings['geocoding_limit'] + 1;
                 } // end if/else
                 
+                // Wait 1 Second to Throttle Requests: Rate limit of 10 geocodings per second
+                if ($geocoding_inc % 10 == 0)
+                    sleep(1);
+                
                 if ($geocoding_inc > $this->settings['geocoding_limit'])
                     break;
             } // while
@@ -294,19 +298,18 @@ class jjwg_MapsController extends SugarController {
             if ($geocoding_inc > $this->settings['geocoding_limit'])
                 break;
         } // end each module type
-        // If Cron processing, then do not redirect.
-        if (isset($_REQUEST['cron'])) {
-            exit;
+        
+        // If not cron processing, then redirect.
+        if (!isset($_REQUEST['cron'])) {
+            // Redirect to the Geocoded Counts Display
+            // contains header and exit
+            $url = 'index.php?module=jjwg_Maps&action=geocoded_counts';
+            if (!empty($this->last_status)) {
+                $url .= '&last_status=' . urlencode($this->last_status);
+            }
+            SugarApplication::redirect($url);
         }
-
-
-        // Redirect to the Geocoded Counts Display
-        // contains header and exit
-        $url = 'index.php?module=jjwg_Maps&action=geocoded_counts';
-        if (!empty($this->last_status)) {
-            $url .= '&last_status=' . urlencode($this->last_status);
-        }
-        SugarApplication::redirect($url);
+        
     }
 
     /**
@@ -617,8 +620,8 @@ class jjwg_MapsController extends SugarController {
                 $map_unit_type = (!empty($_REQUEST['unit_type'])) ? $_REQUEST['unit_type'] : $this->settings['map_default_unit_type'];
             }
 
-            // Define display object
-            $this->display_object = get_module_info($map_module_type);
+            // Define display object, note - 'Accounts_Members' is a special display type
+            $this->display_object = ($map_module_type == 'Accounts_Members') ? get_module_info('Accounts') : get_module_info($map_module_type);
             $mod_strings_display = return_module_language($current_language, $this->display_object->module_name);
             $mod_strings_display = array_merge($mod_strings_display, $mod_strings);
 
@@ -656,7 +659,7 @@ class jjwg_MapsController extends SugarController {
                 // Define Marker Data
                 $aInfo['name'] = $_REQUEST['quick_address'];
                 $aInfo['id'] = 0;
-                $aInfo['module'] = $map_module_type;
+                $aInfo['module'] = ($map_module_type == 'Accounts_Members') ? 'Accounts' : $map_module_type;
                 $aInfo['address'] = $_REQUEST['quick_address'];
                 $aInfo['jjwg_maps_address_c'] = $_REQUEST['quick_address'];
                 $aInfo['jjwg_maps_lat_c'] = $aInfo['lat'];
@@ -692,12 +695,15 @@ class jjwg_MapsController extends SugarController {
             } elseif ($map_module_type == 'Opportunities') { // Opps - Account Name
                 $query = str_replace(' FROM opportunities ', ' ,accounts.name AS account_name, accounts.id AS account_id  FROM opportunities  ', $query);
                 $query = str_replace(' FROM opportunities ', ' FROM opportunities LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id and accounts_opportunities.deleted = 0 LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id AND accounts.deleted=0 ', $query);
+            } elseif ($map_module_type == 'Accounts_Members') { // 'Accounts_Members' is a special display type
+                $query = str_replace(' AND accounts.deleted=0', ' AND accounts.deleted=0 AND accounts.parent_id = \''.$this->jjwg_Maps->db->quote($map_parent_id).'\'', $query);
             }
             //var_dump($query);
             $display_result = $this->jjwg_Maps->db->limitQuery($query, 0, $this->settings['map_markers_limit']);
             while ($display = $this->jjwg_Maps->db->fetchByAssoc($display_result)) {
                 if (!empty($map_distance) && !empty($display['id'])) {
-                    $marker_data = $this->getMarkerData($map_module_type, $display, false, $mod_strings_display);
+                    $marker_data_module_type = ($map_module_type == 'Accounts_Members') ? 'Accounts' : $map_module_type;
+                    $marker_data = $this->getMarkerData($marker_data_module_type, $display, false, $mod_strings_display);
                     if (!empty($marker_data)) {
                         $map_markers[] = $marker_data;
                     }

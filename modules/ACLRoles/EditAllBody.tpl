@@ -1,7 +1,7 @@
 {*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,6 +35,28 @@
  ********************************************************************************/
 
 *}
+{* BEGIN - SECURITY GROUPS *}
+<script type="text/javascript" src='{sugar_getjspath file ='include/javascript/yui/build/selector/selector-min.js'}'></script>
+<script language="Javascript" type="text/javascript">
+{literal}
+function cascadeAccessOption(action,selectEle) {
+	var accessOption = selectEle.options[selectEle.selectedIndex].value;
+	var accessLabel = selectEle.options[selectEle.selectedIndex].text;
+	var nodes = YAHOO.util.Selector.query('.'+action);
+	var selectId = '';
+	for(i=0; i < nodes.length; i++) {
+		selectId = nodes[i].id.substring(8);
+//alert('selectId: '+selectId);
+		nodes[i].value = accessOption;
+		var roleCell = document.getElementById(selectId+'link');
+		if(roleCell != undefined) {
+			roleCell.innerHTML = accessLabel;
+		}		
+	}
+}
+{/literal}
+</script>
+{* END - SECURITY GROUPS *}
 <form method='POST' name='EditView' id='ACLEditView'>
 <input type='hidden' name='record' value='{$ROLE.id}'>
 <input type='hidden' name='module' value='ACLRoles'>
@@ -51,13 +73,41 @@
 <TR id="ACLEditView_Access_Header">
 <td id="ACLEditView_Access_Header_category"></td>
 
+{* BEGIN - SECURITY GROUPS
+Just get the accessOptions for the Accounts module and use for the header select...less file edits this way. 
+Not ideal but it'll work since it's the only way to get that info without editing DetailView.php to pass this with ACTION_NAMES
 {foreach from=$ACTION_NAMES item="ACTION_LABEL" key="ACTION_NAME"}
+*}
+{foreach from=$CATEGORIES item="TYPES" key="CATEGORY_NAME"}
+{if $CATEGORY_NAME=='Accounts'}
+	
+	{foreach from=$ACTION_NAMES item="ACTION_LABEL" key="ACTION_NAME"}
+		{foreach from=$TYPES item="ACTIONS"}
+			{foreach from=$ACTIONS item="ACTION" key="ACTION_NAME_ACTIVE"}
+			{if $ACTION_NAME==$ACTION_NAME_ACTIVE}
+			
+			<td align='center'>
+				<div align='center' id="{$ACTION_NAME}link" onclick="aclviewer.toggleDisplay('{$ACTION_NAME}')"><b>{$ACTION_LABEL}</b></div>
+				<div  style="display: none; text-align: center;" id="{$ACTION_NAME}">
+					<select name='act_guid{$ACTION_NAME}' id='act_guid{$ACTION_NAME}' onblur="cascadeAccessOption('{$ACTION_NAME}',this); aclviewer.toggleDisplay('{$ACTION_NAME}');" >
+					{html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
+					</select>
+				</div>
+			</td>
+			{*
 	<td align='center' id="ACLEditView_Access_Header_{$ACTION_NAME}"><div align='center'><b>{$ACTION_LABEL}</b></div></td>
+			*}
+			{/if}
+			{/foreach}
+		{/foreach}
 {foreachelse}
 
           <td colspan="2">&nbsp;</td>
 
 {/foreach}
+{/if}
+{/foreach}
+{* END - SECURITY GROUPS *}
 </TR>
 {literal}
 
@@ -89,7 +139,12 @@
                     {html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
                     </select>
 					{else}
+{* BEGIN - SECURITY GROUPS : Add class='{$ACTION_NAME}' *}
+{*
 					<select name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
+*}
+					<select class='{$ACTION_NAME}' name='act_guid{$ACTION.id}' id = 'act_guid{$ACTION.id}' onblur="document.getElementById('{$ACTION.id}link').innerHTML=this.options[this.selectedIndex].text; aclviewer.toggleDisplay('{$ACTION.id}');" >
+{* END - SECURITY GROUPS *}
 					{html_options options=$ACTION.accessOptions selected=$ACTION.aclaccess }
 					</select>
 					{/if}

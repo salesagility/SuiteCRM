@@ -3,9 +3,9 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
+require_once('include/JSON.php');
 require_once('modules/jjwg_Areas/jjwg_Areas_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
-
 
 class jjwg_Areas extends jjwg_Areas_sugar {
 
@@ -19,11 +19,11 @@ class jjwg_Areas extends jjwg_Areas_sugar {
      */
     var $point_on_vertex = true;
 
-    function jjwg_Areas() {
+    function jjwg_Areas($init=true) {
         
         parent::jjwg_Areas_sugar();
         // Admin Config Setting
-        $this->configuration();
+        if($init) $this->configuration();
     }
 
     /**

@@ -34,3 +34,10 @@ $mod_strings['LBL_COUNTRY'] = 'Country';
 $mod_strings['LBL_COORDINATES'] = 'Coordinates';
 $mod_strings['LBL_LIST_ASSIGNED_USER'] = 'User';
 $mod_strings['LBL_AREA_MAP'] = 'Area Map';
+
+$mod_strings['LBL_AREA_EDIT_TITLE'] = 'Area Creation Instructions:';
+$mod_strings['LBL_AREA_EDIT_DESC_1'] = 'Left click on the map, in a clockwise motion, to create marker points for the area.';
+$mod_strings['LBL_AREA_EDIT_DESC_2'] = 'Click on the first marker point to close the polygon area.';
+$mod_strings['LBL_AREA_EDIT_RESET'] = 'Reset';
+$mod_strings['LBL_AREA_EDIT_USE_AREA_COORDINATES'] = 'Use Area Coordinates';
+$mod_strings['LBL_AREA_EDIT_COORDINATE_RESULTS'] = 'Coordinate Results (lng,lat,elv):';

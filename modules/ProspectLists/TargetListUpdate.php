@@ -2,7 +2,7 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -60,6 +60,26 @@ if($_REQUEST['select_entire_list'] == '1'){
 	$mass = new MassUpdate();
 	$mass->generateSearchWhere($_REQUEST['module'], $_REQUEST['current_query_by_page']);
 	$ret_array = create_export_query_relate_link_patch($_REQUEST['module'], $mass->searchFields, $mass->where_clauses);
+	/* BEGIN - SECURITY GROUPS */
+	//need to hijack the $ret_array['where'] of securitygorup required
+	if($focus->bean_implements('ACL') && ACLController::requireSecurityGroup($focus->module_dir, 'list') )
+	{
+		require_once('modules/SecurityGroups/SecurityGroup.php');
+		global $current_user;
+		$owner_where = $focus->getOwnerWhere($current_user->id);
+		$group_where = SecurityGroup::getGroupWhere($focus->table_name,$focus->module_dir,$current_user->id);
+		if(!empty($owner_where)){
+			if(empty($ret_array['where']))
+			{
+				$ret_array['where'] = " (".  $owner_where." or ".$group_where.") ";
+			} else {
+				$ret_array['where'] .= " AND (".  $owner_where." or ".$group_where.") ";
+			}
+		} else {
+			$ret_array['where'] .= ' AND '.  $group_where;
+		}
+	}
+	/* END - SECURITY GROUPS */
 	$query = $focus->create_export_query($order_by, $ret_array['where'], $ret_array['join']);
 	$result = $GLOBALS['db']->query($query,true);
 	$uids = array();

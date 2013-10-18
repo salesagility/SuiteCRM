@@ -2,7 +2,7 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * SugarCRM, Inc. Copyright (C) 2004-2012 SugarCRM Inc.
  * 
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -189,7 +189,18 @@ $xtpl->assign("ID", $focus->id);
 if(isset($focus->name)) $xtpl->assign("NAME", $focus->name); else $xtpl->assign("NAME", "");
 
 //Bug45632
+/* BEGIN - SECURITY GROUPS */
+/**
 if(isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id); else $xtpl->assign("ASSIGNED_USER_ID", "");
+*/
+if(isset($focus->assigned_user_id)) $xtpl->assign("ASSIGNED_USER_ID", $focus->assigned_user_id);
+else if(empty($focus->id) && empty($focus->assigned_user_id)) {
+	global $current_user;
+	$xtpl->assign("ASSIGNED_USER_ID", $current_user->id);
+    $xtpl->assign("ASSIGNED_USER_NAME", get_assigned_user_name($current_user->id));
+}
+else $xtpl->assign("ASSIGNED_USER_ID", "");
+/* END - SECURITY GROUPS */
 //Bug45632
 
 if(isset($focus->description)) $xtpl->assign("DESCRIPTION", $focus->description); else $xtpl->assign("DESCRIPTION", "");

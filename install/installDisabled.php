@@ -61,7 +61,7 @@ $out =<<<EOQ
     <tr>
       <th width="400">{$disabled_title_2}</th>
 
-      <th width="200" height="30" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank"><IMG src="include/images/sugarcrm_login.png" alt="SugarCRM" border="0"></a></th>
+      <th width="200" height="30" style="text-align: right;">&nbsp;</th>
     </tr>
 
     <tr>

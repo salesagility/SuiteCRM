@@ -36,3 +36,8 @@ $mod_strings['LBL_JJWG_MAPS_LNG'] = 'Longitude';
 $mod_strings['LBL_MARKER_IMAGE'] = 'Marker Image Type';
 $mod_strings['LBL_LIST_ASSIGNED_USER'] = 'Assigned To';
 $mod_strings['LBL_MARKER_MAP'] = 'Marker Map';
+
+$mod_strings['LBL_MARKER_MARKER_POSITION'] = 'Marker Position (Latitude, Longitude):';
+$mod_strings['LBL_MARKER_CLOSEST_MATCHING_ADDRESS'] = 'Closest Matching Address:';
+$mod_strings['LBL_MARKER_MARKER_STATUS'] = 'Marker Status';
+$mod_strings['LBL_MARKER_EDIT_DESCRIPTION'] = 'Click and drag the marker.';

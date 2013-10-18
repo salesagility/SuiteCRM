@@ -71,12 +71,11 @@ $out = <<<EOQ
 		</p>
 		{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</th>
 
-      <th width="200" height="30" style="text-align: right;"><a href="http://www.sugarcrm.com" target=
-          "_blank"><IMG src="include/images/sugarcrm_login.png" alt="SugarCRM" border="0"></a>
+      <th width="200" height="30" style="text-align: right;">&nbsp;
       </th>
     </tr>
    <tr>
-      <td colspan="2"  id="ready_image"><IMG src="include/images/install_themes.jpg" width="698" height="247" alt="Sugar Themes" border="0"></td>
+      <td colspan="2"  id="ready_image"><IMG src="themes/Suite7/images/bigsuite.png" width="600" height="280" alt="Sugar Themes" border="0"></td>
     </tr>
                 <td>
 			    {$mod_strings['LBL_WELCOME_CHOOSE_LANGUAGE']}: <select name="language" onchange='this.form.submit()';>{$langDropDown}</select>

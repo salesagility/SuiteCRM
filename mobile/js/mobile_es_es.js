@@ -57,8 +57,8 @@ var RES_FILTEROLD='Filtrar los datos antiguos';
 var RES_MINDATE='Fecha mínimo';
 // V2.6
 var RES_ALERTS='Alertas',
- RES_UPDATED="Asignaciones y actualizaciones",
- RES_ICON='Icono';
+	RES_UPDATED="Asignaciones y actualizaciones",
+	RES_ICON='Icono';
 // V3.0
 var RES_MOBILE='Móvil',
 	RES_ADV_OPTIONS="Opciones avanzadas",
@@ -69,7 +69,18 @@ var RES_MOBILE='Móvil',
 	RES_GO_OFFLINE='Desconectarse',
 	RES_SYNC='Sincronizar',
 	RES_OFFLINE_ERR_CANCEL='No se puede conectar a SugarCRM.\nIgnorar los cambios y volver en línea';
-
+// 3.1
+var RES_DEF_LOCK='Establecer código',
+	RES_ENTER_LOCK='Introduzca su contraseña',
+	RES_ENTER2_LOCK='Vuelva a introducir su contraseña',
+	RES_TITLE_LOCK='Bloqueo con código',
+	RES_UNLOCK='Gire Clave Off',
+	RES_PWD_MISMATCH='Las contraseñas no coinciden.',
+	RES_WRONG_PWD='Código erróneo.',
+	RES_MAPS_TITLE='Google Maps',
+	RES_HERE='aquí',
+	RES_DIST='Distancia';
+	
 // DATE FORMAT
 var regDate = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4})$',""),
  regDateTime = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4}) ([0-9]|[0-2][0-9]):([0-6][0-9])$',""),

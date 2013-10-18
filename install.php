@@ -49,6 +49,7 @@ define('SUGARCRM_IS_INSTALLING', $GLOBALS['installing']);
 $GLOBALS['sql_queries'] = 0;
 require_once('include/SugarLogger/LoggerManager.php');
 require_once('sugar_version.php');
+require_once('suitecrm_version.php');
 require_once('include/utils.php');
 require_once('install/install_utils.php');
 require_once('install/install_defaults.php');
@@ -78,7 +79,7 @@ if(get_magic_quotes_gpc() == 1) {
 
 
 $GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
-$setup_sugar_version = $sugar_version;
+$setup_sugar_version = $suitecrm_version;
 $install_script = true;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -259,7 +260,7 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
     }
   }
 
-    $workflow[] = 'register.php';
+    //$workflow[] = 'register.php';
 
 
 // increment/decrement the workflow pointer

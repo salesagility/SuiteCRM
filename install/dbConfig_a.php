@@ -110,8 +110,7 @@ $out2 =<<<EOQ2
 		</p>
 		{$mod_strings['LBL_DBCONF_TITLE']}
 	</th>
-	<th width="200" height="30" style="text-align: right;"><a href="http://www.sugarcrm.com" target="_blank">
-		<IMG src="include/images/sugarcrm_login.png" alt="SugarCRM" border="0"></a>
+	<th width="200" height="30" style="text-align: right;">&nbsp;
         </th>
 </tr>
 <tr>

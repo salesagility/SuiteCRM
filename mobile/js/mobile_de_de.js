@@ -75,6 +75,17 @@ var RES_MOBILE='Mobil',
 	RES_GO_OFFLINE='Trennen',
 	RES_SYNC='Sync',
 	RES_OFFLINE_ERR_CANCEL='Kann keine Verbindung zu SugarCRM.\nÄnderungen ignorieren und kehren Online';
+// 3.1
+var RES_DEF_LOCK='Set Passcode',
+	RES_ENTER_LOCK='Geben Sie Ihren Passcode',
+	RES_ENTER2_LOCK='Geben Sie das Kennwort erneut',
+	RES_TITLE_LOCK='Passcode Lock',
+	RES_UNLOCK='Schalten Passcode Off',
+	RES_PWD_MISMATCH='Die Passwörter stimmen nicht überein.',
+	RES_WRONG_PWD='Ungültiger Passwort.',
+	RES_MAPS_TITLE='Google Maps',
+	RES_HERE='Hier',
+	RES_DIST='Entfernung';
 
 // DATE FORMAT
 var regDate = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4})$',""),

@@ -34,8 +34,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * technical reasons, the Appropriate Legal Notices must display the words
  * "Powered by SugarCRM".
  ********************************************************************************/
-
+/* BEGIN - SECURITY GROUPS */
+if(file_exists("modules/ACLActions/actiondefs.override.php")){
+	require_once("modules/ACLActions/actiondefs.override.php");
+} else {
 require_once('modules/ACLActions/actiondefs.php');
+}
+/* END - SECURITY GROUPS */
 class ACLAction  extends SugarBean{
     var $module_dir = 'ACLActions';
     var $object_name = 'ACLAction';
@@ -248,14 +253,64 @@ class ACLAction  extends SugarBean{
         if(!empty($type)){
             $additional_where .= " AND acl_actions.acltype = '$type' ";
         }
+		/* BEGIN - SECURITY GROUPS */ 
+		/**
         $query = "SELECT acl_actions .*, acl_roles_actions.access_override
                     FROM acl_actions
                     LEFT JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' AND  acl_roles_users.deleted = 0
                     LEFT JOIN acl_roles_actions ON acl_roles_actions.role_id = acl_roles_users.role_id AND acl_roles_actions.action_id = acl_actions.id AND acl_roles_actions.deleted=0
                     WHERE acl_actions.deleted=0 $additional_where ORDER BY category,name";
+		*/
+		$query = "(SELECT acl_actions .*, acl_roles_actions.access_override, 1 as user_role
+				FROM acl_actions
+				INNER JOIN acl_roles_users ON acl_roles_users.user_id = '$user_id' AND  acl_roles_users.deleted = 0
+				LEFT JOIN acl_roles_actions ON acl_roles_actions.role_id = acl_roles_users.role_id AND acl_roles_actions.action_id = acl_actions.id AND acl_roles_actions.deleted=0
+				WHERE acl_actions.deleted=0 $additional_where )
+
+				UNION
+
+				(SELECT acl_actions .*, acl_roles_actions.access_override, 0 as user_role
+				FROM acl_actions 
+				INNER JOIN securitygroups_users ON securitygroups_users.user_id = '$user_id' AND  securitygroups_users.deleted = 0
+				INNER JOIN securitygroups_acl_roles ON securitygroups_users.securitygroup_id = securitygroups_acl_roles.securitygroup_id and securitygroups_acl_roles.deleted = 0
+				LEFT JOIN acl_roles_actions ON acl_roles_actions.role_id = securitygroups_acl_roles.role_id AND acl_roles_actions.action_id = acl_actions.id AND acl_roles_actions.deleted=0
+				WHERE acl_actions.deleted=0 $additional_where )
+
+				UNION 
+
+				(SELECT acl_actions.*, 0 as access_override, -1 as user_role
+				FROM acl_actions
+				WHERE acl_actions.deleted = 0 )
+
+				ORDER BY user_role desc, category,name,access_override desc"; //want non-null to show first
+		 /* END - SECURITY GROUPS */
         $result = $db->query($query);
         $selected_actions = array();
+		/* BEGIN - SECURITY GROUPS */ 
+		global $sugar_config;
+		$has_user_role = false; //used for user_role_precedence
+		$has_role = false; //used to determine if default actions can be ignored. If a user has a defined role don't use the defaults
+		/* END - SECURITY GROUPS */
         while($row = $db->fetchByAssoc($result, FALSE) ){
+			/* BEGIN - SECURITY GROUPS */ 
+			if($has_user_role == false && $row['user_role'] == 1) {
+				$has_user_role = true;
+			}
+			if($has_role == false && ($row['user_role'] == 1 || $row['user_role'] ==0)) {
+				$has_role = true;
+			}
+			//if user roles should take precedence over group roles and we have a user role 
+			//break when we get to processing the group roles
+			if($has_user_role == true && $row['user_role'] == 0 
+					&& isset($sugar_config['securitysuite_user_role_precedence'])
+					&& $sugar_config['securitysuite_user_role_precedence'] == true ) 
+			{
+				break; 
+			}
+			if($row['user_role'] == -1 && $has_role == true) {
+				break; //no need for default actions when a role is assigned to the user or user's group already
+			}
+			/* END - SECURITY GROUPS */
             $acl = new ACLAction();
             $isOverride  = false;
             $acl->populateFromRow($row);
@@ -268,7 +323,16 @@ class ACLAction  extends SugarBean{
 
             }
             if(!isset($selected_actions[$acl->category][$acl->acltype][$acl->name])
-                || ($selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] > $acl->aclaccess
+				|| (
+					/* BEGIN - SECURITY GROUPS - additive security*/
+					(
+						(isset($sugar_config['securitysuite_additive']) && $sugar_config['securitysuite_additive'] == true
+						&& $selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] < $acl->aclaccess) 
+					||
+						((!isset($sugar_config['securitysuite_additive']) || $sugar_config['securitysuite_additive'] == false)
+						&& $selected_actions[$acl->category][$acl->acltype][$acl->name]['aclaccess'] > $acl->aclaccess) 
+					)
+					/* END - SECURITY GROUPS */
                     && $isOverride
                     )
                 ||
@@ -329,17 +393,62 @@ class ACLAction  extends SugarBean{
     * @param int $access
     * @return true or false
     */
+	/* BEGIN - SECURITY GROUPS */
+	/**
     static function hasAccess($is_owner=false, $access = 0){
-
+	*/
+	static function hasAccess($is_owner=false, $in_group=false, $access = 0){	
+		/**
         if($access != 0 && $access == ACL_ALLOW_ALL || ($is_owner && $access == ACL_ALLOW_OWNER))return true;
        //if this exists, then this function is not static, so check the aclaccess parameter
         if(isset($this) && isset($this->aclaccess)){
             if($this->aclaccess == ACL_ALLOW_ALL || ($is_owner && $this->aclaccess == ACL_ALLOW_OWNER))
             return true;
         }
+		*/
+		if($access != 0 && ($access == ACL_ALLOW_ALL 
+			|| ($is_owner && ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP) )  //if owner that's better than in group so count it...better way to clean this up?
+			|| ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
+		)) {
+			return true;
+		}
+        if(isset($this) && isset($this->aclaccess)){
+			if($this->aclaccess == ACL_ALLOW_ALL 
+				|| ($is_owner && $this->aclaccess == ($access == ACL_ALLOW_OWNER || $access == ACL_ALLOW_GROUP))
+				|| ($in_group && $access == ACL_ALLOW_GROUP) //need to pass if in group with access somehow
+			) {
+            	return true;
+        	}
+		}
         return false;
     }
+	/* END - SECURITY GROUPS */
 
+	/* BEGIN - SECURITY GROUPS */
+	/**
+	 * STATIC function userNeedsSecurityGroup($user_id, $category, $action,$type='module')
+	 * checks if a user should have ownership to do an action
+	 *
+	 * @param GUID $user_id
+	 * @param STRING $category
+	 * @param STRING $action
+	 * @param STRING $type
+	 * @return boolean
+	 */
+	function userNeedsSecurityGroup($user_id, $category, $action,$type='module'){
+		//check if we don't have it set in the cache if not lets reload the cache
+		
+		if(empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
+			ACLAction::getUserActions($user_id, false);
+			
+		}
+		
+		if(!empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
+			return $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'] == ACL_ALLOW_GROUP;
+		}
+        return false;
+    }
+	/* END - SECURITY GROUPS */	
 
 
 
@@ -356,7 +465,11 @@ class ACLAction  extends SugarBean{
     * @param STRING $action the action of that category you would like to check access for
     * @param BOOLEAN OPTIONAL $is_owner if the object is owned by the user you are checking access for
     */
+	/* BEGIN - SECURITY GROUPS - added $in_group */
+	/**
     public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false){
+	*/
+	public static function userHasAccess($user_id, $category, $action,$type='module', $is_owner = false, $in_group = false){
        global $current_user;
        if($current_user->isAdminForModule($category)&& !isset($_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess'])){
         return true;
@@ -369,11 +482,15 @@ class ACLAction  extends SugarBean{
         }
 
         if(!empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
+/**
             return ACLAction::hasAccess($is_owner, $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess']);
+*/
+			return ACLAction::hasAccess($is_owner, $in_group, $_SESSION['ACL'][$user_id][$category][$type][$action]['aclaccess']);
         }
         return false;
 
     }
+	/* END - SECURITY GROUPS */
     /**
     * function getUserAccessLevel($user_id, $category, $action,$type='module')
     * returns the access level for a given category and action
