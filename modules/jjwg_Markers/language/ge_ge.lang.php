@@ -1,0 +1,43 @@
+<?php
+
+$mod_strings['LBL_ASSIGNED_TO_ID'] = 'Benutzer-ID zugewiesen';
+$mod_strings['LBL_ASSIGNED_TO_NAME'] = 'Benutzer';
+$mod_strings['LBL_ID'] = 'ID';
+$mod_strings['LBL_DATE_ENTERED'] = 'Erstellungsdatum';
+$mod_strings['LBL_DATE_MODIFIED'] = 'Änderungsdatum';
+$mod_strings['LBL_MODIFIED'] = 'Geändert';
+$mod_strings['LBL_MODIFIED_ID'] = 'Nach Id Geändert';
+$mod_strings['LBL_MODIFIED_NAME'] = 'Nach Name geändert';
+$mod_strings['LBL_CREATED'] = 'Erstellt von';
+$mod_strings['LBL_CREATED_ID'] = 'Nach Id Erstellt';
+$mod_strings['LBL_DESCRIPTION'] = 'Beschreibung';
+$mod_strings['LBL_DELETED'] = 'gelöscht';
+$mod_strings['LBL_NAME'] = 'Name';
+$mod_strings['LBL_CREATED_USER'] = 'Erstellt von User';
+$mod_strings['LBL_MODIFIED_USER'] = 'vom Benutzer geändert';
+$mod_strings['LBL_LIST_NAME'] = 'Name';
+$mod_strings['LBL_LIST_FORM_TITLE'] = 'Markierungsliste';
+$mod_strings['LBL_MODULE_NAME'] = 'Marker';
+$mod_strings['LBL_MODULE_TITLE'] = 'Marker';
+$mod_strings['LBL_HOMEPAGE_TITLE'] = 'Meine Markers';
+$mod_strings['LNK_NEW_RECORD'] = 'Erstellen Markers';
+$mod_strings['LNK_LIST'] = 'View Markers';
+$mod_strings['LNK_IMPORT_JJWG_MARKERS'] = 'Import Markers';
+$mod_strings['LBL_SEARCH_FORM_TITLE'] = 'Suche Markers';
+$mod_strings['LBL_HISTORY_SUBPANEL_TITLE'] = 'ansehen';
+$mod_strings['LBL_ACTIVITIES_SUBPANEL_TITLE'] = 'Aktivitäten';
+$mod_strings['LBL_JJWG_MARKERS_SUBPANEL_TITLE'] = 'Marker';
+$mod_strings['LBL_NEW_FORM_TITLE'] = 'Neue Marker';
+$mod_strings['LBL_CITY'] = 'City';
+$mod_strings['LBL_STATE'] = 'State';
+$mod_strings['LBL_COUNTRY'] = 'Land';
+$mod_strings['LBL_JJWG_MAPS_LAT'] = 'Latitude';
+$mod_strings['LBL_JJWG_MAPS_LNG'] = 'Länge';
+$mod_strings['LBL_MARKER_IMAGE'] = 'Bild-Art Marker';
+$mod_strings['LBL_LIST_ASSIGNED_USER'] = 'Zugewiesen an';
+$mod_strings['LBL_MARKER_MAP'] = 'Marker Map';
+
+$mod_strings['LBL_MARKER_MARKER_POSITION'] = 'Marker Position ( Breite, Länge):';
+$mod_strings['LBL_MARKER_CLOSEST_MATCHING_ADDRESS'] = 'am besten passenden Adressraum:';
+$mod_strings['LBL_MARKER_MARKER_STATUS'] = 'Marker Status';
+$mod_strings['LBL_MARKER_EDIT_DESCRIPTION'] = 'Klicken und ziehen Sie die Markierung.';

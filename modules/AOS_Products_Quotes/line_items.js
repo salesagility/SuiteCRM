@@ -634,6 +634,7 @@ function calculateLine(ln, key){
                 document.getElementById(key + 'product_discount' + ln).value = listPrice;
                 discount = listPrice;
             }
+            productUnitPrice = listPrice - discount;
             document.getElementById(key + 'product_unit_price' + ln).value = format2Number(listPrice - discount);
         }
         else if(dis == 'Percentage')

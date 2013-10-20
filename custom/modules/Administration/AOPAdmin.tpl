@@ -1,0 +1,168 @@
+
+
+<form id="ConfigureSettings" name="ConfigureSettings" enctype='multipart/form-data' method="POST"
+      action="index.php?module=Administration&action=AOPAdmin&do=save">
+
+    <span class='error'>{$error.main}</span>
+
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" class="actionsContainer">
+        <tr>
+            <td>
+                {$BUTTONS}
+                 </td>
+        </tr>
+    </table>
+
+
+
+
+    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+        <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_JOOMLA_SETTINGS}</h4></th>
+        </tr>
+        <tr>
+            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_URL}: </td>
+            <td  >
+                <input type='text' name='joomla_url' value='{$config.joomla_url}' >
+            </td>
+
+        </tr>
+        <!--<tr>
+            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCESS_KEY}: </td>
+            <td  >
+                <input type='text' size='20' name='joomla_access_key' value='{$config.joomla_access_key}' >
+            </td>
+        </tr>-->
+    </table>
+
+    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+        <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_CASE_ASSIGNMENT}</h4></th>
+        </tr>
+        <tr>
+            <td  scope="row" width="200">{$MOD.LBL_AOP_DISTRIBUTION_METHOD}: </td>
+            <td  >
+                <select id='distribution_method_select' name='distribution_method' tabindex='241'>{$DISTRIBUTION_METHOD}</select>
+            </td>
+        </tr>
+        <tr id="distribution_user_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_ASSIGNMENT_USER}: </td>
+            <td  >
+                <input type="text" name="distribution_user_name" class="sqsEnabled" tabindex="0" id="distribution_user_name" size="" value="{$distribution_user_name}" title='' autocomplete="off"  	 >
+                <input type="hidden" name="distribution_user_id" id="distribution_user_id" value="{$config.distribution_user_id}">
+<span class="id-ff multiple">
+<button type="button" name="btn_distribution_user_name" id="btn_distribution_user_name" tabindex="0" title="Select User" class="button firstChild" value="Select User"
+        {literal}
+        onclick='open_popup(
+                "Users",
+                600,
+                400,
+                "",
+                true,
+                false,
+        {"call_back_function":"set_return","form_name":"ConfigureSettings","field_to_name_array":{"id":"distribution_user_id","last_name":"distribution_user_name"}},
+                "single",
+                true
+                );' >
+    {/literal}
+    <img src="themes/default/images/id-ff-select.png"></button><button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
+                                                                                                onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><img src="themes/default/images/id-ff-clear.png"></button>
+</span>
+                <script type="text/javascript">
+                    {literal}
+                    if(typeof sqs_objects == 'undefined'){
+                        var sqs_objects = new Array;
+                    }
+                    sqs_objects['ConfigureSettings_distribution_user_name']={
+                        "form":"ConfigureSettings",
+                        "method":"get_user_array",
+                        "field_list":["user_name","id"],
+                        "populate_list":["distribution_user_name","distribution_user_id"],
+                        "required_list":["distribution_user_id"],
+                        "conditions":[{"name":"user_name","op":"like_custom","end":"%","value":""}],
+                        "limit":"30",
+                        "no_match_text":"No Match"};
+                    SUGAR.util.doWhen(
+                            "typeof(sqs_objects) != 'undefined' && typeof(sqs_objects['ConfigureSettings_distribution_user_name']) != 'undefined'",
+                            enableQS
+                    );
+                    {/literal}
+                </script>
+
+            </td>
+        </tr>
+    </table>
+    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+        <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS}</h4></th>
+        </tr>
+        <tr>
+            <td  scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_ADDRESS}: </td>
+            <td  >
+                <input type="text" name="support_from_address" id="support_from_address" value="{$config.support_from_address}">
+            </td>
+        </tr>
+        <tr>
+            <td  scope="row" width="200">{$MOD.LBL_SUPPORT_FROM_NAME}: </td>
+            <td  >
+                <input type="text" name="support_from_name" id="support_from_name" value="{$config.support_from_name}">
+            </td>
+        </tr>
+        <tr id="user_email_template_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_USER_EMAIL_TEMPLATE}: </td>
+            <td  >
+                <select id='user_email_template_id_select' name='user_email_template_id' onchange='show_edit_template_link(this);'>{$USER_EMAIL_TEMPLATES}</select>
+
+                <a href='javascript:open_email_template_form("user_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='user_email_template_id_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("user_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+            </td>
+        </tr>
+
+        <tr id="contact_email_template_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_CONTACT_EMAIL_TEMPLATE}: </td>
+            <td  >
+                <select id='contact_email_template_id_select' name='contact_email_template_id' onchange='show_edit_template_link(this);'>{$CONTACT_EMAIL_TEMPLATES}</select>
+
+                <a href='javascript:open_email_template_form("contact_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='contact_email_template_id_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("contact_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+            </td>
+        </tr>
+        <tr id="case_creation_email_template_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_CASE_CREATION_EMAIL_TEMPLATE}: </td>
+            <td  >
+                <select id='case_creation_email_template_id_select' name='case_creation_email_template_id' onchange='show_edit_template_link(this);'>{$CREATION_EMAIL_TEMPLATES}</select>
+
+                <a href='javascript:open_email_template_form("case_creation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='case_creation_email_template_id_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("case_creation_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+            </td>
+        </tr>
+
+
+        <tr id="case_closure_email_template_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_CASE_CLOSURE_EMAIL_TEMPLATE}: </td>
+            <td  >
+                <select id='case_closure_email_template_id_select' name='case_closure_email_template_id' onchange='show_edit_template_link(this);'>{$CLOSURE_EMAIL_TEMPLATES}</select>
+
+                <a href='javascript:open_email_template_form("case_closure_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='case_closure_email_template_id_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("case_closure_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+            </td>
+        </tr>
+
+        <tr id="joomla_account_creation_email_template_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE}: </td>
+            <td  >
+                <select id='joomla_account_creation_email_template_id_select' name='joomla_account_creation_email_template_id' onchange='show_edit_template_link(this);'>{$JOOMLA_EMAIL_TEMPLATES}</select>
+
+                <a href='javascript:open_email_template_form("joomla_account_creation_email_template_id")' >{$MOD.LBL_CREATE_EMAIL_TEMPLATE}</a>
+                <span name='edit_template' id='joomla_account_creation_email_template_id_edit_template_link' style='visibility: hidden;'>
+                <a href='javascript:edit_email_template_form("joomla_account_creation_email_template_id")' >{$MOD.LBL_EDIT_EMAIL_TEMPLATE}</a></span>
+            </td>
+        </tr>
+
+    </table>
+    <div style="padding-top: 2px;">
+        {$BUTTONS}
+    </div>
+    {$JAVASCRIPT}
+</form>

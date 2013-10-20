@@ -1,0 +1,42 @@
+body{background:#ccc;}.ui-mobile #HomePage{background-color:#ccc;}.IconWrapper{list-style-type: none;width:100%;padding:0px;margin:0;text-align:center;}
+.IconContainer{position:relative;display:inline-block;vertical-align:top;width:93px;text-align:center;padding-bottom:10px;padding-top:10px;}.IconContainer .ui-link{text-decoration:none;color:#111;text-shadow:0 1px 1px #fff;font-weight:normal;}
+.HomeIcon{background-repeat:no-repeat;background-position:0px 0;height:48px;width:48px;margin-left:auto;margin-right:auto;text-align:center;}
+.MapIcon{background-image:url('../images/iosmaps.png');background-size:48px 48px;}.SyncIcon{background-image:url('../images/icon_SPSync.gif');}.AllModulesIcon{background-image:url('../images/icon_BasicSearch.gif');}.ActivitiesIcon{background-image:url('../images/icon_Activities.gif');}.LastViewedIcon{background-image:url('../images/icon_Dashlet.gif');}.AdminIcon{background-image:url('../images/icon_Application.gif');}.NSEmailIcon{background-image:url('../images/icon_Emails.gif');}
+.GreenIcon{background-repeat:no-repeat;background-position:0px 0;height:32px;width:32px;background-image:url('../images/bullet_green.png');}
+.RedIcon{background-repeat:no-repeat;background-position:0px 0;height:32px;width:32px;background-image:url('../images/bullet_red.png');}
+em{color:red;font-weight:bold;padding-right:.25em;}
+.ui-footer p{text-align:center;}
+.ui-header .ui-title {
+margin-left: 0;
+margin-right: 0;
+   /* text-overflow:visible;  */ /* -Uncomment - to disable Ellipsis completely use with Caution- !*/ 
+}
+
+/* Swipe works with mouse as well but often causes text selection. NOT ON ANDROID
+#HomePage * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+  */
+ /* wrap push on wide viewports once open */
+@media (min-width: 35em){
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-push,
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-fixed-toolbar-display-reveal,
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push,
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
+		margin-right: 17em;
+	}
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-push.ui-panel-content-fixed-toolbar-position-right,
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-fixed-toolbar-open.ui-panel-content-wrap-display-reveal.ui-panel-content-fixed-toolbar-position-right,
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-push.ui-panel-content-wrap-position-right,
+	.ui-responsive-panel.ui-page-panel-open .ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal.ui-panel-content-wrap-position-right {
+		margin: 0 0 0 17em;
+	}
+	.ui-responsive-panel .ui-panel-dismiss-display-push {
+		display: none;
+	}
+}
+.ui-panel-inner {padding-top:0px;}

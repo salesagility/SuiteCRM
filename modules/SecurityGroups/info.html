@@ -1,0 +1,630 @@
+<!-- BEGIN: main -->
+<style type="text/css">
+.securitysuite_clear, .so_clear {
+	height: 0;
+	font-size: 0px;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+	clear: both;
+}
+#content_left {
+	float: left;
+	width: 59%;
+}
+#content_right {
+	float: right;
+	width: 40%;
+}
+#securitysuite_main {
+	font-size: 1.6em;
+	background-color: #ffffff;
+    border: 1px solid #999999;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 3px 3px 3px #B3B3B3;
+    padding: 0 0 1em;
+
+	font-family: Arial, Helvetica, sans-serif !important;
+	color: #333333;
+}
+.securitysuite_header {
+    background-color: #EEEEEE;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    color: #3496C4;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px 0;
+    width: 100%;
+    border-bottom: 1px solid #999999;
+}
+.securitysuite_verify {
+    border-bottom: 1px solid #999999;
+    padding-bottom: 5px;
+}
+.securitysuite_header_title {
+	padding-left: 15px;
+}
+.securitysuite_section_header {
+    color: #444444;
+    font-size: 1.4em !important;
+    font-weight: bold;
+    padding: 5px 0;
+}
+.securitysuite_left {
+	width: 50%;
+	float: left;
+}
+.securitysuite_right {
+	width: 50%;
+	float: right;
+}
+#securitysuite_content {
+	background-color: #ffffff;
+	padding: 10px;
+}
+.securitysuite_extra {
+	padding: 10px 0;
+	border-top: 1px #999999 solid;
+}
+a.securitysuite, a.securitysuite:visited {
+	color: #1988BD !important;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+a.securitysuite:hover {
+	text-decoration: underline !important;
+}
+.securitysuite_features {
+	margin-left: 10px !important;
+}
+.securitysuite_features li {
+	padding: 3px 0;
+	font-weight: bold;
+	list-style-type: disc;
+	font-size: 1.2em !important;
+}
+
+.securitysuite_cart_left {
+	width: 35%;
+	float: left;
+}
+.securitysuite_cart_right {
+	width: 65%;
+	float: right;
+}
+#so_header {
+	background-color: #2f2f2f;
+	padding: 9px 4px 5px 4px;
+	color: #eeeeee;
+	font-weight: bold;
+	font: bold 16px Arial,sans-serif;
+	text-align: center;
+    border-radius: 4px;
+}
+#so_header > a, #so_header > a:hover, #so_header > a:visited {
+	display: block;
+	color: #eeeeee;
+	text-decoration: none;
+}
+#so_header img {
+	margin: 0;
+}
+#so_header_text {
+	vertical-align: super;
+}
+.so_btn {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+
+  *zoom: 1;
+  padding: 4px 10px 4px;
+  margin-bottom: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: #333333 !important;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  vertical-align: middle;
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(top, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+  border: 1px solid #cccccc;
+  border-bottom-color: #b3b3b3;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  *margin-left: .3em;
+}
+.so_btn {
+  text-decoration: none !important;
+}
+.so_btn:hover,
+.so_btn:active,
+.so_btn.active,
+.so_btn.disabled,
+.so_btn[disabled] {
+  background-color: #e6e6e6;
+  text-decoration: none;
+}
+.so_btn:active,
+.so_btn.active {
+  background-color: #cccccc \9;
+}
+.so_btn:first-child {
+  *margin-left: 0;
+}
+.so_btn:hover {
+  color: #333333;
+  text-decoration: none;
+  background-color: #e6e6e6;
+  background-position: 0 -15px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -ms-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+}
+.so_btn:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.so_btn.active,
+.so_btn:active {
+  background-image: none;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #e6e6e6;
+  background-color: #d9d9d9 \9;
+  outline: 0;
+}
+.so_btn.disabled,
+.so_btn[disabled] {
+  cursor: default;
+  background-image: none;
+  background-color: #e6e6e6;
+  opacity: 0.65;
+  filter: alpha(opacity=65);
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+.so_btn_buy {
+	color: #333333 !important;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75) !important;
+}
+.so_btn_buy.active {
+	color: rgba(255, 255, 255, 0.75) !important;
+}
+.so_btn_buy {
+	background-color: #eebb3e; /* f5ce58 */
+	background-image: -moz-linear-gradient(top, #f5e258, #ebae18); /* 245 226 88 / 235 174 24 */
+	background-image: -ms-linear-gradient(top, #f5e258, #ebae18);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f5e258), to(#ebae18));
+	background-image: -webkit-linear-gradient(top, #f5e258, #ebae18);
+	background-image: -o-linear-gradient(top, #f5e258, #ebae18);
+	background-image: linear-gradient(top, #f5e258, #ebae18);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5e258', endColorstr='#ebae18', GradientType=0);
+	border-color: #ebae18 #ebae18 #906b0e;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.so_btn_buy:hover,
+.so_btn_buy:active,
+.so_btn_buy.active,
+.so_btn_buy.disabled,
+.so_btn_buy[disabled] {
+	background-color: #ebae18;
+}
+.so_btn_buy:active,
+.so_btn_buy.active {
+	background-color: #d79f16 \9;
+}
+.securitysuite_verify_btn,
+.securitysuite_verify_btn:hover {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  color: #ffffff !important;
+}
+.securitysuite_verify_btn.active {
+  color: rgba(255, 255, 255, 0.75);
+}
+.securitysuite_verify_btn {
+  background-color: #5bb75b;
+  background-image: -moz-linear-gradient(top, #62c462, #51a351);
+  background-image: -ms-linear-gradient(top, #62c462, #51a351);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
+  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
+  background-image: -o-linear-gradient(top, #62c462, #51a351);
+  background-image: linear-gradient(top, #62c462, #51a351);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#62c462', endColorstr='#51a351', GradientType=0);
+  border-color: #51a351 #51a351 #387038;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.securitysuite_verify_btn:hover,
+.securitysuite_verify_btn:active,
+.securitysuite_verify_btn.active,
+.securitysuite_verify_btn.disabled,
+.securitysuite_verify_btn[disabled] {
+  background-color: #51a351;
+}
+.securitysuite_verify_btn:active,
+.securitysuite_verify_btn.active {
+  background-color: #408140 \9;
+}
+.so_more_btn,
+.so_more_btn:hover {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  color: #ffffff !important;
+}
+.so_more_btn.active {
+  color: rgba(255, 255, 255, 0.75);
+}
+.so_more_btn {
+  background-color: #0074cc;
+  background-image: -moz-linear-gradient(top, #0088cc, #0055cc);
+  background-image: -ms-linear-gradient(top, #0088cc, #0055cc);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0055cc));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0055cc);
+  background-image: -o-linear-gradient(top, #0088cc, #0055cc);
+  background-image: linear-gradient(top, #0088cc, #0055cc);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0088cc', endColorstr='#0055cc', GradientType=0);
+  border-color: #0055cc #0055cc #003580;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.so_more_btn:hover,
+.so_more_btn:active,
+.so_more_btn.active,
+.so_more_btn.disabled,
+.so_more_btn[disabled] {
+  background-color: #0055cc;
+}
+.so_more_btn:active,
+.so_more_btn.active {
+  background-color: #004099 \9;
+}
+.so_tiles {
+	list-style: none;
+    padding: 0 !important;
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+	width: 100%;
+	max-width: 600px;
+}
+.so_tiles > li {
+    font-family: Helvetica Neue,Helvetica,Arial;
+    font-size: 16px;
+	text-align: left;
+	display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: top;
+}
+.so_tile {
+	height: 200px;
+	width: 200px;
+	display: inline-block;
+    *display: inline;
+    *zoom: 1;
+	overflow: hidden;
+    background: none repeat scroll 0 0 #f1f1f1;
+    border: 1px solid #aaaaaa;
+    margin: 7px auto 0;
+    padding: 10px;
+}
+.so_tile_buffer {
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+	margin: -200px 14px 0;
+	z-index: 0;
+	width: 200px;
+}
+.so_tile div, .so_tile p, .so_tile a, .so_tile span {
+    overflow: hidden;
+}
+.so_tile_img a, .so_tile_img a:active, .so_tile_img a:hover,
+.so_tile_title a, .so_tile_title a:active, .so_tile_title a:hover,
+.so_tile_description a, .so_tile_description a:active, .so_tile_description a:hover {
+	color: #444444 !important;
+	text-decoration: none !important;
+}
+.so_tile_title {
+	padding: 15px 0 0 10px;
+}
+.so_tile_title_link {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.so_tile_img {
+	float: left;
+	padding: 6px;
+	width: 64px;
+	height: 64px;
+	line-height: 64px;
+    box-shadow: 0 0.2em 0.6em 0 #999999;
+    padding: 1px !important;
+    margin: auto !important;
+	text-align: center;
+}
+.so_tile_img::after {
+	content: ".";
+    visibility: hidden;
+}
+.so_tile_logo {
+	display: inline-block;
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    vertical-align: middle;
+}
+.so_tile_logo_container {
+	margin: auto !important;
+}
+.so_tile_description, .so_tile_footer {
+	padding: 8px 0 4px 10px;
+}
+.so_tile_footer {
+	float: right;
+	padding-right: 10px;
+}
+.so_tile:hover{outline:0;border-color:rgba(82, 168, 236, 0.8);-webkit-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.1),0 0 8px rgba(82, 168, 236, 0.6);}
+
+</style>
+
+<div id="content_left">
+<div id="securitysuite_main">
+<div class="securitysuite_header">
+	<span class="securitysuite_header_title">SecuritySuite - Basic Edition</span>
+
+	<a class="so_btn so_btn_buy" style="float: right; margin-right: 20px;" title="Get Premium" href="https://www.sugaroutfitters.com/addons/securitysuite/select" target="_blank">FREE - Try Premium for 30 Days</a>
+	<div class="so_clear"></div>
+
+</div>
+<div id="securitysuite_content">
+	<div class="securitysuite_verify">
+		We need your feedback.
+		<a class="so_btn securitysuite_verify_btn" href="https://www.sugaroutfitters.com/addons/securitysuite" target="_blank">Verify SecuritySuite is Working</a>
+	</div>
+
+	<div class="securitysuite_verify">
+		<div style="padding: 10px 0">
+			<a class="so_btn so_more_btn" href="https://www.sugaroutfitters.com/docs/securitysuite/go-premium" target="_blank">Compare Editions</a>
+
+				<div class="securitysuite_section_header">Go to Premium and get it all!</div>
+				<ul class="securitysuite_features">
+					<li>Custom group layouts</li>
+					<li>Login/Sudo as any user</li>
+					<li>Group calendar</li>
+					<li>Group message dashlet</li>
+					<li>Custom module support</li>
+					<li>Inbound email account filtering</li>
+
+				</ul>
+				<a style="font-size: 1.2em" href="https://www.sugaroutfitters.com/docs/securitysuite/features" target="_blank">Check out all the features</a>
+
+		</div>
+	</div>
+
+	<div class="securitysuite_left">
+		<div>
+			<div class="securitysuite_section_header">Misc Docs</div>
+
+			<ul class="securitysuite_features">
+				<li><a href="https://www.sugaroutfitters.com/docs/securitysuite/installation-guide" target="_blank">Installation Guide</a></li>
+				<li><a href="https://www.sugaroutfitters.com/docs/securitysuite/features" target="_blank">Features</a></li>
+				<li><a href="https://www.sugaroutfitters.com/docs/securitysuite/introduction-video" target="_blank">Overview Video</a></li>
+				<li><a href="https://www.sugaroutfitters.com/docs/securitysuite/options" target="_blank">Options</a></li>
+				<li><a href="https://www.sugaroutfitters.com/docs/securitysuite/faq" target="_blank">FAQ</a></li>
+				<li><a href="https://www.sugaroutfitters.com/support/securitysuite" target="_blank">Support</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="securitysuite_right">
+		<div class="securitysuite_section_header">SecuritySuite Quick Overview</div>
+
+		<object id="scPlayer"  width="320" height="249" type="application/x-shockwave-flash" data="http://content.screencast.com/users/eggsurplus_solutions/folders/SecuritySuite/media/87e959f4-9e54-4579-b257-12c8c0e1b243/final_intro_to_ss_video2_controller.swf" >
+			<param name="movie" value="http://content.screencast.com/users/eggsurplus_solutions/folders/SecuritySuite/media/87e959f4-9e54-4579-b257-12c8c0e1b243/final_intro_to_ss_video2_controller.swf" />
+			<param name="quality" value="high" /><param name="bgcolor" value="#FFFFFF" />
+			<param name="flashVars" value="thumb=http://content.screencast.com/users/eggsurplus_solutions/folders/SecuritySuite/media/87e959f4-9e54-4579-b257-12c8c0e1b243/FirstFrame.png&containerwidth=320&containerheight=249&showstartscreen=true&showendscreen=true&loop=false&autostart=false&color=000000,000000&thumb=FirstFrame.png&thumbscale=45&content=http://content.screencast.com/users/eggsurplus_solutions/folders/SecuritySuite/media/87e959f4-9e54-4579-b257-12c8c0e1b243/final_intro_to_SS_video2.mp4&blurover=false" />
+			<param name="allowFullScreen" value="true" />
+			<param name="scale" value="showall" />
+			<param name="allowScriptAccess" value="always" />
+			<param name="base" value="http://content.screencast.com/users/eggsurplus_solutions/folders/SecuritySuite/media/87e959f4-9e54-4579-b257-12c8c0e1b243/" />
+			<iframe type="text/html" frameborder="0" scrolling="no" style="overflow:hidden;" src="http://www.screencast.com/users/eggsurplus_solutions/folders/SecuritySuite/media/87e959f4-9e54-4579-b257-12c8c0e1b243/embed" height="249" width="320" ></iframe>
+		</object>
+
+	</div>
+	<div class="securitysuite_clear"> </div>
+	<div class="securitysuite_extra" style="margin-top: 20px">
+		<div class="securitysuite_section_header">Translations</div>
+		<ul>
+			<li>Spanish translation by Jorge Sbaco</li>
+			<li>Italian translation by Federico Pontelli</li>
+			<li>Italian translation updated by Ivan M. Greggio and Davide Giacometti</li>
+
+			<li>French translation by Markku Suominen</li>
+			<li>Brazilian Portuguese translation by Vanio Vieira (<a class="securitysuite" href="http://www.calixnet.com.br">www.calixnet.com.br</a>)</li>
+			<li>German translation by Robert Laussegger (<a class="securitysuite" href="http://www.iscon.at">www.iscon.at</a>)</li>
+			<li>Russian translation by Egor Ushakov <a class="securitysuite" href="mailto:egor.ushakov.ru@gmail.com">egor.ushakov.ru@gmail.com</a> (<a class="securitysuite" href="http://www.open-bit.ru">http://www.open-bit.ru</a>)</li>
+
+			<li>Ukranian translation by Rostyslav Volonchuk <a class="securitysuite" href="mailto:ros.vol@adjutrix.com">ros.vol@adjutrix.com</a> (<a class="securitysuite" href="http://www.adjutrix.com">http://www.adjutrix.com</a>)</li>
+			<li>Dutch translation by Ronald Vorstenbosch</li>
+			<li>Hungarian translation by László Czirbesz (<a class="securitysuite" href="http://soulware.hu/">Soulware Zrt.</a>)</li>
+		</ul>
+
+	</div>
+	<div class="securitysuite_extra">
+
+		<div>
+
+			<div class="securitysuite_section_header">Troubleshooting</div>
+			In the rare occurrence that you run into any issues after installation you may need to run the following processes:<br/>
+			<ol>
+			<li>Quick Repair/Rebuild All</li>
+			<li>Rebuild Relationships</li>
+			<li>Repair Roles</li>
+
+			</ol>
+
+			Documentation can be found at <a class="securitysuite" href="https://www.sugaroutfitters.com/docs/securitysuite">https://www.sugaroutfitters.com/docs/securitysuite</a>
+
+		</div>
+	</div>
+	<div class="securitysuite_extra">
+		<div>
+			<div class="securitysuite_section_header">Notice for Linux Users</div>
+			<strong>Only needed if you get this error on the list views: <em>MySQL error 1109: Unknown table 'SecurityGroups' in order clause</em></strong>
+
+			<br/>Please make sure that the MySQL variable lower_case_table_names is set to 1. <br/>
+			To find if lower_case_table_names is set to 1 run the following query against your MySQL database: show global variables like 'lower_case_table_names';<br/>
+			See http://dev.mysql.com/doc/refman/5.0/en/identifier-case-sensitivity.html for more information.
+		</div>
+	</div>
+</div>
+</div>
+</div>
+<div id="content_right">
+	<div id="so_header">
+		<a href="https://www.sugaroutfitters.com" target="_blank">
+			<span id="so_header_text">Others from</span>
+			<img src="modules/SecurityGroups/sugaroutfitters/img/SugarOutfitters.png" class="ec_img" id="header_image" height="24" width="186" alt="SugarOutfitters" border="0">
+		</a>
+	</div>
+	<ul class="so_tiles">
+		<li>
+			<div class="so_tile">
+				<div class="so_tile_img">
+					<a class="so_tile_img_link" href="https://www.sugaroutfitters.com/addons/google-style-sugartheme" target="_blank">
+						<img class="so_tile_logo" src="modules/SecurityGroups/sugaroutfitters/img/google-style-sugartheme_logo.png" width="64" height="64"/>
+					</a>
+				</div>
+				<div class="so_tile_title">
+					<a class="so_tile_title_link" href="https://www.sugaroutfitters.com/addons/google-style-sugartheme" title="Google Style SugarTheme" target="_blank">
+						Google Style SugarTheme
+					</a>
+				</div>
+				<div class="so_clear"></div>
+				<div class="so_tile_description">
+					<a class="so_tile_description_link" href="https://www.sugaroutfitters.com/addons/google-style-sugartheme" target="_blank">
+						A google like Theme for CE that does not only add a nicer UI to sugar but also additional features like favorites and a simple reminder functionality.
+					</a>
+				</div>
+				<div class="so_tile_footer">
+					<a class="so_btn so_more_btn" href="https://www.sugaroutfitters.com/addons/google-style-sugartheme" target="_blank">
+						More
+					</a>
+				</div>
+				<div class="so_clear"></div>
+			</div>
+		</li>
+		<li>
+			<div class="so_tile">
+				<div class="so_tile_img">
+					<a class="so_tile_img_link" href="https://www.sugaroutfitters.com/addons/file-upload-module" target="_blank">
+						<img class="so_tile_logo" src="modules/SecurityGroups/sugaroutfitters/img/fileupload_logo.png" width="64" height="64"/>
+					</a>
+				</div>
+				<div class="so_tile_title">
+					<a class="so_tile_title_link" href="https://www.sugaroutfitters.com/addons/file-upload-module" title="File Upload Module" target="_blank">
+						File Upload Module
+					</a>
+				</div>
+				<div class="so_clear"></div>
+				<div class="so_tile_description">
+					<a class="so_tile_description_link" href="https://www.sugaroutfitters.com/addons/file-upload-module" target="_blank">
+						Add file upload fields to any of your modules. This module adds a new field type to Studio allowing you to easily create your own custom file upload fields.
+					</a>
+				</div>
+				<div class="so_tile_footer">
+					<a class="so_btn so_more_btn" href="https://www.sugaroutfitters.com/addons/file-upload-module" target="_blank">
+						More
+					</a>
+				</div>
+				<div class="so_clear"></div>
+			</div>
+		</li>
+		<li>
+			<div class="so_tile">
+				<div class="so_tile_img">
+					<a class="so_tile_img_link" href="https://www.sugaroutfitters.com/addons/photo" target="_blank">
+						<img class="so_tile_logo" src="modules/SecurityGroups/sugaroutfitters/img/photo_logo.png" width="50" height="40"/>
+					</a>
+				</div>
+				<div class="so_tile_title">
+					<a class="so_tile_title_link" href="https://www.sugaroutfitters.com/addons/photo" title="Photo Module" target="_blank">
+						Photo Module
+					</a>
+				</div>
+				<div class="so_clear"></div>
+				<div class="so_tile_description">
+					<a class="so_tile_description_link" href="https://www.sugaroutfitters.com/addons/photo" target="_blank">
+						Add images for your contacts, leads, inventory, and more!
+						This module adds a new field type to your Sugar install that lets you easily a photo field within Studio to your different views.
+					</a>
+				</div>
+				<div class="so_tile_footer">
+					<a class="so_btn so_more_btn" href="https://www.sugaroutfitters.com/addons/photo" target="_blank">
+						More
+					</a>
+				</div>
+				<div class="so_clear"></div>
+			</div>
+		</li>
+		<li>
+			<div class="so_tile">
+				<div class="so_tile_img">
+					<a class="so_tile_img_link" href="https://www.sugaroutfitters.com/addons/DeDupit" target="_blank">
+						<img class="so_tile_logo" src="modules/SecurityGroups/sugaroutfitters/img/DeDupit_logo.png" width="64" height="64"/>
+					</a>
+				</div>
+				<div class="so_tile_title">
+					<a class="so_tile_title_link" href="https://www.sugaroutfitters.com/addons/DeDupit" title="DeDupit " target="_blank">
+						DeDupit
+					</a>
+				</div>
+				<div class="so_clear"></div>
+				<div class="so_tile_description">
+					<a class="so_tile_description_link" href="https://www.sugaroutfitters.com/addons/DeDupit" target="_blank">
+						Run configurable de-duplication routines to keep SugarCRM data clean. When matches are found either automatically merge the records or push them into a table for a user to review and then merge.
+					</a>
+				</div>
+				<div class="so_tile_footer">
+					<a class="so_btn so_more_btn" href="https://www.sugaroutfitters.com/addons/DeDupit" target="_blank">
+						More
+					</a>
+				</div>
+				<div class="so_clear"></div>
+			</div>
+		</li>
+		<li class="so_tile_buffer"></li>
+		<li class="so_tile_buffer"></li>
+		<li class="so_tile_buffer"></li>
+		<li class="so_tile_buffer"></li>
+		<li class="so_tile_buffer"></li>
+	</ul>
+	<a style="float: right" href="https://www.sugaroutfitters.com" target="_blank">Find even more add-ons at SugarOutfitters</a>
+</div>
+<div class="securitysuite_clear"></div>
+<!-- END: main -->

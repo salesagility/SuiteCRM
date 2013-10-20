@@ -1,5 +1,5 @@
 <?php
-// created: 2013-08-12 14:57:20
+// created: 2013-10-20 14:20:14
 $viewdefs = array (
   'Accounts' => 
   array (
@@ -15,6 +15,10 @@ $viewdefs = array (
             1 => 'DUPLICATE',
             2 => 'DELETE',
             3 => 'FIND_DUPLICATES',
+            'AOS_GENLET' => 
+            array (
+              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
+            ),
           ),
         ),
         'maxColumns' => '2',
@@ -229,5 +233,3 @@ $viewdefs = array (
     ),
   ),
 );
-$viewdefs['Accounts']['DetailView']['templateMeta']['form']['buttons']['AOS_GENLET'] = array('customCode'=>'<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">');
-

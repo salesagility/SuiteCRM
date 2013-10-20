@@ -1,5 +1,5 @@
 <?php
-// created: 2013-08-12 14:57:20
+// created: 2013-10-20 14:20:14
 $viewdefs = array (
   'Leads' => 
   array (
@@ -50,6 +50,10 @@ $viewdefs = array (
                   'name' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
                 ),
               ),
+            ),
+            'AOS_GENLET' => 
+            array (
+              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
             ),
           ),
           'headerTpl' => 'modules/Leads/tpls/DetailViewHeader.tpl',
@@ -204,5 +208,3 @@ $viewdefs = array (
     ),
   ),
 );
-$viewdefs['Leads']['DetailView']['templateMeta']['form']['buttons']['AOS_GENLET'] = array('customCode'=>'<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">');
-

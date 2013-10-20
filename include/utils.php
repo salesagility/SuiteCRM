@@ -139,7 +139,7 @@ function make_sugar_config(&$sugar_config)
         'chown' => '',
         'chgrp' => '',
     ),
-    'default_theme' => empty($default_theme) ? 'Suite7' : $default_theme,
+    'default_theme' => empty($default_theme) ? 'Sugar5' : $default_theme,
     'default_time_format' => empty($defaultTimeFormat) ? 'h:ia' : $defaultTimeFormat,
     'default_user_is_admin' => empty($default_user_is_admin) ? false : $default_user_is_admin,
     'default_user_name' => empty($default_user_name) ? '' : $default_user_name,
@@ -173,7 +173,7 @@ function make_sugar_config(&$sugar_config)
     'site_url' => empty($site_URL) ? $site_url : $site_URL,  // this must be set!!
     'showDetailData' => true, // if true, read-only ACL fields will still appear on EditViews as non-editable
     'showThemePicker' => true,
-    'sugar_version' => empty($sugar_version) ? 'unknown' : '6.5.15',
+    'sugar_version' => empty($sugar_version) ? 'unknown' : $sugar_version,
     'time_formats' => empty($timeFormats) ? array (
     'H:i'=>'23:00', 'h:ia'=>'11:00 pm', 'h:iA'=>'11:00PM',
     'H.i'=>'23.00', 'h.ia'=>'11.00 pm', 'h.iA'=>'11.00PM' ) : $timeFormats,
@@ -280,7 +280,7 @@ function get_sugar_config_defaults() {
         'user' => '',
         'group' => '',
     ),
-    'default_theme' => return_session_value_or_default('site_default_theme', 'Suite7'),
+    'default_theme' => return_session_value_or_default('site_default_theme', 'Sugar5'),
     'default_time_format' => 'h:ia',
     'default_user_is_admin' => false,
     'default_user_name' => '',

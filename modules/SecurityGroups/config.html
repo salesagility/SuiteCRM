@@ -1,0 +1,186 @@
+
+
+<!-- BEGIN: main -->
+<form name="ConfigureSettings" id="EditView" method="POST" >
+	<input type="hidden" name="module" value="SecurityGroups">
+	<input type="hidden" name="action">
+	<input type="hidden" name="return_module" value="{RETURN_MODULE}">
+	<input type="hidden" name="return_action" value="{RETURN_ACTION}">
+	<input type="hidden" name="source_form" value="config" />
+	<input type="hidden" name="remove_default_id" value="" />
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+
+		<td style="padding-bottom: 2px;">
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='SaveConfig';" type="submit" name="button" value=" {APP.LBL_SAVE_BUTTON_LABEL} ">
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}';" type="submit" name="button" value=" {APP.LBL_CANCEL_BUTTON_LABEL} ">
+		</td>
+		<td align="right" nowrap>
+			<span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
+				<tr>
+					<td>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_ADDITIVE}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="securitysuite_additive" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_additive}>
+								</td>
+								<td width="20%" class="dataLabel" valign='top'>
+									{MOD.LBL_USER_ROLE_PRECEDENCE}
+								</td>
+								<td width="30%" class="dataField" valign='top'>
+									<input name="securitysuite_user_role_precedence" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_user_role_precedence}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_ADDITIVE_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_USER_ROLE_PRECEDENCE_DESC}</em>
+								</td>
+							</tr>
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_STRICT_RIGHTS}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="securitysuite_strict_rights" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_strict_rights}>
+								</td>
+								<td width="20%" class="dataLabel" valign='top'>
+									{MOD.LBL_FILTER_USER_LIST}
+								</td>
+								<td width="30%" class="dataField" valign='top'>
+									<input name="securitysuite_filter_user_list" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_filter_user_list}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_STRICT_RIGHTS_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_FILTER_USER_LIST_DESC}</em>
+								</td>
+							</tr>
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_USER_POPUP}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="securitysuite_user_popup" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_user_popup}>
+								</td>
+								<td width="20%" class="dataLabel" valign='top'>
+									{MOD.LBL_POPUP_SELECT}
+								</td>
+								<td width="30%" class="dataField" valign='top'>
+									<input name="securitysuite_popup_select" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_popup_select}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_USER_POPUP_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_POPUP_SELECT_DESC}</em>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</td>
+		</tr>
+	</table>
+<P></P>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
+<tr><td>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr><th align="left" class="dataLabel" colspan="4"><h4 class="dataLabel">{MOD.LBL_INHERIT_TITLE}</h4></th>
+		</tr>
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_INHERIT_CREATOR}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="securitysuite_inherit_creator" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inherit_creator}>
+								</td>
+								<td width="20%" class="dataLabel" valign='top'>
+									{MOD.LBL_INHERIT_PARENT}
+								</td>
+								<td width="30%" class="dataField" valign='top'>
+									<input name="securitysuite_inherit_parent" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inherit_parent}>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_INHERIT_CREATOR_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_INHERIT_PARENT_DESC}</em>
+								</td>
+							</tr>
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_INHERIT_ASSIGNED}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="securitysuite_inherit_assigned" tabindex='1' value="1" class="checkbox" type="checkbox" {securitysuite_inherit_assigned}>
+								</td>
+								<td width="20%" class="dataLabel" valign='top'>
+
+									&nbsp;
+								</td>
+								<td width="30%" class="dataField" valign='top'>
+
+									&nbsp;
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="dataField">
+								<em>{MOD.LBL_INHERIT_ASSIGNED_DESC}</em>
+								</td>
+								<td colspan="2" class="dataField">
+
+								&nbsp;
+								</td>
+							</tr>
+	</table>
+</td></tr>
+</table>
+
+<p></p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
+<tr><td>
+	<table width="100%" border="0" cellspacing="0" id="typeForm" cellpadding="0">
+	<tr>
+	<th align="left" class="dataLabel" colspan="3"><h4 class="dataLabel"><span sugar='slot27'>{MOD.LBL_DEFAULT_GROUP_TITLE}</span sugar='slot'></h4></th>
+	</tr>
+	{DEFAULT_GROUPS}
+	<tr>
+	<td class="dataLabel" width="30%">
+		{MOD.LBL_GROUP} <select name='default_group' tabindex='1'>{SECURITY_GROUP_OPTIONS}</select>
+	</td>
+	<td class="dataField" width="30%">
+		{MOD.LBL_MODULE} <select name='default_module' tabindex='1'>{MODULE_OPTIONS}</select>
+	</td>
+	<td class="dataLabel" width="40%">
+		<input type="submit" tabindex='1' class="button" onclick="this.form.action.value='SaveConfig'; this.form.return_module.value='SecurityGroups'; this.form.return_action.value='config';" value='{MOD.LBL_ADD_BUTTON_LABEL}'/>
+	</td>
+	</tr>
+	</table>
+</td></tr></table>
+
+<div style="padding-top:2px;">
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" class="button" onclick="this.form.action.value='SaveConfig'" type="submit" name="button" value=" {APP.LBL_SAVE_BUTTON_LABEL} ">
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}';" type="submit" name="button" value=" {APP.LBL_CANCEL_BUTTON_LABEL} ">
+</div>
+</form>
+
+<!-- END: main -->

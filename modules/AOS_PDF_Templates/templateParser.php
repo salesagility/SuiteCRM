@@ -51,7 +51,7 @@ class templateParser{
 				if (strpos($name,'product_discount')>0){
 					if($value != '' && $value != '0.00')
 					{
-						if($repl_arr[aos_products_quotes_discount] == 'Percentage')
+						if($repl_arr['aos_products_quotes_discount'] == 'Percentage')
 						{
 							$sep = get_number_seperators();
 							$value=rtrim(rtrim(format_number($value), '0'),$sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];

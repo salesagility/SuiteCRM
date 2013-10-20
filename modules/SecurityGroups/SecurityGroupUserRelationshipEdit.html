@@ -1,0 +1,68 @@
+
+
+<!-- BEGIN: main -->
+<form action="index.php" method="post" name="EditView" onsubmit="return check_form('EditView')">
+<input type="hidden" name="module" value="SecurityGroups" />
+<input type="hidden" name="record" value="{ID}" />
+<input type="hidden" name="return_module" value="{RETURN_MODULE}" />
+<input type="hidden" name="return_action" value="{RETURN_ACTION}" />
+<input type="hidden" name="return_id" value="{RETURN_ID}" />
+<input type="hidden" name="action" value="" />
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+<td style="padding-bottom: 2px;">
+    <input type="submit" name="button" class="button"
+        title="{APP.LBL_SAVE_BUTTON_TITLE}"
+        accesskey="{APP.LBL_SAVE_BUTTON_KEY}"
+        onclick="this.form.action.value='SaveSecurityGroupUserRelationship';"
+        value="  {APP.LBL_SAVE_BUTTON_LABEL}  "
+    />
+    <input type="submit" name="button" class="button"
+        title="{APP.LBL_CANCEL_BUTTON_TITLE}"
+        accessKey="{APP.LBL_CANCEL_BUTTON_KEY}"
+        onclick="this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}'; this.form.record.value='{RETURN_ID}'"
+        value="  {APP.LBL_CANCEL_BUTTON_LABEL}  "
+    />
+</td>
+<td align="right" nowrap="nowrap"><span class="required">{APP.LBL_REQUIRED_SYMBOL}</span> {APP.NTC_REQUIRED}</td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
+<tr><td>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    <td width="15%" class="dataLabel"><slot>{MOD.LBL_SECURITYGROUP_NAME}</slot></td>
+    <td width="35%" class="dataField"><slot>
+        <input type="text" name='securitygroup_name' rows="1" cols="30" value="{SECURITYGROUP.NAME}" readonly="readonly" />
+        <input type="hidden" name='securitygroup_id' value='{SECURITYGROUP.ID}'>
+        <input type="button" name="btn1" class="button"
+            title="{APP.LBL_SELECT_BUTTON_TITLE}"
+            accesskey="{APP.LBL_SELECT_BUTTON_KEY}"
+            value='{APP.LBL_SELECT_BUTTON_LABEL}'
+            onclick='open_popup("SecurityGroups",600,400,"",true,false,{"call_back_function":"set_return","form_name":"EditView","field_to_name_array":{"id":"securitygroup_id","name":"securitygroup_name"}});' />
+    </slot></td>
+    <td width="15%" class="dataLabel"><slot>{MOD.LBL_USER_NAME}</slot></td>
+    <td width="35%" class="dataField"><slot>
+        <input type="text" class='sqsEnabled' id='user_name' name='user_name' rows="2" cols="30" value="{USER.NAME}" />
+        <input id='user_id' name='user_id' type="hidden" value='{USER.ID}'>
+        <input type="button" name="btn1" class="button"
+            title="{APP.LBL_SELECT_BUTTON_TITLE}"
+            accesskey="{APP.LBL_SELECT_BUTTON_KEY}"
+            value='{APP.LBL_SELECT_BUTTON_LABEL}'
+            onclick='open_popup("Users",600,400,"",true,false,{"call_back_function":"set_return","form_name":"EditView","field_to_name_array":{"id":"user_id","name":"user_name"}});' />
+    </slot></td>
+    </tr>
+
+    <tr>
+    <td class="dataLabel"><slot>{MOD.LBL_NONINHERITABLE}</slot></td>
+    <td class="dataField"><slot><input name="noninheritable" tabindex='1' value="1" class="checkbox" type="checkbox" {noninheritable}></slot></td>
+    <tr>
+    <td class="dataLabel"><slot>{MOD.LBL_PRIMARY_GROUP}</slot></td>
+    <td class="dataField"><slot><input name="primary_group" tabindex='1' value="1" class="checkbox" type="checkbox" {primary_group}></slot></td>
+    </table>
+</td></tr></table>
+
+</form>
+{JAVASCRIPT}
+<!-- END: main -->

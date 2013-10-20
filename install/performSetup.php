@@ -49,9 +49,6 @@ set_time_limit(3600);
 ob_implicit_flush();
 
 
-
-
-
 require_once('install/install_utils.php');
 
 require_once('modules/TableDictionary.php');
@@ -148,6 +145,15 @@ if(strpos($server_software,'Microsoft-IIS') !== false)
 echo "<br>";
 echo "<b>{$mod_strings['LBL_PERFORM_TABLES']}</b>";
 echo "<br>";
+
+//Suite rebuild exts
+require_once('ModuleInstall/ModuleInstaller.php');
+$ModuleInstaller = new ModuleInstaller();
+$ModuleInstaller->silent=true;
+$ModuleInstaller->rebuild_modules();
+$ModuleInstaller->rebuild_languages(  array ('en_us' => 'English (US)',));
+$ModuleInstaller->rebuild_extensions();
+$ModuleInstaller->rebuild_tabledictionary();
 
 // create the SugarCRM database
 if($setup_db_create_database) {

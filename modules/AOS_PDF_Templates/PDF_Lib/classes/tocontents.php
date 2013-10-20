@@ -5,11 +5,7 @@ class tocontents {
 var $mpdf = null;
 var $_toc;
 var $TOCmark;
-var $TOCfont;
-var $TOCfontsize;
-var $TOCindent;
-var $TOCheader;
-var $TOCfooter;
+var $TOCoutdent;	// mPDF 5.6.31
 var $TOCpreHTML;
 var $TOCpostHTML;
 var $TOCbookmarkText;
@@ -40,22 +36,17 @@ function tocontents(&$mpdf) {
 	$this->m_TOC=array();
 }
 
-function TOCpagebreak($tocfont='', $tocfontsize='', $tocindent='', $TOCusePaging=true, $TOCuseLinking='', $toc_orientation='', $toc_mgl='',$toc_mgr='',$toc_mgt='',$toc_mgb='',$toc_mgh='',$toc_mgf='',$toc_ohname='',$toc_ehname='',$toc_ofname='',$toc_efname='',$toc_ohvalue=0,$toc_ehvalue=0,$toc_ofvalue=0, $toc_efvalue=0, $toc_preHTML='', $toc_postHTML='', $toc_bookmarkText='', $resetpagenum='', $pagenumstyle='', $suppress='', $orientation='', $mgl='',$mgr='',$mgt='',$mgb='',$mgh='',$mgf='',$ohname='',$ehname='',$ofname='',$efname='',$ohvalue=0,$ehvalue=0,$ofvalue=0,$efvalue=0, $toc_id=0, $pagesel='', $toc_pagesel='', $sheetsize='', $toc_sheetsize='') {
+function TOCpagebreak($tocfont='', $tocfontsize='', $tocindent='', $TOCusePaging=true, $TOCuseLinking='', $toc_orientation='', $toc_mgl='',$toc_mgr='',$toc_mgt='',$toc_mgb='',$toc_mgh='',$toc_mgf='',$toc_ohname='',$toc_ehname='',$toc_ofname='',$toc_efname='',$toc_ohvalue=0,$toc_ehvalue=0,$toc_ofvalue=0, $toc_efvalue=0, $toc_preHTML='', $toc_postHTML='', $toc_bookmarkText='', $resetpagenum='', $pagenumstyle='', $suppress='', $orientation='', $mgl='',$mgr='',$mgt='',$mgb='',$mgh='',$mgf='',$ohname='',$ehname='',$ofname='',$efname='',$ohvalue=0,$ehvalue=0,$ofvalue=0,$efvalue=0, $toc_id=0, $pagesel='', $toc_pagesel='', $sheetsize='', $toc_sheetsize='', $tocoutdent='') {	// mPDF 5.6.19
 		if (strtoupper($toc_id)=='ALL') { $toc_id = '_mpdf_all'; }
 		else if (!$toc_id) { $toc_id = 0; }
 		else { $toc_id = strtolower($toc_id); }
 
-		if (!$tocfont) { $tocfont = $this->mpdf->default_font; }
-		if (!$tocfontsize) { $tocfontsize = $this->mpdf->default_font_size; }
-		if (!$tocindent && $tocindent !== 0) { $tocindent = 5; }
 		if ($TOCusePaging === false || strtolower($TOCusePaging) == "off" || $TOCusePaging === 0 || $TOCusePaging === "0" || $TOCusePaging === "") { $TOCusePaging = false; }
 		else { $TOCusePaging = true; }
 		if (!$TOCuseLinking) { $TOCuseLinking = false; }
 		if ($toc_id) {
 			$this->m_TOC[$toc_id]['TOCmark'] = $this->mpdf->page; 
-			$this->m_TOC[$toc_id]['TOCfont'] = $tocfont;
-			$this->m_TOC[$toc_id]['TOCfontsize'] = $tocfontsize;
-			$this->m_TOC[$toc_id]['TOCindent'] = $tocindent;
+			$this->m_TOC[$toc_id]['TOCoutdent'] = $tocoutdent;
 			$this->m_TOC[$toc_id]['TOCorientation'] = $toc_orientation;
 			$this->m_TOC[$toc_id]['TOCuseLinking'] = $TOCuseLinking;
 			$this->m_TOC[$toc_id]['TOCusePaging'] = $TOCusePaging;
@@ -83,9 +74,7 @@ function TOCpagebreak($tocfont='', $tocfontsize='', $tocindent='', $TOCusePaging
 		}
 		else {
 			$this->TOCmark = $this->mpdf->page; 
-			$this->TOCfont = $tocfont;
-			$this->TOCfontsize = $tocfontsize;
-			$this->TOCindent = $tocindent;
+			$this->TOCoutdent = $tocoutdent;
 			$this->TOCorientation = $toc_orientation;
 			$this->TOCuseLinking = $TOCuseLinking;
 			$this->TOCusePaging = $TOCusePaging;
@@ -114,7 +103,7 @@ function TOCpagebreak($tocfont='', $tocfontsize='', $tocindent='', $TOCusePaging
 }
 
 // Initiate, and Mark a place for the Table of Contents to be inserted
-function TOC($tocfont='', $tocfontsize=8, $tocindent=5, $resetpagenum='', $pagenumstyle='', $suppress='', $toc_orientation='', $TOCusePaging=true, $TOCuseLinking=false, $toc_id=0) {
+function TOC($tocfont='', $tocfontsize=0, $tocindent=0, $resetpagenum='', $pagenumstyle='', $suppress='', $toc_orientation='', $TOCusePaging=true, $TOCuseLinking=false, $toc_id=0, $tocoutdent='') {	// mPDF 5.6.19) {
 		if (strtoupper($toc_id)=='ALL') { $toc_id = '_mpdf_all'; }
 		else if (!$toc_id) { $toc_id = 0; }
 		else { $toc_id = strtolower($toc_id); }
@@ -129,22 +118,16 @@ function TOC($tocfont='', $tocfontsize=8, $tocindent=5, $resetpagenum='', $pagen
 		else { 
 			$this->mpdf->PageNumSubstitutions[] = array('from'=>$this->mpdf->page, 'reset'=> $resetpagenum, 'type'=>$pagenumstyle, 'suppress'=>$suppress);
 		}
-		if (!$tocfont) { $tocfont = $this->mpdf->default_font; }
-		if (!$tocfontsize) { $tocfontsize = $this->mpdf->default_font_size; }
 		if ($toc_id) {
 			$this->m_TOC[$toc_id]['TOCmark'] = $this->mpdf->page; 
-			$this->m_TOC[$toc_id]['TOCfont'] = $tocfont;
-			$this->m_TOC[$toc_id]['TOCfontsize'] = $tocfontsize;
-			$this->m_TOC[$toc_id]['TOCindent'] = $tocindent;
+			$this->m_TOC[$toc_id]['TOCoutdent'] = $tocoutdent;
 			$this->m_TOC[$toc_id]['TOCorientation'] = $toc_orientation;
 			$this->m_TOC[$toc_id]['TOCuseLinking'] = $TOCuseLinking;
 			$this->m_TOC[$toc_id]['TOCusePaging'] = $TOCusePaging;
 		}
 		else {
 			$this->TOCmark = $this->mpdf->page; 
-			$this->TOCfont = $tocfont;
-			$this->TOCfontsize = $tocfontsize;
-			$this->TOCindent = $tocindent;
+			$this->TOCoutdent = $tocoutdent;
 			$this->TOCorientation = $toc_orientation;
 			$this->TOCuseLinking = $TOCuseLinking;
 			$this->TOCusePaging = $TOCusePaging;
@@ -173,9 +156,7 @@ function insertTOC() {
 		if ($toci==0 && $this->TOCmark) {
 			$toc_id = 0;
 			$toc_page = $this->TOCmark; 
-			$tocfont = $this->TOCfont;
-			$tocfontsize = $this->TOCfontsize;
-			$tocindent = $this->TOCindent;
+			$tocoutdent = $this->TOCoutdent;
 			$toc_orientation = $this->TOCorientation;
 			$TOCuseLinking = $this->TOCuseLinking;
 			$TOCusePaging = $this->TOCusePaging;
@@ -204,9 +185,7 @@ function insertTOC() {
 
 			$toc_id = key($this->m_TOC);
 			$toc_page = $this->m_TOC[$toc_id]['TOCmark'];
-			$tocfont = $this->m_TOC[$toc_id]['TOCfont'];
-			$tocfontsize = $this->m_TOC[$toc_id]['TOCfontsize'];
-			$tocindent = $this->m_TOC[$toc_id]['TOCindent'];
+			$tocoutdent = $this->m_TOC[$toc_id]['TOCoutdent'];
 			$toc_orientation = $this->m_TOC[$toc_id]['TOCorientation'];
 			$TOCuseLinking = $this->m_TOC[$toc_id]['TOCuseLinking'];
 			$TOCusePaging = $this->m_TOC[$toc_id]['TOCusePaging'];
@@ -234,134 +213,40 @@ function insertTOC() {
 			$toc_sheet_size = $this->m_TOC[$toc_id]['TOCsheetsize'];
 			next($this->m_TOC);
 		}
-		if ($this->TOCheader) { $this->mpdf->SetHeader($this->TOCheader); }
-		else if ($this->TOCheader !== false) { $this->mpdf->SetHeader(); }
 
-		if (!$tocindent && $tocindent !== 0) { $tocindent = 5; }
+		// mPDF 5.6.31
+
 		if (!$toc_orientation) { $toc_orientation= $this->mpdf->DefOrientation; }
 		$this->mpdf->AddPage($toc_orientation, '', '', '', "on", $toc_mgl, $toc_mgr, $toc_mgt, $toc_mgb, $toc_mgh, $toc_mgf, $toc_ohname, $toc_ehname, $toc_ofname, $toc_efname, $toc_ohvalue, $toc_ehvalue, $toc_ofvalue, $toc_efvalue, $toc_page_selector, $toc_sheet_size );
 
-		if ($this->TOCfooter) { $this->mpdf->SetFooter($this->TOCfooter); }
-		else if ($this->TOCfooter !== false) { $this->mpdf->SetFooter(); }
-
+		$this->mpdf->writingToC = true;	// mPDF 5.6.38
+		// mPDF 5.6.31
 		$tocstart=count($this->mpdf->pages);
 		if ($toc_preHTML) { $this->mpdf->WriteHTML($toc_preHTML); }
 
+
+		// mPDF 5.6.19
+		$html ='<div class="mpdf_toc" id="mpdf_toc_'.$toc_id.'">';
 		foreach($this->_toc as $t) {
 		 if ($t['toc_id']==='_mpdf_all' || $t['toc_id']===$toc_id ) {
-		   $tpgno = $this->mpdf->docPageNum($t['p']);
-		   $lineheightcorr = max(0,2-$t['l']);	// mPDF 5.4.15
-		   //Offset
-		   $level=$t['l'];
-
-		   if ($TOCuseLinking) { $tlink = $t['link']; }
-		   else  { $tlink = ''; }
-
-		   if ($this->mpdf->directionality == 'rtl') {
-			$weight='';
-			if($level==0)
-				$weight='B';
-			$str=$t['t'];
-			$fullstr = $str;
-			$this->mpdf->SetFont($tocfont,$weight,$tocfontsize,true,true);
-			$PageCellSize=$this->mpdf->GetStringWidth($tpgno )+2;
-			$strsize=$this->mpdf->GetStringWidth($str);
-			$repdots = $this->mpdf->GetStringWidth(str_repeat('.',5));	// mPDF 5.3.07
-			$cw = count(explode(' ',$str));
-			while (($strsize + $repdots +4 + $PageCellSize) > $this->mpdf->pgwidth && $cw>1) {	// mPDF 5.3.07
-				$str = implode(' ',explode(' ',$str,-1));
-				$strsize=$this->mpdf->GetStringWidth($str);
-				$cw = count(explode(' ',$str));
+			$html .= '<div class="mpdf_toc_level_'.$t['l'].'">';
+			if ($TOCuseLinking) { $html .= '<a class="mpdf_toc_a" href="#__mpdfinternallink_'.$t['link'].'">'; }
+			$html .= '<span class="mpdf_toc_t_level_'.$t['l'].'">'.$t['t'].'</span>';
+			if ($TOCuseLinking) { $html .= '</a>'; }
+			if (!$tocoutdent) { $tocoutdent = '0'; }
+			if ($TOCusePaging) { $html .= ' <dottab outdent="'.$tocoutdent.'" /> ';
+				if ($TOCuseLinking) { $html .= '<a class="mpdf_toc_a" href="#__mpdfinternallink_'.$t['link'].'">'; }
+				$html .= '<span class="mpdf_toc_p_level_'.$t['l'].'">'.$this->mpdf->docPageNum($t['p']).'</span>';
+				if ($TOCuseLinking) { $html .= '</a>'; }
 			}
-			$sl = strlen($str);
-			$rem = substr($fullstr, ($sl+1));
-
-			$this->mpdf->magic_reverse_dir($str, true, $this->mpdf->directionality);	// *RTL*
-
-			if ($TOCusePaging) {
-				//Page number
-				$this->mpdf->SetFont($tocfont,'',$tocfontsize);
-				$this->mpdf->Cell($PageCellSize,$this->mpdf->FontSize+$lineheightcorr,$tpgno ,0,0,'L',0,$tlink);
-
-				//Filling dots
-				$w=$this->mpdf->w-$this->mpdf->lMargin-$this->mpdf->rMargin-$PageCellSize-($level*$tocindent)-($strsize+2);
-				$nb=intval($w/$this->mpdf->GetCharWidth('.',false));	// mPDF 5.3.04
-				if ($nb>0) { 
-					$dots=str_repeat('.',$nb);
-					$this->mpdf->Cell($w+2,$this->mpdf->FontSize+$lineheightcorr,$dots,0,0,'L');
-				}
-				// Text
-				$this->mpdf->SetFont($tocfont,$weight,$tocfontsize);
-				$this->mpdf->Cell($strsize-($level*$tocindent),$this->mpdf->FontSize+$lineheightcorr,$str,0,1,'R',0,$tlink);
-			}
-			else {
-				// Text
-				$this->mpdf->SetFont($tocfont,$weight,$tocfontsize);
-				$this->mpdf->Cell($this->mpdf->pgwidth -($level*$tocindent),$this->mpdf->FontSize+$lineheightcorr,$str,0,1,'R',0,$tlink);
-			}
-
-			if ($rem) {
-				$this->mpdf->x += 10;
-				$this->mpdf->SetFont($tocfont,$weight,$tocfontsize,true,true);
-				$this->mpdf->MultiCell($this->mpdf->pgwidth -($level*$tocindent)-15,$this->mpdf->FontSize+$lineheightcorr,$rem,0,R,0,$tlink,'rtl',true); 
-			}
-		   }
-		   // LTR
-		   else {
-			// Text
-			$weight='';
-			if($level==0)
-				$weight='B';
-			$str=$t['t'];
-			$fullstr = $str;
-			$this->mpdf->SetFont($tocfont,$weight,$tocfontsize,true,true);
-			if($level>0 && $tocindent) { $this->mpdf->Cell($level*$tocindent,$this->mpdf->FontSize+$lineheightcorr); }
-
-			// Font-specific ligature substitution for Indic fonts
-			if (isset($this->mpdf->CurrentFont['indic']) && $this->mpdf->CurrentFont['indic']) $this->mpdf->ConvertIndic($str);	// *INDIC*
-
-			$PageCellSize=$this->mpdf->GetStringWidth($tpgno )+2;
-			$strsize=$this->mpdf->GetStringWidth($str);
-			$repdots = $this->mpdf->GetStringWidth(str_repeat('.',5));	// mPDF 5.3.07
-			$cw = count(explode(' ',$str));
-			while (($strsize + $repdots +4+ $PageCellSize + ($level*$tocindent)) > $this->mpdf->pgwidth && $cw>1) {	// mPDF 5.3.07
-				$str = implode(' ',explode(' ',$str,-1));
-				$strsize=$this->mpdf->GetStringWidth($str);
-				$cw = count(explode(' ',$str));
-			}
-			$sl = strlen($str);
-			$rem = substr($fullstr, ($sl+1));
-
-			if ($TOCusePaging) {
-				// Text
-				$this->mpdf->Cell($strsize+2,$this->mpdf->FontSize+$lineheightcorr,$str,0,0,'',0,$tlink);
-
-				//Filling dots
-				$this->mpdf->SetFont($tocfont,'',$tocfontsize);
-				$w=$this->mpdf->w-$this->mpdf->lMargin-$this->mpdf->rMargin-$PageCellSize-($level*$tocindent)-($strsize+2);
-				$nb=intval($w/$this->mpdf->GetCharWidth('.',false));	// mPDF 5.3.04
-				if ($nb>0) { $dots=str_repeat('.',$nb); }
-				else { $this->mpdf->y += $this->mpdf->lineheight; $dots=str_repeat('.',5); }	// ..... 5 dots?
-				$this->mpdf->Cell($w,$this->mpdf->FontSize+$lineheightcorr,$dots,0,0,'R');
-
-				//Page number
-				$this->mpdf->Cell($PageCellSize,$this->mpdf->FontSize+$lineheightcorr,$tpgno ,0,1,'R',0,$tlink);
-			}
-			else {
-				// Text only
-				$this->mpdf->Cell($strsize+2,$this->mpdf->FontSize+$lineheightcorr,$str,0,1,'',0,$tlink);	// forces new line
-			}
-			if ($rem) {
-				$this->mpdf->x +=  5 + $PageCellSize + ($level*$tocindent);
-				$this->mpdf->SetFont($tocfont,$weight,$tocfontsize,true,true);
-				$this->mpdf->MultiCell($strsize+2,$this->mpdf->FontSize+$lineheightcorr,$rem,0,L,0,$tlink,'ltr',true); 
-			}
-
-		   }	// *RTL*
+			$html .= '</div>';
 		 } 
 		}
+		$html .= '</div>';
+		$this->mpdf->WriteHTML($html);
 
 		if ($toc_postHTML) { $this->mpdf->WriteHTML($toc_postHTML); }
+		$this->mpdf->writingToC = false;	// mPDF 5.6.38
 		$this->mpdf->AddPage($toc_orientation,'E');
 
 		$n_toc = $this->mpdf->page - $tocstart + 1;
@@ -462,9 +347,7 @@ function insertTOC() {
 
 
 function openTagTOC($attr) {
-	if (isset($attr['FONT-SIZE']) && $attr['FONT-SIZE']) { $tocfontsize = $attr['FONT-SIZE']; } else { $tocfontsize = ''; }
-	if (isset($attr['FONT']) && $attr['FONT']) { $tocfont = $attr['FONT']; } else { $tocfont = ''; }
-	if (isset($attr['INDENT']) && $attr['INDENT']) { $tocindent = $attr['INDENT']; } else { $tocindent = ''; }
+	if (isset($attr['OUTDENT']) && $attr['OUTDENT']) { $tocoutdent = $attr['OUTDENT']; } else { $tocoutdent = ''; }	// mPDF 5.6.19
 	if (isset($attr['RESETPAGENUM']) && $attr['RESETPAGENUM']) { $resetpagenum = $attr['RESETPAGENUM']; } else { $resetpagenum = ''; }
 	if (isset($attr['PAGENUMSTYLE']) && $attr['PAGENUMSTYLE']) { $pagenumstyle = $attr['PAGENUMSTYLE']; } else { $pagenumstyle= ''; }
 	if (isset($attr['SUPPRESS']) && $attr['SUPPRESS']) { $suppress = $attr['SUPPRESS']; } else { $suppress = ''; }
@@ -474,16 +357,14 @@ function openTagTOC($attr) {
 	if (isset($attr['LINKS']) && (strtoupper($attr['LINKS'])=='ON' || $attr['LINKS']==1)) { $links = true; }
 	else { $links = false; }
 	if (isset($attr['NAME']) && $attr['NAME']) { $toc_id = strtolower($attr['NAME']); } else { $toc_id = 0; }
-	$this->TOC($tocfont,$tocfontsize,$tocindent,$resetpagenum, $pagenumstyle, $suppress, $toc_orientation, $paging, $links, $toc_id);
+	$this->TOC('',0,0,$resetpagenum, $pagenumstyle, $suppress, $toc_orientation, $paging, $links, $toc_id, $tocoutdent);  // mPDF 5.6.19 5.6.31
 }
 
 
 function openTagTOCPAGEBREAK($attr) {
 	if (isset($attr['NAME']) && $attr['NAME']) { $toc_id = strtolower($attr['NAME']); } else { $toc_id = 0; }
 	if ($toc_id) {
-	  if (isset($attr['FONT-SIZE'])) { $this->m_TOC[$toc_id]['TOCfontsize'] = $attr['FONT-SIZE']; } else { $this->m_TOC[$toc_id]['TOCfontsize'] = $this->mpdf->default_font_size; }
-	  if (isset($attr['FONT'])) { $this->m_TOC[$toc_id]['TOCfont'] = $attr['FONT']; } else { $this->m_TOC[$toc_id]['TOCfont'] = $this->mpdf->default_font; }
-	  if (isset($attr['INDENT']) && $attr['INDENT']) { $this->m_TOC[$toc_id]['TOCindent'] = $attr['INDENT']; } else { $this->m_TOC[$toc_id]['TOCindent'] = ''; }
+	  if (isset($attr['OUTDENT']) && $attr['OUTDENT']) { $this->m_TOC[$toc_id]['TOCoutdent'] = $attr['OUTDENT']; } else { $this->m_TOC[$toc_id]['TOCoutdent'] = ''; }	// mPDF 5.6.19
 	  if (isset($attr['TOC-ORIENTATION']) && $attr['TOC-ORIENTATION']) { $this->m_TOC[$toc_id]['TOCorientation'] = $attr['TOC-ORIENTATION']; } else { $this->m_TOC[$toc_id]['TOCorientation'] = ''; }
 	  if (isset($attr['PAGING']) && (strtoupper($attr['PAGING'])=='OFF' || $attr['PAGING']==='0')) { $this->m_TOC[$toc_id]['TOCusePaging'] = false; }
 	  else { $this->m_TOC[$toc_id]['TOCusePaging'] = true; }
@@ -522,9 +403,7 @@ function openTagTOCPAGEBREAK($attr) {
 	  if (isset($attr['TOC-BOOKMARKTEXT']) && $attr['TOC-BOOKMARKTEXT']) { $this->m_TOC[$toc_id]['TOCbookmarkText'] = htmlspecialchars_decode($attr['TOC-BOOKMARKTEXT'],ENT_QUOTES); }	// *BOOKMARKS*
 	}
 	else {
-	  if (isset($attr['FONT-SIZE'])) { $this->TOCfontsize = $attr['FONT-SIZE']; } else { $this->TOCfontsize = $this->mpdf->default_font_size; }
-	  if (isset($attr['FONT'])) { $this->TOCfont = $attr['FONT']; } else { $this->TOCfont = $this->mpdf->default_font; }
-	  if (isset($attr['INDENT']) && $attr['INDENT']) { $this->TOCindent = $attr['INDENT']; } else { $this->TOCindent = ''; }
+	  if (isset($attr['OUTDENT']) && $attr['OUTDENT']) { $this->TOCoutdent = $attr['OUTDENT']; } else { $this->TOCoutdent = ''; }	// mPDF 5.6.19
 	  if (isset($attr['TOC-ORIENTATION']) && $attr['TOC-ORIENTATION']) { $this->TOCorientation = $attr['TOC-ORIENTATION']; } else { $this->TOCorientation = ''; }
 	  if (isset($attr['PAGING']) && (strtoupper($attr['PAGING'])=='OFF' || $attr['PAGING']==='0')) { $this->TOCusePaging = false; }
 	  else { $this->TOCusePaging = true; }
@@ -548,6 +427,7 @@ function openTagTOCPAGEBREAK($attr) {
 	  else if (isset($attr['TOC-ODD-HEADER-VALUE']) && ($attr['TOC-ODD-HEADER-VALUE']=='-1' || strtoupper($attr['TOC-ODD-HEADER-VALUE'])=='OFF')) { $this->TOC_odd_header_value = -1; }
 	  if (isset($attr['TOC-EVEN-HEADER-VALUE']) && ($attr['TOC-EVEN-HEADER-VALUE']=='1' || strtoupper($attr['TOC-EVEN-HEADER-VALUE'])=='ON')) { $this->TOC_even_header_value = 1; }
 	  else if (isset($attr['TOC-EVEN-HEADER-VALUE']) && ($attr['TOC-EVEN-HEADER-VALUE']=='-1' || strtoupper($attr['TOC-EVEN-HEADER-VALUE'])=='OFF')) { $this->TOC_even_header_value = -1; }
+
 	  if (isset($attr['TOC-ODD-FOOTER-VALUE']) && ($attr['TOC-ODD-FOOTER-VALUE']=='1' || strtoupper($attr['TOC-ODD-FOOTER-VALUE'])=='ON')) { $this->TOC_odd_footer_value = 1; }
 	  else if (isset($attr['TOC-ODD-FOOTER-VALUE']) && ($attr['TOC-ODD-FOOTER-VALUE']=='-1' || strtoupper($attr['TOC-ODD-FOOTER-VALUE'])=='OFF')) { $this->TOC_odd_footer_value = -1; }
 	  if (isset($attr['TOC-EVEN-FOOTER-VALUE']) && ($attr['TOC-EVEN-FOOTER-VALUE']=='1' || strtoupper($attr['TOC-EVEN-FOOTER-VALUE'])=='ON')) { $this->TOC_even_footer_value = 1; }
@@ -555,7 +435,6 @@ function openTagTOCPAGEBREAK($attr) {
 	  if (isset($attr['TOC-PAGE-SELECTOR']) && $attr['TOC-PAGE-SELECTOR']) { $this->TOC_page_selector = $attr['TOC-PAGE-SELECTOR']; }
 	  else { $this->TOC_page_selector = ''; }
 	  if (isset($attr['TOC-SHEET-SIZE']) && $attr['TOC-SHEET-SIZE']) { $this->TOCsheetsize = $attr['TOC-SHEET-SIZE']; } else { $this->TOCsheetsize = ''; }
-
 
 	  if (isset($attr['TOC-PREHTML']) && $attr['TOC-PREHTML']) { $this->TOCpreHTML = htmlspecialchars_decode($attr['TOC-PREHTML'],ENT_QUOTES); }
 	  if (isset($attr['TOC-POSTHTML']) && $attr['TOC-POSTHTML']) { $this->TOCpostHTML = htmlspecialchars_decode($attr['TOC-POSTHTML'],ENT_QUOTES); }

@@ -224,23 +224,30 @@ function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
 }
 
 
-function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsizePt=0, $fontstyle='', $kerning=120, $fontwidth=100) {
+function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsizePt=0, $fontstyle='', $kerning=120, $fontwidth=100, $divider='') {	// mPDF 5.5.23
 	if ($font || $fontstyle || $fontsizePt) $this->mpdf->SetFont($fontfamily,$fontstyle,$fontsizePt);
 	$kerning/=100;
 	$fontwidth/=100;        
 	if($kerning==0) $this->mpdf->Error('Please use values unequal to zero for kerning (CircularText)');
-	if($fontwidth==0) $this->mpdf->Error('Please use values unequal to zero for font width (CircularText)');        
-	$t=0;
+	if($fontwidth==0) $this->mpdf->Error('Please use values unequal to zero for font width (CircularText)');
 	$text=str_replace("\r",'',$text);
-	if ($this->mpdf->usingCoreFont)  {
+	//circumference
+	$u=($r*2)*M_PI;
+	// mPDF 5.5.23
+	$checking = true;
+	$autoset = false;
+	while($checking) {
+	   $t=0;
+	   $w = array();
+	   if ($this->mpdf->usingCoreFont)  {
 		$nb=strlen($text); 
 		for($i=0; $i<$nb; $i++){
 			$w[$i]=$this->mpdf->GetStringWidth($text[$i]);
 			$w[$i]*=$kerning*$fontwidth;
 			$t+=$w[$i];
 		}
-	}
-	else { 
+	   }
+	   else { 
 		$nb=mb_strlen($text, $this->mpdf->mb_enc ); 
 		$lastchar = '';
 		$unicode = $this->mpdf->UTF8StringToArray($text);
@@ -260,9 +267,21 @@ function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsize
 			$lastchar = $char;
 			$t+=$w[$i];
 		}
+	   }
+	   if ($fontsizePt>=0 || $autoset) { $checking = false; }
+	   else {
+		$t+=$this->mpdf->GetStringWidth('  ');
+		if ($divider)
+			$t+=$this->mpdf->GetStringWidth('  ');
+		if ($fontsizePt==-2)
+			$fontsizePt = $this->mpdf->FontSizePt * 0.5  *  $u/$t;
+		else 
+			$fontsizePt = $this->mpdf->FontSizePt * $u/$t;
+		$this->mpdf->SetFontSize($fontsizePt);
+		$autoset = true;
+	   }
 	}
-	//circumference
-	$u=($r*2)*M_PI;
+
 	//total width of string in degrees
 	$d=($t/$u)*360;
 
@@ -313,6 +332,24 @@ function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsize
 		}
 	}
 	$this->mpdf->StopTransform();
+
+	// mPDF 5.5.23
+	if($align=='top' && $divider!=''){
+		$wc=$this->mpdf->GetStringWidth($divider);
+		$wc*=$kerning*$fontwidth;
+
+		$this->mpdf->StartTransform();
+		$this->mpdf->transformRotate(90, $x, $y);
+		$this->mpdf->SetXY($x-$wc/2, $y-$r);
+		$this->mpdf->Cell(($wc),$this->mpdf->FontSize,$divider,0,0,'C');
+		$this->mpdf->StopTransform();
+
+		$this->mpdf->StartTransform();
+		$this->mpdf->transformRotate(-90, $x, $y);
+		$this->mpdf->SetXY($x-$wc/2, $y-$r);
+		$this->mpdf->Cell(($wc),$this->mpdf->FontSize,$divider,0,0,'C');
+		$this->mpdf->StopTransform();
+	}
 }
 
 function Shaded_box( $text,$font='',$fontstyle='B',$szfont='',$width='70%',$style='DF',$radius=2.5,$fill='#FFFFFF',$color='#000000',$pad=2 )

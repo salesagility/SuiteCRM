@@ -195,5 +195,6 @@ $mod_strings = array (
   'LBL_SHIPPING_TAX' => 'Shipping Tax',
   'LBL_SHIPPING_TAX_AMT' => 'Shipping Tax',
   'LBL_IMPORT_LINE_ITEMS' => 'Import Line Items',
+  'LBL_CREATE_OPPORTUNITY' => 'Create Opportunity',
 );
 ?>

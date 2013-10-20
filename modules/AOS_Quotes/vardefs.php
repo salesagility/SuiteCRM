@@ -601,7 +601,16 @@ $dictionary['AOS_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
-  
+
+ 'opportunities' =>
+ array(
+  'name' => 'opportunities',
+  'type' => 'link',
+  'relationship' => 'opportunity_aos_quotes',
+  'module'=>'Opportunities',
+  'bean_name'=>'Opportunity',
+  'source'=>'non-db',
+ ),
  'aos_quotes_project' =>
  array (
   'name' => 'aos_quotes_project',
