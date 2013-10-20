@@ -210,7 +210,6 @@ $nonStandardModules = array (
  VardefManager::clearVardef();
 installerHook('pre_createAllModuleTables');
 foreach( $beanFiles as $bean => $file ) {
-    echo $bean.', ';
 	$doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
 
 	if(in_array($bean, $doNotInit)) {
