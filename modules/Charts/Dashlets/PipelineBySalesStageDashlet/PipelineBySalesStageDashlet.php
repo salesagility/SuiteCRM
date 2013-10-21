@@ -127,7 +127,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
 
         $pipeline_total_string = translate('LBL_TOTAL_PIPELINE', 'Charts') . $sugarChart->currency_symbol . format_number($sugarChart->getTotal(), 0, 0, array('convert'=>true)) . $sugarChart->thousands_symbol;
-            $sugarChart->setProperties($pipeline_total_string, $subtitle, 'horizontal group by chart');
+            $sugarChart->setProperties($pipeline_total_string, $subtitle, 'funnel chart 3D');
 
         $xmlFile = $sugarChart->getXMLFileName($this->id);
         $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());

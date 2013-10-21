@@ -118,8 +118,7 @@ $out =<<<EOQ
 		<img src="{$sugar_md}" alt="SuiteCRM" border="0">
 		</p>
 		{$mod_strings['LBL_PERFORM_TITLE']}</th>
-    <th width="200" style="text-align: right;"><a href="http://www.suitecrm.com" target="_blank">
-    <IMG src="$loginImage" alt="SuiteCRM" border="0"></a></th>
+    <th width="200" style="text-align: right;"></th>
 </tr>
 <tr>
    <td colspan="2">
@@ -146,15 +145,6 @@ echo "<br>";
 echo "<b>{$mod_strings['LBL_PERFORM_TABLES']}</b>";
 echo "<br>";
 
-//Suite rebuild exts
-require_once('ModuleInstall/ModuleInstaller.php');
-$ModuleInstaller = new ModuleInstaller();
-$ModuleInstaller->silent=true;
-$ModuleInstaller->rebuild_modules();
-$ModuleInstaller->rebuild_languages(  array ('en_us' => 'English (US)',));
-$ModuleInstaller->rebuild_extensions();
-$ModuleInstaller->rebuild_tabledictionary();
-
 // create the SugarCRM database
 if($setup_db_create_database) {
     installLog("calling handleDbCreateDatabase()");
@@ -169,6 +159,15 @@ if($setup_db_create_database) {
     handleDbCharsetCollation();
     installerHook('post_handleDbCharsetCollation');
 }
+
+//Suite rebuild exts
+/*require_once('ModuleInstall/ModuleInstaller.php');
+$ModuleInstaller = new ModuleInstaller();
+$ModuleInstaller->silent=true;
+$ModuleInstaller->rebuild_modules();
+$ModuleInstaller->rebuild_languages(  array ('en_us' => 'English (US)',));
+$ModuleInstaller->rebuild_extensions();
+$ModuleInstaller->rebuild_tabledictionary();*/
 
 // create the SugarCRM database user
 if($setup_db_create_sugarsales_user){
@@ -503,6 +502,8 @@ FP;
     $enabled_tabs[] = 'Prospects';
     $enabled_tabs[] = 'ProspectLists';
     $enabled_tabs[] = 'Projects';
+    $enabled_tabs[] = 'FP_events';
+    $enabled_tabs[] = 'FP_Event_Locations';
     $enabled_tabs[] = 'AOS_Products';
     $enabled_tabs[] = 'AOS_Product_Categories';
     $enabled_tabs[] = 'AOS_PDF_Templates';
@@ -510,6 +511,7 @@ FP;
     $enabled_tabs[] = 'jjwg_Markers';
     $enabled_tabs[] = 'jjwg_Areas';
     $enabled_tabs[] = 'jjwg_Address_Cache';
+    $enabled_tabs[] = 'AOR_Reports';
     $enabled_tabs[] = 'AOW_WorkFlow';
 
 

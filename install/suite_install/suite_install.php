@@ -21,6 +21,9 @@ install_aos();
 require_once('install/suite_install/AdvancedOpenPortal.php');
 install_aop();
 
+require_once('install/suite_install/AdvancedOpenEvents.php');
+install_aoe();
+
 require_once('install/suite_install/SecurityGroups.php');
 install_ss();
 

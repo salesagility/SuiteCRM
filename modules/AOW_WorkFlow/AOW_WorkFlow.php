@@ -87,7 +87,7 @@ class AOW_WorkFlow extends Basic {
         $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
 
         foreach($app_list_strings['aow_moduleList'] as $mkey => $mvalue){
-            if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
+            if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_') || str_begin($mkey, 'AOR_')){
                 unset($app_list_strings['aow_moduleList'][$mkey]);
             }
         }

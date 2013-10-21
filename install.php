@@ -261,6 +261,7 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
   }
 
     //$workflow[] = 'register.php';
+    $workflow[] = 'complete_install.php';
 
 
 // increment/decrement the workflow pointer
@@ -331,7 +332,7 @@ EOHTML;
 
 
 
-    $exclude_files = array('register.php','download_modules.php');
+    $exclude_files = array('complete_install.php','register.php','download_modules.php');
 
 if(isset($next_step) && isset($workflow[$next_step]) && !in_array($workflow[$next_step],$exclude_files) && isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
     $the_file = 'installDisabled.php';
@@ -523,6 +524,7 @@ EOQ;
         }
         break;
     case 'register.php':
+    case 'complete_install.php':
         session_unset();
         break;
     case 'SilentInstall':
