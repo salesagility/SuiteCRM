@@ -178,6 +178,12 @@ YAHOO.util.Event.onDOMReady(function() {ldelim}
 {rdelim});
 
 YAHOO.util.Event.onDOMReady(function() {ldelim}
+    //register on basic search form button if it exists
+    if(document.getElementById('search_form_submit'))
+     {ldelim}
+         YAHOO.util.Event.addListener('search_form_submit', 'click',{$id}_range_validate);
+     {rdelim}
+    //register on advanced search submit button if it exists
    if(document.getElementById('search_form_submit_advanced'))
     {ldelim}
         YAHOO.util.Event.addListener('search_form_submit_advanced', 'click',{$id}_range_validate);

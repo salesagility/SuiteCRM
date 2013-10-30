@@ -2586,7 +2586,8 @@ class SugarBean
                 // Bug 38803 - Use CONVERT() function when doing an order by on ntext, text, and image fields
                 if ($source != 'non-db'
                     && $this->db->isTextType($this->db->getFieldType($bean_queried->field_defs[$list_column_name]))) {
-                    $list_column[0] = $this->db->convert($list_column[0], "text2char");
+                    // array(10000) is for db2 only. It tells db2manager to cast 'clob' to varchar(10000) for this 'sort by' column
+                    $list_column[0] = $this->db->convert($list_column[0], "text2char", array(10000));
                 }
 
                 $is_valid = true;
@@ -5379,11 +5380,7 @@ class SugarBean
     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
     * @param $is_owner bool optional, this is part of the ACL check if the current user is an owner they will receive different access
     */
-	/* BEGIN - SECURITY GROUPS - aclaccess */  
-	/**
     function ACLAccess($view,$is_owner='not_set')
-	*/
-    function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
     {
         global $current_user;
         if($current_user->isAdmin()) {
@@ -5744,22 +5741,22 @@ class SugarBean
        $street_field
        )
     {
-        $street_field_2 = $street_field.'_2';
-        $street_field_3 = $street_field.'_3';
-        $street_field_4 = $street_field.'_4';
-        if ( isset($this->$street_field_2)) {
-            $this->$street_field .= "\n". $this->$street_field_2;
-            unset($this->$street_field_2);
-        }
-        if ( isset($this->$street_field_3)) {
-            $this->$street_field .= "\n". $this->$street_field_3;
-            unset($this->$street_field_3);
-        }
-        if ( isset($this->$street_field_4)) {
-            $this->$street_field .= "\n". $this->$street_field_4;
-            unset($this->$street_field_4);
-        }
-        if ( isset($this->$street_field)) {
+        if (isset($this->$street_field)) {
+            $street_field_2 = $street_field.'_2';
+            $street_field_3 = $street_field.'_3';
+            $street_field_4 = $street_field.'_4';
+            if ( isset($this->$street_field_2)) {
+                $this->$street_field .= "\n". $this->$street_field_2;
+                unset($this->$street_field_2);
+            }
+            if ( isset($this->$street_field_3)) {
+                $this->$street_field .= "\n". $this->$street_field_3;
+                unset($this->$street_field_3);
+            }
+            if ( isset($this->$street_field_4)) {
+                $this->$street_field .= "\n". $this->$street_field_4;
+                unset($this->$street_field_4);
+            }
             $this->$street_field = trim($this->$street_field, "\n");
         }
     }

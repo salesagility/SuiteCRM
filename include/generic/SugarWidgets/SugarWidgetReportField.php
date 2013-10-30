@@ -180,6 +180,7 @@ class SugarWidgetReportField extends SugarWidgetField
 
  function queryOrderBy($layout_def)
  {
+     $field_def = array();
 	if(!empty($this->reporter->all_fields[$layout_def['column_key']])) $field_def = $this->reporter->all_fields[$layout_def['column_key']];
 
     if (!empty($layout_def['group_function']))
@@ -195,6 +196,12 @@ class SugarWidgetReportField extends SugarWidgetField
 	else {
 		$order_by = $this->_get_column_alias($layout_def)." \n";
 	}
+
+     //use sugar db function convert on order by string to convert to varchar.  This is mainly for db's
+     //that do not allow sorting on clob/text fields
+    if ($this->reporter->db->isTextType($this->reporter->db->getFieldType($field_def))) {
+        $order_by = $this->reporter->db->convert($order_by,'text2char', array(10000)); // array(10000) is for db2 only
+    }
 
 			if ( empty($layout_def['sort_dir']) || $layout_def['sort_dir'] == 'a')
 			{

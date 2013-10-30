@@ -108,7 +108,7 @@ if (is_array($_POST['merged_ids'])) {
         }		
         //kbrill Bug #13826
         foreach ($linked_fields as $name => $properties) {
-        	if ($properties['name']=='modified_user_link' || in_array($properties['name'], $exclude))
+        	if ($properties['name']=='modified_user_link' || $properties['name']=='created_by_link' || in_array($properties['name'], $exclude))
         	{
         		continue;
         	}

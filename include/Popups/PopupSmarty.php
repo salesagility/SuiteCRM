@@ -237,6 +237,7 @@ class PopupSmarty extends ListViewSmarty{
         $this->th->ss->assign('ASSOCIATED_JAVASCRIPT_DATA', 'var associated_javascript_data = '.$json->encode($associated_row_data). '; var is_show_fullname = '.$is_show_fullname.';');
 		$this->th->ss->assign('module', $this->seed->module_dir);
 		$request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
+
 		$this->th->ss->assign('request_data', $request_data);
 		$this->th->ss->assign('fields', $this->fieldDefs);
 		$this->th->ss->assign('formData', $this->formData);
@@ -385,6 +386,11 @@ class PopupSmarty extends ListViewSmarty{
             }
         }
 
+        if (isset($_REQUEST['request_data'])) {
+            $request_data = json_decode(html_entity_decode($_REQUEST['request_data']), true);
+            $_POST['field_to_name'] = $_REQUEST['field_to_name'] = array_keys($request_data['field_to_name_array']);
+        }
+
         /**
          * Bug #46842 : The relate field field_to_name_array fails to copy over custom fields 
          * By default bean's create_new_list_query function loads fields displayed on the page or used in the search
@@ -403,26 +409,6 @@ class PopupSmarty extends ListViewSmarty{
             }
             
         }
-        else if (!empty($_REQUEST['request_data']))
-        {
-            $request_data = get_object_vars(json_decode(htmlspecialchars_decode($_REQUEST['request_data'])));
-
-            if (!empty($request_data['field_to_name_array']))
-            {
-                $request_data['field_to_name'] = get_object_vars($request_data['field_to_name_array']);
-                if (is_array($request_data['field_to_name']))
-                {
-                    foreach ($request_data['field_to_name'] as $add_field)
-                    {
-                        $add_field = strtolower($add_field);
-                        if ($add_field != 'id' && !isset($this->filter_fields[$add_field]) && isset($this->seed->field_defs[$add_field]))
-                        {
-                            $this->filter_fields[$add_field] = true;
-                        }
-                    }
-                }
-            }
-        }
 
 
 		if (!empty($_REQUEST['query']) || (!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] != 'populate_only')) {
@@ -439,41 +425,7 @@ class PopupSmarty extends ListViewSmarty{
 			);
 		}
 
-		foreach($this->displayColumns as $columnName => $def)
-		{
-			$seedName =  strtolower($columnName);
-
-			if(empty($this->displayColumns[$columnName]['type'])){
-				if(!empty($this->lvd->seed->field_defs[$seedName]['type'])){
-					$seedDef = $this->lvd->seed->field_defs[$seedName];
-		            $this->displayColumns[$columnName]['type'] = (!empty($seedDef['custom_type']))?$seedDef['custom_type']:$seedDef['type'];
-		        }else{
-		        	$this->displayColumns[$columnName]['type'] = '';
-		        }
-			}//fi empty(...)
-
-			if(!empty($this->lvd->seed->field_defs[$seedName]['options'])){
-					$this->displayColumns[$columnName]['options'] = $this->lvd->seed->field_defs[$seedName]['options'];
-			}
-
-	        //C.L. Fix for 11177
-	        if($this->displayColumns[$columnName]['type'] == 'html') {
-	            $cField = $this->seed->custom_fields;
-	               if(isset($cField) && isset($cField->bean->$seedName)) {
-	                 	$seedName2 = strtoupper($columnName);
-	                 	$htmlDisplay = html_entity_decode($cField->bean->$seedName);
-	                 	$count = 0;
-	                 	while($count < count($data['data'])) {
-	                 		$data['data'][$count][$seedName2] = &$htmlDisplay;
-	                 	    $count++;
-	                 	}
-	            	}
-	        }//fi == 'html'
-
-			if (!empty($this->lvd->seed->field_defs[$seedName]['sort_on'])) {
-		    	$this->displayColumns[$columnName]['orderBy'] = $this->lvd->seed->field_defs[$seedName]['sort_on'];
-		    }
-		}
+        $this->fillDisplayColumnsWithVardefs();
 
 		$this->process($file, $data, $this->seed->object_name);
 	}

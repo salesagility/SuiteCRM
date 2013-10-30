@@ -54,11 +54,12 @@ function getSystemInfo($send_usage_info=true){
 
 		//get user count.
 
-		$user_list = get_user_array(false, "Active", "", false, null, " AND is_group=0 AND portal_only=0 ", false);
+                $query = "SELECT count(*) as total from users WHERE " . User::getLicensedUsersWhere();
+                $result = $db->getOne($query, false, 'fetching active users count');
+                if ($result !== false) {
+                    $info['users'] = $result;
+                }
 
-
-
-		$info['users']=count($user_list);
 		if(empty($administration)){
 
 			$administration = new Administration();

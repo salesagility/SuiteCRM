@@ -13,6 +13,7 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH_TITLE'] = "Push Message Dashlet";
 $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Push the Message Dashlet to the Home page for all users. This process may take some time to complete depending on the number of users";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Hookup Module";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Hookup Security Suite to work with your custom modules";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Grab the latest version of SecuritySuite and find other SugarCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.";
 
 
-?>

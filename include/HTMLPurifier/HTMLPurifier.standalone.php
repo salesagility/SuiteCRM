@@ -15032,7 +15032,13 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                 $length = $j - $i + 1;
 
                 // perform removal
-                array_splice($tokens, $i, $length);
+                // CODE HAS TO BE MOVED WITH UPGRADE START
+                if ($tokens instanceof HTMLPurifier_Array) {
+                    $tokens->splice($i, $length);
+                } else {
+                    array_splice($tokens, $i, $length);
+                }
+                // CODE HAS TO BE MOVED WITH UPGRADE ENT
 
                 // update size
                 $size -= $length;
@@ -15071,7 +15077,13 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                 }
 
                 // perform replacement
-                array_splice($tokens, $i + 1, $length, $result);
+                // CODE HAS TO BE MOVED WITH UPGRADE START
+                if ($tokens instanceof HTMLPurifier_Array) {
+                    $tokens->splice($i + 1, $length, $result);
+                } else {
+                    array_splice($tokens, $i + 1, $length, $result);
+                }
+                // CODE HAS TO BE MOVED WITH UPGRADE END
 
                 // update size
                 $size -= $length;
@@ -15187,7 +15199,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
     protected $context;
 
     public function execute($tokens, $config, $context) {
-
+        // CODE HAS TO BE MOVED WITH UPGRADE START
+        $tokens = new HTMLPurifier_Array($tokens);
+        // CODE HAS TO BE MOVED WITH UPGRADE END
         $definition = $config->getHTMLDefinition();
 
         // local variables
@@ -15595,7 +15609,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $context->destroy('CurrentToken');
 
         unset($this->injectors, $this->stack, $this->tokens, $this->t);
-        return $tokens;
+        // CODE HAS TO BE MOVED WITH UPGRADE START
+        return $tokens->getArray();
+        // CODE HAS TO BE MOVED WITH UPGRADE END
     }
 
     /**
@@ -15632,7 +15648,15 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         // array(number nodes to delete, new node 1, new node 2, ...)
 
         $delete = array_shift($token);
-        $old = array_splice($this->tokens, $this->t, $delete, $token);
+        // CODE HAS TO BE MOVED WITH UPGRADE START
+        $old = array();
+        if ($this->tokens instanceof HTMLPurifier_Array) {
+            $old = $this->tokens->splice($this->t, $delete, $token);
+        } else {
+            $old = array_splice($this->tokens, $this->t, $delete, $token);
+        }
+        // CODE HAS TO BE MOVED WITH UPGRADE END
+
 
         if ($injector > -1) {
             // determine appropriate skips
@@ -15650,7 +15674,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * this token.  You must reprocess after this.
      */
     private function insertBefore($token) {
-        array_splice($this->tokens, $this->t, 0, array($token));
+        // CODE HAS TO BE MOVED WITH UPGRADE START
+        $this->tokens->insertBefore($this->t, $token);
+        // CODE HAS TO BE MOVED WITH UPGRADE END
     }
 
     /**
@@ -15658,7 +15684,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * occupied space.  You must reprocess after this.
      */
     private function remove() {
-        array_splice($this->tokens, $this->t, 1);
+        // CODE HAS TO BE MOVED WITH UPGRADE START
+        $this->tokens->remove($this->t);
+        // CODE HAS TO BE MOVED WITH UPGRADE END
     }
 
     /**
@@ -16830,5 +16858,244 @@ class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
 
 }
 
+// CODE HAS TO BE MOVED WITH UPGRADE START
+class HTMLPurifier_Array implements ArrayAccess
+{
+    /**
+     * @param HTMLPurifier_ArrayNode
+     */
+    public $head = null;
+
+    /**
+     * @var int
+     */
+    protected $count = 0;
+
+    /**
+     * @var int
+     */
+    protected $offset = 0;
+
+    /**
+     * @var HTMLPurifier_ArrayNode
+     */
+    protected $offsetItem = null;
 
 
+    public function __construct(array $array = array())
+    {
+        /**
+         * @var HTMLPurifier_ArrayNode $temp
+         */
+        $temp = null;
+        $i = 0;
+
+        foreach ($array as &$v) {
+            $item = new HTMLPurifier_ArrayNode($v);
+
+            if ($this->head == null) {
+                $this->head = &$item;
+            }
+            if ($temp instanceof HTMLPurifier_ArrayNode) {
+                $item->prev = &$temp;
+                $temp->next = &$item;
+            }
+            unset($temp);
+            $temp = &$item;
+
+            $i ++;
+
+            unset($item, $v);
+        }
+        $this->count = $i;
+        $this->offset = 0;
+        $this->offsetItem = &$this->head;
+    }
+
+    protected function findIndex($offset)
+    {
+        if ($this->head == null) {
+            return array(
+                'correct' => false,
+                'value' => null
+            );
+        }
+
+        $current = &$this->head;
+        $goUp = true;
+        $index = 0;
+
+        if ($this->offset <= $offset && $this->offsetItem instanceof HTMLPurifier_ArrayNode) {
+            $current = &$this->offsetItem;
+            $index = $this->offset;
+        } elseif ($this->offset > $offset && ($this->offset - $offset) < $offset && $this->offsetItem instanceof HTMLPurifier_ArrayNode) {
+            $current = &$this->offsetItem;
+            $index = $this->offset;
+            $goUp = false;
+        }
+
+        if ($goUp) {
+            while ($current->next instanceof HTMLPurifier_ArrayNode && $index != $offset) {
+                $current = &$current->next;
+                $index ++;
+            }
+        } else {
+            while ($current->prev instanceof HTMLPurifier_ArrayNode && $index != $offset) {
+                $current = &$current->prev;
+                $index --;
+            }
+        }
+
+        if ($index == $offset) {
+            $this->offset = $offset;
+            $this->offsetItem = &$current;
+            return array(
+                'correct' => true,
+                'value' => &$current
+            );
+        }
+
+        return array(
+            'correct' => false,
+            'value' => &$current
+        );
+    }
+
+    public function insertBefore($offset, $value)
+    {
+        $result = $this->findIndex($offset);
+
+        $this->count ++;
+        $item = new HTMLPurifier_ArrayNode($value);
+        if ($result['correct'] == false) {
+            if ($result['value'] instanceof HTMLPurifier_ArrayNode) {
+                $result['value']->next = &$item;
+                $item->prev = &$result['value'];
+            }
+        } else {
+            if ($result['value'] instanceof HTMLPurifier_ArrayNode) {
+                $item->prev = &$result['value']->prev;
+                $item->next = &$result['value'];
+            }
+            if ($item->prev instanceof HTMLPurifier_ArrayNode) {
+                $item->prev->next = &$item;
+            }
+            if ($result['value'] instanceof HTMLPurifier_ArrayNode) {
+                $result['value']->prev = &$item;
+            }
+        }
+        if ($offset == 0) {
+            $this->head = &$item;
+        }
+        if ($offset <= $this->offset && $this->offsetItem instanceof HTMLPurifier_ArrayNode) {
+            $this->offsetItem = &$this->offsetItem->prev;
+        }
+    }
+
+    public function remove($offset)
+    {
+        $result = $this->findIndex($offset);
+
+        if ($result['correct']) {
+            $this->count --;
+            $item = $result['value'];
+            if ($item->prev instanceof HTMLPurifier_ArrayNode) {
+                $item->prev->next = &$result['value']->next;
+            }
+            if ($item->next instanceof HTMLPurifier_ArrayNode) {
+                $item->next->prev = &$result['value']->prev;
+            }
+            if ($offset == 0) {
+                $this->head = &$item->next;
+            }
+            if ($offset < $this->offset) {
+                $this->offset --;
+            } elseif ($offset == $this->offset) {
+                $this->offsetItem = &$item->next;
+            }
+        }
+    }
+
+    public function splice($offset, $length = 0, $replacement = null)
+    {
+        $old = array();
+
+        for ($i = 0; $i < $length; $i ++) {
+            $result = $this->findIndex($offset);
+            if ($result['correct']) {
+                $old[] = $result['value']->value;
+                $this->remove($offset);
+            }
+        }
+        foreach ((array)$replacement as $k => $v) {
+            $this->insertBefore($offset + $k, $v);
+        }
+
+        return $old;
+    }
+
+    public function getArray()
+    {
+        $return = array();
+        $head = $this->head;
+
+        while ($head instanceof HTMLPurifier_ArrayNode) {
+            $return[] = $head->value;
+            $head = &$head->next;
+        }
+
+        return $return;
+    }
+
+    public function offsetExists($offset)
+    {
+        return $offset >= 0 && $offset < $this->count;
+    }
+
+    public function offsetGet($offset)
+    {
+        $result = $this->findIndex($offset);
+        if ($result['correct']) {
+            return $result['value']->value;
+        }
+
+        return null;
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $result = $this->findIndex($offset);
+        if ($result['correct']) {
+            $result['value']->value = &$value;
+        }
+    }
+
+    public function offsetUnset($offset)
+    {
+        $this->remove($offset);
+    }
+}
+
+class HTMLPurifier_ArrayNode
+{
+    public function __construct(&$value)
+    {
+        $this->value = &$value;
+    }
+
+    /**
+     * @var HTMLPurifier_ArrayNode
+     */
+    public $prev = null;
+
+    /**
+     * @var HTMLPurifier_ArrayNode
+     */
+    public $next = null;
+
+    /**
+     * @var mixed
+     */
+    public $value = null;
+}
+// CODE HAS TO BE MOVED WITH UPGRADE END

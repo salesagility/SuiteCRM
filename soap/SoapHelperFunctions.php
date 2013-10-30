@@ -90,7 +90,7 @@ function get_field_list($value, $translate=true){
 		} //foreach
 	} //if
 
-	if($value->module_dir == 'Bugs'){
+    if (isset($value->module_dir) && $value->module_dir == 'Bugs') {
 
 		$seedRelease = new Release();
 		$options = $seedRelease->get_releases(TRUE, "Active");
@@ -111,7 +111,7 @@ function get_field_list($value, $translate=true){
 			$list['release_name']['options'] = $options_ret;
 		}
 	}
-    if($value->module_dir == 'Emails'){
+    if (isset($value->module_dir) && $value->module_dir == 'Emails') {
         $fields = array('from_addr_name', 'reply_to_addr', 'to_addrs_names', 'cc_addrs_names', 'bcc_addrs_names');
         foreach($fields as $field){
             $var = $value->field_defs[$field];

@@ -46,14 +46,14 @@ function send_back(module,id)
 {var associated_row_data=associated_javascript_data[id];eval("var temp_request_data = "+window.document.forms['popup_query_form'].request_data.value);if(temp_request_data.jsonObject){var request_data=temp_request_data.jsonObject;}else{var request_data=temp_request_data;}
 var passthru_data=Object();if(typeof(request_data.passthru_data)!='undefined')
 {passthru_data=request_data.passthru_data;}
-var form_name=request_data.form_name;var field_to_name_array=request_data.field_to_name_array;var call_back_function=eval("window.opener."+request_data.call_back_function);var array_contents=Array();for(var the_key in field_to_name_array)
-{if(the_key!='toJSON')
-{var the_name=field_to_name_array[the_key];var the_value='';if(module!=''&&id!='')
-{if(associated_row_data['DOCUMENT_NAME']&&the_key.toUpperCase()=="NAME"){the_value=associated_row_data['DOCUMENT_NAME'];}
-else if((the_key.toUpperCase()=='USER_NAME'||the_key.toUpperCase()=='LAST_NAME'||the_key.toUpperCase()=='FIRST_NAME')&&typeof(is_show_fullname)!='undefined'&&is_show_fullname&&form_name!='search_form'){the_value=associated_row_data['FULL_NAME'];}
-else{the_value=associated_row_data[the_key.toUpperCase()];}}
+var form_name=request_data.form_name;var field_to_name_array=request_data.field_to_name_array;var call_back_function=eval("window.opener."+request_data.call_back_function);var array_contents=Array();var fill_array_contents=function(the_key,the_name)
+{var the_value='';if(module!=''&&id!=''){if(associated_row_data['DOCUMENT_NAME']&&the_key.toUpperCase()=="NAME"){the_value=associated_row_data['DOCUMENT_NAME'];}else if((the_key.toUpperCase()=='USER_NAME'||the_key.toUpperCase()=='LAST_NAME'||the_key.toUpperCase()=='FIRST_NAME')&&typeof(is_show_fullname)!='undefined'&&is_show_fullname&&form_name!='search_form'){the_value=associated_row_data['FULL_NAME'];}else{the_value=associated_row_data[the_key.toUpperCase()];}}
 if(typeof(the_value)=='string'){the_value=the_value.replace(/\r\n|\n|\r/g,'\\n');}
-array_contents.push('"'+the_name+'":"'+the_value+'"');}}
+array_contents.push('"'+the_name+'":"'+the_value+'"');}
+for(var the_key in field_to_name_array)
+{if(the_key!='toJSON')
+{if(YAHOO.lang.isArray(field_to_name_array[the_key])){for(var i=0;i<field_to_name_array[the_key].length;i++){fill_array_contents(the_key,field_to_name_array[the_key][i]);}}
+else{fill_array_contents(the_key,field_to_name_array[the_key]);}}}
 var popupConfirm=confirmDialog(array_contents,form_name);eval("var name_to_value_array = {"+array_contents.join(",")+"}");closePopup();var result_data={"form_name":form_name,"name_to_value_array":name_to_value_array,"passthru_data":passthru_data,"popupConfirm":popupConfirm};call_back_function(result_data);}
 function send_back_teams(module,form,field,error_message,request_data,form_team_id)
 {var array_contents=Array();if(form_team_id){array_contents.push(form_team_id);}else{var j=0;for(i=0;i<form.elements.length;i++){if(form.elements[i].name==field){if(form.elements[i].checked==true){array_contents.push(form.elements[i].value);}}}}

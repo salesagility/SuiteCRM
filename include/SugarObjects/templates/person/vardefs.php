@@ -151,6 +151,7 @@ $vardefs =array(
 			),
 			'vname' =>'LBL_ANY_EMAIL',
 			'studio' => array('visible'=>false, 'searchview'=>true),
+            'importable' => false,
 		),
 	'phone_mobile' =>
 		array (

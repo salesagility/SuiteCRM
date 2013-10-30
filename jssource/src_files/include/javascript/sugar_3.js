@@ -184,10 +184,10 @@ function checkMaxSupported(c, s) {
 
 SUGAR.isSupportedBrowser = function(){
     var supportedBrowsers = {
-        msie : {min:8, max:10}, // IE 8, 9, 10
+        msie : {min:9, max:10}, // IE 9, 10
         safari : {min:534}, // Safari 5.1
-        mozilla : {min:22.0}, // Firefox 23.0
-        chrome : {min:28} // Chrome 28
+        mozilla : {min:23.0}, // Firefox 23.0
+        chrome : {min:29} // Chrome 29
     };
     var current = String($.browser.version);
     var supported;
@@ -554,20 +554,23 @@ function getDateObject(dtStr) {
 	var mh = dt[date_reg_positions['m']];
 	var dy = dt[date_reg_positions['d']];
     var dtar = dtStr.split(' ');
+    var date1;
     if(typeof(dtar[1])!='undefined' && isTime(dtar[1])) {//if it is a timedate, we should make date1 to have time value
         var t1 = dtar[1].replace(/am/i,' AM');
         var t1 = t1.replace(/pm/i,' PM');
         //bug #37977: where time format 23.00 causes java script error
         t1=t1.replace(/\./, ':');
-        date1 = new Date(Date.parse(mh+'/'+dy+ '/'+yr+' '+t1));
+        date1 = new Date(mh+'/'+dy+'/'+yr+' '+t1);
     }
     else
     {
-        var date1 = new Date();
-        date1.setFullYear(yr); // xxxx 4 char year
-        date1.setMonth(mh-1); // 0-11 Bug 4048: javascript Date obj months are 0-index
-        date1.setDate(dy); // 1-31
+        date1 = new Date(mh+'/'+dy+'/'+yr);
     }
+
+    if (isNaN(date1.valueOf())) {
+        return null;
+    }
+
 	return date1;
 }
 

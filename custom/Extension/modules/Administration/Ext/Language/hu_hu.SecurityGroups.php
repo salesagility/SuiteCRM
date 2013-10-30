@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 $mod_strings['LBL_MANAGE_SECURITYGROUPS_TITLE'] = 'Biztonsági Csoportok Kezelése';
 $mod_strings['LBL_MANAGE_SECURITYGROUPS'] = 'Biztonsági Csoport Szerkesztő';
@@ -13,6 +13,6 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH_TITLE'] = "Csoportos Üzenet Műsze
 $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Minden felhasználó kezdőlapjára telepíti a Csoportos Üzenet Műszert. Ez a művelet hoszabb ideig is eltarhat, a felhasználók számától függően.";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Modul Csatlakoztatása";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Biztonsági Csoport képesség hozzáadása egyedi modulhoz";
-
-
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Fogd meg a legfrissebb SecuritySuite és talál más SugarCRM modul, témákat és integráció, értékelés, docs, támogatás, és a közösség ellenőrizni változatban.";
 ?>

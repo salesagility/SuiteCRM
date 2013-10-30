@@ -2885,12 +2885,13 @@ SE.listView = {
     /**
      * Like populateListFrame(), but specifically for SugarFolders since the API is radically different
      */
-    populateListFrameSugarFolder : function(node, folderId, forceRefresh) {
+    populateListFrameSugarFolder : function(node, folderId, forceRefresh, getUnread) {
         SE.innerLayout.selectTab(0);
         Dom.get('_blank').innerHTML = "";
         SE.grid.params['emailUIAction'] = 'getMessageListSugarFolders';
         SE.grid.params['ieId'] = node.data.id;
         SE.grid.params['mbox'] = node.data.origText ? node.data.origText : node.data.text;
+        SE.grid.params['getUnread'] = getUnread;
         SE.listView.refreshGrid();
     },
 
