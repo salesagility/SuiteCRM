@@ -102,6 +102,7 @@
                     {if count($shortcutTopMenu.$name) > 0}
                     <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
                                 <span class="breaker">
+
                             {foreach from=$shortcutTopMenu.$name item=item}
                                 {if $item.URL == "-"}
                                     <li>  <a></a><span>&nbsp;</span></li>
@@ -111,14 +112,22 @@
                             {/foreach}
                                     <br>
                                     {/if}
+                                    {if $module == 'Home'}
+                                        <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
+                                        <li><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
+                                    {/if}
                                     <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
                                     {foreach from=$recentRecords item=item name=lastViewed}
                                     {if $name == 'Home'}
+
                                     <table style="width:100%">
+
                                         <tr>
                                             <td>
+
                                                 <li>
                                                     <span></span>
+
                                                     <a title="{$item.module_name}"
                                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
