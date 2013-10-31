@@ -50,7 +50,7 @@ function install_ss() {
 	}
 	$GLOBALS['sugar_config']['addAjaxBannedModules'][] = 'SecurityGroups';
 
-	$sugar_config['securitysuite_version'] = '6.5.15';
+	$sugar_config['securitysuite_version'] = '6.5.16';
 	ksort($sugar_config);
 	write_array_to_file('sugar_config', $sugar_config, 'config.php');
 }

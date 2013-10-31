@@ -5380,7 +5380,11 @@ class SugarBean
     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
     * @param $is_owner bool optional, this is part of the ACL check if the current user is an owner they will receive different access
     */
+	/* BEGIN - SECURITY GROUPS - aclaccess */  
+	/**
     function ACLAccess($view,$is_owner='not_set')
+	*/
+    function ACLAccess($view,$is_owner='not_set',$in_group='not_set')
     {
         global $current_user;
         if($current_user->isAdmin()) {
