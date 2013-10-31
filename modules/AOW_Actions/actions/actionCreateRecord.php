@@ -40,10 +40,16 @@ class actionCreateRecord extends actionBase {
 
         $modules = $app_list_strings['aow_moduleList'];
 
+        $checked = 'CHECKED';
+        if(isset($params['relate_to_workflow']) && !$params['relate_to_workflow']) $checked = '';
+
         $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;:&nbsp;';
+        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
         $html .= "<select name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."'  onchange='show_crModuleFields($line);'>".get_select_options_with_id($modules, $params['record_type'])."</select></td>";
+        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_RELATE_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
+        $html .= "<input type='hidden' name='aow_actions_param[".$line."][relate_to_workflow]' value='0' >";
+        $html .= "<input type='checkbox' id='aow_actions_param[".$line."][relate_to_workflow]' name='aow_actions_param[".$line."][relate_to_workflow]' value='1' $checked></td>";
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
@@ -94,18 +100,19 @@ class actionCreateRecord extends actionBase {
                 $this->set_record($record, $bean, $params);
                 $this->set_relationships($record, $bean, $params);
 
-                require_once('modules/Relationships/Relationship.php');
-                $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, $GLOBALS['db']);
-                if (!empty($key)) {
-                    foreach($bean->field_defs as $field=>$def){
-                        if($def['type'] == 'link' && !empty($def['relationship']) && $def['relationship'] == $key){
-                            $bean->load_relationship($field);
-                            $bean->$field->add($record->id);
-                            break;
+                if(isset($params['relate_to_workflow']) && $params['relate_to_workflow']){
+                    require_once('modules/Relationships/Relationship.php');
+                    $key = Relationship::retrieve_by_modules($bean->module_dir, $record->module_dir, $GLOBALS['db']);
+                    if (!empty($key)) {
+                        foreach($bean->field_defs as $field=>$def){
+                            if($def['type'] == 'link' && !empty($def['relationship']) && $def['relationship'] == $key){
+                                $bean->load_relationship($field);
+                                $bean->$field->add($record->id);
+                                break;
+                            }
                         }
                     }
                 }
-
                 return true;
             }
         }
@@ -120,8 +127,11 @@ class actionCreateRecord extends actionBase {
         if(isset($params['field'])){
             foreach($params['field'] as $key => $field){
 
+                if($field == '') continue;
+
                 switch($params['value_type'][$key]) {
                     case 'Field':
+                        if($params['value'][$key] == '') continue;
                         $data = $bean->field_defs[$params['value'][$key]];
 
                         if($data['type'] == 'relate' && isset($data['id_name'])) {
@@ -130,6 +140,8 @@ class actionCreateRecord extends actionBase {
                         $value = $bean->$params['value'][$key];
                         break;
                     case 'Date':
+                        $dformat = 'Y-m-d H:i:s';
+                        if($record_vardefs[$field]['type'] == 'date') $dformat = 'Y-m-d';
                         switch($params['value'][$key][3]) {
                             case 'business_hours';
                                 if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')){
@@ -159,17 +171,17 @@ class actionCreateRecord extends actionBase {
                             //No business hours module found - fall through.
                             default:
                                 if($params['value'][$key][0] == 'now'){
-                                    $date = gmdate('Y-m-d H:i:s');
+                                    $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] == 'field'){
-                                    $date = $record->$params['field'][$key];
+                                    $date = $record->fetched_row[$params['field'][$key]];
                                 } else {
-                                    $date = $bean->$params['value'][$key][0];
+                                    $date = $bean->fetched_row[$params['value'][$key][0]];
                                 }
 
                                 if($params['value'][$key][1] != 'now'){
-                                    $value = date('Y-m-d H:i:s', strtotime($date . ' '.$app_list_strings['aow_date_operator'][$params['value'][$key][1]].$params['value'][$key][2].' '.$params['value'][$key][3]));
+                                    $value = date($dformat, strtotime($date . ' '.$app_list_strings['aow_date_operator'][$params['value'][$key][1]].$params['value'][$key][2].' '.$params['value'][$key][3]));
                                 } else {
-                                    $value = date('Y-m-d H:i:s', strtotime($date));
+                                    $value = date($dformat, strtotime($date));
                                 }
                                 break;
                         }
@@ -275,10 +287,27 @@ class actionCreateRecord extends actionBase {
         require_once('modules/Relationships/Relationship.php');
         if(isset($params['rel'])){
             foreach($params['rel'] as $key => $field){
+                if($field == '') continue;
+
+                switch($params['rel_value_type'][$key]) {
+                    case 'Field':
+
+                        $data = $bean->field_defs[$params['rel_value'][$key]];
+
+                        if($data['type'] == 'relate' && isset($data['id_name'])) {
+                            $params['rel_value'][$key] = $data['id_name'];
+                        }
+                        $rel_id = $bean->$params['rel_value'][$key];
+                        break;
+                    default:
+                        $rel_id = $params['rel_value'][$key];
+                        break;
+                }
+
                 $def = $record_vardefs[$field];
                 if($def['type'] == 'link' && !empty($def['relationship'])){
                     $record->load_relationship($field);
-                    $record->$field->add($params['rel_value'][$key]);
+                    $record->$field->add($rel_id);
                 }
             }
         }
