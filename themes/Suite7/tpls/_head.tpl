@@ -48,7 +48,7 @@
     <script type="text/javascript">
         <!--
         SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = {/literal}{$THEME_IE6COMPAT}{literal};
+        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
         SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
         SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
         SUGAR.themes.loading_image      = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';

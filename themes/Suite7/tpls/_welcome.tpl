@@ -46,9 +46,9 @@
                 <input type="hidden" name="module" value="Home">
                 <input type="hidden" name="search_form" value="false">
                 <input type="hidden" name="advanced" value="false">
-                <input type="text" name="query_string" id="query_string" size="30" value="{$SEARCH}">
+                <input type="text" name="query_string" id="query_string" size="30" value="{$APP.LBL_SEARCH}">
                 <input type="submit" class="button" value="">
-            </form><br />
+            </form>
         </div>
 {/if}
 
