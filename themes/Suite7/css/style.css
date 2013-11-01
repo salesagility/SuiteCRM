@@ -2279,7 +2279,6 @@ div.confirmTable {
 .h3Row {
     margin-top: 10px;
     vertical-align: middle;
-    background-repeat: repeat-x;
     background-position: top;
     background-color: #fff;
 }
@@ -2693,8 +2692,8 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover
 {
     border: 1px solid;
     font-size: 11px;
+    width:150px;
 }
-
 
 /* for subpanel tabs */
 ul.tablist, ul.subpanelTablist
@@ -8508,10 +8507,9 @@ ul#drop-nav ul li:hover {
 
 #search .button {
     background: url(../../../../index.php?entryPoint=getImage&imageName=search_mag.png) scroll no-repeat center;
-    background-color:#ffffff;
-    width:30px;
+    width:22px;
     height:25px;
-    padding:5px 0 5px 0;
+    padding:0 0 5px 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
@@ -8986,5 +8984,68 @@ a#delete_listview_top:hover {
 
 .moduleTitle {
     margin-top:10px;
+}
+
+.about_suite {
+    padding: 0 25px 0 0;
+    float:left;
+    max-width:550px !important;
+}
+
+.about_suite h3 {
+    font-weight:normal;
+    font-size:18px;
+}
+
+.about_suite ul li {
+    font-size:14px;
+    margin-bottom:10px;
+    color:#777777;
+}
+
+#about_menu {
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+#about_table {
+    width:100%;
+}
+
+#about_header {
+    padding: 10px 15px 20px 15px;
+}
+
+#about_menu li {
+    list-style-type: square;
+}
+
+#featuring {
+    padding:10px 0 0 0;
+    font-size:14px;
+    color:#777777;
+}
+
+.wrapper {
+    border:1px solid #000;
+    display:inline-block;
+    position:relative;
+}
+
+.wrapper input,
+.wrapper button {
+    background-color:transparent;
+    border:0;
+}
+
+.wrapper button {
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+.wrapper input {
+    padding-right:30px; /* button padding */
 }
 

@@ -40,47 +40,55 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 //the code and end-user application.
 
 include_once('suitecrm_version.php');
-
 global $sugar_config, $mod_strings;
+
 ?>
-<style type="text/css">
-ul li {
-list-style-type: square;
-}
-</style>
 <?php echo getVersionedScript("modules/Home/about.js"); ?>
-<span>
-<div class="about" style="padding: 10px 15px 20px 15px;">
-<p>
-<h1><IMG src="include/images/suite_logo.png" alt="SuiteCRM" ondblclick='abouter.display();'></h1>
+<div class="about" id="about_header">
+<h1><img src="include/images/suite_logo.png" alt="SuiteCRM" ondblclick='abouter.display();'></h1>
 <br>
-<b><?php echo $mod_strings['LBL_VERSION']." ".$suitecrm_version;
+<b>
+    <?php echo $mod_strings['LBL_VERSION']." ".$suitecrm_version;
     if( is_file( "custom_version.php" ) ){
         include( "custom_version.php" );
         print( "&nbsp;&nbsp;&nbsp;" . $custom_version );
-    }
-?>
+    }?>
 </b>
-    </p>
-    <p> Sugar
-<?php echo $mod_strings['LBL_VERSION']." ".$sugar_version." (".$mod_strings['LBL_BUILD']." ".$sugar_build.")";?>
-    </p>
-
-<p ><table width="100%" border="0" cellspacing="0" cellpadding="0" class="contentBox">
-
+<p>Sugar<?php echo $mod_strings['LBL_VERSION']." ".$sugar_version." (".$mod_strings['LBL_BUILD']." ".$sugar_build.")";?></p>
+<br>
+<h1><?php echo $mod_strings['LBL_CONTRIBUTOR_SUITECRM']; ?></h1>
+<table id="about_table" class="contentBox">
 <tr>
     <td valign="top" style="padding: 15px 10px 15px 10px;">
-
-<P>&nbsp;</p>
-<P><h3><?php echo $mod_strings['LBL_CONTRIBUTORS']; ?></h3></p>
-<ul style="margin-bottom: 20px; padding-left: 0px;">
-    <li><?php echo $mod_strings['LBL_CONTRIBUTOR_SUITECRM']; ?> (<a href="http://www.suitecrm.com" target="_blank">http://www.suitecrm.com</a>)</li>
-    <li><?php echo $mod_strings['LBL_CONTRIBUTOR_SECURITY_SUITE']; ?> (<a href="http://www.sugaroutfitters.com" target="_blank">http://www.sugaroutfitters.com</a>)</li>
-    <li><?php echo $mod_strings['LBL_CONTRIBUTOR_JJW_GMAPS']; ?> (<a href="http://www.jjwdesign.com" target="_blank">http://www.jjwdesign.com</a>)</li>
-    <li><?php echo $mod_strings['LBL_CONTRIBUTOR_QUICKCRM']; ?> (<a href="http://www.quickcrm.fr/mobile" target="_blank">http://www.quickcrm.fr/mobile</a>)</li>
-    <li><?php echo $mod_strings['LBL_CONTRIBUTOR_CONSCIOUS']; ?> (<a href="http://www.conscious.co.uk" target="_blank">http://www.conscious.co.uk</a>)</li>
-    <li><?php echo $mod_strings['LBL_SOURCE_SUGAR']; ?> (<a href="index.php?module=Home&action=AboutSugar"><?php echo $mod_strings['LBL_ABOUT']; ?></a>)</li>
-</ul>
-
-
+    <div class="about_suite">
+    <br>
+        <h3><?php echo $mod_strings['LBL_ABOUT_SUITE']; ?></h3>
+        <ul id="about_menu">
+            <li><?php echo $mod_strings['LBL_ABOUT_SUITE_1']; ?></li>
+            <li><?php echo $mod_strings['LBL_ABOUT_SUITE_2']; ?></li>
+            <li><?php echo $mod_strings['LBL_ABOUT_SUITE_3']; ?></li>
+            <li><?php echo $mod_strings['LBL_ABOUT_SUITE_4']; ?></li>
+            <li><?php echo $mod_strings['LBL_ABOUT_SUITE_5']; ?></li>
+        </ul>
+    </div>
+    <div class="about_suite">
+        <br>
+        <h3><?php echo $mod_strings['LBL_CONTRIBUTORS']; ?></h3>
+        <ul id="about_menu">
+            <li><?php echo $mod_strings['LBL_FEATURING']; ?>(<a href="http://www.salesagility.com" target="_blank">http://www.salesagility.com</a>)</li>
+            <li><?php echo $mod_strings['LBL_CONTRIBUTOR_SECURITY_SUITE']; ?> (<a href="http://www.sugaroutfitters.com" target="_blank">http://www.sugaroutfitters.com</a>)</li>
+            <li><?php echo $mod_strings['LBL_CONTRIBUTOR_JJW_GMAPS']; ?> (<a href="http://www.jjwdesign.com" target="_blank">http://www.jjwdesign.com</a>)</li>
+            <li><?php echo $mod_strings['LBL_CONTRIBUTOR_QUICKCRM']; ?> (<a href="http://www.quickcrm.fr/mobile" target="_blank">http://www.quickcrm.fr/mobile</a>)</li>
+            <li><?php echo $mod_strings['LBL_CONTRIBUTOR_CONSCIOUS']; ?> (<a href="http://www.conscious.co.uk" target="_blank">http://www.conscious.co.uk</a>)</li>
+            <li><?php echo $mod_strings['LBL_SOURCE_SUGAR']; ?> (<a href="index.php?module=Home&action=AboutSugar"><?php echo $mod_strings['LBL_ABOUT']; ?></a>)</li>
+        </ul>
+    </div>
+    <div class="about_suite">
+        <br>
+        <h3><?php echo $mod_strings['LBL_PARTNERS']; ?></h3>
+        <ul id="about_menu">
+            <li><?php echo $mod_strings['LBL_SUITE__PARTNERS']; ?> (<a href="http://suitecrm.com/index.php/suitecrm-partners">http://suitecrm.com</a>)</li>
+        </ul>
+    </div>
+</tr>
 </div>

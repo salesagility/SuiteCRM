@@ -59,7 +59,5 @@
     </script>
     {/literal}
     {$SUGAR_CSS}
-
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-
 </head>
