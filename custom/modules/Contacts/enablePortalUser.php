@@ -32,13 +32,15 @@ $bean->retrieve($_REQUEST['record']);
 
 if(array_key_exists("aop",$sugar_config) && array_key_exists("joomla_url",$sugar_config['aop'])){
     $portalURL = $sugar_config['aop']['joomla_url'];
-    $wbsv = file_get_contents($portalURL.'/index.php?option=com_advancedopenportal&task=create&sug='.$_REQUEST['record']);
+    $wbsv = file_get_contents($portalURL.'/index.php?option=com_advancedopenportal&task=enable_user&sug='.$_REQUEST['record'].'&uid='.$bean->joomla_account_id);
     $res = json_decode($wbsv);
     if(!$res->success){
-        $msg = $res->error ? $res->error : $mod_strings['LBL_CREATE_PORTAL_USER_FAILED'];
+        $msg = $res->error ? $res->error : $mod_strings['LBL_ENABLE_PORTAL_USER_FAILED'];
         SugarApplication::appendErrorMessage($msg);
     }else{
-        SugarApplication::appendErrorMessage($mod_strings['LBL_CREATE_PORTAL_USER_SUCCESS']);
+        $bean->portal_account_disabled = 0;
+        $bean->save(false);
+        SugarApplication::appendErrorMessage($mod_strings['LBL_ENABLE_PORTAL_USER_SUCCESS']);
     }
 }else{
     SugarApplication::appendErrorMessage($mod_strings['LBL_NO_JOOMLA_URL']);

@@ -87,7 +87,7 @@ class AOW_WorkFlow extends Basic {
         $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
 
         foreach($app_list_strings['aow_moduleList'] as $mkey => $mvalue){
-            if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_') || str_begin($mkey, 'AOR_')){
+            if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
                 unset($app_list_strings['aow_moduleList'][$mkey]);
             }
         }
@@ -236,8 +236,6 @@ class AOW_WorkFlow extends Basic {
                 $where .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
             $query = $module->create_new_list_query('', $where, array(), array(), 0, '', false, $this);
-
-            echo '<br />'.$query.'<br />';
 
             return $module->process_full_list_query($query);
 

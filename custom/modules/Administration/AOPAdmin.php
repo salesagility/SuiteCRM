@@ -50,6 +50,7 @@ $errors			= array();
 
 if(!array_key_exists('aop',$cfg->config)){
     $cfg->config['aop'] = array(
+        'enable_portal' => '',
         'joomla_url'=>'',
         'joomla_access_key'=>'',
         'distribution_method'=>'',
@@ -64,7 +65,12 @@ if(!array_key_exists('aop',$cfg->config)){
     );
 }
 if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
-    $cfg->config['aop']['joomla_url'] = 'http://' . preg_replace( '~^http://~', '', $_REQUEST['joomla_url']);
+    if(!empty($_REQUEST['joomla_url'])){
+        $cfg->config['aop']['joomla_url'] = 'http://' . preg_replace( '~^http://~', '', $_REQUEST['joomla_url']);
+    }else{
+        $cfg->config['aop']['joomla_url'] = '';
+    }
+    $cfg->config['aop']['enable_portal'] = !empty($_REQUEST['enable_portal']);
     $cfg->config['aop']['joomla_access_key'] = $_REQUEST['joomla_access_key'];
     $cfg->config['aop']['distribution_method'] = $_REQUEST['distribution_method'];
     $cfg->config['aop']['distribution_user_id'] = $_REQUEST['distribution_user_id'];
@@ -84,7 +90,12 @@ $distributionMethod = "<OPTION value='singleUser'>Single User</OPTION>";
 $distributionMethod .= get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
 
 
-$distributionUserName = BeanFactory::getBean("Users",$cfg->config['aop']['distribution_user_id'])->name;
+if(!empty($cfg->config['aop']['distribution_user_id'])){
+    $distributionUserName = BeanFactory::getBean("Users",$cfg->config['aop']['distribution_user_id'])->name;
+}else{
+    $distributionUserName = '';
+}
+
 $sugar_smarty->assign('distribution_user_name', $distributionUserName);
 
 $emailTemplateList = get_bean_select_array(true,'EmailTemplate','name');

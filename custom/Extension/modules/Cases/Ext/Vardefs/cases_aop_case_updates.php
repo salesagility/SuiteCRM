@@ -72,6 +72,9 @@ $dictionary["Case"]["fields"]['state'] =
         'len' => 100,
         'audited' => true,
         'comment' => 'The state of the case (i.e. open/closed)',
+        'default' => 'Closed',
+        'parentenum' => 'status',
+        'merge_filter' => 'disabled',
     );
 
 $dictionary["Case"]["fields"]['aop_case_updates_threaded'] =
