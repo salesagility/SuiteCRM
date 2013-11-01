@@ -22,3 +22,13 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 $mod_strings['LBL_AOP_CASE_UPDATES'] = 'Case Updates';
+$mod_strings['LBL_CREATE_PORTAL_USER'] = "Create Portal User";
+$mod_strings['LBL_ENABLE_PORTAL_USER'] = "Enable Portal User";
+$mod_strings['LBL_DISABLE_PORTAL_USER'] = "Disable Portal User";
+$mod_strings['LBL_CREATE_PORTAL_USER_FAILED'] = "Failed to create portal user";
+$mod_strings['LBL_ENABLE_PORTAL_USER_FAILED'] = "Failed to enable portal user";
+$mod_strings['LBL_DISABLE_PORTAL_USER_FAILED'] = "Failed to disable portal user";
+$mod_strings['LBL_CREATE_PORTAL_USER_SUCCESS'] = "Created portal user";
+$mod_strings['LBL_ENABLE_PORTAL_USER_SUCCESS'] = "Enabled portal user";
+$mod_strings['LBL_DISABLE_PORTAL_USER_SUCCESS'] = "Disabled portal user";
+$mod_strings['LBL_NO_JOOMLA_URL'] = "No portal URL specified";

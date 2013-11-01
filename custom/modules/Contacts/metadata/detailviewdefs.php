@@ -1,5 +1,5 @@
 <?php
-// created: 2013-10-20 14:20:14
+// created: 2013-11-01 09:39:03
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -32,28 +32,63 @@ $viewdefs = array (
                 ),
               ),
             ),
-            5 => 
+            'AOS_GENLET' => 
             array (
-              'customCode' => '{if $fields.joomla_account_id.value == "" && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="Create Portal User"> {/if}',
+              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
+            ),
+            'AOP_CREATE' => 
+            array (
+              'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
               'sugar_html' => 
               array (
                 'type' => 'submit',
-                'value' => 'Create Portal User',
+                'value' => '{$MOD.LBL_CREATE_PORTAL_USER}',
                 'htmlOptions' => 
                 array (
-                  'title' => 'Create Portal User',
-                  'accesskey' => 'Create Portal User',
+                  'title' => '{$MOD.LBL_CREATE_PORTAL_USER}',
                   'class' => 'button',
                   'onclick' => 'this.form.action.value=\'createPortalUser\';',
                   'name' => 'buttonCreatePortalUser',
                   'id' => 'createPortalUser_button',
                 ),
-                'template' => '{if $fields.joomla_account_id.value == "" && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+                'template' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
               ),
             ),
-            'AOS_GENLET' => 
+            'AOP_DISABLE' => 
             array (
-              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
+              'customCode' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'disablePortalUser\';" value="{$MOD.LBL_DISABLE_PORTAL_USER}"> {/if}',
+              'sugar_html' => 
+              array (
+                'type' => 'submit',
+                'value' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
+                'htmlOptions' => 
+                array (
+                  'title' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
+                  'class' => 'button',
+                  'onclick' => 'this.form.action.value=\'disablePortalUser\';',
+                  'name' => 'buttonDisablePortalUser',
+                  'id' => 'disablePortalUser_button',
+                ),
+                'template' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              ),
+            ),
+            'AOP_ENABLE' => 
+            array (
+              'customCode' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'enablePortalUser\';" value="{$MOD.LBL_ENABLE_PORTAL_USER}"> {/if}',
+              'sugar_html' => 
+              array (
+                'type' => 'submit',
+                'value' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
+                'htmlOptions' => 
+                array (
+                  'title' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
+                  'class' => 'button',
+                  'onclick' => 'this.form.action.value=\'enablePortalUser\';',
+                  'name' => 'buttonENablePortalUser',
+                  'id' => 'enablePortalUser_button',
+                ),
+                'template' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              ),
             ),
           ),
         ),
