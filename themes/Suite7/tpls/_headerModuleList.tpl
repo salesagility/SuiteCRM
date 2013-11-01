@@ -114,7 +114,7 @@
                                     {/if}
                                     {if $module == 'Home'}
                                         <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
-                                        <li><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
+                                        <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
                                     {/if}
                                     <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
                                     {foreach from=$recentRecords item=item name=lastViewed}
@@ -241,11 +241,10 @@
                     <a href="#">More &raquo;</a><br />
                     <ul class="cssmenu">
                         {foreach from=$moduleExtraMenu item=module key=name name=moduleList}
-                        <li>{sugar_link id="moduleTab_$name" module=$name data=$module}
-                            {/foreach}
+                        <li>{sugar_link id="moduleTab_$name" module=$name data=$module}</li>
+                        {/foreach}
                     </ul>
                 </li>
             {/if}
-
     </div>
 {/if}

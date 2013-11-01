@@ -196,7 +196,7 @@ th, td
 
 #companyLogo
 {
-    padding: px 10px 0px 15px;
+    padding: 0 10px 0 15px;
     vertical-align: bottom;
     float:left;
     margin-bottom:-8px;
@@ -305,7 +305,7 @@ th, td
 }
 #colorPicker
 {
-    padding: 8px 5px 0px 7px;
+    padding: 8px 5px 0 7px;
 }
 #colorPicker ul
 {
@@ -317,7 +317,7 @@ th, td
 {
     list-style-type: none;
     display: inline;
-    padding: 0px;
+    padding: 0;
     cursor: pointer;
     margin: 0;
 }
@@ -352,7 +352,7 @@ div#content > table
     margin: 0 0 0 15px;
 }
 /* put a bit of left margin in when the left column menu is hidden */
-div#content noLeftColumn
+div#content .noLeftColumn
 {
     margin-left: 5px;
     border-left: none;
@@ -391,13 +391,13 @@ div#content noLeftColumn
 #newRecord form input[type=submit],
 #newRecord form input[type=reset]
 {
-    padding-top: 0px;
+    padding-top: 0;
     vertical-align: bottom;
 }
 #newRecord form .dataLabel {
     padding-bottom: 2px;
     padding-top: 3px;
-    padding-left: 0px;
+    padding-left: 0;
     vertical-align: bottom;
 }
 #newRecord form .dataField
@@ -462,8 +462,8 @@ ul.cssmenu li a
     display: block;
 }
 #subModuleList li, #subModuleList ul{
-    padding:0px;
-    margin:0px;
+    padding:0;
+    margin:0;
 }
 
 #subModuleList li.subTabMore{
@@ -2189,7 +2189,6 @@ iframe.teamNoticeBox
 {
     border:1px solid #d0d0d0;
     background:#d0d0d0;
-    zoom:1;
     overflow:hidden;
 }
 
@@ -2198,8 +2197,6 @@ iframe.teamNoticeBox
     overflow:auto;
     background:#FFF;
     position:relative;
-    zoom:1;
-    overflow-x:hidden;
 }
 
 .x-sqs-list-item
@@ -2241,17 +2238,17 @@ embed
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a{
-    padding: 0px 2px;
+    padding: 0 2px;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child  {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
     padding: 20px;
-    border: 0px none;
-    border-radius: 0px;
+    border: 0 none;
+    border-radius: 0;
     height: 487px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -2268,11 +2265,11 @@ div.confirmTable {
 /* Bug 19728 - Email Templates detail view is different with edit view */
 #html_div p
 {
-    margin: 12px 0px;
+    margin: 12px 0;
 }
 
 #html_div p:first-child {
-    margin: 0px 0px 12px 0px;
+    margin: 0 0 12px 0;
 }
 
 /* UNUSED STYLES */
@@ -2311,13 +2308,13 @@ a:link, a:visited, a:hover
 }
 
 .buttonSlide {
-    border: 0px;
+    border: 0;
 }
 
 .buttonSlide .yui-hd {
-    border: 0px;
+    border: 0;
     background-color: transparent;
-    padding: 0px;
+    padding: 0;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
@@ -4340,7 +4337,7 @@ div#content > table
     width: 100%;
 }
 /* put a bit of left margin in when the left column menu is hidden */
-div#content noLeftColumn
+div#content .noLeftColumn
 {
     margin-left: 5px;
     border-left: none;
@@ -6198,7 +6195,6 @@ iframe.teamNoticeBox
 {
     border:1px solid #d0d0d0;
     background:#d0d0d0;
-    zoom:1;
     overflow:hidden;
 }
 
@@ -6207,7 +6203,6 @@ iframe.teamNoticeBox
     overflow:auto;
     background:#FFF;
     position:relative;
-    zoom:1;
     overflow-x:hidden;
 }
 
@@ -6251,17 +6246,17 @@ embed
 
 
 .dashletPanel .hd .hd-center .dashletToolSet a{
-    padding: 0px 2px;
+    padding: 0 2px;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child  {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
     padding: 20px;
-    border: 0px none;
-    border-radius: 0px;
+    border: 0 none;
+    border-radius: 0;
     height: 487px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -6278,11 +6273,11 @@ div.confirmTable {
 /* Bug 19728 - Email Templates detail view is different with edit view */
 #html_div p
 {
-    margin: 12px 0px;
+    margin: 12px 0;
 }
 
 #html_div p:first-child {
-    margin: 0px 0px 12px 0px;
+    margin: 0 0 12px 0;
 }
 
 /* UNUSED STYLES */
@@ -6321,13 +6316,13 @@ a:link, a:visited, a:hover
 }
 
 .buttonSlide {
-    border: 0px;
+    border: 0;
 }
 
 .buttonSlide .yui-hd {
-    border: 0px;
+    border: 0;
     background-color: transparent;
-    padding: 0px;
+    padding: 0;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
@@ -7112,6 +7107,13 @@ textarea
 }
 #moduleList ul li a:link,
 #moduleList ul li a:visited
+{
+    color: #444444;
+    padding:10px 0 10px 0;
+}
+
+#moduleList ul li ul li a:link,
+#moduleList ul li ul li a:visited
 {
     color: #444444;
     padding:10px 0 10px 0;
@@ -8352,7 +8354,8 @@ iframe.teamNoticeBox {
     -moz-border-radius: 2px;
     border-radius: 2px;
     opacity:1;
-    margin-left:0px;
+    margin-top:5px;
+    margin-left:-5px;
 }
 
 #moduleList ul li ul.cssmenu li{
@@ -8368,6 +8371,7 @@ iframe.teamNoticeBox {
 
 #moduleList ul li ul.cssmenu li a {
     font-size:12px;
+
     color:#cccccc;
 }
 
@@ -8418,13 +8422,12 @@ ul#drop-nav {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    right:0px;
+    right:0;
 }
 
 ul#drop-nav li {
     line-height:30px;
-    padding: 0 5px 00;
-
+    padding: 0 5px 0 0;
 }
 
 ul#drop-nav li a {
@@ -8960,7 +8963,7 @@ div.password {
 }
 
 div.dashletToolSet a img:hover {
-    opacity:0.6;#
+    opacity:0.6;
 -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -8984,3 +8987,4 @@ a#delete_listview_top:hover {
 .moduleTitle {
     margin-top:10px;
 }
+

@@ -168,22 +168,5 @@ function qe_init(){
         });
     </script>
 {/literal}
-{$SUGAR_JS}
-{literal}
-<script type="text/javascript">
-    <!--
-    SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-    SUGAR.themes.theme_ie6compat = {/literal}{$THEME_IE6COMPAT}{literal};
-    SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-    SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-    SUGAR.themes.loading_image      = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-    SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-    if ( YAHOO.env.ua )
-        UA = YAHOO.env.ua;
-    -->
-</script>
-{/literal}
-<script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-
 </body>
 </html>

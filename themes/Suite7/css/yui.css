@@ -108,7 +108,7 @@
 .yui-calcontainer {
     position: relative;
     float: left;
-    _overflow: hidden;
+    overflow: hidden;
 }
 
 .yui-calcontainer iframe {

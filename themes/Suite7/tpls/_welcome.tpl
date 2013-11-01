@@ -50,5 +50,6 @@
                 <input type="submit" class="button" value="">
             </form>
         </div>
+
 {/if}
 
