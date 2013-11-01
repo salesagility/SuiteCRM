@@ -54,7 +54,7 @@ global $sugar_config, $mod_strings;
         print( "&nbsp;&nbsp;&nbsp;" . $custom_version );
     }?>
 </b>
-<p>Sugar<?php echo $mod_strings['LBL_VERSION']." ".$sugar_version." (".$mod_strings['LBL_BUILD']." ".$sugar_build.")";?></p>
+<p>Sugar <?php echo $mod_strings['LBL_VERSION']." ".$sugar_version." (".$mod_strings['LBL_BUILD']." ".$sugar_build.")";?></p>
 <br>
 <h1><?php echo $mod_strings['LBL_CONTRIBUTOR_SUITECRM']; ?></h1>
 <table id="about_table" class="contentBox">

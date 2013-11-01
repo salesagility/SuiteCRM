@@ -36,6 +36,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
+require_once('modules/Contacts/views/view.detail.php');
+
 class CustomContactsViewDetail extends ContactsViewDetail{
     public function display(){
         global $sugar_config;

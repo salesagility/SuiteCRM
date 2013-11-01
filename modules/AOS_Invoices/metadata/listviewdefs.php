@@ -54,6 +54,10 @@ array (
     'module' => 'Contacts',
     'id' => 'BILLING_CONTACT_ID',
     'link' => true,
+      'related_fields' =>
+          array (
+              'billing_contact_id',
+          ),
   ),
   'BILLING_ACCOUNT' => 
   array (
@@ -63,6 +67,10 @@ array (
     'module' => 'Accounts',
     'id' => 'BILLING_ACCOUNT_ID',
     'link' => true,
+      'related_fields' =>
+          array (
+              'billing_account_id',
+          ),
   ),
   'TOTAL_AMOUNT' => 
   array (

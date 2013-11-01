@@ -93,7 +93,6 @@ array (
 			'massupdate' => false,
             'duplicate_merge'=> 'disabled',
             'hideacl'=>true,
-
 		),
 	'opportunity_role_fields' =>
 		array (

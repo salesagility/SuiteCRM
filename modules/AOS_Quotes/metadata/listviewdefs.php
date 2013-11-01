@@ -53,6 +53,10 @@ array (
     'module' => 'Contacts',
     'id' => 'BILLING_CONTACT_ID',
     'link' => true,
+      'related_fields' =>
+          array (
+              'billing_contact_id',
+          ),
   ),
   'BILLING_ACCOUNT' => 
   array (
@@ -62,6 +66,10 @@ array (
     'module' => 'Accounts',
     'id' => 'BILLING_ACCOUNT_ID',
     'link' => true,
+      'related_fields' =>
+          array (
+              'billing_account_id',
+          ),
   ),
   'TOTAL_AMOUNT' => 
   array (
@@ -89,30 +97,6 @@ array (
   array (
     'width' => '10%',
     'label' => 'LBL_TYPE',
-    'default' => false,
-  ),
-  'INDUSTRY' => 
-  array (
-    'width' => '10%',
-    'label' => 'LBL_INDUSTRY',
-    'default' => false,
-  ),
-  'ANNUAL_REVENUE' => 
-  array (
-    'width' => '10%',
-    'label' => 'LBL_ANNUAL_REVENUE',
-    'default' => false,
-  ),
-  'PHONE_FAX' => 
-  array (
-    'width' => '10%',
-    'label' => 'LBL_PHONE_FAX',
-    'default' => false,
-  ),
-  'PHONE_OFFICE' => 
-  array (
-    'width' => '10%',
-    'label' => 'LBL_PHONE',
     'default' => false,
   ),
   'BILLING_ADDRESS_STREET' => 
