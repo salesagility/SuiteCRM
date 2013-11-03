@@ -3,6 +3,11 @@ function install_aop() {
 
 	    require_once('modules/EmailTemplates/EmailTemplate.php');
 		global $sugar_config;
+        $sugar_config['aop']['enable_portal'] = false;
+        $sugar_config['aop']['joomla_url'] = '';
+        $sugar_config['aop']['distribution_user_id'] = '';
+        $sugar_config['aop']['support_from_address'] = '';
+        $sugar_config['aop']['support_from_name'] = '';
 		$sugar_config['aop'] = array('distribution_method'=>'roundRobin');
 		$templates = getTemplates();
 		foreach($templates as $configKey => $templateData){
