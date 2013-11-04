@@ -486,6 +486,14 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	    	///////////////////////////////////////////////////////////////////////////
 		}
 	}
+
+	if(!empty($_POST['is_ajax_call']))
+	{
+		$json = getJSONobj();
+		echo $json->encode(array('status' => 'success', 'get' => ''));
+		exit;
+	}
+
 	if (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Home'){
 		header("Location: index.php?module=Home&action=index");
 	}

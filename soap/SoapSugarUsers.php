@@ -1536,9 +1536,22 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
 	$more_query_array = array();
 	foreach($modules as $module) {
 	    if (!array_key_exists($module, $query_array)) {
-	        $lc_module = strtolower($module);
-	        $more_query_array[$module] = array('where'=>array($module => array(0 => "$lc_module.name like '{0}%'")), 'fields'=>"$lc_module.id, $lc_module.name");
-	    }
+            $seed = new $beanList[$module]();
+            $table_name = $seed->table_name;
+            if (!empty($seed->field_defs['name']['db_concat_fields'])) {
+                $namefield = $seed->db->concat($table_name, $seed->field_defs['name']['db_concat_fields']);
+            } else {
+                $namefield = "$table_name.name";
+            }
+            $more_query_array[$module] = array(
+                'where' => array(
+                    $module => array(
+                        0 => "$namefield like '%{0}%'",
+                    ),
+                ),
+                'fields' => "$table_name.id, $namefield AS name"
+            );
+     }
 	}
 
 	if (!empty($more_query_array)) {
@@ -1624,10 +1637,8 @@ function search_by_module($user_name, $password, $search_string, $modules, $offs
 
 				while(($row = $seed->db->fetchByAssoc($result)) != null){
 					$list = array();
-					$fields = explode(", ", $query_array[$module_name]['fields']);
-					foreach($fields as $field){
-						$field_names = explode(".", $field);
-						$list[$field] = array('name'=>$field_names[1], 'value'=>$row[$field_names[1]]);
+                    foreach ($row as $field_key => $field_value) {
+                        $list[$field_key] = array('name'=>$field_key, 'value'=>$field_value);
 					}
 
 					$output_list[] = array('id'=>$row['id'],

@@ -87,6 +87,7 @@ class SugarAutoLoader{
             return true;
         }
 
+
   		return false;
 	}
 
@@ -155,6 +156,7 @@ class SugarAutoLoader{
         }
         return false;
     }
+
 
 	public static function loadAll(){
 		foreach(SugarAutoLoader::$map as $class=>$file){

@@ -332,14 +332,14 @@ class EditView
                     }
                 }
 
-                    $panel = $this->getPanelWithFillers($panel);
+			    	$panel = $this->getPanelWithFillers($panel);
 
-                    $this->sectionPanels[strtoupper($key)] = $panel;
-                }
+			    	$this->sectionPanels[strtoupper($key)] = $panel;
+		        }
 
 
-        $panelCount++;
-        } //foreach
+		$panelCount++;
+		} //foreach
     }
 
     /**
@@ -456,49 +456,49 @@ class EditView
                 {
                     if(isset($GLOBALS['sugar_config']['enable_autocomplete']) && $GLOBALS['sugar_config']['enable_autocomplete'] == true)
                     {
-                        $this->fieldDefs[$name]['autocomplete'] = true;
-                        $this->fieldDefs[$name]['autocomplete_options'] = $this->fieldDefs[$name]['options']; // we need the name for autocomplete
-                    } else {
+						$this->fieldDefs[$name]['autocomplete'] = true;
+	                	$this->fieldDefs[$name]['autocomplete_options'] = $this->fieldDefs[$name]['options']; // we need the name for autocomplete
+					} else {
                         $this->fieldDefs[$name]['autocomplete'] = false;
-                    }
-                    // Bug 57472 - $this->fieldDefs[$name]['autocomplete_options' was set too late, it didn't retrieve the list's name, but the list itself (the developper comment show us that developper expected to retrieve list's name and not the options array)
-                    $this->fieldDefs[$name]['options'] = $app_list_strings[$this->fieldDefs[$name]['options']];
+                   	}
+                   	// Bug 57472 - $this->fieldDefs[$name]['autocomplete_options' was set too late, it didn't retrieve the list's name, but the list itself (the developper comment show us that developper expected to retrieve list's name and not the options array)
+                   	$this->fieldDefs[$name]['options'] = $app_list_strings[$this->fieldDefs[$name]['options']];
                 }
 
                 if(isset($this->fieldDefs[$name]['options']) && is_array($this->fieldDefs[$name]['options']) && isset($this->fieldDefs[$name]['default_empty']) && !isset($this->fieldDefs[$name]['options'][$this->fieldDefs[$name]['default_empty']])) {
                     $this->fieldDefs[$name]['options'] = array_merge(array($this->fieldDefs[$name]['default_empty']=>$this->fieldDefs[$name]['default_empty']), $this->fieldDefs[$name]['options']);
                 }
                                 
-                if(isset($this->fieldDefs[$name]['function'])) {
-                    $function = $this->fieldDefs[$name]['function'];
-                    if(is_array($function) && isset($function['name'])){
-                        $function = $this->fieldDefs[$name]['function']['name'];
-                    }else{
-                        $function = $this->fieldDefs[$name]['function'];
-                    }
+	       	 	if(isset($this->fieldDefs[$name]['function'])) {
+	       	 		$function = $this->fieldDefs[$name]['function'];
+	       			if(is_array($function) && isset($function['name'])){
+	       				$function = $this->fieldDefs[$name]['function']['name'];
+	       			}else{
+	       				$function = $this->fieldDefs[$name]['function'];
+	       			}
 
                     if(isset($this->fieldDefs[$name]['function']['include']) && file_exists($this->fieldDefs[$name]['function']['include']))
                     {
-                        require_once($this->fieldDefs[$name]['function']['include']);
-                    }
+                  		require_once($this->fieldDefs[$name]['function']['include']);
+                  	}
 
-                    if(!empty($this->fieldDefs[$name]['function']['returns']) && $this->fieldDefs[$name]['function']['returns'] == 'html'){
-                        if(!empty($this->fieldDefs[$name]['function']['include'])){
-                                require_once($this->fieldDefs[$name]['function']['include']);
-                        }
-                        $value = call_user_func($function, $this->focus, $name, $value, $this->view);
-                        $valueFormatted = true;
-                    }else{
-                        $this->fieldDefs[$name]['options'] = call_user_func($function, $this->focus, $name, $value, $this->view);
-                    }
-                }
+	       	 		if(!empty($this->fieldDefs[$name]['function']['returns']) && $this->fieldDefs[$name]['function']['returns'] == 'html'){
+						if(!empty($this->fieldDefs[$name]['function']['include'])){
+								require_once($this->fieldDefs[$name]['function']['include']);
+						}
+						$value = call_user_func($function, $this->focus, $name, $value, $this->view);
+						$valueFormatted = true;
+					}else{
+						$this->fieldDefs[$name]['options'] = call_user_func($function, $this->focus, $name, $value, $this->view);
+					}
+	       	 	}
 
-                if(isset($this->fieldDefs[$name]['type']) && $this->fieldDefs[$name]['type'] == 'function' && isset($this->fieldDefs[$name]['function_name'])){
-                    $value = $this->callFunction($this->fieldDefs[$name]);
-                    $valueFormatted = true;
-                }
+	       	 	if(isset($this->fieldDefs[$name]['type']) && $this->fieldDefs[$name]['type'] == 'function' && isset($this->fieldDefs[$name]['function_name'])){
+	       	 		$value = $this->callFunction($this->fieldDefs[$name]);
+	       	 		$valueFormatted = true;
+	       	 	}
 
-                if(!$valueFormatted) {
+	       	 	if(!$valueFormatted) {
                     // $this->focus->format_field($this->focus->field_defs[$name]);
                    $value = isset($this->focus->$name) ? $this->focus->$name : '';
                 }
@@ -927,11 +927,11 @@ EOQ;
     }
 
 
-    /**
-     * Allow Subviews to overwrite this method to show custom titles.
-     * Examples: Projects & Project Templates.
-     * params: $showTitle: boolean for backwards compatibility.
-     */
+	/**
+	 * Allow Subviews to overwrite this method to show custom titles.
+	 * Examples: Projects & Project Templates.
+	 * params: $showTitle: boolean for backwards compatibility.
+	 */
     public function showTitle($showTitle = false)
     {
         global $mod_strings, $app_strings;

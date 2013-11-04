@@ -127,13 +127,11 @@ class CaseUpdatesHook {
             return;
         }
         $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
+        $contact->load_relationship("accounts");
         if(!$contact || !$contact->account_id){
             return;
         }
-
-        if(!$bean->account_id){
-            $bean->account_id = $contact->account_id;
-        }
+        $this->linkAccountAndCase($bean->id,$contact->account_id);
     }
 
     /**
@@ -188,7 +186,10 @@ class CaseUpdatesHook {
         global $app_strings;
         $text = html_entity_decode($text);
         $text = preg_replace('/(\r\n|\r|\n)/s',"\n",$text);
-        $text = preg_replace('#((On.*wrote.*\v)?.*'.preg_quote($app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER']).'(.|\v)*)#mi', "", $text);
+        $pos = strpos($text,$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER']);
+        if($pos !== false){
+            $text = substr($text,0,$pos);
+        }
         return $text;
     }
 

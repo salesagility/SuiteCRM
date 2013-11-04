@@ -280,8 +280,7 @@ $server->wsdl->addComplexType(
 		array(
         	'id'=>array('name'=>'id', 'type'=>'xsd:string'),
 			'module_name'=>array('name'=>'module_name', 'type'=>'xsd:string'),
-            'name_value_list'=>array('name'=>'name_value_list', 'type'=>'tns:name_value_list'),
-            'details'=>array('name'=>'details', 'type'=>'tns:name_value_list'),
+			'name_value_list'=>array('name'=>'name_value_list', 'type'=>'tns:name_value_list'),
 		)
 );
 

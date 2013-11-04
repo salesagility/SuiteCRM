@@ -808,7 +808,8 @@ EOQ;
 		}
 
 
-		if (!$current_user->isAdminForModule('Users')) {
+		//check old password current user is not an admin or current user is an admin editing themselves
+		if (!$current_user->isAdminForModule('Users')  || ($current_user->isAdminForModule('Users') && ($current_user->id == $this->id))) {
 			//check old password first
 			$row = self::findUserPassword($this->user_name, md5($user_password));
             if (empty($row)) {

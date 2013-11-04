@@ -2307,74 +2307,117 @@ eoq;
 		return $cleanUids;
 	}
 
+    /**
+     * Creates Mail folder
+     *
+     * @param object $user User in focus
+     * @param array $folder_params Array of parameters for folder creation
+     */
+    protected function createFolder($user, $folder_params)
+    {
+        $folder = new SugarFolder();
+        foreach ($folder_params as $key => $val) {
+            $folder->$key = $val;
+        }
+
+        $folder->save();
+
+        return $folder;
+    }
+
 	/**
 	 * Creates defaults for the User
 	 * @param object $user User in focus
 	 */
-	function preflightUser(&$user) {
-		global $mod_strings;
+    public function preflightUser(&$user)
+    {
+        global $mod_strings;
+        $folder_types = array();
 
-		$goodToGo = $user->getPreference("email2Preflight", "Emails");
-			$q = "SELECT count(*) count FROM folders f where f.created_by = '{$user->id}' AND f.folder_type = 'inbound' AND f.deleted = 0";
-			$r = $user->db->query($q);
-			$a = $user->db->fetchByAssoc($r);
+        $params = array(
+            // My Emails
+            "inbound" => array(
+                'name' => $mod_strings['LNK_MY_INBOX'],
+                'folder_type' => "inbound",
+                'has_child' => 1,
+                'dynamic_query' => $this->generateDynamicFolderQuery("inbound", $user->id),
+                'is_dynamic' => 1,
+                'created_by' => $user->id,
+                'modified_by' => $user->id,
+            ),
+            // My Drafts
+            "draft" => array(
+                'name' => $mod_strings['LNK_MY_DRAFTS'],
+                'folder_type' => "draft",
+                'has_child' => 0,
+                'dynamic_query' => $this->generateDynamicFolderQuery("draft", $user->id),
+                'is_dynamic' => 1,
+                'created_by' => $user->id,
+                'modified_by' => $user->id,
+            ),
+            // Sent Emails
+            "sent" => array(
+                'name' => $mod_strings['LNK_SENT_EMAIL_LIST'],
+                'folder_type' => "sent",
+                'has_child' => 0,
+                'dynamic_query' => $this->generateDynamicFolderQuery("sent", $user->id),
+                'is_dynamic' => 1,
+                'created_by' => $user->id,
+                'modified_by' => $user->id,
+            ),
+            // Archived Emails
+            "archived" => array(
+                'name' => $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'],
+                'folder_type' => "archived",
+                'has_child' => 0,
+                'dynamic_query' => '',
+                'is_dynamic' => 1,
+                'created_by' => $user->id,
+                'modified_by' => $user->id,
+            ),
+        );
 
-			if($a['count'] < 1) {
-				require_once("include/SugarFolders/SugarFolders.php");
-				// My Emails
-				$folder = new SugarFolder();
-				$folder->new_with_id = true;
-				$folder->id = create_guid();
-				$folder->name = $mod_strings['LNK_MY_INBOX'];
-				$folder->has_child = 1;
-				$folder->created_by = $user->id;
-				$folder->modified_by = $user->id;
-				$folder->is_dynamic = 1;
-				$folder->folder_type = "inbound";
-				$folder->dynamic_query = $this->generateDynamicFolderQuery('inbound', $user->id);
-				$folder->save();
+        $q = "SELECT * FROM folders f WHERE f.created_by = '{$user->id}' AND f.deleted = 0 AND coalesce(" . $user->db->convert("f.folder_type", "length") . ",0) > 0";
+        $r = $user->db->query($q);
 
-				// My Drafts
-				$drafts = new SugarFolder();
-				$drafts->name = $mod_strings['LNK_MY_DRAFTS'];
-				$drafts->has_child = 0;
-				$drafts->parent_folder = $folder->id;
-				$drafts->created_by = $user->id;
-				$drafts->modified_by = $user->id;
-				$drafts->is_dynamic = 1;
-				$drafts->folder_type = "draft";
-				$drafts->dynamic_query = $this->generateDynamicFolderQuery('draft', $user->id);
-				$drafts->save();
+        while ($row = $GLOBALS['db']->fetchByAssoc($r)) {
+            if ($row['folder_type'] == 'inbound') {
+                $parent_id = $row['id'];
+            }
+            if (!in_array($row['folder_type'], $folder_types)) {
+                array_push($folder_types, $row['folder_type']);
+            }
+            if (isset($params[$row['folder_type']])) {
+                unset($params[$row['folder_type']]);
+            }
+        }
 
+        require_once("include/SugarFolders/SugarFolders.php");
 
-				// Sent Emails
-				$archived = new SugarFolder();
-				$archived->name = $mod_strings['LNK_SENT_EMAIL_LIST'];
-				$archived->has_child = 0;
-				$archived->parent_folder = $folder->id;
-				$archived->created_by = $user->id;
-				$archived->modified_by = $user->id;
-				$archived->is_dynamic = 1;
-				$archived->folder_type = "sent";
-				$archived->dynamic_query = $this->generateDynamicFolderQuery('sent', $user->id);
-				$archived->save();
+        foreach ($params as $type => $type_params) {
+            if ($type == "inbound") {
 
-				// Archived Emails
-				$archived = new SugarFolder();
-				$archived->name = $mod_strings['LBL_LIST_TITLE_MY_ARCHIVES'];
-				$archived->has_child = 0;
-				$archived->parent_folder = $folder->id;
-				$archived->created_by = $user->id;
-				$archived->modified_by = $user->id;
-				$archived->is_dynamic = 1;
-				$archived->folder_type = "archived";
-				$archived->dynamic_query = '';
-				$archived->save();
+                $folder = $this->createFolder($user, $params[$type]);
 
-			// set flag to show that this was run
-			$user->setPreference("email2Preflight", true, 1, "Emails");
-		}
-	}
+                $parent_id = $folder->id;
+
+                // handle the case where inbound folder was deleted, but other folders exist
+                if (count($folder_types) != 0) {
+                    // This update query will exclude inbound parent, and any custom created folders.
+                    // For others, it will update their parent_id for the current user.
+                    $q = "UPDATE folders SET parent_folder = '".$parent_id.
+                    "' WHERE folder_type IN ('draft', 'sent', 'archived') AND created_by = '".$user->id."'";
+                    $q = "UPDATE folders SET parent_folder = '".$parent_id.
+                    "' WHERE folder_type IN ('draft', 'sent', 'archived') AND created_by = '".$user->id."'";
+                    $r = $user->db->query($q);
+                }
+            } else {
+                $params[$type]['parent_folder'] = $parent_id;
+
+                $this->createFolder($user, $params[$type]);
+            }
+        }
+    }
 
 	/**
 	 * Parses the core dynamic folder query

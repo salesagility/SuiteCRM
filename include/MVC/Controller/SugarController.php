@@ -753,12 +753,19 @@ class SugarController{
         $this->view = 'edit';
         $GLOBALS['view'] = $this->view;
         ob_clean();
-        if(method_exists($this->bean, 'deleteAttachment')) {
-            echo $this->bean->deleteAttachment($_REQUEST['isDuplicate']) ? 'true' : 'false';
-        } else {
-            echo 'false';
-        }
+        $retval = false;
 
+        if(method_exists($this->bean, 'deleteAttachment')) {
+            $duplicate = "false";
+            if (isset($_REQUEST['isDuplicate']) && $_REQUEST['isDuplicate'] == "true") {
+                $duplicate = "true";
+            }
+            if (isset($_REQUEST['duplicateSave']) && $_REQUEST['duplicateSave'] == "true") {
+                $duplicate = "true";
+            }
+            $retval = $this->bean->deleteAttachment($duplicate);
+        }
+        echo json_encode($retval);
         sugar_cleanup(true);
     }
 

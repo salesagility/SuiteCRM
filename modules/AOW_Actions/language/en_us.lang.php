@@ -53,5 +53,7 @@ $mod_strings = array (
   'LBL_EDIT_EMAIL_TEMPLATE' => 'Edit',
   'LBL_EMAIL' => 'Email',
   'LBL_EMAIL_TEMPLATE' => 'Email Template',
+  'LBL_SETAPPROVAL' => 'Set Approval',
+  'LBL_RELATE_WORKFLOW' => 'Relate to WorkFlow Module',
 
 );

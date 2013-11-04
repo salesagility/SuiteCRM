@@ -88,6 +88,9 @@
 			//YUI scripts loaded on first page
             'include/javascript/yui3/build/yui/yui-min.js'              => 'include/javascript/sugar_grp1_yui.js',
             'include/javascript/yui3/build/loader/loader-min.js'        => 'include/javascript/sugar_grp1_yui.js',
+            'include/javascript/yui3/build/oop/oop-min.js'              => 'include/javascript/sugar_grp1_yui.js',
+            'include/javascript/yui3/build/event-custom/event-custom-base-min.js' => 'include/javascript/sugar_grp1_yui.js',
+            'include/javascript/yui3/build/io/io-base-min.js'           => 'include/javascript/sugar_grp1_yui.js',
 			'include/javascript/yui/build/yahoo/yahoo-min.js'           => 'include/javascript/sugar_grp1_yui.js',
             'include/javascript/yui/build/dom/dom-min.js'               => 'include/javascript/sugar_grp1_yui.js',
 			'include/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js'

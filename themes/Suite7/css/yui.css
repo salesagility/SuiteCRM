@@ -108,7 +108,7 @@
 .yui-calcontainer {
     position: relative;
     float: left;
-    _overflow: hidden;
+    overflow: hidden;
 }
 
 .yui-calcontainer iframe {
@@ -5703,19 +5703,15 @@ div.yuimenu li.selected a.selected {
     background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
     background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
-
 }
 
 .yui-navset .yui-nav li a em {
-
     padding: 8px;
-
 }
 
 .yui-navset {
 
     padding:5px;
-
 }
 
 .yui-nav a em {
@@ -5726,7 +5722,6 @@ div.yuimenu li.selected a.selected {
 div.bodywrapper {
 
     padding:10px;
-
 }
 
 .yui-navset .yui-nav .selected a, .yui-navset .yui-nav .selected a em
@@ -5741,7 +5736,6 @@ div.bodywrapper {
 }
 .yui-navset .yui-content, .yui-navset .yui-navset-top .yui-content
 {
-
     border-top-width: 0px;
     padding: 0.2em 0.5em;
 }
@@ -6177,7 +6171,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 
 .bodywrapper div {
 
-    padding:0 10px 0 10px;
+    #padding:0 10px 0 10px;
 }
 
 .yui-layout .yui-layout-clip {

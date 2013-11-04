@@ -81,6 +81,12 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         return null;
     }
 
+    public function getUpdateContact(){
+        if($this->contact_id){
+            return BeanFactory::getBean("Contacts",$this->contact_id);
+        }
+        return null;
+    }
     public function getUser(){
         $user = BeanFactory::getBean('Users',$this->getCase()->assigned_user_id);
         return $user;

@@ -48,6 +48,13 @@ $dictionary["Contact"]["fields"]["joomla_account_id"] = array (
     'importable' => 'false',
     'studio' => 'true',
 );
+$dictionary["Contact"]["fields"]["portal_account_disabled"] = array (
+    'name' => 'portal_account_disabled',
+    'vname' => 'LBL_PORTAL_ACCOUNT_DISABLED',
+    'type' => 'bool',
+    'importable' => 'false',
+    'studio' => 'false',
+);
 $dictionary["Contact"]["fields"]["joomla_account_access"] = array (
     'name' => 'joomla_account_access',
     'vname' => 'LBL_JOOMLA_ACCOUNT_ACCESS',

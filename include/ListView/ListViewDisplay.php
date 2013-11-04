@@ -134,63 +134,7 @@ class ListViewDisplay {
 
         $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field);
 
-		foreach($this->displayColumns as $columnName => $def)
-		{
-			$seedName =  strtolower($columnName);
-            if(!empty($this->lvd->seed->field_defs[$seedName])){
-                $seedDef = $this->lvd->seed->field_defs[$seedName];
-            }
-
-			if(empty($this->displayColumns[$columnName]['type'])){
-				if(!empty($seedDef['type'])){
-		            $this->displayColumns[$columnName]['type'] = (!empty($seedDef['custom_type']))?$seedDef['custom_type']:$seedDef['type'];
-		        }else{
-		        	$this->displayColumns[$columnName]['type'] = '';
-		        }
-			}//fi empty(...)
-
-			if(!empty($seedDef['options'])){
-					$this->displayColumns[$columnName]['options'] = $seedDef['options'];
-			}
-
-	        //C.L. Fix for 11177
-	        if($this->displayColumns[$columnName]['type'] == 'html') {
-	            $cField = $this->seed->custom_fields;
-	               if(isset($cField) && isset($cField->bean->$seedName)) {
-	                 	$seedName2 = strtoupper($columnName);
-	                 	$htmlDisplay = html_entity_decode($cField->bean->$seedName);
-	                 	$count = 0;
-	                 	while($count < count($data['data'])) {
-	                 		$data['data'][$count][$seedName2] = &$htmlDisplay;
-	                 	    $count++;
-	                 	}
-	            	}
-	        }//fi == 'html'
-
-            //Bug 40511, make sure relate fields have the correct module defined
-            if ($this->displayColumns[$columnName]['type'] == "relate" && !empty($seedDef['link']) && empty( $this->displayColumns[$columnName]['module']))
-            {
-                $link = $seedDef['link'];
-                if (!empty($this->lvd->seed->field_defs[$link]) && !empty($this->lvd->seed->field_defs[$seedDef['link']]['module']))
-                {
-                    $this->displayColumns[$columnName]['module'] = $this->lvd->seed->field_defs[$seedDef['link']]['module'];
-                }
-            }
-
-			if (!empty($seedDef['sort_on'])) {
-		    	$this->displayColumns[$columnName]['orderBy'] = $seedDef['sort_on'];
-		    }
-
-            if(isset($seedDef)){
-                // Merge the two arrays together, making sure the seedDef doesn't override anything explicitly set in the displayColumns array.
-                $this->displayColumns[$columnName] = $this->displayColumns[$columnName] + $seedDef;
-            }
-
-		    //C.L. Bug 38388 - ensure that ['id'] is set for related fields
-            if(!isset($this->displayColumns[$columnName]['id']) && isset($this->displayColumns[$columnName]['id_name'])) {
-               $this->displayColumns[$columnName]['id'] = strtoupper($this->displayColumns[$columnName]['id_name']);
-            }
-		}
+        $this->fillDisplayColumnsWithVardefs();
 
 		$this->process($file, $data, $seed->object_name);
 		return true;
@@ -625,5 +569,68 @@ EOF;
     protected function getMassUpdate()
     {
         return new MassUpdate();
+    }
+
+    /**
+     * Fill displayColumns with additional field values from vardefs of the current bean seed.
+     * We need vardefs to be in displayColumns for a further processing (e.g. in SugarField)
+     * Similar vardef field values do not override field values from displayColumns, only necessary and missing ones are added
+     */
+    protected function fillDisplayColumnsWithVardefs()
+    {
+        foreach ($this->displayColumns as $columnName => $def) {
+            $seedName =  strtolower($columnName);
+            if (!empty($this->lvd->seed->field_defs[$seedName])) {
+                $seedDef = $this->lvd->seed->field_defs[$seedName];
+            }
+
+            if (empty($this->displayColumns[$columnName]['type'])) {
+                if (!empty($seedDef['type'])) {
+                    $this->displayColumns[$columnName]['type'] = (!empty($seedDef['custom_type']))?$seedDef['custom_type']:$seedDef['type'];
+                } else {
+                    $this->displayColumns[$columnName]['type'] = '';
+                }
+            }//fi empty(...)
+
+            if (!empty($seedDef['options'])) {
+                $this->displayColumns[$columnName]['options'] = $seedDef['options'];
+            }
+
+            //C.L. Fix for 11177
+            if ($this->displayColumns[$columnName]['type'] == 'html') {
+                $cField = $this->seed->custom_fields;
+                if (isset($cField) && isset($cField->bean->$seedName)) {
+                    $seedName2 = strtoupper($columnName);
+                    $htmlDisplay = html_entity_decode($cField->bean->$seedName);
+                    $count = 0;
+                    while ($count < count($data['data'])) {
+                        $data['data'][$count][$seedName2] = &$htmlDisplay;
+                        $count++;
+                    }
+                }
+            }//fi == 'html'
+
+            //Bug 40511, make sure relate fields have the correct module defined
+            if ($this->displayColumns[$columnName]['type'] == "relate" && !empty($seedDef['link']) && empty( $this->displayColumns[$columnName]['module'])) {
+                $link = $seedDef['link'];
+                if (!empty($this->lvd->seed->field_defs[$link]) && !empty($this->lvd->seed->field_defs[$seedDef['link']]['module'])) {
+                    $this->displayColumns[$columnName]['module'] = $this->lvd->seed->field_defs[$seedDef['link']]['module'];
+                }
+            }
+
+            if (!empty($seedDef['sort_on'])) {
+                $this->displayColumns[$columnName]['orderBy'] = $seedDef['sort_on'];
+            }
+
+            if (isset($seedDef)) {
+                // Merge the two arrays together, making sure the seedDef doesn't override anything explicitly set in the displayColumns array.
+                $this->displayColumns[$columnName] = $this->displayColumns[$columnName] + $seedDef;
+            }
+
+            //C.L. Bug 38388 - ensure that ['id'] is set for related fields
+            if (!isset($this->displayColumns[$columnName]['id']) && isset($this->displayColumns[$columnName]['id_name'])) {
+                $this->displayColumns[$columnName]['id'] = strtoupper($this->displayColumns[$columnName]['id_name']);
+            }
+        }
     }
 }

@@ -13,5 +13,6 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH_TITLE'] = "Forza pubblicazione Dash
 $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Pubblica la Dashlet dei Messaggi nell'Home Page di tutti gli utenti. Questo processo potrebbe richiedere del tempo in base al numero degli utenti.";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Modulo per l'Integrazione";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Integra Security Suite con i tuoi moduli custom.";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Scarica l'ultima versione di SecuritySuite e trovare altri moduli di SugarCRM, temi e integrazioni con commenti, documenti, supporto, e le versioni verificate comunità.";
 
-?>

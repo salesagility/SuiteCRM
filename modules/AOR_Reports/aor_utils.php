@@ -24,15 +24,15 @@
 
 function getModuleFields($module, $view='EditView',$value = '')
 {
-    global $beanList;
+    global $app_strings, $beanList;
 
-    $fields = array(''=>'');
+    $fields = array(''=>$app_strings['LBL_NONE']);
 
     if ($module != '') {
         if(isset($beanList[$module]) && $beanList[$module]){
             $mod = new $beanList[$module]();
             foreach($mod->field_defs as $name => $arr){
-                if(isset($arr['type']) && $arr['type'] != 'link'){
+                if((isset($arr['type']) && $arr['type'] != 'link') &&((!isset($arr['source']) || $arr['source'] != 'non-db') || ($arr['type'] == 'relate' && isset($arr['id_name'])))){
                     if(isset($arr['vname']) && $arr['vname'] != ''){
                         $fields[$name] = rtrim(translate($arr['vname'],$mod->module_dir), ':');
                     } else {

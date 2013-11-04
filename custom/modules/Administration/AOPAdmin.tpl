@@ -13,13 +13,36 @@
         </tr>
     </table>
 
+    <script type="text/javascript">
+        {literal}
+        $(function() {
+            $('#enable_portal').change(function (){
 
+                if($('#enable_portal').is(":checked")){
+                    addToValidate('ConfigureSettings','joomla_url','text',true,"{/literal}{$MOD.LBL_AOP_JOOMLA_URL}{literal}");
+                    $('#joomla_url_row').show();
+                }else{
+                    removeFromValidate('ConfigureSettings','joomla_url');
+                    $('#joomla_url_row').hide();
+                }
+            });
+            $('#enable_portal').change();
 
+        });
+        {/literal}
+    </script>
 
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_JOOMLA_SETTINGS}</h4></th>
         </tr>
         <tr>
+            <td  scope="row" width="200">{$MOD.LBL_AOP_ENABLE_PORTAL}: </td>
+            <td  >
+                <input type='checkbox' id='enable_portal' name='enable_portal' {if $config.enable_portal}checked='checked'{/if} >
+            </td>
+
+        </tr>
+        <tr id='joomla_url_row'>
             <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_URL}: </td>
             <td  >
                 <input type='text' name='joomla_url' value='{$config.joomla_url}' >

@@ -46,6 +46,7 @@ array (
         'hidden' =>
         array (
            '<input type="hidden" name="isSaveAndNew" value="false">',
+           '<input type="hidden" name="is_ajax_call" value="1">',
         ),
         'buttons' =>
         array (

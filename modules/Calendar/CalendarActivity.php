@@ -98,7 +98,7 @@ class CalendarActivity {
 	}
 
 	/**
-	 * Get where clause for fetching entried from DB
+	 * Get where clause for fetching entries from DB for within two dates timespan
 	 * @param string $table_name t
 	 * @param string $rel_table table for accept status, not used in Tasks
 	 * @param SugarDateTime $start_ts_obj start date
@@ -107,24 +107,25 @@ class CalendarActivity {
 	 * @param string $view view; not used for now, left for compatibility
 	 * @return string
 	 */
-	function get_occurs_within_where_clause($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name='date_start', $view){
-		global $timedate;
-
-		$start = clone $start_ts_obj;
-		$end = clone $end_ts_obj;
-
-		$field_date = $table_name.'.'.$field_name;
-		$start_day = $GLOBALS['db']->convert("'{$start->asDb()}'",'datetime');
-		$end_day = $GLOBALS['db']->convert("'{$end->asDb()}'",'datetime');
-
-		$where = "($field_date >= $start_day AND $field_date < $end_day";
-		if($rel_table != ''){
-			$where .= " AND $rel_table.accept_status != 'decline'";
-		}
-
-		$where .= ")";
-		return $where;
+    function get_occurs_within_where_clause($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name = 'date_start', $view)
+    {
+        return self::getOccursWhereClauseGeneral($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name, array('self', 'within'));
 	}
+
+    /**
+     * Get where clause for fetching entries from DB for until certain date timespan
+     * @param string $table_name t
+     * @param string $rel_table table for accept status, not used in Tasks
+     * @param SugarDateTime $start_ts_obj start date
+     * @param SugarDateTime $end_ts_obj end date
+     * @param string $field_name date field in table
+     * @param string $view view; not used for now, left for compatibility
+     * @return string
+     */
+    public static function get_occurs_until_where_clause($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name = 'date_start', $view)
+    {
+        return self::getOccursWhereClauseGeneral($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name, array('self', 'until'));
+    }
 
 	function get_freebusy_activities($user_focus, $start_date_time, $end_date_time){
 		$act_list = array();
@@ -178,7 +179,7 @@ class CalendarActivity {
 				$meeting->disable_row_level_security = true;
 			}
 
-			$where = CalendarActivity::get_occurs_within_where_clause($meeting->table_name, $meeting->rel_users_table, $view_start_time, $view_end_time, 'date_start', $view);
+            $where = self::get_occurs_until_where_clause($meeting->table_name, $meeting->rel_users_table, $view_start_time, $view_end_time, 'date_start', $view);
 			$where .= $completedMeetings;
 			$focus_meetings_list = build_related_list_by_user_id($meeting, $user_id, $where);
 			foreach($focus_meetings_list as $meeting) {
@@ -246,6 +247,61 @@ class CalendarActivity {
 		}
 		return $act_list;
 	}
+
+    /**
+     * Get where clause for fetching entries from DB (is used by certain get_occurs.. methods)
+     * @param string $table_name t
+     * @param string $rel_table table for accept status, not used in Tasks
+     * @param SugarDateTime $start_ts_obj start date
+     * @param SugarDateTime $end_ts_obj end date
+     * @param string $field_name date field in table
+     * @param array $callback callback function to generete specific SQL query-part
+     * @return string
+     */
+    protected static function getOccursWhereClauseGeneral($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name, $callback)
+    {
+        $start = clone $start_ts_obj;
+        $end = clone $end_ts_obj;
+
+        $field_date = $table_name . '.' . $field_name;
+
+        $start_day = $GLOBALS['db']->convert("'{$start->asDb()}'",'datetime');
+        $end_day = $GLOBALS['db']->convert("'{$end->asDb()}'",'datetime');
+
+        $where = '(';
+        $where .= call_user_func($callback, $field_date, $start_day, $end_day);
+
+        if ($rel_table != ''){
+            $where .= " AND $rel_table.accept_status != 'decline'";
+        }
+
+        $where .= ")";
+        return $where;
+    }
+
+    /**
+     * Helper-method to generate within two dates sql clause
+     * @param $field_date string table_name.field_name to compare
+     * @param $start_day string period start date
+     * @param $end_day string period end date
+     * @return string
+     */
+    protected static function within($field_date, $start_day, $end_day)
+    {
+        return "$field_date >= $start_day AND $field_date < $end_day";
+    }
+
+    /**
+     * Helper-method to generate until some date sql clause
+     * @param $field_date string table_name.field_name to compare
+     * @param $start_day string period start date
+     * @param $end_day string period end date
+     * @return string
+     */
+    protected static function until($field_date, $start_day, $end_day)
+    {
+        return "$field_date < $end_day";
+    }
 }
 
 ?>

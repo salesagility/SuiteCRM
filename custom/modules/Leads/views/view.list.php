@@ -1,22 +1,19 @@
-<?php 
-
-// custom/modules/Leads/views/view.list.php
+<?php
 
 require_once('include/MVC/View/views/view.list.php');
 require_once('custom/modules/Leads/LeadsListViewSmarty.php');
 
-class LeadsViewList extends ViewList {
-	
-	function LeadsViewList(){
-		parent::ViewList();
-	}
-	
-	function preDisplay(){
-		$this->lv = new LeadsListViewSmarty();
-                
-                // Bug: Missing "add to target list" entry in the action menu
-                $this->lv->targetList = true;
-	}
-}
+class LeadsViewList extends ViewList
+{
+    /**
+     * @see ViewList::preDisplay()
+     */
+    public function preDisplay(){
+        require_once('modules/AOS_PDF_Templates/formLetter.php');
+        formLetter::LVPopupHtml('Leads');
+        parent::preDisplay();
 
-?>
+        $this->lv = new LeadsListViewSmarty();
+    }
+
+}

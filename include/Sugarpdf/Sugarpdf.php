@@ -361,6 +361,10 @@ class Sugarpdf extends TCPDF
             // need to adjust the current page number
             // so the following output will not overlap the previous output
             if ($this->getNumPages() != $this->getPage()) {
+                if (!empty($this->currentY)) {
+                    $this->y = $this->currentY;
+                    $this->currentY = 0;
+                }
                 $this->setPage($this->getNumPages());
             }
             $firstcell = true;
