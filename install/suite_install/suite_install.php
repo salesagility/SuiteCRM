@@ -7,9 +7,13 @@ global $sugar_config;
 $sugar_config['default_max_tabs'] = 10;
 $sugar_config['suitecrm_version'] = $suitecrm_version;
 $sugar_config['sugar_version'] = $sugar_version;
+$sugar_config['sugarbeet'] = false;
 
 ksort($sugar_config);
 write_array_to_file('sugar_config', $sugar_config, 'config.php');
+
+require_once('modules/Administration/updater_utils.php');
+set_CheckUpdates_config_setting('manual');
 
 
 require_once('install/suite_install/AdvancedOpenWorkflow.php');

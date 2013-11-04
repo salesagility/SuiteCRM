@@ -102,7 +102,9 @@ class AdministrationController extends SugarController
 	    	 require_once('modules/Home/UnifiedSearchAdvanced.php');
 	    	 $unifiedSearchAdvanced = new UnifiedSearchAdvanced();
 	    	 $unifiedSearchAdvanced->saveGlobalSearchSettings();
-	    	    echo "true";
+
+             $return = 'true';
+            echo $return;
     	 }
          catch (Exception $ex)
          {

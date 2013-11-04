@@ -195,7 +195,9 @@ class DynamicField {
                 //if it's still not loaded we really don't have anything useful to cache
                 if(empty($GLOBALS['dictionary'][$object]['fields']))return;
             }
-            $GLOBALS ['dictionary'] [$object] ['custom_fields'] = false;
+            if (!isset($GLOBALS['dictionary'][$object]['custom_fields'])) {
+                $GLOBALS['dictionary'][$object]['custom_fields'] = false;
+            }
             if (! empty ( $GLOBALS ['dictionary'] [$object] )) {
                 if (! empty ( $result )) {
                     // First loop to add

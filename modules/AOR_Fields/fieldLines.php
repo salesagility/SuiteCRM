@@ -33,6 +33,8 @@ function display_field_lines($focus, $field, $value, $view){
         require_once ('include/language/jsLanguage.php');
         jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
     }
+
+    $html .= '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
     $html .= '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
 
     if($view == 'EditView'){

@@ -125,6 +125,8 @@ class AOR_Report extends Basic {
 
     function build_report_html($offset = -1, $links = true){
 
+        global $beanList;
+
         $report_sql = $this->build_report_query();
         $max_rows = 20;
         $total_rows = 0;
@@ -216,8 +218,10 @@ class AOR_Report extends Basic {
 
             $path = unserialize(base64_decode($field->module_path));
 
+            $field_bean = new $beanList[$this->report_module]();
+
             $field_module = $this->report_module;
-            $field_alias = 'accounts';
+            $field_alias = $field_bean->table_name;
             if($path[0] != $this->report_module){
                 foreach($path as $rel){
                     $field_module = getRelatedModule($field_module,$rel);

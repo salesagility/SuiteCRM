@@ -893,8 +893,13 @@ eoq;
             $metalist = $email->et->folder->getListItemsForEmailXML($_REQUEST['ieId'], $page,
             $emailSettings['showNumInList'], $sort, $direction);
             $count = $email->et->folder->getCountItems($_REQUEST['ieId']);
-            $unread = $email->et->folder->getCountUnread($_REQUEST['ieId']);
-            $out = $email->et->jsonOuput($metalist, 'Email', $count, false, $unread);
+
+            if (!empty($_REQUEST['getUnread'])) {
+                $out = $email->et->jsonOuput($metalist, 'Email', $count, false);
+            } else {
+                $unread = $email->et->folder->getCountUnread($_REQUEST['ieId']);
+                $out = $email->et->jsonOuput($metalist, 'Email', $count, false, $unread);
+            }
 
             @ob_end_clean();
             ob_start();

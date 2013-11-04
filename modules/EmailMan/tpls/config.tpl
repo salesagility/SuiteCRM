@@ -534,7 +534,7 @@ function sendTestEmail()
     var mail_sendtype = document.getElementById('mail_sendtype').value;
 
     var from_name = document.getElementById('notify_fromname').value;
-	var postDataString = 'mail_name=system&mail_sendtype=' + mail_sendtype + '&mail_smtpserver=' + smtpServer + "&mail_smtpport=" + smtpPort + "&mail_smtpssl=" + smtpssl +
+	var postDataString = 'mail_type=system&mail_sendtype=' + mail_sendtype + '&mail_smtpserver=' + smtpServer + "&mail_smtpport=" + smtpPort + "&mail_smtpssl=" + smtpssl +
 	                      "&mail_smtpauth_req=" + mailsmtpauthreq.checked + "&mail_smtpuser=" + trim(document.getElementById('mail_smtpuser').value) +
 	                      "&mail_smtppass=" + trim(document.getElementById('mail_smtppass').value) + "&outboundtest_to_address=" + encodeURIComponent(toAddress) +
                           "&outboundtest_from_address=" + fromAddress + "&mail_from_name=" + from_name;

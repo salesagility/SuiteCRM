@@ -41,14 +41,18 @@
 </div>
 *}
         <div id="search">
-            <form name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                <input type="hidden" name="action" value="UnifiedSearch">
-                <input type="hidden" name="module" value="Home">
-                <input type="hidden" name="search_form" value="false">
-                <input type="hidden" name="advanced" value="false">
-                <input type="text" name="query_string" id="query_string" size="30" value="{$SEARCH}">
-                <input type="submit" class="button" value="">
-            </form><br />
+            <div class="wrapper">
+                <form name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
+                    <input type="hidden" name="action" value="UnifiedSearch">
+                    <input type="hidden" name="module" value="Home">
+                    <input type="hidden" name="search_form" value="false">
+                    <input type="hidden" name="advanced" value="false">
+                    <input type="text" name="query_string" id="query_string" value=""/>
+                    <button  type="submit" class="button" ></button>
+                </form>
+            </div>
         </div>
+
+
 {/if}
 

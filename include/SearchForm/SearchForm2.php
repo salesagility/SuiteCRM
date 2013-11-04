@@ -671,6 +671,9 @@ require_once('include/EditView/EditView2.php');
 
                          $field = $real_field;
                          unset($this->searchFields[$end_field]['value']);
+                     }else{
+                         //if both start and end ranges have not been defined, skip this filter.
+                        continue;
                      }
                  } else if (preg_match('/^range_(.*?)$/', $field, $match) && isset($this->searchFields[$field]['value'])) {
                      $real_field = $match[1];

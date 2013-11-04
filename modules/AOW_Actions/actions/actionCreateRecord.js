@@ -170,7 +170,7 @@ function show_crRelField(ln, cln, value, type_value){
         var aow_field_name = "aow_actions_param["+ln+"][rel_value]["+cln+"]";
         var aow_field_type_name = "aow_actions_param["+ln+"][rel_value_type]["+cln+"]";
 
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getRelActionFieldTypeOptions&aow_module="+cr_module[ln]+"&alt_module="+flow_module+"&aow_fieldname="+aow_field+"&aow_newfieldname="+aow_field_type_name+"&aow_value="+type_value,callback);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getActionFieldTypeOptions&aow_module="+cr_module[ln]+"&alt_module="+flow_module+"&aow_fieldname="+aow_field+"&aow_newfieldname="+aow_field_type_name+"&aow_value="+type_value,callback);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOW_WorkFlow&action=getRelFieldTypeSet&aow_module="+cr_module[ln]+"&alt_module="+flow_module+"&aow_fieldname="+aow_field+"&aow_newfieldname="+aow_field_name+"&aow_value="+value+"&aow_type="+type_value,callback2);
     }
     else {

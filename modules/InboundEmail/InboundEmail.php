@@ -135,7 +135,6 @@ class InboundEmail extends SugarBean {
 	var $new_schema					= true;
 	var $process_save_dates 			= true;
 	var $order_by;
-	var $db;
 	var $dbManager;
 	var $field_defs;
 	var $column_fields;
@@ -4478,11 +4477,14 @@ eoq;
 		return $ret;
 	}
 
-	/**
-	 * for mailboxes of type "Support" parse for '[CASE:%1]'
-	 * @param	$emailName		the subject line of the email
-	 * @param	$aCase			a Case object
-	 */
+    /**
+     * For mailboxes of type "Support" parse for '[CASE:%1]'
+     *
+     * @param string $emailName The subject line of the email
+     * @param aCase  $aCase     A Case object
+     *
+     * @return string|boolean   Case ID or FALSE if not found
+     */
 	function getCaseIdFromCaseNumber($emailName, $aCase) {
 		//$emailSubjectMacro
 		$exMacro = explode('%1', $aCase->getEmailSubjectMacro());
@@ -4495,19 +4497,23 @@ eoq;
 			// $sub2 is XX] xxxxxxxxxxxxxx
 			$sub3 = substr($sub2, 0, strpos($sub2, $close));
 
-            // filter out deleted records in order to create a new case
-            // if email is related to deleted one (bug #49840)
-            $r = $this->db->query("SELECT id FROM cases WHERE case_number = '{$sub3}' and deleted = 0", true);
-			$a = $this->db->fetchByAssoc($r);
-			if(!empty($a['id'])) {
-				return $a['id'];
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
+            // case number is supposed to be numeric
+            if (ctype_digit($sub3)) {
+                // filter out deleted records in order to create a new case
+                // if email is related to deleted one (bug #49840)
+                $query = 'SELECT id FROM cases WHERE case_number = '
+                    . $this->db->quoted($sub3)
+                    . ' and deleted = 0';
+                $r = $this->db->query($query, true);
+                $a = $this->db->fetchByAssoc($r);
+                if (!empty($a['id'])) {
+                    return $a['id'];
+                }
+            }
+        }
+
+        return false;
+    }
 
 	function get_stored_options($option_name,$default_value=null,$stored_options=null) {
 		if (empty($stored_options)) {

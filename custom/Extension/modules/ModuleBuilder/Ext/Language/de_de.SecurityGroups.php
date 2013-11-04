@@ -1,16 +1,16 @@
 <?php
 
-$mod_strings['LBL_DEFAULT'] = 'Default';
-$mod_strings['LBL_ADD_LAYOUT'] = 'Add Layout';
-$mod_strings['LBL_ADD_LAYOUTS'] = 'Add Layout';
-$mod_strings['LBL_QUESTION_ADD_LAYOUT'] = 'Select a Group Layout to Add.';
-$mod_strings['LBL_REMOVE_LAYOUT'] = 'Remove Group Layout';
+$mod_strings['LBL_DEFAULT'] = 'Standard';
+$mod_strings['LBL_ADD_LAYOUT'] = 'Layout hinzufügen';
+$mod_strings['LBL_ADD_LAYOUTS'] = 'Layout hinzufügen';
+$mod_strings['LBL_QUESTION_ADD_LAYOUT'] = 'Wählen Sie ein Gruppen Layout zum Hinzufügen';
+$mod_strings['LBL_REMOVE_LAYOUT'] = 'Gruppen Layout entfernen';
 
-$mod_strings['LBL_SECURITYGROUP'] = 'Security Group:';
-$mod_strings['LBL_COPY_FROM'] = 'Copy From:';
-$mod_strings['LBL_ADDLAYOUTDONE'] = 'Layout Saved';
-$mod_strings['LBL_REMOVELAYOUTDONE'] = 'Layout Removed';
-$mod_strings['LBL_REMOVE_CONFIRM'] = 'Are you really sure?';
-$mod_strings['help']['studioWizard']['addLayoutHelp'] = "To create a custom layout for a Security Group select the appropriate Security Group and the layout from which to copy from as a starting point.";
+$mod_strings['LBL_SECURITYGROUP'] = 'Berechtigungsgruppe:';
+$mod_strings['LBL_COPY_FROM'] = 'Kopieren von:';
+$mod_strings['LBL_ADDLAYOUTDONE'] = 'Layout gespeichert';
+$mod_strings['LBL_REMOVELAYOUTDONE'] = 'Layout entfernt';
+$mod_strings['LBL_REMOVE_CONFIRM'] = 'Sind Sie sicher?';
+$mod_strings['help']['studioWizard']['addLayoutHelp'] = "Um ein spezielles Layout für eine Berechtigungsgruppe zu erstellen, wählen Sie die Gruppe und ein Layout als Ausgangspunkt für Ihre Anpassung";
 
 ?>

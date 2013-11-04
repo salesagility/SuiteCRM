@@ -184,6 +184,7 @@ function gridInit() {
 				if(test.match(/SUGAR\./)) {
 					params['emailUIAction'] = 'getMessageListSugarFolders';
 					params['mbox'] = test.substr(6);
+                    params['getUnread'] = 1;
 				}
 			}
 			//dataModel.initPaging(urlBase, SUGAR.email2.userPrefs.emailSettings.showNumInList);
@@ -230,7 +231,10 @@ function gridInit() {
 				oPayload = oPayload || { };
 
 				oPayload.totalRecords = oResponse.meta.total;
-				oPayload.unreadRecords = oResponse.meta.unread;
+
+                if (oResponse.meta.unread != -1) {
+                    oPayload.unreadRecords = oResponse.meta.unread;
+                }
 
 		        var tabObject = SE.innerLayout.get("tabs")[0];
 		        var mboxTitle = "";
@@ -243,7 +247,9 @@ function gridInit() {
 		        if (SE.tree) {
 			        var node = SE.tree.getNodeByProperty('id', this.params.ieId) || SE.tree.getNodeByProperty('origText', this.params.mbox);
 			        if (node) {
-				        node.data.unseen = oResponse.meta.unread;
+                        if (oResponse.meta.unread != -1) {
+                            node.data.unseen = oResponse.meta.unread;
+                        }
 				        SE.accounts.renderTree();
 			        }
 		        }

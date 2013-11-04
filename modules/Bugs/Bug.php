@@ -91,13 +91,13 @@ class Bug extends SugarBean {
 	var $assigned_user_name;
 	var $type;
 
-	//BEGIN Additional fields being added to Bug Tracker
+	//BEGIN Additional fields being added to Bugs
 	
 	var $fixed_in_release;
 	var $work_log;
 	var $source;
 	var $product_category;
-	//END Additional fields being added to Bug Tracker
+	//END Additional fields being added to Bugs
 	
 	var $module_dir = 'Bugs';
 	var $table_name = "bugs";

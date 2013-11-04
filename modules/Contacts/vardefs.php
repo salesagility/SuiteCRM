@@ -93,7 +93,6 @@ array (
 			'massupdate' => false,
             'duplicate_merge'=> 'disabled',
             'hideacl'=>true,
-
 		),
 	'opportunity_role_fields' =>
 		array (
@@ -117,20 +116,6 @@ array (
 			'source' => 'non-db',
 			'vname' => 'LBL_OPPORTUNITY_ROLE_ID',
 			'studio' => array('listview' => false),
-		),
-		//bug 42902
-		'email'=> array(
-			'name' => 'email',
-			'type' => 'email',
-			'query_type' => 'default',
-			'source' => 'non-db',
-			'operator' => 'subquery',
-			'subquery' => 'SELECT eabr.bean_id FROM email_addr_bean_rel eabr JOIN email_addresses ea ON (ea.id = eabr.email_address_id) WHERE eabr.deleted=0 AND ea.email_address LIKE',
-			'db_field' => array(
-				'id',
-			),
-			'vname' =>'LBL_ANY_EMAIL',
-			'studio' => array('visible'=>false, 'searchview'=>true),
 		),
 	'opportunity_role' =>
 		array(
@@ -331,6 +316,14 @@ array (
         'vname' => 'LBL_TASKS',
         'reportable' => false
     ),
+    'notes_parent' => array(
+           'name' => 'notes_parent',
+           'type' => 'link',
+           'relationship' => 'contact_notes_parent',
+           'source' => 'non-db',
+           'vname' => 'LBL_TASKS',
+           'reportable' => false
+       ),
 		'user_sync'=>
 		array (
 			'name' => 'user_sync',
@@ -578,6 +571,16 @@ array (
 			'relationship_role_column'=>'parent_type',
             'relationship_role_column_value'=>'Contacts'
 		),
+        'contact_notes_parent' => array('lhs_module' => 'Contacts',
+            'lhs_table' => 'contacts',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Notes',
+            'rhs_table' => 'notes',
+            'rhs_key' => 'parent_id',
+            'relationship_type' => 'one-to-many',
+                        'relationship_role_column'=>'parent_type',
+            'relationship_role_column_value'=>'Contacts'
+                ),
         'contacts_assigned_user' => array('lhs_module' => 'Users',
             'lhs_table' => 'users',
             'lhs_key' => 'id',

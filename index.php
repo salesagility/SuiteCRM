@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 if(!defined('sugarEntry'))define('sugarEntry', true);
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by

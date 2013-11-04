@@ -258,7 +258,7 @@ class AOW_WorkFlowController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value, getValidFieldsTypes($module, $fieldname)) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
@@ -292,9 +292,10 @@ class AOW_WorkFlowController extends SugarController {
 
         switch($_REQUEST['aow_type']) {
             case 'Field':
+                $valid_fields = getValidFieldsTypes($module, $fieldname);
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aow_field' id='$aow_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value, $valid_fields) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
@@ -386,7 +387,7 @@ class AOW_WorkFlowController extends SugarController {
         else{
             $valid_opp = array('Value');
         }*/
-        $valid_opp = array('Value');
+        $valid_opp = array('Value','Field');
 
         foreach($app_list_strings['aow_rel_action_type_list'] as $key => $keyValue){
             if(!in_array($key, $valid_opp)){

@@ -66,7 +66,8 @@ class ModuleScanner{
 	private $blackListExempt = array();
 	private $classBlackListExempt = array();
 
-	private $validExt = array('png', 'gif', 'jpg', 'css', 'js', 'php', 'txt', 'html', 'htm', 'tpl', 'pdf', 'md5', 'xml');
+    // Bug 56717 - adding hbs extension to the whitelist - rgonzalez
+	private $validExt = array('png', 'gif', 'jpg', 'css', 'js', 'php', 'txt', 'html', 'htm', 'tpl', 'pdf', 'md5', 'xml', 'hbs');
 	private $classBlackList = array(
         // Class names specified here must be in lowercase as the implementation
         // of the tokenizer converts all tokens to lowercase.
@@ -469,15 +470,29 @@ class ModuleScanner{
 	/**
 	 *Ensures that a file has a valid extension
 	 */
-	private function isValidExtension($file){
+	public function isValidExtension($file)
+	{
 		$file = strtolower($file);
+		$pi = pathinfo($file);
 
-		$extPos = strrpos($file, '.');
 		//make sure they don't override the files.md5
-		if($extPos === false || $file == 'files.md5')return false;
-		$ext = substr($file, $extPos + 1);
-		return in_array($ext, $this->validExt);
+		if(empty($pi['extension']) || $pi['basename'] == 'files.md5') {
+		    return false;
+		}
+		return in_array($pi['extension'], $this->validExt);
 
+	}
+
+	public function isConfigFile($file)
+	{
+	    $real = realpath($file);
+	    if($real == realpath("config.php")) {
+	        return true;
+	    }
+	    if(file_exists("config_override.php") && $real == realpath("config_override.php")) {
+	        return true;
+	    }
+	    return false;
 	}
 
 	/**
@@ -532,6 +547,11 @@ class ModuleScanner{
 		$issues = array();
 		if(!$this->isValidExtension($file)){
 			$issues[] = translate('ML_INVALID_EXT');
+			$this->issues['file'][$file] = $issues;
+			return $issues;
+		}
+		if($this->isConfigFile($file)){
+			$issues[] = translate('ML_OVERRIDE_CORE_FILES');
 			$this->issues['file'][$file] = $issues;
 			return $issues;
 		}

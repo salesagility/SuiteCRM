@@ -166,6 +166,12 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
 					return '';
 				}else{
 					$user_uid = $info[0][$group_user_attr];
+                    if (is_array($user_uid)){
+                        $user_uid = $user_uid[0];
+                    }
+                    // If user_uid contains special characters (for LDAP) we need to escape them !
+                    $user_uid = str_replace(array("(", ")"), array("\(", "\)"), $user_uid);
+
 				}
 
 				// build search query and determine if we are searching for a bare id or the full dn path
@@ -177,14 +183,14 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
                     && $GLOBALS['ldap_config']->settings['ldap_group_attr_req_dn'] == 1) {
 
 					$GLOBALS['log']->debug("ldapauth: Checking for group membership using full user dn");
-					$user_search = "($group_attr=" . $group_user_attr . "=" . $user_uid[0] . "," . $base_dn . ")";
+					$user_search = "($group_attr=" . $group_user_attr . "=" . $user_uid . "," . $base_dn . ")";
 				} else {
-					$user_search = "($group_attr=" . $user_uid[0] . ")";
+					$user_search = "($group_attr=" . $user_uid . ")";
 				}
 				$GLOBALS['log']->debug("ldapauth: Searching for user: " . $user_search);
 
 				//user is not a member of the group if the count is zero get the logs and return no id so it fails login        
-                if (!isset($user_uid[0])
+                if (!isset($user_uid)
                     || ldap_count_entries($ldapconn, ldap_search($ldapconn, $group_name, $user_search)) ==  0) {
 
 					$GLOBALS['log']->fatal("ldapauth: User ($name) is not a member of the LDAP group");
@@ -192,7 +198,7 @@ class LDAPAuthenticateUser extends SugarAuthenticateUser{
                     $GLOBALS['log']->debug(
                         "ldapauth: Group DN:{$GLOBALS['ldap_config']->settings['ldap_group_dn']}"
                         . " Group Name: " . $GLOBALS['ldap_config']->settings['ldap_group_name']
-                        . " Group Attribute: $group_attr  User Attribute: $group_user_attr :(" . $user_uid[0] . ")"
+                        . " Group Attribute: $group_attr  User Attribute: $group_user_attr :(" . $user_uid . ")"
                     );
 
 					ldap_close($ldapconn);

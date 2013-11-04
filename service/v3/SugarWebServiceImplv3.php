@@ -368,7 +368,7 @@ class SugarWebServiceImplv3 extends SugarWebServiceImpl {
 
     /**
      * Given a list of modules to search and a search string, return the id, module_name, along with the fields
-     * We will support Accounts, Bug Tracker, Cases, Contacts, Leads, Opportunities, Project, ProjectTask, Quotes
+     * We will support Accounts, Bugs, Cases, Contacts, Leads, Opportunities, Project, ProjectTask, Quotes
      *
      * @param string $session			- Session ID returned by a previous call to login.
      * @param string $search_string 	- string to search

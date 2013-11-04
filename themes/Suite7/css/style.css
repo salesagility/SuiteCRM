@@ -196,7 +196,7 @@ th, td
 
 #companyLogo
 {
-    padding: px 10px 0px 15px;
+    padding: 0 10px 0 15px;
     vertical-align: bottom;
     float:left;
     margin-bottom:-8px;
@@ -305,7 +305,7 @@ th, td
 }
 #colorPicker
 {
-    padding: 8px 5px 0px 7px;
+    padding: 8px 5px 0 7px;
 }
 #colorPicker ul
 {
@@ -317,7 +317,7 @@ th, td
 {
     list-style-type: none;
     display: inline;
-    padding: 0px;
+    padding: 0;
     cursor: pointer;
     margin: 0;
 }
@@ -340,7 +340,6 @@ th, td
 }
 div#content
 {
-    padding-top: 11px;
     padding-left: 8px;
     padding-bottom: 20px;
     border: 0;
@@ -350,9 +349,10 @@ div#content
 div#content > table
 {
     width: 100%;
+    margin: 0 0 0 15px;
 }
 /* put a bit of left margin in when the left column menu is hidden */
-div#content noLeftColumn
+div#content .noLeftColumn
 {
     margin-left: 5px;
     border-left: none;
@@ -391,13 +391,13 @@ div#content noLeftColumn
 #newRecord form input[type=submit],
 #newRecord form input[type=reset]
 {
-    padding-top: 0px;
+    padding-top: 0;
     vertical-align: bottom;
 }
 #newRecord form .dataLabel {
     padding-bottom: 2px;
     padding-top: 3px;
-    padding-left: 0px;
+    padding-left: 0;
     vertical-align: bottom;
 }
 #newRecord form .dataField
@@ -462,8 +462,8 @@ ul.cssmenu li a
     display: block;
 }
 #subModuleList li, #subModuleList ul{
-    padding:0px;
-    margin:0px;
+    padding:0;
+    margin:0;
 }
 
 #subModuleList li.subTabMore{
@@ -2189,7 +2189,6 @@ iframe.teamNoticeBox
 {
     border:1px solid #d0d0d0;
     background:#d0d0d0;
-    zoom:1;
     overflow:hidden;
 }
 
@@ -2198,8 +2197,6 @@ iframe.teamNoticeBox
     overflow:auto;
     background:#FFF;
     position:relative;
-    zoom:1;
-    overflow-x:hidden;
 }
 
 .x-sqs-list-item
@@ -2241,17 +2238,17 @@ embed
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a{
-    padding: 0px 2px;
+    padding: 0 2px;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child  {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
     padding: 20px;
-    border: 0px none;
-    border-radius: 0px;
+    border: 0 none;
+    border-radius: 0;
     height: 487px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -2268,11 +2265,11 @@ div.confirmTable {
 /* Bug 19728 - Email Templates detail view is different with edit view */
 #html_div p
 {
-    margin: 12px 0px;
+    margin: 12px 0;
 }
 
 #html_div p:first-child {
-    margin: 0px 0px 12px 0px;
+    margin: 0 0 12px 0;
 }
 
 /* UNUSED STYLES */
@@ -2282,7 +2279,6 @@ div.confirmTable {
 .h3Row {
     margin-top: 10px;
     vertical-align: middle;
-    background-repeat: repeat-x;
     background-position: top;
     background-color: #fff;
 }
@@ -2311,13 +2307,13 @@ a:link, a:visited, a:hover
 }
 
 .buttonSlide {
-    border: 0px;
+    border: 0;
 }
 
 .buttonSlide .yui-hd {
-    border: 0px;
+    border: 0;
     background-color: transparent;
-    padding: 0px;
+    padding: 0;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
@@ -2696,8 +2692,8 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover
 {
     border: 1px solid;
     font-size: 11px;
+    width:150px;
 }
-
 
 /* for subpanel tabs */
 ul.tablist, ul.subpanelTablist
@@ -3594,17 +3590,7 @@ ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
 ul.clickMenu li span.ab:hover {
     background-position: 6px 0px;
 }
-ul.clickMenu>li, ul.SugarActionMenuIESub li {
-    background-color: #ECF1F4;
-    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
-    border: 1px solid #ABC3D7;
-    float: left;
-    margin: 0;
-    padding: 0 0 0 0;
-    list-style: none;
-    position: relative; /*--Declare X and Y axis base--*/
-    cursor: pointer;
-}
+
 ul.SugarActionMenuIESub li a,
 ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a{
     display: block;
@@ -4339,7 +4325,7 @@ th, td
 }
 div#content
 {
-    padding-top: 11px;
+
     padding-left: 8px;
     padding-bottom: 20px;
     margin-left: 0;
@@ -4350,7 +4336,7 @@ div#content > table
     width: 100%;
 }
 /* put a bit of left margin in when the left column menu is hidden */
-div#content noLeftColumn
+div#content .noLeftColumn
 {
     margin-left: 5px;
     border-left: none;
@@ -6208,7 +6194,6 @@ iframe.teamNoticeBox
 {
     border:1px solid #d0d0d0;
     background:#d0d0d0;
-    zoom:1;
     overflow:hidden;
 }
 
@@ -6217,7 +6202,6 @@ iframe.teamNoticeBox
     overflow:auto;
     background:#FFF;
     position:relative;
-    zoom:1;
     overflow-x:hidden;
 }
 
@@ -6261,17 +6245,17 @@ embed
 
 
 .dashletPanel .hd .hd-center .dashletToolSet a{
-    padding: 0px 2px;
+    padding: 0 2px;
 }
 
 .dashletPanel .hd .hd-center .dashletToolSet a:last-child  {
-    padding-right: 0px;
+    padding-right: 0;
 }
 
 .dashletPanelMenu.wizard.import .bd .screen {
     padding: 20px;
-    border: 0px none;
-    border-radius: 0px;
+    border: 0 none;
+    border-radius: 0;
     height: 487px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -6288,11 +6272,11 @@ div.confirmTable {
 /* Bug 19728 - Email Templates detail view is different with edit view */
 #html_div p
 {
-    margin: 12px 0px;
+    margin: 12px 0;
 }
 
 #html_div p:first-child {
-    margin: 0px 0px 12px 0px;
+    margin: 0 0 12px 0;
 }
 
 /* UNUSED STYLES */
@@ -6331,13 +6315,13 @@ a:link, a:visited, a:hover
 }
 
 .buttonSlide {
-    border: 0px;
+    border: 0;
 }
 
 .buttonSlide .yui-hd {
-    border: 0px;
+    border: 0;
     background-color: transparent;
-    padding: 0px;
+    padding: 0;
 }
 
 .buttonSlide.yui-module .yui-hd .toggle em {
@@ -7126,6 +7110,13 @@ textarea
     color: #444444;
     padding:10px 0 10px 0;
 }
+
+#moduleList ul li ul li a:link,
+#moduleList ul li ul li a:visited
+{
+    color: #444444;
+    padding:10px 0 10px 0;
+}
 #moduleList ul li a:hover
 {
     color: #000000;
@@ -7545,6 +7536,10 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
     background : transparent url('../../../../index.php?entryPoint=getImage&themeName=Sugar55&imageName=sugar-yui-sprites.png')  no-repeat scroll 0px -70px;
 }
 
+ul.yui-nav li.selected {
+    background:#f10202;
+}
+
 
 #basic_search_link
 {
@@ -7638,7 +7633,6 @@ ul.clickMenu li span.ab:hover {
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
     background-color: #ECF1F4;
     background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
-    border: 1px solid #ABC3D7;
     float: left;
     margin: 0;
     list-style: none;
@@ -8195,7 +8189,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 ul.clickMenu>li, ul.SugarActionMenuIESub li {
-    margin: 0 3px 0 3px;
     padding: 5px 2px 5px 2px;
     background: #ffffff; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
@@ -8236,7 +8229,7 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
 
 a#create_link.utilsLink {
     padding: 5px 8px 5px 8px;
-    margin: 0 3px 0 3px;
+    margin: 5px 3px 0 3px;
     background: #ffffff; /* Old browsers */
     /* IE9 SVG, needs conditional override of 'filter' to 'none' */
     background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2VkZWRlZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
@@ -8360,7 +8353,8 @@ iframe.teamNoticeBox {
     -moz-border-radius: 2px;
     border-radius: 2px;
     opacity:1;
-    margin-left:0px;
+    margin-top:5px;
+    margin-left:-5px;
 }
 
 #moduleList ul li ul.cssmenu li{
@@ -8376,6 +8370,7 @@ iframe.teamNoticeBox {
 
 #moduleList ul li ul.cssmenu li a {
     font-size:12px;
+
     color:#cccccc;
 }
 
@@ -8426,13 +8421,12 @@ ul#drop-nav {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    right:0px;
+    right:0;
 }
 
 ul#drop-nav li {
     line-height:30px;
-    padding: 0 5px 00;
-
+    padding: 0 5px 0 0;
 }
 
 ul#drop-nav li a {
@@ -8513,10 +8507,9 @@ ul#drop-nav ul li:hover {
 
 #search .button {
     background: url(../../../../index.php?entryPoint=getImage&imageName=search_mag.png) scroll no-repeat center;
-    background-color:#ffffff;
-    width:30px;
+    width:22px;
     height:25px;
-    padding:5px 0 5px 0;
+    padding:0 0 5px 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
@@ -8616,10 +8609,6 @@ table.view {
     padding: 0;
 }
 
-
-div#content > table {
-    width:99%;
-}
 
 #footer {
     max-height:50px !important;
@@ -8723,6 +8712,7 @@ ul#quick-nav li a:hover {
     display: block;
     position: relative;
     float: left;
+    padding: 5px 0 5px 0;
 }
 
 #quick-nav li:hover {
@@ -8971,7 +8961,7 @@ div.password {
 }
 
 div.dashletToolSet a img:hover {
-    opacity:0.6;#
+    opacity:0.6;
 -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -8987,3 +8977,75 @@ div#email_options {
 a#delete_listview_top:hover {
     color:#ffffff;
 }
+
+#add_dashlets {
+    display:none;
+}
+
+.moduleTitle {
+    margin-top:10px;
+}
+
+.about_suite {
+    padding: 0 25px 0 0;
+    float:left;
+    max-width:550px !important;
+}
+
+.about_suite h3 {
+    font-weight:normal;
+    font-size:18px;
+}
+
+.about_suite ul li {
+    font-size:14px;
+    margin-bottom:10px;
+    color:#777777;
+}
+
+#about_menu {
+    margin-top:10px;
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+#about_table {
+    width:100%;
+}
+
+#about_header {
+    padding: 10px 15px 20px 15px;
+}
+
+#about_menu li {
+    list-style-type: square;
+}
+
+#featuring {
+    padding:10px 0 0 0;
+    font-size:14px;
+    color:#777777;
+}
+
+.wrapper {
+    border:1px solid #000;
+    display:inline-block;
+    position:relative;
+}
+
+.wrapper input,
+.wrapper button {
+    background-color:transparent;
+    border:0;
+}
+
+.wrapper button {
+    position:absolute;
+    right:0;
+    top:0;
+}
+
+.wrapper input {
+    padding-right:30px; /* button padding */
+}
+

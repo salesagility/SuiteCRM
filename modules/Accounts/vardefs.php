@@ -142,6 +142,7 @@ $dictionary['Account'] = array('table' => 'accounts', 'audited'=>true, 'unified_
 			),
 			'vname' =>'LBL_ANY_EMAIL',
 			'studio' => array('visible'=>false, 'searchview'=>true),
+            'importable' => false,
 		),	
   'tasks' =>
   array (

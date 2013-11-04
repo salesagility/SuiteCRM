@@ -66,13 +66,13 @@ class StudioModule
     }
 
      /*
-     * Gets the name of this module. Some modules have naming inconsistencies such as Bug Tracker and Bugs which causes warnings in Relationships
+     * Gets the name of this module. Some modules have naming inconsistencies such as Bugs and Bugs which causes warnings in Relationships
      * Added to resolve bug #20257
      */
     function getModuleName()
     {
     	$modules_with_odd_names = array(
-    	'Bug Tracker'=>'Bugs'
+    	'Bugs'=>'Bugs'
     	);
     	if ( isset ( $modules_with_odd_names [ $this->name ] ) )
     		return ( $modules_with_odd_names [ $this->name ] ) ;

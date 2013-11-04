@@ -182,7 +182,8 @@ SUGAR.quickCompose = function() {
 			         language : tinyConfig.language,
 			         extended_valid_elements : tinyConfig.extended_valid_elements,
 			         mode: tinyConfig.mode,
-			         strict_loading_mode : true
+			         strict_loading_mode : true,
+			         gecko_spellcheck : tinyConfig.gecko_spellcheck
 		    	 });
 				SQ.tinyLoaded = true;
 			}

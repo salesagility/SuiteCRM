@@ -184,9 +184,9 @@ class SugarRelationshipFactory {
                 foreach($def['relationships'] as $relKey => $relDef)
                 {
                     if ($key == $relKey) //Relationship only entry, we need to capture everything
-                        $relationships[$key] = array_merge(array('name' => $key), $def, $relDef);
+                        $relationships[$key] = array_merge(array('name' => $key), (array)$def, (array)$relDef);
                     else {
-                        $relationships[$relKey] = array_merge(array('name' => $relKey), $relDef);
+                        $relationships[$relKey] = array_merge(array('name' => $relKey), (array)$relDef);
                         if(!empty($relationships[$relKey]['join_table']) && empty($relationships[$relKey]['fields'])
                             && isset($dictionary[$relationships[$relKey]['join_table']]['fields'])) {
                             $relationships[$relKey]['fields'] = $dictionary[$relationships[$relKey]['join_table']]['fields'];

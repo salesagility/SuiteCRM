@@ -60,6 +60,10 @@ array (
     'module' => 'Accounts',
     'id' => 'CONTRACT_ACCOUNT_ID',
     'link' => true,
+      'related_fields' =>
+          array (
+              'contract_account_id',
+          ),
   ),
   'TOTAL_CONTRACT_VALUE' => 
   array (

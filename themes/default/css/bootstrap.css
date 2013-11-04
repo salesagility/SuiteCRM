@@ -1837,9 +1837,6 @@ li[class*=" icon-"].icon-large:before {
 .icon-signout:before {
   content: "\f08b";
 }
-.icon-linkedin-sign:before {
-  content: "\f08c";
-}
 .icon-pushpin:before {
   content: "\f08d";
 }
