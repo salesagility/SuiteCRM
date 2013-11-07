@@ -10,7 +10,6 @@ custom/history/*
 custom/modulebuilder/*
 custom/working/*
 custom/modules/*/Ext/
-custom/application/Ext/*
 # Custom configuration should also be ignored.
 /config.php
 # The silent upgrade scripts aren't needed.
@@ -55,4 +54,3 @@ Session.vim
 # Windows
 Thumbs.db
 Desktop.ini
-
