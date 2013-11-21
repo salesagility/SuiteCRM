@@ -2919,3 +2919,23 @@ $app_strings = array (
   ),
 );
 
+// DISYTEL: Additional Translations
+$app_list_strings['product_category_dom']['Bugs'] = 'Incidencias';
+$app_strings['LBL_EMAIL_ADDRESS_BOOK_TITLE_ICON'] = '<img src="themes/Suite7/images/icon_email_addressbook.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"     alt="Libreta de Direcciones" /> Libreta de Direcciones';
+$app_strings['LBL_EMAIL_ADDRESS_BOOK_TITLE_ICON_SHORT'] = '<img src="themes/Suite7/images/icon_email_addressbook.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"  width="14" height="14" align=absmiddle border=0 alt="" />';
+$app_strings['LBL_EMAIL_FOLDERS'] = '<img src="themes/Suite7/images/icon_email_folder.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    align=absmiddle border=0 alt="" />Carpetas';
+$app_strings['LBL_EMAIL_FOLDERS_SHORT'] = '<img src="themes/Suite7/images/icon_email_folder.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    align=absmiddle border=0 alt="" />';
+$app_strings['LBL_EMAIL_SEARCH'] = '<img src="themes/Suite7/images/Search.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    align=absmiddle border=0 alt="" />';
+$app_strings['LBL_EMAIL_SEARCH_SHORT'] = '<img src="themes/Suite7/images/Search.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    align=absmiddle border=0 alt="" />';
+$app_strings['ERR_EXTERNAL_API_NO_OAUTH_TOKEN'] = 'No se encuentra el Token de Acceso OAuth.';
+$app_strings['LBL_EMPTY_REQUIRED_VCARD'] = 'La vCard no tiene todos los campos requeridos para este módulo. Por favor consulte sugarcrm.log para más detalles.';
+$app_strings['LBL_VCARD_ERROR_FILESIZE'] = 'El archivo subido excede el límite de tamaño, el cual se especificó en el formulario HTML.';
+$app_strings['LBL_VCARD_ERROR_DEFAULT'] = 'Hubo un error subiendo el archivo vCard. Por favor consulte sugarcrm.log para más detalles.';
+$app_strings['ERROR_LICENSE_FULLY_EXPIRED'] = 'La Suscripción de su Companía al Producto SugarCRM ha expirado y necesita ser renovada. Sólo los administradores pueden ingresar cuando expiró una Suscripción. Si tiene alguna inquietud, por favor contacte con su administrador.';
+$app_strings['WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING'] = '<b>Advertencia:</b> Su navegador está en modo compatibilidad IE el cual no es soportado.';
+$app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] = 'Estado: ';
+$app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO'] = 'Relacionado A: ';
+$app_strings['LBL_CHOOSE_START_AND_END_DATES'] = 'Por favor seleccione un rango de fecha inicial y un rango de fecha final';
+$app_strings['LBL_CHOOSE_START_AND_END_ENTRIES'] = 'Por favor seleccione un rango de entrada de inicio y de finalización';
+$app_strings['UPLOAD_REQUEST_ERROR'] = 'Ocurrió un error. Por favor actualice su página y vuelva a intentarlo.';
+$app_strings['ERR_BAD_RESPONSE_FROM_SERVER'] = 'Respuesta incorrecta del servidor';
