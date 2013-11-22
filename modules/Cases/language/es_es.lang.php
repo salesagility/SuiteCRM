@@ -144,4 +144,7 @@ $mod_strings = array (
   'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Asignado al usuario',
   'LBL_EXPORT_TEAM_COUNT' => 'Número de equipos',
   'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Relación de contactos en Emails',
+  'LBL_UPDATE_TEXT' => 'Actualizado',
+  'LBL_INTERNAL' => 'Interno',
+  'LBL_AOP_CASE_UPDATES' => 'Actualizaciones del Caso',
 );

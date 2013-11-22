@@ -1120,8 +1120,10 @@ $mod_strings = array (
   'LBL_FTS_DISABLED' => 'La búsqueda de texto completo ha sido desactivada debido a que el sistema no ha sido capaz de conectarse al motor de búsqueda.',
   'LBL_FTS_CONNECTION_INVALID' => 'Los parámetros del texto completo de la búsqueda que ha introducido no son válidos y pueden ralentizar el rendimiento del sistema. Por favor, actualice la configuración.',
   'MSG_RECONNECT_LOTUSLIVE' => 'Actualmente no se encuentra conectado a IBM SmartCloud. Conéctese al IBM SmartCloud mediante su perfil para poder tener acceso a las reuniones y ficheros de IBM SmartCloud.',
-  'LBL_REPAIR_UPLOAD_FOLDER' => 'Remove missed files from upload directory',
-  'LBL_REPAIR_UPLOAD_FOLDER_DESC' => 'Please note that removal can take a lot of time',
-  'LBL_TOTAL_FILES' => 'Total files',
-  'LBL_REMOVED_FILES' => 'Removed files',
+  'LBL_REPAIR_UPLOAD_FOLDER' => 'Eliminar archivos perdidos del directorio upload',
+  'LBL_REPAIR_UPLOAD_FOLDER_DESC' => 'Note que la eliminación puede tomar mucho tiempo',
+  'LBL_TOTAL_FILES' => 'Archivos Totales',
+  'LBL_REMOVED_FILES' => 'Archivos Eliminados',
 );
+
+$mod_strings['LBL_OOTB_SUGARFEEDS'] = 'Limpiar Tablas de SugarFeed';

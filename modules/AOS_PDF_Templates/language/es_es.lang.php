@@ -62,15 +62,26 @@ $mod_strings = array (
   'LBL_PREPARED_FOR' => 'Preparado Para',
   'LBL_PREPARED_BY' => 'Preparado Por',
 
-  'LBL_QUOTE_GROUP_SAMPLE' => 'Quote Group Sample',
-  'LBL_INVOICE_GROUP_SAMPLE' => 'Invoice Group Sample',
-  'LBL_MARGIN_LEFT' => 'Margin Left',
-  'LBL_MARGIN_RIGHT' => 'Margin Right',
-  'LBL_MARGIN_TOP' => 'Margin Top',
-  'LBL_MARGIN_BOTTOM' => 'Margin Bottom',
-  'LBL_MARGIN_HEADER' => 'Margin Header',
-  'LBL_MARGIN_FOOTER' => 'Margin Footer',
-  'LBL_EDITVIEW_PANEL1' => 'Margins',
-  'LBL_DETAILVIEW_PANEL1' => 'Margins',
+  'LBL_QUOTE_GROUP_SAMPLE' => 'Ejemplo de Grupo de Cotización',
+  'LBL_INVOICE_GROUP_SAMPLE' => 'Ejemplo de Grupo de Factura',
+  'LBL_MARGIN_LEFT' => 'Margen Izquierdo',
+  'LBL_MARGIN_RIGHT' => 'Margen Derecho',
+  'LBL_MARGIN_TOP' => 'Margen Superior',
+  'LBL_MARGIN_BOTTOM' => 'Margen Inferior',
+  'LBL_MARGIN_HEADER' => 'Margen de Encabezado',
+  'LBL_MARGIN_FOOTER' => 'Margen de Pie',
+  'LBL_EDITVIEW_PANEL1' => 'Márgenes',
+  'LBL_DETAILVIEW_PANEL1' => 'Márgenes',
 );
+// DISYTEL: Additional translations
+$mod_strings['LBL_ACTIVE'] = 'Activa';
+$mod_strings['LBL_QUOTE_SAMPLE'] = 'Ejemplo de Cotización';
+$mod_strings['LBL_INVOICE_SAMPLE'] = 'Ejemplo de Factura';
+$mod_strings['LBL_ACCOUNT_SAMPLE'] = 'Ejemplo de Cuenta';
+$mod_strings['LBL_CONTACT_SAMPLE'] = 'Ejemplo de Contacto';
+$mod_strings['LBL_LEAD_SAMPLE'] = 'Ejemplo de Cliente Potencial';
+$mod_strings['LBL_ANY_STREET'] = 'Cualquier Calle';
+$mod_strings['LBL_ANY_TOWN'] = 'Cualquier Ciudad';
+$mod_strings['LBL_ANY_WHERE'] = 'Cualquier Lugar';
+
 ?>
