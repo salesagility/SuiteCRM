@@ -103,7 +103,7 @@ $mod_strings = array (
   'LBL_SHIPPING_ADDRESS' => 'Calle de Envío:',
   'LBL_STATE' => 'Estado:',
   'LBL_TEAMS_LINK' => 'Equipos',
-  'LBL_TICKER_SYMBOL' => 'Símbolo Grueso:',
+  'LBL_TICKER_SYMBOL' => 'Símbolo Ticker:',
   'LBL_TYPE' => 'Type:',
   'LBL_USERS_ASSIGNED_LINK' => 'Usuarios Asignados',
   'LBL_USERS_CREATED_LINK' => 'Creado Por Usuarios',
@@ -133,7 +133,7 @@ $mod_strings = array (
   'LBL_NEW_FORM_TITLE' => 'Nueva Factura',
   'LBL_TERMS_C' => 'Terminos',
   'LBL_APPROVAL_ISSUE' => 'Incidencias de Aprobación',
-  'LBL_APPROVAL_STATUS' => 'Estatus de Aprobación',
+  'LBL_APPROVAL_STATUS' => 'Estado de Aprobación',
   'LBL_BILLING_ACCOUNT' => 'Cuenta',
   'LBL_BILLING_CONTACT' => 'Contacto',
   'LBL_EXPIRATION' => 'Válida Hasta',
@@ -157,8 +157,8 @@ $mod_strings = array (
   'LBL_QUOTE_DATE' => 'Fecha de Cotización',
   'LBL_INVOICE_DATE' => 'Fecha de Facturación',
   'LBL_DUE_DATE' => 'Fecha de Vencimiento',
-  'LBL_STATUS' => 'Estatus',
-  'LBL_INVOICE_STATUS' => 'Estatus de la Factura',
+  'LBL_STATUS' => 'Estado',
+  'LBL_INVOICE_STATUS' => 'Estado de la Factura',
   'LBL_PRODUCT_QUANITY' => 'Cantidad',
   'LBL_PRODUCT_NAME' => 'Producto',
   'LBL_PRODUCT_NOTE' => 'Nota',
@@ -183,16 +183,22 @@ $mod_strings = array (
   'LBL_EMAIL_NAME' => 'Factura para',
   'LBL_NO_TEMPLATE' => 'ERROR\nPor favor seleccione un formato editando la Factura y seleccionando un formato de Factura\nSi usted no ha creado un formato de Factura, vaya al módulo de Formatos PDF y cree uno',
   
-  'LBL_SUBTOTAL_TAX_AMOUNT' => 'Subtotal + Tax',//pre shipping
-  'LBL_EMAIL_PDF' => 'Email PDF',
+  'LBL_SUBTOTAL_TAX_AMOUNT' => 'Subtotal + Impuestos',//pre shipping
+  'LBL_EMAIL_PDF' => 'Enviar PDF por Email',
   
-  'LBL_ADD_GROUP' => 'Add Group',
-  'LBL_DELETE_GROUP' => 'Delete Group',
-  'LBL_GROUP_NAME' => 'Group Name',
-  'LBL_GROUP_TOTAL' => 'Group Total',
+  'LBL_ADD_GROUP' => 'Agregar Grupo',
+  'LBL_DELETE_GROUP' => 'Eliminar Grupo',
+  'LBL_GROUP_NAME' => 'Nombre de Grupo',
+  'LBL_GROUP_TOTAL' => 'Total de Grupo',
 
-    'LBL_SHIPPING_TAX' => 'Shipping VAT',
-    'LBL_SHIPPING_TAX_AMT' => 'Shipping Tax',
+    'LBL_SHIPPING_TAX' => 'Impuesto Valor Agregado de Envío',
+    'LBL_SHIPPING_TAX_AMT' => 'Impuesto de Envío',
     'LBL_IMPORT_LINE_ITEMS' => 'Import Line Items',
 );
+// DISYTEL: Additional translations
+$mod_strings['LBL_PART_NUMBER'] = 'Nro de Parte';
+$mod_strings['LBL_PRODUCT_DESCRIPTION'] = 'Descripción';
+$mod_strings['LBL_SERVICE_LIST_PRICE'] = 'Lista';
+$mod_strings['LBL_SERVICE_DISCOUNT'] = 'Descuento';
+
 ?>

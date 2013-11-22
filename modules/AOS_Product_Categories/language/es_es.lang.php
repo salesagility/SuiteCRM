@@ -1,7 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,24 +34,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-/*********************************************************************************
+$mod_strings = array (
+  'LBL_ASSIGNED_TO_ID' => 'ID Usuario Asignado',
+  'LBL_ASSIGNED_TO_NAME' => 'Asignado a',
+  'LBL_ID' => 'ID',
+  'LBL_DATE_ENTERED' => 'Fecha de Creación',
+  'LBL_DATE_MODIFIED' => 'Fecha de Modificación',
+  'LBL_MODIFIED' => 'Modificado por',
+  'LBL_MODIFIED_ID' => 'Modificado por ID',
+  'LBL_MODIFIED_NAME' => 'Modificado por Nombre',
+  'LBL_CREATED' => 'Creado por',
+  'LBL_CREATED_ID' => 'Creado por ID',
+  'LBL_DESCRIPTION' => 'Descripción',
+  'LBL_DELETED' => 'Eliminado',
+  'LBL_NAME' => 'Nombre',
+  'LBL_CREATED_USER' => 'Creado por Usuario',
+  'LBL_MODIFIED_USER' => 'Modificado por Usuario',
+  'LBL_LIST_NAME' => 'Nombre',
+  'LBL_EDIT_BUTTON' => 'Editar',
+  'LBL_REMOVE' => 'Eliminar',
 
- * Description:  Defines the Spanish language pack for the base application.
- * Portions created by REDK Ingeniería del Software S.L..
- * All Rights Reserved.
- * Contributor(s): REDK Software Engineering (www.redk.net)
- ********************************************************************************/
- 
-$app_list_strings['_type_dom'] = array (
-  '' => '',
-  'Analyst' => 'Analista',
-  'Competitor' => 'Competidor',
-  'Customer' => 'Cliente',
-  'Integrator' => 'Integrador',
-  'Investor' => 'Inversor',
-  'Partner' => 'Partner',
-  'Press' => 'Prensa',
-  'Prospect' => 'Prospecto',
-  'Reseller' => 'Revendedor',
-  'Other' => 'Otro',
+  'LBL_LIST_FORM_TITLE' => 'Lista de Categorías de Producto',
+  'LBL_MODULE_NAME' => 'Categorías de Producto',
+  'LBL_MODULE_TITLE' => 'Categorías de Producto',
+  'LBL_HOMEPAGE_TITLE' => 'Mis Categorías de Producto',
+  'LNK_NEW_RECORD' => 'Crear Categorías de Producto',
+  'LNK_LIST' => 'Ver Categorías de Producto',
+  'LNK_IMPORT_AOS_PRODUCT_CATEGORIES' => 'Importar Categorías de Producto',
+  'LBL_SEARCH_FORM_TITLE' => 'Buscar Categorías de Producto',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'Ver History',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
+  'LBL_AOS_PRODUCT_CATEGORIES_SUBPANEL_TITLE' => 'Categorías de Producto',
+  'LBL_NEW_FORM_TITLE' => 'Nueva Categoría de Producto',
+  'LBL_PARENT_CATEGORY' => 'Categoría Padre',
+  'LBL_IS_PARENT' => "Es una categoría padre",
+  'LBL_SUB_CATEGORIES' => "Sub categorías",
+  'LBL_PRODUCT_CATEGORIES' => "Categoría Padre",
+  'LBL_PRODUCT_CATEGORYS_NAME' => "Categoría Padre",
 );
