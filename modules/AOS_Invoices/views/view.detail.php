@@ -4,7 +4,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.detail.php');
 
 class AOS_InvoicesViewDetail extends ViewDetail {
-	var $currSymbol;
+
 	function AOS_InvoicesViewDetail(){
  		parent::ViewDetail();
  	}
@@ -18,7 +18,7 @@ class AOS_InvoicesViewDetail extends ViewDetail {
 	function populateInvoiceTemplates(){
 		global $app_list_strings;
 		
-		$sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted='0' AND type='AOS_Invoices' AND active";
+		$sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted = 0 AND type='AOS_Invoices' AND active = 1";
 
 		$res = $this->bean->db->query($sql);
         $app_list_strings['template_ddown_c_list'] = array();
