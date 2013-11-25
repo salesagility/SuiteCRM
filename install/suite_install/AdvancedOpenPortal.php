@@ -27,7 +27,7 @@ function install_aop() {
 function updateScheduler(){
 	require_once('modules/Schedulers/Scheduler.php');
 	$scheduler = new Scheduler();
-	if(count($scheduler->get_full_list('','job = "function::pollMonitoredInboxesCustomAOP"'))){
+	if(count($scheduler->get_full_list('',"job = 'function::pollMonitoredInboxesCustomAOP'"))){
 		return;
 	}
 	$scheduler->name = "AOP Check Inbound Mailboxes";
@@ -38,7 +38,7 @@ function updateScheduler(){
 	$scheduler->status = "Active";
 	$scheduler->catch_up = 0;
 	$scheduler->save();
-        $oldSchedules = $scheduler->get_full_list('','job = "function::pollMonitoredInboxes"');
+        $oldSchedules = $scheduler->get_full_list('',"job = 'function::pollMonitoredInboxes'");
 
 	foreach($oldSchedules as $oldSchedule){
 		$oldSchedule->status = "Inactive";
