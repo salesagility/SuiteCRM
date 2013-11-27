@@ -46,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
  
 $app_list_strings['moduleList'] = array (
-  'Home' => 'Inicio',
+  // 'Home' => 'Inicio', // DO NOT TRANSLATE!
   'Contacts' => 'Contactos',
   'Accounts' => 'Cuentas',
   'Opportunities' => 'Oportunidades',
@@ -2260,7 +2260,7 @@ $app_strings = array (
   'LBL_CLOSE_AND_CREATE_BUTTON_LABEL' => 'Cerrar y Crear Nuevo',
   'LBL_CLOSE_AND_CREATE_BUTTON_TITLE' => 'Cerrar y Crear Nuevo',
   'LBL_CLOSE_AND_CREATE_BUTTON_KEY' => 'C',
-  'LBL_OPEN_ITEMS' => 'Abrir elementos:',
+  'LBL_OPEN_ITEMS' => 'Elementos Abiertos:',
   'LBL_COMPOSE_EMAIL_BUTTON_KEY' => 'L',
   'LBL_COMPOSE_EMAIL_BUTTON_LABEL' => 'Redactar Correo',
   'LBL_COMPOSE_EMAIL_BUTTON_TITLE' => 'Redactar Correo [Alt+L]',
