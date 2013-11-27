@@ -150,3 +150,6 @@ $mod_strings = array (
   'LBL_CLEANJOBQUEUE' => 'Liberador de la Cola de Trabajos',
   'LBL_REMOVEDOCUMENTSFROMFS' => 'Extracción de documentos del sistema de archivos',
 );
+
+$mod_strings['LBL_OOTB_SUGARFEEDS'] = 'Limpiar Tablas de SugarFeed';
+$mod_strings['LBL_TRIMSUGARFEEDS'] = 'Limpiar Tablas de SugarFeed';

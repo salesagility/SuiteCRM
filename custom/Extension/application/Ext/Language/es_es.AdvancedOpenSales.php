@@ -27,10 +27,10 @@
 $app_list_strings['moduleList']['AOS_Contracts'] = 'Contratos';
 $app_list_strings['moduleList']['AOS_Invoices'] = 'Facturas';
 $app_list_strings['moduleList']['AOS_PDF_Templates'] = 'Formatos PDF';
-$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Product Categories';
+$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Categorías de Productos';
 $app_list_strings['moduleList']['AOS_Products'] = 'Productos';
 $app_list_strings['moduleList']['AOS_Products_Quotes'] = 'Cotizaciones de Productos';
-$app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Line Item Groups';
+$app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Grupos de Lineas de Items';
 $app_list_strings['moduleList']['AOS_Quotes'] = 'Cotizaciones';
 $app_list_strings['aos_quotes_type_dom'][''] = '';
 $app_list_strings['aos_quotes_type_dom']['Analyst'] = 'Analista';
@@ -102,4 +102,11 @@ $app_strings['LBL_GENERATE_LETTER'] = 'Generar Carta';
 
 $app_strings['LBL_SELECT_TEMPLATE'] = 'Por favor seleccione un formato';
 $app_strings['LBL_NO_TEMPLATE'] = 'ERROR\nNo se encontraron formatos.\nPor favor vaya al módulo de Formatos PDF y cree uno';
+
+$app_list_strings['vat_list']['0.0'] = '0%';
+$app_list_strings['vat_list']['5.0'] = '5%';
+$app_list_strings['vat_list']['7.5'] = '7.5%';
+$app_list_strings['vat_list']['17.5'] = '17.5%';
+$app_list_strings['vat_list']['20.0'] = '20%';
+$app_list_strings['pdf_template_sample_dom'][''] = '';
 
