@@ -231,7 +231,7 @@ class AOR_Report extends Basic {
             $label = $field->label.$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['display'] = $field->display;
-            $fields[$label]['function'] = $field->function;
+            $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
@@ -320,7 +320,7 @@ class AOR_Report extends Basic {
             $label = $field->label.$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['display'] = $field->display;
-            $fields[$label]['function'] = $field->function;
+            $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
 
 
@@ -467,8 +467,8 @@ class AOR_Report extends Basic {
                     $query['group_by'][] = $select_field;
                 }
 
-                if($field->function != null){
-                    $select_field = $field->function.'('.$select_field.')';
+                if($field->field_function != null){
+                    $select_field = $field->field_function.'('.$select_field.')';
                 }
 
                 $query['select'][] = $select_field ." AS '".$field->label.$i."'";

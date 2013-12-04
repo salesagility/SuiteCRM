@@ -46,7 +46,7 @@ class AOR_Field extends Basic {
     var $field;
     var $display;
     var $label;
-    var $function;
+    var $field_function;
     var $sort_by;
     var $sort_order;
     var $group_by;

@@ -151,10 +151,10 @@ $dictionary['AOR_Field'] = array(
             'len' => '255',
             'size' => '20',
         ),
-        'function' =>
+        'field_function' =>
         array (
             'required' => false,
-            'name' => 'function',
+            'name' => 'field_function',
             'vname' => 'LBL_FUNCTION',
             'type' => 'enum',
             'massupdate' => 0,
