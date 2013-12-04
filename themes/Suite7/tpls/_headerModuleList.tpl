@@ -112,7 +112,7 @@
                             {/foreach}
                                     <br>
                                     {/if}
-                                    {if $module == 'Home' and !$lock_homepage}
+                                    {if $name == 'Home' and !$lock_homepage}
                                         <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
                                         <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
                                     {/if}
