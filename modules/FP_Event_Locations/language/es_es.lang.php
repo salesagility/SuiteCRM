@@ -70,7 +70,7 @@ $mod_strings = array (
   'LBL_ADDRESS_CITY' => 'Ciudad',
   'LBL_ADDRESS_COUNTRY' => 'País',
   'LBL_ADDRESS_POSTALCODE' => 'Código Postal',
-  'LBL_ADDRESS_STATE'  => 'País',
+  'LBL_ADDRESS_STATE'  => 'Estado/Provincia',
   'LBL_CAPACITY' => 'Capacidad',
   'LBL_EDITVIEW_PANEL1' => 'Dirección',	
 );
