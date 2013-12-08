@@ -228,7 +228,7 @@ class AOR_Report extends Basic {
                     $field_alias = $rel;
                 }
             }
-            $label = $field->label.$i;
+            $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->function;
@@ -317,7 +317,7 @@ class AOR_Report extends Basic {
                     $field_module = getRelatedModule($field_module,$rel);
                 }
             }
-            $label = $field->label.$i;
+            $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->function;
@@ -434,6 +434,8 @@ class AOR_Report extends Basic {
                 $field = new AOR_Field();
                 $field->retrieve($row['id']);
 
+                $field->label = str_replace(' ','_',$field->label).$i;
+
                 $path = unserialize(base64_decode($field->module_path));
 
                 $field_module = $module;
@@ -460,7 +462,7 @@ class AOR_Report extends Basic {
                 }
 
                 if($field->sort_by != ''){
-                    $query['sort_by'][] = $field->label.$i.' '.$field->sort_by;
+                    $query['sort_by'][] = $field->label.' '.$field->sort_by;
                 }
 
                 if($field->group_by == 1){
@@ -471,7 +473,7 @@ class AOR_Report extends Basic {
                     $select_field = $field->function.'('.$select_field.')';
                 }
 
-                $query['select'][] = $select_field ." AS '".$field->label.$i."'";
+                $query['select'][] = $select_field ." AS '".$field->label."'";
                 ++$i;
             }
         }
@@ -633,29 +635,4 @@ class AOR_Report extends Basic {
     }
 		
 }
-
-/*$field_array = array();
-
-$field_array[0] = $select_field;
-$field_array[1] = $field->label;
-$field_array[2] = $field->display == 1 ? 'yes' : 'no';
-$field_array[3] = $field->sort_by;
-$field_array[4] = $field->sort_order;
-$field_array[5] = ($field->function != null ? $field->function : '0') .'${comma}';
-$field_array[6] = $field->group_by == 1 ? 'Grouped' : '0';
-$field_array[7] = $field->group_order;
-$field_array[8] = $data['type'];
-$field_array[9] = ''; //relationship
-$field_array[10] = 'false'; //rel?
-$field_array[11] = ''; //?
-
-if(isset($data['options']) && $data['options'] != ''){
-   $field_array[12] = 'options';
-   $field_array[13] = $data['options'];
-} else {
-   $field_array[12] = '';
-   $field_array[13] = '';
-}
-
-$select[] = $field_array;*/
 ?>
