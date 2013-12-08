@@ -205,7 +205,7 @@ function insertConditionLine(){
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aow_conditions_delete_line" + condln + "' class='button' value='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_CONDITION_LINE') + "'></button><br>";
+        a.innerHTML = "<button type='button' id='aow_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
         a.innerHTML += "<input type='hidden' name='aow_conditions_deleted[" + condln + "]' id='aow_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aow_conditions_id[" + condln + "]' id='aow_conditions_id" + condln + "' value=''>";
     } else{
         a.innerHTML = condln +1;
