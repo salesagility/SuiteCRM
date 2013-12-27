@@ -265,10 +265,10 @@ function getModuleField($module, $fieldname, $aor_field, $view='EditView',$value
         require_once($beanFiles[$beanList[$module]]);
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
-    if ( $vardef['type'] == 'parent_type' ) {
-        $focus->field_defs[$vardef['name']]['options'] = $focus->field_defs[$vardef['group']]['options'];
-    }
     $vardefFields = $focus->getFieldDefinitions();
+    if ( $vardefFields[$fieldname]['type'] == 'parent_type' ) {
+        $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
+    }
     foreach ( $vardefFields as $name => $properties ) {
         $fieldlist[$name] = $properties;
         // fill in enums

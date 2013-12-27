@@ -35,6 +35,7 @@ function display_lines($focus, $field, $value, $view){
 
         $html .= '<script src="modules/AOS_Products_Quotes/line_items.js"></script>';
         $html .= '<script language="javascript">var sig_digits = '.$locale->getPrecision().';';
+        $html .= 'var module_sugar_grp1 = "'.$focus->module_dir.'";';
         $html .= 'var enable_groups = '.$enable_groups.';';
         $html .= 'var total_tax = '.$total_tax.';';
         $html .= '</script>';
