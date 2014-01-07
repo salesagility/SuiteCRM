@@ -1888,6 +1888,7 @@ $app_strings = array (
 	'LBL_BILLING_STREET'=> 'Street:',
 	'LBL_SHIPPING_STREET'=> 'Street:',
 
+    'LBL_PROSPECTS'=>'Prospects',
     'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
     'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
     'LBL_PRODUCTS'=>'Products',

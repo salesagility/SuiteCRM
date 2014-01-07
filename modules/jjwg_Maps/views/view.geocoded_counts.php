@@ -83,13 +83,13 @@ class Jjwg_MapsViewGeocoded_Counts extends SugarView {
 
     $export_url = $sugar_config['site_url'].'/index.php?module=jjwg_Maps&action=export_geocoding_addresses&display_module=';
 
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Accounts">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_ACCOUNTS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'LBL_ACCOUNTS">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_ACCOUNTS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Contacts">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_CONTACTS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'LBL_CONTACTS">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_CONTACTS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Leads">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_LEADS'].'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'LBL_LEADS">'.$app_strings['LBL_EXPORT'].' '.$app_strings['LBL_LEADS'].'</a>';
     echo '<br /><br />';
-    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'Prospects">'.$app_strings['LBL_EXPORT'].' Prospects'.'</a>';
+    echo '<a target="_blank" href="'.htmlspecialchars($export_url).'LBL_PROSPECTS">'.$app_strings['LBL_EXPORT'].' LBL_PROSPECTS'.'</a>';
     echo '<br /><br />';
     
     echo '<br /><br />';

@@ -238,7 +238,7 @@
             {/foreach}
             {if count($moduleExtraMenu) > 0}
                 <li id="moduleTabExtraMenu">
-                    <a href="#">More &raquo;</a><br />
+                    <a href="#">{$APP.LBL_MORE} &raquo;</a><br />
                     <ul class="cssmenu">
                         {foreach from=$moduleExtraMenu item=module key=name name=moduleList}
                         <li>{sugar_link id="moduleTab_$name" module=$name data=$module}</li>

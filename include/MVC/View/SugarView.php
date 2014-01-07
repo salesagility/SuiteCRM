@@ -926,7 +926,6 @@ EOHTML;
 
 
 
-
         // The interactive user interfaces in modified source and object code
         // versions of this program must display Appropriate Legal Notices, as
         // required under Section 5 of the GNU General Public License version

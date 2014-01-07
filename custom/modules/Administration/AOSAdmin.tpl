@@ -18,7 +18,7 @@
         <tr>
             <td  scope="row" width="200">{$MOD.LBL_AOS_ADMIN_CONTRACT_RENEWAL_REMINDER}: </td>
             <td  >
-                <input type='text' size='10' name='aos_contracts_renewalReminderPeriod' value='{$config.aos.contracts.renewalReminderPeriod}' > <span>days</span>
+                <input type='text' size='10' name='aos_contracts_renewalReminderPeriod' value='{$config.aos.contracts.renewalReminderPeriod}' > <span>{$MOD.LBL_AOS_DAYS}</span>
             </td>
         </tr>
     </table>
