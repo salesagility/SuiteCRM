@@ -69,7 +69,7 @@
         <p>{$COPYRIGHT}</p>
     </div>
 
-    <button id="admin_options">Supercharged by SuiteCRM</button>
+    <button id="admin_options">SuiteCRM - SugarCRM Supercharged!</button>
     <button id="powered_by">&copy; Powered by SugarCRM</button>
     </div>
 
