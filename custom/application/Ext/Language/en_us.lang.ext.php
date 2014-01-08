@@ -2,6 +2,18 @@
  //WARNING: The contents of this file are auto-generated
 
 
+/**
+ * Created by PhpStorm.
+ * User: will
+ * Date: 08/01/14
+ * Time: 15:15
+ */
+
+$app_strings['LBL_SUITE_SUPERCHARGED']= 'Supercharged by SuiteCRM';
+$app_strings['LBL_SUITE_POWERED_BY']= 'Powered By SugarCRM';
+$app_strings['LBL_SUITE_TOP']= 'Back to top';
+$app_strings['LBL_SUITE_PRINT']= 'Print this page';
+
 
 $app_strings['LBL_MAP'] = 'Map';
 $app_strings['LBL_MAPS'] = 'Maps';
@@ -818,6 +830,13 @@ $app_list_strings['case_status_dom'] =
       'Closed_Rejected' => 'Rejected',
       'Closed_Duplicate' => 'Duplicate',
   );
+
+$app_list_strings['aop_distribution_method'] =
+    array (
+        'singleUser' => 'Single User',
+        'roundRobin' => 'Round Robin',
+        'leastBusy' => 'Least Busy',
+    );
 
 
 $app_list_strings["moduleList"]["SecurityGroups"] = 'Security Groups Management';
