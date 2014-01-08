@@ -43,15 +43,13 @@
 </div>
 
 <div id="bottomLinks">
-{if $AUTHENTICATED}
-{*{$BOTTOMLINKS}*}
-    {/if}
 </div>
 
 <div id="footer">
     {if $AUTHENTICATED}
     <div id="links">
-        <button id="backtotop">Back To Top</button>
+        <button id="print_page" onclick="printpage()">{$APP.LBL_SUITE_PRINT}</button>
+        <button id="backtotop">{$APP.LBL_SUITE_TOP}</button>
     </div>
     {/if}
 	<div id="responseTime">
@@ -69,14 +67,17 @@
         <p>{$COPYRIGHT}</p>
     </div>
 
-    <button id="admin_options">SuiteCRM - SugarCRM Supercharged!</button>
-    <button id="powered_by">&copy; Powered by SugarCRM</button>
+    <button id="admin_options">{$APP.LBL_SUITE_SUPERCHARGED}</button>
+    <button id="powered_by">&copy; {$APP.LBL_POWERED_BY}</button>
     </div>
 
 </div>
 <script>
 {literal}
-
+function printpage()
+{
+    window.print();
+}
 if(SUGAR.util.isTouchScreen()) {
         setTimeout(resizeHeader,10000);
 }
