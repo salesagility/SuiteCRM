@@ -987,4 +987,11 @@ $app_list_strings['case_status_dom'] =
       'Closed_Rejected' => 'Rejected',
       'Closed_Duplicate' => 'Duplicate',
   );
+
+$app_list_strings['aop_distribution_method'] =
+    array (
+        'singleUser' => 'Single User',
+        'roundRobin' => 'Round Robin',
+        'leastBusy' => 'Least Busy',
+    );
 ?>
