@@ -70,7 +70,9 @@ $popupMeta = array (
     'type' => 'name',
     'label' => 'LBL_NAME',
     'width' => '10%',
+    'link' => true,
     'default' => true,
+    'name' => 'name',
   ),
   'CITY' => 
   array (
@@ -78,6 +80,7 @@ $popupMeta = array (
     'label' => 'LBL_CITY',
     'width' => '10%',
     'default' => true,
+    'name' => 'city',
   ),
   'STATE' => 
   array (
@@ -85,6 +88,7 @@ $popupMeta = array (
     'label' => 'LBL_STATE',
     'width' => '10%',
     'default' => true,
+    'name' => 'state',
   ),
   'COUNTRY' => 
   array (
@@ -92,6 +96,7 @@ $popupMeta = array (
     'label' => 'LBL_COUNTRY',
     'width' => '10%',
     'default' => true,
+    'name' => 'country',
   ),
   'ASSIGNED_USER_NAME' => 
   array (
@@ -100,6 +105,7 @@ $popupMeta = array (
     'label' => 'LBL_ASSIGNED_TO_NAME',
     'width' => '10%',
     'default' => true,
+    'name' => 'assigned_user_name',
   ),
 ),
 );

@@ -4,10 +4,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/utils.php');
 require_once('include/export_utils.php');
 
-global $sugar_config;
-global $locale;
-global $current_user;
-
 /*
  * The entry point is registered by
  * custom/include/MVC/Controller/entry_point_registry.php
@@ -71,5 +67,3 @@ if (!empty($_REQUEST['cron'])) {
   
   exit;
 }
-
-?>
