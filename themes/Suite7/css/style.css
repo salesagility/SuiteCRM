@@ -2357,7 +2357,7 @@ button, input[type=submit], input[type=reset], input[type=button], .button
     padding-left: 3px;
 }
 button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
-button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
+
 button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
 {
     color: #fff;
@@ -6365,8 +6365,7 @@ button, input[type=submit], input[type=reset], input[type=button], .button
     padding-left: 3px;
 }
 button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
-button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
-button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
+
 {
     color: #fff;
     background-image: none;
@@ -7043,8 +7042,7 @@ button, input[type=submit], input[type=reset], input[type=button], .button
     background-image: url('../../../../index.php?entryPoint=getImage&imageName=bgBtn.gif');
 }
 button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover,
-button:focus, input[type=submit]:focus, input[type=reset]:focus, input[type=button]:focus,
-button[selected], input[type=submit][selected], input[type=reset][selected], input[type=button][selected]
+
 {
     background-color: #f10202;
     border-color: #f10202;
@@ -8791,8 +8789,7 @@ input[type=reset],
 
 input[type=button]:hover,
 input[type=submit]:hover,
-input[type=reset]:hover,
-.button:focus {
+input[type=reset]:hover {
     filter:none !important;
     background:#f10202;
     border:1px solid #999;
@@ -8853,13 +8850,6 @@ select:focus {
     padding:3px;
 }
 
-button:focus {
-    font-weight:bold;
-}
-
-button:active {
-    font-weight:bold;
-}
 
 .tabForm {
     border: none;
