@@ -48,8 +48,8 @@
 <div id="footer">
     {if $AUTHENTICATED}
     <div id="links">
-        <button id="print_page" onclick="printpage()">{$APP.LBL_SUITE_PRINT}</button>
-        <button id="backtotop">{$APP.LBL_SUITE_TOP}</button>
+        <button id="print_page" onclick="printpage()">{$MOD.LBL_SUITE_PRINT}</button>
+        <button id="backtotop">{$MOD.LBL_SUITE_TOP}</button>
     </div>
     {/if}
 	<div id="responseTime">
@@ -67,8 +67,8 @@
         <p>{$COPYRIGHT}</p>
     </div>
 
-    <button id="admin_options">{$APP.LBL_SUITE_SUPERCHARGED}</button>
-    <button id="powered_by">&copy; {$APP.LBL_POWERED_BY}</button>
+    <button id="admin_options">{$MOD.LBL_SUITE_SUPERCHARGED}</button>
+    <button id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</button>
     </div>
 
 </div>
