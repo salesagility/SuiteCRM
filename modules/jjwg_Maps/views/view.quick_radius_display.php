@@ -10,10 +10,7 @@ class Jjwg_MapsViewQuick_Radius_Display extends SugarView {
   
   function display() {
     
-    global $sugar_config;
-    global $currentModule;
-    
-    $url = 'index.php?module='.$currentModule.'&action=map_markers';
+    $url = 'index.php?module='.$GLOBALS['currentModule'].'&action=map_markers';
     foreach (array_keys($_REQUEST) as $key) {
       // Exclude certain request parameters
       if (!in_array($key, array('action', 'module', 'entryPoint', 'record', 'relate_id'))) {
@@ -26,13 +23,12 @@ class Jjwg_MapsViewQuick_Radius_Display extends SugarView {
 <div class="clear"></div>
 
 <iframe src="<?php echo $url; ?>" 
-	width="100%" height="700" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"><p>Sorry, 
+	width="100%" height="900" frameborder="0" marginheight="0" marginwidth="0" scrolling="auto"><p>Sorry, 
     your browser does not support iframes.</p></iframe>
-<p>iframe: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $url; ?></a></p>
+
+<p>IFrame: <a href="<?php echo htmlspecialchars($url); ?>"><?php echo $mod_strings['LBL_MAP']; ?> URL</a></p>
 
 <?php
 
  	}
 }
-
-?>

@@ -1,6 +1,8 @@
 <?php
+
 $module_name = 'jjwg_Maps';
-$searchdefs [$module_name] = 
+
+$searchdefs[$module_name] = 
 array (
   'layout' => 
   array (
@@ -104,4 +106,3 @@ array (
     ),
   ),
 );
-?>

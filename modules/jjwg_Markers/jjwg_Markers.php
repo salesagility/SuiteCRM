@@ -3,7 +3,6 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
-require_once('include/JSON.php');
 require_once('modules/jjwg_Markers/jjwg_Markers_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 

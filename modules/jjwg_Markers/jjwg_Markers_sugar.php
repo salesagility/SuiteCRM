@@ -42,5 +42,3 @@ class jjwg_Markers_sugar extends Basic {
     }
 
 }
-
-?>
