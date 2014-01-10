@@ -61,7 +61,10 @@ $mod_strings = array (
   'LBL_URL' => 'URL',
   'LBL_CONTACT' => 'Contacto',
   
-  'LBL_PRODUCT_IMAGE' => 'Product Image',
-  'LBL_IMAGE_UPLOAD_FAIL' => 'ERROR: uploaded file exceeded the max filesize: max filesize: ',
+  'LBL_PRODUCT_IMAGE' => 'Imagen del Producto',
+  'LBL_IMAGE_UPLOAD_FAIL' => 'ERROR: el archivo subido excede el tamaño máximo: max filesize: ',
 );
+
+$mod_strings['LBL_AOS_PRODUCT_CATEGORYS_NAME'] = 'Categoría de Producto';
+
 ?>
