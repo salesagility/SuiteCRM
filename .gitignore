@@ -53,6 +53,11 @@ nbproject/
 Session.vim
 # Windows
 Thumbs.db
+<<<<<<< HEAD
 Desktop.ini
 # Disytel
 lang_cmp.php
+=======
+Desktop.ini
+/SuiteCRM
+>>>>>>> likhobory-master
