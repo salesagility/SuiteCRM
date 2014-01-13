@@ -54,9 +54,9 @@
 {{/if}}
 <td class='dataField' width='1%'>
 {{* 
-This is custom code that you may set to show on the second column of the address
-table.  An example would be the "Copy" button present from the Accounts detailview.
-See modules/Accounts/views/view.detail.php to see the value being set 
+Здесь может быть расположен дополнительный код, расширяющий функциональность модуля.
+Как пример - кнопка "Копирование..", расположенная рядом с отгрузочным адресом Формы просмотра контрагента.
+Пример реализации вы можете посмотреть в файле modules/Accounts/views/view.detail.php  
 *}}
 {$custom_code_{{$displayParams.key}}}
 </td>
