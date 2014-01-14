@@ -53,7 +53,7 @@ function insertSample(smpl){
         var footer = tinyMCE.getInstanceById("pdffooter");
         var cnf = true;
         if(body.getContent() != '' || header.getContent() != '' || footer.getContent() != ''){
-            cnf=confirm('{$MOD.LBL_WARNING_OVERWRITE}');
+            cnf=confirm(SUGAR.language.get('AOS_PDF_Templates', 'LBL_WARNING_OVERWRITE'));
         }
         if(cnf){
             smpl = eval(smpl);
