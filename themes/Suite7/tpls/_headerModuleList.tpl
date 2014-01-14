@@ -35,7 +35,13 @@
  ********************************************************************************/
 
 *}
-
+{php}
+    global $mod_strings,$app_strings,$current_user;
+    require_once("modules/ACLRoles/ACLRole.php");
+    $acl_role_obj = new ACLRole();
+    $user_roles = $acl_role_obj->getUserRoles($current_user->id);
+    $role = $user_roles[0];
+{/php}
 {if $USE_GROUP_TABS}
     <div id="moduleList">
         <ul>
@@ -135,7 +141,10 @@
                                                     </a>
                                             </td>
                                             <td align="right">
-                                                <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                                {php}
+                                                if(ACLController::checkAccess('$module_name', 'edit', true)){
+                                                {/php}<em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                                {php}}{/php}
                                             </td>
                                             </span>
             </li>
@@ -156,7 +165,10 @@
                                             </a>
                         </td>
                         <td align="right">
-                            <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                            {php}
+                            if(ACLController::checkAccess('$module_name', 'edit', true)){
+                            {/php}<em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                            {php}}{/php}
                         </td>
                         </span>
                         </li>
@@ -200,7 +212,10 @@
                                             </a>
                                             </td>
                                             <td align="right">
-                                                <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                                {php}
+                                                if(ACLController::checkAccess('$module_name', 'edit', true)){
+                                                {/php}<em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                                {php}}{/php}
                                             </td>
                                             </span>
                                         </li>
@@ -221,7 +236,10 @@
                                             </a>
                                             </td>
                                             <td align="right">
-                                            <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                                {php}
+                                                if(ACLController::checkAccess('$module_name', 'edit', true)){
+                                                {/php}<em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                                {php}}{/php}
                                             </td>
                                             </span>
                                         </li>
