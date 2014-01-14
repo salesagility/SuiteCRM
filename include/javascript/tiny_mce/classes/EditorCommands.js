@@ -1,16 +1,16 @@
 /**
  * EditorCommands.js
  *
- * Copyright 2009, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
 	// Added for compression purposes
-	var each = tinymce.each, undefined, TRUE = true, FALSE = false;
+	var each = tinymce.each, undef, TRUE = true, FALSE = false;
 
 	/**
 	 * This class enables you to add custom editor commands and it contains
@@ -23,6 +23,7 @@
 			selection = editor.selection,
 			commands = {state: {}, exec : {}, value : {}},
 			settings = editor.settings,
+			formatter = editor.formatter,
 			bookmark;
 
 		/**
@@ -108,21 +109,21 @@
 		// Private methods
 
 		function execNativeCommand(command, ui, value) {
-			if (ui === undefined)
+			if (ui === undef)
 				ui = FALSE;
 
-			if (value === undefined)
+			if (value === undef)
 				value = null;
 
 			return editor.getDoc().execCommand(command, ui, value);
 		};
 
 		function isFormatMatch(name) {
-			return editor.formatter.match(name);
+			return formatter.match(name);
 		};
 
 		function toggleFormat(name, value) {
-			editor.formatter.toggle(name, value ? {value : value} : undefined);
+			formatter.toggle(name, value ? {value : value} : undef);
 		};
 
 		function storeSelection(type) {
@@ -182,7 +183,7 @@
 				// Remove all other alignments first
 				each('left,center,right,full'.split(','), function(name) {
 					if (align != name)
-						editor.formatter.remove('align' + name);
+						formatter.remove('align' + name);
 				});
 
 				toggleFormat('align' + align);
@@ -239,7 +240,7 @@
 			},
 
 			RemoveFormat : function(command) {
-				editor.formatter.remove(command);
+				formatter.remove(command);
 			},
 
 			mceBlockQuote : function(command) {
@@ -287,6 +288,8 @@
 			mceInsertContent : function(command, ui, value) {
 				var parser, serializer, parentNode, rootNode, fragment, args,
 					marker, nodeRect, viewPortRect, rng, node, node2, bookmarkHtml, viewportBodyElement;
+
+				//selection.normalize();
 
 				// Setup parser and serializer
 				parser = editor.parser;
@@ -345,7 +348,7 @@
 
 					// Insert bookmark node and get the parent
 					selection.setContent(bookmarkHtml);
-					parentNode = editor.selection.getNode();
+					parentNode = selection.getNode();
 					rootNode = editor.getBody();
 
 					// Opera will return the document node when selection is in root
@@ -419,6 +422,10 @@
 				editor.setContent(editor.getContent().replace(/tiny_mce_marker/g, function() { return value }));
 			},
 
+			mceToggleFormat : function(command, ui, value) {
+				toggleFormat(value);
+			},
+
 			mceSetContent : function(command, ui, value) {
 				editor.setContent(value);
 			},
@@ -432,6 +439,11 @@
 				intentValue = parseInt(intentValue);
 
 				if (!queryCommandState('InsertUnorderedList') && !queryCommandState('InsertOrderedList')) {
+					// If forced_root_blocks is set to false we don't have a block to indent so lets create a div
+					if (!settings.forced_root_block && !dom.getParent(selection.getNode(), dom.isBlock)) {
+						formatter.apply('div');
+					}
+
 					each(selection.getSelectedBlocks(), function(element) {
 						if (command == 'outdent') {
 							value = Math.max(0, parseInt(element.style.paddingLeft || 0) - intentValue);
@@ -462,7 +474,7 @@
 			},
 
 			mceToggleFormat : function(command, ui, value) {
-				editor.formatter.toggle(value);
+				formatter.toggle(value);
 			},
 
 			InsertHorizontalRule : function() {
@@ -479,54 +491,39 @@
 			},
 
 			mceInsertLink : function(command, ui, value) {
-				var link = dom.getParent(selection.getNode(), 'a'), img, style, cls;
+				var anchor;
 
-				if (tinymce.is(value, 'string'))
+				if (typeof(value) == 'string')
 					value = {href : value};
+
+				anchor = dom.getParent(selection.getNode(), 'a');
 
 				// Spaces are never valid in URLs and it's a very common mistake for people to make so we fix it here.
 				value.href = value.href.replace(' ', '%20');
 
-				if (!link) {
-					// WebKit can't create links on floated images for some odd reason
-					// So, just remove styles and restore it later
-					if (tinymce.isWebKit) {
-						img = dom.getParent(selection.getNode(), 'img');
+				// Remove existing links if there could be child links or that the href isn't specified
+				if (!anchor || !value.href) {
+					formatter.remove('link');
+				}		
 
-						if (img) {
-							style = img.style.cssText;
-							cls = img.className;
-							img.style.cssText = null;
-							img.className = null;
-						}
-					}
-
-					execNativeCommand('CreateLink', FALSE, 'javascript:mctmp(0);');
-
-					// Restore styles
-					if (style)
-						img.style.cssText = style;
-					if (cls)
-						img.className = cls;
-
-					each(dom.select("a[href='javascript:mctmp(0);']"), function(link) {
-						dom.setAttribs(link, value);
-					});
-				} else {
-					if (value.href)
-						dom.setAttribs(link, value);
-					else
-						editor.dom.remove(link, TRUE);
+				// Apply new link to selection
+				if (value.href) {
+					formatter.apply('link', value, anchor);
 				}
 			},
-			
+
 			selectAll : function() {
 				var root = dom.getRoot(), rng = dom.createRng();
 
-				rng.setStart(root, 0);
-				rng.setEnd(root, root.childNodes.length);
+				// Old IE does a better job with selectall than new versions
+				if (selection.getRng().setStart) {
+					rng.setStart(root, 0);
+					rng.setEnd(root, root.childNodes.length);
 
-				editor.selection.setRng(rng);
+					selection.setRng(rng);
+				} else {
+					execNativeCommand('SelectAll');
+				}
 			}
 		});
 
@@ -534,7 +531,12 @@
 		addCommands({
 			// Override justify commands
 			'JustifyLeft,JustifyCenter,JustifyRight,JustifyFull' : function(command) {
-				return isFormatMatch('align' + command.substring(7));
+				var name = 'align' + command.substring(7);
+				var nodes = selection.isCollapsed() ? [dom.getParent(selection.getNode(), dom.isBlock)] : selection.getSelectedBlocks();
+				var matches = tinymce.map(nodes, function(node) {
+					return !!formatter.matchNode(node, name);
+				});
+				return tinymce.inArray(matches, TRUE) !== -1;
 			},
 
 			'Bold,Italic,Underline,Strikethrough,Superscript,Subscript' : function(command) {
@@ -560,7 +562,10 @@
 			},
 
 			'InsertUnorderedList,InsertOrderedList' : function(command) {
-				return dom.getParent(selection.getNode(), command == 'insertunorderedlist' ? 'UL' : 'OL');
+				var list = dom.getParent(selection.getNode(), 'ul,ol');
+				return list && 
+				     (command === 'insertunorderedlist' && list.tagName === 'UL'
+				   || command === 'insertorderedlist' && list.tagName === 'OL');
 			}
 		}, 'state');
 
@@ -581,16 +586,14 @@
 		}, 'value');
 
 		// Add undo manager logic
-		if (settings.custom_undo_redo) {
-			addCommands({
-				Undo : function() {
-					editor.undoManager.undo();
-				},
+		addCommands({
+			Undo : function() {
+				editor.undoManager.undo();
+			},
 
-				Redo : function() {
-					editor.undoManager.redo();
-				}
-			});
-		}
+			Redo : function() {
+				editor.undoManager.redo();
+			}
+		});
 	};
 })(tinymce);
