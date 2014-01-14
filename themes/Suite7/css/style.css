@@ -349,7 +349,6 @@ div#content
 div#content > table
 {
     width: 100%;
-    margin: 0 0 0 15px;
 }
 /* put a bit of left margin in when the left column menu is hidden */
 div#content .noLeftColumn
