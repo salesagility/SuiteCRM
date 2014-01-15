@@ -161,7 +161,7 @@ class SugarPHPMailer extends PHPMailer
      * @access private
      * @return string
      */
-    function AttachAll() {
+    /*function AttachAll() {
         // Return text of body
         $mime = array();
 
@@ -210,7 +210,7 @@ class SugarPHPMailer extends PHPMailer
         $mime[] = sprintf("--%s--%s", $this->boundary[1], $this->LE);
 
         return join("", $mime);
-    }
+    }*/
 
 	/**
 	 * handles Charset translation for all visual parts of the email.
