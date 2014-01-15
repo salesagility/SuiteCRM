@@ -68,7 +68,7 @@ function loadFieldLine(field){
     /*if (field['value'] instanceof Array) {
         field['value'] = JSON.stringify(field['value'])
     }*/
-    showFieldModuleField(ln, field['function'], field['label']);
+    showFieldModuleField(ln, field['field_function'], field['label']);
 
     //getView(ln,action['id']);
 
@@ -157,7 +157,7 @@ function showFieldModuleField(ln, function_value, label_value){
             }
         }
 
-        var aor_field_name = "aor_fields_function["+ln+"]";
+        var aor_field_name = "aor_fields_field_function["+ln+"]";
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFunctionField&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+function_value,callback);
 
