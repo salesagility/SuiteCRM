@@ -3,6 +3,13 @@
 
  
  //WARNING: The contents of this file are auto-generated
+$beanList['CS_ColourSelector'] = 'CS_ColourSelector';
+$beanFiles['CS_ColourSelector'] = 'modules/CS_ColourSelector/CS_ColourSelector.php';
+$moduleList[] = 'CS_ColourSelector';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
 $beanList['Calls_Reschedule'] = 'Calls_Reschedule';
 $beanFiles['Calls_Reschedule'] = 'modules/Calls_Reschedule/Calls_Reschedule.php';
 $modules_exempt_from_availability_check['Calls_Reschedule'] = 'Calls_Reschedule';
