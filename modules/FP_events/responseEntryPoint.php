@@ -19,7 +19,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     	if($response == 'accept'){
 
             //check to see if they have already responded to the email
-            $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
+            $check_q = 'SELECT email_responded FROM fp_events_contacts_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
     		//update contact to accepted
     		$query = 'UPDATE fp_events_contacts_c SET accept_status="Accepted", email_responded="1" WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'" AND email_responded="0"';
@@ -40,7 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     	}
     	else if($response == 'decline'){
     		//check to see if they have already responded to the email
-            $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
+            $check_q = 'SELECT email_responded FROM fp_events_contacts_c WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
             //update contact to accepted
     		$query = 'UPDATE fp_events_contacts_c SET accept_status="Declined", email_responded="1" WHERE fp_events_contactsfp_events_ida="'.$event->id.'" AND fp_events_contactscontacts_idb="'.$delegate_id.'" AND email_responded="0"';
@@ -117,7 +117,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
     	if($response == 'accept'){
             //check to see if they have already responded to the email
-            $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE ffp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
+            $check_q = 'SELECT email_responded FROM fp_events_leads_1_c WHERE ffp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
     		//update contact to accepted
     		$query = 'UPDATE fp_events_leads_1_c SET accept_status="Accepted", email_responded="1" WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'" AND email_responded="0"';
@@ -138,7 +138,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     	}
     	else if($response == 'decline'){
     		//check to see if they have already responded to the email
-            $check_q = 'SELECT email_responded FROM fp_events_prospects_1_c WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
+            $check_q = 'SELECT email_responded FROM fp_events_leads_1_c WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'"';
              $check = $db->getOne($check_q);
             //update contact to accepted
     		$query = 'UPDATE fp_events_leads_1_c SET accept_status="Declined", email_responded="1" WHERE fp_events_leads_1fp_events_ida="'.$event->id.'" AND fp_events_leads_1leads_idb="'.$delegate_id.'" AND email_responded="0"';
