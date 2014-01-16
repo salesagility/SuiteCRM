@@ -33,3 +33,6 @@ install_ss();
 
 require_once('install/suite_install/GoogleMaps.php');
 install_gmaps();
+
+require_once('install/suite_install/colourSelector.php');
+install_colourSelector();
