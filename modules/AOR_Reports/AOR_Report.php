@@ -133,7 +133,7 @@ class AOR_Report extends Basic {
         $count_query = 'SELECT count(*) c FROM ('.$report_sql.') as n';;
 
         // We have a count query.  Run it and get the results.
-        $result = $this->db->query($count_query, true, "Error running count query for $this->object_name List: ");
+        $result = $this->db->query($count_query);
         $assoc = $this->db->fetchByAssoc($result);
         if(!empty($assoc['c']))
         {
