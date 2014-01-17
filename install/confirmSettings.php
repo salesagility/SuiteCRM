@@ -492,7 +492,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         <tr>
             <td></td>
             <td><strong>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</strong></td>
-            <td>' . $suhosinStatus . '</td>
+            <td>" . $suhosinStatus . "</td>
         </tr>
         ";
 
