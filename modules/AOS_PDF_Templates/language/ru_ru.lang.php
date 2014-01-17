@@ -61,6 +61,8 @@ $mod_strings = array (
   'LBL_TYPE' => 'Шаблон для',
   'LBL_ACTIVE' => 'Активен',
   'LBL_DEFAULT_TEMPLATE' => 'Стандартный шаблон',
+  'LBL_BUTTON_INSERT' => 'Вставить',
+  'LBL_WARNING_OVERWRITE' => 'Внимание: все несохранённые данные текущего шаблона будут удалены.',
   'LBL_INSERT_FIELDS' => 'Вставка поля', 
   
   'LBL_SAMPLE' => 'Загрузить пример бланка',
