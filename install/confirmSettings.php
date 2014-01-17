@@ -488,13 +488,13 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         {
             $suhosinStatus = "<span class='stop'><b>{$app_strings['ERR_SUHOSIN']}</b></span>";
         }
-        $envString .= '
+        $envString .= "
         <tr>
             <td></td>
-            <td><strong>PHP allows to use stream (' . UploadStream::STREAM_NAME . '://)</strong></td>
+            <td><strong>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</strong></td>
             <td>' . $suhosinStatus . '</td>
         </tr>
-        ';
+        ";
 
 // PHP.ini
 $phpIniLocation = get_cfg_var("cfg_file_path");
