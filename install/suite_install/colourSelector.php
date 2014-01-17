@@ -5,7 +5,7 @@ function install_colourSelector() {
 
     global $sugar_config;
 
-    $sugar_config['colour_selector']['version'] = '1.0';
+    $sugar_config['colourselector']['version'] = '1.0';
     if(!isset($sugar_config['colourselector']['menu'])) $sugar_config['colourselector']['menu'] = '#f10202';
     if(!isset($sugar_config['colourselector']['menufont'])) $sugar_config['colourselector']['menufont'] = '#f10202';
     if(!isset($sugar_config['colourselector']['menubrd'])) $sugar_config['colourselector']['menubrd'] = '#f10202';
