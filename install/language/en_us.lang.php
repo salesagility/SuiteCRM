@@ -553,6 +553,7 @@ $mod_strings = array(
 	'LBL_YOUR_PHP_VERSION' => '(Your current php version is ',
 	'LBL_RECOMMENDED_PHP_VERSION' =>' Recommended php version is 5.2.x)',
 	'LBL_BACKWARD_COMPATIBILITY_ON' => 'Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off for proceeding further',
+    'LBL_STREAM' => 'PHP allows to use stream',
 
     'advanced_password_new_account_email' => array(
         'subject' => 'New account information',
