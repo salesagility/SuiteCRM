@@ -301,6 +301,8 @@ $mod_strings['LBL_CONTRIBUTOR_SECURITY_SUITE'] = 'SecuritySuite by Jason Eggers'
 $mod_strings['LBL_CONTRIBUTOR_JJW_GMAPS'] = 'JJWDesign Google Maps by Jeffrey J. Walters';
 $mod_strings['LBL_CONTRIBUTOR_QUICKCRM'] = 'QuickCRM Mobile by Benoit Luquet';
 $mod_strings['LBL_CONTRIBUTOR_CONSCIOUS'] = 'SuiteCRM LOGO Provided by Conscious Solutions';
+$mod_strings['LBL_LANGUAGE_SPANISH'] = 'Spanish Translation Provided by Disytel openConsulting';
+$mod_strings['LBL_LANGUAGE_RUSSIAN'] = 'Russian Translation Provided by likhobory';
 
 $mod_strings['LBL_ABOUT_SUITE_1'] = 'SuiteCRM  - бесплатный форк SugarCRM. Вы можете найти множество материалов в интернете, поясняющих необходимость появления данного проекта';
 $mod_strings['LBL_ABOUT_SUITE_2'] = 'SuiteCRM распространяется под лицензией GPL3';
