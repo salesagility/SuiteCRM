@@ -113,12 +113,19 @@ $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_MEETINGS'] = 'Название груп
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_PROSPECTS'] = 'Название группы меток для Адресатов:';
 
 $mod_strings['LBL_CONFIG_GEOCODING_SETTINGS_TITLE'] = 'Параметры геокодирования:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE'] = 'API URL сервиса геокодирования:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_DESC'] = 'Адрес Google Maps API V3 либо адрес прокси-сервера.';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_TITLE'] = 'Секретная фраза:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_DESC'] = 'Секретная фраза прокси-сервера.';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_TITLE'] = 'Лимит геокодирования:';
-$mod_strings['LBL_CONFIG_GEOCODING_LIMIT_DESC'] = 'Установка лимита на количество записей, получаемых запросом для геокодирования';
+$mod_strings['LBL_CONFIG_GEOCODING_LIMIT_DESC'] = 'Установка лимита на количество записей, получаемых запросом для геокодирования.';
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_TITLE'] = 'Лимит геокодирования для Google:';
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_DESC'] = 'Установка лимита на количество записей при использовании Google Maps API при геокодировании.';
 $mod_strings['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_TITLE'] = 'Лимит экспортируемых адресов:';
 $mod_strings['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_DESC'] = 'Установка лимита на количество экспортируемых адресов.';
+$mod_strings['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_TITLE'] = 'Использовать приблизительные координаты';
+$mod_strings['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_DESC'] = 'Разрешать использовать приблизительные координаты местоположения в результатах геокодирования.';
+
 
 $mod_strings['LBL_CONFIG_ADDRESS_CACHE_SETTINGS_TITLE'] = 'Параметры кэша адресов:';
 $mod_strings['LBL_CONFIG_ADDRESS_CACHE_GET_ENABLED_TITLE'] = 'Использование кэша адресов при чтении:';
@@ -148,3 +155,6 @@ $mod_strings['LBL_CONFIG_MAP_CLUSTER_GRID_SIZE_DESC'] = 'Установка ра
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_TITLE'] = 'Максимальный масштаб для кластеризации:';
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = 'Установка максимального масштаба карты, при котором метки будут отображаться единым кластером.';
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = 'Примечание: все сохранённые параметры находятся в таблице <b>config</b>, категория <b>jjwg</b>. Файл controller.php для перезаписи параметров больше не используется.';
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE'] = 'Удаление AdSense-объявлений:';
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC'] = 'Пожертвуйте автору модуля определённую сумму, после чего свяжитесь с ним для получения соответствующего ключа.';
+
