@@ -7,12 +7,13 @@
  */
 
 $mod_strings['LBL_COLOUR_SETTINGS'] = 'Colour Settings';
-$mod_strings['LBL_COLOUR_DESC'] = 'Change colour here';
+$mod_strings['LBL_COLOUR_DESC'] = 'Customise your SuiteCRM theme';
 
-$mod_strings['LBL_COLOUR_ADMIN_MENU'] = 'Select header menu colour';
-$mod_strings['LBL_COLOUR_ADMIN_MENUFONT'] = 'Select menu font colour';
-$mod_strings['LBL_COLOUR_ADMIN_MENUBRD'] = 'Select menu border colour';
-$mod_strings['LBL_COLOUR_ADMIN_PAGEHEADER'] = 'Select page header colour';
-$mod_strings['LBL_COLOUR_ADMIN_PAGELINK'] = 'Select page link colour';
-$mod_strings['LBL_COLOUR_ADMIN_DASHLET'] = 'Select dashlet header colour';
-$mod_strings['LBL_COLOUR_ADMIN_BUTTON'] = 'Select button colour';
+$mod_strings['LBL_COLOUR_ADMIN_MENU'] = 'Menu colour config';
+$mod_strings['LBL_COLOUR_ADMIN_MENUFONT'] = 'Menu font colour';
+$mod_strings['LBL_COLOUR_ADMIN_MENUBRD'] = 'Menu border colour';
+$mod_strings['LBL_COLOUR_ADMIN_PAGE'] = 'Page colour config';
+$mod_strings['LBL_COLOUR_ADMIN_PAGEHEADER'] = 'Page header colour';
+$mod_strings['LBL_COLOUR_ADMIN_PAGELINK'] = 'Page link colour';
+$mod_strings['LBL_COLOUR_ADMIN_DASHLET'] = 'Dashlet colour config';
+$mod_strings['LBL_COLOUR_ADMIN_BUTTON'] = 'Button colour config';
