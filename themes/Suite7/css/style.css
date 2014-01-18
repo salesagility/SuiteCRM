@@ -347,6 +347,7 @@ div#content
     margin-left: 0;
     margin-right: 5px;
     margin-top:20px;
+    margin-bottom:25px;
 }
 div#content > table
 {
@@ -4260,7 +4261,7 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
     border: solid 1px #999999;
     color: #121212;
-    border-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
     font-size:12px;
 }
@@ -4568,9 +4569,9 @@ ul#drop-nav ul li:hover {
     width:22px;
     height:25px;
     padding:0 0 5px 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     border:none;
 }
 
@@ -5090,4 +5091,3 @@ a#delete_listview_top:hover {
 .wrapper input {
     padding-right:30px; /* button padding */
 }
-
