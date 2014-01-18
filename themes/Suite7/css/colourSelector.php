@@ -70,3 +70,32 @@ border:1px solid #999;
 background: #<?php echo $sugar_config['colourselector']['dashlet']; ?>;
 
 }
+
+/* Top navigation CSS */
+
+#moduleList ul li a:link {
+background:none;
+color:#<?php echo $sugar_config['colourselector']['modlink']; ?>;
+}
+
+#moduleList ul li a:visited {
+background:none;
+color:#<?php echo $sugar_config['colourselector']['modlinkvisited']; ?>;
+}
+
+#moduleList ul li:hover {
+background:#<?php echo $sugar_config['colourselector']['modlisthover']; ?>;
+}
+
+#moduleList ul li a:hover {
+background:none;
+color:#<?php echo $sugar_config['colourselector']['modlinkhover']; ?>;
+}
+
+#moduleList ul li ul.cssmenu {
+background:#<?php echo $sugar_config['colourselector']['cssmenu']; ?>;
+}
+
+#moduleList ul li ul.cssmenu li a {
+color:#<?php echo $sugar_config['colourselector']['cssmenulink']; ?>;
+}
