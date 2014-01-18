@@ -1,7 +1,9 @@
+<p>{$MOD.LBL_COLOUR_ADMIN_INTRO}</p>
 <form id="ConfigureSettings" name="ConfigureSettings" enctype='multipart/form-data' method="POST"
       action="index.php?module=Administration&action=colourAdmin&do=save">
 
     <span class='error'>{$error.main}</span>
+
 
     <table width="100%" cellpadding="0" cellspacing="1" border="0" class="actionsContainer">
         <tr style="float:left;">
@@ -10,6 +12,13 @@
             </td>
         </tr>
 
+    </table>
+
+    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+        <tr><th align="left" scope="row" colspan="4"><h4><strong>{$MOD.LBL_COLOUR_ADMIN_TABS}</strong></h4></th></tr>
+        <tr style="float:left;">
+            <td>{$MOD.LBL_COLOUR_ADMIN_TABSNUM}</td><td><input type="text" id="default_max_tabs" name="default_max_tabs" value="{$config.default_max_tabs}" /></td>
+        </tr>
     </table>
 
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">

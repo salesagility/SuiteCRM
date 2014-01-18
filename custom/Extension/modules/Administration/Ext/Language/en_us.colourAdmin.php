@@ -8,6 +8,7 @@
 
 $mod_strings['LBL_COLOUR_SETTINGS'] = 'Theme Settings';
 $mod_strings['LBL_COLOUR_DESC'] = 'Customise your SuiteCRM theme';
+$mod_strings['LBL_COLOUR_ADMIN_INTRO'] = 'Change these settings to customise your SuiteCRM theme. <strong>Note:</strong> Please remember to refresh (Ctrl + F5) once you have saved your settings.';
 
 $mod_strings['LBL_COLOUR_ADMIN_CUSTOM'] = 'Custom code config';
 $mod_strings['LBL_COLOUR_ADMIN_MENU'] = 'Menu colour config';
@@ -34,3 +35,6 @@ $mod_strings['LBL_COLOUR_ADMIN_BTNMID2'] = 'Button colour mid-bottom: ';
 $mod_strings['LBL_COLOUR_ADMIN_BTNBTM'] = 'Button colour bottom: ';
 $mod_strings['LBL_COLOUR_ADMIN_BTNHOVER'] = 'Button hover colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_DASHHEAD'] = 'Dashlet header colour: ';
+
+$mod_strings['LBL_COLOUR_ADMIN_TABS'] = 'Menu contents config';
+$mod_strings['LBL_COLOUR_ADMIN_TABSNUM'] = 'Number of menu items/tabs: ';
