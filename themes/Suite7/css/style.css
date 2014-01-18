@@ -5091,3 +5091,9 @@ a#delete_listview_top:hover {
 .wrapper input {
     padding-right:30px; /* button padding */
 }
+
+input[type=text].cstm_code {
+    resize:both;
+    width:200px;
+    height:200px;
+}

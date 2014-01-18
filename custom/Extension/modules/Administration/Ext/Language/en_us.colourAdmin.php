@@ -9,6 +9,7 @@
 $mod_strings['LBL_COLOUR_SETTINGS'] = 'Theme Settings';
 $mod_strings['LBL_COLOUR_DESC'] = 'Customise your SuiteCRM theme';
 
+$mod_strings['LBL_COLOUR_ADMIN_CUSTOM'] = 'Custom code config';
 $mod_strings['LBL_COLOUR_ADMIN_MENU'] = 'Menu colour config';
 $mod_strings['LBL_COLOUR_ADMIN_PAGE'] = 'Page colour config';
 $mod_strings['LBL_COLOUR_ADMIN_PAGEHEADER'] = 'Page header colour';
