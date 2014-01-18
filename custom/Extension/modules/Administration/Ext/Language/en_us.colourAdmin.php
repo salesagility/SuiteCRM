@@ -6,7 +6,7 @@
  * Time: 23:10
  */
 
-$mod_strings['LBL_COLOUR_SETTINGS'] = 'Colour Settings';
+$mod_strings['LBL_COLOUR_SETTINGS'] = 'Theme Settings';
 $mod_strings['LBL_COLOUR_DESC'] = 'Customise your SuiteCRM theme';
 
 $mod_strings['LBL_COLOUR_ADMIN_MENU'] = 'Menu colour config';

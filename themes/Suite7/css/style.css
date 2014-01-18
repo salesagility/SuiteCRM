@@ -346,6 +346,7 @@ div#content
     padding-bottom: 20px;
     margin-left: 0;
     margin-right: 5px;
+    margin-top:20px;
 }
 div#content > table
 {
@@ -580,7 +581,7 @@ div.moduleTitle
 {
     display: block;
     float: right;
-    margin-top: 0;
+    margin-top: 10px;
 }
 .moduleTitle span.utils a img
 {
@@ -1193,10 +1194,48 @@ div.indent_right {
 /* Footer styles */
 #footer
 {
-    padding-top: 10px;
-    text-align: center;
-    padding-bottom: 5px;
+    background:#ededed;
+    height:30px;
+    width:100%;
+    position:fixed;
+    bottom:0;
+    padding: 5px 10px 5px 10px;
     clear: both;
+}
+
+.companyLogo
+{
+
+    width:150px;
+    float:left;
+    padding: 0 10px 0 0;
+    border-right:1px solid #cccccc;
+
+}
+
+.companyLogo img {
+
+    width:100%;
+    height:100%;
+
+}
+
+div#responseTime {
+
+    width:250px;
+    font-size:12px;
+    color:#888888;
+    float:left;
+    margin:10px 0 0 10px;
+}
+
+#copyright_data {
+    width:500px;
+    font-size:12px;
+    color:#888888;
+    text-align:center;
+    margin:0 auto;
+    padding:5px 000;
 }
 
 #themePicker, #langPicker
@@ -2790,6 +2829,7 @@ table, div
 }
 h1, h2
 {
+    margin-top:5px;
     font-size: 18px;
 }
 h3
@@ -4092,7 +4132,7 @@ body {
 input[type=button],
 input[type=submit],
 input[type=reset],
-button {
+.button, button {
 
     padding: 2px 5px 2px 5px;
     margin: 0 3px 0 3px;
@@ -4107,8 +4147,8 @@ button {
     background: linear-gradient(to bottom,  #ffffff 0%,#f3f3f3 50%,#ededed 51%,#ffffff 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 ); /* IE6-8 */
     border: solid 1px #999999;
-    color: #121212;
-    border-radius: 2px;
+    color: #333333;
+    border-radius: 5px;
     cursor: pointer;
     font-size:12px;
 }
@@ -4116,13 +4156,14 @@ button {
 input[type=button]:hover,
 input[type=submit]:hover,
 input[type=reset]:hover,
-button:hover {
+.button:hover, button:hover {
     background:#f10202;
     border:1px solid #999;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
+    color:#ffffff;
 }
 
 /* Form/fields CSS */
@@ -4626,11 +4667,6 @@ table.view {
     padding: 0;
 }
 
-
-#footer {
-    max-height:50px !important;
-}
-
 #dialog {
     text-align:center;
     overflow:hidden;
@@ -4655,13 +4691,10 @@ button #powered_by {
     border:none;
 }
 
-#backtotop {
-    padding: 3px;
-    margin:10px 25px 10px 10px;
-}
 
 #links {
     float:right;
+    margin:5px 15px 00;
 }
 
 #bottomLinks {
@@ -4801,7 +4834,7 @@ input[type=reset],
     filter:none !important;
     border: solid 1px #999999;
     color: #121212;
-    border-radius: 2px;
+    border-radius: 5px;
     cursor: pointer;
     font-size:12px;
 }
