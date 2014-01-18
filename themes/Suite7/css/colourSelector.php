@@ -91,3 +91,5 @@ background:#<?php echo $sugar_config['colourselector']['cssmenu']; ?>;
 #moduleList ul li ul.cssmenu li a {
 color:#<?php echo $sugar_config['colourselector']['cssmenulink']; ?>;
 }
+
+<?php echo $sugar_config['colourselector']['custom']; ?>
