@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ian
- * Date: 15/01/14
- * Time: 09:14
- */
 
 require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
