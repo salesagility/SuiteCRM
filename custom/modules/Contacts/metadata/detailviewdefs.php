@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-20 12:14:34
+// created: 2014-01-20 13:01:54
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -180,12 +180,6 @@ $viewdefs = array (
               'label' => 'LBL_ACCOUNT_NAME',
               'displayParams' => 
               array (
-                'enableConnectors' => true,
-                'module' => 'Contacts',
-                'connectors' => 
-                array (
-                  0 => 'ext_rest_linkedin',
-                ),
               ),
             ),
             1 => 

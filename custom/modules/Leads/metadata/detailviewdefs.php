@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-20 12:14:34
+// created: 2014-01-20 13:01:54
 $viewdefs = array (
   'Leads' => 
   array (
@@ -110,12 +110,6 @@ $viewdefs = array (
               'name' => 'account_name',
               'displayParams' => 
               array (
-                'enableConnectors' => true,
-                'module' => 'Leads',
-                'connectors' => 
-                array (
-                  0 => 'ext_rest_linkedin',
-                ),
               ),
             ),
             1 => 'website',

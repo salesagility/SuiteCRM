@@ -1,9 +1,5 @@
 <?php
-
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
-
-if(!defined('sugarEntry'))define('sugarEntry', true);
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,13 +36,18 @@ if(!defined('sugarEntry'))define('sugarEntry', true);
  ********************************************************************************/
 
 
-include ('include/MVC/preDispatch.php');
-$startTime = microtime(true);
-require_once('include/entryPoint.php');
-ob_start();
-require_once('include/MVC/SugarApplication.php');
-$app = new SugarApplication();
-$app->startSession();
-$app->execute();
 
-?>
+
+require_once('custom/include/MySugar/MySugar.php');
+
+$mySugar = new MySugar($_REQUEST['module']);
+if (!isset($_REQUEST['DynamicAction'])) {
+	$_REQUEST['DynamicAction'] = 'displayDashlet';
+}
+// commit session before returning output so we can serialize AJAX requests
+// and not get session into a wrong state
+$res = $mySugar->$_REQUEST['DynamicAction']();
+if(isset($_REQUEST['commit_session'])) {
+    session_commit();
+}
+echo $res;
