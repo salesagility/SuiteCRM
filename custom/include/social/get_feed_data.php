@@ -17,6 +17,37 @@ $settings = array(
 
 session_start();
 
+/* If access tokens are not available redirect to connect page. */
+if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
+    if ($settings['consumer_key'] === '' || $settings['consumer_secret'] === '') {
+        echo 'You need a consumer key and secret to test the sample code. Get one from <a href="https://dev.twitter.com/apps">dev.twitter.com/apps</a>';
+        exit;
+    }
+    /* Build TwitterOAuth object with client credentials. */
+    $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret']);
+
+    /* Get temporary credentials. */
+    $request_token = $connection->getRequestToken($settings['call_back_url']);
+
+    /* Save temporary credentials to session. */
+    $_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
+    $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
+
+    /* If last connection failed don't display authorization link. */
+    switch ($connection->http_code) {
+        case 200:
+            /* Build authorize URL and redirect user to Twitter. */
+            $url = $connection->getAuthorizeURL($token);
+            header('Location: ' . $url);
+            break;
+        default:
+            /* Show notification if something went wrong. */
+            echo 'Could not connect to Twitter. Refresh the page or try again later.';
+    }
+}
+/* Get user access tokens out of the session. */
+$access_token = $_SESSION['access_token'];
+
 /* Create a TwitterOauth object with consumer/user tokens. */
 $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 
@@ -89,105 +120,30 @@ if ($user) {
 }
 
 
+$facebook_helper = new facebook_helper();
+//get current user logged in
+$user = $facebook_helper->facebook->getUser();
+
+$user_home = check_facebook_login($facebook_helper);
+
 if ($user) {
     $logoutUrl = $facebook_helper->get_logout_url();
 } else {
-    $loginUrl = $facebook_helper->get_login_url($url);
+    $loginUrl = $facebook_helper->get_login_url($_REQUEST['url']);
 }
 
-
-//$single = $user_home['data'][0];
-
-foreach ($user_home['data'] as $single) {
-    $id = guid_maker();
-    $message = $db->quote(generate_stream($single));
-    $assigned_user = '1';
-
-    $date = date("Y-m-d H:m:s", strtotime($single['created_time']));
-
-    $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $message . "' AND date_entered = '" . $date . "'";
-    $results = $db->query($sql_check);
-
-    while ($row = $db->fetchByAssoc($results)) {
-        $found_record = $row;
-        break;
-    }
-    if (empty($found_record)) {
-        $sql = "INSERT INTO sugarfeed (id, name, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, related_module, related_id, link_url, link_type)
-                    VALUES
-                     ('" . $id . "',
-                      NULL,
-                      '" . $date . "',
-                      '" . $date . "',
-                      '1',
-                      '1',
-                      '" . $message . "',
-                      '0',
-                      '" . $assigned_user . "',
-                      'UserFeed',
-                      '" . $assigned_user . "',
-                      NULL,
-                      NULL);";
-
-        if (!empty($message)) {
-            $results = $db->query($sql);
-            $sql2 = "INSERT INTO sugarfeed_cstm WHERE (id_c, social_c) values ('" . $id . "','facebook');";
-            $results = $db->query($sql2);
-        }
-    }
+if ($user){
+    $log = '<a href="' . $logoutUrl . '">Logout with Facebook</a>';
+}else{
+    //if not loged in
+    $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
 }
 
-//print_r($user_home);
+$html =  '<div>';
+$html .=  $log;
+$html .= '</div>';
 
-function guid_maker()
-{
-    if (function_exists('com_create_guid')) {
-        return com_create_guid();
-    } else {
-        mt_srand((double)microtime() * 10000); //optional for php 4.2.0 and up.
-        $charid = strtoupper(md5(uniqid(rand(), true)));
-        $hyphen = chr(45);
-        $uuid = chr(123)
-            . substr($charid, 0, 8) . $hyphen
-            . substr($charid, 8, 4) . $hyphen
-            . substr($charid, 12, 4) . $hyphen
-            . substr($charid, 16, 4) . $hyphen
-            . substr($charid, 20, 12)
-            . chr(125);
-        return $uuid;
-    }
-}
-
-function generate_stream($stream)
-{
-
-    //if simple post
-    if ($stream['from']['name'] == "Gina Scott") {
-        $var = "asd";
-    }
-    switch ($stream['type']) {
-
-        case "":
-            $string = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . $stream['message'];
-            break;
-        case "link";
-            $string = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
-            break;
-        case "status":
-            //
-            if (!empty($stream['story'])) {
-                $string = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . $stream['story'] . "</a>";
-            } else {
-                //wall post.
-                $string = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . $stream['message'] . "</a>";
-            }
-            break;
-        case "photos":
-            break;
-    }
-
-
-    return $string;
-
+foreach($user_home['data'] as $single){
+    data_insert($single, "facebook");
 }
 
