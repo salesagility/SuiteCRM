@@ -68,7 +68,7 @@ function loadFieldLine(field){
     /*if (field['value'] instanceof Array) {
         field['value'] = JSON.stringify(field['value'])
     }*/
-    showFieldModuleField(ln, field['function'], field['label']);
+    showFieldModuleField(ln, field['field_function'], field['label']);
 
     //getView(ln,action['id']);
 
@@ -157,7 +157,7 @@ function showFieldModuleField(ln, function_value, label_value){
             }
         }
 
-        var aor_field_name = "aor_fields_function["+ln+"]";
+        var aor_field_name = "aor_fields_field_function["+ln+"]";
 
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFunctionField&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+function_value,callback);
 
@@ -265,7 +265,7 @@ function insertFieldLine(){
 
     var a = x.insertCell(0);
     if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button' value='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_CONDITION_LINE') + "'></button><br>";
+        a.innerHTML = "<button type='button' id='aor_fields_delete_line" + fieldln + "' class='button' value='' tabindex='116' onclick='markFieldLineDeleted(" + fieldln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
         a.innerHTML += "<input type='hidden' name='aor_fields_deleted[" + fieldln + "]' id='aor_fields_deleted" + fieldln + "' value='0'><input type='hidden' name='aor_fields_id[" + fieldln + "]' id='aor_fields_id" + fieldln + "' value=''>";
     } else{
         a.innerHTML = fieldln +1;

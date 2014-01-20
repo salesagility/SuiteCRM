@@ -86,4 +86,7 @@ $mod_strings = array (
   'LBL_INBOUND_EMAIL_DESC' => 'Sólo permitir el acceso a una cuenta de correo electrónico si el usuario pertenece a un grupo que se asigna a la cuenta de correo.',  
   'LBL_PRIMARY_GROUP' => 'Grupo Principal',
 );
+
+$mod_strings['LBL_ALL_MODULES'] = 'Todos';
+
 ?>

@@ -100,4 +100,3 @@ array (
     'default' => false,
   ),
 );
-?>

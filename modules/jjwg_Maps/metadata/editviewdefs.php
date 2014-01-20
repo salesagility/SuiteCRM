@@ -1,6 +1,8 @@
 <?php
+
 $module_name = 'jjwg_Maps';
-$viewdefs [$module_name] = 
+
+$viewdefs[$module_name] = 
 array (
   'EditView' => 
   array (
@@ -81,4 +83,3 @@ array (
     ),
   ),
 );
-?>

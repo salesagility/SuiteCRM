@@ -20,6 +20,8 @@ $mod_strings['LBL_MAP_DISPLAY'] = 'Visualização do Mapa';
 $mod_strings['LBL_MAP_LEGEND'] = 'Legenda:';
 $mod_strings['LBL_MAP_USERS'] = 'Usuários:';
 $mod_strings['LBL_MAP_USER_GROUPS'] = 'Grupos de Usuários:';
+$mod_strings['LBL_MAP_GROUP'] = 'Grupo';
+$mod_strings['LBL_MAP_TYPE'] = 'Tipo';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'Atribuído para:';
 $mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
 
@@ -59,6 +61,9 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use os links abaixo para exportar end
 'Quando você terminar de geocodificação, importar os endereços para o módulo de cache de endereços para ser usado com os seus mapas. '.
 'Note, o endereço do módulo de cache é opcional. Todas as informações geocodificação é armazenado no módulo representativo.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
+$mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'Adicionar à lista de destino';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = 'Tem certeza que você deseja adicionar os itens selecionados para a lista de alvos?';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_PROCESSING'] = 'Processamento...';
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configurações';
 $mod_strings['LBL_CONFIG_SAVED'] = 'Configurações salvas com sucesso!';
@@ -102,12 +107,18 @@ $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_MEETINGS'] = 'Campo Grupo para Reuniõe
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_PROSPECTS'] = 'Campo Grupo de Perspectivas / Metas:';
 
 $mod_strings['LBL_CONFIG_GEOCODING_SETTINGS_TITLE'] = 'Georreferenciamento / Google Settings:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE'] = 'URL Geocoding API:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_DESC'] = 'A URL do Google Maps API V3 ou Proxy';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_TITLE'] = 'Frase Secreta para Proxy:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_DESC'] = 'A frase secreta para ser usado com a comparação MD5 Proxy.';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_TITLE'] = 'Limite de geocodificação:';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_DESC'] = "'geocoding_limit' define o limite de consulta ao selecionar registros para geocode.";
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_TITLE'] = 'Limite de geocodificação Google:';
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_DESC'] = "'google_geocoding_limit' define o limite do pedido quando a geocodificação utilizando a API do Google Maps.";
 $mod_strings['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_TITLE'] = 'Exportação Limite Endereços:';
 $mod_strings['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_DESC'] = "'export_addresses_limit' define o limite de consulta ao selecionar os registros de exportação.";
+$mod_strings['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_TITLE'] = "Permitir 'APPROXIMATE' as «Localização Tipos:";
+$mod_strings['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_DESC'] = "'allow_approximate_location_type' - permite que tipos de locais de 'APPROXIMATE' a ser considerado resultados de geocodificação 'OK'.";
 
 $mod_strings['LBL_CONFIG_ADDRESS_CACHE_SETTINGS_TITLE'] = 'Configurações de cache de endereço:';
 $mod_strings['LBL_CONFIG_ADDRESS_CACHE_GET_ENABLED_TITLE'] = 'Ativar Cache Endereço (Get ):';
@@ -137,3 +148,5 @@ $mod_strings['LBL_CONFIG_MAP_CLUSTER_GRID_SIZE_DESC'] = "'map_clusterer_grid_siz
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_TITLE'] = 'Map Markers Clusterer Max Zoom:';
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = "'map_clusterer_max_zoom' é usado para definir o nível máximo de zoom em que não será aplicada clustering.";
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = "Nota Importante: Todas as configurações salvas podem ser encontrados na tabela 'config' na categoria 'jjwg' Note, um arquivo controller.php costume não deve ser usado para substituir as configurações.";
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE'] = 'Chave Remoção Mapa AdSense:';
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC'] = 'Doações para este projecto! Então entre em contato JJWDesign.com para uma chave de remoção AdSense.';

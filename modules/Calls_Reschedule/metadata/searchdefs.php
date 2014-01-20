@@ -40,7 +40,7 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
-$module_name = 'Calls_Reschedule';
+$module_name = 'LBL_MODULE_NAME';
   $searchdefs[$module_name] = array(
 					'templateMeta' => array(
 							'maxColumns' => '3',

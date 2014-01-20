@@ -160,9 +160,9 @@ class actionCreateRecord extends actionBase {
                                         $value = $businessHours->addBusinessHours($amount);
                                     }else if($dateToUse == "field"){
                                         $dateToUse = $params['field'][$key];
-                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
+                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($record->fetched_row[$dateToUse]));
                                     }else{
-                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
+                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->fetched_row[$dateToUse]));
                                     }
                                     $value = $timedate->asDb( $value );
                                     break;

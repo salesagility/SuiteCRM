@@ -20,6 +20,8 @@ $mod_strings['LBL_MAP_DISPLAY'] = 'Visualización de Mapa';
 $mod_strings['LBL_MAP_LEGEND'] = 'Leyenda:';
 $mod_strings['LBL_MAP_USERS'] = 'Usuarios:';
 $mod_strings['LBL_MAP_USER_GROUPS'] = 'Grupos de Usuarios:';
+$mod_strings['LBL_MAP_GROUP'] = 'Grupo';
+$mod_strings['LBL_MAP_TYPE'] = 'Tipo';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'Asignado a:';
 $mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
 
@@ -59,7 +61,9 @@ $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Utilice los enlaces siguientes para e
 'Cuando haya terminado la geocodificación, importe las direcciones al módulo de caché de direcciones para ser utilizado con sus mapas. '.
 'Tenga en cuenta que el módulo de caché de direcciones es opcional. Toda la información de geocodificación se almacena en el módulo de representación.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Caché de Direcciones';
-
+$mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'Añadir a la Lista de destinos';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = '¿Está seguro que desea agregar los elementos seleccionados a la Lista de destinos?';
+$mod_strings['LBL_ADD_TO_TARGET_LIST_PROCESSING'] = 'Tratamiento...';
 
 $mod_strings['LBL_CONFIG_TITLE'] = 'Configuración';
 $mod_strings['LBL_CONFIG_SAVED'] = 'Configuraciones Guardadas con Exito!';
@@ -103,12 +107,18 @@ $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_MEETINGS'] = 'Campo de Agrupamiento par
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_PROSPECTS'] = 'Campo de Agrupamiento para Prospectos/Público Objetivo:';
 
 $mod_strings['LBL_CONFIG_GEOCODING_SETTINGS_TITLE'] = 'Configuración de Geocodificación de Google:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE'] = 'URL Geocodificación API:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_DESC'] = 'La URL de Google Maps API V3 o Proxy';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_TITLE'] = 'Frase secreta para Proxy:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_DESC'] = 'La frase secreta para ser utilizado con la comparación MD5 Proxy.';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_TITLE'] = 'Límite de Geocodificación:';
 $mod_strings['LBL_CONFIG_GEOCODING_LIMIT_DESC'] = "'geocoding_limit' establece el límite de consultas cuando se seleccionan registros para geocodificar.";
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_TITLE'] = 'Límite de Geocodificación de Google:';
 $mod_strings['LBL_CONFIG_GOOGLE_GEOCODING_LIMIT_DESC'] = "'google_geocoding_limit' establece el límite de solicitudes cuando se usann las APIs de Google Maps API.";
 $mod_strings['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_TITLE'] = 'Exporta el límite de Direcciones:';
 $mod_strings['LBL_CONFIG_EXPORT_ADDRESSES_LIMIT_DESC'] = "'export_addresses_limit' establece el limite de consultas cuando se selecciones registros para exportar.";
+$mod_strings['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_TITLE'] = "Permitir a 'APPROXIMATE' Ubicación Tipos:";
+$mod_strings['LBL_CONFIG_ALLOW_APPROXIMATE_LOCATION_TYPE_DESC'] = "'allow_approximate_location_type' - permite que los tipos de ubicación de 'APPROXIMATE' a tener en cuenta los resultados de geocodificación 'OK'.";
 
 $mod_strings['LBL_CONFIG_ADDRESS_CACHE_SETTINGS_TITLE'] = 'Seteos de Caché de Direcciones:';
 $mod_strings['LBL_CONFIG_ADDRESS_CACHE_GET_ENABLED_TITLE'] = 'Habilita el Cache de Direcciones (Get):';
@@ -138,3 +148,5 @@ $mod_strings['LBL_CONFIG_MAP_CLUSTER_GRID_SIZE_DESC'] = "'map_clusterer_grid_siz
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_TITLE'] = "Zoom máximo de Markers Clusters:";
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = "'map_clusterer_max_zoom' es usado para establecer el nivel máximo de zoom  al cual el clusterizado no se aplica.";
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = "Nota Importante: Todas las configuraciones guardadas pueden ser encontradas en la tabla 'config' bao la categoría 'jjwg'. Nota: la utilización del archivo 'controller.php' personalizado para ignorar las configuraciones, queda obsoleto a partir de ahora.";
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE'] = 'Clave Removal Mapa AdSense:';
+$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC'] = 'Donar a este proyecto! Entonces póngase en contacto JJWDesign.com para una clave de eliminación de AdSense.';
