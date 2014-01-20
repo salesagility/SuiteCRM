@@ -25,7 +25,7 @@ $access_token = $_SESSION['access_token'];
 $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 
 /* If method is set change API call made. Test is called by default. */
-$tweets = $connection->get('statuses/home_timeline', array('screen_name' => $content['screen_name'], 'exclude_replies ' => true));
+$tweets = $connection->get('statuses/home_timeline', array('screen_name' => $_SESSION['access_token']['screen_name'], 'exclude_replies ' => true));
 
 $i = 0;
 

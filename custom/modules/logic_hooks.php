@@ -13,8 +13,4 @@ $hook_array['after_save'] = Array();
 $hook_array['after_save'][] = Array(30, 'popup_select', 'modules/SecurityGroups/AssignGroups.php','AssignGroups', 'popup_select');
 $hook_array['after_ui_frame'][] = Array(10, 'Load Social', 'custom/include/social/hooks.php','hooks', 'load_js');
 
-
-
-
-
 ?>
