@@ -53,7 +53,7 @@ $viewdefs = array (
             ),
             'SA_RESCHEDULE' => 
             array (
-              'customCode' => '{if $fields.status.value != "Held"} <input title="Reschedule" class="button" onclick="get_form();" name="Reschedule" id="reschedule_button" value="Reschedule" type="button">{/if}',
+              'customCode' => '{if $fields.status.value != "Held"} <input title="{$MOD.LBL_RESCHEDULE}" class="button" onclick="get_form();" name="Reschedule" id="reschedule_button" value="{$MOD.LBL_RESCHEDULE}" type="button">{/if}',
             ),
           ),
           'hidden' => 

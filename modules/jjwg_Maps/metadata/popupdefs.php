@@ -1,4 +1,5 @@
 <?php
+
 $popupMeta = array (
     'moduleMain' => 'jjwg_Maps',
     'varName' => 'jjwg_Maps',

@@ -2,8 +2,8 @@
 $admin_option_defs = array();
 $admin_option_defs['Administration']['aos'] = array(
     'edit',
-    'AOS Settings',
-    'Change settings for Advanced OpenSales',
+    'LBL_AOS_SETTINGS',
+    'LBL_CHANGE_SETTINGS',
     './index.php?module=Administration&action=AOSAdmin'
 );
 

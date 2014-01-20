@@ -49,3 +49,6 @@ $app_list_strings['fp_event_status_dom']['No Response'] = 'No Response';
 
 $app_strings['LBL_STATUS_EVENT'] = 'Invite Status';
 $app_strings['LBL_ACCEPT_STATUS'] = 'Accept Status';
+$app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Select This Page';
+$app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Select All';
+$app_strings['LBL_LISTVIEW_NONE'] = 'Deselect All';

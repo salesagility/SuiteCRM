@@ -82,10 +82,9 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
      */
     function saveAddressCacheInfo($aInfo = array()) {
         
-        global $current_user;
         // Bug: $current_user object not properly set for some reason
-        if (empty($current_user->id) && !empty($_SESSION['authenticated_user_id'])) {
-            $current_user->id = $_SESSION['authenticated_user_id'];
+        if (empty($GLOBALS['current_user']->id) && !empty($_SESSION['authenticated_user_id'])) {
+            $GLOBALS['current_user']->id = $_SESSION['authenticated_user_id'];
         }
         
         if (!empty($this->settings['address_cache_save_enabled'])) {
@@ -106,7 +105,7 @@ class jjwg_Address_Cache extends jjwg_Address_Cache_sugar {
                     $cache->lat = $aInfo['lat'];
                     $cache->lng = $aInfo['lng'];
                     $cache->description = '';
-                    $cache->assigned_user_id = $current_user->id;
+                    $cache->assigned_user_id = $GLOBALS['current_user']->id;
                     $cache->save(false);
                     return true;
                 }

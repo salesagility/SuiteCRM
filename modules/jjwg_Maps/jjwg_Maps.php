@@ -5,7 +5,6 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 // modules/jjwg_Maps/jjwg_Maps.php
 
-require_once('include/JSON.php');
 require_once('modules/jjwg_Maps/jjwg_Maps_sugar.php');
 require_once('modules/Administration/Administration.php');
 
@@ -47,6 +46,17 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             'Users' => 'address'
         ),
         /**
+         * 'geocoding_api_url' sets the URL used for geocoding (Google or Proxy)
+         * @var string
+         */
+        'geocoding_api_url' => 'https://maps.googleapis.com/maps/api/geocode/json?sensor=false',
+        /**
+         * 'geocoding_api_secret' sets a secret phrase to be used by a Proxy for hash comparison
+         * @var string
+         * 'hash' is added to the URL parameters as a MD5 of the Concatenation of the Address and the Secret
+         */
+        'geocoding_api_secret' => '',
+        /**
          * 'geocoding_limit' sets the query limit when selecting records to geocode.
          * @var integer
          */
@@ -56,6 +66,10 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          * @var integer
          */
         'google_geocoding_limit' => 100,
+        /**
+         * 'allow_approximate_location_type' allows a Geocoding 'location_type' of 'APPROXIMATE' to be considered an 'OK' Status
+         */
+        'allow_approximate_location_type' => false,
         /**
          * 'map_markers_limit' sets the query limit when selecting records to display on a map.
          * @var integer
@@ -110,6 +124,19 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          */
         'map_clusterer_max_zoom' => 14,
         /**
+         * 'map_adsense_removal_key' is used to remove Adsense Ads from the Maps
+         * @var string
+         */
+        'map_adsense_removal_key' => 'Donate and Contact JJWDesign for Key',
+        /**
+         * 'map_adsense_pub_id' is the Adsense Publisher ID
+         */
+        'map_adsense_pub_id' => 'pub-1684392434841062',
+        /**
+         *'map_adsense_channel_number' is the AdSense Channel Number
+         */
+        'map_adsense_channel_number' => '4243785793',
+        /**
          * 'map_default_center_latitude' sets the default center latitude position for maps.
          * @var float
          */
@@ -152,11 +179,61 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      */
     var $jjwg_Address_Cache;
 
+
     /**
-     * JSON object for decoding Google Response
-     * @var object
+     * geocoded_counts - Geocoding totals
+     * @var array 
      */
-    var $jsonObj;
+    var $geocoded_counts = null;
+    
+    /**
+     * geocoded_headings - Display headings
+     * @var array 
+     */
+    var $geocoded_headings = null;
+    
+    /**
+     * geocoded_module_totals - Geocoded module totals
+     * @var array 
+     */
+    var $geocoded_module_totals = null;
+    
+    /**
+     * geocoding_results - Google Geocoding API Results
+     * @var array 
+     */
+    var $geocoding_results = null;
+
+    /**
+     * map_center - Map Center (Related)
+     * @var array 
+     */
+    var $map_center = null;
+    
+    /**
+     * map_markers - Map Marker Data (Display)
+     * @var array 
+     */
+    var $map_markers = null;
+    
+    /**
+     * map_markers_groups - Sets the array of map groups
+     * @var array
+     */
+    var $map_markers_groups = array();
+
+    /**
+     * map_markers - Custom Markers Data (jjwg_Markers)
+     * @var array 
+     */
+    var $custom_markers = null;
+    
+    /**
+     * custom_areas - Custom Areas Data (jjwg_Areas)
+     * @var array 
+     */
+    var $custom_areas = null;
+
 
 
     /**
@@ -261,9 +338,32 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $this->settings['address_cache_save_enabled'] = (!empty($rev['address_cache_save_enabled'])) ? true : false;
             // Logic Hooks: true/false or 1/0
             $this->settings['logic_hooks_enabled'] = (!empty($rev['logic_hooks_enabled'])) ? true : false;
-
-        }
+            // Allow APPROXIMATE 'location_type'
+            $this->settings['allow_approximate_location_type'] = (!empty($rev['allow_approximate_location_type'])) ? true : false;
+            
+            // Set Geocoding API URL or Proxy URL
+            if (isset($rev['geocoding_api_url'])) {
+                $this->settings['geocoding_api_url'] = $rev['geocoding_api_url'];
+            }
+            // Set Google Maps API Secret
+            if (isset($rev['geocoding_api_secret'])) {
+                $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
+            }
+            
+            // Set Adsense Removal Key
+            if (isset($rev['map_adsense_removal_key'])) {
+                $this->settings['map_adsense_removal_key'] = $rev['map_adsense_removal_key'];
+            }
+            // Set Adsense Pub ID and Channel Number
+            if (isset($rev['map_adsense_pub_id'])) {
+                $this->settings['map_adsense_pub_id'] = $rev['map_adsense_pub_id'];
+            }
+            if (isset($rev['map_adsense_channel_number'])) {
+                $this->settings['map_adsense_channel_number'] = $rev['map_adsense_channel_number'];
+            }
         
+        }
+
         // Set for Global Use
         $GLOBALS['jjwg_config'] = $this->settings;
     }
@@ -326,7 +426,8 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $int_settings = array('geocoding_limit', 'google_geocoding_limit',
                 'map_markers_limit', 'map_default_distance', 'export_addresses_limit',
                 'map_clusterer_grid_size', 'map_clusterer_max_zoom',
-                'address_cache_get_enabled', 'address_cache_save_enabled', 'logic_hooks_enabled');
+                'address_cache_get_enabled', 'address_cache_save_enabled', 
+                'logic_hooks_enabled', 'allow_approximate_location_type');
             foreach ($int_settings as $setting) {
                 if (isset($data[$setting]) && is_numeric(trim($data[$setting]))) {
                     $admin->saveSetting($category, $setting, (int) trim($data[$setting]));
@@ -349,6 +450,28 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['map_default_center_longitude']) && is_numeric(trim($data['map_default_center_longitude']))) {
                 $admin->saveSetting($category, 'map_default_center_longitude', (float) trim($data['map_default_center_longitude']));
             }
+            
+            // Set Geocoding API URL or Proxy URL
+            if (substr($data['geocoding_api_url'], 0, 4) != 'http' && substr($data['geocoding_api_url'], 0, 2) != '//') {
+                $data['geocoding_api_url'] = $this->settings['geocoding_api_url'];
+            }
+            if (isset($data['geocoding_api_url'])) {
+                $admin->saveSetting($category, 'geocoding_api_url', trim($data['geocoding_api_url']));
+            }
+            // Set Google Maps API Secret
+            if (empty($data['geocoding_api_secret'])) $data['geocoding_api_secret'] = '';
+            if (isset($data['geocoding_api_secret'])) {
+                $admin->saveSetting($category, 'geocoding_api_secret', trim($data['geocoding_api_secret']));
+            }
+            
+            // Set Adsense Removal Key
+            if (empty($data['map_adsense_removal_key'])) $data['map_adsense_removal_key'] = '';
+            if (isset($data['map_adsense_removal_key'])) {
+                $admin->saveSetting($category, 'map_adsense_removal_key', trim($data['map_adsense_removal_key']));
+            }
+            // Set Adsense Pub ID and Channel Number
+            $admin->saveSetting($category, 'map_adsense_pub_id', $this->settings['map_adsense_pub_id']);
+            $admin->saveSetting($category, 'map_adsense_channel_number', $this->settings['map_adsense_channel_number']);
             
             return true;
         }
@@ -727,18 +850,34 @@ class jjwg_Maps extends jjwg_Maps_sugar {
     /**
      * getGoogleMapsGeocode - Get Lng/Lat using Google Maps V3
      * @var $address
-     * @var $return_full_array - true or false
+     * @var $return_full_array boolean
+     * @var $allow_approximate boolean
      */
-    function getGoogleMapsGeocode($address, $return_full_array = false) {
+    function getGoogleMapsGeocode($address, $return_full_array = false, $allow_approximate = true) {
 
         $GLOBALS['log']->debug(__METHOD__.' START');
         $GLOBALS['log']->info(__METHOD__.' $address: '.$address);
         
-        $this->jsonObj = new JSON(JSON_LOOSE_TYPE);
-
-        // Google Maps v3 - The new v3 Google Maps API no longer requires a Maps API Key!
-        $base_url = "https://maps.google.com/maps/api/geocode/json?sensor=false&";
+        /* allow_approximate_location_type - overrides only to true */
+        if (!empty($this->settings['allow_approximate_location_type'])) {
+            $allow_approximate = true;
+        }
+        
+        /**
+         * Google Maps API v3 - The new v3 Google Maps API no longer requires a Maps API Key!
+         * Old Default: https://maps.google.com/maps/api/geocode/json?sensor=false
+         * New Default: https://maps.googleapis.com/maps/api/geocode/json?sensor=false
+         */
+        $base_url = $this->settings['geocoding_api_url'];
+        if (!(strpos($base_url, '?') > 0)) $base_url .= '?';
+        // Add Address Parameter
         $request_url = $base_url . "&address=" . urlencode($address);
+        // Add Hash Parameter as MD5 of Concatenation of Address and Secret
+        if (!empty($this->settings['geocoding_api_secret'])) {
+            $hash = md5($address.$this->settings['geocoding_api_secret']);
+            $request_url .= '&hash='.urlencode($hash);
+        }
+        
         $GLOBALS['log']->info(__METHOD__.' cURL Request URL: '.$request_url);
 
         $ch = curl_init();
@@ -758,31 +897,40 @@ class jjwg_Maps extends jjwg_Maps_sugar {
 
         curl_close($ch);
         $GLOBALS['log']->debug(__METHOD__.' $json_contents: '.$json_contents);
-        $googlemaps = $this->jsonObj->decode($json_contents);
+        $googlemaps = json_decode($json_contents, true);
         $GLOBALS['log']->debug(__METHOD__.' $googlemaps: '.$googlemaps);
 
-        // Status: "OK" : geocoding was successful
-        // "ZERO_RESULTS" : indicates that the geocode was successful but returned no results
-        // "OVER_QUERY_LIMIT" : indicates that you are over your quota.
-        // "REQUEST_DENIED" : lack of sensor parameter
-        // "INVALID_REQUEST" generally indicates that the query (address or latlng) is missing.
-        //echo "Status: ".$googlemaps->status."\n";
-
+        /**
+         * https://developers.google.com/maps/documentation/geocoding/#Results
+         * Status: "OK" : geocoding was successful
+         * "ZERO_RESULTS" : indicates that the geocode was successful but returned no results
+         * "OVER_QUERY_LIMIT" : indicates that you are over your quota
+         * "REQUEST_DENIED" : lack of sensor parameter
+         * "INVALID_REQUEST" generally indicates that the query (address or lat/lng) is missing.
+         * Limit to location_type = 'ROOFTOP', 'RANGE_INTERPOLATED' or 'GEOMETRIC_CENTER' but not 'APPROXIMATE'
+         */
+        $aInfo = array('address' => $address);
         if (!empty($googlemaps) && isset($googlemaps['status'])) {
-
-            // Debug: Log Over Limit
             if ($googlemaps['status'] == 'OVER_QUERY_LIMIT') {
-                $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: indicates that you are over your quota.');
+            // Debug: Log Over Limit
+                $GLOBALS['log']->warn(__METHOD__.' Google Maps API Status of OVER_QUERY_LIMIT: Over Your Quota');
+            } elseif (!$allow_approximate && $googlemaps['results'][0]['geometry']['location_type'] == 'APPROXIMATE') {
+                // Consider 'APPROXIMATE' to be similar to 'ZERO_RESULTS'
+                @$aInfo = array(
+                    'address' => $address,
+                    'status' => 'APPROXIMATE',
+                    'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
+                    'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
+                );
+            } else {
+                // Return address info
+                @$aInfo = array(
+                    'address' => $address,
+                    'status' => $googlemaps['status'],
+                    'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
+                    'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
+                );
             }
-            // Return address info
-            @$aInfo = array(
-                'address' => $address,
-                'status' => $googlemaps['status'],
-                'lat' => $googlemaps['results'][0]['geometry']['location']['lat'],
-                'lng' => $googlemaps['results'][0]['geometry']['location']['lng']
-            );
-        } else {
-            $aInfo = array('address' => $address);
         }
 
         if ($return_full_array) {
@@ -814,7 +962,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
      */
     function defineMapsAddress($object_name, $display) {
 
-        global $app_list_strings;
         $address = false;
         $fields = false;
         $parent = null;

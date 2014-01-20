@@ -43,40 +43,41 @@
 </div>
 
 <div id="bottomLinks">
-{if $AUTHENTICATED}
-{*{$BOTTOMLINKS}*}
-    {/if}
 </div>
 
 <div id="footer">
     {if $AUTHENTICATED}
     <div id="links">
-        <button id="backtotop">Back To Top</button>
+        <button id="print_page" onclick="printpage()">{$MOD.LBL_SUITE_PRINT}</button>
+        <button id="backtotop">{$MOD.LBL_SUITE_TOP}</button>
     </div>
     {/if}
 	<div id="responseTime">
     	{$STATISTICS}
     </div>
     <div id="copyright_data">
-    <div id="dialog2" title="SuiteCRM - SugarCRM Supercharged!">
-        <p>SuiteCRM has been written and assembled by SalesAgility, one of the world's most knowledgeable SugarCRM consultancies.</p>
+    <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
+        <p>{$MOD.LBL_SUITE_DESC1}</p>
         <br>
-        <p>SuiteCRM is intended to deliver on the promise of SugarCRM - a freely available open source CRM project that combines great functionality, with community and commitment.</p>
+        <p>{$MOD.LBL_SUITE_DESC2}</p>
         <br>
-        <p>There will be no licenced software as part of the project managed by SalesAgility. All the code is free. All the code is available for free download. There is no hidden agenda to charge for access to the code. It is and always will be free and open source. There will be no paid-for versions.</p>
+        <p>{$MOD.LBL_SUITE_DESC3}</p>
     </div>
-    <div id="dialog" title="&copy; Powered by SugarCRM">
+    <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
         <p>{$COPYRIGHT}</p>
     </div>
 
-    <button id="admin_options">Supercharged by SuiteCRM</button>
-    <button id="powered_by">&copy; Powered by SugarCRM</button>
+    <button id="admin_options">{$MOD.LBL_SUITE_SUPERCHARGED}</button>
+    <button id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</button>
     </div>
 
 </div>
 <script>
 {literal}
-
+function printpage()
+{
+    window.print();
+}
 if(SUGAR.util.isTouchScreen()) {
         setTimeout(resizeHeader,10000);
 }

@@ -1,5 +1,6 @@
 <?php
 $mod_strings = array (
+	'LBL_RESCHEDULE' => 'Reschedule',
     'LBL_RESCHEDULE_COUNT' => 'Call Attempts',
     'LBL_RESCHEDULE_DATE' => 'Date',
     'LBL_RESCHEDULE_REASON' => 'Reason',

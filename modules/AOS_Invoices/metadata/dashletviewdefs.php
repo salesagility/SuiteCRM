@@ -33,7 +33,7 @@ array(
 	array(
 		'default' => ''
 		),
-'billing account' => 
+'billing_account' =>
 	array(
 		'default' => ''
 		),

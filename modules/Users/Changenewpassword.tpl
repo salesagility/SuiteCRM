@@ -103,8 +103,8 @@ form
 <td>
 <table cellpadding="0"  cellspacing="0" border="0" align="center">
 <tr>
-<td style="padding-bottom: 10px;" ><b>{$MOD.LBL_LOGIN_WELCOME_TO}</b><br />
-<img src="{$sugar_md}" alt="Sugar" width="340" height="25" /></td>
+<td style="padding-bottom: 10px;" >
+<img src="{$sugar_md}" alt="SuiteCRM" /></td>
 </tr>
 <tr>
 <td align="center">
