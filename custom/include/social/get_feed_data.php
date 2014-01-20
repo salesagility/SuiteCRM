@@ -23,6 +23,7 @@ if ($user) {
 if ($user){
     $log = '<a href="' . $logoutUrl . '">Logout with Facebook</a>';
 }else{
+    //if not loged in
     $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
 }
 
