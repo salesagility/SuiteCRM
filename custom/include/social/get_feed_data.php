@@ -10,7 +10,6 @@ require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroau
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
 global $db;
-
 global $current_user;
 
 $settings = array(
@@ -24,7 +23,7 @@ $settings = array(
 session_start();
 
 
-/* If access tokens are not available redirect to connect page. */
+
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
     if ($settings['consumer_key'] === '' || $settings['consumer_secret'] === '') {
         echo 'You need a consumer key and secret to test the sample code. Get one from <a href="https://dev.twitter.com/apps">dev.twitter.com/apps</a>';
@@ -103,10 +102,6 @@ if ($tweets) {
                       NULL,
                       NULL);";
             $results = $db->query($sql);
-
-            $sql2 = "INSERT INTO sugarfeed_cstm WHERE (id_c, social_c) values ('" . $id . "','twitter');";
-            $results = $db->query($sql2);
-
             $i++;
         }else{
             $i++;
