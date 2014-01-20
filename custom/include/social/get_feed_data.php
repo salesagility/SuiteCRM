@@ -16,7 +16,7 @@ global $current_user;
 session_start();
 
 //Authenicate User and authenicate them if they are not already authenticated
-auth_twitter();
+$html = auth_twitter();
 
 /* Get user access tokens out of the session. */
 $access_token = $_SESSION['access_token'];
@@ -97,7 +97,7 @@ if ($user){
     $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
 }
 
-$html =  '<div>';
+$html .=  '<div>';
 $html .=  $log;
 $html .= '</div>';
 
