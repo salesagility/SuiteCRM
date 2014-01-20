@@ -1,11 +1,11 @@
 /**
  * SaxParser.js
  *
- * Copyright 2010, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
@@ -83,9 +83,9 @@
 		 */
 		self.parse = function(html) {
 			var self = this, matches, index = 0, value, endRegExp, stack = [], attrList, i, text, name, isInternalElement, removeInternalElements,
-				shortEndedElements, fillAttrsMap, isShortEnded, validate, elementRule, isValidElement, attr, attribsValue,
+				shortEndedElements, fillAttrsMap, isShortEnded, validate, elementRule, isValidElement, attr, attribsValue, invalidPrefixRegExp,
 				validAttributesMap, validAttributePatterns, attributesRequired, attributesDefault, attributesForced, selfClosing,
-				tokenRegExp, attrRegExp, specialElements, attrValue, idCount = 0, decode = tinymce.html.Entities.decode, fixSelfClosing;
+				tokenRegExp, attrRegExp, specialElements, attrValue, idCount = 0, decode = tinymce.html.Entities.decode, fixSelfClosing, isIE;
 
 			function processEndTag(name) {
 				var pos, i;
@@ -112,6 +112,47 @@
 				}
 			};
 
+			function parseAttribute(match, name, value, val2, val3) {
+				var attrRule, i;
+
+				name = name.toLowerCase();
+				value = name in fillAttrsMap ? name : decode(value || val2 || val3 || ''); // Handle boolean attribute than value attribute
+
+				// Validate name and value
+				if (validate && !isInternalElement && name.indexOf('data-') !== 0) {
+					attrRule = validAttributesMap[name];
+
+					// Find rule by pattern matching
+					if (!attrRule && validAttributePatterns) {
+						i = validAttributePatterns.length;
+						while (i--) {
+							attrRule = validAttributePatterns[i];
+							if (attrRule.pattern.test(name))
+								break;
+						}
+
+						// No rule matched
+						if (i === -1)
+							attrRule = null;
+					}
+
+					// No attribute rule found
+					if (!attrRule)
+						return;
+
+					// Validate value
+					if (attrRule.validValues && !(value in attrRule.validValues))
+						return;
+				}
+
+				// Add attribute to list and map
+				attrList.map[name] = value;
+				attrList.push({
+					name: name,
+					value: value
+				});
+			};
+
 			// Precompile RegExps and map objects
 			tokenRegExp = new RegExp('<(?:' +
 				'(?:!--([\\w\\W]*?)-->)|' + // Comment
@@ -119,10 +160,10 @@
 				'(?:!DOCTYPE([\\w\\W]*?)>)|' + // DOCTYPE
 				'(?:\\?([^\\s\\/<>]+) ?([\\w\\W]*?)[?/]>)|' + // PI
 				'(?:\\/([^>]+)>)|' + // End element
-				'(?:([^\\s\\/<>]+)\\s*((?:[^"\'>]+(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>]*))*)>)' + // Start element
+				'(?:([A-Za-z0-9\\-\\:\\.]+)((?:\\s+[^"\'>]+(?:(?:"[^"]*")|(?:\'[^\']*\')|[^>]*))*|\\/|\\s+)>)' + // Start element
 			')', 'g');
 
-			attrRegExp = /([\w:\-]+)(?:\s*=\s*(?:(?:\"((?:\\.|[^\"])*)\")|(?:\'((?:\\.|[^\'])*)\')|([^>\s]+)))?/g;
+			attrRegExp = /([\w:\-]+)(?:\s*=\s*(?:(?:\"((?:[^\"])*)\")|(?:\'((?:[^\'])*)\')|([^>\s]+)))?/g;
 			specialElements = {
 				'script' : /<\/script[^>]*>/gi,
 				'style' : /<\/style[^>]*>/gi,
@@ -131,11 +172,13 @@
 
 			// Setup lookup tables for empty elements and boolean attributes
 			shortEndedElements = schema.getShortEndedElements();
-			selfClosing = schema.getSelfClosingElements();
+			selfClosing = settings.self_closing_elements || schema.getSelfClosingElements();
 			fillAttrsMap = schema.getBoolAttrs();
 			validate = settings.validate;
 			removeInternalElements = settings.remove_internals;
 			fixSelfClosing = settings.fix_self_closing;
+			isIE = tinymce.isIE;
+			invalidPrefixRegExp = /^:/;
 
 			while (matches = tokenRegExp.exec(html)) {
 				// Text
@@ -143,9 +186,20 @@
 					self.text(decode(html.substr(index, matches.index - index)));
 
 				if (value = matches[6]) { // End element
-					processEndTag(value.toLowerCase());
+					value = value.toLowerCase();
+
+					// IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
+					if (isIE && invalidPrefixRegExp.test(value))
+						value = value.substr(1);
+
+					processEndTag(value);
 				} else if (value = matches[7]) { // Start element
 					value = value.toLowerCase();
+
+					// IE will add a ":" in front of elements it doesn't understand like custom elements or HTML5 elements
+					if (isIE && invalidPrefixRegExp.test(value))
+						value = value.substr(1);
+
 					isShortEnded = value in shortEndedElements;
 
 					// Is self closing tag for example an <li> after an open <li>
@@ -173,46 +227,7 @@
 							attrList = [];
 							attrList.map = {};
 
-							attribsValue.replace(attrRegExp, function(match, name, value, val2, val3) {
-								var attrRule, i;
-
-								name = name.toLowerCase();
-								value = name in fillAttrsMap ? name : decode(value || val2 || val3 || ''); // Handle boolean attribute than value attribute
-
-								// Validate name and value
-								if (validate && !isInternalElement && name.indexOf('data-') !== 0) {
-									attrRule = validAttributesMap[name];
-
-									// Find rule by pattern matching
-									if (!attrRule && validAttributePatterns) {
-										i = validAttributePatterns.length;
-										while (i--) {
-											attrRule = validAttributePatterns[i];
-											if (attrRule.pattern.test(name))
-												break;
-										}
-
-										// No rule matched
-										if (i === -1)
-											attrRule = null;
-									}
-
-									// No attribute rule found
-									if (!attrRule)
-										return;
-
-									// Validate value
-									if (attrRule.validValues && !(value in attrRule.validValues))
-										return;
-								}
-
-								// Add attribute to list and map
-								attrList.map[name] = value;
-								attrList.push({
-									name: name,
-									value: value
-								});
-							});
+							attribsValue.replace(attrRegExp, parseAttribute);
 						} else {
 							attrList = [];
 							attrList.map = {};

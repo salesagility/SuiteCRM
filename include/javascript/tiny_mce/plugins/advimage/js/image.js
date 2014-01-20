@@ -171,9 +171,13 @@ var ImageDialog = {
 		if (el && el.nodeName == 'IMG') {
 			ed.dom.setAttribs(el, args);
 		} else {
-			ed.execCommand('mceInsertContent', false, '<img id="__mce_tmp" />', {skip_undo : 1});
-			ed.dom.setAttribs('__mce_tmp', args);
-			ed.dom.setAttrib('__mce_tmp', 'id', '');
+			tinymce.each(args, function(value, name) {
+				if (value === "") {
+					delete args[name];
+				}
+			});
+
+			ed.execCommand('mceInsertContent', false, tinyMCEPopup.editor.dom.createHTML('img', args), {skip_undo : 1});
 			ed.undoManager.add();
 		}
 
@@ -391,12 +395,14 @@ var ImageDialog = {
 					if (v == '0')
 						img.style.border = isIE ? '0' : '0 none none';
 					else {
-						if (b.length == 3 && b[isIE ? 2 : 1])
-							bStyle = b[isIE ? 2 : 1];
+						var isOldIE = tinymce.isIE && (!document.documentMode || document.documentMode < 9);
+
+						if (b.length == 3 && b[isOldIE ? 2 : 1])
+							bStyle = b[isOldIE ? 2 : 1];
 						else if (!bStyle || bStyle == 'none')
 							bStyle = 'solid';
 						if (b.length == 3 && b[isIE ? 0 : 2])
-							bColor = b[isIE ? 0 : 2];
+							bColor = b[isOldIE ? 0 : 2];
 						else if (!bColor || bColor == 'none')
 							bColor = 'black';
 						img.style.border = v + 'px ' + bStyle + ' ' + bColor;

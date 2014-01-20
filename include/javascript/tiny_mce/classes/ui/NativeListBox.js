@@ -1,15 +1,15 @@
 /**
  * NativeListBox.js
  *
- * Copyright 2009, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
-	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher;
+	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher, undef;
 
 	/**
 	 * This class is used to create list boxes/select list. This one will generate
@@ -65,11 +65,11 @@
 		select : function(va) {
 			var t = this, fv, f;
 
-			if (va == undefined)
+			if (va == undef)
 				return t.selectByIndex(-1);
 
 			// Is string or number make function selector
-			if (va && va.call)
+			if (va && typeof(va)=="function")
 				f = va;
 			else {
 				f = function(v) {
@@ -188,7 +188,7 @@
 
 			// Accessibility keyhandler
 			Event.add(t.id, 'keydown', function(e) {
-				var bf;
+				var bf, DOM_VK_LEFT = 37, DOM_VK_RIGHT = 39, DOM_VK_UP = 38, DOM_VK_DOWN = 40, DOM_VK_RETURN = 13, DOM_VK_SPACE = 32;
 
 				Event.remove(t.id, 'change', ch);
 				changeListenerAdded = false;
@@ -200,9 +200,12 @@
 					Event.remove(t.id, 'blur', bf);
 				});
 
-				if (e.keyCode == 13 || e.keyCode == 32) {
+				if (e.keyCode == DOM_VK_RETURN || e.keyCode == DOM_VK_SPACE) {
 					onChange(e);
 					return Event.cancel(e);
+				} else if (e.keyCode == DOM_VK_DOWN || e.keyCode == DOM_VK_UP) {
+					// allow native implementation (navigate select element options)
+					e.stopImmediatePropagation();
 				}
 			});
 
