@@ -235,27 +235,27 @@ function generate_stream($stream){
     switch($stream['type']){
 
         case "":
-            $string = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
+            $string = $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 75);
             break;
         case "link";
             if(!empty($stream['name'])){
-                $string = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
+                $string = $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . substr($stream['name'], 0, 75) . "</a>";
             }else{
                 //must be an article
-                $string = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
+                $string =  $stream['from']['name'] . "<a/> -  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
             }
             break;
         case "status":
             //
             if(!empty($stream['story'])){
-                $string = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 100) . "</a>";
+                $string = $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 75) . "</a>";
             }else{
                 //wall post.
-                $string = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 100) . "</a>";
+                $string = $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 75) . "</a>";
             }
             break;
         case "photos":
             break;
     }
-    return $string;
+    return $string . ' ... ';
 }
