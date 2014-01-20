@@ -205,29 +205,28 @@ function guid_maker(){
 function generate_stream($stream){
     //if simple post
     switch($stream['type']){
-
         case "":
-            $string = $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 75);
+            $string = $stream['from']['name'] . "" . substr($stream['message'], 0, 75);
             break;
         case "link";
             if(!empty($stream['name'])){
-                $string = $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . substr($stream['name'], 0, 75) . "</a>";
+                $string = $stream['from']['name'] . " - <a href=" . $stream['link'] . ">" . substr($stream['name'], 0, 75) . "</a>";
             }else{
                 //must be an article
-                $string =  $stream['from']['name'] . "<a/> -  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
+                $string =  $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
             }
             break;
         case "status":
             //
             if(!empty($stream['story'])){
-                $string = $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 75) . "</a>";
+                $string = $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 75) . "</a>";
             }else{
                 //wall post.
-                $string = $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 75) . "</a>";
+                $string = $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 75) . "</a>";
             }
             break;
         case "photos":
             break;
     }
-    return $string . ' ... ';
+    return $string;
 }
