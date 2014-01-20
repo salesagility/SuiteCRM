@@ -25,20 +25,21 @@ $(function() {
 
         //Ajax Call
         username = $("#facebook_username_c").text();
-        module = $("#formDetailView input[name=module]").val()
-        record = $("input[name=record]").val()
-        social = "facebook";
-        url = document.URL;
+        if(username){
+             module = $("#formDetailView input[name=module]").val();
+             record = $("input[name=record]").val();
+             social = "facebook";
+             url = document.URL;
 
-        $.ajax({
-            type: "POST",
-            url: "index.php?entryPoint=social&social=facebook&username=" + username + "&module=" + module + "&record=" + record,
-            data: { username: username, social: "facebook", url:url }
-        })
-            .done(function( msg ) {
-                $("#facebook_feed").html( msg + $("#feed_history_c").html() );
-            });
-
+             $.ajax({
+                 type: "POST",
+                 url: "index.php?entryPoint=social&social=facebook&username=" + username + "&module=" + module + "&record=" + record,
+                 data: { username: username, social: "facebook", url:url }
+             })
+             .done(function( msg ) {
+                $("#facebook_feed").html( msg );
+             });
+         }
 });
 
 
