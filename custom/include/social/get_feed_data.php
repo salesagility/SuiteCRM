@@ -17,6 +17,38 @@ $settings = array(
 
 session_start();
 
+/* If access tokens are not available redirect to connect page. */
+if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
+    if ($settings['consumer_key'] === '' || $settings['consumer_secret'] === '') {
+        echo 'You need a consumer key and secret to test the sample code. Get one from <a href="https://dev.twitter.com/apps">dev.twitter.com/apps</a>';
+        exit;
+    }
+    /* Build TwitterOAuth object with client credentials. */
+    $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret']);
+
+    /* Get temporary credentials. */
+    $request_token = $connection->getRequestToken($settings['call_back_url']);
+
+    /* Save temporary credentials to session. */
+    $_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
+    $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
+
+    /* If last connection failed don't display authorization link. */
+    switch ($connection->http_code) {
+        case 200:
+            /* Build authorize URL and redirect user to Twitter. */
+            $url = $connection->getAuthorizeURL($token);
+            header('Location: ' . $url);
+            break;
+        default:
+            /* Show notification if something went wrong. */
+            echo 'Could not connect to Twitter. Refresh the page or try again later.';
+    }
+}
+/* Get user access tokens out of the session. */
+$access_token = $_SESSION['access_token'];
+
+
 /* Create a TwitterOauth object with consumer/user tokens. */
 $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 
