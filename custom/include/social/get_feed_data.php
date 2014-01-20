@@ -6,7 +6,6 @@
  * Time: 09:14
  */
 
-require("custom/include/social/facebook/facebook.class.php");
 require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
