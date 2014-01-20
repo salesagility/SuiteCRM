@@ -27,7 +27,7 @@ class facebook_helper{
     function get_my_newsfeed(){
         return $this->facebook->api('me/home'); //get my news feed
     }
-    function get_other_newsfeed($user, $limit = "50"){
+    function get_other_newsfeed($user, $limit = "100"){
         return $this->facebook->api('/' . $user . '/feed?limit=' . $limit);
     }
     function get_login_url($url){
@@ -56,7 +56,6 @@ class facebook_helper{
                 break;
             case "link":
                 return $this->link_type($story);
-            case "video":
                 break;
         }
     }
