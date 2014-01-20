@@ -10,18 +10,20 @@
 class hooks{
 
     function load_js($bean, $event, $arguments){
-
         $mapping = '';
+        if($_REQUEST['action'] == 'DetailView'){
+            include("custom/modules/Connectors/connectors/sources/ext/rest/facebookAPI/mapping.php");
+            if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
+                echo '<script src="custom/include/social/facebook/facebook.js"></script>';
+            }
 
-        include('custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php');
-
-
-              if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
-                  echo '<script src="custom/include/social/facebook/facebook.js"></script>';
-                  echo '<script src="custom/include/social/twitter/twitter.js"></script>';
-
-              }
-
+            $mapping = '';
+            include('custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php');
+            if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
+               echo '<script src="custom/include/social/facebook/facebook.js"></script>';
+               echo '<script src="custom/include/social/twitter/twitter.js"></script>';
+            }
+        }
     }
 
 }
