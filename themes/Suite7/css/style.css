@@ -2433,6 +2433,7 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=butt
 #header
 {
     min-width: 85em;
+    z-index:10;
 }
 /* header */
 #header div.line {
@@ -5096,4 +5097,17 @@ input[type=text].cstm_code {
     resize:both;
     width:200px;
     height:200px;
+}
+
+#caseUpdates {
+
+    padding:10px 0 10px 0;
+}
+
+.caseUpdate {
+    padding: 0 0 0 18px;
+}
+
+.caseUpdateImage {
+    padding: 0 5px 0 5px;
 }
