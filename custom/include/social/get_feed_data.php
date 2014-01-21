@@ -22,29 +22,10 @@ $settings = array(
     'call_back_url' => $config['properties']['OAUTH_CALLBACK'],
 );
 
-if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
-    if ($settings['consumer_key'] === '' || $settings['consumer_secret'] === '') {
-        echo 'You need a consumer key and secret to test the sample code. Get one from <a href="https://dev.twitter.com/apps">dev.twitter.com/apps</a>';
-        exit;
-    }
+$connection = check_auth();
 
-    /* Build TwitterOAuth object with client credentials. */
-    $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret']);
-
-    /* Get temporary credentials. */
-    $request_token = $connection->getRequestToken($settings['call_back_url']);
-
-    /* Save temporary credentials to session. */
-    $_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
-    $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-
-    $html ='';
-
-    /* Build authorize URL and redirect user to Twitter. */
-    $url = $connection->getAuthorizeURL($token);
-    $html = "<a href='". $url ."'>Log into Twitter</a>";
-
-}
+$html .= $_REQUEST['html'];
+$request_token = $_REQUEST['request_token'];
 
 /* Get user access tokens out of the session. */
 $access_token = $_SESSION['access_token'];
@@ -60,23 +41,15 @@ $i = 0;
 if (empty($tweets['errors'])) {
     while ($i < count($tweets)) {
 
-
         if (count($tweets[$i]['entities']['urls'][0]['url']) != '') {
-            $tweets[$i]['text'] = str_replace($tweets[$i]['entities']['urls'][0]['url'], "<a href='" . $tweets[$i]['entities']['urls'][0]['expanded_url'] . "'target='_blank'>" . $tweets[$i]['entities']['urls'][0]['display_url'] . "</a> ", $tweets[$i]['text']);
-            $tweets[$i]['text'] = $db->quote($tweets[$i]['text']);
-
+            $tweets[$i]['text'] = replace_urls($db,$tweets[$i]);
         }
 
         $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
-        $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $tweets[$i]['text'] . "' AND date_entered = '" . $date . "'";
-        $results = $db->query($sql_check);
 
-        while ($row = $db->fetchByAssoc($results)) {
-            $found_record = $row;
+        $duplicate_found = duplicate_check($db,$tweets[$i]['text'],$date);
 
-            break;
-        }
-        if (empty($found_record)) {
+        if (!$duplicate_found) {
 
             $id = create_guid();
 
@@ -105,7 +78,6 @@ if (empty($tweets['errors'])) {
 }
 
 require("custom/include/social/facebook/facebook.class.php");
-
 
 $facebook_helper = new facebook_helper();
 //get current user logged in
