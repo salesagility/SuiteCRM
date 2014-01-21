@@ -37,18 +37,18 @@ function auth_twitter(){
         $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
 
         /* If last connection failed don't display authorization link. */
-        switch ($connection->http_code) {
-            case 200:
+
                 /* Build authorize URL and redirect user to Twitter. */
+
+                $html ='';
+
                 $url = $connection->getAuthorizeURL($token);
                 $html = "<a href='". $url ."'>Log into Twitter</a>";
-                return $html;
-                break;
-            default:
-                /* Show notification if something went wrong. */
-                return 'Could not connect to Twitter. Refresh the page or try again later.';
-        }
-    }
 
+
+
+
+    }
+    return $html;
 
 }
