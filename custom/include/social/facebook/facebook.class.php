@@ -64,7 +64,7 @@ class facebook_helper{
         $string = '<tr>
                         <td>
                             <div class="fb_bubble">
-                            <span  class="facebook_img "><a href="' . $story['link'] . '"><img width="20%" src="' . $story['picture'] . '"/></a></span>
+                            <span  class="facebook_img "><a href="' . $story['link'] . '"><img width="10%" style="float:left" src="' . $story['picture'] . '"/></a></span>
                             <span class="facebook_story">' . $story['story'] . '</span>
                             </div>
 
@@ -96,14 +96,14 @@ class facebook_helper{
         $string = '<tr>
                         <td>
                         <div class="fb_bubble">
-                        <span class="facebook_img" ><a href="' . $story['link'] . '"><img width="20%" src="' . $story['picture'] . '"/></a></span>';
+                        <span class="facebook_img" style="padding-left:5px;" ><a href="' . $story['link'] . '"><img width="10%"  style="float:left"  src="' . $story['picture'] . '"/></a></span>';
                         if($story['name']){
                             $string .= '<span class="facebook_name">' . $story['name'] . '<br></span>';
                         }else{
                             $string .= '<span class="facebook_name">' . $story['story'] . '<br></span>';
                         }
 
-        $string .= '<span class="facebook_message">' . $story['message'] . '</span>
+        $string .= '<span class="facebook_message" style="padding-right:5px;"> ' . $story['message'] . '</span>
                         </div>
                         </td>
                         <td><div class="fb_bubble">' . date("y/m/d H:m", strtotime($story['updated_time'])) . '</div></td>
