@@ -12,9 +12,9 @@
 
             //Used for testing
             $this->_has_testing_enabled = false;
-
+            $this->_enable_in_admin_search = false;
             //Used to enable hover for the formatter
-            $this->_enable_in_hover = true;
+            $this->_enable_in_hover = false;
         }
 
 
