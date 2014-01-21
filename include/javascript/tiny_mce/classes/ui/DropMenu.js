@@ -1,11 +1,11 @@
 /**
  * DropMenu.js
  *
- * Copyright 2009, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
@@ -17,6 +17,50 @@
 	 *
 	 * @class tinymce.ui.DropMenu
 	 * @extends tinymce.ui.Menu
+	 * @example
+	 * // Adds a menu to the currently active editor instance
+	 * var dm = tinyMCE.activeEditor.controlManager.createDropMenu('somemenu');
+	 * 
+	 * // Add some menu items
+	 * dm.add({title : 'Menu 1', onclick : function() {
+	 *     alert('Item 1 was clicked.');
+	 * }});
+	 * 
+	 * dm.add({title : 'Menu 2', onclick : function() {
+	 *     alert('Item 2 was clicked.');
+	 * }});
+	 * 
+	 * // Adds a submenu
+	 * var sub1 = dm.addMenu({title : 'Menu 3'});
+	 * sub1.add({title : 'Menu 1.1', onclick : function() {
+	 *     alert('Item 1.1 was clicked.');
+	 * }});
+	 * 
+	 * // Adds a horizontal separator
+	 * sub1.addSeparator();
+	 * 
+	 * sub1.add({title : 'Menu 1.2', onclick : function() {
+	 *     alert('Item 1.2 was clicked.');
+	 * }});
+	 * 
+	 * // Adds a submenu to the submenu
+	 * var sub2 = sub1.addMenu({title : 'Menu 1.3'});
+	 * 
+	 * // Adds items to the sub sub menu
+	 * sub2.add({title : 'Menu 1.3.1', onclick : function() {
+	 *     alert('Item 1.3.1 was clicked.');
+	 * }});
+	 * 
+	 * sub2.add({title : 'Menu 1.3.2', onclick : function() {
+	 *     alert('Item 1.3.2 was clicked.');
+	 * }});
+	 * 
+	 * dm.add({title : 'Menu 4', onclick : function() {
+	 *     alert('Item 3 was clicked.');
+	 * }});
+	 * 
+	 * // Display the menu at position 100, 100
+	 * dm.showMenu(100, 100);
 	 */
 	tinymce.create('tinymce.ui.DropMenu:tinymce.ui.Menu', {
 		/**
@@ -83,8 +127,8 @@
 		update : function() {
 			var t = this, s = t.settings, tb = DOM.get('menu_' + t.id + '_tbl'), co = DOM.get('menu_' + t.id + '_co'), tw, th;
 
-			tw = s.max_width ? Math.min(tb.clientWidth, s.max_width) : tb.clientWidth;
-			th = s.max_height ? Math.min(tb.clientHeight, s.max_height) : tb.clientHeight;
+			tw = s.max_width ? Math.min(tb.offsetWidth, s.max_width) : tb.offsetWidth;
+			th = s.max_height ? Math.min(tb.offsetHeight, s.max_height) : tb.offsetHeight;
 
 			if (!DOM.boxModel)
 				t.element.setStyles({width : tw + 2, height : th + 2});
@@ -182,7 +226,7 @@
 					if (m.settings.onclick)
 						m.settings.onclick(e);
 
-					return Event.cancel(e); // Cancel to fix onbeforeunload problem
+					return false; // Cancel to fix onbeforeunload problem
 				}
 			});
 
@@ -348,7 +392,7 @@
 		// Internal functions
 		_setupKeyboardNav : function(){
 			var contextMenu, menuItems, t=this; 
-			contextMenu = DOM.select('#menu_' + t.id)[0];
+			contextMenu = DOM.get('menu_' + t.id);
 			menuItems = DOM.select('a[role=option]', 'menu_' + t.id);
 			menuItems.splice(0,0,contextMenu);
 			t.keyboardNav = new tinymce.ui.KeyboardNavigation({
@@ -411,8 +455,12 @@
 
 			n = DOM.add(n, s.element || 'span', {'class' : 'mceText', title : o.settings.title}, o.settings.title);
 
-			if (o.settings.style)
+			if (o.settings.style) {
+				if (typeof o.settings.style == "function")
+					o.settings.style = o.settings.style();
+
 				DOM.setAttrib(n, 'style', o.settings.style);
+			}
 
 			if (tb.childNodes.length == 1)
 				DOM.addClass(ro, 'mceFirst');
