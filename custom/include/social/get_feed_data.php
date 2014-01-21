@@ -106,27 +106,6 @@ foreach($user_home['data'] as $single){
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function check_facebook_login($facebook_helper){
     $user = $facebook_helper->facebook->getUser();
 
