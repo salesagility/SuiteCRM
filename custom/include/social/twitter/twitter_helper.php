@@ -7,7 +7,7 @@ function replace_urls($db,$array)
     $count = count($array['entities']['urls']);
     while($i < $count) {
 
-        $text = str_replace($array['entities']['urls'][$i]['url'], "<a href='" . $array['entities']['urls'][$i]['expanded_url'] . "'target='_blank'>" . $array['entities']['urls'][$i]['display_url'] . "</a> ", $array['text']);
+        $text = str_replace($array['entities']['urls'][$i]['url'], "<a target ='_blank' href='" . $array['entities']['urls'][$i]['expanded_url'] . "'>" . $array['entities']['urls'][$i]['display_url'] . "</a> ", $array['text']);
         $text = $db->quote($text);
         $i++;
     }
@@ -29,6 +29,9 @@ function duplicate_check($db,$text,$date){
 }
 
 function check_auth(){
+
+    $config = '';
+
     require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
     require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
