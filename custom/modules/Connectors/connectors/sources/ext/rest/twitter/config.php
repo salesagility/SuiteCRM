@@ -6,4 +6,4 @@ $config['properties']['oauth_access_token_secret'] = 'dFpKPsNPMvYUaXon3UIbGszRKa
 $config['properties']['consumer_key'] = 'dj9YOOhPIMbXUAVIlufmIg';
 $config['properties']['consumer_secret'] = '62SBWnzlsGDyV16sGEmB8ViD11cktOZ6DbZqmhQPWY';
 $config['properties']['max_number_of_tweets'] = '10';
-$config['properties']['OAUTH_CALLBACK'] = 'localhost/suitecrm/custom/include/social/twitter/twitter_auth/callback.php';
+$config['properties']['OAUTH_CALLBACK'] = 'localhost/SuiteDevelopment/custom/include/social/twitter/twitter_auth/callback.php';
