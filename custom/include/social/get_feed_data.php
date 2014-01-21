@@ -60,23 +60,15 @@ $i = 0;
 if (empty($tweets['errors'])) {
     while ($i < count($tweets)) {
 
-
         if (count($tweets[$i]['entities']['urls'][0]['url']) != '') {
-            $tweets[$i]['text'] = str_replace($tweets[$i]['entities']['urls'][0]['url'], "<a href='" . $tweets[$i]['entities']['urls'][0]['expanded_url'] . "'target='_blank'>" . $tweets[$i]['entities']['urls'][0]['display_url'] . "</a> ", $tweets[$i]['text']);
-            $tweets[$i]['text'] = $db->quote($tweets[$i]['text']);
-
+            $tweets[$i]['text'] = replace_urls($db,$tweets[$i]);
         }
 
         $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
-        $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $tweets[$i]['text'] . "' AND date_entered = '" . $date . "'";
-        $results = $db->query($sql_check);
 
-        while ($row = $db->fetchByAssoc($results)) {
-            $found_record = $row;
+        $duplicate_found = duplicate_check($db,$tweets[$i]['text'],$date);
 
-            break;
-        }
-        if (empty($found_record)) {
+        if (!$duplicate_found) {
 
             $id = create_guid();
 
