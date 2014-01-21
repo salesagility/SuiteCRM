@@ -1,11 +1,11 @@
 /**
  * Node.js
  *
- * Copyright 2010, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
@@ -419,11 +419,15 @@
 						i = node.attributes.length;
 						while (i--) {
 							name = node.attributes[i].name;
-							if (name === "name" || name.indexOf('data-') === 0)
+							if (name === "name" || name.indexOf('data-mce-') === 0)
 								return false;
 						}
 					}
 
+					// Keep comments
+					if (node.type === 8)
+						return false;
+					
 					// Keep non whitespace text nodes
 					if ((node.type === 3 && !whiteSpaceRegExp.test(node.value)))
 						return false;
