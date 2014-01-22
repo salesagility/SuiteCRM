@@ -15,12 +15,11 @@ global $current_user;
 session_start();
 
 $settings = array(
-    'oauth_access_token' => $config['properties']['oauth_access_token'],
-    'oauth_access_token_secret' => $config['properties']['oauth_access_token_secret'],
     'consumer_key' => $config['properties']['consumer_key'],
     'consumer_secret' => $config['properties']['consumer_secret'],
     'call_back_url' => $config['properties']['OAUTH_CALLBACK'],
 );
+
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
     $connection = check_auth();
 }
@@ -43,21 +42,21 @@ if (empty($tweets['errors'])) {
     while ($i < count($tweets)) {
 
         if (count($tweets[$i]['entities']['urls'][0]['url']) != '') {
-            $tweets[$i]['text'] = replace_urls($db,$tweets[$i]);
+            $tweets[$i]['text'] = replace_urls($db, $tweets[$i]);
         }
 
-        $duplicate_found = duplicate_check($db,$tweets[$i]['text'],$date);
+        $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
+        $image = "<img src=" . $tweets[$i]['user']['profile_image_url_https'] . " style=float:left;padding-right:5px;padding-bottom:5px;/>";
+        $duplicate_found = duplicate_check($db, $tweets[$i]['text'], $date);
 
         if (!$duplicate_found) {
-
-            $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
 
             $id = create_guid();
 
             $sql = "INSERT INTO sugarfeed (id, name, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, related_module, related_id, link_url, link_type)
                     VALUES
                      ('" . $id . "',
-                      '<b>" . $tweets[$i]['user']['name'] . " </b>',
+                      '" . $image . "<b>"  . $tweets[$i]['user']['name'] . " </b>',
                       '" . $date . "',
                       '" . $date . "',
                       '1',
@@ -92,22 +91,23 @@ if ($user) {
     $loginUrl = $facebook_helper->get_login_url($_REQUEST['url']);
 }
 
-if ($user){
+if ($user) {
     $log = '<a href="' . $logoutUrl . '">Logout with Facebook</a>';
-}else{
-    $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
+} else {
+    $log = '<a href="' . $loginUrl . '">Login with Facebook</a>';
 }
 
-$html .=  '<div>';
-$html .=  $log;
+$html .= '<div>';
+$html .= $log;
 $html .= '</div>';
 
-foreach($user_home['data'] as $single){
+foreach ($user_home['data'] as $single) {
     data_insert($single, "facebook");
 }
 
 
-function check_facebook_login($facebook_helper){
+function check_facebook_login($facebook_helper)
+{
     $user = $facebook_helper->facebook->getUser();
 
     if ($user) {
@@ -127,7 +127,8 @@ function check_facebook_login($facebook_helper){
     return $user_home;
 }
 
-function data_insert($single, $type){
+function data_insert($single, $type)
+{
     global $db;
     $id = guid_maker();
     $temp = generate_stream($single);
@@ -140,14 +141,14 @@ function data_insert($single, $type){
     $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $message[1] . "' AND date_entered = '" . $date . "'";
     $results = $db->query($sql_check);
 
-    while ($row = $db->fetchByAssoc($results)){
+    while ($row = $db->fetchByAssoc($results)) {
         $found_record = $row;
         break;
     }
-    if(empty($found_record)){
+    if (empty($found_record)) {
         $sql = "INSERT INTO sugarfeed (id, name, date_entered, date_modified, modified_user_id, created_by, description, deleted, assigned_user_id, related_module, related_id, link_url, link_type)
                     VALUES
-                     ('" . $id ."',
+                     ('" . $id . "',
                       '" . $name . "',
                       '" . $date . "',
                       '" . $date . "',
@@ -157,57 +158,61 @@ function data_insert($single, $type){
                       '0',
                       '" . $assigned_user . "',
                       '" . $type . "',
-                      '" . $assigned_user ."',
+                      '" . $assigned_user . "',
                       NULL,
                       NULL);";
 
-        if(!empty($message)){
+        if (!empty($message)) {
             $results = $db->query($sql);
         }
     }
 }
+
 //print_r($user_home);
-function guid_maker(){
-    if (function_exists('com_create_guid')){
+function guid_maker()
+{
+    if (function_exists('com_create_guid')) {
         return com_create_guid();
-    }else{
-        mt_srand((double)microtime()*10000);//optional for php 4.2.0 and up.
+    } else {
+        mt_srand((double)microtime() * 10000); //optional for php 4.2.0 and up.
         $charid = strtoupper(md5(uniqid(rand(), true)));
         $hyphen = chr(45);
         $uuid = chr(123)
-            .substr($charid, 0, 8).$hyphen
-            .substr($charid, 8, 4).$hyphen
-            .substr($charid,12, 4).$hyphen
-            .substr($charid,16, 4).$hyphen
-            .substr($charid,20,12)
-            .chr(125);
+            . substr($charid, 0, 8) . $hyphen
+            . substr($charid, 8, 4) . $hyphen
+            . substr($charid, 12, 4) . $hyphen
+            . substr($charid, 16, 4) . $hyphen
+            . substr($charid, 20, 12)
+            . chr(125);
         return $uuid;
     }
 }
-function generate_stream($stream){
+
+function generate_stream($stream)
+{
     //if simple post
-    switch($stream['type']){
+    switch ($stream['type']) {
         case "":
-            $string[1] = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
+            $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
             break;
         case "link";
-            $string[0] = "<a href=http://www.facebook.com/". $stream['from']['id'] . " style=float:left;padding-right:5px;padding-bottom:5px; ><img src=http://graph.facebook.com/" . $stream['from']['id']  . "/picture /></a>";
-            if(!empty($stream['name'])){
+            $string[0] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . " style=float:left;padding-right:5px;padding-bottom:5px; ><img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture /></a>";
+            if (!empty($stream['name'])) {
 
-                $string[1] = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
-            }else{
+                $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
+            } else {
                 //must be an article
-                $string[1] = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
+                $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
             }
             break;
         case "status":
             //
-            $string[0] = "<a href=http://www.facebook.com/". $stream['from']['id'] . " style=float:left;padding-right:5px;padding-bottom:5px; ><img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture /></a>";
-            if(!empty($stream['story'])){
-                $string[1] = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 100) . "</a>";
-            }else{
+            $string[0] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . " style=float:left;padding-right:5px;padding-bottom:5px; ><img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture /></a>";
+            if (!empty($stream['story'])) {
+                $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 100) . "</a>";
+            } else {
                 //wall post.
-                $string[1] = "<a href=http://www.facebook.com/". $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 100) . "</a>";
+                $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 100) . "</a>";
             }
             break;
         case "photos":
