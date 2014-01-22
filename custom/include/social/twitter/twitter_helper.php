@@ -7,12 +7,12 @@ function replace_urls($db,$array)
     $count = count($array['entities']['urls']);
     while($i < $count) {
 
-        $text = str_replace($array['entities']['urls'][$i]['url'], "<a target ='_blank' href='" . $array['entities']['urls'][$i]['expanded_url'] . "'>" . $array['entities']['urls'][$i]['display_url'] . "</a> ", $array['text']);
-        $text = $db->quote($text);
-        $i++;
+       $array['text'] = str_replace($array['entities']['urls'][$i]['url'], "<a target ='_blank' href='" . $array['entities']['urls'][$i]['expanded_url'] . "'>" . $array['entities']['urls'][$i]['display_url'] . "</a> ", $array['text']);
+       $array['text'] = $db->quote( $array['text']);
+       $i++;
     }
 
-    return $text;
+    return $array['text'];
 
 
 }
@@ -26,6 +26,8 @@ function duplicate_check($db,$text,$date){
         return true;
         break;
     }
+
+    return false;
 }
 
 function check_auth(){

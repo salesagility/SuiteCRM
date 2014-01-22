@@ -21,8 +21,9 @@ $settings = array(
     'consumer_secret' => $config['properties']['consumer_secret'],
     'call_back_url' => $config['properties']['OAUTH_CALLBACK'],
 );
-
-$connection = check_auth();
+if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
+    $connection = check_auth();
+}
 
 $html .= $_REQUEST['html'];
 $request_token = $_REQUEST['request_token'];
@@ -45,11 +46,11 @@ if (empty($tweets['errors'])) {
             $tweets[$i]['text'] = replace_urls($db,$tweets[$i]);
         }
 
-        $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
-
         $duplicate_found = duplicate_check($db,$tweets[$i]['text'],$date);
 
         if (!$duplicate_found) {
+
+            $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
 
             $id = create_guid();
 
@@ -64,7 +65,7 @@ if (empty($tweets['errors'])) {
                       '" . $tweets[$i]['text'] . "',
                       '0',
                       '" . $current_user->id . "',
-                      'UserFeed',
+                      'twitter',
                       '" . $current_user->id . "',
                       NULL,
                       NULL);";
