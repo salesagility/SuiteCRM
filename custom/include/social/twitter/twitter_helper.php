@@ -5,9 +5,10 @@ function replace_urls($db,$array)
 
     $i = 0;
     $count = count($array['entities']['urls']);
+
     while($i < $count) {
 
-       $array['text'] = str_replace($array['entities']['urls'][$i]['url'], "<a target ='_blank' href='" . $array['entities']['urls'][$i]['expanded_url'] . "'>" . $array['entities']['urls'][$i]['display_url'] . "</a> ", $array['text']);
+       $array['text'] = str_replace($array['entities']['urls'][$i]['url'], "<a href=". $array['entities']['urls'][$i]['expanded_url'] . ">" . $array['entities']['urls'][$i]['display_url'] . "</a>", $array['text']);
        $array['text'] = $db->quote( $array['text']);
        $i++;
     }
@@ -38,18 +39,10 @@ function check_auth(){
     require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
     $settings = array(
-        'oauth_access_token' => $config['properties']['oauth_access_token'],
-        'oauth_access_token_secret' => $config['properties']['oauth_access_token_secret'],
         'consumer_key' => $config['properties']['consumer_key'],
         'consumer_secret' => $config['properties']['consumer_secret'],
         'call_back_url' => $config['properties']['OAUTH_CALLBACK'],
     );
-
-    if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
-        if ($settings['consumer_key'] === '' || $settings['consumer_secret'] === '') {
-            echo 'You need a consumer key and secret to test the sample code. Get one from <a href="https://dev.twitter.com/apps">dev.twitter.com/apps</a>';
-            exit;
-        }
 
         /* Build TwitterOAuth object with client credentials. */
         $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret']);
@@ -72,5 +65,5 @@ function check_auth(){
 
         return $connection;
 
-    }
+
 }
