@@ -3,6 +3,8 @@ require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroau
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 require('custom/include/social/twitter/twitter_helper.php');
 
+global $sugar_config;
+
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
 $settings = array(
     'oauth_access_token' => $config['properties']['oauth_access_token'],
@@ -12,7 +14,7 @@ $settings = array(
 );
 
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
-    $connection = check_auth();
+    $connection = check_auth($sugar_config['site_url']);
 }
 
 $html .= $_REQUEST['html'];
@@ -52,13 +54,3 @@ function format_tweets($tweets){
     return $html . '</div>';
 
 }
-
-
-
-
-
-
-
-
-
-
