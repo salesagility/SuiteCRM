@@ -11,6 +11,7 @@ require('custom/include/social/twitter/twitter_helper.php');
 
 global $db;
 global $current_user;
+global $sugar_config;
 
 session_start();
 
@@ -21,7 +22,7 @@ $settings = array(
 );
 
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
-    $connection = check_auth();
+    $connection = check_auth($sugar_config['site_url']);
 }
 
 $html .= $_REQUEST['html'];

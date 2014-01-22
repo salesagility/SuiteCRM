@@ -31,24 +31,27 @@ function duplicate_check($db,$text,$date){
     return false;
 }
 
-function check_auth(){
+function check_auth($url){
+
+    $url = $url . "/custom/include/social/twitter/twitter_auth/callback.php";
 
     $config = '';
 
     require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
     require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
+
     $settings = array(
         'consumer_key' => $config['properties']['consumer_key'],
         'consumer_secret' => $config['properties']['consumer_secret'],
-        'call_back_url' => $config['properties']['OAUTH_CALLBACK'],
+
     );
 
         /* Build TwitterOAuth object with client credentials. */
         $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret']);
 
         /* Get temporary credentials. */
-        $request_token = $connection->getRequestToken($settings['call_back_url']);
+        $request_token = $connection->getRequestToken($url);
 
         /* Save temporary credentials to session. */
         $_SESSION['oauth_token'] = $token = $request_token['oauth_token'];
