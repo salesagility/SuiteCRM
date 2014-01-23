@@ -1,22 +1,37 @@
 <?php
+
+/*
+ * @author Salesagility Ltd <support@salesagility.com>
+ * Date: 15/01/14
+ * Time: 09:14
+ *
+ * This file uses the developer account set up in the connectors to generate the feed.
+ *
+ */
+
 require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 require('custom/include/social/twitter/twitter_helper.php');
 
 global $sugar_config;
 
-/** Set access tokens here - see: https://dev.twitter.com/apps/ **/
+/*
+ * Pull in connector settings for creating the authentication between Suite and Twitter.
+ * If these settings are blank check the connector and make sure the setting are correct.
+*/
+
 $settings = array(
-    'oauth_access_token' => $config['properties']['oauth_access_token'],
-    'oauth_access_token_secret' => $config['properties']['oauth_access_token_secret'],
     'consumer_key' => $config['properties']['consumer_key'],
     'consumer_secret' => $config['properties']['consumer_secret'],
 );
 
+//Check if we are already authenticated.
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
     $connection = check_auth($sugar_config['site_url']);
 }
 
+
+//Pull in values set in the authenitcation function.
 $html .= $_REQUEST['html'];
 $request_token = $_REQUEST['request_token'];
 

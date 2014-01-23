@@ -1,19 +1,29 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ian
+ * @author Salesagility Ltd <support@salesagility.com>
  * Date: 15/01/14
  * Time: 09:14
+ *
+ * This file requires each user to log into their twitter account and authorise SuiteCRM to access it.
+ *
  */
+
+//Load resources.
 require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 require('custom/include/social/twitter/twitter_helper.php');
 
+//Load Globals.
 global $db;
 global $current_user;
 global $sugar_config;
 
 session_start();
+
+/*
+ * Pull in connector settings for creating the authentication between Suite and Twitter.
+ * If these settings are blank check the connector and make sure the setting are correct.
+*/
 
 $settings = array(
     'consumer_key' => $config['properties']['consumer_key'],
@@ -21,10 +31,15 @@ $settings = array(
     'call_back_url' => $config['properties']['OAUTH_CALLBACK'],
 );
 
+/*
+ * Check if the if the user is authenticated if not run the authenticating function and show the login link in the activity stream
+*/
+
 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
     $connection = check_auth($sugar_config['site_url']);
 }
 
+//Pull in values set in the authenitcation function.
 $html .= $_REQUEST['html'];
 $request_token = $_REQUEST['request_token'];
 
@@ -37,7 +52,18 @@ $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_se
 /* If method is set change API call made. Test is called by default. */
 $tweets = $connection->get('statuses/home_timeline', array('screen_name' => $_SESSION['access_token']['screen_name'], 'exclude_replies' => true));
 
+//Set the increment value.
 $i = 0;
+
+/*
+
+-Loop through all the tweets.
+- Replace any URLS for Hrefs first, this needs to be done first as this is what get stored in the DB so duplicate checking would not work otherwise.
+- Reformat the Date from twitters date format.
+- Check if the tweet has already been entered into the Activity Stream.
+- if no duplicates found use insert query to add tweet to activity stream.
+- Start loop again.
+*/
 
 if (empty($tweets['errors'])) {
     while ($i < count($tweets)) {
