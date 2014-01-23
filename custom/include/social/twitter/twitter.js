@@ -21,8 +21,8 @@ $(function () {
                 data: { twitter_user: twitter_user, social: "twitter"}
             })
                 .done(function (msg) {
-                    $("#twitter_feed").html(' ');
-                    $("#twitter_feed").html(msg + $("#twitter_feed").html());
+                    $("#feed").html(' ');
+                    $("#feed").html(msg + $("#feed").html());
                 });
 
         } else {

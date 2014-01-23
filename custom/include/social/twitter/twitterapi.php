@@ -50,19 +50,27 @@ echo $formatted_display;
 
 
 function format_tweets($tweets){
+
     $i = 0;
     $html ='';
     $html = "<link rel='stylesheet' type='text/css' href='custom/include/social/twitter/twitter.css'>";
 
 
     $html .= "<div style='height:400px;overflow:scroll'><table width='100%'>";
-    $html .= '<tr><th style="text-align:center">Twitter Activity</th><th style="text-align:center"></th></tr>';
-    $html .= "<tr><td style='text-align:center'>" . $tweets[0]['user']['name'] ."</td><td style='text-align:center'><img src='". $tweets[0]['user']['profile_image_url'] ."'></td></tr>";
+    $html .= '<tr><th><h3>20 Latest Tweets</h3></th></tr>';
+    $html .= "<tr><td><img style='padding:5px;'; src='". $tweets[0]['user']['profile_image_url'] ."'><b style='margin-left:5px; font-size:20px;'>" ."@". $tweets[0]['user']['screen_name'] ."</b></td></tr>";
     $html .= "</table>";
 
     while($i < count($tweets)){
-        $html .= "<div class='tweet'>";
-        $html .= "<p>". $tweets[$i]['text']."</p>";
+        $u = 0;
+        $count = count($tweets[$i]['entities']['urls']);
+
+        while($u < $count) {
+            $tweets[$i]['text'] = str_replace($tweets[$i]['entities']['urls'][$u]['url'], "<a style='font-size:15px;' href='".$tweets[$i]['entities']['urls'][$u]['expanded_url']."'>". $tweets[$i]['entities']['urls'][$u]['display_url'] ."</a> ",$tweets[$i]['text']);
+            $u++;
+        }
+        $html .= "<div class='tweet' style='width:30%;float:left; padding:25px;'>";
+        $html .= "<p style='font-size:15px;'>". $tweets[$i]['text']."</p>";
         $html .= "</div>";
         $i++;
     }
