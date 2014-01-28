@@ -71,6 +71,7 @@
         </tr>
     </table>
 
+
     <div style="padding-top: 2px;">
         {$BUTTONS}
     </div>
