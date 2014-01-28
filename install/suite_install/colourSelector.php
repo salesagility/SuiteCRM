@@ -24,7 +24,6 @@ function install_colourSelector() {
     if(!isset($sugar_config['colourselector']['modlinkhover'])) $sugar_config['colourselector']['modlinkhover'] = '#ffffff';
     if(!isset($sugar_config['colourselector']['cssmenu'])) $sugar_config['colourselector']['cssmenu'] = '#333333';
     if(!isset($sugar_config['colourselector']['cssmenulink'])) $sugar_config['colourselector']['cssmenulink'] = '#cccccc';
-    if(!isset($sugar_config['colourselector']['custom'])) $sugar_config['colourselector']['custom'] = '';
 
     ksort($sugar_config);
     write_array_to_file('sugar_config', $sugar_config, 'config.php');
