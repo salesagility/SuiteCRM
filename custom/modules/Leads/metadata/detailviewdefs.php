@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-21 11:28:43
+// created: 2014-01-28 16:47:08
 $viewdefs = array (
   'Leads' => 
   array (
@@ -144,6 +144,17 @@ $viewdefs = array (
           6 => 
           array (
             0 => 'description',
+            1 => 
+            array (
+              'name' => 'twitteruser_c_user_c',
+            ),
+          ),
+          7 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebookAPI_user_c',
+            ),
           ),
         ),
         'LBL_PANEL_ADVANCED' => 

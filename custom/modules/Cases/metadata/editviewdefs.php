@@ -19,20 +19,6 @@ array (
           'field' => '30',
         ),
       ),
-      'useTabs' => false,
-      'tabDefs' => 
-      array (
-        'LBL_CASE_INFORMATION' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ASSIGNMENT' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-      ),
     ),
     'panels' => 
     array (
@@ -52,24 +38,14 @@ array (
         ),
         2 => 
         array (
-          0 => 
-          array (
-            'name' => 'state',
-            'comment' => 'The state of the case (i.e. open/closed)',
-            'label' => 'LBL_STATE',
-          ),
-          1 => '',
-        ),
-        3 => 
-        array (
           0 => 'status',
           1 => 'account_name',
         ),
-        4 => 
+        3 => 
         array (
           0 => 'type',
         ),
-        5 => 
+        4 => 
         array (
           0 => 
           array (
@@ -80,7 +56,7 @@ array (
             ),
           ),
         ),
-        6 => 
+        5 => 
         array (
           0 => 
           array (
@@ -88,27 +64,27 @@ array (
             'nl2br' => true,
           ),
         ),
-        7 => 
+        6 => 
         array (
           0 => 
           array (
             'name' => 'resolution',
             'nl2br' => true,
           ),
+          1 => 
+          array (
+            'name' => '_user_c',
+          ),
         ),
-        8 => 
+        7 => 
         array (
           0 => 
           array (
-            'name' => 'update_text',
-            'studio' => 'visible',
-            'label' => 'LBL_UPDATE_TEXT',
+            'name' => 'twitteruser_c_user_c',
           ),
           1 => 
           array (
-            'name' => 'internal',
-            'studio' => 'visible',
-            'label' => 'LBL_INTERNAL',
+            'name' => 'twitter_user_c',
           ),
         ),
       ),

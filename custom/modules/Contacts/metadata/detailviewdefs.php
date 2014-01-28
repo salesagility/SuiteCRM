@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-21 11:28:43
+// created: 2014-01-28 16:47:08
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -32,64 +32,6 @@ $viewdefs = array (
                 ),
               ),
             ),
-            'AOS_GENLET' => 
-            array (
-              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
-            ),
-            'AOP_CREATE' => 
-            array (
-              'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$MOD.LBL_CREATE_PORTAL_USER}',
-                'htmlOptions' => 
-                array (
-                  'title' => '{$MOD.LBL_CREATE_PORTAL_USER}',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'createPortalUser\';',
-                  'name' => 'buttonCreatePortalUser',
-                  'id' => 'createPortalUser_button',
-                ),
-                'template' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
-            'AOP_DISABLE' => 
-            array (
-              'customCode' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'disablePortalUser\';" value="{$MOD.LBL_DISABLE_PORTAL_USER}"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
-                'htmlOptions' => 
-                array (
-                  'title' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'disablePortalUser\';',
-                  'name' => 'buttonDisablePortalUser',
-                  'id' => 'disablePortalUser_button',
-                ),
-                'template' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
-            'AOP_ENABLE' => 
-            array (
-              'customCode' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'enablePortalUser\';" value="{$MOD.LBL_ENABLE_PORTAL_USER}"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
-                'htmlOptions' => 
-                array (
-                  'title' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'enablePortalUser\';',
-                  'name' => 'buttonENablePortalUser',
-                  'id' => 'enablePortalUser_button',
-                ),
-                'template' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
           ),
         ),
         'maxColumns' => '2',
@@ -113,26 +55,6 @@ $viewdefs = array (
             'file' => 'modules/Leads/Lead.js',
           ),
         ),
-        'useTabs' => false,
-        'tabDefs' => 
-        array (
-          'LBL_CONTACT_INFORMATION' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ADVANCED' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ASSIGNMENT' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-        ),
-        'syncDetailEditViews' => true,
       ),
       'panels' => 
       array (
@@ -142,18 +64,17 @@ $viewdefs = array (
           array (
             0 => 
             array (
-              'name' => 'first_name',
-              'comment' => 'First name of the contact',
-              'label' => 'LBL_FIRST_NAME',
+              'name' => 'full_name',
+              'label' => 'LBL_NAME',
             ),
           ),
           1 => 
           array (
             0 => 
             array (
-              'name' => 'last_name',
-              'comment' => 'Last name of the contact',
-              'label' => 'LBL_LAST_NAME',
+              'name' => 'title',
+              'comment' => 'The title of the contact',
+              'label' => 'LBL_TITLE',
             ),
             1 => 
             array (
@@ -165,9 +86,8 @@ $viewdefs = array (
           array (
             0 => 
             array (
-              'name' => 'title',
-              'comment' => 'The title of the contact',
-              'label' => 'LBL_TITLE',
+              'name' => 'department',
+              'label' => 'LBL_DEPARTMENT',
             ),
             1 => 
             array (
@@ -179,8 +99,11 @@ $viewdefs = array (
           array (
             0 => 
             array (
-              'name' => 'department',
-              'label' => 'LBL_DEPARTMENT',
+              'name' => 'account_name',
+              'label' => 'LBL_ACCOUNT_NAME',
+              'displayParams' => 
+              array (
+              ),
             ),
             1 => 
             array (
@@ -189,17 +112,6 @@ $viewdefs = array (
             ),
           ),
           4 => 
-          array (
-            0 => 
-            array (
-              'name' => 'account_name',
-              'label' => 'LBL_ACCOUNT_NAME',
-              'displayParams' => 
-              array (
-              ),
-            ),
-          ),
-          5 => 
           array (
             0 => 
             array (
@@ -222,7 +134,7 @@ $viewdefs = array (
               ),
             ),
           ),
-          6 => 
+          5 => 
           array (
             0 => 
             array (
@@ -231,7 +143,7 @@ $viewdefs = array (
               'label' => 'LBL_EMAIL_ADDRESS',
             ),
           ),
-          7 => 
+          6 => 
           array (
             0 => 
             array (
@@ -241,17 +153,8 @@ $viewdefs = array (
             ),
             1 => 
             array (
-              'name' => 'aop_case_updates_contacts_1_name',
+              'name' => 'twitter_user_c',
             ),
-          ),
-          8 => 
-          array (
-            0 => 
-            array (
-              'name' => 'facebook_username_c',
-              'label' => 'LBL_FACEBOOK_USERNAME',
-            ),
-            1 => '',
           ),
         ),
         'LBL_PANEL_ADVANCED' => 
@@ -302,6 +205,21 @@ $viewdefs = array (
             array (
               'name' => 'assigned_user_name',
               'label' => 'LBL_ASSIGNED_TO_NAME',
+            ),
+            1 => 
+            array (
+              'name' => 'date_modified',
+              'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+              'label' => 'LBL_DATE_MODIFIED',
+            ),
+          ),
+          1 => 
+          array (
+            0 => 
+            array (
+              'name' => 'date_entered',
+              'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+              'label' => 'LBL_DATE_ENTERED',
             ),
           ),
         ),
