@@ -1,7 +1,7 @@
 <?php
 $admin_option_defs = array();
 $admin_option_defs['Administration']['colourselector'] = array(
-    'edit',
+    'themeadmin',
     'LBL_COLOUR_SETTINGS',
     'LBL_COLOUR_DESC',
     './index.php?module=Administration&action=colourAdmin'

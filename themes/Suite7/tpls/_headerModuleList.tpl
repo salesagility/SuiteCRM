@@ -43,11 +43,11 @@
             {assign var="groupSelected" value=false}
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-                <li class="noBorder">
-                    <li>
+                <li>
                     <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-        <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
-        </span><span class="notCurrentTabRight">&nbsp;</span>
+                    <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
+                    </span>
+                    <span class="notCurrentTabRight">&nbsp;</span>
                     <ul class="cssmenu">
                         {foreach from=$modules.modules item=module key=modulekey}
                             <li>
@@ -59,7 +59,7 @@
                 </li>
                 {if !empty($modules.extra)}
                     <li class="subTabMore">
-                        <span>{$APP.LBL_MORE} &raquo;</span>
+                        <span style="font-weight:normal";>{$APP.LBL_MORE} &raquo;</span>
                         <ul class="cssmenu">
                             {foreach from=$modules.extra item=submodulename key=submodule}
                                 <li>
