@@ -30,26 +30,6 @@ array (
           'field' => '30',
         ),
       ),
-      'useTabs' => false,
-      'tabDefs' => 
-      array (
-        'LBL_CONTACT_INFORMATION' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ADVANCED' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ASSIGNMENT' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-      ),
-      'syncDetailEditViews' => true,
     ),
     'panels' => 
     array (
@@ -166,17 +146,8 @@ array (
           ),
           1 => 
           array (
-            'name' => 'aop_case_updates_contacts_1_name',
+            'name' => 'twitter_user_c',
           ),
-        ),
-        8 => 
-        array (
-          0 => 
-          array (
-            'name' => 'facebook_username_c',
-            'label' => 'LBL_FACEBOOK_USERNAME',
-          ),
-          1 => '',
         ),
       ),
       'LBL_PANEL_ADVANCED' => 

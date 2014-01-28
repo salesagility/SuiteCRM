@@ -287,8 +287,8 @@ class ConnectorsController extends SugarController
     function add_social_field($module, $field_name)
     {
 
-        $field = array(
 
+        $field = array(
             array(
                 'name' => $field_name,
                 'label' => $field_name,
@@ -308,9 +308,12 @@ class ConnectorsController extends SugarController
         $layout[$module] = $field_name;
 
         require_once('ModuleInstall/ModuleInstaller.php');
+        require_once('custom/include/social/Language/en_us.lang.php');
         $moduleInstaller = new ModuleInstaller();
         $moduleInstaller->install_custom_fields($field);
         $moduleInstaller->addFieldsToLayout($layout);
+
+
 
 
     }

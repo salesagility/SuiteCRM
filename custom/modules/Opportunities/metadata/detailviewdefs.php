@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-21 11:28:43
+// created: 2014-01-28 16:47:08
 $viewdefs = array (
   'Opportunities' => 
   array (
@@ -71,6 +71,10 @@ $viewdefs = array (
             array (
               'name' => 'description',
               'nl2br' => true,
+            ),
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
             ),
           ),
         ),

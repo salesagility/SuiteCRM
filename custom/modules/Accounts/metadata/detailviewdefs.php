@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-21 11:28:43
+// created: 2014-01-28 16:50:35
 $viewdefs = array (
   'Accounts' => 
   array (
@@ -15,10 +15,6 @@ $viewdefs = array (
             1 => 'DUPLICATE',
             2 => 'DELETE',
             3 => 'FIND_DUPLICATES',
-            'AOS_GENLET' => 
-            array (
-              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
-            ),
           ),
         ),
         'maxColumns' => '2',
@@ -42,26 +38,6 @@ $viewdefs = array (
             'file' => 'modules/Accounts/Account.js',
           ),
         ),
-        'useTabs' => false,
-        'tabDefs' => 
-        array (
-          'LBL_ACCOUNT_INFORMATION' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ADVANCED' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ASSIGNMENT' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-        ),
-        'syncDetailEditViews' => true,
       ),
       'panels' => 
       array (
@@ -145,19 +121,6 @@ $viewdefs = array (
               'label' => 'LBL_DESCRIPTION',
             ),
           ),
-          5 => 
-          array (
-            0 => 
-            array (
-              'name' => 'facebook_username_c',
-              'label' => 'LBL_FACEBOOK_USERNAME',
-            ),
-            1 => 
-            array (
-              'name' => 'twitter_user_c',
-              'label' => 'LBL_TWITTER_USER',
-            ),
-          ),
         ),
         'LBL_PANEL_ADVANCED' => 
         array (
@@ -239,6 +202,20 @@ $viewdefs = array (
             array (
               'name' => 'assigned_user_name',
               'label' => 'LBL_ASSIGNED_TO',
+            ),
+            1 => 
+            array (
+              'name' => 'date_modified',
+              'label' => 'LBL_DATE_MODIFIED',
+              'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+            ),
+          ),
+          1 => 
+          array (
+            0 => 
+            array (
+              'name' => 'date_entered',
+              'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
             ),
           ),
         ),

@@ -34,26 +34,6 @@ array (
           'file' => 'modules/Accounts/Account.js',
         ),
       ),
-      'useTabs' => false,
-      'tabDefs' => 
-      array (
-        'LBL_ACCOUNT_INFORMATION' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ADVANCED' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-        'LBL_PANEL_ASSIGNMENT' => 
-        array (
-          'newTab' => false,
-          'panelDefault' => 'expanded',
-        ),
-      ),
-      'syncDetailEditViews' => true,
     ),
     'panels' => 
     array (
@@ -135,19 +115,6 @@ array (
           array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
-          ),
-        ),
-        5 => 
-        array (
-          0 => 
-          array (
-            'name' => 'facebook_username_c',
-            'label' => 'LBL_FACEBOOK_USERNAME',
-          ),
-          1 => 
-          array (
-            'name' => 'twitter_user_c',
-            'label' => 'LBL_TWITTER_USER',
           ),
         ),
       ),
