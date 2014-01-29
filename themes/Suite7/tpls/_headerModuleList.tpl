@@ -43,52 +43,37 @@
             {assign var="groupSelected" value=false}
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-                {if ( ( $smarty.request.parentTab == $group || (!$smarty.request.parentTab && in_array($MODULE_TAB,$modules.modules)) ) && !$groupSelected ) || ($smarty.foreach.groupList.index == 0 && $defaultFirst)}
-                    <li class="noBorder">
-                        <span class="currentTabLeft">&nbsp;</span><span class="currentTab">
-            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
-        </span><span class="currentTabRight">&nbsp;</span></li>
-                        {assign var="groupSelected" value=true}
-                        {else}
-                    <li>
-                    <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-        <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
-        </span><span class="notCurrentTabRight">&nbsp;</span>
-                {/if}
-                </li>
-            {/foreach}
-        </ul>
-    </div>
-    <div class="clear"></div>
-    <div id="subModuleList">
-        {assign var="groupSelected" value=false}
-        {foreach from=$groupTabs item=modules key=group name=moduleList}
-            {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-            <span id="moduleLink_{$smarty.foreach.moduleList.index}" {if ( ( $smarty.request.parentTab == $group || (!$smarty.request.parentTab && in_array($MODULE_TAB,$modules.modules)) ) && !$groupSelected ) || ($smarty.foreach.moduleList.index == 0 && $defaultFirst)}class="selected" {assign var="groupSelected" value=true}{/if}>
-    	<ul>
-            {foreach from=$modules.modules item=module key=modulekey}
                 <li>
-                    {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                    {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
-                </li>
-            {/foreach}
-            {if !empty($modules.extra)}
-                <li class="subTabMore">
-                    <a>>></a>
+                    <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
+                    <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
+                    </span>
+                    <span class="notCurrentTabRight">&nbsp;</span>
                     <ul class="cssmenu">
-                        {foreach from=$modules.extra item=submodulename key=submodule}
+                        {foreach from=$modules.modules item=module key=modulekey}
                             <li>
-                                <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}
-                                </a>
+                                {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
+                                {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
                             </li>
                         {/foreach}
                     </ul>
                 </li>
-            {/if}
+                {if !empty($modules.extra)}
+                    <li class="subTabMore">
+                        <span style="font-weight:normal";>{$APP.LBL_MORE} &raquo;</span>
+                        <ul class="cssmenu">
+                            {foreach from=$modules.extra item=submodulename key=submodule}
+                                <li>
+                                    <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}
+                                    </a>
+                                </li>
+                            {/foreach}
+                        </ul>
+                    </li>
+                {/if}
+            {/foreach}
         </ul>
-    </span>
-        {/foreach}
     </div>
+    <div class="clear"></div>
 {else}
     <div id="moduleList">
         <ul>

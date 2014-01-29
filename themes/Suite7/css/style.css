@@ -470,9 +470,7 @@ ul.cssmenu li a
     margin:0px;
 }
 
-#subModuleList li.subTabMore{
-    position:relative;
-}
+
 
 #subModuleList ul.cssmenu{
     display:block;
@@ -2433,7 +2431,6 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=butt
 #header
 {
     min-width: 85em;
-    z-index:10;
 }
 /* header */
 #header div.line {
@@ -2644,8 +2641,6 @@ ul.subTabs li a:link, ul.subTabs li a:visited
     text-decoration: none;
     padding: 0.2em 0.5em 0.3em 0.5em;
     margin: 0 -3px 0 0;
-    border-right: 1px solid;
-    border-left: 1px solid;
     border-bottom: none;
 }
 
@@ -3187,13 +3182,15 @@ textarea
 }
 #subModuleList
 {
-    background-color:#f10202;
-    border-color:#0046ad;
+position:relative;
+    border:0;
+    margin:0;
+    padding:0;
+
 }
 #subModuleList span a
 {
-    border-right-color:#0046ad;
-    border-left-color:#79a7d8;
+
 }
 #subModuleList span a:link,
 #subModuleList span a:visited
@@ -3203,7 +3200,6 @@ textarea
 #subModuleList span a:hover
 {
     background-color:#0046ad;
-    border-left-color:#0046ad;
 }
 
 /* lists in the header */
@@ -5098,16 +5094,24 @@ input[type=text].cstm_code {
     width:200px;
     height:200px;
 }
+#subModuleList ul {
+    min-width:200px;
 
-#caseUpdates {
-
-    padding:10px 0 10px 0;
+}
+#subModuleList ul li {
+    padding:5px;
+    background:#333;
+    border:none;
+    display:block;
 }
 
-.caseUpdate {
-    padding: 0 0 0 18px;
+
+#subModuleList span a {
+    padding:5px;
+    margin:5px;
+    border-radius:2px;
 }
 
-.caseUpdateImage {
-    padding: 0 5px 0 5px;
+#subModuleList span a:hover {
+    background:#565656;
 }
