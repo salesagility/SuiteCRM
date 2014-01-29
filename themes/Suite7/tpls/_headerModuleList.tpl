@@ -39,8 +39,52 @@
 {if $USE_GROUP_TABS}
     <div id="moduleList">
         <ul>
-            <li class="noBorder">&nbsp;</li>
             {assign var="groupSelected" value=false}
+            {foreach from=$moduleTopMenu item=module key=name name=moduleList}
+                {if $name == $MODULE_TAB}
+                    <li>
+                        <span class="currentTabLeft">&nbsp;</span>
+                        <span class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                        <ul class="cssmenu">
+                            {if count($shortcutTopMenu.$name) > 0}
+                            <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
+                                <span class="breaker">
+                            {foreach from=$shortcutTopMenu.$name item=item}
+                                {if $item.URL == "-"}
+                                    <li><a></a><span>&nbsp;</span></li>
+                            {else}
+                                <li ><a href="{$item.URL}"><span>{$item.LABEL}</span></a><br></li>
+                                {/if}
+                            {/foreach}
+                                <br>
+                            {/if}
+                            <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
+                            {foreach from=$recentRecords item=item name=lastViewed}
+                                    <table style="width:100%">
+                                        <tr>
+                                            <td>
+                                                <li>
+                                                    <span>
+                                                    <a title="{$item.module_name}"
+                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                    href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                                    <span>{$item.item_summary_short}</span>
+                                                    </a>
+                                            </td>
+                                            <td align="right">
+                                                <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><img style="float:right;" src="index.php?entryPoint=getImage&imageName=dashlet-header-edit.png" width="14" height="14" class="iconed_dull"></a></em>
+                                            </td>
+                                            </span>
+                                                </li>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            {/foreach}
+                            </span>
+                        </ul>
+                    </li>
+                {/if}
+            {/foreach}
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                 <li>
@@ -55,21 +99,14 @@
                                 {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
                             </li>
                         {/foreach}
+                        {foreach from=$modules.extra item=submodulename key=submodule}
+                            <li>
+                                <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}
+                                </a>
+                            </li>
+                        {/foreach}
                     </ul>
                 </li>
-                {if !empty($modules.extra)}
-                    <li class="subTabMore">
-                        <span style="font-weight:normal";>{$APP.LBL_MORE} &raquo;</span>
-                        <ul class="cssmenu">
-                            {foreach from=$modules.extra item=submodulename key=submodule}
-                                <li>
-                                    <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}
-                                    </a>
-                                </li>
-                            {/foreach}
-                        </ul>
-                    </li>
-                {/if}
             {/foreach}
         </ul>
     </div>
