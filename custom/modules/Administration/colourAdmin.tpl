@@ -71,12 +71,6 @@
         </tr>
     </table>
 
-    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-        <tr><th align="left" scope="row" colspan="4"><h4><strong>{$MOD.LBL_COLOUR_ADMIN_CUSTOM}</strong></h4></th></tr>
-        <tr style="float:left;">
-            <td><input type="text" id="colourselector_custom" name="colourselector_custom" value="{$config.colourselector.custom}" class="cstm_code" /></td>
-        </tr>
-    </table>
 
     <div style="padding-top: 2px;">
         {$BUTTONS}
