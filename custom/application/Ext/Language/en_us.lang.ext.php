@@ -1,6 +1,15 @@
 <?php 
  //WARNING: The contents of this file are auto-generated
 
+
+/**
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
+
+
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
  
 /**
  * Extensions to SugarCRM
