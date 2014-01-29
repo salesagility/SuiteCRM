@@ -57,6 +57,10 @@
                             {/foreach}
                                 <br>
                             {/if}
+                                    {if $name == 'Home' and !$lock_homepage}
+                                        <h3 class="home_h2">{$APP.LBL_LINK_ACTIONS}</h3>
+                                        <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
+                                    {/if}
                             <h3 class="home_h2">{$APP.LBL_LAST_VIEWED}</h3><br>
                             {foreach from=$recentRecords item=item name=lastViewed}
                                     <table style="width:100%">
@@ -100,8 +104,7 @@
                         {/foreach}
                         {foreach from=$modules.extra item=submodulename key=submodule}
                             <li>
-                                <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}
-                                </a>
+                                <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a>
                             </li>
                         {/foreach}
                     </ul>
