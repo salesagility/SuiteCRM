@@ -2625,6 +2625,7 @@ ul.subTabs li a:link, ul.subTabs li a:visited
 }
 #moduleList ul li ul.cssmenu
 {
+    min-width:100px;
     position:absolute;
     z-index:50;
     margin-left: -1.7em;
