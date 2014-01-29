@@ -26,4 +26,9 @@ $sugar_config['enable_action_menu'] = true;
 $sugar_config['stack_trace_errors'] = false;
 $sugar_config['developerMode'] = true;
 $sugar_config['default_max_tabs'] = '10';
+$sugar_config['passwordsetting']['SystemGeneratedPasswordON'] = '1';
+$sugar_config['passwordsetting']['systexpirationtype'] = '1';
+$sugar_config['SAML_loginurl'] = '';
+$sugar_config['SAML_X509Cert'] = '';
+$sugar_config['authenticationClass'] = '';
 /***CONFIGURATOR***/

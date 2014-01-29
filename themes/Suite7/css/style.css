@@ -2748,8 +2748,20 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover
 {
     border: 1px solid;
     font-size: 11px;
+    width:50px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
+#search input[name=query_string]:focus {
+    width:150px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
 
 /* for subpanel tabs */
 ul.tablist, ul.subpanelTablist
@@ -4360,6 +4372,7 @@ iframe.teamNoticeBox {
     line-height:25px;
     margin:0;
     padding:5px;
+
 }
 
 #moduleList ul li a:link {
@@ -4367,6 +4380,7 @@ iframe.teamNoticeBox {
     color:#cccccc;
     font-weight:normal;
     font-size:12px !important;
+
 }
 
 #moduleList ul li a:visited {
@@ -4377,6 +4391,7 @@ iframe.teamNoticeBox {
 
 #moduleList ul li:hover {
     background:#565656;
+
 }
 
 #moduleList ul li a:hover {
