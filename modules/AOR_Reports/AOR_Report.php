@@ -265,13 +265,15 @@ class AOR_Report extends Basic {
                     $html .= "<td class='' valign='top' align='left'>";
                     if($att['link'] && $links) $html .= "<a href='index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
 
+                    $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
+
                     switch ($att['function']){
                         case 'COUNT':
                         case 'SUM':
                             $html .= $row[$name];
                             break;
                         default:
-                            $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]);
+                            $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id);
                             break;
                     }
                     if($att['link'] && $links) $html .= "</a>";
@@ -452,6 +454,10 @@ class AOR_Report extends Basic {
 
                 if($data['type'] == 'relate' && isset($data['id_name'])) {
                     $field->field = $data['id_name'];
+                }
+
+                if($data['type'] == 'currency' && !stripos($field->field, '_USD') && isset($field_module->field_defs['currency_id'])) {
+                    $query['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
                 }
 
                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {

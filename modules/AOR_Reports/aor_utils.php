@@ -136,7 +136,7 @@ function getModuleRelationships($module, $view='EditView',$value = '')
 }
 
 
-function getModuleField($module, $fieldname, $aor_field, $view='EditView',$value = '', $alt_type = ''){
+function getModuleField($module, $fieldname, $aor_field, $view='EditView',$value = '', $alt_type = '', $currency_id = ''){
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
     // use the mod_strings for this module
@@ -342,6 +342,30 @@ function getModuleField($module, $fieldname, $aor_field, $view='EditView',$value
         $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aor_field;
 
+    }
+
+    if($fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
+        static $sfh;
+
+        if(!isset($sfh)) {
+            require_once('include/SugarFields/SugarFieldHandler.php');
+            $sfh = new SugarFieldHandler();
+        }
+
+        if($currency_id != '' && !stripos($fieldname, '_USD')){
+            $userCurrencyId = $current_user->getPreference('currency');
+            if($currency_id != $userCurrencyId){
+                $currency = new Currency();
+                $currency->retrieve($currency_id);
+                $value = $currency->convertToDollar($value);
+                $currency->retrieve($userCurrencyId);
+                $value = $currency->convertFromDollar($value);
+            }
+        }
+
+        $parentfieldlist[strtoupper($fieldname)] = $value;
+
+        return($sfh->displaySmarty($parentfieldlist, $fieldlist[$fieldname], 'ListView', $displayParams));
     }
 
     $ss->assign("fields",$fieldlist);
