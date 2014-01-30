@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-28 16:47:08
+// created: 2014-01-30 15:03:57
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -154,6 +154,24 @@ $viewdefs = array (
             1 => 
             array (
               'name' => 'twitter_user_c',
+            ),
+          ),
+          7 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebookAPI_user_c',
+            ),
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
+            ),
+          ),
+          8 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebook_user_c',
             ),
           ),
         ),

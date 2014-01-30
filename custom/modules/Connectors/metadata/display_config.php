@@ -1,28 +1,24 @@
 <?php
-// created: 2014-01-28 16:51:16
+// created: 2014-01-30 15:03:29
 $modules_sources = array (
   'Accounts' => 
   array (
     'ext_rest_insideview' => 'ext_rest_insideview',
-    'ext_rest_facebookAPI' => 'ext_rest_facebookAPI',
     'ext_rest_twitter' => 'ext_rest_twitter',
   ),
   'Contacts' => 
   array (
     'ext_rest_insideview' => 'ext_rest_insideview',
+    'ext_rest_twitter' => 'ext_rest_twitter',
+    'ext_rest_facebook' => 'ext_rest_facebook',
   ),
   'Leads' => 
   array (
     'ext_rest_insideview' => 'ext_rest_insideview',
-    'ext_rest_facebookAPI' => 'ext_rest_facebookAPI',
   ),
   'Opportunities' => 
   array (
     'ext_rest_insideview' => 'ext_rest_insideview',
-  ),
-  'Calls' => 
-  array (
-    'ext_rest_facebookAPI' => 'ext_rest_facebookAPI',
   ),
   'Tasks' => 
   array (

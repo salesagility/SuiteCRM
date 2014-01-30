@@ -8,7 +8,7 @@ $(function() {
 
 
         //Ajax Call
-        username = $("#facebook_username_c").text();
+        username = $("#facebook_user_c").text();
         if(username){
              module = $("#formDetailView input[name=module]").val();
              record = $("input[name=record]").val();
