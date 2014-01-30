@@ -220,7 +220,7 @@ class ConnectorsController extends SugarController
 
             } //foreach
 
-            if ($id == 'ext_rest_twitter' || $id == 'ext_rest_facebookAPI') {
+            if ($id == 'ext_rest_twitter' || $id == 'ext_rest_facebook') {
 
 
                 $full_list = array_keys($mapping['beans']);

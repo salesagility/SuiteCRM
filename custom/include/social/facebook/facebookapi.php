@@ -23,7 +23,7 @@ if ($user){
 }
 
 
-echo '<div style="height:400px;overflow:scroll"><table>';
+echo '<div style="height:400px;overflow:scroll"><table width="100%">';
 echo '<tr><th style="text-align:center">Facebook Activity</th><th style="text-align:center">' . $log . '</th></tr>';
 echo '<tr>';
 echo '<td style="text-align:center"><a href="' . $different_user['link'] . '">' . $different_user['first_name'] . ' ' . $different_user['last_name'] . ' (' . $different_user['username'] .')</a><br>

@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-28 16:51:11
+// created: 2014-01-30 15:28:37
 $connectors = array (
   'ext_rest_linkedin' => 
   array (
@@ -34,19 +34,22 @@ $connectors = array (
       3 => 'Opportunities',
     ),
   ),
-  'ext_rest_facebookAPI' => 
+  'ext_rest_facebook' => 
   array (
-    'id' => 'ext_rest_facebookAPI',
+    'id' => 'ext_rest_facebook',
     'name' => 'Facebook',
     'enabled' => true,
-    'directory' => 'custom/modules/Connectors/connectors/sources/ext/rest/facebookAPI',
+    'directory' => 'custom/modules/Connectors/connectors/sources/ext/rest/facebook',
     'eapm' => 
     array (
       'enabled' => true,
     ),
     'modules' => 
     array (
-      0 => 'Contacts',
+      0 => 'Accounts',
+      1 => 'Calls',
+      2 => 'Leads',
+      3 => 'Contacts',
     ),
   ),
   'ext_rest_twitter' => 

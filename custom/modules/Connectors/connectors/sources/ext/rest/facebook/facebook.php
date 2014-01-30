@@ -4,7 +4,7 @@
 
     require_once('include/connectors/sources/ext/rest/rest.php');
 
-    class ext_rest_facebookAPI extends ext_rest
+    class ext_rest_facebook extends ext_rest
     {
         public function __construct()
         {

@@ -149,6 +149,24 @@ array (
             'name' => 'twitter_user_c',
           ),
         ),
+        8 => 
+        array (
+          0 => 
+          array (
+            'name' => 'facebookAPI_user_c',
+          ),
+          1 => 
+          array (
+            'name' => 'twitter_user_c',
+          ),
+        ),
+        9 => 
+        array (
+          0 => 
+          array (
+            'name' => 'facebook_user_c',
+          ),
+        ),
       ),
       'LBL_PANEL_ADVANCED' => 
       array (
