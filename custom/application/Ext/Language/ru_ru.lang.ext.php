@@ -707,8 +707,8 @@ $app_list_strings['product_type_dom']['Service'] = 'Услуга';
 $app_list_strings['product_quote_parent_type_dom']['AOS_Quotes'] = 'Предложения';
 $app_list_strings['product_quote_parent_type_dom']['AOS_Invoices'] = 'Счета';
 
-$app_list_strings['pdf_template_type_dom']['Quotes'] = 'Предложений';
-$app_list_strings['pdf_template_type_dom']['Invoices'] = 'Счетов';
+$app_list_strings['pdf_template_type_dom']['AOS_Quotes'] = 'Предложений';
+$app_list_strings['pdf_template_type_dom']['AOS_Invoices'] = 'Счетов';
 $app_list_strings['pdf_template_type_dom']['Accounts'] = 'Контрагентов';
 $app_list_strings['pdf_template_type_dom']['Contacts'] = 'Контактов';
 $app_list_strings['pdf_template_type_dom']['Leads'] = 'Предварит. контактов';
