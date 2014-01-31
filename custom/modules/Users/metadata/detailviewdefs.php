@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-29 16:53:32
+// created: 2014-01-31 11:04:54
 $viewdefs = array (
   'Users' => 
   array (
@@ -47,7 +47,10 @@ $viewdefs = array (
           ),
           2 => 
           array (
-            0 => 'picture',
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
+            ),
           ),
         ),
         'LBL_EMPLOYEE_INFORMATION' => 
@@ -74,12 +77,10 @@ $viewdefs = array (
           ),
           4 => 
           array (
-            0 => '',
             1 => 'phone_fax',
           ),
           5 => 
           array (
-            0 => '',
             1 => 'phone_home',
           ),
           6 => 
