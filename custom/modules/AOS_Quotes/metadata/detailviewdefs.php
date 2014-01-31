@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-28 12:29:28
+// created: 2014-01-29 16:53:32
 $viewdefs = array (
   'AOS_Quotes' => 
   array (
@@ -230,6 +230,11 @@ $viewdefs = array (
           8 => 
           array (
             0 => 
+            array (
+              'name' => 'twitter_user_c',
+              'label' => 'Twitter User',
+            ),
+            1 => 
             array (
               'name' => 'twitter_user_c',
               'label' => 'Twitter User',

@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-28 12:42:58
+// created: 2014-01-29 16:53:32
 $viewdefs = array (
   'Documents' => 
   array (
@@ -101,6 +101,10 @@ $viewdefs = array (
             array (
               'name' => 'assigned_user_name',
               'label' => 'LBL_ASSIGNED_TO_NAME',
+            ),
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
             ),
           ),
         ),
