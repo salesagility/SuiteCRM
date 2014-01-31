@@ -53,7 +53,7 @@ if ($twitter_enabled) {
     $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_secret'], $access_token['oauth_token'], $access_token['oauth_token_secret']);
 
     /* If method is set change API call made. Test is called by default. */
-    $tweets = $connection->get('statuses/home_timeline', array('screen_name' => $_SESSION['access_token']['screen_name'], 'exclude_replies' => true));
+    $tweets = $connection->get('statuses/home_timeline', array('screen_name' => $_SESSION['access_token']['screen_name'], 'exclude_replies' => false));
 
     //Set the increment value.
     $i = 0;
@@ -70,6 +70,7 @@ if ($twitter_enabled) {
 
     if (empty($tweets['errors'])) {
         while ($i < count($tweets)) {
+            if(!isset($tweets[$i]['retweet_status'])){
 
             if (count($tweets[$i]['entities']['urls'][0]['url']) > 0) {
                 $tweets[$i]['text'] = replace_urls($db, $tweets[$i]);
@@ -112,6 +113,7 @@ if ($twitter_enabled) {
                 $i++;
             }
         }
+    }
     }
 }
 
