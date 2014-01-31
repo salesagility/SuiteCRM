@@ -116,6 +116,10 @@ array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
+          1 => 
+          array (
+            'name' => 'twitter_user_c',
+          ),
         ),
       ),
       'LBL_PANEL_ADVANCED' => 

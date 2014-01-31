@@ -186,6 +186,11 @@ array (
             'name' => 'twitter_user_c',
             'label' => 'Twitter User',
           ),
+          1 => 
+          array (
+            'name' => 'twitter_user_c',
+            'label' => 'Twitter User',
+          ),
         ),
       ),
     ),

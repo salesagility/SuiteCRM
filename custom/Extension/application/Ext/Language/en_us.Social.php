@@ -28,4 +28,3 @@ $mod_strings = array (
     'FACEBOOK_USER_C' => 'Facebook User',
 );
 
-

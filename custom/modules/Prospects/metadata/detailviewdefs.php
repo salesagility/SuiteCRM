@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-20 12:14:34
+// created: 2014-01-29 16:53:32
 $viewdefs = array (
   'Prospects' => 
   array (
@@ -102,12 +102,6 @@ $viewdefs = array (
               'name' => 'account_name',
               'displayParams' => 
               array (
-                'enableConnectors' => true,
-                'module' => 'Prospects',
-                'connectors' => 
-                array (
-                  0 => 'ext_rest_linkedin',
-                ),
               ),
             ),
             1 => 'phone_fax',
@@ -142,6 +136,10 @@ $viewdefs = array (
           6 => 
           array (
             0 => 'description',
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
+            ),
           ),
         ),
         'LBL_MORE_INFORMATION' => 

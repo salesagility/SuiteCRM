@@ -1,6 +1,6 @@
 <?php
-$module_name = 'AOS_Quotes';
-$_object_name = 'aos_quotes';
+$module_name = 'AOS_Invoices';
+$_object_name = 'aos_invoices';
 $viewdefs [$module_name] = 
 array (
   'EditView' => 
@@ -66,35 +66,35 @@ array (
           ),
           1 => 
           array (
-            'name' => 'opportunity',
-            'label' => 'LBL_OPPORTUNITY',
+            'name' => 'number',
+            'label' => 'LBL_INVOICE_NUMBER',
+            'customCode' => '{$fields.number.value}',
           ),
         ),
         1 => 
         array (
           0 => 
           array (
-            'name' => 'number',
+            'name' => 'quote_number',
             'label' => 'LBL_QUOTE_NUMBER',
-            'customCode' => '{$fields.number.value}',
           ),
           1 => 
           array (
-            'name' => 'stage',
-            'label' => 'LBL_STAGE',
+            'name' => 'due_date',
+            'label' => 'LBL_DUE_DATE',
           ),
         ),
         2 => 
         array (
           0 => 
           array (
-            'name' => 'expiration',
-            'label' => 'LBL_EXPIRATION',
+            'name' => 'quote_date',
+            'label' => 'LBL_QUOTE_DATE',
           ),
           1 => 
           array (
-            'name' => 'invoice_status',
-            'label' => 'LBL_INVOICE_STATUS',
+            'name' => 'invoice_date',
+            'label' => 'LBL_INVOICE_DATE',
           ),
         ),
         3 => 
@@ -106,42 +106,20 @@ array (
           ),
           1 => 
           array (
-            'name' => 'term',
-            'label' => 'LBL_TERM',
+            'name' => 'status',
+            'label' => 'LBL_STATUS',
           ),
         ),
         4 => 
         array (
           0 => 
           array (
-            'name' => 'approval_status',
-            'label' => 'LBL_APPROVAL_STATUS',
-          ),
-          1 => 
-          array (
-            'name' => 'approval_issue',
-            'label' => 'LBL_APPROVAL_ISSUE',
-          ),
-        ),
-        5 => 
-        array (
-          0 => 
-          array (
-            'name' => 'approval_issue',
-            'label' => 'LBL_APPROVAL_ISSUE',
+            'name' => 'description',
+            'label' => 'LBL_DESCRIPTION',
           ),
           1 => 
           array (
             'name' => 'twitter_user_c',
-            'label' => 'Twitter User',
-          ),
-        ),
-        6 => 
-        array (
-          0 => 
-          array (
-            'name' => 'twitter_user_c',
-            'label' => 'Twitter User',
           ),
         ),
       ),
@@ -233,6 +211,9 @@ array (
             'name' => 'line_items',
             'label' => 'LBL_LINE_ITEMS',
           ),
+        ),
+        2 => 
+        array (
         ),
         3 => 
         array (
