@@ -53,11 +53,6 @@ include('custom/metadata/securitygroups_usersMetaData.php');
 
  
  //WARNING: The contents of this file are auto-generated
-include('custom/metadata/fp_events_leads_1MetaData.php');
-
-
- 
- //WARNING: The contents of this file are auto-generated
 include('custom/metadata/aos_contracts_documentsMetaData.php');
 
 

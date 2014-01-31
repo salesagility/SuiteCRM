@@ -96,8 +96,16 @@ var $selectedCategories = array();
         $this->searchFields = $dashletData['SugarFeedDashlet']['searchFields'];
         $this->columns = $dashletData['SugarFeedDashlet']['columns'];
 
-        $this->categories["facebook"] = "Facebook";
-        $this->categories["twitter"] = "Twitter";
+        $twitter_enabled = $this->check_enabled('twitter');
+        $facebook_enabled = $this->check_enabled('facebook');
+
+        if($facebook_enabled){
+            $this->categories["Facebook"] = "Facebook";
+        }
+
+        if($twitter_enabled){
+            $this->categories["Twitter"] = "Twitter";
+        }
 
 		$catCount = count($this->categories);
 		ACLController::filterModuleList($this->categories, false);
@@ -164,12 +172,12 @@ var $selectedCategories = array();
 				$regular_modules[] = 'UserFeed';
 				continue;
 			}
-            if($module == 'facebook'){
-                $regular_modules[] = "facebook";
+            if($module == 'Facebook'){
+                $regular_modules[] = "Facebook";
                 continue;
             }
-            if($module == 'twitter'){
-                $regular_modules[] = 'twitter';
+            if($module == 'Twitter'){
+                $regular_modules[] = 'Twitter';
                 continue;
             }
 
@@ -566,4 +574,16 @@ enableQS(false);
             return true;
         }
     }
+
+    function check_enabled($type){
+        global $db;
+        $query = "SELECT * FROM `config` where name = 'module_" .$type . "' and value =  1;";
+        $results = $db->query($query);
+
+        while ($row = $db->fetchByAssoc($results)) {
+            return true;
+            break;
+        }
+    }
+
 }
