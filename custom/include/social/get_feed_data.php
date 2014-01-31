@@ -137,14 +137,14 @@ if ($facebook_enabled) {
     }
 
     if ($user) {
-        $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
+       // $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
     } else {;
         $log = '<a class="button" href="' . $loginUrl . '">Facebook Login</a>';
     }
 
-    $html .= '<div>';
+    $html .= '<span>';
     $html .= $log;
-    $html .= '</div>';
+    $html .= '</span>';
 
     foreach ($user_home['data'] as $single) {
         data_insert($single, "facebook");
