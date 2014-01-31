@@ -652,6 +652,16 @@ $app_list_strings['aor_function_list']['MIN'] = 'Minimum';
 $app_list_strings['aor_function_list']['MAX'] = 'Maximum';
 $app_list_strings['aor_function_list']['SUM'] = 'Sum';
 $app_list_strings['aor_function_list']['AVG'] = 'Average';
+
+/**
+ * Social Feed Language Strings.
+ */
+
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Facebook User';
+$app_strings['LBL_TWITTER_USER_C'] = 'Twitter User';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
  
 /**
  * Extensions to SugarCRM

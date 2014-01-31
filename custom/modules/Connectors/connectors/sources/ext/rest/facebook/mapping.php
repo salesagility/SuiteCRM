@@ -1,9 +1,9 @@
 <?php
-// created: 2014-01-30 15:03:57
+// created: 2014-01-31 11:33:32
 $mapping = array (
   'beans' => 
   array (
-    'Contacts' => 
+    'Accounts' => 
     array (
     ),
   ),

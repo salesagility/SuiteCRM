@@ -23,7 +23,7 @@ class hooks{
             $mapping = '';
             include('custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php');
             if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
-               echo '<script src="custom/include/social/social_feeds.js"></script>';
+               echo '<script src="custom/include/social/twitter/twitter_feed.js"></script>';
                echo '<script src="custom/include/social/twitter/twitter.js"></script>';
             }
         }
