@@ -9,44 +9,44 @@
         public function __construct()
         {
             parent::__construct();
-
+            global $app_list_strings;
             //Used for testing
             $this->_has_testing_enabled = false;
             $this->_enable_in_admin_search = false;
             //Used to enable hover for the formatter
             $this->_enable_in_hover = false;
 
+            $this->allowedModuleList = array('Accounts' => $app_list_strings['moduleList']['Accounts'],
+                'Contacts' => $app_list_strings['moduleList']['Contacts'],
+                'Leads' => $app_list_strings['moduleList']['Leads']);
+
+
         }
 
-
-
         /**
-         * getItem
-         * Returns an array containing a key/value pair(s) of a source record
+         * function to force only to let the modules in the allowed list to appear in the enable connectors,
          *
-         * @param Array $args Array of arguments to search/filter by
-         * @param String $module String optional value of the module that the connector framework is attempting to map to
-         * @return Array of key/value pair(s) of the source record; empty Array if no results are found
+         * @param array $moduleList
+         * @return array
          */
+        public function filterAllowedModules( $moduleList ) {
+            // InsideView currently has no ability to talk to modules other than these four
+            $outModuleList = array();
+            foreach ( $moduleList as $module ) {
+                if ( !in_array($module,$this->allowedModuleList) ) {
+                    continue;
+                } else {
+                    $outModuleList[$module] = $module;
+                }
+            }
+            return $outModuleList;
+        }
+
         public function getItem($args=array(), $module=null)
-        {
+        { return null;  }
 
-            return null;
-        }
-
-        /**
-         * getList
-         * Returns a nested array containing a key/value pair(s) of a source record
-         *
-         * @param Array $args Array of arguments to search/filter by
-         * @param String $module String optional value of the module that the connector framework is attempting to map to
-         * @return Array of key/value pair(s) of source record; empty Array if no results are found
-         */
         public function getList($args=array(), $module=null)
-        {
-
-            return null;
-        }
+        { return null; }
     }
 
 ?>
