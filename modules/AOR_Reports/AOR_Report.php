@@ -415,7 +415,7 @@ class AOR_Report extends Basic {
             }
             $query .= ' '.$query_sort_by;
         }
-
+echo $query;
         return $query;
 
     }
@@ -444,8 +444,9 @@ class AOR_Report extends Basic {
                 $table_alias = $field_module->table_name;
                 if($path[0] != $module->module_dir){
                     foreach($path as $rel){
-                        $query = $this->build_report_query_join($rel, $field_module, 'relationship', $query);
-                        $field_module = new $beanList[getRelatedModule($field_module->module_dir,$rel)];
+                        $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$rel)];
+                        $query = $this->build_report_query_join($rel, $field_module, 'relationship', $query, $new_field_module);
+                        $field_module = $new_field_module;
                         $table_alias = $rel;
                     }
                 }
@@ -487,7 +488,7 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_report_query_join($name, SugarBean $module, $type, $query = array()){
+    function build_report_query_join($name, SugarBean $module, $type, $query = array(),SugarBean $rel_module = null ){
 
         if(!isset($query['join'][$name])){
 
@@ -503,6 +504,7 @@ class AOR_Report extends Basic {
                         $join = $module->$name->getJoin($params, true);
 
                         $query['join'][$name] = $join['join'];
+                        if($rel_module != null) $query['join'][$name] .= $this->build_report_access_query($rel_module);
                         $query['select'][] = $join['select']." AS '".$name."_id'";
                     }
                     break;
@@ -513,6 +515,37 @@ class AOR_Report extends Basic {
 
         }
         return $query;
+    }
+
+    function build_report_access_query(SugarBean $module){
+
+        $where = '';
+        if($module->bean_implements('ACL') && ACLController::requireOwner($module->module_dir, 'list') )
+        {
+            global $current_user;
+            $owner_where = $module->getOwnerWhere($current_user->id);
+            $where = ' AND '.$owner_where;
+
+        }
+
+        if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
+            /* BEGIN - SECURITY GROUPS */
+            if($module->bean_implements('ACL') && ACLController::requireSecurityGroup($module->module_dir, 'list') )
+            {
+                require_once('modules/SecurityGroups/SecurityGroup.php');
+                global $current_user;
+                $owner_where = $module->getOwnerWhere($current_user->id);
+                $group_where = SecurityGroup::getGroupWhere($module->table_name,$module->module_dir,$current_user->id);
+                if(!empty($owner_where)){
+                    $where .= " AND (".  $owner_where." or ".$group_where.") ";
+                } else {
+                    $where .= ' AND '.  $group_where;
+                }
+            }
+            /* END - SECURITY GROUPS */
+        }
+
+        return $where;
     }
 
     function build_report_query_where($query = array()){
@@ -535,9 +568,10 @@ class AOR_Report extends Basic {
                 $table_alias = $condition_module->table_name;
                 if($path[0] != $module->module_dir){
                     foreach($path as $rel){
-                      $query = $this->build_report_query_join($rel, $condition_module, 'relationship', $query);
-                      $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
-                      $table_alias = $rel;
+                        $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+                        $query = $this->build_report_query_join($rel, $condition_module, 'relationship', $query, $new_condition_module);
+                        $condition_module = $new_condition_module;
+                        $table_alias = $rel;
                     }
                 }
 
@@ -634,7 +668,7 @@ class AOR_Report extends Basic {
                 }
             }
 
-            $query['where'][] = $module->table_name.".deleted = 0 ";
+            $query['where'][] = $module->table_name.".deleted = 0 ".$this->build_report_access_query($module);
 
         }
         return $query;
