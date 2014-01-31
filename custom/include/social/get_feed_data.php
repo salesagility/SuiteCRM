@@ -135,9 +135,9 @@ if ($facebook_enabled) {
     }
 
     if ($user) {
-        $log = '<a href="' . $logoutUrl . '">Logout with Facebook</a>';
-    } else {
-        $log = '<a href="' . $loginUrl . '">Login with Facebook</a>';
+        $log = '<a class="button" href="' . $logoutUrl . '">Facebook Logout</a>';
+    } else {;
+        $log = '<a class="button" href="' . $loginUrl . '">Facebook Login</a>';
     }
 
     $html .= '<div>';
