@@ -106,7 +106,7 @@ function check_auth($url){
 
         /* Build authorize URL and redirect user to Twitter. */
         $url = $connection->getAuthorizeURL($token);
-        $html = "<a href='". $url ."'>Log into Twitter</a>";
+        $html = "<a class='button' href='". $url ."'>Log into Twitter</a>";
 
        $_REQUEST['html'] = $html;
        $_REQUEST['request_token'] = $request_token;
