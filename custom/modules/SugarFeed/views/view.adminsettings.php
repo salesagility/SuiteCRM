@@ -141,8 +141,8 @@ class customViewAdminsettings extends ViewAdminsettings
         }
 
         $possible_feeds = SugarFeed::getAllFeedModules();
-        $possible_feeds['Facebook'] = 'Facebook';
-        $possible_feeds['Twitter'] = 'Twitter';
+        $possible_feeds['facebook'] = 'Facebook';
+        $possible_feeds['twitter'] = 'Twitter';
         $module_list = array();
         $userFeedEnabled = 0;
         foreach ( $possible_feeds as $module ) {
