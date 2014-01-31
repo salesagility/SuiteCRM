@@ -30,6 +30,39 @@ function replace_urls($db,$array)
 
 }
 
+function replace_hashtags($db,$array)
+{
+
+    $i = 0;
+    $count = count($array['entities']['hashtags']);
+
+    while($i < $count) {
+
+        $array['text'] = str_replace('#'. $array['entities']['hashtags'][$i]['text'], "<a href=http://twitter.com/#" .$array['entities']['hashtags'][$i]['text'] .">" . "#" . $array['entities']['hashtags'][$i]['text']. "</a>", $array['text']);
+        $i++;
+    }
+
+    return $array['text'];
+
+}
+
+function replace_users($db,$array)
+{
+
+    $i = 0;
+    $count = count($array['entities']['user_mentions']);
+
+    while($i < $count) {
+
+        $array['text'] = str_replace('@'. $array['entities']['user_mentions'][$i]['screen_name'], "<a href=http://twitter.com/" .$array['entities']['user_mentions'][$i]['screen_name'] .">" . "@" . $array['entities']['user_mentions'][$i]['screen_name']. "</a>", $array['text']);
+        $i++;
+    }
+
+    return $array['text'];
+
+
+}
+
 function duplicate_check($db,$text,$date){
 
     $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $text . "' AND date_entered = '" . $date . "'";

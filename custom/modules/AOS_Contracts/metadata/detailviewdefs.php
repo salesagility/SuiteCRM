@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-28 15:19:44
+// created: 2014-01-29 16:53:32
 $viewdefs = array (
   'AOS_Contracts' => 
   array (
@@ -143,6 +143,10 @@ $viewdefs = array (
           7 => 
           array (
             0 => 'description',
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
+            ),
           ),
         ),
         'lbl_line_items' => 
@@ -162,7 +166,6 @@ $viewdefs = array (
               'name' => 'total_amt',
               'label' => 'LBL_TOTAL_AMT',
             ),
-            1 => '',
           ),
           2 => 
           array (
