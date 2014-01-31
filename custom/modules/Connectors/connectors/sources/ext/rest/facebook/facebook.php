@@ -11,6 +11,7 @@
             parent::__construct();
             global $app_list_strings;
             //Used for testing
+            $this->_enable_in_admin_mapping = false;
             $this->_has_testing_enabled = false;
             $this->_enable_in_admin_search = false;
             //Used to enable hover for the formatter

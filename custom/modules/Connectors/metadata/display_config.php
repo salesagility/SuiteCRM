@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-31 11:33:31
+// created: 2014-01-31 16:48:09
 $modules_sources = array (
   'Accounts' => 
   array (
@@ -11,6 +11,7 @@ $modules_sources = array (
   'Contacts' => 
   array (
     'ext_rest_insideview' => 'ext_rest_insideview',
+    'ext_rest_facebook' => 'ext_rest_facebook',
   ),
   'Leads' => 
   array (
