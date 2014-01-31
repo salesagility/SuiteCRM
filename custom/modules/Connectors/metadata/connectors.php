@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-31 15:40:34
+// created: 2014-01-31 16:10:14
 $connectors = array (
   'ext_rest_linkedin' => 
   array (
@@ -40,10 +40,7 @@ $connectors = array (
     'name' => 'Facebook',
     'enabled' => true,
     'directory' => 'custom/modules/Connectors/connectors/sources/ext/rest/facebook',
-    'eapm' => 
-    array (
-      'enabled' => true,
-    ),
+    'eapm' => false,
     'modules' => 
     array (
       0 => 'Accounts',
