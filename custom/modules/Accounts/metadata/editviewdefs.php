@@ -157,6 +157,22 @@ array (
           ),
         ),
       ),
+      'LBL_PANEL_SOCIAL_FEED' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'facebook_user_c',
+            'label' => 'LBL_FACEBOOK_USER_C',
+          ),
+          1 => 
+          array (
+            'name' => 'twitter_user_c',
+            'label' => 'LBL_TWITTER_USER_C',
+          ),
+        ),
+      ),
     ),
   ),
 );

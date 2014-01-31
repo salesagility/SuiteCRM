@@ -174,7 +174,7 @@ if ($facebook_enabled) {
         $date = date("Y-m-d H:i:s", strtotime($single['created_time']));
 
 
-        $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $message[1] . "' AND date_entered = '" . $date . "'";
+        $sql_check = "SELECT * FROM sugarfeed WHERE description = '" . $message . "' AND date_entered = '" . $date . "'";
         $results = $db->query($sql_check);
 
         while ($row = $db->fetchByAssoc($results)) {
@@ -225,29 +225,33 @@ if ($facebook_enabled) {
 
     function generate_stream($stream)
     {
+
+        if($stream['from']['name'] = 'Jemma Moss'){
+                $vare = "asd";
+        }
         //if simple post
         switch ($stream['type']) {
             case "":
                 $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
                 break;
             case "link";
-                $string[0] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . " style=float:left;padding-right:5px;padding-bottom:5px; ><img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture /></a>";
+                $string[0] = "<img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['name'])) {
 
-                    $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
+                    $string[1] =  $stream['from']['name'] . " -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
                 } else {
                     //must be an article
-                    $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> -  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
+                    $string[1] =  $stream['from']['name'] . "  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
                 }
                 break;
             case "status":
                 //
-                $string[0] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . " style=float:left;padding-right:5px;padding-bottom:5px; ><img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture /></a>";
+                $string[0] = "<img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['story'])) {
-                    $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 100) . "</a>";
+                    $string[1] = $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 100) . "</a>";
                 } else {
                     //wall post.
-                    $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 100) . "</a>";
+                    $string[1] = $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 100) . "</a>";
                 }
                 break;
             case "photos":

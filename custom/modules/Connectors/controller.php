@@ -291,7 +291,7 @@ class ConnectorsController extends SugarController
         $field = array(
             array(
                 'name' => $field_name,
-                'label' => $field_name,
+                'label' => 'LBL_' . strtoupper($field_name),
                 'type' => 'varchar',
                 'module' => $module,
                 'ext1' => 'LIST',
@@ -311,11 +311,50 @@ class ConnectorsController extends SugarController
         require_once('custom/include/social/Language/en_us.lang.php');
         $moduleInstaller = new ModuleInstaller();
         $moduleInstaller->install_custom_fields($field);
-        $moduleInstaller->addFieldsToLayout($layout);
+        //$moduleInstaller->addFieldsToLayout($layout);
 
 
+        $this->create_panel_on_view('detailview', $field, $module, 'LBL_PANEL_SOCIAL_FEED');
+        /* now add it to the edit view. */
+        $this->create_panel_on_view('editview', $field, $module, 'LBL_PANEL_SOCIAL_FEED');
 
 
+    }
+
+
+    private function create_panel_on_view($view, $field, $module, $panel_name){
+        //require and create object.
+        require_once('modules/ModuleBuilder/parsers/ParserFactory.php');
+        $parser = ParserFactory::getParser($view, $module);
+
+        if(!array_key_exists( $field['0']['name'],$parser->_fielddefs )){
+            //add newly created fields to fielddefs as they wont be there.
+            $parser->_fielddefs[ $field['0']['name'] ] = $field['0'];
+        }
+
+        if(!array_key_exists( $panel_name, $parser->_viewdefs['panels'] )){
+            //create the layout for the row.
+            $field_defs = array(0 => $field['0']['name']);
+
+            //add the row to the panel.
+            $panel = array( 0 => $field_defs );
+
+            //add the panel to the view.
+            $parser->_viewdefs['panels'][ $panel_name ] = $panel;
+
+            //save the panel.
+
+        }else{
+            //if the panel already exists we need to push items on to it.
+            foreach($parser->_viewdefs['panels'][ $panel_name ] as $row_key => $row){
+                foreach($row as $key_field => $single_field){
+                    if($single_field == "(empty)"){
+                        $parser->_viewdefs['panels'][ $panel_name ][ $row_key ][ $key_field ] = $field['0']['name'];
+                    }
+                }
+            }
+        }
+        $parser->handleSave(false);
     }
 }
 

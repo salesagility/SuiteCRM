@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-30 15:03:57
+// created: 2014-01-31 11:33:32
 $viewdefs = array (
   'Accounts' => 
   array (
@@ -52,6 +52,12 @@ $viewdefs = array (
               'label' => 'LBL_NAME',
               'displayParams' => 
               array (
+                'enableConnectors' => true,
+                'module' => 'Accounts',
+                'connectors' => 
+                array (
+                  0 => 'ext_rest_linkedin',
+                ),
               ),
             ),
             1 => 
@@ -216,6 +222,22 @@ $viewdefs = array (
             array (
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+            ),
+          ),
+        ),
+        'LBL_PANEL_SOCIAL_FEED' => 
+        array (
+          0 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebook_user_c',
+              'label' => 'LBL_FACEBOOK_USER_C',
+            ),
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
+              'label' => 'LBL_TWITTER_USER_C',
             ),
           ),
         ),
