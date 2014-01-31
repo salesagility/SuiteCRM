@@ -71,9 +71,16 @@ if ($twitter_enabled) {
     if (empty($tweets['errors'])) {
         while ($i < count($tweets)) {
 
-            if (count($tweets[$i]['entities']['urls'][0]['url']) != '') {
+            if (count($tweets[$i]['entities']['urls'][0]['url']) > 0) {
                 $tweets[$i]['text'] = replace_urls($db, $tweets[$i]);
             }
+            if (count($tweets[$i]['entities']['hashtags']) > 0) {
+                $tweets[$i]['text'] = replace_hashtags($db, $tweets[$i]);
+            }
+            if (count($tweets[$i]['entities']['user_mentions']) > 0) {
+                $tweets[$i]['text'] = replace_users($db, $tweets[$i]);
+            }
+
 
             $date = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
             $image = "<img src=" . $tweets[$i]['user']['profile_image_url_https'] . " style=float:left;padding-right:5px;padding-bottom:5px;/>";

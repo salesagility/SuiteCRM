@@ -113,14 +113,7 @@ array (
           0 => 'description',
           1 => 
           array (
-            'name' => 'twitteruser_c_user_c',
-          ),
-        ),
-        8 => 
-        array (
-          0 => 
-          array (
-            'name' => 'facebookAPI_user_c',
+            'name' => 'twitter_user_c',
           ),
         ),
       ),

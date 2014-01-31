@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-28 15:19:44
+// created: 2014-01-29 16:53:32
 $viewdefs = array (
   'AOS_Invoices' => 
   array (
@@ -116,8 +116,6 @@ $viewdefs = array (
           ),
           4 => 
           array (
-            0 => '',
-            1 => '',
           ),
           5 => 
           array (
@@ -157,8 +155,6 @@ $viewdefs = array (
           ),
           7 => 
           array (
-            0 => '',
-            1 => '',
           ),
           8 => 
           array (
@@ -166,6 +162,10 @@ $viewdefs = array (
             array (
               'name' => 'description',
               'label' => 'LBL_DESCRIPTION',
+            ),
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
             ),
           ),
         ),
@@ -186,7 +186,6 @@ $viewdefs = array (
               'name' => 'total_amt',
               'label' => 'LBL_TOTAL_AMT',
             ),
-            1 => '',
           ),
           2 => 
           array (
