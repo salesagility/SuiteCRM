@@ -120,10 +120,7 @@ height: 10px;
 		</div>
 
 	</div>
-
-
-</div>
-<script type="text/javascript">
+			<script type="text/javascript">
     var activePage = {$activePage};
     var theme = '{$theme}';
     current_user_id = '{$current_user}';
@@ -189,4 +186,6 @@ height: 10px;
     });
     mySugarLoader.insert();
     {/literal}
+</script>
+
 </script>
