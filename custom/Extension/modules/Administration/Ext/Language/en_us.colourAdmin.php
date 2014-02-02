@@ -38,3 +38,6 @@ $mod_strings['LBL_COLOUR_ADMIN_DASHHEAD'] = 'Dashlet header colour: ';
 
 $mod_strings['LBL_COLOUR_ADMIN_TABS'] = 'Menu contents config';
 $mod_strings['LBL_COLOUR_ADMIN_TABSNUM'] = 'Number of menu items/tabs: ';
+
+$mod_strings['LBL_DEFAULT_ADMIN_DASHLET'] = 'Dashlet Column Config';
+$mod_strings['LBL_DASHLET_COLUMNS'] = 'Number of dashlet columns: ';
