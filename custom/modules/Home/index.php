@@ -133,7 +133,8 @@ if(!$hasUserPreferences){
 
         $count = 0;
         $columns = array();
-        $columns[0] = array();
+        /*
+         * $columns[0] = array();
         $columns[0]['width'] = '33%';
         $columns[0]['dashlets'] = array();
         $columns[1] = array();
@@ -142,15 +143,14 @@ if(!$hasUserPreferences){
         $columns[2] = array();
         $columns[2]['width'] = '33%';
         $columns[2]['dashlets'] = array();
+        */
 
-        /*
-        $count = 0;
-        $columns = array();
         if($sugar_config['columns'] = '1'){
         $columns[0] = array();
         $columns[0]['width'] = '100%';
         $columns[0]['dashlets'] = array();
         }
+
         if($sugar_config['columns'] = '2'){
             $columns[0] = array();
             $columns[0]['width'] = '60%';
@@ -159,6 +159,7 @@ if(!$hasUserPreferences){
             $columns[1]['width'] = '40%';
             $columns[1]['dashlets'] = array();
         }
+
         if($sugar_config['columns'] = '3'){
             $columns[0] = array();
             $columns[0]['width'] = '33%';
@@ -170,7 +171,6 @@ if(!$hasUserPreferences){
             $columns[2]['width'] = '33%';
             $columns[2]['dashlets'] = array();
         }
-         */
 
         foreach($dashlets as $guid=>$dashlet) {
             if( $dashlet['forceColumn'] == 0 ) array_push($columns[0]['dashlets'], $guid);
