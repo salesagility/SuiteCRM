@@ -21,33 +21,28 @@ if ($user){
 }else{
     $log = '<a href="' . $loginUrl .'">Login with Facebook</a>';
 }
+$html .= "<div style='height:400px;overflow:scroll'><table width='100%'>";
+$html .= "<tr><th><h3>Facebook Feed</h3></th></tr>";
+$html .= "<tr><td style='padding:5px'><img src=https://graph.facebook.com/" . $different_user['username'] . "/picture>";
+$html .= "<b style='margin-left:5px; font-size:20px;'>".$different_user['first_name'] .  " " . $different_user['last_name'] . "</b></td></tr>";
+$html .= "</table>";
 
 
-echo '<div style="height:400px;overflow:scroll"><table width="100%">';
-echo '<tr><th style="text-align:center">Facebook Activity</th><th style="text-align:center">' . $log . '</th></tr>';
-echo '<tr>';
-echo '<td style="text-align:center"><a href="' . $different_user['link'] . '">' . $different_user['first_name'] . ' ' . $different_user['last_name'] . ' (' . $different_user['username'] .')</a><br>
-        ' . $different_user['gender']. ' <br>
-        ' . $different_user['location']['name'] . '</td>';
-echo '<td style="text-align:center"><img src="https://graph.facebook.com/' . $different_user['username'] . '/picture"></td>';
-echo '</tr>';
 
 foreach($content['data'] as $story){
-    $results =  $facebook_helper->process_feed($story);
+
     if(!empty($results)){
-        echo $results;
+        $html . $results;
     }
 }
-echo '</table></div>';
-?>
-<style>
-    .fb_bubble {
-        border-bottom: 0 none;
-        border-radius: 0;
-        border-top: 1px solid #E8E8E8;
-        cursor: default;
-        font-size: 12px;
-        min-height: 32px;
-        padding: 9px 15px 12px;
-    }
-</style>
+
+foreach($content['data'] as $story){
+
+        $html .= "<div style='width:30%;float:left;padding:25px;height:160px;'>";
+        $results =  $facebook_helper->process_feed($story);
+        $html .=  "<p style='text-align:center;'>". $results."</p>";
+        $html .= "</div>";
+
+
+}
+echo $html;

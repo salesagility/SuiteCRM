@@ -1,5 +1,5 @@
 <?php
-// created: 2014-02-03 11:48:28
+// created: 2014-02-03 12:55:32
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -216,6 +216,17 @@ $viewdefs = array (
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
               'label' => 'LBL_DATE_ENTERED',
+            ),
+          ),
+        ),
+        'LBL_PANEL_SOCIAL_FEED' => 
+        array (
+          0 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebook_user_c',
+              'label' => 'LBL_FACEBOOK_USER_C',
             ),
           ),
         ),

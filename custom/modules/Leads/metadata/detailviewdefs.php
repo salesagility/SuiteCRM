@@ -1,5 +1,5 @@
 <?php
-// created: 2014-02-03 11:48:28
+// created: 2014-02-03 12:55:32
 $viewdefs = array (
   'Leads' => 
   array (
@@ -199,6 +199,11 @@ $viewdefs = array (
             array (
               'name' => 'twitter_user_c',
               'label' => 'LBL_TWITTER_USER_C',
+            ),
+            1 => 
+            array (
+              'name' => 'facebook_user_c',
+              'label' => 'LBL_FACEBOOK_USER_C',
             ),
           ),
         ),

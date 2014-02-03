@@ -70,9 +70,9 @@ if ($twitter_enabled) {
 
     if (empty($tweets['errors'])) {
         while ($i < count($tweets)) {
-            if(!isset($tweets[$i]['retweet_status'])){
 
-            $limit = 110;
+
+            $limit = 104;
 
             $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i],$limit);
 
@@ -115,7 +115,7 @@ if ($twitter_enabled) {
             }
         }
     }
-    }
+
 }
 
 $facebook_enabled = check_enabled($db, 'facebook');
@@ -236,32 +236,30 @@ if ($facebook_enabled) {
     function generate_stream($stream)
     {
 
-        if($stream['from']['name'] = 'Jemma Moss'){
-                $vare = "asd";
-        }
+
         //if simple post
         switch ($stream['type']) {
             case "":
                 $string[1] = "<a href=http://www.facebook.com/" . $stream['from']['id'] . ">" . $stream['from']['name'] . "<a/> - " . substr($stream['message'], 0, 100);
                 break;
             case "link";
-                $string[0] = "<img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
+                $string[0] = "<img style=float:left;padding-right:5px;padding-bottom:5px; src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['name'])) {
 
-                    $string[1] =  $stream['from']['name'] . " -  <a href=" . $stream['link'] . ">" . $stream['name'] . "</a>";
+                    $string[1] = '<b>' . $stream['from']['name']. '</b><p style=line-height:30px;>' .  $stream['name']  . '</p>' . '<a href=' . $stream['link'] . '>View article</a>';
                 } else {
                     //must be an article
-                    $string[1] =  $stream['from']['name'] . "  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
+                    $string[1] = '<b>' . $stream['from']['name']. '</b>' . "  <a href=" . $stream['actions']['0']['link'] . ">likes an article</a>";
                 }
                 break;
             case "status":
                 //
-                $string[0] = "<img src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
+                $string[0] = "<img style=float:left;padding-right:5px;padding-bottom:5px; src=http://graph.facebook.com/" . $stream['from']['id'] . "/picture />";
                 if (!empty($stream['story'])) {
-                    $string[1] = $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['story'], 0, 100) . "</a>";
+                    $string[1] = '<b>' . $stream['from']['name']. '</b><p style=line-height:30px;>' . substr($stream['story'], 0, 100) . "</p><a href=" . $stream['actions']['0']['link'] . ">View post on Facebook</a>";
                 } else {
                     //wall post.
-                    $string[1] = $stream['from']['name'] . " - <a href=" . $stream['actions']['0']['link'] . ">" . substr($stream['message'], 0, 100) . "</a>";
+                    $string[1] = '<b>' . $stream['from']['name'] . '</b><p style=line-height:30px;>' . substr($stream['message'], 0, 100) . "</p><a href=" . $stream['actions']['0']['link'] .">View post on Facebook</a>";
                 }
                 break;
             case "photos":
