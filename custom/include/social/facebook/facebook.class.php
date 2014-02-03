@@ -57,60 +57,95 @@ class facebook_helper{
             case "link":
                 return $this->link_type($story);
                 break;
+            case "video":
+                return $this->video_type($story);
+                break;
         }
     }
+
     function photo_status($story){
 
-        $string = '<tr>
-                        <td>
-                            <div class="fb_bubble">
-                            <span  class="facebook_img "><a href="' . $story['link'] . '"><img width="10%" style="float:left" src="' . $story['picture'] . '"/></a></span>
-                            <span class="facebook_story">' . $story['story'] . '</span>
-                            </div>
 
-                        </td>
-                        <td ><div class="fb_bubble">' . date("y/m/d H:m", strtotime($story['updated_time'])) . '</div></td>
-                   </tr>';
-
-
+        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
+        $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
+        $string .= '<img src=https://graph.facebook.com/' . $story['from']['id'] . '/picture>';
+        $string .= '<img src=https://graph.facebook.com/' . $story['to']['id'] . '/picture>';
+        $string .= '<p>' .$story['story'] .'</p>';
+        $string .= '<p>' .$story['message'] .'</p>';
+        $string .= "</div>";
         return $string;
     }
 
     function status($story){
 
-        $string = '<tr>
-                        <td>
-                        <div class="fb_bubble">
-                            <span class="facebook_story">' . $story['story'] . '</span>
-                            <span>' . '</span>
-                        </div>
-                          </td>
-                        <td><div class="fb_bubble">' . date("y/m/d H:m", strtotime($story['updated_time'])) . '</div></td>
+        $to_name = $this->get_to($story);
 
-                   </tr>';
+        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
+        $string .= '<div style="padding: 3px; width: 100%;">' .$story['from']['name'] . '</div>';
 
+        if($story['status_type'] == 'approved_friend'){
+            $string .= '<img src=https://graph.facebook.com/' . $story['story_tags']['0']['0']['id']. '/picture>';
+            $string .= '<img src=https://graph.facebook.com/' . $story['story_tags']['18']['0']['id']. '/picture>';
+        }else{
+            $string .= '<img src=https://graph.facebook.com/' . $story['from']['id'] . '/picture>';
+            $string .= '<img src=https://graph.facebook.com/' . $story['to']['id'] . '/picture>';
+        }
+
+        $string .= '<img src=https://graph.facebook.com/' . $story['story_tags']['0']['0']['id']. '/picture>';
+
+
+        $string .= '<p>' .$story['story'] .'</p>';
+        $string .= '<p>' .$story['message'] .'</p>';
+        $string .= "</div>";
 
         return $string;
+
+
     }
     function link_type($story){
-        $string = '<tr>
-                        <td>
-                        <div class="fb_bubble">
-                        <span class="facebook_img" style="padding-left:5px;" ><a href="' . $story['link'] . '"><img width="10%"  style="float:left"  src="' . $story['picture'] . '"/></a></span>';
-                        if($story['name']){
-                            $string .= '<span class="facebook_name">' . $story['name'] . '<br></span>';
-                        }else{
-                            $string .= '<span class="facebook_name">' . $story['story'] . '<br></span>';
-                        }
+        $string .= "<div style='margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
+        $string .= '<div style="padding: 3px; width: 100%;">' . $story['message'] . '</div>';
 
-        $string .= '<span class="facebook_message" style="padding-right:5px;"> ' . $story['message'] . '</span>
-                        </div>
-                        </td>
-                        <td><div class="fb_bubble">' . date("y/m/d H:m", strtotime($story['updated_time'])) . '</div></td>
-                   </tr>';
-
-
+        $string .= '<a style="padding: 5px; float:left;" href="' . $story['link'] . '"><img style=float:left; src="' . $story['picture'] . '"/></a>';
+        $string .= '<a  href="' . $story['link'] . '">' .$story['description'] .'</a>';
+        $string .= '<p>' . $story['caption'] . '</p>';
+        $string .= "</div>";
         return $string;
+
+
+    }
+
+    function video_type($story){
+
+        $string = '';
+        $string .= "<div style=' margin: 0 auto; background-color: #F7F7F7; height:160px; width:389px; ; border:1px solid #cccccc'>";
+        $string .= '<div style="padding: 3px; width: 100%;">' . $story['from']['name'] .' Shared a video with '. $story['message'] . '</div>';
+
+        $string .= '<a style="padding: 5px; float:left;" href="' . $story['link'] . '"><img style=float:left; src="' . $story['picture'] . '"/></a>';
+        $string .= '<a  href="' . $story['link'] . '">' .$story['description'] .'</a>';
+        $string .= '<p>' . $story['caption'] . '</p>';
+        $string .= "</div>";
+        return $string;
+    }
+
+    function get_to($story){
+
+        $value = '';
+
+        foreach($story as $field => $value){
+           if(isset($story[$field]['data'][0]['name'])){
+               $value = $story['data']['0']['name'];
+               break;
+           }
+            if($field == 'to'){
+                $value = $story['data']['0']['name'];
+
+                break;
+            }
+        }
+
+        return $value;
+
     }
 }
 ?>

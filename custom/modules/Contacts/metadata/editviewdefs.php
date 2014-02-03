@@ -1,5 +1,5 @@
 <?php
-$viewdefs ['Leads'] = 
+$viewdefs ['Contacts'] = 
 array (
   'EditView' => 
   array (
@@ -9,15 +9,11 @@ array (
       array (
         'hidden' => 
         array (
-          0 => '<input type="hidden" name="prospect_id" value="{if isset($smarty.request.prospect_id)}{$smarty.request.prospect_id}{else}{$bean->prospect_id}{/if}">',
-          1 => '<input type="hidden" name="account_id" value="{if isset($smarty.request.account_id)}{$smarty.request.account_id}{else}{$bean->account_id}{/if}">',
-          2 => '<input type="hidden" name="contact_id" value="{if isset($smarty.request.contact_id)}{$smarty.request.contact_id}{else}{$bean->contact_id}{/if}">',
-          3 => '<input type="hidden" name="opportunity_id" value="{if isset($smarty.request.opportunity_id)}{$smarty.request.opportunity_id}{else}{$bean->opportunity_id}{/if}">',
-        ),
-        'buttons' => 
-        array (
-          0 => 'SAVE',
-          1 => 'CANCEL',
+          0 => '<input type="hidden" name="opportunity_id" value="{$smarty.request.opportunity_id}">',
+          1 => '<input type="hidden" name="case_id" value="{$smarty.request.case_id}">',
+          2 => '<input type="hidden" name="bug_id" value="{$smarty.request.bug_id}">',
+          3 => '<input type="hidden" name="email_id" value="{$smarty.request.email_id}">',
+          4 => '<input type="hidden" name="inbound_email_id" value="{$smarty.request.inbound_email_id}">',
         ),
       ),
       'maxColumns' => '2',
@@ -34,11 +30,10 @@ array (
           'field' => '30',
         ),
       ),
-      'javascript' => '<script type="text/javascript" language="Javascript">function copyAddressRight(form)  {ldelim} form.alt_address_street.value = form.primary_address_street.value;form.alt_address_city.value = form.primary_address_city.value;form.alt_address_state.value = form.primary_address_state.value;form.alt_address_postalcode.value = form.primary_address_postalcode.value;form.alt_address_country.value = form.primary_address_country.value;return true; {rdelim} function copyAddressLeft(form)  {ldelim} form.primary_address_street.value =form.alt_address_street.value;form.primary_address_city.value = form.alt_address_city.value;form.primary_address_state.value = form.alt_address_state.value;form.primary_address_postalcode.value =form.alt_address_postalcode.value;form.primary_address_country.value = form.alt_address_country.value;return true; {rdelim} </script>',
     ),
     'panels' => 
     array (
-      'LBL_CONTACT_INFORMATION' => 
+      'lbl_contact_information' => 
       array (
         0 => 
         array (
@@ -50,29 +45,58 @@ array (
         ),
         1 => 
         array (
-          0 => 'last_name',
-          1 => 'phone_work',
+          0 => 
+          array (
+            'name' => 'last_name',
+          ),
+          1 => 
+          array (
+            'name' => 'phone_work',
+            'comment' => 'Work phone number of the contact',
+            'label' => 'LBL_OFFICE_PHONE',
+          ),
         ),
         2 => 
         array (
-          0 => 'title',
-          1 => 'phone_mobile',
+          0 => 
+          array (
+            'name' => 'title',
+            'comment' => 'The title of the contact',
+            'label' => 'LBL_TITLE',
+          ),
+          1 => 
+          array (
+            'name' => 'phone_mobile',
+            'comment' => 'Mobile phone number of the contact',
+            'label' => 'LBL_MOBILE_PHONE',
+          ),
         ),
         3 => 
         array (
           0 => 'department',
-          1 => 'phone_fax',
+          1 => 
+          array (
+            'name' => 'phone_fax',
+            'comment' => 'Contact fax number',
+            'label' => 'LBL_FAX_PHONE',
+          ),
         ),
         4 => 
         array (
           0 => 
           array (
             'name' => 'account_name',
-            'type' => 'varchar',
-            'validateDependency' => false,
-            'customCode' => '<input name="account_name" id="EditView_account_name" {if ($fields.converted.value == 1)}disabled="true"{/if} size="30" maxlength="255" type="text" value="{$fields.account_name.value}">',
+            'displayParams' => 
+            array (
+              'key' => 'billing',
+              'copy' => 'primary',
+              'billingKey' => 'primary',
+              'additionalFields' => 
+              array (
+                'phone_office' => 'phone_work',
+              ),
+            ),
           ),
-          1 => 'website',
         ),
         5 => 
         array (
@@ -106,40 +130,56 @@ array (
         ),
         6 => 
         array (
-          0 => 'email1',
+          0 => 
+          array (
+            'name' => 'email1',
+            'studio' => 'false',
+            'label' => 'LBL_EMAIL_ADDRESS',
+          ),
         ),
         7 => 
         array (
-          0 => 'description',
+          0 => 
+          array (
+            'name' => 'description',
+            'label' => 'LBL_DESCRIPTION',
+          ),
         ),
       ),
       'LBL_PANEL_ADVANCED' => 
       array (
         0 => 
         array (
-          0 => 'status',
-          1 => 'lead_source',
+          0 => 
+          array (
+            'name' => 'report_to_name',
+            'label' => 'LBL_REPORTS_TO',
+          ),
+          1 => 
+          array (
+            'name' => 'sync_contact',
+            'comment' => 'Synch to outlook?  (Meta-Data only)',
+            'label' => 'LBL_SYNC_CONTACT',
+          ),
         ),
         1 => 
         array (
           0 => 
           array (
-            'name' => 'status_description',
+            'name' => 'lead_source',
+            'comment' => 'How did the contact come about',
+            'label' => 'LBL_LEAD_SOURCE',
           ),
           1 => 
           array (
-            'name' => 'lead_source_description',
+            'name' => 'do_not_call',
+            'comment' => 'An indicator of whether contact can be called',
+            'label' => 'LBL_DO_NOT_CALL',
           ),
         ),
         2 => 
         array (
-          0 => 'opportunity_amount',
-          1 => 'refered_by',
-        ),
-        3 => 
-        array (
           0 => 'campaign_name',
-          1 => 'do_not_call',
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' => 
@@ -149,7 +189,7 @@ array (
           0 => 
           array (
             'name' => 'assigned_user_name',
-            'label' => 'LBL_ASSIGNED_TO',
+            'label' => 'LBL_ASSIGNED_TO_NAME',
           ),
         ),
       ),
@@ -158,11 +198,6 @@ array (
         0 => 
         array (
           0 => 
-          array (
-            'name' => 'twitter_user_c',
-            'label' => 'LBL_TWITTER_USER_C',
-          ),
-          1 => 
           array (
             'name' => 'facebook_user_c',
             'label' => 'LBL_FACEBOOK_USER_C',

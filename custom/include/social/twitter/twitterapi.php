@@ -54,7 +54,7 @@ function format_tweets($db,$tweets){
 
     $i = 0;
     $html ='';
-    $html = "<link rel='stylesheet' type='text/css' href='custom/include/social/twitter/twitter.css'>";
+//    $html = "<link rel='stylesheet' type='text/css' href='custom/include/social/twitter/twitter.css'>";
 
 
     $html .= "<div style='height:400px;overflow:scroll'><table width='100%'>";

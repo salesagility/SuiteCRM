@@ -17,10 +17,10 @@ function format_feed_tweets($db, $array, $limit)
 {
 
     if (strlen($array['text']) > $limit) {
-        $array['text'] = '<br /><p style=line-height:30px;>' . substr($array['text'], 0, $limit) . '. . .<br /><a href=https://twitter.com/' . $array['user']['screen_name'] . '/status/' . $array['id'] . '>View in Twitter</a></p>';
+        $array['text'] = '<br /><p style=line-height:30px;>' . substr($array['text'], 0, $limit) . '. . .<br /><a href=https://twitter.com/' . $array['user']['screen_name'] . '/status/' . $array['id'] . '>View full Tweet</a></p>';
 
     } else {
-        $array['text'] = '<br /><p style=line-height:30px;>' . $array['text'] . '<br /><a href=https://twitter.com/' . $array['user']['screen_name'] . '/status/' . $array['id'] . '>View in Twitter</a></p>';
+        $array['text'] = '<br /><p style=line-height:30px;>' . $array['text'] . '<br /><a href=https://twitter.com/' . $array['user']['screen_name'] . '/status/' . $array['id'] . '>View on Twitter</a></p>';
 
     }
 
