@@ -111,10 +111,6 @@ array (
         7 => 
         array (
           0 => 'description',
-          1 => 
-          array (
-            'name' => 'twitter_user_c',
-          ),
         ),
       ),
       'LBL_PANEL_ADVANCED' => 
@@ -154,6 +150,17 @@ array (
           array (
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
+          ),
+        ),
+      ),
+      'LBL_PANEL_SOCIAL_FEED' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'twitter_user_c',
+            'label' => 'LBL_TWITTER_USER_C',
           ),
         ),
       ),

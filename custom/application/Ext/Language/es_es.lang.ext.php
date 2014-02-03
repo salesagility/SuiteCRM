@@ -1,100 +1,6 @@
 <?php 
  //WARNING: The contents of this file are auto-generated
 
- 
-/**
- * Extensions to SugarCRM
- * @package Reschedule for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
-$app_list_strings['call_reschedule_dom'][''] = '';
-$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Fuera de la Oficina';
-$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'En una reunion';
-
-$app_strings['LBL_RESCHEDULE_LABEL'] = 'Replanificar';
-$app_strings['LBL_RESCHEDULE_TITLE'] = 'Por favor ingrese los datos de la Replanificaci&oacute;n';
-$app_strings['LBL_RESCHEDULE_DATE'] = 'Fecha:';
-$app_strings['LBL_RESCHEDULE_REASON'] = 'Raz&oacute;n:';
-$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Por favor seleccione una fecha v&aacute;lida';
-$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Por favor seleccione una raz&oacute;n';
-
-$app_strings['LBL_RESCHEDULE_PANEL'] = 'Replanificar';
-$app_strings['LBL_RESCHEDULE_HISTORY'] = 'Historial de Intentos de Llamada';
-$app_strings['LBL_RESCHEDULE_COUNT'] = 'Intentos de Llamada';
-
-
-
-
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
-
-
-$app_list_strings['moduleList']['FP_events'] = 'Eventos';
-$app_list_strings['moduleList']['FP_Event_Locations'] = 'Ubicaciones';
-$app_list_strings['invite_template_list'][''] = '';
-
-$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invitado';
-$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'No Invitado';
-$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Asisti贸';
-$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'No Asisti贸';
-$app_list_strings['fp_event_status_dom']['Accepted'] = 'Aceptado';
-$app_list_strings['fp_event_status_dom']['Declined'] = 'Rechazado';
-$app_list_strings['fp_event_status_dom']['No Response'] = 'Sin Respuesta';
-
-$app_strings['LBL_STATUS_EVENT'] = 'Estado de Invitaci贸n';
-$app_strings['LBL_ACCEPT_STATUS'] = 'Estado de Aceptaci贸n';
-
 
 
 $app_strings['LBL_MAP'] = 'Mapa';
@@ -439,60 +345,6 @@ $app_list_strings['marker_image_list']['zoo'] = 'Zoo';
 
 
 /**
- *
- * @package Advanced OpenPortal
- * @copyright SalesAgility Ltd http://www.salesagility.com
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
-
-$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'Eventos de Casos';
-$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Actualizaciones de Casos';
-$app_list_strings['moduleList']['AOP_Case_Events'] = 'Eventos de Casos';
-$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Actualizaciones de Casos';
-$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Por favor responda por encima de esta linea ==========';
-
-$app_list_strings['case_state_dom'] =
-  array (
-      'Open' => 'Abierto',
-      'Closed' => 'Cerrado',
-  );
-$app_list_strings['case_state_default_key'] = 'Open';
-$app_list_strings['case_status_default_key'] = 'Open_New';
-$app_list_strings['case_status_dom'] =
-  array (
-      'Open_New' => 'Nuevo',
-      'Open_Assigned' => 'Asignado',
-      'Closed_Closed' => 'Cerrado',
-      'Open_Pending Input' => 'Pendiente de Informaci贸n',
-      'Closed_Rejected' => 'Rechazado',
-      'Closed_Duplicate' => 'Duplicado',
-  );
-
-
-$app_list_strings["moduleList"]["SecurityGroups"] = 'Administraci贸n de Grupos de Seguridad';
-$app_strings['LBL_LOGIN_AS'] = "Conexi髇 como ";
-$app_strings['LBL_LOGOUT_AS'] = "Cerrar sesi髇 como ";
-
-
-
-/**
  * Advanced OpenReports, SugarCRM Reporting.
  * @package Advanced OpenReports for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -559,6 +411,147 @@ $app_list_strings['aor_function_list']['MIN'] = 'Minimo';
 $app_list_strings['aor_function_list']['MAX'] = 'Maximo';
 $app_list_strings['aor_function_list']['SUM'] = 'Suma';
 $app_list_strings['aor_function_list']['AVG'] = 'Promedio';
+
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ * 
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+
+$app_list_strings['moduleList']['FP_events'] = 'Eventos';
+$app_list_strings['moduleList']['FP_Event_Locations'] = 'Ubicaciones';
+$app_list_strings['invite_template_list'][''] = '';
+
+$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invitado';
+$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'No Invitado';
+$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Asisti贸';
+$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'No Asisti贸';
+$app_list_strings['fp_event_status_dom']['Accepted'] = 'Aceptado';
+$app_list_strings['fp_event_status_dom']['Declined'] = 'Rechazado';
+$app_list_strings['fp_event_status_dom']['No Response'] = 'Sin Respuesta';
+
+$app_strings['LBL_STATUS_EVENT'] = 'Estado de Invitaci贸n';
+$app_strings['LBL_ACCEPT_STATUS'] = 'Estado de Aceptaci贸n';
+
+ 
+/**
+ * Extensions to SugarCRM
+ * @package Reschedule for SugarCRM
+ * @subpackage Products
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+
+$app_list_strings['call_reschedule_dom'][''] = '';
+$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Fuera de la Oficina';
+$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'En una reunion';
+
+$app_strings['LBL_RESCHEDULE_LABEL'] = 'Replanificar';
+$app_strings['LBL_RESCHEDULE_TITLE'] = 'Por favor ingrese los datos de la Replanificaci&oacute;n';
+$app_strings['LBL_RESCHEDULE_DATE'] = 'Fecha:';
+$app_strings['LBL_RESCHEDULE_REASON'] = 'Raz&oacute;n:';
+$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Por favor seleccione una fecha v&aacute;lida';
+$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Por favor seleccione una raz&oacute;n';
+
+$app_strings['LBL_RESCHEDULE_PANEL'] = 'Replanificar';
+$app_strings['LBL_RESCHEDULE_HISTORY'] = 'Historial de Intentos de Llamada';
+$app_strings['LBL_RESCHEDULE_COUNT'] = 'Intentos de Llamada';
+
+
+
+
+/**
+ *
+ * @package Advanced OpenPortal
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+
+
+$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'Eventos de Casos';
+$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Actualizaciones de Casos';
+$app_list_strings['moduleList']['AOP_Case_Events'] = 'Eventos de Casos';
+$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Actualizaciones de Casos';
+$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Por favor responda por encima de esta linea ==========';
+
+$app_list_strings['case_state_dom'] =
+  array (
+      'Open' => 'Abierto',
+      'Closed' => 'Cerrado',
+  );
+$app_list_strings['case_state_default_key'] = 'Open';
+$app_list_strings['case_status_default_key'] = 'Open_New';
+$app_list_strings['case_status_dom'] =
+  array (
+      'Open_New' => 'Nuevo',
+      'Open_Assigned' => 'Asignado',
+      'Closed_Closed' => 'Cerrado',
+      'Open_Pending Input' => 'Pendiente de Informaci贸n',
+      'Closed_Rejected' => 'Rechazado',
+      'Closed_Duplicate' => 'Duplicado',
+  );
 
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.
@@ -1097,5 +1090,12 @@ $app_list_strings['marker_image_list']['winery'] = 'Lagar';
 $app_list_strings['marker_image_list']['work_office'] = 'Oficina';
 $app_list_strings['marker_image_list']['world_heritage_site'] = 'Patrimonio de la Humanidad';
 $app_list_strings['marker_image_list']['zoo'] = 'Zoo';
+
+
+
+$app_list_strings["moduleList"]["SecurityGroups"] = 'Administraci贸n de Grupos de Seguridad';
+$app_strings['LBL_LOGIN_AS'] = "Conexi髇 como ";
+$app_strings['LBL_LOGOUT_AS'] = "Cerrar sesi髇 como ";
+
 
 ?>

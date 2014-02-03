@@ -72,9 +72,10 @@ if ($twitter_enabled) {
         while ($i < count($tweets)) {
             if(!isset($tweets[$i]['retweet_status'])){
 
-            if (count($tweets[$i]['entities']['urls'][0]['url']) > 0) {
-                $tweets[$i]['text'] = replace_urls($db, $tweets[$i]);
-            }
+            $limit = 110;
+
+            $tweets[$i]['text'] = format_feed_tweets($db, $tweets[$i],$limit);
+
             if (count($tweets[$i]['entities']['hashtags']) > 0) {
                 $tweets[$i]['text'] = replace_hashtags($db, $tweets[$i]);
             }

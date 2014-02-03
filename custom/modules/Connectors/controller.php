@@ -308,7 +308,6 @@ class ConnectorsController extends SugarController
         $layout[$module] = $field_name;
 
         require_once('ModuleInstall/ModuleInstaller.php');
-        require_once('custom/include/social/Language/en_us.lang.php');
         $moduleInstaller = new ModuleInstaller();
         $moduleInstaller->install_custom_fields($field);
         //$moduleInstaller->addFieldsToLayout($layout);

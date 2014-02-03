@@ -116,10 +116,6 @@ array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
-          1 => 
-          array (
-            'name' => 'twitter_user_c',
-          ),
         ),
       ),
       'LBL_PANEL_ADVANCED' => 
@@ -166,11 +162,6 @@ array (
         0 => 
         array (
           0 => 
-          array (
-            'name' => 'facebook_user_c',
-            'label' => 'LBL_FACEBOOK_USER_C',
-          ),
-          1 => 
           array (
             'name' => 'twitter_user_c',
             'label' => 'LBL_TWITTER_USER_C',
