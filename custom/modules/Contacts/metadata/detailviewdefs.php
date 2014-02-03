@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-31 16:48:09
+// created: 2014-02-03 11:48:28
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -150,28 +150,6 @@ $viewdefs = array (
               'name' => 'description',
               'comment' => 'Full text of the note',
               'label' => 'LBL_DESCRIPTION',
-            ),
-            1 => 
-            array (
-              'name' => 'twitter_user_c',
-            ),
-          ),
-          7 => 
-          array (
-            0 => 
-            array (
-              'name' => 'facebookAPI_user_c',
-            ),
-            1 => 
-            array (
-              'name' => 'twitter_user_c',
-            ),
-          ),
-          8 => 
-          array (
-            0 => 
-            array (
-              'name' => 'facebook_user_c',
             ),
           ),
         ),

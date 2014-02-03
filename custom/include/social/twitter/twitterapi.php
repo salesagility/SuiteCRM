@@ -13,7 +13,7 @@ require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroau
 require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 require('custom/include/social/twitter/twitter_helper.php');
 
-global $sugar_config;
+global $sugar_config, $db;
 
 /*
  * Pull in connector settings for creating the authentication between Suite and Twitter.
@@ -44,12 +44,13 @@ $connection = new TwitterOAuth($settings['consumer_key'], $settings['consumer_se
 /* If method is set change API call made. Test is called by default. */
 $tweets = $connection->get('statuses/user_timeline', array('screen_name' => $_REQUEST['twitter_user']));
 
-$formatted_display = format_tweets($tweets);
+$formatted_display = format_tweets($db,$tweets);
 
 echo $formatted_display;
 
 
-function format_tweets($tweets){
+function format_tweets($db,$tweets){
+
 
     $i = 0;
     $html ='';
@@ -61,19 +62,26 @@ function format_tweets($tweets){
     $html .= "<tr><td><img style='padding:5px;'; src='". $tweets[0]['user']['profile_image_url'] ."'><b style='margin-left:5px; font-size:20px;'>" ."@". $tweets[0]['user']['screen_name'] ."</b></td></tr>";
     $html .= "</table>";
 
-    while($i < count($tweets)){
-        $u = 0;
-        $count = count($tweets[$i]['entities']['urls']);
 
-        while($u < $count) {
-            $tweets[$i]['text'] = str_replace($tweets[$i]['entities']['urls'][$u]['url'], "<a style='font-size:15px;' href='".$tweets[$i]['entities']['urls'][$u]['expanded_url']."'>". $tweets[$i]['entities']['urls'][$u]['display_url'] ."</a> ",$tweets[$i]['text']);
-            $u++;
+    foreach($tweets as $tweet){
+
+        $limit = 255;
+
+        $tweet['text'] = format_feed_tweets($db,$tweet, $limit);
+
+        if (count($tweet['entities']['hashtags']) > 0) {
+            $tweets['text'] = replace_hashtags($db, $tweet);
         }
-        $html .= "<div class='tweet' style='width:30%;float:left; padding:25px;'>";
-        $html .= "<p style='font-size:15px;'>". $tweets[$i]['text']."</p>";
+        if (count($tweet['entities']['user_mentions']) > 0) {
+            $tweet['text'] = replace_users($db, $tweet);
+        }
+
+        $html .= "<div class='tweet' style='width:30%;float:left;padding:25px;height:100px;'>";
+        $html .=  "<p>". $tweet['text']."</p>";
         $html .= "</div>";
         $i++;
     }
+
     return $html . '</div>';
 
 }

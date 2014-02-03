@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-31 16:48:09
+// created: 2014-02-03 11:48:28
 $viewdefs = array (
   'Leads' => 
   array (
@@ -50,10 +50,6 @@ $viewdefs = array (
                   'name' => '{$APP.LBL_MANAGE_SUBSCRIPTIONS}',
                 ),
               ),
-            ),
-            'AOS_GENLET' => 
-            array (
-              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
             ),
           ),
           'headerTpl' => 'modules/Leads/tpls/DetailViewHeader.tpl',
@@ -108,9 +104,6 @@ $viewdefs = array (
             0 => 
             array (
               'name' => 'account_name',
-              'displayParams' => 
-              array (
-              ),
             ),
             1 => 'website',
           ),
@@ -144,17 +137,6 @@ $viewdefs = array (
           6 => 
           array (
             0 => 'description',
-            1 => 
-            array (
-              'name' => 'twitteruser_c_user_c',
-            ),
-          ),
-          7 => 
-          array (
-            0 => 
-            array (
-              'name' => 'facebookAPI_user_c',
-            ),
           ),
         ),
         'LBL_PANEL_ADVANCED' => 
@@ -206,6 +188,17 @@ $viewdefs = array (
             array (
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+            ),
+          ),
+        ),
+        'LBL_PANEL_SOCIAL_FEED' => 
+        array (
+          0 => 
+          array (
+            0 => 
+            array (
+              'name' => 'twitter_user_c',
+              'label' => 'LBL_TWITTER_USER_C',
             ),
           ),
         ),

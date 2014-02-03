@@ -1,5 +1,5 @@
 <?php
-// created: 2014-01-31 16:48:09
+// created: 2014-02-03 11:48:27
 $searchdefs = array (
   'ext_rest_insideview' => 
   array (
@@ -22,18 +22,12 @@ $searchdefs = array (
     array (
     ),
   ),
-  'ext_rest_facebook' => 
-  array (
-    'Accounts' => 
-    array (
-    ),
-    'Contacts' => 
-    array (
-    ),
-  ),
   'ext_rest_twitter' => 
   array (
     'Accounts' => 
+    array (
+    ),
+    'Leads' => 
     array (
     ),
   ),
