@@ -47,6 +47,7 @@
 
 <div id="footer">
     {if $AUTHENTICATED}
+    <div class="companyLogo"><a href="index.php?module=Home&action=index" border="0"><img src="{$COMPANY_LOGO_URL}" width="{$COMPANY_LOGO_WIDTH}" height="{$COMPANY_LOGO_HEIGHT}" alt="{sugar_translate label='LBL_COMPANY_LOGO'}" border="0"/></a></div>
     <div id="links">
         <button id="print_page" onclick="printpage()">{$MOD.LBL_SUITE_PRINT}</button>
         <button id="backtotop">{$MOD.LBL_SUITE_TOP}</button>
