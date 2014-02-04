@@ -191,7 +191,7 @@ EOS;
         return "";
     }
 
-    function run_action(SugarBean $bean, $params = array()){
+    function run_action(SugarBean $bean, $params = array(), $in_save=false){
         global $sugar_config;
 
         include_once('modules/EmailTemplates/EmailTemplate.php');
@@ -245,7 +245,7 @@ EOS;
         //now create email
         if (@$mail->Send()) {
             $emailObj->to_addrs= $emailTo;
-            $emailObj->type= 'archived';
+            $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mail->Subject;
             $emailObj->description = $mail->AltBody;

@@ -68,6 +68,13 @@ $dictionary['AOW_Condition'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
+  'module_path' =>
+  array (
+    'name' => 'module_path',
+    'type' => 'longtext',
+    'vname' => 'LBL_MODULE_PATH',
+    'isnull' => true,
+  ),
   'field' => 
   array (
     'required' => false,
