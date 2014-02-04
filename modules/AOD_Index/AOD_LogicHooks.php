@@ -25,7 +25,7 @@
 class AOD_LogicHooks{
 
     function saveModuleChanges(SugarBean $bean, $event, $arguments){
-        if(defined('sugarEntry') && SUGARCRM_IS_INSTALLING){
+        if(defined('sugarEntry') && 'SUGARCRM_IS_INSTALLING'){
             return;
         }
         $index = BeanFactory::getBean("AOD_Index")->getIndex();

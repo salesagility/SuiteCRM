@@ -17,7 +17,8 @@ global $db;
 global $current_user;
 global $sugar_config;
 
-session_start();
+//session_start();
+$html = '';
 
 $twitter_enabled = check_enabled($db, 'twitter');
 
