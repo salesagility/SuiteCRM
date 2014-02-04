@@ -9,7 +9,7 @@
 
 class hooks{
 
-    function load_js($bean, $event, $arguments){
+    function load_js($event, $arguments){
         $mapping = '';
 
         if($_REQUEST['action'] == 'DetailView'){
