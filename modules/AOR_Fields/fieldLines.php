@@ -81,7 +81,7 @@ function display_field_lines($focus, $field, $value, $view){
         $html .= '<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/Jit/jit.js"></script>';
         $html .= '<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/sugarCharts.js"></script>';
         $html .= '<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/mySugarCharts.js"></script>';*/
-        $html .= $focus->build_report_html(0).'<br />';
+        $html .= $focus->build_group_report(0).'<br />';
 
     }
     return $html;

@@ -123,14 +123,76 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_report_html($offset = -1, $links = true){
+    function build_group_report($offset = -1, $links = true){
+        global $beanList;
+
+        $html = '';
+
+        $module = new $beanList[$this->report_module]();
+
+        $query = '';
+        $query_array = array();
+
+        $query_array = $this->build_report_query_select($query_array, true);
+        $query_array = $this->build_report_query_where($query_array);
+
+        foreach ($query_array['select'] as $select){
+            $query .=  ($query == '' ? 'SELECT ' : ', ').$select;
+        }
+
+        $query .= ' FROM '.$module->table_name.' ';
+
+        if(isset($query_array['join'])){
+            foreach ($query_array['join'] as $join){
+                $query .= $join;
+            }
+        }
+        if(isset($query_array['where'])){
+            $query_where = '';
+            foreach ($query_array['where'] as $where){
+                $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
+            }
+            $query .= ' '.$query_where;
+        }
+
+        if(isset($query_array['group_by'])){
+            $query_group_by = '';
+            foreach ($query_array['group_by'] as $group_by){
+                $query_group_by .=  ($query_group_by == '' ? 'GROUP BY ' : ', ').$group_by;
+            }
+            $query .= ' '.$query_group_by;
+        }
+
+        if(isset($query_array['sort_by'])){
+            $query_sort_by = '';
+            foreach ($query_array['sort_by'] as $sort_by){
+                $query_sort_by .=  ($query_sort_by == '' ? 'ORDER BY ' : ', ').$sort_by;
+            }
+            $query .= ' '.$query_sort_by;
+        }
+
+        $result = $this->db->query($query);
+
+        while ($row = $this->db->fetchByAssoc($result)) {
+
+           $html .= $this->build_report_html($offset, $links, $row['Name0']);
+
+        }
+
+        if($html == '') $html = $this->build_report_html($offset, $links);
+        return $html;
+
+    }
+
+
+    function build_report_html($offset = -1, $links = true, $group_value = ''){
 
         global $beanList;
 
-        $report_sql = $this->build_report_query();
+        $report_sql = $this->build_report_query($group_value);
         $max_rows = 20;
         $total_rows = 0;
-        $count_query = 'SELECT count(*) c FROM ('.$report_sql.') as n';;
+        $count_query = 'SELECT count(*) c FROM ('.$report_sql.') as n';
 
         // We have a count query.  Run it and get the results.
         $result = $this->db->query($count_query);
@@ -159,8 +221,11 @@ class AOR_Report extends Basic {
 
             $html .= "<thead><tr class='pagination'>";
 
+
+
             $html .="<td colspan='18'>
                        <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
+                        <td style='text-align:left' >$group_value</td>
                         <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
 
             if($offset == 0){
@@ -230,14 +295,14 @@ class AOR_Report extends Basic {
             }
             $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
-            $fields[$label]['display'] = $field->display;
+            $fields[$label]['display'] = $field->display && !$field->group_display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
 
 
-            if($field->display){
+            if($fields[$label]['display']){
                 $html .= "<th scope='col'>";
                 $html .= "<div style='white-space: normal;' width='100%' align='left'>";
                 $html .= $field->label;
@@ -370,7 +435,7 @@ class AOR_Report extends Basic {
 
 
 
-    function build_report_query(){
+    function build_report_query($group_value =''){
         global $beanList;
 
         $module = new $beanList[$this->report_module]();
@@ -378,7 +443,7 @@ class AOR_Report extends Basic {
         $query = '';
         $query_array = array();
 
-        $query_array = $this->build_report_query_select($query_array);
+        $query_array = $this->build_report_query_select($query_array, false, $group_value);
         $query_array = $this->build_report_query_where($query_array);
 
         foreach ($query_array['select'] as $select){
@@ -415,12 +480,12 @@ class AOR_Report extends Basic {
             }
             $query .= ' '.$query_sort_by;
         }
-echo $query;
+
         return $query;
 
     }
 
-    function build_report_query_select($query = array()){
+    function build_report_query_select($query = array(), $grouped =false, $group_value =''){
         global $beanList;
 
         if($beanList[$this->report_module]){
@@ -428,7 +493,10 @@ echo $query;
 
             $query['select'][] = $module->table_name.".id AS '".$module->table_name."_id'";
 
-            $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
+            $sub_sql ='';
+            if($grouped) $sub_sql = 'AND group_display = 1';
+
+            $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' $sub_sql AND deleted = 0 ORDER BY field_order ASC";
             $result = $this->db->query($sql);
             $i = 0;
             while ($row = $this->db->fetchByAssoc($result)) {
@@ -481,7 +549,9 @@ echo $query;
                 }
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
-                ++$i;
+
+                if($field->group_display && !$grouped) $query['where'][] = $select_field." = '".$group_value."'";
+                    ++$i;
             }
         }
         return $query;

@@ -222,7 +222,7 @@ $dictionary['AOR_Field'] = array(
             'required' => false,
             'name' => 'group_by',
             'vname' => 'LBL_GROUP',
-            'type' => 'enum',
+            'type' => 'bool',
             'massupdate' => 0,
             'comments' => '',
             'help' => '',
@@ -233,11 +233,7 @@ $dictionary['AOR_Field'] = array(
             'reportable' => true,
             'unified_search' => false,
             'merge_filter' => 'disabled',
-            'len' => 100,
-            'size' => '20',
-            'options' => 'aor_group_dom',
             'studio' => 'visible',
-            'dependency' => false,
         ),
         'group_order' =>
         array (
@@ -260,6 +256,24 @@ $dictionary['AOR_Field'] = array(
             'options' => 'aor_type_order_dom',
             'studio' => 'visible',
             'dependency' => false,
+        ),
+        'group_display' =>
+        array (
+            'required' => false,
+            'name' => 'group_display',
+            'vname' => 'LBL_GROUP_DISPLAY',
+            'type' => 'bool',
+            'massupdate' => 0,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'studio' => 'visible',
         ),
         'aor_reports' =>
         array (
