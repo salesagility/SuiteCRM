@@ -50,7 +50,7 @@ class AOR_ReportsController extends SugarController {
     }
 
     protected function action_changeReportPage(){
-        echo $this->bean->build_report_html($_REQUEST['offset']);
+        echo $this->bean->build_report_html($_REQUEST['offset'], true,$_REQUEST['group']);
         die();
     }
 
