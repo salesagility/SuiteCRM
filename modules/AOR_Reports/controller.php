@@ -131,7 +131,7 @@ class AOR_ReportsController extends SugarController {
                 </table><br />';
 
 
-        $printable = $this->bean->build_report_html(-1,false);
+        $printable = $this->bean->build_group_report(-1,false);
         $stylesheet = file_get_contents('themes/Suite7/css/style.css');
 
         ob_clean();
