@@ -186,51 +186,52 @@ class AOR_Report extends Basic {
 
             $query_array['select'][] = $select_field ." AS '".$field_label."'";
             $query_array['where'][] = $select_field ." IS NOT NULL ";
-        }
 
-        $query_array = $this->build_report_query_where($query_array);
+            $query_array = $this->build_report_query_where($query_array);
 
-        foreach ($query_array['select'] as $select){
-            $query .=  ($query == '' ? 'SELECT ' : ', ').$select;
-        }
-
-        $query .= ' FROM '.$module->table_name.' ';
-
-        if(isset($query_array['join'])){
-            foreach ($query_array['join'] as $join){
-                $query .= $join;
+            foreach ($query_array['select'] as $select){
+                $query .=  ($query == '' ? 'SELECT ' : ', ').$select;
             }
-        }
-        if(isset($query_array['where'])){
-            $query_where = '';
-            foreach ($query_array['where'] as $where){
-                $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
+
+            $query .= ' FROM '.$module->table_name.' ';
+
+            if(isset($query_array['join'])){
+                foreach ($query_array['join'] as $join){
+                    $query .= $join;
+                }
             }
-            $query .= ' '.$query_where;
-        }
-
-        if(isset($query_array['group_by'])){
-            $query_group_by = '';
-            foreach ($query_array['group_by'] as $group_by){
-                $query_group_by .=  ($query_group_by == '' ? 'GROUP BY ' : ', ').$group_by;
+            if(isset($query_array['where'])){
+                $query_where = '';
+                foreach ($query_array['where'] as $where){
+                    $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
+                }
+                $query .= ' '.$query_where;
             }
-            $query .= ' '.$query_group_by;
-        }
 
-        if(isset($query_array['sort_by'])){
-            $query_sort_by = '';
-            foreach ($query_array['sort_by'] as $sort_by){
-                $query_sort_by .=  ($query_sort_by == '' ? 'ORDER BY ' : ', ').$sort_by;
+            if(isset($query_array['group_by'])){
+                $query_group_by = '';
+                foreach ($query_array['group_by'] as $group_by){
+                    $query_group_by .=  ($query_group_by == '' ? 'GROUP BY ' : ', ').$group_by;
+                }
+                $query .= ' '.$query_group_by;
             }
-            $query .= ' '.$query_sort_by;
-        }
 
-        $result = $this->db->query($query);
+            if(isset($query_array['sort_by'])){
+                $query_sort_by = '';
+                foreach ($query_array['sort_by'] as $sort_by){
+                    $query_sort_by .=  ($query_sort_by == '' ? 'ORDER BY ' : ', ').$sort_by;
+                }
+                $query .= ' '.$query_sort_by;
+            }
 
-        while ($row = $this->db->fetchByAssoc($result)) {
+            $result = $this->db->query($query);
 
-           $html .= $this->build_report_html($offset, $links, $row[$field_label]);
+            while ($row = $this->db->fetchByAssoc($result)) {
+                if($html != '') $html .= '<br />';
 
+               $html .= $this->build_report_html($offset, $links, $row[$field_label]);
+
+            }
         }
 
         if($html == '') $html = $this->build_report_html($offset, $links);
@@ -279,7 +280,7 @@ class AOR_Report extends Basic {
 
             $html .="<td colspan='18'>
                        <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
-                        <td style='text-align:left' ><b>$group_value</b></td>
+                        <td style='text-align:left' ><H3>$group_value</H3></td>
                         <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
 
             if($offset == 0){
@@ -320,6 +321,8 @@ class AOR_Report extends Basic {
                       </td>";
 
             $html .="</tr></thead>";
+        } else{
+            $html = "<H3>$group_value</H3>".$html;
         }
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
@@ -388,7 +391,7 @@ class AOR_Report extends Basic {
 
                     switch ($att['function']){
                         case 'COUNT':
-                        case 'SUM':
+                        //case 'SUM':
                             $html .= $row[$name];
                             break;
                         default:
@@ -575,7 +578,7 @@ class AOR_Report extends Basic {
                     $field->field = $data['id_name'];
                 }
 
-                if($data['type'] == 'currency' && !stripos($field->field, '_USD') && isset($field_module->field_defs['currency_id'])) {
+                if($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
                     $query['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
                 }
 
