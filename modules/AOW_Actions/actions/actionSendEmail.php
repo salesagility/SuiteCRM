@@ -176,7 +176,13 @@ EOS;
                 $emailTarget = $params['email_target'];
                 $relatedFields = $bean->get_related_fields();
                 $field = $relatedFields[$emailTarget];
-                $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
+                if($field['type'] == 'relate'){
+                    $linkedBeans = array();
+                    $id = $bean->$field['id_name'];
+                    $linkedBeans[] = BeanFactory::getBean($field['module'],$id);
+                }else{
+                    $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
+                }
                 if($linkedBeans){
                     $linkedBean = $linkedBeans[0];
                     return $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
