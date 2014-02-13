@@ -63,77 +63,6 @@ height: 10px;
 {$chartResources}
 {$mySugarChartResources}
 
-<script type="text/javascript">
-var activePage = {$activePage};
-var theme = '{$theme}';
-current_user_id = '{$current_user}';
-jsChartsArray = new Array();
-var moduleName = '{$module}';
-document.body.setAttribute("class", "yui-skin-sam");
-{literal}
-var mySugarLoader = new YAHOO.util.YUILoader({
-	require : ["my_sugar", "sugar_charts"],
-    // Bug #48940 Skin always must be blank
-    skin: {
-        base: 'blank',
-        defaultSkin: ''
-    },
-	onSuccess: function(){
-		initMySugar();
-		initmySugarCharts();
-		SUGAR.mySugar.maxCount = 	{/literal}{$maxCount}{literal};
-		SUGAR.mySugar.homepage_dd = new Array();
-		var j = 0;
-
-		{/literal}
-		var dashletIds = {$dashletIds};
-
-		{if !$lock_homepage}
-			for(i in dashletIds) {ldelim}
-				SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-				SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-                // Bug #47097 : Dashlets not displayed after moving them
-                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
-                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
-				SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-				SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-				j++;
-			{rdelim}
-			{if $hiddenCounter > 0}
-			for(var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
-				SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_'+activePage+'_hidden' + wp);
-			{rdelim}
-			{/if}
-			YAHOO.util.DDM.mode = 1;
-		{/if}
-		{literal}
-		SUGAR.mySugar.renderDashletsDialog();
-		SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
-		{/literal}
-		{literal}
-	}
-});
-mySugarLoader.addModule({
-	name :"my_sugar",
-	type : "js",
-	fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
-	varName: "initMySugar",
-	requires: []
-});
-mySugarLoader.addModule({
-	name :"sugar_charts",
-	type : "js",
-	fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
-	varName: "initmySugarCharts",
-	requires: []
-});
-mySugarLoader.insert();
-{/literal}
-</script>
-
-
-
-
 <div class="clear"></div>
 <div id="pageContainer" class="yui-skin-sam">
 <div id="pageNum_{$activePage}_div">
@@ -194,4 +123,71 @@ mySugarLoader.insert();
 				
 	
 </div>
+<script type="text/javascript">
+    var activePage = {$activePage};
+    var theme = '{$theme}';
+    current_user_id = '{$current_user}';
+    jsChartsArray = new Array();
+    var moduleName = '{$module}';
+    document.body.setAttribute("class", "yui-skin-sam");
+    {literal}
+    var mySugarLoader = new YAHOO.util.YUILoader({
+        require : ["my_sugar", "sugar_charts"],
+        // Bug #48940 Skin always must be blank
+        skin: {
+            base: 'blank',
+            defaultSkin: ''
+        },
+        onSuccess: function(){
+            initMySugar();
+            initmySugarCharts();
+            SUGAR.mySugar.maxCount = 	{/literal}{$maxCount}{literal};
+            SUGAR.mySugar.homepage_dd = new Array();
+            var j = 0;
+
+            {/literal}
+            var dashletIds = {$dashletIds};
+
+            {if !$lock_homepage}
+            for(i in dashletIds) {ldelim}
+                SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
+                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+                // Bug #47097 : Dashlets not displayed after moving them
+                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+                j++;
+                {rdelim}
+            {if $hiddenCounter > 0}
+            for(var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
+                SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_'+activePage+'_hidden' + wp);
+                {rdelim}
+            {/if}
+            YAHOO.util.DDM.mode = 1;
+            {/if}
+            {literal}
+            SUGAR.mySugar.renderDashletsDialog();
+            SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
+            {/literal}
+            {literal}
+        }
+    });
+    mySugarLoader.addModule({
+        name :"my_sugar",
+        type : "js",
+        fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
+        varName: "initMySugar",
+        requires: []
+    });
+    mySugarLoader.addModule({
+        name :"sugar_charts",
+        type : "js",
+        fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
+        varName: "initmySugarCharts",
+        requires: []
+    });
+    mySugarLoader.insert();
+    {/literal}
+</script>
 
