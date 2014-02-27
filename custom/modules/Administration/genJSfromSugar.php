@@ -44,6 +44,7 @@ class mobile_jsLanguage {
 	}
 	
     function createAppStringsCache($lang = 'en_us') {
+		global $sugar_config;
 		$lst_mod=array('Accounts','Contacts','Opportunities','Leads','Calls','Meetings','Cases','Project','ProjectTask','Tasks','Notes');
 		$required_list = $this->getListOfLists($lst_mod); // List of application list strings used in the application (enums)
 
@@ -56,6 +57,7 @@ class mobile_jsLanguage {
 			$app_list_strings["moduleListSingular"][$lst]= isset($all_app_list_strings["moduleListSingular"][$lst])?$all_app_list_strings["moduleListSingular"][$lst]:$all_app_list_strings["moduleList"][$lst];
 		}
 		$app_list_strings["parent_type_display"]=$all_app_list_strings["parent_type_display"];
+		$app_list_strings["duration_intervals"]=$all_app_list_strings["duration_intervals"];
 		$app_list_strings["moduleList"]["SavedSearches"]= $all_app_list_strings["moduleList"]["SavedSearch"];
 		// date_range_search_dom in not defined until 6.2
 		$app_list_strings["date_search"]= isset($all_app_list_strings["date_range_search_dom"])?$all_app_list_strings["date_range_search_dom"]:$all_app_list_strings["kbdocument_date_filter_options"];
@@ -71,7 +73,7 @@ class mobile_jsLanguage {
 		$ADM_mod_strings = return_module_language($lang, "Administration");
         $str = <<<EOQ
 var RES_CREATE='{$app_strings['LBL_CREATE_BUTTON_LABEL']}',RES_LIST='{$app_strings['LBL_LIST']}',RES_ADD_TO_HOME='{$app_strings['LBL_MARK_AS_FAVORITES']}',RES_REM_FROM_HOME='{$app_strings['LBL_REMOVE_FROM_FAVORITES']}',RES_RECORD_ERROR='{$app_strings['ERROR_NO_RECORD']}',RES_LAST_VIEWED='{$app_strings['LBL_LAST_VIEWED']}', RES_DELETE_CONFIRMATION='{$app_strings['NTC_DELETE_CONFIRMATION']}', RES_DEL_LABEL='{$app_strings['LBL_DELETE_BUTTON_LABEL']}', RES_NEXT_LABEL='{$app_strings['LNK_LIST_NEXT']}', RES_PREVIOUS_LABEL='{$app_strings['LNK_LIST_PREVIOUS']}';
-var RES_HOME_LABEL='{$all_app_list_strings["moduleList"]["Home"]}',RES_SYNC='{$all_app_list_strings["moduleList"]["Sync"]}',RES_SAVEDSEARCH='{$all_app_list_strings["moduleList"]["SavedSearch"]}',RES_SAVESEARCH='{$SS_mod_strings["LBL_SAVE_SEARCH_AS"]}',RES_DISABLED='{$ADM_mod_strings["LBL_DISABLED"]}';
+var RES_ASC='{$SS_mod_strings["LBL_ASCENDING"]}',RES_DESC='{$SS_mod_strings["LBL_DESCENDING"]}',RES_HOME_LABEL='{$all_app_list_strings["moduleList"]["Home"]}',RES_SYNC='{$all_app_list_strings["moduleList"]["Sync"]}',RES_SAVEDSEARCH='{$all_app_list_strings["moduleList"]["SavedSearch"]}',RES_SAVESEARCH='{$SS_mod_strings["LBL_SAVE_SEARCH_AS"]}',RES_DISABLED='{$ADM_mod_strings["LBL_DISABLED"]}';
 var sugar_app_list_strings = jQuery.parseJSON('$app_list_strings_encoded');
 EOQ;
 		$SS_mod_strings = null;
@@ -93,6 +95,7 @@ EOQ;
 			'LBL_LAST_VIEWED',
 			'LNK_LIST_NEXT',
 			'LNK_LIST_PREVIOUS',
+			'LBL_LINK_SELECT',
 			'LBL_LIST_USER_NAME',
 			'NTC_LOGIN_MESSAGE', //'Please enter your user name and password.'
 //			'LBL_LOGOUT',
@@ -100,10 +103,19 @@ EOQ;
 			'LBL_ASSIGNED_TO',
 			'LBL_CLEAR_BUTTON_LABEL',
 			'LBL_DURATION_DAYS',
-			'LBL_CLOSE_AND_CREATE_BUTTON_TITLE',
-			'LBL_CLOSE_BUTTON_TITLE',
+			'LBL_CLOSE_AND_CREATE_BUTTON_TITLE', // TO REMOVE WHEN APPS ARE UPDATED
+			'LBL_CLOSE_AND_CREATE_BUTTON_LABEL',
+			'LBL_CLOSE_BUTTON_TITLE', // TO REMOVE WHEN APPS ARE UPDATED
+			'LBL_CLOSE_BUTTON_LABEL',
 			'LBL_LISTVIEW_ALL',
 			'LBL_LISTVIEW_NONE',
+			'LBL_SAVED',
+			'LBL_PRIMARY_ADDRESS',
+			'LBL_BILLING_ADDRESS',
+			'LBL_ALT_ADDRESS',
+			'LBL_SHIPPING_ADDRESS',
+			'LBL_DUPLICATE_BUTTON',
+			'MSG_SHOW_DUPLICATES',
 		);
 		$str_app_array=array();
 		foreach($app_array as $key){
@@ -118,15 +130,17 @@ EOQ;
 		$in_file=(strlen ($str) > 49000?'1':'0');
 		$administration->saveSetting('QuickCRM', $lang.'f', $in_file);
 		
-        $saveDir = realpath(dirname(__FILE__).'/../../../mobile/fielddefs/');
-        if($fh = @fopen($saveDir . '/' .$lang . '.js', "w")){
-            fputs($fh, $str);
-            fclose($fh);
-        }
-		else
-			{
-				// die();
+//		if ($sugar_config['sugar_version']<'6.3'){
+			$saveDir = realpath(dirname(__FILE__).'/../../../mobile/fielddefs/');
+			if($fh = @fopen($saveDir . '/' .$lang . '.js', "w")){
+				fputs($fh, $str);
+				fclose($fh);
 			}
+			else
+			{
+					// die();
+			}
+//		}
     }
     
     function createDefaultLocalization() {
@@ -143,17 +157,18 @@ EOQ;
         $str .= '$time = "'.time().'";';
         $str .= ' ?>';
         
-        $saveDir = realpath(dirname(__FILE__).'/../../../mobile/fielddefs/');
-        if($fh = fopen($saveDir .'/' . 'localization.php', "w")){
-            fputs($fh, $str);
-            fclose($fh);
-        }
-		else
+//		if ($sugar_config['sugar_version']<'6.3'){
+			$saveDir = realpath(dirname(__FILE__).'/../../../mobile/fielddefs/');
+			if($fh = fopen($saveDir .'/' . 'localization.php', "w")){
+				fputs($fh, $str);
+				fclose($fh);
+			}
+			else
 			{
 				$mod_strings = return_module_language($current_language, "Administration");
 				echo $mod_strings['LBL_ERR_DIR_MSG'].$saveDir;
 			}
-			
+//		}
 		
 		$str = "var mobile_edition = 'CE',Q_API='2.3', app_support=true, module_access={}, sugar_mod_fields={};";
         $str .= 'var js_plugins=[],html_plugins=[];';
@@ -203,14 +218,17 @@ EOQ;
 		$str .= "var CustomHTML=".(file_exists("custom/QuickCRM/home.html")?"true":"false").";";
 		$str .= "var CustomJS=".(file_exists("custom/QuickCRM/custom.js")?"true":"false").";";
 
+
 		$administration->saveSetting('QuickCRM', 'sugar_config', base64_encode($str));
 		
-        $saveDir = realpath(dirname(__FILE__).'/../../../mobile/');
+		if ($sugar_config['sugar_version']<'6.3'){
+			$saveDir = realpath(dirname(__FILE__).'/../../../mobile/');
         
-        if($fh = @fopen($saveDir . '/config.js', "w")){
-            fputs($fh, $str);
-            fclose($fh);
-        }
+			if($fh = @fopen($saveDir . '/config.js', "w")){
+				fputs($fh, $str);
+				fclose($fh);
+			}
+		}
     }
     
 	function createAllFiles(){
@@ -244,6 +262,11 @@ function createMobileFiles(){
 					$info = $info['http_code'];
 					$err=($info=='403' || $info=='500');
 				}
+
+
+
+
+
 
 				curl_close($ch); 
 				return (!$err);

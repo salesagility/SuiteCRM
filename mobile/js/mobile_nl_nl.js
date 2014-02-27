@@ -87,12 +87,13 @@ var RES_DEF_LOCK='Stel wachtwoord in',
 	RES_HERE='Hier',
 	RES_DIST='Afstand';
 
-// DATE FORMAT
-var regDate = new RegExp('^([0-9]|[0][0-9]|[1][0,1,2])/([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]{4})$',"");
-var regDateTime = new RegExp('^([0-9]|[0][0-9]|[1][0,1,2])/([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]{4}) ([0-9]|[0-2][0-9]):([0-6][0-9])$',"");
-var regMonth="$1";
-var regDay="$2";
-var AMPM=true;
+// FUTURE VERSIONS - NOT USED YET
+var RES_SCANCARD='Scan QR Code business card',
+	RES_COUNT='Number of',
+	RES_SUM='Sum',
+	RES_AVERAGE='Average',
+	RES_REMINDERS='Reminders',
+	RES_ROWS_PER_DASHLET="Regels per Dashlet";
 
 // ADDRESS FORMAT
 var Addresses_Template= '$street<br/>$city, $state $postalcode<br/>$country';
