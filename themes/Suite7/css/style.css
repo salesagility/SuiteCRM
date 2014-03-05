@@ -9038,3 +9038,21 @@ a#delete_listview_top:hover {
     padding-right:30px; /* button padding */
 }
 
+blockquote {
+    display: inline-block;
+    z-index:0;
+
+
+}
+
+blockquote.oval-thought-border {
+    margin:25px 25px 50px 25px;
+}
+
+.oval-thought-border {
+    margin:25px;
+}
+
+.clear { clear: both; }
+
+#padding{margin:25px;}
