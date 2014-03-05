@@ -66,8 +66,8 @@ $(document).ready(function(){
     }
 });
 </script>
-<a href='' onclick='collapseAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL']}</a>
-<a href='' onclick='expandAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_EXPAND_ALL']}</a>
+<a href='' onclick='collapseAllUpdates(); return false;' class='button'>{$mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL']}</a>
+<a href='' onclick='expandAllUpdates(); return false;' class='button'>{$mod_strings['LBL_CASE_UPDATES_EXPAND_ALL']}</a>
 <div>
 EOD;
 
@@ -106,9 +106,10 @@ function getUpdateDisplayHead($update){
 }
 
 function display_single_update(AOP_Case_Updates $update){
-    $html = getUpdateDisplayHead($update);
-    $html .= "<div  id='caseUpdate".$update->id."' class='caseUpdate'>";
+
+    $html = "<blockquote class='oval-thought-border'>".getUpdateDisplayHead($update);
+    $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
     $html .= nl2br(html_entity_decode($update->description));
-    $html .= "<hr></div>";
+    $html .= "</div></blockquote>";
     return $html;
 }
