@@ -66,8 +66,8 @@ $(document).ready(function(){
     }
 });
 </script>
-<a href='' onclick='collapseAllUpdates(); return false;' class='button'>{$mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL']}</a>
-<a href='' onclick='expandAllUpdates(); return false;' class='button'>{$mod_strings['LBL_CASE_UPDATES_EXPAND_ALL']}</a>
+<a href='' onclick='collapseAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL']}</a>
+<a href='' onclick='expandAllUpdates(); return false;'>{$mod_strings['LBL_CASE_UPDATES_EXPAND_ALL']}</a>
 <div>
 EOD;
 
@@ -107,9 +107,30 @@ function getUpdateDisplayHead($update){
 
 function display_single_update(AOP_Case_Updates $update){
 
-    $html = "<blockquote class='oval-thought-border'>".getUpdateDisplayHead($update);
-    $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
-    $html .= nl2br(html_entity_decode($update->description));
-    $html .= "</div></blockquote>";
-    return $html;
+    /*if assigned user, don't add css*/
+    if($update->assigned_user_id){
+        $html = "<div id='lessmargin'><div id='caseStyle'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+    }
+
+    /*if contact, add css*/
+    if($update->contact_id){
+        $html = "<div id='extramargin'><div id='caseStyle'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+    }
+
+    /*if internal, add css*/
+    if($update->internal){
+        $html = "<div id='extramargin'><div id='caseStyleInteral'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+    }
 }
