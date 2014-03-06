@@ -9056,3 +9056,39 @@ blockquote.oval-thought-border {
 .clear { clear: both; }
 
 #padding{margin:25px;}
+
+#caseStyle {
+    background:#eeeeee;
+    border:1px solid #cccccc;
+    margin:10px;
+    padding:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#caseStyleInternal {
+    background:#121212;
+    border:1px solid #cccccc;
+    margin:10px;
+    padding:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.caseUpdateImage {
+    margin:0 5px 0 0;
+}
+
+.caseUpdate{
+    margin:5px 0 0 15px;
+}
+
+#extramargin {
+    margin: 0 0 0 50px;
+}
+
+#lessmargin {
+    margin: 0 50px 0 0;
+}
