@@ -107,30 +107,33 @@ function getUpdateDisplayHead($update){
 
 function display_single_update(AOP_Case_Updates $update){
 
-    /*if assigned user, don't add css*/
+    /*if assigned user*/
     if($update->assigned_user_id){
-        $html = "<div id='lessmargin'><div id='caseStyle'>".getUpdateDisplayHead($update);
+        /*if internal update*/
+        if ($update->internal){
+            $html = "<div id='caseStyleInternal'>".getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= "</div></div>";
+            return $html;
+        }
+        /*if standard update*/
+        else {
+        $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
         $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
         $html .= nl2br(html_entity_decode($update->description));
         $html .= "</div></div></div>";
         return $html;
+        }
     }
 
-    /*if contact, add css*/
+    /*if contact user*/
     if($update->contact_id){
-        $html = "<div id='extramargin'><div id='caseStyle'>".getUpdateDisplayHead($update);
+        $html = "<div id='extramargin'><div id='caseStyleContact'>".getUpdateDisplayHead($update);
         $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
         $html .= nl2br(html_entity_decode($update->description));
         $html .= "</div></div></div>";
         return $html;
     }
 
-    /*if internal, add css*/
-    if($update->internal){
-        $html = "<div id='extramargin'><div id='caseStyleInteral'>".getUpdateDisplayHead($update);
-        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
-        $html .= nl2br(html_entity_decode($update->description));
-        $html .= "</div></div></div>";
-        return $html;
-    }
 }
