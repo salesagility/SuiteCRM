@@ -9057,8 +9057,18 @@ blockquote.oval-thought-border {
 
 #padding{margin:25px;}
 
-#caseStyle {
-    background:#eeeeee;
+#caseStyleUser {
+    background:#f7f7f7;
+    border:1px solid #cccccc;
+    margin:10px;
+    padding:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#caseStyleContact {
+    background:#DEDEDE;
     border:1px solid #cccccc;
     margin:10px;
     padding:10px;
@@ -9068,13 +9078,13 @@ blockquote.oval-thought-border {
 }
 
 #caseStyleInternal {
-    background:#121212;
+    background:#00EEEE;
     border:1px solid #cccccc;
-    margin:10px;
     padding:10px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+    margin: 10px 60px 10px 10px;
 }
 
 .caseUpdateImage {
