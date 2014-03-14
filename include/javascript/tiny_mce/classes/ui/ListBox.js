@@ -1,15 +1,15 @@
 /**
  * ListBox.js
  *
- * Copyright 2009, Moxiecode Systems AB
+ * Copyright, Moxiecode Systems AB
  * Released under LGPL License.
  *
- * License: http://tinymce.moxiecode.com/license
- * Contributing: http://tinymce.moxiecode.com/contributing
+ * License: http://www.tinymce.com/license
+ * Contributing: http://www.tinymce.com/contributing
  */
 
 (function(tinymce) {
-	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher;
+	var DOM = tinymce.DOM, Event = tinymce.dom.Event, each = tinymce.each, Dispatcher = tinymce.util.Dispatcher, undef;
 
 	/**
 	 * This class is used to create list boxes/select list. This one will generate
@@ -105,6 +105,7 @@
 			t.onRenderMenu = new tinymce.util.Dispatcher(this);
 
 			t.classPrefix = 'mceListBox';
+			t.marked = {};
 		},
 
 		/**
@@ -117,11 +118,13 @@
 		select : function(va) {
 			var t = this, fv, f;
 
-			if (va == undefined)
+			t.marked = {};
+
+			if (va == undef)
 				return t.selectByIndex(-1);
 
 			// Is string or number make function selector
-			if (va && va.call)
+			if (va && typeof(va)=="function")
 				f = va;
 			else {
 				f = function(v) {
@@ -153,26 +156,40 @@
 		 * @param {String} idx Index to select, pass -1 to select menu/title of select box.
 		 */
 		selectByIndex : function(idx) {
-			var t = this, e, o;
+			var t = this, e, o, label;
+
+			t.marked = {};
 
 			if (idx != t.selectedIndex) {
 				e = DOM.get(t.id + '_text');
+				label = DOM.get(t.id + '_voiceDesc');
 				o = t.items[idx];
 
 				if (o) {
 					t.selectedValue = o.value;
 					t.selectedIndex = idx;
 					DOM.setHTML(e, DOM.encode(o.title));
+					DOM.setHTML(label, t.settings.title + " - " + o.title);
 					DOM.removeClass(e, 'mceTitle');
 					DOM.setAttrib(t.id, 'aria-valuenow', o.title);
 				} else {
 					DOM.setHTML(e, DOM.encode(t.settings.title));
+					DOM.setHTML(label, DOM.encode(t.settings.title));
 					DOM.addClass(e, 'mceTitle');
 					t.selectedValue = t.selectedIndex = null;
 					DOM.setAttrib(t.id, 'aria-valuenow', t.settings.title);
 				}
 				e = 0;
 			}
+		},
+
+		/**
+		 * Marks a specific item by name. Marked values are optional items to mark as active.
+		 *
+		 * @param {String} value Value item to mark.
+		 */
+		mark : function(value) {
+			this.marked[value] = true;
 		},
 
 		/**
@@ -216,7 +233,7 @@
 		renderHTML : function() {
 			var h = '', t = this, s = t.settings, cp = t.classPrefix;
 
-			h = '<span role="button" aria-haspopup="true" aria-labelledby="' + t.id +'_text" aria-describedby="' + t.id + '_voiceDesc"><table role="presentation" tabindex="0" id="' + t.id + '" cellpadding="0" cellspacing="0" class="' + cp + ' ' + cp + 'Enabled' + (s['class'] ? (' ' + s['class']) : '') + '"><tbody><tr>';
+			h = '<span role="listbox" aria-haspopup="true" aria-labelledby="' + t.id +'_voiceDesc" aria-describedby="' + t.id + '_voiceDesc"><table role="presentation" tabindex="0" id="' + t.id + '" cellpadding="0" cellspacing="0" class="' + cp + ' ' + cp + 'Enabled' + (s['class'] ? (' ' + s['class']) : '') + '"><tbody><tr>';
 			h += '<td>' + DOM.createHTML('span', {id: t.id + '_voiceDesc', 'class': 'voiceLabel', style:'display:none;'}, t.settings.title); 
 			h += DOM.createHTML('a', {id : t.id + '_text', tabindex : -1, href : 'javascript:;', 'class' : 'mceText', onclick : "return false;", onmousedown : 'return false;'}, DOM.encode(t.settings.title)) + '</td>';
 			h += '<td>' + DOM.createHTML('a', {id : t.id + '_open', tabindex : -1, href : 'javascript:;', 'class' : 'mceOpen', onclick : "return false;", onmousedown : 'return false;'}, '<span><span style="display:none;" class="mceIconOnly" aria-hidden="true">\u25BC</span></span>') + '</td>';
@@ -233,7 +250,7 @@
 		showMenu : function() {
 			var t = this, p2, e = DOM.get(this.id), m;
 
-			if (t.isDisabled() || t.items.length == 0)
+			if (t.isDisabled() || t.items.length === 0)
 				return;
 
 			if (t.menu && t.menu.isMenuVisible)
@@ -252,13 +269,19 @@
 			m.settings.keyboard_focus = !tinymce.isOpera; // Opera is buggy when it comes to auto focus
 
 			// Select in menu
-			if (t.oldID)
-				m.items[t.oldID].setSelected(0);
+			each(t.items, function(o) {
+				if (m.items[o.id]) {
+					m.items[o.id].setSelected(0);
+				}
+			});
 
 			each(t.items, function(o) {
+				if (m.items[o.id] && t.marked[o.value]) {
+					m.items[o.id].setSelected(1);
+				}
+
 				if (o.value === t.selectedValue) {
 					m.items[o.id].setSelected(1);
-					t.oldID = o.id;
 				}
 			});
 
@@ -304,7 +327,7 @@
 			m = t.settings.control_manager.createDropMenu(t.id + '_menu', {
 				menu_line : 1,
 				'class' : t.classPrefix + 'Menu mceNoIcons',
-				max_width : 150,
+				max_width : 250,
 				max_height : 150
 			});
 
@@ -324,9 +347,10 @@
 
 			each(t.items, function(o) {
 				// No value then treat it as a title
-				if (o.value === undefined) {
+				if (o.value === undef) {
 					m.add({
 						title : o.title,
+						role : "option",
 						'class' : 'mceMenuItemTitle',
 						onclick : function() {
 							if (t.settings.onselect('') !== false)
@@ -335,6 +359,7 @@
 					});
 				} else {
 					o.id = DOM.uniqueId();
+					o.role= "option";
 					o.onclick = function() {
 						if (t.settings.onselect(o.value) !== false)
 							t.select(o.value); // Must be runned after
