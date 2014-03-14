@@ -86,7 +86,8 @@ class SugarWebServiceUtilv4 extends SugarWebServiceUtilv3_1
 		{
 			$show_deleted = 1;
 		}
-		$order_by=$seed->process_order_by($order_by, null);
+		// Fix bug with sort order in get_entry_list
+		// $order_by=$seed->process_order_by($order_by, null);
 
 		$params = array();
 		if(!empty($favorites)) {
