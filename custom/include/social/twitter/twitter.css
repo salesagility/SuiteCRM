@@ -1,0 +1,16 @@
+/*
+* @author Salesagility Ltd <support@salesagility.com>
+ * Date: 15/01/14
+ * Time: 09:14
+*/
+
+.tweet {
+    border-bottom: 0 none;
+    border-radius: 0;
+    border-top: 1px solid #E8E8E8;
+    cursor: default;
+    font-size: 12px;
+    min-height: 32px;
+    padding: 9px 15px 12px;
+    padding-top: 20px;
+}

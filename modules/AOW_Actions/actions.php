@@ -25,6 +25,7 @@
     $aow_actions_list[]='CreateRecord';
     $aow_actions_list[]='ModifyRecord';
     $aow_actions_list[]='SendEmail';
+    $aow_actions_list[]='SetApproval';
 
 
 if (file_exists('custom/modules/AOW_Actions/Ext/Actions/actions.ext.php')) {

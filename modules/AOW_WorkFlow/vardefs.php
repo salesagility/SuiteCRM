@@ -28,7 +28,7 @@ $dictionary['AOW_WorkFlow'] = array(
 	'audited'=>true,
 		'duplicate_merge'=>true,
 		'fields'=>array (
-  'flow_module' => 
+  'flow_module' =>
   array (
     'required' => true,
     'name' => 'flow_module',
@@ -51,6 +51,29 @@ $dictionary['AOW_WorkFlow'] = array(
     'studio' => 'visible',
     'dependency' => false,
   ),
+'flow_run_on' =>
+array (
+    'required' => true,
+    'name' => 'flow_run_on',
+    'vname' => 'LBL_RUN_ON',
+    'type' => 'enum',
+    'massupdate' => 0,
+    'default' => '0',
+    'comments' => '',
+    'help' => '',
+    'importable' => 'true',
+    'duplicate_merge' => 'disabled',
+    'duplicate_merge_dom_value' => '0',
+    'audited' => false,
+    'reportable' => true,
+    'unified_search' => false,
+    'merge_filter' => 'disabled',
+    'len' => 100,
+    'size' => '20',
+    'options' => 'aow_run_on_list',
+    'studio' => 'visible',
+    'dependency' => false,
+),
   'status' => 
   array (
     'required' => false,

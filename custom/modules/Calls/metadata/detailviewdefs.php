@@ -1,5 +1,5 @@
 <?php
-// created: 2013-09-23 20:18:02
+// created: 2014-01-30 14:55:23
 $viewdefs = array (
   'Calls' => 
   array (
@@ -51,10 +51,6 @@ $viewdefs = array (
                 'template' => '{if $fields.status.value != "Held" && $bean->aclAccess("edit")}[CONTENT]{/if}',
               ),
             ),
-            'SA_RESCHEDULE' => 
-            array (
-              'customCode' => '{if $fields.status.value != "Held"} <input title="{$MOD.LBL_RESCHEDULE}" class="button" onclick="get_form();" name="Reschedule" id="reschedule_button" value="{$MOD.LBL_RESCHEDULE}" type="button">{/if}',
-            ),
           ),
           'hidden' => 
           array (
@@ -80,13 +76,6 @@ $viewdefs = array (
           ),
         ),
         'useTabs' => false,
-        'includes' => 
-        array (
-          'SA_RESCHEDULE' => 
-          array (
-            'file' => 'modules/Calls_Reschedule/reschedule_form.js',
-          ),
-        ),
       ),
       'panels' => 
       array (
@@ -143,6 +132,17 @@ $viewdefs = array (
               'comment' => 'Full text of the note',
               'label' => 'LBL_DESCRIPTION',
             ),
+            1 => 
+            array (
+              'name' => 'twitter_user_c',
+            ),
+          ),
+          4 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebookAPI_user_c',
+            ),
           ),
         ),
         'LBL_PANEL_ASSIGNMENT' => 
@@ -170,19 +170,6 @@ $viewdefs = array (
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}&nbsp;',
               'label' => 'LBL_DATE_ENTERED',
             ),
-          ),
-        ),
-        'lbl_reschedule_panel' => 
-        array (
-          0 => 
-          array (
-            0 => 
-            array (
-              'name' => 'reschedule_history',
-              'comment' => 'Call duration, minutes portion',
-              'label' => 'LBL_RESCHEDULE_HISTORY',
-            ),
-            1 => '',
           ),
         ),
       ),

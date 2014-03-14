@@ -31,7 +31,7 @@ class AOW_WorkFlow extends Basic {
 	var $table_name = 'aow_workflow';
 	var $importable = false;
 	var $disable_row_level_security = true ;
-	
+
 	var $id;
 	var $name;
 	var $date_entered;
@@ -50,13 +50,13 @@ class AOW_WorkFlow extends Basic {
 	var $flow_module;
 	var $status;
 	var $run_when;
-	
+
 	function AOW_WorkFlow(){
 		parent::Basic();
         $this->load_flow_beans();
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
@@ -124,6 +124,21 @@ class AOW_WorkFlow extends Basic {
     }
 
     /**
+     * Select and run all active flows for the specified bean
+     */
+    function run_bean_flows(SugarBean &$bean){
+        if($_REQUEST['module'] != 'Import'){
+            $flows = AOW_WorkFlow::get_full_list(''," aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' ");
+
+            foreach($flows as $flow){
+                if($flow->check_valid_bean($bean))
+                    $flow->run_actions($bean, true);
+            }
+        }
+        return true;
+    }
+
+    /**
      * Use the condition statements and processed table to build query to retrieve beans to be actioned
      */
     function get_flow_beans(){
@@ -131,7 +146,72 @@ class AOW_WorkFlow extends Basic {
 
         if($beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
-            $where = '';
+
+            $query = '';
+            $query_array = array();
+
+            //$query_array = $this->build_report_query_select($query_array);
+            $query_array['select'][] = $module->table_name.".id AS id";
+            $query_array = $this->build_flow_query_where($query_array);
+
+            foreach ($query_array['select'] as $select){
+                $query .=  ($query == '' ? 'SELECT ' : ', ').$select;
+            }
+
+            $query .= ' FROM '.$module->table_name.' ';
+
+            if(isset($query_array['join'])){
+                foreach ($query_array['join'] as $join){
+                    $query .= $join;
+                }
+            }
+            if(isset($query_array['where'])){
+                $query_where = '';
+                foreach ($query_array['where'] as $where){
+                    $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
+                }
+                $query .= ' '.$query_where;
+            }
+            return $module->process_full_list_query($query);
+
+
+        }
+        return null;
+    }
+
+    function build_flow_query_join($name, SugarBean $module, $type, $query = array()){
+
+        if(!isset($query['join'][$name])){
+
+            switch ($type){
+                case 'custom':
+                    $query['join'][$name] = 'LEFT JOIN '.$module->get_custom_table_name().' '.$name.' ON '.$module->table_name.'.id = '. $name.'.id_c ';
+                    break;
+
+                case 'relationship':
+                    if($module->load_relationship($name)){
+                        $params['join_type'] = 'LEFT JOIN';
+                        $params['join_table_alias'] = $name;
+                        $join = $module->$name->getJoin($params, true);
+
+                        $query['join'][$name] = $join['join'];
+                        $query['select'][] = $join['select']." AS '".$name."_id'";
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+
+        }
+        return $query;
+    }
+
+    function build_flow_query_where($query = array()){
+        global $beanList, $app_list_strings, $sugar_config;
+
+        if($beanList[$this->flow_module]){
+            $module = new $beanList[$this->flow_module]();
 
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
             $result = $this->db->query($sql);
@@ -139,34 +219,44 @@ class AOW_WorkFlow extends Basic {
             while ($row = $this->db->fetchByAssoc($result)) {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
+
+                $path = unserialize(base64_decode($condition->module_path));
+
+                $condition_module = $module;
+                $table_alias = $condition_module->table_name;
+                if(isset($path[0]) && $path[0] != $module->module_dir){
+                    foreach($path as $rel){
+                        $query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
+                        $condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
+                        $table_alias = $rel;
+                    }
+                }
+
                 if(isset($app_list_strings['aow_sql_operator_list'][$condition->operator])){
                     $where_set = false;
 
-                    if($where != ''){
-                        $where .= ' AND ';
-                    }
-                    $data = $module->field_defs[$condition->field];
+                    $data = $condition_module->field_defs[$condition->field];
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->field = $data['id_name'];
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                        $field = $module->table_name.'_cstm.'.$condition->field;
+                        $field = $table_alias.'_cstm.'.$condition->field;
                     } else {
-                        $field = $module->table_name.'.'.$condition->field;
+                        $field = $table_alias.'.'.$condition->field;
                     }
 
                     switch($condition->value_type) {
                         case 'Field':
-                            $data = $module->field_defs[$condition->value];
+                            $data = $condition_module->field_defs[$condition->value];
 
                             if($data['type'] == 'relate' && isset($data['id_name'])) {
                                 $condition->value = $data['id_name'];
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $value = $module->table_name.'_cstm.'.$condition->value;
+                                $value = $table_alias.'_cstm.'.$condition->value;
                             } else {
-                                $value = $module->table_name.'.'.$condition->value;
+                                $value = $table_alias.'.'.$condition->value;
                             }
                             break;
 
@@ -179,11 +269,11 @@ class AOW_WorkFlow extends Basic {
                                     $value = 'NOW()';
                                 }
                             } else {
-                                $data = $module->field_defs[$params[0]];
+                                $data = $condition_module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                    $value = $module->table_name.'_cstm.'.$params[0];
+                                    $value = $table_alias.'_cstm.'.$params[0];
                                 } else {
-                                    $value = $module->table_name.'.'.$params[0];
+                                    $value = $table_alias.'.'.$params[0];
                                 }
                             }
 
@@ -214,8 +304,8 @@ class AOW_WorkFlow extends Basic {
                                     $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
                                 }
                                 $value .= ')';
+                                $query['where'][] = $value;
                             }
-                            $where .= $value;
                             $where_set = true;
                             break;
 
@@ -226,27 +316,195 @@ class AOW_WorkFlow extends Basic {
                     }
 
 
-                    if(!$where_set) $where .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' '.$value;
+                    if(!$where_set) $query['where'][] = $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' '.$value;
                 }
             }
-           if(!$this->multiple_runs){
-                if($where != ''){
-                    $where .= ' AND ';
+            if($this->flow_run_on){
+                switch($this->flow_run_on){
+
+                    case'New_Records':
+                        $query['where'][] = $module->table_name . '.' . 'date_entered' . ' > ' . "'" .$this->date_entered."'";
+                        Break;
+
+                    case'Modified_Records':
+                        $query['where'][] = $module->table_name . '.' . 'date_modified' . ' > ' . "'" .$this->date_entered."'" . ' AND ' . $module->table_name . '.' . 'date_entered' . ' <> ' . $module->table_name . '.' . 'date_modified';
+                        Break;
+
                 }
-                $where .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
             }
-            $query = $module->create_new_list_query('', $where, array(), array(), 0, '', false, $this);
 
-            return $module->process_full_list_query($query);
+            if(!$this->multiple_runs){
+                $query['where'][] .= "NOT EXISTS (SELECT * FROM aow_processed WHERE aow_processed.aow_workflow_id='".$this->id."' AND aow_processed.parent_id=".$module->table_name.".id AND aow_processed.status = 'Complete' AND aow_processed.deleted = 0)";
+            }
 
+            $query['where'][] = $module->table_name.".deleted = 0 ";
         }
-        return null;
+
+        return $query;
+    }
+
+    function check_valid_bean(SugarBean &$bean){
+        global $beanList, $app_list_strings;
+
+        require_once('modules/AOW_Processed/AOW_Processed.php');
+        $processed = new AOW_Processed();
+        if(!$this->multiple_runs){
+            $processed->retrieve_by_string_fields(array('aow_workflow_id' => $this->id,'parent_id' => $bean->id));
+
+            if($processed->status == 'Complete'){
+                //has already run so return false
+                return false;
+            }
+        }
+
+        if(!isset($bean->date_entered)){
+            $bean->date_entered = $bean->fetched_row['date_entered'];
+        }
+
+        if($this->flow_run_on){
+            $GLOBALS['log']->fatal('Failed Workflow for time - '.strtotime($bean->date_entered).'  '.strtotime($this->date_entered));
+
+            switch($this->flow_run_on){
+                case'New_Records':
+                    if(strtotime($bean->date_entered) < strtotime($this->date_entered))
+                        return false;
+                    Break;
+
+                case'Modified_Records':
+                    if(strtotime($bean->date_modified) < strtotime($this->date_entered) && strtotime($bean->date_modified) != strtotime($bean->date_entered))
+                        return false;
+                    Break;
+
+            }
+        }
+
+        $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
+
+        $result = $this->db->query($sql);
+
+        while ($row = $this->db->fetchByAssoc($result)) {
+            $condition = new AOW_Condition();
+            $condition->retrieve($row['id']);
+
+            $field = $condition->field;
+            $value = $condition->value;
+
+
+            $path = unserialize(base64_decode($condition->module_path));
+
+            $condition_bean = $bean;
+
+            //TODO Add multi module implementation
+            /*$table_alias = $condition_bean->table_name;
+            if(isset($path[0]) && $path[0] != $bean->module_dir){
+                foreach($path as $rel){
+                    //$query = $this->build_flow_query_join($rel, $condition_module, 'relationship', $query);
+                    $condition_bean = new $beanList[getRelatedModule($condition_bean->module_dir,$rel)];
+                    $table_alias = $rel;
+                }
+            }*/
+            $dateFields = array('date','datetime', 'datetimecombo');
+            if(isset($app_list_strings['aow_sql_operator_list'][$condition->operator])){
+                $where_set = false;
+
+                $data = $condition_bean->field_defs[$field];
+
+                if($data['type'] == 'relate' && isset($data['id_name'])) {
+                    $field = $data['id_name'];
+                }
+                $field = $condition_bean->$field;
+
+                if(in_array($data['type'],$dateFields)) {
+                    $field = strtotime($field);
+                }
+
+                switch($condition->value_type) {
+                    case 'Field':
+                        $data = $condition_bean->field_defs[$value];
+
+                        if($data['type'] == 'relate' && isset($data['id_name'])) {
+                            $value = $data['id_name'];
+                        }
+                        $value = $condition_bean->$value;
+
+                        if(in_array($data['type'],$dateFields)) {
+                            $value = strtotime($value);
+                        }
+
+                        break;
+
+                    case 'Date':
+                        $params =  unserialize(base64_decode($value));
+                        if($params[0] == 'now'){
+                            $value = date('Y-m-d H:i:s');
+                        } else {
+                            $value = $condition_bean->$params[0];
+                        }
+
+                        if($params[1] != 'now'){
+                            switch($params[3]) {
+                                case 'business_hours';
+                                    //business hours not implemented for query, default to hours
+                                    $params[3] = 'hours';
+                                default:
+                                    $value = strtotime($value, $app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
+                                    break;
+                            }
+                        } else {
+                            $value = strtotime($value);
+                        }
+                        break;
+
+                    case 'Multi':
+
+                        $value = unencodeMultienum($value);
+                        switch($condition->operator) {
+                            case 'Not_Equal_To';
+                                $condition->operator = 'Not_Contains';
+                                break;
+                            case 'Equal_To';
+                            default:
+                                $condition->operator = 'Contains';
+                                break;
+                        }
+                        break;
+
+                    case 'Value':
+                    default:
+                        if(in_array($data['type'],$dateFields)) {
+                            $value = strtotime($value);
+                        }
+                        break;
+                }
+
+                if(!($this->compare_condition($field, $value, $condition->operator))){
+                    return false;
+                }
+
+            }
+        }
+
+        return true;
+    }
+
+    function compare_condition($var1, $var2, $operator = '='){
+        switch ($operator) {
+            case "Not_Equal_To": return $var1 != $var2;
+            case "Greater_Than":  return $var1 >  $var2;
+            case "Less_Than":  return $var1 <  $var2;
+            case "Greater_Than_or_Equal_To": return $var1 >= $var2;
+            case "Less_Than_or_Equal_To": return $var1 <= $var2;
+            case "Contains": return in_array($var1,$var2);
+            case "Not_Contains": return !in_array($var1,$var2);
+            case "=":
+            default: return $var1 == $var2;
+        }
     }
 
     /**
      * Run the actions against the passed $bean
      */
-    function run_actions(SugarBean $bean){
+    function run_actions(SugarBean &$bean, $in_save = false){
 
         require_once('modules/AOW_Processed/AOW_Processed.php');
         $processed = new AOW_Processed();
@@ -286,7 +544,7 @@ class AOW_WorkFlow extends Basic {
                 }
 
                 $flow_action = new $action_name($action->id);
-                if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)))){
+                if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)){
                     $pass = false;
                     $processed->aow_actions->add($action->id, array('status' => 'Failed'));
                 } else {
@@ -303,6 +561,6 @@ class AOW_WorkFlow extends Basic {
         return $pass;
     }
 
-		
+
 }
 ?>

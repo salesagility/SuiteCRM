@@ -134,9 +134,11 @@ foreach ( $possible_feeds as $module ) {
         continue;
     } else {
         $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
+
     }
 
     $module_list[] = $currModule;
+
 }
 $sugar_smarty->assign('module_list',$module_list);
 $sugar_smarty->assign('user_feed_enabled',$userFeedEnabled);

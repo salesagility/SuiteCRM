@@ -88,9 +88,9 @@ EOS;
         return $html;
     }
 
-    function run_action(SugarBean $bean, $params = array()){
-
-        $this->set_record($bean, $bean, $params);
+    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+        $GLOBALS['log']->fatal('Running Action modify record for bean - '.$bean->id);
+        $this->set_record($bean, $bean, $params, $in_save);
         $this->set_relationships($bean, $bean, $params);
 
         return true;

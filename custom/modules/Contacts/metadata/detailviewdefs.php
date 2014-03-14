@@ -1,5 +1,5 @@
 <?php
-// created: 2013-11-01 09:39:03
+// created: 2014-02-03 12:55:32
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -32,64 +32,6 @@ $viewdefs = array (
                 ),
               ),
             ),
-            'AOS_GENLET' => 
-            array (
-              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
-            ),
-            'AOP_CREATE' => 
-            array (
-              'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$MOD.LBL_CREATE_PORTAL_USER}',
-                'htmlOptions' => 
-                array (
-                  'title' => '{$MOD.LBL_CREATE_PORTAL_USER}',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'createPortalUser\';',
-                  'name' => 'buttonCreatePortalUser',
-                  'id' => 'createPortalUser_button',
-                ),
-                'template' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
-            'AOP_DISABLE' => 
-            array (
-              'customCode' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'disablePortalUser\';" value="{$MOD.LBL_DISABLE_PORTAL_USER}"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
-                'htmlOptions' => 
-                array (
-                  'title' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'disablePortalUser\';',
-                  'name' => 'buttonDisablePortalUser',
-                  'id' => 'disablePortalUser_button',
-                ),
-                'template' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
-            'AOP_ENABLE' => 
-            array (
-              'customCode' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'enablePortalUser\';" value="{$MOD.LBL_ENABLE_PORTAL_USER}"> {/if}',
-              'sugar_html' => 
-              array (
-                'type' => 'submit',
-                'value' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
-                'htmlOptions' => 
-                array (
-                  'title' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
-                  'class' => 'button',
-                  'onclick' => 'this.form.action.value=\'enablePortalUser\';',
-                  'name' => 'buttonENablePortalUser',
-                  'id' => 'enablePortalUser_button',
-                ),
-                'template' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
-              ),
-            ),
           ),
         ),
         'maxColumns' => '2',
@@ -111,25 +53,6 @@ $viewdefs = array (
           0 => 
           array (
             'file' => 'modules/Leads/Lead.js',
-          ),
-        ),
-        'useTabs' => false,
-        'tabDefs' => 
-        array (
-          'LBL_CONTACT_INFORMATION' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ADVANCED' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
-          ),
-          'LBL_PANEL_ASSIGNMENT' => 
-          array (
-            'newTab' => false,
-            'panelDefault' => 'expanded',
           ),
         ),
       ),
@@ -180,12 +103,6 @@ $viewdefs = array (
               'label' => 'LBL_ACCOUNT_NAME',
               'displayParams' => 
               array (
-                'enableConnectors' => true,
-                'module' => 'Contacts',
-                'connectors' => 
-                array (
-                  0 => 'ext_rest_linkedin',
-                ),
               ),
             ),
             1 => 
@@ -233,10 +150,6 @@ $viewdefs = array (
               'name' => 'description',
               'comment' => 'Full text of the note',
               'label' => 'LBL_DESCRIPTION',
-            ),
-            1 => 
-            array (
-              'name' => 'aop_case_updates_contacts_1_name',
             ),
           ),
         ),
@@ -303,6 +216,17 @@ $viewdefs = array (
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
               'label' => 'LBL_DATE_ENTERED',
+            ),
+          ),
+        ),
+        'LBL_PANEL_SOCIAL_FEED' => 
+        array (
+          0 => 
+          array (
+            0 => 
+            array (
+              'name' => 'facebook_user_c',
+              'label' => 'LBL_FACEBOOK_USER_C',
             ),
           ),
         ),

@@ -25,9 +25,9 @@
 
 function getModuleFields($module, $view='EditView',$value = '', $valid = array())
 {
-    global $beanList;
+    global $app_strings, $beanList;
 
-    $fields = array(''=>'');
+    $fields = array(''=>$app_strings['LBL_NONE']);
     $unset = array();
 
     if ($module != '') {
@@ -52,11 +52,49 @@ function getModuleFields($module, $view='EditView',$value = '', $valid = array()
 
         }
     }
+    if($view == 'JSON'){
+        return json_encode($fields);
+    }
     if($view == 'EditView'){
         return get_select_options_with_id($fields, $value);
     } else {
         return $fields[$value];
     }
+}
+
+function getRelModuleFields($module, $rel_field, $view='EditView',$value = ''){
+    global $beanList;
+
+    if($module == $rel_field){
+        return getModuleFields($module, $view, $value);
+    }
+
+    $mod = new $beanList[$module]();
+    $data = $mod->field_defs[$rel_field];
+
+    if(isset($data['module']) && $data['module'] != ''){
+        return getModuleFields($data['module'], $view, $value);
+    }
+
+}
+
+function getRelatedModule($module, $rel_field){
+    global $beanList;
+
+    if($module == $rel_field){
+        return $module;
+    }
+
+    $mod = new $beanList[$module]();
+
+    if(isset($arr['module']) && $arr['module'] != '') {
+        return $arr['module'];
+    } else if($mod->load_relationship($rel_field)){
+        return $mod->$rel_field->getRelatedModuleName();
+    }
+
+    return $module;
+
 }
 
 function getModuleRelationships($module, $view='EditView',$value = '')
@@ -331,6 +369,14 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     if(isset( $fieldlist[$fieldname]['id_name'] ) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']){
         $rel_value = $value;
 
+        require_once("include/TemplateHandler/TemplateHandler.php");
+        $template_handler = new TemplateHandler();
+        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist,$fieldlist,$view);
+        $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
+        $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
+
+        echo $quicksearch_js;
+
         if(isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users'){
             $rel_value = get_assigned_user_name($value);
         } else if(isset($fieldlist[$fieldname]['module'])){
@@ -350,6 +396,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
 
+
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
         //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
@@ -361,6 +408,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
     }
 
+    $ss->assign("QS_JS", $quicksearch_js);
     $ss->assign("fields",$fieldlist);
     $ss->assign("form_name",$view);
     $ss->assign("bean",$focus);
