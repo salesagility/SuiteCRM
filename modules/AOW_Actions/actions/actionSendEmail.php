@@ -198,13 +198,38 @@ EOS;
     }
 
     function run_action(SugarBean $bean, $params = array(), $in_save=false){
-        global $sugar_config;
+        global $sugar_config, $beanList;
 
         include_once('modules/EmailTemplates/EmailTemplate.php');
+        require_once('modules/AOW_Actions/actions/templateParser.php');
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
 
         $object_arr[$bean->module_dir] = $bean->id;
+
+        foreach($bean->field_defs as $bean_arr){
+            if($bean_arr['type'] == 'relate'){
+                if(isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress'){
+                    $relate_bean = new $beanList[$bean_arr['module']]();
+                    if(!isset($object_arr[$relate_bean->module_dir])) $object_arr[$relate_bean->module_dir] = $bean->$bean_arr['id_name'];
+                }
+            }
+            else if($bean_arr['type'] == 'link'){
+                if(!isset($bean_arr['module'])) $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
+                if(isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress'){
+                    $linkedBeans = $bean->get_linked_beans($bean_arr['name'],$bean_arr['module']);
+                    if($linkedBeans){
+                        $linkedBean = $linkedBeans[0];
+                        if(!isset($object_arr[$linkedBean->module_dir])) $object_arr[$linkedBean->module_dir] = $linkedBean->id;
+                    }
+                }
+            }
+        }
+
+        $GLOBALS['log']->fatal(print_r($object_arr, true));
+
+        if(!isset($object_arr['Contacts']))$object_arr['Contacts'] = '';
+        $object_arr['Users'] = $bean->assigned_user_id;
 
         $parsedSiteUrl = parse_url($sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];
@@ -218,10 +243,13 @@ EOS;
 
         $url =  $cleanUrl."/index.php?module={$bean->module_dir}&action=DetailView&record={$bean->id}";
 
-        $subject = $emailTemp->parse_template($emailTemp->subject, $object_arr);
-        $body_html = $emailTemp->parse_template($emailTemp->body_html, $object_arr);
+        $subject = str_replace("\$contact_user","\$user",$emailTemp->subject);
+        $body_html = str_replace("\$contact_user","\$user",$emailTemp->body_html);
+        $body_plain = str_replace("\$contact_user","\$user",$emailTemp->body);
+        $subject = aowTemplateParser::parse_template($subject, $object_arr);
+        $body_html = aowTemplateParser::parse_template($body_html, $object_arr);
         $body_html = str_replace("\$url",$url,$body_html);
-        $body_plain = $emailTemp->parse_template($emailTemp->body, $object_arr);
+        $body_plain = aowTemplateParser::parse_template($body_plain, $object_arr);
         $body_plain = str_replace("\$url",$url,$body_plain);
         $email = $this->getEmailFromParams($bean,$params);
         return $this->sendEmail($email, $subject, $body_html, $body_plain, $bean);

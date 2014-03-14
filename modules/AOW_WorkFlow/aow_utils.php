@@ -101,16 +101,17 @@ function getModuleRelationships($module, $view='EditView',$value = '')
 {
     global $beanList, $app_list_strings;
 
-    $fields = array(''=>'');
-
-    $invalid_modules = array('Emails','CampaignLog');
-
-    $unset = array();
+    $fields = array($module=>$app_list_strings['moduleList'][$module]);
+    $sort_fields = array();
+    $invalid_modules = array();
 
     if ($module != '') {
         if(isset($beanList[$module]) && $beanList[$module]){
-             $mod = new $beanList[$module]();
+            $mod = new $beanList[$module]();
 
+            /*if($mod->is_AuditEnabled()){
+                $fields['Audit'] = translate('LBL_AUDIT_TABLE','AOR_Fields');
+            }*/
             foreach($mod->get_linked_fields() as $name => $arr){
                 if(isset($arr['module']) && $arr['module'] != '') {
                     $rel_module = $arr['module'];
@@ -119,21 +120,17 @@ function getModuleRelationships($module, $view='EditView',$value = '')
                 }
                 if(!in_array($rel_module,$invalid_modules)){
                     if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
+                        $sort_fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
                     } else {
-                        $fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '. $name;
+                        $sort_fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '. $name;
                     }
                     if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
-                        $unset[] = $arr['id_name'];
+                        if(isset($fields[$arr['id_name']])) unset( $fields[$arr['id_name']]);
                     }
                 }
             } //End loop.
-
-            foreach($unset as $name){
-                if(isset($fields[$name])) unset( $fields[$name]);
-            }
-
-            array_multisort($fields, SORT_ASC, $fields);
+            array_multisort($sort_fields, SORT_ASC, $sort_fields);
+            $fields = array_merge((array)$fields, (array)$sort_fields);
         }
     }
     if($view == 'EditView'){
@@ -365,7 +362,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldname = 'aow_temp_date';
     }
 
-
+    $quicksearch_js = '';
     if(isset( $fieldlist[$fieldname]['id_name'] ) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']){
         $rel_value = $value;
 
