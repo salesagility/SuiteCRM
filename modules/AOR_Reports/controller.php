@@ -246,7 +246,7 @@ class AOR_ReportsController extends SugarController {
             $module = getRelatedModule($_REQUEST['aor_module'],$_REQUEST['rel_field']);
         } else {
             $module = $_REQUEST['aor_module'];
-        };
+        }
         $fieldname = $_REQUEST['aor_fieldname'];
         $aor_field = $_REQUEST['aor_newfieldname'];
 
