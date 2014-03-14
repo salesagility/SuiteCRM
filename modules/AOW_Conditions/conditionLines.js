@@ -109,7 +109,7 @@ function showModuleField(ln, operator_value, type_value, field_value){
             success: function(result) {
                 document.getElementById('aow_conditions_fieldInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
-                enableQS(false);
+                enableQS(true);
             },
             failure: function(result) {
                 document.getElementById('aow_conditions_fieldInput'+ln).innerHTML = '';

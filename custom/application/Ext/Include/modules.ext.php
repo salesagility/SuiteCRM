@@ -3,34 +3,26 @@
 
  
  //WARNING: The contents of this file are auto-generated
-$beanList['Calls_Reschedule'] = 'Calls_Reschedule';
-$beanFiles['Calls_Reschedule'] = 'modules/Calls_Reschedule/Calls_Reschedule.php';
-$modules_exempt_from_availability_check['Calls_Reschedule'] = 'Calls_Reschedule';
-$report_include_modules['Calls_Reschedule'] = 'Calls_Reschedule';
-$modInvisList[] = 'Calls_Reschedule';
+$beanList['FP_events'] = 'FP_events';
+$beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';
+$moduleList[] = 'FP_events';
+$beanList['FP_Event_Locations'] = 'FP_Event_Locations';
+$beanFiles['FP_Event_Locations'] = 'modules/FP_Event_Locations/FP_Event_Locations.php';
+$moduleList[] = 'FP_Event_Locations';
 
 
  
  //WARNING: The contents of this file are auto-generated
-$beanList['SecurityGroups'] = 'SecurityGroup';
-$beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
-$moduleList[] = 'SecurityGroups';
-
-
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['jjwg_Maps'] = 'jjwg_Maps';
-$beanFiles['jjwg_Maps'] = 'modules/jjwg_Maps/jjwg_Maps.php';
-$moduleList[] = 'jjwg_Maps';
-$beanList['jjwg_Markers'] = 'jjwg_Markers';
-$beanFiles['jjwg_Markers'] = 'modules/jjwg_Markers/jjwg_Markers.php';
-$moduleList[] = 'jjwg_Markers';
-$beanList['jjwg_Areas'] = 'jjwg_Areas';
-$beanFiles['jjwg_Areas'] = 'modules/jjwg_Areas/jjwg_Areas.php';
-$moduleList[] = 'jjwg_Areas';
-$beanList['jjwg_Address_Cache'] = 'jjwg_Address_Cache';
-$beanFiles['jjwg_Address_Cache'] = 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php';
-$moduleList[] = 'jjwg_Address_Cache';
+$beanList['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$beanFiles['AOD_IndexEvent'] = 'modules/AOD_IndexEvent/AOD_IndexEvent.php';
+$modules_exempt_from_availability_check['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$report_include_modules['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$modInvisList[] = 'AOD_IndexEvent';
+$beanList['AOD_Index'] = 'AOD_Index';
+$beanFiles['AOD_Index'] = 'modules/AOD_Index/AOD_Index.php';
+$modules_exempt_from_availability_check['AOD_Index'] = 'AOD_Index';
+$report_include_modules['AOD_Index'] = 'AOD_Index';
+$modInvisList[] = 'AOD_Index';
 
 
  
@@ -45,16 +37,6 @@ $beanFiles['AOP_Case_Updates'] = 'modules/AOP_Case_Updates/AOP_Case_Updates.php'
 $modules_exempt_from_availability_check['AOP_Case_Updates'] = 'AOP_Case_Updates';
 $report_include_modules['AOP_Case_Updates'] = 'AOP_Case_Updates';
 $modInvisList[] = 'AOP_Case_Updates';
-
-
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['FP_events'] = 'FP_events';
-$beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';
-$moduleList[] = 'FP_events';
-$beanList['FP_Event_Locations'] = 'FP_Event_Locations';
-$beanFiles['FP_Event_Locations'] = 'modules/FP_Event_Locations/FP_Event_Locations.php';
-$moduleList[] = 'FP_Event_Locations';
 
 
  
@@ -77,28 +59,6 @@ $beanFiles['AOR_Condition'] = 'modules/AOR_Conditions/AOR_Condition.php';
 $modules_exempt_from_availability_check['AOR_Conditions'] = 'AOR_Conditions';
 $report_include_modules['AOR_Conditions'] = 'AOR_Conditions';
 $modInvisList[] = 'AOR_Conditions';
-
-
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['AOW_Actions'] = 'AOW_Action';
-$beanFiles['AOW_Action'] = 'modules/AOW_Actions/AOW_Action.php';
-$modules_exempt_from_availability_check['AOW_Actions'] = 'AOW_Actions';
-$report_include_modules['AOW_Actions'] = 'AOW_Actions';
-$modInvisList[] = 'AOW_Actions';
-$beanList['AOW_WorkFlow'] = 'AOW_WorkFlow';
-$beanFiles['AOW_WorkFlow'] = 'modules/AOW_WorkFlow/AOW_WorkFlow.php';
-$moduleList[] = 'AOW_WorkFlow';
-$beanList['AOW_Processed'] = 'AOW_Processed';
-$beanFiles['AOW_Processed'] = 'modules/AOW_Processed/AOW_Processed.php';
-$modules_exempt_from_availability_check['AOW_Processed'] = 'AOW_Processed';
-$report_include_modules['AOW_Processed'] = 'AOW_Processed';
-$modInvisList[] = 'AOW_Processed';
-$beanList['AOW_Conditions'] = 'AOW_Condition';
-$beanFiles['AOW_Condition'] = 'modules/AOW_Conditions/AOW_Condition.php';
-$modules_exempt_from_availability_check['AOW_Conditions'] = 'AOW_Conditions';
-$report_include_modules['AOW_Conditions'] = 'AOW_Conditions';
-$modInvisList[] = 'AOW_Conditions';
 
 
  
@@ -135,6 +95,28 @@ $moduleList[] = 'AOS_Quotes';
 
  
  //WARNING: The contents of this file are auto-generated
+$beanList['AOW_Actions'] = 'AOW_Action';
+$beanFiles['AOW_Action'] = 'modules/AOW_Actions/AOW_Action.php';
+$modules_exempt_from_availability_check['AOW_Actions'] = 'AOW_Actions';
+$report_include_modules['AOW_Actions'] = 'AOW_Actions';
+$modInvisList[] = 'AOW_Actions';
+$beanList['AOW_WorkFlow'] = 'AOW_WorkFlow';
+$beanFiles['AOW_WorkFlow'] = 'modules/AOW_WorkFlow/AOW_WorkFlow.php';
+$moduleList[] = 'AOW_WorkFlow';
+$beanList['AOW_Processed'] = 'AOW_Processed';
+$beanFiles['AOW_Processed'] = 'modules/AOW_Processed/AOW_Processed.php';
+$modules_exempt_from_availability_check['AOW_Processed'] = 'AOW_Processed';
+$report_include_modules['AOW_Processed'] = 'AOW_Processed';
+$modInvisList[] = 'AOW_Processed';
+$beanList['AOW_Conditions'] = 'AOW_Condition';
+$beanFiles['AOW_Condition'] = 'modules/AOW_Conditions/AOW_Condition.php';
+$modules_exempt_from_availability_check['AOW_Conditions'] = 'AOW_Conditions';
+$report_include_modules['AOW_Conditions'] = 'AOW_Conditions';
+$modInvisList[] = 'AOW_Conditions';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
 $beanList['jjwg_Maps'] = 'jjwg_Maps';
 $beanFiles['jjwg_Maps'] = 'modules/jjwg_Maps/jjwg_Maps.php';
 $moduleList[] = 'jjwg_Maps';
@@ -147,6 +129,38 @@ $moduleList[] = 'jjwg_Areas';
 $beanList['jjwg_Address_Cache'] = 'jjwg_Address_Cache';
 $beanFiles['jjwg_Address_Cache'] = 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php';
 $moduleList[] = 'jjwg_Address_Cache';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['jjwg_Maps'] = 'jjwg_Maps';
+$beanFiles['jjwg_Maps'] = 'modules/jjwg_Maps/jjwg_Maps.php';
+$moduleList[] = 'jjwg_Maps';
+$beanList['jjwg_Markers'] = 'jjwg_Markers';
+$beanFiles['jjwg_Markers'] = 'modules/jjwg_Markers/jjwg_Markers.php';
+$moduleList[] = 'jjwg_Markers';
+$beanList['jjwg_Areas'] = 'jjwg_Areas';
+$beanFiles['jjwg_Areas'] = 'modules/jjwg_Areas/jjwg_Areas.php';
+$moduleList[] = 'jjwg_Areas';
+$beanList['jjwg_Address_Cache'] = 'jjwg_Address_Cache';
+$beanFiles['jjwg_Address_Cache'] = 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php';
+$moduleList[] = 'jjwg_Address_Cache';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['Calls_Reschedule'] = 'Calls_Reschedule';
+$beanFiles['Calls_Reschedule'] = 'modules/Calls_Reschedule/Calls_Reschedule.php';
+$modules_exempt_from_availability_check['Calls_Reschedule'] = 'Calls_Reschedule';
+$report_include_modules['Calls_Reschedule'] = 'Calls_Reschedule';
+$modInvisList[] = 'Calls_Reschedule';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['SecurityGroups'] = 'SecurityGroup';
+$beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
+$moduleList[] = 'SecurityGroups';
 
 
 ?>

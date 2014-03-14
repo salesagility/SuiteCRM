@@ -22,4 +22,4 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-$extensions["aowactions"] =  array("section" => "aow_actions",	  "extdir" => "Actions", "file" => 'actions.ext.php', "module" => "AOW_Actions");
+$extensions["schedulers"] =  array("section" => "aow_actions",	  "extdir" => "Actions", "file" => 'actions.ext.php', "module" => "AOW_Actions");

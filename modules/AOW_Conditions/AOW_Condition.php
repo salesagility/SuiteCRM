@@ -46,6 +46,7 @@ class AOW_Condition extends Basic {
 	var $modified_user_link;
 	var $aow_workflow_id;
 	var $condition_order;
+    var $module_path;
 	var $field;
 	var $operator;
 	var $value;

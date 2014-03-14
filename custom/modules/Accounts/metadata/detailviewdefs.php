@@ -1,5 +1,5 @@
 <?php
-// created: 2013-10-20 14:20:14
+// created: 2014-02-03 12:55:32
 $viewdefs = array (
   'Accounts' => 
   array (
@@ -15,10 +15,6 @@ $viewdefs = array (
             1 => 'DUPLICATE',
             2 => 'DELETE',
             3 => 'FIND_DUPLICATES',
-            'AOS_GENLET' => 
-            array (
-              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
-            ),
           ),
         ),
         'maxColumns' => '2',
@@ -226,6 +222,22 @@ $viewdefs = array (
             array (
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+            ),
+          ),
+        ),
+        'LBL_PANEL_SOCIAL_FEED' => 
+        array (
+          0 => 
+          array (
+            0 => 
+            array (
+              'name' => 'twitter_user_c',
+              'label' => 'LBL_TWITTER_USER_C',
+            ),
+            1 => 
+            array (
+              'name' => 'facebook_user_c',
+              'label' => 'LBL_FACEBOOK_USER_C',
             ),
           ),
         ),
