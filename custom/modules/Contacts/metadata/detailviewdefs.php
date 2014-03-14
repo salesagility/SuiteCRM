@@ -1,5 +1,5 @@
 <?php
-// created: 2014-02-03 12:55:32
+// created: 2014-03-14 17:00:51
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -30,6 +30,60 @@ $viewdefs = array (
                   'onclick' => 'this.form.return_module.value=\'Contacts\'; this.form.return_action.value=\'DetailView\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.action.value=\'Subscriptions\'; this.form.module.value=\'Campaigns\'; this.form.module_tab.value=\'Contacts\';',
                   'name' => 'Manage Subscriptions',
                 ),
+              ),
+            ),
+            'AOP_CREATE' => 
+            array (
+              'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
+              'sugar_html' => 
+              array (
+                'type' => 'submit',
+                'value' => '{$MOD.LBL_CREATE_PORTAL_USER}',
+                'htmlOptions' => 
+                array (
+                  'title' => '{$MOD.LBL_CREATE_PORTAL_USER}',
+                  'class' => 'button',
+                  'onclick' => 'this.form.action.value=\'createPortalUser\';',
+                  'name' => 'buttonCreatePortalUser',
+                  'id' => 'createPortalUser_button',
+                ),
+                'template' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              ),
+            ),
+            'AOP_DISABLE' => 
+            array (
+              'customCode' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'disablePortalUser\';" value="{$MOD.LBL_DISABLE_PORTAL_USER}"> {/if}',
+              'sugar_html' => 
+              array (
+                'type' => 'submit',
+                'value' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
+                'htmlOptions' => 
+                array (
+                  'title' => '{$MOD.LBL_DISABLE_PORTAL_USER}',
+                  'class' => 'button',
+                  'onclick' => 'this.form.action.value=\'disablePortalUser\';',
+                  'name' => 'buttonDisablePortalUser',
+                  'id' => 'disablePortalUser_button',
+                ),
+                'template' => '{if $fields.joomla_account_id.value && !$fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
+              ),
+            ),
+            'AOP_ENABLE' => 
+            array (
+              'customCode' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'enablePortalUser\';" value="{$MOD.LBL_ENABLE_PORTAL_USER}"> {/if}',
+              'sugar_html' => 
+              array (
+                'type' => 'submit',
+                'value' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
+                'htmlOptions' => 
+                array (
+                  'title' => '{$MOD.LBL_ENABLE_PORTAL_USER}',
+                  'class' => 'button',
+                  'onclick' => 'this.form.action.value=\'enablePortalUser\';',
+                  'name' => 'buttonENablePortalUser',
+                  'id' => 'enablePortalUser_button',
+                ),
+                'template' => '{if $fields.joomla_account_id.value && $fields.portal_account_disabled.value && $AOP_PORTAL_ENABLED}[CONTENT]{/if}',
               ),
             ),
           ),

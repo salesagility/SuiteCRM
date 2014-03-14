@@ -86,7 +86,9 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     exit();
 }
 
-$distributionMethod = get_select_options_with_id($app_list_strings['aop_distribution_method'], $cfg->config['aop']['distribution_method']);
+$distributionMethod = "<OPTION value='singleUser'>Single User</OPTION>";
+$distributionMethod .= get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
+
 
 if(!empty($cfg->config['aop']['distribution_user_id'])){
     $distributionUserName = BeanFactory::getBean("Users",$cfg->config['aop']['distribution_user_id'])->name;
