@@ -320,6 +320,37 @@ class ConnectorsController extends SugarController
 
     }
 
+    function action_SaveModifyProperties() {
+        require_once('include/connectors/sources/SourceFactory.php');
+        $sources = array();
+        $properties = array();
+        foreach($_REQUEST as $name=>$value) {
+            if(preg_match("/^source[0-9]+$/", $name, $matches)) {
+                $source_id = $value;
+                $properties = array();
+                foreach($_REQUEST as $arg=>$val) {
+                    if(preg_match("/^{$source_id}_(.*?)$/", $arg, $matches2)) {
+                        $properties[$matches2[1]] = $val;
+                    }
+                }
+                $source = SourceFactory::getSource($source_id);
+                if(!empty($properties)) {
+                    $source->setProperties($properties);
+                    $source->saveConfig();
+                }
+            }
+        }
+
+        require_once('include/connectors/utils/ConnectorUtils.php');
+        ConnectorUtils::updateMetaDataFiles();
+        // BEGIN SUGAR INT
+        if(empty($_REQUEST['from_unit_test'])) {
+            // END SUGAR INT
+            header("Location: index.php?action=ConnectorSettings&module=Connectors");
+            // BEGIN SUGAR INT
+        }
+    }
+
 
     private function create_panel_on_view($view, $field, $module, $panel_name){
         //require and create object.
