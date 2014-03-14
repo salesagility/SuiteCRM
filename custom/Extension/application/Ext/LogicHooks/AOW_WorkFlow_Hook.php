@@ -22,29 +22,10 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
-
-$mod_strings = array (
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Name',
-  'LBL_MODULE_NAME' => 'WorkFlow Conditions',
-  'LBL_MODULE_TITLE' => 'WorkFlow Conditions',
-  'LBL_MODULE_PATH' => 'Module',
-  'LBL_FIELD' => 'Field',
-  'LBL_OPERATOR' => 'Operator',
-  'LBL_VALUE_TYPE' => 'Type',
-  'LBL_VALUE' => 'Value',
-  'LBL_ORDER' => 'Order',
-  'LBL_CONDITION_OPERATOR' => 'Condition Operator',
-  'LBL_AOW_WORKFLOW_ID' => 'WorkFlow Id',
-);
+if (!isset($hook_array) || !is_array($hook_array)) {
+    $hook_array = array();
+}
+if (!isset($hook_array['after_save']) || !is_array($hook_array['after_save'])) {
+    $hook_array['after_save'] = array();
+}
+$hook_array['after_save'][] = Array(99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php','AOW_WorkFlow', 'run_bean_flows');

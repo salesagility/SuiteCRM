@@ -30,7 +30,26 @@ class AOW_WorkFlowController extends SugarController {
     protected function action_getModuleFields()
     {
         if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
-            echo getModuleFields($_REQUEST['aow_module']);
+            if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+                $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+            } else {
+                $module = $_REQUEST['aow_module'];
+            }
+            echo getModuleFields($module,$_REQUEST['view'],$_REQUEST['aow_value']);
+        }
+        die;
+
+    }
+
+    protected function action_getRelatedModule()
+    {
+        if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
+            if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+                $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+            } else {
+                $module = $_REQUEST['aow_module'];
+            }
+            echo $module;
         }
         die;
 
@@ -39,7 +58,12 @@ class AOW_WorkFlowController extends SugarController {
     protected function action_getModuleRelationships()
     {
         if (!empty($_REQUEST['aow_module']) && $_REQUEST['aow_module'] != '') {
-            echo getModuleRelationships($_REQUEST['aow_module']);
+            if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+                $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+            } else {
+                $module = $_REQUEST['aow_module'];
+            }
+            echo getModuleRelationships($module);
         }
         die;
 
@@ -50,7 +74,11 @@ class AOW_WorkFlowController extends SugarController {
 
         global $app_list_strings, $beanFiles, $beanList;
 
-        $module = $_REQUEST['aow_module'];
+        if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+            $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+        } else {
+            $module = $_REQUEST['aow_module'];
+        }
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
@@ -116,7 +144,11 @@ class AOW_WorkFlowController extends SugarController {
 
         global $app_list_strings, $beanFiles, $beanList;
 
-        $module = $_REQUEST['aow_module'];
+        if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+            $module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+        } else {
+            $module = $_REQUEST['aow_module'];
+        }
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
 
@@ -136,7 +168,7 @@ class AOW_WorkFlowController extends SugarController {
             case 'decimal':
             case 'float':
             case 'currency':
-                $valid_opp = array('Value','Field');
+                $valid_opp = array('Value','Field','Any_Change');
                 break;
             case 'uint':
             case 'ulong':
@@ -144,22 +176,29 @@ class AOW_WorkFlowController extends SugarController {
             case 'short':
             case 'tinyint':
             case 'int':
-                $valid_opp = array('Value','Field');
+                $valid_opp = array('Value','Field','Any_Change');
                 break;
             case 'date':
             case 'datetime':
             case 'datetimecombo':
-                $valid_opp = array('Value','Field', 'Date');
+                $valid_opp = array('Value','Field','Any_Change','Date');
                 break;
             case 'enum':
             case 'multienum':
-                $valid_opp = array('Value','Field', 'Multi');
+                $valid_opp = array('Value','Field','Any_Change', 'Multi');
+                break;
+            case 'relate':
+            case 'id':
+                $valid_opp = array('Value','Field','Any_Change', 'SecurityGroup');
                 break;
             default:
-                $valid_opp = array('Value','Field');
+                $valid_opp = array('Value','Field','Any_Change');
                 break;
         }
 
+        if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
+            unset($app_list_strings['aow_condition_type_list']['SecurityGroup']);
+        }
         foreach($app_list_strings['aow_condition_type_list'] as $key => $keyValue){
             if(!in_array($key, $valid_opp)){
                 unset($app_list_strings['aow_condition_type_list'][$key]);
@@ -244,6 +283,11 @@ class AOW_WorkFlowController extends SugarController {
 
     protected function action_getModuleFieldType()
     {
+        if(isset($_REQUEST['rel_field']) &&  $_REQUEST['rel_field'] != ''){
+            $rel_module = getRelatedModule($_REQUEST['aow_module'],$_REQUEST['rel_field']);
+        } else {
+            $rel_module = $_REQUEST['aow_module'];
+        }
         $module = $_REQUEST['aow_module'];
         $fieldname = $_REQUEST['aow_fieldname'];
         $aow_field = $_REQUEST['aow_newfieldname'];
@@ -263,15 +307,21 @@ class AOW_WorkFlowController extends SugarController {
                     echo getModuleFields($module, $view, $value);
                 }
                 break;
+            case 'Any_Change';
+                echo '';
+                break;
             case 'Date':
                 echo getDateField($module, $aow_field, $view, $value, false);
                 break;
             case 'Multi':
-                echo getModuleField($module,$fieldname, $aow_field, $view, $value,'multienum');
+                echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value,'multienum');
                 break;
+            case 'SecurityGroup':
+                $module = 'Accounts';
+                $fieldname = 'SecurityGroups';
             case 'Value':
             default:
-                echo getModuleField($module,$fieldname, $aow_field, $view, $value );
+                echo getModuleField($rel_module,$fieldname, $aow_field, $view, $value );
                 break;
         }
         die;

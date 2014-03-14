@@ -24,8 +24,6 @@
 var currentln;
 
 function show_edit_template_link(field, ln) {
-    console.log("Show edit called");
-    console.log('aow_actions_edit_template_link' + ln);
     var field1 = document.getElementById('aow_actions_edit_template_link' + ln);
 
     if (field.selectedIndex == 0) {

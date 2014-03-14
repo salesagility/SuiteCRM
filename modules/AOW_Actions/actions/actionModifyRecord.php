@@ -36,10 +36,16 @@ class actionModifyRecord extends actionCreateRecord {
     }
 
     function edit_display($line,SugarBean $bean = null, $params = array()){
-        global $app_list_strings;
+        require_once("modules/AOW_WorkFlow/aow_utils.php");
+
+        $modules = getModuleRelationships($bean->module_dir,'EditView', $params['rel_type']);
 
         $html = "<input type='hidden' name='aow_actions_param[".$line."][record_type]' id='aow_actions_param_record_type".$line."' value='' />";
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<tr>";
+        $html .= '<td id="name_label" scope="row" valign="top">'.translate("LBL_RECORD_TYPE","AOW_Actions").':<span class="required">*</span>&nbsp;&nbsp;';
+        $html .= "<select name='aow_actions_param[".$line."][rel_type]' id='aow_actions_param_rel_type".$line."'  onchange='show_mrModuleFields($line);'>".$modules."</select></td>";
+        $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
         $html .= "</tr>";
@@ -54,22 +60,24 @@ class actionModifyRecord extends actionCreateRecord {
         $html .= "</tr>";
 
 
-            require_once("modules/AOW_WorkFlow/aow_utils.php");
+
         $html .= <<<EOS
         <script id ='aow_script$line'>
             function updateFlowModule(){
                 var mod = document.getElementById('flow_module').value;
                 document.getElementById('aow_actions_param_record_type$line').value = mod;
-                cr_module[$line] = mod;
-                show_crModuleFields($line);
+                //cr_module[$line] = mod;
+                //show_crModuleFields($line);
             }
             document.getElementById('flow_module').addEventListener("change", updateFlowModule, false);
-            updateFlowModule();
+            updateFlowModule($line);
 EOS;
-        require_once("modules/AOW_WorkFlow/aow_utils.php");
 
-        $html .= "cr_fields[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($bean->module_name)))."\";";
-        $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($params['record_type'])))."\";";
+
+        $module = getRelatedModule($bean->module_name, $params['rel_type']);
+        $html .= "cr_module[".$line."] = \"".$module."\";";
+        $html .= "cr_fields[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleFields($module)))."\";";
+        $html .= "cr_relationships[".$line."] = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($module)))."\";";
         if($params && array_key_exists('field',$params)){
             foreach($params['field'] as $key => $field){
                 if(is_array($params['value'][$key]))$params['value'][$key] = json_encode($params['value'][$key]);
@@ -89,10 +97,22 @@ EOS;
     }
 
     function run_action(SugarBean $bean, $params = array(), $in_save=false){
-        $GLOBALS['log']->fatal('Running Action modify record for bean - '.$bean->id);
-        $this->set_record($bean, $bean, $params, $in_save);
-        $this->set_relationships($bean, $bean, $params);
 
+        if(isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']){
+            $relatedFields = $bean->get_linked_fields();
+            $field = $relatedFields[$params['rel_type']];
+            if(!isset($field['module'])) $field['module'] = getRelatedModule($bean->module_dir,$field['name']);
+            $linkedBeans = $bean->get_linked_beans($field['name'],$field['module']);
+            if($linkedBeans){
+                foreach($linkedBeans as $linkedBean){
+                    $this->set_record($linkedBean, $bean, $params, 'false');
+                    $this->set_relationships($linkedBean, $bean, $params);
+                }
+            }
+        } else {
+            $this->set_record($bean, $bean, $params, $in_save);
+            $this->set_relationships($bean, $bean, $params);
+        }
         return true;
     }
 
