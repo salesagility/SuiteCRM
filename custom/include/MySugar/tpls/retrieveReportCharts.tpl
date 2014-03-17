@@ -1,5 +1,4 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -35,19 +34,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-
-require_once('custom/include/MySugar/MySugar.php');
-
-$mySugar = new CustomMySugar($_REQUEST['module']);
-if (!isset($_REQUEST['DynamicAction'])) {
-	$_REQUEST['DynamicAction'] = 'displayDashlet';
-}
-// commit session before returning output so we can serialize AJAX requests
-// and not get session into a wrong state
-$res = $mySugar->$_REQUEST['DynamicAction']();
-if(isset($_REQUEST['commit_session'])) {
-    session_commit();
-}
-echo $res;
+*}
+<table width="100%">
+	{foreach from=$reportCharts item=chart}
+	<tr>
+		<td align="left"><a class="mbLBLL" href="javascript:void(0)" onclick="{$chart.onclick}">{$chart.title}</a><br /></td>
+	</tr>
+	{/foreach}
+</table>

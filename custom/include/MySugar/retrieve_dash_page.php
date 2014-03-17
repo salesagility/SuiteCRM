@@ -186,7 +186,7 @@ if (empty($pages)){
     $pages = array();
     $pageIndex = 0;
     $pages[0]['columns'] = $columns;
-    $pages[0]['numColumns'] = '3';
+    $pages[0]['numColumns'] = '2';
     $pages[0]['pageTitleLabel'] = 'LBL_HOME_PAGE_1_NAME';	// "My Sugar"
     $pageIndex++;
     $current_user->setPreference('pages', $pages, 0, 'Home');
@@ -195,7 +195,7 @@ if (empty($pages)){
 
 $sugar_smarty = new Sugar_Smarty();
 
-$activePage = 0;
+$activePage = $_POST['page_id'];
 
 $divPages[] = $activePage;
 
@@ -264,28 +264,12 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
     }
 }
 
+$_SESSION['current_tab'] = $activePage;
 
-$i = 0;
-    while($i < count($pages)){
-
-        $pageNum = $i;
-
-        if($pageNum != $activePage){
-            $divPages[] = $pageNum;
-        }
-
-        $pageTabs[$pageNum]['pageTitle'] = $pages[$i]['pageTitle'];
-
-        if($pageNum == $activePage){
-            $pageTabs[$pageNum]['pageTitle'] = 'My Sugar';
-            $pageTabs[$pageNum]['tabClass'] = 'current';
-        }
-        $i++;
-    }
 
 if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
-$sugar_smarty->assign('pages', $pageTabs);
+
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('sugarFlavor', $sugar_flavor);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
@@ -319,10 +303,10 @@ $resources = $sugarChart->getChartResources();
 $mySugarResources = $sugarChart->getMySugarChartResources();
 $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
-if (file_exists("custom/include/MySugar/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+if (file_exists("custom/include/MySugar/tpls/MySugar2.tpl")) {
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar2.tpl');
 } else {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar2.tpl');
 }
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
