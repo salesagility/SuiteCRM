@@ -73,25 +73,30 @@
 <!-- JIT Library File -->
 <script language="javascript" type="text/javascript" src="{sugar_getjspath file='custom/include/SugarCharts/js/Jit/jit.js'}"></script>
 
-<ul class="subpanelTablist" id="tabList">
-    {foreach from=$pages key=pageNum item=pageData}
-        <li id="pageNum_{$pageNum}">
-            <a id="pageNum_{$pageNum}_anchor" class="{$pageData.tabClass}" href="javascript:SUGAR.mySugar.togglePages('{$pageNum}');">
-        <span id="pageNum_{$pageNum}_input_span" style="display:none;">
-        <input type="hidden" id="pageNum_{$pageNum}_name_hidden_input" value="{$pageData.pageTitle}"/>
-        <input type="text" id="pageNum_{$pageNum}_name_input" value="{$pageData.pageTitle}" size="10" onblur="SUGAR.mySugar.savePageTitle('{$pageNum}',this.value);"/>
-        </span>
-        <span id="pageNum_{$pageNum}_link_span">
-        <span id="pageNum_{$pageNum}_title_text" ondblclick="SUGAR.mySugar.renamePage('{$pageNum}');">{$pageData.pageTitle}</span>&nbsp;
-        <span id="pageNum_{$pageNum}_more_detail" {if $pageData.tabClass != 'current'}style="display:none;"{/if}>
-        <img onclick="return SUGAR.mySugar.showTabContext('{$pageNum}');" onmouseout="return nd(1000);" src="{sugar_getimagepath file='MoreDetail.png'}" width="8" height="7" border="0"/>
-		</span>
-        </span>
+<div class="yui-module yui-scroll">
+
+
+    <ul class="subpanelTablist">
+        <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' class="{$pageTabs}" onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+
+        {foreach from=$pages key=tabNum item=pageTabs}
+
+            <li id="pageNum_{$tabNum}">
+                <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' class="{$pageTabs}" onClick=retrievePage({$tabNum});>
+                    <span>{$pageTabs.pageTitle}</span>
+                </a>
+            </li>
+
+        {/foreach}
+
+        <li id="pageNum_{$tabNum}">
+            <a style='cursor: pointer;' class="{$pageTabs.tabClass}" onClick=addForm({$tabNum});>
+                <span>+</span>
             </a>
         </li>
-    {/foreach}
 
-</ul>
+    </ul>
+</div>
 
 
 <div id="pageContainer">
