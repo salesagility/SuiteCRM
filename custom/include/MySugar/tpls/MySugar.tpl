@@ -71,20 +71,21 @@
 
 
                     <ul class="subpanelTablist">
-                        <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' class="{$tabClass}" onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
 
-                        {foreach from=$pages key=tabNum item=pageTabs}
+                        <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+
+                        {foreach from=$pages key=tabNum item=Tabs}
 
                             <li id="pageNum_{$tabNum}">
-                                <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' class="{$pageTabs.tabClass}" onClick=retrievePage({$tabNum});>
-                                    <span>{$pageTabs.pageTitle}</span>
+                                <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' class="{$Tabs.tabClass}" onClick=retrievePage({$tabNum});>
+                                    <span>{$Tabs.pageTitle}</span>
                                 </a>
                             </li>
 
                         {/foreach}
 
                         <li id="pageNum_{$tabNum}">
-                            <a style='cursor: pointer;' class="{$pageTabs.tabClass}" onClick=addForm({$tabNum});>
+                            <a style='cursor: pointer;' class="{$Tabs.tabClass}" onClick=addForm({$tabNum});>
                               <span>+</span>
                             </a>
                         </li>
