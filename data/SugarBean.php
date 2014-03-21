@@ -3394,7 +3394,9 @@ class SugarBean
 
 					//if rname is set to 'name', and bean files exist, then check if field should be a concatenated name
 					global $beanFiles, $beanList;
-					if($data['rname'] && !empty($beanFiles[$beanList[$rel_module]])) {
+					// °3/21/2014 FIX NS-TEAM - Relationship fields could not be displayed in subpanels
+					//if($data['rname'] && !empty($beanFiles[$beanList[$rel_module]])) {
+					if(isset($data['rname']) && $data['rname'] == 'name' && !empty($beanFiles[$beanList[$rel_module]])) {
 
 						//create an instance of the related bean
 						require_once($beanFiles[$beanList[$rel_module]]);
