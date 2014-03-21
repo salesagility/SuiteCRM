@@ -269,21 +269,16 @@ $i = 0;
     while($i < count($pages)){
 
         $pageNum = $i;
-
-        if($pageNum != $activePage){
-            $divPages[] = $pageNum;
-        }
-
         $pageTabs[$pageNum]['pageTitle'] = $pages[$i]['pageTitle'];
 
-        if($pageNum == $activePage){
+        if($pageNum == 0){
             $pageTabs[$pageNum]['pageTitle'] = 'My Sugar';
             $pageTabs[$pageNum]['tabClass'] = 'current';
+        }else{
+            $divPages[] = $pageNum;
         }
         $i++;
     }
-
-if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
 $sugar_smarty->assign('pages', $pageTabs);
 $sugar_smarty->assign('sugarVersion', $sugar_version);

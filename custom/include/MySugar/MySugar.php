@@ -112,7 +112,7 @@ class CustomMySugar extends MySugar{
 										 'options' => $options,
 			                             'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']);
 
-		    // add to beginning of the array
+
 		    array_unshift($pages[$_SESSION['current_tab']]['columns'][0]['dashlets'], $guid);
 
 		    $current_user->setPreference('dashlets', $dashlets, 0, $this->type);
