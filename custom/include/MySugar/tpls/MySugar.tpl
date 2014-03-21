@@ -71,7 +71,7 @@
 
 
                     <ul class="subpanelTablist">
-                        <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' class="{$pageTabs.tabClass}" onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+                        <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' class="{$tabClass}" onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
 
                         {foreach from=$pages key=tabNum item=pageTabs}
 
@@ -91,9 +91,6 @@
 
                     </ul>
                 </div>
-
-
-
 
             <div class="clear"></div>
             <div id="pageContainer" class="yui-skin-sam">
