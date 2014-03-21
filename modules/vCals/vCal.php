@@ -283,11 +283,15 @@ class vCal extends SugarBean {
     /**
      * this function takes an iCal array and converts it to iCal string while following RFC rules
      */
-    public static function create_ical_string_from_array($ical_array)
+    public static function create_ical_string_from_array($ical_array,$no_folding=false)
     {
         $str = "";
         foreach ($ical_array as $ical) {
-            $str .= self::fold_ical_lines($ical[0], self::escape_ical_chars($ical[1])) . self::EOL;
+            if($no_folding){
+                $str .= $ical[0].":".self::escape_ical_chars($ical[1]) . self::EOL;
+            } else {
+                $str .= self::fold_ical_lines($ical[0], self::escape_ical_chars($ical[1])) . self::EOL;
+            }
         }
         return $str;
     }
