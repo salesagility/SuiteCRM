@@ -142,12 +142,10 @@ $app_list_strings['case_status_dom'] =
       'Closed_Rejected' => 'Rejected',
       'Closed_Duplicate' => 'Duplicate',
   );
-
-$app_list_strings['aop_distribution_method'] =
+$app_list_strings['contact_portal_user_type_dom'] =
     array (
-        'singleUser' => 'Single User',
-        'roundRobin' => 'Round Robin',
-        'leastBusy' => 'Least Busy',
+        'Single' => 'Single user',
+        'Account' => 'Account user',
     );
 
 /**
@@ -377,8 +375,10 @@ $app_list_strings['aow_condition_operator_list']['OR'] = 'OR';
 $app_list_strings['aow_condition_operator_list']['OR'] = 'OR';
 $app_list_strings['aow_condition_type_list']['Value'] = 'Value';
 $app_list_strings['aow_condition_type_list']['Field'] = 'Field';
+$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Any Change';
+$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'In SecurityGroup';
 $app_list_strings['aow_condition_type_list']['Date'] = 'Date';
-$app_list_strings['aow_condition_type_list']['Multi'] = 'Multiple';
+$app_list_strings['aow_condition_type_list']['Multi'] = 'One of';
 $app_list_strings['aow_action_type_list']['Value'] = 'Value';
 $app_list_strings['aow_action_type_list']['Field'] = 'Field';
 $app_list_strings['aow_action_type_list']['Date'] = 'Date';
