@@ -590,7 +590,7 @@ class AOR_Report extends Basic {
                 }
 
                 if($field->sort_by != ''){
-                    $query['sort_by'][] = $field->label.' '.$field->sort_by;
+                    $query['sort_by'][] = "'".$field->label."' ".$field->sort_by;
                 }
 
                 if($field->group_by == 1){

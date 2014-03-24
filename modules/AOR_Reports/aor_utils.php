@@ -331,9 +331,11 @@ function getModuleField($module, $fieldname, $aor_field, $view='EditView',$value
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aor_field;
         $fieldlist[$fieldname]['name'] = $aor_field.'_display';
     } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')){
+        $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
         $fieldlist[$fieldname]['name'] = $aor_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
+        $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
         //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
         //$fieldlist[$fieldname]['value'] = $value;
