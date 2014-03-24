@@ -112,6 +112,23 @@ $dictionary['AOS_Contracts'] = array(
     'enable_range_search' => true,
     'options' => 'numeric_range_search_dom',
   ),
+        'total_contract_value_usdollar' =>
+            array (
+                'name' => 'total_contract_value_usdollar',
+                'vname' => 'LBL_TOTAL_CONTRACT_VALUE_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'currency_id' => 
   array (
     'required' => false,
@@ -480,6 +497,23 @@ $dictionary['AOS_Contracts'] = array(
             'reportable' => true,
             'len' => '26,6',
         ),
+        'total_amt_usdollar' =>
+            array (
+                'name' => 'total_amt_usdollar',
+                'vname' => 'LBL_TOTAL_AMT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'total_amt',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'subtotal_amount' =>
         array (
             'required' => false,
@@ -496,6 +530,23 @@ $dictionary['AOS_Contracts'] = array(
             'reportable' => true,
             'len' => '26,6',
         ),
+        'subtotal_amount_usdollar' =>
+            array (
+                'name' => 'subtotal_amount_usdollar',
+                'vname' => 'LBL_SUBTOTAL_AMOUNT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'subtotal_amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'discount_amount' =>
         array (
             'required' => false,
@@ -512,6 +563,23 @@ $dictionary['AOS_Contracts'] = array(
             'reportable' => true,
             'len' => '26,6',
         ),
+        'discount_amount_usdollar' =>
+            array (
+                'name' => 'discount_amount_usdollar',
+                'vname' => 'LBL_DISCOUNT_AMOUNT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'discount_amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'tax_amount' =>
         array (
             'required' => false,
@@ -528,6 +596,23 @@ $dictionary['AOS_Contracts'] = array(
             'reportable' => true,
             'len' => '26,6',
         ),
+        'tax_amount_usdollar' =>
+            array (
+                'name' => 'tax_amount_usdollar',
+                'vname' => 'LBL_TAX_AMOUNT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'tax_amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'shipping_amount' =>
         array (
             'required' => false,
@@ -544,6 +629,23 @@ $dictionary['AOS_Contracts'] = array(
             'reportable' => true,
             'len' => '26,6',
         ),
+        'shipping_amount_usdollar' =>
+            array (
+                'name' => 'shipping_amount_usdollar',
+                'vname' => 'LBL_SHIPPING_AMOUNT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'shipping_amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'shipping_tax' =>
         array (
             'required' => false,
@@ -586,6 +688,23 @@ $dictionary['AOS_Contracts'] = array(
                 'include' => 'modules/AOS_Products_Quotes/Line_Items.php'
             ),
         ),
+        'shipping_tax_amt_usdollar' =>
+            array (
+                'name' => 'shipping_tax_amt_usdollar',
+                'vname' => 'LBL_SHIPPING_TAX_AMT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'shipping_tax_amt',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'total_amount' =>
         array (
             'required' => false,
@@ -604,6 +723,23 @@ $dictionary['AOS_Contracts'] = array(
             'enable_range_search' => true,
             'options' => 'numeric_range_search_dom',
         ),
+        'total_amount_usdollar' =>
+            array (
+                'name' => 'total_amount_usdollar',
+                'vname' => 'LBL_GRAND_TOTAL_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'total_amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
         'currency_id' =>
         array (
             'required' => false,

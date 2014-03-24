@@ -28,6 +28,7 @@
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
 require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
+
 class AOS_Contracts extends AOS_Contracts_sugar {
 	
 	function AOS_Contracts(){
@@ -67,7 +68,11 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 		if(isset($_POST['renewal_reminder_date']) && !empty($_POST['renewal_reminder_date'])){
 			$this->createReminder();
 		}
-		
+
+        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+
+        perform_save($this);
+
 		parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');

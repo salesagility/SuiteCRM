@@ -118,6 +118,26 @@ $dictionary['AOS_Products'] = array(
     'enable_range_search' => true,
     'options' => 'numeric_range_search_dom',
   ),
+        'cost_usdollar' =>
+            array (
+                'required' => '0',
+                'name' => 'cost_usdollar',
+                'vname' => 'LBL_COST_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'cost',
+                'len' => '26,6',
+                'massupdate' => 0,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+            ),
   'currency_id' => 
   array (
     'required' => false,
@@ -158,6 +178,23 @@ $dictionary['AOS_Products'] = array(
     'enable_range_search' => true,
     'options' => 'numeric_range_search_dom',
   ),
+        'price_usdollar' =>
+            array (
+                'name' => 'price_usdollar',
+                'vname' => 'LBL_PRICE_USDOLLAR',
+                'type' => 'currency',
+                'disable_num_format' => true,
+                'group'=>'price',
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'url' => 
   array (
     'required' => false,
