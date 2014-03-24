@@ -168,7 +168,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
             require_once('modules/Emails/Email.php');
             $emailObj = new Email();
             $emailObj->to_addrs = implode(",",$emails);
-            $emailObj->type= 'archived';
+            $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mailer->Subject;
             $emailObj->description = $mailer->AltBody;
