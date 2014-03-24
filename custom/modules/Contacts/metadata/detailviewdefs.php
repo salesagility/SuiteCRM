@@ -1,5 +1,5 @@
 <?php
-// created: 2014-03-14 17:00:51
+// created: 2013-11-01 09:39:03
 $viewdefs = array (
   'Contacts' => 
   array (
@@ -32,7 +32,11 @@ $viewdefs = array (
                 ),
               ),
             ),
-            'AOP_CREATE' => 
+            'AOS_GENLET' =>
+            array (
+              'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
+            ),
+            'AOP_CREATE' =>
             array (
               'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
               'sugar_html' => 
@@ -109,8 +113,27 @@ $viewdefs = array (
             'file' => 'modules/Leads/Lead.js',
           ),
         ),
+        'useTabs' => false,
+        'tabDefs' =>
+        array (
+          'LBL_CONTACT_INFORMATION' =>
+          array (
+            'newTab' => false,
+            'panelDefault' => 'expanded',
+          ),
+          'LBL_PANEL_ADVANCED' =>
+          array (
+            'newTab' => false,
+            'panelDefault' => 'expanded',
+          ),
+          'LBL_PANEL_ASSIGNMENT' =>
+          array (
+            'newTab' => false,
+            'panelDefault' => 'expanded',
+          ),
+        ),
       ),
-      'panels' => 
+      'panels' =>
       array (
         'lbl_contact_information' => 
         array (
@@ -157,9 +180,15 @@ $viewdefs = array (
               'label' => 'LBL_ACCOUNT_NAME',
               'displayParams' => 
               array (
+                'enableConnectors' => true,
+                'module' => 'Contacts',
+                'connectors' =>
+                array (
+                  0 => 'ext_rest_linkedin',
+                ),
               ),
             ),
-            1 => 
+            1 =>
             array (
               'name' => 'phone_fax',
               'label' => 'LBL_FAX_PHONE',
@@ -205,9 +234,13 @@ $viewdefs = array (
               'comment' => 'Full text of the note',
               'label' => 'LBL_DESCRIPTION',
             ),
+            1 =>
+            array (
+              'name' => 'aop_case_updates_contacts_1_name',
+            ),
           ),
         ),
-        'LBL_PANEL_ADVANCED' => 
+        'LBL_PANEL_ADVANCED' =>
         array (
           0 => 
           array (
@@ -270,17 +303,6 @@ $viewdefs = array (
               'name' => 'date_entered',
               'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
               'label' => 'LBL_DATE_ENTERED',
-            ),
-          ),
-        ),
-        'LBL_PANEL_SOCIAL_FEED' => 
-        array (
-          0 => 
-          array (
-            0 => 
-            array (
-              'name' => 'facebook_user_c',
-              'label' => 'LBL_FACEBOOK_USER_C',
             ),
           ),
         ),
