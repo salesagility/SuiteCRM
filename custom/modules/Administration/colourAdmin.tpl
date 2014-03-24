@@ -22,13 +22,6 @@
     </table>
 
     <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-        <tr><th align="left" scope="row" colspan="4"><h4><strong>{$MOD.LBL_DEFAULT_ADMIN_DASHLET}</strong></h4></th></tr>
-        <tr style="float:left;">
-            <td>{$MOD.LBL_DASHLET_COLUMNS}</td><td><input type="text" id="columns" name="columns" value="{$config.columns}" size="15" /></td>
-        </tr>
-    </table>
-
-    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr><th align="left" scope="row" colspan="4"><h4><strong>{$MOD.LBL_COLOUR_ADMIN_MENU}</strong></h4></th></tr>
         <tr style="float:left;">
             <td>{$MOD.LBL_COLOUR_ADMIN_BASE}</td><td><input type="text" id="colourselector_menu" name="colourselector_menu" class="color" value="{$config.colourselector.menu}" size="15" /></td>
