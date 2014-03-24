@@ -59,6 +59,7 @@
     </script>
     {/literal}
     {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="http://localhost/SuiteCRM/themes/Suite7/css/bubbles.css">
+    <link rel="stylesheet" type="text/css" href="themes/Suite7/css/colourSelector.php">
+    <script type="text/javascript" src='{sugar_getjspath file="themes/Suite7/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
 </head>
