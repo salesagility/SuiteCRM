@@ -113,9 +113,34 @@ function getUpdateDisplayHead(SugarBean $update){
 }
 
 function display_single_update(AOP_Case_Updates $update){
-    $html = getUpdateDisplayHead($update);
-    $html .= "<div  id='caseUpdate".$update->id."' class='caseUpdate'>";
-    $html .= nl2br(html_entity_decode($update->description));
-    $html .= "<hr></div>";
-    return $html;
+
+    /*if assigned user*/
+    if($update->assigned_user_id){
+        /*if internal update*/
+        if ($update->internal){
+            $html = "<div id='caseStyleInternal'>".getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= "</div></div>";
+            return $html;
+        }
+        /*if standard update*/
+        else {
+        $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+        }
+    }
+
+    /*if contact user*/
+    if($update->contact_id){
+        $html = "<div id='extramargin'><div id='caseStyleContact'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+    }
+
 }

@@ -1247,7 +1247,7 @@ div.indent_right {
 /* Footer styles */
 #footer
 {
-    background:#ededed;
+
     height:30px;
     width:100%;
     bottom:0;
@@ -1274,18 +1274,17 @@ div.indent_right {
 
 div#responseTime {
 
-    width:250px;
+    width:200px;
     font-size:12px;
     color:#888888;
-    float:left;
-    margin:10px 0 0 10px;
+    margin:0px auto;
 }
 
 #copyright_data {
-    width:500px;
+
     font-size:12px;
     color:#888888;
-    text-align:center;
+width:350px;
     margin:0 auto;
     padding:5px 000;
 }
@@ -5211,4 +5210,50 @@ input[type=text].cstm_code {
 
 #moduleDashletsList {
     max-height:375px !important;
+}
+
+#caseStyleUser {
+    background:#f7f7f7;
+    border:1px solid #cccccc;
+    margin:10px;
+    padding:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#caseStyleContact {
+    background:#DEDEDE;
+    border:1px solid #cccccc;
+    margin:10px;
+    padding:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#caseStyleInternal {
+    background:#00EEEE;
+    border:1px solid #cccccc;
+    padding:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin: 10px 60px 10px 10px;
+}
+
+.caseUpdateImage {
+    margin:0 5px 0 0;
+}
+
+.caseUpdate{
+    margin:5px 0 0 15px;
+}
+
+#extramargin {
+    margin: 0 0 0 50px;
+}
+
+#lessmargin {
+    margin: 0 50px 0 0;
 }
