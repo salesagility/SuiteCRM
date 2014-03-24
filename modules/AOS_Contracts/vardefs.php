@@ -774,7 +774,7 @@ $dictionary['AOS_Contracts'] = array(
     ),
 ),
 'relationships'=>array (
-    'aos_contracts_aos_product_quotes' =>
+    'aos_contracts_aos_products_quotes' =>
     array (
         'lhs_module'=> 'AOS_Contracts',
         'lhs_table'=> 'aos_contracts',
