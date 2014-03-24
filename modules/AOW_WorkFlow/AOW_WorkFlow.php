@@ -51,10 +51,12 @@ class AOW_WorkFlow extends Basic {
 	var $status;
 	var $run_when;
 
-	function AOW_WorkFlow(){
+	function AOW_WorkFlow($init=true){
 		parent::Basic();
-        $this->load_flow_beans();
-        require_once('modules/AOW_WorkFlow/aow_utils.php');
+        if($init){
+            $this->load_flow_beans();
+            require_once('modules/AOW_WorkFlow/aow_utils.php');
+        }
 	}
 
 	function bean_implements($interface){
@@ -86,9 +88,11 @@ class AOW_WorkFlow extends Basic {
 
         $app_list_strings['aow_moduleList'] = $app_list_strings['moduleList'];
 
-        foreach($app_list_strings['aow_moduleList'] as $mkey => $mvalue){
-            if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
-                unset($app_list_strings['aow_moduleList'][$mkey]);
+        if(!empty($app_list_strings['aow_moduleList'])){
+            foreach($app_list_strings['aow_moduleList'] as $mkey => $mvalue){
+                if(!isset($beanList[$mkey]) || str_begin($mkey, 'AOW_')){
+                    unset($app_list_strings['aow_moduleList'][$mkey]);
+                }
             }
         }
 
@@ -143,7 +147,7 @@ class AOW_WorkFlow extends Basic {
      * Use the condition statements and processed table to build query to retrieve beans to be actioned
      */
     function get_flow_beans(){
-        global $beanList, $app_list_strings, $sugar_config;
+        global $beanList;
 
         if($beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
@@ -151,7 +155,6 @@ class AOW_WorkFlow extends Basic {
             $query = '';
             $query_array = array();
 
-            //$query_array = $this->build_report_query_select($query_array);
             $query_array['select'][] = $module->table_name.".id AS id";
             $query_array = $this->build_flow_query_where($query_array);
 
