@@ -350,7 +350,7 @@ class CaseUpdatesHook {
         require_once('modules/Emails/Email.php');
         $emailObj = new Email();
         $emailObj->to_addrs = $email;
-        $emailObj->type= 'archived';
+        $emailObj->type= 'out';
         $emailObj->deleted = '0';
         $emailObj->name = $mailer->Subject;
         $emailObj->description = $mailer->AltBody;
