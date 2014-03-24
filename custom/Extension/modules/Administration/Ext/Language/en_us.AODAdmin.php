@@ -24,3 +24,4 @@
 $mod_strings['LBL_SALESAGILITY_ADMIN'] = 'Advanced OpenAdmin';
 $mod_strings['LBL_AOD_ADMIN_MANAGE_AOD'] = 'Advanced OpenDiscovery Settings';
 $mod_strings['LBL_AOD_ENABLE'] = 'Enable AOD';
+$mod_strings['LBL_AOD_SETTINGS'] = 'AOD Settings';

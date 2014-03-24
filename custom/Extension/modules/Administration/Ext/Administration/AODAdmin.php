@@ -24,7 +24,7 @@
 $admin_option_defs = array();
 $admin_option_defs['Administration']['aod'] = array(
     'edit',
-    'AOD Settings',
+    'LBL_AOD_SETTINGS',
     'Change settings for Advanced OpenDiscovery',
     './index.php?module=Administration&action=AODAdmin'
 );
