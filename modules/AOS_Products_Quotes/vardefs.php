@@ -36,6 +36,29 @@ $dictionary['AOS_Products_Quotes'] = array(
       'required' => true,
       'importable' => 'required',
     ),
+    'currency_id' =>
+     array (
+      'required' => false,
+      'name' => 'currency_id',
+      'vname' => 'LBL_CURRENCY',
+      'type' => 'id',
+      'massupdate' => 0,
+      'comments' => '',
+      'help' => '',
+      'importable' => 'true',
+      'duplicate_merge' => 'disabled',
+      'duplicate_merge_dom_value' => 0,
+      'audited' => false,
+      'reportable' => false,
+      'len' => 36,
+      'size' => '20',
+      'studio' => 'visible',
+      'function' =>
+        array (
+            'name' => 'getCurrencyDropDown',
+            'returns' => 'html',
+        ),
+    ),
   'part_number' =>
     array (
         'required' => false,
@@ -119,6 +142,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'product_cost_price_usdollar' =>
+            array (
+                'name' => 'product_cost_price_usdollar',
+                'vname' => 'LBL_PRODUCT_COST_PRICE_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'product_cost_price',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'product_list_price' => 
   array (
     'required' => false,
@@ -135,6 +175,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'product_list_price_usdollar' =>
+            array (
+                'name' => 'product_list_price_usdollar',
+                'vname' => 'LBL_PRODUCT_LIST_PRICE_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'product_list_price',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'product_discount' => 
   array (
     'required' => false,
@@ -151,6 +208,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'product_discount_usdollar' =>
+            array (
+                'name' => 'product_discount_usdollar',
+                'vname' => 'LBL_PRODUCT_DISCOUNT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'product_discount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'product_discount_amount' => 
   array (
     'required' => false,
@@ -167,6 +241,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'product_discount_amount_usdollar' =>
+            array (
+                'name' => 'product_discount_amount_usdollar',
+                'vname' => 'LBL_PRODUCT_DISCOUNT_AMOUNT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'product_discount_amount',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'discount' => 
   array (
     'required' => false,
@@ -186,6 +277,7 @@ $dictionary['AOS_Products_Quotes'] = array(
     'options' => 'discount_list',
     'studio' => 'visible',
   ),
+
   'product_unit_price' => 
   array (
     'required' => '1',
@@ -202,6 +294,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'product_unit_price_usdollar' =>
+            array (
+                'name' => 'product_unit_price_usdollar',
+                'vname' => 'LBL_PRODUCT_UNIT_PRICE_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'product_unit_price',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'vat_amt' => 
   array (
     'required' => '1',
@@ -218,6 +327,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'vat_amt_usdollar' =>
+            array (
+                'name' => 'vat_amt_usdollar',
+                'vname' => 'LBL_VAT_AMT_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'vat_amt',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'product_total_price' => 
   array (
     'required' => '1',
@@ -234,6 +360,23 @@ $dictionary['AOS_Products_Quotes'] = array(
     'reportable' => true,
     'len' => '26,6',
   ),
+        'product_total_price_usdollar' =>
+            array (
+                'name' => 'product_total_price_usdollar',
+                'vname' => 'LBL_PRODUCT_TOTAL_PRICE_USDOLLAR',
+                'type' => 'currency',
+                'group'=>'product_total_price',
+                'disable_num_format' => true,
+                'duplicate_merge'=>'0',
+                'audited'=>true,
+                'comment' => '',
+                'studio' => array(
+                    'editview'=>false,
+                    'detailview'=>false,
+                    'quickcreate'=>false,
+                ),
+                'len' => '26,6',
+            ),
   'vat' => 
   array (
     'required' => false,
