@@ -17,11 +17,20 @@ class SubPanelSearchForm extends SearchForm  {
     }
 
     function display(){
-        $html = '';
+        $this->tpl = 'SubpanelSearchFormGeneric.tpl';
+        echo parent::display(false);
+        /*$html = '';
+
+        $html .= "<tr>";
+        $html .= "<td aligh='left'>";
+
         if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
             $html .= $this->displayCollectionSelect($this->subPanel->subpanel_defs->base_collection_list);
         }
-        echo $html;
+        $html .= "</td>";
+        $html .= "<td aligh='right'><input id='search_form_submit' class='button' type='submit' value='Search' name='button' onclick='javascript:showSubPanel(\"history\",\"/SuiteCRM/index.php?module=Accounts&action=DetailView&record=108e60ee-816e-f861-4772-5271284d598d&ajax_load=1&loadLanguageJS=1&Accounts_history_CELL_ORDER_BY=&sort_order=desc&to_pdf=true&action=SubPanelViewer&subpanel=history&layout_def_key=Accounts\",true);return false;' title='Search' tabindex='2'></td></tr>";
+
+        echo $html;*/
     }
 
     function displayCollectionSelect($collection = array(), $value = array()){
