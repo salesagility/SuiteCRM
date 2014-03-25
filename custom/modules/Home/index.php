@@ -280,7 +280,7 @@ $i = 0;
         $i++;
     }
 
-$sugar_smarty->assign('pages', $pageTabs);
+
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('sugarFlavor', $sugar_flavor);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
@@ -297,7 +297,7 @@ $sugar_smarty->assign('theme', $theme);
 
 $sugar_smarty->assign('divPages', $divPages);
 $sugar_smarty->assign('activePage', $activePage);
-
+$sugar_smarty->assign('dashboardPages', $pageTabs);
 $sugar_smarty->assign('current_user', $current_user->id);
 
 $sugar_smarty->assign('lblAdd', $GLOBALS['app_strings']['LBL_ADD_BUTTON']);

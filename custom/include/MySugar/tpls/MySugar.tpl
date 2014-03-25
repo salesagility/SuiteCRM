@@ -69,29 +69,34 @@
         <td>
             <div class="yui-module yui-scroll">
 
+                {* Start the tabs section *}
+                <ul class="subpanelTablist">
 
-                    <ul class="subpanelTablist">
+                    {* Display the remove button to allow the addition of more tabs *}
 
-                        <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+                    <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
 
-                        {foreach from=$pages key=tabNum item=Tabs}
+                    {* Foreach of the pages generate a tab in the tab section *}
 
-                            <li id="pageNum_{$tabNum}">
-                                <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' class="{$Tabs.tabClass}" onClick=retrievePage({$tabNum});>
-                                    <span>{$Tabs.pageTitle}</span>
-                                </a>
-                            </li>
-
-                        {/foreach}
-
+                    {foreach from=$dashboardPages key=tabNum item=tab}
                         <li id="pageNum_{$tabNum}">
-                            <a style='cursor: pointer;' class="{$Tabs.tabClass}" onClick=addForm({$tabNum});>
-                              <span>+</span>
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' class="{$tab.tabClass}" onClick=retrievePage({$tabNum});>
+                                <span>{$tab.pageTitle}</span>
                             </a>
                         </li>
+                    {/foreach}
 
-                    </ul>
-                </div>
+                    {* Display the add button to allow the addition of more tabs *}
+
+
+                    <li id="pageNum_{$tabNum}">
+                        <a style='cursor: pointer;' class="{$tab.tabClass}" onClick=addForm({$tabNum});>
+                            <span>+</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
 
             <div class="clear"></div>
             <div id="pageContainer" class="yui-skin-sam">
