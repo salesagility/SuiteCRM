@@ -54,7 +54,7 @@ function outputPage(page_id,pageContent){
     $("#removeTab_anchor").attr("onclick","removeForm("+ page_id +")");
 
 
-
-
 }
+
+
 
