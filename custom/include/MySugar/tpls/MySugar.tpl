@@ -84,8 +84,7 @@
                             </a>
 
                         </li>
-                        {/if}
-                        {if $tabNum > 0} <li id="pageNum_{$tabNum}">
+                        {else} <li id="pageNum_{$tabNum}">
                             <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
                                 <span>{$tab.pageTitle}</span>
                             </a>

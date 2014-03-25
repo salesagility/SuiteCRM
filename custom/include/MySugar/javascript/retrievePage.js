@@ -51,7 +51,7 @@ function outputPage(page_id,pageContent){
 
     $( "#pageNum_"+ page_id +"_div" ).append(pageContent);
 
-    $("#removeTab_anchor").attr("onclick","removeForm("+ page_id +")");
+//    $("#removeTab_anchor").attr("onclick","removeForm("+ page_id +")");
 
 
 }
