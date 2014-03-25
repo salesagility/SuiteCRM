@@ -67,36 +67,46 @@
 <table cellpadding="0" cellspacing="0" border="0" width="100%">
     <tr>
         <td>
-            <div class="yui-module yui-scroll">
+            {*<div class="yui-module yui-scroll">*}
 
                 {* Start the tabs section *}
-                <ul class="subpanelTablist">
+                <ul class="dashboardTabList">
 
                     {* Display the remove button to allow the addition of more tabs *}
 
-                    <a id="removeTab_anchor" style='cursor:pointer; float:right; padding:3px' onClick=removeForm(0);><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
 
                     {* Foreach of the pages generate a tab in the tab section *}
 
                     {foreach from=$dashboardPages key=tabNum item=tab}
-                        <li id="pageNum_{$tabNum}">
+                        {if $tabNum == 0} <li id="pageNum_{$tabNum}">
                             <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
                                 <span>{$tab.pageTitle}</span>
                             </a>
+
                         </li>
+                        {/if}
+                        {if $tabNum > 0} <li id="pageNum_{$tabNum}">
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
+                                <span>{$tab.pageTitle}</span>
+                            </a>
+                            <a id="removeTab_anchor"  onClick=removeForm({$tabNum});><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+
+                            </li>{/if}
                     {/foreach}
+
+
 
                     {* Display the add button to allow the addition of more tabs *}
 
 
-                    <li id="pageNum_{$tabNum}">
+                    <li class="addButton">
                         <a style='cursor: pointer;' onClick=addForm({$tabNum});>
-                            <span>+</span>
+                            <span>Add Tab +</span>
                         </a>
                     </li>
 
                 </ul>
-            </div>
+            {*</div>*}
 
             <div class="clear"></div>
             <div id="pageContainer" class="yui-skin-sam">
@@ -168,6 +178,7 @@
             <script type="text/javascript" src="custom/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
             <script type="text/javascript" src="custom/include/MySugar/javascript/retrievePage.js"></script>
 
+            <link rel="stylesheet" type="text/css" href="custom/include/MySugar/dashboardstyle.css">
 
             <script type="text/javascript">
 

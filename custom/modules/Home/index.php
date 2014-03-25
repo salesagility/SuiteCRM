@@ -272,7 +272,7 @@ $i = 0;
         $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];
 
         if($i == 0){
-            $pageTabs[$i]['pageTitle'] = 'My Sugar';
+            $pageTabs[$i]['pageTitle'] = 'Suite Dashboard';
 //            $pageTabs[$i]['active'] = 'current';
         }else{
             $divPages[] = $i;
@@ -323,6 +323,7 @@ if (file_exists("custom/include/MySugar/tpls/MySugar.tpl")) {
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
 echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
+echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
 
 
 ?>
