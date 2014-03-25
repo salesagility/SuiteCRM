@@ -6,3 +6,4 @@
  */
 
 $action_file_map['subpanelviewer'] = 'custom/include/SubPanel/SubPanelViewer.php';
+$action_file_map['subpanelsearch'] = 'custom/include/SubPanel/SubPanelSearchDisplay.php';

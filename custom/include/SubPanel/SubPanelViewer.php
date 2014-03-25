@@ -66,7 +66,7 @@ $record = $_REQUEST['record'];
 $module = $_REQUEST['module'];
 
 $search_query = '';
-$collection = array('Calls','Meetings');
+//$collection = array('Calls','Meetings');
 
 if(empty($_REQUEST['inline']))
 {
@@ -86,7 +86,7 @@ if(!empty($_REQUEST['layout_def_key'])){
 
 $subpanel_object = new CustomSubPanel($module, $record, $subpanel,null, $layout_def_key, $search_query, $collection);
 
-echo $subpanel_object->getSearchForm();/*
+//echo $subpanel_object->getSearchForm();
 
 $subpanel_object->setTemplateFile('custom/include/SubPanel/SubPanelDynamic.html');
 echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  
@@ -101,5 +101,5 @@ if (!isset($_SESSION['isMobile'])) {
 if(empty($_REQUEST['inline']))
 {
 	insert_popup_footer($theme);
-}*/
+}
 
