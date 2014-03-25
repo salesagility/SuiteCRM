@@ -88,12 +88,4 @@ if(!isset($_POST['dashName'])){
     $sugar_smarty->assign('lblAddDashlets', $home_mod_strings['LBL_ADD_DASHLETS']);
     $sugar_smarty->assign('numCols', $dashboardPage['numColumns']);
 
-    $sugar_smarty->fetch('include/MySugar/tpls/retrievePage.tpl');
-
-    unset($_POST['dashName']);
-    unset($_POST['numColumns']);
-
-
-
-
 }
