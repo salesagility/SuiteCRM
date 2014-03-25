@@ -268,14 +268,14 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
 $i = 0;
     while($i < count($pages)){
 
-        $pageNum = $i;
-        $pageTabs[$pageNum]['pageTitle'] = $pages[$i]['pageTitle'];
 
-        if($pageNum == 0){
-            $pageTabs[$pageNum]['pageTitle'] = 'My Sugar';
-            $pageTabs[$pageNum]['tabClass'] = 'current';
+        $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];
+
+        if($i == 0){
+            $pageTabs[$i]['pageTitle'] = 'My Sugar';
+//            $pageTabs[$i]['active'] = 'current';
         }else{
-            $divPages[] = $pageNum;
+            $divPages[] = $i;
         }
         $i++;
     }
@@ -322,4 +322,7 @@ if (file_exists("custom/include/MySugar/tpls/MySugar.tpl")) {
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
+echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
+
+
 ?>

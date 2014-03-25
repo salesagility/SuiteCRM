@@ -80,7 +80,7 @@
 
                     {foreach from=$dashboardPages key=tabNum item=tab}
                         <li id="pageNum_{$tabNum}">
-                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' class="{$tab.tabClass}" onClick=retrievePage({$tabNum});>
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
                                 <span>{$tab.pageTitle}</span>
                             </a>
                         </li>
@@ -90,7 +90,7 @@
 
 
                     <li id="pageNum_{$tabNum}">
-                        <a style='cursor: pointer;' class="{$tab.tabClass}" onClick=addForm({$tabNum});>
+                        <a style='cursor: pointer;' onClick=addForm({$tabNum});>
                             <span>+</span>
                         </a>
                     </li>
