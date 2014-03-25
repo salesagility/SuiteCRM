@@ -8,4 +8,5 @@ $entry_point_registry['social_reader'] = array('file' => 'custom/include/social/
 $entry_point_registry['add_dash_page'] = array('file' => 'custom/modules/Home/AddDashboardPages.php' , 'auth' => '1');
 $entry_point_registry['retrieve_dash_page'] = array('file' => 'custom/include/MySugar/retrieve_dash_page.php' , 'auth' => '1');
 $entry_point_registry['remove_dash_page'] = array('file' => 'custom/modules/Home/RemoveDashboardPages.php' , 'auth' => '1');
+$entry_point_registry['rename_dash_page'] = array('file' => 'custom/modules/Home/RenameDashboardPages.php' , 'auth' => '1');
 ?>

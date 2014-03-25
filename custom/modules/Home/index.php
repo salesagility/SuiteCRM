@@ -101,8 +101,8 @@ if(!$hasUserPreferences){
             'module' => 'Home',
             'forceColumn' => 0,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'LBL_DASHLET_DISCOVER_SUGAR_PRO',
-                'url' => 'https://www.sugarcrm.com/crm/product/gopro',
+            'options' => array('titleLabel' => 'Discover SuiteCRM',
+                'url' => 'http://www.suitecrm.com',
                 'height' => 315,
             ));
 
@@ -111,15 +111,6 @@ if(!$hasUserPreferences){
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['SugarFeedDashlet']['file'],
         );
-
-        $dashlets[create_guid()] = array('className' => 'iFrameDashlet',
-            'module' => 'Home',
-            'forceColumn' => 1,
-            'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'LBL_DASHLET_SUGAR_NEWS',
-                'url' => 'https://www.sugarcrm.com/crm/product/news',
-                'height' => 315,
-            ));
 
         foreach($defaultDashlets as $dashletName=>$module){
             // clint - fixes bug #20398
