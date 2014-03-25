@@ -93,14 +93,7 @@ if(!isset($_POST['dashName'])){
     unset($_POST['dashName']);
     unset($_POST['numColumns']);
 
-    $queryParams = array(
-        'module' => 'Home',
-        'action' => 'index',
-    );
 
-    $sa = new SugarApplication();
-
-    $sa->redirect('index.php?' . http_build_query($queryParams));
 
 
 }

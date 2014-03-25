@@ -1,17 +1,16 @@
 function handleSubmit(){
     $(this).submit();
-
+    window.location.replace("index.php");
 }
 
 function handleCancel(){
-    $(this).cancel();
+    this.cancel();
 }
 
 
 
 
 function removeForm(page_id) {
-    console.log(page_id);
     if (page_id > 0) {
         $.ajax({
 

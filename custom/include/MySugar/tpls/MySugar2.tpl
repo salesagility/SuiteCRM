@@ -63,14 +63,18 @@ height: 10px;
 {$chartResources}
 {$mySugarChartResources}
 
-
-<table cellpadding="0" cellspacing="0" border="0" width="100%" id="tabListContainerTable">
-
 <div class="clear"></div>
 <div id="pageContainer" class="yui-skin-sam">
 <div id="pageNum_{$activePage}_div">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
  	<tr>
+	 	<td>
+
+		</td>
+
+		<td rowspan="3">
+				{sugar_getimage name="blank.gif"  width='40' height='1' border='0'}
+		</td>
 		<td align='right'>
 			{if !$lock_homepage}<input id="add_dashlets" class="button" type="button" value="{$lblAddDashlets}" onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
 		</td>
@@ -78,7 +82,6 @@ height: 10px;
 	<tr>
 		{counter assign=hiddenCounter start=0 print=false}
 		{foreach from=$columns key=colNum item=data}
-
 		<td valign='top' width='{$data.width}'>
 			<ul class='noBullet' id='col_{$activePage}_{$colNum}'>
 				<li id='page_{$activePage}_hidden{$hiddenCounter}b' style='height: 5px; margin-top:12px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
@@ -99,7 +102,6 @@ height: 10px;
 		{/foreach}
 	</tr>
 </table>
-
 	</div>
 
 	{foreach from=$divPages key=divPageIndex item=divPageNum}
@@ -121,14 +123,7 @@ height: 10px;
 				
 	
 </div>
-
-    <script type="text/javascript" src="custom/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
-    <script type="text/javascript" src="custom/include/MySugar/javascript/retrievePage.js"></script>
-
-
 <script type="text/javascript">
-
-
     var activePage = {$activePage};
     var theme = '{$theme}';
     current_user_id = '{$current_user}';
@@ -156,18 +151,18 @@ height: 10px;
             {if !$lock_homepage}
             for(i in dashletIds) {ldelim}
                 SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-            SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-            // Bug #47097 : Dashlets not displayed after moving them
-            // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
-            SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
-            SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-            SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-            j++;
-            {rdelim}
+                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+                // Bug #47097 : Dashlets not displayed after moving them
+                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+                j++;
+                {rdelim}
             {if $hiddenCounter > 0}
             for(var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
                 SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_'+activePage+'_hidden' + wp);
-            {rdelim}
+                {rdelim}
             {/if}
             YAHOO.util.DDM.mode = 1;
             {/if}
@@ -195,3 +190,4 @@ height: 10px;
     mySugarLoader.insert();
     {/literal}
 </script>
+
