@@ -6,7 +6,7 @@
  */
 
 
-$layout_defs["Accounts"]["subpanel_setup"]["history"]['search'] =
+$layout_defs["Accounts"]["subpanel_setup"]["history"]['searchdefs'] =
 array (
     'collection' =>
         array (
