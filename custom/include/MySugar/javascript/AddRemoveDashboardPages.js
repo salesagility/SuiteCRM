@@ -7,9 +7,6 @@ function handleCancel(){
     this.cancel();
 }
 
-
-
-
 function removeForm(page_id) {
     if (page_id > 0) {
         $.ajax({
@@ -65,10 +62,7 @@ function addForm(page_id){
 
 function get_form(data,titleval,myButtons) {
 
-
-
     var form = data;
-
     dialog = new YAHOO.widget.Dialog('dialog1', {
         width: '400px',
 
@@ -91,5 +85,58 @@ function get_form(data,titleval,myButtons) {
     dialog.show();
 
 }
+
+function renameTab(page_id){
+    $.ajax({
+
+        url : "index.php?entryPoint=rename_dash_page",
+        dataType: 'HTML',
+        type: 'POST',
+        data: {
+            'page_id': page_id
+        },
+
+        success : function(data) {
+            var titleval = 'Rename Dashboard Page';
+            var myButtons = [{ text: "Save", handler: renameTabSubmit, isDefault: true },
+                { text: "Cancel", handler:handleCancel }];
+            get_form(data,titleval,myButtons)
+
+        },
+        error : function(request,error)
+        {
+
+        }
+    })
+}
+
+function renameTabSubmit(){
+    var dashName = $("#dashName").val();
+    var page_id = $("#page_id").val();
+    $.ajax({
+        url : "index.php?entryPoint=rename_dash_page",
+        dataType: 'HTML',
+        type: 'POST',
+        data: {
+            'page_id': page_id,
+            'dashName': dashName
+        },
+
+
+        success : function(data) {
+            data = JSON.parse(data);
+
+            $("#name_" + data.page_id).text(data.dashName);
+
+            dialog.hide();
+
+        },
+        error : function(request,error)
+        {
+
+        }
+    })
+}
+
 
 
