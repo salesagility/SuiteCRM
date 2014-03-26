@@ -62,7 +62,6 @@
 	});
 {/literal}
 </script>
-
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
 {{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
@@ -102,7 +101,7 @@
     {else}
 	<td class="sumbitButtons">
     {/if}
-        <input tabindex='2' title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_SEARCH_BUTTON_TITLE}'/>
+        <input tabindex='2' title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='submitSearch("{$subpanel}");' class='button' type='button' name='search' id='search_form_search' value='{$APP.LBL_SEARCH_BUTTON_TITLE}'/>
 	    <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
     </td>
 	</tr>

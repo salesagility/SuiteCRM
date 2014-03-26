@@ -51,6 +51,20 @@ class CustomSubPanel extends SubPanel
 
 	}
 
+    function get_searchdefs($module)
+    {
+        $thisPanel =& $this->subpanel_defs;
+        $subpanel_defs = $thisPanel->_instance_properties;
+
+        if(isset($subpanel_defs['searchdefs'])){
+            $searchdefs[$module]['layout']['basic_search'] = $subpanel_defs['searchdefs'];
+            $searchdefs[$module]['templateMeta'] = Array ('maxColumns' => 3, 'maxColumnsBasic' => 4, 'widths' => Array ( 'label' => 10, 'field' => 30 )) ;
+            return $searchdefs;
+        }
+
+        return false;
+    }
+
     function getSearchForm()
     {
         require_once('custom/include/SubPanel/SubPanelSearchForm.php');
@@ -63,14 +77,14 @@ class CustomSubPanel extends SubPanel
 
         $searchMetaData = $searchForm->retrieveSearchDefs($module);
 
-        if (isset($this->subpanelDef->_instance_properties['searchdefs'])){
+        if ($subpanel_searchMetaData = $this->get_searchdefs($module)){
 
-            $searchForm->setup($this->subpanelDef->_instance_properties['searchdefs'], $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'subpanel_search');
+            $searchForm->setup($searchMetaData['searchdefs'], $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
 
-            return $searchForm->display(false);
+            return $searchForm->display();
         }
 
-        return print_r($this->subpanelDef->_instance_properties,true);
+        return 'FAIL';
     }
 
 }

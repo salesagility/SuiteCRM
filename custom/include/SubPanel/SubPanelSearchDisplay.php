@@ -2,11 +2,11 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /**
  * SubPanelSearchDisplay.php
- * @author SalesAgility <support@salesagility.com>
+ * @author SalesAgility <info@salesagility.com>
  * Date: 28/01/14
  */
 
-
+ini_set('display_errors',1);
 
 global $beanList;
 global $beanFiles;
@@ -15,11 +15,6 @@ global $beanFiles;
 if(empty($_REQUEST['module']))
 {
 	die("'module' was not defined");
-}
-
-if(empty($_REQUEST['record']))
-{
-	die("'record' was not defined");
 }
 
 if(!isset($beanList[$_REQUEST['module']]))
@@ -32,11 +27,11 @@ if (!isset($_REQUEST['subpanel'])) {
 }
 
 $subpanel = $_REQUEST['subpanel'];
-$record = $_REQUEST['record'];
+$record = '';
 $module = $_REQUEST['module'];
 
 $search_query = '';
-//$collection = array('Calls','Meetings');
+$collection = array();
 
 //require_once('include/SubPanel/SubPanelDefinitions.php');
 //require_once($beanFiles[$beanList[$_REQUEST['module']]]);
