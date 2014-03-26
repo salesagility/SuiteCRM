@@ -16,9 +16,10 @@ class SubPanelSearchForm extends SearchForm  {
         parent::SearchForm($seed, $module, 'DetailView', $options);
     }
 
-    function display(){
+    function display($header = false){
         //$this->tpl = 'SubpanelSearchFormGeneric.tpl';
-        return parent::display(false);
+        $this->th->ss->assign('subpanel', $this->subPanel->subpanel_id);
+        return parent::display($header);
         /*$html = '';
 
         $html .= "<tr>";
