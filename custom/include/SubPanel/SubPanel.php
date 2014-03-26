@@ -63,11 +63,14 @@ class CustomSubPanel extends SubPanel
 
         $searchMetaData = $searchForm->retrieveSearchDefs($module);
 
-        $searchForm->setup($searchMetaData['searchdefs'], $searchMetaData['searchFields'], 'SearchFormGeneric.tpl', 'basic_search');
+        if (isset($this->subpanelDef->_instance_properties['searchdefs'])){
 
-        $searchForm->display(false);
+            $searchForm->setup($this->subpanelDef->_instance_properties['searchdefs'], $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'subpanel_search');
 
+            return $searchForm->display(false);
+        }
 
+        return print_r($this->subpanelDef->_instance_properties,true);
     }
 
 }

@@ -17,8 +17,8 @@ class SubPanelSearchForm extends SearchForm  {
     }
 
     function display(){
-        $this->tpl = 'SubpanelSearchFormGeneric.tpl';
-        echo parent::display(false);
+        //$this->tpl = 'SubpanelSearchFormGeneric.tpl';
+        return parent::display(false);
         /*$html = '';
 
         $html .= "<tr>";
