@@ -79,14 +79,14 @@
 
                     {foreach from=$dashboardPages key=tabNum item=tab}
                         {if $tabNum == 0} <li id="pageNum_{$tabNum}">
-                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;'  onClick=retrievePage({$tabNum});>
                                 <span>{$tab.pageTitle}</span>
                             </a>
 
                         </li>
                         {else} <li id="pageNum_{$tabNum}">
-                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
-                                <span>{$tab.pageTitle}</span>
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' ondblclick="renameTab({$tabNum})" onClick=retrievePage({$tabNum});>
+                                <span id="name_{$tabNum}">{$tab.pageTitle}</span>
                             </a>
                             <a id="removeTab_anchor"  onClick=removeForm({$tabNum});><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
 
@@ -99,10 +99,15 @@
 
 
                     <li class="addButton">
+                        <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">Add Dashlets</a>
+                    </li>
+
+                    <li class="addButton">
                         <a style='cursor: pointer;' onClick=addForm({$tabNum});>
-                            <span>Add Tab +</span>
+                            <span>Add Tab</span>
                         </a>
                     </li>
+
 
                 </ul>
             {*</div>*}
