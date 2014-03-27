@@ -67,7 +67,7 @@ $module = $_REQUEST['module'];
 
 $collection = array();
 if(isset($_REQUEST['collection_basic'])){
-    $collection = $_REQUEST['collection_basic'];
+    //$collection = $_REQUEST['collection_basic'];
 }
 
 if(empty($_REQUEST['inline']))

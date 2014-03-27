@@ -59,9 +59,27 @@ function submitSearch(subpanel) {
         else if (type != "button" && type != "submit") {
             if ($(this).val() != '') submit_data.push($(this).attr("name")+'='+$(this).val());
         }
-    })
+    });
 
     var url = 'index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+id + '&layout_def_key='+submit_data.join('&');
 
     showSubPanel(subpanel,url,true);
+}
+
+function clearSearch(subpanel) {
+
+    $('#'+subpanel+'_search input').each(function() {
+        var type = $(this).attr("type");
+
+        if ((type == "checkbox" || type == "radio")) {
+            $(this).prop('checked', false);
+        }
+        else if (type != "button" && type != "submit") {
+            $(this).val('')
+        }
+    });
+    $('#'+subpanel+'_search select').each(function() {
+        $(this).prop('selectedIndex',0);
+    });
+
 }
