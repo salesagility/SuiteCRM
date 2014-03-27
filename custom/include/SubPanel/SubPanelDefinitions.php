@@ -14,6 +14,8 @@ class CustomaSubPanel extends aSubPanel
 
     function CustomaSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
 
+        $this->_instance_properties = $instance_properties ;
+
         if(isset($instance_properties['collection_list' ])) $this->base_collection_list = $instance_properties['collection_list' ];
 
         if(!empty($collections) && isset($instance_properties['collection_list' ])){
@@ -23,25 +25,14 @@ class CustomaSubPanel extends aSubPanel
                 }
             }
         }
-
         if (!$this->isCollection()){
             $table = strtolower($instance_properties['module']);
-            $search_query = str_replace('sub_module',$table,$search_query);
+            $search_query = str_replace('meetings',$table,$search_query);
         }
         $this->search_query = $search_query;
 
         parent::aSubPanel($name , $instance_properties , $parent_bean , $reload , $original_only);
 
-    }
-
-    /**
-     * Test to see if the sub panels defs contain a collection
-     *
-     * @return bool
-     */
-    function isCollection ()
-    {
-        return ($this->get_inst_prop_value ( 'type' ) == 'collection');
     }
 
     //returns the where clause for the query.
