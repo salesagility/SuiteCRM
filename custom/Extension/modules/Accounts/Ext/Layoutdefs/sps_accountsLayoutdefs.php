@@ -13,6 +13,7 @@ array (
             'name' => 'collection',
             'label' => 'LBL_COLLECTION_TYPE',
             'type' => 'enum',
+            'options' => 'collection_temp_list',
             'default' => true,
             'width' => '10%',
         ),

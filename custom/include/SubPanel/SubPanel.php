@@ -78,10 +78,12 @@ class CustomSubPanel extends SubPanel
 
             $searchForm->setup($subpanel_searchMetaData, $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
 
+            $searchForm->populateFromRequest();
+
             return $searchForm->display();
         }
 
-        return 'FAIL';
+        return '';
     }
 
     function buildSearchQuery()
@@ -106,6 +108,79 @@ class CustomSubPanel extends SubPanel
         $GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
 
         return print_r($where_clauses,true);
+    }
+
+    function ProcessSubPanelListView($xTemplatePath, &$mod_strings)
+    {
+        global $app_strings;
+        global $current_user;
+        global $sugar_config;
+
+        if(isset($this->listview)){
+            $ListView =& $this->listview;
+        }else{
+            $ListView = new ListView();
+        }
+        $ListView->initNewXTemplate($xTemplatePath,$this->subpanel_defs->mod_strings);
+        $ListView->xTemplateAssign("RETURN_URL", "&return_module=".$this->parent_module."&return_action=DetailView&return_id=".$this->parent_bean->id);
+        $ListView->xTemplateAssign("RELATED_MODULE", $this->parent_module);  // TODO: what about unions?
+        $ListView->xTemplateAssign("RECORD_ID", $this->parent_bean->id);
+        $ListView->xTemplateAssign("EDIT_INLINE_PNG", SugarThemeRegistry::current()->getImage('edit_inline','align="absmiddle"  border="0"',null,null,'.gif',$app_strings['LNK_EDIT']));
+        $ListView->xTemplateAssign("DELETE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_DELETE_INLINE']));
+        $ListView->xTemplateAssign("REMOVE_INLINE_PNG", SugarThemeRegistry::current()->getImage('delete_inline','align="absmiddle" border="0"',null,null,'.gif',$app_strings['LBL_ID_FF_REMOVE']));
+        $header_text= '';
+
+        $ListView->xTemplateAssign("SUBPANEL_ID", $this->subpanel_id);
+        $ListView->xTemplateAssign("SUBPANEL_SEARCH", $this->getSearchForm());
+        $display_sps = '';
+        if($this->search_query == '') $display_sps = 'display:none';
+        $ListView->xTemplateAssign("DISPLAY_SPS",$display_sps);
+
+        if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace']))
+        {
+            $exploded = explode('/', $xTemplatePath);
+            $file_name = $exploded[sizeof($exploded) - 1];
+            $mod_name =  $exploded[sizeof($exploded) - 2];
+            $header_text= "&nbsp;<a href='index.php?action=index&module=DynamicLayout&from_action=$file_name&from_module=$mod_name&mod_lang="
+                .$_REQUEST['module']."'>".SugarThemeRegistry::current()->getImage("EditLayout","border='0' align='bottom'",null,null,'.gif','Edit Layout')."</a>";
+        }
+        $ListView->setHeaderTitle('');
+        $ListView->setHeaderText('');
+
+        ob_start();
+
+        $ListView->is_dynamic = true;
+        $ListView->records_per_page = $sugar_config['list_max_entries_per_subpanel'] + 0;
+        if (isset($this->subpanel_defs->_instance_properties['records_per_page'])) {
+            $ListView->records_per_page = $this->subpanel_defs->_instance_properties['records_per_page'] + 0;
+        }
+        $ListView->start_link_wrapper = "javascript:showSubPanel('".$this->subpanel_id."','";
+        $ListView->subpanel_id = $this->subpanel_id;
+        $ListView->end_link_wrapper = "',true);";
+        if ( !empty($this->layout_def_key) ) {
+            $ListView->end_link_wrapper = '&layout_def_key='.$this->layout_def_key.$ListView->end_link_wrapper;
+        }
+
+        $where = '';
+        $ListView->setQuery($where, '', '', '');
+        $ListView->show_export_button = false;
+
+        //function returns the query that was used to populate sub-panel data.
+
+        $query=$ListView->process_dynamic_listview($this->parent_module, $this->parent_bean,$this->subpanel_defs);
+        $this->subpanel_query=$query;
+        $ob_contents = ob_get_contents();
+        ob_end_clean();
+        return $ob_contents;
+    }
+
+    function display()
+    {
+        $result_array = array();
+
+        $return_string = $this->ProcessSubPanelListView($this->template_file,$result_array);
+
+        print $return_string;
     }
 
 }

@@ -17,18 +17,18 @@ class SubPanelSearchForm extends SearchForm  {
     }
 
     function display($header = false){
+        global $app_list_strings;
+        if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
+            $app_list_strings['collection_temp_list'] = $this->getCollectionList($this->subPanel->subpanel_defs->base_collection_list);
+        }
         $this->th->ss->assign('subpanel', $this->subPanel->subpanel_id);
         return parent::display($header);
-
-        /*if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
-            $html .= $this->displayCollectionSelect($this->subPanel->subpanel_defs->base_collection_list);
-        }*/
     }
 
-    function displayCollectionSelect($collection = array(), $value = array()){
+    function getCollectionList($collection = array()){
         global $app_list_strings;
 
-        $html = '';
+        $select = array();
 
         if(!empty($collection)){
 
@@ -38,12 +38,8 @@ class SubPanelSearchForm extends SearchForm  {
                     $select[$name] = $app_list_strings['moduleList'][$value_array['module']];
                 }
             }
-
-            $html .= '<select multiple>';
-            $html .= get_select_options_with_id($select, $value);
-            $html .= '</select>';
         }
-        return $html;
+        return $select;
     }
 
     function displaySavedSearchSelect(){
