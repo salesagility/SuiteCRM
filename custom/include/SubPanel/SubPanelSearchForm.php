@@ -1,7 +1,7 @@
 <?php
 /**
  * SubPanelSearchForm.php
- * @author SalesAgility <support@salesagility.com>
+ * @author SalesAgility <info@salesagility.com>
  * Date: 28/01/14
  */
 
@@ -17,21 +17,12 @@ class SubPanelSearchForm extends SearchForm  {
     }
 
     function display($header = false){
-        //$this->tpl = 'SubpanelSearchFormGeneric.tpl';
         $this->th->ss->assign('subpanel', $this->subPanel->subpanel_id);
         return parent::display($header);
-        /*$html = '';
 
-        $html .= "<tr>";
-        $html .= "<td aligh='left'>";
-
-        if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
+        /*if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
             $html .= $this->displayCollectionSelect($this->subPanel->subpanel_defs->base_collection_list);
-        }
-        $html .= "</td>";
-        $html .= "<td aligh='right'><input id='search_form_submit' class='button' type='submit' value='Search' name='button' onclick='javascript:showSubPanel(\"history\",\"/SuiteCRM/index.php?module=Accounts&action=DetailView&record=108e60ee-816e-f861-4772-5271284d598d&ajax_load=1&loadLanguageJS=1&Accounts_history_CELL_ORDER_BY=&sort_order=desc&to_pdf=true&action=SubPanelViewer&subpanel=history&layout_def_key=Accounts\",true);return false;' title='Search' tabindex='2'></td></tr>";
-
-        echo $html;*/
+        }*/
     }
 
     function displayCollectionSelect($collection = array(), $value = array()){

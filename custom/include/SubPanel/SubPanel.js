@@ -45,16 +45,23 @@ function buildSearchPanel(subpanel){
 }
 
 function submitSearch(subpanel) {
-    var inputValues = [];
+    var submit_data = [];
+    var module = get_module_name();
+    var id = get_record_id();
+    submit_data.push(module);
+
     $('#'+subpanel+'_search input,select').each(function() {
         var type = $(this).attr("type");
 
         if ((type == "checkbox" || type == "radio")) {
-            if($(this).is(":checked")) inputValues.push($(this).val());
+            if($(this).is(":checked")) submit_data.push($(this).attr("name")+'='+$(this).val());
         }
         else if (type != "button" && type != "submit") {
-            inputValues.push($(this).val());
+            if ($(this).val() != '') submit_data.push($(this).attr("name")+'='+$(this).val());
         }
     })
-    alert(inputValues.join(','));
+
+    var url = 'index.php?sugar_body_only=1&module='+module+'&subpanel='+subpanel+'&action=SubPanelViewer&inline=1&record='+id + '&layout_def_key='+submit_data.join('&');
+
+    showSubPanel(subpanel,url,true);
 }

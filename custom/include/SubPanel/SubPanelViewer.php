@@ -65,8 +65,10 @@ $subpanel = $_REQUEST['subpanel'];
 $record = $_REQUEST['record'];
 $module = $_REQUEST['module'];
 
-$search_query = '';
-//$collection = array('Calls','Meetings');
+$collection = array();
+if(isset($_REQUEST['collection_basic'])){
+    $collection = $_REQUEST['collection_basic'];
+}
 
 if(empty($_REQUEST['inline']))
 {
@@ -84,9 +86,7 @@ if(!empty($_REQUEST['layout_def_key'])){
 	$layout_def_key = $_REQUEST['layout_def_key'];
 }
 
-$subpanel_object = new CustomSubPanel($module, $record, $subpanel,null, $layout_def_key, $search_query, $collection);
-
-//echo $subpanel_object->getSearchForm();
+$subpanel_object = new CustomSubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
 
 $subpanel_object->setTemplateFile('custom/include/SubPanel/SubPanelDynamic.html');
 echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  

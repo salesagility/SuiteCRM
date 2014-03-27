@@ -30,13 +30,7 @@ $subpanel = $_REQUEST['subpanel'];
 $record = '';
 $module = $_REQUEST['module'];
 
-$search_query = '';
 $collection = array();
-
-//require_once('include/SubPanel/SubPanelDefinitions.php');
-//require_once($beanFiles[$beanList[$_REQUEST['module']]]);
-//$focus=new $beanList[$_REQUEST['module']];
-//$focus->retrieve($record);
 
 include('custom/include/SubPanel/SubPanel.php');
 $layout_def_key = '';
@@ -44,7 +38,7 @@ if(!empty($_REQUEST['layout_def_key'])){
 	$layout_def_key = $_REQUEST['layout_def_key'];
 }
 
-$subpanel_object = new CustomSubPanel($module, $record, $subpanel,null, $layout_def_key, $search_query, $collection);
+$subpanel_object = new CustomSubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
 
 echo $subpanel_object->getSearchForm();
 

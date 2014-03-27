@@ -36,8 +36,6 @@
 
 *}
 {{* If templateMeta.maxColumnsBasic is not set, use maxColumns *}}
-<input type='hidden' id="orderByInput" name='orderBy' value=''/>
-<input type='hidden' id="sortOrder" name='sortOrder' value=''/>
 {if !isset($templateMeta.maxColumnsBasic)}
 	{assign var="basicMaxColumns" value=$templateMeta.maxColumns}
 {else}
