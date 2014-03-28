@@ -68,13 +68,7 @@ height: 10px;
 <div id="pageNum_{$activePage}_div">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
  	<tr>
-	 	<td>
 
-		</td>
-
-		<td rowspan="3">
-				{sugar_getimage name="blank.gif"  width='40' height='1' border='0'}
-		</td>
 		<td align='right'>
 			{if !$lock_homepage}<input id="add_dashlets" class="button" type="button" value="{$lblAddDashlets}" onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
 		</td>

@@ -1201,6 +1201,8 @@ div.indent_right {
 /* Footer styles */
 #footer
 {
+
+    bottom:0;
     padding-top: 10px;
     text-align: center;
     padding-bottom: 5px;
@@ -9102,4 +9104,9 @@ blockquote.oval-thought-border {
 
 #lessmargin {
     margin: 0 50px 0 0;
+}
+
+#pageContainer {
+    padding:0;
+    margin:0;
 }
