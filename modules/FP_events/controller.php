@@ -406,6 +406,14 @@ class FP_eventsController extends SugarController
                 $emailTemp->disable_row_level_security = true;
                 $emailTemp->retrieve($event->invite_templates);  //Use the ID value of the email template record
 
+                //check email template is set, if not return error
+                if($emailTemp->id == '')
+                {
+                    SugarApplication::appendErrorMessage($mod_strings['LBL_ERROR_MSG_5']);
+                    SugarApplication::redirect("index.php?module=FP_events&return_module=FP_events&action=DetailView&record=".$event->id);
+                    die();
+                }
+
                 //parse the lead varibales first
                 $firstpass = $emailTemp->parse_template_bean($emailTemp->body_html, 'Contacts', $contact);
 
@@ -610,7 +618,7 @@ class FP_eventsController extends SugarController
         //now create email
         if (@$mail->Send()) {
             $emailObj->to_addrs= '';
-            $emailObj->type= 'archived';
+            $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mail->Subject;
             $emailObj->description = $mail->AltBody;

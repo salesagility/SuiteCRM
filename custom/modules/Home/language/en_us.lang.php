@@ -12,6 +12,9 @@ $mod_strings['LBL_CONTRIBUTOR_JJW_GMAPS'] = 'JJWDesign Google Maps by Jeffrey J.
 $mod_strings['LBL_CONTRIBUTOR_QUICKCRM'] = 'QuickCRM Mobile by Benoit Luquet';
 $mod_strings['LBL_CONTRIBUTOR_CONSCIOUS'] = 'SuiteCRM LOGO Provided by Conscious Solutions';
 
+$mod_strings['LBL_LANGUAGE_SPANISH'] = 'Spanish Translation Provided by Disytel openConsulting';
+$mod_strings['LBL_LANGUAGE_RUSSIAN'] = 'Russian Translation Provided by likhobory';
+
 $mod_strings['LBL_ABOUT_SUITE_1'] = 'SuiteCRM is a fork of SugarCRM. There are many articles on the web that explain the reasons why a fork of SugarCRM became necessary.';
 $mod_strings['LBL_ABOUT_SUITE_2'] = 'SuiteCRM is published under an open source licence - GPL3';
 $mod_strings['LBL_ABOUT_SUITE_3'] = 'SuiteCRM is completely compatible with SugarCRM 6.5.x';

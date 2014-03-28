@@ -181,7 +181,7 @@ class iCal extends vCal {
                 $ical_array[] = array("PRIORITY", "1");
         }
         $ical_array[] = array("END", "VTODO");
-        return vCal::create_ical_string_from_array($ical_array);
+        return vCal::create_ical_string_from_array($ical_array,true);
     }
 
     /**
@@ -335,7 +335,7 @@ class iCal extends vCal {
 
         }
 
-        $str = vCal::create_ical_string_from_array($ical_array);
+        $str = vCal::create_ical_string_from_array($ical_array,true);
 
         require_once('include/TimeDate.php');
         $timedate = new TimeDate();
@@ -497,7 +497,7 @@ class iCal extends vCal {
 
         $ical_array[] = array("END", "VTIMEZONE");
 
-        return vCal::create_ical_string_from_array($ical_array);
+        return vCal::create_ical_string_from_array($ical_array,true);
     }
 
     /**
@@ -520,8 +520,7 @@ class iCal extends vCal {
         $ical_array[] = array("METHOD", "PUBLISH");
         $ical_array[] = array("X-WR-CALNAME", "$cal_name (SugarCRM)");
         $ical_array[] = array("PRODID", "-//SugarCRM//SugarCRM Calendar//EN");
-        $timezonestr = explode(":", $this->getTimezoneString(), 2);
-        $ical_array[] = array($timezonestr[0], $timezonestr[1]);
+        $ical_array = array_merge($ical_array,vCal::create_ical_array_from_string($this->getTimezoneString()));
         $ical_array[] = array("CALSCALE", "GREGORIAN");
 
         $now_date_time = $timedate->getNow(true);
@@ -541,7 +540,7 @@ class iCal extends vCal {
 
         $utc_now_time = $this->getUtcDateTime($now_date_time);
 
-        $str = vCal::create_ical_string_from_array($ical_array);
+        $str = vCal::create_ical_string_from_array($ical_array,true);
 
         $str .= $this->createSugarIcal($user_focus,$start_date_time,$end_date_time,$utc_now_time);
 
@@ -550,7 +549,7 @@ class iCal extends vCal {
         );
         $ical_array[] = array("END", "VCALENDAR");
 
-        $str .= vCal::create_ical_string_from_array($ical_array);
+        $str .= vCal::create_ical_string_from_array($ical_array,true);
 
         return $str;
     }

@@ -8,9 +8,10 @@ $mod_strings['LBL_REMOVE_LAYOUT'] = 'Удалить макет Групп';
 
 $mod_strings['LBL_SECURITYGROUP'] = 'Группы пользователей:';
 $mod_strings['LBL_COPY_FROM'] = 'Копировать из:';
-$mod_strings['LBL_ADDLAYOUTDONE'] = 'Сохраненный макет';
-$mod_strings['LBL_REMOVELAYOUTDONE'] = 'Удаленный макет';
+$mod_strings['LBL_ADDLAYOUTDONE'] = 'Сохранённый макет';
+$mod_strings['LBL_REMOVELAYOUTDONE'] = 'Удалённый макет';
 $mod_strings['LBL_REMOVE_CONFIRM'] = 'Вы действительно уверены?';
 $mod_strings['help']['studioWizard']['addLayoutHelp'] = "Для создания макета Групп пользователей выберите соответствующую Группу и макет для копирования.";
+
 
 ?>

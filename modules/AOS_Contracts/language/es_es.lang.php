@@ -65,6 +65,41 @@ $mod_strings = array (
     'LBL_RENEWAL_REMINDER_DATE' => 'Fecha de Recordatorio de Renovación',
     'LBL_CONTRACT_TYPE' => 'Tipo de Contrato',
 
-    'LBL_CONTACT' => 'Contact',
+    'LBL_CONTACT' => 'Contacto',
 );
+
+// DISYTEL: Additional translations
+$mod_strings['LBL_ADD_GROUP'] = 'Agregar Grupo';
+$mod_strings['LBL_DELETE_GROUP'] = 'Eliminar Grupo';
+$mod_strings['LBL_GROUP_NAME'] = 'Nombre del Grupo';
+$mod_strings['LBL_GROUP_TOTAL'] = 'Total del Grupo';
+$mod_strings['LBL_PRODUCT_QUANITY'] = 'Cantidad';
+$mod_strings['LBL_PRODUCT_NAME'] = 'Producto';
+$mod_strings['LBL_PART_NUMBER'] = 'Nro de Parte';
+$mod_strings['LBL_PRODUCT_NOTE'] = 'Nota';
+$mod_strings['LBL_PRODUCT_DESCRIPTION'] = 'Descripción';
+$mod_strings['LBL_LIST_PRICE'] = 'Lista';
+$mod_strings['LBL_DISCOUNT_TYPE'] = 'Tipo';
+$mod_strings['LBL_DISCOUNT_AMT'] = 'Descuento';
+$mod_strings['LBL_UNIT_PRICE'] = 'Precio de Venta';
+$mod_strings['LBL_TOTAL_PRICE'] = 'Total';
+$mod_strings['LBL_VAT'] = 'Impuesto';
+$mod_strings['LBL_VAT_AMT'] = 'Monto Impuesto';
+$mod_strings['LBL_SERVICE_NAME'] = 'Servicio';
+$mod_strings['LBL_SERVICE_LIST_PRICE'] = 'Lista';
+$mod_strings['LBL_SERVICE_PRICE'] = 'Precio de Venta';
+$mod_strings['LBL_SERVICE_DISCOUNT'] = 'Descuento';
+$mod_strings['LBL_LINE_ITEMS'] = 'Items';
+$mod_strings['LBL_SUBTOTAL_AMOUNT'] = 'Subtotal';
+$mod_strings['LBL_DISCOUNT_AMOUNT'] = 'Descuento';
+$mod_strings['LBL_TAX_AMOUNT'] = 'Impuesto';
+$mod_strings['LBL_SHIPPING_AMOUNT'] = 'Envío';
+$mod_strings['LBL_TOTAL_AMT'] = 'Total';
+$mod_strings['LBL_GRAND_TOTAL'] = 'Gran Total';
+$mod_strings['LBL_SHIPPING_TAX'] = 'Impuestos de Envío';
+$mod_strings['LBL_SHIPPING_TAX_AMT'] = 'Impuesto de Envío';
+$mod_strings['LBL_ADD_PRODUCT_LINE'] = 'Agregar Línea de Producto';
+$mod_strings['LBL_ADD_SERVICE_LINE'] = 'Agregar Línea de Servicio';
+
+
 ?>

@@ -167,6 +167,11 @@ $dictionary['AOW_Processed'] = array(
 ),
     'indices' => array(
         array(
+            'name' => 'aow_processed_index_workflow',
+            'type' => 'index',
+            'fields' => array('aow_workflow_id','status','parent_id','deleted'),
+        ),
+        array(
             'name' => 'aow_processed_index_status',
             'type' => 'index',
             'fields' => array('status'),

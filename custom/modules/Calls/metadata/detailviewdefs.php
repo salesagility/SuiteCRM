@@ -51,12 +51,12 @@ $viewdefs = array (
                 'template' => '{if $fields.status.value != "Held" && $bean->aclAccess("edit")}[CONTENT]{/if}',
               ),
             ),
-            'SA_RESCHEDULE' => 
+            'SA_RESCHEDULE' =>
             array (
-              'customCode' => '{if $fields.status.value != "Held"} <input title="Reschedule" class="button" onclick="get_form();" name="Reschedule" id="reschedule_button" value="Reschedule" type="button">{/if}',
+              'customCode' => '{if $fields.status.value != "Held"} <input title="{$MOD.LBL_RESCHEDULE}" class="button" onclick="get_form();" name="Reschedule" id="reschedule_button" value="{$MOD.LBL_RESCHEDULE}" type="button">{/if}',
             ),
           ),
-          'hidden' => 
+          'hidden' =>
           array (
             0 => '<input type="hidden" name="isSaveAndNew">',
             1 => '<input type="hidden" name="status">',
@@ -80,15 +80,15 @@ $viewdefs = array (
           ),
         ),
         'useTabs' => false,
-        'includes' => 
+        'includes' =>
         array (
-          'SA_RESCHEDULE' => 
+          'SA_RESCHEDULE' =>
           array (
             'file' => 'modules/Calls_Reschedule/reschedule_form.js',
           ),
         ),
       ),
-      'panels' => 
+      'panels' =>
       array (
         'lbl_call_information' => 
         array (
@@ -145,7 +145,7 @@ $viewdefs = array (
             ),
           ),
         ),
-        'LBL_PANEL_ASSIGNMENT' => 
+        'LBL_PANEL_ASSIGNMENT' =>
         array (
           0 => 
           array (
@@ -172,11 +172,11 @@ $viewdefs = array (
             ),
           ),
         ),
-        'lbl_reschedule_panel' => 
+        'lbl_reschedule_panel' =>
         array (
-          0 => 
+          0 =>
           array (
-            0 => 
+            0 =>
             array (
               'name' => 'reschedule_history',
               'comment' => 'Call duration, minutes portion',

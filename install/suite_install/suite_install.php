@@ -25,6 +25,9 @@ install_aos();
 require_once('install/suite_install/AdvancedOpenPortal.php');
 install_aop();
 
+require_once('install/suite_install/AdvancedOpenDiscovery.php');
+install_aod();
+
 require_once('install/suite_install/AdvancedOpenEvents.php');
 install_aoe();
 
@@ -33,3 +36,6 @@ install_ss();
 
 require_once('install/suite_install/GoogleMaps.php');
 install_gmaps();
+
+require_once('install/suite_install/colourSelector.php');
+install_colourSelector();

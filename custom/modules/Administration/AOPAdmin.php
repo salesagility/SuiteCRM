@@ -86,7 +86,7 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     exit();
 }
 
-$distributionMethod = "<OPTION value='singleUser'>Single User</OPTION>";
+$distributionMethod = "<OPTION value='singleUser'>".$mod_strings['LBL_SINGLE_USER']."</OPTION>";
 $distributionMethod .= get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
 
 

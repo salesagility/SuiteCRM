@@ -56,6 +56,8 @@ $mod_strings = array (
   'LBL_TYPE' => 'Type',
   'LBL_ACTIVE' => 'Active',
   'LBL_DEFAULT_TEMPLATE' => 'Default Template',
+  'LBL_BUTTON_INSERT' => 'Insert',
+  'LBL_WARNING_OVERWRITE' => 'Warning this will overwrite you current Work',
   'LBL_INSERT_FIELDS' => 'Insert Fields',
   
   'LBL_SAMPLE' => 'Load Sample',

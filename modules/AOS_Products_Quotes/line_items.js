@@ -821,8 +821,9 @@ function format2Number(str, sig)
     else{
         str = num.toFixed(sig);
     }
-    str = str.replace(/,/, '{,}').replace(/\./, '{.}');
-    str = str.replace(/{,}/, num_grp_sep).replace(/{.}/, dec_sep);
+
+    str = str.split(/,/).join('{,}').split(/\./).join('{.}');
+    str = str.split('{,}').join(num_grp_sep).split('{.}').join(dec_sep);
 
     return str;
 }

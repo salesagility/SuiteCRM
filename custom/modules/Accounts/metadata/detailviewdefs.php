@@ -15,7 +15,7 @@ $viewdefs = array (
             1 => 'DUPLICATE',
             2 => 'DELETE',
             3 => 'FIND_DUPLICATES',
-            'AOS_GENLET' => 
+            'AOS_GENLET' =>
             array (
               'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
             ),

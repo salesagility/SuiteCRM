@@ -1,9 +1,8 @@
 <?php
+
 $module_name = 'jjwg_Maps';
 
-global $mod_strings, $app_strings;
-
-$listViewDefs [$module_name] = 
+$listViewDefs[$module_name] = 
 array (
   'MAP_ACTION' =>
   array (
@@ -20,7 +19,7 @@ array (
       2 => 'id',
     ),
     'customCode' => '<a href="index.php?module='.$module_name.'&action=map_display'.
-            '&relate_module={$PARENT_TYPE}&display_module={$MODULE_TYPE}&record={$ID}" >'.$app_strings['LBL_MAP'].' {$MODULE_TYPE}</a>',
+            '&relate_module={$PARENT_TYPE}&display_module={$MODULE_TYPE}&record={$ID}" >'.$GLOBALS['app_strings']['LBL_MAP'].' {$MODULE_TYPE}</a>',
   ),
   'NAME' => 
   array (
@@ -109,4 +108,3 @@ array (
     'default' => false,
   ),
 );
-?>

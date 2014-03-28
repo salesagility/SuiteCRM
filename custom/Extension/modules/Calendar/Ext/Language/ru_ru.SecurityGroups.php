@@ -1,4 +1,4 @@
 <?php
 
-$mod_strings['LBL_SECURITYGROUPS'] = 'Фильтровать список Групп пользователей';
+$mod_strings['LBL_SECURITYGROUPS'] = 'Фильтр по группам пользователей';
 ?>

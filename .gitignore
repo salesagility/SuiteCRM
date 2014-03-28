@@ -54,3 +54,7 @@ Session.vim
 # Windows
 Thumbs.db
 Desktop.ini
+.DS_Store
+.DS_Store?
+# Disytel
+lang_cmp.php

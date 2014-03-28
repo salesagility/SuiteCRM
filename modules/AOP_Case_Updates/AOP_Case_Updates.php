@@ -47,13 +47,13 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         if(!empty($this->contact_id)){
             $emails = $this->getEmailForUser();
             if($aop_config['user_email_template_id']){
-                $email_template->retrieve($aop_config['user_email_template_id']);
+                $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
             }
             $addDelimiter = false;
         }elseif($this->assigned_user_id && !$this->internal){
             $emails = $this->getEmailForContact();
             if($aop_config['contact_email_template_id']){
-                $email_template->retrieve($aop_config['contact_email_template_id']);
+                $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
                 $signature = $current_user->getDefaultSignature();
             }
         }
@@ -168,7 +168,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
             require_once('modules/Emails/Email.php');
             $emailObj = new Email();
             $emailObj->to_addrs = implode(",",$emails);
-            $emailObj->type= 'archived';
+            $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mailer->Subject;
             $emailObj->description = $mailer->AltBody;

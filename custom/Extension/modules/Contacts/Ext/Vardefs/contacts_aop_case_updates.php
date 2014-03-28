@@ -64,4 +64,12 @@ $dictionary["Contact"]["fields"]["joomla_account_access"] = array (
     'importable' => 'false',
     'studio' => 'false',
 );
+$dictionary["Contact"]["fields"]["portal_user_type"] = array (
+    'name' => 'portal_user_type',
+    'vname' => 'LBL_PORTAL_USER_TYPE',
+    'type' => 'enum',
+    'options' => 'contact_portal_user_type_dom',
+    'len' => '100',
+    'default' => 'Single',
+);
  ?>

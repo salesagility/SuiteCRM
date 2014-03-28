@@ -20,14 +20,14 @@ array (
         ),
       ),
       'useTabs' => false,
-      'tabDefs' => 
+      'tabDefs' =>
       array (
-        'LBL_CASE_INFORMATION' => 
+        'LBL_CASE_INFORMATION' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
-        'LBL_PANEL_ASSIGNMENT' => 
+        'LBL_PANEL_ASSIGNMENT' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -52,7 +52,7 @@ array (
         ),
         2 => 
         array (
-          0 => 
+          0 =>
           array (
             'name' => 'state',
             'comment' => 'The state of the case (i.e. open/closed)',
@@ -60,16 +60,16 @@ array (
           ),
           1 => '',
         ),
-        3 => 
+        3 =>
         array (
           0 => 'status',
           1 => 'account_name',
         ),
-        4 => 
+        4 =>
         array (
           0 => 'type',
         ),
-        5 => 
+        5 =>
         array (
           0 => 
           array (
@@ -80,7 +80,7 @@ array (
             ),
           ),
         ),
-        6 => 
+        6 =>
         array (
           0 => 
           array (
@@ -88,7 +88,7 @@ array (
             'nl2br' => true,
           ),
         ),
-        7 => 
+        7 =>
         array (
           0 => 
           array (
@@ -96,7 +96,7 @@ array (
             'nl2br' => true,
           ),
         ),
-        8 => 
+        8 =>
         array (
           0 => 
           array (

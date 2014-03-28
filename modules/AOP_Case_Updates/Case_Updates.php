@@ -90,7 +90,7 @@ EOD;
     return $html;
 }
 
-function getUpdateDisplayHead($update){
+function getUpdateDisplayHead(SugarBean $update){
     if($update->contact_id){
         $name = $update->getUpdateContact()->name;
     }elseif($update->assigned_user_id){
@@ -102,13 +102,45 @@ function getUpdateDisplayHead($update){
     $html .= "<img  id='caseUpdate".$update->id."Image' class='caseUpdateImage' src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."'>";
     $html .= "</a>";
     $html .= "<span>".($update->internal ? "<strong>Internal</strong> " : '') .$name . " at ".$update->date_entered."</span><br>";
+    $notes = $update->get_linked_beans('notes','Notes');
+    if($notes){
+        $html.= "Attachments: ";
+        foreach($notes as $note){
+            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
+        }
+    }
     return $html;
 }
 
 function display_single_update(AOP_Case_Updates $update){
-    $html = getUpdateDisplayHead($update);
-    $html .= "<div  id='caseUpdate".$update->id."' class='caseUpdate'>";
-    $html .= nl2br(html_entity_decode($update->description));
-    $html .= "<hr></div>";
-    return $html;
+
+    /*if assigned user*/
+    if($update->assigned_user_id){
+        /*if internal update*/
+        if ($update->internal){
+            $html = "<div id='caseStyleInternal'>".getUpdateDisplayHead($update);
+            $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+            $html .= nl2br(html_entity_decode($update->description));
+            $html .= "</div></div>";
+            return $html;
+        }
+        /*if standard update*/
+        else {
+        $html = "<div id='lessmargin'><div id='caseStyleUser'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+        }
+    }
+
+    /*if contact user*/
+    if($update->contact_id){
+        $html = "<div id='extramargin'><div id='caseStyleContact'>".getUpdateDisplayHead($update);
+        $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
+        $html .= nl2br(html_entity_decode($update->description));
+        $html .= "</div></div></div>";
+        return $html;
+    }
+
 }

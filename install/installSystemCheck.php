@@ -435,7 +435,7 @@ if($error_found){
 
         <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
           <tr>
-            <td><input class="button" type="button" onclick="window.open('http://suitecrm.com/index.php/forum/index');" value="{$mod_strings['LBL_HELP']}" /></td>
+            <td><input class="button" type="button" onclick="window.open('http://www.suitecrm.com/support');" value="{$mod_strings['LBL_HELP']}" /></td>
             <td>
                 <input class="button" type="button" name="Re-check" value="{$mod_strings['LBL_CHECKSYS_RECHECK']}" onclick="callSysCheck();" id="button_next2"/>
             </td>

@@ -71,4 +71,8 @@ $mod_strings = array (
   'LBL_SERVICE_MODULE_NAME' => 'Servicios',
   'LBL_LIST_NUM' => 'No.',
 );
+
+$mod_strings['LBL_PART_NUMBER'] = 'Nro de Parte';
+$mod_strings['LBL_PRODUCT_DESCRIPTION'] = 'Descripción';
+
 ?>

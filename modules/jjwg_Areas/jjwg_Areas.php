@@ -3,7 +3,6 @@
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 
-require_once('include/JSON.php');
 require_once('modules/jjwg_Areas/jjwg_Areas_sugar.php');
 require_once('modules/jjwg_Maps/jjwg_Maps.php');
 
@@ -14,13 +13,32 @@ class jjwg_Areas extends jjwg_Areas_sugar {
      */
     var $settings = array();
     /**
-     * Point in Area/Polygon check on vertices?
+     * coords processed from coordinates string
+     * @var array of strings ('lng,lat,elv')
+     */
+    var $coords = array();
+    /**
+     * polygon processed from coordinates strings
+     * @var array of arrays (keys: lng, lat, elv)
+     */
+    var $polygon = null;
+    /**
+     * Point in Area/Polygon check on vertices
      * @var boolean
      */
     var $point_on_vertex = true;
+    /**
+     * @area Polygon Area 
+     */
+    var $area = 0;
+    /**
+     * Polygon Centroid (Area Balance Center)
+     * @var array (keys: lng, lat, elv)
+     */
+    var $centroid = null;
 
     function jjwg_Areas($init=true) {
-        
+
         parent::jjwg_Areas_sugar();
         // Admin Config Setting
         if($init) $this->configuration();
@@ -39,22 +57,37 @@ class jjwg_Areas extends jjwg_Areas_sugar {
     }
 
     /**
+     * Retrieve object by id
+     */
+    function retrieve($id, $encode = true, $deleted = true) {
+        
+        parent::retrieve($id, $encode, $deleted);
+        
+        $this->polygon = $this->define_polygon();
+        $this->area = $this->define_area();
+        $this->centroid = $this->define_centroid();
+        
+        return $this;
+    }
+
+    /**
      * 
-     * Define polygon coordinates for views
+     * Define polygon coordinates
      */
     function define_polygon() {
 
-        $polygon = array();
+        if (!empty($this->polygon)) return $this->polygon;
+        
         if (preg_match('/[\n\r]/', $this->coordinates)) {
-            $coords = preg_split("/[\n\r\s]+/", $this->coordinates, null, PREG_SPLIT_NO_EMPTY);
+            $this->coords = preg_split("/[\n\r\s]+/", $this->coordinates, null, PREG_SPLIT_NO_EMPTY);
         } else {
-            $coords = preg_split("/[\s]+/", $this->coordinates, null, PREG_SPLIT_NO_EMPTY);
+            $this->coords = preg_split("/[\s]+/", $this->coordinates, null, PREG_SPLIT_NO_EMPTY);
         }
-        if (count($coords) > 0) {
-            foreach ($coords as $coord) {
+        if (count($this->coords) > 0) {
+            foreach ($this->coords as $coord) {
                 $p = preg_split("/[\s\(\)]*,[\s\(\)]*/", $coord, null, PREG_SPLIT_NO_EMPTY);
                 if ($this->is_valid_lng($p[0]) && $this->is_valid_lat($p[1])) {
-                    $polygon[] = array(
+                    $this->polygon[] = array(
                         'lng' => $p[0],
                         'lat' => $p[1],
                         'elv' => $p[2],
@@ -62,8 +95,8 @@ class jjwg_Areas extends jjwg_Areas_sugar {
                 }
             }
         }
-        if (count($polygon) > 0) {
-            return $polygon;
+        if (count($this->polygon) > 0) {
+            return $this->polygon;
         } else {
             return false;
         }
@@ -71,39 +104,79 @@ class jjwg_Areas extends jjwg_Areas_sugar {
 
     /**
      * 
-     * Define Area centeral point based on average
+     * Define Area Location based on Centroid
+     * (Center of Gravity or Balance Point)
+     * 
      */
     function define_area_loc() {
 
         $loc = array();
-        $i = 0;
-        $latTotal = 0.0;
-        $lngTotal = 0.0;
-        // Find average point (lng,lat,elv)
-        $coords = preg_split("/[\n\r]+/", $this->coordinates, null, PREG_SPLIT_NO_EMPTY);
-        foreach ($coords as $coord) {
-            $p = preg_split("/[\s\(\)]*,[\s\(\)]*/", $coord, null, PREG_SPLIT_NO_EMPTY);
-            if ($this->is_valid_lat($p[0]) && $this->is_valid_lng($p[1])) {
-                $lngTotal += $p[0];
-                $latTotal += $p[1];
-                $i++;
-            }
-        }
         $loc['name'] = $this->name;
-        if ($i > 0) {
-            $loc['lat'] = $latTotal / floatval($i);
-            $loc['lng'] = $lngTotal / floatval($i);
-            $loc['elv'] = 0;
-        } else {
-            $loc['lat'] = 0;
-            $loc['lng'] = 0;
-            $loc['elv'] = 0;
-        }
+        $loc['lng'] = $this->centroid['lng'];
+        $loc['lat'] = $this->centroid['lat'];
         $loc = $this->define_loc($loc);
 
         return $loc;
     }
 
+    /**
+     * Define Centroid - Point
+     * @return type 
+     */
+    function define_centroid() {
+        
+        if (!empty($this->centroid)) return $this->centroid;
+        
+        if (empty($this->polygon)) $this->polygon = $this->define_polygon();
+        
+        $n = count($this->polygon);
+        $a = $this->define_area($this->polygon);
+        if (empty($a)) return $this->centroid;
+        $cx = 0.0;
+        $cy = 0.0;
+
+        for ($i = 0; $i < $n; $i++) {
+            $cx += ($this->polygon[$i]['lng'] + $this->polygon[$i+1]['lng']) * ( ($this->polygon[$i]['lng'] * $this->polygon[$i+1]['lat']) - ($this->polygon[$i+1]['lng'] * $this->polygon[$i]['lat']) );
+            $cy += ($this->polygon[$i]['lat'] + $this->polygon[$i+1]['lat']) * ( ($this->polygon[$i]['lng'] * $this->polygon[$i+1]['lat']) - ($this->polygon[$i+1]['lng'] * $this->polygon[$i]['lat']) );
+        }
+        $centroid_lng = (1/(6*$a))*$cx;
+        $centroid_lat = (1/(6*$a))*$cy;
+        
+        if ($centroid_lng != 0 && $centroid_lat != 0) {
+            $this->centroid = array(
+                'lng' => $centroid_lng,
+                'lat' => $centroid_lat,
+                'elv' => 0
+            );
+        }
+
+        return $this->centroid;
+    }
+    
+    /**
+     * Define Polygon Area
+     * @return type 
+     */
+    function define_area() {
+        
+        if (!empty($this->area)) return $this->area;
+        
+        if (empty($this->polygon)) $this->polygon = $this->define_polygon();
+        
+        // Based on: http://forums.devnetwork.net/viewtopic.php?f=1&t=44074
+        $n = count($this->polygon);
+        $area = 0.0;
+        for ($i = 0; $i < $n; $i++) {
+            $j = ($i + 1);
+            $area += $this->polygon[$i]['lng'] * $this->polygon[$j]['lat'];
+            $area -= $this->polygon[$i]['lat'] * $this->polygon[$j]['lng'];
+        }
+        $area /= 2;
+        $this->area = abs($area);
+        
+        return $this->area;
+    }
+    
     /**
      * 
      * Define Marker Location
@@ -116,19 +189,24 @@ class jjwg_Areas extends jjwg_Areas_sugar {
             $loc['name'] = $marker->name;
             $loc['lat'] = $marker->jjwg_maps_lat;
             $loc['lng'] = $marker->jjwg_maps_lng;
-        } elseif (is_array($marker)) {
+        } elseif (is_array($marker) && !empty($marker)) {
             $loc['name'] = $marker['name'];
             $loc['lat'] = $marker['lat'];
             $loc['lng'] = $marker['lng'];
+        } else {
+            $loc['name'] = '';
+            $loc['lat'] = $this->centroid['lat'];
+            $loc['lng'] = $this->centroid['lng'];
         }
+        
         if (empty($loc['name'])) {
             $loc['name'] = 'N/A';
         }
         if (!$this->is_valid_lat($loc['lat'])) {
-            $loc['lat'] = '28.7312';
+            $loc['lat'] = $this->settings['map_default_center_latitude'];
         }
         if (!$this->is_valid_lng($loc['lng'])) {
-            $loc['lng'] = '-81.41267';
+            $loc['lng'] = $this->settings['map_default_center_longitude'];
         }
         return $loc;
     }
@@ -197,7 +275,12 @@ class jjwg_Areas extends jjwg_Areas_sugar {
         
         $this->point_on_vertex = $point_on_vertex;
         $polygon = preg_split('/[\s]+/', $this->coordinates);
- 
+        
+        // Chek $polygon count
+        if (!(count($polygon) > 1)) return false;
+        // Add the first point to the end, in order to properly close the loop completely
+        if ($polygon[count($polygon)-1] != $polygon[0]) $polygon[] = $polygon[0];
+        
         // Transform string coordinates into arrays with x and y values
         $point = $this->point_string_to_coordinates($point);
         $vertices = array();
