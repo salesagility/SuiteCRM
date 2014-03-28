@@ -7,7 +7,7 @@ function handleCancel(){
     this.cancel();
 }
 
-function removeForm(page_id) {
+function removeDashboardForm(page_id) {
     if (page_id > 0) {
         $.ajax({
 
@@ -37,7 +37,7 @@ function removeForm(page_id) {
     }
 }
 
-function addForm(page_id){
+function addDashboardForm(page_id){
 
     $.ajax({
 

@@ -88,7 +88,7 @@
                             <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' ondblclick="renameTab({$tabNum})" onClick=retrievePage({$tabNum});>
                                 <span id="name_{$tabNum}">{$tab.pageTitle}</span>
                             </a>
-                            <a id="removeTab_anchor"  onClick=removeForm({$tabNum});><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+                            <a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
 
                             </li>{/if}
                     {/foreach}
@@ -103,7 +103,7 @@
                     </li>
 
                     <li class="addButton">
-                        <a style='cursor: pointer;' onClick=addForm({$tabNum});>
+                        <a style='cursor: pointer;' onClick=addDashboardForm({$tabNum});>
                             <span>Add Tab</span>
                         </a>
                     </li>
