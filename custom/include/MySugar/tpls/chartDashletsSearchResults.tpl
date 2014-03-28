@@ -1,5 +1,4 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -35,19 +34,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-
-
-
-require_once('custom/include/MySugar/MySugar.php');
-
-$mySugar = new CustomMySugar($_REQUEST['module']);
-if (!isset($_REQUEST['DynamicAction'])) {
-	$_REQUEST['DynamicAction'] = 'displayDashlet';
-}
-// commit session before returning output so we can serialize AJAX requests
-// and not get session into a wrong state
-$res = $mySugar->$_REQUEST['DynamicAction']();
-if(isset($_REQUEST['commit_session'])) {
-    session_commit();
-}
-echo $res;
+*}
+<h4>{$lblSearchResults} - <i>{$searchString}</i>:</h4>
+<hr>
+{if count($charts)}
+<h3>{sugar_translate label='LBL_BASIC_CHARTS' module='Home'}</h3>
+<table width="100%">
+	{foreach from=$charts item=chart}
+	<tr>
+		<td width="100%" align="left"><a href="javascript:void(0)" onclick="{$chart.onclick}">{$chart.icon}</a>&nbsp;<a class="mbLBLL" href="#" onclick="{$chart.onclick}">{$chart.title}</a><br /></td>
+	</tr>
+	{/foreach}
+</table>
+{/if}
