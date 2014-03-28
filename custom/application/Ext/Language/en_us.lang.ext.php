@@ -1072,6 +1072,15 @@ $app_strings['LBL_TWITTER_USER_C'] = 'Twitter User';
 $app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
 
 /**
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
+
+
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
+
+/**
  * @package SuiteCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
@@ -1100,4 +1109,7 @@ $app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
 $app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
 $app_strings['LBL_QUICK_CALL'] = 'Log Call';
 $app_strings['LBL_QUICK_TASK'] = 'Create Task';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Type';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
 ?>
