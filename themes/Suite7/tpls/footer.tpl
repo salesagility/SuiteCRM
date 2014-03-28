@@ -35,15 +35,16 @@
  ********************************************************************************/
 
 *}
-<!--end body panes-->
+
         </td></tr></table>
     </div>
-    <div class="clear"></div>
+
 
 </div>
 
 <div id="bottomLinks">
 </div>
+<div class="clear_footer"></div>
 
 <div id="footer">
     <div id="responseTime">
