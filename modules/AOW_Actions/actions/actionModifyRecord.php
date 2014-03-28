@@ -101,7 +101,7 @@ EOS;
         if(isset($params['rel_type']) && $params['rel_type'] != '' && $bean->module_dir != $params['rel_type']){
             $relatedFields = $bean->get_linked_fields();
             $field = $relatedFields[$params['rel_type']];
-            if(!isset($field['module'])) $field['module'] = getRelatedModule($bean->module_dir,$field['name']);
+            if(!isset($field['module']) || $field['module'] == '') $field['module'] = getRelatedModule($bean->module_dir,$field['name']);
             $linkedBeans = $bean->get_linked_beans($field['name'],$field['module']);
             if($linkedBeans){
                 foreach($linkedBeans as $linkedBean){

@@ -573,12 +573,41 @@ eoq;
     return true;
 }
 
-function getEmailingModules(){
-    require_once('include/SugarEmailAddress/SugarEmailAddress.php');
-    $emailadd = new EmailAddress();
+function getEmailableModules(){
+    global $beanFiles, $beanList, $app_list_strings;
+    $emailableModules = array();
+    foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
+        if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
+            require_once($beanFiles[$beanList[$bean_name]]);
+            $obj = new $beanList[$bean_name];
+            if($obj instanceof Person || $obj instanceof Company){
+                $emailableModules[] = $bean_name;
+            }
+        }
+    }
+    asort($emailableModules);
+    return $emailableModules;
+}
 
-    return $emailadd->get_linked_fields();
+function getRelatedEmailableFields($module){
+    global $beanList;
+    $relEmailFields = array();
+    $emailableModules = getEmailableModules();
+    if ($module != '') {
+        if(isset($beanList[$module]) && $beanList[$module]){
+            $mod = new $beanList[$module]();
 
+            foreach($mod->get_related_fields() as $field){
+                if(!isset($field['module']) || !in_array($field['module'],$emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")){
+                    continue;
+                }
+                $relEmailFields[$field['name']] = $field['module'].": ".trim(translate($field['vname'],$mod->module_name),":");
+            }
+
+            array_multisort($relEmailFields, SORT_ASC, $relEmailFields);
+        }
+    }
+    return $relEmailFields;
 }
 
 function fixUpFormatting($module, $field, $value)
