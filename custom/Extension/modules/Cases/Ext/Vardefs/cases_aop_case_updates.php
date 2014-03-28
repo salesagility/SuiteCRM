@@ -72,7 +72,7 @@ $dictionary["Case"]["fields"]['state'] =
         'len' => 100,
         'audited' => true,
         'comment' => 'The state of the case (i.e. open/closed)',
-        'default' => 'Closed',
+        'default' => 'Open',
         'parentenum' => 'status',
         'merge_filter' => 'disabled',
     );

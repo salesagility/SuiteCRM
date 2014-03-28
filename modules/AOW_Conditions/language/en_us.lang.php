@@ -39,6 +39,7 @@ $mod_strings = array (
   'LBL_NAME' => 'Name',
   'LBL_MODULE_NAME' => 'WorkFlow Conditions',
   'LBL_MODULE_TITLE' => 'WorkFlow Conditions',
+  'LBL_MODULE_PATH' => 'Module',
   'LBL_FIELD' => 'Field',
   'LBL_OPERATOR' => 'Operator',
   'LBL_VALUE_TYPE' => 'Type',

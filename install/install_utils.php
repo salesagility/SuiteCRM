@@ -2031,7 +2031,7 @@ function post_install_modules(){
 }
 
 function get_help_button_url(){
-    $help_url = 'http://suitecrm.com/index.php/forum/index';
+    $help_url = 'http://www.suitecrm.com/support';
 
     return $help_url;
 }

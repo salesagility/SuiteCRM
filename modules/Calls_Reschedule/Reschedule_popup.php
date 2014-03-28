@@ -37,6 +37,7 @@ switch($time_format)
         $time = explode(":",$time);//splits the time into hours and minutes
         $hour = $time[0];//gets the hour
         $min = $time[1];//gets the time
+        $period = '';
         $format = '23:00';//set time format for the javascript live update of date/time
         break;
     case 'H.i':
@@ -46,6 +47,7 @@ switch($time_format)
         $time = explode(".",$time);
         $hour = $time[0];
         $min = $time[1];
+        $period = '';
         $format = '23.00';
         break;
     case 'h:ia':
@@ -146,7 +148,7 @@ switch($time_format)
             <input id="call_id" type="hidden" name="call_id" >
             <label for="date"><?php echo $app_strings['LBL_RESCHEDULE_DATE']; ?></label><br />
             <input id="date" type="textbox" name="date" value="<?php echo $date;?>" />
-            <img id="date_start_trigger"  border="0" style="position:relative; top:2px" alt="Enter Date" src="themes/Sugar5/images/jscalendar.gif"/>
+            <img id="date_start_trigger"  border="0" style="position:relative; top:2px" alt="Enter Date" src="themes/Suite7/images/jscalendar.gif"/>
 <?php
 //$mins is the minutes option
 $mins = '<select id="date_start_minutes" name="date_start_minutes" class="datetimecombo_time" size="1">';

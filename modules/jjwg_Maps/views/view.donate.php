@@ -10,9 +10,6 @@ class Jjwg_MapsViewDonate extends SugarView {
 	
 	function display() {
 		
-		global $sugar_config;
-		global $currentModule;
-		
 ?>
 
 <div style="margin: 15px;">
@@ -81,4 +78,3 @@ Jeff Walters<br />
  	}
 }
 
-?>

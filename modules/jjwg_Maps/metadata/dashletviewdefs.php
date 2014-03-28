@@ -1,4 +1,5 @@
 <?php
+
 $dashletData['jjwg_MapsDashlet']['searchFields'] = array (
   'name' => 
   array (

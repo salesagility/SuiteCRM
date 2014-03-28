@@ -23,19 +23,9 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 
-$app_list_strings['call_reschedule_dom'][''] = '';
-$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Out of Office';
-$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'In a Meeting';
-
-$app_strings['LBL_RESCHEDULE_LABEL'] = 'Reschedule';
-$app_strings['LBL_RESCHEDULE_TITLE'] = 'Please enter the reschedule information';
-$app_strings['LBL_RESCHEDULE_DATE'] = 'Date:';
-$app_strings['LBL_RESCHEDULE_REASON'] = 'Reason:';
-$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Please select a valid date';
-$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Please select a reason';
-
-$app_strings['LBL_RESCHEDULE_PANEL'] = 'Reschedule';
-$app_strings['LBL_RESCHEDULE_HISTORY'] = 'Call attempt history';
-$app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
+$mod_strings = array (
+    'TWITTER_USER_C' => 'Twitter User',
+    'FACEBOOK_USER_C' => 'Facebook User',
+);
 
 

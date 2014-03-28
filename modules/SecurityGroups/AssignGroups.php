@@ -169,7 +169,7 @@ function send_massassign(mode, no_record_txt, start_string, end_string, del) {
 		return false;
 
 	if(document.MassAssign_SecurityGroups.massassign_group.selectedIndex == 0) {
-		alert("Please select a group and try again.");
+		alert("${current_module_strings['LBL_SELECT_GROUP_ERROR']}");
 		return false;	
 	}
 	 

@@ -56,7 +56,7 @@ $dictionary['SugarFeed'] = array(
   array (
     'name' => 'description',
     'type' => 'name',
-    'dbType' => 'varchar',
+    'dbType' => 'text',
     'vname' => 'LBL_NAME',
     'len' => 255,
     'comment' => 'Name of the feed',

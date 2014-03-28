@@ -51,6 +51,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar {
                     $product_quote->number = ++$j;
                     $product_quote->assigned_user_id = $parent->assigned_user_id;
                     $product_quote->parent_id = $parent->id;
+                    $product_quote->currency_id = $parent->currency_id;
                     $product_quote->parent_type = $parent->object_name;
                     $product_quote->save();
                 }
@@ -70,5 +71,10 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar {
         //}
     }
 
+    function save($check_notify = FALSE){
+        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+        perform_save($this);
+        parent::save($check_notify);
+    }
 }
 ?>

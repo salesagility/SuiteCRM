@@ -21,7 +21,7 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$viewdefs ['Contacts'] = 
+$viewdefs ['Contacts'] =
 array (
   'EditView' => 
   array (
@@ -166,13 +166,13 @@ array (
             'name' => 'description',
             'label' => 'LBL_DESCRIPTION',
           ),
-          1 => 
+          1 =>
           array (
             'name' => 'aop_case_updates_contacts_1_name',
           ),
         ),
       ),
-      'LBL_PANEL_ADVANCED' => 
+      'LBL_PANEL_ADVANCED' =>
       array (
         0 => 
         array (

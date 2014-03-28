@@ -59,14 +59,14 @@ function setProspectReturn(popup_reply_data){
 }
 
 
-function changeReportPage(offset){
+function changeReportPage(offset, group){
     var callback = {
         success: function(result) {
-           document.getElementById('report_table').innerHTML = result.responseText;
+           document.getElementById('report_table'+group).innerHTML = result.responseText;
         }
     }
 
     var record = document.getElementsByName('record')[0].value;
 
-    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=changeReportPage&record="+record+"&offset="+offset,callback);
+    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=changeReportPage&record="+record+"&offset="+offset+"&group="+group,callback);
 }

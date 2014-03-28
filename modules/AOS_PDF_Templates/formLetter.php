@@ -41,7 +41,7 @@ class formLetter{
 	function LVPopupHtml($module){
 		global $app_list_strings,$app_strings;
 		
-		$sql = "SELECT * FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0";
+		$sql = "SELECT * FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0  AND active = 1";
 		$result = $this->bean->db->query($sql);
 		$countLine = $this->bean->db->getRowCount($result);
 		
@@ -99,7 +99,7 @@ class formLetter{
 	function DVPopupHtml($module){
 		global $app_list_strings,$app_strings;
 		
-		$sql = "SELECT * FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0";
+		$sql = "SELECT * FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0  AND active = 1";
 		$result = $this->bean->db->query($sql);
 		$countLine = $this->bean->db->getRowCount($result);
 		

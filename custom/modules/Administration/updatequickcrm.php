@@ -1,19 +1,15 @@
 <?php
 /*********************************************************************************
- * This file is part of QuickCRM Mobile Pro.
- * QuickCRM Mobile Pro is a mobile client for SugarCRM
- * 
- * Author : NS-Team (http://www.quickcrm.fr/mobile)
- * All rights (c) 2011-2012 by NS-Team
+ * This file is part of QuickCRM Mobile CE.
+ * QuickCRM Mobile CE is a mobile client for SugarCRM
  *
- * This Version of the QuickCRM Mobile Pro is licensed software and may only be used in 
- * alignment with the License Agreement received with this Software.
- * This Software is copyrighted and may not be further distributed without
- * witten consent of NS-Team
- * 
+ * Author : NS-Team (http://www.ns-team.fr)
+ *
+ * QuickCRM Mobile CE is licensed under GNU General Public License v3 (GPLv3)
+ *
  * You can contact NS-Team at NS-Team - 55 Chemin de Mervilla - 31320 Auzeville - France
- * or via email at quickcrm@ns-team.fr
- * 
+ * or via email at infos@ns-team.fr
+ *
  ********************************************************************************/
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 

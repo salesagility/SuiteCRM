@@ -10,4 +10,8 @@ $mod_strings['LBL_AOS_ADMIN_INITIAL_QUOTE_NUMBER'] = 'Initial Quote Number';
 $mod_strings['LBL_AOS_ADMIN_LINE_ITEM_SETTINGS'] = 'Line Item Settings';
 $mod_strings['LBL_AOS_ADMIN_ENABLE_LINE_ITEM_GROUPS'] = 'Enable Line Items Groups';
 $mod_strings['LBL_AOS_ADMIN_ENABLE_LINE_ITEM_TOTAL_TAX'] = 'Add TAX To Line Total';
-
+$mod_strings['LBL_AOS_SETTINGS'] = 'AOS Settings';
+$mod_strings['LBL_AOS_PRODUCTS'] = 'AOS Products';
+$mod_strings['LBL_AOS_EDIT'] = 'edit';
+$mod_strings['LBL_AOS_DAYS'] = 'days';
+$mod_strings['LBL_CHANGE_SETTINGS'] = 'Change settings for Advanced OpenSales';

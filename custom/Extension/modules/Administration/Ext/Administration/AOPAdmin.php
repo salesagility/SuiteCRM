@@ -24,7 +24,7 @@
 $admin_option_defs = array();
 $admin_option_defs['Administration']['aop'] = array(
     'edit',
-    'AOP Settings',
+    'LBL_AOP_SETTINGS',
     'Change settings for Advanced OpenPortal',
     './index.php?module=Administration&action=AOPAdmin'
 );
