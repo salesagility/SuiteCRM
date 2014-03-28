@@ -1,31 +1,25 @@
 <?php
 /**
- * sps_accountsLayoutdefs.php
+ * sps_project_tasksLayoutdefs.php
  * @author SalesAgility <support@salesagility.com>
  * Date: 27/01/14
  */
 
 
-$layout_defs["Accounts"]["subpanel_setup"]["history"]['searchdefs'] =
+$layout_defs["ProjectTask"]["subpanel_setup"]["history"]['searchdefs'] =
 array (
     'collection' =>
         array (
             'name' => 'collection',
             'label' => 'LBL_COLLECTION_TYPE',
             'type' => 'enum',
-            'options' => 'collection_temp_list',
+            'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
             'default' => true,
             'width' => '10%',
         ),
     'name' =>
         array (
             'name' => 'name',
-            'default' => true,
-            'width' => '10%',
-        ),
-    'date_modified' =>
-        array (
-            'name' => 'date_modified',
             'default' => true,
             'width' => '10%',
         ),
@@ -37,6 +31,12 @@ array (
             'default' => true,
             'width' => '10%',
         ),
+    'date_modified' =>
+        array (
+            'name' => 'date_modified',
+            'default' => true,
+            'width' => '10%',
+        ),
 );
 
-$layout_defs["Accounts"]["subpanel_setup"]["history"]['top_buttons'][] = array('widget_class' => 'SubPanelTopFilterButton');
+$layout_defs["ProjectTask"]["subpanel_setup"]["history"]['top_buttons'][] = array('widget_class' => 'SubPanelTopFilterButton');

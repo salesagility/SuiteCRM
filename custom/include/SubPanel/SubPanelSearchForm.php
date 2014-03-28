@@ -17,10 +17,10 @@ class SubPanelSearchForm extends SearchForm  {
     }
 
     function display($header = false){
-        global $app_list_strings;
+        /*//global $app_list_strings;
         if($this->subPanel->subpanel_defs->isCollection() && isset($this->subPanel->subpanel_defs->base_collection_list)){
-            $app_list_strings['collection_temp_list'] = $this->getCollectionList($this->subPanel->subpanel_defs->base_collection_list);
-        }
+            $GLOBALS['app_list_strings']['collection_temp_list'] = $this->getCollectionList($this->subPanel->subpanel_defs->base_collection_list);
+        }*/
         $this->th->ss->assign('subpanel', $this->subPanel->subpanel_id);
         return parent::display($header);
     }

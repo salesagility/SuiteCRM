@@ -7,6 +7,7 @@ require_once('include/SubPanel/SubPanel.php');
 class CustomSubPanel extends SubPanel
 {
     var $search_query='';
+    var $collections = array();
 
 	function CustomSubPanel($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() )
 	{
@@ -17,6 +18,7 @@ class CustomSubPanel extends SubPanel
         $this->parent_record_id = $record_id;
         $this->parent_module = $module;
         $this->layout_def_key = $layout_def_key;
+        $this->collections = $collections;
 
         $this->parent_bean = $focus;
         $result = $focus;
@@ -78,6 +80,9 @@ class CustomSubPanel extends SubPanel
 
             $searchForm->setup($subpanel_searchMetaData, $searchMetaData['searchFields'], 'SubpanelSearchFormGeneric.tpl', 'basic_search');
 
+            if(!empty($this->collections))
+                $searchForm->searchFields['collection'] = array();
+
             $searchForm->populateFromRequest();
 
             return $searchForm->display();
@@ -133,7 +138,7 @@ class CustomSubPanel extends SubPanel
         $ListView->xTemplateAssign("SUBPANEL_ID", $this->subpanel_id);
         $ListView->xTemplateAssign("SUBPANEL_SEARCH", $this->getSearchForm());
         $display_sps = '';
-        if($this->search_query == '') $display_sps = 'display:none';
+        if($this->search_query == '' && empty($this->collections)) $display_sps = 'display:none';
         $ListView->xTemplateAssign("DISPLAY_SPS",$display_sps);
 
         if(is_admin($current_user) && $_REQUEST['module'] != 'DynamicLayout' && !empty($_SESSION['editinplace']))

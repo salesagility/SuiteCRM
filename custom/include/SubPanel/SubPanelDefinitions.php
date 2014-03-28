@@ -19,9 +19,9 @@ class CustomaSubPanel extends aSubPanel
         if(isset($instance_properties['collection_list' ])) $this->base_collection_list = $instance_properties['collection_list' ];
 
         if(!empty($collections) && isset($instance_properties['collection_list' ])){
-            foreach($instance_properties['collection_list' ] as $name => $value){
+            foreach($instance_properties['collection_list' ] as $cname => $value){
                 if(!in_array($value['module'], $collections)){
-                    unset($instance_properties['collection_list'][$name]);
+                    unset($instance_properties['collection_list'][$cname]);
                 }
             }
         }
