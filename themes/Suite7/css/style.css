@@ -4675,7 +4675,7 @@ ul#drop-nav ul li:hover {
 
 .dashletPanel {
     padding:0;
-    margin:0;
+    margin:0 0 0 25px;
 }
 
 .hd-center {

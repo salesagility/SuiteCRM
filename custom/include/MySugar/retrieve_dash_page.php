@@ -101,8 +101,8 @@ if(!$hasUserPreferences){
             'module' => 'Home',
             'forceColumn' => 0,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'Discover SuiteCRM',
-                'url' => 'http://www.suitecrm.com',
+            'options' => array('titleLabel' => 'LBL_DASHLET_DISCOVER_SUGAR_PRO',
+                'url' => 'https://www.sugarcrm.com/crm/product/gopro',
                 'height' => 315,
             ));
 
@@ -111,6 +111,15 @@ if(!$hasUserPreferences){
             'forceColumn' => 1,
             'fileLocation' => $dashletsFiles['SugarFeedDashlet']['file'],
         );
+
+        $dashlets[create_guid()] = array('className' => 'iFrameDashlet',
+            'module' => 'Home',
+            'forceColumn' => 1,
+            'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
+            'options' => array('titleLabel' => 'LBL_DASHLET_SUGAR_NEWS',
+                'url' => 'https://www.sugarcrm.com/crm/product/news',
+                'height' => 315,
+            ));
 
         foreach($defaultDashlets as $dashletName=>$module){
             // clint - fixes bug #20398
@@ -177,7 +186,7 @@ if (empty($pages)){
     $pages = array();
     $pageIndex = 0;
     $pages[0]['columns'] = $columns;
-    $pages[0]['numColumns'] = '3';
+    $pages[0]['numColumns'] = '2';
     $pages[0]['pageTitleLabel'] = 'LBL_HOME_PAGE_1_NAME';	// "My Sugar"
     $pageIndex++;
     $current_user->setPreference('pages', $pages, 0, 'Home');
@@ -186,7 +195,7 @@ if (empty($pages)){
 
 $sugar_smarty = new Sugar_Smarty();
 
-$activePage = 0;
+$activePage = $_POST['page_id'];
 
 $divPages[] = $activePage;
 
@@ -255,21 +264,10 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
     }
 }
 
-
-$i = 0;
-    while($i < count($pages)){
+$_SESSION['current_tab'] = $activePage;
 
 
-        $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];
-
-        if($i == 0){
-            $pageTabs[$i]['pageTitle'] = 'Suite Dashboard';
-//            $pageTabs[$i]['active'] = 'current';
-        }else{
-            $divPages[] = $i;
-        }
-        $i++;
-    }
+if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
 
 $sugar_smarty->assign('sugarVersion', $sugar_version);
@@ -288,7 +286,7 @@ $sugar_smarty->assign('theme', $theme);
 
 $sugar_smarty->assign('divPages', $divPages);
 $sugar_smarty->assign('activePage', $activePage);
-$sugar_smarty->assign('dashboardPages', $pageTabs);
+
 $sugar_smarty->assign('current_user', $current_user->id);
 
 $sugar_smarty->assign('lblAdd', $GLOBALS['app_strings']['LBL_ADD_BUTTON']);
@@ -305,16 +303,12 @@ $resources = $sugarChart->getChartResources();
 $mySugarResources = $sugarChart->getMySugarChartResources();
 $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
-if (file_exists("custom/include/MySugar/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+if (file_exists("custom/include/MySugar/tpls/MySugar2.tpl")) {
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar2.tpl');
 } else {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar2.tpl');
 }
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
-echo"<script> $( '#pageNum_'+ 0 +'_anchor').addClass( 'current' );</script>";
-echo"<script> $( '#pageNum_'+ 0).addClass( 'active' );</script>";
-
-
 ?>

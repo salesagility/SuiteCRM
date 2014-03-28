@@ -40,19 +40,19 @@
 
 *}
 {literal}
-<style>
-.menu{
-	z-index:100;
-}
+    <style>
+        .menu {
+            z-index: 100;
+        }
 
-.subDmenu{
-	z-index:100;
-}
+        .subDmenu {
+            z-index: 100;
+        }
 
-div.moduleTitle {
-height: 10px;
-	}
-</style>
+        div.moduleTitle {
+            height: 10px;
+        }
+    </style>
 {/literal}
 
 
@@ -63,129 +63,187 @@ height: 10px;
 {$chartResources}
 {$mySugarChartResources}
 
-<div class="clear"></div>
-<div id="pageContainer" class="yui-skin-sam">
-<div id="pageNum_{$activePage}_div">
-<table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
- 	<tr>
-	 	<td>
 
-		</td>
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+    <tr>
+        <td>
+            {*<div class="yui-module yui-scroll">*}
 
-		<td rowspan="3">
-				{sugar_getimage name="blank.gif"  width='40' height='1' border='0'}
-		</td>
-		<td align='right'>
-			{if !$lock_homepage}<input id="add_dashlets" class="button" type="button" value="{$lblAddDashlets}" onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
-		</td>
-	</tr>
-	<tr>
-		{counter assign=hiddenCounter start=0 print=false}
-		{foreach from=$columns key=colNum item=data}
-		<td valign='top' width='{$data.width}'>
-			<ul class='noBullet' id='col_{$activePage}_{$colNum}'>
-				<li id='page_{$activePage}_hidden{$hiddenCounter}b' style='height: 5px; margin-top:12px;' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
-		        {foreach from=$data.dashlets key=id item=dashlet}
-				<li class='noBullet' id='dashlet_{$id}'>
-					<div id='dashlet_entire_{$id}' class='dashletPanel'>
-						{$dashlet.script}
-					{$dashlet.displayHeader}
-						{$dashlet.display}
-                        {$dashlet.displayFooter}
-                  </div>
-				</li>
-				{/foreach}
-				<li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px' class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
-			</ul>
-		</td>
-		{counter}
-		{/foreach}
-	</tr>
-</table>
-	</div>
+                {* Start the tabs section *}
+                <ul class="dashboardTabList">
 
-	{foreach from=$divPages key=divPageIndex item=divPageNum}
-	<div id="pageNum_{$divPageNum}_div" style="display:none;">
-	</div>
-	{/foreach}
+                    {* Display the remove button to allow the addition of more tabs *}
+
+
+                    {* Foreach of the pages generate a tab in the tab section *}
+
+                    {foreach from=$dashboardPages key=tabNum item=tab}
+                        {if $tabNum == 0} <li id="pageNum_{$tabNum}">
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;'  onClick=retrievePage({$tabNum});>
+                                <span>{$tab.pageTitle}</span>
+                            </a>
+
+                        </li>
+                        {else} <li id="pageNum_{$tabNum}">
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' ondblclick="renameTab({$tabNum})" onClick=retrievePage({$tabNum});>
+                                <span id="name_{$tabNum}">{$tab.pageTitle}</span>
+                            </a>
+                            <a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+
+                            </li>{/if}
+                    {/foreach}
 
 
 
-	<div id="dashletsDialog" style="display:none;">
-		<div class="hd" id="dashletsDialogHeader"><a href="javascript:void(0)" onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
-			<div class="container-close">&nbsp;</div></a>{$lblAdd}
-		</div>
-		<div class="bd" id="dashletsList">
-			<form></form>
-		</div>
+                    {* Display the add button to allow the addition of more tabs *}
 
-	</div>
-			<script type="text/javascript">
-    var activePage = {$activePage};
-    var theme = '{$theme}';
-    current_user_id = '{$current_user}';
-    jsChartsArray = new Array();
-    var moduleName = '{$module}';
-    document.body.setAttribute("class", "yui-skin-sam");
-    {literal}
-    var mySugarLoader = new YAHOO.util.YUILoader({
-        require : ["my_sugar", "sugar_charts"],
-        // Bug #48940 Skin always must be blank
-        skin: {
-            base: 'blank',
-            defaultSkin: ''
-        },
-        onSuccess: function(){
-            initMySugar();
-            initmySugarCharts();
-            SUGAR.mySugar.maxCount = 	{/literal}{$maxCount}{literal};
-            SUGAR.mySugar.homepage_dd = new Array();
-            var j = 0;
 
-            {/literal}
-            var dashletIds = {$dashletIds};
+                    <li class="addButton">
+                        <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">Add Dashlets</a>
+                    </li>
 
-            {if !$lock_homepage}
-            for(i in dashletIds) {ldelim}
-                SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-                SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-                // Bug #47097 : Dashlets not displayed after moving them
-                // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
-                SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
-                SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-                SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-                j++;
-                {rdelim}
-            {if $hiddenCounter > 0}
-            for(var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
-                SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_'+activePage+'_hidden' + wp);
-                {rdelim}
-            {/if}
-            YAHOO.util.DDM.mode = 1;
-            {/if}
-            {literal}
-            SUGAR.mySugar.renderDashletsDialog();
-            SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
-            {/literal}
-            {literal}
-        }
-    });
-    mySugarLoader.addModule({
-        name :"my_sugar",
-        type : "js",
-        fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
-        varName: "initMySugar",
-        requires: []
-    });
-    mySugarLoader.addModule({
-        name :"sugar_charts",
-        type : "js",
-        fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
-        varName: "initmySugarCharts",
-        requires: []
-    });
-    mySugarLoader.insert();
-    {/literal}
-</script>
+                    <li class="addButton">
+                        <a style='cursor: pointer;' onClick=addDashboardForm({$tabNum});>
+                            <span>Add Tab</span>
+                        </a>
+                    </li>
 
-</script>
+
+                </ul>
+            {*</div>*}
+
+            <div class="clear"></div>
+            <div id="pageContainer" class="yui-skin-sam">
+                <div id="pageNum_{$activePage}_div">
+                    <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+                        <tr>
+
+                            <td align='right'>
+                                {if !$lock_homepage}<input id="add_dashlets" class="button" type="button"
+                                                           value="{$lblAddDashlets}"
+                                                           onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
+                            </td>
+                        </tr>
+                        <tr>
+                            {counter assign=hiddenCounter start=0 print=false}
+                            {foreach from=$columns key=colNum item=data}
+                                <td valign='top' width='{$data.width}'>
+                                    <ul class='noBullet' id='col_{$activePage}_{$colNum}'>
+                                        <li id='page_{$activePage}_hidden{$hiddenCounter}b'
+                                            style='height: 5px; margin-top:12px;' class='noBullet'>
+                                            &nbsp;&nbsp;&nbsp;</li>
+                                        {foreach from=$data.dashlets key=id item=dashlet}
+                                            <li class='noBullet' id='dashlet_{$id}'>
+                                                <div id='dashlet_entire_{$id}' class='dashletPanel'>
+                                                    {$dashlet.script}
+                                                    {$dashlet.displayHeader}
+                                                    {$dashlet.display}
+                                                    {$dashlet.displayFooter}
+                                                </div>
+                                            </li>
+                                        {/foreach}
+                                        <li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px'
+                                            class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+                                    </ul>
+                                </td>
+                                {counter}
+                            {/foreach}
+                        </tr>
+                    </table>
+                </div>
+
+                {foreach from=$divPages key=divPageIndex item=divPageNum}
+                    <div id="pageNum_{$divPageNum}_div" style="display:none;">
+                    </div>
+                {/foreach}
+
+
+
+                <div id="dashletsDialog" style="display:none;">
+                    <div class="hd" id="dashletsDialogHeader"><a href="javascript:void(0)"
+                                                                 onClick="javascript:SUGAR.mySugar.closeDashletsDialog();">
+                            <div class="container-close">&nbsp;</div>
+                        </a>{$lblAdd}
+                    </div>
+                    <div class="bd" id="dashletsList">
+                        <form></form>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <script type="text/javascript" src="custom/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+            <script type="text/javascript" src="custom/include/MySugar/javascript/retrievePage.js"></script>
+
+            <link rel="stylesheet" type="text/css" href="custom/include/MySugar/dashboardstyle.css">
+
+            <script type="text/javascript">
+
+
+                var activePage = {$activePage};
+                var theme = '{$theme}';
+                current_user_id = '{$current_user}';
+                jsChartsArray = new Array();
+                var moduleName = '{$module}';
+                document.body.setAttribute("class", "yui-skin-sam");
+                {literal}
+                var mySugarLoader = new YAHOO.util.YUILoader({
+                    require: ["my_sugar", "sugar_charts"],
+                    // Bug #48940 Skin always must be blank
+                    skin: {
+                        base: 'blank',
+                        defaultSkin: ''
+                    },
+                    onSuccess: function () {
+                        initMySugar();
+                        initmySugarCharts();
+                        SUGAR.mySugar.maxCount =    {/literal}{$maxCount}{literal};
+                        SUGAR.mySugar.homepage_dd = new Array();
+                        var j = 0;
+
+                        {/literal}
+                        var dashletIds = {$dashletIds};
+
+                        {if !$lock_homepage}
+                        for (i in dashletIds) {ldelim}
+                            SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
+                        SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+                        // Bug #47097 : Dashlets not displayed after moving them
+                        // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+                        SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+                        SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+                        SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+                        j++;
+                        {rdelim}
+                        {if $hiddenCounter > 0}
+                        for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
+                            SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
+                        {rdelim}
+                        {/if}
+                        YAHOO.util.DDM.mode = 1;
+                        {/if}
+                        {literal}
+                        SUGAR.mySugar.renderDashletsDialog();
+                        SUGAR.mySugar.sugarCharts.loadSugarCharts(activePage);
+                        {/literal}
+                        {literal}
+                    }
+                });
+                mySugarLoader.addModule({
+                    name: "my_sugar",
+                    type: "js",
+                    fullpath: {/literal}"{sugar_getjspath file='include/MySugar/javascript/MySugar.js'}"{literal},
+                    varName: "initMySugar",
+                    requires: []
+                });
+                mySugarLoader.addModule({
+                    name: "sugar_charts",
+                    type: "js",
+                    fullpath: {/literal}"{sugar_getjspath file="include/SugarCharts/Jit/js/mySugarCharts.js"}"{literal},
+                    varName: "initmySugarCharts",
+                    requires: []
+                });
+                mySugarLoader.insert();
+                {/literal}
+            </script>
