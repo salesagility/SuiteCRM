@@ -75,11 +75,11 @@ function clearSearch(subpanel) {
             $(this).prop('checked', false);
         }
         else if (type != "button" && type != "submit") {
-            $(this).val('')
+            $(this).val('');
         }
     });
     $('#'+subpanel+'_search select').each(function() {
-        $(this).prop('selectedIndex',0);
+        $(this).children().removeProp('selected');
     });
 
 }

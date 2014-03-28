@@ -66,8 +66,10 @@ $record = $_REQUEST['record'];
 $module = $_REQUEST['module'];
 
 $collection = array();
-if(isset($_REQUEST['collection_basic'])){
-    //$collection = $_REQUEST['collection_basic'];
+
+if(isset($_REQUEST['collection_basic']) && $_REQUEST['collection_basic'][0] != 'null'){
+    $_REQUEST['collection_basic'] = explode(',',$_REQUEST['collection_basic'][0]);
+    $collection = $_REQUEST['collection_basic'];
 }
 
 if(empty($_REQUEST['inline']))

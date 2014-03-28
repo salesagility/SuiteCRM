@@ -29,3 +29,5 @@ $app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
 $app_strings['LBL_QUICK_CALL'] = 'Log Call';
 $app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
