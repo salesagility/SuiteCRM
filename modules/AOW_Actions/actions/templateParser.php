@@ -100,6 +100,8 @@ class aowTemplateParser{
 		}
 		static function parse_template($string, &$bean_arr) {
 			global $beanFiles, $beanList;
+
+            $person = array();
 	
 			foreach($bean_arr as $bean_name => $bean_id) {
 			
@@ -109,20 +111,20 @@ class aowTemplateParser{
 				$focus->retrieve($bean_id);
 				
 				$string = aowTemplateParser::parse_template_bean($string, strtolower($beanList[$bean_name]), $focus);
-				
-				/*foreach($focus->field_defs as $focus_name => $focus_arr){
-					if($focus_arr['type'] == 'relate'){
-						if(isset($focus_arr['module']) &&  $focus_arr['module'] != '' && $focus_arr['module'] != 'EmailAddress'){
-							//$relate_focus_name = $beanList[$focus_arr['module']];
-							$relate_focus = new $beanList[$focus_arr['module']]();
-							$relate_focus->retrieve($focus->$focus_arr['id_name']);
-							//$object_arr[$relate_focus->module_dir] = $focus->$focus_arr['id_name'];
-							$string = aowTemplateParser::parse_template_bean($string, $focus_arr['name'], $relate_focus);
-						}
-					}
-				}*/
+
+                if($focus instanceof Person){
+                    $person[] = $focus;
+                }
 				
 			}
+
+            if(!empty($person)){
+                $focus = $person[0];
+            } else {
+                $focus = new Contact();
+            }
+            $string = aowTemplateParser::parse_template_bean($string, 'contact', $focus);
+
 			return $string;
 		}
 	}

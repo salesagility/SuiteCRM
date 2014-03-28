@@ -29,19 +29,6 @@ class actionSendEmail extends actionBase {
     private $emailableModules = array();
 
     function actionSendEmail($id = ''){
-        global $beanFiles, $beanList, $app_list_strings;
-
-        foreach($app_list_strings['aow_moduleList'] as $bean_name => $bean_dis) {
-
-            if(isset($beanList[$bean_name]) && isset($beanFiles[$beanList[$bean_name]])){
-                require_once($beanFiles[$beanList[$bean_name]]);
-                $obj = new $beanList[$bean_name];
-                if($obj instanceof Person || $obj instanceof Company){
-                    $this->emailableModules[] = $bean_name;
-                }
-            }
-        }
-        asort($this->emailableModules);
         parent::actionBase($id);
     }
 
@@ -50,100 +37,28 @@ class actionSendEmail extends actionBase {
     }
 
     function edit_display($line,SugarBean $bean = null, $params = array()){
-        global $mod_strings, $app_list_strings;
+        global $app_list_strings;
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name');
 
-        $targetOptions = array();
-        foreach($bean->get_related_fields() as $field){
-            if(!isset($field['module']) || !in_array($field['module'],$this->emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")){
-                continue;
-            }
-            $targetOptions[$field['name']] = $field['module'].": ".trim(translate($field['vname'],$bean->module_name),":");
-        }
-
-        array_multisort($targetOptions, SORT_ASC, $targetOptions);
-
-        if(!array_key_exists('email_target_type',(array)$params)){
-            $params['email_target_type'] = 'Email Address';
-        }
-
-        if(!in_array($bean->module_dir,$this->emailableModules)) unset($app_list_strings['aow_email_type_list']['Record Email']);
+        if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['aow_email_type_list']['Record Email']);
+        $targetOptions = getRelatedEmailableFields($bean->module_dir);
         if(empty($targetOptions)) unset($app_list_strings['aow_email_type_list']['Related Field']);
 
+        $html = '<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="'.get_select_options_with_id($app_list_strings['aow_email_type_list'], '').'">
+				  <input type="hidden" name="aow_email_to_list" id="aow_email_to_list" value="'.get_select_options_with_id($app_list_strings['aow_email_to_list'], '').'">';
 
-        $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
+        $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
         $html .= "<tr>";
         $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= '<td valign="top" width="37.5%">';
+        $html .= '<td valign="top" scope="row" width="37.5%">';
 
-        $html .= "\n<select onchange='targetTypeChanged(".$line.")' id='aow_actions_param_email_target_type".$line."' name='aow_actions_param[".$line."][email_target_type]'>".get_select_options_with_id($app_list_strings['aow_email_type_list'],$params['email_target_type'] )."</select>";
+        $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
+        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '</td>';
 
-
-        //Related field inputs
-        $hideRelated = $params['email_target_type'] != "Related Field" ? "style='display: none;'" : '';
-        $html .= "\n<select $hideRelated name='aow_actions_param[".$line."][email_target]' id='aow_actions_param_email_target".$line."' >".get_select_options_with_id($targetOptions,isset($params['email_target'])? $params['email_target'] : '')."</select>";
-
-
-        //User Input
-        $emailUserId = array_key_exists('email_user_id',(array)$params) ? $params['email_user_id'] : '';
-        $emailUserName = array_key_exists('email_user_name',(array)$params) ? $params['email_user_name'] : '';
-
-        $hideUser = $params['email_target_type'] != "Specify User" ? "style='display: none;'" : '';
-        $html .= <<<EOS
-
-        <span $hideUser id="aow_actions_email_user_span$line">
-<input type="text"
-        name="aow_actions_param[$line][email_user_name]" class="sqsEnabled" tabindex="1"
-        id="aow_actions_param[$line][email_user_name]" size="" value="$emailUserName" title='' autocomplete="off"  	 >
-<input type="hidden" name="aow_actions_param[$line][email_user_id]"
-	id="aow_actions_param[$line][email_user_id]"
-	value="$emailUserId">
-<span class="id-ff multiple">
-<button type="button"
-    name="btn_aow_actions_param[$line][email_user_name]"
-    id="btn_aow_actions_param[$line][email_user_name]" tabindex="1"
-    title="Select User" class="button firstChild" value="Select User"
-onclick="open_popup(
-    'Users',
-	600,
-	400,
-	'',
-	true,
-	false,
-	{'call_back_function':'set_return',
-	    'form_name':'EditView',
-	    'field_to_name_array':{
-	                'id':'aow_actions_param[$line][email_user_id]',
-	                'user_name':'aow_actions_param[$line][email_user_name]'}},
-	'single',
-	true
-);" ><img src="themes/default/images/id-ff-select.png?v=lSCqV0_gGHDPkVH62imIiQ"></button>
-<button type="button"
-    name="btn_clr_aow_actions_param[$line][email_user_name]"
-    id="btn_clr_aow_actions_param[$line][email_user_name]" tabindex="1" title="Clear User"  class="button lastChild"
-onclick="SUGAR.clearRelateField(this.form, 'aow_actions_param[$line][email_user_name]', 'aow_actions_param[$line][email_user_id]');"  value="Clear User" ><img src="themes/default/images/id-ff-clear.png?v=lSCqV0_gGHDPkVH62imIiQ"></button>
-</span>
-<script type="text/javascript">
-SUGAR.util.doWhen(
-		"typeof(sqs_objects) != 'undefined' && typeof(sqs_objects['EditView_aow_actions_param[$line]['email_user_name']']) != 'undefined'",
-		enableQS
-);
-</script>
-</span>
-
-EOS;
-
-        if(!isset($params['email'])) $params['email'] = '';
         if(!isset($params['email_template'])) $params['email_template'] = '';
-
         $hidden = "style='visibility: hidden;'";
         if($params['email_template'] != '') $hidden = "";
-
-        //Email input
-        $hideEmail = $params['email_target_type'] != "Email Address" ? "style='display: none;'" : '';
-        $html .= '<input '.$hideEmail.' name="aow_actions_param['.$line.'][email]" id="aow_actions_param_email'.$line.'" size="30" maxlength="255" value="'.$params['email'].'" type="text">';
-
-        $html .= '</td>';
 
         $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL_TEMPLATE","AOW_Actions").':<span class="required">*</span></td>';
         $html .= "<td valign='top' width='37.5%'>";
@@ -155,46 +70,142 @@ EOS;
         $html .= "</tr>";
         $html .= "</table>";
 
+        $html .= "<script id ='aow_script".$line."'>";
+
+        //backward compatible
+        if(isset($params['email_target_type']) && !is_array($params['email_target_type'])){
+            $email = '';
+            switch($params['email_target_type']){
+                case 'Email Address':
+                    $email = $params['email'];
+                    break;
+                case 'Specify User':
+                    $email = $params['email_user_id'];
+                    break;
+                case 'Related Field':
+                    $email = $params['email_target'];
+                    break;
+            }
+            $html .= "load_emailline('".$line."','to','".$params['email_target_type']."','".$email."');";
+        }
+        //end backward compatible
+
+        if(isset($params['email_target_type'])){
+            foreach($params['email_target_type'] as $key => $field){
+                if(is_array($params['email'][$key]))$params['email'][$key] = json_encode($params['email'][$key]);
+                $html .= "load_emailline('".$line."','".$params['email_to_type'][$key]."','".$params['email_target_type'][$key]."','".$params['email'][$key]."');";
+            }
+        }
+        $html .= "</script>";
+
         return $html;
 
     }
 
-    private function getEmailFromParams(SugarBean $bean, $params){
-        if(!array_key_exists('email_target_type',$params)){
-            return '';
-        }
+    private function getEmailsFromParams(SugarBean $bean, $params){
 
-        switch($params['email_target_type']){
-            case 'Email Address':
-                return array_key_exists('email', $params) ? $params['email'] : '';
-            case 'Specify User':
-                $user = new User();
-                $user->retrieve($params['email_user_id']);
-                return $user->emailAddress->getPrimaryAddress($user);
-                break;
-            case 'Related Field':
-                $emailTarget = $params['email_target'];
-                $relatedFields = $bean->get_related_fields();
-                $field = $relatedFields[$emailTarget];
-                if($field['type'] == 'relate'){
-                    $linkedBeans = array();
-                    $id = $bean->$field['id_name'];
-                    $linkedBeans[] = BeanFactory::getBean($field['module'],$id);
-                }else{
-                    $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
-                }
-                if($linkedBeans){
-                    $linkedBean = $linkedBeans[0];
-                    return $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
-                }
-                break;
-            case 'Record Email':
-                return $bean->emailAddress->getPrimaryAddress($bean);
-                break;
-            default:
-                return '';
+        $emails = array();
+        //backward compatible
+        if(isset($params['email_target_type']) && !is_array($params['email_target_type'])){
+            $email = '';
+            switch($params['email_target_type']){
+                case 'Email Address':
+                    $params['email'] = array($params['email']);
+                    break;
+                case 'Specify User':
+                    $params['email'] = array($params['email_user_id']);
+                    break;
+                case 'Related Field':
+                    $params['email'] = array($params['email_target']);
+                    break;
+            }
+            $params['email_target_type'] = array($params['email_target_type']);
+            $params['email_to_type'] = array('to');
         }
-        return "";
+        //end backward compatible
+        if(isset($params['email_target_type'])){
+            foreach($params['email_target_type'] as $key => $field){
+                switch($field){
+                    case 'Email Address':
+                        $emails[$params['email_to_type'][$key]][] = $params['email'][$key];
+                        break;
+                    case 'Specify User':
+                        $user = new User();
+                        $user->retrieve($params['email'][$key]);
+                        $emails[$params['email_to_type'][$key]][] = $user->emailAddress->getPrimaryAddress($user);
+                        break;
+                    case 'Users':
+                        $users = array();
+                        switch($params['email'][$key][0]) {
+                            Case 'security_group':
+                                if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
+                                    require_once('modules/SecurityGroups/SecurityGroup.php');
+                                    $security_group = new SecurityGroup();
+                                    $security_group->retrieve($params['email'][$key][1]);
+                                    $users = $security_group->get_linked_beans( 'users','User');
+                                    $r_users = array();
+                                    if($params['email'][$key][2] != ''){
+                                        require_once('modules/ACLRoles/ACLRole.php');
+                                        $role = new ACLRole();
+                                        $role->retrieve($params['email'][$key][2]);
+                                        $role_users = $role->get_linked_beans( 'users','User');
+                                        foreach($role_users as $role_user){
+                                            $r_users[$role_user->id] = $role_user->name;
+                                        }
+                                    }
+                                    foreach($users as $user_id => $user){
+                                        if($params['email'][$key][2] != '' && !isset($r_users[$user->id])){
+                                            unset($users[$user_id]);
+                                        }
+                                    }
+                                    break;
+                                }
+                            //No Security Group module found - fall through.
+                            Case 'role':
+                                require_once('modules/ACLRoles/ACLRole.php');
+                                $role = new ACLRole();
+                                $role->retrieve($params['email'][$key][2]);
+                                $users = $role->get_linked_beans( 'users','User');
+                                break;
+                            Case 'all':
+                            default:
+                                global $db;
+                                $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
+                                $result = $db->query($sql);
+                                while ($row = $db->fetchByAssoc($result)) {
+                                    $user = new User();
+                                    $user->retrieve($row['id']);
+                                    $users[$user->id] = $user;
+                                }
+                                break;
+                        }
+                        foreach($users as $user){
+                            $emails[$params['email_to_type'][$key]][] = $user->emailAddress->getPrimaryAddress($user);
+                        }
+                        break;
+                    case 'Related Field':
+                        $emailTarget = $params['email_target'];
+                        $relatedFields = $bean->get_related_fields();
+                        $field = $relatedFields[$emailTarget];
+                        if($field['type'] == 'relate'){
+                            $linkedBeans = array();
+                            $id = $bean->$field['id_name'];
+                            $linkedBeans[] = BeanFactory::getBean($field['module'],$id);
+                        }else{
+                            $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
+                        }
+                        if($linkedBeans){
+                            $linkedBean = $linkedBeans[0];
+                            $emails[$params['email_to_type'][$key]][] = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                        }
+                        break;
+                    case 'Record Email':
+                        $emails[$params['email_to_type'][$key]][] = $bean->emailAddress->getPrimaryAddress($bean);
+                        break;
+                }
+            }
+        }
+        return $emails;
     }
 
     function run_action(SugarBean $bean, $params = array(), $in_save=false){
@@ -204,6 +215,10 @@ EOS;
         require_once('modules/AOW_Actions/actions/templateParser.php');
         $emailTemp = new EmailTemplate();
         $emailTemp->retrieve($params['email_template']);
+
+        if($emailTemp->id == ''){
+            return false;
+        }
 
         $object_arr[$bean->module_dir] = $bean->id;
 
@@ -215,7 +230,7 @@ EOS;
                 }
             }
             else if($bean_arr['type'] == 'link'){
-                if(!isset($bean_arr['module'])) $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
+                if(!isset($bean_arr['module']) || $bean_arr['module'] == '') $bean_arr['module'] = getRelatedModule($bean->module_dir,$bean_arr['name']);
                 if(isset($bean_arr['module']) &&  $bean_arr['module'] != ''&& !isset($object_arr[$bean_arr['module']])&& $bean_arr['module'] != 'EmailAddress'){
                     $linkedBeans = $bean->get_linked_beans($bean_arr['name'],$bean_arr['module']);
                     if($linkedBeans){
@@ -226,9 +241,6 @@ EOS;
             }
         }
 
-        $GLOBALS['log']->fatal(print_r($object_arr, true));
-
-        if(!isset($object_arr['Contacts']))$object_arr['Contacts'] = '';
         $object_arr['Users'] = $bean->assigned_user_id;
 
         $parsedSiteUrl = parse_url($sugar_config['site_url']);
@@ -251,12 +263,12 @@ EOS;
         $body_html = str_replace("\$url",$url,$body_html);
         $body_plain = aowTemplateParser::parse_template($body_plain, $object_arr);
         $body_plain = str_replace("\$url",$url,$body_plain);
-        $email = $this->getEmailFromParams($bean,$params);
-        return $this->sendEmail($email, $subject, $body_html, $body_plain, $bean);
+        $emails = $this->getEmailsFromParams($bean,$params);
+        return $this->sendEmail($emails['to'], $subject, $body_html, $body_plain, $bean, $emails['cc'],$emails['bcc']);
 
     }
 
-    function sendEmail($emailTo, $emailSubject, $emailBody, $altemailBody, SugarBean $relatedBean = null, $attachments = array())
+    function sendEmail($emailTo, $emailSubject, $emailBody, $altemailBody, SugarBean $relatedBean = null, $emailCc = array(), $emailBcc = array(), $attachments = array())
     {
         require_once('modules/Emails/Email.php');
         require_once('include/SugarPHPMailer.php');
@@ -274,11 +286,27 @@ EOS;
         $mail->AltBody = $altemailBody;
         $mail->handleAttachments($attachments);
         $mail->prepForOutbound();
-        $mail->AddAddress($emailTo);
+
+        if(empty($emailTo)) return false;
+        foreach($emailTo as $to){
+            $mail->AddAddress($to);
+        }
+        if(!empty($emailCc)){
+            foreach($emailCc as $email){
+                $mail->AddCC($email);
+            }
+        }
+        if(!empty($emailBcc)){
+            foreach($emailBcc as $email){
+                $mail->AddBCC($email);
+            }
+        }
 
         //now create email
         if (@$mail->Send()) {
-            $emailObj->to_addrs= $emailTo;
+            $emailObj->to_addrs= implode(',',$emailTo);
+            $emailObj->cc_addrs= implode(',',$emailCc);
+            $emailObj->bcc_addrs= implode(',',$emailBcc);
             $emailObj->type= 'out';
             $emailObj->deleted = '0';
             $emailObj->name = $mail->Subject;
