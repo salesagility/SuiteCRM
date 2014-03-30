@@ -258,19 +258,17 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
 
 $i = 0;
     while($i < count($pages)){
-
-
-        $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];
-
         if($i == 0){
             $pageTabs[$i]['pageTitle'] = 'Suite Dashboard';
 //            $pageTabs[$i]['active'] = 'current';
         }else{
+            $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];
             $divPages[] = $i;
         }
         $i++;
     }
 
+if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) $sugar_smarty->assign('lock_homepage', true);
 
 $sugar_smarty->assign('sugarVersion', $sugar_version);
 $sugar_smarty->assign('sugarFlavor', $sugar_flavor);
@@ -292,6 +290,7 @@ $sugar_smarty->assign('dashboardPages', $pageTabs);
 $sugar_smarty->assign('current_user', $current_user->id);
 
 $sugar_smarty->assign('lblAdd', $GLOBALS['app_strings']['LBL_ADD_BUTTON']);
+$sugar_smarty->assign('lblAddTab', $GLOBALS['app_strings']['LBL_ADD_TAB']);
 $sugar_smarty->assign('lblAddDashlets', $GLOBALS['app_strings']['LBL_ADD_DASHLETS']);
 $sugar_smarty->assign('lblLnkHelp', $GLOBALS['app_strings']['LNK_HELP']);
 

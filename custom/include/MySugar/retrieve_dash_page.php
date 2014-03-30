@@ -271,7 +271,6 @@ if(!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == t
 
 
 $sugar_smarty->assign('sugarVersion', $sugar_version);
-$sugar_smarty->assign('sugarFlavor', $sugar_flavor);
 $sugar_smarty->assign('currentLanguage', $GLOBALS['current_language']);
 $sugar_smarty->assign('serverUniqueKey', $GLOBALS['server_unique_key']);
 $sugar_smarty->assign('imagePath', $GLOBALS['image_path']);

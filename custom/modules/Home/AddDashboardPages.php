@@ -11,7 +11,7 @@ global $current_user;
 
 
 if(!isset($_POST['dashName'])){
-    $html .= "<form method='post' name='addpageform' id='addpageform' action='index.php?module=Home&action=AddDashboardPages'/>";
+    $html = "<form method='post' name='addpageform' id='addpageform' action='index.php?module=Home&action=AddDashboardPages'/>";
     $html .= "<table>";
     $html .= "<tr>";
     $html .= "<td><label for='dashName'>Enter Dashboard Name: </label></td>";

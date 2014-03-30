@@ -15,7 +15,7 @@ $pages = $current_user->getPreference('pages', $type);
 if (count($pages) > 1) {
 
     if (!isset($_POST['dashName'])) {
-        $html .= "<form method='post' name='removepageform'/>";
+        $html = "<form method='post' name='removepageform'/>";
         $html .= "<table>";
         $html .= "<tr>";
         $html .= "<td><label for='dashName'>Rename Dashboard: </label></td>";
