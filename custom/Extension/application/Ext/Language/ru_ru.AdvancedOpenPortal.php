@@ -46,9 +46,8 @@ $app_list_strings['case_status_dom'] =
       'Closed_Duplicate' => 'Продублированное',
   );
   
-  $app_list_strings['aop_distribution_method'] =
+  $app_list_strings['contact_portal_user_type_dom'] =
     array (
-        'singleUser' => 'Указанный пользователь',
-        'roundRobin' => 'В цикле',
-        'leastBusy' => 'Наименее занятой',
+        'Single' => 'Указанный пользователь',
+        'Account' => 'Учётная запись пользователя',
     ); 
