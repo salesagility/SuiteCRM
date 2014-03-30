@@ -51,7 +51,7 @@ function display_field_lines($focus, $field, $value, $view){
         $html .= "</script>";
 
         if(isset($focus->report_module) && $focus->report_module != ''){
-            require_once("modules/AOR_Reports/aor_utils.php");
+            require_once("modules/AOW_WorkFlow/aow_utils.php");
             $html .= "<script>";
             $html .= "report_rel_modules = \"".trim(preg_replace('/\s+/', ' ', getModuleRelationships($focus->report_module)))."\";";
             $html .= "report_module = \"".$focus->report_module."\";";
