@@ -18,7 +18,7 @@
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <support@salesagility.com>
+ * @author Salesagility Ltd <info@salesagility.com>
  */
 
 $app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
@@ -29,5 +29,7 @@ $app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
 $app_strings['LBL_QUICK_CALL'] = 'Log Call';
 $app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
+
+$GLOBALS['app_strings']['LBL_ADD_TAB'] = 'Add Tab';
 
 $app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );

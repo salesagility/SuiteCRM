@@ -85,10 +85,10 @@
 
                         </li>
                         {else} <li id="pageNum_{$tabNum}">
-                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' ondblclick="renameTab({$tabNum})" onClick=retrievePage({$tabNum});>
+                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick=retrievePage({$tabNum});>
                                 <span id="name_{$tabNum}">{$tab.pageTitle}</span>
                             </a>
-                            <a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><img src="themes/default/images/id-ff-clear.png?v=_-JTwt2j0YIZGpaautavag"></a>
+                        {if !$lock_homepage}<a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><img src="themes/default/images/id-ff-clear.png"></a>{/if}
 
                             </li>{/if}
                     {/foreach}
@@ -97,17 +97,17 @@
 
                     {* Display the add button to allow the addition of more tabs *}
 
-
+                    {if !$lock_homepage}
                     <li class="addButton">
-                        <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">Add Dashlets</a>
+                        <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">{$lblAddDashlets}</a>
                     </li>
 
                     <li class="addButton">
-                        <a style='cursor: pointer;' onClick=addDashboardForm({$tabNum});>
-                            <span>Add Tab</span>
+                        <a style='cursor: pointer;' onclick="addDashboardForm({$tabNum});">
+                            <span>{$lblAddTab}</span>
                         </a>
                     </li>
-
+                    {/if}
 
                 </ul>
             {*</div>*}
