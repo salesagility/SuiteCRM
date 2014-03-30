@@ -23,7 +23,7 @@
  */
 
 
-require_once("modules/AOR_Reports/aor_utils.php");
+require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class AOR_ReportsController extends SugarController {
 

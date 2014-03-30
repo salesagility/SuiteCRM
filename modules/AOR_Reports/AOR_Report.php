@@ -50,7 +50,7 @@ class AOR_Report extends Basic {
 	function AOR_Report(){
 		parent::Basic();
         $this->load_report_beans();
-        //require_once('modules/AOR_Reports/aor_utils.php');
+        require_once('modules/AOW_WorkFlow/aow_utils.php');
 	}
 	
 	function bean_implements($interface){
