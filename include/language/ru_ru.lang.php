@@ -3917,8 +3917,8 @@ $app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
 
 $app_list_strings['moduleList']['AOR_Reports'] = 'Отчёты';
 $app_list_strings['moduleList']['AOR_Conditions'] = 'Условия отчёта';
-$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчета';
-$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчета';
+$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчёта';
+$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчёта';
 
 $app_list_strings['aor_operator_list']['Equal_To'] = '=';
 $app_list_strings['aor_operator_list']['Not_Equal_To'] = '!=';
@@ -4502,6 +4502,8 @@ $app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
 
 $app_list_strings['aow_condition_type_list']['Value'] = 'Значение';
 $app_list_strings['aow_condition_type_list']['Field'] = 'Поле';
+$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Изменение';
+$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'Состоит в Группе пользователей';
 $app_list_strings['aow_condition_type_list']['Date'] = 'Дата';
 $app_list_strings['aow_condition_type_list']['Multi'] = 'Мультивыбор';
 
@@ -4539,6 +4541,10 @@ $app_list_strings['aow_email_type_list']['Record Email'] = 'Отобранной
 $app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
 $app_list_strings['aow_email_type_list']['Related Field'] = 'Связанного модуля';
 
+$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
+$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
+$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
+
 /**
 * @package SuiteCRM
 * @copyright SalesAgility Ltd http://www.salesagility.com
@@ -4568,6 +4574,9 @@ $app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. конта�
 $app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
 $app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
 $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
 
 
 /**
@@ -4617,15 +4626,32 @@ $app_list_strings['case_status_dom'] =
       'Closed_Duplicate' => 'Продублированное',
   );
   
-  $app_list_strings['aop_distribution_method'] =
+  $app_list_strings['contact_portal_user_type_dom'] =
     array (
-        'singleUser' => 'Указанный пользователь',
-        'roundRobin' => 'В цикле',
-        'leastBusy' => 'Наименее занятой',
-    ); 
+        'Single' => 'Указанный пользователь',
+        'Account' => 'Учётная запись пользователя',
+    );  
 	
 $app_list_strings["moduleList"]["SecurityGroups"] = 'Группы пользователей';
 $app_strings['LBL_LOGIN_AS'] = "Login as ";
 $app_strings['LBL_LOGOUT_AS'] = "Logout as ";
+
+$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
+$app_list_strings['moduleList']['AOD_Index'] = 'Индекс';
+
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Учётная запись в Facebook';
+$app_strings['LBL_TWITTER_USER_C'] = 'Учётная запись в Twitter';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Подробности';
+
+/**
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
+
+
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
 
 ?>

@@ -25,8 +25,8 @@
 
 $app_list_strings['moduleList']['AOR_Reports'] = 'Отчёты';
 $app_list_strings['moduleList']['AOR_Conditions'] = 'Условия отчёта';
-$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчета';
-$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчета';
+$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчёта';
+$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчёта';
 
 $app_list_strings['aor_operator_list']['Equal_To'] = '=';
 $app_list_strings['aor_operator_list']['Not_Equal_To'] = '!=';
