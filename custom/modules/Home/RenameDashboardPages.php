@@ -18,7 +18,7 @@ if (count($pages) > 1) {
         $html = "<form method='post' name='removepageform'/>";
         $html .= "<table>";
         $html .= "<tr>";
-        $html .= "<td><label for='dashName'>Rename Dashboard: </label></td>";
+        $html .= "<td><label for='dashName'>".$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME']." </label></td>";
         $html .= "<td><input name='dashName' id='dashName' value='" .$pages[$_POST['page_id']]['pageTitle'] ."'/></td>";
         $html .= "<input type='hidden' id='page_id' name='page_id' value='" . $_POST['page_id']. "' />";
         $html .= "</tr>";

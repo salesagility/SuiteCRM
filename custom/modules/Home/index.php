@@ -101,7 +101,7 @@ if(!$hasUserPreferences){
             'module' => 'Home',
             'forceColumn' => 0,
             'fileLocation' => $dashletsFiles['iFrameDashlet']['file'],
-            'options' => array('titleLabel' => 'Discover SuiteCRM',
+            'options' => array('titleLabel' => $GLOBALS['app_strings']['LBL_DISCOVER_SUITECRM'],
                 'url' => 'http://www.suitecrm.com',
                 'height' => 315,
             ));
@@ -259,7 +259,7 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
 $i = 0;
     while($i < count($pages)){
         if($i == 0){
-            $pageTabs[$i]['pageTitle'] = 'Suite Dashboard';
+            $pageTabs[$i]['pageTitle'] = $GLOBALS['app_strings']['LBL_SUITE_DASHBOARD'];
 //            $pageTabs[$i]['active'] = 'current';
         }else{
             $pageTabs[$i]['pageTitle'] = $pages[$i]['pageTitle'];

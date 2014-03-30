@@ -1111,7 +1111,17 @@ $app_strings['LBL_QUICK_CALL'] = 'Log Call';
 $app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
-$GLOBALS['app_strings']['LBL_ADD_TAB'] = 'Add Tab';
+$app_strings['LBL_ADD_TAB'] = 'Add Tab';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite Dashboard';
+$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
+$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
+$app_strings['LBL_DELETE_DASHBOARD1'] = 'Are you sure you want to delete the';
+$app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
+$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
+$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
+$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
+
+$app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
 $app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
 ?>
