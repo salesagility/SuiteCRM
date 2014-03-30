@@ -245,9 +245,10 @@ class AOR_Report extends Basic {
         global $beanList;
 
         $report_sql = $this->build_report_query($group_value);
-        $max_rows = 8;
+        $max_rows = 20;
         $total_rows = 0;
-        $count_query = 'SELECT count(*) c FROM ('.$report_sql.') as n';
+        $count_sql = explode('ORDER BY', $report_sql);
+        $count_query = 'SELECT count(*) c FROM ('.$count_sql[0].') as n';
 
         // We have a count query.  Run it and get the results.
         $result = $this->db->query($count_query);
@@ -590,7 +591,7 @@ class AOR_Report extends Basic {
                 }
 
                 if($field->sort_by != ''){
-                    $query['sort_by'][] = "'".$field->label."' ".$field->sort_by;
+                    $query['sort_by'][] = $select_field." ".$field->sort_by;
                 }
 
                 if($field->group_by == 1){
