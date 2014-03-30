@@ -20,10 +20,10 @@ function removeDashboardForm(page_id) {
 
             success: function (data) {
 
-                var titleval = 'Remove Current Dashboard Page';
+                var titleval = SUGAR.language.get('app_strings', 'LBL_DELETE_DASHBOARD_PAGE');
                 var myButtons = [
-                    { text: "Yes", handler: handleSubmit, isDefault: true },
-                    { text: "No", handler: handleCancel }
+                    { text: SUGAR.language.get('app_strings', 'LBL_SEARCH_DROPDOWN_YES'), handler: handleSubmit, isDefault: true },
+                    { text: SUGAR.language.get('app_strings', 'LBL_SEARCH_DROPDOWN_NO'), handler: handleCancel }
                 ];
                 get_form(data,titleval,myButtons)
 
@@ -46,9 +46,9 @@ function addDashboardForm(page_id){
         type: 'POST',
 
         success : function(data) {
-            var titleval = 'Add a Dashboard Page';
-            var myButtons = [{ text: "Save", handler: handleSubmit, isDefault: true },
-                { text: "Cancel", handler:handleCancel }];
+            var titleval = SUGAR.language.get('app_strings', 'LBL_ADD_DASHBOARD_PAGE');
+            var myButtons = [{ text: SUGAR.language.get('app_strings', 'LBL_SAVE_BUTTON_LABEL'), handler: handleSubmit, isDefault: true },
+                { text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_TITLE'), handler:handleCancel }];
             get_form(data,titleval,myButtons)
 
         },
@@ -97,9 +97,9 @@ function renameTab(page_id){
         },
 
         success : function(data) {
-            var titleval = 'Rename Dashboard Page';
-            var myButtons = [{ text: "Save", handler: renameTabSubmit, isDefault: true },
-                { text: "Cancel", handler:handleCancel }];
+            var titleval = SUGAR.language.get('app_strings', 'LBL_RENAME_DASHBOARD_PAGE');
+            var myButtons = [{ text: SUGAR.language.get('app_strings', 'LBL_SAVE_BUTTON_LABEL'), handler: renameTabSubmit, isDefault: true },
+                { text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL'), handler:handleCancel }];
             get_form(data,titleval,myButtons)
 
         },
