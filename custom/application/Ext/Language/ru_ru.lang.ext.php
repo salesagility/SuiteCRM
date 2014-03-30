@@ -371,8 +371,8 @@ $app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
 
 $app_list_strings['moduleList']['AOR_Reports'] = 'Отчёты';
 $app_list_strings['moduleList']['AOR_Conditions'] = 'Условия отчёта';
-$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчета';
-$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчета';
+$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчёта';
+$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчёта';
 $app_list_strings['aor_operator_list']['Equal_To'] = '=';
 $app_list_strings['aor_operator_list']['Not_Equal_To'] = '!=';
 $app_list_strings['aor_operator_list']['Greater_Than'] = '>';
@@ -471,6 +471,8 @@ $app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
 
 $app_list_strings['aow_condition_type_list']['Value'] = 'Значение';
 $app_list_strings['aow_condition_type_list']['Field'] = 'Поле';
+$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Изменение';
+$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'Состоит в Группе пользователей';
 $app_list_strings['aow_condition_type_list']['Date'] = 'Дата';
 $app_list_strings['aow_condition_type_list']['Multi'] = 'Мультивыбор';
 
@@ -537,6 +539,10 @@ $app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. конта�
 $app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
 $app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
 $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
+
 
 
 /**
@@ -586,12 +592,11 @@ $app_list_strings['case_status_dom'] =
       'Closed_Duplicate' => 'Продублированное',
   );
 
-$app_list_strings['aop_distribution_method'] =
+  $app_list_strings['contact_portal_user_type_dom'] =
     array (
-        'singleUser' => 'Указанный пользователь',
-        'roundRobin' => 'В цикле',
-        'leastBusy' => 'Наименее занятой',
-    );  
+        'Single' => 'Указанный пользователь',
+        'Account' => 'Учётная запись пользователя',
+    );   
   
 $app_list_strings["moduleList"]["SecurityGroups"] = 'Группы пользователей';
 $app_strings['LBL_LOGIN_AS'] = "Login as ";
@@ -781,7 +786,56 @@ $app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Все записи';
 $app_strings['LBL_LISTVIEW_NONE'] = 'Отменить выбор';
 
 
+/**
+ * Extensions to SugarCRM
+ * @package Reschedule for SugarCRM
+ * @subpackage Products
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
 
+$mod_strings = array (
+    'TWITTER_USER_C' => 'Учётная запись в Twitter',
+    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
+);
+
+
+
+/**
+ * Social Feed Language Strings.
+ */
+
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Учётная запись в Facebook';
+$app_strings['LBL_TWITTER_USER_C'] = 'Учётная запись в Twitter';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Подробности';
+
+
+/**
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
+
+
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
 
 
 

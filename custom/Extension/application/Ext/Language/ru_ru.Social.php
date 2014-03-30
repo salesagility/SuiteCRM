@@ -23,25 +23,8 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 
- $mod_strings = array (
+$mod_strings = array (
     'TWITTER_USER_C' => 'Учётная запись в Twitter',
     'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
- );
-
-$app_list_strings['call_reschedule_dom'][''] = '';
-$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Сотрудник отсутствует';
-$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'Сотрудник занят';
-
-$app_strings['LBL_RESCHEDULE_LABEL'] = 'Звонок откладывается';
-$app_strings['LBL_RESCHEDULE_TITLE'] = 'Заполните следующие поля:';
-$app_strings['LBL_RESCHEDULE_DATE'] = 'Дата:';
-$app_strings['LBL_RESCHEDULE_REASON'] = 'Причина:';
-$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Укажите правильную дату';
-$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Укажите причину, по которой звонок отложен';
-
-$app_strings['LBL_RESCHEDULE_PANEL'] = 'Отложенные звонки';
-$app_strings['LBL_RESCHEDULE_HISTORY'] = 'История дозвона';
-$app_strings['LBL_RESCHEDULE_COUNT'] = 'Попыток дозвона';
-$app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
-
+);
 

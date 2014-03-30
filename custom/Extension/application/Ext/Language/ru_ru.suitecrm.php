@@ -28,3 +28,6 @@ $app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. конта�
 $app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
 $app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
 $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );

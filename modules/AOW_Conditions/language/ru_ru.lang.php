@@ -30,14 +30,14 @@
 
 
 $mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Ответственный(ая)-ID',
-  'LBL_ASSIGNED_TO_NAME' => 'Ответственный(ая)',
   'LBL_ID' => 'ID',
   'LBL_DATE_ENTERED' => 'Дата создания',
   'LBL_DATE_MODIFIED' => 'Дата изменения',
   'LBL_MODIFIED' => 'Изменено',
   'LBL_MODIFIED_ID' => 'Изменено(ID)',
   'LBL_MODIFIED_NAME' => 'Изменено (Имя)',
+   'LBL_CREATED_USER' => 'Создано',
+  'LBL_MODIFIED_USER' => 'Изменено',
   'LBL_CREATED' => 'Создано',
   'LBL_CREATED_ID' => 'Создано(ID)',
   'LBL_DESCRIPTION' => 'Описание',
@@ -45,6 +45,7 @@ $mod_strings = array (
   'LBL_NAME' => 'Условие',
   'LBL_MODULE_NAME' => 'Условия',
   'LBL_MODULE_TITLE' => 'Условия',
+  'LBL_MODULE_PATH' => 'Модуль',
   'LBL_FIELD' => 'Поле',
   'LBL_OPERATOR' => 'Оператор сравнения',
   'LBL_VALUE_TYPE' => 'Тип',
@@ -53,3 +54,4 @@ $mod_strings = array (
   'LBL_CONDITION_OPERATOR' => 'Оператор сравнения',
   'LBL_AOW_WORKFLOW_ID' => 'WorkFlow Id',
 );
+

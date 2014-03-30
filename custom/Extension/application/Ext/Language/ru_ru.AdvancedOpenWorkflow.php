@@ -56,6 +56,8 @@ $app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
 
 $app_list_strings['aow_condition_type_list']['Value'] = 'Значение';
 $app_list_strings['aow_condition_type_list']['Field'] = 'Поле';
+$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Изменение';
+$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'Состоит в Группе пользователей';
 $app_list_strings['aow_condition_type_list']['Date'] = 'Дата';
 $app_list_strings['aow_condition_type_list']['Multi'] = 'Мультивыбор';
 
@@ -92,5 +94,9 @@ $app_list_strings['aow_email_type_list']['Email Address'] = 'Вручную';
 $app_list_strings['aow_email_type_list']['Record Email'] = 'Отобранной записи';
 $app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
 $app_list_strings['aow_email_type_list']['Related Field'] = 'Связанного модуля';
+
+$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
+$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
+$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
 
 

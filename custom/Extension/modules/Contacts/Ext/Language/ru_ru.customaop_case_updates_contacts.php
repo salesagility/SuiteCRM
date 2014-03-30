@@ -32,3 +32,4 @@ $mod_strings['LBL_CREATE_PORTAL_USER_SUCCESS'] = "Создать пользов�
 $mod_strings['LBL_ENABLE_PORTAL_USER_SUCCESS'] = "Включить пользователя портала";
 $mod_strings['LBL_DISABLE_PORTAL_USER_SUCCESS'] = "Отключить пользователя портала";
 $mod_strings['LBL_NO_JOOMLA_URL'] = "Не указан URL портала";
+$mod_strings['LBL_PORTAL_USER_TYPE'] = "Пользователь портала";
