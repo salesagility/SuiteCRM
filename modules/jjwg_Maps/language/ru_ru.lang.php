@@ -113,7 +113,7 @@ $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_MEETINGS'] = 'Название груп
 $mod_strings['LBL_CONFIG_GROUP_FIELD_FOR_PROSPECTS'] = 'Название группы меток для Адресатов:';
 
 $mod_strings['LBL_CONFIG_GEOCODING_SETTINGS_TITLE'] = 'Параметры геокодирования:';
-$mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE'] = 'API URL сервиса геокодирования:';
+$mod_strings['LBL_CONFIG_GEOCODING_API_URL_TITLE'] = 'URL API-сервиса геокодирования:';
 $mod_strings['LBL_CONFIG_GEOCODING_API_URL_DESC'] = 'Адрес Google Maps API V3 либо адрес прокси-сервера.';
 $mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_TITLE'] = 'Секретная фраза:';
 $mod_strings['LBL_CONFIG_GEOCODING_API_SECRET_DESC'] = 'Секретная фраза прокси-сервера.';

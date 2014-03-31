@@ -29,7 +29,7 @@
   ***********************************************************************likhobory*/
 
 $mod_strings = array (
-     'LBL_ID' => 'ID',
+    'LBL_ID' => 'ID',
     'LBL_DATE_ENTERED' => 'Дата создания',
     'LBL_DATE_MODIFIED' => 'Дата изменения',
     'LBL_MODIFIED' => 'Изменено',

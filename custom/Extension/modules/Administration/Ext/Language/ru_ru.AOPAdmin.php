@@ -47,3 +47,5 @@ $mod_strings['LBL_SUPPORT_FROM_ADDRESS'] = 'В качестве адреса о�
 $mod_strings['LBL_SUPPORT_FROM_NAME'] = 'В качестве имени отправителя указывать';
 $mod_strings['LBL_CREATE_EMAIL_TEMPLATE']  = 'Создать';
 $mod_strings['LBL_EDIT_EMAIL_TEMPLATE']  = 'Изменить';
+$mod_strings['LBL_AOP_SINGLE_USER']  = 'Указанный пользователь';
+$mod_strings['LBL_AOP_SETTINGS'] = 'Настройка портала';
