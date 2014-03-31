@@ -2753,7 +2753,7 @@ $app_strings = array (
 	'LBL_LOADING_PAGE' => 'Загрузка страницы...',
 
 	'LBL_RELOAD_PAGE' => 'Пожалуйста, <a href="javascript: window.location.reload()">обновите эту страницу</a> для использования этого дашлета.',
-	'LBL_ADD_DASHLETS' => 'Добавление дашлетов',
+	'LBL_ADD_DASHLETS' => 'Добавить дашлет',
 	'LBL_CLOSE_DASHLETS' => 'закрыть',
 	'LBL_OPTIONS' => 'Параметры',
 	'LBL_NUMBER_OF_COLUMNS' => 'Выберите количество колонок',
@@ -4575,6 +4575,18 @@ $app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
 $app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
 $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
+
+$app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
+$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
+$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
+$app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';
+$app_strings['LBL_DELETE_DASHBOARD2'] = '?';
+$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Добавление новой страницы на закладку ГЛАВНАЯ';
+$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Удаление текущей страницы с закладки ГЛАВНАЯ';
+$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Переименование страницы';
+
+$app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
 $app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
 
