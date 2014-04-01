@@ -81,12 +81,13 @@ var RES_DEF_LOCK='Bloco passcode',
 	RES_HERE='ecco',
 	RES_DIST='Distanza';
 
-// DATE FORMAT
-var regDate = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4})$',"");
-var regDateTime = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4}) ([0-9]|[0-2][0-9]):([0-6][0-9])$',"");
-var regMonth="$2";
-var regDay="$1";
-var AMPM=false;
+// FUTURE VERSIONS - NOT USED YET
+var RES_SCANCARD='Scanner Carte de visite QR Code',
+	RES_COUNT='Nombre de',
+	RES_SUM='Somme',
+	RES_AVERAGE='Moyenne',
+	RES_REMINDERS='Rappels',
+	RES_ROWS_PER_DASHLET="Righe per Dashlet";
 
 // ADDRESS FORMAT
 var Addresses_Template= '$street<br/>$city, $state $postalcode<br/>$country';

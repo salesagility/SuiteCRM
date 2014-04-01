@@ -51,7 +51,7 @@ $viewdefs = array (
                 ),
               ),
             ),
-            'AOS_GENLET' => 
+            'AOS_GENLET' =>
             array (
               'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
             ),
@@ -108,11 +108,11 @@ $viewdefs = array (
             0 => 
             array (
               'name' => 'account_name',
-              'displayParams' => 
+              'displayParams' =>
               array (
                 'enableConnectors' => true,
                 'module' => 'Leads',
-                'connectors' => 
+                'connectors' =>
                 array (
                   0 => 'ext_rest_linkedin',
                 ),

@@ -32,11 +32,11 @@ $viewdefs = array (
                 ),
               ),
             ),
-            'AOS_GENLET' => 
+            'AOS_GENLET' =>
             array (
               'customCode' => '<input type="button" class="button" onClick="showPopup();" value="{$APP.LBL_GENERATE_LETTER}">',
             ),
-            'AOP_CREATE' => 
+            'AOP_CREATE' =>
             array (
               'customCode' => '{if !$fields.joomla_account_id.value && $AOP_PORTAL_ENABLED}<input type="submit" class="button" onClick="this.form.action.value=\'createPortalUser\';" value="{$MOD.LBL_CREATE_PORTAL_USER}"> {/if}',
               'sugar_html' => 
@@ -114,26 +114,26 @@ $viewdefs = array (
           ),
         ),
         'useTabs' => false,
-        'tabDefs' => 
+        'tabDefs' =>
         array (
-          'LBL_CONTACT_INFORMATION' => 
+          'LBL_CONTACT_INFORMATION' =>
           array (
             'newTab' => false,
             'panelDefault' => 'expanded',
           ),
-          'LBL_PANEL_ADVANCED' => 
+          'LBL_PANEL_ADVANCED' =>
           array (
             'newTab' => false,
             'panelDefault' => 'expanded',
           ),
-          'LBL_PANEL_ASSIGNMENT' => 
+          'LBL_PANEL_ASSIGNMENT' =>
           array (
             'newTab' => false,
             'panelDefault' => 'expanded',
           ),
         ),
       ),
-      'panels' => 
+      'panels' =>
       array (
         'lbl_contact_information' => 
         array (
@@ -182,13 +182,13 @@ $viewdefs = array (
               array (
                 'enableConnectors' => true,
                 'module' => 'Contacts',
-                'connectors' => 
+                'connectors' =>
                 array (
                   0 => 'ext_rest_linkedin',
                 ),
               ),
             ),
-            1 => 
+            1 =>
             array (
               'name' => 'phone_fax',
               'label' => 'LBL_FAX_PHONE',
@@ -234,13 +234,13 @@ $viewdefs = array (
               'comment' => 'Full text of the note',
               'label' => 'LBL_DESCRIPTION',
             ),
-            1 => 
+            1 =>
             array (
               'name' => 'aop_case_updates_contacts_1_name',
             ),
           ),
         ),
-        'LBL_PANEL_ADVANCED' => 
+        'LBL_PANEL_ADVANCED' =>
         array (
           0 => 
           array (

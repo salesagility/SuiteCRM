@@ -81,12 +81,13 @@ var RES_DEF_LOCK='Establecer código',
 	RES_HERE='aquí',
 	RES_DIST='Distancia';
 	
-// DATE FORMAT
-var regDate = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4})$',""),
- regDateTime = new RegExp('^([0-9]|[0,1,2][0-9]|[3][0,1])/([0-9]|[0][0-9]|[1][0,1,2])/([0-9]{4}) ([0-9]|[0-2][0-9]):([0-6][0-9])$',""),
- regMonth="$2",
- regDay="$1",
- AMPM=false;
+// FUTURE VERSIONS - NOT USED YET
+var RES_SCANCARD='Scan QR Code business card',
+	RES_COUNT='Number of',
+	RES_SUM='Sum',
+	RES_AVERAGE='Average',
+	RES_REMINDERS='Reminders',
+	RES_ROWS_PER_DASHLET="Elementos por Dashlet";
 
 // ADDRESS FORMAT
 var Addresses_Template= '$street<br/>$postalcode $city<br/>$country';

@@ -17,7 +17,7 @@ function reschedule_history($focus, $field, $value, $view){
         $html = '';
         $html .= '<ul id="history_list">';
 
-        $query = 'SELECT calls_reschedule.id FROM calls_reschedule JOIN users ON calls_reschedule.modified_user_id = users.id WHERE call_id="'.$focus->id.'" ORDER BY calls_reschedule.date_entered DESC';
+        $query = "SELECT calls_reschedule.id FROM calls_reschedule JOIN users ON calls_reschedule.modified_user_id = users.id WHERE call_id='".$focus->id."' ORDER BY calls_reschedule.date_entered DESC";
         
         $result = $focus->db->query($query);
         

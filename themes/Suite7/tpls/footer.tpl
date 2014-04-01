@@ -35,26 +35,29 @@
  ********************************************************************************/
 
 *}
-<!--end body panes-->
+
         </td></tr></table>
     </div>
-    <div class="clear"></div>
+
 
 </div>
 
 <div id="bottomLinks">
 </div>
+<div class="clear_footer"></div>
 
 <div id="footer">
+    <div id="responseTime">
+        {$STATISTICS}
+    </div>
     {if $AUTHENTICATED}
+    <div class="companyLogo"><a href="index.php?module=Home&action=index" border="0"><img src="{$COMPANY_LOGO_URL}" width="{$COMPANY_LOGO_WIDTH}" height="{$COMPANY_LOGO_HEIGHT}" alt="{sugar_translate label='LBL_COMPANY_LOGO'}" border="0"/></a></div>
     <div id="links">
         <button id="print_page" onclick="printpage()">{$MOD.LBL_SUITE_PRINT}</button>
         <button id="backtotop">{$MOD.LBL_SUITE_TOP}</button>
     </div>
     {/if}
-	<div id="responseTime">
-    	{$STATISTICS}
-    </div>
+
     <div id="copyright_data">
     <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
         <p>{$MOD.LBL_SUITE_DESC1}</p>
@@ -62,6 +65,7 @@
         <p>{$MOD.LBL_SUITE_DESC2}</p>
         <br>
         <p>{$MOD.LBL_SUITE_DESC3}</p>
+        <br>
     </div>
     <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
         <p>{$COPYRIGHT}</p>

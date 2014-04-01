@@ -47,18 +47,23 @@ class AOS_Products extends AOS_Products_sugar {
 
 		if (isset($_FILES['uploadimage']['tmp_name'])&&$_FILES['uploadimage']['tmp_name']!=""){
 
-		if($_FILES['uploadimage']['size'] > $sugar_config['upload_maxsize']) {
-			die($mod_strings['LBL_IMAGE_UPLOAD_FAIL'].$sugar_config['upload_maxsize']);
+            if($_FILES['uploadimage']['size'] > $sugar_config['upload_maxsize']) {
+                die($mod_strings['LBL_IMAGE_UPLOAD_FAIL'].$sugar_config['upload_maxsize']);
 
-		}
-		else {
-			$this->product_image=$sugar_config['site_url'].'/'.$sugar_config['upload_dir'].$_FILES['uploadimage']['name'];
-			move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$_FILES['uploadimage']['name']);
+            }
+            else {
+                $this->product_image=$sugar_config['site_url'].'/'.$sugar_config['upload_dir'].$_FILES['uploadimage']['name'];
+                move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$_FILES['uploadimage']['name']);
 
-		}
-	}
-	parent::save($check_notify);
-}
+            }
+	    }
+
+        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+
+        perform_save($this);
+
+	    parent::save($check_notify);
+    }
 	
 }
 ?>

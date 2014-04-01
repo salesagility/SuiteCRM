@@ -37,6 +37,7 @@ switch($time_format)
         $time = explode(":",$time);//splits the time into hours and minutes
         $hour = $time[0];//gets the hour
         $min = $time[1];//gets the time
+        $period = '';
         $format = '23:00';//set time format for the javascript live update of date/time
         break;
     case 'H.i':
@@ -46,6 +47,7 @@ switch($time_format)
         $time = explode(".",$time);
         $hour = $time[0];
         $min = $time[1];
+        $period = '';
         $format = '23.00';
         break;
     case 'h:ia':

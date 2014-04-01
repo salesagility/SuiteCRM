@@ -366,7 +366,7 @@ function populate_service_lines($text, $lineItems, $element = 'tr'){
                     $firstValue = '$aos_products_quotes_'.$name;
                     $firstNum = $curNum;
                 }
-                else if($curNum > $lastNum)
+                if($curNum > $lastNum)
                 {
                     $lastValue = '$aos_products_quotes_'.$name;
                     $lastNum = $curNum;

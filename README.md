@@ -1,4 +1,4 @@
-##SuiteCRM 7.0.2
+##SuiteCRM 7.1.0
 
 ### What's in this repository ###
 
@@ -26,10 +26,7 @@ The following links offer various ways to view, contribute and collaborate to th
 ### Development Roadmap ###
 
 #### Advanced OpenWorkflow ####
-+ Work with related modules(SalesAgility) 
-+ New modified only(SalesAgility) 
 + Approvals(Unassigned)*
-+ Field change triggers(Unassigned)*
 
 #### Advanced OpenReports ####
 + Charts(SalesAgility) 
@@ -43,7 +40,6 @@ The following links offer various ways to view, contribute and collaborate to th
 + Integration with WordPress & Drupal(Unassigned)*
 
 #### Advanced OpenDiscovery ####
-+ Zend only(SalesAgility) 
 + Solr integration(Unassigned)*
 
 (*) Unassigned - Available for collaborators to be assigned to this requirement and develop it for future releases.

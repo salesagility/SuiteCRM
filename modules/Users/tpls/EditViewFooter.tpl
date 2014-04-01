@@ -368,7 +368,7 @@
             </tr>
                         <tr>
                             <td width="17%" scope="row"><slot>{$MOD.LBL_PUBLISH_KEY}:</slot>&nbsp;{sugar_help text=$MOD.LBL_CHOOSE_A_KEY}</td>
-                            <td width="20%" ><slot><input id='calendar_publish_key' name='calendar_publish_key' tabindex='17' size='25' maxlength='25' type="text" value="{$CALENDAR_PUBLISH_KEY}"></slot></td>
+                            <td width="20%" ><slot><input id='calendar_publish_key' name='calendar_publish_key' tabindex='17' size='25' maxlength='36' type="text" value="{$CALENDAR_PUBLISH_KEY}"></slot></td>
                             <td width="63%" ><slot>&nbsp;</slot></td>
                         </tr>
                         <tr>

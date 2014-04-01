@@ -46,6 +46,7 @@ class AOW_Condition extends Basic {
 	var $modified_user_link;
 	var $aow_workflow_id;
 	var $condition_order;
+    var $module_path;
 	var $field;
 	var $operator;
 	var $value;
@@ -74,11 +75,15 @@ class AOW_Condition extends Basic {
                 foreach($this->field_defs as $field_def) {
                     if(isset($post_data[$key.$field_def['name']][$i])){
                         if(is_array($post_data[$key.$field_def['name']][$i])){
-                            switch($condition->value_type) {
-                                case 'Date':
-                                    $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
-                                default:
-                                    $post_data[$key.$field_def['name']][$i] = encodeMultienumValue($post_data[$key.$field_def['name']][$i]);
+                            if($field_def['name'] == 'module_path'){
+                                $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
+                            }else {
+                                switch($condition->value_type) {
+                                    case 'Date':
+                                        $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
+                                    default:
+                                        $post_data[$key.$field_def['name']][$i] = encodeMultienumValue($post_data[$key.$field_def['name']][$i]);
+                                }
                             }
                         } else if($field_def['name'] === 'value' && $post_data[$key.'value_type'][$i] === 'Value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['flow_module'], $condition->field, $post_data[$key.$field_def['name']][$i]);

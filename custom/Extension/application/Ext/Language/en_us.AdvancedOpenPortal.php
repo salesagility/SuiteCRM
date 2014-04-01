@@ -45,10 +45,8 @@ $app_list_strings['case_status_dom'] =
       'Closed_Rejected' => 'Rejected',
       'Closed_Duplicate' => 'Duplicate',
   );
-
-$app_list_strings['aop_distribution_method'] =
+$app_list_strings['contact_portal_user_type_dom'] =
     array (
-        'singleUser' => 'Single User',
-        'roundRobin' => 'Round Robin',
-        'leastBusy' => 'Least Busy',
+        'Single' => 'Single user',
+        'Account' => 'Account user',
     );

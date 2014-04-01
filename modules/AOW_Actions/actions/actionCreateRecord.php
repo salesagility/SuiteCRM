@@ -91,7 +91,7 @@ class actionCreateRecord extends actionBase {
 
     }
 
-    function run_action(SugarBean $bean, $params = array()){
+    function run_action(SugarBean $bean, $params = array(), $in_save=false){
         global $beanList;
 
         if(isset($params['record_type']) && $params['record_type'] != ''){
@@ -119,7 +119,7 @@ class actionCreateRecord extends actionBase {
         return false;
     }
 
-    function set_record(SugarBean $record, SugarBean $bean, $params = array()){
+    function set_record(SugarBean $record, SugarBean $bean, $params = array(), $in_save = false){
         global $app_list_strings, $timedate;
 
         $record_vardefs = $record->getFieldDefinitions();
@@ -160,9 +160,9 @@ class actionCreateRecord extends actionBase {
                                         $value = $businessHours->addBusinessHours($amount);
                                     }else if($dateToUse == "field"){
                                         $dateToUse = $params['field'][$key];
-                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($record->fetched_row[$dateToUse]));
+                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
                                     }else{
-                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->fetched_row[$dateToUse]));
+                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($bean->$dateToUse));
                                     }
                                     $value = $timedate->asDb( $value );
                                     break;
@@ -273,9 +273,12 @@ class actionCreateRecord extends actionBase {
                 $record->$field = $value;
             }
         }
-        $record->process_save_dates =false;
 
-        $check_notify = $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
+        $check_notify = false;
+        if($in_save) $record->processed = true;
+        else $check_notify = $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
+
+        $record->process_save_dates =false;
 
         $record->save($check_notify);
     }

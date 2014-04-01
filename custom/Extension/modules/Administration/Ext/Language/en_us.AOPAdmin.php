@@ -47,4 +47,5 @@ $mod_strings['LBL_SUPPORT_FROM_ADDRESS'] = 'Support Email From Address';
 $mod_strings['LBL_SUPPORT_FROM_NAME'] = 'Support Email From Name';
 $mod_strings['LBL_CREATE_EMAIL_TEMPLATE']  = 'Create';
 $mod_strings['LBL_EDIT_EMAIL_TEMPLATE']  = 'Edit';
-$mod_strings['LBL_AOP_SINGLE_USER']  = 'Single User';
+$mod_strings['LBL_SINGLE_USER'] = 'Single User';
+$mod_strings['LBL_AOP_SETTINGS'] = 'AOP Settings';
