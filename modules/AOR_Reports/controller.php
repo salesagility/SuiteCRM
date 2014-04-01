@@ -23,7 +23,7 @@
  */
 
 
-require_once("modules/AOR_Reports/aor_utils.php");
+require_once("modules/AOW_WorkFlow/aow_utils.php");
 
 class AOR_ReportsController extends SugarController {
 
@@ -50,7 +50,7 @@ class AOR_ReportsController extends SugarController {
     }
 
     protected function action_changeReportPage(){
-        echo $this->bean->build_report_html($_REQUEST['offset']);
+        echo $this->bean->build_report_html($_REQUEST['offset'], true,$_REQUEST['group']);
         die();
     }
 
@@ -131,7 +131,7 @@ class AOR_ReportsController extends SugarController {
                 </table><br />';
 
 
-        $printable = $this->bean->build_report_html(-1,false);
+        $printable = $this->bean->build_group_report(-1,false);
         $stylesheet = file_get_contents('themes/Suite7/css/style.css');
 
         ob_clean();
@@ -246,7 +246,7 @@ class AOR_ReportsController extends SugarController {
             $module = getRelatedModule($_REQUEST['aor_module'],$_REQUEST['rel_field']);
         } else {
             $module = $_REQUEST['aor_module'];
-        };
+        }
         $fieldname = $_REQUEST['aor_fieldname'];
         $aor_field = $_REQUEST['aor_newfieldname'];
 

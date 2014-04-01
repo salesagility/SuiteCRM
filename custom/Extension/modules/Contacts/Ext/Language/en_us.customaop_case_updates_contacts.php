@@ -32,3 +32,4 @@ $mod_strings['LBL_CREATE_PORTAL_USER_SUCCESS'] = "Created portal user";
 $mod_strings['LBL_ENABLE_PORTAL_USER_SUCCESS'] = "Enabled portal user";
 $mod_strings['LBL_DISABLE_PORTAL_USER_SUCCESS'] = "Disabled portal user";
 $mod_strings['LBL_NO_JOOMLA_URL'] = "No portal URL specified";
+$mod_strings['LBL_PORTAL_USER_TYPE'] = "Portal User Type";

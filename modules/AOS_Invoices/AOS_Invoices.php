@@ -53,6 +53,10 @@ class AOS_Invoices extends AOS_Invoices_sugar {
             }
         }
 
+        require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
+
+        perform_save($this);
+
         parent::save($check_notify);
 
         require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');

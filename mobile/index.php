@@ -10,7 +10,7 @@
 		}
 		// language files for Sugar Fields
 		if (!file_exists("fielddefs/modules_$language.js")) {
-			echo "console.log('language $language not found');";
+//			echo "console.log('language $language not found');";
 			$language="en_us";
 		}
 		// language file for QuickCRM interface
@@ -23,38 +23,9 @@
 		?>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+		<meta name="apple-itunes-app" content="app-id=593452214">
         <link rel="apple-touch-icon" href="images/QuickCRM-CE.png"/>
-		
-		<script type="text/javascript" language="Javascript">
-			var QCRM={}, app_version="",mobile_app=false, loaded_scripts=false, proxy_url, QuickCRMAddress = '.', ServerAddress='../',myTimeZone,qusers, mobile_usr=new Array(),  init_module = '', init_record="";
-				QCRM={
-					OffLine:false,
-					JJWG:false,
-				};
-		</script>
-        <script type="text/javascript" src="lib/jquery-1.7.2.min.js"></script>
-		<script type="text/javascript" language="Javascript">
-$( document ).bind( "mobileinit", function() {
-	$.mobile.defaultPageTransition = 'none';
-	$.mobile.activeBtnClass = 'none';
-});
-$( document ).on( "pageinit", "#HomePage", function() {
-    $( document ).on( "swiperight swiperleft", "#HomePage", function( e ) {
-        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
-            if ( e.type === "swiperight" ) {
-                $( "#HomePanel" ).panel( "open" );
-            }
-        }
-		else {
-            if ( e.type === "swipeleft" ) {
-                $( "#HomePanel" ).panel( "close" );
-            }
-        }
-
-    });
-});
-		</script>
-		<!-- Sugar strings and fields -->
+        <script type="text/javascript" src="lib/jquery-1.8.2.min.js"></script>
 		<?php
         echo <<<EOQ
         <script type="text/javascript" src="config.js?v=$time"></script>
@@ -65,26 +36,35 @@ $( document ).on( "pageinit", "#HomePage", function() {
 EOQ;
 		?>
         <script type="text/javascript" src="lib/modernizr.js"></script>
-        <link rel="stylesheet" href="lib/jquerymobile/jquery.mobile-1.3.1.min.css" />
-        <link rel="stylesheet" href="lib/jquerymobile/jqm-icon-pack-2.0-original.css" />
+        <link rel="stylesheet" href="lib/jquerymobile/jquery.mobile-1.3.2.min.css" />
+        <link rel="stylesheet" href="lib/jquerymobile/jqm-icon-pack-fa.css" />
         <link rel="stylesheet" href="lib/mobiscroll/mobiscroll-2.5.custom.min.css" />
-        <script type="text/javascript" src="lib/jquerymobile/jquery.mobile-1.3.1.min.js"></script>
+        <script type="text/javascript" src="lib/jquerymobile/jquery.mobile-1.3.2.min.js"></script>
         <script type="text/javascript" src="lib/mobiscroll/mobiscroll-2.5.custom.min.js"></script>
+        <script type="text/javascript" src="lib/json2.min.js"></script>
+		<script type="text/javascript" language="Javascript">
+			var froot="./", QCRM={}, app_version="",mobile_app=false, sugar_flavor='CE', ForceCE=false, loaded_scripts=false, proxy_url, QuickCRMAddress = '.', ServerAddress='../',myTimeZone,qusers, mobile_usr=new Array(),  init_module = '', init_record="";
+				QCRM={
+					OffLine:false,
+					StoredVersion:false,
+					UpdatedConfig:false,
+					TimeDiff:false,
+					JJWG:false,
+					calendar: {enabled:false,dates:{},init:false, currDate:new Date()}
+				};
+			$( document ).bind( "mobileinit", function() {
+				$.mobile.defaultPageTransition = 'none';
+			});
+		proxy_url=(QuickCRMAddress+(QuickCRMAddress.substr(-1)==="/"?"":"/"))+(mobile_app?"REST":"../service/v"+(sugar_version >= '6.4'?'4_1':(sugar_version >= '6.2'?'4':'2')))+"/rest.php";
+		</script>
         <script type="text/javascript" src="js/quickcrm-utils-ce-3.2.min.js"></script>
-        <script type="text/javascript" src="js/quicrcrm-ce-3.2.2.min.js"></script>
+        <script type="text/javascript" src="js/quickcrm-ce-3.3.2.min.js"></script>
 		<?php
 		if (file_exists("../custom/QuickCRM/custom.js")) {
 			echo '<script type="text/javascript" src="../custom/QuickCRM/custom.js?v='.time().'"></script>';
 		}
 		?>
-
-
-
-
-
-		<script type="text/javascript" language="Javascript">
-		proxy_url=(QuickCRMAddress+(QuickCRMAddress.substr(-1)==="/"?"":"/"))+(mobile_app?"REST":"../service/v"+(sugar_version >= '6.2'?'4':(sugar_version >= '6.1'?'2':'2')))+"/rest.php";
-		</script>
+		
 
 		<?php
 		if(isset($_REQUEST['module']) && isset($_REQUEST['record'])){
@@ -96,7 +76,7 @@ EOQ;
 		}
 		?>
 		<!-- Mobile language file and UI -->
-        <link rel="stylesheet" href="css/quickcrm3.css" />
+        <link rel="stylesheet" href="css/quickcrm331.css" />
         <title>QuickCRM CE</title>
     </head>
     <body>
@@ -110,6 +90,8 @@ EOQ;
 				</div>
 				<div id="LoginLoading">
 					<p>... Loading</p>
+				</div>
+				<div id="HomeWarning">
 				</div>
 				<div id="LoginForm" style="display: none;">
                 <p id="LoginPageMessage"></p>
@@ -132,10 +114,10 @@ EOQ;
             </div><!-- /footer -->
         </div>
 
-        <div id="HomePage" data-role="page" data-theme="b" data-title="Home">
+        <div id="HomePage" data-role="page" data-theme="c" data-title="Home" class="ui-responsive-panel">
             <div data-role="panel" data-theme="a" id="HomePanel" data-display="reveal" data-dismissible="false">
 				<table width="100%"><tr>
-					<td><a href="#" onclick="OpenHelp()" data-icon="question"  data-theme="a" data-role="button"data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
+					<td><a href="#" onclick="OpenHelp()" data-icon="question"  data-theme="a" data-role="button" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
 					<td align="center"><a href="#LockPage" data-rel="dialog" id="LockBtn" data-icon="lock"  data-theme="a" data-role="button" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
 					<td align="right"><a id="LogOutButton" href="javascript:Disconnect();LogOutUser();" data-theme="a" data-role="button" data-icon="power" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></td>
 				</tr></table>
@@ -150,49 +132,32 @@ EOQ;
 				</div>
 			</div>
             <div data-role="header">
-				<a href="#HomePanel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
-               <h1>QuickCRM</h1>
- 
+				<a href="#HomePanel" data-icon="reorder" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="HomePageTitle">QuickCRM</h1>
+                <a id="NotifyHomeBtn" href="#HomeNotify" data-rel="popup" data-theme="e" data-icon="flag" data-iconpos="notext"  style="display:none;" class="ui-btn-right"></a>
+				<div id="HomeBar" data-role="navbar" data-mini="true" >
+					<ul>
+						<li><a id="AllModulesLinkLabel" href="#AllModulesPopup" data-rel="popup" data-theme="c" data-role="button" data-icon="faplus"  data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></li>
+						<li><a id="ActivitiesLinkLabel" href="#ActivitiesListPage" data-theme="c" data-transition="none" data-role="button" data-icon="calendar" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></li>
+						<li id="MapsContainer"><a id="MapsLinkLabel" href="#" onclick="javascript:JJWG.ShowMapSearch();" data-theme="c" data-role="button" data-icon="mappin" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc ui-disabled"></a></li>
+						<li id="OffLineContainer"><a id="SyncPageLinkLabel" href="#SyncPage" data-theme="c" data-role="button" data-icon="retweet" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></li>
+						<li><a id="AdminPageLinkLabel" href="#AllOptions" data-theme="c" data-role="button" data-icon="wrench" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a></li>
+					</ul>
+				</div>	
             </div>
             <div data-role="content">
 				<div id="HomeCustom">
 				</div>
+				<div id="Favorites" class="IconWrapper">
+				</div>
+				<div id="Creates" class="IconWrapper">
+				</div>
                 <ul class="IconWrapper" id="HomeMenu">
-
-                    <li id="ActivitiesContainer" class="IconContainer">
-                        <a href="#ActivitiesListPage">
-                            <div class="HomeIcon ActivitiesIcon"></div>
-                            <div id="ActivitiesLinkLabel"></div>
-                        </a>
-                    </li>
-
-                    <li class="IconContainer">
-                        <a href="#AllModulesListPage">
-                            <div class="HomeIcon AllModulesIcon"></div>
-                            <div id="AllModulesLinkLabel"></div>
-                        </a>
-                    </li>
-                    <li class="IconContainer">
-                        <a href="#LastViewedListPage">
-                            <div class="HomeIcon LastViewedIcon"></div>
-                            <div id="LastViewedLinkLabel"></div>
-                        </a>
-                    </li>
-
-                    <li class="IconContainer">
-                        <a href="#EditOptions">
-                            <div class="HomeIcon AdminIcon"></div>
-                            <div id="AdminPageLinkLabel"></div>
-                        </a>
-                    </li>
-
-                    <li class="IconContainer" id="ContactNSTEAMContainer">
-                        <a id="ContactNSTEAM" href="mailto:quickcrm@ns-team.fr?subject=Message sent from QuickCRM Mobile CE">
-                            <div class="HomeIcon NSEmailIcon"></div>
-                            <div id="ContactNSTEAMLinkLabel">Contact NS-Team</div>
-                        </a>
-                    </li>
                 </ul>
+                <a id='lnkPwd' href="#EnterPwdPage" data-rel="dialog" data-position-to="window" style='display:none;'></a>
+				<div id="AllModulesPopup" data-role="popup" data-theme="c">
+					<ul id="AllModulesPopupDiv" data-role="listview" data-theme="c" data-split-theme="c" data-filter="false" />
+				</div>
             </div><!-- /content -->
         </div>
 
@@ -284,71 +249,6 @@ EOQ;
             </div>
         </div>
 
-        <div id="EditOptions" data-role="page" data-theme="b">
-            <div data-role="header" data-theme="b">
-                <h1 id="EditOptionsTitle"></h1>
-				<a id="OptionsCancelTopBtn" href="#HomePage" data-role="button" data-rel="back" data-theme="c"></a>
-				<a id="OptionsConfirmTopBtn" href="javascript:SaveOptions();" data-role="button"  data-inline="true" class="ui-btn-right" data-theme="b"></a>
-            </div>
-            <div data-role="content">
-				<div data-role="collapsible" data-collapsed="false">
-				<h4 id="OptGeneral"></h4>
-
-					<div data-role="fieldcontain">
-						<fieldset data-role="controlgroup" data-mini="true">
-							<legend id="OptToolbarLbl"></legend>
-							<input type="checkbox" name="OptIconsLabels" id="OptIconsLabels" class="custom" data-theme="c" />
-							<label for="OptIconsLabels"></label>
-						</fieldset>
-					</div>
-
-					<div data-role="fieldcontain" data-mini="true">
-						<label for="OptRowsPerPage"></label>
-						<input type="range" name="OptRowsPerPage" id="OptRowsPerPage" value="20" step="5" min="5" max="500" data-theme="c" data-track-theme="b" />
-					</div>
-					<a id='lnkQLogout' href="#QLogout" data-rel="dialog" data-transition="pop" style='display:none;'></a>
-
-					<div data-role="fieldcontain">
-						<fieldset data-role="controlgroup" data-mini="true">
-							<legend id="OptHideEmptySubPLbl">Subpanels</legend>
-							<input type="checkbox" name="OptHideEmptySubP" id="OptHideEmptySubP" class="custom" data-theme="c" />
-							<label for="OptHideEmptySubP">Hide Empty</label>
-						</fieldset>
-					</div>
-					<div data-role="fieldcontain"  id="OptDatePickerDiv">
-						<fieldset data-role="controlgroup" data-mini="true">
-							<legend id="OptDatePickerLbl">Date Picker</legend>
-							<input type="checkbox" name="OptDatePicker" id="OptDatePicker" class="custom" data-theme="c" />
-							<label for="OptDatePicker">QuickCRM</label>
-						</fieldset>
-					</div>
-				</div>
-				
-				<div id="OptHomeDiv" data-role="collapsible">
-				<h4 id="OptHome"></h4>
-				<div data-role="fieldcontain">
-					<fieldset id="OptHomeIcons" data-role="controlgroup"  data-mini="true"/>
-				</div>
-				</div>
-				
-				<div data-role="collapsible" >
-					<h4 id="SortOrder"></h4>
-					<ul id="ModulesListSort" data-role="listview" data-theme="c" data-inset="true" data-filter="false" />
-				</div>
-				<div id="OptActDiv" data-role="collapsible">
-				</div>
-
-
-
-
-
-
-				<div style="margin:0 auto; margin-left:auto; margin-right:auto; align:center; text-align:center;">
-					<a id="OptionsCancelBottomBtn"  href="#HomePage" data-role="button" data-rel="back" data-inline="true" data-theme="c"></a>
-					<a id="OptionsConfirmBottomBtn" href="javascript:SaveOptions();" data-role="button" data-inline="true" ></a>
-				</div>
-            </div>
-        </div>
         <div id="QLogout" data-role="page" data-theme="b">
             <div data-role="header" data-theme="b">
                 <h1 id="QDialogTitle">QuickCRM</h1>
@@ -361,6 +261,102 @@ EOQ;
 				</div>
             </div>
         </div>
+		
+        <div id="AllOptions" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="AllOptionsTitle"></h1>
+            </div>
+            <div data-role="content">
+					<ul data-role="listview" data-theme="c" data-filter="false" >
+						<li><a id="OptionsGeneralLnk" href="#OptionsGeneral" data-transition="slide"></a></li>
+						<li><a id="OptionsHomeLnk" href="#OptionsHome" data-transition="slide"></a></li>
+						<li><a id="OptionsSortOrderLnk" href="#OptionsSortOrder" data-transition="slide"></a></li>
+						<li id="OptFilterOldDiv" ><a id="OptionsFilterOldLnk" href="#OptionsFilterOld" data-transition="slide"></a></li>
+						<li id="OptActDiv" ><a id="OptionsActLnk" href="#OptionsAct" data-transition="slide">Calls and meetings</a></li>
+						<li id="ContactNSTEAMContainer">
+						<li id="OptGetPro"><a id="OptGetProLnk" href="#" style="white-space:normal;" onclick="OpenQuickCRM()"></a></li>
+                    </li>
+					</ul>
+            </div>
+        </div>
+		
+        <div id="OptionsGeneral" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" onclick="OptionsGeneralSave();" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="OptionsGeneralTitle"></h1>
+            </div>
+            <div data-role="content">
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup" data-mini="true">
+							<legend id="OptToolbarLbl"></legend>
+							<input type="checkbox" name="OptIconsLabels" id="OptIconsLabels" class="custom" data-theme="c" />
+							<label for="OptIconsLabels"></label>
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain" data-mini="true">
+						<label for="OptRowsPerPage"></label>
+						<input type="range" name="OptRowsPerPage" id="OptRowsPerPage" value="20" step="5" min="5" max="500" data-theme="c" data-track-theme="b" />
+					</div>
+
+					<div id="RowsPerDashlet" data-role="fieldcontain" data-mini="true">
+						<label for="OptRowsPerDashlet"></label>
+						<input type="range" name="OptRowsPerDashlet" id="OptRowsPerDashlet" value="5" step="5" min="5" max="20" data-theme="c" data-track-theme="b" />
+					</div>
+
+					<div data-role="fieldcontain">
+						<fieldset data-role="controlgroup" data-mini="true">
+							<legend id="OptHideEmptySubPLbl">Subpanels</legend>
+							<input type="checkbox" name="OptHideEmptySubP" id="OptHideEmptySubP" class="custom" data-theme="c" />
+							<label for="OptHideEmptySubP"></label>
+						</fieldset>
+					</div>
+					<div data-role="fieldcontain" id="OptAlertDiv">
+						<fieldset data-role="controlgroup" data-mini="true">
+							<legend id="OptAlertsLbl"></legend>
+							<input type="checkbox" name="OptAlerts" id="OptAlerts" class="custom" data-theme="c" />
+							<label for="OptAlerts"></label>
+						</fieldset>
+					</div>
+            </div>
+        </div>
+	
+        <div id="OptionsHome" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" onclick="OptionsHomeSave();" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="OptionsHomeTitle"></h1>
+            </div>
+            <div data-role="content">
+				<div data-role="fieldcontain">
+					<fieldset id="OptHomeIcons" data-role="controlgroup"  data-mini="true"/>
+				</div>
+            </div>
+        </div>
+	
+        <div id="OptionsSortOrder" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" onclick="OptionsSortOrderSave();" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="OptionsSortOrderTitle"></h1>
+            </div>
+            <div data-role="content">
+					<ul id="ModulesListSort" data-role="listview" data-theme="c" data-filter="false" />
+            </div>
+        </div>
+	
+        <div id="OptionsFilterOld" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" onclick="OptionsFilterOldSave();" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="OptionsFilterOldTitle"></h1>
+            </div>
+        </div>
+	
+        <div id="OptionsAct" data-role="page" data-theme="c">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" onclick="OptionsActSave();" data-rel="back" data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="OptionsActTitle"></h1>
+            </div>
+        </div>
+	
 		<div id="GlobalSearch" data-role="page" data-theme="c">
             <div data-role="header" data-theme="b">
                 <h1 id="GlobalSearchTitle"></h1>
@@ -417,6 +413,17 @@ EOQ;
 				</div>
 			</div>
 		</div>
+
+        <div id="DownloadPage" data-role="page" data-theme="b">
+            <div data-role="header" data-theme="b">
+				<a href="#" data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc"></a>
+                <h1 id="DownloadPageTitle"></h1>
+           </div>
+
+            <div data-role="content">
+				<div id="DownloadDiv"></div>
+            </div>
+        </div>
 
     </body>
 </html>

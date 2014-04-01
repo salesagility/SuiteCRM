@@ -94,7 +94,12 @@ $viewdefs ['AOW_WorkFlow'] =
                             'name' => 'multiple_runs',
                             'label' => 'LBL_MULTIPLE_RUNS',
                         ),
-                        1 => '',
+                        1 =>
+                            array (
+                                'name' => 'flow_run_on',
+                                'studio' => 'visible',
+                                'label' => 'LBL_FLOW_RUN_ON',
+                            ),
                     ),
                     3 =>
                     array (

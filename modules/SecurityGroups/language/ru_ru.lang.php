@@ -79,6 +79,7 @@ $mod_strings = array(
     'LBL_MAKE_POST' => 'Отправить сообщение',
     'LBL_POST' => 'Отправить',
     'LBL_SELECT_GROUP' => 'Выберите группу',
+	'LBL_SELECT_GROUP_ERROR' => 'Не выбрано ни одной группы.',
 
     'LBL_HOOKUP_SELECT' => "Выберите модуль",
     'LBL_HOOKUP_CONFIRM_PART1' => "Будет добавлена связь между Группой пользователя и ",
