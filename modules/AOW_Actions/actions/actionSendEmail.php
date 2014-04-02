@@ -184,7 +184,7 @@ class actionSendEmail extends actionBase {
                         }
                         break;
                     case 'Related Field':
-                        $emailTarget = $params['email_target'];
+                        $emailTarget = $params['email'][$key];
                         $relatedFields = $bean->get_related_fields();
                         $field = $relatedFields[$emailTarget];
                         if($field['type'] == 'relate'){
