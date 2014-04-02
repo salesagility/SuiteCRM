@@ -209,7 +209,7 @@ $dictionary['AOS_Products'] = array(
     'duplicate_merge_dom_value' => '0',
     'audited' => 1,
     'reportable'=>true,
-    'len' => '25',
+    'len' => '255',
   ),
   'contact_id' => 
   array (
