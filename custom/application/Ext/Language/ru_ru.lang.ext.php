@@ -507,8 +507,12 @@ $app_list_strings['aow_assign_options']['security_group'] = 'ВСЕ пользо
 
 $app_list_strings['aow_email_type_list']['Email Address'] = 'Вручную';
 $app_list_strings['aow_email_type_list']['Record Email'] = 'Отобранной записи';
-$app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
 $app_list_strings['aow_email_type_list']['Related Field'] = 'Связанного модуля';
+$app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
+$app_list_strings['aow_email_type_list']['Users'] = 'Пользователи';
+$app_list_strings['aow_email_to_list']['to'] = 'Кому';
+$app_list_strings['aow_email_to_list']['cc'] = 'Копия';
+$app_list_strings['aow_email_to_list']['bcc'] = 'Скрытая копия';
 
 /**
 * @package SuiteCRM
@@ -539,7 +543,7 @@ $app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. конта�
 $app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
 $app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
 $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
-$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Модуль';
 
 $app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
 
