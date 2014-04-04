@@ -82,7 +82,7 @@ EOS;
             foreach($params['field'] as $key => $field){
                 if(is_array($params['value'][$key]))$params['value'][$key] = json_encode($params['value'][$key]);
 
-                $html .= "load_crline('".$line."','".$field."','".$params['value'][$key]."','".$params['value_type'][$key]."');";
+                $html .= "load_crline('".$line."','".$field."','".str_replace(array("\r\n","\r","\n")," ",$params['value'][$key])."','".$params['value_type'][$key]."');";
             }
         }
         if(isset($params['rel'])){
