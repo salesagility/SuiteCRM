@@ -413,24 +413,4 @@ EOJS;
 		}
 	}
 
-    function addTab(){
-        if (isset($_REQUEST['numColumns'])){
-            $numCols = $_REQUEST['numColumns'];
-        }
-        else{
-            $numCols = '2';
-        }
-
-        $pageName = js_escape($_REQUEST['pageName']);
-
-        $json = getJSONobj();
-        echo 'result = ' . $json->encode(array('pageName' => $pageName, 'numCols' => $numCols));
-    }
-
-
-
-
-
-
-
 }
