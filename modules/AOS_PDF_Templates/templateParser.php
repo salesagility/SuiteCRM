@@ -39,6 +39,10 @@ class templateParser{
                 else if($field_def['type'] == 'multienum' && isset($field_def['options'])) {
 					$repl_arr[$key."_".$field_def['name']] = implode(', ', unencodeMultienum($focus->$field_def['name']));
 				}
+                //Fix for Windows Server as it needed to be converted to a string.
+                else if($field_def['type'] == 'int') {
+                    $repl_arr[$key."_".$field_def['name']] = strval($focus->$field_def['name']);
+                }
                 else {
 					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
 				}
