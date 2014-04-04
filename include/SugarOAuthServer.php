@@ -167,7 +167,7 @@ class SugarOAuthServer
 		    $this->provider->setTimestampNonceHandler(array($this,'timestampNonceChecker'));
 		    $this->provider->setTokenHandler(array($this,'tokenHandler'));
 	        if(!empty($req_path)) {
-		        $this->provider->setRequestTokenPath($req_path);  // No token needed for this end point
+		        $this->provider->isRequestTokenEndpoint($req_path);  // No token needed for this end point
 	        }
 	    	$this->provider->checkOAuthRequest(null, $this->decodePostGet());
 	    	if(mt_rand() % 10 == 0) {
