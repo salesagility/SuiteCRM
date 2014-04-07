@@ -82,11 +82,11 @@ $dictionary['Calls_Reschedule'] = array(
     'len' => 36,
     'size' => '20',
   ),
-  'call' =>
+  'call_name' =>
   array (
     'required' => false,
     'source' => 'non-db',
-    'name' => 'call',
+    'name' => 'call_name',
     'vname' => 'LBL_CALLS',
     'type' => 'relate',
     'massupdate' => 0,
