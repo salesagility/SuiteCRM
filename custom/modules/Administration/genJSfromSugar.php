@@ -221,14 +221,12 @@ EOQ;
 
 		$administration->saveSetting('QuickCRM', 'sugar_config', base64_encode($str));
 		
-		if ($sugar_config['sugar_version']<'6.3'){
 			$saveDir = realpath(dirname(__FILE__).'/../../../mobile/');
         
 			if($fh = @fopen($saveDir . '/config.js', "w")){
 				fputs($fh, $str);
 				fclose($fh);
 			}
-		}
     }
     
 	function createAllFiles(){
@@ -262,11 +260,6 @@ function createMobileFiles(){
 					$info = $info['http_code'];
 					$err=($info=='403' || $info=='500');
 				}
-
-
-
-
-
 
 				curl_close($ch); 
 				return (!$err);
