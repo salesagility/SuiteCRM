@@ -251,6 +251,7 @@ class AOW_WorkFlow extends Basic {
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $table_alias.'_cstm.'.$condition->field;
+                        $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                     } else {
                         $field = $table_alias.'.'.$condition->field;
                     }
@@ -264,6 +265,7 @@ class AOW_WorkFlow extends Basic {
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $value = $table_alias.'_cstm.'.$condition->value;
+                                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                             } else {
                                 $value = $table_alias.'.'.$condition->value;
                             }
@@ -283,6 +285,7 @@ class AOW_WorkFlow extends Basic {
                                 $data = $condition_module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                     $value = $table_alias.'_cstm.'.$params[0];
+                                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                                 } else {
                                     $value = $table_alias.'.'.$params[0];
                                 }
