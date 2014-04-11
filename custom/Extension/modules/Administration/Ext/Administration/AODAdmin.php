@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package Advanced OpenPortal
+ * @package Advanced OpenDiscovery
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -22,11 +22,11 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 $admin_option_defs = array();
-$admin_option_defs['Administration']['aop'] = array(
+$admin_option_defs['Administration']['aod'] = array(
     'edit',
-    'LBL_AOP_SETTINGS',
-    'LBL_AOP_DESC',
-    './index.php?module=Administration&action=AOPAdmin'
+    'LBL_AOD_SETTINGS',
+    'LBL_AOD_DESC',
+    './index.php?module=Administration&action=AODAdmin'
 );
 if (isset($admin_group_header['sagility']))  $admin_option_defs['Administration'] = array_merge((array)$admin_option_defs['Administration'], (array)$admin_group_header['sagility'][3]['Administration']);
 

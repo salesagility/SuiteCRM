@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package Advanced OpenPortal
+ * @package Advanced OpenDiscovery
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -21,20 +21,8 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$admin_option_defs = array();
-$admin_option_defs['Administration']['aop'] = array(
-    'edit',
-    'LBL_AOP_SETTINGS',
-    'LBL_AOP_DESC',
-    './index.php?module=Administration&action=AOPAdmin'
-);
-if (isset($admin_group_header['sagility']))  $admin_option_defs['Administration'] = array_merge((array)$admin_option_defs['Administration'], (array)$admin_group_header['sagility'][3]['Administration']);
-
-$admin_group_header['sagility'] = array(
-    'LBL_SALESAGILITY_ADMIN',
-    '',
-    false,
-    $admin_option_defs,
-    ''
-);
-?>
+$mod_strings['LBL_SALESAGILITY_ADMIN'] = 'Advanced OpenAdmin';
+$mod_strings['LBL_AOD_ADMIN_MANAGE_AOD'] = 'Advanced OpenDiscovery Settings';
+$mod_strings['LBL_AOD_ENABLE'] = 'Enable AOD';
+$mod_strings['LBL_AOD_SETTINGS'] = 'AOD Settings';
+$mod_strings['LBL_AOD_DESC'] = 'Change settings for Advanced OpenDiscovery';

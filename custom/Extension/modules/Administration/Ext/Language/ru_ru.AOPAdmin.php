@@ -49,3 +49,4 @@ $mod_strings['LBL_CREATE_EMAIL_TEMPLATE']  = 'Создать';
 $mod_strings['LBL_EDIT_EMAIL_TEMPLATE']  = 'Изменить';
 $mod_strings['LBL_AOP_SINGLE_USER']  = 'Указанный пользователь';
 $mod_strings['LBL_AOP_SETTINGS'] = 'Настройка портала';
+$mod_strings['LBL_AOP_DESC'] = 'Настройка параметров портала';

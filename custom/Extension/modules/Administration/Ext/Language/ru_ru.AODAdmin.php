@@ -25,3 +25,4 @@ $mod_strings['LBL_SALESAGILITY_ADMIN'] = 'OpenAdmin';
 $mod_strings['LBL_AOD_ADMIN_MANAGE_AOD'] = 'Настройка полнотекстового поиска';
 $mod_strings['LBL_AOD_ENABLE'] = 'Включить полнотекстовый поиск';
 $mod_strings['LBL_AOD_SETTINGS'] = 'Настройка полнотекстового поиска';
+$mod_strings['LBL_AOD_DESC'] = 'Настройка параметров полнотекстового поиска';

@@ -1299,6 +1299,7 @@ $mod_strings['LBL_CREATE_EMAIL_TEMPLATE']  = 'Создать';
 $mod_strings['LBL_EDIT_EMAIL_TEMPLATE']  = 'Изменить';
 $mod_strings['LBL_AOP_SINGLE_USER']  = 'Указанный пользователь';
 $mod_strings['LBL_AOP_SETTINGS'] = 'Настройка портала';
+$mod_strings['LBL_AOP_DESC'] = 'Настройка параметров портала';
 
 $mod_strings['LBL_SALESAGILITY_ADMIN'] = 'OpenAdmin';
 $mod_strings['LBL_AOS_ADMIN_CONTRACT_SETTINGS'] = 'Параметры договоров';
@@ -1357,5 +1358,6 @@ $mod_strings['LBL_SALESAGILITY_ADMIN'] = 'OpenAdmin';
 $mod_strings['LBL_AOD_ADMIN_MANAGE_AOD'] = 'Настройка полнотекстового поиска';
 $mod_strings['LBL_AOD_ENABLE'] = 'Включить полнотекстовый поиск';
 $mod_strings['LBL_AOD_SETTINGS'] = 'Настройка полнотекстового поиска';
+$mod_strings['LBL_AOD_DESC'] = 'Настройка параметров полнотекстового поиска';
 
 ?>
