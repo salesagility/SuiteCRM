@@ -298,14 +298,13 @@ function populate_product_lines($text, $lineItems, $element = 'tr'){
         //Converting Text
         $tparts = explode($firstValue,$text);
         $temp = $tparts[0];
-        $tparts = explode($lastValue,$tparts[1]);
 
         //check if there is only one line item
         if($firstNum == $lastNum){
-
             $linePart = $firstValue;
         }
         else{
+            $tparts = explode($lastValue,$tparts[1]);
             $linePart = $firstValue . $tparts[0] . $lastValue;
         }
 
@@ -314,7 +313,6 @@ function populate_product_lines($text, $lineItems, $element = 'tr'){
         $lsValue = substr($temp,$tcount);
         $tcount=strpos($lsValue,">")+1;
         $lsValue = substr($lsValue,0,$tcount);
-
 
         //Read line end values
         $tcount=strpos($tparts[1],$endElement)+strlen($endElement);
@@ -381,23 +379,27 @@ function populate_service_lines($text, $lineItems, $element = 'tr'){
         //Converting Text
         $tparts = explode($firstValue,$text);
         $temp = $tparts[0];
-        $tparts = explode($lastValue,$tparts[1]);
-        $linePart = $firstValue . $tparts[0] . $lastValue;
+
+        //check if there is only one line item
+        if($firstNum == $lastNum){
+            $linePart = $firstValue;
+        }
+        else{
+            $tparts = explode($lastValue,$tparts[1]);
+            $linePart = $firstValue . $tparts[0] . $lastValue;
+        }
 
         $tcount = strrpos($temp,$startElement);
         $lsValue = substr($temp,$tcount);
-
         $tcount=strpos($lsValue,">")+1;
         $lsValue = substr($lsValue,0,$tcount);
 
         //Read line end values
         $tcount=strpos($tparts[1],$endElement)+strlen($endElement);
         $leValue = substr($tparts[1],0,$tcount);
-
         $tdTemp = explode($lsValue,$temp);
 
         $linePart = $lsValue.$tdTemp[count($tdTemp)-1].$linePart.$leValue;
-
         $parts = explode($linePart,$text);
         $text = $parts[0];
 
@@ -415,4 +417,3 @@ function populate_service_lines($text, $lineItems, $element = 'tr'){
     }
     return $text;
 }
-?>
