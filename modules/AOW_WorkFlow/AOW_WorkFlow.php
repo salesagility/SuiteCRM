@@ -180,6 +180,7 @@ class AOW_WorkFlow extends Basic {
                     }
                     $query .= ' '.$query_where;
                 }
+                echo '<br /><br />'.$query;
                 return $module->process_full_list_query($query);
             }
 
@@ -509,7 +510,7 @@ class AOW_WorkFlow extends Basic {
                         }
                     case 'Value':
                     default:
-                        if(in_array($data['type'],$dateFields)) {
+                        if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
                         }
                         break;
