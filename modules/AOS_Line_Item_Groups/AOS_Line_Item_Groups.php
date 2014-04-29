@@ -53,6 +53,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar {
                 $product_quote_group->parent_id = $parent->id;
                 $product_quote_group->parent_type = $parent->object_name;
 				$product_quote_group->save();
+                $post_data[$key.'id'][$i] = $product_quote_group->id;
 
                 if(isset($post_data[$key.'group_number'][$i])){
                     $groups[$post_data[$key.'group_number'][$i]] = $product_quote_group->id;
