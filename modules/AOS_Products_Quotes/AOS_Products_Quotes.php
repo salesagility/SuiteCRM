@@ -54,6 +54,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar {
                     $product_quote->currency_id = $parent->currency_id;
                     $product_quote->parent_type = $parent->object_name;
                     $product_quote->save();
+                    $_POST[$key.'id'][$i] = $product_quote->id;
                 }
             }
         }
