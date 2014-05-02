@@ -279,6 +279,7 @@
 YAHOO.util.Event.onDOMReady(function(){	
 	var schedulerLoader = new YAHOO.util.YUILoader({
 		require : ["jsclass_scheduler"],
+        skin: { base: 'blank', defaultSkin: '' },
 		onSuccess: function(){
 			var root_div = document.getElementById('scheduler');
 			var sugarContainer_instance = new SugarContainer(document.getElementById('scheduler'));
