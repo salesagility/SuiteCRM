@@ -297,7 +297,7 @@ class AOW_WorkFlow extends Basic {
                                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                                             $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
                                         } else {
-                                            $value = "DATE_ADD($value, INTERVAL ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3].")";
+                                            $value = "DATE_ADD(".$value.", INTERVAL ".$app_list_strings['aow_date_operator'][$params[1]].$params[2]." ".$params[3].")";
                                         }
                                         break;
                                 }
