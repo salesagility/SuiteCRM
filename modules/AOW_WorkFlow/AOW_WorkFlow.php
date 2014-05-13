@@ -108,7 +108,7 @@ class AOW_WorkFlow extends Basic {
 		$flows = AOW_WorkFlow::get_full_list(''," aow_workflow.status = 'Active' ");
 
         foreach($flows as $flow){
-            $flow->run_flow();
+            $flow->run_flow($flow);
         }
         return true;
 	}
@@ -116,13 +116,13 @@ class AOW_WorkFlow extends Basic {
     /**
      * Retrieve the beans to actioned and run the actions
      */
-    function run_flow(){
+    function run_flow($flow){
         $beans = $this->get_flow_beans();
         if(!empty($beans)){
 
             foreach($beans as $bean){
                 $bean->retrieve($bean->id);
-                $this->run_actions($bean);
+                $this->run_actions($bean,$flow->assigned_user_id);
             }
         }
     }
@@ -133,14 +133,14 @@ class AOW_WorkFlow extends Basic {
     function run_bean_flows(SugarBean &$bean){
         if($_REQUEST['module'] != 'Import'){
 
-            $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' AND aow_workflow.deleted = 0 ";
+            $query = "SELECT id, assigned_user_id FROM aow_workflow WHERE aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' AND aow_workflow.deleted = 0 ";
 
             $result = $this->db->query($query, false);
             $flow = new AOW_WorkFlow();
             while (($row = $bean->db->fetchByAssoc($result)) != null){
                 $flow ->retrieve($row['id']);
                 if($flow->check_valid_bean($bean))
-                    $flow->run_actions($bean, true);
+                    $flow->run_actions($bean,$flow->assigned_user_id, true);
             }
         }
         return true;
@@ -549,7 +549,7 @@ class AOW_WorkFlow extends Basic {
     /**
      * Run the actions against the passed $bean
      */
-    function run_actions(SugarBean &$bean, $in_save = false){
+    function run_actions(SugarBean &$bean, $assigned_user_id_p='', $in_save = false){
 
         require_once('modules/AOW_Processed/AOW_Processed.php');
         $processed = new AOW_Processed();
@@ -589,7 +589,7 @@ class AOW_WorkFlow extends Basic {
                 }
 
                 $flow_action = new $action_name($action->id);
-                if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)){
+                if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $assigned_user_id_p, $in_save)){
                     $pass = false;
                     $processed->aow_actions->add($action->id, array('status' => 'Failed'));
                 } else {

@@ -102,9 +102,17 @@ class actionSendEmail extends actionBase {
 
     }
 
-    private function getEmailsFromParams(SugarBean $bean, $params){
+    private function getEmailsFromParams(SugarBean $bean, $params, $assigned_user_id){
 
         $emails = array();
+        if(isset($assigned_user_id) && $assigned_user_id!=''){
+            $user = new User();
+            $user->retrieve($assigned_user_id);
+            $emails['from']['email'] = $user->emailAddress->getPrimaryAddress($user);
+            $emails['from']['name'] = $user->name;
+        }
+
+
         //backward compatible
         if(isset($params['email_target_type']) && !is_array($params['email_target_type'])){
             $email = '';
@@ -208,7 +216,7 @@ class actionSendEmail extends actionBase {
         return $emails;
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    function run_action(SugarBean $bean, $params = array(), $assigned_user_id='', $in_save=false){
         global $sugar_config, $beanList;
 
         include_once('modules/EmailTemplates/EmailTemplate.php');
@@ -263,12 +271,12 @@ class actionSendEmail extends actionBase {
         $body_html = str_replace("\$url",$url,$body_html);
         $body_plain = aowTemplateParser::parse_template($body_plain, $object_arr);
         $body_plain = str_replace("\$url",$url,$body_plain);
-        $emails = $this->getEmailsFromParams($bean,$params);
-        return $this->sendEmail($emails['to'], $subject, $body_html, $body_plain, $bean, $emails['cc'],$emails['bcc']);
+        $emails = $this->getEmailsFromParams($bean,$params,$assigned_user_id);
+        return $this->sendEmail($emails['from'],$emails['to'], $subject, $body_html, $body_plain, $bean, $emails['cc'],$emails['bcc']);
 
     }
 
-    function sendEmail($emailTo, $emailSubject, $emailBody, $altemailBody, SugarBean $relatedBean = null, $emailCc = array(), $emailBcc = array(), $attachments = array())
+    function sendEmail($emailFrom, $emailTo, $emailSubject, $emailBody, $altemailBody, SugarBean $relatedBean = null, $emailCc = array(), $emailBcc = array(), $attachments = array())
     {
         require_once('modules/Emails/Email.php');
         require_once('include/SugarPHPMailer.php');
@@ -277,8 +285,14 @@ class actionSendEmail extends actionBase {
         $defaults = $emailObj->getSystemDefaultEmail();
         $mail = new SugarPHPMailer();
         $mail->setMailerForSystem();
-        $mail->From = $defaults['email'];
-        $mail->FromName = $defaults['name'];
+        if(!isset($emailFrom)) {
+            $mail->From = $defaults['email'];
+            $mail->FromName = $defaults['name'];
+        }
+        else{
+            $mail->From = $emailFrom['email'];
+            $mail->FromName = $emailFrom['name'];
+        }
         $mail->ClearAllRecipients();
         $mail->ClearReplyTos();
         $mail->Subject=from_html($emailSubject);
