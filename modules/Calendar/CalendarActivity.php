@@ -300,7 +300,7 @@ class CalendarActivity {
      */
     protected static function until($field_date, $start_day, $end_day)
     {
-        return "$field_date < $end_day";
+        return "($field_date >= $start_day AND $field_date < $end_day) OR ($field_date < $start_day AND date_end > $start_day)";
     }
 }
 
