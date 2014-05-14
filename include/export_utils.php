@@ -217,12 +217,8 @@ function export($type, $records = null, $members = false, $sample=false) {
         $beginWhere = substr(trim($where), 0, 5);
         if ($beginWhere == "where")
             $where = substr(trim($where), 5, strlen($where));
-        $ret_array = create_export_query_relate_link_patch($type, $searchFields, $where);
-        if(!empty($ret_array['join'])) {
-            $query = $focus->create_export_query($order_by,$ret_array['where'],$ret_array['join']);
-        } else {
-            $query = $focus->create_export_query($order_by,$ret_array['where']);
-        }
+
+        $query = $focus->create_export_query($order_by,$where);
     }
 
     $result = '';
