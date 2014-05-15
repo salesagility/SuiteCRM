@@ -225,8 +225,6 @@ class AOW_WorkFlow extends Basic {
             $sql = "SELECT id FROM aow_conditions WHERE aow_workflow_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
             $result = $this->db->query($sql);
 
-            $query = $this->build_flow_query_join($module->get_custom_table_name(), $module, 'custom', $query);
-
             while ($row = $this->db->fetchByAssoc($result)) {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
@@ -253,6 +251,7 @@ class AOW_WorkFlow extends Basic {
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $table_alias.'_cstm.'.$condition->field;
+                        $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                     } else {
                         $field = $table_alias.'.'.$condition->field;
                     }
