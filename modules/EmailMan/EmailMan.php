@@ -643,13 +643,15 @@ class EmailMan extends SugarBean{
 			}
 
 			//test for duplicate email address by marketing id.
-            $dup_query="select id from campaign_log where more_information='".$this->db->quote($module->email1)."' and marketing_id='".$this->marketing_id."'";
-			$dup=$this->db->query($dup_query);
-			$dup_row=$this->db->fetchByAssoc($dup);
-			if (!empty($dup_row)) {
-				//we have seen this email address before
-				$this->set_as_sent($module->email1,true,null,null,'blocked');
-				return true;
+			if(!($this->test)){
+                $dup_query="select id from campaign_log where more_information='".$this->db->quote($module->email1)."' and marketing_id='".$this->marketing_id."'";
+                $dup=$this->db->query($dup_query);
+                $dup_row=$this->db->fetchByAssoc($dup);
+                if (!empty($dup_row)) {
+                    //we have seen this email address before
+                    $this->set_as_sent($module->email1,true,null,null,'blocked');
+                    return true;
+                }
 			}
 
 
