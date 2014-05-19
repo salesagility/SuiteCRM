@@ -255,6 +255,10 @@ class AOW_WorkFlow extends Basic {
                     } else {
                         $field = $table_alias.'.'.$condition->field;
                     }
+                    //Add default value if defined into the query (workflows do not work with null values)
+                    if(isset($data['no_default']) && $data['no_default']==false && isset($data['default'])) {
+                      $field = "COALESCE(".$field.", '".$data['default']."')";
+                    }
 
                     switch($condition->value_type) {
                         case 'Field':
