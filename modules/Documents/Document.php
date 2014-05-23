@@ -36,11 +36,11 @@ if(!defined('sugarEntry') || !sugarEntry)
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once ('include/upload_file.php');
+require_once('include/SugarObjects/templates/file/File.php');
 
 
 // User is used to store Forecast information.
-class Document extends SugarBean {
+class Document extends File {
 
 	var $id;
 	var $document_name;
@@ -95,7 +95,7 @@ class Document extends SugarBean {
 
 
 	function Document() {
-		parent :: SugarBean();
+		parent :: File();
 		$this->setupCustomFields('Documents'); //parameter is module name
 		$this->disable_row_level_security = false;
 	}
