@@ -333,7 +333,11 @@ class AOW_WorkFlow extends Basic {
 
                         case 'Value':
                         default:
-                            $value = "'".$condition->value."'";
+                            if(is_numeric($condition->value)){
+                                $value = "".$condition->value."";
+                            } else {
+                                $value = "'".$condition->value."'";
+                            }
                             break;
                     }
 
