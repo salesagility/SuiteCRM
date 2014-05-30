@@ -91,7 +91,7 @@ class actionCreateRecord extends actionBase {
 
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    function run_action(SugarBean $bean, $params = array(), $assigned_user_id='', $in_save=false){
         global $beanList;
 
         if(isset($params['record_type']) && $params['record_type'] != ''){

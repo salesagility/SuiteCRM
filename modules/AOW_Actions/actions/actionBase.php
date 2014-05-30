@@ -42,7 +42,7 @@ class actionBase {
 
     }
 
-    function run_action(SugarBean $bean, $params = array(), $in_save=false){
+    function run_action(SugarBean $bean, $params = array(), $assigned_user_id='', $in_save=false){
 
         return true;
 

@@ -643,13 +643,15 @@ class EmailMan extends SugarBean{
 			}
 
 			//test for duplicate email address by marketing id.
-            $dup_query="select id from campaign_log where more_information='".$this->db->quote($module->email1)."' and marketing_id='".$this->marketing_id."'";
-			$dup=$this->db->query($dup_query);
-			$dup_row=$this->db->fetchByAssoc($dup);
-			if (!empty($dup_row)) {
-				//we have seen this email address before
-				$this->set_as_sent($module->email1,true,null,null,'blocked');
-				return true;
+			if(!($this->test)){
+                $dup_query="select id from campaign_log where more_information='".$this->db->quote($module->email1)."' and marketing_id='".$this->marketing_id."'";
+                $dup=$this->db->query($dup_query);
+                $dup_row=$this->db->fetchByAssoc($dup);
+                if (!empty($dup_row)) {
+                    //we have seen this email address before
+                    $this->set_as_sent($module->email1,true,null,null,'blocked');
+                    return true;
+                }
 			}
 
 
@@ -706,7 +708,12 @@ class EmailMan extends SugarBean{
 			if (empty($this->current_mailbox->id) or $this->current_mailbox->id !== $this->current_emailmarketing->inbound_email_id) {
 				$this->current_mailbox->retrieve($this->current_emailmarketing->inbound_email_id);
 				//extract the email address.
-				$this->mailbox_from_addr=$this->current_mailbox->get_stored_options('from_addr','nobody@example.com',null);
+
+				$emailObj = new Email();
+                $defaults = $emailObj->getSystemDefaultEmail();
+                fwrite(STDOUT,"Using defaults from address ".$defaults['name']." address ".$defaults['email']."\n");
+				$this->mailbox_from_addr=$this->current_mailbox->get_stored_options($defaults['name'],$defaults['email'],null);
+				fwrite(STDOUT,"Ended using ".json_encode($this->mailbox_from_addr)."\n");
 			}
 
 			// fetch campaign details..
