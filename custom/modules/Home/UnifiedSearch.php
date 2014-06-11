@@ -1,10 +1,10 @@
 <?php
  /**
- * 
- * 
- * @package 
+ *
+ *
+ * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -120,6 +120,9 @@ if($queryString){
     if($hits){
 foreach($hits as $hit){
     $bean = BeanFactory::getBean($hit->record_module,$hit->record_id);
+        if(empty($bean)){
+            continue;
+        }
     echo "<tr>"
         ."<td>".getModuleLabel($bean->module_name)."</td>"
         ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$bean->get_summary_text()."</a></td>"
