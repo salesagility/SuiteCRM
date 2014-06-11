@@ -302,9 +302,6 @@ class AOD_Index extends AOD_Index_sugar {
      * @return Zend_Search_Lucene_Interface
      */
     private function getLuceneIndex(){
-        if(!empty($this->index)){
-            return $this->index;
-        }
         if(file_exists($this->location)){
             $this->index = new Zend_Search_Lucene($this->location);
         }else{
