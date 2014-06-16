@@ -274,11 +274,11 @@ var $selectedCategories = array();
 
             // assign a baseURL w/ the action set as DisplayDashlet
             foreach($this->lvs->data['pageData']['urls'] as $type => $url) {
+                $GLOBALS['log']->fatal('ASD type='.$type.' URL='.$url);
             	// awu Replacing action=DisplayDashlet with action=DynamicAction&DynamicAction=DisplayDashlet
-                if($type == 'orderBy')
-                    $this->lvs->data['pageData']['urls'][$type] = preg_replace('/(action=.*&)/Ui', 'action=DynamicAction&DynamicAction=displayDashlet&', $url);
-                else
-                    $this->lvs->data['pageData']['urls'][$type] = preg_replace('/(action=.*&)/Ui', 'action=DynamicAction&DynamicAction=displayDashlet&', $url) . '&sugar_body_only=1&id=' . $this->id;
+                $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet';
+                if($type != 'orderBy')
+                    $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&id=' . $this->id;
             }
 
             $this->lvs->ss->assign('dashletId', $this->id);
