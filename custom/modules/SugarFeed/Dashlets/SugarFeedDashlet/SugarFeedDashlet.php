@@ -274,7 +274,6 @@ var $selectedCategories = array();
 
             // assign a baseURL w/ the action set as DisplayDashlet
             foreach($this->lvs->data['pageData']['urls'] as $type => $url) {
-                $GLOBALS['log']->fatal('ASD type='.$type.' URL='.$url);
             	// awu Replacing action=DisplayDashlet with action=DynamicAction&DynamicAction=DisplayDashlet
                 $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet';
                 if($type != 'orderBy')
