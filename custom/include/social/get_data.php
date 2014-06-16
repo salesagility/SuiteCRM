@@ -13,7 +13,7 @@ $social = $_REQUEST['social'];
 $twitter_user = $_REQUEST['twitter_user'];
 
 if(!empty($_REQUEST['code'])){
-    include("config.php");
+    include_once("config.php");
     //nasty way of fixing the facebook login bug.
     header("Location: " . $sugar_config['site_url'] . "?module=" . $_REQUEST['module'] . "&action=DetailView&record=" . $_REQUEST['record'] . "&");
 }
@@ -22,9 +22,9 @@ if(!empty($_REQUEST['code'])){
     switch($social){
 
         case "facebook":
-            require("custom/include/social/facebook/facebookapi.php");
+            require_once("custom/include/social/facebook/facebookapi.php");
             break;
         case "twitter";
-            require("custom/include/social/twitter/twitterapi.php");
+            require_once("custom/include/social/twitter/twitterapi.php");
             break;
     }

@@ -10,8 +10,8 @@
  */
 
 require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
-require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
-require('custom/include/social/twitter/twitter_helper.php');
+require_once('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
+require_once('custom/include/social/twitter/twitter_helper.php');
 
 global $sugar_config, $db;
 

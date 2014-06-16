@@ -5,14 +5,14 @@
  * Verify credentials and redirect to based on response from Twitter.
  */
 
-include('../../../../../config.php');
+include_once('../../../../../config.php');
 
 global $sugar_config;
 
 /* Start session and load lib */
 session_start();
 require_once('twitteroauth/twitteroauth.php');
-include('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
+include_once('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
 /* If the oauth_token is old redirect to the connect page. */
 if (isset($_REQUEST['oauth_token']) && $_SESSION['oauth_token'] !== $_REQUEST['oauth_token']) {
