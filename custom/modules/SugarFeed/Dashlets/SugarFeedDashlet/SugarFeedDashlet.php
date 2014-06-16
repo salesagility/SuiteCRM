@@ -52,7 +52,7 @@ var $selectedCategories = array();
     function SugarFeedDashlet($id, $def = null) {
 		global $current_user, $app_strings, $app_list_strings;
 
-		require('modules/SugarFeed/metadata/dashletviewdefs.php');
+		require_once('modules/SugarFeed/metadata/dashletviewdefs.php');
 		$this->myItemsOnly = false;
         parent::DashletGeneric($id, $def);
 		$this->myItemsOnly = false;
@@ -543,7 +543,7 @@ enableQS(false);
 		$ss->assign('more_img', $moreimg);
 		$ss->assign('less_img', $lessimg);
 
-        include("custom/include/social/get_feed_data.php");
+        include_once("custom/include/social/get_feed_data.php");
         $ss->assign('facebook', $html );
 
         if($current_user->getPreference('use_real_names') == 'on'){
