@@ -274,14 +274,21 @@ class actionCreateRecord extends actionBase {
             }
         }
 
-        $check_notify = false;
-        if($in_save) $record->processed = true;
+        $bean_processed = isset($record->processed) ? $record->processed : false;
+
+        if($in_save){
+            global $current_user;
+            $record->processed = true;
+            $check_notify = $record->assigned_user_id != $current_user->id && $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
+        }
         else $check_notify = $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
 
         $record->process_save_dates =false;
         $record->new_with_id = false;
 
         $record->save($check_notify);
+
+        $record->processed = $bean_processed;
     }
 
     function set_relationships(SugarBean $record, SugarBean $bean, $params = array()){
@@ -291,7 +298,7 @@ class actionCreateRecord extends actionBase {
         require_once('modules/Relationships/Relationship.php');
         if(isset($params['rel'])){
             foreach($params['rel'] as $key => $field){
-                if($field == '') continue;
+                if($field == '' || $params['rel_value'][$key] == '') continue;
 
                 switch($params['rel_value_type'][$key]) {
                     case 'Field':
