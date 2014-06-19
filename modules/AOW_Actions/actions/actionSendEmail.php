@@ -240,8 +240,13 @@ class actionSendEmail extends actionBase {
                 }
             }
         }
-
-        $object_arr['Users'] = $bean->assigned_user_id;
+        
+        if (is_a($bean, 'User')) {
+            $object_arr['Users'] = $bean->id;
+        }
+        else {
+            $object_arr['Users'] = $bean->assigned_user_id;
+        }
 
         $parsedSiteUrl = parse_url($sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];
