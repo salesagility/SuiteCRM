@@ -40,7 +40,7 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
 
     $cfg->saveConfig();
 
-    //SugarApplication::redirect('index.php?module=Administration');
+    SugarApplication::redirect('index.php?module=Administration');
     exit();
 }
 
