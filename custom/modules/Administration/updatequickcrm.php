@@ -19,5 +19,8 @@ global $sugar_config;
 global $mod_strings;
 createMobileFiles();
 echo $mod_strings['LBL_UPDATE_MSG']." <strong>".$sugar_config['site_url'].'/mobile</strong>';
+$webapp=$sugar_config['site_url'].'/mobile';
+$nativeapp=$sugar_config['site_url'];
+echo $mod_strings['LBL_UPDATE_MSG']." <strong><br>&nbsp;-&nbsp;Web app : $webapp<br>&nbsp;-&nbsp;QuickCRM for iOS : $nativeapp<br>&nbsp;-&nbsp;QuickCRM for Android : $nativeapp".'</strong>';
 
 ?>
