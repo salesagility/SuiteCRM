@@ -170,7 +170,7 @@ function ie_test_open_popup_with_submit(module_name, action, pageTarget, width, 
     SI.testDlg.render(document.body);
 	var Connect = YAHOO.util.Connect;
 	if (Connect.url) URL = Connect.url + "&" +  url;
-    Connect.asyncRequest("GET", URL, {success:SI.testDlg._updateContent, failure:SI.testDlg.hide, scope:SI.testDlg});
+    Connect.asyncRequest("POST", URL, {success:SI.testDlg._updateContent, failure:SI.testDlg.hide, scope:SI.testDlg});
     SI.testDlg.show();
 
 }
@@ -263,7 +263,7 @@ function getFoldersListForInboundAccount(module_name, action, pageTarget, width,
     SI.listDlg.render(document.body);
     var Connect = YAHOO.util.Connect;
     if (Connect.url) URL = Connect.url + "&" +  url;
-    Connect.asyncRequest("GET", URL, {success:SI.listDlg._updateContent, failure:SI.listDlg.hide, scope:SI.listDlg});
+    Connect.asyncRequest("POST", URL, {success:SI.listDlg._updateContent, failure:SI.listDlg.hide, scope:SI.listDlg});
     SI.listDlg.show();
 
 } // fn

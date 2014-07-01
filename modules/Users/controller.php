@@ -116,5 +116,14 @@ class UsersController extends SugarController
         $this->view = 'fts';
         $GLOBALS['current_user']->setPreference('fts_disabled_modules', $_REQUEST['disabled_modules']);
     }
+
+    /**
+     * action "save" (with a lower case S that is for OSX users ;-)
+     * @see SugarController::action_save()
+     */
+    public function action_save()
+    {
+        require 'modules/Users/Save.php';
+    }
 }	
-?>
+
