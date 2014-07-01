@@ -521,6 +521,10 @@ class SecurityGroup extends SecurityGroup_sugar {
 
         $security_modules = array();
 
+        //https://www.sugaroutfitters.com/support/securitysuite/496
+        //There are some modules that shouldn't ever inherit groups...        
+        $module_blacklist = array('SchedulersJobs','Schedulers','Trackers');
+
         require_once('modules/Relationships/Relationship.php');
         $rs = new Relationship();
         $query =  "SELECT lhs_module, rhs_module FROM $rs->table_name WHERE deleted=0 AND (lhs_module = 'SecurityGroups' OR rhs_module='SecurityGroups')";
@@ -529,9 +533,17 @@ class SecurityGroup extends SecurityGroup_sugar {
         while(($row=$rs->db->fetchByAssoc($result)) != null) {
 
             if($row['lhs_module'] == 'SecurityGroups') {
+                if(in_array($row['rhs_module'],$module_blacklist)) {
+                    continue;
+                }
+                
                 //$security_modules[$row['rhs_module']] = $row['rhs_module'];
                 $security_modules[$row['rhs_module']] = $app_list_strings['moduleList'][$row['rhs_module']];//rost fix
             } else {
+                if(in_array($row['lhs_module'],$module_blacklist)) {
+                    continue;
+                }
+                
                 //$security_modules[$row['lhs_module']] = $row['lhs_module'];
                 $security_modules[$row['lhs_module']] = $app_list_strings['moduleList'][$row['lhs_module']];//rost fix
 
