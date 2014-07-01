@@ -392,6 +392,8 @@ class ModuleScanner{
         'xml_set_processing_instruction_handler',
         'xml_set_start_namespace_decl_handler',
         'xml_set_unparsed_entity_decl_handler',
+	    'simplexml_load_file',
+	    'simplexml_load_string',
 
 	    // unzip
 	    'unzip',

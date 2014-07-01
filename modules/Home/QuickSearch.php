@@ -273,6 +273,9 @@ class quicksearchQuery
             $listData = $results[$i]->get_list_view_data();
 
             foreach ($args['field_list'] as $field) {
+                if ($field == "user_hash") {
+                    continue;
+                }
                 // handle enums
                 if ((isset($results[$i]->field_name_map[$field]['type']) && $results[$i]->field_name_map[$field]['type'] == 'enum')
                     || (isset($results[$i]->field_name_map[$field]['custom_type']) && $results[$i]->field_name_map[$field]['custom_type'] == 'enum')) {
