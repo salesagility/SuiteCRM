@@ -126,8 +126,8 @@ EOQ;
 echo $out;
 installLog("calling handleSugarConfig()");
 $bottle = handleSugarConfig();
-installLog("calling handleLog4Php()");
-handleLog4Php();
+//installLog("calling handleLog4Php()");
+//handleLog4Php();
 
 $server_software = $_SERVER["SERVER_SOFTWARE"];
 if(strpos($server_software,'Microsoft-IIS') !== false)
@@ -350,7 +350,7 @@ enableSugarFeeds();
 //enableInsideViewConnector();
 
 // Install the logic hook for FTS
-installLog("Creating FTS logic hook");
+/*installLog("Creating FTS logic hook");
 if (!function_exists('createFTSLogicHook')) {
     function createFTSLogicHook($filePath = 'application/Ext/LogicHooks/logichooks.ext.php')
     {
@@ -374,35 +374,7 @@ CIA;
 }
 createFTSLogicHook();
 // also write it to Extension directory so it won't be lost when rebuilding extensions
-createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');
-
-///////////////////////////////////////////////////////////////////////////////
-////    START DEMO DATA
-
-    // populating the db with seed data
-    installLog("populating the db with seed data");
-    if( $_SESSION['demoData'] != 'no' ){
-        installerHook('pre_installDemoData');
-        set_time_limit( 301 );
-
-      echo "<br>";
-        echo "<b>{$mod_strings['LBL_PERFORM_DEMO_DATA']}</b>";
-        echo "<br><br>";
-
-        print( $render_table_close );
-        print( $render_table_open );
-
-        global $current_user;
-        $current_user = new User();
-        $current_user->retrieve(1);
-        include("install/populateSeedData.php");
-        installerHook('post_installDemoData');
-    }
-
-    $endTime = microtime(true);
-    $deltaTime = $endTime - $startTime;
-
-
+createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');*/
 
 ///////////////////////////////////////////////////////////////////////////
 ////    FINALIZE LANG PACK INSTALL
@@ -531,6 +503,34 @@ if(function_exists('imagecreatetruecolor'))
     require_once('modules/UpgradeWizard/uw_utils.php');
     rebuildSprites(true);
 }
+
+///////////////////////////////////////////////////////////////////////////////
+////    START DEMO DATA
+
+// populating the db with seed data
+installLog("populating the db with seed data");
+if( $_SESSION['demoData'] != 'no' ){
+    installerHook('pre_installDemoData');
+    set_time_limit( 301 );
+
+    echo "<br>";
+    echo "<b>{$mod_strings['LBL_PERFORM_DEMO_DATA']}</b>";
+    echo "<br><br>";
+
+    print( $render_table_close );
+    print( $render_table_open );
+
+    global $current_user;
+    $current_user = new User();
+    $current_user->retrieve(1);
+    include("install/populateSeedData.php");
+    installerHook('post_installDemoData');
+}
+
+$endTime = microtime(true);
+$deltaTime = $endTime - $startTime;
+
+
 
 if( count( $bottle ) > 0 ){
     foreach( $bottle as $bottle_message ){
