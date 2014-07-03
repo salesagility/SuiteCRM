@@ -44,19 +44,23 @@ class sendEmail{
 		$email->type = "draft";
 		$email->status = "draft";
 	
-		if(!empty($module->billing_contact_id) && $module->billing_contact_id!="") {
-			require_once('modules/Contacts/Contact.php');
-			$contact = new Contact;
-			$contact->retrieve($module->billing_contact_id);
-			
-			$email->parent_type = 'Contacts';
-			$email->parent_id = $contact->id;
-		
-			if(!empty($contact->email1)){
-				$email->to_addrs_emails = $contact->email1.";";
-				$email->to_addrs = $module->billing_contact_name." <".$contact->email1.">";
-			} 
-		}
+		if(!empty($module->billing_contact_id) && $module->billing_contact_id!="")
+            $contact_id = $module->billing_contact_id;
+        else if(!empty($module->contact_id) && $module->contact_id!="")
+            $contact_id = $module->contact_id;
+
+            require_once('modules/Contacts/Contact.php');
+            $contact = new Contact;
+            if($contact->retrieve($contact_id)){
+                $email->parent_type = 'Contacts';
+                $email->parent_id = $contact->id;
+
+                if(!empty($contact->email1)){
+                    $email->to_addrs_emails = $contact->email1.";";
+                    $email->to_addrs = $module->billing_contact_name." <".$contact->email1.">";
+                }
+            }
+
 	
 		//team id
 		$email->team_id  = $current_user->default_team;

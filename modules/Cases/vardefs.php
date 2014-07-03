@@ -86,6 +86,19 @@ $dictionary['Case'] = array('table' => 'cases','audited'=>true, 'unified_search'
   	'comment' => 'The account to which the case is associated'
   	),
 
+   'state' =>
+   array (
+    'name' => 'state',
+    'vname' => 'LBL_STATE',
+    'type' => 'enum',
+    'options' => 'case_state_dom',
+    'len' => 100,
+    'audited' => true,
+    'comment' => 'The state of the case (i.e. open/closed)',
+    'default' => 'Open',
+    'parentenum' => 'status',
+    'merge_filter' => 'disabled',
+  ),
   'status' =>
   array (
     'name' => 'status',

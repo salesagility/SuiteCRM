@@ -37,6 +37,7 @@ class AOS_Contracts_sugar extends Basic {
 	var $object_name = 'AOS_Contracts';
 	var $table_name = 'aos_contracts';
 	var $importable = true;
+    var $lineItems = true;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 		var $id;
 		var $name;
