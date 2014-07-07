@@ -437,6 +437,7 @@ logThis('finished addNewSystemTabsFromUpgrade');
 			$new_upgrade->version = $sugar_version;
 			$new_upgrade->status = "installed";
 			$new_upgrade->manifest =(!empty($_SESSION['install_manifest']) ? $_SESSION['install_manifest'] : '');
+            $new_upgrade->processed = true;
 			$new_upgrade->save();
 		}
 		set_upgrade_progress('commit','in_progress','upgradeHistory','done');
