@@ -176,6 +176,9 @@ function checkMaxSupported(c, s) {
     var current = c.split(".");
     var supported = s.split(".");
     for (var i in supported) {
+
+
+
         if (current[i] && parseInt(current[i]) > parseInt(supported[i])) return false;
         else if (current[i] && parseInt(current[i]) < parseInt(supported[i])) return true;
     }
@@ -191,7 +194,7 @@ SUGAR.isSupportedBrowser = function(){
     };
     var current = String($.browser.version);
     var supported;
-    if ($.browser.msie){ // Internet Explorer
+    if ($.browser.msie || (!(window.ActiveXObject) && "ActiveXObject" in window)){ // Internet Explorer
         supported = supportedBrowsers['msie'];
     }
     else if ($.browser.mozilla) { // Firefox
