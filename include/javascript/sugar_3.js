@@ -39,7 +39,7 @@ function checkMinSupported(c,s){var current=c.split(".");var supported=s.split("
 return true;}
 function checkMaxSupported(c,s){var current=c.split(".");var supported=s.split(".");for(var i in supported){if(current[i]&&parseInt(current[i])>parseInt(supported[i]))return false;else if(current[i]&&parseInt(current[i])<parseInt(supported[i]))return true;}
 return true;}
-SUGAR.isSupportedBrowser=function(){var supportedBrowsers={msie:{min:9,max:10},safari:{min:534},mozilla:{min:23.0},chrome:{min:29}};var current=String($.browser.version);var supported;if($.browser.msie){supported=supportedBrowsers['msie'];}
+SUGAR.isSupportedBrowser=function(){var supportedBrowsers={msie:{min:9,max:11},safari:{min:534},mozilla:{min:23.0},chrome:{min:29}};var current=String($.browser.version);var supported;if($.browser.msie||(!(window.ActiveXObject)&&"ActiveXObject"in window)){supported=supportedBrowsers['msie'];}
 else if($.browser.mozilla){supported=supportedBrowsers['mozilla'];}
 else{$.browser.chrome=/chrome/.test(navigator.userAgent.toLowerCase());if($.browser.chrome){current=navigator.userAgent.match(/Chrome\/(.*?) /)[1];supported=supportedBrowsers['chrome'];}
 else if($.browser.safari){supported=supportedBrowsers['safari'];}}
@@ -184,7 +184,7 @@ function get_current_bgcolor(input){if(input.currentStyle){style=input.currentSt
 else{style='';styleRGB=document.defaultView.getComputedStyle(input,'').getPropertyValue("background-color");comma=styleRGB.indexOf(',');style+=dec2hex(styleRGB.substring(4,comma));commaPrevious=comma;comma=styleRGB.indexOf(',',commaPrevious+1);style+=dec2hex(styleRGB.substring(commaPrevious+2,comma));style+=dec2hex(styleRGB.substring(comma+2,styleRGB.lastIndexOf(')')));return style;}}
 function hex2dec(hex){return(parseInt(hex,16));}
 var hexDigit=new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F");function dec2hex(dec){return(hexDigit[dec>>4]+hexDigit[dec&15]);}
-function fade_error_style(normalStyle,percent){errorStyle='c60c30';var r1=hex2dec(errorStyle.slice(0,2));var g1=hex2dec(errorStyle.slice(2,4));var b1=hex2dec(errorStyle.slice(4,6));var r2=hex2dec(normalStyle.slice(0,2));var g2=hex2dec(normalStyle.slice(2,4));var b2=hex2dec(normalStyle.slice(4,6));var pc=percent / 100;r=Math.floor(r1+(pc*(r2-r1))+.5);g=Math.floor(g1+(pc*(g2-g1))+.5);b=Math.floor(b1+(pc*(b2-b1))+.5);for(var wp=0;wp<inputsWithErrors.length;wp++){inputsWithErrors[wp].style.backgroundColor="#"+dec2hex(r)+dec2hex(g)+dec2hex(b);}}
+function fade_error_style(normalStyle,percent){errorStyle='f10202';var r1=hex2dec(errorStyle.slice(0,2));var g1=hex2dec(errorStyle.slice(2,4));var b1=hex2dec(errorStyle.slice(4,6));var r2=hex2dec(normalStyle.slice(0,2));var g2=hex2dec(normalStyle.slice(2,4));var b2=hex2dec(normalStyle.slice(4,6));var pc=percent / 100;r=Math.floor(r1+(pc*(r2-r1))+.5);g=Math.floor(g1+(pc*(g2-g1))+.5);b=Math.floor(b1+(pc*(b2-b1))+.5);for(var wp=0;wp<inputsWithErrors.length;wp++){inputsWithErrors[wp].style.backgroundColor="#"+dec2hex(r)+dec2hex(g)+dec2hex(b);}}
 function isFieldTypeExceptFromEmptyCheck(fieldType)
 {var results=false;var exemptList=['bool','file'];for(var i=0;i<exemptList.length;i++)
 {if(fieldType==exemptList[i])
