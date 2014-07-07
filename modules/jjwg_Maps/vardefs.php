@@ -18,7 +18,7 @@ $dictionary['jjwg_Maps'] = array(
     'duplicate_merge_dom_value' => '0',
     'audited' => true,
     'reportable' => true,
-    'len' => '9',
+    'len' => '26',
     'size' => '20',
     'precision' => '4',
   ),
