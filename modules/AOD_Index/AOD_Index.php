@@ -256,12 +256,12 @@ class AOD_Index extends AOD_Index_sugar {
                 return false;
             }
 
-            $bean->retrieve($beanId);
-            if(!$bean){
+            if(!self::isModuleSearchable($module,BeanFactory::getObjectName($module))){
                 return false;
             }
 
-            if(!self::isModuleSearchable($module,$bean->getObjectName())){
+            $bean->retrieve($beanId);
+            if(!$bean){
                 return false;
             }
 
