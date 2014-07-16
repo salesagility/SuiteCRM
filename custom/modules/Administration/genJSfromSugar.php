@@ -32,7 +32,7 @@ class mobile_jsLanguage {
 			$nodeModule = new $beanList[$moduleName];
 			foreach($nodeModule->field_name_map as $field_name => $field_defs)
 			{
-				if(($field_defs['type'] == 'enum')||($field_defs['type'] == 'multienum')
+				if(($field_defs['type'] == 'enum')||($field_defs['type'] == 'multienum')||($field_defs['type'] == 'dynamicenum')
 					&& ($field_defs['source'] != 'non-db')
 				)
 				{
@@ -74,7 +74,7 @@ class mobile_jsLanguage {
         $str = <<<EOQ
 var RES_CREATE='{$app_strings['LBL_CREATE_BUTTON_LABEL']}',RES_LIST='{$app_strings['LBL_LIST']}',RES_ADD_TO_HOME='{$app_strings['LBL_MARK_AS_FAVORITES']}',RES_REM_FROM_HOME='{$app_strings['LBL_REMOVE_FROM_FAVORITES']}',RES_RECORD_ERROR='{$app_strings['ERROR_NO_RECORD']}',RES_LAST_VIEWED='{$app_strings['LBL_LAST_VIEWED']}', RES_DELETE_CONFIRMATION='{$app_strings['NTC_DELETE_CONFIRMATION']}', RES_DEL_LABEL='{$app_strings['LBL_DELETE_BUTTON_LABEL']}', RES_NEXT_LABEL='{$app_strings['LNK_LIST_NEXT']}', RES_PREVIOUS_LABEL='{$app_strings['LNK_LIST_PREVIOUS']}';
 var RES_ASC='{$SS_mod_strings["LBL_ASCENDING"]}',RES_DESC='{$SS_mod_strings["LBL_DESCENDING"]}',RES_HOME_LABEL='{$all_app_list_strings["moduleList"]["Home"]}',RES_SYNC='{$all_app_list_strings["moduleList"]["Sync"]}',RES_SAVEDSEARCH='{$all_app_list_strings["moduleList"]["SavedSearch"]}',RES_SAVESEARCH='{$SS_mod_strings["LBL_SAVE_SEARCH_AS"]}',RES_DISABLED='{$ADM_mod_strings["LBL_DISABLED"]}';
-var sugar_app_list_strings = jQuery.parseJSON('$app_list_strings_encoded');
+var sugar_app_list_strings = $app_list_strings_encoded;
 EOQ;
 		$SS_mod_strings = null;
 		$ADM_mod_strings = null;
@@ -122,7 +122,7 @@ EOQ;
 			$str_app_array[$key] = str_replace('"','\\"',isset($app_strings[$key])?$app_strings[$key]:$key);
 		}
 		$app_strings_encoded = $json->encode($str_app_array);
-		$str .= "var sugar_app_strings = jQuery.parseJSON('$app_strings_encoded');";
+		$str .= "var sugar_app_strings = $app_strings_encoded;";
         
 		require_once('modules/Administration/Administration.php');
 		$administration = new Administration();
@@ -221,14 +221,12 @@ EOQ;
 
 		$administration->saveSetting('QuickCRM', 'sugar_config', base64_encode($str));
 		
-		if ($sugar_config['sugar_version']<'6.3'){
 			$saveDir = realpath(dirname(__FILE__).'/../../../mobile/');
         
 			if($fh = @fopen($saveDir . '/config.js', "w")){
 				fputs($fh, $str);
 				fclose($fh);
 			}
-		}
     }
     
 	function createAllFiles(){
@@ -262,11 +260,6 @@ function createMobileFiles(){
 					$info = $info['http_code'];
 					$err=($info=='403' || $info=='500');
 				}
-
-
-
-
-
 
 				curl_close($ch); 
 				return (!$err);

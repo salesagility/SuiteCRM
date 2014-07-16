@@ -24,7 +24,7 @@ if(isset($mod_strings['LBL_MODULE_NAME'])) {
 	$mod_name = $mod_strings['LBL_MODULE_NAME'];
 }
 echo "\n<p>\n";
-echo get_module_title($mod_id, $mod_name.": ".$mod_strings['LBL_CONFIGURE_SETTINGS'], true);
+echo get_module_title($mod_id, $mod_name.": ".$mod_strings['LBL_CONFIGURE_SETTINGS'], false);
 echo "\n</p>\n";
 global $theme;
 global $currentModule;
@@ -110,6 +110,13 @@ if(isset($sugar_config['securitysuite_inherit_assigned']) && $sugar_config['secu
 $xtpl->assign('securitysuite_inherit_assigned', $securitysuite_inherit_assigned);
 
 
+// securitysuite_inbound_email
+$securitysuite_inbound_email = '';
+if(isset($sugar_config['securitysuite_inbound_email']) && $sugar_config['securitysuite_inbound_email'] == true) {
+    $securitysuite_inbound_email = 'CHECKED';
+} 
+$xtpl->assign('securitysuite_inbound_email', $securitysuite_inbound_email);
+
 
 //default security groups
 $groupFocus = new SecurityGroup();
@@ -137,7 +144,7 @@ foreach($groups['list'] as $group) {
 	$options[$group->id] = $group->name;
 }
 $xtpl->assign("SECURITY_GROUP_OPTIONS", get_select_options_with_id($options, ""));
-			
+
 //$moduleList = $app_list_strings['moduleList'];
 
 //require_once('modules/Studio/DropDowns/DropDownHelper.php');
@@ -150,7 +157,7 @@ $security_modules["All"] = $mod_strings["LBL_ALL_MODULES"];//rost fix
 ksort($security_modules);
 $xtpl->assign("MODULE_OPTIONS", get_select_options_with_id($security_modules, "All"));
 
-								
+
 $xtpl->parse("main");
 
 $xtpl->out("main");

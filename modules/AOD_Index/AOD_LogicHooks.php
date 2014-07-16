@@ -1,10 +1,10 @@
 <?php
  /**
- * 
- * 
- * @package 
+ *
+ *
+ * @package
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -25,11 +25,39 @@
 class AOD_LogicHooks{
 
     function saveModuleChanges(SugarBean $bean, $event, $arguments){
-        if(defined('sugarEntry') && 'SUGARCRM_IS_INSTALLING'){
+        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
-        $index = BeanFactory::getBean("AOD_Index")->getIndex();
-        $index->index($bean->module_name,$bean->id);
+        try{
+            $index = BeanFactory::getBean("AOD_Index")->getIndex();
+            $index->index($bean->module_name,$bean->id);
+        }catch(Exception $ex){
+            $GLOBALS['log']->error($ex->getMessage());
+        }
+    }
+
+    function saveModuleDelete(SugarBean $bean, $event, $arguments){
+        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+            return;
+        }
+        try{
+            $index = BeanFactory::getBean("AOD_Index")->getIndex();
+            $index->remove($bean->module_name,$bean->id);
+        }catch(Exception $ex){
+            $GLOBALS['log']->error($ex->getMessage());
+        }
+    }
+
+    function saveModuleRestore(SugarBean $bean, $event, $arguments){
+        if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
+            return;
+        }
+        try{
+            $index = BeanFactory::getBean("AOD_Index")->getIndex();
+            $index->index($bean->module_name,$bean->id);
+        }catch(Exception $ex){
+            $GLOBALS['log']->error($ex->getMessage());
+        }
     }
 
 }

@@ -29,7 +29,7 @@ class AOR_Report extends Basic {
 	var $table_name = 'aor_reports';
 	var $importable = true;
 	var $disable_row_level_security = true ;
-	
+
 	var $id;
 	var $name;
 	var $date_entered;
@@ -46,13 +46,13 @@ class AOR_Report extends Basic {
 	var $assigned_user_name;
 	var $assigned_user_link;
 	var $report_module;
-	
+
 	function AOR_Report(){
 		parent::Basic();
         $this->load_report_beans();
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
@@ -577,13 +577,27 @@ class AOR_Report extends Basic {
 
                 if($data['type'] == 'relate' && isset($data['id_name'])) {
                     $field->field = $data['id_name'];
+                    $data_new = $field_module->field_defs[$field->field];
+                    if($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
+                        $data_new['type'] = 'link';
+                        $data_new['relationship'] = $data['link'];
+                    }
+                    $data = $data_new;
+                }
+
+                if($data['type'] == 'link' && $data['source'] == 'non-db') {
+                    $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$data['relationship'])];
+                    $query = $this->build_report_query_join($data['relationship'], $field_module, 'relationship', $query, $new_field_module);
+                    $field_module = $new_field_module;
+                    $table_alias = $data['relationship'];
+                    $field->field = 'id';
                 }
 
                 if($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
                     $query['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
                 }
 
-                if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
+                if((isset($data['source']) && $data['source'] == 'custom_fields')) {
                     $select_field = $table_alias.'_cstm.'.$field->field;
                     $query = $this->build_report_query_join($table_alias.'_cstm', $field_module, 'custom', $query);
                 } else {
@@ -707,6 +721,20 @@ class AOR_Report extends Basic {
 
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->field = $data['id_name'];
+                        $data_new = $condition_module->field_defs[$condition->field];
+                        if($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
+                            $data_new['type'] = 'link';
+                            $data_new['relationship'] = $data['link'];
+                        }
+                        $data = $data_new;
+                    }
+
+                    if($data['type'] == 'link' && $data['source'] == 'non-db'){
+                        $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,$data['relationship'])];
+                        $query = $this->build_report_query_join($data['relationship'], $condition_module, 'relationship', $query, $new_field_module);
+                        $field_module = $new_field_module;
+                        $table_alias = $data['relationship'];
+                        $condition->field = 'id';
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $table_alias.'_cstm.'.$condition->field;
@@ -721,6 +749,20 @@ class AOR_Report extends Basic {
 
                             if($data['type'] == 'relate' && isset($data['id_name'])) {
                                 $condition->value = $data['id_name'];
+                                $data_new = $condition_module->field_defs[$condition->value];
+                                if($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
+                                    $data_new['type'] = 'link';
+                                    $data_new['relationship'] = $data['link'];
+                                }
+                                $data = $data_new;
+                            }
+
+                            if($data['type'] == 'link' && $data['source'] == 'non-db'){
+                                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$data['relationship'])];
+                                $query = $this->build_report_query_join($data['relationship'], $field_module, 'relationship', $query, $new_field_module);
+                                $field_module = $new_field_module;
+                                $table_alias = $data['relationship'];
+                                $field->field = 'id';
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $value = $condition_module->table_name.'_cstm.'.$condition->value;
@@ -798,6 +840,6 @@ class AOR_Report extends Basic {
         }
         return $query;
     }
-		
+
 }
 ?>

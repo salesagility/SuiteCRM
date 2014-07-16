@@ -52,7 +52,7 @@ var $selectedCategories = array();
     function SugarFeedDashlet($id, $def = null) {
 		global $current_user, $app_strings, $app_list_strings;
 
-		require('modules/SugarFeed/metadata/dashletviewdefs.php');
+		require_once('modules/SugarFeed/metadata/dashletviewdefs.php');
 		$this->myItemsOnly = false;
         parent::DashletGeneric($id, $def);
 		$this->myItemsOnly = false;
@@ -275,10 +275,9 @@ var $selectedCategories = array();
             // assign a baseURL w/ the action set as DisplayDashlet
             foreach($this->lvs->data['pageData']['urls'] as $type => $url) {
             	// awu Replacing action=DisplayDashlet with action=DynamicAction&DynamicAction=DisplayDashlet
-                if($type == 'orderBy')
-                    $this->lvs->data['pageData']['urls'][$type] = preg_replace('/(action=.*&)/Ui', 'action=DynamicAction&DynamicAction=displayDashlet&', $url);
-                else
-                    $this->lvs->data['pageData']['urls'][$type] = preg_replace('/(action=.*&)/Ui', 'action=DynamicAction&DynamicAction=displayDashlet&', $url) . '&sugar_body_only=1&id=' . $this->id;
+                $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet';
+                if($type != 'orderBy')
+                    $this->lvs->data['pageData']['urls'][$type] = $url.'&action=DynamicAction&DynamicAction=displayDashlet&sugar_body_only=1&id=' . $this->id;
             }
 
             $this->lvs->ss->assign('dashletId', $this->id);
@@ -543,7 +542,7 @@ enableQS(false);
 		$ss->assign('more_img', $moreimg);
 		$ss->assign('less_img', $lessimg);
 
-        include("custom/include/social/get_feed_data.php");
+        include_once("custom/include/social/get_feed_data.php");
         $ss->assign('facebook', $html );
 
         if($current_user->getPreference('use_real_names') == 'on'){

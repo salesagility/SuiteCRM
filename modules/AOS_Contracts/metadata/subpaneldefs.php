@@ -28,27 +28,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $layout_defs['AOS_Contracts'] = array(
 	'subpanel_setup' => array(
-        'aos_contracts_aos_products_quotes' => array (
-            'order' => 100,
-            'module' => 'AOS_Products_Quotes',
-            'subpanel_name' => 'default',
-            'sort_order' => 'asc',
-            'sort_by' => 'id',
-            'title_key' => 'LBL_AOS_CONTRACTS_AOS_PRODUCTS_QUOTES_1_FROM_AOS_PRODUCTS_QUOTES_TITLE',
-            'get_subpanel_data' => 'aos_contracts_aos_products_quotes',
-            'top_buttons' =>
-            array (
-                0 =>
-                array (
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                ),
-                1 =>
-                array (
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                ),
-            ),
-        ),
         'aos_contracts_documents' => array (
             'order' => 100,
             'module' => 'Documents',

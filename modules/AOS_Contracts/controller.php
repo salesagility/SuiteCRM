@@ -40,32 +40,43 @@ class AOS_ContractsController extends SugarController {
             		$this->bean->name = $row['name'];
             		$this->bean->total_contract_value = $row['total_amount'];
             
-            		if (isset($row['billing_account_id'])) {
-			$_REQUEST['account_id'] = $row['billing_account_id'];
-        		}
+            if (isset($row['billing_account_id'])) {
+                $_REQUEST['account_id'] = $row['billing_account_id'];
+            }
+
+            if (isset($row['billing_contact_id'])) {
+                $_REQUEST['contact_id'] = $row['billing_contact_id'];
+            }
         		
-        		if (isset($row['opportunity_id'])) {
-        		$_REQUEST['opportunity_id'] = $row['opportunity_id'];
-        		}
-        	}
+            if (isset($row['opportunity_id'])) {
+                $_REQUEST['opportunity_id'] = $row['opportunity_id'];
+            }
+        }
         	
 		if (isset($_REQUEST['account_id'])) {
-            		$query = "SELECT id,name FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
-           	 	$result = $this->bean->db->query($query, true);
-            		$row = $this->bean->db->fetchByAssoc($result);
-            		$this->bean->contract_account = $row['name'];
-            		$this->bean->contract_account_id = $row['id'];
+            $query = "SELECT id,name FROM accounts WHERE id = '{$_REQUEST['account_id']}'";
+            $result = $this->bean->db->query($query, true);
+            $row = $this->bean->db->fetchByAssoc($result);
+            $this->bean->contract_account = $row['name'];
+            $this->bean->contract_account_id = $row['id'];
 		}
+
+        if (isset($_REQUEST['contact_id'])) {
+            $contact = new Contact();
+            $contact->retrieve($_REQUEST['contact_id']);
+            $this->bean->contact = $contact->name;
+            $this->bean->contact_id = $contact->id;
+        }
 		
 		if (isset($_REQUEST['opportunity_id'])) {
-            		$query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
-            		$result = $this->bean->db->query($query, true);
-            		$row = $this->bean->db->fetchByAssoc($result);
-            		$this->bean->opportunity = $row['name'];
-            		$this->bean->opportunity_id = $row['id'];
-        	}
+            $query = "SELECT id,name FROM opportunities WHERE id = '{$_REQUEST['opportunity_id']}'";
+            $result = $this->bean->db->query($query, true);
+            $row = $this->bean->db->fetchByAssoc($result);
+            $this->bean->opportunity = $row['name'];
+            $this->bean->opportunity_id = $row['id'];
+        }
         
-    	}
+    }
 }
 
 ?> 

@@ -9,8 +9,7 @@
  */
 
 require_once('custom/include/social/twitter/twitter_auth/twitteroauth/twitteroauth.php');
-require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
-require('custom/include/social/twitter/twitter_helper.php');
+require_once('custom/include/social/twitter/twitter_helper.php');
 
 //Load Globals.
 global $db;
@@ -23,6 +22,8 @@ $html = '';
 $twitter_enabled = check_enabled($db, 'twitter');
 
 if ($twitter_enabled) {
+
+    require('custom/modules/Connectors/connectors/sources/ext/rest/twitter/config.php');
 
     /*
      * Pull in connector settings for creating the authentication between Suite and Twitter.
@@ -123,7 +124,7 @@ $facebook_enabled = check_enabled($db, 'facebook');
 
 if ($facebook_enabled) {
 
-    require("custom/include/social/facebook/facebook.class.php");
+    require_once("custom/include/social/facebook/facebook.class.php");
 
     $facebook_helper = new facebook_helper();
 
