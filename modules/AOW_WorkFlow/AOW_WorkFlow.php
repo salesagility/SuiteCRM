@@ -180,6 +180,7 @@ class AOW_WorkFlow extends Basic {
                     }
                     $query .= ' '.$query_where;
                 }
+                echo '<br /><br />'.$query;
                 return $module->process_full_list_query($query);
             }
 
@@ -251,6 +252,7 @@ class AOW_WorkFlow extends Basic {
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $table_alias.'_cstm.'.$condition->field;
+                        $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                     } else {
                         $field = $table_alias.'.'.$condition->field;
                     }
@@ -264,6 +266,7 @@ class AOW_WorkFlow extends Basic {
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $value = $table_alias.'_cstm.'.$condition->value;
+                                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                             } else {
                                 $value = $table_alias.'.'.$condition->value;
                             }
@@ -283,6 +286,7 @@ class AOW_WorkFlow extends Basic {
                                 $data = $condition_module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                     $value = $table_alias.'_cstm.'.$params[0];
+                                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
                                 } else {
                                     $value = $table_alias.'.'.$params[0];
                                 }
@@ -506,7 +510,7 @@ class AOW_WorkFlow extends Basic {
                         }
                     case 'Value':
                     default:
-                        if(in_array($data['type'],$dateFields)) {
+                        if(in_array($data['type'],$dateFields) && trim($value) != '') {
                             $value = strtotime($value);
                         }
                         break;

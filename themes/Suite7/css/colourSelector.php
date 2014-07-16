@@ -10,6 +10,8 @@ if(is_file('../../../config_override.php')) {
     require_once('../../../config_override.php');
 }
 
+if(!isset($sugar_config['colourselector'])) return;
+
 //set file type back to css from php
 header("Content-type: text/css; charset: UTF-8");
 

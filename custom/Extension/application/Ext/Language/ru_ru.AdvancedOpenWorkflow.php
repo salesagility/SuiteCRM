@@ -92,8 +92,16 @@ $app_list_strings['aow_assign_options']['security_group'] = 'ВСЕ пользо
 
 $app_list_strings['aow_email_type_list']['Email Address'] = 'Вручную';
 $app_list_strings['aow_email_type_list']['Record Email'] = 'Отобранной записи';
-$app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
 $app_list_strings['aow_email_type_list']['Related Field'] = 'Связанного модуля';
+$app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
+$app_list_strings['aow_email_type_list']['Users'] = 'Пользователей';
+$app_list_strings['aow_email_to_list']['to'] = 'Кому';
+$app_list_strings['aow_email_to_list']['cc'] = 'Копия';
+$app_list_strings['aow_email_to_list']['bcc'] = 'Скрытая копия';
+
+$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
+$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
+$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
 
 $app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
 $app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';

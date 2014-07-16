@@ -2,31 +2,31 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo. If the display of the logo is not reasonably feasible for
@@ -42,10 +42,12 @@ require_once('modules/AOD_Index/LuceneUtils.php');
 requireLucene();
 
 class AOD_Index extends AOD_Index_sugar {
-	
+
 	function AOD_Index(){
 		parent::AOD_Index_sugar();
-	}
+        Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('utf-8');
+        Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive());
+    }
 
     function isEnabled(){
         global $sugar_config;
@@ -86,53 +88,53 @@ class AOD_Index extends AOD_Index_sugar {
      * @param $revision
      * @return bool|Zend_Search_Lucene_Document
      */
-private function getDocumentForRevision($revision){
-    $path = getDocumentRevisionPath($revision->id);
-    if(!file_exists($path)){
-        return array("error"=>"File not found");
+    private function getDocumentForRevision($revision){
+        $path = getDocumentRevisionPath($revision->id);
+        if(!file_exists($path)){
+            return array("error"=>"File not found");
+        }
+        //Convert the file to a lucene document
+        $mime = $revision->file_mime_type;
+        switch($mime){
+            case 'application/pdf':
+                $document = createPDFDocument($path);
+                break;
+            case 'application/msword':
+                $document = createDocDocument($path);
+                break;
+            case 'application/vnd.oasis.opendocument.text':
+                $document = createOdtDocument($path);
+                break;
+            case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+                $document = createDocXDocument($path);
+                break;
+            case 'text/html':
+                $document = createHTMLDocument($path);
+                break;
+            case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                $document = createXLSXDocument($path);
+                break;
+            case 'application/rtf':
+                $document = createRTFDocument($path);
+            case 'text/csv':
+            case 'text/plain':
+                $document = createTextDocument($path);
+                break;
+            case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
+                $document = createPPTXDocument($path);
+                break;
+            case 'application/vnd.oasis.opendocument.spreadsheet':
+            case 'application/vnd.ms-powerpoint':
+            case 'application/vnd.ms-excel':
+            default:
+                return array("error"=>"Mime type $mime not supported");
+        }
+        if(!$document){
+            return array("error"=>"Failed to parse document");
+        }
+        $document->addField(Zend_Search_Lucene_Field::text("filename",$revision->filename));
+        return array("error"=>false,"document"=>$document);
     }
-    //Convert the file to a lucene document
-    $mime = $revision->file_mime_type;
-    switch($mime){
-        case 'application/pdf':
-            $document = createPDFDocument($path);
-            break;
-        case 'application/msword':
-            $document = createDocDocument($path);
-            break;
-        case 'application/vnd.oasis.opendocument.text':
-            $document = createOdtDocument($path);
-            break;
-        case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
-            $document = createDocXDocument($path);
-            break;
-        case 'text/html':
-            $document = createHTMLDocument($path);
-            break;
-        case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-            $document = createXLSXDocument($path);
-            break;
-        case 'application/rtf':
-            $document = createRTFDocument($path);
-        case 'text/csv':
-        case 'text/plain':
-            $document = createTextDocument($path);
-            break;
-        case 'application/vnd.openxmlformats-officedocument.presentationml.presentation':
-            $document = createPPTXDocument($path);
-            break;
-        case 'application/vnd.oasis.opendocument.spreadsheet':
-        case 'application/vnd.ms-powerpoint':
-        case 'application/vnd.ms-excel':
-        default:
-            return array("error"=>"Mime type $mime not supported");
-    }
-    if(!$document){
-        return array("error"=>"Failed to parse document");
-    }
-    $document->addField(Zend_Search_Lucene_Field::text("filename",$revision->filename));
-    return array("error"=>false,"document"=>$document);
-}
 
     public function getDocumentForBean(SugarBean $bean){
         if($bean->module_name == 'DocumentRevisions'){
@@ -143,18 +145,18 @@ private function getDocumentForRevision($revision){
         if($document["error"]){
             return $document;
         }
-        $document["document"]->addField(Zend_Search_Lucene_Field::UnIndexed("aod_id", $bean->module_name." ".$bean->id));
+        $document["document"]->addField(Zend_Search_Lucene_Field::Keyword("aod_id", $bean->module_name." ".$bean->id));
         $document["document"]->addField(Zend_Search_Lucene_Field::UnIndexed("record_id", $bean->id));
         $document["document"]->addField(Zend_Search_Lucene_Field::UnIndexed("record_module", $bean->module_name));
         foreach($GLOBALS['dictionary'][$bean->getObjectName()]['fields'] as $key => $field){
             switch($field['type']){
                 case "enum":
-                    $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key)));
+                    $document["document"]->addField(Zend_Search_Lucene_Field::Keyword($key, strtolower($bean->$key),'UTF-8'));
                     break;
 
                 case "multienum":
                     $vals = unencodeMultienum($bean->$field);
-                    $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ",$vals))));
+                    $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ",$vals)),'UTF-8'));
                     break;
                 case "name":
                 case "phone":
@@ -167,10 +169,8 @@ private function getDocumentForRevision($revision){
                     }else{
                         $val = '';
                     }
-                    $field = Zend_Search_Lucene_Field::unStored($key, $val);
-                    if($key == "name"){
-                        $field->boost = 1.5;
-                    }
+                    $field = Zend_Search_Lucene_Field::unStored($key, $val,'UTF-8');
+                    $field->boost = $this->getBoost($bean->module_name,$key);
                     $document["document"]->addField($field);
                     break;
                 case "address":
@@ -190,6 +190,19 @@ private function getDocumentForRevision($revision){
         }
 
         return $document;
+    }
+
+    private function getBoost($module, $field){
+        $fieldBoosts = array('name' =>0.5, 'first_name' => 0.5, 'last_name' => 0.5);
+        $moduleBoosts = array('Accounts' => 0.5, 'Contacts' => 0.5, 'Leads' => 0.5, 'Opportunities' => 0.5);
+        $boost = 1;
+        if(!empty($fieldBoosts[$field])){
+            $boost += $fieldBoosts[$field];
+        }
+        if(!empty($moduleBoosts[$module])){
+            $boost += $moduleBoosts[$module];
+        }
+        return $boost;
     }
 
     private function getIndexEvent($module, $beanId){
@@ -275,9 +288,9 @@ private function getDocumentForRevision($revision){
         return $module . " " . $beanId;
     }
 
-    private function remove($module, $beanId){
-        $idTerm = new Zend_Search_Lucene_Index_Term($this->getIdForDoc($module,$beanId),"aod_id");
-        $query = new Zend_Search_Lucene_Search_Query_Term($idTerm);
+    public function remove($module, $beanId){
+        $term  = new Zend_Search_Lucene_Index_Term($module.' '.$beanId, 'aod_id');
+        $query = new Zend_Search_Lucene_Search_Query_Term($term);
         $hits = $this->getLuceneIndex()->find($query);
         foreach ($hits as $hit) {
             $this->getLuceneIndex()->delete($hit->id);
@@ -289,9 +302,6 @@ private function getDocumentForRevision($revision){
      * @return Zend_Search_Lucene_Interface
      */
     private function getLuceneIndex(){
-        if(!empty($this->index)){
-            return $this->index;
-        }
         if(file_exists($this->location)){
             $this->index = new Zend_Search_Lucene($this->location);
         }else{

@@ -101,5 +101,10 @@ $mod_strings = array (
   'LBL_SHIPPING_TAX_AMT' => 'Shipping Tax',
   'LBL_ADD_PRODUCT_LINE' => 'Add Product Line',
   'LBL_ADD_SERVICE_LINE' => 'Add Service Line ',
+  'LBL_PRINT_AS_PDF' => 'Print as PDF',
+  'LBL_EMAIL_PDF' => 'Email PDF',
+  'LBL_PDF_NAME' => 'Contract',
+  'LBL_EMAIL_NAME' => 'Contract for',
+  'LBL_NO_TEMPLATE' => 'ERROR\nNo templates found. If you have not created an Contract template, go to the PDF templates module and create one',
 );
 ?>
