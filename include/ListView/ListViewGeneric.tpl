@@ -80,9 +80,6 @@
                 <p class="msg">
                     {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
                 </p>
-                <p class="submsg">
-                    {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$moduleName|replace:"<item4>":$helpLink}
-                </p>
         {elseif $query == "-advanced_search"}
             <p class="msg">
                 {$APP.MSG_LIST_VIEW_NO_RESULTS_BASIC}
