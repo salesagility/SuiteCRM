@@ -172,6 +172,18 @@ function qe_init(){
             $('html, body').animate({scrollTop:0}, 500); // Scroll speed to the top
         });
     </script>
+    <script>
+        function toggleCodes(on) {
+            var obj = document.getElementById('icons');
+
+            if (on) {
+                obj.className += ' codesOn';
+            } else {
+                obj.className = obj.className.replace(' codesOn', '');
+            }
+        }
+
+    </script>
 {/literal}
 </body>
 </html>
