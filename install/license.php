@@ -73,11 +73,15 @@ $out =<<<EOQ
     </script>
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
    <script type="text/javascript" src="install/license.js"></script>
+<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
 <div id='licenseDiv'>
-<form action="install.php" method="post" name="setConfig" id="form">
+            <div id="steps"><p >Step 2 of 8 - License Agreement</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
+            </div>
+            <form action="install.php" method="post" name="setConfig" id="form">
 <form action="welcome.php" method="post" name="setLang" id="langForm">
   <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
     <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>

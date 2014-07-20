@@ -71,33 +71,28 @@ if(version_compare(phpversion(),'5.2.2') < 0){
 
 $langHeader = get_language_header();
 $out = <<<EOQ
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html {$langHeader}>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta http-equiv="Content-Style-Type" content="text/css">
-   <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_INSTALL_TYPE_TITLE']}</title>
-   <link REL="SHORTCUT ICON" HREF="$icon">
-   <link rel="stylesheet" href="$css" type="text/css">
+   <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_INSTALL_TYPE_TITLE']}</title>   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
+   <link rel="stylesheet" href="install/install.css" type="text/css">
+   <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
+   <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
+   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="themes/Suite7/js/responsiveslides.min.js"></script>
 </head>
-
 <body onload="javascript:document.getElementById('button_next').focus();">
+    <!--SuiteCRM installer-->
+    <div id="suitecrm_installer">
+        <form action="install.php" method="post" name="form" id="form">
+            <header id="install_header">
+            <h1 id="welcomelink">{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</h1>
+                <div class="install_img"><img src="{$sugar_md}" alt="SuiteCRM"></div>
+            </header>
     <form action="install.php" method="post" name="form" id="form">
-  <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
-      <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>
-    <tr>
-      <th width="500">
-		<p>
-		<img src="{$sugar_md}" alt="SugarCRM" border="0">
-		</p>
 		{$mod_strings['LBL_INSTALL_TYPE_TITLE']}</th>
-
-    <th width="200" height="30" style="text-align: right;">&nbsp;
-        </th>
-    </tr>
-
-    <tr><td colspan="2">
-        <table width="100%" class="StyleDottedHr">
 EOQ;
 
 
@@ -115,40 +110,24 @@ if(isset($_SESSION['install_type']) && $_SESSION['install_type']=='custom'){
 
 
 $out .= <<<EOQ2
-<tr><th colspan='2' align="left">{$mod_strings['LBL_INSTALL_TYPE_SUBTITLE']}</th></tr>
-        <tr><td width='200'>
+{$mod_strings['LBL_INSTALL_TYPE_SUBTITLE']}
           <input name="install_type" type="radio" value="Typical" {$typical_checked}>{$mod_strings['LBL_INSTALL_TYPE_TYPICAL']}
-        </td><td width='500'>
+
             {$mod_strings['LBL_INSTALL_TYPE_MSG2']}
-        <td></tr>
-        <tr><td width='200'>
+
           <input type="radio" name="install_type" value="custom" {$custom_checked}>{$mod_strings['LBL_INSTALL_TYPE_CUSTOM']}
-        </td><td width='500'>
+
             {$mod_strings['LBL_INSTALL_TYPE_MSG3']}
-        <td></tr>
-        </table>
+<b><i>{$php_suggested_ver}</i></b></td></tr>
 
-
-      </td>
-    </tr>
-	<tr><td width='1000'><b><i>{$php_suggested_ver}</i></b></td></tr>
-    <tr>
-      <td align="right" colspan="2" height="20">
         <hr>
                 <input type="hidden" name="current_step" value="{$next_step}">
 
-        <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-          <tr>
-
-            <td><input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_installType" onclick="document.getElementById('form').submit();" />
-                <input type="hidden" name="goto" value="{$mod_strings['LBL_BACK']}" /></td>
-                <td><input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" /></td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+        <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_installType" onclick="document.getElementById('form').submit();" />
+                <input type="hidden" name="goto" value="{$mod_strings['LBL_BACK']}" />
+                <input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" />
     </form>
+    </div>
 </body>
 </html>
 EOQ2;

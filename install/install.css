@@ -46,6 +46,8 @@ body {
 	margin: 0px 0px 0px 0px;
 	background-color : #f7f7f7 ;
 	color : #333333;
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-weight:normal;
 }
 
 img {
@@ -193,7 +195,7 @@ table.shell tbody {
 
 table.shell tbody table tbody {
     overflow-y:visible;
-    height:auto;
+
 }
 
 table.shell {
@@ -423,4 +425,177 @@ a.other{
 
 .yui-panel .bd p {
 	margin:0 !important;
+}
+
+#suitecrm_installer {
+    width: 750px;
+    height:500px;
+    max-height:500px !important;
+    position: relative;
+    line-height: 1.4em;
+    margin:25px auto;
+    background:#ffffff;
+    border:1px solid #cccccc;
+    vertical-align:middle;
+
+}
+
+
+#install_header {
+    margin:10px auto;
+    border-bottom:1px solid #cccccc;
+    height:50px;
+}
+
+#install_header img {
+    float:left;
+    padding:0 10px;
+    max-height:40px;
+}
+
+.rslides {
+    position: relative;
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.rslides li {
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    display: none;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.rslides li:first-child {
+    position: relative;
+    display: block;
+    float: left;
+}
+
+.rslides img {
+    display: block;
+    height: auto;
+    float: left;
+    width: 100%;
+    border: 0;
+}
+
+#welcomelink {
+    float:right;
+    margin:10px 10px 0 0;
+    padding:0;
+    font-weight:normal;
+    color:#565656;
+}
+
+#welcomelink {
+    font-weight:normal;
+    color:#565656;
+}
+
+#install_footer {
+    margin:10px auto;
+
+    height:50px;
+}
+
+.install_img {
+    max-width:200px;
+}
+
+#footer_links a{
+    text-decoration:none;
+}
+
+p#footer_links {
+    text-align:center;
+    margin-top:10px;
+}
+#wrapper {
+    min-height:300px;
+    border-bottom:1px solid #cccccc;
+}
+
+.sliderimg {
+
+    max-height:300px;
+}
+#progress {
+    text-align:center;
+    position:relative;
+
+}
+.progressbutton {
+    -moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
+    box-shadow:inset 0px 1px 0px 0px #f5978e;
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) );
+    background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f');
+    background-color:#f24537;
+    -webkit-border-top-left-radius:0px;
+    -moz-border-radius-topleft:0px;
+    border-top-left-radius:0px;
+    -webkit-border-top-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-bottomright:0px;
+    border-bottom-right-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    -moz-border-radius-bottomleft:0px;
+    border-bottom-left-radius:0px;
+    text-indent:0;
+    border:1px solid #d02718;
+    display:inline-block;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:14px;
+    font-weight:bold;
+    font-style:normal;
+    height:30px;
+    line-height:15px;
+    width:75px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #810e05;
+    cursor:pointer;
+}
+.progressbutton:hover {
+    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
+    background:-moz-linear-gradient( center top, #c62d1f 5%, #f24537 100% );
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537');
+    background-color:#c62d1f;
+}.progressbutton:active {
+     position:relative;
+     top:1px;
+ }
+/* This button was generated using CSSButtonGenerator.com */
+
+#install_content {
+    font-size:12px;
+    max-height:350px;
+    overflow:auto;
+    padding:25px;
+}
+
+#steps {
+    font-size:24px;
+    verticle-align:top;
+    float:right;
+    margin: 0 5px 0 0;
+}
+
+#steps p {
+    font-size:14px;
+    margin:0 0 0 5px;
+}
+
+#complete {
+    color:green;
 }

@@ -40,13 +40,12 @@
     </div>
 
 
-</div>
+</main>
 
 <div id="bottomLinks">
 </div>
-<div class="clear_footer"></div>
 
-<div id="footer">
+<footer>
     <div id="responseTime">
         {$STATISTICS}
     </div>
@@ -75,7 +74,7 @@
     <button id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</button>
     </div>
 
-</div>
+</footer>
 <script>
 {literal}
 function printpage()
