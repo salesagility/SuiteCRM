@@ -188,14 +188,14 @@ th, td
 }
 
 /* layout the header elements */
-#header div.line
+header div.line
 {
     height: 4px;
     margin: 0;
     padding: 0;
 }
 
-#header ul li
+header ul li
 {
     display:inline;
 }
@@ -496,7 +496,7 @@ ul.cssmenu li a
 
 }
 
-#header ul.cssmenu li{
+header ul.cssmenu li{
     display:block;
 }
 
@@ -2463,12 +2463,12 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=butt
 }
 
 /* set a minimum width for the header */
-#header
+header
 {
     min-width: 85em;
 }
 /* header */
-#header div.line {
+header div.line {
     height: 2px;
     border-bottom: 2px solid;
     color:#0046ad;
@@ -3171,7 +3171,7 @@ textarea
 }
 
 /* header */
-#header div.line {
+header div.line {
     background-color:#f10202;
     border-bottom-color: #0046ad;
     color:#0046ad;
@@ -4143,7 +4143,7 @@ body {
 
 /* Header CSS */
 
-#header {
+header {
     position:fixed;
     top:0px;
     width:100%;
