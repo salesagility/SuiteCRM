@@ -200,7 +200,9 @@ class actionSendEmail extends actionBase {
                         }
                         break;
                     case 'Record Email':
-                        $emails[$params['email_to_type'][$key]][] = $bean->emailAddress->getPrimaryAddress($bean);
+                        $recordEmail = $bean->emailAddress->getPrimaryAddress($bean);
+                        if($recordEmail == '' && isset($bean->email1)) $recordEmail = $bean->email1;
+                        $emails[$params['email_to_type'][$key]][] = $recordEmail;
                         break;
                 }
             }
