@@ -25,6 +25,9 @@
 class AOD_LogicHooks{
 
     function saveModuleChanges(SugarBean $bean, $event, $arguments){
+        if($bean->module_name == 'AOD_Index'){
+            return;
+        }
         if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
@@ -37,6 +40,9 @@ class AOD_LogicHooks{
     }
 
     function saveModuleDelete(SugarBean $bean, $event, $arguments){
+        if($bean->module_name == 'AOD_Index'){
+            return;
+        }
         if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
@@ -49,6 +55,9 @@ class AOD_LogicHooks{
     }
 
     function saveModuleRestore(SugarBean $bean, $event, $arguments){
+        if($bean->module_name == 'AOD_Index'){
+            return;
+        }
         if(defined('sugarEntry') && defined('SUGARCRM_IS_INSTALLING')){
             return;
         }
