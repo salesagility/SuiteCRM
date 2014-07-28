@@ -278,9 +278,9 @@ class AOW_WorkFlow extends Basic {
                             $params =  unserialize(base64_decode($condition->value));
                             if($params[0] == 'now'){
                                 if($sugar_config['dbconfig']['db_type'] == 'mssql'){
-                                    $value  = 'GetDate()';
+                                    $value  = 'GetUTCDate()';
                                 } else {
-                                    $value = 'NOW()';
+                                    $value = 'UTC_TIMESTAMP()';
                                 }
                             } else {
                                 $data = $condition_module->field_defs[$params[0]];
