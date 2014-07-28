@@ -71,12 +71,13 @@ class AOD_Index extends AOD_Index_sugar {
     }
 
     public function getIndex(){
-        $indexes = $this->get_full_list();
-        if(count($indexes)){
-            $index = $indexes[0];
+        $index = BeanFactory::getBean('AOD_Index',1);
+        if(!empty($index) && !empty($index->id)){
             return $index;
         }else{
             $index = new AOD_Index();
+            $index->id = 1;
+            $index->new_with_id = true;
             $index->name = "Index";
             $index->location = "modules/AOD_Index/Index/Index";
             $index->save();
