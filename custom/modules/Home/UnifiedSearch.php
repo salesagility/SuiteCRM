@@ -119,16 +119,12 @@ if($queryString){
     <?php
     if($hits){
 foreach($hits as $hit){
-    $bean = BeanFactory::getBean($hit->record_module,$hit->record_id);
-        if(empty($bean)){
-            continue;
-        }
     echo "<tr>"
-        ."<td>".getModuleLabel($bean->module_name)."</td>"
-        ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$bean->get_summary_text()."</a></td>"
-        ."<td>".getRecordSummary($bean)."</td>"
-        ."<td>".$bean->date_entered."</td>"
-        ."<td>".$bean->date_modified."</td>"
+        ."<td>".$hit->label."</td>"
+        ."<td><a href='index.php?module=".$hit->record_module."&action=DetailView&record=".$hit->record_id."'>".$hit->name."</a></td>"
+        ."<td>".$hit->summary."</td>"
+        ."<td>".$hit->date_entered."</td>"
+        ."<td>".$hit->date_modified."</td>"
         ."<td>".getScoreDisplay($hit)."</td>"
         ."</tr>";
 }
@@ -198,6 +194,7 @@ function getCorrectMTime($filePath){
 }
 
 function doSearch($index, $queryString, $start = 0, $amount = 20){
+    global $current_user;
     $cachePath = 'cache/modules/AOD_Index/QueryCache/' . md5($queryString);
     if(is_file($cachePath)){
         $mTime = getCorrectMTime($cachePath);
@@ -209,10 +206,29 @@ function doSearch($index, $queryString, $start = 0, $amount = 20){
         $tmphits = $index->find($queryString);
         $hits = array();
         foreach($tmphits as $hit){
+            $bean = BeanFactory::getBean($hit->record_module,$hit->record_id);
+            if(empty($bean)){
+                continue;
+            }
+            if($bean->bean_implements('ACL') && !is_admin($current_user)){
+                //Annoyingly can't use the following as it always passes true for is_owner checks on list
+                //$bean->ACLAccess('list');
+                $in_group = SecurityGroup::groupHasAccess($bean->module_dir,$bean->id, 'list');
+                $is_owner = $bean->isOwner($current_user->id);
+                $access = ACLController::checkAccess($bean->module_dir,'list', $is_owner, 'module', $in_group);
+                if(!$access){
+                    continue;
+                }
+            }
             $newHit = new stdClass;
             $newHit->record_module = $hit->record_module;
             $newHit->record_id = $hit->record_id;
             $newHit->score = $hit->score;
+            $newHit->label = getModuleLabel($bean->module_name);
+            $newHit->name = $bean->get_summary_text();
+            $newHit->summary = getRecordSummary($bean);
+            $newHit->date_entered = $bean->date_entered;
+            $newHit->date_modified = $bean->date_modified;
             $hits[] = $newHit;
         }
         //Cache results so pagination is nice and snappy.
