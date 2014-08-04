@@ -248,10 +248,10 @@ class AOD_Index extends AOD_Index_sugar {
             if(!$this->isEnabled()){
                 return;
             }
-            $bean_name = $GLOBALS['beanList'][$module];
-            if(!$bean_name){
+            if(empty($GLOBALS['beanList'][$module])){
                 return false;
             }
+            $bean_name = $GLOBALS['beanList'][$module];
             $bean = new $bean_name();
             if(!$bean || ! $bean instanceof SugarBean){
                 return false;
