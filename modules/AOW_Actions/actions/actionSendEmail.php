@@ -237,7 +237,9 @@ class actionSendEmail extends actionBase {
         foreach($bean->field_defs as $bean_arr){
             if($bean_arr['type'] == 'relate'){
                 if(isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress'){
-                    if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$bean_arr['id_name'];
+                    if(isset($bean->field_defs[$bean_arr['id_name']]) && $bean->field_defs[$bean_arr['id_name']]['source'] != 'non-db'){
+                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$bean_arr['id_name'];
+                    }
                 }
             }
             else if($bean_arr['type'] == 'link'){
@@ -251,6 +253,8 @@ class actionSendEmail extends actionBase {
                 }
             }
         }
+
+        $GLOBALS['log']->fatal('AOW '.print_r($object_arr,true));
 
         $object_arr['Users'] = $bean->assigned_user_id;
 
