@@ -180,7 +180,6 @@ class AOW_WorkFlow extends Basic {
                     }
                     $query .= ' '.$query_where;
                 }
-                echo '<br /><br />'.$query;
                 return $module->process_full_list_query($query);
             }
 
@@ -314,9 +313,18 @@ class AOW_WorkFlow extends Basic {
                             $multi_values = unencodeMultienum($condition->value);
                             if(!empty($multi_values)){
                                 $value = '(';
-                                foreach($multi_values as $multi_value){
-                                    if($value != '(') $value .= $sep;
-                                    $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
+                                if($data['type'] == 'multienum'){
+                                    $multi_operator =  $condition->operator == 'Equal_To' ? 'LIKE' : 'NOT LIKE';
+                                    foreach($multi_values as $multi_value){
+                                        if($value != '(') $value .= $sep;
+                                        $value .= $field." $multi_operator '%^".$multi_value."^%'";
+                                    }
+                                }
+                                else {
+                                    foreach($multi_values as $multi_value){
+                                        if($value != '(') $value .= $sep;
+                                        $value .= $field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator]." '".$multi_value."'";
+                                    }
                                 }
                                 $value .= ')';
                                 $query['where'][] = $value;
@@ -488,6 +496,7 @@ class AOW_WorkFlow extends Basic {
                     case 'Multi':
 
                         $value = unencodeMultienum($value);
+                        if($data['type'] == 'multienum') $field = unencodeMultienum($field);
                         switch($condition->operator) {
                             case 'Not_Equal_To';
                                 $condition->operator = 'Not_Contains';
@@ -533,8 +542,22 @@ class AOW_WorkFlow extends Basic {
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains": return in_array($var1,$var2);
-            case "Not_Contains": return !in_array($var1,$var2);
+            case "Contains":
+                if(is_array($var1)){
+                    foreach($var1 as $var){
+                        if(in_array($var,$var2)) return true;
+                    }
+                    return false;
+                }
+                else return in_array($var1,$var2);
+            case "Not_Contains":
+                if(is_array($var1)){
+                    foreach($var1 as $var){
+                        if(in_array($var,$var2)) return false;
+                    }
+                    return true;
+                }
+                else return !in_array($var1,$var2);
             case "Equal_To":
             default: return $var1 == $var2;
         }
