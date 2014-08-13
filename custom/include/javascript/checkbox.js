@@ -47,6 +47,8 @@ $(function () {
         
         $(this).parents('.cust_list').hide();
 
+        Populate();
+
         return false; //Prevent page from jumping back to the top on click
     });
 
