@@ -96,7 +96,7 @@
                     <a href="#" id="grouptab_{$smarty.foreach.groupList.index}">{$group}</a>
                     </span>
                 <span class="notCurrentTabRight">&nbsp;</span>
-                <ul class="cssmenu" id="{$group}">
+                <ul class="cssmenu"{if $smarty.foreach.groupList.last} id="All"{/if}>
                     {foreach from=$modules.modules item=module key=modulekey}
                         <li>
                             {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
