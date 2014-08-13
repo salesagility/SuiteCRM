@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 $app_list_strings["moduleList"]["SecurityGroups"] = 'Управление Группами пользователей';
 $app_strings['LBL_LOGIN_AS'] = "Войти как ";
