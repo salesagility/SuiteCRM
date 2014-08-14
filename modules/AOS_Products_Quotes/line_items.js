@@ -666,7 +666,7 @@ function calculateLine(ln, key){
     }
 
 
-    var vat = unformat2Number(document.getElementById(key + 'vat' + ln).value);
+    var vat = unformatNumber(document.getElementById(key + 'vat' + ln).value,',','.');
 
     var productTotalPrice = productQty * productUnitPrice;
 
