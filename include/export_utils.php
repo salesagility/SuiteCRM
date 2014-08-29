@@ -83,72 +83,7 @@ function export($type, $records = null, $members = false, $sample=false) {
     global $mod_strings;
     global $current_language;
     $sampleRecordNum = 5;
-    $contact_fields = array(
-        "id"=>"Contact ID"
-        ,"lead_source"=>"Lead Source"
-        ,"date_entered"=>"Date Entered"
-        ,"date_modified"=>"Date Modified"
-        ,"first_name"=>"First Name"
-        ,"last_name"=>"Last Name"
-        ,"salutation"=>"Salutation"
-        ,"birthdate"=>"Lead Source"
-        ,"do_not_call"=>"Do Not Call"
-        ,"email_opt_out"=>"Email Opt Out"
-        ,"title"=>"Title"
-        ,"department"=>"Department"
-        ,"birthdate"=>"Birthdate"
-        ,"do_not_call"=>"Do Not Call"
-        ,"phone_home"=>"Phone (Home)"
-        ,"phone_mobile"=>"Phone (Mobile)"
-        ,"phone_work"=>"Phone (Work)"
-        ,"phone_other"=>"Phone (Other)"
-        ,"phone_fax"=>"Fax"
-        ,"email1"=>"Email"
-        ,"email2"=>"Email (Other)"
-        ,"assistant"=>"Assistant"
-        ,"assistant_phone"=>"Assistant Phone"
-        ,"primary_address_street"=>"Primary Address Street"
-        ,"primary_address_city"=>"Primary Address City"
-        ,"primary_address_state"=>"Primary Address State"
-        ,"primary_address_postalcode"=>"Primary Address Postalcode"
-        ,"primary_address_country"=>"Primary Address Country"
-        ,"alt_address_street"=>"Other Address Street"
-        ,"alt_address_city"=>"Other Address City"
-        ,"alt_address_state"=>"Other Address State"
-        ,"alt_address_postalcode"=>"Other Address Postalcode"
-        ,"alt_address_country"=>"Other Address Country"
-        ,"description"=>"Description"
-    );
 
-    $account_fields = array(
-        "id"=>"Account ID",
-        "name"=>"Account Name",
-        "website"=>"Website",
-        "industry"=>"Industry",
-        "account_type"=>"Type",
-        "ticker_symbol"=>"Ticker Symbol",
-        "employees"=>"Employees",
-        "ownership"=>"Ownership",
-        "phone_office"=>"Phone",
-        "phone_fax"=>"Fax",
-        "phone_alternate"=>"Other Phone",
-        "email1"=>"Email",
-        "email2"=>"Other Email",
-        "rating"=>"Rating",
-        "sic_code"=>"SIC Code",
-        "annual_revenue"=>"Annual Revenue",
-        "billing_address_street"=>"Billing Address Street",
-        "billing_address_city"=>"Billing Address City",
-        "billing_address_state"=>"Billing Address State",
-        "billing_address_postalcode"=>"Billing Address Postalcode",
-        "billing_address_country"=>"Billing Address Country",
-        "shipping_address_street"=>"Shipping Address Street",
-        "shipping_address_city"=>"Shipping Address City",
-        "shipping_address_state"=>"Shipping Address State",
-        "shipping_address_postalcode"=>"Shipping Address Postalcode",
-        "shipping_address_country"=>"Shipping Address Country",
-        "description"=>"Description"
-    );
     //Array of fields that should not be exported, and are only used for logic
     $remove_from_members = array("ea_deleted", "ear_deleted", "primary_address");
     $focus = 0;
@@ -281,8 +216,13 @@ function export($type, $records = null, $members = false, $sample=false) {
         //process retrieved record
     	while($val = $db->fetchByAssoc($result, false)) {
 
+        	if ($members)
+			$focus = BeanFactory::getBean($val['related_type']);
+		else
+		{ // field order mapping is not applied for member-exports, as they include multiple modules
             //order the values in the record array
             $val = get_field_order_mapping($focus->module_dir,$val);
+		}
 
             $new_arr = array();
 		if($members){
@@ -327,10 +267,10 @@ function export($type, $records = null, $members = false, $sample=false) {
 
                     // Bug 32463 - Properly have multienum field translated into something useful for the client
                     case 'multienum':
-                        $value = str_replace("^","",$value);
+			$valueArray = unencodeMultiEnum($value);
+
                         if (isset($focus->field_name_map[$fields_array[$key]]['options']) && isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) )
                         {
-                            $valueArray = explode(",",$value);
                             foreach ($valueArray as $multikey => $multivalue )
                             {
                                 if (isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue]) )
@@ -338,9 +278,19 @@ function export($type, $records = null, $members = false, $sample=false) {
                                     $valueArray[$multikey] = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$multivalue];
                                 }
                             }
-                            $value = implode(",",$valueArray);
                         }
+			$value = implode(",",$valueArray);
+
                         break;
+
+		case 'enum':
+			if (	isset($focus->field_name_map[$fields_array[$key]]['options']) && 
+				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']]) &&
+				isset($app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value])
+			)
+				$value = $app_list_strings[$focus->field_name_map[$fields_array[$key]]['options']][$value];
+
+			break;
                 }
             }
 
