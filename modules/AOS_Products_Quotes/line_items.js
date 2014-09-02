@@ -20,12 +20,17 @@
  *
  * @author SalesAgility <info@salesagility.com>
  */
-
  var lineno;
  var prodln = 0;
  var servln = 0;
  var groupn = 0;
  var group_ids = {};
+ 
+ 
+ 
+$( document ).ready(function() {
+    CheckProductPrice();
+});
  
  
  /**
@@ -161,7 +166,7 @@ function insertProductLine(tableid, groupid) {
     }
 
     var d = x.insertCell(5);
-    d.innerHTML = "<input type='text' style='text-align: right; width:90px;' name='product_product_discount[" + prodln + "]' id='product_product_discount" + prodln + "' size='12' maxlength='50' value='' title='' tabindex='116' onfocus='calculateLine(" + prodln + ",\"product_\");' onblur='calculateLine(" + prodln + ",\"product_\");'><input type='hidden' name='product_product_discount_amount[" + prodln + "]' id='product_product_discount_amount" + prodln + "' value=''  />";
+    d.innerHTML = "<input type='text' style='text-align: right; width:90px;' name='product_product_discount[" + prodln + "]' id='product_product_discount" + prodln + "' size='12' maxlength='50' value='' title='' tabindex='116' onfocus='calculateLine(" + prodln + ",\"product_\");' onblur='calculateLine(" + prodln + ",\"product_\"); CheckProductPrice();' onkeydown='javascript:if(13==event.keyCode){return false;}'><input type='hidden' name='product_product_discount_amount[" + prodln + "]' id='product_product_discount_amount" + prodln + "' value=''  />";
     d.innerHTML += "<select tabindex='116' name='product_discount[" + prodln + "]' id='product_discount" + prodln + "' onchange='calculateLine(" + prodln + ",\"product_\");'>" + discount_hidden + "</select>";
 
     var e = x.insertCell(6);
@@ -185,7 +190,7 @@ function insertProductLine(tableid, groupid) {
         currencyFields.push("product_product_total_price" + prodln);
     }
     var h = x.insertCell(9);
-    h.innerHTML = "<input type='hidden' name='product_currency[" + prodln + "]' id='product_currency" + prodln + "' value=''><input type='hidden' name='product_deleted[" + prodln + "]' id='product_deleted" + prodln + "' value='0'><input type='hidden' name='product_id[" + prodln + "]' id='product_id" + prodln + "' value=''><button type='button' id='product_delete_line" + prodln + "' class='button' value='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "' tabindex='116' onclick='markLineDeleted(" + prodln + ",\"product_\")'><img src='themes/default/images/id-ff-clear.png' alt='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "'></button><br>";
+    h.innerHTML = "<input type='hidden' name='product_currency[" + prodln + "]' id='product_currency" + prodln + "' value=''><input type='hidden' name='product_deleted[" + prodln + "]' id='product_deleted" + prodln + "' value='0'><input type='hidden' name='product_id[" + prodln + "]' id='product_id" + prodln + "' value=''><button type='button' id='product_delete_line" + prodln + "' class='button' value='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "' tabindex='116' onclick='markLineDeleted(" + prodln + ",\"product_\");'><img src='themes/default/images/id-ff-clear.png' alt='" + SUGAR.language.get(module_sugar_grp1, 'LBL_REMOVE_PRODUCT_LINE') + "'></button><br>";
 
 
     enableQS(true);
@@ -599,6 +604,7 @@ function markLineDeleted(ln, key)
 
     calculateTotal(groupid);
     calculateTotal();
+    CheckProductPrice();
 }
 
 
@@ -606,8 +612,7 @@ function markLineDeleted(ln, key)
  * Calculate Line Values
  */
 
-function calculateLine(ln, key){
-
+function calculateLine(ln, key){    
     var required = 'product_list_price';
     if(document.getElementById(key + required + ln) == null){
         required = 'product_unit_price';
@@ -690,6 +695,59 @@ function calculateLine(ln, key){
     calculateTotal(groupid);
     calculateTotal();
 
+}
+
+/**
+ * Check product price on change
+ */
+function CheckProductPrice()
+{     
+    var id = new Array();
+    var price = new Array();            
+    var responseData;
+    $('#lineItems').find('input').each(function(i){
+
+        if(this.id.indexOf('product_product_unit_price') != -1){
+            if($('#'+this.id).is(":visible")){
+                price.push(this.value);
+            }
+
+        }            
+    });
+    if(price.length == 0){
+        $('#SAVE_HEADER').removeAttr("disabled");
+        $('#SAVE_FOOTER').removeAttr("disabled");
+        $('#save_and_continue').removeAttr("disabled");
+    } else {
+        for (i=0; i<price.length; i++) {             
+            // Check product price on upload                 
+            $.ajax({
+                url: "index.php?module=AOS_Products_Quotes&action=Get_Product_Price&sugar_body_only=true",
+                type:'POST',
+                async:false,
+                dataType: "json",
+                data:{
+                  product_id: document.getElementById('product_product_id' + i).value,				
+                },              
+                success: function(data) {                
+                    if(Math.round(data) > Math.round(price[i])){
+                       responseData = true;                   
+                    }
+                },             
+            });
+            if(responseData){           
+                $('#SAVE_HEADER').attr("disabled", "disabled");
+                $('#SAVE_FOOTER').attr("disabled", "disabled");
+                $('#save_and_continue').attr("disabled", "disabled");
+                YAHOO.SUGAR.MessageBox.show({msg: 'The sales price is too low.', title: 'Attention!',   });
+                $('#sugarMsgWindow_mask').attr('style', 'z-index: 1; height: auto; width: auto; display: block; overflow: auto; position: fixed; bottom: 0; right: 0;');
+            } else {                
+                $('#SAVE_HEADER').removeAttr("disabled");
+                $('#SAVE_FOOTER').removeAttr("disabled");
+                $('#save_and_continue').removeAttr("disabled");                                
+            }
+        }
+    }
 }
 
 /**
