@@ -70,7 +70,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar {
 
     function save($check_notify = FALSE){
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
-        perform_save($this);
+        perform_aos_save($this);
         parent::save($check_notify);
     }
 }

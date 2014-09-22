@@ -74,7 +74,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar {
 
     function save($check_notify = FALSE){
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
-        perform_save($this);
+        perform_aos_save($this);
         parent::save($check_notify);
     }
 }
