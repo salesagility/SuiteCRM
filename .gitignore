@@ -14,8 +14,6 @@ custom/modules/*/Ext/
 /config.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
-# The silent upgrade scripts aren't needed.
-silentUpgrade*.php
 # Logs files can safely be ignored.
 *.log
 ## IDE specific items
