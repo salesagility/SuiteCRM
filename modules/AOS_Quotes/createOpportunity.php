@@ -22,6 +22,11 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
+    if(!(ACLController::checkAccess('Opportunities', 'edit', true))){
+        ACLController::displayNoAccess();
+        die;
+    }
+
     global $app_list_strings;
 
 	require_once('modules/AOS_Quotes/AOS_Quotes.php');
