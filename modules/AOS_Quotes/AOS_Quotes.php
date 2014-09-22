@@ -50,7 +50,7 @@ class AOS_Quotes extends AOS_Quotes_sugar {
 
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
 
-        perform_save($this);
+        perform_aos_save($this);
 
 		parent::save($check_notify);
 		
