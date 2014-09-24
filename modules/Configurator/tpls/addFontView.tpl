@@ -100,14 +100,6 @@
             <td></td>
         </tr>
         <tr>
-            <td  scope="row">{$MOD.LBL_PDF_PATCH}:{sugar_help text=$MOD.LBL_PDF_PATCH_INFO} </td>
-            <td>
-                <textarea size='60' name='pdf_patch' id='pdf_patch' rows="4" cols="80"></textarea>
-            </td>
-            <td  scope="row"></td>
-            <td></td>
-        </tr>
-        <tr>
             <td  scope="row">{$MOD.LBL_FONT_LIST_STYLE}: <span class="required">*</span>{sugar_help text=$MOD.LBL_FONT_LIST_STYLE_INFO} </td>
             <td>
                 {html_options name="pdf_style_list" options=$STYLE_LIST}

@@ -179,9 +179,6 @@ function checkMaxSupported(c, s) {
     var current = c.split(".");
     var supported = s.split(".");
     for (var i in supported) {
-
-
-
         if (current[i] && parseInt(current[i]) > parseInt(supported[i])) return false;
         else if (current[i] && parseInt(current[i]) < parseInt(supported[i])) return true;
     }
@@ -192,8 +189,8 @@ SUGAR.isSupportedBrowser = function(){
     var supportedBrowsers = {
         msie : {min:9, max:11}, // IE 9, 11
         safari : {min:534}, // Safari 5.1
-        mozilla : {min:23.0}, // Firefox 23.0
-        chrome : {min:29} // Chrome 29
+        mozilla : {min:31.0}, // Firefox 31.0
+        chrome : {min:37} // Chrome 37 
     };
     var current = String($.browser.version);
     var supported;
@@ -866,7 +863,7 @@ var hexDigit=new Array("0","1","2","3","4","5","6","7","8","9","A","B","C","D","
 function dec2hex(dec){return(hexDigit[dec>>4]+hexDigit[dec&15]);}
 
 function fade_error_style(normalStyle, percent) {
-	errorStyle = 'f10202';
+	errorStyle = 'c60c30';
 	var r1 = hex2dec(errorStyle.slice(0,2));
 	var g1 = hex2dec(errorStyle.slice(2,4));
 	var b1 = hex2dec(errorStyle.slice(4,6));

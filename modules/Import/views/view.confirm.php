@@ -545,7 +545,8 @@ YAHOO.util.Event.onDOMReady(function(){
             fieldQualifier = document.getElementById('custom_enclosure_other').value;
         }
 
-        var url = 'index.php?action=RefreshMapping&module=Import&importFile=' + importFile
+        var module = document.getElementById('importconfirm').import_module.value;
+        var url = 'index.php?import_module='+module+'&action=RefreshMapping&module=Import&importFile=' + importFile
                     + '&delim=' + fieldDelimeter + '&qualif=' + fieldQualifier + "&header=" + hasHeader;
 
         YAHOO.util.Connect.asyncRequest('GET', url, callback);
