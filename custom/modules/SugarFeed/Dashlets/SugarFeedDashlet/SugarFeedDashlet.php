@@ -576,7 +576,7 @@ enableQS(false);
 
     function check_enabled($type){
         global $db;
-        $query = "SELECT * FROM `config` where name = 'module_" .$type . "' and value =  1;";
+        $query = "SELECT * FROM config where name = 'module_" .$type . "' and value =  1;";
         $results = $db->query($query);
 
         while ($row = $db->fetchByAssoc($results)) {
