@@ -34,7 +34,7 @@ class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar {
 	function save_groups($post_data, $parent, $key = ''){
 	
 		$groups = array();
-        $group_count = count($post_data[$key.'group_number']);
+        $group_count = isset($post_data[$key.'group_number']) ? count($post_data[$key.'group_number']) : 0;
         $j = 0;
 		for ($i = 0; $i < $group_count; ++$i) {
 		

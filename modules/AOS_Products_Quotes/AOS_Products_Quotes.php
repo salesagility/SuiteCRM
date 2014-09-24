@@ -31,7 +31,7 @@ class AOS_Products_Quotes extends AOS_Products_Quotes_sugar {
 
     function save_lines($post_data, $parent, $groups = array(), $key = ''){
 
-        $line_count = count($post_data[$key.'name']);
+        $line_count = isset($post_data[$key.'name']) ? count($post_data[$key.'name']) : 0;
         $j = 0;
         for ($i = 0; $i < $line_count; ++$i) {
 
