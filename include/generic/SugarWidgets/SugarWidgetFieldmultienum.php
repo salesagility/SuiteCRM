@@ -63,10 +63,15 @@ class SugarWidgetFieldMultiEnum extends SugarWidgetFieldEnum {
 	}
         
     public function queryFilterone_of(&$layout_def) {
-		$arr = array ();
-		foreach ($layout_def['input_name0'] as $value) {
-			array_push($arr, "'".$GLOBALS['db']->quote($value)."'");
-		}
+        //Fix for inaccurate filtering of contacts in Contacts dashlet on multiselects.
+        $arr = array();
+        foreach ($layout_def['input_name0'] as $value) {
+            if($value != ""){
+                array_push($arr, "'".$GLOBALS['db']->quote($value)."'");
+            }else{
+                array_push($arr, "'^^'");
+            }
+        }
 	    $reporter = $this->layout_manager->getAttribute("reporter");
 
     	$col_name = $this->_get_column_select($layout_def) . " LIKE " ;
