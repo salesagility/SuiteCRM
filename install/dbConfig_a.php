@@ -275,7 +275,7 @@ $out4 =<<<EOQ4
 
 <script>
 
-$('#fts_type').change(function(){
+$('#setup_fts_type').change(function(){
     if($(this).val() == '')
         hideFTSSettings();
     else
