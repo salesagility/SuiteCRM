@@ -8,7 +8,7 @@ This repository has been created to allow community members to collaborate and c
 
 ### Contributing to the repository ###
 
-#####mportant: Please read before developing code intended for inclusion in the SuiteCRM repository.#####
+#####Important: Please read before developing code intended for inclusion in the SuiteCRM repository.#####
 
 Please read, print, sign, scan and email the following [contributor agreement][cont_agrmt]
 
