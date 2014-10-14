@@ -12,7 +12,9 @@ Please read, print, sign, scan and email the following [contributor agreement][c
 
 [cont_agrmt]: http://suitecrm.com/git/suitecrmcontributorlicenseagreement.pdf
 
-The Contributor Agreement only needs to be signed once for all pull requests and contributions. Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
+The Contributor Agreement only needs to be signed once for all pull requests and contributions. 
+
+Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
 
 ### Helpful links for the community###
 
