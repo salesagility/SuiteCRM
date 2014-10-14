@@ -6,9 +6,9 @@ This is the git repository for the SuiteCRM project, the fully open source & sup
 
 This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the SuiteCRM ecosystem.
 
-### Contributing to the repository ###
+### Contributing to the project ###
 
-#####Important: Please read before developing code intended for inclusion in the SuiteCRM repository.#####
+#####Important: Please read before developing code intended for inclusion in the SuiteCRM project.#####
 
 Please read, print, sign, scan and email the following [contributor agreement][cont_agrmt]
 
