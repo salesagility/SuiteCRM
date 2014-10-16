@@ -66,7 +66,7 @@ if(typeof JotPad == 'undefined') { // since the dashlet can be included multiple
 				ta = document.getElementById('jotpad_textarea_' + id);
 				if(SUGAR.isIE) ta.value = divObj.innerHTML.replace(/<br>/gi, "\n");
 				else ta.value = divObj.innerHTML.replace(/<br>/gi, '');
-				ta.value = ta.value.replace(/&amp;/, "&");
+				ta.value = ta.value.replace(/&amp;/gi, "&");
 				divObj.style.display = 'none';
 				ta.style.display = '';
 				ta.focus();
