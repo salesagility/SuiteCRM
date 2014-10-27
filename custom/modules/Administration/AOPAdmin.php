@@ -50,6 +50,7 @@ $errors			= array();
 
 if(!array_key_exists('aop',$cfg->config)){
     $cfg->config['aop'] = array(
+        'enable_aop' => 1,
         'enable_portal' => '',
         'joomla_url'=>'',
         'joomla_access_key'=>'',
@@ -64,12 +65,16 @@ if(!array_key_exists('aop',$cfg->config)){
         'support_from_name'=>'',
     );
 }
+if(!array_key_exists('enable_aop',$cfg->config['aop'])){
+    $cfg->config['aop']['enable_aop'] = 1;
+}
 if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     if(!empty($_REQUEST['joomla_url'])){
         $cfg->config['aop']['joomla_url'] = 'http://' . preg_replace( '~^http://~', '', $_REQUEST['joomla_url']);
     }else{
         $cfg->config['aop']['joomla_url'] = '';
     }
+    $cfg->config['aop']['enable_aop'] = !empty($_REQUEST['enable_aop']);
     $cfg->config['aop']['enable_portal'] = !empty($_REQUEST['enable_portal']);
     $cfg->config['aop']['joomla_access_key'] = $_REQUEST['joomla_access_key'];
     $cfg->config['aop']['distribution_method'] = $_REQUEST['distribution_method'];
