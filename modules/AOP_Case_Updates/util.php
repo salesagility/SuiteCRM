@@ -21,6 +21,15 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
+
+function isAOPEnabled(){
+    global $sugar_config;
+    if(array_key_exists("aop",$sugar_config) && array_key_exists('enable_aop',$sugar_config['aop'])){
+        return !empty($sugar_config['aop']['enable_aop']);
+    }
+    return true;//Defaults to enabled.
+}
+
 function getPortalEmailSettings(){
     global $sugar_config;
     $settings = array('from_name'=>'','from_address'=>'');

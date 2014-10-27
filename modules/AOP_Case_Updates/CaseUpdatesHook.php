@@ -26,12 +26,12 @@ class CaseUpdatesHook {
     private $slug_size = 50;
 
 
-    function getLastRobin() {
+    private function getLastRobin() {
         global $sugar_config;
         return $sugar_config['aop']['last_robin'];
     }
 
-    function setLastRobin($lastRobin) {
+    private function setLastRobin($lastRobin) {
         require_once('modules/Configurator/Configurator.php');
         $cfg = new Configurator();
         $cfg->config['aop']['last_robin'] = $lastRobin;
@@ -70,6 +70,9 @@ class CaseUpdatesHook {
     }
 
     public function saveUpdate($bean, $event, $arguments){
+        if(!isAOPEnabled()){
+            return;
+        }
         global $current_user, $app_list_strings;
         if(empty($bean->fetched_row) || !$bean->id){
 
@@ -126,6 +129,9 @@ class CaseUpdatesHook {
         if($arguments['module'] != "Cases" || $arguments['related_module'] != "Contacts"){
             return;
         }
+        if(!isAOPEnabled()){
+            return;
+        }
         $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
         $contact->load_relationship("accounts");
         if(!$contact || !$contact->account_id){
@@ -146,7 +152,9 @@ class CaseUpdatesHook {
             $GLOBALS['log']->warn("CaseUpdatesHook: saveEmailUpdate: Not a create case or wrong parent type");
             return;
         }
-
+        if(!isAOPEnabled()){
+            return;
+        }
         if(!$bean->parent_id ){
             $GLOBALS['log']->warn("CaseUpdatesHook: saveEmailUpdate No parent id");
             return;
@@ -182,7 +190,7 @@ class CaseUpdatesHook {
         $case_update->save();
     }
 
-    public function unquoteEmail($text){
+    private function unquoteEmail($text){
         global $app_strings;
         $text = html_entity_decode($text);
         $text = preg_replace('/(\r\n|\r|\n)/s',"\n",$text);
@@ -216,6 +224,9 @@ class CaseUpdatesHook {
     }
 
     private function sendClosureEmail(aCase $bean){
+        if(!isAOPEnabled()){
+            return;
+        }
         $GLOBALS['log']->warn("CaseUpdatesHook: sendClosureEmail called");
         require_once("include/SugarPHPMailer.php");
         $mailer=new SugarPHPMailer();
@@ -309,6 +320,9 @@ class CaseUpdatesHook {
     }
 
     private function sendCreationEmail(aCase $bean, $contact){
+        if(!isAOPEnabled()){
+            return;
+        }
         require_once("include/SugarPHPMailer.php");
         $mailer=new SugarPHPMailer();
         $admin = new Administration();

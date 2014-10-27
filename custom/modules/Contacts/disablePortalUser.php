@@ -22,7 +22,10 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 if(!defined('sugarEntry'))define('sugarEntry', true);
-
+require_once 'modules/AOP_Case_Updates/util.php';
+if(!isAOPEnabled()){
+    return;
+}
 global $sugar_config, $mod_strings;
 
 require_once('modules/Contacts/Contact.php');
