@@ -42,6 +42,7 @@ $_REQUEST['edit']='true';
 
 require_once('include/SugarFolders/SugarFolders.php');
 require_once('include/templates/TemplateGroupChooser.php');
+require_once 'modules/AOP_Case_Updates/util.php';
 
 // GLOBALS
 global $mod_strings;
@@ -356,9 +357,7 @@ $xtpl->assign('LEAVEMESSAGESONMAILSERVER', get_select_options_with_id($app_list_
 
 $distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
-print_r($distributionAssignOptions);
-//die();
-$xtpl->assign('DISTRIBUTION_OPTIONS', getAssignField('distribution_options',$distributionAssignOptions));
+$xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options',$distributionAssignOptions));
 $xtpl->assign('distribution_user_name', $distribution_user_name);
 $xtpl->assign('distribution_user_id', $distribution_user_id);
 
@@ -498,38 +497,3 @@ $xtpl->out("main");
         $('#distrib_method').change();
     });
 </script>
-
-<?php
-
-function getAssignField($assignField, $value){
-    global $app_list_strings;
-
-
-    $roles = get_bean_select_array(true, 'ACLRole','name', '','name',true);
-
-    if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
-        unset($app_list_strings['aow_assign_options']['security_group']);
-    }
-    else{
-        $securityGroups = get_bean_select_array(true, 'SecurityGroup','name', '','name',true);
-    }
-
-    $field = '';
-
-    $field .= "<select type='text' name='$assignField".'[0]'."' id='$assignField".'[0]'."' onchange='assign_field_change(\"$assignField\")' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_assign_options'], $value[0]) ."</select>&nbsp;&nbsp;";
-    if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
-        $field .= "<input type='hidden' name='$assignField".'[1]'."' id='$assignField".'[1]'."' value=''  />";
-    }
-    else {
-        $display = 'none';
-        if($value[0] == 'security_group'){
-            $display = '';
-        }
-        $field .= "<select type='text' style='display:$display' name='$assignField".'[1]'."' id='$assignField".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1]) ."</select>&nbsp;&nbsp;";
-    }
-    $display = 'none';
-    if($value[0] == 'role' || $value[0] == 'security_group') $display = '';
-    $field .= "<select type='text' style='display:$display' name='$assignField".'[2]'."' id='$assignField".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2]) ."</select>&nbsp;&nbsp;";
-    return $field;
-
-}

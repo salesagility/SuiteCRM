@@ -31,6 +31,7 @@ $mod_strings['LBL_AOP_JOOMLA_ACCESS_KEY'] = 'Joomla Access Key';
 $mod_strings['LBL_AOP_CASE_ASSIGNMENT'] = 'Case Distribution';
 $mod_strings['LBL_AOP_DISTRIBUTION_METHOD'] = 'Distribution method';
 $mod_strings['LBL_AOP_ASSIGNMENT_USER'] = 'Distribution user';
+$mod_strings['LBL_AOP_ASSIGNMENT_OPTIONS'] = 'Distribution target';
 
 $mod_strings['LBL_AOP_EMAIL_SETTINGS'] = 'Email Settings';
 $mod_strings['LBL_AOP_CONTACT_EMAIL_TEMPLATE'] = 'Contact Email Template';

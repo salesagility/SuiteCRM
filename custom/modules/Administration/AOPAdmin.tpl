@@ -85,6 +85,10 @@
                 <select id='distribution_method_select' name='distribution_method' tabindex='241'>{$DISTRIBUTION_METHOD}</select>
             </td>
         </tr>
+        <tr id="distribution_options_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_ASSIGNMENT_OPTIONS}: </td>
+            <td>{$DISTRIBUTION_OPTIONS}</td>
+        </tr>
         <tr id="distribution_user_row">
             <td  scope="row" width="200">{$MOD.LBL_AOP_ASSIGNMENT_USER}: </td>
             <td  >
