@@ -120,7 +120,8 @@ $out .= <<<EOQ2
 
             {$mod_strings['LBL_INSTALL_TYPE_MSG3']}
             <br>
-        <b><i>{$php_suggested_ver}</i></b></td></tr>
+        <b><i>{$php_suggested_ver}</i></b>
+        <br>
         <hr>
 </div>
         <div id="installcontrols">

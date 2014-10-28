@@ -543,12 +543,16 @@ a.other{
 
 #install_footer {
     margin:10px auto;
-
     height:50px;
 }
 
 .install_img {
     max-width:200px;
+}
+
+.install_img:hover {
+    transition: all 0.5s ease;
+    opacity:0.8;
 }
 
 #footer_links a{
@@ -616,4 +620,32 @@ p#footer_links {
 
 #installoptions {
     padding:10px;
+}
+
+#installcontrols {}
+
+div.install_block{
+    overflow:hidden;
+}
+div.install_block label{
+    max-width:50% !important;
+    display:block;
+    float:left;
+    text-align:left;
+}
+
+div.install_block h3{
+    width:auto;
+    display:block;
+    float:left;
+    text-align:left;
+}
+div.install_block .input{
+    margin-left:4px;
+    float:left;
+}
+
+div.install_block .select{
+    margin-left:4px;
+    float:left;
 }
