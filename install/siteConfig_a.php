@@ -207,7 +207,7 @@ $out .= <<<EOQ
 </div>
 </div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </body>
 </html>
