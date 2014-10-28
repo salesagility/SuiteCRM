@@ -37,12 +37,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+require_once 'modules/AOP_Case_Updates/util.php';
+if(!isAOPEnabled()){
+    //Use the default
+    require 'modules/InboundEmail/EditView.php';
+    exit();
+}
+
 
 $_REQUEST['edit']='true';
 
 require_once('include/SugarFolders/SugarFolders.php');
 require_once('include/templates/TemplateGroupChooser.php');
-require_once 'modules/AOP_Case_Updates/util.php';
 
 // GLOBALS
 global $mod_strings;
