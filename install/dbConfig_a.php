@@ -199,22 +199,24 @@ if($db->supports("create_user")){
     $setup_db_sugarsales_password_retype = urldecode($_SESSION['setup_db_sugarsales_password_retype']);
 
     $out2 .=<<<EOQ2
-
+<br>
 <hr>
+<br>
 {$mod_strings['LBL_DBCONFIG_SECURITY']}
-<div id='sugarDBUser'><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></div>$dbUSRDD
+<div class='install_block'><label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>$dbUSRDD
 
 <span id='connection_user_div' style="display:none">
         <span class="required">*</span>
-        <b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b>
-         <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+        <label><b>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</b></label>
+        <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
 
-<b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></td>
+    <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></label>
     <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" /><input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
     <input type="hidden" name="setup_db_sugarsales_password" value="{$_SESSION['setup_db_sugarsales_password']}" />
-    <b>{$mod_strings['LBL_DBCONF_DB_PASSWORD2']}</b>
+    <label><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD2']}</b></label>
     <input type="password" name="setup_db_sugarsales_password_retype_entry" value="{$setup_db_sugarsales_password_retype}"  /><input type="hidden" name="setup_db_sugarsales_password_retype" value="{$setup_db_sugarsales_password_retype}" />
 </span>
+</div>
 
 EOQ2;
 }
