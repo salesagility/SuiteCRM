@@ -649,3 +649,30 @@ div.install_block .select{
     margin-left:4px;
     float:left;
 }
+input {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
+
+select {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
+
+input[type=text] {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
+
+input[type=password] {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
