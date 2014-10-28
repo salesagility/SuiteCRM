@@ -149,15 +149,16 @@ EOQ;
 //hide this in typical mode
 if(!empty($_SESSION['install_type'])  && strtolower($_SESSION['install_type'])=='custom'){
     $out .=<<<EOQ
-
+<div class='install_block'>
    {$mod_strings['LBL_SITECFG_URL_MSG']}
     <span class="required">*</span>
-       <b>{$mod_strings['LBL_SITECFG_URL']}
-       <input type="text" name="setup_site_url" id="button_next2" value="{$_SESSION['setup_site_url']}" size="40" />
-       <br>{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}
-       <span class="required">*</span>
-       <b>{$mod_strings['LBL_SYSTEM_NAME']}</b>
-       <input type="text" name="setup_system_name" value="{$_SESSION['setup_system_name']}" size="40" /><br>
+    <label><b>{$mod_strings['LBL_SITECFG_URL']}</b></label>
+    <input type="text" name="setup_site_url" id="button_next2" value="{$_SESSION['setup_site_url']}" size="40" />
+    <br>{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}
+    <span class="required">*</span>
+    <label><b>{$mod_strings['LBL_SYSTEM_NAME']}</b></label>
+    <input type="text" name="setup_system_name" value="{$_SESSION['setup_system_name']}" size="40" /><br>
+</div>
 EOQ;
     $db = getDbConnection();
     if($db->supports("collation")) {
@@ -171,27 +172,26 @@ EOQ;
         }
         $options = get_select_options_with_id(array_combine($collationOptions, $collationOptions), $default);
         $out .=<<<EOQ
+        <div class='install_block'>
        <br>{$mod_strings['LBL_SITECFG_COLLATION_MSG']}
        <span class="required">*</span>
-       <b>{$mod_strings['LBL_COLLATION']}</b>
+       <label><b>{$mod_strings['LBL_COLLATION']}</b></label>
        <select name="setup_db_collation" id="setup_db_collation">$options</select><br>
+       </div>
 EOQ;
    }
 }
 
 $out .=<<<EOQ
-
+<div class='install_block'>
     {$mod_strings['LBL_SITECFG_PASSWORD_MSG']}
-    <span class="required">*</span>
-    <b>{$mod_strings['LBL_SITECFG_ADMIN_Name']}</b><br>
+    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></b></label><br>
     <input type="text" name="setup_site_admin_user_name" value="{$_SESSION['setup_site_admin_user_name']}" size="20" maxlength="60" />
-    <span class="required">*</span></td>
-    <b>{$mod_strings['LBL_SITECFG_ADMIN_PASS']}</b><br>
+    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS']} <span class="required">*</span></b></label><br>
     <input type="password" name="setup_site_admin_password" value="{$_SESSION['setup_site_admin_password']}" size="20" />
-    <span class="required">*</span>
-    <b>{$mod_strings['LBL_SITECFG_ADMIN_PASS_2']}
+    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS_2']} <span class="required">*</span></b></label>
     <input type="password" name="setup_site_admin_password_retype" value="{$_SESSION['setup_site_admin_password_retype']}" size="20" />
-
+</div>
 EOQ;
 
 $out .= <<<EOQ
