@@ -41,7 +41,7 @@
  * Description:  Defines the stylesheet used for the application installation.
  ********************************************************************************/
 
- /* Default style*/
+ /* SuiteCRM Installation CSS*/
 body {
 	margin: 0px 0px 0px 0px;
 	background-color : #f7f7f7 ;
@@ -55,7 +55,6 @@ img {
 }
 
 tr,td,th,table {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 12px;
 	color: #333333;
 	vertical-align: top;
@@ -63,7 +62,6 @@ tr,td,th,table {
 	
 h1 {
 	color: #EA1313;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 8px;
@@ -71,15 +69,13 @@ h1 {
 
 h2 {
 	color: #B41C4F;
-	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 18px; 
 	font-weight: bold; 
 	margin-bottom: 6px;
 	}
 
 h3 {
-	color: #333333; 
-	font-family: Arial, Verdana, Helvetica, sans-serif;
+	color: #333333;
 	font-size: 16px; 
 	font-weight: bold; 
 	margin-bottom: 4px;
@@ -126,7 +122,7 @@ a:hover {
     text-decoration: underline;
 	}
 
-LI {
+li {
     list-style-image: url('../themes/Suite7/images/right-arrow-install.png');
     margin-left: 6px;
     margin-bottom:2px;
@@ -142,10 +138,6 @@ ul ul li {
     margin-bottom:2px;
 
 }
-	
-form {
-	margin: 0px;
-	}
 	
 input,select {
 	border: 1px solid #888888;
@@ -171,21 +163,71 @@ textarea {
 	}
 	
 .button {
-	border: 1px solid #000000;
-	font-size: 12px;
-	color: #ffffff;
-	background-color: #a10a3d;
-	font-weight: bold;
+    background-color:#B41C4F;
+    -webkit-border-top-left-radius:0px;
+    -moz-border-radius-topleft:0px;
+    border-top-left-radius:0px;
+    -webkit-border-top-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-bottomright:0px;
+    border-bottom-right-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    -moz-border-radius-bottomleft:0px;
+    border-bottom-left-radius:0px;
+    text-indent:0;
+    display:inline-block;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:14px;
+    font-weight:bold;
+    font-style:normal;
+    height:30px;
+    line-height:15px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #810e05;
+    cursor:pointer;
+    padding: 0 10px 0 10px;
+    transition: all 0.5s ease;
 	}
+
+.button:hover, .acceptButton:hover {
+    background:#565656;
+    transition: all 0.5s ease;
+}
 /* custom */
 
 .acceptButton {
-	
-	border: 1px solid #000000;
-	font-size: 12px;
-	color: #ffffff;
-	background-color: #a10a3d;
-	font-weight: bold;
+
+    background-color:#B41C4F;
+    -webkit-border-top-left-radius:0px;
+    -moz-border-radius-topleft:0px;
+    border-top-left-radius:0px;
+    -webkit-border-top-right-radius:0px;
+    -moz-border-radius-topright:0px;
+    border-top-right-radius:0px;
+    -webkit-border-bottom-right-radius:0px;
+    -moz-border-radius-bottomright:0px;
+    border-bottom-right-radius:0px;
+    -webkit-border-bottom-left-radius:0px;
+    -moz-border-radius-bottomleft:0px;
+    border-bottom-left-radius:0px;
+    text-indent:0;
+    display:inline-block;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:14px;
+    font-weight:bold;
+    font-style:normal;
+    height:30px;
+    line-height:15px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #810e05;
+    cursor:pointer;
+    padding: 0 10px 0 10px;
 	}
 
 table.shell tbody {
@@ -531,52 +573,6 @@ p#footer_links {
     position:relative;
 
 }
-.progressbutton {
-    -moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
-    box-shadow:inset 0px 1px 0px 0px #f5978e;
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f) );
-    background:-moz-linear-gradient( center top, #f24537 5%, #c62d1f 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f');
-    background-color:#f24537;
-    -webkit-border-top-left-radius:0px;
-    -moz-border-radius-topleft:0px;
-    border-top-left-radius:0px;
-    -webkit-border-top-right-radius:0px;
-    -moz-border-radius-topright:0px;
-    border-top-right-radius:0px;
-    -webkit-border-bottom-right-radius:0px;
-    -moz-border-radius-bottomright:0px;
-    border-bottom-right-radius:0px;
-    -webkit-border-bottom-left-radius:0px;
-    -moz-border-radius-bottomleft:0px;
-    border-bottom-left-radius:0px;
-    text-indent:0;
-    border:1px solid #d02718;
-    display:inline-block;
-    color:#ffffff;
-    font-family:Arial;
-    font-size:14px;
-    font-weight:bold;
-    font-style:normal;
-    height:30px;
-    line-height:15px;
-    width:75px;
-    text-decoration:none;
-    text-align:center;
-    text-shadow:1px 1px 0px #810e05;
-    cursor:pointer;
-}
-.progressbutton:hover {
-    background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537) );
-    background:-moz-linear-gradient( center top, #c62d1f 5%, #f24537 100% );
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537');
-    background-color:#c62d1f;
-}.progressbutton:active {
-     position:relative;
-     top:1px;
- }
-/* This button was generated using CSSButtonGenerator.com */
 
 #install_content {
     font-size:12px;
