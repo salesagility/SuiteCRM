@@ -361,7 +361,8 @@ $xtpl->assign('hasGrpFld',$focus->groupfolder_id == null ? '' : 'checked="1"');
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', get_select_options_with_id($app_list_strings['dom_int_bool'], $leaveMessagesOnMailServer));
 
-$distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
+$distributionMethod = '<option value="AOPDefault">'.$mod_strings['LBL_AOP_DEFAULT_DISTRIBUTION'].'</option>';
+$distributionMethod .= get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
 $xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options',$distributionAssignOptions));
 $xtpl->assign('distribution_user_name', $distribution_user_name);
@@ -466,12 +467,12 @@ $xtpl->out("main");
             $('#distribution_options\\[0\\]').show();
             $('#distribution_options\\[1\\]').show();
             $('#distribution_options\\[2\\]').show();
+            assign_field_change('distribution_options');
         }else{
             $('#distribution_options\\[0\\]').hide();
             $('#distribution_options\\[1\\]').hide();
             $('#distribution_options\\[2\\]').hide();
         }
-        assign_field_change('distribution_options');
     }
 
     function displayDistributionUser(display){
@@ -496,7 +497,10 @@ $xtpl->out("main");
                     displayDistributionOptions(false);
                     displayDistributionUser(true);
                     break;
+                case 'AOPDefault':
                 default:
+                    displayDistributionOptions(false);
+                    displayDistributionUser(false);
                     break;
             }
         });
