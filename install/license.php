@@ -209,7 +209,7 @@ function callSysCheck(){
 
           <div id='sysCheckMsg'><div>
 <footer id="install_footer">
-    <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
+    <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
 </body>
 </html>
