@@ -89,66 +89,49 @@ $defaultLanguages = "";
 $langHeader = get_language_header();
 
 $out =<<<EOQ
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta http-equiv="Content-Script-Type" content="text/javascript">
    <meta http-equiv="Content-Style-Type" content="text/css">
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_CONFIRM_TITLE']}</title>
-   <link REL="SHORTCUT ICON" HREF="$icon">
-   <link rel="stylesheet" href="$css" type="text/css" />
+   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
+   <link rel="stylesheet" href="install/install.css" type="text/css" />
+   <script type="text/javascript" src="install/installCommon.js"></script>
+   <script type="text/javascript" src="install/siteConfig.js"></script>
+<link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
+   <script type="text/javascript" src="install/license.js"></script>
+<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
+    <!--SuiteCRM installer-->
+    <div id="suitecrm_installer">
 <form action="install.php" method="post" name="setConfig" id="form">
 <input type="hidden" name="current_step" value="{$next_step}">
-<table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
-      <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>
-    <tr>
-      <th width="500">
-		<p>
-		<img src="{$sugar_md}" alt="SugarCRM" border="0">
-		</p>
-		{$mod_strings['LBL_CONFIRM_TITLE']}</th>
-        <th width="200" style="text-align: right;">&nbsp;
-        </th>
-    </tr>
-    <tr>
-        <td colspan="2">
-
-        <table width="100%" cellpadding="0" cellpadding="0" border="0" class="StyleDottedHr">
-            <tr><th colspan="3" align="left">{$mod_strings['LBL_DBCONF_TITLE']}</th></tr>
-            <tr><td></td><td><b>{$mod_strings['LBL_CONFIRM_DB_TYPE']}</b></td><td>{$_SESSION['setup_db_type']}</td></tr>
-            <tr><td></td><td><b>{$mod_strings['LBL_DBCONF_HOST_NAME']}</b></td><td>{$_SESSION['setup_db_host_name']}</td></tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_DBCONF_DB_NAME']}</b></td>
-                <td>
-					{$_SESSION['setup_db_database_name']} {$dbCreate}
-                </td>
-            </tr>
+<header id="install_header">
+            <div id="steps"><p >Step 8 of 8 - {$mod_strings['LBL_CONFIRM_TITLE']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i>
+            </div>
+            <div class="install_img"><a href="https://suitecrm.com"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+            </header>
+<input type="hidden" name="current_step" value="{$next_step}">
+		<h2>{$mod_strings['LBL_CONFIRM_TITLE']}</h2>
+<hr>
+            <h3>{$mod_strings['LBL_DBCONF_TITLE']}</h3>
+            <p><b>{$mod_strings['LBL_CONFIRM_DB_TYPE']}</b>{$_SESSION['setup_db_type']}</p>
+            <p><b>{$mod_strings['LBL_DBCONF_HOST_NAME']}</b> {$_SESSION['setup_db_host_name']}</p>
+            <p><b>{$mod_strings['LBL_DBCONF_DB_NAME']}</b> {$_SESSION['setup_db_database_name']} {$dbCreate}</p>
 EOQ;
 
 $out .=<<<EOQ
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_DBCONF_DB_ADMIN_USER']}</b></td>
-                <td>{$_SESSION['setup_db_admin_user_name']}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</b></td>
-                <td>{$demoData}</td>
-            </tr>
+            <p><b>{$mod_strings['LBL_DBCONF_DB_ADMIN_USER']}</b> {$_SESSION['setup_db_admin_user_name']}</p>
+            <p><b>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</b> {$demoData}</p>
 EOQ;
 if($yesNoDropCreate){
 
 $out .=<<<EOQ
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_DBCONF_DB_DROP']}</b></td>
-                <td>{$yesNoDropCreate}</td>
-            </tr>
+            <p><b>{$mod_strings['LBL_DBCONF_DB_DROP']}</b> {$yesNoDropCreate}</p>
 EOQ;
 
 }
@@ -157,43 +140,15 @@ EOQ;
 if(isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom'){
 $out .=<<<EOQ
 
-	   <tr><td colspan="3" align="left"></td></tr>
-            <tr>
-            	<th colspan="3" align="left">{$mod_strings['LBL_SITECFG_TITLE']}</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_URL']}</b></td>
-                <td>{$_SESSION['setup_site_url']}</td>
-            </tr>
-            <tr style='display:none'>
-	   <tr style='display:none'><td colspan="3" align="left"></td></tr>
-            	<th colspan="3" align="left" style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</th>
-            </tr>
-            <tr style='display:none'>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b></td>
-                <td>{$yesNoSugarUpdates}</td>
-            </tr>
-            <tr>
-	   <tr><td colspan="3" align="left"></td></tr>
-            	<th colspan="3" align="left">{$mod_strings['LBL_SITECFG_SITE_SECURITY']}</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_CUSTOM_SESSION']}?</b></td>
-                <td>{$yesNoCustomSession}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_CUSTOM_LOG']}?</b></td>
-                <td>{$yesNoCustomLog}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_CUSTOM_ID']}?</b></td>
-                <td>{$yesNoCustomId}</td>
-            </tr>
+	   <h3>{$mod_strings['LBL_SITECFG_TITLE']}</h3>
+       <p><b>{$mod_strings['LBL_SITECFG_URL']}</b> {$_SESSION['setup_site_url']}</p>
+       <h3 style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</h3>
+       <p style='display:none'><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b> {$yesNoSugarUpdates}</p>
+
+	   <h3>{$mod_strings['LBL_SITECFG_SITE_SECURITY']}</h3>
+       <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_SESSION']}?</b> {$yesNoCustomSession}</p>
+       <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_LOG']}?</b> {$yesNoCustomLog}</p>
+       <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_ID']}?</b> {$yesNoCustomId}</p>
 EOQ;
 }
 
@@ -240,89 +195,62 @@ EOQ;
 
 
 $envString = '
-	   <tr><td colspan="3" align="left"></td></tr><tr><th colspan="3" align="left">'.$mod_strings['LBL_SYSTEM_ENV'].'</th></tr>';
+	   <h2>'.$mod_strings['LBL_SYSTEM_ENV'].'</h2>';
 
     // PHP VERSION
         $envString .='
-          <tr>
-             <td></td>
-            <td><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b></td>
-            <td >'.constant('PHP_VERSION').'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</h3>
+            <p>'.constant('PHP_VERSION').'</p>';
 
 
 //Begin List of already known good variables.  These were checked during the initial sys check
 // XML Parsing
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_XML'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_XML'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 
 
 // mbstrings
 
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_MBSTRING'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_MBSTRING'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // config.php
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_CONFIG'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_CONFIG'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // custom dir
 
 
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 
 // modules dir
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p';
 
 // upload dir
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</strong></td>
-        <td>'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // data dir
 
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_DATA'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_DATA'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // cache dir
     $error_found = true;
         $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</strong></td>
-        <td  >'.$mod_strings['LBL_CHECKSYS_OK'].'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</h3>
+        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 // End already known to be good
 
 // memory limit
@@ -368,11 +296,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
 }
 
           $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_MEM'].'</strong></td>
-        <td  >'.$memory_msg.'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_MEM'].'</strong></h3>
+        <p>'.$memory_msg.'</p>';
 
     // zlib
     if(function_exists('gzclose')) {
@@ -381,11 +306,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         $zlibStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZLIB']}</b></span>";
     }
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_CHECKSYS_ZLIB'].'</strong></td>
-            <td  >'.$zlibStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_CHECKSYS_ZLIB'].'</p>
+            <p>'.$zlibStatus.'</p>';
 
     // zip
     if(class_exists("ZipArchive")) {
@@ -394,11 +316,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         $zipStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZIP']}</b></span>";
     }
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</strong></td>
-            <td  >'.$zipStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</h3>
+            <p>'.$zipStatus.'</p>';
 
     // PCRE
     if(defined('PCRE_VERSION')) {
@@ -412,11 +331,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE']}</b></span>";
     }
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</strong></td>
-            <td  >'.$pcreStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</h3>
+            <p>'.$pcreStatus.'</p>';
 
     // imap
     if(function_exists('imap_open')) {
@@ -426,11 +342,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     }
 
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_CHECKSYS_IMAP'].'</strong></td>
-            <td  >'.$imapStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_CHECKSYS_IMAP'].'</h3>
+            <p>'.$imapStatus.'</p>';
 
 
     // cURL
@@ -441,11 +354,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     }
 
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_CHECKSYS_CURL'].'</strong></td>
-            <td  >'.$curlStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_CHECKSYS_CURL'].'</h3>
+            <p>'.$curlStatus.'</p>';
 
 
       //CHECK UPLOAD FILE SIZE
@@ -462,11 +372,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         }
 
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'].'</strong></td>
-            <td  >'.$fileMaxStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'].'</h3>
+            <p>'.$fileMaxStatus.'</p>';
 
       //CHECK Sprite support
         if(function_exists('imagecreatetruecolor'))
@@ -476,11 +383,8 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
             $spriteSupportStatus = "<span class='stop'><b>{$mod_strings['ERROR_SPRITE_SUPPORT']}</b></span>";
         }
             $envString .='
-          <tr>
-            <td></td>
-            <td><strong>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</strong></td>
-            <td  >'.$spriteSupportStatus.'</td>
-          </tr>';
+          <h3>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</h3>
+          <p>'.$spriteSupportStatus.'</p>';
 
         // Suhosin allow to use upload://
         if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"],'Microsoft-IIS') === false))
@@ -492,33 +396,20 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
             $suhosinStatus = "<span class='stop'><b>{$app_strings['ERR_SUHOSIN']}</b></span>";
         }
         $envString .= "
-        <tr>
-            <td></td>
-            <td><strong>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</strong></td>
-            <td>" . $suhosinStatus . "</td>
-        </tr>
+        <h3>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</h3>
+            <p>" . $suhosinStatus . "</p>
         ";
 
 // PHP.ini
 $phpIniLocation = get_cfg_var("cfg_file_path");
           $envString .='
-      <tr>
-        <td></td>
-        <td><strong>'.$mod_strings['LBL_CHECKSYS_PHP_INI'].'</strong></td>
-        <td  >'.$phpIniLocation.'</td>
-      </tr>';
+      <h3>'.$mod_strings['LBL_CHECKSYS_PHP_INI'].'</h3>
+      <p>'.$phpIniLocation.'</p>';
 
 $out .= $envString;
 
 $out .=<<<EOQ
 
-        </table>
-        </td>
-    </tr>
-    <tr>
-        <td align="right" colspan="2">
-        <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-        <tr><th align="left" colspan="2">&nbsp;</th></tr>
 EOQ;
 
 // CRON Settings
@@ -543,16 +434,12 @@ if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // IIS IUSR_xxx may no
     }
 }
 $cronString = '
-			<tr>
-			    <td align="left" colspan="2">
 			    <font style="color:#a10a3d;" >
 						'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'<br>
 				</font>
 						cd '.realpath('./').'<br>
 						php.exe -f cron.php
 						<br>'.$error.'
-				</td>
-			</tr>
 ';
 } else {
 if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // some Linux servers do not make this available
@@ -561,55 +448,34 @@ if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // some Linux servers 
     }
 }
 $cronString = '
-			<tr>
-			    <td align="left" colspan="2">
 			    <font color="red">
 						'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'
 				</font>
 						'.$mod_strings_scheduler['LBL_CRON_LINUX_DESC'].'<br>
 						*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1
-						<br>'.$error.'
-				</td>
-			</tr>
+						<br><br><hr><br>'.$error.'
 ';
 }
 
 $out .= $cronString;
 
 $out .=<<<EOQ
-        </table>
-        </td>
-    </tr>
-    <tr>
-        <td colspan='3' align='right'>
                 <input type="button" class="button" name="print_summary" id="button_print_summary_settings" value="{$mod_strings['LBL_PRINT_SUMM']}"
-                onClick='window.print()' onCluck='window.open("install.php?current_step="+(document.setConfig.current_step.value -1)+"&goto={$mod_strings["LBL_NEXT"]}&print=true");' />&nbsp;
-      	</td>
-    </tr>
-    <tr>
-        <td align="right" colspan="2">
-        <hr>
-        <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-            <tr>
-              <td align=right>
+                onClick='window.print()' onCluck='window.open("install.php?current_step="+(document.setConfig.current_step.value -1)+"&goto={$mod_strings["LBL_NEXT"]}&print=true");' />
                     <input type="button" class="button" id="show_pass_button" value="{$mod_strings['LBL_SHOW_PASS']}"
                     onClick='togglePass();' />
-              </td>
-                <td>
                 	<input type="hidden" name="goto" id="goto">
+<div id="installcontrols">
                     <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_settings" onclick="document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';document.getElementById('form').submit();" />
-                </td>
-                <td>
                 	<input class="button" type="button" value="{$mod_strings['LBL_LANG_BUTTON_COMMIT']}" onclick="document.getElementById('goto').value='{$mod_strings['LBL_NEXT']}';document.getElementById('form').submit();" id="button_next2"/>
-                </td>
-            </tr>
-        </table>
-        </td>
-    </tr>
-</table>
+</div>
 </form>
 <br>
+</div>
+<footer id="install_footer">
+    <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
+</footer>
 <script>
 function togglePass(){
     if(document.getElementById('show_site_admin_pass').style.display == ''){

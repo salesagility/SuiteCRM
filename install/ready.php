@@ -72,7 +72,7 @@ $out = <<<EOQ
             <header id="install_header">
             <div id="steps"><p >Step 1 of 8 - Pre-Installation requirements</p><i class="icon-progress-0"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
             </div>
-            <div class="install_img"><img src="{$sugar_md}" alt="SuiteCRM"></div>
+            <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
 	        <div id="install_content">
 	        <form action="install.php" method="post" name="form" id="form">
@@ -99,9 +99,11 @@ $out = <<<EOQ
 							    </span>
 						    <div id='installType' >{$mod_strings['REQUIRED_INSTALLTYPE_MSG']}</div>
 					<hr>
-							    <input type="hidden" name="current_step" value="{$next_step}">
-								<input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_BACK']}" id="button_back_ready" onclick="document.getElementById('form').submit();" />
-								<input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2" />
+                    <div id="installcontrols">
+					    <input type="hidden" name="current_step" value="{$next_step}">
+					    <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_BACK']}" id="button_back_ready" onclick="document.getElementById('form').submit();" />
+						<input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2" />
+					</div>
     </form>
     </content>
     </div>
@@ -120,6 +122,10 @@ $out = <<<EOQ
 
         }
     </script>
+</div>
+<footer id="install_footer">
+    <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
+</footer>
 </body>
 </html>
 EOQ;

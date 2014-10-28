@@ -51,7 +51,6 @@ body {
 }
 
 img {
-	behavior:	url("themes/SugarIE6/js/pngbehavior.htc");
     border:none;
 }
 
@@ -71,7 +70,7 @@ h1 {
 	}
 
 h2 {
-	color: #137DED;
+	color: #B41C4F;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 18px; 
 	font-weight: bold; 
@@ -87,7 +86,7 @@ h3 {
 	}
 
 h4 {
-	color: #333333; 
+	color: #565656;
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 14px; 
 	font-weight: bold; 
@@ -437,6 +436,8 @@ a.other{
     background:#ffffff;
     border:1px solid #cccccc;
     vertical-align:middle;
+    overflow:auto;
+    padding:10px;
 
 }
 
@@ -598,4 +599,25 @@ p#footer_links {
 
 #complete {
     color:green;
+}
+
+#licenseaccept {
+    padding:10px;
+    float:left;
+}
+
+#installcontrols {
+    float:right;
+    padding:10px;
+}
+
+.licensetext {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding:10px;
+}
+
+#installoptions {
+    padding:10px;
 }

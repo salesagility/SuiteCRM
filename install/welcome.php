@@ -69,7 +69,7 @@ $out = <<<EOQ
         <form action="install.php" method="post" name="form" id="form">
             <header id="install_header">
             <h1 id="welcomelink">{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</h1>
-                <div class="install_img"><img src="{$sugar_md}" alt="SuiteCRM"></div>
+                <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
                 <div id="wrapper">
                     <div class="rslides_container">
@@ -89,9 +89,6 @@ $out = <<<EOQ
             </div>
 	    </form>
 	    </div>
-	    <footer id="install_footer">
-        <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
-	    </footer>
 	</div>
     <script>
         function showtime(div){
@@ -136,6 +133,9 @@ $("#slider2").responsiveSlides({
       });
 
 </script>
+<footer id="install_footer">
+    <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
+</footer>
 </body>
 </html>
 EOQ;
