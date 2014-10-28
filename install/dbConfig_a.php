@@ -128,14 +128,14 @@ EOQ2;
 $config_params = $db->installConfig();
 $form = '';
 foreach($config_params as $group => $gdata) {
-    $form .= "<tr><td colspan=\"3\" align=\"left\">{$mod_strings[$group]}</td></tr>\n";
+    $form.= "<div class='install_block'>";
+    $form .= "<label>{$mod_strings[$group]}</label>\n";
     foreach($gdata as $name => $value) {
+
         if(!empty($value)) {
-            $form .= "<tr>";
             if(!empty($value['required'])) {
-                $form .= "<td><span class=\"required\">*</span></td>\n";
+                $form .= "<span class=\"required\">*</span>\n";
             } else {
-                $form .= "<td>&nbsp;</td>\n";
             }
             if(!empty($_SESSION[$name])) {
                 $sessval = $_SESSION[$name];
@@ -167,6 +167,7 @@ FORM;
             $form .= "<input name=\"$name\" id=\"$name\" value=\"\" type=\"hidden\">\n";
         }
     }
+    $form .= "</div>";
 }
 
 $out2 .= $form;
@@ -218,17 +219,19 @@ if($db->supports("create_user")){
 EOQ2;
 }
 
-$demoDD = "<select name='demoData' id='demoData'><option value='no' >".$mod_strings['LBL_NO']."</option><option value='yes'>".$mod_strings['LBL_YES']."</option>";
-$demoDD .= "</select><br>&nbsp;";
+$demoDD = "<select name='demoData' id='demoData' class='select'><option value='no' >".$mod_strings['LBL_NO']."</option><option value='yes'>".$mod_strings['LBL_YES']."</option>";
+$demoDD .= "</select>";
 
 
 $out3 =<<<EOQ3
 <hr>
+<div class="install_block">
 <h2>{$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}</h2>
-    <td width='1%'>&nbsp;</td>
-    <h3>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</h3>
-        <p>{$demoDD}</p>
-
+    <label>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</label>
+        {$demoDD}
+</div>
+<br>
+<br>
 EOQ3;
 
 
@@ -271,7 +274,7 @@ function toggleDBUser(){
         ouv = document.getElementById('dbUSRData').value;
         if(ouv == 'provide' || ouv == 'create'){
             document.getElementById('connection_user_div').style.display = '';
-            document.getElementById('sugarDBUser').style.display = 'none';
+            document.getElementById('sugarDBUs<br>er').style.display = 'none';
         }else{
             document.getElementById('connection_user_div').style.display = 'none';
             document.getElementById('sugarDBUser').style.display = '';
@@ -413,30 +416,15 @@ function confirm_drop_tables(yes_no){
 
 </script>
 
-
-
            <div id="checkingDiv" style="display:none">
-           <table cellspacing="0" cellpadding="0" border="0">
-               <tr><td>
                     <p><img alt="{$mod_strings['LBL_LICENSE_CHKDB_HEADER']}" src='install/processing.gif'> <br>{$mod_strings['LBL_LICENSE_CHKDB_HEADER']}</p>
-                </td></tr>
-            </table>
-            </div>
+           </div>
 
           <div id='sysCheckMsg' style="display:none">
-           <table cellspacing="0" cellpadding="0" border="0" >
-               <tr><td>
                     <p>{$mod_strings['LBL_DROP_DB_CONFIRM']}</p>
-               </td></tr>
-               <tr><td align='center'>
                     <input id='accept_btn' type='button' class='button' onclick='confirm_drop_tables(true)' value="{$mod_strings['LBL_ACCEPT']}">
                     <input type='button' class='button' onclick='confirm_drop_tables(false)' id="button_cancel_dbConfig" value="{$mod_strings['LBL_CANCEL']}">
-                </td></tr>
-            </table>
-
-          <div>
           </div>
-</div>
 </div>
 <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
