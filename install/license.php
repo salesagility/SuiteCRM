@@ -82,7 +82,7 @@ $out =<<<EOQ
     <div id="install_container">
     <div id="install_box">
         <div id='licenseDiv'>
-            <div id="steps"><p >Step 2 of 8 - License Agreement</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
+            <div id="steps"><p>{$mod_strings['LBL_STEP2']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
         </div>
         <form action="install.php" method="post" name="setConfig" id="form">
         <header id="install_header">
