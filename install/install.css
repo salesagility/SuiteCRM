@@ -54,28 +54,28 @@ tr,td,th,table {
 	font-size: 12px;
 	color: #333333;
 	vertical-align: top;
-	}
+}
 	
 h1 {
 	color: #EA1313;
 	font-size: 20px;
 	font-weight: bold;
 	margin-bottom: 8px;
-	}
+}
 
 h2 {
 	color: #B41C4F;
 	font-size: 18px; 
 	font-weight: bold; 
 	margin-bottom: 6px;
-	}
+}
 
 h3 {
 	color: #333333;
 	font-size: 16px; 
 	font-weight: bold; 
 	margin-bottom: 4px;
-	}
+}
 
 h4 {
 	color: #565656;
@@ -83,7 +83,7 @@ h4 {
 	font-size: 14px; 
 	font-weight: bold; 
 	margin-bottom: 2px;
-	}
+}
 
 h5 {
 	color: #333333; 
@@ -91,7 +91,7 @@ h5 {
 	font-size: 13px; 
 	font-weight: bold; 
 	margin-bottom: 1px;
-	}
+}
 	
 p {
     margin-top: 0px;
@@ -102,20 +102,20 @@ hr  {
 	color: #ffffff;
 	width: 100%;
 	height: 1px;
-	}
+}
 
 a:link, a:visited {
 	font-size: 12px; color: #333333;
     text-decoration: none;
 	font-family:  Arial, Verdana, Helvetica, sans-serif;
     text-decoration: underline;
-	}
+}
 
 a:hover {
 	color: #EA1313;
     text-decoration: none;
     text-decoration: underline;
-	}
+}
 
 li {
     list-style-image: url('../themes/Suite7/images/right-arrow-install.png');
@@ -131,7 +131,6 @@ li ul li {
 ul ul li {
     list-style:none;
     margin-bottom:2px;
-
 }
 	
 input,select {
@@ -199,27 +198,28 @@ textarea {
 
 .small {
 	font-size: 10px;
-	}
+}
 
 .stop {
 	color: #cc0000;
 	text-align: left;
-	}
+}
 
 .stop a:link, a:visited  {
 	color: #cc0000;
 	text-decoration: underline;
 	text-align: left;
-	}
+}
 
 .go {
 	color: #00cc00;
-	}
+}
 
 .required {
 	color: #ff2222;
 	font-weight: bold;
-	}
+}
+
 .error {
 	color: #ff2222;
 	font-weight: bold;
@@ -308,7 +308,6 @@ a.other{
     padding:10px;
 
 }
-
 
 #install_header {
     margin:10px auto;
