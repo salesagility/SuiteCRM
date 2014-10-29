@@ -92,8 +92,9 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     header('Location: index.php?module=Administration&action=index');
     exit();
 }
-
-$distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
+$distribStrings = $app_list_strings['dom_email_distribution_for_auto_create'];
+unset($distribStrings['AOPDefault']);
+$distributionMethod = get_select_options_with_id($distribStrings, $cfg->config['aop']['distribution_method']);
 $distributionOptions = getAOPAssignField('distribution_options',$cfg->config['aop']['distribution_options']);
 
 
