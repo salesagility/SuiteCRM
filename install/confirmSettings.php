@@ -107,7 +107,8 @@ $out =<<<EOQ
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->
-    <div id="suitecrm_installer">
+    <div id="install_container">
+    <div id="install_box">
 <form action="install.php" method="post" name="setConfig" id="form">
 <input type="hidden" name="current_step" value="{$next_step}">
 <header id="install_header">
@@ -476,6 +477,7 @@ $out .=<<<EOQ
 <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
+</div>
 <script>
 function togglePass(){
     if(document.getElementById('show_site_admin_pass').style.display == ''){

@@ -87,7 +87,8 @@ $out = <<<EOQ
 </head>
 <body onload="javascript:document.getElementById('button_next').focus();">
     <!--SuiteCRM installer-->
-    <div id="suitecrm_installer">
+    <div id="install_container">
+    <div id="install_box">
         <div id='licenseDiv'>
             <div id="steps"><p >Step 3 of 8 - Installation Type</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
         </div>
@@ -136,6 +137,7 @@ $out .= <<<EOQ2
     <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
+</div>
 </body>
 </html>
 EOQ2;

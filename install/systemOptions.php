@@ -93,7 +93,8 @@ $out=<<<EOQ
 
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
 <!--SuiteCRM installer-->
-    <div id="suitecrm_installer">
+<div id="install_container">
+<div id="install_box">
     <div id='licenseDiv'>
             <div id="steps"><p >Step 4 of 8 - Database Selection</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
         </div>
