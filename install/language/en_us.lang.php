@@ -421,7 +421,6 @@ $mod_strings = array(
     'LBL_SHOW_PASS'                     => 'Show Passwords',
     'LBL_HIDE_PASS'                     => 'Hide Passwords',
     'LBL_HIDDEN'                        => '<i>(hidden)</i>',
-    'LBL_STARTINSTALL'                  => 'Start Installation &raquo;',
     'LBL_STEP1'                         => 'Step 1 of 8 - Pre-Installation requirements',
     'LBL_STEP2'                         => 'Step 2 of 8 - License Agreement',
     'LBL_STEP3'                         => 'Step 3 of 8 - Installation Type',
