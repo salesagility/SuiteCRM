@@ -112,7 +112,7 @@ $out =<<<EOQ
 <form action="install.php" method="post" name="setConfig" id="form">
 <input type="hidden" name="current_step" value="{$next_step}">
 <header id="install_header">
-            <div id="steps"><p >Step 8 of 8 - {$mod_strings['LBL_CONFIRM_TITLE']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i>
+            <div id="steps"><p>{$mod_strings['LBL_STEP7']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i>
             </div>
             <div class="install_img"><a href="https://suitecrm.com"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>

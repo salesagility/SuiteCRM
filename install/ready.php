@@ -71,7 +71,7 @@ $out = <<<EOQ
     <div id="install_box">
         <form action="install.php" method="post" name="form" id="form">
             <header id="install_header">
-            <div id="steps"><p >Step 1 of 8 - Pre-Installation requirements</p><i class="icon-progress-0"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
+            <div id="steps"><p>{$mod_strings['LBL_STEP1']}</p><i class="icon-progress-0"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
             </div>
             <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
