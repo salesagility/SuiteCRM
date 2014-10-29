@@ -98,27 +98,25 @@ $out =<<<EOQ
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_CONFIRM_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install.css" type="text/css" />
+   <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+   <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+   <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
    <script type="text/javascript" src="install/installCommon.js"></script>
    <script type="text/javascript" src="install/siteConfig.js"></script>
-<link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
-   <script type="text/javascript" src="install/license.js"></script>
-<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->
     <div id="install_container">
     <div id="install_box">
-<form action="install.php" method="post" name="setConfig" id="form">
-<input type="hidden" name="current_step" value="{$next_step}">
-<header id="install_header">
-            <div id="steps"><p>{$mod_strings['LBL_STEP7']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i>
-            </div>
-            <div class="install_img"><a href="https://suitecrm.com"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+        <form action="install.php" method="post" name="setConfig" id="form">
+            <input type="hidden" name="current_step" value="{$next_step}">
+            <header id="install_header">
+                <div id="steps"><p>{$mod_strings['LBL_STEP7']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i></div>
+                <div class="install_img"><a href="https://suitecrm.com"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
-<input type="hidden" name="current_step" value="{$next_step}">
-		<h2>{$mod_strings['LBL_CONFIRM_TITLE']}</h2>
-<hr>
+            <input type="hidden" name="current_step" value="{$next_step}">
+		    <h2>{$mod_strings['LBL_CONFIRM_TITLE']}</h2>
+            <hr>
             <h3>{$mod_strings['LBL_DBCONF_TITLE']}</h3>
             <p><b>{$mod_strings['LBL_CONFIRM_DB_TYPE']}</b>{$_SESSION['setup_db_type']}</p>
             <p><b>{$mod_strings['LBL_DBCONF_HOST_NAME']}</b> {$_SESSION['setup_db_host_name']}</p>
@@ -141,15 +139,14 @@ EOQ;
 if(isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom'){
 $out .=<<<EOQ
 
-	   <h3>{$mod_strings['LBL_SITECFG_TITLE']}</h3>
-       <p><b>{$mod_strings['LBL_SITECFG_URL']}</b> {$_SESSION['setup_site_url']}</p>
-       <h3 style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</h3>
-       <p style='display:none'><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b> {$yesNoSugarUpdates}</p>
-
-	   <h3>{$mod_strings['LBL_SITECFG_SITE_SECURITY']}</h3>
-       <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_SESSION']}?</b> {$yesNoCustomSession}</p>
-       <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_LOG']}?</b> {$yesNoCustomLog}</p>
-       <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_ID']}?</b> {$yesNoCustomId}</p>
+	        <h3>{$mod_strings['LBL_SITECFG_TITLE']}</h3>
+            <p><b>{$mod_strings['LBL_SITECFG_URL']}</b> {$_SESSION['setup_site_url']}</p>
+            <h3 style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</h3>
+            <p style='display:none'><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b> {$yesNoSugarUpdates}</p>
+	        <h3>{$mod_strings['LBL_SITECFG_SITE_SECURITY']}</h3>
+            <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_SESSION']}?</b> {$yesNoCustomSession}</p>
+            <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_LOG']}?</b> {$yesNoCustomLog}</p>
+            <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_ID']}?</b> {$yesNoCustomId}</p>
 EOQ;
 }
 
@@ -462,18 +459,18 @@ $cronString = '
 $out .= $cronString;
 
 $out .=<<<EOQ
-                <input type="button" class="button" name="print_summary" id="button_print_summary_settings" value="{$mod_strings['LBL_PRINT_SUMM']}"
-                onClick='window.print()' onCluck='window.open("install.php?current_step="+(document.setConfig.current_step.value -1)+"&goto={$mod_strings["LBL_NEXT"]}&print=true");' />
-                    <input type="button" class="button" id="show_pass_button" value="{$mod_strings['LBL_SHOW_PASS']}"
-                    onClick='togglePass();' />
-                	<input type="hidden" name="goto" id="goto">
-<div id="installcontrols">
-                    <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_settings" onclick="document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';document.getElementById('form').submit();" />
-                	<input class="button" type="button" value="{$mod_strings['LBL_LANG_BUTTON_COMMIT']}" onclick="document.getElementById('goto').value='{$mod_strings['LBL_NEXT']}';document.getElementById('form').submit();" id="button_next2"/>
-</div>
-</form>
-<br>
-</div>
+            <input type="button" class="button" name="print_summary" id="button_print_summary_settings" value="{$mod_strings['LBL_PRINT_SUMM']}"
+            onClick='window.print()' onCluck='window.open("install.php?current_step="+(document.setConfig.current_step.value -1)+"&goto={$mod_strings["LBL_NEXT"]}&print=true");' />
+            <input type="button" class="button" id="show_pass_button" value="{$mod_strings['LBL_SHOW_PASS']}"
+            onClick='togglePass();' />
+            <input type="hidden" name="goto" id="goto">
+            <div id="installcontrols">
+                <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_settings" onclick="document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';document.getElementById('form').submit();" />
+                <input class="button" type="button" value="{$mod_strings['LBL_LANG_BUTTON_COMMIT']}" onclick="document.getElementById('goto').value='{$mod_strings['LBL_NEXT']}';document.getElementById('form').submit();" id="button_next2"/>
+            </div>
+        </form>
+        <br>
+    </div>
 <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
@@ -499,7 +496,6 @@ function togglePass(){
 </script>
 </body>
 </html>
-
 
 EOQ;
 echo $out;
