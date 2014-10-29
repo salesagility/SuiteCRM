@@ -36,18 +36,14 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*********************************************************************************
-
- * Description:  Defines the stylesheet used for the application installation.
- ********************************************************************************/
-
  /* SuiteCRM Installation CSS*/
 body {
 	margin: 0px 0px 0px 0px;
 	background-color : #f7f7f7 ;
 	color : #333333;
-    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-weight:normal;
+    font-size:0.8em;
 }
 
 img {
@@ -103,10 +99,9 @@ p {
 }
 
 hr  { 
-	color: #888888;
+	color: #ffffff;
 	width: 100%;
 	height: 1px;
-	margin: 0px;
 	}
 
 a:link, a:visited {
@@ -164,24 +159,10 @@ textarea {
 	
 .button {
     background-color:#B41C4F;
-    -webkit-border-top-left-radius:0px;
-    -moz-border-radius-topleft:0px;
-    border-top-left-radius:0px;
-    -webkit-border-top-right-radius:0px;
-    -moz-border-radius-topright:0px;
-    border-top-right-radius:0px;
-    -webkit-border-bottom-right-radius:0px;
-    -moz-border-radius-bottomright:0px;
-    border-bottom-right-radius:0px;
-    -webkit-border-bottom-left-radius:0px;
-    -moz-border-radius-bottomleft:0px;
-    border-bottom-left-radius:0px;
     text-indent:0;
     display:inline-block;
     color:#ffffff;
-    font-family:Arial;
     font-size:14px;
-    font-weight:bold;
     font-style:normal;
     height:30px;
     line-height:15px;
@@ -200,26 +181,11 @@ textarea {
 /* custom */
 
 .acceptButton {
-
     background-color:#B41C4F;
-    -webkit-border-top-left-radius:0px;
-    -moz-border-radius-topleft:0px;
-    border-top-left-radius:0px;
-    -webkit-border-top-right-radius:0px;
-    -moz-border-radius-topright:0px;
-    border-top-right-radius:0px;
-    -webkit-border-bottom-right-radius:0px;
-    -moz-border-radius-bottomright:0px;
-    border-bottom-right-radius:0px;
-    -webkit-border-bottom-left-radius:0px;
-    -moz-border-radius-bottomleft:0px;
-    border-bottom-left-radius:0px;
     text-indent:0;
     display:inline-block;
     color:#ffffff;
-    font-family:Arial;
     font-size:14px;
-    font-weight:bold;
     font-style:normal;
     height:30px;
     line-height:15px;
@@ -228,146 +194,8 @@ textarea {
     text-shadow:1px 1px 0px #810e05;
     cursor:pointer;
     padding: 0 10px 0 10px;
-	}
-
-table.shell tbody {
-    display: block;
+    transition: all 0.5s ease;
 }
-
-table.shell tbody table tbody {
-    overflow-y:visible;
-
-}
-
-table.shell {
-	background-color: #ffffff;
-    width:auto;
-    max-width:800px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    -moz-box-shadow: 0 0 5px #888888;
-    -webkit-box-shadow: 0 0 5px#888888;
-    box-shadow: 0 0 5px #888888;
-
-	}
-table.shell td#help {
-background: #333333; /* Old browsers */
-    /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzMzMzMzMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxMjEyMTIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-    background: -moz-linear-gradient(top,  #565656 0%, #333333 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#565656), color-stop(100%,#333333)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #565656 0%,#333333 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #565656 0%,#333333 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #565656 0%,#333333 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #565656 0%,#333333 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#565656', endColorstr='#333333',GradientType=0 ); /* IE6-8 */
-    border-bottom: 1px solid #000000;
-    text-align: right;
-    padding: 6px 15px;
-    font-weight: bold;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-table.shell td#help a {color: #ffffff;}
-
-
-table.shell td#info a:link, table.shell td#info a:visited, table.shell td#info a:hover {color: #ffffff;}
-
-table.shell td#ready_image {
-    background: #666666;
-    border-bottom: 1px solid #000000;
-    text-align: center;
-    padding: 0;
-}
-
-table.shell td#ready {
-    background: #666666;
-    border-bottom: 1px solid #000000;
-    text-align: center;
-    color: #ffffff;
-    font-size: 18px;
-    padding: 8px;
-}
-
-table.shell th {
-	border-bottom: 1px solid #cccccc;
-	background-color: #ffffff;
-	color: #888888;
-	font-size: 16px;
-	font-weight: bold;
-	padding: 15px 15px 10px 15px;
-	text-align: left;
-	}
-
-table.shell th h2 {
-	color: #888888;
-	font-size: 16px;
-	font-weight: bold;
-	text-align: left;
-    margin-top: 20px;
-    margin-bottom: 0;
-}
-
-table.shell td {
-	padding: 15px;
-	}
-	
-table.post_install {
-	background-color: #ffffff;
-	width: 600px;
-	height: 300px;
-	margin-top: 20px;
-	margin-bottom: 100px;
-	border: 1px solid #111111;
-	}
-
-table.post_install th {
-	border-bottom: 1px solid #888888;
-	background-color: #ffffff;
-	color: #888888;
-	font-size: 16px;
-	font-weight: bold;
-	padding: 6px;
-	text-align: left;
-	}
-	
-table.stdTable td {
-	padding: 5px 0 2px 5px;
-	}
-table.stdTable th {
-
-	padding: 2px;
-
-	}
-
-table.StyleDottedHr a:link, a:visited  {
-	color: #a10a3d;
-}
-
-table.Welcome td, table.StyleDottedHr td {
-border-bottom: 1px  #cccccc;
-	padding: 5px 0px 5px 0px;
-	}
-table.Welcome th {
-	color: #a10a3d;
-	padding: 5px;
-	font-size: 14px;
-    border-top: 2px solid  #a10a3d;
-    border-bottom: 1px solid #dddddd;;
-	}
-	
-table.StyleDottedHr th {
-	color: #444444;
-	padding: 5px 0;
-	font-size: 14px;
-	}
-
-table.Welcome a:link, a:visited  {
-	color: #cc0000;
-	text-decoration: underline;
-	}	
 
 .small {
 	font-size: 10px;
@@ -676,13 +504,13 @@ input[type=password] {
 }
 
 #install_container {
-width: 750px;
-height:500px;
-max-height:500px !important;
-position: absolute;
-top:0;
-bottom: 0;
-left: 0;
-right: 0;
-margin: auto;
+    width: 750px;
+    height:500px;
+    max-height:500px !important;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }
