@@ -78,31 +78,24 @@ $out=<<<EOQ
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_SYSOPTS_DB_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install.css" type="text/css">
+   <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+   <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+   <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
    <script src="cache/include/javascript/sugar_grp1_yui.js?s={$sugar_version}&c={$js_custom_version}"></script>
-   <script type="text/javascript">
-    <!--
-    if ( YAHOO.env.ua )
-        UA = YAHOO.env.ua;
-    -->
-    </script>
-    <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
-   <script type="text/javascript" src="install/license.js"></script>
-<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
 <!--SuiteCRM installer-->
 <div id="install_container">
-<div id="install_box">
-    <div id='licenseDiv'>
+    <div id="install_box">
+        <div id='licenseDiv'>
             <div id="steps"><p>{$mod_strings['LBL_STEP4']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
         </div>
-<form action="install.php" method="post" name="systemOptions" id="form">
-<header id="install_header">
-            <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
-        </header>
-<div id="installoptions">
+        <form action="install.php" method="post" name="systemOptions" id="form">
+            <header id="install_header">
+                <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+            </header>
+        <div id="installoptions">
 		{$errs}
         <h2>{$mod_strings['LBL_SYSOPTS_DB']}</h2>
         {$mod_strings['LBL_SYSOPTS_2']}
@@ -117,8 +110,7 @@ EOQ;
 }
 
 $out.=<<<EOQ
-    <div name="ociMsg" id="ociMsg" style="display:none">
-    </div>
+    <div name="ociMsg" id="ociMsg" style="display:none"></div>
 EOQ;
 
 $out.=<<<EOQ
@@ -136,6 +128,12 @@ $out.=<<<EOQ
 <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
+<script type="text/javascript">
+    <!--
+    if ( YAHOO.env.ua )
+        UA = YAHOO.env.ua;
+    -->
+    </script>
 </body>
 </html>
 EOQ;
