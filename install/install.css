@@ -468,13 +468,11 @@ a.other{
 	margin:0 !important;
 }
 
-#suitecrm_installer {
+#install_box {
     width: 750px;
     height:500px;
     max-height:500px !important;
-    position: relative;
     line-height: 1.4em;
-    margin:25px auto;
     background:#ffffff;
     border:1px solid #cccccc;
     vertical-align:middle;
@@ -675,4 +673,16 @@ input[type=password] {
     margin:5px;
     border:1px solid #cccccc;
     font-size:1em;
+}
+
+#install_container {
+width: 750px;
+height:500px;
+max-height:500px !important;
+position: absolute;
+top:0;
+bottom: 0;
+left: 0;
+right: 0;
+margin: auto;
 }

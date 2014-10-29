@@ -65,7 +65,8 @@ $out = <<<EOQ
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->
-    <div id="suitecrm_installer">
+    <div id="install_container">
+    <div id="install_box">
         <form action="install.php" method="post" name="form" id="form">
             <header id="install_header">
             <h1 id="welcomelink">{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</h1>
@@ -89,7 +90,10 @@ $out = <<<EOQ
             </div>
 	    </form>
 	    </div>
-	</div>
+	<footer id="install_footer">
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+</footer>
+</div>
     <script>
         function showtime(div){
 
@@ -133,9 +137,7 @@ $("#slider2").responsiveSlides({
       });
 
 </script>
-<footer id="install_footer">
-    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
-</footer>
+
 </body>
 </html>
 EOQ;

@@ -127,8 +127,9 @@ $out =<<<EOQ
     <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
-    <!--SuiteCRM installer-->
-    <div id="suitecrm_installer">
+<!--SuiteCRM installer-->
+<div id="install_container">
+<div id="install_box">
 <form action="install.php" method="post" name="setConfig" id="form">
 <header id="install_header">
             <div id="steps"><p >Step 7 of 8 - Site Configuration</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
@@ -205,10 +206,12 @@ $out .= <<<EOQ
 </b>
 <br>
 </div>
-</div>
+
 <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>
+</div>
+</div>
 </body>
 </html>
 
