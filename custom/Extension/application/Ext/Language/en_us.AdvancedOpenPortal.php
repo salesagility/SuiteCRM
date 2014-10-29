@@ -51,6 +51,7 @@ $app_list_strings['contact_portal_user_type_dom'] =
         'Account' => 'Account user',
     );
 $app_list_strings['dom_email_distribution_for_auto_create']=array (
+    'AOPDefault' => 'Use AOP Default',
     'singleUser' => 'Single User',
     'roundRobin' => 'Round-Robin',
     'leastBusy' => 'Least-Busy',
