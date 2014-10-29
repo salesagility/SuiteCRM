@@ -86,7 +86,7 @@ $out = <<<EOQ
 <div id="progress">
             {$mod_strings['LBL_WELCOME_CHOOSE_LANGUAGE']}: <select name="language" onchange='this.form.submit()';>{$langDropDown}</select>
 	        <input type="hidden" name="current_step" value="{$next_step}">
-            <input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2" />
+            <input class="button" type="submit" name="goto" value="{$mod_strings['LBL_STARTINSTALL']}" id="button_next2" />
             </div>
 	    </form>
 	    </div>
