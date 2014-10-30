@@ -50,7 +50,7 @@ $langDropDown = get_select_options_with_id($supportedLanguages, $current_languag
 
 $langHeader = get_language_header();
 $out = <<<EOQ
-<!doctype html>
+<!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -61,80 +61,80 @@ $out = <<<EOQ
    <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="themes/Suite7/js/responsiveslides.min.js"></script>
+   <script src="themes/Suite7/js/responsiveslides.min.js"></script>
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->
-    <div id="suitecrm_installer">
+    <div id="install_container">
+    <div id="install_box">
         <form action="install.php" method="post" name="form" id="form">
             <header id="install_header">
-            <h1 id="welcomelink">{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</h1>
-                <div class="install_img"><img src="{$sugar_md}" alt="SuiteCRM"></div>
+                <h1 id="welcomelink">{$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}</h1>
+                <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
-                <div id="wrapper">
-                    <div class="rslides_container">
-                        <ul class="rslides" id="slider2">
+            <div id="wrapper">
+                <div class="rslides_container">
+                    <ul class="rslides" id="slider2">
+                        <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
                             <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
                             <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
-                            <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
-                        </ul>
-                    </div>
-
+                    </ul>
                 </div>
+            </div>
 
-<div id="progress">
-            {$mod_strings['LBL_WELCOME_CHOOSE_LANGUAGE']}: <select name="language" onchange='this.form.submit()';>{$langDropDown}</select>
-	        <input type="hidden" name="current_step" value="{$next_step}">
-            <input class="progressbutton" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2" />
+            <div id="progress">
+                {$mod_strings['LBL_WELCOME_CHOOSE_LANGUAGE']}: <select name="language" onchange='this.form.submit()';>{$langDropDown}</select>
+	            <input type="hidden" name="current_step" value="{$next_step}">
+                <input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2" />
             </div>
 	    </form>
-	    </div>
-	    <footer id="install_footer">
-        <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="suitecrm.com" target="_blank">License</a>
-	    </footer>
 	</div>
-    <script>
-        function showtime(div){
+	<footer id="install_footer">
+        <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+    </footer>
+</div>
+<script>
+    function showtime(div){
 
-            if(document.getElementById(div).style.display == ''){
-                document.getElementById(div).style.display = 'none';
-                document.getElementById('adv_'+div).style.display = '';
-                document.getElementById('basic_'+div).style.display = 'none';
-            }else{
-                document.getElementById(div).style.display = '';
-                document.getElementById('adv_'+div).style.display = 'none';
-                document.getElementById('basic_'+div).style.display = '';
+        if(document.getElementById(div).style.display == ''){
+            document.getElementById(div).style.display = 'none';
+            document.getElementById('adv_'+div).style.display = '';
+            document.getElementById('basic_'+div).style.display = 'none';
+            }
+            else {
+            document.getElementById(div).style.display = '';
+            document.getElementById('adv_'+div).style.display = 'none';
+            document.getElementById('basic_'+div).style.display = '';
             }
 
         }
-    </script>
-    <script>
-  $(".rslides").responsiveSlides({
-  auto: true,             // Boolean: Animate automatically, true or false
-  speed: 800,            // Integer: Speed of the transition, in milliseconds
-  timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
-  pager: false,           // Boolean: Show pager, true or false
-  random: false,          // Boolean: Randomize the order of the slides, true or false
-  pause: false,           // Boolean: Pause on hover, true or false
-  pauseControls: true,    // Boolean: Pause when hovering controls, true or false
-  prevText: "",   // String: Text for the "previous" button
-  nextText: "",       // String: Text for the "next" button
-  maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
-  navContainer: "ul",       // Selector: Where controls should be appended to, default is after the 'ul'
-  manualControls: "",     // Selector: Declare custom pager navigation
-  namespace: "rslides",   // String: Change the default namespace used
-  before: function(){},   // Function: Before callback
-  after: function(){}     // Function: After callback
-});
-$("#slider2").responsiveSlides({
+</script>
+<script>
+    $(".rslides").responsiveSlides({
+        auto: true,             // Boolean: Animate automatically, true or false
+        speed: 800,            // Integer: Speed of the transition, in milliseconds
+        timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
+        pager: false,           // Boolean: Show pager, true or false
+        random: false,          // Boolean: Randomize the order of the slides, true or false
+        pause: false,           // Boolean: Pause on hover, true or false
+        pauseControls: true,    // Boolean: Pause when hovering controls, true or false
+        prevText: "",   // String: Text for the "previous" button
+        nextText: "",       // String: Text for the "next" button
+        maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
+        navContainer: "ul",       // Selector: Where controls should be appended to, default is after the 'ul'
+        manualControls: "",     // Selector: Declare custom pager navigation
+        namespace: "rslides",   // String: Change the default namespace used
+        before: function(){},   // Function: Before callback
+        after: function(){}     // Function: After callback
+    });
+    $("#slider2").responsiveSlides({
         nav: true,
         speed: 500,
         maxwidth: 750,
         namespace: "centered-btns",
         speed: 800,            // Integer: Speed of the transition, in milliseconds
-  timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
-      });
-
+        timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
+    });
 </script>
 </body>
 </html>

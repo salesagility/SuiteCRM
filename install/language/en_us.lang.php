@@ -55,11 +55,7 @@ $mod_strings = array(
     'LBL_SYSOPTS_DB_TITLE'              => 'Database Type',
 	'LBL_SYSOPTS_ERRS_TITLE'			=> 'Please fix the following errors before proceeding:',
 	'LBL_MAKE_DIRECTORY_WRITABLE'      => 'Please make the following directory writable:',
-
-
     'ERR_DB_VERSION_FAILURE'			=> 'Unable to check database version.',
-
-
 	'DEFAULT_CHARSET'					=> 'UTF-8',
     'ERR_ADMIN_USER_NAME_BLANK'         => 'Provide the user name for the SuiteCRM admin user. ',
 	'ERR_ADMIN_PASS_BLANK'				=> 'Provide the password for the SuiteCRM admin user. ',
@@ -425,6 +421,14 @@ $mod_strings = array(
     'LBL_SHOW_PASS'                     => 'Show Passwords',
     'LBL_HIDE_PASS'                     => 'Hide Passwords',
     'LBL_HIDDEN'                        => '<i>(hidden)</i>',
+    'LBL_STEP1'                         => 'Step 1 of 8 - Pre-Installation requirements',
+    'LBL_STEP2'                         => 'Step 2 of 8 - License Agreement',
+    'LBL_STEP3'                         => 'Step 3 of 8 - Installation Type',
+    'LBL_STEP4'                         => 'Step 4 of 8 - Database Selection',
+    'LBL_STEP5'                         => 'Step 5 of 8 - Database Configuration',
+    'LBL_STEP6'                         => 'Step 6 of 8 - Site Configuration',
+    'LBL_STEP7'                         => 'Step 7 of 8 - Confirm Settings',
+    'LBL_STEP8'                         => 'Step 8 of 8 - Installation Successful',
 //	'LBL_NO_THANKS'						=> 'Continue to installer',
 	'LBL_CHOOSE_LANG'					=> '<b>Choose your language</b>',
 	'LBL_STEP'							=> 'Step',
