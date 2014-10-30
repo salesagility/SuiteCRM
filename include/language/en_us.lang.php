@@ -463,7 +463,9 @@ $app_list_strings = array (
     'project_status_dom' => array (
         'Draft' => 'Draft',
         'In Review' => 'In Review',
-        'Published' => 'Published',
+        'Underway' => 'Underway',
+        'On_Hold' => 'On Hold',
+        'Completed' => 'Completed',
     ),
     'project_status_default' => 'Draft',
 
