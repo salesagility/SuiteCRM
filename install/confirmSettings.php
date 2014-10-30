@@ -117,20 +117,23 @@ $out =<<<EOQ
             <input type="hidden" name="current_step" value="{$next_step}">
 		    <h2>{$mod_strings['LBL_CONFIRM_TITLE']}</h2>
             <hr>
-            <h3>{$mod_strings['LBL_DBCONF_TITLE']}</h3>
-            <p><b>{$mod_strings['LBL_CONFIRM_DB_TYPE']}</b>{$_SESSION['setup_db_type']}</p>
-            <p><b>{$mod_strings['LBL_DBCONF_HOST_NAME']}</b> {$_SESSION['setup_db_host_name']}</p>
-            <p><b>{$mod_strings['LBL_DBCONF_DB_NAME']}</b> {$_SESSION['setup_db_database_name']} {$dbCreate}</p>
+            <div id="confsettings">
+                <div class="dbcred">
+                    <h3>{$mod_strings['LBL_DBCONF_TITLE']}</h3>
+                    <p><b>{$mod_strings['LBL_CONFIRM_DB_TYPE']}</b> {$_SESSION['setup_db_type']}</p>
+                    <p><b>{$mod_strings['LBL_DBCONF_HOST_NAME']}</b> {$_SESSION['setup_db_host_name']}</p>
+                    <p><b>{$mod_strings['LBL_DBCONF_DB_NAME']}</b> {$_SESSION['setup_db_database_name']} {$dbCreate}</p>
+                    <p><b>{$mod_strings['LBL_DBCONF_DB_ADMIN_USER']}</b> {$_SESSION['setup_db_admin_user_name']}</p>
+                    <p><b>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</b> {$demoData}</p>
+
 EOQ;
 
-$out .=<<<EOQ
-            <p><b>{$mod_strings['LBL_DBCONF_DB_ADMIN_USER']}</b> {$_SESSION['setup_db_admin_user_name']}</p>
-            <p><b>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</b> {$demoData}</p>
-EOQ;
 if($yesNoDropCreate){
 
 $out .=<<<EOQ
             <p><b>{$mod_strings['LBL_DBCONF_DB_DROP']}</b> {$yesNoDropCreate}</p>
+            </div>
+
 EOQ;
 
 }
@@ -139,116 +142,73 @@ EOQ;
 if(isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom'){
 $out .=<<<EOQ
 
-	        <h3>{$mod_strings['LBL_SITECFG_TITLE']}</h3>
-            <p><b>{$mod_strings['LBL_SITECFG_URL']}</b> {$_SESSION['setup_site_url']}</p>
-            <h3 style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</h3>
-            <p style='display:none'><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b> {$yesNoSugarUpdates}</p>
-	        <h3>{$mod_strings['LBL_SITECFG_SITE_SECURITY']}</h3>
-            <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_SESSION']}?</b> {$yesNoCustomSession}</p>
-            <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_LOG']}?</b> {$yesNoCustomLog}</p>
-            <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_ID']}?</b> {$yesNoCustomId}</p>
+	        <div class="sitecred">
+	            <h3>{$mod_strings['LBL_SITECFG_TITLE']}</h3>
+                <p><b>{$mod_strings['LBL_SITECFG_URL']}</b> {$_SESSION['setup_site_url']}</p>
+                <h3 style='display:none'>{$mod_strings['LBL_SITECFG_SUGAR_UPDATES']}</h3>
+                <p style='display:none'><b>{$mod_strings['LBL_SITECFG_SUGAR_UP']}</b> {$yesNoSugarUpdates}</p>
+	            <h3>{$mod_strings['LBL_SITECFG_SITE_SECURITY']}</h3>
+                <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_SESSION']}?</b> {$yesNoCustomSession}</p>
+                <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_LOG']}?</b> {$yesNoCustomLog}</p>
+                <p><b>{$mod_strings['LBL_SITECFG_CUSTOM_ID']}?</b> {$yesNoCustomId}</p>
+            </div>
 EOQ;
 }
 
 $out .=<<<EOQ
 
-	   <tr><td colspan="3" align="left"></td></tr>
-          <tr><th colspan="3" align="left">{$mod_strings['LBL_SYSTEM_CREDS']}</th></tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_DBCONF_DB_USER']}</b></td>
-                <td>
-                    {$_SESSION['setup_db_sugarsales_user']}
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b></td>
-                <td>
-                    <span id='hide_db_admin_pass'>{$mod_strings['LBL_HIDDEN']}</span>
-                    <span style='display:none' id='show_db_admin_pass'>{$_SESSION['setup_db_sugarsales_password']}</span>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_ADMIN_Name']}</b></td>
-                <td>
-                    Admin
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS']}</b></td>
-                <td>
-                    <span id='hide_site_admin_pass'>{$mod_strings['LBL_HIDDEN']}</span>
-                    <span style='display:none' id='show_site_admin_pass'>{$_SESSION['setup_site_admin_password']}</span>
-                </td>
-            </tr>
+	            <div class="sitecred">
+	                <h3>{$mod_strings['LBL_SYSTEM_CREDS']}</h3>
+                    <p><b>{$mod_strings['LBL_DBCONF_DB_USER']}</b> {$_SESSION['setup_db_sugarsales_user']}</p>
+                    <p><b>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</b> <span id='hide_db_admin_pass'>{$mod_strings['LBL_HIDDEN']}</span></p>
+                    <p><span style='display:none' id='show_db_admin_pass'>{$_SESSION['setup_db_sugarsales_password']}</span></p>
+                    <p><b>{$mod_strings['LBL_SITECFG_ADMIN_Name']}</b> Admin</p>
+                    <p><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS']}</b> <span id='hide_site_admin_pass'>{$mod_strings['LBL_HIDDEN']}</span></p>
+                    <p><span style='display:none' id='show_site_admin_pass'>{$_SESSION['setup_site_admin_password']}</span></p>
+                </div>
 
 EOQ;
 
-
-
-
-
-
 $envString = '
-	   <h2>'.$mod_strings['LBL_SYSTEM_ENV'].'</h2>';
+
+	   <h3>'.$mod_strings['LBL_SYSTEM_ENV'].'</h3>';
 
     // PHP VERSION
-        $envString .='
-          <h3>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</h3>
-            <p>'.constant('PHP_VERSION').'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PHPVER'].'</b> '.constant('PHP_VERSION').'</p>';
 
 
 //Begin List of already known good variables.  These were checked during the initial sys check
 // XML Parsing
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_XML'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_XML'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 
 
 // mbstrings
 
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_MBSTRING'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MBSTRING'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // config.php
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_CONFIG'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CONFIG'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // custom dir
 
 
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CUSTOM'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 
 // modules dir
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MODULE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p';
 
 // upload dir
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_UPLOAD'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // data dir
 
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_DATA'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_DATA'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 
 // cache dir
     $error_found = true;
-        $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</h3>
-        <p>'.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
+        $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CACHE'].'</b> '.$mod_strings['LBL_CHECKSYS_OK'].'</p>';
 // End already known to be good
 
 // memory limit
@@ -293,9 +253,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     }
 }
 
-          $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_MEM'].'</strong></h3>
-        <p>'.$memory_msg.'</p>';
+          $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_MEM'].'</strong></b> '.$memory_msg.'</p>';
 
     // zlib
     if(function_exists('gzclose')) {
@@ -303,9 +261,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     } else {
         $zlibStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZLIB']}</b></span>";
     }
-            $envString .='
-          <h3>'.$mod_strings['LBL_CHECKSYS_ZLIB'].'</p>
-            <p>'.$zlibStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_ZLIB'].'</b> '.$zlibStatus.'</p>';
 
     // zip
     if(class_exists("ZipArchive")) {
@@ -313,9 +269,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     } else {
         $zipStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_ZIP']}</b></span>";
     }
-            $envString .='
-          <h3>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</h3>
-            <p>'.$zipStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_ZIP'].'</b> '.$zipStatus.'</p>';
 
     // PCRE
     if(defined('PCRE_VERSION')) {
@@ -328,9 +282,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
     } else {
         $pcreStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_PCRE']}</b></span>";
     }
-            $envString .='
-          <h3>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</h3>
-            <p>'.$pcreStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PCRE'].'</b> '.$pcreStatus.'</p>';
 
     // imap
     if(function_exists('imap_open')) {
@@ -339,9 +291,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         $imapStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_IMAP']}</b></span>";
     }
 
-            $envString .='
-          <h3>'.$mod_strings['LBL_CHECKSYS_IMAP'].'</h3>
-            <p>'.$imapStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_IMAP'].'</b> '.$imapStatus.'</p>';
 
 
     // cURL
@@ -351,9 +301,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         $curlStatus = "<span class='stop'><b>{$mod_strings['ERR_CHECKSYS_CURL']}</b></span>";
     }
 
-            $envString .='
-          <h3>'.$mod_strings['LBL_CHECKSYS_CURL'].'</h3>
-            <p>'.$curlStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_CURL'].'</b> '.$curlStatus.'</p>';
 
 
       //CHECK UPLOAD FILE SIZE
@@ -369,9 +317,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
             $fileMaxStatus = "<span class='stop'><b>{$mod_strings['ERR_UPLOAD_MAX_FILESIZE']}</font></b></span>";
         }
 
-            $envString .='
-          <h3>'.$mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'].'</h3>
-            <p>'.$fileMaxStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_UPLOAD_MAX_FILESIZE_TITLE'].'</b> '.$fileMaxStatus.'</p>';
 
       //CHECK Sprite support
         if(function_exists('imagecreatetruecolor'))
@@ -380,9 +326,7 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         }else{
             $spriteSupportStatus = "<span class='stop'><b>{$mod_strings['ERROR_SPRITE_SUPPORT']}</b></span>";
         }
-            $envString .='
-          <h3>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</h3>
-          <p>'.$spriteSupportStatus.'</p>';
+            $envString .='<p><b>'.$mod_strings['LBL_SPRITE_SUPPORT'].'</b> '.$spriteSupportStatus.'</p>';
 
         // Suhosin allow to use upload://
         if (UploadStream::getSuhosinStatus() == true || (strpos(ini_get('suhosin.perdir'), 'e') !== false && strpos($_SERVER["SERVER_SOFTWARE"],'Microsoft-IIS') === false))
@@ -393,22 +337,25 @@ if( $memory_limit == "" ){          // memory_limit disabled at compile time, no
         {
             $suhosinStatus = "<span class='stop'><b>{$app_strings['ERR_SUHOSIN']}</b></span>";
         }
-        $envString .= "
-        <h3>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</h3>
-            <p>" . $suhosinStatus . "</p>
-        ";
+        $envString .= "<p><b>{$mod_strings['LBL_STREAM']} (" . UploadStream::STREAM_NAME . "://)</b> " . $suhosinStatus . "</p>";
 
-// PHP.ini
-$phpIniLocation = get_cfg_var("cfg_file_path");
-          $envString .='
-      <h3>'.$mod_strings['LBL_CHECKSYS_PHP_INI'].'</h3>
-      <p>'.$phpIniLocation.'</p>';
+    // PHP.ini
+    $phpIniLocation = get_cfg_var("cfg_file_path");
+    $envString .='<p><b>'.$mod_strings['LBL_CHECKSYS_PHP_INI'].'</b> '.$phpIniLocation.'</p>';
+
+$out .=<<<EOQ
+
+<div id="syscred">
+
+EOQ;
 
 $out .= $envString;
 
 $out .=<<<EOQ
 
+</div>
 EOQ;
+
 
 // CRON Settings
 if ( !isset($sugar_config['default_language']) )
@@ -470,6 +417,7 @@ $out .=<<<EOQ
             </div>
         </form>
         <br>
+    </div>
     </div>
 <footer id="install_footer">
     <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>

@@ -524,3 +524,87 @@ input[type=password] {
 #errormsg {
     margin-top:100px;
 }
+
+.dbcred {
+    width: 45%;
+    float: left;
+    padding: 5px 15px;
+}
+
+.sitecred {
+    width: 45%; /* Account for margins + border values */
+    float: left;
+    padding: 5px 15px;
+    margin: 0px 5px 5px 5px;
+}
+/*
+.syscred {
+    width: 30%;
+    padding: 5px 15px;
+    float: left;
+}
+*/
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 980px or less */
+@media screen and (max-width: 980px) {
+
+    #confsettings {
+        width: 94%;
+    }
+    .dbcred {
+        width: 41%;
+        padding: 1% 4%;
+    }
+    .sitecred {
+        width: 41%;
+        padding: 1% 4%;
+        margin: 0px 0px 5px 5px;
+        float: right;
+    }
+
+    .syscred {
+        clear: both;
+        padding: 1% 4%;
+        width: auto;
+        float: none;
+    }
+
+}
+
+/* for 700px or less */
+@media screen and (max-width: 960px) {
+
+    .dbcred {
+        width: auto;
+        float: none;
+    }
+
+    .sitecred {
+        width: auto;
+        float: none;
+        margin-left: 0px;
+    }
+
+    .syscred {
+        width: auto;
+        float: none;
+    }
+
+}
+
+#syscred {
+    clear:both;
+    position:relative;
+    border-top:1px solid #cccccc;
+    border-bottom:1px solid #cccccc;
+    margin:10px 0 10px 0;
+    padding:0 10px 0 10px;
+}
+
+#syscred p {
+    font-weight:normal;
+
+}
