@@ -89,7 +89,7 @@ $out = <<<EOQ
     <div id="install_container">
         <div id="install_box">
             <header id="install_header">
-                <div id="steps"><p>{$mod_strings['LBL_STEP7']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i></div>
+                <div id="steps"><p>{$mod_strings['LBL_STEP3']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i></div>
                 <div class="install_img"><a href="https://suitecrm.com"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
             <form action="install.php" method="post" name="form" id="form">
@@ -126,11 +126,10 @@ $out .= <<<EOQ2
                 </div>
             </form>
         </div>
-    </div>
-    <footer id="install_footer">
+        <footer id="install_footer">
         <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
     </footer>
-</div>
+    </div>
 </body>
 </html>
 EOQ2;
