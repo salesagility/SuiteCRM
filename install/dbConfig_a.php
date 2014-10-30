@@ -118,13 +118,14 @@ $config_params = $db->installConfig();
 $form = '';
 foreach($config_params as $group => $gdata) {
     $form.= "<div class='install_block'>";
-    $form .= "<label>{$mod_strings[$group]}</label>\n";
+    $form .= "<label>{$mod_strings[$group]}</label><br>\n";
     foreach($gdata as $name => $value) {
 
         if(!empty($value)) {
             if(!empty($value['required'])) {
-                $form .= "<span class=\"required\">*</span>\n";
-            } else {
+                $form .= "<span class=\"required\">*</span>";
+            }
+             else {
             }
             if(!empty($_SESSION[$name])) {
                 $sessval = $_SESSION[$name];

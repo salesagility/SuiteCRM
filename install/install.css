@@ -297,9 +297,9 @@ a.other{
 }
 
 #install_box {
-    width: 750px;
-    height:500px;
-    max-height:500px !important;
+    width: 960px;
+    height:90%;
+    max-height:90% !important;
     line-height: 1.4em;
     background:#ffffff;
     border:1px solid #cccccc;
@@ -390,6 +390,7 @@ p#footer_links {
 }
 #wrapper {
     min-height:300px;
+    width:960px !important;
     border-bottom:1px solid #cccccc;
 }
 
@@ -447,8 +448,6 @@ p#footer_links {
     padding:10px;
 }
 
-#installcontrols {}
-
 div.install_block{
     overflow:hidden;
 }
@@ -503,9 +502,9 @@ input[type=password] {
 }
 
 #install_container {
-    width: 750px;
-    height:500px;
-    max-height:500px !important;
+    width: 960px;
+    height:90%;
+    max-height:90% !important;
     position: absolute;
     top:0;
     bottom: 0;
