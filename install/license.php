@@ -82,8 +82,7 @@ $out =<<<EOQ
     <div id="install_container">
     <div id="install_box">
         <div id='licenseDiv'>
-            <div id="steps"><p>{$mod_strings['LBL_STEP2']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
-        </div>
+            <div id="steps"><p>{$mod_strings['LBL_STEP2']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i></div>
         <form action="install.php" method="post" name="setConfig" id="form">
         <header id="install_header">
             <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
@@ -202,6 +201,8 @@ function callSysCheck(){
 </script>
            <div id="checkingDiv" style="display:none">
                     <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
+            </div>
+            </div>
             </div>
 <footer id="install_footer">
     <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
