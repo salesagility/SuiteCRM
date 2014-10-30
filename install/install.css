@@ -297,8 +297,10 @@ a.other{
 }
 
 #install_box {
-    width: 960px;
-    height:90%;
+    width: 960px !important;
+    min-width: 50% !important;
+    height:90% !important;
+    min-height:500px !important;
     max-height:90% !important;
     line-height: 1.4em;
     background:#ffffff;
@@ -502,8 +504,10 @@ input[type=password] {
 }
 
 #install_container {
-    width: 960px;
-    height:90%;
+    width: 960px !important;
+    min-width: 50% !important;
+    height:90% !important;
+    min-height:500px !important;
     max-height:90% !important;
     position: absolute;
     top:0;
