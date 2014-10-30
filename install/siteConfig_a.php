@@ -180,11 +180,11 @@ EOQ;
 
 $out .=<<<EOQ
 <div class='install_block'>
-    {$mod_strings['LBL_SITECFG_PASSWORD_MSG']}
-    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></b></label><br>
-    <input type="text" name="setup_site_admin_user_name" value="{$_SESSION['setup_site_admin_user_name']}" size="20" maxlength="60" />
-    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS']} <span class="required">*</span></b></label><br>
-    <input type="password" name="setup_site_admin_password" value="{$_SESSION['setup_site_admin_password']}" size="20" />
+    <p>{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
+    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></b></label>
+    <input type="text" name="setup_site_admin_user_name" value="{$_SESSION['setup_site_admin_user_name']}" size="20" maxlength="60" /><br>
+    <label><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS']} <span class="required">*</span></b></label>
+    <input type="password" name="setup_site_admin_password" value="{$_SESSION['setup_site_admin_password']}" size="20" /><br>
     <label><b>{$mod_strings['LBL_SITECFG_ADMIN_PASS_2']} <span class="required">*</span></b></label>
     <input type="password" name="setup_site_admin_password_retype" value="{$_SESSION['setup_site_admin_password_retype']}" size="20" />
 </div>
