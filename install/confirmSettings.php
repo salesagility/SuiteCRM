@@ -378,29 +378,22 @@ if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // IIS IUSR_xxx may no
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
     }
 }
-$cronString = '
-			    <font style="color:#a10a3d;" >
-						'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'<br>
-				</font>
+$cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_WINDOWS_DESC'].'</b><br>
 						cd '.realpath('./').'<br>
 						php.exe -f cron.php
-						<br>'.$error.'
-';
+						<br>'.$error.'</p>
+			   ';
 } else {
 if(isset($_SERVER['Path']) && !empty($_SERVER['Path'])) { // some Linux servers do not make this available
     if(!strpos($_SERVER['PATH'], 'php')) {
 //        $error = '<em>'.$mod_strings_scheduler['LBL_NO_PHP_CLI'].'</em>';
     }
 }
-$cronString = '
-			    <font color="red">
-						'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'
-				</font>
-						'.$mod_strings_scheduler['LBL_CRON_LINUX_DESC'].'<br>
+$cronString = '<p><b>'.$mod_strings_scheduler['LBL_CRON_INSTRUCTIONS_LINUX'].'</b><br> '.$mod_strings_scheduler['LBL_CRON_LINUX_DESC'].'<br>
 						*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;
 						cd '.realpath('./').'; php -f cron.php > /dev/null 2>&1
-						<br><br><hr><br>'.$error.'
-';
+						<br><br><hr><br>'.$error.'</p>
+              ';
 }
 
 $out .= $cronString;
