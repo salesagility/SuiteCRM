@@ -105,6 +105,7 @@ $out =<<<EOQ
         </div>
 </form>
 </div>
+<div id='sysCheckMsg'><div>
 </div>
 <script>
 var msgPanel;
@@ -199,16 +200,9 @@ function callSysCheck(){
     }
 
 </script>
-
            <div id="checkingDiv" style="display:none">
-           <table cellspacing="0" cellpadding="0" border="0">
-               <tr><td>
                     <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
-                </td></tr>
-            </table>
             </div>
-
-          <div id='sysCheckMsg'><div>
 <footer id="install_footer">
     <p id="footer_links"><a href="suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="suitecrm.com" target="_blank">Support Forums</a> | <a href="suitecrm.com" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
 </footer>

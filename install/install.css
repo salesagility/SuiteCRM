@@ -513,3 +513,11 @@ input[type=password] {
     right: 0;
     margin: auto;
 }
+
+#errorheaders {
+    margin:0 0 50px 0;
+}
+
+#errormsg {
+    margin-top:100px;
+}
