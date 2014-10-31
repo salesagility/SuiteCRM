@@ -75,9 +75,10 @@ $out = <<<EOQ
             <div id="wrapper">
                 <div class="rslides_container">
                     <ul class="rslides" id="slider2">
-                        <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
-                            <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
-                            <li><img src="themes/Suite7/images/bigsuite.png" alt="" class="sliderimg"></li>
+                        <li><img src="themes/Suite7/images/SuiteScreen1.png" alt="" class="sliderimg"></li>
+                             <li><img src="themes/Suite7/images/SuiteScreen2.png" alt="" class="sliderimg"></li>
+                            <li><img src="themes/Suite7/images/SuiteScreen3.png" alt="" class="sliderimg"></li>
+                            <li><img src="themes/Suite7/images/SuiteScreen4.png" alt="" class="sliderimg"></li>
                     </ul>
                 </div>
             </div>
