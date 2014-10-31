@@ -3,11 +3,11 @@ function install_ganttChartPro() {
 
     require_once('ModuleInstall/ModuleInstaller.php');
     $ModuleInstaller = new ModuleInstaller();
-    $ModuleInstaller->install_custom_fields(getCustomFields());
+    $ModuleInstaller->install_custom_fields(getGCCustomFields());
 
 }
 
-function getCustomFields(){
+function getGCCustomFields(){
     $custom_fields =
   array (
       'ProjectTaskrelationship_type_c' =>
