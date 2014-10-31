@@ -741,10 +741,21 @@ require_once('include/EditView/EditView2.php');
                          // construct the query for multenums
                          // use the 'like' query as both custom and OOB multienums are implemented with types that cannot be used with an 'in'
                          $operator = 'custom_enum';
-                         $table_name = $this->seed->table_name ;
-                         if ($customField)
-                             $table_name .= "_cstm" ;
-                         $db_field = $table_name . "." . $field;
+			// Relationshipfields get their field name directly from the field name map,
+			// this alias-name is automatically replaced by the join table and rname through sugarbean::create_new_list_query
+			if (isset($this->seed->field_name_map[$field]) && 
+				isset($this->seed->field_name_map[$field]['source']) && 
+				$this->seed->field_name_map[$field]['source'] == 'non-db')
+			{
+				$db_field = $this->seed->field_name_map[$field]['name'];
+			}
+			else
+			{
+				$table_name = $this->seed->table_name ;
+				if ($customField)
+					$table_name .= "_cstm" ;
+				$db_field = $table_name . "." . $field;
+			}
 
                          foreach($parms['value'] as $val) {
                              if($val != ' ' and $val != '') {
@@ -823,7 +834,6 @@ require_once('include/EditView/EditView2.php');
                              if ($type == 'relate' && !empty($this->seed->field_name_map[$field]['link'])
                                  && !empty($this->seed->field_name_map[$field]['rname'])) {
                                      $link = $this->seed->field_name_map[$field]['link'];
-                                     $relname = $link['relationship'];
                                      if (($this->seed->load_relationship($link))){
                                          //Martin fix #27494
                                          $db_field = $this->seed->field_name_map[$field]['name'];
@@ -834,6 +844,13 @@ require_once('include/EditView/EditView2.php');
 
 
                              }
+				// Relationship fields get the name directly from the field_name_map
+				else if (isset($this->seed->field_name_map[$field]) && 
+					isset($this->seed->field_name_map[$field]['source']) && 
+					$this->seed->field_name_map[$field]['source'] == 'non-db')
+				{
+					$db_field = $this->seed->field_name_map[$field]['name'];
+				}
                              else if ($type == 'parent') {
                                  if (!empty($this->searchFields['parent_type'])) {
                                      $parentType = $this->searchFields['parent_type'];
