@@ -186,7 +186,7 @@ class SugarView
                 'favicon' => $this->getFavicon(),
             );
 
-            if(SugarThemeRegistry::current()->name == 'Classic')
+            if(SugarThemeRegistry::current()->name == 'Classic' || SugarThemeRegistry::current()->classic)
                 $ajax_ret['moduleList'] = $this->displayHeader(true);
 
             if(empty($this->responseTime))
