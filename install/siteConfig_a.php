@@ -130,6 +130,7 @@ $out =<<<EOQ
         <div id="install_container">
             <div id="install_box">
                 <form action="install.php" method="post" name="setConfig" id="form">
+                <div id="install_content">
                     <header id="install_header">
                         <div id="steps"><p>{$mod_strings['LBL_STEP6']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i></div>
                         <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
@@ -192,6 +193,7 @@ EOQ;
 
 $out .= <<<EOQ
 <hr>
+</div>
 <div id="installcontrols">
     <input class="button" type="button" name="goto" value="{$mod_strings['LBL_BACK']}" id="button_back_siteConfig_a" onclick="document.getElementById('form').submit();" />
     <input type="hidden" name="goto" value="{$mod_strings['LBL_BACK']}" />

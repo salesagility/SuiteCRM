@@ -81,12 +81,12 @@ $out =<<<EOQ
     <!--SuiteCRM installer-->
     <div id="install_container">
     <div id="install_box">
-        <div id='licenseDiv'>
-            <div id="steps"><p>{$mod_strings['LBL_STEP2']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i></div>
-        <form action="install.php" method="post" name="setConfig" id="form">
         <header id="install_header">
             <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+            <div id="steps"><p>{$mod_strings['LBL_STEP2']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i></div>
         </header>
+        <form action="install.php" method="post" name="setConfig" id="form">
+        <div id="install_content">
             <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
             <br>
             <hr>
@@ -96,14 +96,14 @@ $out =<<<EOQ
             <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
         	onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
         </div>
+        </div>
         <div id="installcontrols">
             <input type="hidden" name="current_step" value="{$next_step}">
             <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_BACK']}"  id="button_back_license" onclick="document.getElementById('form').submit();" />
             <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" onclick="callSysCheck();"/>
             <input type="hidden" name="goto" id='hidden_goto' value="{$mod_strings['LBL_BACK']}" />
         </div>
-</form>
-</div>
+    </form>
 <div id='sysCheckMsg'><div>
 </div>
 <script>

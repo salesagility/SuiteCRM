@@ -89,12 +89,13 @@ $out=<<<EOQ
 <div id="install_container">
     <div id="install_box">
         <div id='licenseDiv'>
-            <div id="steps"><p>{$mod_strings['LBL_STEP4']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
         </div>
+        <header id="install_header">
+            <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+            <div id="steps"><p>{$mod_strings['LBL_STEP4']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i>
+        </header>
         <form action="install.php" method="post" name="systemOptions" id="form">
-            <header id="install_header">
-                <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
-            </header>
+        <div id="install_content">
         <div id="installoptions">
 		{$errs}
         <h2>{$mod_strings['LBL_SYSOPTS_DB']}</h2>
@@ -115,6 +116,7 @@ EOQ;
 
 $out.=<<<EOQ
 </div>
+
 <hr>
     <div id="installcontrols">
         <input type="hidden" name="current_step" value=" $next_step ">
