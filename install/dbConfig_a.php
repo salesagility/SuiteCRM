@@ -426,6 +426,9 @@ function confirm_drop_tables(yes_no){
     if ( YAHOO.env.ua )
         UA = YAHOO.env.ua;
     -->
+    $(document).ready(function(){
+    $(#install_box).scrollTop(0);
+});
     </script>
 </body>
 </html>

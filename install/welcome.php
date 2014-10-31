@@ -60,7 +60,7 @@ $out = <<<EOQ
    <link rel="stylesheet" href="install/install.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
-   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+   <script src="include/javascript/jquery/jquery-min.js"></script>
    <script src="themes/Suite7/js/responsiveslides.min.js"></script>
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
