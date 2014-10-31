@@ -506,15 +506,15 @@ input[type=password] {
 #install_container {
     width: 960px !important;
     min-width: 50% !important;
-    height:90% !important;
+    height:500px !important;
     min-height:500px !important;
-    max-height:90% !important;
+    max-height:500px !important;
     position: absolute;
-    top:0;
+    top:-10%;
     bottom: 0;
     left: 0;
     right: 0;
-    margin: auto;
+    margin:auto;
 }
 
 #errorheaders {
