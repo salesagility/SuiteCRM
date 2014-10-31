@@ -60,13 +60,11 @@
 <input type='hidden' id='fieldwidth' value='{$fieldwidth}'>
 <input type='hidden' id='maxColumns' value='{$maxColumns}'>
 <input type='hidden' id='nextPanelId' value='{$nextPanelId}'>
-<div id='toolbox' style='float:left; overflow-y:auto; overflow-x:hidden';>
-    <h2 style='margin-bottom:20px;'>{$mod.LBL_TOOLBOX}</h2>
-    
+<div id='toolbox'>
+    <h1>{$mod.LBL_TOOLBOX}</h1>
     <div id='delete'>
-    {sugar_image name=Delete width=48 height=48}
+        <h2 class="deleteme"><i class="icon-trash"></i><span>{$mod.LBL_DELETE}</span></h2>
     </div>
-
 	{if ! isset($fromPortal) && ! isset($wireless) && empty($single_panel)}
     <div id='panelproxy'></div>
     {/if}
@@ -105,7 +103,7 @@
                 {sugar_translate label=$newLabel module=$language}
                 {/if}
  			{else}
-                {assign var='label' value=$col.label} 
+                {assign var='label' value=$col.label}
                 {if !empty($current_mod_strings[$label])}
                     {$current_mod_strings[$label]}
                 {else}
@@ -256,7 +254,7 @@ var editPanelProperties = function (panelId, view) {
     panelId = "" + panelId;
 	var key_label = document.getElementById('le_panelid_' + panelId).innerHTML.replace(/^\s+|\s+$/g,'');
 	var value_label = document.getElementById('le_panelname_' + panelId).innerHTML.replace(/^\s+|\s+$/g,'');
-	var params = "module=ModuleBuilder&action=editProperty&view_module=" + encodeURIComponent(ModuleBuilder.module) 
+	var params = "module=ModuleBuilder&action=editProperty&view_module=" + encodeURIComponent(ModuleBuilder.module)
 	            + (ModuleBuilder.package ?  "&view_package=" + encodeURIComponent(ModuleBuilder.package) : "")
                 + "&view=" + encodeURIComponent(view) + "&id_label=le_panelname_" + encodeURIComponent(panelId) + "&name_label=label_" + encodeURIComponent(key_label.toUpperCase())
                 + "&title_label=" + encodeURIComponent(SUGAR.language.get("ModuleBuilder", "LBL_LABEL_TITLE")) + "&value_label=" + encodeURIComponent(value_label);
@@ -292,20 +290,20 @@ var showHideBox = function (newTab, idCount, panelId, firstPanelId, firstPanelId
 
 {/literal}
 var editFieldProperties = function (idCount, label) {ldelim}
-	var value_label = document.getElementById('le_label_' + idCount).innerHTML.replace(/^\s+|\s+$/g,''); 
+	var value_label = document.getElementById('le_label_' + idCount).innerHTML.replace(/^\s+|\s+$/g,'');
 	var value_tabindex = document.getElementById('le_tabindex_' + idCount).innerHTML.replace(/^\s+|\s+$/g,'');
 	var title_label = '{sugar_translate label="LBL_LABEL_TITLE" module="ModuleBuilder"}';
 	var title_tabindex = '{sugar_translate label="LBL_TAB_ORDER" module="ModuleBuilder"}';
-	
+
 	ModuleBuilder.getContent(
 	  	'module=ModuleBuilder&action=editProperty'
 	  + '&view_module={$view_module|escape:'url'}' + '{if $fromModuleBuilder}&view_package={$view_package}{/if}'
-	  +	'&view={$view|escape:'url'}&id_label=le_label_' + encodeURIComponent(idCount) 
+	  +	'&view={$view|escape:'url'}&id_label=le_label_' + encodeURIComponent(idCount)
 	  + '&name_label=label_' + encodeURIComponent(label) + '&title_label=' + encodeURIComponent(title_label)
-	  + '&value_label=' + encodeURIComponent(value_label) + '&id_tabindex=le_tabindex_' + encodeURIComponent(idCount) 
+	  + '&value_label=' + encodeURIComponent(value_label) + '&id_tabindex=le_tabindex_' + encodeURIComponent(idCount)
 	  + '&title_tabindex=' + encodeURIComponent(title_tabindex)
 	  + '&name_tabindex=tabindex&value_tabindex=' + encodeURIComponent(value_tabindex) );
-	
+
 {rdelim}
 
 Studio2.firstPanelId = "{$firstpanelid}";

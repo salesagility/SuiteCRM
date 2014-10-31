@@ -188,14 +188,14 @@ th, td
 }
 
 /* layout the header elements */
-#header div.line
+header div.line
 {
     height: 4px;
     margin: 0;
     padding: 0;
 }
 
-#header ul li
+header ul li
 {
     display:inline;
 }
@@ -496,7 +496,7 @@ ul.cssmenu li a
 
 }
 
-#header ul.cssmenu li{
+header ul.cssmenu li{
     display:block;
 }
 
@@ -1942,7 +1942,6 @@ table.tabForm td ul li {
 }
 
 .sqsMatchedSmartInputItem {
-    font-size:11px;
     padding: 2px 5px 2px 5px;
     margin: 0;
     cursor: pointer;
@@ -2169,20 +2168,6 @@ td.edit.view td[align=right]
     text-align: left;
 }
 
-/* login page*/
-.login table tr td
-{
-    padding:0px !important;
-    text-align:left;
-}
-.login
-{
-    padding:10px 6px 12px 10px !important;
-}
-.login .login_more
-{
-    text-align:right;
-}
 
 #lastviewicon, #newrecordicon, #shortcuts_img,#lastviewicon_1, #newrecordicon_1, #shortcuts_img_1 {
     display:none;
@@ -2286,7 +2271,6 @@ iframe.teamNoticeBox
 
 .loading-indicator
 {
-    font-size:11px;
     background-image:url('../default/ext/resources/images/default/grid/loading.gif');
     background-repeat:no-repeat;
     background-position:left;
@@ -2479,12 +2463,12 @@ button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=butt
 }
 
 /* set a minimum width for the header */
-#header
+header
 {
     min-width: 85em;
 }
 /* header */
-#header div.line {
+header div.line {
     height: 2px;
     border-bottom: 2px solid;
     color:#0046ad;
@@ -2599,7 +2583,6 @@ ul.subTabs li a:link, ul.subTabs li a:visited
 }
 .subTabMore
 {
-    font-size: 11px;
     text-decoration: none;
     padding-top: 3px;
 }
@@ -2873,7 +2856,7 @@ body
 }
 table, div
 {
-    font-size: 11px;
+
 }
 h1, h2
 {
@@ -3188,7 +3171,7 @@ textarea
 }
 
 /* header */
-#header div.line {
+header div.line {
     background-color:#f10202;
     border-bottom-color: #0046ad;
     color:#0046ad;
@@ -4160,7 +4143,7 @@ body {
 
 /* Header CSS */
 
-#header {
+header {
     position:fixed;
     top:0px;
     width:100%;
@@ -4276,21 +4259,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     -moz-box-shadow: 0 0 5px #999999;
     -webkit-box-shadow: 0 0 5px#999999;
     box-shadow: 0 0 5px #999999;
-}
-
-/* login page*/
-.login table tr td
-{
-    padding:0px !important;
-    text-align:left;
-}
-.login
-{
-    padding:10px 6px 12px 10px !important;
-}
-.login .login_more
-{
-    text-align:right;
 }
 
 /* Dashlet CSS */
@@ -5095,10 +5063,6 @@ ul.tablist li a, ul.subpanelTablist li a, ul.tablist li a.current, ul.tablist li
     border-top-right-radius: 5px;
 }
 
-div.password {
-    border:none;
-}
-
 div.dashletToolSet a img:hover {
     opacity:0.6;
     -webkit-transition: all 0.3s ease-out;
@@ -5256,4 +5220,94 @@ input[type=text].cstm_code {
 
 #lessmargin {
     margin: 0 50px 0 0;
+}
+
+#suite_login {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border:1px solid #cccccc;
+    max-width:250px !important;
+    margin:0 auto;
+    padding:25px 10px 25px 10px;
+    background:#f7f7f7;
+    font-size:14px;
+    color:#565656;
+}
+
+#suite_login input[type=text], #suite_login input[type=password] {
+    padding:5px 0px 5px 0px;
+    font-size:14px;
+    margin:5px 0 5px 0;
+    border:none;
+}
+
+#logintext {
+    font-size:14px;
+    padding:5px 0 5px 0;
+
+}
+
+#langselect {
+    margin:5px 000;
+}
+
+.loginimage{
+    text-align:center;
+}
+
+.login {
+    margin:0 auto;
+    text-align:Center;
+}
+
+#logininput {
+    border:1px solid #cccccc;
+    background:#ffffff;
+    margin:5px 10px 5px 10px;
+}
+
+div.password {
+    border:none;
+    margin:0 auto;
+}
+
+#forgot_pass_link {
+    width:250px;
+    margin:0 auto;
+    padding:5px 0 15px 0;
+}
+
+#forgot_pass_link a{
+    float:right;
+
+}
+
+#suite_password {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border:1px solid #cccccc;
+    max-width:250px !important;
+    margin:0 auto;
+    padding:25px 10px 45px 10px;
+    background:#f7f7f7;
+    font-size:14px;
+    color:#565656;
+}
+
+#suite_password p {
+    margin: 0 0 10px 10px;
+}
+
+#suite_password input[type=text], #suite_login input[type=password] {
+    padding:5px 0px 5px 0px;
+    font-size:14px;
+    margin:5px 0 5px 0;
+    border:none;
+}
+
+#suite_login img {
+    max-width:250px !important;
+    max-height:250px !important;
 }

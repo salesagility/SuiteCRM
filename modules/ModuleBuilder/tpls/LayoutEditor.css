@@ -36,24 +36,31 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+#layoutEditor img {
+
+}
+#delete img {
+    height:32px;
+    width:32px;
+}
 #layoutEditor h4, #layoutEditor h3, #layoutEditor h2, #layoutEditor h1, .panel_name  {
-	font-size:11px;
 	padding-left: 0px;
 	margin: 3px;
 }
 
 .panel_name {
 	font-weight: bold;
-	color: #000000;
+	color: #565656;
 	float:left; 
 	margin:5px;
 }
-#toolbox { float:left; width: 175px; padding:5px; margin:0;    border: 1px dotted black;}
-#panels { 
+#toolbox { background:#f7f7f7; float:left; width: 175px; padding:5px; margin:10px 10px;    border: 1px solid #cccccc;}
+#panels {
 	float:right; 
 	padding:5px 10px 5px 5px;
 	margin-left:20px;
-	border: 1px dotted black;
+	border: 1px solid #cccccc;
+    width:100%;
 }
 .le_panel { 
     background: #eee;
@@ -75,7 +82,11 @@
 body > .le_panel .le_edit, #toolbox .le_panel .le_edit {  
 	display:none; 
 }
-#toolbox .le_panel, #toolbox .le_row, .le_field { width:150px; float: left; border: 1px solid grey; background: #eee; padding: 2px; margin: 2px 3px; overflow:hidden; }
+#toolbox .le_panel, #toolbox .le_row, .le_field { width:150px; float: left; border: 1px solid grey; background: #eee; padding: 5px; margin: 2px 3px; overflow:hidden; }
+
+#toolbox .le_panel img, #toolbox .le_row img, .le_field img {
+    margin: 0;
+}
 
 #delete { width: 52px; padding-top:5px; padding-bottom:10px;}
 
@@ -91,4 +102,15 @@ body > .le_panel .le_edit, #toolbox .le_panel .le_edit {
 .le_edit{
 	cursor:pointer;
 	float:right;
+}
+
+.deleteme {
+   
+    font-weight:normal;
+    color:#565656;
+
+}
+
+#delete{
+    text-align:center;
 }

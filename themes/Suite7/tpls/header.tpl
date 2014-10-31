@@ -40,7 +40,7 @@
 <a name="top"></a>
 {$DCSCRIPT}
 {if $AUTHENTICATED}
-<div id="header">
+<header>
     <div id="ajaxHeader">
         {include file="_headerModuleList.tpl" theme_template=true}
     </div>
@@ -55,7 +55,7 @@
 
     <div class="clear"></div>
 
-</div>
+</header>
 
 {/if}
 
@@ -73,6 +73,6 @@
 </script>
 {/literal}
 
-<div id="main">
+<main>
     <div id="content" {if !$AUTHENTICATED}class="noLeftColumn" {/if}>
         <table style=""" id="contentTable"><tr><td>

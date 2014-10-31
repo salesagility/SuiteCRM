@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 *}
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html {$langHeader}>
 <head>
     <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
@@ -62,6 +62,8 @@
     </script>
     {/literal}
     {$SUGAR_CSS}
+    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <link rel="stylesheet" type="text/css" href="themes/Suite7/css/colourSelector.php">
     <script type="text/javascript" src='{sugar_getjspath file="themes/Suite7/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
