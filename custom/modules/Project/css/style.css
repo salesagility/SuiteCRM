@@ -380,3 +380,9 @@
     position: absolute;
     background-color: #9999FF;
 }
+
+#popup_form {
+    text-align: left;
+    position: relative;
+    z-index: 9999;
+}
