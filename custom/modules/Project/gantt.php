@@ -87,6 +87,7 @@ class Gantt {
                 $task_start_day = $this->count_days($start_date, $task->date_start);
                 $task_end_day = $this->count_days($start_date, $task->date_finish);
                 $task_duration = $this->count_days($task->date_start, $task->date_finish);
+                $task->predecessors = $task->predecessors == '' ? 0 : $task->predecessors;
 
 
                 for ($x=1; $x<= $day_count; $x++)
