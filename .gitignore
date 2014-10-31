@@ -10,6 +10,8 @@ custom/history/*
 custom/modulebuilder/*
 custom/working/*
 custom/modules/*/Ext/
+# Ignore AOD indexes
+modules/AOD_Index/Index/*
 # Custom configuration should also be ignored.
 /config.php
 # Connector configuration should also be ignored.
