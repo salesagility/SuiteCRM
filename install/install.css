@@ -391,14 +391,14 @@ p#footer_links {
     margin-top:10px;
 }
 #wrapper {
-    min-height:300px;
+    min-height:400px !important;
     width:960px !important;
     border-bottom:1px solid #cccccc;
 }
 
 .sliderimg {
 
-    max-height:300px;
+    max-height:400px !important;
 }
 #progress {
     text-align:center;
