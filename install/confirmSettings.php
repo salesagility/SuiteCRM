@@ -109,6 +109,7 @@ $out =<<<EOQ
     <div id="install_container">
     <div id="install_box">
         <form action="install.php" method="post" name="setConfig" id="form">
+        <div id="install_content">
             <input type="hidden" name="current_step" value="{$next_step}">
             <header id="install_header">
                 <div id="steps"><p>{$mod_strings['LBL_STEP7']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7"></i></div>
@@ -404,6 +405,8 @@ $out .=<<<EOQ
             <input type="button" class="button" id="show_pass_button" value="{$mod_strings['LBL_SHOW_PASS']}"
             onClick='togglePass();' />
             <input type="hidden" name="goto" id="goto">
+            </div>
+            </div>
             <div id="installcontrols">
                 <input class="button" type="button" value="{$mod_strings['LBL_BACK']}" id="button_back_settings" onclick="document.getElementById('goto').value='{$mod_strings['LBL_BACK']}';document.getElementById('form').submit();" />
                 <input class="button" type="button" value="{$mod_strings['LBL_LANG_BUTTON_COMMIT']}" onclick="document.getElementById('goto').value='{$mod_strings['LBL_NEXT']}';document.getElementById('form').submit();" id="button_next2"/>

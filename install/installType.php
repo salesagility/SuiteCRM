@@ -93,6 +93,7 @@ $out = <<<EOQ
                 <div class="install_img"><a href="https://suitecrm.com"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
             </header>
             <form action="install.php" method="post" name="form" id="form">
+            <div id="install_content">
 EOQ;
 
 $typical_checked ='checked';
@@ -117,6 +118,7 @@ $out .= <<<EOQ2
                     <b><i>{$php_suggested_ver}</i></b>
                     <br>
                     <hr>
+                </div>
                 </div>
                 <div id="installcontrols">
                     <input type="hidden" name="current_step" value="{$next_step}">
