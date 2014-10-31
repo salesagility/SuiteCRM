@@ -56,7 +56,7 @@ require_once("install/install_utils.php");
 $license_file = getLicenseContents("LICENSE.txt");
 $langHeader = get_language_header();
 $out =<<<EOQ
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -73,59 +73,39 @@ $out =<<<EOQ
     </script>
     <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
    <script type="text/javascript" src="install/license.js"></script>
+<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
-<div id='licenseDiv'>
-<form action="install.php" method="post" name="setConfig" id="form">
-<form action="welcome.php" method="post" name="setLang" id="langForm">
-  <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
-    <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>
-    <tr>
-      <th width="500">
-		<p>
-		<img src="{$sugar_md}" alt="SugarCRM" border="0">
-		</p>
-      {$mod_strings['LBL_LICENSE_ACCEPTANCE']}</th>
-      <th width="200" height="30" style="text-align: right;">&nbsp;
-      </th>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <textarea cols="80" rows="20" readonly>{$license_file}</textarea>
-      </td>
-    </tr>
-
-    <tr>
-      <td align=left>
-        <input type="checkbox" class="checkbox" name="setup_license_accept" id="button_next2" onClick='toggleNextButton();' {$checked} />
-        <a href='javascript:void(0)' onClick='toggleLicenseAccept();toggleNextButton();'>{$mod_strings['LBL_LICENSE_I_ACCEPT']}</a>
-      </td>
-      <td align=right>
-        <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
+    <!--SuiteCRM installer-->
+    <div id="install_container">
+    <div id="install_box">
+        <div id='licenseDiv'>
+        <header id="install_header">
+            <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+            <div id="steps"><p>{$mod_strings['LBL_STEP2']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1"></i><i class="icon-progress-2"></i><i class="icon-progress-3"></i><i class="icon-progress-4"></i><i class="icon-progress-5"></i><i class="icon-progress-6"></i><i class="icon-progress-7"></i></div>        <form action="install.php" method="post" name="setConfig" id="form">
+        </header>
+            <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
+            <br>
+            <hr>
+        <div id="licenseaccept">
+            <input type="checkbox" class="checkbox" name="setup_license_accept" id="button_next2" onClick='toggleNextButton();' {$checked} />
+            <a href='javascript:void(0)' onClick='toggleLicenseAccept();toggleNextButton();'>{$mod_strings['LBL_LICENSE_I_ACCEPT']}</a>
+            <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
         	onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
-      </td>
-    </tr>
-    <tr>
-      <td align="right" colspan="2">
-        <hr>
-        <input type="hidden" name="current_step" value="{$next_step}">
-        <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-          <tr>
-            <td>
-                <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_BACK']}"  id="button_back_license" onclick="document.getElementById('form').submit();" />
-                <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" onclick="callSysCheck();"/>
-                <input type="hidden" name="goto" id='hidden_goto' value="{$mod_strings['LBL_BACK']}" />
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-
-  </table>
+        </div>
+        </div>
+        <div id="installcontrols">
+            <input type="hidden" name="current_step" value="{$next_step}">
+            <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_BACK']}"  id="button_back_license" onclick="document.getElementById('form').submit();" />
+            <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" onclick="callSysCheck();"/>
+            <input type="hidden" name="goto" id='hidden_goto' value="{$mod_strings['LBL_BACK']}" />
+        </div>
 </form>
+<div id='sysCheckMsg'><div>
 </div>
-
+</div>
 <script>
 var msgPanel;
 function callSysCheck(){
@@ -219,21 +199,17 @@ function callSysCheck(){
     }
 
 </script>
-
            <div id="checkingDiv" style="display:none">
-           <table cellspacing="0" cellpadding="0" border="0">
-               <tr><td>
                     <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
-                </td></tr>
-            </table>
+            </div>
             </div>
 
-          <div id='sysCheckMsg'><div>
-
-
+<footer id="install_footer">
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+</footer>
+</div>
 </body>
 </html>
 EOQ;
-
 echo $out;
 ?>
