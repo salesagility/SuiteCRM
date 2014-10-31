@@ -196,6 +196,13 @@ class SugarTheme
      */
     public $group_tabs;
 
+    /**
+     * Support for classic themes
+     *
+     * @var bool
+     */
+    public $classic;
+
 
     /**
      * Cache built of all css files locations
@@ -452,6 +459,7 @@ class SugarTheme
             'barChartColors',
             'pieChartColors',
             'group_tabs',
+            'classic',
             'ignoreParentFiles',
             );
     }
