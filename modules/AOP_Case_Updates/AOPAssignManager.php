@@ -8,7 +8,11 @@ class AOPAssignManager{
     function __construct($ieX = false){
         global $sugar_config;
         $this->ieX = $ieX;
-        $inboundDistribMethod = $ieX->get_stored_options("distrib_method", "");
+        if($ieX) {
+            $inboundDistribMethod = $ieX->get_stored_options("distrib_method", "");
+        }else{
+            $inboundDistribMethod = '';
+        }
         if($this->isAOPFallback($inboundDistribMethod)){
             $this->distributionMethod = $sugar_config['aop']['distribution_method'];
             $this->aopFallback = true;
