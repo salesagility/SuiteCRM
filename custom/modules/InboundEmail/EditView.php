@@ -439,7 +439,6 @@ $xtpl->out("main");
     function hideElem(id){
         if(document.getElementById(id)){
             document.getElementById(id).style.display = "none";
-            document.getElementById(id).value = "";
         }
     }
 
