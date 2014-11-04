@@ -24,20 +24,6 @@
 
 $job_strings[] = 'pollMonitoredInboxesCustomAOP';
 
-$GLOBALS['log']->info('Custom add jobs here loaded');
-function getDistributionMethod($ieX){
-    global $sugar_config;
-
-    $method = $sugar_config['aop']['distribution_method'];
-    //Check if there is a portal setting for the distribution method.
-    if($method){
-        return $method;
-
-    }else{
-        return $ieX->get_stored_options("distrib_method", "");
-    }
-}
-
 function pollMonitoredInboxesCustomAOP() {
 
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
@@ -95,16 +81,8 @@ function pollMonitoredInboxesCustomAOP() {
                     } // if
                     $messagesToDelete = array();
                     if ($ieX->isMailBoxTypeCreateCase()) {
-                        $users[] = $sugarFolder->assign_to_id;
-                        $distributionMethod = getDistributionMethod($ieX);
-                        if ($distributionMethod == 'singleUser') {
-                            $distributionUserId = $sugar_config['aop']['distribution_user_id'];
-                        }elseif ($distributionMethod != 'roundRobin') {
-                            $counts = $emailUI->getAssignedEmailsCountForUsers($users);
-                        } else {
-                            $lastRobin = $emailUI->getLastRobin($ieX);
-                        }
-                        $GLOBALS['log']->debug('distribution method id [ '.$distributionMethod.' ]');
+                        require_once 'modules/AOP_Case_Updates/AOPAssignManager.php';
+                        $assignManager = new AOPAssignManager($ieX);
                     }
                     foreach($newMsgs as $k => $msgNo) {
                         $uid = $msgNo;
@@ -123,37 +101,7 @@ function pollMonitoredInboxesCustomAOP() {
                                     $messagesToDelete[] = $uid;
                                 }
                                 if ($ieX->isMailBoxTypeCreateCase()) {
-                                    $userId = "";
-                                    if ($distributionMethod == 'singleUser') {
-                                        $userId = $distributionUserId;
-                                    }elseif ($distributionMethod == 'roundRobin') {
-                                        if (sizeof($users) == 1) {
-                                            $userId = $users[0];
-                                            $lastRobin = $users[0];
-                                        } else {
-                                            $userIdsKeys = array_flip($users); // now keys are values
-                                            $thisRobinKey = $userIdsKeys[$lastRobin] + 1;
-                                            if(!empty($users[$thisRobinKey])) {
-                                                $userId = $users[$thisRobinKey];
-                                                $lastRobin = $users[$thisRobinKey];
-                                            } else {
-                                                $userId = $users[0];
-                                                $lastRobin = $users[0];
-                                            }
-                                        } // else
-                                    } else {
-                                        if (sizeof($users) == 1) {
-                                            foreach($users as $k => $value) {
-                                                $userId = $value;
-                                            } // foreach
-                                        } else {
-                                            asort($counts); // lowest to highest
-                                            $countsKeys = array_flip($counts); // keys now the 'count of items'
-                                            $leastBusy = array_shift($countsKeys); // user id of lowest item count
-                                            $userId = $leastBusy;
-                                            $counts[$leastBusy] = $counts[$leastBusy] + 1;
-                                        }
-                                    } // else
+                                    $userId = $assignManager->getNextAssignedUser();
                                     $GLOBALS['log']->debug('userId [ '.$userId.' ]');
                                     $ieX->handleCreateCase($ieX->email, $userId);
                                 } // if
@@ -184,9 +132,6 @@ function pollMonitoredInboxesCustomAOP() {
                         $current++;
                     } // foreach
                     // update Inbound Account with last robin
-                    if ($ieX->isMailBoxTypeCreateCase() && $distributionMethod == 'roundRobin') {
-                        $emailUI->setLastRobin($ieX, $lastRobin);
-                    } // if
 
                 } // if
                 if ($isGroupFolderExists)	 {
