@@ -25,18 +25,6 @@ require_once("util.php");
 class CaseUpdatesHook {
     private $slug_size = 50;
 
-
-    private function getLastRobin() {
-        global $sugar_config;
-        return $sugar_config['aop']['last_robin'];
-    }
-
-    private function setLastRobin($lastRobin) {
-        require_once('modules/Configurator/Configurator.php');
-        $cfg = new Configurator();
-        $cfg->config['aop']['last_robin'] = $lastRobin;
-        $cfg->saveConfig();
-    }
     private function getCaseCounts(){
         global $db;
         $counts = array();
@@ -48,25 +36,9 @@ class CaseUpdatesHook {
     }
 
     private function getAssignToUser(){
-        global $sugar_config;
-        $method = $sugar_config['aop']['distribution_method'];
-        switch($method){
-            case 'singleUser':
-                return $sugar_config['aop']['distribution_user_id'];
-            case 'roundRobin':
-                $counts = $this->getCaseCounts();
-                $ids = array_keys($counts);
-                sort($ids);
-                $lastRobin = $this->getLastRobin();
-                $robin = ($lastRobin+1) % count($ids);
-                $this->setLastRobin($robin);
-                return $ids[$robin];
-            case 'leastBusy':
-            default:
-                $counts = $this->getCaseCounts();
-                asort($counts);
-                return current(array_keys($counts));
-        }
+        require_once 'modules/AOP_Case_Updates/AOPAssignManager.php';
+        $assignManager = new AOPAssignManager();
+        return $assignManager->getNextAssignedUser();
     }
 
     public function saveUpdate($bean, $event, $arguments){
