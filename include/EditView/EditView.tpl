@@ -275,4 +275,6 @@ $(document).ready(function() {ldelim}
     $(".collapseLink,.expandLink").click(function (e) {ldelim} e.preventDefault(); {rdelim});
   {rdelim});
 {rdelim}
+    opened_tab="{$opened_tab}";
+    {{$form_name}}_tabs.selectTab(opened_tab.substr(3,4));
 </script>
