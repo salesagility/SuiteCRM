@@ -160,6 +160,37 @@ class CaseUpdatesHook {
         $case_update->internal = false;
         $case_update->case_id = $bean->parent_id;
         $case_update->save();
+
+        $this->updateCaseStatus($case_update->case_id);
+    }
+
+    /**
+     * Changes the status of the supplied case based on the case_status_changes config values.
+     * @param $caseId
+     */
+    private function updateCaseStatus($caseId){
+        global $sugar_config;
+        if(empty($caseId)){
+            return;
+        }
+        if(empty($sugar_config['aop']['case_status_changes'])){
+            return;
+        }
+        $statusMap = json_decode($sugar_config['aop']['case_status_changes'],1);
+        if(empty($statusMap)){
+            return;
+        }
+        $case = BeanFactory::getBean('Cases',$caseId);
+        if(empty($case)){
+            return;
+        }
+        if(array_key_exists($case->status,$statusMap)){
+            $case->status = $statusMap[$case->status];
+            $statusBits = explode('_',$case->status);
+            $case->state = array_shift($statusBits);
+            $case->save();
+        }
+
     }
 
     private function unquoteEmail($text){
