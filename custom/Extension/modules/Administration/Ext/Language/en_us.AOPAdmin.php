@@ -51,3 +51,9 @@ $mod_strings['LBL_CREATE_EMAIL_TEMPLATE']  = 'Create';
 $mod_strings['LBL_EDIT_EMAIL_TEMPLATE']  = 'Edit';
 $mod_strings['LBL_SINGLE_USER'] = 'Single User';
 $mod_strings['LBL_AOP_SETTINGS'] = 'AOP Settings';
+
+$mod_strings['LBL_AOP_CASE_STATUS_SETTINGS'] = 'Case Status Changes';
+$mod_strings['LBL_AOP_IF_STATUS'] = 'If status is';
+$mod_strings['LBL_AOP_THEN_STATUS'] = 'change status to';
+$mod_strings['LBL_AOP_ADD_STATUS'] = 'Add';
+$mod_strings['LBL_AOP_REMOVE_STATUS'] = 'Remove';
