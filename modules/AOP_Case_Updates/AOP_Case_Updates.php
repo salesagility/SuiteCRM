@@ -25,8 +25,9 @@
 /**
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
-require_once('modules/AOP_Case_Updates/AOP_Case_Updates_sugar.php');
-require_once("util.php");
+require_once 'modules/AOP_Case_Updates/AOP_Case_Updates_sugar.php';
+require_once 'util.php';
+require_once 'include/clean.php';
 class AOP_Case_Updates extends AOP_Case_Updates_sugar {
 
     function AOP_Case_Updates(){
@@ -34,6 +35,8 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
     }
 
     function save($check_notify = false){
+        $this->name = SugarCleaner::cleanHtml($this->name);
+        $this->description = SugarCleaner::cleanHtml($this->description);
         global $current_user, $sugar_config;
         parent::save($check_notify);
         $email_template = new EmailTemplate();
