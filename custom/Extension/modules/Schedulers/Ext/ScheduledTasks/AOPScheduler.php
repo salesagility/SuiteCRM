@@ -25,7 +25,7 @@
 $job_strings[] = 'pollMonitoredInboxesCustomAOP';
 
 function pollMonitoredInboxesCustomAOP() {
-
+    require_once 'custom/modules/InboundEmail/AOPInboundEmail.php';
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxesCustomAOP()');
     global $dictionary;
@@ -35,14 +35,14 @@ function pollMonitoredInboxesCustomAOP() {
     require_once('modules/Configurator/Configurator.php');
     require_once('modules/Emails/EmailUI.php');
 
-    $ie = new InboundEmail();
+    $ie = new AOPInboundEmail();
     $emailUI = new EmailUI();
     $r = $ie->db->query('SELECT id, name FROM inbound_email WHERE is_personal = 0 AND deleted=0 AND status=\'Active\' AND mailbox_type != \'bounce\'');
     $GLOBALS['log']->debug('Just got Result from get all Inbounds of Inbound Emails');
 
     while($a = $ie->db->fetchByAssoc($r)) {
         $GLOBALS['log']->debug('In while loop of Inbound Emails');
-        $ieX = new InboundEmail();
+        $ieX = new AOPInboundEmail();
         $ieX->retrieve($a['id']);
         $GLOBALS['current_user']->team_id = $ieX->team_id;
         $GLOBALS['current_user']->team_set_id = $ieX->team_set_id;
