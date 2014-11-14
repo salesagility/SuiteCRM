@@ -383,4 +383,8 @@ class CaseUpdatesHook {
         $emailObj->status = 'sent';
         $emailObj->save();
     }
+
+    public function filterHTML($bean, $event, $arguments){
+        $bean->description = SugarCleaner::cleanHtml($bean->description,true);
+    }
 }
