@@ -23,6 +23,7 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 require_once('include/MVC/View/views/view.edit.php');
+require_once('include/SugarTinyMCE.php');
 
 class CasesViewEdit extends ViewEdit {
 
@@ -48,6 +49,8 @@ class CasesViewEdit extends ViewEdit {
             </script>
         <?php
         }
+        $tiny = new SugarTinyMCE();
+        echo $tiny->getInstance('update_text,description');
     }
 
 }
