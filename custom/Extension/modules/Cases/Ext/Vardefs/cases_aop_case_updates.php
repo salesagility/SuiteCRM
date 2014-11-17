@@ -106,4 +106,24 @@ $dictionary["Case"]["fields"]["aop_case_updates"] = array (
     'id_name' => 'case_id',
     'vname' => 'LBL_AOP_CASE_UPDATES',
 );
- ?>
+$dictionary["Case"]["fields"]['case_attachments_display'] =
+    array (
+        'required' => false,
+        'name' => 'case_attachments_display',
+        'vname' => 'LBL_CASE_ATTACHMENTS_DISPLAY',
+        'type' => 'function',
+        'source' => 'non-db',
+        'massupdate' => 0,
+        'studio' => 'visible',
+        'importable' => 'false',
+        'duplicate_merge' => 'disabled',
+        'duplicate_merge_dom_value' => 0,
+        'audited' => false,
+        'reportable' => false,
+        'function' =>
+            array (
+                'name' => 'display_case_attachments',
+                'returns' => 'html',
+                'include' => 'modules/AOP_Case_Updates/Case_Updates.php'
+            ),
+    );

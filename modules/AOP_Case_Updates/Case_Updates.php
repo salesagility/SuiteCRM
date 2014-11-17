@@ -144,3 +144,14 @@ function display_single_update(AOP_Case_Updates $update){
     }
 
 }
+
+function display_case_attachments($case){
+    $html = '';
+    $notes = $case->get_linked_beans('notes','Notes');
+    if($notes){
+        foreach($notes as $note){
+            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
+        }
+    }
+    return $html;
+}
