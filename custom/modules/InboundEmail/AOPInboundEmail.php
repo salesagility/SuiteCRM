@@ -23,6 +23,7 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
+require_once 'include/clean.php';
 class AOPInboundEmail extends InboundEmail {
 
     /**
@@ -44,7 +45,6 @@ class AOPInboundEmail extends InboundEmail {
         $matches = array_unique($matches);
         foreach($matches as $match){
             if(in_array($match,$noteIds)){
-                echo "Replacing cid:".$match ." with index.php?entryPoint=download&id={$match}&type=Notes \n";
                 $string = str_replace('cid:'.$match,"index.php?entryPoint=download&id={$match}&type=Notes&",$string);
             }
         }
@@ -71,7 +71,7 @@ class AOPInboundEmail extends InboundEmail {
                 $noteIds[] = $note->id;
             }
             if($email->description_html) {
-                $c->description = $this->processImageLinks($email->description_html,$noteIds);
+                $c->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html),$noteIds);
             }else{
                 $c->description = $email->description;
             }
