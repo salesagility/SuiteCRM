@@ -24,6 +24,34 @@
  */
 require_once 'modules/InboundEmail/InboundEmail.php';
 class AOPInboundEmail extends InboundEmail {
+
+    /**
+     * Replaces embedded image links with links to the appropriate note in the CRM.
+     * @param $string
+     * @param $noteIds A whitelist of note ids to replace
+     * @return mixed
+     */
+    function processImageLinks($string, $noteIds){
+        if(!$noteIds){
+            return $string;
+        }
+        $matches = array();
+        preg_match('/cid:([[:alnum:]-]*)/',$string,$matches);
+        if(!$matches){
+            return $string;
+        }
+        array_shift($matches);
+        $matches = array_unique($matches);
+        foreach($matches as $match){
+            if(in_array($match,$noteIds)){
+                echo "Replacing cid:".$match ." with index.php?entryPoint=download&id={$match}&type=Notes \n";
+                $string = str_replace('cid:'.$match,"index.php?entryPoint=download&id={$match}&type=Notes&",$string);
+            }
+        }
+        return $string;
+    }
+
+
     function handleCreateCase($email, $userId) {
         global $current_user, $mod_strings, $current_language;
         $mod_strings = return_module_language($current_language, "Emails");
@@ -36,8 +64,14 @@ class AOPInboundEmail extends InboundEmail {
             $GLOBALS['log']->debug('retrieveing email');
             $email->retrieve($email->id);
             $c = new aCase();
+
+            $notes = $email->get_linked_beans('notes','Notes');
+            $noteIds = array();
+            foreach($notes as $note){
+                $noteIds[] = $note->id;
+            }
             if($email->description_html) {
-                $c->description = $email->description_html;
+                $c->description = $this->processImageLinks($email->description_html,$noteIds);
             }else{
                 $c->description = $email->description;
             }
@@ -83,6 +117,21 @@ class AOPInboundEmail extends InboundEmail {
                     $c->contacts->add($contactIds);
                 } // if
             } // if
+            foreach($notes as $note){
+                //Link notes to case also
+                $newNote = BeanFactory::newBean('Notes');
+                $newNote->name = $note->name;
+                $newNote->file_mime_type = $note->file_mime_type;
+                $newNote->filename = $note->filename;
+                $newNote->parent_type = 'Cases';
+                $newNote->parent_id = $c->id;
+                $newNote->save();
+                $srcFile = "upload://{$note->id}";
+                $destFile = "upload://{$newNote->id}";
+                copy($srcFile,$destFile);
+
+            }
+
             $c->email_id = $email->id;
             $email->parent_type = "Cases";
             $email->parent_id = $caseId;
