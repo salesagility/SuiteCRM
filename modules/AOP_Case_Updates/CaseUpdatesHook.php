@@ -160,6 +160,20 @@ class CaseUpdatesHook {
         $case_update->internal = false;
         $case_update->case_id = $bean->parent_id;
         $case_update->save();
+        $notes = $bean->get_linked_beans('notes','Notes');
+        foreach($notes as $note){
+            //Link notes to case update also
+            $newNote = BeanFactory::newBean('Notes');
+            $newNote->name = $note->name;
+            $newNote->file_mime_type = $note->file_mime_type;
+            $newNote->filename = $note->filename;
+            $newNote->parent_type = 'AOP_Case_Updates';
+            $newNote->parent_id = $case_update->id;
+            $newNote->save();
+            $srcFile = "upload://{$note->id}";
+            $destFile = "upload://{$newNote->id}";
+            copy($srcFile,$destFile);
+        }
 
         $this->updateCaseStatus($case_update->case_id);
     }
