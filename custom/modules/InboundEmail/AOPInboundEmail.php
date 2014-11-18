@@ -33,6 +33,7 @@ class AOPInboundEmail extends InboundEmail {
      * @return mixed
      */
     function processImageLinks($string, $noteIds){
+        global $sugar_config;
         if(!$noteIds){
             return $string;
         }
@@ -45,7 +46,7 @@ class AOPInboundEmail extends InboundEmail {
         $matches = array_unique($matches);
         foreach($matches as $match){
             if(in_array($match,$noteIds)){
-                $string = str_replace('cid:'.$match,"index.php?entryPoint=download&id={$match}&type=Notes&",$string);
+                $string = str_replace('cid:'.$match,$sugar_config['site_url']."/index.php?entryPoint=download&id={$match}&type=Notes&",$string);
             }
         }
         return $string;
