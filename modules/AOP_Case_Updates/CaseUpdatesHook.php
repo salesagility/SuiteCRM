@@ -21,7 +21,7 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-require_once("util.php");
+require_once 'util.php';
 class CaseUpdatesHook {
     private $slug_size = 50;
 
@@ -40,6 +40,21 @@ class CaseUpdatesHook {
         $assignManager = new AOPAssignManager();
         return $assignManager->getNextAssignedUser();
     }
+
+    private function arrangeFilesArray(){
+        $count = 0;
+        foreach($_FILES['case_update_file'] as $key => $vals){
+            foreach($vals as $index => $val){
+                if(!array_key_exists('case_update_file'.$index,$_FILES)){
+                    $_FILES['case_update_file'.$index] = array();
+                    $count++;
+                }
+                $_FILES['case_update_file'.$index][$key] = $val;
+            }
+        }
+        return $count;
+    }
+
 
     public function saveUpdate($bean, $event, $arguments){
         if(!isAOPEnabled()){
@@ -68,8 +83,8 @@ class CaseUpdatesHook {
         }
         //Grab the update field and create a new update with it.
         $text = $bean->update_text;
-        if(!$text){
-            //No text, so nothing really to save.
+        if(!$text && empty($_FILES['case_update_file'])){
+            //No text or files, so nothing really to save.
             return;
         }
         $bean->update_text = "";
@@ -84,6 +99,24 @@ class CaseUpdatesHook {
         $case_update->description = nl2br($text);
         $case_update->case_id = $bean->id;
         $case_update->save();
+
+        $fileCount = $this->arrangeFilesArray();
+
+        for($x = 0; $x < $fileCount; $x++){
+            $uploadFile = new UploadFile('case_update_file'.$x);
+            if(!$uploadFile->confirm_upload()){
+                //TODO: Cancel save?
+            }
+            $note = BeanFactory::newBean('Notes');
+            $note->name = $uploadFile->get_stored_file_name();
+            $note->file_mime_type = $uploadFile->mime_type;
+            $note->filename = $uploadFile->get_stored_file_name();
+            $note->parent_type = 'AOP_Case_Updates';
+            $note->parent_id = $case_update->id;
+            $note->not_use_rel_in_req = true;
+            $note->save();
+            $uploadFile->final_move($note->id);
+        }
     }
 
     private function linkAccountAndCase($case_id,$account_id){
