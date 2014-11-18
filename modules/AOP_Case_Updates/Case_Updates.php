@@ -90,6 +90,14 @@ EOD;
     return $html;
 }
 
+function display_update_form(){
+    global $mod_strings, $app_strings;
+    $sugar_smarty	= new Sugar_Smarty();
+    $sugar_smarty->assign('MOD', $mod_strings);
+    $sugar_smarty->assign('APP', $app_strings);
+    return $sugar_smarty->fetch('modules/AOP_Case_Updates/tpl/caseUpdateForm.tpl');
+}
+
 function getUpdateDisplayHead(SugarBean $update){
     if($update->contact_id){
         $name = $update->getUpdateContact()->name;

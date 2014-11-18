@@ -23,3 +23,5 @@
  */
 $mod_strings['LBL_AOP_CASE_EVENTS'] = 'Case Events';
 $mod_strings['LBL_CASE_ATTACHMENTS_DISPLAY'] = 'Case Attachments:';
+$mod_strings['LBL_ADD_CASE_FILE'] = 'Add file';
+$mod_strings['LBL_REMOVE_CASE_FILE'] = 'Remove file';
