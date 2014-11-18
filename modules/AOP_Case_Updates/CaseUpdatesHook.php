@@ -103,20 +103,47 @@ class CaseUpdatesHook {
         $fileCount = $this->arrangeFilesArray();
 
         for($x = 0; $x < $fileCount; $x++){
+            if($_FILES['case_update_file']['error'][$x] == UPLOAD_ERR_NO_FILE){
+                continue;
+            }
             $uploadFile = new UploadFile('case_update_file'.$x);
             if(!$uploadFile->confirm_upload()){
-                //TODO: Cancel save?
+                continue;
             }
-            $note = BeanFactory::newBean('Notes');
+            $note = $this->newNote($case_update->id);
             $note->name = $uploadFile->get_stored_file_name();
             $note->file_mime_type = $uploadFile->mime_type;
             $note->filename = $uploadFile->get_stored_file_name();
-            $note->parent_type = 'AOP_Case_Updates';
-            $note->parent_id = $case_update->id;
-            $note->not_use_rel_in_req = true;
             $note->save();
             $uploadFile->final_move($note->id);
         }
+        $postPrefix = 'case_update_id_';
+        foreach($_POST as $key => $val){
+            if(strpos($key, $postPrefix) !== 0 || empty($val)){
+                continue;
+            }
+            //Val is selected doc id
+            $doc = BeanFactory::getBean('Documents',$val);
+            if(!$doc){
+                continue;
+            }
+            $note = $this->newNote($case_update->id);
+            $note->name = $doc->document_name;
+            $note->file_mime_type = $doc->last_rev_mime_type;
+            $note->filename = $doc->filename;
+            $note->save();
+            $srcFile = "upload://{$doc->document_revision_id}";
+            $destFile = "upload://{$note->id}";
+            copy($srcFile,$destFile);
+        }
+    }
+
+    private function newNote($caseUpdateId){
+        $note = BeanFactory::newBean('Notes');
+        $note->parent_type = 'AOP_Case_Updates';
+        $note->parent_id = $caseUpdateId;
+        $note->not_use_rel_in_req = true;
+        return $note;
     }
 
     private function linkAccountAndCase($case_id,$account_id){
