@@ -82,7 +82,9 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         $case = $this->getCase();
         if($case){
             $contacts = $case->get_linked_beans("contacts","Contacts");
-            return $contacts[0];
+            if($contacts){
+                return $contacts[0];
+            }
         }
         return null;
     }
