@@ -97,6 +97,11 @@ class AOPInboundEmail extends InboundEmail {
                     $c->account_name = $acct->name;
                 } // if
             } // if
+            $contactIds = $this->getRelatedId($contactAddr, 'contacts');
+            if(!empty($contactIds)) {
+                $c->contact_created_by_id = $contactIds[0];
+            }
+
             $c->save(true);
             $caseId = $c->id;
             $c = new aCase();
@@ -104,7 +109,6 @@ class AOPInboundEmail extends InboundEmail {
             if($c->load_relationship('emails')) {
                 $c->emails->add($email->id);
             } // if
-            if($contactIds = $this->getRelatedId($contactAddr, 'contacts')) {
                 if(!empty($contactIds) && $c->load_relationship('contacts')) {
                     if (!$accountIds && count($contactIds) == 1) {
                         $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
@@ -117,7 +121,6 @@ class AOPInboundEmail extends InboundEmail {
                     }
                     $c->contacts->add($contactIds);
                 } // if
-            } // if
             foreach($notes as $note){
                 //Link notes to case also
                 $newNote = BeanFactory::newBean('Notes');
