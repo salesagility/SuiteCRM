@@ -23,10 +23,12 @@
                     $('#distribution_settings').show();
                     $('#enable_portal_row').show();
                 }else{
+                    $('#enable_portal').attr('checked', false);
                     removeFromValidate('ConfigureSettings','joomla_url');
                     $('#email_settings').hide();
                     $('#distribution_settings').hide();
                     $('#enable_portal_row').hide();
+                    $('#enable_portal').change();
                 }
             });
             $('#enable_aop').change();
@@ -34,9 +36,11 @@
                 if($('#enable_portal').is(":checked") && $('#enable_aop').is(":checked")){
                     addToValidate('ConfigureSettings','joomla_url','text',true,"{/literal}{$MOD.LBL_AOP_JOOMLA_URL}{literal}");
                     $('#joomla_url_row').show();
+                    $('#allow_portal_status_change_row').show();
                 }else{
                     removeFromValidate('ConfigureSettings','joomla_url');
                     $('#joomla_url_row').hide();
+                    $('#allow_portal_status_change_row').hide();
                 }
             });
             $('#enable_portal').change();
@@ -65,6 +69,13 @@
             <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_URL}: </td>
             <td  >
                 <input type='text' name='joomla_url' value='{$config.joomla_url}' >
+            </td>
+
+        </tr>
+        <tr id='allow_portal_status_change_row'>
+            <td  scope="row" width="200">{$MOD.LBL_AOP_ALLOW_PORTAL_STATUS_CHANGE}: </td>
+            <td  >
+                <input type='checkbox' name='allow_portal_status_change' {if $config.allow_portal_status_change}checked='checked'{/if} >
             </td>
 
         </tr>

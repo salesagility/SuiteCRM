@@ -64,6 +64,7 @@ if(!array_key_exists('aop',$cfg->config)){
         'joomla_account_creation_email_template_id'=>'',
         'support_from_address'=>'',
         'support_from_name'=>'',
+        'allow_portal_status_change' => '',
         'case_status_changes' => json_encode(array()),
     );
 }
@@ -89,6 +90,7 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $cfg->config['aop']['joomla_account_creation_email_template_id'] = $_REQUEST['joomla_account_creation_email_template_id'];
     $cfg->config['aop']['support_from_address'] = $_REQUEST['support_from_address'];
     $cfg->config['aop']['support_from_name'] = $_REQUEST['support_from_name'];
+    $cfg->config['aop']['allow_portal_status_change'] = !empty($_REQUEST['allow_portal_status_change']);
     /*
      * We save the case_status_changes array as json since the way config changes are persisted to config.php
      * means that removing entries is tricky. json simplifies this.
