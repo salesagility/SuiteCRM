@@ -35,10 +35,19 @@ class AOR_ReportsController extends SugarController {
             } else {
                 $module = $_REQUEST['aor_module'];
             }
-            echo getModuleFields($module,$_REQUEST['view'],$_REQUEST['aor_value']);
+            $val = !empty($_REQUEST['aor_value']) ? $_REQUEST['aor_value'] : '';
+            echo getModuleFields($module,$_REQUEST['view'],$val);
         }
         die;
 
+    }
+
+    protected function action_getModuleTreeData()
+    {
+        if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
+            echo getModuleTreeData($_REQUEST['aor_module']);
+        }
+        die;
     }
 
     protected function action_getModuleRelationships()
