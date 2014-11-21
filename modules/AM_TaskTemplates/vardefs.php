@@ -300,7 +300,7 @@ $dictionary['AM_TaskTemplates'] = array(
   ),
   'duration' => 
   array (
-    'required' => false,
+    'required' => true,
     'name' => 'duration',
     'vname' => 'LBL_DURATION',
     'type' => 'int',
@@ -331,4 +331,4 @@ $dictionary['AM_TaskTemplates'] = array(
 if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AM_TaskTemplates','AM_TaskTemplates', array('basic','assignable'));
+VardefManager::createVardef('AM_TaskTemplates','AM_TaskTemplates', array('basic','assignable'));
