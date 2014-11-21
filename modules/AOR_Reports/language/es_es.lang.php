@@ -61,4 +61,5 @@ $mod_strings = array (
   'LBL_EXPORT' => 'Exportar',
   'LBL_DOWNLOAD_PDF' => 'Descargar PDF',
   'LBL_ADD_TO_PROSPECT_LIST' => 'Agregar a Lista de Público Objetivo',
+    'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Campos',
 );

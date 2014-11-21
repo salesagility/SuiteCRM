@@ -51,7 +51,6 @@ $mod_strings = array (
     'LBL_SEARCH_FORM_TITLE' => 'Buscar Campos',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'Ver History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
-    'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Campos',
     'LBL_NEW_FORM_TITLE' => 'Nuevo Campo',
     'LBL_ORDER' => 'Orden',
     'LBL_MODULE_PATH' => 'Módulo',

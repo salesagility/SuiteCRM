@@ -57,7 +57,6 @@ $mod_strings = array (
     'LBL_SEARCH_FORM_TITLE' => 'Поиск полей',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'История',
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Мероприятия',
-    'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Поля',
     'LBL_NEW_FORM_TITLE' => 'Новые поля',
     'LBL_ORDER' => 'Сортировка',
     'LBL_MODULE_PATH' => 'Модуль',
