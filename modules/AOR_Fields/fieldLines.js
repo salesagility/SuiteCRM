@@ -48,34 +48,26 @@ function loadFieldLine(field){
     ln = insertFieldLine();
 
     for(var a in field){
-        if(document.getElementById(prefix + a + ln) != null){
-            if(document.getElementById(prefix + a + ln).type == 'checkbox'){
-                if(field[a] == 1){
-                    document.getElementById(prefix + a + ln).checked = true;
-                } else {
-                    document.getElementById(prefix + a + ln).checked = false;
-                }
 
+        var elem = document.getElementById(prefix + a + ln);
+
+        if(elem != null){
+            if(elem.nodeName != 'INPUT'){
+                elem.innerHTML = field[a];
+            }else if(elem.type == 'checkbox'){
+                elem.checked = field[a] == 1;
             } else {
-                document.getElementById(prefix + a + ln).value = field[a];
+                elem.value = field[a];
+                console.log("Setting value of "+prefix + a + ln +" to "+field[a]);
             }
         }
     }
 
-    var select_field = document.getElementById('aor_fields_field'+ln);
-    document.getElementById('aor_fields_field_label'+ln).innerHTML = select_field.options[select_field.selectedIndex].text;
-
-    /*if (field['value'] instanceof Array) {
-        field['value'] = JSON.stringify(field['value'])
-    }*/
     showFieldModuleField(ln, field['field_function'], field['label']);
-
-    //getView(ln,action['id']);
-
 }
 
 function showFieldModuleFields(){
-
+return;
     clearFieldLines();
 
     report_module = document.getElementById('report_module').value;
@@ -137,7 +129,7 @@ function showFieldCurrentModuleFields(ln, value){
 function showFieldModuleField(ln, function_value, label_value){
     if (typeof function_value === 'undefined') { function_value = ''; }
     if (typeof label_value === 'undefined') { label_value = ''; }
-
+return;
     var aor_field = document.getElementById('aor_fields_field'+ln).value;
     if(aor_field != ''){
 
@@ -277,17 +269,17 @@ function insertFieldLine(){
     b.style.width = '12%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    b.innerHTML = "<select style='width:178px;"+viewStyle+"' name='aor_fields_module_path["+ fieldln +"][0]' id='aor_fields_module_path" + fieldln + "' value='' title='' tabindex='116' onchange='showFieldCurrentModuleFields(" + fieldln + ");'>" + report_rel_modules + "</select>";
+    b.innerHTML = "<input type='hidden' name='aor_fields_module_path["+ fieldln +"][0]' id='aor_fields_module_path" + fieldln + "' value=''>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
-    b.innerHTML += "<span style='width:178px;"+viewStyle+"' id='aor_fields_field_label" + fieldln + "' ></span>";
+    b.innerHTML += "<span id='aor_fields_module_path_display" + fieldln + "'></span>";
 
     var b1 = x.insertCell(2);
     b1.style.width = '12%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    b1.innerHTML = "<select style='width:178px;"+viewStyle+"' name='aor_fields_field["+ fieldln +"]' id='aor_fields_field" + fieldln + "' value='' title='' tabindex='116' onchange='showFieldModuleField(" + fieldln + ");'>" + report_fields + "</select>";
+    b1.innerHTML = "<input type='hidden' name='aor_fields_field["+ fieldln +"]' id='aor_fields_field" + fieldln + "' value=''>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
-    b1.innerHTML += "<span style='width:178px;"+viewStyle+"' id='aor_fields_field_label" + fieldln + "' ></span>";
+    b1.innerHTML += "<span style='width:178px;' id='aor_fields_field_label" + fieldln + "' ></span>";
 
     var c = x.insertCell(3);
     c.innerHTML = "<input name='aor_fields_display["+ fieldln +"]' value='0' type='hidden'>";
