@@ -42,7 +42,7 @@ class CustomContactsViewDetail extends ContactsViewDetail{
     public function display(){
         global $sugar_config;
 
-        $aop_portal_enabled = !empty($sugar_config['aop']['enable_portal']);
+        $aop_portal_enabled = !empty($sugar_config['aop']['enable_portal']) && !empty($sugar_config['aop']['enable_aop']);
 
         $this->ss->assign("AOP_PORTAL_ENABLED", $aop_portal_enabled);
 

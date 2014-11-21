@@ -16,9 +16,22 @@
     <script type="text/javascript">
         {literal}
         $(function() {
-            $('#enable_portal').change(function (){
+            $('#enable_aop').change(function (){
 
-                if($('#enable_portal').is(":checked")){
+                if($('#enable_aop').is(":checked")){
+                    $('#email_settings').show();
+                    $('#distribution_settings').show();
+                    $('#enable_portal_row').show();
+                }else{
+                    removeFromValidate('ConfigureSettings','joomla_url');
+                    $('#email_settings').hide();
+                    $('#distribution_settings').hide();
+                    $('#enable_portal_row').hide();
+                }
+            });
+            $('#enable_aop').change();
+            $('#enable_portal').change(function (){
+                if($('#enable_portal').is(":checked") && $('#enable_aop').is(":checked")){
                     addToValidate('ConfigureSettings','joomla_url','text',true,"{/literal}{$MOD.LBL_AOP_JOOMLA_URL}{literal}");
                     $('#joomla_url_row').show();
                 }else{
@@ -27,7 +40,6 @@
                 }
             });
             $('#enable_portal').change();
-
         });
         {/literal}
     </script>
@@ -36,6 +48,13 @@
         <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_JOOMLA_SETTINGS}</h4></th>
         </tr>
         <tr>
+            <td  scope="row" width="200">{$MOD.LBL_AOP_ENABLE_AOP}: </td>
+            <td  >
+                <input type='checkbox' id='enable_aop' name='enable_aop' {if $config.enable_aop}checked='checked'{/if} >
+            </td>
+
+        </tr>
+        <tr id="enable_portal_row">
             <td  scope="row" width="200">{$MOD.LBL_AOP_ENABLE_PORTAL}: </td>
             <td  >
                 <input type='checkbox' id='enable_portal' name='enable_portal' {if $config.enable_portal}checked='checked'{/if} >
@@ -57,7 +76,7 @@
         </tr>-->
     </table>
 
-    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+    <table id='distribution_settings' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_CASE_ASSIGNMENT}</h4></th>
         </tr>
         <tr>
@@ -65,6 +84,10 @@
             <td  >
                 <select id='distribution_method_select' name='distribution_method' tabindex='241'>{$DISTRIBUTION_METHOD}</select>
             </td>
+        </tr>
+        <tr id="distribution_options_row">
+            <td  scope="row" width="200">{$MOD.LBL_AOP_ASSIGNMENT_OPTIONS}: </td>
+            <td>{$DISTRIBUTION_OPTIONS}</td>
         </tr>
         <tr id="distribution_user_row">
             <td  scope="row" width="200">{$MOD.LBL_AOP_ASSIGNMENT_USER}: </td>
@@ -113,7 +136,7 @@
             </td>
         </tr>
     </table>
-    <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+    <table id='email_settings' width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
         <tr><th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_AOP_EMAIL_SETTINGS}</h4></th>
         </tr>
         <tr>

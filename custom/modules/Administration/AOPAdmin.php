@@ -22,7 +22,7 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
+require_once 'modules/AOP_Case_Updates/util.php';
 
 global $current_user, $sugar_config;
 global $mod_strings;
@@ -50,10 +50,12 @@ $errors			= array();
 
 if(!array_key_exists('aop',$cfg->config)){
     $cfg->config['aop'] = array(
+        'enable_aop' => 1,
         'enable_portal' => '',
         'joomla_url'=>'',
         'joomla_access_key'=>'',
         'distribution_method'=>'',
+        'distribution_options'=>'',
         'distribution_user_id'=>'',
         'user_email_template_id'=>'',
         'contact_email_template_id'=>'',
@@ -64,16 +66,21 @@ if(!array_key_exists('aop',$cfg->config)){
         'support_from_name'=>'',
     );
 }
+if(!array_key_exists('enable_aop',$cfg->config['aop'])){
+    $cfg->config['aop']['enable_aop'] = 1;
+}
 if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     if(!empty($_REQUEST['joomla_url'])){
         $cfg->config['aop']['joomla_url'] = 'http://' . preg_replace( '~^http://~', '', $_REQUEST['joomla_url']);
     }else{
         $cfg->config['aop']['joomla_url'] = '';
     }
+    $cfg->config['aop']['enable_aop'] = !empty($_REQUEST['enable_aop']);
     $cfg->config['aop']['enable_portal'] = !empty($_REQUEST['enable_portal']);
     $cfg->config['aop']['joomla_access_key'] = $_REQUEST['joomla_access_key'];
     $cfg->config['aop']['distribution_method'] = $_REQUEST['distribution_method'];
     $cfg->config['aop']['distribution_user_id'] = $_REQUEST['distribution_user_id'];
+    $cfg->config['aop']['distribution_options'] = $_REQUEST['distribution_options'];
     $cfg->config['aop']['user_email_template_id'] = $_REQUEST['user_email_template_id'];
     $cfg->config['aop']['contact_email_template_id'] = $_REQUEST['contact_email_template_id'];
     $cfg->config['aop']['case_creation_email_template_id'] = $_REQUEST['case_creation_email_template_id'];
@@ -86,8 +93,8 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     exit();
 }
 
-$distributionMethod = "<OPTION value='singleUser'>".$mod_strings['LBL_SINGLE_USER']."</OPTION>";
-$distributionMethod .= get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
+$distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
+$distributionOptions = getAOPAssignField('distribution_options',$cfg->config['aop']['distribution_options']);
 
 
 if(!empty($cfg->config['aop']['distribution_user_id'])){
@@ -113,6 +120,7 @@ $sugar_smarty->assign('CLOSURE_EMAIL_TEMPLATES', $closureEmailTemplateDropdown);
 $sugar_smarty->assign('JOOMLA_EMAIL_TEMPLATES', $joomlaEmailTemplateDropdown);
 
 $sugar_smarty->assign('DISTRIBUTION_METHOD', $distributionMethod);
+$sugar_smarty->assign('DISTRIBUTION_OPTIONS', $distributionOptions);
 $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
@@ -146,17 +154,44 @@ echo $javascript->getScript();
     var selectElement = document.getElementById('distribution_method_select');
     selectElement.onchange = function(event){
         var distribRow = document.getElementById('distribution_user_row');
+        var distribOptionsRow = document.getElementById('distribution_options_row');
         if(selectElement.value == 'singleUser'){
-            distribRow.style.display = "";
+            showElem('distribution_user_row');
+            hideElem('distribution_options_row');
             addToValidate('ConfigureSettings','distribution_user_id','relate',true,"Please choose a user to assign cases to.");
         }else{
             SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');
-            distribRow.style.display = "none";
+            hideElem('distribution_user_row');
+            showElem('distribution_options_row');
             removeFromValidate('ConfigureSettings','distribution_user_id');
         }
     };
     selectElement.onchange();
+    function hideElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "none";
+            document.getElementById(id).value = "";
+        }
+    }
 
+    function showElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "";
+        }
+    }
+
+    function assign_field_change(field){
+        hideElem(field + '[1]');
+        hideElem(field + '[2]');
+
+        if(document.getElementById(field + '[0]').value == 'role'){
+            showElem(field + '[2]');
+        }
+        else if(document.getElementById(field + '[0]').value == 'security_group'){
+            showElem(field + '[1]');
+            showElem(field + '[2]');
+        }
+    }
     var currentEmailSelect;
 
     function open_email_template_form(id) {

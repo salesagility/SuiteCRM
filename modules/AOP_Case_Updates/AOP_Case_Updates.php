@@ -41,6 +41,9 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
             //Don't send email on import
             return;
         }
+        if(!isAOPEnabled()){
+            return;
+        }
         if($this->internal){
             return;
         }
