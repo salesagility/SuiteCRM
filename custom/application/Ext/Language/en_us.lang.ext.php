@@ -477,39 +477,11 @@ $app_list_strings['marker_image_list']['zoo'] = 'Zoo';
 
 $app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Project Templates';
 $app_list_strings['moduleList']['AM_TaskTemplates'] = 'Project Task Templates';
-$app_list_strings['project_status_dom']['Draft'] = 'Draft';
-$app_list_strings['project_status_dom']['In Review'] = 'In Review';
-$app_list_strings['project_status_dom']['Published'] = 'Published';
-$app_list_strings['project_priority_options']['High'] = 'High';
-$app_list_strings['project_priority_options']['Medium'] = 'Medium';
-$app_list_strings['project_priority_options']['Low'] = 'Low';
-$app_list_strings['project_task_status_options']['Not Started'] = 'Not Started';
-$app_list_strings['project_task_status_options']['In Progress'] = 'In Progress';
-$app_list_strings['project_task_status_options']['Completed'] = 'Completed';
-$app_list_strings['project_task_status_options']['Pending Input'] = 'Pending Input';
-$app_list_strings['project_task_status_options']['Deferred'] = 'Deferred';
-$app_list_strings['project_task_priority_options']['High'] = 'High';
-$app_list_strings['project_task_priority_options']['Medium'] = 'Medium';
-$app_list_strings['project_task_priority_options']['Low'] = 'Low';
 $app_list_strings['relationship_type_list']['FS'] = 'Finish to Start';
 $app_list_strings['relationship_type_list']['SS'] = 'Start to Start';
-$app_list_strings['project_task_utilization_options']['0'] = 'none';
-$app_list_strings['project_task_utilization_options']['25'] = '25';
-$app_list_strings['project_task_utilization_options']['50'] = '50';
-$app_list_strings['project_task_utilization_options']['75'] = '75';
-$app_list_strings['project_task_utilization_options']['100'] = '100';
 $app_list_strings['moduleList']['AM_ProjectHolidays'] = 'Project Holidays';
 $app_list_strings['holiday_resource_dom']['Contacts'] = 'Contacts';
 $app_list_strings['holiday_resource_dom']['Users'] = 'Users';
-
-$app_list_strings['project_status_dom'] = array (
-    'Draft' => 'Draft',
-    'In Review' => 'In Review',
-    'Underway' => 'Underway',
-    'On_Hold' => 'On Hold',
-    'Completed' => 'Completed',
-);
-
 $app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
 $app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
 $app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
@@ -1221,4 +1193,10 @@ $app_list_strings['contact_portal_user_type_dom'] =
         'Single' => 'Single user',
         'Account' => 'Account user',
     );
+$app_list_strings['dom_email_distribution_for_auto_create']=array (
+    'singleUser' => 'Single User',
+    'roundRobin' => 'Round-Robin',
+    'leastBusy' => 'Least-Busy',
+    'random' => 'Random',
+);
 ?>
