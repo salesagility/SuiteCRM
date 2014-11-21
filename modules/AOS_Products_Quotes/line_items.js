@@ -612,6 +612,7 @@ function calculateLine(ln, key){
     if(document.getElementById(key + required + ln) == null){
         required = 'product_unit_price';
     }
+    console.log(key + 'name' + ln);
     if (document.getElementById(key + 'name' + ln).value == '' || document.getElementById(key + required + ln).value == ''){
         return;
     }
@@ -689,6 +690,19 @@ function calculateLine(ln, key){
 
     calculateTotal(groupid);
     calculateTotal();
+
+}
+
+function calculateAllLines(){
+
+    var row = document.getElementById('lineItems').getElementsByTagName('tbody');
+    var length = row.length;
+    for (k=0; k < length; k++) {
+        var input = row[k].getElementsByTagName('input');
+        var key = input[0].id.split('_')[0]+'_';
+        var ln = input[0].id.slice(-1);
+        calculateLine(ln, key);
+    }
 
 }
 
@@ -909,4 +923,12 @@ function formatNumber(n, num_grp_sep, dec_sep, round, precision) {
         n[0] = n[0].toString().replace(regex, "$1" + num_grp_sep + "$2");
     }
     return n[0] + (n.length > 1 && n[1] != "" ? dec_sep + n[1] : "");
+}
+
+function check_form(formname) {
+    calculateAllLines();
+    if (typeof(siw) != 'undefined' && siw
+        && typeof(siw.selectingSomething) != 'undefined' && siw.selectingSomething)
+        return false;
+    return validate_form(formname, '');
 }
