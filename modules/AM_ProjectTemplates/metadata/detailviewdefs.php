@@ -14,6 +14,10 @@ array (
           1 => 'DUPLICATE',
           2 => 'DELETE',
           3 => 'FIND_DUPLICATES',
+          4 =>
+              array (
+                    'customCode' => '<input title="{$APP.LBL_CREATE_PROJECT}" class="button" type="button" name="create_project" id="create_project" value="{$APP.LBL_CREATE_PROJECT}" onclick="confirmation(\'{$id}\')" />',
+              ),
         ),
       ),
       'maxColumns' => '2',
@@ -29,6 +33,13 @@ array (
           'label' => '10',
           'field' => '30',
         ),
+      ),
+      'includes' =>
+      array (
+          0 =>
+          array (
+           'file' => 'modules/AM_ProjectTemplates/create_project.js',
+          ),
       ),
       'useTabs' => false,
       'tabDefs' => 
