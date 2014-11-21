@@ -459,6 +459,14 @@ class MysqlManager extends DBManager
 		return mysql_real_escape_string($this->quoteInternal($string), $this->getDatabase());
 	}
 
+    /**
+     * @see DBManager::quoteIdentifier()
+     */
+    public function quoteIdentifier($string)
+    {
+        return '`'.$string.'`';
+    }
+
 	/**
 	 * @see DBManager::connect()
 	 */
