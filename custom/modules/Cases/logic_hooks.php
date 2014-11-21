@@ -18,7 +18,9 @@ $hook_array['after_relationship_add'][] = Array(77, 'addRelationship', 'custom/m
 $hook_array['after_relationship_add'][] = Array(9, 'Assign account', 'modules/AOP_Case_Updates/CaseUpdatesHook.php','CaseUpdatesHook', 'assignAccount'); 
 $hook_array['after_relationship_add'][] = Array(10, 'Send contact case email', 'modules/AOP_Case_Updates/CaseUpdatesHook.php','CaseUpdatesHook', 'creationNotify'); 
 $hook_array['after_relationship_delete'] = Array(); 
-$hook_array['after_relationship_delete'][] = Array(77, 'deleteRelationship', 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php','CasesJjwg_MapsLogicHook', 'deleteRelationship'); 
+$hook_array['after_relationship_delete'][] = Array(77, 'deleteRelationship', 'custom/modules/Cases/CasesJjwg_MapsLogicHook.php','CasesJjwg_MapsLogicHook', 'deleteRelationship');
+$hook_array['after_retrieve'] = Array();
+$hook_array['after_retrieve'][] = Array(77, 'Filter HTML', 'modules/AOP_Case_Updates/CaseUpdatesHook.php','CaseUpdatesHook', 'filterHTML');
 
 
 

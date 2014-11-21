@@ -33,6 +33,7 @@ array (
           'panelDefault' => 'expanded',
         ),
       ),
+      'form' => array('enctype' => 'multipart/form-data'),
     ),
     'panels' => 
     array (
@@ -104,13 +105,22 @@ array (
             'studio' => 'visible',
             'label' => 'LBL_UPDATE_TEXT',
           ),
-          1 => 
+          1 =>
           array (
             'name' => 'internal',
             'studio' => 'visible',
             'label' => 'LBL_INTERNAL',
           ),
         ),
+          9 =>
+              array (
+                  0 =>
+                      array (
+                          'name' => 'case_update_form',
+                          'studio' => 'visible',
+                          'label' => 'LBL_UPDATE_TEXT',
+                      ),
+              ),
       ),
       'LBL_PANEL_ASSIGNMENT' => 
       array (

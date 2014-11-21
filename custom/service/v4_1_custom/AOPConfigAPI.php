@@ -22,35 +22,28 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-require_once('include/MVC/View/views/view.edit.php');
-require_once('include/SugarTinyMCE.php');
+if(!defined('sugarEntry'))define('sugarEntry', true);
+require_once('service/v4_1/SugarWebServiceImplv4_1.php');
+class AOPConfigAPI extends SugarWebServiceImplv4_1 {
 
-class CasesViewEdit extends ViewEdit {
-
-    function CasesViewEdit(){
-        parent::ViewEdit();
-    }
-
-    function display(){
-        parent::display();
+    function get_aop_config($session) {
         global $sugar_config;
-        $enabled = !empty($sugar_config['aop']['enable_aop']);
-        $new = empty($this->bean->id);
-        $show = $enabled && !$new;
-        if(!$show){
-            ?>
-            <script>
-                $(document).ready(function(){
-                    $('#update_text').closest('td').html('');
-                    $('#update_text_label').closest('td').html('');
-                    $('#internal').closest('td').html('');
-                    $('#internal_label').closest('td').html('');
-                });
-            </script>
-        <?php
-        }
-        $tiny = new SugarTinyMCE();
-        echo $tiny->getInstance('update_text,description');
-    }
+        $GLOBALS['log']->info('Begin: SugarWebServiceImplv4_1_custom->get_aop_config');
+        $error = new SoapError();
 
-}
+        //authenticate
+        if (!self::$helperObject->checkSessionAndModuleAccess($session, 'invalid_session', '', '', '',  $error))
+        {
+            $GLOBALS['log']->info('End: SugarWebServiceImplv4_1_custom->get_aop_config.');
+            return false;
+        }
+        $whitelist = array('allow_portal_status_change');
+        $ret = array();
+        foreach($sugar_config['aop'] as $key => $value){
+            if(in_array($key,$whitelist)){
+                $ret[$key] = $value;
+            }
+        }
+        return $ret;
+    }
+} 

@@ -64,6 +64,8 @@ if(!array_key_exists('aop',$cfg->config)){
         'joomla_account_creation_email_template_id'=>'',
         'support_from_address'=>'',
         'support_from_name'=>'',
+        'allow_portal_status_change' => '',
+        'case_status_changes' => json_encode(array()),
     );
 }
 if(!array_key_exists('enable_aop',$cfg->config['aop'])){
@@ -88,12 +90,19 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $cfg->config['aop']['joomla_account_creation_email_template_id'] = $_REQUEST['joomla_account_creation_email_template_id'];
     $cfg->config['aop']['support_from_address'] = $_REQUEST['support_from_address'];
     $cfg->config['aop']['support_from_name'] = $_REQUEST['support_from_name'];
+    $cfg->config['aop']['allow_portal_status_change'] = !empty($_REQUEST['allow_portal_status_change']);
+    /*
+     * We save the case_status_changes array as json since the way config changes are persisted to config.php
+     * means that removing entries is tricky. json simplifies this.
+     */
+    $cfg->config['aop']['case_status_changes'] = json_encode(array_combine($_POST['if_status'],$_POST['then_status']));
     $cfg->saveConfig();
     header('Location: index.php?module=Administration&action=index');
     exit();
 }
-
-$distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
+$distribStrings = $app_list_strings['dom_email_distribution_for_auto_create'];
+unset($distribStrings['AOPDefault']);
+$distributionMethod = get_select_options_with_id($distribStrings, $cfg->config['aop']['distribution_method']);
 $distributionOptions = getAOPAssignField('distribution_options',$cfg->config['aop']['distribution_options']);
 
 
@@ -129,6 +138,16 @@ $sugar_smarty->assign("JAVASCRIPT",get_set_focus_js());
 $sugar_smarty->assign('config', $cfg->config['aop']);
 $sugar_smarty->assign('error', $errors);
 
+$cBean = BeanFactory::getBean('Cases');
+$statusDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']],'');
+$currentStatuses = '';
+foreach(json_decode($cfg->config['aop']['case_status_changes'],true) as $if => $then){
+    $ifDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']],$if);
+    $thenDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']],$then);
+    $currentStatuses .= getStatusRowTemplate($mod_strings,$ifDropdown,$thenDropdown)."\n";
+}
+
+$sugar_smarty->assign('currentStatuses', $currentStatuses);
 
 $buttons =  <<<EOQ
     <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
@@ -149,6 +168,9 @@ $javascript = new javascript();
 $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
 ?>
+<script type="text/template" id="statusRowTemplate">
+    <?= getStatusRowTemplate($mod_strings,$statusDropdown,$statusDropdown) ?>
+</script>
 <script language="Javascript" type="text/javascript">
 
     var selectElement = document.getElementById('distribution_method_select');
@@ -279,6 +301,30 @@ echo $javascript->getScript();
     }
 
     refreshEditVisibility();
-
+$(document).ready(function(){
+    $('#addStatusButton').click(function(e){
+        var template = $('#statusRowTemplate').html();
+        $(e.target).closest('tr').before(template);
+    });
+    $(document).on('click','.removeStatusButton',function(e){
+        $(e.target).closest('tr').remove();
+    });
+});
 </script>
-
+<?php
+function getStatusRowTemplate($mod_strings,$ifDropdown,$thenDropdown){
+    $html = <<<EOF
+    <tr>
+        <td  scope="row" width="100">{$mod_strings['LBL_AOP_IF_STATUS']}: </td>
+        <td width="100">
+            <select id='if_status_select[]' name='if_status[]'>{$ifDropdown}</select>
+        </td>
+        <td  scope="row" width="100">{$mod_strings['LBL_AOP_THEN_STATUS']}: </td>
+        <td width="100">
+            <select id='then_status_select[]' name='then_status[]'>{$thenDropdown}</select>
+        </td>
+        <td><button class="removeStatusButton" type="button">{$mod_strings['LBL_AOP_REMOVE_STATUS']}</button></td>
+    </tr>
+EOF;
+    return $html;
+}
