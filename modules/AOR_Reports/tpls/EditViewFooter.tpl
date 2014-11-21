@@ -13,6 +13,9 @@
             selectable: true,
             onDragStop: function(node, e,thing){
                 var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
+                if(node.type != 'field'){
+                    return;
+                }
                 if(target.closest('#fieldLines')){
                     addNodeToFields(node,target);
                 }
@@ -131,6 +134,7 @@
         $('#report_module').change(function(){
             loadTreeData($(this).val());
         });
+        loadTreeData($('#report_module').val());
 
     });
 </script>
