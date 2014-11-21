@@ -25,6 +25,7 @@ $mod_strings['LBL_SALESAGILITY_ADMIN'] = 'Advanced OpenAdmin';
 $mod_strings['LBL_AOP_ADMIN_MANAGE_AOP'] = 'Advanced OpenPortal Settings';
 $mod_strings['LBL_AOP_ENABLE_AOP'] = 'Enable AOP';
 $mod_strings['LBL_AOP_ENABLE_PORTAL'] = 'Enable External Portal';
+$mod_strings['LBL_AOP_ALLOW_PORTAL_STATUS_CHANGE'] = 'Allow portal users to change case status';
 $mod_strings['LBL_AOP_JOOMLA_SETTINGS'] = 'Portal Settings';
 $mod_strings['LBL_AOP_JOOMLA_URL'] = 'Joomla URL';
 $mod_strings['LBL_AOP_JOOMLA_ACCESS_KEY'] = 'Joomla Access Key';
@@ -51,3 +52,10 @@ $mod_strings['LBL_CREATE_EMAIL_TEMPLATE']  = 'Create';
 $mod_strings['LBL_EDIT_EMAIL_TEMPLATE']  = 'Edit';
 $mod_strings['LBL_SINGLE_USER'] = 'Single User';
 $mod_strings['LBL_AOP_SETTINGS'] = 'AOP Settings';
+
+$mod_strings['LBL_AOP_CASE_STATUS_SETTINGS'] = 'Case Status Changes';
+$mod_strings['LBL_AOP_IF_STATUS'] = 'If status is';
+$mod_strings['LBL_AOP_THEN_STATUS'] = 'change status to';
+$mod_strings['LBL_AOP_ADD_STATUS'] = 'Add';
+$mod_strings['LBL_AOP_REMOVE_STATUS'] = 'Remove';
+

@@ -439,7 +439,6 @@ $xtpl->out("main");
     function hideElem(id){
         if(document.getElementById(id)){
             document.getElementById(id).style.display = "none";
-            document.getElementById(id).value = "";
         }
     }
 
@@ -466,12 +465,12 @@ $xtpl->out("main");
             $('#distribution_options\\[0\\]').show();
             $('#distribution_options\\[1\\]').show();
             $('#distribution_options\\[2\\]').show();
+            assign_field_change('distribution_options');
         }else{
             $('#distribution_options\\[0\\]').hide();
             $('#distribution_options\\[1\\]').hide();
             $('#distribution_options\\[2\\]').hide();
         }
-        assign_field_change('distribution_options');
     }
 
     function displayDistributionUser(display){
@@ -496,7 +495,10 @@ $xtpl->out("main");
                     displayDistributionOptions(false);
                     displayDistributionUser(true);
                     break;
+                case 'AOPDefault':
                 default:
+                    displayDistributionOptions(false);
+                    displayDistributionUser(false);
                     break;
             }
         });

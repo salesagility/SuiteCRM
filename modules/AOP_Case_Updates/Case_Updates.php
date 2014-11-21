@@ -90,6 +90,14 @@ EOD;
     return $html;
 }
 
+function display_update_form(){
+    global $mod_strings, $app_strings;
+    $sugar_smarty	= new Sugar_Smarty();
+    $sugar_smarty->assign('MOD', $mod_strings);
+    $sugar_smarty->assign('APP', $app_strings);
+    return $sugar_smarty->fetch('modules/AOP_Case_Updates/tpl/caseUpdateForm.tpl');
+}
+
 function getUpdateDisplayHead(SugarBean $update){
     if($update->contact_id){
         $name = $update->getUpdateContact()->name;
@@ -143,4 +151,15 @@ function display_single_update(AOP_Case_Updates $update){
         return $html;
     }
 
+}
+
+function display_case_attachments($case){
+    $html = '';
+    $notes = $case->get_linked_beans('notes','Notes');
+    if($notes){
+        foreach($notes as $note){
+            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
+        }
+    }
+    return $html;
 }

@@ -106,4 +106,87 @@ $dictionary["Case"]["fields"]["aop_case_updates"] = array (
     'id_name' => 'case_id',
     'vname' => 'LBL_AOP_CASE_UPDATES',
 );
- ?>
+$dictionary["Case"]["fields"]['case_attachments_display'] =
+    array (
+        'required' => false,
+        'name' => 'case_attachments_display',
+        'vname' => 'LBL_CASE_ATTACHMENTS_DISPLAY',
+        'type' => 'function',
+        'source' => 'non-db',
+        'massupdate' => 0,
+        'studio' => 'visible',
+        'importable' => 'false',
+        'duplicate_merge' => 'disabled',
+        'duplicate_merge_dom_value' => 0,
+        'audited' => false,
+        'reportable' => false,
+        'function' =>
+            array (
+                'name' => 'display_case_attachments',
+                'returns' => 'html',
+                'include' => 'modules/AOP_Case_Updates/Case_Updates.php'
+            ),
+    );
+
+$dictionary["Case"]["fields"]['case_update_form'] =
+    array (
+        'required' => false,
+        'name' => 'case_update_form',
+        'vname' => 'LBL_CASE_UPDATE_FORM',
+        'type' => 'function',
+        'source' => 'non-db',
+        'massupdate' => 0,
+        'studio' => 'visible',
+        'importable' => 'false',
+        'duplicate_merge' => 'disabled',
+        'duplicate_merge_dom_value' => 0,
+        'audited' => false,
+        'reportable' => false,
+        'function' =>
+            array (
+                'name' => 'display_update_form',
+                'returns' => 'html',
+                'include' => 'modules/AOP_Case_Updates/Case_Updates.php'
+            ),
+    );
+
+$dictionary["Case"]["fields"]["contact_created_by"] = array (
+    'name' => 'contact_created_by',
+    'type' => 'link',
+    'relationship' => 'cases_created_contact',
+    'module'=>'Contacts',
+    'bean_name'=>'Contact',
+    'link_type'=>'one',
+    'source' => 'non-db',
+    'vname' => 'LBL_CONTACT_CREATED_BY',
+    'side' => 'left',
+    'id_name' => 'contact_created_by_id',
+);
+$dictionary["Case"]["fields"]["contact_created_by_name"] = array (
+    'name' => 'contact_created_by_name',
+    'type' => 'relate',
+    'source' => 'non-db',
+    'vname' => 'LBL_CONTACT_CREATED_BY_NAME',
+    'save' => true,
+    'id_name' => 'contact_created_by_id',
+    'link' => 'cases_created_contact',
+    'table' => 'Contacts',
+    'module' => 'Contacts',
+    'rname' => 'name',
+);
+$dictionary["Case"]["fields"]["contact_created_by_id"] = array (
+    'name' => 'contact_created_by_id',
+    'type' => 'id',
+    'reportable' => false,
+    'vname' => 'LBL_CONTACT_CREATED_BY_ID',
+);
+
+$dictionary["Case"]["relationships"]["cases_created_contact"] = array (
+    'lhs_module'=> 'Contacts',
+    'lhs_table'=> 'contacts',
+    'lhs_key' => 'id',
+    'rhs_module'=> 'Cases',
+    'rhs_table'=> 'cases',
+    'rhs_key' => 'contact_created_by_id',
+    'relationship_type'=>'one-to-many',
+);
