@@ -1,11 +1,11 @@
 {literal}
     <script src="modules/AOR_Reports/js/jqtree/tree.jquery.js"></script>
     <script src="modules/AOR_Fields/fieldLines.js"></script>
+    <script src="modules/AOR_Conditions/conditionLines.js"></script>
 
 <script>
     $(document).ready(function(){
 
-        var fieldData = {"":"-none-","id":"ID","date_entered":"Date Created","date_modified":"Date Modified","modified_by_name":"Modified By Name","created_by_name":"Created By","description":"Description","deleted":"Deleted","assigned_user_name":"Assigned to","salutation":"Salutation","first_name":"First Name","last_name":"Last Name","title":"Title","department":"Department","do_not_call":"Do Not Call","phone_home":"Home","phone_mobile":"Mobile","phone_work":"Office Phone","phone_other":"Other Phone","phone_fax":"Fax","primary_address_street":"Primary Address Street","primary_address_city":"Primary Address City","primary_address_state":"Primary Address State","primary_address_postalcode":"Primary Address Postal Code","primary_address_country":"Primary Address Country","alt_address_street":"Alternate Address Street","alt_address_city":"Alternate Address City","alt_address_state":"Alternate Address State","alt_address_postalcode":"Alternate Address Postal Code","alt_address_country":"Alternate Address Country","assistant":"Assistant","assistant_phone":"Assistant Phone","lead_source":"Lead Source","account_name":"Account Name","report_to_name":"Reports To","birthdate":"Birthdate","campaign_name":"Campaign","joomla_account_id":"LBL_JOOMLA_ACCOUNT_ID","portal_account_disabled":"LBL_PORTAL_ACCOUNT_DISABLED","portal_user_type":"Portal User Type","jjwg_maps_address_c":"Address","jjwg_maps_geocode_status_c":"Geocode Status","jjwg_maps_lat_c":"Latitude","jjwg_maps_lng_c":"Longitude"};
 
         $('#fieldTree').tree({
             data: {},
@@ -16,8 +16,10 @@
                 if(node.type != 'field'){
                     return;
                 }
-                if(target.closest('#fieldLines')){
-                    addNodeToFields(node,target);
+                if(target.closest('#fieldLines').length > 0){
+                    addNodeToFields(node);
+                }else if(target.closest('#conditionLines').length > 0){
+                    addNodeToConditions(node);
                 }
 
             },
@@ -28,6 +30,16 @@
 
         function addNodeToFields(node){
             loadFieldLine(
+                    {
+                        'label' : node.name,
+                        'module_path' : node.module_path,
+                        'module_path_display' : node.module_path,
+                        'field' : node.id,
+                        'field_label' : node.name});
+        }
+
+        function addNodeToConditions(node){
+            loadConditionLine(
                     {
                         'label' : node.name,
                         'module_path' : node.module,
@@ -87,14 +99,21 @@
 
             for(var field in relData){
                 if(field) {
-                    var modulePath = field;
-                    if(node){
-                        modulePath = node.module_path + ":" + modulePath;
+                    var modulePath = '';
+                    if(relData[field]['type'] == 'relationship') {
+                        modulePath = field;
+                        if (node) {
+                            modulePath = node.module_path + ":" + field;
+                        }
+                    }else{
+                        if (node) {
+                            modulePath = node.module_path;
+                        }
                     }
                     var newNode = {
                         id: field,
                         label: relData[field]['label'],
-                        'load_on_demand' : true,
+                        load_on_demand : true,
                         type: relData[field]['type'],
                         module: relData[field]['module'],
                         module_path: modulePath};
@@ -132,10 +151,15 @@
 
 
         $('#report_module').change(function(){
+            report_module = $(this).val();
             loadTreeData($(this).val());
         });
+        report_module = $('#report_module').val();
         loadTreeData($('#report_module').val());
 
+        $.each(fieldLines,function(key,val){
+            loadFieldLine(val);
+        });
     });
 </script>
 {/literal}
@@ -148,7 +172,7 @@
             </div>
         </td>
         <td>
-<div class="edit view edit508  expanded" id="detailpanel_fields">
+<div class="edit view edit508  expanded" id="detailpanel_fields" style="height: 50%;">
     <h4>&nbsp;&nbsp;
         <a onclick="collapsePanel('fields');" class="collapseLink" href="javascript:void(0)">
             <img border="0" src="{sugar_getimagepath file="basic_search.gif"}"
@@ -178,10 +202,7 @@
             initPanel('fields', 'expanded');
         }); </script>
     {/literal}
-</div></td>
-    </tr>
-    <tr><td>
-            <div class="edit view edit508  expanded" id="detailpanel_conditions">
+</div> <div class="edit view edit508  expanded" id="detailpanel_conditions" style="height: 50%;">
                 <h4>&nbsp;&nbsp;
                     <a onclick="collapsePanel('conditions');" class="collapseLink" href="javascript:void(0)">
                         <img border="0" src="{sugar_getimagepath file="basic_search.gif"}"
@@ -189,16 +210,18 @@
                     <a onclick="expandPanel('conditions');" class="expandLink" href="javascript:void(0)">
                         <img border="0" src="{sugar_getimagepath file="advanced_search.gif"}"
                              id="detailpanel_conditions_img_show"></a>
-                    {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}
+                    {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}
                     <script>
                         document.getElementById('detailpanel_conditions').className += ' expanded';
                     </script>
                 </h4>
                 <table width="100%" cellspacing="1" cellpadding="0" border="0" class="yui3-skin-sam edit view panelContainer"
-                       id="FIELDS">
+                       id="CONDITIONS">
                     <tbody>
                     <tr>
+                        <div id="conditionLines">
 
+                        </div>
                     </tr>
                     </tbody>
                 </table>
@@ -207,5 +230,8 @@
                             initPanel('conditions', 'expanded');
                         }); </script>
                 {/literal}
-            </div></td></tr>
+            </div></td>
+    </tr>
+    <tr><td>
+           </td></tr>
 </table>

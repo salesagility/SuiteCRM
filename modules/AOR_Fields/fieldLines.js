@@ -269,7 +269,7 @@ function insertFieldLine(){
     b.style.width = '12%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    b.innerHTML = "<input type='hidden' name='aor_fields_module_path["+ fieldln +"][0]' id='aor_fields_module_path" + fieldln + "' value=''>";
+    b.innerHTML = "<input type='hidden' name='aor_fields_module_path["+ fieldln +"]' id='aor_fields_module_path" + fieldln + "' value=''>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
     b.innerHTML += "<span id='aor_fields_module_path_display" + fieldln + "'></span>";
 

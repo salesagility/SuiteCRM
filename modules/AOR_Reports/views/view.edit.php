@@ -40,12 +40,33 @@ class AOR_ReportsViewEdit extends ViewEdit {
             require_once ('include/language/jsLanguage.php');
             jsLanguage::createModuleStringsCache('AOR_Fields', $GLOBALS['current_language']);
         }
-
-        echo '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
         echo '<script src="cache/jsLanguage/AOR_Fields/'. $GLOBALS['current_language'] . '.js"></script>';
+
+        if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
+            require_once ('include/language/jsLanguage.php');
+            jsLanguage::createModuleStringsCache('AOR_Conditions', $GLOBALS['current_language']);
+        }
+        echo '<script src="cache/jsLanguage/AOR_Conditions/'. $GLOBALS['current_language'] . '.js"></script>';
+        echo '<script src="include/javascript/yui3/build/yui/yui-min.js"></script>';
+
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
         echo "</script>";
+
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->bean->db->query($sql);
+
+        $fields = array();
+        while ($row = $this->bean->db->fetchByAssoc($result)) {
+            $field_name = new AOR_Field();
+            $field_name->retrieve($row['id']);
+            $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
+            $arr = $field_name->toArray();
+            $arr['module_path_display'] = $field_name->module_path ? $field_name->module_path : $this->bean->report_module;
+            $arr['field_label'] = $field_name->field;
+            $fields[] = $arr;
+        }
+        echo "<script>var fieldLines = ".json_encode($fields)."</script>";
         parent::preDisplay();
     }
 
