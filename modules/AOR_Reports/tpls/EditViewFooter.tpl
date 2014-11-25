@@ -166,75 +166,17 @@
     });
 </script>
 {/literal}
-<table>
-    <tr>
-        <td rowspan="2">
-            <div class="edit view edit508  expanded" id="detailpanel_fields_select">
-                <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
-                <div id="fieldTree"></div>
+<div class="edit view edit508  expanded" id="detailpanel_fields_select" style="float: left; width: 15%; height: 500px; overflow-y: auto;">
+    <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
+    <div id="fieldTree"></div>
+</div>
+<div class="edit view edit508  expanded" id="detailpanel_fields" style="width: 80%; float: right;">
+    <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
+            <div id="fieldLines" style="min-height: 50px;">
             </div>
-        </td>
-        <td>
-<div class="edit view edit508  expanded" id="detailpanel_fields" style="height: 50%;">
-    <h4>&nbsp;&nbsp;
-        <a onclick="collapsePanel('fields');" class="collapseLink" href="javascript:void(0)">
-            <img border="0" src="{sugar_getimagepath file="basic_search.gif"}"
-                 id="detailpanel_fields_img_hide"></a>
-        <a onclick="expandPanel('fields');" class="expandLink" href="javascript:void(0)">
-            <img border="0" src="{sugar_getimagepath file="advanced_search.gif"}"
-                 id="detailpanel_fields_img_show"></a>
-        {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}
-        <script>
-            document.getElementById('detailpanel_fields').className += ' expanded';
-        </script>
-    </h4>
-    <table width="100%" cellspacing="1" cellpadding="0" border="0" class="yui3-skin-sam edit view panelContainer"
-           id="FIELDS">
-        <tbody>
-        <tr>
-            <div id="fieldLines">
-
-
-
-            </div>
-        </tr>
-        </tbody>
-    </table>
-    {literal}
-    <script type="text/javascript">SUGAR.util.doWhen("typeof initPanel == 'function'", function () {
-            initPanel('fields', 'expanded');
-        }); </script>
-    {/literal}
-</div> <div class="edit view edit508  expanded" id="detailpanel_conditions" style="height: 50%;">
-                <h4>&nbsp;&nbsp;
-                    <a onclick="collapsePanel('conditions');" class="collapseLink" href="javascript:void(0)">
-                        <img border="0" src="{sugar_getimagepath file="basic_search.gif"}"
-                             id="detailpanel_conditions_img_hide"></a>
-                    <a onclick="expandPanel('conditions');" class="expandLink" href="javascript:void(0)">
-                        <img border="0" src="{sugar_getimagepath file="advanced_search.gif"}"
-                             id="detailpanel_conditions_img_show"></a>
-                    {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}
-                    <script>
-                        document.getElementById('detailpanel_conditions').className += ' expanded';
-                    </script>
-                </h4>
-                <table width="100%" cellspacing="1" cellpadding="0" border="0" class="yui3-skin-sam edit view panelContainer"
-                       id="CONDITIONS">
-                    <tbody>
-                    <tr>
-                        <div id="conditionLines">
-
-                        </div>
-                    </tr>
-                    </tbody>
-                </table>
-                {literal}
-                    <script type="text/javascript">SUGAR.util.doWhen("typeof initPanel == 'function'", function () {
-                            initPanel('conditions', 'expanded');
-                        }); </script>
-                {/literal}
-            </div></td>
-    </tr>
-    <tr><td>
-           </td></tr>
-</table>
+</div>
+<div class="edit view edit508 collapsed" id="detailpanel_conditions" style="width: 80%; float: right;">
+    <h4>{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
+    <div id="conditionLines"  style="min-height: 50px;">
+    </div>
+</div>
