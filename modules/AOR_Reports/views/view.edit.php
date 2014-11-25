@@ -80,6 +80,8 @@ class AOR_ReportsViewEdit extends ViewEdit {
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
+            $condition_item['module_path_display'] = $condition_name->module_path ? $condition_name->module_path : $this->bean->report_module;
+            $condition_item['field_label'] = $condition_name->field;
             $conditions[] = $condition_item;
         }
         echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
