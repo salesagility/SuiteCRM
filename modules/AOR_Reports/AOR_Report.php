@@ -353,11 +353,13 @@ class AOR_Report extends Basic {
             }
             $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
+            $fields[$label]['label'] = $field->label;
             $fields[$label]['display'] = $field->display && !$field->group_display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
+            $fields[$label]['total'] = $field->total;
 
 
             if($fields[$label]['display']){
@@ -371,6 +373,7 @@ class AOR_Report extends Basic {
 
         $html .= "</tr>";
         $html .= "</thead>";
+        $html .= "<tbody>";
 
         if($offset >= 0){
             $result = $this->db->limitQuery($report_sql, $offset, $max_rows);
@@ -380,6 +383,8 @@ class AOR_Report extends Basic {
 
         $row_class = 'oddListRowS1';
 
+
+        $totals = array();
         while ($row = $this->db->fetchByAssoc($result)) {
             $html .= "<tr class='".$row_class."' height='20'>";
 
@@ -399,6 +404,9 @@ class AOR_Report extends Basic {
                             $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id);
                             break;
                     }
+                    if($att['total']){
+                        $totals[$name][] = $row[$name];
+                    }
                     if($att['link'] && $links) $html .= "</a>";
                     $html .= "</td>";
                 }
@@ -407,10 +415,53 @@ class AOR_Report extends Basic {
 
             $row_class = $row_class == 'oddListRowS1' ?  'evenListRowS1':'oddListRowS1';
         }
+        $html .= "</tbody>";
+
+        $html .= $this->getTotalHtml($fields,$totals);
 
         $html .= "</table>";
 
         return $html;
+    }
+
+    function getTotalHTML($fields,$totals){
+        global $app_list_strings;
+        $html = '';
+        $html .= "<tbody>";
+        $html .= "<tr>";
+        foreach($fields as $label => $field){
+            if($field['total']){
+                $totalLabel = $field['label'] ." ".$app_list_strings['aor_total_options'][$field['total']];
+                $html .= "<th>{$totalLabel}</th>";
+            }else{
+                $html .= "<th></th>";
+            }
+        }
+        $html .= "</tr>";
+        $html .= "<tr>";
+        foreach($fields as $label => $field){
+            if($field['total']){
+                $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
+            }else{
+                $html .= "<td></td>";
+            }
+        }
+        $html .= "</tr>";
+        $html .= "</tbody>";
+        return $html;
+    }
+
+    function calculateTotal($type, $totals){
+        switch($type){
+            case 'SUM':
+                return array_sum($totals);
+            case 'COUNT':
+                return count($totals);
+            case 'AVG':
+                return array_sum($totals)/count($totals);
+            default:
+                return '';
+        }
     }
 
     function build_report_csv(){
