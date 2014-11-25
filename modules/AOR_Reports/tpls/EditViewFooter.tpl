@@ -153,6 +153,8 @@
         $('#report_module').change(function(){
             report_module = $(this).val();
             loadTreeData($(this).val());
+            clearFieldLines();
+            clearConditionLines();
         });
         report_module = $('#report_module').val();
         loadTreeData($('#report_module').val());
