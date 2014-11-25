@@ -67,6 +67,22 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $fields[] = $arr;
         }
         echo "<script>var fieldLines = ".json_encode($fields)."</script>";
+
+
+        $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY condition_order ASC";
+        $result = $this->bean->db->query($sql);
+        $conditions = array();
+        while ($row = $this->bean->db->fetchByAssoc($result)) {
+            $condition_name = new AOR_Condition();
+            $condition_name->retrieve($row['id']);
+            $condition_name->module_path = implode(":",unserialize(base64_decode($condition_name->module_path)));
+            if($condition_name->value_type == 'Date'){
+                $condition_name->value = unserialize(base64_decode($condition_name->value));
+            }
+            $condition_item = $condition_name->toArray();
+            $conditions[] = $condition_item;
+        }
+        echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
         parent::preDisplay();
     }
 
