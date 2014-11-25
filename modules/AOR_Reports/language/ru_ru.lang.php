@@ -69,4 +69,5 @@ $mod_strings = array (
   'LBL_ADD_TO_PROSPECT_LIST' => 'Добавить в список адресатов',
     'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Поля',
     'LBL_AOR_CONDITIONS_SUBPANEL_TITLE' => 'Условия',
+    'LBL_TOTAL' => 'общий',
 );

@@ -206,6 +206,10 @@ function insertFieldHeader(){
     var h=x.insertCell(8);
     h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_GROUP');
+
+    var h=x.insertCell(9);
+    h.style.color="rgb(0,0,0)";
+    h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_TOTAL');
 }
 
 function insertFieldLine(){
@@ -276,7 +280,11 @@ function insertFieldLine(){
     var h=x.insertCell(8);
     h.innerHTML = "<input name='aor_fields_group_by["+ fieldln +"]' value='0' type='hidden'>";
     h.innerHTML += "<input id='aor_fields_group_by" + fieldln + "' name='aor_fields_group_by["+ fieldln +"]' value='1' type='checkbox'>";
-    h.style.width = '12%';
+    h.style.width = '10%';
+
+    var h=x.insertCell(9);
+    h.innerHTML = "<select type='text' name='aor_fields_total["+ fieldln +"]' id='aor_fields_total" + fieldln + "'>"+total_values+"</select>";
+    h.style.width = '10%';
 
     fieldln++;
     fieldln_count++;

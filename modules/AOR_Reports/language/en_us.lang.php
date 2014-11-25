@@ -63,4 +63,5 @@ $mod_strings = array (
   'LBL_ADD_TO_PROSPECT_LIST' => 'Add To Target List',
     'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Fields',
     'LBL_AOR_CONDITIONS_SUBPANEL_TITLE' => 'Conditions',
+    'LBL_TOTAL' => 'Total',
 );
