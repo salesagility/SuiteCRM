@@ -37,13 +37,18 @@ function loadConditionLine(condition){
     ln = insertConditionLine();
 
     for(var a in condition){
-        if(document.getElementById(prefix + a + ln) != null){
-            document.getElementById(prefix + a + ln).value = condition[a];
+        var elem = document.getElementById(prefix + a + ln);
+        if(elem != null){
+            if(elem.nodeName != 'INPUT') {
+                elem.innerHTML = condition[a];
+            }else {
+                elem.value = condition[a];
+            }
         }
     }
 
-    var select_field = document.getElementById('aor_conditions_field'+ln);
-    document.getElementById('aor_conditions_field_label'+ln).innerHTML = select_field.options[select_field.selectedIndex].text;
+    //var select_field = document.getElementById('aor_conditions_field'+ln);
+    //document.getElementById('aor_conditions_field_label'+ln).innerHTML = select_field.options[select_field.selectedIndex].text;
 
     if (condition['value'] instanceof Array) {
         condition['value'] = JSON.stringify(condition['value'])
@@ -256,18 +261,18 @@ function insertConditionLine(){
     b.style.width = '15%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    b.innerHTML = "<select style='width:178px;"+viewStyle+"' name='aor_conditions_module_path["+ condln +"][0]' id='aor_conditions_module_path" + condln + "' value='' title='' tabindex='116' onchange='showConditionCurrentModuleFields(" + condln + ");'>" + report_rel_modules + "</select>";
+    b.innerHTML = "<input type='hidden' name='aor_conditions_module_path["+ condln +"][0]' id='aor_conditions_module_path" + condln + "' value=''>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
-    b.innerHTML += "<span style='width:178px;"+viewStyle+"' id='aor_fields_field_label" + condln + "' ></span>";
+    b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
 
 
     var c = x.insertCell(2);
     c.style.width = '15%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    c.innerHTML = "<select style='width:178px;"+viewStyle+"' name='aor_conditions_field["+ condln +"]' id='aor_conditions_field" + condln + "' value='' title='' tabindex='116' onchange='showConditionModuleField(" + condln + ");'>" + report_fields + "</select>";
+    c.innerHTML = "<input type='hidden' name='aor_conditions_field["+ condln +"]' id='aor_conditions_field" + condln + "' value=''>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
-    c.innerHTML += "<span style='width:178px;"+viewStyle+"' id='aor_conditions_field_label" + condln + "' ></span>";
+    c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
 
 
     var d = x.insertCell(3);
