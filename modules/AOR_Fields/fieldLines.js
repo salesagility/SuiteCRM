@@ -38,8 +38,6 @@ YUI().use('sortable', function(Y) {
     Y.DD.DDM.on('drag:end', fieldSort);
 });
 
-document.getElementById('report_module').addEventListener("change", showFieldModuleFields, false);
-
 function loadFieldLine(field){
 
     var prefix = 'aor_fields_';
@@ -63,33 +61,6 @@ function loadFieldLine(field){
     }
 
     showFieldModuleField(ln, field['field_function'], field['label']);
-}
-
-function showFieldModuleFields(){
-
-    clearFieldLines();
-
-    report_module = document.getElementById('report_module').value;
-
-    if(report_module != ''){
-
-        var callback = {
-            success: function(result) {
-                report_rel_modules = result.responseText;
-            }
-        }
-        var callback2 = {
-            success: function(result) {
-                report_fields = result.responseText;
-                document.getElementById('btn_FieldLine').disabled = '';
-            }
-        }
-
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleRelationships&aor_module="+report_module,callback);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFields&view=EditView&aor_module="+report_module,callback2);
-
-    }
-
 }
 
 function showFieldCurrentModuleFields(ln, value){
