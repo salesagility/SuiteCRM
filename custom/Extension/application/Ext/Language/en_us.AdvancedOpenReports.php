@@ -66,3 +66,7 @@ $app_list_strings['aor_function_list']['MIN'] = 'Minimum';
 $app_list_strings['aor_function_list']['MAX'] = 'Maximum';
 $app_list_strings['aor_function_list']['SUM'] = 'Sum';
 $app_list_strings['aor_function_list']['AVG'] = 'Average';
+$app_list_strings['aor_total_options'][''] = '';
+$app_list_strings['aor_total_options']['COUNT'] = 'Count';
+$app_list_strings['aor_total_options']['SUM'] = 'Sum';
+$app_list_strings['aor_total_options']['AVG'] = 'Average';
