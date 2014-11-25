@@ -160,6 +160,9 @@
         $.each(fieldLines,function(key,val){
             loadFieldLine(val);
         });
+        $.each(conditionLines,function(key,val){
+            loadConditionLine(val);
+        });
     });
 </script>
 {/literal}
