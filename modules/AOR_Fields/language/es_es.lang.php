@@ -64,4 +64,5 @@ $mod_strings = array (
     'LBL_GROUP' => 'Grupo',
     'LBL_GROUP_ORDER' => 'Orden de Grupo',
     'LBL_AUDIT_TABLE' => 'Tabla de Auditoría',
+    'LBL_TOTAL' => 'Total',
 );
