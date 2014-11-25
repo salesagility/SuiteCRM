@@ -52,13 +52,12 @@ function loadFieldLine(field){
         var elem = document.getElementById(prefix + a + ln);
 
         if(elem != null){
-            if(elem.nodeName != 'INPUT'){
+            if(elem.nodeName != 'INPUT' && elem.nodeName != 'SELECT'){
                 elem.innerHTML = field[a];
             }else if(elem.type == 'checkbox'){
                 elem.checked = field[a] == 1;
             } else {
                 elem.value = field[a];
-                console.log("Setting value of "+prefix + a + ln +" to "+field[a]);
             }
         }
     }
@@ -67,7 +66,7 @@ function loadFieldLine(field){
 }
 
 function showFieldModuleFields(){
-return;
+
     clearFieldLines();
 
     report_module = document.getElementById('report_module').value;
@@ -129,7 +128,7 @@ function showFieldCurrentModuleFields(ln, value){
 function showFieldModuleField(ln, function_value, label_value){
     if (typeof function_value === 'undefined') { function_value = ''; }
     if (typeof label_value === 'undefined') { label_value = ''; }
-return;
+
     var aor_field = document.getElementById('aor_fields_field'+ln).value;
     if(aor_field != ''){
 
