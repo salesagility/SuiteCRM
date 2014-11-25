@@ -27,8 +27,6 @@ var condln_count = 0;
 var report_fields =  new Array();
 var report_module = '';
 
-document.getElementById('report_module').addEventListener("change", showConditionModuleFields, false);
-
 function loadConditionLine(condition){
 
     var prefix = 'aor_conditions_';
@@ -57,27 +55,6 @@ function loadConditionLine(condition){
     showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'])
 
     //getView(ln,action['id']);
-
-}
-
-function showConditionModuleFields(){
-
-    clearConditionLines();
-
-    report_module = document.getElementById('report_module').value;
-
-    if(report_module != ''){
-
-        var callback = {
-            success: function(result) {
-                report_fields = result.responseText;
-                document.getElementById('btn_ConditionLine').disabled = '';
-            }
-        }
-
-        var connectionObject = YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFields&view=EditView&aor_module="+report_module,callback);
-
-    }
 
 }
 
