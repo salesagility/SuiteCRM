@@ -109,6 +109,15 @@ $dictionary['AOR_Report'] = array(
      'bean_name'=>'AOR_Condition',
      'source'=>'non-db',
   ),
+  'aor_charts' =>
+      array (
+        'name' => 'aor_charts',
+        'type' => 'link',
+        'relationship' => 'aor_charts_aor_reports',
+        'source' => 'non-db',
+        'id_name' => 'aor_report_id',
+        'vname' => 'LBL_AOR_CHARTS',
+      ),
 ),
 'relationships'=>array (
     'aor_reports_aor_fields' =>
