@@ -70,3 +70,7 @@ $app_list_strings['aor_total_options'][''] = '';
 $app_list_strings['aor_total_options']['COUNT'] = 'Count';
 $app_list_strings['aor_total_options']['SUM'] = 'Sum';
 $app_list_strings['aor_total_options']['AVG'] = 'Average';
+$app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
+$app_list_strings['aor_chart_types']['line'] = 'Line chart';
+$app_list_strings['aor_chart_types']['area'] = 'Area chart';
+$app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
