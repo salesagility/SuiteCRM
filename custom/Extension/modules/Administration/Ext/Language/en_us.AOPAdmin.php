@@ -25,7 +25,6 @@ $mod_strings['LBL_SALESAGILITY_ADMIN'] = 'Advanced OpenAdmin';
 $mod_strings['LBL_AOP_ADMIN_MANAGE_AOP'] = 'Advanced OpenPortal Settings';
 $mod_strings['LBL_AOP_ENABLE_AOP'] = 'Enable AOP';
 $mod_strings['LBL_AOP_ENABLE_PORTAL'] = 'Enable External Portal';
-$mod_strings['LBL_AOP_ALLOW_PORTAL_STATUS_CHANGE'] = 'Allow portal users to change case status';
 $mod_strings['LBL_AOP_JOOMLA_SETTINGS'] = 'Portal Settings';
 $mod_strings['LBL_AOP_JOOMLA_URL'] = 'Joomla URL';
 $mod_strings['LBL_AOP_JOOMLA_ACCESS_KEY'] = 'Joomla Access Key';
