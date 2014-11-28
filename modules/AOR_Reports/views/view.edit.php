@@ -86,6 +86,12 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $conditions[] = $condition_item;
         }
         echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
+        $charts = array();
+        foreach($this->bean->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            $charts[] = $chart->toArray();
+        }
+        echo "<script>var chartLines = ".json_encode($charts)."</script>";
+
         parent::preDisplay();
     }
 
