@@ -50,7 +50,9 @@ function loadFieldLine(field){
         var elem = document.getElementById(prefix + a + ln);
 
         if(elem != null){
-            if(elem.nodeName != 'INPUT' && elem.nodeName != 'SELECT'){
+            if(a === 'field_order'){
+                $('#'+prefix+a+ln).val(ln);
+            }else if(elem.nodeName != 'INPUT' && elem.nodeName != 'SELECT'){
                 elem.innerHTML = field[a];
             }else if(elem.type == 'checkbox'){
                 elem.checked = field[a] == 1;
