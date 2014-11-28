@@ -75,6 +75,10 @@ class AOR_Report extends Basic {
         require_once('modules/AOR_Conditions/AOR_Condition.php');
         $condition = new AOR_Condition();
         $condition->save_lines($_POST, $this, 'aor_conditions_');
+
+        require_once('modules/AOR_Charts/AOR_Chart.php');
+        $chart = new AOR_Chart();
+        $chart->save_lines($_POST, $this, 'aor_chart_');
     }
 
     function load_report_beans(){
