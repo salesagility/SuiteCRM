@@ -98,7 +98,71 @@ class AOR_Report extends Basic {
     }
 
     private function getValidChartTypes(){
-        return array('bar','line');
+        return array('bar','line','pie','radar','polar');
+    }
+
+    private function getBarChartData($reportData, $xName,$yName){
+        $data = array();
+        $data['labels'] = array();
+        $datasetData = array();
+        foreach($reportData as $row){
+            $data['labels'][] = $row[$xName];
+            $datasetData[] = $row[$yName];
+        }
+
+        $data['datasets'] = array();
+        $data['datasets'][] = array(
+            'fillColor' => "rgba(151,187,205,0.2)",
+            'strokeColor' => "rgba(151,187,205,1)",
+            'pointColor' => "rgba(151,187,205,1)",
+            'pointStrokeColor' => "#fff",
+            'pointHighlightFill' => "#fff",
+            'pointHighlightStroke' => "rgba(151,187,205,1)4",
+            'data'=>$datasetData);
+        return $data;
+    }
+
+    private function getLineChartData($reportData, $xName,$yName){
+        return $this->getBarChartData($reportData, $xName,$yName);
+    }
+
+    private function getRadarChartData($reportData, $xName,$yName){
+        return $this->getBarChartData($reportData, $xName,$yName);
+    }
+
+    private function getPolarChartData($reportData, $xName,$yName){
+        return $this->getPieChartData($reportData, $xName,$yName);
+    }
+
+    private function getPieChartData($reportData, $xName,$yName){
+        $data = array();
+
+        foreach($reportData as $row){
+            if(!$row[$yName]){
+                continue;
+            }
+            $colour = $this->getColour($row[$xName]);
+            $data[] = array(
+                'value' => (int)$row[$yName],
+                'label' => $row[$xName],
+                'color' => $colour['main'],
+                'highlight' => $colour['highlight'],
+            );
+        }
+        return $data;
+    }
+
+    private function getColour($seed){
+        $hash = md5($seed);
+        $r = hexdec(substr($hash, 0, 2));
+        $g = hexdec(substr($hash, 2, 2));
+        $b = hexdec(substr($hash, 4, 2));
+        $highR = $r + 10;
+        $highG = $g + 10;
+        $highB = $b + 10;
+        $main = '#'.dechex($r).dechex($g).dechex($b);
+        $highlight = '#'.dechex($highR).dechex($highG).dechex($highB);
+        return array('main'=>$main,'highlight'=>$highlight);
     }
 
     private function build_single_chart(AOR_Chart $chartBean, array $reportData, array $fields){
@@ -115,35 +179,32 @@ class AOR_Report extends Basic {
         $xName = str_replace(' ','_',$x->label) . $chartBean->x_field;
         $yName = str_replace(' ','_',$y->label) . $chartBean->y_field;
 
-        $data = array();
-        $data['labels'] = array();
-        $datasetData = array();
-        foreach($reportData as $row){
-            $data['labels'][] = $row[$xName];
-            $datasetData[] = $row[$yName];
-        }
-
-        $data['datasets'] = array();
-        $data['datasets'][] = array(
-                            'fillColor' => "rgba(151,187,205,0.2)",
-                            'strokeColor' => "rgba(151,187,205,1)",
-                            'pointColor' => "rgba(151,187,205,1)",
-                            'pointStrokeColor' => "#fff",
-                            'pointHighlightFill' => "#fff",
-                            'pointHighlightStroke' => "rgba(151,187,205,1)4",
-                            'data'=>$datasetData);
-        $data = json_encode($data);
-        $chartId = 'chart'.$chartBean->id;
-        $html .= "<canvas id='{$chartId}' width='800' height='800'></canvas>";
         switch($chartBean->type){
+            case 'polar':
+                $chartFunction = 'PolarArea';
+                $data = $this->getPolarChartData($reportData, $xName,$yName);
+                break;
+            case 'radar':
+                $chartFunction = 'Radar';
+                $data = $this->getRadarChartData($reportData, $xName,$yName);
+                break;
+            case 'pie':
+                $chartFunction = 'Pie';
+                $data = $this->getPieChartData($reportData, $xName,$yName);
+                break;
             case 'line':
                 $chartFunction = 'Line';
+                $data = $this->getLineChartData($reportData, $xName,$yName);
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
+                $data = $this->getBarChartData($reportData, $xName,$yName);
                 break;
         }
+        $data = json_encode($data);
+        $chartId = 'chart'.$chartBean->id;
+        $html .= "<canvas id='{$chartId}' width='800' height='800'></canvas>";
         $html .= <<<EOF
         <script>
         $(document).ready(function(){

@@ -72,5 +72,6 @@ $app_list_strings['aor_total_options']['SUM'] = 'Suma';
 $app_list_strings['aor_total_options']['AVG'] = 'Promedio';
 $app_list_strings['aor_chart_types']['bar'] = 'Gráfico de barras';
 $app_list_strings['aor_chart_types']['line'] = 'Gráfico de líneas';
-$app_list_strings['aor_chart_types']['area'] = 'Gráfico de áreas';
 $app_list_strings['aor_chart_types']['pie'] = 'Gráfico de sectores';
+$app_list_strings['aor_chart_types']['radar'] = 'Gráfico radial';
+$app_list_strings['aor_chart_types']['polar'] = 'Gráfico de polar';
