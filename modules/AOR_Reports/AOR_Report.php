@@ -97,33 +97,52 @@ class AOR_Report extends Basic {
         asort($app_list_strings['aor_moduleList']);
     }
 
+    private function build_single_chart(AOR_Chart $chartBean, array $reportData, array $fields){
+        $chart = SugarChartFactory::getInstance();
+        $chart->setProperties($chartBean->name, '', $chartBean->type.' chart');
+        $html = '';
+        $html .= $chart->getChartResources();
+        $html .= $chart->getMySugarChartResources();
+        $x = $fields[$chartBean->x_field];
+        $y = $fields[$chartBean->y_field];
+        if(!$x || !$y){
+            //Malformed chart object - missing an axis field
+            return '';
+        }
+        $xName = str_replace(' ','_',$x->label) . array_search($x->field_order,array_keys($fields));
+        $yName = str_replace(' ','_',$y->label) . array_search($y->field_order,array_keys($fields));
+        $data = array();
+        foreach($reportData as $row){
+            $data[$row[$xName]] = $row[$yName];
+        }
+        $chart->setData($data);
+        $file = create_cache_directory('modules/AOR_Reports/Charts/') .'chart.xml';
+        $xml = $chart->generateXML();
+        $chart->saveXMLFile($file, $xml);
+        $html .= $chart->display($chartBean->name, $file);
+        return $html;
+    }
+
     function build_report_chart(){
 
-        require_once('include/SugarCharts/SugarChartFactory.php');
-        $chart = SugarChartFactory::getInstance();
-
-       /* echo $resources = $chart->getChartResources();
-        echo $mySugarResources = $chart->getMySugarChartResources();*/
-
-        $chart->setProperties('test', 'sub_test', 'funnel chart 3D');
-        $chart->group_by = array('Type2','Assigned to1');
         $result = $this->db->query($this->build_report_query());
         $data = array();
         while($row = $this->db->fetchByAssoc($result, false))
         {
-            $row['key'] = $row['Type2'];
-            $row['value'] =  $row['Type2'];
-            $row['total'] =  $row['count0'];
             $data[] = $row;
         }
-
-        $chart->setData($data);
-
-        $file = create_cache_directory('modules/AOR_Reports/Charts/') .'chart.xml';
-
-        $chart->saveXMLFile($file, $chart->generateXML());
-
-        return $chart->display('test', $file, '100%', '480', false);
+        require_once('include/SugarCharts/SugarChartFactory.php');
+        $fields = array();
+        foreach($this->get_linked_beans('aor_fields','AOR_Fields') as $field){
+            $fields[$field->field_order] = $field;
+        }
+        ksort($fields);
+        $html = '';
+        foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            $html .= $this->build_single_chart($chart,$data,$fields);
+        }
+        echo "<button id='showHideChartButton'></button>";
+        return $html;
     }
 
 
@@ -424,7 +443,7 @@ class AOR_Report extends Basic {
         $html .= $this->getTotalHtml($fields,$totals);
 
         $html .= "</table>";
-
+        $html .= $this->build_report_chart();
         return $html;
     }
 
