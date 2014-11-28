@@ -97,29 +97,63 @@ class AOR_Report extends Basic {
         asort($app_list_strings['aor_moduleList']);
     }
 
+    private function getValidChartTypes(){
+        return array('bar','line');
+    }
+
     private function build_single_chart(AOR_Chart $chartBean, array $reportData, array $fields){
-        $chart = SugarChartFactory::getInstance();
-        $chart->setProperties($chartBean->name, '', $chartBean->type.' chart');
         $html = '';
-        $html .= $chart->getChartResources();
-        $html .= $chart->getMySugarChartResources();
+        if(!in_array($chartBean->type, $this->getValidChartTypes())){
+            return $html;
+        }
         $x = $fields[$chartBean->x_field];
         $y = $fields[$chartBean->y_field];
         if(!$x || !$y){
             //Malformed chart object - missing an axis field
             return '';
         }
-        $xName = str_replace(' ','_',$x->label) . array_search($x->field_order,array_keys($fields));
-        $yName = str_replace(' ','_',$y->label) . array_search($y->field_order,array_keys($fields));
+        $xName = str_replace(' ','_',$x->label) . $chartBean->x_field;
+        $yName = str_replace(' ','_',$y->label) . $chartBean->y_field;
+
         $data = array();
+        $data['labels'] = array();
+        $datasetData = array();
         foreach($reportData as $row){
-            $data[$row[$xName]] = $row[$yName];
+            $data['labels'][] = $row[$xName];
+            $datasetData[] = $row[$yName];
         }
-        $chart->setData($data);
-        $file = create_cache_directory('modules/AOR_Reports/Charts/') .'chart.xml';
-        $xml = $chart->generateXML();
-        $chart->saveXMLFile($file, $xml);
-        $html .= $chart->display($chartBean->name, $file);
+
+        $data['datasets'] = array();
+        $data['datasets'][] = array(
+                            'fillColor' => "rgba(151,187,205,0.2)",
+                            'strokeColor' => "rgba(151,187,205,1)",
+                            'pointColor' => "rgba(151,187,205,1)",
+                            'pointStrokeColor' => "#fff",
+                            'pointHighlightFill' => "#fff",
+                            'pointHighlightStroke' => "rgba(151,187,205,1)4",
+                            'data'=>$datasetData);
+        $data = json_encode($data);
+        $chartId = 'chart'.$chartBean->id;
+        $html .= "<canvas id='{$chartId}' width='800' height='800'></canvas>";
+        switch($chartBean->type){
+            case 'line':
+                $chartFunction = 'Line';
+                break;
+            case 'bar':
+            default:
+                $chartFunction = 'Bar';
+                break;
+        }
+        $html .= <<<EOF
+        <script>
+        $(document).ready(function(){
+            var data = {$data};
+            var ctx = document.getElementById("{$chartId}").getContext("2d");
+            console.log('Creating new chart');
+            var myNewChart = new Chart(ctx).{$chartFunction}(data);
+        });
+        </script>
+EOF;
         return $html;
     }
 
@@ -131,17 +165,17 @@ class AOR_Report extends Basic {
         {
             $data[] = $row;
         }
-        require_once('include/SugarCharts/SugarChartFactory.php');
         $fields = array();
         foreach($this->get_linked_beans('aor_fields','AOR_Fields') as $field){
-            $fields[$field->field_order] = $field;
+            $fields[] = $field;
         }
-        ksort($fields);
-        $html = '';
+        usort($fields,function($a,$b){
+            return $a->field_order - $b->field_order;
+        });
+        $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             $html .= $this->build_single_chart($chart,$data,$fields);
         }
-        echo "<button id='showHideChartButton'></button>";
         return $html;
     }
 
