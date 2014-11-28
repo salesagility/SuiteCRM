@@ -68,6 +68,24 @@ $dictionary['AOR_Chart'] = array(
                 'size' => '20',
                 'options' => 'aor_chart_types',
             ),
+        'x_field' =>
+            array (
+                'required' => false,
+                'name' => 'x_field',
+                'vname' => 'LBL_X_FIELD',
+                'type' => 'text',
+                'len' => 100,
+                'size' => '20',
+            ),
+        'y_field' =>
+            array (
+                'required' => false,
+                'name' => 'y_field',
+                'vname' => 'LBL_Y_FIELD',
+                'type' => 'text',
+                'len' => 100,
+                'size' => '20',
+            ),
 	),
 	'relationships'=>array (
         "aor_charts_aor_reports" => array (
