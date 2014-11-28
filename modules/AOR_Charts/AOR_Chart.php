@@ -42,6 +42,10 @@ class AOR_Chart extends Basic {
 	var $deleted;
 	var $created_by_link;
 	var $modified_user_link;
+
+    var $type;
+    var $x_field;
+    var $y_field;
 	
 	function AOR_Chart(){
 		parent::Basic();

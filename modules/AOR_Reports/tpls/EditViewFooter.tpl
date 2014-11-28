@@ -211,9 +211,7 @@
         function updateChartDimensionSelects(){
             var options = {};
             for(var x = 0; x < fieldln_count; x++){
-                var key = $('#aor_fields_module_path'+x).val();
-                key += '|' + $('#aor_fields_field'+x).val();
-                options[key] = $('#aor_fields_module_path_display'+x).text() + " - "+$('#aor_fields_label'+x).val();
+                options[x] = $('#aor_fields_module_path_display'+x).text() + " - "+$('#aor_fields_label'+x).val();
             }
             $('#chartLines .chartDimensionSelect').each(function(index){
                 var select = $(this);
