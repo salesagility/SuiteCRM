@@ -56,8 +56,8 @@ class AOR_Chart extends Basic {
             }
             $aorChart->name = $post[$postKey.'title'][$key];
             $aorChart->type = $post[$postKey.'type'][$key];
-            $aorChart->x = $post[$postKey.'x'][$key];
-            $aorChart->y = $post[$postKey.'y'][$key];
+            $aorChart->x_field = $post[$postKey.'x_field'][$key];
+            $aorChart->y_field = $post[$postKey.'y_field'][$key];
             $aorChart->aor_report_id = $bean->id;
             $aorChart->save();
             $seenIds[] = $aorChart->id;
