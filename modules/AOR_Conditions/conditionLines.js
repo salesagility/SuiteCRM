@@ -321,3 +321,12 @@ function date_field_change(field){
     }
 }
 
+function addNodeToConditions(node){
+    loadConditionLine(
+        {
+            'label' : node.name,
+            'module_path' : node.module,
+            'module_path_display' : node.module,
+            'field' : node.id,
+            'field_label' : node.name});
+}

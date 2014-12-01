@@ -361,3 +361,13 @@ function date_field_change(field){
     }
 }
 
+function addNodeToFields(node){
+    loadFieldLine(
+        {
+            'label' : node.name,
+            'module_path' : node.module_path,
+            'module_path_display' : node.module_path,
+            'field' : node.id,
+            'field_label' : node.name});
+}
+
