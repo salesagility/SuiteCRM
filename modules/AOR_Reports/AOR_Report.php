@@ -180,7 +180,9 @@ class AOR_Report extends Basic {
         $highR = $r + 10;
         $highG = $g + 10;
         $highB = $b + 10;
-        $main = '#'.dechex($r).dechex($g).dechex($b);
+        $main = '#'.str_pad(dechex($r),2,'0',STR_PAD_LEFT)
+                    .str_pad(dechex($g),2,'0',STR_PAD_LEFT)
+                    .str_pad(dechex($b),2,'0',STR_PAD_LEFT);
         $highlight = '#'.dechex($highR).dechex($highG).dechex($highB);
         return array('main'=>$main,'highlight'=>$highlight);
     }
@@ -230,7 +232,8 @@ class AOR_Report extends Basic {
         $data = json_encode($data);
         $config = json_encode($config);
         $chartId = 'chart'.$chartBean->id;
-        $html .= "<canvas id='{$chartId}' width='800' height='800'></canvas>";
+        $html .= "<h3>{$chartBean->name}</h3>";
+        $html .= "<canvas id='{$chartId}' width='400' height='400'></canvas>";
         $html .= <<<EOF
         <script>
         $(document).ready(function(){
@@ -838,8 +841,16 @@ EOF;
                 case 'relationship':
                     if($module->load_relationship($name)){
                         $params['join_type'] = 'LEFT JOIN';
-                        $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                        $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                        if($module->$name->relationship_type != 'one-to-many'){
+                            $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                            $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
+                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($alias);
+                        }else{
+                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                            $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
+                        }
+                        $linkAlias = $parentAlias."|".$alias;
+                        $params['join_table_link_alias'] = $this->db->quoteIdentifier($linkAlias);
                         $join = $module->$name->getJoin($params, true);
                         $query['join'][$alias] = $join['join'];
                         if($rel_module != null) $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
