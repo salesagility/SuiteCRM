@@ -495,7 +495,7 @@ EOF;
             if($path[0] != $this->report_module){
                 foreach($path as $rel){
                     $field_module = getRelatedModule($field_module,$rel);
-                    $field_alias = $rel;
+                    $field_alias = $field_alias . ':'.$rel;
                 }
             }
             $label = str_replace(' ','_',$field->label).$i;
@@ -796,7 +796,7 @@ EOF;
                 if($data['type'] == 'link' && $data['source'] == 'non-db') {
                     $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$data['relationship'])];
                     $table_alias = $data['relationship'];
-                    $query = $this->build_report_query_join($data['relationship'],$table_alias, $field_module, 'relationship', $query, $new_field_module);
+                    $query = $this->build_report_query_join($data['relationship'],$table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
                     $field_module = $new_field_module;
                     $field->field = 'id';
                 }
@@ -807,7 +807,7 @@ EOF;
 
                 if((isset($data['source']) && $data['source'] == 'custom_fields')) {
                     $select_field = $table_alias.'_cstm.'.$field->field;
-                    $query = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm', $field_module, 'custom', $query);
+                    $query = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm',$table_alias, $field_module, 'custom', $query);
                 } else {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
@@ -915,13 +915,14 @@ EOF;
                 $table_alias = $condition_module->table_name;
                 if($path[0] != $module->module_dir){
                     foreach($path as $rel){
+                        $rel = strtolower($rel);
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
-                        $query = $this->build_report_query_join($rel, $table_alias, $condition_module, 'relationship', $query, $new_condition_module);
+                        $oldAlias = $table_alias;
+                        $table_alias = $table_alias.":".$rel;
+                        $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_condition_module);
                         $condition_module = $new_condition_module;
-                        $table_alias = $rel;
                     }
                 }
-
                 if(isset($app_list_strings['aor_sql_operator_list'][$condition->operator])){
                     $where_set = false;
 
@@ -939,16 +940,16 @@ EOF;
 
                     if($data['type'] == 'link' && $data['source'] == 'non-db'){
                         $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,$data['relationship'])];
-                        $query = $this->build_report_query_join($data['relationship'], $table_alias, $condition_module, 'relationship', $query, $new_field_module);
+                        $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
                         $field_module = $new_field_module;
                         $table_alias = $data['relationship'];
                         $condition->field = 'id';
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                        $field = $table_alias.'_cstm.'.$condition->field;
-                        $query = $this->build_report_query_join($table_alias.'_cstm',$table_alias.'_cstm', $condition_module, 'custom', $query);
+                        $field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$condition->field;
+                        $query = $this->build_report_query_join($table_alias.'_cstm',$table_alias.'_cstm',$oldAlias, $condition_module, 'custom', $query);
                     } else {
-                        $field = $table_alias.'.'.$condition->field;
+                        $field = $this->db->quoteIdentifier($table_alias).'.'.$condition->field;
                     }
 
                     switch($condition->value_type) {
@@ -967,14 +968,14 @@ EOF;
 
                             if($data['type'] == 'link' && $data['source'] == 'non-db'){
                                 $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$data['relationship'])];
-                                $query = $this->build_report_query_join($data['relationship'], $table_alias, $field_module, 'relationship', $query, $new_field_module);
+                                $query = $this->build_report_query_join($data['relationship'], $table_alias,$oldAlias, $field_module, 'relationship', $query, $new_field_module);
                                 $field_module = $new_field_module;
                                 $table_alias = $data['relationship'];
                                 $field->field = 'id';
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $value = $condition_module->table_name.'_cstm.'.$condition->value;
-                                $query = $this->build_report_query_join($condition_module->table_name.'_cstm', $table_alias.'_cstm', $condition_module, 'custom', $query);
+                                $query = $this->build_report_query_join($condition_module->table_name.'_cstm', $table_alias.'_cstm',$table_alias, $condition_module, 'custom', $query);
                             } else {
                                 $value = $condition_module->table_name.'.'.$condition->value;
                             }
@@ -992,7 +993,7 @@ EOF;
                                 $data = $condition_module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                     $value = $condition_module->table_name.'_cstm.'.$params[0];
-                                    $query = $this->build_report_query_join($condition_module->table_name.'_cstm', $table_alias.'_cstm', $condition_module, 'custom', $query);
+                                    $query = $this->build_report_query_join($condition_module->table_name.'_cstm', $table_alias.'_cstm',$table_alias, $condition_module, 'custom', $query);
                                 } else {
                                     $value = $condition_module->table_name.'.'.$params[0];
                                 }
