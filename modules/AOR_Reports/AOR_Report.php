@@ -130,7 +130,7 @@ class AOR_Report extends Basic {
         return array();
     }
     private function getLineChartConfig(){
-        return $this->getBarCharConfig();
+        return $this->getBarChartConfig();
     }
 
     private function getRadarChartData($reportData, $xName,$yName){
