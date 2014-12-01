@@ -45,7 +45,10 @@ class AOR_ReportsController extends SugarController {
     protected function action_getModuleTreeData()
     {
         if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
-            echo getModuleTreeData($_REQUEST['aor_module']);
+            ob_start();
+            $data = getModuleTreeData($_REQUEST['aor_module']);
+            ob_clean();
+            echo $data;
         }
         die;
     }
