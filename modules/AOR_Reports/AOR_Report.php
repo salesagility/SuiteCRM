@@ -126,12 +126,32 @@ class AOR_Report extends Basic {
         return $this->getBarChartData($reportData, $xName,$yName);
     }
 
+    private function getBarChartConfig(){
+        return array();
+    }
+    private function getLineChartConfig(){
+        return $this->getBarCharConfig();
+    }
+
     private function getRadarChartData($reportData, $xName,$yName){
         return $this->getBarChartData($reportData, $xName,$yName);
     }
 
     private function getPolarChartData($reportData, $xName,$yName){
         return $this->getPieChartData($reportData, $xName,$yName);
+    }
+
+    private function getRadarChartConfig(){
+        return array();
+    }
+
+    private function getPolarChartConfig(){
+        return $this->getPieChartConfig();
+    }
+    private function getPieChartConfig(){
+        $config = array();
+        $config['legendTemplate'] = "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";
+        return $config;
     }
 
     private function getPieChartData($reportData, $xName,$yName){
@@ -183,26 +203,32 @@ class AOR_Report extends Basic {
             case 'polar':
                 $chartFunction = 'PolarArea';
                 $data = $this->getPolarChartData($reportData, $xName,$yName);
+                $config = $this->getPolarChartConfig();
                 break;
             case 'radar':
                 $chartFunction = 'Radar';
                 $data = $this->getRadarChartData($reportData, $xName,$yName);
+                $config = $this->getRadarChartConfig();
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
                 $data = $this->getPieChartData($reportData, $xName,$yName);
+                $config = $this->getPieChartConfig();
                 break;
             case 'line':
                 $chartFunction = 'Line';
                 $data = $this->getLineChartData($reportData, $xName,$yName);
+                $config = $this->getLineChartConfig();
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
                 $data = $this->getBarChartData($reportData, $xName,$yName);
+                $config = $this->getBarChartConfig();
                 break;
         }
         $data = json_encode($data);
+        $config = json_encode($config);
         $chartId = 'chart'.$chartBean->id;
         $html .= "<canvas id='{$chartId}' width='800' height='800'></canvas>";
         $html .= <<<EOF
@@ -211,7 +237,10 @@ class AOR_Report extends Basic {
             var data = {$data};
             var ctx = document.getElementById("{$chartId}").getContext("2d");
             console.log('Creating new chart');
-            var myNewChart = new Chart(ctx).{$chartFunction}(data);
+            var config = {$config};
+            var chart = new Chart(ctx).{$chartFunction}(data, config);
+            var legend = chart.generateLegend();
+            $('#{$chartId}').after(legend);
         });
         </script>
 EOF;
