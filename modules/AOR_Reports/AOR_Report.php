@@ -430,6 +430,9 @@ class AOR_Report extends Basic {
         $html .= "<tbody>";
         $html .= "<tr>";
         foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
             if($field['total']){
                 $totalLabel = $field['label'] ." ".$app_list_strings['aor_total_options'][$field['total']];
                 $html .= "<th>{$totalLabel}</th>";
@@ -440,6 +443,9 @@ class AOR_Report extends Basic {
         $html .= "</tr>";
         $html .= "<tr>";
         foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
             if($field['total']){
                 $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
             }else{
