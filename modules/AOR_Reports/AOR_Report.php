@@ -97,158 +97,8 @@ class AOR_Report extends Basic {
         asort($app_list_strings['aor_moduleList']);
     }
 
-    private function getValidChartTypes(){
-        return array('bar','line','pie','radar','polar');
-    }
 
-    private function getBarChartData($reportData, $xName,$yName){
-        $data = array();
-        $data['labels'] = array();
-        $datasetData = array();
-        foreach($reportData as $row){
-            $data['labels'][] = $row[$xName];
-            $datasetData[] = $row[$yName];
-        }
 
-        $data['datasets'] = array();
-        $data['datasets'][] = array(
-            'fillColor' => "rgba(151,187,205,0.2)",
-            'strokeColor' => "rgba(151,187,205,1)",
-            'pointColor' => "rgba(151,187,205,1)",
-            'pointStrokeColor' => "#fff",
-            'pointHighlightFill' => "#fff",
-            'pointHighlightStroke' => "rgba(151,187,205,1)4",
-            'data'=>$datasetData);
-        return $data;
-    }
-
-    private function getLineChartData($reportData, $xName,$yName){
-        return $this->getBarChartData($reportData, $xName,$yName);
-    }
-
-    private function getBarChartConfig(){
-        return array();
-    }
-    private function getLineChartConfig(){
-        return $this->getBarChartConfig();
-    }
-
-    private function getRadarChartData($reportData, $xName,$yName){
-        return $this->getBarChartData($reportData, $xName,$yName);
-    }
-
-    private function getPolarChartData($reportData, $xName,$yName){
-        return $this->getPieChartData($reportData, $xName,$yName);
-    }
-
-    private function getRadarChartConfig(){
-        return array();
-    }
-
-    private function getPolarChartConfig(){
-        return $this->getPieChartConfig();
-    }
-    private function getPieChartConfig(){
-        $config = array();
-        $config['legendTemplate'] = "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>";
-        return $config;
-    }
-
-    private function getPieChartData($reportData, $xName,$yName){
-        $data = array();
-
-        foreach($reportData as $row){
-            if(!$row[$yName]){
-                continue;
-            }
-            $colour = $this->getColour($row[$xName]);
-            $data[] = array(
-                'value' => (int)$row[$yName],
-                'label' => $row[$xName],
-                'color' => $colour['main'],
-                'highlight' => $colour['highlight'],
-            );
-        }
-        return $data;
-    }
-
-    private function getColour($seed){
-        $hash = md5($seed);
-        $r = hexdec(substr($hash, 0, 2));
-        $g = hexdec(substr($hash, 2, 2));
-        $b = hexdec(substr($hash, 4, 2));
-        $highR = $r + 10;
-        $highG = $g + 10;
-        $highB = $b + 10;
-        $main = '#'.str_pad(dechex($r),2,'0',STR_PAD_LEFT)
-                    .str_pad(dechex($g),2,'0',STR_PAD_LEFT)
-                    .str_pad(dechex($b),2,'0',STR_PAD_LEFT);
-        $highlight = '#'.dechex($highR).dechex($highG).dechex($highB);
-        return array('main'=>$main,'highlight'=>$highlight);
-    }
-
-    private function build_single_chart(AOR_Chart $chartBean, array $reportData, array $fields){
-        $html = '';
-        if(!in_array($chartBean->type, $this->getValidChartTypes())){
-            return $html;
-        }
-        $x = $fields[$chartBean->x_field];
-        $y = $fields[$chartBean->y_field];
-        if(!$x || !$y){
-            //Malformed chart object - missing an axis field
-            return '';
-        }
-        $xName = str_replace(' ','_',$x->label) . $chartBean->x_field;
-        $yName = str_replace(' ','_',$y->label) . $chartBean->y_field;
-
-        switch($chartBean->type){
-            case 'polar':
-                $chartFunction = 'PolarArea';
-                $data = $this->getPolarChartData($reportData, $xName,$yName);
-                $config = $this->getPolarChartConfig();
-                break;
-            case 'radar':
-                $chartFunction = 'Radar';
-                $data = $this->getRadarChartData($reportData, $xName,$yName);
-                $config = $this->getRadarChartConfig();
-                break;
-            case 'pie':
-                $chartFunction = 'Pie';
-                $data = $this->getPieChartData($reportData, $xName,$yName);
-                $config = $this->getPieChartConfig();
-                break;
-            case 'line':
-                $chartFunction = 'Line';
-                $data = $this->getLineChartData($reportData, $xName,$yName);
-                $config = $this->getLineChartConfig();
-                break;
-            case 'bar':
-            default:
-                $chartFunction = 'Bar';
-                $data = $this->getBarChartData($reportData, $xName,$yName);
-                $config = $this->getBarChartConfig();
-                break;
-        }
-        $data = json_encode($data);
-        $config = json_encode($config);
-        $chartId = 'chart'.$chartBean->id;
-        $html .= "<h3>{$chartBean->name}</h3>";
-        $html .= "<canvas id='{$chartId}' width='400' height='400'></canvas>";
-        $html .= <<<EOF
-        <script>
-        $(document).ready(function(){
-            var data = {$data};
-            var ctx = document.getElementById("{$chartId}").getContext("2d");
-            console.log('Creating new chart');
-            var config = {$config};
-            var chart = new Chart(ctx).{$chartFunction}(data, config);
-            var legend = chart.generateLegend();
-            $('#{$chartId}').after(legend);
-        });
-        </script>
-EOF;
-        return $html;
-    }
 
     function build_report_chart(){
 
@@ -267,7 +117,7 @@ EOF;
         });
         $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
-            $html .= $this->build_single_chart($chart,$data,$fields);
+            $html .= $chart->buildChartHTML($data,$fields);
         }
         return $html;
     }
