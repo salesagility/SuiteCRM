@@ -740,14 +740,6 @@ EOF;
 
     }
 
-    function getAliasForField($module, AOR_Field $field){
-        $path = unserialize(base64_decode($field->module_path));
-        if(empty($path[0])){
-            return $module;
-        }
-
-    }
-
     function build_report_query_select($query = array(), $group_value =''){
         global $beanList;
 
@@ -939,10 +931,11 @@ EOF;
                     }
 
                     if($data['type'] == 'link' && $data['source'] == 'non-db'){
-                        $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,$data['relationship'])];
-                        $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
+                        $relModule = getRelatedModule($condition_module->module_dir,$data['relationship']);
+                        $new_field_module = new $beanList[$relModule];
+                        $query = $this->build_report_query_join($data['relationship'], $table_alias.':'.strtolower($relModule), $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
                         $field_module = $new_field_module;
-                        $table_alias = $data['relationship'];
+                        $table_alias = $table_alias.':'.$data['relationship'];
                         $condition->field = 'id';
                     }
                     if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
