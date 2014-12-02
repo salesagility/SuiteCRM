@@ -331,10 +331,23 @@ function fieldSort(){
             var j;
             for (j=0; j < input.length; j++) {
                 if (input[j].id.indexOf('aor_fields_field_order') != -1) {
-                    input[j].value = i;
+                    $('.chartDimensionSelect').each(function(){
+                        if($(this).data('value') == input[j].value){
+                            $(this).data('value',(i-1)+'tmp');
+                        }
+                    });
+                    input[j].value = i-1;
                 }
             }
         }
+        $('.chartDimensionSelect').each(function(){
+            var suffix = 'tmp';
+            var val = $(this).data('value')+'';
+            if(val && val.indexOf(suffix, val.length - suffix.length) !== -1){
+                $(this).data('value',val.slice(0,-3));
+            }
+        });
+        updateChartDimensionSelects();
     }
 }
 
