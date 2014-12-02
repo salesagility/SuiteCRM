@@ -18,6 +18,7 @@
                 }
                 if(target.closest('#fieldLines').length > 0){
                     addNodeToFields(node);
+                    updateChartDimensionSelects();
                 }else if(target.closest('#conditionLines').length > 0){
                     addNodeToConditions(node);
                 }

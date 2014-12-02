@@ -16,12 +16,13 @@ function loadChartLine(chart){
     if(chart['name']){
         title = chart['name'];
     }
-    span.append("<td><input type='text' name='aor_chart_title[]' placeholder='{/literal}{$MOD.LBL_CHART_TITLE}{literal}' value='"+title+"'></td>");
+    var placeholder = SUGAR.language.translate('AOR_Reports','LBL_CHART_TITLE');
+    span.append("<td><input type='text' name='aor_chart_title[]' placeholder='"+placeholder+"' value='"+title+"'></td>");
 
     var cell = $('<td></td>');
     var select = $("<select name='aor_chart_type[]'></select>");
     $.each(SUGAR.language.languages['app_list_strings']['aor_chart_types'],function(key,value){
-        var option = $('<option></option');
+        var option = $('<option></option>');
         option.val(key);
         option.text(value);
         if(chart['type'] === key){
@@ -43,12 +44,13 @@ function loadChartLine(chart){
 }
 
 function updateChartDimensionSelects(){
-    var options = {};
+    var options = [];
     for(var x = 0; x < fieldln_count; x++){
-        options[x] = $('#aor_fields_module_path_display'+x).text() + " - "+$('#aor_fields_label'+x).val();
+        options[$('#aor_fields_field_order'+x).val()] = $('#aor_fields_module_path_display'+x).text() + " - "+$('#aor_fields_label'+x).val();
     }
     $('#chartLines .chartDimensionSelect').each(function(index){
         var select = $(this);
+        select.empty();
         $.each(options, function(key,val){
             var selected = '';
             if(key == select.data('value')){
