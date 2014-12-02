@@ -305,7 +305,7 @@ class AOW_WorkFlow extends Basic {
                                                 $amount = 0-$amount;
                                             }
                                             $value = $businessHours->addBusinessHours($amount);
-                                            $value = $timedate->asDb( $value );
+                                            $value = "'".$timedate->asDb( $value )."'";
                                             break;
                                         }
                                         //No business hours module found - fall through.
