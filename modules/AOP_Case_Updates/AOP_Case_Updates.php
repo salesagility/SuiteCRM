@@ -56,17 +56,23 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
                 $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
             }
             $addDelimiter = false;
+            if($emails && $email_template){
+                $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
+                $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter,$this->contact_id);
+            }
         }elseif($this->assigned_user_id && !$this->internal){
-            $emails = $this->getEmailForContact();
             if($aop_config['contact_email_template_id']){
                 $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
                 $signature = $current_user->getDefaultSignature();
             }
-        }
-
-        if($emails && $email_template){
-            $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
-            $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter);
+            if($email_template) {
+                foreach ($this->getContacts() as $contact) {
+                    $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
+                    $emails = array();
+                    $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
+                    $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter, $contact->id);
+                }
+            }
         }
     }
 
@@ -78,13 +84,10 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         return $case;
     }
 
-    public function getContact(){
+    public function getContacts(){
         $case = $this->getCase();
         if($case){
-            $contacts = $case->get_linked_beans("contacts","Contacts");
-            if($contacts){
-                return $contacts[0];
-            }
+            return $case->get_linked_beans("contacts","Contacts");
         }
         return null;
     }
@@ -111,16 +114,8 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         }
         return array();
     }
-    private function getEmailForContact(){
-        $addresses = array();
-        $contact = $this->getContact();
-        if($contact){
-            $addresses[] = $contact->emailAddress->getPrimaryAddress($contact);
-        }
-        return $addresses;
-    }
 
-    private function populateTemplate(EmailTemplate $template, $addDelimiter = true){
+    private function populateTemplate(EmailTemplate $template, $addDelimiter = true, $contactId = null){
         global $app_strings, $sugar_config;
         //Order of beans seems to matter here so we place contact first.
         $userId = '';
@@ -128,7 +123,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         if(!$user){
             $this->getUser();
         }
-        $beans = array("Contacts" => $this->getContact()->id,"Cases" => $this->getCase()->id, "Users" => $user->id, "AOP_Case_Updates" => $this->id);
+        $beans = array("Contacts" => $contactId,"Cases" => $this->getCase()->id, "Users" => $user->id, "AOP_Case_Updates" => $this->id);
         $ret = array();
         $ret['subject'] = from_html(aop_parse_template($template->subject,$beans));
         $body = aop_parse_template(str_replace("\$sugarurl",$sugar_config['site_url'],$template->body_html),$beans);
@@ -142,7 +137,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         return $ret;
     }
 
-    private function sendEmail($emails, $template, $signature = array(), $caseId = null, $addDelimiter = true){
+    private function sendEmail($emails, $template, $signature = array(), $caseId = null, $addDelimiter = true, $contactId = null){
         $GLOBALS['log']->info("AOPCaseUpdates: sendEmail called");
         require_once("include/SugarPHPMailer.php");
         $mailer=new SugarPHPMailer();
@@ -162,7 +157,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         }
         $emailSettings = getPortalEmailSettings();
         $GLOBALS['log']->info("AOPCaseUpdates: sendEmail email portal settings are ".print_r($emailSettings,true));
-        $text = $this->populateTemplate($template, $addDelimiter);
+        $text = $this->populateTemplate($template, $addDelimiter, $contactId);
         $mailer->Subject = $text['subject'];
         $mailer->Body = $text['body'] . $signatureHTML;
         $mailer->IsHTML(true);
