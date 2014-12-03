@@ -379,7 +379,7 @@ function addNodeToFields(node){
         {
             'label' : node.name,
             'module_path' : node.module_path,
-            'module_path_display' : node.module_path,
+            'module_path_display' : node.module_path_display,
             'field' : node.id,
             'field_label' : node.name});
 }

@@ -104,7 +104,8 @@ function getModuleTreeData($module){
     $fields = array(
         $module =>  array('label' => $app_list_strings['moduleList'][$module],
                         'type' => 'module',
-                        'module' => $module)
+                        'module' => $module,
+                        'module_label'=> $app_list_strings['moduleList'][$module])
     );
 
     if ($module != '') {
@@ -120,10 +121,12 @@ function getModuleTreeData($module){
 
                 if(isset($arr['vname']) && $arr['vname'] != '') {
                     $label = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
+                    $module_label = trim(translate($arr['vname'],$mod->module_dir),':');
                 }else {
                     $label = $app_list_strings['moduleList'][$rel_module].' : '. $name;
+                    $module_label = $name;
                 }
-                $sort_fields[$name] = array('label'=>$label,'type'=>'relationship','module' => $rel_module);
+                $sort_fields[$name] = array('label'=>$label,'type'=>'relationship','module' => $rel_module,'module_label'=>$module_label);
                 if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
                     if(isset($fields[$arr['id_name']])){
                         unset( $fields[$arr['id_name']]);

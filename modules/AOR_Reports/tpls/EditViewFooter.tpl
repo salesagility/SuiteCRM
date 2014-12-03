@@ -63,7 +63,8 @@
                                             'load_on_demand' : false,
                                             type: 'field',
                                             module: node.module,
-                                            module_path : node.module_path
+                                            module_path : node.module_path,
+                                            module_path_display: node.module_path_display
                                         });
                             }
                         }
@@ -81,14 +82,21 @@
             for(var field in relData){
                 if(field) {
                     var modulePath = '';
+                    var modulePathDisplay = '';
                     if(relData[field]['type'] == 'relationship') {
                         modulePath = field;
                         if (node) {
                             modulePath = node.module_path + ":" + field;
+                            modulePathDisplay = node.module_path_display + " : "+relData[field]['module_label'];
+                        }else{
+                            modulePathDisplay = $('#report_module option:selected').text() + ' : ' + relData[field]['module_label'];
                         }
                     }else{
                         if (node) {
                             modulePath = node.module_path;
+                            modulePathDisplay = node.module_path_display;
+                        }else{
+                            modulePathDisplay = $('#report_module option:selected').text() + ' : ' + relData[field]['module_label'];
                         }
                     }
                     var newNode = {
@@ -97,12 +105,11 @@
                         load_on_demand : true,
                         type: relData[field]['type'],
                         module: relData[field]['module'],
-                        module_path: modulePath};
+                        module_path: modulePath,
+                        module_path_display: modulePathDisplay};
                     treeData.push(newNode);
                 }
             }
-         //   console.log("treeData is ");
-         //   console.log(treeData);
             $('#fieldTree').tree('loadData',treeData, node);
             if(node){
                 node.loaded = true;
