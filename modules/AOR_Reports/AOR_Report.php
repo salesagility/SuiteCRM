@@ -347,6 +347,9 @@ class AOR_Report extends Basic {
             $field_alias = $field_bean->table_name;
             if($path[0] != $this->report_module){
                 foreach($path as $rel){
+                    if(empty($rel)){
+                        continue;
+                    }
                     $field_module = getRelatedModule($field_module,$rel);
                     $field_alias = $field_alias . ':'.$rel;
                 }
@@ -391,7 +394,9 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
-                    if($att['link'] && $links) $html .= "<a href='index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                    if($att['link'] && $links){
+                        $html .= "<a href='index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                    }
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
 
@@ -702,8 +707,9 @@ class AOR_Report extends Basic {
                             $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
                             $params['left_join_table_alias'] = $this->db->quoteIdentifier($alias);
                         }else{
-                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                            $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
                             $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
+                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
                         }
                         $linkAlias = $parentAlias."|".$alias;
                         $params['join_table_link_alias'] = $this->db->quoteIdentifier($linkAlias);
