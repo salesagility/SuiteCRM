@@ -326,7 +326,7 @@ function addNodeToConditions(node){
         {
             'label' : node.name,
             'module_path' : node.module,
-            'module_path_display' : node.module,
+            'module_path_display' : node.module_path_display,
             'field' : node.id,
             'field_label' : node.name});
 }
