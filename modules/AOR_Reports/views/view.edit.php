@@ -24,6 +24,7 @@
  */
 
 require_once('include/MVC/View/views/view.edit.php');
+require_once 'modules/AOW_WorkFlow/aow_utils.php';
 class AOR_ReportsViewEdit extends ViewEdit {
 
     public function __construct() {
@@ -54,22 +55,19 @@ class AOR_ReportsViewEdit extends ViewEdit {
         echo "total_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_total_options'], '')))."\";";
         echo "</script>";
 
-        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY field_order ASC";
-        $result = $this->bean->db->query($sql);
-
-        $fields = array();
-        while ($row = $this->bean->db->fetchByAssoc($result)) {
-            $field_name = new AOR_Field();
-            $field_name->retrieve($row['id']);
-            $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
-            $arr = $field_name->toArray();
-            $arr['module_path_display'] = $field_name->module_path ? $field_name->module_path : $this->bean->report_module;
-            $arr['field_label'] = $field_name->field;
-            $fields[] = $arr;
-        }
+        $fields = $this->getFieldLines();
         echo "<script>var fieldLines = ".json_encode($fields)."</script>";
 
+        $conditions = $this->getConditionLines();
+        echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
 
+        $charts = $this->getChartLines();
+        echo "<script>var chartLines = ".json_encode($charts)."</script>";
+
+        parent::preDisplay();
+    }
+
+    private function getConditionLines(){
         $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY condition_order ASC";
         $result = $this->bean->db->query($sql);
         $conditions = array();
@@ -81,18 +79,63 @@ class AOR_ReportsViewEdit extends ViewEdit {
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
-            $condition_item['module_path_display'] = $condition_name->module_path ? $condition_name->module_path : $this->bean->report_module;
-            $condition_item['field_label'] = $condition_name->field;
+            $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field);
+            $condition_item['module_path_display'] = $display['module'];
+            $condition_item['field_label'] = $display['field'];
             $conditions[] = $condition_item;
         }
-        echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
+        return $conditions;
+    }
+
+    private function getFieldLines(){
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->bean->db->query($sql);
+
+        $fields = array();
+        while ($row = $this->bean->db->fetchByAssoc($result)) {
+            $field_name = new AOR_Field();
+            $field_name->retrieve($row['id']);
+            $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
+            $arr = $field_name->toArray();
+            $display = $this->getDisplayForField($field_name->module_path, $field_name->field);
+            $arr['module_path_display'] = $display['module'];
+            $arr['field_label'] = $display['field'];
+            $fields[] = $arr;
+        }
+        return $fields;
+    }
+
+    /**
+     * Returns the display labels for a module path and field.
+     * @param $modulePath
+     * @param $field
+     * @return array
+     */
+    private function getDisplayForField($modulePath, $field){
+        $modulePathDisplay = array();
+        $currentBean = BeanFactory::getBean($this->bean->report_module);
+        $modulePathDisplay[] = $currentBean->module_name;
+        $split = explode(':',$modulePath);
+        foreach($split as $relName){
+            if(empty($relName)){
+                continue;
+            }
+            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
+            $currentBean = BeanFactory::getBean($thisModule);
+            $modulePathDisplay[] = $currentBean->module_name;
+        }
+        $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
+        $fieldDisplay = translate($fieldDisplay,$currentBean->module_dir);
+        $fieldDisplay = trim($fieldDisplay,':');
+        return array('field'=>$fieldDisplay,'module'=>implode(' : ',$modulePathDisplay));
+    }
+
+    private function getChartLines(){
         $charts = array();
         foreach($this->bean->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             $charts[] = $chart->toArray();
         }
-        echo "<script>var chartLines = ".json_encode($charts)."</script>";
-
-        parent::preDisplay();
+        return $charts;
     }
 
 
