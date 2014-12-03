@@ -96,7 +96,7 @@
                             modulePath = node.module_path;
                             modulePathDisplay = node.module_path_display;
                         }else{
-                            modulePathDisplay = $('#report_module option:selected').text() + ' : ' + relData[field]['module_label'];
+                            modulePathDisplay = relData[field]['module_label'];
                         }
                     }
                     var newNode = {
