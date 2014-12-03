@@ -120,9 +120,17 @@ class AOR_ReportsViewEdit extends ViewEdit {
             if(empty($relName)){
                 continue;
             }
+            if(!empty($currentBean->field_name_map[$relName]['vname'])){
+                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'],$currentBean->module_dir),':');
+            }
             $thisModule = getRelatedModule($currentBean->module_dir, $relName);
             $currentBean = BeanFactory::getBean($thisModule);
-            $modulePathDisplay[] = $currentBean->module_name;
+
+            if(!empty($moduleLabel)){
+                $modulePathDisplay[] = $moduleLabel;
+            }else {
+                $modulePathDisplay[] = $currentBean->module_name;
+            }
         }
         $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
         $fieldDisplay = translate($fieldDisplay,$currentBean->module_dir);
