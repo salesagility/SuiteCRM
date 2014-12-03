@@ -214,13 +214,15 @@ class AOR_Chart extends Basic {
         $html .= <<<EOF
         <script>
         $(document).ready(function(){
-            var data = {$data};
-            var ctx = document.getElementById("{$chartId}").getContext("2d");
-            console.log('Creating new chart');
-            var config = {$config};
-            var chart = new Chart(ctx).{$chartFunction}(data, config);
-            var legend = chart.generateLegend();
-            $('#{$chartId}').after(legend);
+            SUGAR.util.doWhen("typeof Chart != 'undefined'", function(){
+                var data = {$data};
+                var ctx = document.getElementById("{$chartId}").getContext("2d");
+                console.log('Creating new chart');
+                var config = {$config};
+                var chart = new Chart(ctx).{$chartFunction}(data, config);
+                var legend = chart.generateLegend();
+                $('#{$chartId}').after(legend);
+            });
         });
         </script>
 EOF;
