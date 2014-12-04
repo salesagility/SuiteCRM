@@ -658,7 +658,7 @@ class AOR_Report extends Basic {
                 }
 
                 if($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
-                    $query['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
+                    $query['select'][$table_alias.'_currency_id'] = $this->db->quoteIdentifier($table_alias).".currency_id AS '".$table_alias."_currency_id'";
                 }
 
                 if((isset($data['source']) && $data['source'] == 'custom_fields')) {
