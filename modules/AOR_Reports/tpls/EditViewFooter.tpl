@@ -185,9 +185,9 @@
 </div>
 <div class="edit view edit508" id="detailpanel_charts" style="width: 80%; float: right;">
     <h4>{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
-    <div id="chartLines"  style="min-height: 50px;">
+    <div id="chartLines">
         <table>
-            <thead>
+            <thead id="chartHead" style="display: none;">
                 <tr>
                     <td></td>
                     <td>{$MOD.LBL_CHART_TITLE}</td>
