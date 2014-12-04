@@ -122,6 +122,9 @@ class AOR_ReportsViewEdit extends ViewEdit {
         $currentBean = BeanFactory::getBean($this->bean->report_module);
         $modulePathDisplay[] = $currentBean->module_name;
         $split = explode(':',$modulePath);
+        if($split && $split[0] == $currentBean->module_dir){
+            array_shift($split);
+        }
         foreach($split as $relName){
             if(empty($relName)){
                 continue;
