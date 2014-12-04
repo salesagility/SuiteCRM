@@ -62,12 +62,15 @@ class AOR_ReportsViewEdit extends ViewEdit {
         echo "<script>var conditionLines = ".json_encode($conditions)."</script>";
 
         $charts = $this->getChartLines();
-        echo "<script>var chartLines = ".json_encode($charts)."</script>";
+        echo "<script>var chartLines = ".json_encode($charts).";</script>";
 
         parent::preDisplay();
     }
 
     private function getConditionLines(){
+        if(!$this->bean->id){
+            return array();
+        }
         $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY condition_order ASC";
         $result = $this->bean->db->query($sql);
         $conditions = array();
@@ -88,6 +91,9 @@ class AOR_ReportsViewEdit extends ViewEdit {
     }
 
     private function getFieldLines(){
+        if(!$this->bean->id){
+            return array();
+        }
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->bean->id."' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->bean->db->query($sql);
 
@@ -140,6 +146,9 @@ class AOR_ReportsViewEdit extends ViewEdit {
 
     private function getChartLines(){
         $charts = array();
+        if(!$this->bean->id){
+            return array();
+        }
         foreach($this->bean->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             $charts[] = $chart->toArray();
         }
