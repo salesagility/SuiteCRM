@@ -400,7 +400,7 @@ if($error_found){
         <hr>
     <div id="installcontrols">
         <form action="install3.php" method="post" name="theForm" id="theForm">
-            <input class="button" type="button" onclick="window.open('http://www.suitecrm.com/support');" value="{$mod_strings['LBL_HELP']}" />
+            <input class="button" type="button" onclick="window.open('http://www.suitecrm.com/forum/index');" value="{$mod_strings['LBL_HELP']}" />
             <input class="button" type="button" name="Re-check" value="{$mod_strings['LBL_CHECKSYS_RECHECK']}" onclick="callSysCheck();" id="button_next2"/>
         </form>
     </div>
