@@ -3,6 +3,9 @@ function loadChartLine(chart){
     var removeButton = $('<button type="button"><img src="themes/default/images/id-ff-remove-nobg.png" alt=""></button>');
     removeButton.click(function(){
         removeButton.closest('tr').remove();
+        if($("[name='aor_chart_id\\[\\]']").size() == 0){
+            $('#chartHead').hide();
+        }
     });
     var cell = $('<td></td>');
     cell.append(removeButton);
@@ -41,6 +44,7 @@ function loadChartLine(chart){
     span.append("<td><select name='aor_chart_y_field[]' class='chartDimensionSelect' data-value='"+chart.y_field+"'></select></td>");
 
     $('#chartLines tbody').append(span);
+    $('#chartHead').show();
 }
 
 function updateChartDimensionSelects(){
