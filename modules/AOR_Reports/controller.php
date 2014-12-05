@@ -62,7 +62,8 @@ class AOR_ReportsController extends SugarController {
     }
 
     protected function action_changeReportPage(){
-        echo $this->bean->build_report_html($_REQUEST['offset'], true,$_REQUEST['group']);
+        $tableId = !empty($_REQUEST['table_id']) ? $_REQUEST['table_id'] : '';
+        echo $this->bean->build_report_html($_REQUEST['offset'], true,$_REQUEST['group'],$tableId);
         die();
     }
 
