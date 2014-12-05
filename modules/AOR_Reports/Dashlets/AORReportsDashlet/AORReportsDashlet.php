@@ -9,7 +9,6 @@ class AORReportsDashlet extends Dashlet {
 
     function AORReportsDashlet($id, $def = null) {
 		global $current_user, $app_strings;
-		require('modules/AOR_Reports/Dashlets/AORReportsDashlet/AORReportsDashlet.data.php');
 
         parent::Dashlet($id);
         $this->isConfigurable = true;
