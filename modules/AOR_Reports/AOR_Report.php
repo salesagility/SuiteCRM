@@ -100,7 +100,7 @@ class AOR_Report extends Basic {
 
 
 
-    function build_report_chart(){
+    function build_report_chart($chartIds = null){
 
         $result = $this->db->query($this->build_report_query());
         $data = array();
@@ -117,6 +117,9 @@ class AOR_Report extends Basic {
         });
         $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            if($chartIds != null && !in_array($chart->id,$chartIds)){
+                continue;
+            }
             $html .= $chart->buildChartHTML($data,$fields);
         }
         return $html;
@@ -796,7 +799,7 @@ class AOR_Report extends Basic {
                     if($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->field = $data['id_name'];
                         $data_new = $condition_module->field_defs[$condition->field];
-                        if($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
+                        if(!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
                             $data_new['type'] = 'link';
                             $data_new['relationship'] = $data['link'];
                         }
