@@ -117,7 +117,7 @@ class AOR_Report extends Basic {
         });
         $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
-            if($chartIds != null && !in_array($chart->id,$chartIds)){
+            if($chartIds !== null && !in_array($chart->id,$chartIds)){
                 continue;
             }
             $html .= $chart->buildChartHTML($data,$fields);
