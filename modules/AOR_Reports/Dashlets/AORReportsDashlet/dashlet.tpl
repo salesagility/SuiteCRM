@@ -1,9 +1,6 @@
 {if !$onlyCharts}
     {literal}
         <script>
-            $(document).ready(function(){
-                changeReportPage('{/literal}{$report_id}{literal}',0,'','{/literal}{$dashlet_id}{literal}');
-            });
             if (typeof changeReportPage !== "function") {
                 function changeReportPage(record, offset, group_value, table_id){
                     $.get('index.php',
@@ -18,6 +15,10 @@
                     );
                 }
             }
+            $(document).ready(function(){
+                changeReportPage('{/literal}{$report_id}{literal}',0,'','{/literal}{$dashlet_id}{literal}');
+            });
+
         </script>
     {/literal}
     <div class="aor_report_contents">
