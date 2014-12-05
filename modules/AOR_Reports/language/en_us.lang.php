@@ -75,4 +75,6 @@ $mod_strings = array (
   'LBL_DASHLET_REPORT' => 'Report',
   'LBL_DASHLET_CHOOSE_REPORT' => 'Please choose a report',
   'LBL_DASHLET_SAVE' => 'Save',
+  'LBL_DASHLET_CHARTS' => 'Charts',
+  'LBL_DASHLET_ONLY_CHARTS' => 'Only show charts',
 );

@@ -36,7 +36,7 @@
                                             "",
                                             true,
                                             false,
-                                            {"call_back_function":"set_return","form_name":"ConfigureReportDashlet","field_to_name_array":{"id":"aor_report_id","name":"aor_report_name"}},
+                                            {"call_back_function":"aor_report_set_return","form_name":"ConfigureReportDashlet","field_to_name_array":{"id":"aor_report_id","name":"aor_report_name"}},
                                             "single",
                                             true
                                     );' >
@@ -81,6 +81,25 @@
                 </td>
             </tr>
             <tr>
+                <td scope='row'><label for="onlyCharts{$id}">
+                        {$MOD.LBL_DASHLET_ONLY_CHARTS}
+                    </label>
+                </td>
+                <td>
+                    <input type='checkbox' id='onlyCharts{$id}' name='onlyCharts' {if $onlyCharts}checked='checked'{/if}>
+                </td>
+            </tr>
+            <tr>
+                <td scope='row'>
+                    {$MOD.LBL_DASHLET_CHARTS}
+                </td>
+                <td>
+                    <select multiple="multiple" name="charts[]" id="charts{$id}">
+                        {$chartOptions}
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td align='right'>
                     <input type='submit' class='button' value='{$MOD.LBL_DASHLET_SAVE}'>
                 </td>
@@ -88,3 +107,26 @@
         </table>
     </form>
 </div>
+<script>
+    {literal}
+    function loadCharts(reportId){
+        $.getJSON('index.php',
+                {module : 'AOR_Reports',
+                    record : reportId,
+                    to_pdf : 1,
+                    action : 'getChartsForReport'}).done(
+                function(data){
+                    var chartSelect = $('#charts{/literal}{$id}{literal}');
+                    chartSelect.empty();
+                    $.each(data, function(key,val){
+                        chartSelect.append($('<option></option').val(key).text(val));
+                    });
+                }
+        );
+    }
+    function aor_report_set_return(ret){
+        loadCharts(ret.name_to_value_array.aor_report_id);
+        set_return(ret);
+    }
+    {/literal}
+</script>
