@@ -76,4 +76,9 @@ $mod_strings = array (
   'LBL_CHART_TYPE' => 'тип',
   'LBL_CHART_X_FIELD' => 'Ось X',
   'LBL_CHART_Y_FIELD' => 'Ось Y',
+  'LBL_AOR_REPORTS_DASHLET' => 'Отчёты',
+  'LBL_DASHLET_TITLE' => 'название',
+  'LBL_DASHLET_REPORT' => 'Отчёты',
+  'LBL_DASHLET_CHOOSE_REPORT' => 'Пожалуйста, выберите отчет',
+  'LBL_DASHLET_SAVE' => 'Сохранить',
 );

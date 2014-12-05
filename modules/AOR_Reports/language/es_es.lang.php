@@ -70,4 +70,9 @@ $mod_strings = array (
   'LBL_CHART_TYPE' => 'Tipo',
   'LBL_CHART_X_FIELD' => 'Eje X',
   'LBL_CHART_Y_FIELD' => 'Eje Y',
+  'LBL_AOR_REPORTS_DASHLET' => 'Reportes',
+  'LBL_DASHLET_TITLE' => 'Título',
+  'LBL_DASHLET_REPORT' => 'Report',
+  'LBL_DASHLET_CHOOSE_REPORT' => 'Por favor, elija un informe',
+  'LBL_DASHLET_SAVE' => 'Guardar',
 );
