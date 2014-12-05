@@ -240,7 +240,7 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_report_html($offset = -1, $links = true, $group_value = ''){
+    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = ''){
 
         global $beanList;
 
@@ -292,19 +292,19 @@ class AOR_Report extends Basic {
                     <img src='".SugarThemeRegistry::current()->getImageURL('previous_off.gif')."' alt='Previous' align='absmiddle' border='0'>
                 </button>";
             } else {
-                $html .="<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(0,\"".$group_value."\")'>
+                $html .="<button type='button' id='listViewStartButton_top' name='listViewStartButton' title='Start' class='button' onclick='changeReportPage(\"".$this->id."\",0,\"".$group_value."\",\"".$tableIdentifier."\")'>
                     <img src='".SugarThemeRegistry::current()->getImageURL('start.gif')."' alt='Start' align='absmiddle' border='0'>
                 </button>
-                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(".$previous_offset.",\"".$group_value."\")'>
+                <button type='button' id='listViewPrevButton_top' name='listViewPrevButton' class='button' title='Previous' onclick='changeReportPage(\"".$this->id."\",".$previous_offset.",\"".$group_value."\",\"".$tableIdentifier."\")'>
                     <img src='".SugarThemeRegistry::current()->getImageURL('previous.gif')."' alt='Previous' align='absmiddle' border='0'>
                 </button>";
             }
             $html .=" <span class='pageNumbers'>(".$start ." - ".$end ." of ". $total_rows .")</span>";
             if($next_offset < $total_rows){
-                $html .="<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(".$next_offset.",\"".$group_value."\")'>
+                $html .="<button type='button' id='listViewNextButton_top' name='listViewNextButton' title='Next' class='button' onclick='changeReportPage(\"".$this->id."\",".$next_offset.",\"".$group_value."\",\"".$tableIdentifier."\")'>
                         <img src='".SugarThemeRegistry::current()->getImageURL('next.gif')."' alt='Next' align='absmiddle' border='0'>
                     </button>
-                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(".$last_offset.",\"".$group_value."\")'>
+                     <button type='button' id='listViewEndButton_top' name='listViewEndButton' title='End' class='button' onclick='changeReportPage(\"".$this->id."\",".$last_offset.",\"".$group_value."\",\"".$tableIdentifier."\")'>
                         <img src='".SugarThemeRegistry::current()->getImageURL('end.gif')."' alt='End' align='absmiddle' border='0'>
                     </button>";
             } else {
@@ -425,7 +425,7 @@ class AOR_Report extends Basic {
         $html .= $this->getTotalHtml($fields,$totals);
 
         $html .= "</table>";
-        $html .= $this->build_report_chart();
+
         return $html;
     }
 
