@@ -75,6 +75,9 @@ class AOR_Field extends Basic {
                         } else if($field_def['name'] == 'value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key.$field_def['name']][$i]);
                         }
+                        if($field_def['name'] == 'module_path'){
+                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize(explode(":",$post_data[$key.$field_def['name']][$i])));
+                        }
                         $field->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
                     }
 

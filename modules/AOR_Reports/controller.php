@@ -35,10 +35,22 @@ class AOR_ReportsController extends SugarController {
             } else {
                 $module = $_REQUEST['aor_module'];
             }
-            echo getModuleFields($module,$_REQUEST['view'],$_REQUEST['aor_value']);
+            $val = !empty($_REQUEST['aor_value']) ? $_REQUEST['aor_value'] : '';
+            echo getModuleFields($module,$_REQUEST['view'],$val);
         }
         die;
 
+    }
+
+    protected function action_getModuleTreeData()
+    {
+        if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
+            ob_start();
+            $data = getModuleTreeData($_REQUEST['aor_module']);
+            ob_clean();
+            echo $data;
+        }
+        die;
     }
 
     protected function action_getModuleRelationships()
@@ -50,8 +62,28 @@ class AOR_ReportsController extends SugarController {
     }
 
     protected function action_changeReportPage(){
-        echo $this->bean->build_report_html($_REQUEST['offset'], true,$_REQUEST['group']);
+        $tableId = !empty($_REQUEST['table_id']) ? $_REQUEST['table_id'] : '';
+        $group = !empty($_REQUEST['group']) ? $_REQUEST['group'] : '';
+        $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
+        echo $this->bean->build_report_html($offset, true,$group,$tableId);
         die();
+    }
+
+    protected function action_getChartsForReport(){
+        if(empty($_REQUEST['record'])){
+            echo json_encode(array());
+            return;
+        }
+        $report = BeanFactory::getBean('AOR_Reports',$_REQUEST['record']);
+        if(!$report){
+            echo json_encode(array());
+            return;
+        }
+        $charts = array();
+        foreach($report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            $charts[$chart->id] = $chart->name;
+        }
+        echo json_encode($charts);
     }
 
     protected function action_addToProspectList(){

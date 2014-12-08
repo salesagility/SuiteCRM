@@ -43,6 +43,9 @@ array (
         ),
       ),
       'useTabs' => false,
+        'form' => array(
+            'footerTpl' => 'modules/AOR_Reports/tpls/EditViewFooter.tpl'
+        ),
     ),
     'panels' => 
     array (
@@ -68,20 +71,6 @@ array (
           0 => 'description',
         ),
       ),
-    'Fields' =>
-    array (
-        0 =>
-        array (
-            0 => 'field_lines',
-        ),
-    ),
-    'Conditions' =>
-    array (
-        0 =>
-        array (
-            0 => 'condition_lines',
-        ),
-    ),
     ),
   ),
 );
