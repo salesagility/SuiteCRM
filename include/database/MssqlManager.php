@@ -1035,6 +1035,14 @@ class MssqlManager extends DBManager
     }
 
     /**
+     * @see DBManager::quoteIdentifier()
+     */
+    public function quoteIdentifier($string)
+    {
+        return '['.$string.']';
+    }
+
+    /**
      * @see DBManager::tableExists()
      */
     public function tableExists($tableName)

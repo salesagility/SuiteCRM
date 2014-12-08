@@ -195,6 +195,28 @@ $dictionary['AOR_Field'] = array(
             'studio' => 'visible',
             'dependency' => false,
         ),
+        'total' =>
+            array (
+                'required' => false,
+                'name' => 'total',
+                'vname' => 'LBL_TOTAL',
+                'type' => 'enum',
+                'massupdate' => 0,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'len' => 100,
+                'size' => '20',
+                'options' => 'aor_total_options',
+                'studio' => 'visible',
+                'dependency' => false,
+            ),
         'sort_order' =>
         array (
             'required' => false,
