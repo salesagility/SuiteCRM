@@ -706,9 +706,16 @@ class AOR_Report extends Basic {
                     if($module->load_relationship($name)){
                         $params['join_type'] = 'LEFT JOIN';
                         if($module->$name->relationship_type != 'one-to-many'){
-                            $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
-                            $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
-                            $params['left_join_table_alias'] = $this->db->quoteIdentifier($alias);
+                            if($module->$name->getSide() == REL_LHS){
+                                $params['right_join_table_alias'] = $this->db->quoteIdentifier($alias);
+                                $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
+                                $params['left_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                            }else{
+                                $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
+                                $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
+                                $params['left_join_table_alias'] = $this->db->quoteIdentifier($alias);
+                            }
+
                         }else{
                             $params['right_join_table_alias'] = $this->db->quoteIdentifier($parentAlias);
                             $params['join_table_alias'] = $this->db->quoteIdentifier($alias);
