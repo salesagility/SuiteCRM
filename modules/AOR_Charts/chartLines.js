@@ -49,8 +49,15 @@ function loadChartLine(chart){
 
 function updateChartDimensionSelects(){
     var options = [];
+    var ln = 0;
     for(var x = 0; x < fieldln_count; x++){
-        options[$('#aor_fields_field_order'+x).val()] = $('#aor_fields_module_path_display'+x).text() + " - "+$('#aor_fields_label'+x).val();
+        if($('#aor_fields_deleted'+x).val() === '1'){
+            fieldln_count++;
+            continue;
+        }else if($('#aor_fields_deleted'+x).val() === '0'){
+            options[ln] = $('#aor_fields_module_path_display'+x).text() + " - "+$('#aor_fields_label'+x).val();
+            ln++;
+        }
     }
     $('#chartLines .chartDimensionSelect').each(function(index){
         var select = $(this);
