@@ -7,6 +7,10 @@ require_once('include/Dashlets/Dashlet.php');
 
 class AORReportsDashlet extends Dashlet {
 
+    var $report;
+    var $charts;
+    var $onlyCharts;
+
     function AORReportsDashlet($id, $def = array()) {
 		global $current_user, $app_strings;
 
@@ -18,7 +22,9 @@ class AORReportsDashlet extends Dashlet {
         }else{
             $this->title = $def['dashletTitle'];
         }
-        $this->report = BeanFactory::getBean('AOR_Reports',$def['aor_report_id']);
+        if(!empty($def['aor_report_id'])) {
+            $this->report = BeanFactory::getBean('AOR_Reports', $def['aor_report_id']);
+        }
         $this->onlyCharts = !empty($def['onlyCharts']);
         $this->charts = !empty($def['charts']) ? $def['charts'] : array();
     }
@@ -37,14 +43,18 @@ class AORReportsDashlet extends Dashlet {
     }
 
     function getChartHTML(){
-        $chartHTML = $this->report->build_report_chart($this->charts);
-        return $chartHTML;
+        if(!empty($this->report->id)) {
+            return $this->report->build_report_chart($this->charts);
+        }else{
+            return '';
+        }
     }
 
 	function process() {
     }
 
     public function displayOptions() {
+        ob_start();
         global $current_language;
         $mod_strings = return_module_language($current_language, 'AOR_Reports');
         $optionsSmarty = new Sugar_Smarty();
@@ -55,13 +65,16 @@ class AORReportsDashlet extends Dashlet {
         $optionsSmarty->assign('aor_report_name', $this->report->name);
         $optionsSmarty->assign('onlyCharts', $this->onlyCharts);
         $charts = array();
-        foreach($this->report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
-            $charts[$chart->id] = $chart->name;
+        if(!empty($this->report->id)){
+            foreach($this->report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+                $charts[$chart->id] = $chart->name;
+            }
         }
+
         $chartOptions = get_select_options_with_id($charts,$this->charts);
         $optionsSmarty->assign('chartOptions', $chartOptions);
         $optionsTemplate = get_custom_file_if_exists('modules/AOR_Reports/Dashlets/AORReportsDashlet/dashletConfigure.tpl');
-
+        ob_clean();
         return $optionsSmarty->fetch($optionsTemplate);
     }
     public function saveOptions($req) {
