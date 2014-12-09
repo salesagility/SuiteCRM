@@ -65,7 +65,10 @@ class AOR_ReportsController extends SugarController {
         $tableId = !empty($_REQUEST['table_id']) ? $_REQUEST['table_id'] : '';
         $group = !empty($_REQUEST['group']) ? $_REQUEST['group'] : '';
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
-        echo $this->bean->build_report_html($offset, true,$group,$tableId);
+        if(!empty($this->bean->id)){
+            echo $this->bean->build_report_html($offset, true,$group,$tableId);
+        }
+
         die();
     }
 

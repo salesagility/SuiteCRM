@@ -16,7 +16,9 @@
                 }
             }
             $(document).ready(function(){
-                changeReportPage('{/literal}{$report_id}{literal}',0,'','{/literal}{$dashlet_id}{literal}');
+                if('{/literal}{$report_id}{literal}'){
+                    changeReportPage('{/literal}{$report_id}{literal}',0,'','{/literal}{$dashlet_id}{literal}');
+                }
             });
 
         </script>
