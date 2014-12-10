@@ -77,4 +77,5 @@ $mod_strings = array (
   'LBL_DASHLET_SAVE' => 'Guardar',
   'LBL_DASHLET_CHARTS' => 'Gráficas',
   'LBL_DASHLET_ONLY_CHARTS' => 'Sólo mostrar gráficos',
+  'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE' => 'Scheduled Reports',
 );
