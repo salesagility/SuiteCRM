@@ -67,37 +67,11 @@ class AOR_Scheduled_Reports_sugar extends Company {
 		var $assigned_user_id;
 		var $assigned_user_name;
 		var $assigned_user_link;
-		var $aor_scheduled_reports_type;
-		var $industry;
-		var $annual_revenue;
-		var $phone_fax;
-		var $billing_address_street;
-		var $billing_address_street_2;
-		var $billing_address_street_3;
-		var $billing_address_street_4;
-		var $billing_address_city;
-		var $billing_address_state;
-		var $billing_address_postalcode;
-		var $billing_address_country;
-		var $rating;
-		var $phone_office;
-		var $phone_alternate;
-		var $website;
-		var $ownership;
-		var $employees;
-		var $ticker_symbol;
-		var $shipping_address_street;
-		var $shipping_address_street_2;
-		var $shipping_address_street_3;
-		var $shipping_address_street_4;
-		var $shipping_address_city;
-		var $shipping_address_state;
-		var $shipping_address_postalcode;
-		var $shipping_address_country;
 		var $email1;
 		var $email_addresses_primary;
 		var $email_addresses;
 		var $email_addresses_non_primary;
+		var $schedule;
 		function AOR_Scheduled_Reports_sugar(){	
 		parent::Company();
 	}

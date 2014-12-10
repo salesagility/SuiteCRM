@@ -103,7 +103,59 @@ $dictionary['AOR_Scheduled_Reports'] = array(
                 ),
 
 
+            'schedule' =>
+  array (
+    'required' => true,
+    'name' => 'schedule',
+    'vname' => 'LBL_SCHEDULE',
+    'type' => 'varchar',
+    'massupdate' => 0,
+    'no_default' => false,
+    'comments' => '',
+    'help' => '',
+    'importable' => 'true',
+    'duplicate_merge' => 'disabled',
+    'duplicate_merge_dom_value' => '0',
+    'audited' => false,
+    'reportable' => true,
+    'unified_search' => false,
+    'merge_filter' => 'disabled',
+    'len' => '100',
+    'size' => '20',
+  ),
 
+
+    "aor_scheduled_reports_aor_reports" => array (
+                'name' => 'aor_scheduled_reports_aor_reports',
+                'type' => 'link',
+                'relationship' => 'aor_scheduled_reports_aor_reports',
+                'source' => 'non-db',
+                'module' => 'AOR_Reports',
+                'bean_name' => 'AOR_Report',
+                'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
+                'id_name' => 'aor_scheduled_reports_aor_reportsaor_reports_ida',
+            ),
+    "aor_scheduled_reports_aor_reports_name" => array (
+    'name' => 'aor_scheduled_reports_aor_reports_name',
+    'type' => 'relate',
+    'source' => 'non-db',
+    'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
+    'save' => true,
+    'id_name' => 'aor_scheduled_reports_aor_reportsaor_reports_ida',
+    'link' => 'aor_scheduled_reports_aor_reports',
+    'table' => 'aor_reports',
+    'module' => 'AOR_Reports',
+    'rname' => 'name',
+),
+"aor_scheduled_reports_aor_reportsaor_reports_ida" => array (
+    'name' => 'aor_scheduled_reports_aor_reportsaor_reports_ida',
+    'type' => 'link',
+    'relationship' => 'aor_scheduled_reports_aor_reports',
+    'source' => 'non-db',
+    'reportable' => false,
+    'side' => 'right',
+    'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE',
+),
 
 
 
