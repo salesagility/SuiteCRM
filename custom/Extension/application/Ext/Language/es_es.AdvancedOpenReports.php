@@ -27,6 +27,7 @@ $app_list_strings['moduleList']['AOR_Reports'] = 'Reportes';
 $app_list_strings['moduleList']['AOR_Conditions'] = 'Condiciones de Reportes';
 $app_list_strings['moduleList']['AOR_Charts'] = 'Gráficos de Reportes';
 $app_list_strings['moduleList']['AOR_Fields'] = 'Campos de Reportes';
+$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Informes programados';
 $app_list_strings['aor_operator_list']['Equal_To'] = 'Igual a';
 $app_list_strings['aor_operator_list']['Not_Equal_To'] = 'No igual a';
 $app_list_strings['aor_operator_list']['Greater_Than'] = 'Mayor que';
