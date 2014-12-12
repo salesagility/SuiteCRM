@@ -54,6 +54,7 @@ $viewdefs [$module_name] =
                                 0 =>
                                     array (
                                         0 => 'name',
+                                        1 => 'status',
                                     ),
                                 1 =>
                                     array (
@@ -69,6 +70,10 @@ $viewdefs [$module_name] =
                                                 'name' => 'schedule',
                                                 'label' => 'LBL_SCHEDULE',
                                             ),
+                                        1 => array(
+                                            'name' => 'last_run',
+                                            'displayParams' => array('readOnly' => true),
+                                        ),
                                     ),
                                 3 =>
                                     array (

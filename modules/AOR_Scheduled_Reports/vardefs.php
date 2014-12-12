@@ -108,7 +108,8 @@ $dictionary['AOR_Scheduled_Reports'] = array(
     'required' => true,
     'name' => 'schedule',
     'vname' => 'LBL_SCHEDULE',
-    'type' => 'varchar',
+    'type' => 'CronSchedule',
+    'dbType' => 'varchar',
     'massupdate' => 0,
     'no_default' => false,
     'comments' => '',
@@ -123,7 +124,25 @@ $dictionary['AOR_Scheduled_Reports'] = array(
     'len' => '100',
     'size' => '20',
   ),
-
+            'last_run' => array (
+                'name' => 'last_run',
+                'vname' => 'LBL_LAST_RUN',
+                'dbtype' => 'datetime',
+                'type' => 'readonly',
+                'required' => false,
+                'reportable' => false,
+            ),
+            'status' => array (
+                'name' => 'status',
+                'vname' => 'LBL_STATUS',
+                'type' => 'enum',
+                'options' => 'aor_scheduled_reports_status_dom',
+                'len' => 100,
+                'editable' => false,
+                'required' => false,
+                'reportable' => false,
+                'importable' => 'required',
+            ),
 
     "aor_scheduled_reports_aor_reports" => array (
                 'name' => 'aor_scheduled_reports_aor_reports',
