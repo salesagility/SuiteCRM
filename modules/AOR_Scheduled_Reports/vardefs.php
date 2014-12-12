@@ -143,43 +143,49 @@ $dictionary['AOR_Scheduled_Reports'] = array(
                 'reportable' => false,
                 'importable' => 'required',
             ),
-
-    "aor_scheduled_reports_aor_reports" => array (
-                'name' => 'aor_scheduled_reports_aor_reports',
+            "aor_report" => array (
+                'name' => 'aor_report',
                 'type' => 'link',
                 'relationship' => 'aor_scheduled_reports_aor_reports',
+                'module'=>'AOR_Reports',
+                'bean_name'=>'AOR_Report',
+                'link_type'=>'one',
                 'source' => 'non-db',
-                'module' => 'AOR_Reports',
-                'bean_name' => 'AOR_Report',
-                'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
-                'id_name' => 'aor_scheduled_reports_aor_reportsaor_reports_ida',
+                'vname' => 'LBL_AOR_REPORT',
+                'side' => 'left',
+                'id_name' => 'aor_report_id',
             ),
-    "aor_scheduled_reports_aor_reports_name" => array (
-    'name' => 'aor_scheduled_reports_aor_reports_name',
-    'type' => 'relate',
-    'source' => 'non-db',
-    'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
-    'save' => true,
-    'id_name' => 'aor_scheduled_reports_aor_reportsaor_reports_ida',
-    'link' => 'aor_scheduled_reports_aor_reports',
-    'table' => 'aor_reports',
-    'module' => 'AOR_Reports',
-    'rname' => 'name',
-),
-"aor_scheduled_reports_aor_reportsaor_reports_ida" => array (
-    'name' => 'aor_scheduled_reports_aor_reportsaor_reports_ida',
-    'type' => 'link',
-    'relationship' => 'aor_scheduled_reports_aor_reports',
-    'source' => 'non-db',
-    'reportable' => false,
-    'side' => 'right',
-    'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE',
-),
-
+            "aor_report_name" => array (
+                'name' => 'aor_report_name',
+                'type' => 'relate',
+                'source' => 'non-db',
+                'vname' => 'LBL_AOR_REPORT_NAME',
+                'save' => true,
+                'id_name' => 'aor_report_id',
+                'link' => 'aor_scheduled_reports_aor_reports',
+                'table' => 'aor_reports',
+                'module' => 'AOR_Reports',
+                'rname' => 'name',
+            ),
+            "aor_report_id" => array (
+                'name' => 'aor_report_id',
+                'type' => 'id',
+                'reportable' => false,
+                'vname' => 'LBL_AOR_REPORT_ID',
+            ),
 
 
 ),
 	'relationships'=>array (
+        "aor_scheduled_reports_aor_reports" => array (
+            'lhs_module'=> 'AOR_Reports',
+            'lhs_table'=> 'aor_reports',
+            'lhs_key' => 'id',
+            'rhs_module'=> 'AOR_Scheduled_Reports',
+            'rhs_table'=> 'aor_scheduled_reports',
+            'rhs_key' => 'aor_report_id',
+            'relationship_type'=>'one-to-many',
+        ),
         'aor_scheduled_reports_email_addresses' =>
             array (
                 'lhs_module' => 'AOR_Scheduled_Reports',
