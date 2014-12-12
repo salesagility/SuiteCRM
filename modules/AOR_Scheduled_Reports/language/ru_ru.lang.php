@@ -86,4 +86,6 @@ $mod_strings = array (
   'LBL_SCHEDULE' => 'Schedule',
   'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE' => 'Отчёты',
   'LBL_SCHEDULED_REPORTS_INFORMATION' => 'Scheduled Reports',
+  'LBL_LAST_RUN' => 'Last run',
+  'LBL_STATUS' => 'Status',
 );
