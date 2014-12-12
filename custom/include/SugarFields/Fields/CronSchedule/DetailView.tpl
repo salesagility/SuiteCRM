@@ -31,6 +31,12 @@
         if(hours === '*') {
             return schedule;
         }
+        if(mins.length < 2){
+            mins = '0'+mins;
+        }
+        if(hours.length < 2){
+            hours = '0'+hours;
+        }
         if(weekday !== '*' && day !== '*'){
             return schedule;
         }else if(weekday !== '*'){
@@ -47,13 +53,10 @@
             return '{{$APP.LBL_CRON_MONTHLY}} {{$APP.LBL_CRON_ON_THE_MONTHDAY}} '+day+' {{$APP.LBL_CRON_AT}} '+hours+':'+mins;
             {literal}
         }
-        if(!canShowBasic){
-            return schedule;
-        }else{
-            {/literal}
-            return '{{$APP.LBL_CRON_DAILY}} {{$APP.LBL_CRON_AT}} '+hours+':'+mins
-            {literal}
-        }
+        {/literal}
+        return '{{$APP.LBL_CRON_DAILY}} {{$APP.LBL_CRON_AT}} '+hours+':'+mins
+        {literal}
+
     }
     {/literal}
 </script>

@@ -40,12 +40,28 @@
 /**
  * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
  */
-require_once('modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports_sugar.php');
+require_once 'modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports_sugar.php';
+require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
 class AOR_Scheduled_Reports extends AOR_Scheduled_Reports_sugar {
 	
 	function AOR_Scheduled_Reports(){	
 		parent::AOR_Scheduled_Reports_sugar();
 	}
-	
+
+    function shouldRun(DateTime $date){
+        global $timedate;
+        if(empty($date)){
+            $date = new DateTime();
+        }
+        $cron = Cron\CronExpression::factory($this->schedule);
+        if(empty($this->last_run) && $cron->isDue($date)){
+            return true;
+        }
+        $lastRun = $timedate->fromDb($this->last_run);
+        $next = $cron->getNextRunDate($lastRun);
+        if($next < $date){
+            return true;
+        }
+        return false;
+    }
 }
-?>

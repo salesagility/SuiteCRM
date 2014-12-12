@@ -55,7 +55,7 @@ $viewdefs [$module_name] =
                                     array (
                                         0 =>
                                             array (
-                                                'name' => 'aor_scheduled_reports_aor_reports_name',
+                                                'name' => 'aor_report_name',
                                             ),
                                     ),
                                 2 =>
