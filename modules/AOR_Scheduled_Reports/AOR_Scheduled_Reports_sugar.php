@@ -72,6 +72,9 @@ class AOR_Scheduled_Reports_sugar extends Company {
 		var $email_addresses;
 		var $email_addresses_non_primary;
 		var $schedule;
+        var $status;
+        var $last_run;
+        var $aor_report_id;
 		function AOR_Scheduled_Reports_sugar(){	
 		parent::Company();
 	}
