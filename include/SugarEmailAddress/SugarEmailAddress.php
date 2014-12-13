@@ -173,7 +173,7 @@ class SugarEmailAddress extends SugarBean {
      * @param string $replyTo GUID of reply-to address
      * @param string $invalid GUID of invalid address
      */
-    function save($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false) {
+    function savee($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false) {
         if(empty($this->addresses) || $in_workflow){
             $this->populateAddresses($id, $module, $new_addrs,$primary);
         }

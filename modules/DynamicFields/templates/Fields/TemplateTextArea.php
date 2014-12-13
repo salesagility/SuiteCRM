@@ -87,7 +87,7 @@ class TemplateTextArea extends TemplateText{
 		return $def;
 	}
 
-	function get_db_default()
+	function get_db_default($modify = false)
 	{
 	    // TEXT columns in MySQL cannot have a DEFAULT value - let the Bean handle it on save
         return null; // Bug 16612 - null so that the get_db_default() routine in TemplateField doesn't try to set DEFAULT
