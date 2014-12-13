@@ -42,7 +42,7 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
 
 require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
 
-class ParserLabel extends ModuleBuilderParser
+class ParserLabel //extends ModuleBuilderParser
 {
 
     function ParserLabel ($moduleName, $packageName = '' )

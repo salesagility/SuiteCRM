@@ -131,7 +131,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     /**
      * @returns true if group is assigned to the record
      */
-    function groupHasAccess($module,$id, $action = '')
+    static function groupHasAccess($module,$id, $action = '')
     {
         if(!isset($id) || $id == '[SELECT_ID_LIST]')
         {
@@ -167,7 +167,7 @@ class SecurityGroup extends SecurityGroup_sugar {
         return false;
     }
 
-    function inherit(&$focus,$isUpdate)
+    static function inherit(&$focus,$isUpdate)
     {
         global $sugar_config;
         SecurityGroup::assign_default_groups($focus,$isUpdate); //this must be first because it does not check for dups
@@ -200,7 +200,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function assign_default_groups(&$focus,$isUpdate)
+    static function assign_default_groups(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -230,7 +230,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_creator(&$focus,$isUpdate)
+    static function inherit_creator(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -267,7 +267,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_assigned(&$focus,$isUpdate)
+    static function inherit_assigned(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -303,7 +303,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_parent(&$focus,$isUpdate)
+    static function inherit_parent(&$focus,$isUpdate)
     {
         global $sugar_config;
         //new record or if update from soap api for cases or bugs

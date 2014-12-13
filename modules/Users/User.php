@@ -600,7 +600,7 @@ class User extends Person {
      * @return object User bean
      * @return null null if no User found
      */
-	function retrieve($id, $encode = true, $deleted = true) {
+	function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
 		if ($ret) {
 			if (isset ($_SESSION)) {
@@ -970,7 +970,7 @@ EOQ;
 		return $user_fields;
 	}
 
-	function list_view_parse_additional_sections(& $list_form, $xTemplateSection) {
+	function list_view_parse_additional_sections(&$list_form) {
 		return $list_form;
 	}
 
@@ -1009,7 +1009,7 @@ EOQ;
 
 
 
-	function create_export_query($order_by, $where) {
+	function create_export_query($order_by, $where, $relate_link_join = '') {
 		include('modules/Users/field_arrays.php');
 
 		$cols = '';
@@ -1585,9 +1585,9 @@ EOQ;
         }
 	}
 
-   function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false)
+   function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false,$ifListForExport = false)
    {	//call parent method, specifying for array to be returned
-   	$ret_array = parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, true,$parentbean, $singleSelect);
+   	$ret_array = parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, true,$parentbean, $singleSelect,$ifListForExport);
 
    	//if this is being called from webservices, then run additional code
    	if(!empty($GLOBALS['soap_server_object'])){
