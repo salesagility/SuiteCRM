@@ -10,30 +10,44 @@ array (
     'link' => true,
     'default' => true,
   ),
-  'SCHEDULE' => 
-  array (
-    'type' => 'varchar',
-    'label' => 'LBL_SCHEDULE',
-    'width' => '10%',
-    'default' => true,
-  ),
-  'AOR_SCHEDULED_REPORTS_AOR_REPORTS_NAME' => 
+  'AOR_REPORT_NAME' => 
   array (
     'type' => 'relate',
     'link' => true,
-    'label' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
-    'id' => 'AOR_SCHEDULED_REPORTS_AOR_REPORTSAOR_REPORTS_IDA',
+    'label' => 'LBL_AOR_REPORT_NAME',
+    'id' => 'AOR_REPORT_ID',
     'width' => '10%',
     'default' => true,
   ),
-  'EMAIL1' => 
+  'STATUS' => 
   array (
-    'width' => '15%',
-    'label' => 'LBL_EMAIL_ADDRESS',
-    'sortable' => false,
-    'link' => true,
-    'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
+    'type' => 'enum',
+    'label' => 'LBL_STATUS',
+    'width' => '10%',
     'default' => true,
+  ),
+  'DATE_MODIFIED' => 
+  array (
+    'type' => 'datetime',
+    'label' => 'LBL_DATE_MODIFIED',
+    'width' => '10%',
+    'default' => false,
+  ),
+  'ASSIGNED_USER_NAME' => 
+  array (
+    'link' => true,
+    'type' => 'relate',
+    'label' => 'LBL_ASSIGNED_TO_NAME',
+    'id' => 'ASSIGNED_USER_ID',
+    'width' => '10%',
+    'default' => false,
+  ),
+  'DATE_ENTERED' => 
+  array (
+    'type' => 'datetime',
+    'label' => 'LBL_DATE_ENTERED',
+    'width' => '10%',
+    'default' => false,
   ),
 );
 ?>

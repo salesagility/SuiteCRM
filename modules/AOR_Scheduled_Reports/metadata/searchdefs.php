@@ -13,16 +13,6 @@ array (
         'default' => true,
         'width' => '10%',
       ),
-      'aor_scheduled_reports_aor_reports_name' => 
-      array (
-        'type' => 'relate',
-        'link' => true,
-        'label' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
-        'id' => 'AOR_SCHEDULED_REPORTS_AOR_REPORTSAOR_REPORTS_IDA',
-        'width' => '10%',
-        'default' => true,
-        'name' => 'aor_scheduled_reports_aor_reports_name',
-      ),
       'current_user_only' => 
       array (
         'name' => 'current_user_only',
@@ -39,16 +29,6 @@ array (
         'name' => 'name',
         'default' => true,
         'width' => '10%',
-      ),
-      'aor_scheduled_reports_aor_reports_name' => 
-      array (
-        'type' => 'relate',
-        'link' => true,
-        'label' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
-        'width' => '10%',
-        'default' => true,
-        'id' => 'AOR_SCHEDULED_REPORTS_AOR_REPORTSAOR_REPORTS_IDA',
-        'name' => 'aor_scheduled_reports_aor_reports_name',
       ),
       'current_user_only' => 
       array (

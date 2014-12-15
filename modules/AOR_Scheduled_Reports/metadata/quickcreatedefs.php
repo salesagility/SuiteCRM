@@ -61,8 +61,8 @@ array (
         array (
           0 => 
           array (
-            'name' => 'aor_scheduled_reports_aor_reports_name',
-            'label' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
+            'name' => 'aor_reports_name',
+            'label' => 'LBL_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
           ),
         ),
         2 => 
