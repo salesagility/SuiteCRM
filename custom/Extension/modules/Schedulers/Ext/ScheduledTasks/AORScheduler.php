@@ -91,6 +91,20 @@ EOF;
         $emailObj = new Email();
         $defaults = $emailObj->getSystemDefaultEmail();
         $mail = new SugarPHPMailer();
+
+        $result = $report->db->query($report->build_report_query());
+        $reportData = array();
+        while($row = $report->db->fetchByAssoc($result, false))
+        {
+            $reportData[] = $row;
+        }
+        $fields = $report->getReportFields();
+        foreach($report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            $image = $chart->buildChartImage($reportData,$fields,false);
+            $mail->AddStringEmbeddedImage($image,$chart->id,$chart->name.".png",'base64','image/png');
+            $html .= "<img src='cid:{$chart->id}'>";
+        }
+
         $mail->setMailerForSystem();
         $mail->IsHTML(true);
         $mail->From = $defaults['email'];
