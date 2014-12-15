@@ -118,12 +118,14 @@ class AOR_Report extends Basic {
             $data[] = $row;
         }
         $fields = $this->getReportFields();
-        $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
+        $html = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
+        $x = 0;
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             if($chartIds !== null && !in_array($chart->id,$chartIds)){
                 continue;
             }
-            $html .= $chart->buildChartHTML($data,$fields);
+            $html .= $chart->buildChartHTML($data,$fields,$x);
+            $x++;
         }
         return $html;
     }
