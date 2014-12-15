@@ -114,6 +114,14 @@
         $('#'+id+'_basic').on('change',function(){
             updateCRONValue(id);
         });
+        var rawChange = function(){
+            updateCRONValue(id);
+        }
+        $('#'+id+'_raw_minutes').change(rawChange);
+        $('#'+id+'_raw_hours').change(rawChange);
+        $('#'+id+'_raw_day').change(rawChange);
+        $('#'+id+'_raw_month').change(rawChange);
+        $('#'+id+'_raw_weekday').change(rawChange);
         updateCRONDisplay(id);
         updateCRONType(id);
         updateCRONFields(id);
