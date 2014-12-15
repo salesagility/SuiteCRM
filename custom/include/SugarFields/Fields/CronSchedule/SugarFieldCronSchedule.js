@@ -74,6 +74,12 @@ function updateCRONFields(id){
 function updateCRONValue(id){
     //If advanced mode, do nothing
     if($('#'+id+'_raw').is(':checked')){
+        var minutes = $('#'+id+'_raw_minutes').val();
+        var hours = $('#'+id+'_raw_hours').val();
+        var days = $('#'+id+'_raw_day').val();
+        var months = $('#'+id+'_raw_month').val();
+        var weekdays = $('#'+id+'_raw_weekday').val();
+        $('#'+id).val(minutes + ' ' + hours + ' ' + days + ' '+months+' '+weekdays);
         return;
     }
     var days = '',weekdays = '',hours = '', minutes = '';
