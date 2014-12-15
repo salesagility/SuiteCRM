@@ -98,7 +98,16 @@ class AOR_Report extends Basic {
     }
 
 
-
+    function getReportFields(){
+        $fields = array();
+        foreach($this->get_linked_beans('aor_fields','AOR_Fields') as $field){
+            $fields[] = $field;
+        }
+        usort($fields,function($a,$b){
+            return $a->field_order - $b->field_order;
+        });
+        return $fields;
+    }
 
     function build_report_chart($chartIds = null){
 
@@ -108,13 +117,7 @@ class AOR_Report extends Basic {
         {
             $data[] = $row;
         }
-        $fields = array();
-        foreach($this->get_linked_beans('aor_fields','AOR_Fields') as $field){
-            $fields[] = $field;
-        }
-        usort($fields,function($a,$b){
-            return $a->field_order - $b->field_order;
-        });
+        $fields = $this->getReportFields();
         $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             if($chartIds !== null && !in_array($chart->id,$chartIds)){
