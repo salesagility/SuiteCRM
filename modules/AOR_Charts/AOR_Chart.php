@@ -75,7 +75,7 @@ class AOR_Chart extends Basic {
     }
 
     private function getValidChartTypes(){
-        return array('bar','line','pie','radar','polar');
+        return array('bar','line','pie','radar');
     }
 
     private function getBarChartData($reportData, $xName,$yName){
@@ -149,11 +149,14 @@ class AOR_Chart extends Basic {
         return $data;
     }
 
-    private function getColour($seed){
+    private function getColour($seed,$rgbArray = false){
         $hash = md5($seed);
         $r = hexdec(substr($hash, 0, 2));
         $g = hexdec(substr($hash, 2, 2));
         $b = hexdec(substr($hash, 4, 2));
+        if($rgbArray){
+            return array('R'=>$r,'G'=>$g,'B'=>$b);
+        }
         $highR = $r + 10;
         $highG = $g + 10;
         $highB = $b + 10;
@@ -162,6 +165,103 @@ class AOR_Chart extends Basic {
             .str_pad(dechex($b),2,'0',STR_PAD_LEFT);
         $highlight = '#'.dechex($highR).dechex($highG).dechex($highB);
         return array('main'=>$main,'highlight'=>$highlight);
+    }
+
+    function buildChartImageBar($chartPicture){
+        $scaleSettings = array("DrawSubTicks" => false, "LabelRotation" => 30, 'MinDivHeight' => 50);
+        $chartPicture->drawScale($scaleSettings);
+        $chartPicture->drawBarChart(array());
+    }
+
+    function buildChartImagePie($chartPicture,$chartData, $reportData,$imageHeight, $imageWidth, $xName){
+        $PieChart = new pPie($chartPicture,$chartData);
+        $x = 0;
+        foreach($reportData as $row){
+            $PieChart->setSliceColor($x,$this->getColour($row[$xName],true));
+            $x++;
+        }
+        $PieChart->draw2DPie($imageWidth/3,$imageHeight/2,array("Border"=>TRUE,'Radius'=>200,''=>true));
+        $PieChart->drawPieLegend($imageWidth*0.7,$imageHeight/3, array('FontSize'=>10,"FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf",'BoxSize'=>14));
+    }
+
+    function buildChartImageLine($chartPicture){
+        $scaleSettings = array("XMargin"=>10,"YMargin"=>10,"GridR"=>200,"GridG"=>200,"GridB"=>200,'MinDivHeight' => 50,"LabelRotation" => 30);
+        $chartPicture->drawScale($scaleSettings);
+        $chartPicture->drawLineChart();
+    }
+
+    function buildChartImageRadar($chartPicture, $chartData){
+        $SplitChart = new pRadar();
+        $Options = array("LabelPos"=>RADAR_LABELS_HORIZONTAL,);
+        $SplitChart->drawRadar($chartPicture,$chartData,$Options);
+
+    }
+
+    public function buildChartImage(array $reportData, array $fields,$asDataURI = true){
+        require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
+        $html = '';
+        if(!in_array($this->type, $this->getValidChartTypes())){
+            return $html;
+        }
+        $x = $fields[$this->x_field];
+        $y = $fields[$this->y_field];
+        if(!$x || !$y){
+            //Malformed chart object - missing an axis field
+            return '';
+        }
+        $xName = str_replace(' ','_',$x->label) . $this->x_field;
+        $yName = str_replace(' ','_',$y->label) . $this->y_field;
+
+        $chartData = new pData();
+        $chartData->loadPalette("modules/AOR_Charts/lib/pChart/palettes/navy.color", TRUE);
+        foreach($reportData as $row){
+            $chartData->addPoints($row[$yName],'data');
+            $chartData->addPoints($row[$xName],'Labels');
+        }
+
+        $chartData->setSerieDescription("Months","Month");
+        $chartData->setAbscissa("Labels");
+
+        $imageHeight = 700;
+        $imageWidth = 700;
+
+        $chartPicture = new pImage($imageWidth,$imageHeight,$chartData);
+
+        $chartPicture->Antialias = True;
+
+        $chartPicture->drawFilledRectangle(0,0,$imageWidth-1,$imageHeight-1,array("R"=>240,"G"=>240,"B"=>240,"BorderR"=>0,"BorderG"=>0,"BorderB"=>0,));
+
+        $chartPicture->setFontProperties(array("FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf","FontSize"=>14));
+
+        $chartPicture->drawText($imageWidth/2,20,$this->name,array("R"=>0,"G"=>0,"B"=>0,'Align'=>TEXT_ALIGN_TOPMIDDLE));
+        $chartPicture->setFontProperties(array("FontName"=>"modules/AOR_Charts/lib/pChart/fonts/verdana.ttf","FontSize"=>6));
+
+        $chartPicture->setGraphArea(60,60,$imageWidth-60,$imageHeight-100);
+
+        switch($this->type){
+            case 'radar':
+                $this->buildChartImageRadar($chartPicture, $chartData);
+                break;
+            case 'pie':
+                $this->buildChartImagePie($chartPicture,$chartData, $reportData,$imageHeight, $imageWidth, $xName);
+                break;
+            case 'line':
+                $this->buildChartImageLine($chartPicture);
+                break;
+            case 'bar':
+            default:
+                $this->buildChartImageBar($chartPicture);
+                break;
+        }
+
+        ob_start();
+        $chartPicture->render('');
+        $img = ob_get_clean();
+        if($asDataURI){
+            return 'data:image/png;base64,'.base64_encode($img);
+        }else{
+            return $img;
+        }
     }
 
     public function buildChartHTML(array $reportData, array $fields){
