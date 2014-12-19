@@ -714,8 +714,19 @@ class JsChart extends SugarChart {
 		$pattern = array();
 		$replacement = array();
 		$content = file_get_contents($xmlFile);
+		$GLOBALS['log']->fatal("Opened file ($xmlFile)");
 		$content = $GLOBALS['locale']->translateCharset($content,'UTF-16LE', 'UTF-8');
-		$pattern[] = '/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+_-\s]+)\<\/link\>/e';
+
+		/*
+		* Fix to Bug 1934 https://suitecrm.com/forum/bug-tracker/1934-unable-to-return-chart-data-invalid-xml-for-file-cache-xml
+		*
+		* This compensates for changes to PCRE Extension for PHP > 5.5.1
+		* Where original Regex expression failed during compilation time using
+		* pattern[] = '/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+_-\s]+)\<\/link\>/e';
+		*
+		* Replacement regex $pattern applied
+		*/
+		$pattern[] = '/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/e';
 		$replacement[] = "'<link>'.urlencode(\"$1\").'</link>'";
 //		$pattern[] = '/NULL/e';
 //		$replacement[] = "";

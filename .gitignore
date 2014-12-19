@@ -58,3 +58,5 @@ Desktop.ini
 .DS_Store?
 # Disytel
 lang_cmp.php
+.kdev4/
+SuiteCRM.kdev4
