@@ -28,3 +28,4 @@ $mod_strings['LBL_AOP_CASE_UPDATES_THREADED'] = 'Actualizaciones de Casos Encade
 $mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL'] = 'Colapsar Todos';
 $mod_strings['LBL_CASE_UPDATES_EXPAND_ALL'] = 'Expandir Todos';
 $mod_strings['LBL_NO_CASE_UPDATES'] = "No ha habido actualizaciones de este caso";
+$mod_strings['LBL_AOP_CASE_ATTACHMENTS'] = 'Adjuntos: '; 
