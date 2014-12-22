@@ -28,3 +28,4 @@ $mod_strings['LBL_AOP_CASE_UPDATES_THREADED'] = 'Case Updates Threaded';
 $mod_strings['LBL_CASE_UPDATES_COLLAPSE_ALL'] = 'Collapse All';
 $mod_strings['LBL_CASE_UPDATES_EXPAND_ALL'] = 'Expand All';
 $mod_strings['LBL_NO_CASE_UPDATES'] = "There have been no updates to this case";
+$mod_strings['LBL_AOP_CASE_ATTACHMENTS'] = 'Attachments: '; 
