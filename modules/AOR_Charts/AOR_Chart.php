@@ -150,6 +150,7 @@ class AOR_Chart extends Basic {
 
         $chartData = new pData();
         $chartData->loadPalette("modules/AOR_Charts/lib/pChart/palettes/navy.color", TRUE);
+        $labels = array();
         foreach($reportData as $row){
             $chartData->addPoints($row[$yName],'data');
             $chartData->addPoints($row[$xName],'Labels');
