@@ -459,7 +459,7 @@ class AOR_Report extends Basic {
             if(!$field['display']){
                 continue;
             }
-            if($field['total']){
+            if($field['total'] && isset($totals[$label])){
                 $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
             }else{
                 $html .= "<td></td>";
