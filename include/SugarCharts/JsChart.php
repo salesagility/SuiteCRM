@@ -714,7 +714,6 @@ class JsChart extends SugarChart {
 		$pattern = array();
 		$replacement = array();
 		$content = file_get_contents($xmlFile);
-		$GLOBALS['log']->fatal("Opened file ($xmlFile)");
 		$content = $GLOBALS['locale']->translateCharset($content,'UTF-16LE', 'UTF-8');
 
 		/*
