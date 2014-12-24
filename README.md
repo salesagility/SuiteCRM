@@ -1,4 +1,4 @@
-##SuiteCRM 7.1.4
+##SuiteCRM 7.1.5
 
 ### What's in this repository ###
 
@@ -10,9 +10,9 @@ This repository has been created to allow community members to collaborate and c
 
 #####Important: Please read before developing code intended for inclusion in the SuiteCRM project.#####
 
-Please read, print, sign, scan and email the following [contributor agreement][cont_agrmt]
+Please read and sign the following [contributor agreement][cont_agrmt]
 
-[cont_agrmt]: http://suitecrm.com/git/suitecrmcontributorlicenseagreement.pdf
+[cont_agrmt]: https://www.clahub.com/agreements/salesagility/SuiteCRM
 
 The Contributor Agreement only needs to be signed once for all pull requests and contributions. 
 
