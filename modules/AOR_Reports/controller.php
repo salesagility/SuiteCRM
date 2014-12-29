@@ -195,7 +195,7 @@ class AOR_ReportsController extends SugarController {
         $aor_field = $_REQUEST['aor_newfieldname'];
 
         if($view == 'EditView'){
-            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list'], $value) ."</select>";
+            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list'], $value) ."</select>";
         }else{
             echo $app_list_strings['aor_function_list'][$value];
         }
@@ -265,7 +265,7 @@ class AOR_ReportsController extends SugarController {
 
         $app_list_strings['aor_operator_list'];
         if($view == 'EditView'){
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_operator_list'], $value) ."</select>";
+            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_operator_list'], $value) ."</select>";
         }else{
             echo $app_list_strings['aor_operator_list'][$value];
         }
@@ -434,7 +434,7 @@ class AOR_ReportsController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
@@ -470,7 +470,7 @@ class AOR_ReportsController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
@@ -521,7 +521,7 @@ class AOR_ReportsController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
