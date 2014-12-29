@@ -25,6 +25,7 @@
 
 require_once('include/MVC/View/views/view.edit.php');
 require_once 'modules/AOW_WorkFlow/aow_utils.php';
+require_once 'modules/AOR_Reports/aor_utils.php';
 class AOR_ReportsViewEdit extends ViewEdit {
 
     public function __construct() {
@@ -82,7 +83,7 @@ class AOR_ReportsViewEdit extends ViewEdit {
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
-            $display = $this->getDisplayForField($condition_name->module_path, $condition_name->field);
+            $display = getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->report_module);
             $condition_item['module_path_display'] = $display['module'];
             $condition_item['field_label'] = $display['field'];
             $conditions[] = $condition_item;
@@ -103,48 +104,12 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $field_name->retrieve($row['id']);
             $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
-            $display = $this->getDisplayForField($field_name->module_path, $field_name->field);
+            $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
             $arr['module_path_display'] = $display['module'];
             $arr['field_label'] = $display['field'];
             $fields[] = $arr;
         }
         return $fields;
-    }
-
-    /**
-     * Returns the display labels for a module path and field.
-     * @param $modulePath
-     * @param $field
-     * @return array
-     */
-    private function getDisplayForField($modulePath, $field){
-        $modulePathDisplay = array();
-        $currentBean = BeanFactory::getBean($this->bean->report_module);
-        $modulePathDisplay[] = $currentBean->module_name;
-        $split = explode(':',$modulePath);
-        if($split && $split[0] == $currentBean->module_dir){
-            array_shift($split);
-        }
-        foreach($split as $relName){
-            if(empty($relName)){
-                continue;
-            }
-            if(!empty($currentBean->field_name_map[$relName]['vname'])){
-                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'],$currentBean->module_dir),':');
-            }
-            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
-            $currentBean = BeanFactory::getBean($thisModule);
-
-            if(!empty($moduleLabel)){
-                $modulePathDisplay[] = $moduleLabel;
-            }else {
-                $modulePathDisplay[] = $currentBean->module_name;
-            }
-        }
-        $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
-        $fieldDisplay = translate($fieldDisplay,$currentBean->module_dir);
-        $fieldDisplay = trim($fieldDisplay,':');
-        return array('field'=>$fieldDisplay,'module'=>implode(' : ',$modulePathDisplay));
     }
 
     private function getChartLines(){
