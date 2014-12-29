@@ -793,8 +793,11 @@ class AOR_Report extends Basic {
 
                 $condition_module = $module;
                 $table_alias = $condition_module->table_name;
-                if($path[0] != $module->module_dir){
+                if(!empty($path[0]) && $path[0] != $module->module_dir){
                     foreach($path as $rel){
+                        if(empty($rel)){
+                            continue;
+                        }
                         $rel = strtolower($rel);
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                         $oldAlias = $table_alias;
@@ -831,6 +834,13 @@ class AOR_Report extends Basic {
                         $query = $this->build_report_query_join($table_alias.'_cstm',$table_alias.'_cstm',$oldAlias, $condition_module, 'custom', $query);
                     } else {
                         $field = $this->db->quoteIdentifier($table_alias).'.'.$condition->field;
+                    }
+
+                    if(!empty($this->user_parameters[$condition->id]) && $condition->parameter){
+                        $condParam = $this->user_parameters[$condition->id];
+                        $condition->value = $condParam['value'];
+                        $condition->operator = $condParam['operator'];
+                        $condition->value_type = $condParam['type'];
                     }
 
                     switch($condition->value_type) {
@@ -914,7 +924,7 @@ class AOR_Report extends Basic {
 
                         case 'Value':
                         default:
-                            $value = "'".$condition->value."'";
+                            $value = "'".$this->db->quote($condition->value)."'";
                             break;
                     }
 
