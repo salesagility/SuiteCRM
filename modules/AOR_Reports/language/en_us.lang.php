@@ -78,4 +78,5 @@ $mod_strings = array (
   'LBL_DASHLET_CHARTS' => 'Charts',
   'LBL_DASHLET_ONLY_CHARTS' => 'Only show charts',
   'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE' => 'Scheduled Reports',
+  'LBL_UPDATE_PARAMETERS' => 'Update',
 );
