@@ -157,6 +157,24 @@ $dictionary['AOR_Condition'] = array(
     'len' => '255',
     'size' => '20',
   ),
+        'parameter' =>
+            array (
+                'required' => false,
+                'name' => 'parameter',
+                'vname' => 'LBL_PARAMETER',
+                'type' => 'bool',
+                'massupdate' => 0,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'studio' => 'visible',
+            ),
   'aor_reports' =>
   array (
     'name' => 'aor_reports',
