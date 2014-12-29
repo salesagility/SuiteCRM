@@ -215,7 +215,9 @@ class AOR_Chart extends Basic {
         $html .= $img;
         $html .= <<<EOF
 <script>
-addImage('{$this->id}_img','{$this->id}_img_map','index.php?module=AOR_Charts&action=getImageMap&to_pdf=1&imageMapId={$index}');
+SUGAR.util.doWhen("typeof addImage != 'undefined'", function(){
+    addImage('{$this->id}_img','{$this->id}_img_map','index.php?module=AOR_Charts&action=getImageMap&to_pdf=1&imageMapId={$index}');
+});
 </script>
 EOF;
         return $html;
