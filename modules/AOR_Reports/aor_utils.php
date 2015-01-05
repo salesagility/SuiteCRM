@@ -76,6 +76,10 @@ function requestToUserParameters(){
 }
 
 function getConditionsAsParameters($report, $override = array()){
+    if(empty($report)){
+        return array();
+    }
+
     global $app_list_strings;
     $conditions = array();
     foreach($report->get_linked_beans('aor_conditions','AOR_Conditions') as $condition){
