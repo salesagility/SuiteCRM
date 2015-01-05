@@ -22,20 +22,23 @@ class AORReportsDashlet extends Dashlet {
         }else{
             $this->title = $def['dashletTitle'];
         }
+
+        $this->params = array();
+        if(!empty($def['parameter_id'])) {
+            foreach ($def['parameter_id'] as $key => $parameterId) {
+                $this->params[$parameterId] = array(
+                    'id' => $parameterId,
+                    'operator' => $def['parameter_operator'][$key],
+                    'type' => $def['parameter_type'][$key],
+                    'value' => $def['parameter_value'][$key]);
+            }
+        }
         if(!empty($def['aor_report_id'])) {
             $this->report = BeanFactory::getBean('AOR_Reports', $def['aor_report_id']);
+            $this->report->user_parameters = $this->params;
         }
         $this->onlyCharts = !empty($def['onlyCharts']);
         $this->charts = !empty($def['charts']) ? $def['charts'] : array();
-        $this->params = array();
-        foreach($def['parameter_id'] as $key => $parameterId){
-            $this->params[$parameterId] = array(
-                'id' => $parameterId,
-                'operator' => $def['parameter_operator'][$key],
-                'type' => $def['parameter_type'][$key],
-                'value' => $def['parameter_value'][$key]);
-        }
-        $this->report->user_parameters = $this->params;
     }
 
     public function display() {
@@ -79,40 +82,12 @@ class AORReportsDashlet extends Dashlet {
         $optionsSmarty->assign('aor_report_name', $this->report->name);
         $optionsSmarty->assign('onlyCharts', $this->onlyCharts);
         $charts = array();
-        $conditions = array();
         if(!empty($this->report->id)){
             foreach($this->report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
                 $charts[$chart->id] = $chart->name;
             }
-
-            foreach($this->report->get_linked_beans('aor_conditions','AOR_Conditions') as $condition){
-                if(!$condition->parameter){
-                    continue;
-                }
-
-                $path = unserialize(base64_decode($condition->module_path));
-                $field_module = $this->report->report_module;
-                if($path[0] != $this->report->report_module){
-                    foreach($path as $rel){
-                        if(empty($rel)){
-                            continue;
-                        }
-                        $field_module = getRelatedModule($field_module,$rel);
-                    }
-                }
-                $value = isset($this->params[$condition->id]['value']) ? $this->params[$condition->id]['value'] : $condition->value;
-                $field = getModuleField($field_module,$condition->field,'parameter_value[]', 'EditView', $value);
-                $disp = getDisplayForField($path,$condition->field,$this->report->report_module);
-                $conditions[] = array('id'=>$condition->id,
-                                        'operator' => $condition->operator,
-                                        'operator_display' => $app_list_strings['aor_operator_list'][$condition->operator],
-                                        'value_type' => $condition->value_type,
-                                        'value' => $value,
-                                        'field_display' => $disp['field'],
-                                        'module_display' => $disp['module'],
-                                        'field' => $field);
-            }
         }
+        $conditions = getConditionsAsParameters($this->report, $this->params);
         $optionsSmarty->assign('parameters', $conditions);
         $chartOptions = get_select_options_with_id($charts,$this->charts);
         $optionsSmarty->assign('chartOptions', $chartOptions);
