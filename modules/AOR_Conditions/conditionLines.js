@@ -212,7 +212,7 @@ function insertConditionHeader(){
     if(view === 'EditView') {
         var h = x.insertCell(-1);
         h.style.color = "rgb(0,0,0)";
-        h.innerHTML = SUGAR.language.get('AOR_Fields', 'LBL_PARAMETER');
+        h.innerHTML = SUGAR.language.get('AOR_Conditions', 'LBL_PARAMETER');
     }
 }
 
