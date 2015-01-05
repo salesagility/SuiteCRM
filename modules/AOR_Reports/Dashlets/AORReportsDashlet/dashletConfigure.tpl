@@ -104,7 +104,7 @@
                     {$MOD.LBL_PARAMETERS}
                 </td>
                 <td>
-                    <div id="parameterOptions">
+                    <div id="parameterOptions{$id}">
                         {foreach from=$parameters item=condition}
                             <input type='hidden' name='parameter_id[]' value='{$condition.id}'>
                             <input type='hidden' name='parameter_operator[]' value='{$condition.operator}'>
@@ -139,8 +139,29 @@
                 }
         );
     }
+    function loadParameters(reportId){
+        $.getJSON('index.php',
+                {module : 'AOR_Reports',
+                    record : reportId,
+                    to_pdf : 1,
+                    action : 'getParametersForReport'}).done(
+                function(data){
+                    var paramContainer = $('#parameterOptions{/literal}{$id}{literal}');
+                    var html = '';
+                    for(var x = 0; x < data.length; x++) {
+                        var cond = data[x];
+                        html += "<input type='hidden' name='parameter_id[]' value='"+cond.id+"'>";
+                        html += "<input type='hidden' name='parameter_operator[]' value='"+cond.operator+"'>";
+                        html += "<input type='hidden' name='parameter_type[]' value='"+cond.value_type+"'>";
+                        html += cond.module_display+" "+cond.field_display+" "+cond.operator_display+" "+cond.field;
+                    }
+                    paramContainer.html(html);
+                }
+        );
+    }
     function aor_report_set_return(ret){
         loadCharts(ret.name_to_value_array.aor_report_id);
+        loadParameters(ret.name_to_value_array.aor_report_id);
         set_return(ret);
     }
     {/literal}
