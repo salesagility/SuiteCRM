@@ -2,7 +2,7 @@
     {literal}
         <script>
                 function changeReportPage(record, offset, group_value, table_id){
-                    var params = {/literal}{$parameters}{literal};
+                    params = reportDashletParams[record];
                     $.get('index.php',
                             {module : 'AOR_Reports',
                                 record : record,
@@ -20,6 +20,10 @@
                 }
             $(document).ready(function(){
                 if('{/literal}{$report_id}{literal}'){
+                    if(typeof reportDashletParams === 'undefined'){
+                        reportDashletParams = [];
+                    }
+                    reportDashletParams['{/literal}{$report_id}{literal}'] = {/literal}{$parameters}{literal}
                     changeReportPage('{/literal}{$report_id}{literal}',0,'','{/literal}{$dashlet_id}{literal}');
                 }
             });
