@@ -74,3 +74,37 @@ function requestToUserParameters(){
     }
     return $params;
 }
+
+function getConditionsAsParameters($report, $override = array()){
+    global $app_list_strings;
+    $conditions = array();
+    foreach($report->get_linked_beans('aor_conditions','AOR_Conditions') as $condition){
+        if(!$condition->parameter){
+            continue;
+        }
+
+        $path = unserialize(base64_decode($condition->module_path));
+        $field_module = $report->report_module;
+        if($path[0] != $report->report_module){
+            foreach($path as $rel){
+                if(empty($rel)){
+                    continue;
+                }
+                $field_module = getRelatedModule($field_module,$rel);
+            }
+        }
+
+        $value = isset($override[$condition->id]['value']) ? $override[$condition->id]['value'] : $value = $condition->value;
+        $field = getModuleField($field_module,$condition->field,'parameter_value[]', 'EditView', $value);
+        $disp = getDisplayForField($path,$condition->field,$report->report_module);
+        $conditions[] = array('id'=>$condition->id,
+            'operator' => $condition->operator,
+            'operator_display' => $app_list_strings['aor_operator_list'][$condition->operator],
+            'value_type' => $condition->value_type,
+            'value' => $value,
+            'field_display' => $disp['field'],
+            'module_display' => $disp['module'],
+            'field' => $field);
+    }
+    return $conditions;
+}

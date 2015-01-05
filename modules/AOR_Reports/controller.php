@@ -74,6 +74,24 @@ class AOR_ReportsController extends SugarController {
         die();
     }
 
+    protected function action_getParametersForReport(){
+        if(empty($_REQUEST['record'])){
+            echo json_encode(array());
+            return;
+        }
+        $report = BeanFactory::getBean('AOR_Reports',$_REQUEST['record']);
+        if(!$report){
+            echo json_encode(array());
+            return;
+        }
+        if(empty($report->id)) {
+            echo json_encode(array());
+            return;
+        }
+        $conditions = getConditionsAsParameters($report);
+        echo json_encode($conditions);
+    }
+
     protected function action_getChartsForReport(){
         if(empty($_REQUEST['record'])){
             echo json_encode(array());
