@@ -100,6 +100,21 @@
                 </td>
             </tr>
             <tr>
+                <td scope='row'>
+                    {$MOD.LBL_PARAMETERS}
+                </td>
+                <td>
+                    <div id="parameterOptions">
+                        {foreach from=$parameters item=condition}
+                            <input type='hidden' name='parameter_id[]' value='{$condition.id}'>
+                            <input type='hidden' name='parameter_operator[]' value='{$condition.operator}'>
+                            <input type='hidden' name='parameter_type[]' value='{$condition.value_type}'>
+                            {$condition.module_display} {$condition.field_display} {$condition.operator_display} {$condition.field}
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+            <tr>
                 <td align='right'>
                     <input type='submit' class='button' value='{$MOD.LBL_DASHLET_SAVE}'>
                 </td>
