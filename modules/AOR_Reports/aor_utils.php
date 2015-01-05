@@ -33,8 +33,12 @@ function getDisplayForField($modulePath, $field, $reportModule){
     $modulePathDisplay = array();
     $currentBean = BeanFactory::getBean($reportModule);
     $modulePathDisplay[] = $currentBean->module_name;
-    $split = explode(':',$modulePath);
-    if($split && $split[0] == $currentBean->module_dir){
+    if(is_array($modulePath)) {
+        $split = $modulePath;
+    }else{
+        $split = explode(':', $modulePath);
+    }
+    if ($split && $split[0] == $currentBean->module_dir) {
         array_shift($split);
     }
     foreach($split as $relName){
@@ -57,4 +61,16 @@ function getDisplayForField($modulePath, $field, $reportModule){
     $fieldDisplay = translate($fieldDisplay,$currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay,':');
     return array('field'=>$fieldDisplay,'module'=>implode(' : ',$modulePathDisplay));
+}
+
+function requestToUserParameters(){
+    $params = array();
+    foreach($_REQUEST['parameter_id'] as $key => $parameterId){
+        $params[$parameterId] = array('id'=>$parameterId,
+            'operator'=> $_REQUEST['parameter_operator'][$key],
+            'type'=> $_REQUEST['parameter_type'][$key],
+            'value'=> $_REQUEST['parameter_value'][$key],
+        );
+    }
+    return $params;
 }

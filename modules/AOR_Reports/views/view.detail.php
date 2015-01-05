@@ -65,7 +65,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
 
 
-        $this->bean->user_parameters = $this->requestToUserParameters();
+        $this->bean->user_parameters = requestToUserParameters();
 
         $reportHTML = $this->bean->build_group_report(0,true).'<br />';
         $reportHTML .= $this->bean->build_report_chart();
@@ -81,16 +81,6 @@ class AOR_ReportsViewDetail extends ViewDetail {
         echo "<script>var reportParameters = ".json_encode($params).";</script>";
     }
 
-    private function requestToUserParameters(){
-        $params = array();
-        foreach($_REQUEST['parameter_id'] as $key => $parameterId){
-            $params[$parameterId] = array('id'=>$parameterId,
-                            'operator'=> $_REQUEST['parameter_operator'][$key],
-                            'type'=> $_REQUEST['parameter_type'][$key],
-                            'value'=> $_REQUEST['parameter_value'][$key],
-            );
-        }
-        return $params;
-    }
+
 
 }
