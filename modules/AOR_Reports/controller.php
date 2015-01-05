@@ -24,6 +24,7 @@
 
 
 require_once("modules/AOW_WorkFlow/aow_utils.php");
+require_once("modules/AOR_Reports/aor_utils.php");
 
 class AOR_ReportsController extends SugarController {
 
@@ -66,6 +67,7 @@ class AOR_ReportsController extends SugarController {
         $group = !empty($_REQUEST['group']) ? $_REQUEST['group'] : '';
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         if(!empty($this->bean->id)){
+            $this->bean->user_parameters = requestToUserParameters();
             echo $this->bean->build_report_html($offset, true,$group,$tableId);
         }
 
