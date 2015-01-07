@@ -483,6 +483,10 @@ class AOR_Report extends Basic {
         }
     }
 
+    private function encloseForCSV($field){
+        return '"'.$field.'"';
+    }
+
     function build_report_csv(){
 
         ini_set('zlib.output_compression', 'Off');
@@ -520,7 +524,7 @@ class AOR_Report extends Basic {
 
 
             if($field->display){
-                $csv.= $field->label;
+                $csv.= $this->encloseForCSV($field->label);
                 $csv .= $delimiter;
             }
             ++$i;
@@ -534,9 +538,9 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     if($att['function'] != '' )
-                        $csv .= $row[$name];
+                        $csv .= $this->encloseForCSV($row[$name]);
                     else
-                        $csv .= trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name])));
+                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
                     $csv .= $delimiter;
                 }
             }
