@@ -64,7 +64,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
       $this->settings = $settings;
       $this->assertion = base64_decode($assertion);
       $this->xml = new DOMDocument();
-      $this->xml->loadXML($this->assertion);
+      $this->loadXML($this->xml, $this->assertion);
     }
 
     /**
@@ -90,6 +90,37 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
       $entries = $xpath->query($query);
       return $entries->item(0)->nodeValue;
+    }
+
+    /**
+     * This function load an XML string in a save way.
+     * Prevent XEE/XXE Attacks
+     *
+     * @param DOMDocument $dom The document where load the xml.
+     * @param string $xml The XML string to be loaded.
+     *
+     * @throws DOMExceptions
+     *
+     * @return DOMDocument $dom The result of load the XML at the DomDocument
+     */
+    public function loadXML($dom, $xml)
+    {
+        assert('$dom instanceof DOMDocument');
+        assert('is_string($xml)');
+
+        if (strpos($xml, '<!ENTITY') !== false) {
+            throw new Exception('Detected use of ENTITY in XML, disabled to prevent XXE/XEE attacks');
+        }
+
+        $oldEntityLoader = libxml_disable_entity_loader(true);
+        $res = $dom->loadXML($xml);
+        libxml_disable_entity_loader($oldEntityLoader);
+
+        if (!$res) {
+            return false;
+        } else {
+            return $dom;
+        }
     }
   }
 
