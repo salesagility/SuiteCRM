@@ -278,8 +278,6 @@ abstract class Zend_Oauth_Token
      */
     public function __wakeup() 
     {
-        if ($this->_httpUtility === null) {
-            $this->_httpUtility = new Zend_Oauth_Http_Utility;
-        }
+        $this->_httpUtility = new Zend_Oauth_Http_Utility;
     }
 }

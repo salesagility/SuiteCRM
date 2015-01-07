@@ -173,7 +173,7 @@ class AOR_ReportsController extends SugarController {
             $pdf->WriteHTML($stylesheet,1);
             $pdf->WriteHTML($head,2);
             $pdf->WriteHTML($printable,3);
-            $pdf->Output($this->bean->name, "D");
+            $pdf->Output($this->bean->name.'.pdf', "D");
 
         }catch(mPDF_exception $e){
             echo $e;
