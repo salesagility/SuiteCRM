@@ -109,7 +109,10 @@ class AOR_Report extends Basic {
         return $fields;
     }
 
-    function build_report_chart($chartIds = null){
+    const CHART_TYPE_PCHART = 'pchart';
+    const CHART_TYPE_CHARTJS = 'chartjs';
+
+    function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
 
         $result = $this->db->query($this->build_report_query());
         $data = array();
@@ -118,13 +121,21 @@ class AOR_Report extends Basic {
             $data[] = $row;
         }
         $fields = $this->getReportFields();
-        $html = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
+
+        switch($chartType) {
+            case self::CHART_TYPE_PCHART:
+                $html = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
+                break;
+            case self::CHART_TYPE_CHARTJS:
+                $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
+                break;
+        }
         $x = 0;
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             if($chartIds !== null && !in_array($chart->id,$chartIds)){
                 continue;
             }
-            $html .= $chart->buildChartHTML($data,$fields,$x);
+            $html .= $chart->buildChartHTML($data,$fields,$x, $chartType);
             $x++;
         }
         return $html;
