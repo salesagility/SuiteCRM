@@ -92,7 +92,7 @@ EOF;
         $defaults = $emailObj->getSystemDefaultEmail();
         $mail = new SugarPHPMailer();
 
-        $result = $report->db->query($report->build_report_query());
+        /*$result = $report->db->query($report->build_report_query());
         $reportData = array();
         while($row = $report->db->fetchByAssoc($result, false))
         {
@@ -103,7 +103,7 @@ EOF;
             $image = $chart->buildChartImage($reportData,$fields,false);
             $mail->AddStringEmbeddedImage($image,$chart->id,$chart->name.".png",'base64','image/png');
             $html .= "<img src='cid:{$chart->id}'>";
-        }
+        }*/
 
         $mail->setMailerForSystem();
         $mail->IsHTML(true);
