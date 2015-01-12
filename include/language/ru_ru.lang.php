@@ -1995,8 +1995,8 @@ $app_strings = array (
  	'LBL_EMAIL_SAVE_DRAFT'				=> 'Сохранить черновик',
 
 	'LBL_EMAIL_SEARCHING'				=> 'ПОИСК',
-	'LBL_EMAIL_SEARCH'                      => SugarThemeRegistry::current()->getImage('Поиск', 'align=absmiddle border=0', null, null, ".gif", ''),
-    'LBL_EMAIL_SEARCH_SHORT'                => SugarThemeRegistry::current()->getImage('Поиск', 'align=absmiddle border=0', null, null, ".gif", ''),
+	'LBL_EMAIL_SEARCH'                      => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null, null, ".gif", ''),
+    'LBL_EMAIL_SEARCH_SHORT'                => SugarThemeRegistry::current()->getImage('Search', 'align=absmiddle border=0', null, null, ".gif", ''),
 
 	'LBL_EMAIL_SEARCH_ADVANCED'			=> 'Расширенный поиск',
 	'LBL_EMAIL_SEARCH_DATE_FROM'			=> 'Дата С',
@@ -4622,7 +4622,7 @@ $app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'События обр�
 $app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Обновления обращения';
 $app_list_strings['moduleList']['AOP_Case_Events'] = 'События обращения';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Обновления обращения';
-$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
+$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Пожалуйста, пишите ответ выше этой линии ==========';
 
 $app_list_strings['case_state_dom'] =
   array (
