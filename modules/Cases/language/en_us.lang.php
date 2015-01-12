@@ -136,6 +136,4 @@ $mod_strings = array (
 	'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
 );
 
-$mod_strings['LBL_AOP_CASE_ATTACHMENTS'] = 'Attachments: '; 
-
 ?>
