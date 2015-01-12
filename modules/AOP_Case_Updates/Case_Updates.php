@@ -91,6 +91,7 @@ EOD;
 }
 
 function getUpdateDisplayHead(SugarBean $update){
+    global $mod_strings;
     if($update->contact_id){
         $name = $update->getUpdateContact()->name;
     }elseif($update->assigned_user_id){
@@ -101,10 +102,10 @@ function getUpdateDisplayHead(SugarBean $update){
     $html = "<a href='' onclick='toggleCaseUpdate(\"".$update->id."\");return false;'>";
     $html .= "<img  id='caseUpdate".$update->id."Image' class='caseUpdateImage' src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."'>";
     $html .= "</a>";
-    $html .= "<span>".($update->internal ? "<strong>Internal</strong> " : '') .$name . " at ".$update->date_entered."</span><br>";
+    $html .= "<span>".($update->internal ? "<strong>" . $mod_strings['LBL_INTERNAL'] . "</strong> " : '') .$name . " ".$update->date_entered."</span><br>";
     $notes = $update->get_linked_beans('notes','Notes');
     if($notes){
-        $html.= "Attachments: ";
+        $html.= $mod_strings['LBL_AOP_CASE_ATTACHMENTS'];
         foreach($notes as $note){
             $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
         }

@@ -57,5 +57,6 @@ $mod_strings = array (
   'LBL_AOP_CASE_UPDATES_SUBPANEL_TITLE' => 'Case Updates',
   'LBL_CASE_NAME' => 'Case',
   'LBL_CONTACT_NAME' => 'Contact',
-  'LBL_INTERNAL' => 'Internal Update',
+  'LBL_INTERNAL' => 'Internal Update',    
+  'LBL_AOP_CASE_ATTACHMENTS' => 'Attachments: ', 
 );
