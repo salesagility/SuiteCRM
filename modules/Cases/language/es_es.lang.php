@@ -151,4 +151,3 @@ $mod_strings = array (
   'LBL_INTERNAL' => 'Interno',
   'LBL_AOP_CASE_UPDATES' => 'Actualizaciones del Caso',
 );
-$mod_strings['LBL_AOP_CASE_ATTACHMENTS'] = 'Adjuntos: ';
