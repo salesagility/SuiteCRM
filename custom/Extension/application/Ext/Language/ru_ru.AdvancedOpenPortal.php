@@ -27,7 +27,7 @@ $app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'События обр�
 $app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Обновления обращения';
 $app_list_strings['moduleList']['AOP_Case_Events'] = 'События обращения';
 $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Обновления обращения';
-$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
+$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Пожалуйста, пишите ответ выше этой линии ==========';
 
 $app_list_strings['case_state_dom'] =
   array (
