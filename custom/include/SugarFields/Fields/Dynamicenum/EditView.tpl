@@ -359,4 +359,5 @@ YUI().use("autocomplete", "autocomplete-filters", "autocomplete-highlighters", "
     var el = document.getElementById("{{$vardef.parentenum}}");
     el.addEventListener("change", function(){literal}{updateDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}, false);
     window.onload = function(){literal}{updateDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}
+    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded) {literal}{updateDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}
 </script>
