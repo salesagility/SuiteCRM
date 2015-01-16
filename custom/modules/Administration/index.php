@@ -86,12 +86,12 @@ foreach ($admin_group_header as $key=>$values) {
         (!isset($addedHeaderGroups[$values[0]]))) {
             $admin_group_header_tab[]=$values;
             $group_header_value=get_form_header(translate($values[0],'Administration'),$values[1],$values[2]);
-        	$group[$j][0] = '<table cellpadding="0" cellspacing="0" width="100%" class="h3Row"><tr ><td width="20%" valign="bottom"><h3>' . translate($values[0]) . '</h3></td></tr>';
+        	$group[$j][0] = '<h3>' . translate($values[0]) . '</h3>';
         	$addedHeaderGroups[$values[0]] = 1;
         	if (isset($values[4]))
-    	       $group[$j][1] = '<tr><td style="padding-top: 3px; padding-bottom: 5px;">' . translate($values[4]) . '</td></tr></table>';
+    	       $group[$j][1] = '' . translate($values[4]) . '';
     	    else
-    	       $group[$j][2] = '</tr></table>';
+    	       $group[$j][2] = '';
             $colnum=0;
             $i=0;
             $fix = array_keys($values[3]);
@@ -164,5 +164,5 @@ $sugar_smarty->assign("ITEM_DESCRIPTION", $description);
 $sugar_smarty->assign("COLNUM", $tab);
 $sugar_smarty->assign('ID_TAB', $id_tab);
 
-echo $sugar_smarty->fetch('modules/Administration/index.tpl');
+echo $sugar_smarty->fetch('custom/modules/Administration/index.tpl');
 ?>
