@@ -4157,11 +4157,12 @@ ul.navbar-nav li ul li:hover {
     margin: 0 5px 0 5px;
 }
 
-@media (max-width:480px){
-    #cal-edit{
+@media (max-width:640px){
+    #cal-edit, #settings_dialog, #settings_dialog form{
         top:10px;
-        max-height:400px;
-        max-width:300px;
+        max-height:400px !important;
+        max-width:300px !important;
+        overflow:scroll;
     }
 }
 
