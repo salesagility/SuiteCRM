@@ -1702,7 +1702,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
     padding:6px 0 3px 10px;
     border-left:1px solid #bbbbbb;
     margin: 0 10px 0 10px;
-    font-size:1.1em;
+    font-size:1em;
 }
 
 #globalLinks ul {
@@ -3182,7 +3182,7 @@ fieldset[disabled] .btn-primary.active {
 
 #topnav{
     padding:15px 0 15px 0;
-    font-size:1.1em;
+    font-size:1em;
 }
 
 ul#topnav li a {
@@ -3227,8 +3227,9 @@ li#usermenu:hover {
 
 #moremenu a{
     color:#ffffff;
-    font-size:1.1em;
+    font-size:1em;
     cursor:pointer;
+    padding:7px 0 0 0;
 }
 
 #moremenu ul li a{
