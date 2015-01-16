@@ -3490,7 +3490,7 @@ table legend {
 
 /* Media queries for larger screens to hide mobile content */
 
-@media (max-width:1248px){
+@media (max-width:1279px){
     #usermenu, #searchform, #searchmobile{
         display:none;
     }
@@ -3611,13 +3611,22 @@ body {
         left: 0;
         z-index: 1000;
         display: block;
-        padding: 20px;
+        padding:20px;
         overflow-x: hidden;
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
         min-width:215px !important;
     }
+}
+
+#sidebarlinks {
+    margin: 0 0 15px 10px;
+}
+
+#sidebarlinks a{
+    padding:5px 10px 5px 10px;
+    font-size:1.1em;
 }
 
 /* Sidebar navigation */
@@ -3948,7 +3957,7 @@ li#moremenu {
 }
 #recentlinks {
     float:left;
-    width:150px;
+    width:125px;
 }
 
 #recentlinks_edit {
