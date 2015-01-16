@@ -373,40 +373,38 @@
          * @param $ul - dropdown box model which needs to render out of the fixed box range
          *              if $ul is not given, it will restore back to the original structure
          */
-        IEfix: function($ul) {
-            if ($.browser.msie && $.browser.version > 6) {
-                if($ul) {
-                    if( $ul.hasClass('iefixed') === false)
-                        return;
-                    this.each(function(){
-                        SUGAR.themes.counter = SUGAR.themes.counter ? SUGAR.themes.counter++ : 1;
-                        var $$ = $(this),
-                            _id = $$.attr("ul-child-id") ? $$.attr("ul-child-id") : ($$.parent('.SugarActionMenu').attr("id")) ? $$.parent('.SugarActionMenu').attr("id") + 'Subnav' : 'sugaractionmenu' + SUGAR.themes.counter,
-                            _top = $$.position().top + $$.outerHeight(),
-                            _width = 'auto', //to obtain a certain size, apply min-width in css
-                            _css = {
-                                top: _top,
-                                width: _width,
-                                position: 'fixed'
-                            },
-                            _right = $('body').width() - $$.offset().left - $$.width(),
-                            _left = $$.offset().left;
-                        //fixed positioning depends on the css property
-                        if($ul.css('right') != 'auto') {
-                            _css['right'] = _right;
-                        } else {
-                            _css['left'] = _left;
-                        }
-                        $('body').append($ul.attr("id", _id).addClass("SugarActionMenuIESub").css(_css));
-                        $$.attr("ul-child-id", _id);
-                    });
+    IEfix: function($ul) {
+            if($ul) {
+                if( $ul.hasClass('iefixed') === false)
+                    return;
+                this.each(function(){
+                    SUGAR.themes.counter = SUGAR.themes.counter ? SUGAR.themes.counter++ : 1;
+                    var $$ = $(this),
+                        _id = $$.attr("ul-child-id") ? $$.attr("ul-child-id") : ($$.parent('.SugarActionMenu').attr("id")) ? $$.parent('.SugarActionMenu').attr("id") + 'Subnav' : 'sugaractionmenu' + SUGAR.themes.counter,
+                        _top = $$.position().top + $$.outerHeight(),
+                        _width = 'auto', //to obtain a certain size, apply min-width in css
+                        _css = {
+                            top: _top,
+                            width: _width,
+                            position: 'fixed'
+                        },
+                        _right = $('body').width() - $$.offset().left - $$.width(),
+                        _left = $$.offset().left;
+                    //fixed positioning depends on the css property
+                    if($ul.css('right') != 'auto') {
+                        _css['right'] = _right;
+                    } else {
+                        _css['left'] = _left;
+                    }
+                    $('body').append($ul.attr("id", _id).addClass("SugarActionMenuIESub").css(_css));
+                    $$.attr("ul-child-id", _id);
+                });
 
-                } else {
-                    this.each(function(){
-                        var _id = $(this).attr("ul-child-id");
-                        $(this).append($("body>#"+_id).removeClass("SugarActionMenuIESub"));
-                    });
-                }
+            } else {
+                this.each(function(){
+                    var _id = $(this).attr("ul-child-id");
+                    $(this).append($("body>#"+_id).removeClass("SugarActionMenuIESub"));
+                });
             }
         }
 	}

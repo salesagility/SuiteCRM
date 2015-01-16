@@ -66,9 +66,10 @@
             ),
 			//jquery libraries
 			$sugar_grp_jquery = array(
-			'include/javascript/jquery/jquery-min.js'              => 'include/javascript/sugar_grp1_jquery.js',
-			'include/javascript/jquery/jquery-ui-min.js'          => 'include/javascript/sugar_grp1_jquery.js',
-			'include/javascript/jquery/jquery.json-2.3.js'        => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery-min.js'             => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery-ui-min.js'          => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery.browser.js'         => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery.json-2.3.js'        => 'include/javascript/sugar_grp1_jquery.js',
 			//bootstrap
             //'include/javascript/jquery/bootstrap/bootstrap.min.js'              => 'include/javascript/sugar_grp1_jquery.js',			
             //jquery for moddule menus
