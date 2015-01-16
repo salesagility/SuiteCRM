@@ -111,6 +111,7 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
         </div>-->
     </form>
 </div> <!-- /container -->
+<!--
             <label for="user_name" lass="sr-only">{sugar_translate module="Users" label="LBL_USER_NAME"}</label>
 
 			<div class="password">
@@ -154,3 +155,6 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
 		</td>
 	</tr>
 </table>
+<br>
+<br>
+-->
