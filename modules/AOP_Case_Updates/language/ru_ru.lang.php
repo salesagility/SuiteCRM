@@ -63,5 +63,6 @@ $mod_strings = array (
   'LBL_AOP_CASE_UPDATES_SUBPANEL_TITLE' => 'Обновления обращения',
   'LBL_CASE_NAME' => 'Обращение',
   'LBL_CONTACT_NAME' => 'Контакт',
-  'LBL_INTERNAL' => 'Внутреннее обновление',
+  'LBL_INTERNAL' => 'Внутреннее обновление',  
+  'LBL_AOP_CASE_ATTACHMENTS' => 'Вложения: ',  
 );

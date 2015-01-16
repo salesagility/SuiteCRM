@@ -149,6 +149,7 @@ $mod_strings['LBL_CASE_UPDATES_EXPAND_ALL'] = 'Развернуть все';
 $mod_strings['LBL_NO_CASE_UPDATES'] = "Для данного обращения нет обновлений";
 
 $mod_strings['LBL_AOP_CASE_EVENTS'] = 'События обращения';
+$mod_strings['LBL_AOP_CASE_ATTACHMENTS'] = 'Вложения: ';  
 
 
 
