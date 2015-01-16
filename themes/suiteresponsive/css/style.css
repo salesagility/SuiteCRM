@@ -4157,5 +4157,13 @@ ul.navbar-nav li ul li:hover {
     margin: 0 5px 0 5px;
 }
 
+@media (max-width:480px){
+    #cal-edit{
+        top:10px;
+        max-height:400px;
+        max-width:300px;
+    }
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
