@@ -95,12 +95,12 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
         <br>
         <div class="input-group">
             <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
-            <input type="text" class="form-control" placeholder="Username" required autofocus tabindex="1" id="user_name" name="user_name"  value='{$LOGIN_USER_NAME}' />
+            <input type="text" class="form-control" placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" required autofocus tabindex="1" id="user_name" name="user_name"  value='{$LOGIN_USER_NAME}' />
         </div>
         <br>
         <div class="input-group">
             <span class="input-group-addon logininput glyphicon glyphicon-lock"></span>
-            <input type="password" class="form-control" placeholder="Password" tabindex="2" id="user_password" name="user_password" value='{$LOGIN_PASSWORD}' />
+            <input type="password" class="form-control" placeholder="{sugar_translate module="Users" label="LBL_PASSWORD"}" tabindex="2" id="user_password" name="user_password" value='{$LOGIN_PASSWORD}' />
         </div>
         <br>
         <input id="bigbutton" class="btn btn-lg btn-primary btn-block" type="submit" title="{sugar_translate module="Users" label="LBL_LOGIN_BUTTON_TITLE"}" tabindex="3" name="Login" value="{sugar_translate module="Users" label="LBL_LOGIN_BUTTON_LABEL"}">
