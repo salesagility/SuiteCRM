@@ -40,30 +40,32 @@
 -->
 
 <!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
+<div class="table-responsive">
+    <table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view table">
+        <tbody>
+        <!-- BEGIN: list_nav_row -->
+        {PAGINATION}
+        <!-- END: list_nav_row -->
+        <tr height="20">
+            <!-- BEGIN: header_cell -->
+            <th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
+            <!-- END: header_cell -->
+        </tr>
+        <!-- BEGIN: row -->
+        <tr height="20" class="{ROW_COLOR}S1" >
+            <!-- BEGIN: cell -->
+            <td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
+            <!-- END: cell -->
+        </tr>
+        <!-- END: row -->
+        <!-- BEGIN: nodata -->
+        <tr height='20' class='{ROW_COLOR}S1'>
+            <td colspan='{COL_COUNT}'>
+                <em>{APP.LBL_NO_DATA}</em>
+            </td>
+        </tr>
+        <!-- END: nodata -->
+        </tbody>
+    </table>
+</div>
 <!-- END: dyn_list_view -->
