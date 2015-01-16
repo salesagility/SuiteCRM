@@ -2832,20 +2832,6 @@ input[type=text].cstm_code {
     height:200px;
 }
 
-.bigmenu {
-    columns:150px 2;
-    -webkit-columns:150px 2; /* Safari and Chrome */
-    -moz-columns:150px 2; /* Firefox */
-    float:left;
-}
-
-#All {
-    columns:150px 2;
-    -webkit-columns:150px 2; /* Safari and Chrome */
-    -moz-columns:150px 2; /* Firefox */
-    float:left;
-}
-
 #moduleDashletsList {
     max-height:375px !important;
 }
@@ -3229,7 +3215,31 @@ li#usermenu:hover {
     color:#ffffff;
     font-size:1em;
     cursor:pointer;
-    padding:7px 0 0 0;
+    padding:7px 0 6px 0;
+}
+
+@media (max-height:600px) {
+    #moremenu ul {
+        max-height: 500px;
+        width: 100%;
+        overflow: auto;
+    }
+}
+
+@media (max-height:700px) {
+    #moremenu ul {
+        max-height: 550px;
+        width: 100%;
+        overflow: auto;
+    }
+}
+
+@media (max-height:800px) {
+    #moremenu ul {
+        max-height: 600px;
+        width: 100%;
+        overflow: auto;
+    }
 }
 
 #moremenu ul li a{
