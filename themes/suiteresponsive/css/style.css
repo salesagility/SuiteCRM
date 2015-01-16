@@ -2556,11 +2556,6 @@ h1,h2,h3,h4 {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-h2 {
-    margin:0;
-    padding:0;
-}
-
 select {
     padding:4px;
 }
