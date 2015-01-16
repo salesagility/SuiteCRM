@@ -244,10 +244,11 @@
             <a href="javascript:void(0)" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
             <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
         </div>
+        <div id="quickcreatelinks">
         <div class="dropdown">
-            <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-               Create New Record <span class="glyphicon glyphicon-plus"></span>
-            </button>
+            <a href="" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+               Create New Record<span id="quickcreateplus" class="glyphicon glyphicon-plus"></span>
+            </a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                 <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
                 <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
@@ -257,6 +258,7 @@
                 <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
                 <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
             </ul>
+        </div>
         </div>
         <hr class="hr">
         <h2 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h2>
