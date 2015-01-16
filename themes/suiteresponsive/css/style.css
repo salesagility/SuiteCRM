@@ -1538,11 +1538,10 @@ h4, h5 {
 
 hr {
     border: 0;
-    border-top: 1px solid #999;
-    background-color: #999;
-    color: #999;
+    border-top: 1px solid #cccccc;
+    background-color: #cccccc;
+    color: #cccccc;
     height: 1px;
-    margin: 1em 0;
     clear: both;
 }
 
@@ -3187,9 +3186,8 @@ ul#topnav li a:hover {
 
 .hr {
     height:1px;
-    margin:25px 0 0 0;
-    color:#dddddd;
-    background:#dddddd;
+    color:#ffffff;
+    background:#ffffff;
 }
 
 #usermenu{
@@ -3631,15 +3629,6 @@ body {
     }
 }
 
-#sidebarlinks {
-    margin: 0 0 15px 10px;
-}
-
-#sidebarlinks a{
-    padding:5px 10px 5px 10px;
-    font-size:1.1em;
-}
-
 /* Sidebar navigation */
 
 .nav-sidebar {
@@ -3658,6 +3647,23 @@ body {
     background-color: #428bca;
 }
 
+#sidebarlinks {
+    margin: 0 0 15px 10px;
+}
+
+#sidebarlinks a{
+    padding:5px 10px 5px 10px;
+    font-size:1.1em;
+}
+
+span#quickcreateplus{
+    padding:0 0 0 10px;
+}
+
+#quickcreatelinks{
+    margin: 0 0 15px 12px;
+    font-size:1.1em;
+}
 /* Main content */
 
 .main {
