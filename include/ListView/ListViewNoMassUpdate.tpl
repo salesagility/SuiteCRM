@@ -44,18 +44,19 @@
 *}
 
 
-<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
+<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View footable'>
 {assign var="link_select_id" value="selectLinkTop"}
 {assign var="link_action_id" value="actionLinkTop"}
 {include file='include/ListView/ListViewPagination.tpl'}
-
+    <thead>
 	<tr height='20'>
 	    {if !empty($quickViewLinks)}
 		<th scope='col' width='1%'>&nbsp;</th>
 		{/if}
 		{counter start=0 name="colCounter" print=false assign="colCounter"}
 		{foreach from=$displayColumns key=colHeader item=params}
-			<th scope='col' width='{$params.width}%' >
+            {if $colCounter == '1'}<th scope='col' width='{$params.width}%' data-toggle="true">
+            {else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
 				<span sugar="sugar{$colCounter}"><div style='white-space: nowrap;'width='100%' align='{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
 	                <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
@@ -83,7 +84,7 @@
 			{counter name="colCounter"}
 		{/foreach}
 	</tr>
-
+</thead>
 	{foreach name=rowIteration from=$data key=id item=rowData}
 		{if $smarty.foreach.rowIteration.iteration is odd}
 			{assign var='_rowColor' value=$rowColor[0]}
