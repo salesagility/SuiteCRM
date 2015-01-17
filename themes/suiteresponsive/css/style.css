@@ -4180,7 +4180,7 @@ ul.navbar-nav li ul li:hover {
 }
 
 @media (max-width:640px){
-    #cal-edit, #settings_dialog, #settings_dialog form{
+    #cal-edit, #settings_dialog, #settings_dialog form, #container1 {
         top:10px;
         max-height:400px !important;
         max-width:300px !important;
