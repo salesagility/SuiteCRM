@@ -3956,9 +3956,10 @@ li#moremenu {
 }
 
 /* Hide search form as standard */
-
-.search_form {
-    display:none;
+@media (max-width:767px) {
+    .search_form {
+        display: none;
+    }
 }
 
 /* Custom styling for recently viewed on sidebar */
