@@ -45,6 +45,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <div id="sidebarlinks_head" class="navbar-toggle collapsed">
+                <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
+                <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <a href="javascript:void(0)" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+                <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            </div>
             <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
             <form id="searchmobile" name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
                 <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
@@ -55,6 +61,7 @@
                     <input type="text" class="form-control" name="query_string" id="query_string" placeholder="Search..." />
                 </span>
             </form>
+
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {if $USE_GROUP_TABS}
