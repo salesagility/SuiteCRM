@@ -3470,7 +3470,7 @@ table legend {
     width:200px;
 }
 
-@media screen and (min-width:801px) {
+@media screen and (min-width:479px) {
     #mobilefooter {
         display:none
     }
@@ -3654,6 +3654,21 @@ body {
 #sidebarlinks a{
     padding:5px 10px 5px 10px;
     font-size:1.1em;
+}
+
+#sidebarlinks_head {
+    display:none;
+}
+
+@media (min-width: 480px) and (max-width: 979px) {
+    #sidebarlinks_head {
+        display:inline;
+    }
+    #sidebarlinks_head a {
+        color: #ffffff;
+        padding: 3px 10px 5px 10px;
+        font-size: 1.1em;
+    }
 }
 
 span#quickcreateplus{
