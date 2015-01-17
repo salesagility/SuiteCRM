@@ -47,6 +47,7 @@ var LBL_REQUEST_SUBMIT = '{sugar_translate module="Users" label="LBL_REQUEST_SUB
 var LBL_SHOWOPTIONS = '{sugar_translate module="Users" label="LBL_SHOWOPTIONS"}';
 var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}';
 </script>
+<!-- Start login container -->
 <div class="container">
     <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''">
         <div class="companylogo">{$LOGIN_IMAGE}</div>
@@ -104,57 +105,28 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
         </div>
         <br>
         <input id="bigbutton" class="btn btn-lg btn-primary btn-block" type="submit" title="{sugar_translate module="Users" label="LBL_LOGIN_BUTTON_TITLE"}" tabindex="3" name="Login" value="{sugar_translate module="Users" label="LBL_LOGIN_BUTTON_LABEL"}">
-        <!--<div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me"> Remember me
-            </label>
-        </div>-->
+        <div id="forgotpasslink" style="cursor: pointer; display:{$DISPLAY_FORGOT_PASSWORD_FEATURE};" onclick='toggleDisplay("forgot_password_dialog");'>
+            <a href='javascript:void(0)'>{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
+        </div>
     </form>
-</div> <!-- /container -->
-<!--
-            <label for="user_name" lass="sr-only">{sugar_translate module="Users" label="LBL_USER_NAME"}</label>
-
-			<div class="password">
-
-			<form action="index.php" method="post" name="fp_form" id="fp_form" >
-								<table cellpadding="0" cellspacing="2" border="0" align="center" width="100%">
-									<tr>
-										<td colspan="2" class="login_more">
-										<div  style="cursor: hand; cursor: pointer; display:{$DISPLAY_FORGOT_PASSWORD_FEATURE};" onclick='toggleDisplay("forgot_password_dialog");'>
-											<a href='javascript:void(0)'><IMG src="{sugar_getimagepath file='advanced_search.gif'}" border="0" alt="Hide Options" id="forgot_password_dialog_options">{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
-										</div>
-											<div id="forgot_password_dialog" style="display:none" >
-												<input type="hidden" name="entryPoint" value="GeneratePassword">
-												<table cellpadding="0" cellspacing="2" border="0" align="center" width="100%" >
-													<tr>
-														<td colspan="2">
-															<div id="generate_success" class='error' style="display:inline;"> </div>
-														</td>
-													</tr>
-													<tr>
-														<td scope="row" width="30%"><label for="fp_user_name">{sugar_translate module="Users" label="LBL_USER_NAME"}:</label></td>
-														<td width="70%"><input type="text" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' /></td>
-													</tr>
-													<tr>
-											            <td scope="row" width="30%"><label for="fp_user_mail">{sugar_translate module="Users" label="LBL_EMAIL"}:</label></td>
-											            <td width="70%"><input type="text" size='26' id="fp_user_mail" name="fp_user_mail"  value='' ></td>
-											     	</tr>
-													{$CAPTCHA}
-													<tr>
-													    <td scope="row" width="30%"><div id='wait_pwd_generation'></div></td>
-														<td width="70%"><input title="Email Temp Password" class="button" type="button" style="display:inline" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}"></td>
-													</tr>
-												</table>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</form>
-			</div>
-		</div>
-		</td>
-	</tr>
-</table>
-<br>
-<br>
--->
+        <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form" name="fp_form" id="fp_form" >
+            <div id="forgot_password_dialog" style="display:none" >
+                <input type="hidden" name="entryPoint" value="GeneratePassword">
+                <div id="generate_success" class='error' style="display:inline;"></div>
+                <div class="input-group">
+                    <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
+                    <input type="text" class="form-control" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}"/>
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon logininput glyphicon glyphicon-envelope"></span>
+                    <input type="text" class="form-control" size='26' id="fp_user_mail" name="fp_user_mail" value ='' placeholder="{sugar_translate module="Users" label="LBL_EMAIL"}">
+                </div>
+                <br>
+                {$CAPTCHA}
+                <div id='wait_pwd_generation'></div>
+                <input id="bigbutton" class="btn btn-lg btn-primary btn-block" class="button" type="button" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}">
+            </div>
+        </form>
+</div>
+<!-- End login container -->

@@ -4188,5 +4188,9 @@ ul.navbar-nav li ul li:hover {
     }
 }
 
+#forgotpasslink {
+    margin: 10px 0 0 0;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
