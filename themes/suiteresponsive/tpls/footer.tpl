@@ -205,7 +205,8 @@ function qe_init(){
         $(function () {
             setTimeout(function() {
                 $('.footable').footable();
-                $('.footable-first-column').removeAttr("data-hide").attr("data-toggle","true");
+                $('.footable-first-column').attr("data-toggle","true");
+                $('.footable-first-column').removeAttr("data-hide");
 
             },1000);
 
