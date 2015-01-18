@@ -205,6 +205,7 @@ function qe_init(){
         $(function () {
             setTimeout(function() {
                 $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+                $('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
                 $('.footable').footable();
                 $(".footable").find("th:first").attr("data-toggle","true");
             },1000);
