@@ -36,10 +36,10 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- 
+
 #cal-grid {
-	border-left: 1px solid silver;	 
-	overflow: hidden;	
+	border-left: 1px solid silver;
+	overflow: hidden;
 }
 
 #cal-scrollable {
@@ -48,14 +48,14 @@
 }
 
 #cal-grid .col {
-	width: 14.2%; 
-	float: left; 
+	width: 14.2%;
+	float: left;
 	border-bottom: 0px solid silver;
 }
 
 #cal-grid .left_col {
-	width: 52px; 
-	float: left; 
+	width: 50px;
+	float: left;
 	border-bottom: 0px solid silver;
 }
 
@@ -67,30 +67,29 @@
 	height: 14px;
 	border-right: 1px solid silver;
 	border-bottom: 1px solid #e5e5e5;
-	background-color: transparent;	
+	background-color: transparent;
 }
 #cal-grid .slot_over {
 	background-color: #D1DCFF;
 }
 
-#cal-grid .left_slot {	
+#cal-grid .left_slot {
 	height: 14px;
 	font-size: 10px;
-	text-align: center;	
-	border-right: 1px solid silver;	
-	border-bottom: 1px solid #e5e5e5;	
+	text-align: center;
+	border-right: 1px solid silver;
+	border-bottom: 1px solid #e5e5e5;
 	vertical-align: middle;
-	line-height: 15px;	
+	line-height: 15px;
 }
 
 #cal-grid .col_head {
-	height: 14px;	
 	text-align: center;
 	font-size: 13px;
 	border-bottom: 1px solid silver;
 	border-top: 1px solid silver;
-	border-right: 1px solid silver;	
-	white-space: nowrap;	
+	border-right: 1px solid silver;
+	white-space: nowrap;
 }
 
 #cal-grid .col_head a {
@@ -108,7 +107,7 @@
 #cal-grid div.slot_active {
 	background-color: gray;
 }
-	
+
 #cal-grid .today {
 	font-weight: bold;
 	background-color: #FCD372;
@@ -122,9 +121,9 @@
 
 .act_item {
 	width: 92%;
-	min-width: 0px;	
+	min-width: 0px;
 	font-size: 10px;
-	position : relative;	
+	position : relative;
 	vertical-align: top;
 	display: inline-block;
 	border: 1px solid;
@@ -158,13 +157,13 @@
 	padding-left: 2px;
 	padding-right: 2px;
 	overflow: hidden;
-	height: 13px;	
+	height: 13px;
 	padding-top: 1px;
 	font-size: 11px;
 }
 
 .adicon {
-	float: right;	
+	float: right;
 	color: black;
 	width: 10px;
 	font-size: 9px;
@@ -178,7 +177,7 @@
 }
 
 .act_item .head div {
-	font-size: 11px;	
+	font-size: 11px;
 }
 
 
@@ -192,9 +191,9 @@
 
 
 .act_item .yui-resize-handle-inner-b {
-    width: 16px;  
+    width: 16px;
     margin-left: auto;
-    margin-right: auto;    
+    margin-right: auto;
     border-top: 0px double;
     background-image: none;
     position: relative;
