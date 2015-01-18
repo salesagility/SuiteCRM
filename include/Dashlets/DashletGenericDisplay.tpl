@@ -45,7 +45,7 @@
 {assign var="alt_prev" value=$navStrings.previous}
 {assign var="alt_end" value=$navStrings.end}
 
-<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view'>
+<table id="dashletPanel" cellpadding='0' cellspacing='0' width='100%' border='0' class='list view footable default'>
     <tr class="pagination" role=”presentation”>
         <td colspan='{$colCount+1}' align='right'>
             <table border='0' cellpadding='0' cellspacing='0' width='100%'>
@@ -109,6 +109,7 @@
             </table>
         </td>
     </tr>
+	<thead>
     <tr height='20'>
         {foreach from=$displayColumns key=colHeader item=params}
 	        <th scope='col' width='{$params.width}%'>
@@ -142,7 +143,7 @@
 		<td  class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
 		{/if}
     </tr>
-
+	</thead>
 	{foreach name=rowIteration from=$data key=id item=rowData}
 		{if $smarty.foreach.rowIteration.iteration is odd}
 			{assign var='_rowColor' value=$rowColor[0]}

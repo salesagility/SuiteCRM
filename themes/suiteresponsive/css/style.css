@@ -4235,5 +4235,17 @@ li#topnav:first-child{
     display:none;
 }
 
+tr.pagination td span.footable-toggle {
+    display: none;
+    font-family: "footable";
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #888;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
