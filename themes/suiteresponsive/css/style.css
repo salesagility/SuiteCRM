@@ -3164,7 +3164,7 @@ fieldset[disabled] .btn-primary.active {
 
 #topnav{
     padding:15px 0 15px 0;
-    font-size:1em;
+    font-size:1.1em;
 }
 
 ul#topnav li a {
@@ -3208,7 +3208,7 @@ li#usermenu:hover {
 
 #moremenu a{
     color:#ffffff;
-    font-size:1em;
+    font-size:1.1em;
     cursor:pointer;
     padding:7px 0 6px 0;
 }
@@ -4229,6 +4229,10 @@ ul.navbar-nav li ul li:hover {
 
 table#lineItems{
     max-width:50%;
+}
+
+li#topnav:first-child{
+    display:none;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
