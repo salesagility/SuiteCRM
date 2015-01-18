@@ -2747,10 +2747,6 @@ select:focus {
     display:none;
 }
 
-.cal-edit {
-    width:1080px;
-}
-
 a#delete_listview_top:hover {
     color:#ffffff;
 }
@@ -4186,7 +4182,12 @@ ul.navbar-nav li ul li:hover {
         max-height:400px !important;
         max-width:300px !important;
         overflow:scroll;
-        z-index:999;
+    }
+}
+
+@media(min-width:1280px){
+    #cal-edit{
+        margin:50px 0 0 200px;
     }
 }
 
@@ -4224,6 +4225,10 @@ ul.navbar-nav li ul li:hover {
         background: url("../../../../index.php?entryPoint=getImage&themeName=suiteresponsive&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
         cursor: pointer;
     }
+}
+
+table#lineItems{
+    max-width:50%;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
