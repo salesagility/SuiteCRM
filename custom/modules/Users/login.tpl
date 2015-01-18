@@ -49,6 +49,7 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
 </script>
 <!-- Start login container -->
 <div class="container">
+    <div id="loginform">
     <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''">
         <div class="companylogo">{$LOGIN_IMAGE}</div>
         <span class="error" id="browser_warning" style="display:none">
@@ -113,6 +114,7 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
             <div id="forgot_password_dialog" style="display:none" >
                 <input type="hidden" name="entryPoint" value="GeneratePassword">
                 <div id="generate_success" class='error' style="display:inline;"></div>
+                <br>
                 <div class="input-group">
                     <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
                     <input type="text" class="form-control" size='26' id="fp_user_name" name="fp_user_name"  value='{$LOGIN_USER_NAME}' placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}"/>
@@ -128,5 +130,6 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
                 <input id="bigbutton" class="btn btn-lg btn-primary btn-block" class="button" type="button" onclick="validateAndSubmit(); return document.getElementById('cant_login').value == ''" id="generate_pwd_button" name="fp_login" value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}">
             </div>
         </form>
+    </div>
 </div>
 <!-- End login container -->
