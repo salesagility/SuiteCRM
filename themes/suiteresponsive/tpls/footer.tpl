@@ -204,7 +204,7 @@ function qe_init(){
         /* Function to call footable for responsive table functionality */
         $(function () {
             setTimeout(function() {
-                $('.footable th:not(:first-child)').attr("data-hide","phone, tablet");
+                $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
                 $('.footable').footable();
                 $(".footable").find("th:first").attr("data-toggle","true");
             },1000);
