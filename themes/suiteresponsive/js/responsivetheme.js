@@ -58,7 +58,7 @@ $(function () {
         $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $('.footable').footable();
         $(".footable").find("th:first").attr("data-toggle","true");
-    },1000);
+    },2000);
 });
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
