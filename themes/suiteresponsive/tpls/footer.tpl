@@ -203,7 +203,12 @@ function qe_init(){
         });
         /* Function to call footable for responsive table functionality */
         $(function () {
-            $('.footable').footable();
+            setTimeout(function() {
+                $('.footable').footable();
+                $('.footable-first-column').removeAttr("data-hide").attr("data-toggle","true");
+
+            },1000);
+
         });
         /* JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete */
         $(window).on('resize', function () {
