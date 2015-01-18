@@ -2397,7 +2397,6 @@ ul#detailViewActions.clickMenu {
     background-color: #eee;
     border: 1px solid #ddd;
     vertical-align: bottom;
-    padding: 0 3px 0 10px;
 }
 
 .selectActionsDisabled span {
@@ -2517,10 +2516,12 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 }
 
 .selectActionsDisabled {
-    padding: 5px 8px 5px 8px;
+    padding: 3px 8px 3px 8px;
     margin: 0 3px 0 3px;
     background: #cccccc; /* Old browsers */
-    border: solid 1px #999999;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
     color: #121212;
     cursor: pointer;
     font-size:12px;
@@ -4191,6 +4192,37 @@ ul.navbar-nav li ul li:hover {
 
 #forgotpasslink {
     margin: 10px 0 0 0;
+}
+
+@media (max-width:480px) {
+    .paginationChangeButtons {
+        max-width:125px;
+    }
+    .paginationActionButtons{
+        padding:30px;
+    }
+
+    #listViewStartButton_top, #listViewPrevButton_top, #listViewNextButton_top, #listViewEndButton_top,
+    #listViewStartButton_bottom, #listViewPrevButton_bottom, #listViewNextButton_bottom, #listViewEndButton_bottom {
+        padding: 2px 5px 2px 5px;
+        margin: 0;
+    }
+
+    .pageNumbers {
+        font-size: 10px;
+    }
+
+    #selectedRecordsTop {
+        max-width: 100px;
+        float: left;
+    }
+    ul.clickMenu li span {
+        width: 16px;
+        height: 16px;
+        float: left;
+        background: url("../../../../index.php?entryPoint=getImage&themeName=suiteresponsive&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
+        cursor: pointer;
+    }
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
