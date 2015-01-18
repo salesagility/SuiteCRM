@@ -205,9 +205,8 @@ function qe_init(){
         $(function () {
             setTimeout(function() {
                 $('.footable').footable();
-                $('.footable-first-column').attr("data-toggle","true");
-                $('.footable-first-column').removeAttr("data-hide");
-
+                $(".footable").find("th:first").removeAttr("data-hide").attr("data-toggle","true");
+                $(".footable").find("th:first").css("display","inline");
             },1000);
 
         });
