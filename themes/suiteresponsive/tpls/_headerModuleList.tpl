@@ -93,7 +93,7 @@
                 {if $name == $MODULE_TAB}
                 <li id="topnav">
                     <span class="currentTabLeft">&nbsp;</span>
-                    <span id="headerlinks" class="dropdown-toggle" data-toggle="dropdown" class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                    {if $name !='Home'}<span id="headerlinks" class="dropdown-toggle" data-toggle="dropdown" class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h2"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>{$APP.LBL_LINK_ACTIONS}</h3>
