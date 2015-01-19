@@ -60,9 +60,9 @@ $json = getJSONobj();
 $pass = '';
 if(!empty($_REQUEST['mail_smtppass'])) {
     $pass = $_REQUEST['mail_smtppass'];
-} elseif(isset($_REQUEST['mail_name'])) {
+} elseif(isset($_REQUEST['mail_type'])) {
     $oe = new OutboundEmail();
-    $oe = $oe->getMailerByName($current_user, $_REQUEST['mail_name']);
+    $oe = $oe->getMailerByName($current_user, $_REQUEST['mail_type']);
     if(!empty($oe)) {
         $pass = $oe->mail_smtppass;
     }
