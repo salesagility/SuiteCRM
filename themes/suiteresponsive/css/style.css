@@ -1698,7 +1698,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 /* global links */
 
 #globalLinks {
-    padding:6px 0 3px 10px;
+    padding:6px 0 3px 5px;
     border-left:1px solid #bbbbbb;
     margin: 0 10px 0 10px;
     font-size:1.1em;
@@ -2567,12 +2567,6 @@ a:link {
 iframe.teamNoticeBox {
     width:100%;
     overflow:auto;
-}
-
-#globalLinks {
-    margin:0 5px 5px 10px;
-    padding: 5px 5px 0 5px;
-    border-left:1px solid #565656;
 }
 
 #globalLinks ul li a {
