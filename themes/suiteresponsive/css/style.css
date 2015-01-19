@@ -3979,6 +3979,9 @@ li#moremenu {
     margin:0;
     padding:0;
 }
+    #moremenu ul li a{
+        color:#ffffff;
+    }
 }
 /* Custom styling for recently viewed on sidebar */
 
