@@ -242,7 +242,7 @@
 <!--End Responsive Top Navigation Menu -->
 <!--Start Responsive Sidebar -->
 <div class="container-fluid">
-    <a href="" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
+    <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
         <div id="sidebarlinks">
