@@ -83,7 +83,7 @@ $('#buttontoggle').click(function(){
     if ($('.sidebar').is(':hidden')){
         $.cookie('sidebartoggle', 'collapsed');
         $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
-        $('#buttontoggle').animate({
+        $('#buttontoggle').css({
             'left' : "-=215px"
         });
     }
@@ -93,7 +93,7 @@ var sidebartoggle = $.cookie('sidebartoggle');
 if (sidebartoggle == 'collapsed'){
     $('.sidebar').hide();
     $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
-    $('#buttontoggle').animate({
+    $('#buttontoggle').css({
         'left' : "-=215px"
     });
 }
