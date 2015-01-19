@@ -204,7 +204,6 @@
                     {/foreach}
                     <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                 </ul>
-                <li id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></li>
             </div>
             <div id="search" class="dropdown nav navbar-nav navbar-right">
             <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
@@ -243,6 +242,7 @@
 <!--End Responsive Top Navigation Menu -->
 <!--Start Responsive Sidebar -->
 <div class="container-fluid">
+    <a href="" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
         <div id="sidebarlinks">
