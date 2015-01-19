@@ -1701,7 +1701,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
     padding:6px 0 3px 10px;
     border-left:1px solid #bbbbbb;
     margin: 0 10px 0 10px;
-    font-size:1em;
+    font-size:1.1em;
 }
 
 #globalLinks ul {
