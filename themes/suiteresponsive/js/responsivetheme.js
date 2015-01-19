@@ -73,31 +73,32 @@ $('.showsearch').click(function() {
 });
 
 // jQuery to toggle sidebar
-var sidebartoggle = $.cookie('sidebartoggle');
-if (sidebartoggle == 'collapsed'){
-    $('.sidebar').hide();
-    $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
-}
-if (sidebartoggle == 'expanded'){
-    $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
-    $('#buttontoggle').animate({
-        'left' : "+=215px"
-    });
-}
+
 $('#buttontoggle').click(function(){
     $('.sidebar').toggle();
     if ($('.sidebar').is(':visible')){
         $.cookie('sidebartoggle', 'expanded');
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
-        $('#buttontoggle').animate({
-            'left' : "+=215px"
-        });
     }
     if ($('.sidebar').is(':hidden')){
         $.cookie('sidebartoggle', 'collapsed');
         $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+        $('#buttontoggle').animate({
+            'left' : "-=215px"
+        });
     }
     console.log($.cookie('sidebartoggle'));
 });
+var sidebartoggle = $.cookie('sidebartoggle');
+if (sidebartoggle == 'collapsed'){
+    $('.sidebar').hide();
+    $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+    $('#buttontoggle').animate({
+        'left' : "-=215px"
+    });
+}
+if (sidebartoggle == 'expanded'){
+    $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+}
 
 // End of custom jQuery

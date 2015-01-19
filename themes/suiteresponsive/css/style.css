@@ -4226,7 +4226,7 @@ li#topnav:first-child{
 #buttontoggle
 {
     position: fixed;
-    left: 0;
+    left: 215px;
     top: 20%;
     background:#eeeeee;
     z-index: 100;
