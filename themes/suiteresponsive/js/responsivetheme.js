@@ -53,12 +53,10 @@ $(function() {
 
 // Function to call footable for responsive table functionality
 $(function () {
-    setTimeout(function() {
         $('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $('.footable').footable();
         $(".footable").find("th:first").attr("data-toggle","true");
-    },2000);
 });
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
@@ -75,22 +73,6 @@ $('.showsearch').click(function() {
 });
 
 // jQuery to toggle sidebar
-$('#buttontoggle').click(function(){
-    $('.sidebar').toggle();
-    if ($('.sidebar').is(':visible')){
-        $.cookie('sidebartoggle', 'expanded');
-        $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
-
-    }
-
-    if ($('.sidebar').is(':hidden')){
-        $.cookie('sidebartoggle', 'collapsed');
-        $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
-
-    }
-    console.log($.cookie('sidebartoggle'));
-});
-
 var sidebartoggle = $.cookie('sidebartoggle');
 if (sidebartoggle == 'collapsed'){
     $('.sidebar').hide();
@@ -98,6 +80,24 @@ if (sidebartoggle == 'collapsed'){
 }
 if (sidebartoggle == 'expanded'){
     $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+    $('#buttontoggle').animate({
+        'left' : "+=215px"
+    });
 }
+$('#buttontoggle').click(function(){
+    $('.sidebar').toggle();
+    if ($('.sidebar').is(':visible')){
+        $.cookie('sidebartoggle', 'expanded');
+        $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+        $('#buttontoggle').animate({
+            'left' : "+=215px"
+        });
+    }
+    if ($('.sidebar').is(':hidden')){
+        $.cookie('sidebartoggle', 'collapsed');
+        $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+    }
+    console.log($.cookie('sidebartoggle'));
+});
 
 // End of custom jQuery
