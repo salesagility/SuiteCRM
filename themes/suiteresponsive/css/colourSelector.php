@@ -49,8 +49,8 @@ background:none;
 color:#<?php echo $sugar_config['colourselector']['navbarfont']; ?>;
 }
 
-@media(max-width:767px){
-ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+@media(max-width:979px){
+ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a, #moremenu ul li a {
 color:#<?php echo $sugar_config['colourselector']['navbarfont']; ?>; !important;
 }
 }
