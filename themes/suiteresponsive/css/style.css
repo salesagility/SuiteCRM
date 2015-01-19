@@ -3973,6 +3973,13 @@ li#moremenu {
     }
 }
 
+@media (max-width:979px){
+#recentlyViewed, .recent_h2{
+    display:none;
+    margin:0;
+    padding:0;
+}
+}
 /* Custom styling for recently viewed on sidebar */
 
 .sidebaredit {
@@ -4246,6 +4253,5 @@ li#topnav:first-child{
     color: #FFF;
     background:none !important;
 }
-
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
