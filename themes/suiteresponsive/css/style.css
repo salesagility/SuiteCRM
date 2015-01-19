@@ -4037,6 +4037,12 @@ ul.navbar-nav li:hover, .bigmenu li a:hover {
     background:#337ab7 !important;
 }
 
+@media(max-width:767px){
+    ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color:#ffffff; !important;
+    }
+}
+
 ul.navbar-nav li ul li:hover {
     background:none !important;
 }
