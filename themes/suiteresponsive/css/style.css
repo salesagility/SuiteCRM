@@ -4256,5 +4256,10 @@ li#topnav:first-child{
     color: #FFF;
     background:none !important;
 }
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #bbbbbb !important;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
