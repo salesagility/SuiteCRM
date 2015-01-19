@@ -96,4 +96,5 @@ global $sugar_config, $mod_strings;
         </ul>
     </div>
 </tr>
+</table>
 </div>
