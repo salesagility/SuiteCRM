@@ -3236,18 +3236,19 @@ li#usermenu:hover {
     cursor:pointer;
     padding:5px;
     font-size:1em;
+    display: block;
 }
 
-#moremenu ul li{
-
-    padding:5px;
+#moremenu ul li:hover{
+    border-radius:0 !important;
 }
 
 #moremenu ul li a:hover{
     color:#ffffff;
-    background:none;
+    background:none !important;
     cursor:pointer;
     padding:5px;
+    background:#3C8DBC !important;
 }
 
 .button {
