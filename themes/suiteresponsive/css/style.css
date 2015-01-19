@@ -4241,5 +4241,11 @@ li#topnav:first-child{
     width:24px;
     padding:8px 4px 8px 4px;
 }
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: #FFF;
+    background:none !important;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
