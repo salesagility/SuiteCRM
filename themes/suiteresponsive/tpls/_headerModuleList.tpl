@@ -246,10 +246,10 @@
     <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
         <div id="sidebarlinks">
-            <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
-            <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-            <a href="javascript:void(0)" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
-            <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            <a href="index.php" title="Home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
+            <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}" title="{$CURRENT_USER}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+            <a href="javascript:void(0)" onclick="refresh();" title="Refresh"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+            <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' title="{$LOGOUT_LABEL}"><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
         </div>
         <div id="quickcreatelinks">
         <div class="dropdown">
