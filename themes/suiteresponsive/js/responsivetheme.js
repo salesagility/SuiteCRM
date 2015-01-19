@@ -79,6 +79,9 @@ $('#buttontoggle').click(function(){
     if ($('.sidebar').is(':visible')){
         $.cookie('sidebartoggle', 'expanded');
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+        $('#buttontoggle').css({
+            'left' : "+=215px"
+        });
     }
     if ($('.sidebar').is(':hidden')){
         $.cookie('sidebartoggle', 'collapsed');
@@ -99,6 +102,9 @@ if (sidebartoggle == 'collapsed'){
 }
 if (sidebartoggle == 'expanded'){
     $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+    $('#buttontoggle').css({
+        'left' : "+=215px"
+    });
 }
 
 // End of custom jQuery
