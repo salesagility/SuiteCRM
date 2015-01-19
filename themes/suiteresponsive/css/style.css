@@ -1700,7 +1700,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 #globalLinks {
     padding:6px 0 3px 5px;
     border-left:1px solid #bbbbbb;
-    margin: 0 10px 0 10px;
+    margin: 0 0 0 10px;
     font-size:1.1em;
 }
 
@@ -3186,7 +3186,7 @@ ul#topnav li a:hover {
     cursor:pointer;
     padding:10px 0 10px 0;
     list-style:none;
-    margin: 0 0 0 5px;
+    margin: 0 0 0 10px;
 }
 
 li#usermenu:hover {
@@ -3486,6 +3486,10 @@ table legend {
 }
 #searchbutton {
     margin:10px 5px 0 0;
+}
+
+#searchform{
+    margin-right:-10px;
 }
 
 /* Media queries for larger screens to hide mobile content */
