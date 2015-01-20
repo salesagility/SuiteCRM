@@ -3994,12 +3994,12 @@ li.moremenu {
 
 li.recentlinks_top {
     float:left;
-    width:auto;
+    width:80px;
 }
 
 li.recentlinks_topedit {
     float:right;
-    max-width:50px;
+    max-width:32px;
     margin:5px 0 5px 0;
 }
 
