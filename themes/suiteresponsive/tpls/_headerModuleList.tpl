@@ -61,7 +61,6 @@
                     <input type="text" class="form-control" name="query_string" id="query_string" placeholder="Search..." />
                 </span>
             </form>
-
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             {if $USE_GROUP_TABS}
@@ -190,9 +189,9 @@
                 </ul>
             </div>
             <div id="search" class="dropdown nav navbar-nav navbar-right">
-            <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
-                <span class="glyphicon glyphicon-search"> </span>
-            </button>
+                <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
+                    <span class="glyphicon glyphicon-search"> </span>
+                </button>
                 <div  class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                     <form id="searchformdropdown" name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
                         <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
@@ -207,7 +206,7 @@
                         </div>
                     </form>
                 </div>
-                </div>
+            </div>
             <form id="searchform" class="navbar-form navbar-right" name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
                 <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
                 <input type="hidden" class="form-control" name="module" value="Home">
