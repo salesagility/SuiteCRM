@@ -3793,9 +3793,15 @@ li#moremenu {
         font-weight: bold;
     }
 
-    /* This border breaks up/defines sections from view */
+    /* This border breaks up/defines sections from view
     .detail tr {
         border-bottom: 1px solid #cccccc;
+    }
+    */
+
+    .detail tr{
+        margin:0;
+        padding:0;
     }
 
     .detail tr:last-child {
