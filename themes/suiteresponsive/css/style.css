@@ -3994,7 +3994,7 @@ li.moremenu {
 
 li.recentlinks_top {
     float:left;
-    max-width:100% !important;
+    max-width:90% !important;
 }
 
 li.recentlinks_topedit a {
