@@ -3994,13 +3994,13 @@ li.moremenu {
 
 li.recentlinks_top {
     float:left;
-    max-width:90% !important;
+    width:auto;
 }
 
-li.recentlinks_topedit a {
+li.recentlinks_topedit {
     float:right;
     max-width:50px;
-    margin:5px;
+    margin:5px 0 5px 0;
 }
 
 li.recentlinks_topedit a:hover {
