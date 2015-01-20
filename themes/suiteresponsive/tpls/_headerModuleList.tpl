@@ -268,6 +268,7 @@
         </div>
         </div>
         <hr class="hr">
+        <div id="recentlyViewed">
         <h2 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h2>
         <ul class="nav nav-pills nav-stacked">
             {foreach from=$recentRecords item=item name=lastViewed}
@@ -281,6 +282,7 @@
                 </li>
             {/foreach}
         </ul>
+        </div>
     </div>
     <!--End Responsive Sidebar -->
     <!--Start Page content -->

@@ -3992,12 +3992,6 @@ li.moremenu {
 }
 /* Custom styling for recently viewed on sidebar */
 
-.sidebaredit {
-    float:left;
-    margin:0;
-    padding:0;
-}
-
 li.recentlinks a {
     float:left;
     width:130px;
@@ -4256,6 +4250,7 @@ li.topnav:first-child{
     padding:8px 4px 8px 4px;
 }
 
+/* Override bootstrap styles where not required */
 .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
     color: #FFF;
     background:none !important;
