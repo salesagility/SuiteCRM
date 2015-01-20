@@ -3816,7 +3816,7 @@ li#moremenu {
 
     /* Custom styling for table header */
     .detail h4 {
-        font-size: 1.2em;
+        font-size:1em;
         background: #eeeeee;
         border: 1px solid #cccccc;
         margin: 10px 0 0 0;
@@ -3851,6 +3851,7 @@ li#moremenu {
         margin: 0 5px 0 25px;
         padding:0;
         max-width:33%;
+        font-size:1em;
     }
 }
 
@@ -3875,7 +3876,7 @@ li#moremenu {
     }
     .edit  tr,.edit tr td[scope="col"],.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td,.detail tr td,.detail table, table.detail {
         background:none;
-        font-size:1.1em;
+        font-size:1em;
 
     }
     /* Custom styling for table header */
@@ -3910,10 +3911,10 @@ li#moremenu {
         border:none;
     }
     .edit input[type=text] {
-        padding:10px;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
+        font-size:1em;
     }
     /* Fix for how email section/table shows */
     .emailaddresses tr, .emailaddresses td {
@@ -3974,7 +3975,7 @@ li#moremenu {
 }
 
 @media (max-width:979px){
-#recentlyViewed, .recent_h2{
+.recentlyViewed, .recent_h2{
     display:none;
     margin:0;
     padding:0;
@@ -4130,7 +4131,7 @@ ul.navbar-nav li ul li:hover {
 }
 
 @media (max-width:320px) {
-    #dashletcontainer {
+    .dashletcontainer {
         width:67%;
         position:relative;
         margin:0;
@@ -4140,7 +4141,7 @@ ul.navbar-nav li ul li:hover {
 }
 
 @media (min-width:340px) and (max-width:360px) {
-    #dashletcontainer {
+    .dashletcontainer {
         width:75%;
         position:relative;
         margin:0;
@@ -4150,7 +4151,7 @@ ul.navbar-nav li ul li:hover {
 }
 
 @media (min-width:480px) and (max-width:480px) {
-    #dashletcontainer {
+    .dashletcontainer {
         width:95%;
         position:relative;
         margin:0;
@@ -4160,7 +4161,7 @@ ul.navbar-nav li ul li:hover {
 }
 
 @media (min-width:480px) and (max-width:959px) {
-    #dashletcontainer {
+    .dashletcontainer {
         width:95%;
         position:relative;
         margin:0;
