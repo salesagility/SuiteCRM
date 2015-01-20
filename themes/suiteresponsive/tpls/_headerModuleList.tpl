@@ -69,7 +69,7 @@
                     {assign var="groupSelected" value=false}
                     {foreach from=$groupTabs item=modules key=group name=groupList}
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-                        <li id="topnav">
+                        <li class="topnav">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
                             <a href="#" id="grouptab_{$smarty.foreach.groupList.index}"  class="dropdown-toggle" data-toggle="dropdown">{$group}</a>
                             <span class="notCurrentTabRight">&nbsp;</span>
@@ -91,9 +91,9 @@
             <ul class="nav navbar-nav">
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                 {if $name == $MODULE_TAB}
-                <li id="topnav">
+                <li class="topnav">
                     <span class="currentTabLeft">&nbsp;</span>
-                    {if $name !='Home'}<span id="headerlinks" class="dropdown-toggle" data-toggle="dropdown" class="currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
+                    {if $name !='Home'}<span class="dropdown-toggle headerlinks currentTab" data-toggle="dropdown">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h2"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>{$APP.LBL_LINK_ACTIONS}</h3>
@@ -131,9 +131,9 @@
                 {/foreach}
             </ul>
             {else}
-            <li id="topnav">
+            <li class="topnav">
                 <span class="notCurrentTabLeft">&nbsp;</span>
-                {if $name != 'Home'}<span id="headerlinks" class="dropdown-toggle" data-toggle="dropdown" class="notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
+                {if $name != 'Home'}<span class="dropdown-toggle headerlinks notCurrentTab" data-toggle="dropdown">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
                 <ul class="dropdown-menu" role="menu">
                     {if count($shortcutTopMenu.$name) > 0}
                     <h3 class="home_h2"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>{$APP.LBL_LINK_ACTIONS}</h3>
@@ -149,7 +149,7 @@
                     <h3 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h3>
                     {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
-                        <table id="recentlyViewed" style="width:100%">
+                        <table class="recentlyViewed" style="width:100%">
                             <tr>
                                 <td>
                                     <li>
@@ -174,7 +174,7 @@
             {/if}
             {/foreach}
             {if count($moduleExtraMenu) > 0}
-                <li id="moremenu">
+                <li class="moremenu">
                     <a class="dropdown-toggle" data-toggle="dropdown">{$APP.LBL_MORE} &raquo;</a>
                     <ul class="dropdown-menu" role="menu">
                         <div class="bigmenu">
@@ -271,14 +271,14 @@
         <h2 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h2>
         <ul class="nav nav-pills nav-stacked">
             {foreach from=$recentRecords item=item name=lastViewed}
-                <li id="recentlinks" role="presentation">
+                <li class="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
+                <li class="recentlinks" role="presentation">
                     <a title="{$item.module_name}"
                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
                         {$item.image}&nbsp;<span aria-hidden="true">{$item.item_summary_short}</span>
                     </a>
                 </li>
-                <li id="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
             {/foreach}
         </ul>
     </div>

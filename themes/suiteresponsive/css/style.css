@@ -2966,11 +2966,11 @@ input[type=text].cstm_code {
 /* End color and theme picker */
 
 /* Start SuiteCRM Responsive/Bootstrap additional CSS */
-#headerlinks a:link, #headerlinks a:visited {
+.headerlinks a:link, .headerlinks a:visited {
     color:#ffffff;
 }
 
-#headerlinks a:hover {
+.headerlinks a:hover {
     color:#428BCA;
 }
 
@@ -3156,17 +3156,17 @@ fieldset[disabled] .btn-primary.active {
     padding:0 5px 0 5px;
 }
 
-#topnav{
+.topnav{
     padding:15px 0 15px 0;
     font-size:1.1em;
 }
 
-ul#topnav li a {
+ul.topnav li a {
     text-decoration:none;
     font-size:1.4em;
 }
 
-ul#topnav li a:hover {
+ul.topnav li a:hover {
     color:#ffffff;
     background:#5CB85C;
     -webkit-transition: all 0.3s ease-out;
@@ -3200,15 +3200,15 @@ li#usermenu:hover {
 
 /* Custom styles fore 'More' list item on top navigation */
 
-#moremenu a{
-    color:#ffffff;
+.moremenu a{
+    color:#ffffff !important;
     font-size:1.1em;
     cursor:pointer;
     padding:7px 0 6px 0;
 }
 
 @media (max-height:600px) {
-    #moremenu ul {
+    .moremenu ul {
         max-height: 500px;
         width: 100%;
         overflow: auto;
@@ -3216,7 +3216,7 @@ li#usermenu:hover {
 }
 
 @media (max-height:700px) {
-    #moremenu ul {
+    .moremenu ul {
         max-height: 550px;
         width: 100%;
         overflow: auto;
@@ -3224,27 +3224,27 @@ li#usermenu:hover {
 }
 
 @media (max-height:800px) {
-    #moremenu ul {
+    .moremenu ul {
         max-height: 600px;
         width: 100%;
         overflow: auto;
     }
 }
 
-#moremenu ul li a{
-    color:#3C8DBC;
+.moremenu ul li a{
+    color:#3C8DBC !important;
     cursor:pointer;
     padding:5px;
     font-size:1em;
     display: block;
 }
 
-#moremenu ul li:hover{
+.moremenu ul li:hover{
     border-radius:0 !important;
 }
 
-#moremenu ul li a:hover{
-    color:#ffffff;
+.moremenu ul li a:hover{
+    color:#ffffff !important;
     background:none !important;
     cursor:pointer;
     padding:5px;
@@ -3252,7 +3252,7 @@ li#usermenu:hover {
 }
 
 .button {
-    color: #fff;
+    color: #ffffff;
     background-color: #3C8DBC;
     border:none;
     padding:3px 10px;
@@ -3353,7 +3353,7 @@ ul.dashboardTabList li {
     background:#008080;
 }
 
-#headerlinks a:hover {
+.headerlinks a:hover {
     color:#ffffff;
 }
 
@@ -3716,7 +3716,7 @@ span#quickcreateplus{
     padding:8px 0 8px 0;
 }
 
-li#moremenu {
+li.moremenu {
     padding:8px 10px 8px 10px;
 }
 
@@ -3986,7 +3986,7 @@ li#moremenu {
     margin:0;
     padding:0;
 }
-    #moremenu ul li a{
+    .moremenu ul li a{
         color:#ffffff;
     }
 }
@@ -3998,20 +3998,17 @@ li#moremenu {
     padding:0;
 }
 
-#recentlyviewed {
-    width:100%;
-}
-#recentlinks {
+li.recentlinks a {
     float:left;
     width:130px;
 }
 
-#recentlinks_edit {
+li.recentlinks_edit a {
     float:right;
 }
 
-#recentlinks_edit a:hover {
-    background:none;
+li.recentlinks_edit a:hover {
+    background:none !important;
 }
 
 /* Custom styling from group tabs menu structure */
@@ -4243,7 +4240,7 @@ table#lineItems{
     max-width:50%;
 }
 
-li#topnav:first-child{
+li.topnav:first-child{
     display:none;
 }
 
