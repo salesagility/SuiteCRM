@@ -44,22 +44,22 @@ background: #<?php echo $sugar_config['colourselector']['dashlet']; ?>;
     background:#<?php echo $sugar_config['colourselector']['navbar'];?> !important;
 }
 
-#headerlinks a:link, #headerlinks a:visited, .navbar-inverse .navbar-brand, #moremenu a, {
+.headerlinks a:link, .headerlinks a:visited, .navbar-inverse .navbar-brand, .moremenu a, {
 background:none;
 color:#<?php echo $sugar_config['colourselector']['navbarfont']; ?>;
 }
 
 @media(max-width:979px){
-ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a, #moremenu ul li a {
+ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a, .moremenu ul li a {
 color:#<?php echo $sugar_config['colourselector']['navbarfont']; ?>; !important;
 }
 }
 
-ul#topnav li:hover, .dropdown-menu li a:hover, li#usermenu:hover, #moremenu ul li:hover,ul.navbar-nav li:hover, .bigmenu li a:hover  {
+ul.topnav li:hover, .dropdown-menu li a:hover, li#usermenu:hover, .moremenu ul li:hover,ul.navbar-nav li:hover, .bigmenu li a:hover  {
 background:#<?php echo $sugar_config['colourselector']['navbarlihover']; ?> !important;
 }
 
-#headerlinks a:hover, .navbar-inverse .navbar-brand:hover, #moremenu a:hover {
+.headerlinks a:hover, .navbar-inverse .navbar-brand:hover, .moremenu a:hover {
 color:#<?php echo $sugar_config['colourselector']['navbarlinkhover']; ?>;
 }
 
