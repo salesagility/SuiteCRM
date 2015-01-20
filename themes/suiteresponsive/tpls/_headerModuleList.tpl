@@ -45,7 +45,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div id="sidebarlinks_head" class="navbar-toggle collapsed">
+            <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
                 <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                 <a href="javascript:void(0)" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
@@ -71,9 +71,9 @@
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                         <li class="topnav">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}"  class="dropdown-toggle" data-toggle="dropdown">{$group}</a>
+                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle" data-toggle="dropdown">{$group}</a>
                             <span class="notCurrentTabRight">&nbsp;</span>
-                            <ul class="dropdown-menu" role="menu" {if $smarty.foreach.groupList.last} id="All"{/if}>
+                            <ul class="dropdown-menu" role="menu" {if $smarty.foreach.groupList.last} class="All"{/if}>
                                 {foreach from=$modules.modules item=module key=modulekey}
                                     <li>
                                         {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
@@ -109,22 +109,14 @@
                         <h3 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h3>
                         {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
-                        <table class="recentlyViewed">
-                            <tr>
-                                <td>
-                                    <li>
-                                        <a title="{$item.module_name}"
-                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                        <span>{$item.item_summary_short}</span>
-                                        </a>
-                                    </li>
-                                </td>
-                                <td align="right">
-                                    <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></em>
-                                </td>
-                            </tr>
-                        </table>
+                            <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
+                            <li class="recentlinks_top" role="presentation">
+                                <a title="{$item.module_name}"
+                                accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                <span>{$item.item_summary_short}</span>
+                                </a>
+                            </li>
                         {/if}
                     {foreachelse}
                     {$APP.NTC_NO_ITEMS_DISPLAY}
@@ -149,23 +141,15 @@
                     <h3 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h3>
                     {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
-                        <table class="recentlyViewed" style="width:100%">
-                            <tr>
-                                <td>
-                                    <li>
-                                        <a title="{$item.module_name}"
-                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                        <span>{$item.item_summary_short}</span>
-                                        </a>
-                                    </li>
-                                </td>
-                                <td align="right">
-                                    <em><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></em>
-                                </td>
-                            </tr>
-                        </table>
-                    {/if}
+                            <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
+                            <li class="recentlinks_top" role="presentation">
+                                <a title="{$item.module_name}"
+                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                    <span>{$item.item_summary_short}</span>
+                                </a>
+                            </li>
+                        {/if}
                 {foreachelse}
                 {$APP.NTC_NO_ITEMS_DISPLAY}
             {/foreach}
@@ -240,12 +224,12 @@
     </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
-<!--Start Responsive Sidebar -->
+<!--Start Page Container and Responsive Sidebar -->
 <div class="container-fluid">
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
-        <div id="sidebarlinks">
+        <div id="userlinks">
             <a href="index.php" title="Home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
             <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}" title="{$CURRENT_USER}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
             <a href="javascript:void(0)" onclick="refresh();" title="Refresh"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>

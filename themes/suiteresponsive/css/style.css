@@ -3643,24 +3643,24 @@ body {
     background-color: #428bca;
 }
 
-#sidebarlinks {
+#userlinks {
     margin: 0 0 15px 10px;
 }
 
-#sidebarlinks a{
+#userlinks a{
     padding:5px 10px 5px 10px;
     font-size:1.1em;
 }
 
-#sidebarlinks_head {
+#userlinks_head {
     display:none;
 }
 
 @media (min-width: 480px) and (max-width: 979px) {
-    #sidebarlinks_head {
+    #userlinks_head {
         display:inline;
     }
-    #sidebarlinks_head a {
+    #userlinks_head a {
         color: #ffffff;
         padding: 3px 10px 5px 10px;
         font-size: 1.1em;
@@ -3992,6 +3992,22 @@ li.moremenu {
 }
 /* Custom styling for recently viewed on sidebar */
 
+li.recentlinks_top {
+    float:left;
+    max-width:100% !important;
+}
+
+li.recentlinks_topedit a {
+    float:right;
+    max-width:50px;
+    margin:5px;
+}
+
+li.recentlinks_topedit a:hover {
+    background:none;
+    color:#565656 !important;
+}
+
 li.recentlinks a {
     float:left;
     width:130px;
@@ -3999,6 +4015,7 @@ li.recentlinks a {
 
 li.recentlinks_edit a {
     float:right;
+    max-width:50px;
 }
 
 li.recentlinks_edit a:hover {
