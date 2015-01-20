@@ -4244,7 +4244,7 @@ li#topnav:first-child{
 {
     position: fixed;
     left: 215px;
-    top: 20%;
+    top: 130px;
     background:#eeeeee;
     z-index: 100;
     height:32px;
