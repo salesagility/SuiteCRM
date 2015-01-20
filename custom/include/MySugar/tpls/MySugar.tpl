@@ -103,19 +103,18 @@
             <!-- Construct Dashlets -->
 <div id="pageContainer" class="yui-skin-sam">
     <div id="pageNum_{$activePage}_div">
-        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-top: 5px;">
+        <table>
             <tr>
-
                 <td align='right'>
                     {if !$lock_homepage}<input id="add_dashlets" class="button" type="button"
-                                               value="{$lblAddDashlets}"
-                                               onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
+                    value="{$lblAddDashlets}"
+                    onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
                 </td>
             </tr>
             <tr>
                 {counter assign=hiddenCounter start=0 print=false}
                 {foreach from=$columns key=colNum item=data}
-                    <td id="dashletcontainer" valign='top' width='{$data.width}'>
+                    <td class="dashletcontainer" valign='top' width='{$data.width}'>
                         <ul class='noBullet' id='col_{$activePage}_{$colNum}'>
                             <li id='page_{$activePage}_hidden{$hiddenCounter}b'
                                 style='height: 5px; margin-top:12px;' class='noBullet'>

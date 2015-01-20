@@ -109,7 +109,7 @@
                         <h3 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h3>
                         {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
-                        <table id="recentlyViewed">
+                        <table class="recentlyViewed">
                             <tr>
                                 <td>
                                     <li>
