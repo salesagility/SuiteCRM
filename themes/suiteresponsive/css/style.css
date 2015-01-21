@@ -3151,7 +3151,7 @@ fieldset[disabled] .btn-primary.active {
     transition: all 0.3s ease-out;
 }
 
-.recent_h2{
+.recent_h3{
     color:#333333;
     padding:0 5px 0 5px;
 }
@@ -3981,7 +3981,7 @@ li.moremenu {
 }
 
 @media (max-width:979px){
-.recentlyViewed, .recent_h2{
+.recentlyViewed, .recent_h3{
     display:none;
     margin:0;
     padding:0;
@@ -4192,7 +4192,7 @@ ul.navbar-nav li ul li:hover {
     border-bottom:1px solid #cccccc;
 }
 
-.home_h2 span{
+.home_h3 span{
     margin: 0 5px 0 5px;
 }
 
