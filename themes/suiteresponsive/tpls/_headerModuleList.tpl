@@ -95,7 +95,7 @@
                     {if $name !='Home'}<span class="dropdown-toggle headerlinks currentTab" data-toggle="dropdown">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
-                        <h3 class="home_h2"><span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>{$APP.LBL_LINK_ACTIONS}</h3>
+                        <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
                         <span class="breaker">
                             {foreach from=$shortcutTopMenu.$name item=item}
                                 {if $item.URL == "-"}
@@ -105,7 +105,7 @@
                                 {/if}
                             {/foreach}
                         {/if}
-                        <h3 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h3>
+                        <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
                         {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
                             <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
@@ -127,7 +127,7 @@
                 {if $name != 'Home'}<span class="dropdown-toggle headerlinks notCurrentTab" data-toggle="dropdown">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
                 <ul class="dropdown-menu" role="menu">
                     {if count($shortcutTopMenu.$name) > 0}
-                    <h3 class="home_h2"><span class="glyphicon glyphicon-share" aria-hidden="true"></span>{$APP.LBL_LINK_ACTIONS}</h3>
+                    <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
                     {foreach from=$shortcutTopMenu.$name item=item}
                         {if $item.URL == "-"}
                             <li><a></a><span>&nbsp;</span></li>
@@ -137,7 +137,7 @@
                     {/foreach}
                     <br>
                     {/if}
-                    <h3 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h3>
+                    <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
                     {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
                             <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
@@ -252,7 +252,7 @@
         </div>
         <hr class="hr">
         <div id="recentlyViewed">
-        <h2 class="recent_h2">{$APP.LBL_LAST_VIEWED}</h2>
+        <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
         <ul class="nav nav-pills nav-stacked">
             {foreach from=$recentRecords item=item name=lastViewed}
                 <li class="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
