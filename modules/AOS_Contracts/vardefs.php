@@ -763,9 +763,9 @@ $dictionary['AOS_Contracts'] = array(
                 'returns' => 'html',
             ),
         ),
-    "aos_contracts_aos_products_quotes" =>
+    "aos_products_quotes" =>
     array (
-        'name' => 'aos_contracts_aos_products_quotes',
+        'name' => 'aos_products_quotes',
         'type' => 'link',
         'relationship' => 'aos_contracts_aos_products_quotes',
         'module' => 'AOS_Products_Quotes',
