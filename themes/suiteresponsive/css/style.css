@@ -4271,7 +4271,7 @@ li.topnav:first-child{
 
 .dashletPanel{
     border:1px solid #eeeeee; !important;
-    margin: 10px;
+    margin: 0 10px 25px 10px;
     box-shadow: #cccccc 0 5px 10px;
     -moz-box-shadow: #cccccc 0 5px 10px;
     -webkit-box-shadow: #cccccc 0 5px 10px;
@@ -4286,6 +4286,10 @@ li.topnav:first-child{
 #dashletbuttons{
     color:#3C8DBC;
     margin: 0 2px 0 2px;
+}
+
+#dashletbuttons:hover{
+    opacity:0.8;
 }
 
 .dashletToolSet{
