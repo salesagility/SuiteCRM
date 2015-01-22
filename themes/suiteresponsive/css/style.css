@@ -2498,19 +2498,6 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
     border:none;
 }
 
-/* Dashlet CSS */
-
-.dashletPanel .h3Row {
-    background: #777777;
-    color:#ffffff;
-}
-
-.dashletPanel .h3Row h3 {
-    color:#ffffff;
-    font-weight:normal;
-    margin:0 5px 0 5px;
-}
-
 #ajaxHeader {
     float:left;
 }
@@ -2601,10 +2588,6 @@ iframe.teamNoticeBox {
     padding:0;
     margin:0;
     background:#fefefe;
-}
-
-.bd-center {
-    border:1px solid #ccc;
 }
 
 .evenListRowS1 {
@@ -2984,10 +2967,6 @@ input[type=text].cstm_code {
 
 ol, ul, dl {
     margin:0;
-}
-
-#dashletbuttons{
-    color:#ffffff;
 }
 
 #loginform {
@@ -4275,6 +4254,42 @@ li.topnav:first-child{
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
     border-color: #bbbbbb !important;
+}
+
+/* Dashlet CSS */
+
+.dashletPanel .h3Row {
+    background: #ffffff;
+    color:#ffffff;
+    border-bottom:1px solid #eeeeee; !important;
+}
+
+.h3Row {
+    padding:5px 10px 5px 10px;
+    margin:5px 0 5px 0;
+}
+
+.dashletPanel{
+    border:1px solid #eeeeee; !important;
+    margin: 10px;
+    box-shadow: #cccccc 0 5px 10px;
+    -moz-box-shadow: #cccccc 0 5px 10px;
+    -webkit-box-shadow: #cccccc 0 5px 10px;
+}
+
+.dashletPanel .h3Row h3{
+    color:#3C8DBC;
+    font-weight:bold;
+    margin:0 0 0 10px;
+}
+
+#dashletbuttons{
+    color:#3C8DBC;
+    margin: 0 2px 0 2px;
+}
+
+.dashletToolSet{
+    margin: 0 10px 0 0;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */

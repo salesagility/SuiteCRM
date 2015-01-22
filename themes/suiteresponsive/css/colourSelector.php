@@ -26,7 +26,7 @@ color: #<?php echo $sugar_config['colourselector']['pageheader']; ?>;
 
 /* Pagelink CSS */
 
-a, a:link, a:visited{
+a, a:link, a:visited, .dashletPanel .h3Row h3, #dashletbuttons{
 color: #<?php echo $sugar_config['colourselector']['pagelink']; ?>;
 }
 
