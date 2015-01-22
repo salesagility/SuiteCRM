@@ -96,8 +96,8 @@
 <!-- END Generic Footer -->
 {/if}
 <!-- END Footer Section -->
-<script>
 {literal}
+<script>
 function printpage()
 {
     window.print();
@@ -154,15 +154,15 @@ function qe_init(){
     if(SUGAR.ajaxUI)
     	YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
 </script>
-    <script src="themes/suiteresponsive/js/jquery.cookie.js"></script>
-    <!-- Include all boostrap dependencies -->
-    <script src="themes/suiteresponsive/js/bootstrap.min.js"></script>
-    <script src="themes/suiteresponsive/js/html5shiv.min.js"></script>
-    <script src="themes/suiteresponsive/js/respond.min.js"></script>
-    <!-- Include custom JS -->
-    <script src="themes/suiteresponsive/js/responsivetheme.js" type="text/javascript"></script>
-    <!-- Include footable scripts -->
-    <script src="themes/suiteresponsive/js/footable.js" type="text/javascript"></script>
+<script src="themes/suiteresponsive/js/jquery.cookie.js"></script>
+<!-- Include all boostrap dependencies -->
+<script src="themes/suiteresponsive/js/bootstrap.min.js"></script>
+<script src="themes/suiteresponsive/js/html5shiv.min.js"></script>
+<script src="themes/suiteresponsive/js/respond.min.js"></script>
+<!-- Include custom JS -->
+<script src="themes/suiteresponsive/js/responsivetheme.js" type="text/javascript"></script>
+<!-- Include footable scripts -->
+<script src="themes/suiteresponsive/js/footable.js" type="text/javascript"></script>
 {/literal}
 </div>
 </body>
