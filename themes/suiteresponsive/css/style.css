@@ -98,7 +98,6 @@ body
     filter:alpha(opacity=90);
     -moz-opacity:0.9;
     opacity: 0.9;
-    /*	width:150px;*/
 }
 
 fieldset, table, pre {
@@ -178,7 +177,6 @@ th, td {
 
 #leftHandle {
     float:left;
-    /*margin-top: 10px;*/
 }
 
 /* new record form */
@@ -2228,7 +2226,6 @@ ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuI
     margin: 0;
     padding: 0;
     clear: both;
-    /*width: 170px;*/
     width:100%;
     white-space: nowrap;
 
@@ -4296,5 +4293,8 @@ li.topnav:first-child{
     margin: 0 10px 0 0;
 }
 
+.teamNoticeBox{
+    border:none;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
