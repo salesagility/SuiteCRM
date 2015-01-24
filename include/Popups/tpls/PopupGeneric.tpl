@@ -50,18 +50,18 @@
 {$jsLang}
 {$LIST_HEADER}
 {if $should_process}
-	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view'>
+	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view footable'>
 		<tr class='pagination'  role='presentation'>
 			<td colspan='{$colCount+1}' align='right'>
 				<table border='0' cellpadding='0' cellspacing='0' width='100%'>
 					<tr>
 						<td align='left' >
 							&nbsp;</td>
-						<td  align='right' nowrap='nowrap'>						
+						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
 									{sugar_getimage name="start" ext=".png" other_attributes='align="absmiddle" border="0" ' alt="$alt_start"}
-								</button>						
+								</button>
 								<!--<a href='{$pageData.urls.startPage}' {if $prerow}onclick="return sListView.save_checks(0, '{$moduleString}')"{/if} >{sugar_getimage name="start" ext=".png" alt=$navStrings.start other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.start}</a>&nbsp;-->
 							{else}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' disabled>
@@ -108,7 +108,7 @@
 				</table>
 			</td>
 		</tr>
-	
+		<thead>
 		<tr height='20'>
 			{if $prerow}
 				<td nowrap="nowrap" width="43px" class="selectCol td_alt">
@@ -120,7 +120,8 @@
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
 			{foreach from=$displayColumns key=colHeader item=params}
-				<th scope='col' width='{$params.width}%' nowrap="nowrap">
+				{if $colCounter == '0'}<th scope='col' width='{$params.width}%' data-toggle="true">
+				{else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
                                 <a href="{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}" onclick='sListView.save_checks(0, "{$moduleString}");' class='listViewThLinkS1'>{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
@@ -150,7 +151,7 @@
 			<td class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
 			{/if}
 		</tr>
-			
+		</thead>
 		{foreach name=rowIteration from=$data key=id item=rowData}
 			{if $smarty.foreach.rowIteration.iteration is odd}
 				{assign var='_rowColor' value=$rowColor[0]}
@@ -170,16 +171,16 @@
 				{foreach from=$displayColumns key=col item=params}
 					<td scope='row' align='{$params.align|default:'left'}' valign=top class='{$_rowColor}S1' bgcolor='{$_bgColor}'>
 						{if $params.link && !$params.customCode}
-							
+
 							<{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href='javascript:void(0)' onclick="send_back('{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}','{$rowData[$params.id]|default:$rowData.ID}');">{$rowData.$col}</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
-	
-						{elseif $params.customCode} 
+
+						{elseif $params.customCode}
 							{sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
-						{elseif $params.currency_format} 
-							{sugar_currency_format 
-	                            var=$rowData.$col 
-	                            round=$params.currency_format.round 
-	                            decimals=$params.currency_format.decimals 
+						{elseif $params.currency_format}
+							{sugar_currency_format
+	                            var=$rowData.$col
+	                            round=$params.currency_format.round
+	                            decimals=$params.currency_format.decimals
 	                            symbol=$params.currency_format.symbol
 	                            convert=$params.currency_format.convert
 	                            currency_symbol=$params.currency_format.currency_symbol
@@ -190,12 +191,12 @@
 									checked=checked
 								{/if}
 								/>
-                        {elseif $params.type == 'multienum' } 
+                        {elseif $params.type == 'multienum' }
 								{counter name="oCount" assign="oCount" start=0}
 								{multienum_to_array string=$rowData.$col assign="vals"}
 								{foreach from=$vals item=item}
 									{counter name="oCount"}
-									{sugar_translate label=$params.options select=$item}{if $oCount !=  count($vals)},{/if} 
+									{sugar_translate label=$params.options select=$item}{if $oCount !=  count($vals)},{/if}
 								{/foreach}
                         {else}
                             {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
@@ -203,7 +204,7 @@
 					</td>
 					{counter name="colCounter"}
 				{/foreach}
-		 	
+
 		{/foreach}
 		<tr class='pagination' role='presentation'>
 			<td colspan='{$colCount+1}' align='right'>
@@ -211,11 +212,11 @@
 					<tr>
 						<td align='left' >
 							&nbsp;</td>
-						<td  align='right' nowrap='nowrap'>						
+						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
 									{sugar_getimage name="start" ext=".png" other_attributes='align="absmiddle" border="0" ' alt="$alt_start"}
-								</button>						
+								</button>
 								<!--<a href='{$pageData.urls.startPage}' {if $prerow}onclick="return sListView.save_checks(0, '{$moduleString}')"{/if} >{sugar_getimage name="start" ext=".png" alt=$navStrings.start other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.start}</a>&nbsp;-->
 							{else}
 								<button type='button' title='{$navStrings.start}' class='button' disabled>
