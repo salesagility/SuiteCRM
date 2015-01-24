@@ -164,5 +164,10 @@ $sugar_smarty->assign("ITEM_DESCRIPTION", $description);
 $sugar_smarty->assign("COLNUM", $tab);
 $sugar_smarty->assign('ID_TAB', $id_tab);
 
-echo $sugar_smarty->fetch('custom/modules/Administration/index.tpl');
+if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/adminPanel.tpl')) {
+    echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/adminPanel.tpl');
+} else {
+    echo $sugar_smarty->fetch('modules/Administration/index.tpl');
+}
+
 ?>
