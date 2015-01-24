@@ -167,7 +167,7 @@ $sugar_smarty->assign('ID_TAB', $id_tab);
 if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/adminPanel.tpl')) {
     echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/adminPanel.tpl');
 } else {
-    echo $sugar_smarty->fetch('modules/Administration/index.tpl');
+    echo $sugar_smarty->display('modules/Administration/index.tpl');
 }
 
 ?>
