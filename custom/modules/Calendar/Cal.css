@@ -61,16 +61,7 @@
 
 #cal-grid .week {
 	float: left;
-    display: table;
-    table-layout: fixed;
-    width:100%;
 }
-
-#cal-grid .week .col{
-    display: table-cell;
-    text-align: center;
-}
-
 
 #cal-grid .slot {
 	height: 14px;
@@ -93,12 +84,12 @@
 }
 
 #cal-grid .col_head {
-	text-align: right;
+	text-align: center;
 	font-size: 13px;
+	border-bottom: 1px solid silver;
 	border-top: 1px solid silver;
 	border-right: 1px solid silver;
 	white-space: nowrap;
-    padding:3px;
 }
 
 #cal-grid .col_head a {
@@ -219,4 +210,36 @@
 
 #edit_all_recurrences_block button {
 	margin: 4px;
+}
+
+.month_header{
+    width:100%:
+}
+
+.month_header .col{
+    width:100% !important:
+}
+
+#cal-grid .month_header .col_head{
+    border-bottom: none;
+    text-align: right;
+    padding:5px;
+}
+
+#cal-grid .left_col{
+    width:9%;
+}
+
+.week_container .col{
+    width:13% !important;
+}
+
+#cal-grid .week_header .col{
+    width:13%;
+}
+
+#cal-grid .slot, #cal-grid .left_slot{
+    height:28px;
+    font-size:16px;
+    padding:5px;
 }

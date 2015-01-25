@@ -215,8 +215,6 @@ class CalendarGrid {
 			$head_content = $GLOBALS['timedate']->fromTimestamp($start + $wf*3600*24)->format('W');
 			$head_content = "<a href='".ajaxLink("index.php?module=Calendar&action=index&view=week&hour=0&day=".$GLOBALS['timedate']->fromTimestamp($start)->format('j')."&month=".$GLOBALS['timedate']->fromTimestamp($start)->format('n')."&year=".$GLOBALS['timedate']->fromTimestamp($start)->format('Y'))."'>".$head_content."</a>";
 		}
-
-        //Removed month value from here as the week number column was not required.
 		$left_col = ($this->style != 'basic');
 
 		$attr = "";
@@ -232,8 +230,8 @@ class CalendarGrid {
 					$str .= "</div>";
 				}
 
-				$str .= "<div class='week'>";
-				for($d = 0; $d < $cols; $d++){
+            $str .= "<div class='".$this->cal->view."_header'>";
+            for($d = 0; $d < $cols; $d++){
 					$curr_time = $start + $d * 86400;
 					$str .= "<div class='col'>";
 					$str .= $this->get_day_head($curr_time,$d,true);
@@ -249,8 +247,8 @@ class CalendarGrid {
 					$str .= "<div class='left_basic_slot' style='height: ".$height."px;'>&nbsp;</div>";
 				$str .= "</div>";
 			}
-			$str .= "<div class='week'>";
-			for($d = 0; $d < $cols; $d++){
+        $str .= "<div class='".$this->cal->view."_container'>";
+        for($d = 0; $d < $cols; $d++){
 				$curr_time = $start + $d*86400;
 				$str .= $this->get_basic_cell($curr_time,$height,$suffix);
 			}
@@ -293,10 +291,13 @@ class CalendarGrid {
 		$str .= "<div id='cal-grid' style='visibility: hidden;'>";
 			$str .= $this->get_basic_row($week_start_ts);
 			if(!$basic){
-				$str .= "<div id='cal-scrollable' style='clear: both; height: ".$this->scroll_height."px;'>";
+				$str .= "<div style='clear: both; height: ".$this->scroll_height."px;'>";
 					$str .= $this->get_time_column($week_start_ts);
-					$str .= "<div class='week'>";
-					for($d = 0; $d < 7; $d++){
+
+
+                $str .= "<div class='".$this->cal->view."_container'>";
+
+						for($d = 0; $d < 7; $d++){
 						$curr_time = $week_start_ts + $d*86400;
 						$str .= $this->get_day_column($curr_time);
 					}
@@ -322,11 +323,11 @@ class CalendarGrid {
 		$str .= "<div id='cal-grid' style='visibility: hidden;'>";
 			$str .= $this->get_basic_row($day_start_ts,1);
 			if(!$basic){
-				$str .= "<div id='cal-scrollable' style='height: ".$this->scroll_height."px;'>";
+				$str .= "<div style='height: ".$this->scroll_height."px;'>";
 					$str .= $this->get_time_column($day_start_ts);
 					$d = 0;
 					$curr_time = $day_start_ts + $d*86400;
-					$str .= "<div class='week'>";
+                    $str .= "<div class='".$this->cal->view."_container'>";
 					$str .= $this->get_day_column($curr_time);
 					$str .= "</div>";
 					$str .= "<div style='clear: left;'></div>";
@@ -360,7 +361,7 @@ class CalendarGrid {
 					$str .= $this->get_basic_row($curr_time_global);
 				}else{
 					$str .= $this->get_time_column($curr_time_global);
-					$str .= "<div class='week'>";
+                    $str .= "<div class='".$this->cal->view."_container'>";
 					for($d = 0; $d < 7; $d++){
 						$curr_time = $week_start_ts + $d*86400 + $w*60*60*24*7;
 						$str .= $this->get_day_column($curr_time,$d);
@@ -402,7 +403,7 @@ class CalendarGrid {
 			$str .= $this->get_basic_row($week_start_ts,7,$user_number_str);
 			if(!$basic){
 				$str .= $this->get_time_column($week_start_ts);
-					$str .= "<div class='week'>";
+                $str .= "<div class='".$this->cal->view."_container'>";
 					for($d = 0; $d < 7; $d++){
 						$curr_time = $week_start_ts + $d*86400;
 						$str .= $this->get_day_column($curr_time,$d,$user_number_str);
