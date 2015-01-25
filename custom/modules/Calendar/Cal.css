@@ -243,3 +243,13 @@
     font-size:16px;
     padding:5px;
 }
+
+#cal-grid .day_container .col{
+    width:100% !important;
+}
+
+.day_container{
+    width:91%;
+    float:left;
+}
+
