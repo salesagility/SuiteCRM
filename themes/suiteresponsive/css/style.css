@@ -4296,5 +4296,16 @@ li.topnav:first-child{
 .teamNoticeBox{
     border:none;
 }
+
+.oddListRowS1, .evenListRowS1{
+    background:#f7f7f7 !important;
+    border-top:1px solid #dddddd;
+    border-bottom:1px solid #dddddd;
+}
+
+.list tr.oddListRowS1 td, .list tr.evenListRowS1 td{
+    padding-top:10px !important;
+    padding-bottom:10px !important;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

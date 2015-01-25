@@ -107,13 +107,13 @@
 <a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
 {if $hideTable == false}
 	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table footable'>
-    {assign var="link_select_id" value="selectLinkTop"}
+	<thead>
+	{assign var="link_select_id" value="selectLinkTop"}
     {assign var="link_action_id" value="actionLinkTop"}
     {assign var="actionsLink" value=$actionsLinkTop}
     {assign var="selectLink" value=$selectLinkTop}
     {assign var="action_menu_location" value="top"}
 	{include file='include/ListView/ListViewPagination.tpl'}
-	<thead>
 	<tr height='20'>
 			{if $prerow}
 				<td width='1%' class="td_alt">
