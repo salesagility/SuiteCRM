@@ -3185,7 +3185,7 @@ li#usermenu:hover {
 }
 
 @media (max-height:600px) {
-    .moremenu ul {
+    .moremenu ul, .dropdown-menu {
         max-height: 500px;
         width: 100%;
         overflow: auto;
@@ -3193,7 +3193,7 @@ li#usermenu:hover {
 }
 
 @media (max-height:700px) {
-    .moremenu ul {
+    .moremenu ul, .dropdown-menu  {
         max-height: 550px;
         width: 100%;
         overflow: auto;
@@ -3201,7 +3201,7 @@ li#usermenu:hover {
 }
 
 @media (max-height:800px) {
-    .moremenu ul {
+    .moremenu ul, .dropdown-menu {
         max-height: 600px;
         width: 100%;
         overflow: auto;
@@ -4354,8 +4354,6 @@ li.topnav:first-child{
     border-bottom: 1px solid #dddddd;
 
 }
-
-
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
