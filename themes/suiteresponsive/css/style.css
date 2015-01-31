@@ -675,6 +675,7 @@ table.subpanelTabForm {
 
 /* Footer styles */
 footer {
+    clear:both;
     border-top:1px solid #cccccc;
     bottom:0;
     position:relative;
@@ -4312,5 +4313,6 @@ li.topnav:first-child{
     color: #000000;
     margin: 0 5px 0 5px;
 }
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
