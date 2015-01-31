@@ -86,11 +86,11 @@
                 {* Display the add button to allow the addition of more tabs *}
 
                 {if !$lock_homepage}
-                    <li id="addbuttons" class="btn btn-primary">
+                    <li id="addbuttons">
                         <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">{$lblAddDashlets}</a>
                     </li>
 
-                    <li id="addbuttons" class="btn btn-primary">
+                    <li id="addbuttons">
                         <a style='cursor: pointer;' onclick="addDashboardForm({$tabNum});">
                             <span>{$lblAddTab}</span>
                         </a>
