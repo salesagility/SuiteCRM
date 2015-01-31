@@ -219,9 +219,9 @@ th, td {
 }
 
 /* module title */
-div.moduleTitle {
-    height:2em;
-}
+/*div.moduleTitle {*/
+    /*height:30px;*/
+/*}*/
 
 .moduleTitle h2 {
     display: block;
