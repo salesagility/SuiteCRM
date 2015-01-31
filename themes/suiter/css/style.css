@@ -3417,8 +3417,8 @@ table legend {
 
 /* Removing border for tables */
 
-.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
-    border-top:none;
+.detail table, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
+    border:1px solid #dddddd;
 }
 
 /* Footer styles for mobile */
