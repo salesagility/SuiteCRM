@@ -4227,10 +4227,6 @@ table#lineItems{
     max-width:50%;
 }
 
-li.topnav:first-child{
-    display:none;
-}
-
 #buttontoggle
 {
     position: fixed;
