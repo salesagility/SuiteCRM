@@ -4326,10 +4326,9 @@ table#lineItems{
 }
 
 .paginationWrapper{
-   float:right;
+    float:right;
     margin:0;
     padding:0;
-    width: 140px !important;
 }
 
 .paginationWrapper span, .paginationWrapper span,{
@@ -4337,18 +4336,21 @@ table#lineItems{
     margin: 0;
 }
 
-[id^=whole_subpanel_]
- {
+[id^=list_subpanel_]
+{
     margin-bottom: 25px !important;
-    border-top: 1px solid #dddddd;
-    border-left: 1px solid #dddddd;
-    border-right: 1px solid #dddddd;
+    border: 1px solid #dddddd;
 }
 
-[id^=subpanel_title_] h3
+[id^=list_subpanel_] tr:last-child
 {
-    border-bottom: 1px solid #dddddd;
+    margin-bottom: 25px !important;
+    border-bottom: none;
+}
 
+.h3Row{
+    padding:0;
+    margin:0;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
