@@ -4084,7 +4084,7 @@ ul.navbar-nav li ul li:hover {
 }
 
 .serverstats{
-    margin:6px 0 0 0;
+    margin:0;
     padding:0;
     width:250px !important;
     float:left;
@@ -4306,6 +4306,11 @@ li.topnav:first-child{
 .list tr.oddListRowS1 td, .list tr.evenListRowS1 td{
     padding-top:10px !important;
     padding-bottom:10px !important;
+}
+
+#copyright_data a{
+    color: #000000;
+    margin: 0 5px 0 5px;
 }
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
