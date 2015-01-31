@@ -4313,6 +4313,11 @@ li.topnav:first-child{
     margin: 0 5px 0 5px;
 }
 
+#copyright_data a:hover, #links a:hover{
+    cursor:pointer;
+    text-decoration:none;
+}
+
 @media (min-width: 768px) {
    .showsearch{
        display:none;
