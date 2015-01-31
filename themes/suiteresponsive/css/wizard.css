@@ -37,11 +37,11 @@
  ********************************************************************************/
 
 
-#welcome 
+#welcome
 {
     border-right: none !important;
 }
- 
+
 div.screen div.edit.view
 {
     border-bottom: none !important;
@@ -53,16 +53,31 @@ div.screen div.edit.view th
     background: transparent;
 }
 
-div.nav-buttons 
+div.nav-buttons
 {
     background-color: #F6F6F6;
     padding: 1em;
     margin-top: 0;
 }
 
-.dashletPanelMenu
-{
-	border-left: 1px solid #4E8CCF;
-	border-right: 1px solid #4E8CCF;
-	border-bottom: 1px solid #4E8CCF;
+#welcome, #personalinfo, #locale, #finish{
+    border:1px solid #cccccc !important;
+    margin:0 auto;
+}
+
+#UserWizard{
+    font-size:12px;
+    width:100%;
+}
+
+#UserWizard input{
+    border-radius:0;
+    border: 1px solid #CCC;
+    padding: 4px;
+
+}
+
+#welcome input[type=button]{
+    font-size:12px;
+    cursor:pointer;
 }
