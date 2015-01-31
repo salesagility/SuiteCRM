@@ -2658,7 +2658,7 @@ button #powered_by {
 button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
 {
     border: none;
-    background-color: #777777;
+    /*background-color: #777777;*/
     color: #000000;
 }
 
@@ -3229,7 +3229,6 @@ li#usermenu:hover {
 
 .button {
     color: #ffffff;
-    background-color: #3C8DBC;
     border:none;
     padding:3px 10px;
     -webkit-border-radius: 2px;
@@ -4312,5 +4311,45 @@ li.topnav:first-child{
     color: #000000;
     margin: 0 5px 0 5px;
 }
+
+@media (min-width: 768px) {
+   .showsearch{
+       display:none;
+   }
+}
+
+
+.helpIcon{
+    display:none;
+}
+
+.paginationWrapper{
+   float:right;
+    margin:0;
+    padding:0;
+    width: 140px !important;
+}
+
+.paginationWrapper span, .paginationWrapper span,{
+    padding: 0;
+    margin: 0;
+}
+
+[id^=whole_subpanel_]
+ {
+    margin-bottom: 25px !important;
+    border-top: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+}
+
+[id^=subpanel_title_] h3
+{
+    border-bottom: 1px solid #dddddd;
+
+}
+
+
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
