@@ -47,8 +47,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <!-- Bootstrap -->
-    <link href="themes/suiter/css/bootstrap.min.css" rel="stylesheet">
-    <link href="themes/suiter/css/footable.core.css" rel="stylesheet" type="text/css" />
+    <link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">
+    <link href="themes/SuiteR/css/footable.core.css" rel="stylesheet" type="text/css" />
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -70,7 +70,7 @@
     </script>
     {/literal}
     {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/suiter/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/suiter/js/jscolor.js"}'></script>
+    <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/colourSelector.php">
+    <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteR/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
 </head>
