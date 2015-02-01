@@ -226,45 +226,47 @@
 <div class="container-fluid">
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
-    <div class="col-sm-3 col-md-2 sidebar">
-        <div id="userlinks">
-            <a href="index.php" title="Home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
-            <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}" title="{$CURRENT_USER}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-            <a href="javascript:void(0)" onclick="refresh();" title="Refresh"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
-            <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' title="{$LOGOUT_LABEL}"><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
-        </div>
-        <div id="quickcreatelinks">
-        <div class="dropdown">
-            <a href="" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-               Create New Record<span id="quickcreateplus" class="glyphicon glyphicon-plus"></span>
-            </a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
-                <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
-                <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
-                <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
-                <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
-                <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
-                <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
-            </ul>
-        </div>
-        </div>
-        <hr class="hr">
-        <div id="recentlyViewed">
-        <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
-        <ul class="nav nav-pills nav-stacked">
-            {foreach from=$recentRecords item=item name=lastViewed}
-                <li class="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
-                <li class="recentlinks" role="presentation">
-                    <a title="{$item.module_name}"
-                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                        {$item.image}&nbsp;<span aria-hidden="true">{$item.item_summary_short}</span>
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div id="userlinks">
+                <a href="index.php" title="Home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
+                <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}" title="{$CURRENT_USER}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <a href="javascript:void(0)" onclick="refresh();" title="Refresh"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
+                <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' title="{$LOGOUT_LABEL}"><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+            </div>
+            <div id="quickcreatelinks">
+                <div class="dropdown">
+                    <a href="" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                       Create New Record<span id="quickcreateplus" class="glyphicon glyphicon-plus"></span>
                     </a>
-                </li>
-            {/foreach}
-        </ul>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
+                        <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
+                        <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
+                        <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
+                        <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
+                        <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
+                        <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="hr">
+            <div id="recentlyViewed">
+                <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
+                <ul class="nav nav-pills nav-stacked">
+                    {foreach from=$recentRecords item=item name=lastViewed}
+                        <li class="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
+                        <li class="recentlinks" role="presentation">
+                            <a title="{$item.module_name}"
+                               accessKey="{$smarty.foreach.lastViewed.iteration}"
+                               href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                {$item.image}&nbsp;<span aria-hidden="true">{$item.item_summary_short}</span>
+                            </a>
+                        </li>
+                    {/foreach}
+                </ul>
+            </div>
         </div>
     </div>
+</div>
     <!--End Responsive Sidebar -->
     <!--Start Page content -->

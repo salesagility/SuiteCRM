@@ -39,7 +39,9 @@
 <body onMouseOut="closeMenus();">
 {$DCSCRIPT}
 {if $AUTHENTICATED}
-    {include file="_headerModuleList.tpl" theme_template=true}
+    <div id="ajaxHeader">
+        {include file="_headerModuleList.tpl" theme_template=true}
+    </div>
 {/if}
 {literal}
     <iframe id='ajaxUI-history-iframe' src='index.php?entryPoint=getImage&imageName=blank.png' title='empty' style='display:none'></iframe>
