@@ -4353,5 +4353,9 @@ table#lineItems{
     margin:0;
 }
 
+
+div.action_buttons form {float:left;}
+.paginationWrapper { float:right; }
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
