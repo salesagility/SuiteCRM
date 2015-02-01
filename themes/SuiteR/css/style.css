@@ -4218,7 +4218,7 @@ ul.navbar-nav li ul li:hover {
         width: 16px;
         height: 16px;
         float: left;
-        background: url("../../../../index.php?entryPoint=getImage&themeName=suiteresponsive&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
+        background: url("../../../../index.php?entryPoint=getImage&themeName=SuiteR&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
         cursor: pointer;
     }
 }
@@ -4357,5 +4357,8 @@ table#lineItems{
 div.action_buttons form {float:left;}
 .paginationWrapper { float:right; }
 
+.yui-layout .yui-layout-clip-right .collapse{
+    display:visible;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
