@@ -3229,7 +3229,6 @@ li#usermenu:hover {
 }
 
 .button {
-    color: #ffffff;
     border:none;
     padding:3px 10px;
     -webkit-border-radius: 2px;
@@ -3240,6 +3239,29 @@ li#usermenu:hover {
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
     margin:2px;
+    color: #fff;
+    background-color: #3C8DBC;
+    padding:3px 10px;
+    margin:2px;
+    cursor:pointer;
+}
+
+button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
+    border:none;
+    padding:3px 10px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    margin:2px;
+    color: #565656;
+    background-color: #cccccc;
+    padding:3px 10px;
+    margin:2px;
+    cursor:pointer;
 }
 
 input[type=submit], input[type=button] {
@@ -4353,13 +4375,20 @@ table#lineItems{
     margin:0;
 }
 
+div.action_buttons form {
+    float:left;
+}
 
-div.action_buttons form {float:left;}
-.paginationWrapper { float:right; }
+.paginationWrapper {
+    float:right;
+}
+
+/* Fix to override bootstrap for email module panel collapse/expand */
 
 .yui-layout .yui-layout-clip-right .collapse, .yui-layout-hd .collapse{
-visibility:visible !important;
+    visibility:visible !important;
     display:block !important;
 }
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
