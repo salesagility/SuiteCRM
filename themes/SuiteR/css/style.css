@@ -625,11 +625,12 @@ table.subpanelTabForm {
 /* sitemap */
 
 #sitemap {
+    clear:both;
     width: 650px;
     display:none;
     z-index:9999;
-    margin-right:1em;
-    margin-top:2.5em;
+    left:30%;
+    top:10%;
 }
 
 #sitemap .edit.view {
@@ -660,8 +661,9 @@ table.subpanelTabForm {
 }
 
 /* sitemap link div */
-#sitemapLink span {
+#sitemapLink a {
     cursor:pointer;
+    margin:0 0 0 18px;
 }
 #sitemapLink span img {
     cursor:pointer;
@@ -1574,15 +1576,6 @@ a:link, a:visited, a:hover {
     background-image: url('../../../../index.php?entryPoint=getImage&imageName=slider_button_less.png');
 }
 
-#sitemapLink {
-    padding-top: 3px;
-}
-
-#sitemapLinkSpan {
-    border-right:1px solid #999;
-    border-right:none;
-}
-
 /* DetailView/EditView/ListView styles */
 .view {
     border-bottom:1px solid;
@@ -2048,11 +2041,6 @@ ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.c
 }
 .olBgClass {
     background-color: #abc3d7;
-}
-
-/* sitemap */
-#sitemap .edit.view {
-    border-color: #3C8DBC !important;
 }
 
 .yui-navset .yui-nav, .yui-navset .yui-navset-top .yui-nav, .yui-layout .yui-layout-hd {
