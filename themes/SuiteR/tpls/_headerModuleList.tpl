@@ -170,9 +170,10 @@
             </ul>
             {/if}
             <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
-                <li id="usermenu" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                    <span class="glyphicon glyphicon-user"> </span> {$CURRENT_USER}
+                <li id="usermenu" class="dropdown-toggle" aria-expanded="true">
+                    <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'><span class="glyphicon glyphicon-user"> </span> {$CURRENT_USER}
                     <span class="caret"></span>
+                    </a>
                 </li>
                 <button id="usermenucollapsed" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
                     <span class="glyphicon glyphicon-user"> </span>

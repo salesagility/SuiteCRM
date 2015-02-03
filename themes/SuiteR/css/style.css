@@ -1690,14 +1690,23 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 /* global links */
 
 #globalLinks {
-    padding:6px 0 3px 5px;
     border-left:1px solid #bbbbbb;
     margin: 0 0 0 10px;
     font-size:1.1em;
 }
 
-#globalLinks ul {
+#globalLinks a{
+    color:#ffffff;
+}
+
+#globalLinks ul li a {
     max-width:150px !important;
+    color:#3C8DBC;
+}
+
+#globalLinks ul li a:hover {
+    max-width:150px !important;
+    color:#ffffff;
 }
 
 /* themepicker */
@@ -4386,7 +4395,7 @@ div.action_buttons form {
 /* Fix to make Boostrap drop down hover on larger screens */
 
 @media (min-width:1280px) {
-    .navbar-nav > li:hover ul.dropdown-menu {
+    .navbar-nav > li:hover ul.dropdown-menu, #globalLinks:hover ul.dropdown-menu {
         display: block;
     }
 
