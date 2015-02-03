@@ -1690,6 +1690,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 /* global links */
 
 #globalLinks {
+    padding:0;
     border-left:1px solid #bbbbbb;
     margin: 0 0 0 10px;
     font-size:1.1em;
@@ -1707,6 +1708,11 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 #globalLinks ul li a:hover {
     max-width:150px !important;
     color:#ffffff;
+}
+
+#globalLinks li{
+    padding:8px 0 0 0;
+    height:50px;
 }
 
 /* themepicker */
