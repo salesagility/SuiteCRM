@@ -4383,5 +4383,18 @@ div.action_buttons form {
     padding:5px;
 }
 
+/* Fix to make Boostrap drop down hover on larger screens */
+
+@media (min-width:1280px) {
+    .navbar-nav > li:hover ul.dropdown-menu {
+        display: block;
+    }
+
+    /* if you want to hide the arrow */
+    a.menu:after, .dropdown-toggle:after {
+        content: none;
+    }
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
