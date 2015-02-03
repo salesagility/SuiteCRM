@@ -250,7 +250,26 @@
                 </div>
             </div>
             <hr class="hr">
-            <div id="recentlyViewed">
+            <div id="actionMenuSidebar">
+                {foreach from=$moduleTopMenu item=module key=name name=moduleList}
+                    {if $name == $MODULE_TAB}
+                        <ul class="nav nav-pills nav-stacked">
+                            {if count($shortcutTopMenu.$name) > 0}
+                                <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
+                                {foreach from=$shortcutTopMenu.$name item=item}
+                                    {if $item.URL == "-"}
+                                        <li><a></a><span>&nbsp;</span></li>
+                                    {else}
+                                        <li class="actionmenulinks" role="presentation"><a href="{$item.URL}"><span>{$item.LABEL}</span></a></li>
+                                    {/if}
+                                {/foreach}
+                                <br>
+                            {/if}
+                        </ul>
+                    {/if}
+                {/foreach}
+            </div>
+            <div id="recentlyViewedSidebar">
                 <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                 <ul class="nav nav-pills nav-stacked">
                     {foreach from=$recentRecords item=item name=lastViewed}

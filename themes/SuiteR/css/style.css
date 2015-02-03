@@ -2539,6 +2539,7 @@ h1,h2,h3,h4 {
     color:#333333;
     font-weight:normal;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin:0 0 5px 0;
 }
 
 select {
@@ -3979,7 +3980,7 @@ li.moremenu {
 }
 
 @media (max-width:979px){
-.recentlyViewed, .recent_h3{
+.recentlyViewedSidebar, .recent_h3{
     display:none;
     margin:0;
     padding:0;
@@ -4388,6 +4389,10 @@ div.action_buttons form {
 .yui-layout .yui-layout-clip-right .collapse, .yui-layout-hd .collapse{
     visibility:visible !important;
     display:block !important;
+}
+
+.actionmenulinks a span{
+    padding:5px;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
