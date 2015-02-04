@@ -69,6 +69,13 @@ $(window).resize(function () {
     }
 });
 
+// Change to allow links to be clicked on larger resolutions for Bootstrap.
+$(window).load(function () {
+    if ($(window).width() > 980) {
+        $("span").removeAttr("data-toggle","dropdown");
+    }
+});
+
 // Button to toggle list view search
 $('.showsearch').click(function() {
     $('.search_form').toggle();
