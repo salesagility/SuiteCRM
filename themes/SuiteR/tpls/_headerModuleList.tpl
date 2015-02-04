@@ -70,7 +70,7 @@
                         {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                         <li class="topnav">
                             <span class="notCurrentTabLeft">&nbsp;</span><span class="notCurrentTab">
-                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle" data-toggle="dropdown">{$group}</a>
+                            <a href="#" id="grouptab_{$smarty.foreach.groupList.index}" class="dropdown-toggle">{$group}</a>
                             <span class="notCurrentTabRight">&nbsp;</span>
                             <ul class="dropdown-menu" role="menu" {if $smarty.foreach.groupList.last} class="All"{/if}>
                                 {foreach from=$modules.modules item=module key=modulekey}
@@ -92,7 +92,7 @@
                 {if $name == $MODULE_TAB}
                 <li class="topnav">
                     <span class="currentTabLeft">&nbsp;</span>
-                    {if $name !='Home'}<span class="dropdown-toggle headerlinks currentTab" data-toggle="dropdown">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
+                    {if $name !='Home'}<span class="dropdown-toggle headerlinks currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
@@ -124,7 +124,7 @@
             {else}
                 <li class="topnav">
                     <span class="notCurrentTabLeft">&nbsp;</span>
-                    {if $name != 'Home'}<span class="dropdown-toggle headerlinks notCurrentTab" data-toggle="dropdown">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
+                    {if $name != 'Home'}<span class="dropdown-toggle headerlinks notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
