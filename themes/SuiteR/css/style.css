@@ -4400,7 +4400,7 @@ div.action_buttons form {
 
 /* Fix to make Boostrap drop down hover on larger screens */
 
-@media (min-width:1280px) {
+@media (min-width:1024px) {
     .navbar-nav > li:hover ul.dropdown-menu, #globalLinks:hover ul.dropdown-menu {
         display: block;
     }
