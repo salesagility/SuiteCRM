@@ -137,7 +137,7 @@ class AuthenticationController
 			//Ensure the user is authorized
 			checkAuthUserStatus();
 
-			loginLicense();
+			//loginLicense();
 			if(!empty($GLOBALS['login_error'])){
 				unset($_SESSION['authenticated_user_id']);
 				$GLOBALS['log']->fatal('FAILED LOGIN: potential hack attempt:'.$GLOBALS['login_error']);
