@@ -4026,7 +4026,7 @@ li.recentlinks_edit a:hover {
 
 /* Custom styling from group tabs menu structure */
 
-a[id^=grouptab] {
+a[id^=grouptab], a[id^=moduleTab]{
     color: #f7f7f7;
 }
 
