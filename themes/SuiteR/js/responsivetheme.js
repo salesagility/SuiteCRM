@@ -66,7 +66,7 @@ $(window).resize(function () {
     if ($(window).width() < 979) {
         $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
     }
-    if ($(window).width() > 980) {
+    if ($(window).width() > 980 && $('.sidebar').is(':visible')) {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
     }
 });
