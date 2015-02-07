@@ -66,7 +66,6 @@ var checkContents = setInterval(function(){
         $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $(element).footable();
         $(".footable").find("th:first").attr("data-toggle","true");
-        console.log("called");
         clearInterval(checkContents);
     }
 },1);
