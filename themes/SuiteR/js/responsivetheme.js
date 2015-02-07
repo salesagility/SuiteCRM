@@ -58,6 +58,8 @@ var checkContents = setInterval(function(){
 //        $('.footable').footable();
         $('.list.view').footable();
         $(".footable").find("th:first").attr("data-toggle","true");
+        console.log("called");
+        clearInterval(checkContents);
     }
 },1);
 
