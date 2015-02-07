@@ -1732,8 +1732,9 @@ ul.tablist, ul.subpanelTablist
 }
 ul.tablist li a, ul.subpanelTablist li a {
     border-top: 2px solid;
-    border-right: 1px solid;
-    border-bottom: none;
+    border-right-color:#cccccc;
+    border-top:none;
+    border-bottom:none;
 }
 
 ul.tablist li a:hover, ul.subpanelTablist li a:hover {
@@ -2009,18 +2010,18 @@ h5.calSharedUser {
 
 /* for subpanel tabs */
 .subpanelTabForm {
-    border-color: #abc3d7;
+    border-color: #3C8DBC;
     color: #000000;
     background-color: #ffffff;
 }
 
 ul.tablist, ul.subpanelTablist {
-    border-bottom-color: #abc3d7;
+    border-bottom-color: #3C8DBC;
 }
 
 ul.tablist li a:hover, ul.subpanelTablist li a:hover {
     background: #fafafa;
-    border-color: #abc3d7;
+    border-color: #3C8DBC;
 }
 
 ul.tablist li a, ul.subpanelTablist li a {
@@ -2039,9 +2040,9 @@ ul.tablist li a:hover, ul.subpanelTablist li a:hover {
 ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
     color: #4f4f4f;
     background: #fff;
-    border-right-color: #abc3d7;
-    border-top-color: #abc3d7;
-    border-bottom-color: #fff;
+    border-right-color:#cccccc;
+    border-top:none;
+    border-bottom:none;
 }
 
 ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.current:hover {
