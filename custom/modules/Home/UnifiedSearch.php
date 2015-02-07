@@ -76,7 +76,7 @@ if($queryString){
     <input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' placeholder='<?php echo translate("LBL_SEARCH_QUERY_PLACEHOLDER","AOD_Index");?>' value='<?php echo $queryString;?>'>
     <input type="submit" class="button primary" value="<?php echo translate("LBL_SEARCH_BUTTON","AOD_Index");?>">&nbsp;
 </form>
-<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View footable'>
+<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
     <?php getPaginateHTML($queryString, $start,$amount,$total); ?>
     <thead>
     <tr height='20'>

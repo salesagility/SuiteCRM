@@ -106,7 +106,7 @@
 {$multiSelectData}
 <a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
 {if $hideTable == false}
-	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table footable'>
+	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
 	<thead>
 	{assign var="link_select_id" value="selectLinkTop"}
     {assign var="link_action_id" value="actionLinkTop"}
