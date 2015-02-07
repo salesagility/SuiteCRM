@@ -52,11 +52,19 @@ $(function() {
 });
 
 var checkContents = setInterval(function(){
-    if ($(".list.view").length > 0){ // Check if element has been found
+    if ($(".list.view").length > 0 || $(".list.View").length > 0){ // Check if element has been found
+
+       if($(".list.view").length > 0){
+           element = $(".list.view");
+       }
+
+        if($(".list.View").length > 0){
+            element = $(".list.View");
+        }
+
         $('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-//        $('.footable').footable();
-        $('.list.view').footable();
+        $(element).footable();
         $(".footable").find("th:first").attr("data-toggle","true");
         console.log("called");
         clearInterval(checkContents);
