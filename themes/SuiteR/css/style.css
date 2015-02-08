@@ -3092,6 +3092,7 @@ fieldset[disabled] .btn-primary.active {
 .dropdown-menu {
     background:#f7f7f7;
     padding:10px;
+    min-width: 185px;
 }
 
 .dropdown-menu em {
@@ -3121,6 +3122,7 @@ fieldset[disabled] .btn-primary.active {
     color:#3C8DBC;
     text-decoration:none;
     padding:5px;
+    display:block;
 }
 
 .dropdown-menu li a:hover {
@@ -3130,16 +3132,20 @@ fieldset[disabled] .btn-primary.active {
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
+
 }
 
 .recent_h3{
     color:#333333;
-    padding:0 5px 0 5px;
 }
 
 .topnav{
-    padding:15px 0 15px 0;
+    padding:15px 4px 16px 0;
     font-size:1.1em;
+}
+
+.topnav:hover{
+    background-color: #597dbc !important;
 }
 
 ul.topnav li a {
@@ -3191,7 +3197,6 @@ li#usermenu:hover {
 @media (max-height:600px) {
     .moremenu ul, .dropdown-menu {
         max-height: 500px;
-        width: 100%;
         overflow: auto;
     }
 }
@@ -3199,7 +3204,6 @@ li#usermenu:hover {
 @media (max-height:700px) {
     .moremenu ul, .dropdown-menu  {
         max-height: 550px;
-        width: 100%;
         overflow: auto;
     }
 }
@@ -3207,7 +3211,6 @@ li#usermenu:hover {
 @media (max-height:800px) {
     .moremenu ul, .dropdown-menu {
         max-height: 600px;
-        width: 100%;
         overflow: auto;
     }
 }
@@ -3993,31 +3996,35 @@ li.moremenu {
     }
 }
 /* Custom styling for recently viewed on sidebar */
-
-li.recentlinks_top {
+li.recentlinks_top{
     float:left;
-    width:80px;
+    width:75%;
+    overflow: hidden;
+    margin-left:2px;
 }
 
 li.recentlinks_topedit {
     float:right;
-    max-width:32px;
-    margin:5px 0 5px 0;
+    width:20%;
 }
 
-li.recentlinks_topedit a:hover {
-    background:none;
-    color:#565656 !important;
+li.recentlinks_topedit a:focus{
+    color:#FFF !important;
 }
+
+.recentlinks_top a{
+    width:100%;
+    height:100%;
+}
+
 
 li.recentlinks a {
     float:left;
-    width:130px;
+
 }
 
 li.recentlinks_edit a {
     float:right;
-    max-width:50px;
 }
 
 li.recentlinks_edit a:hover {
@@ -4025,6 +4032,10 @@ li.recentlinks_edit a:hover {
 }
 
 /* Custom styling from group tabs menu structure */
+
+[id^=moduleTab] a:hover{
+        color: hotpink;
+}
 
 a[id^=grouptab], a[id^=moduleTab]{
     color: #f7f7f7;
@@ -4060,19 +4071,15 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-ul.navbar-nav li:hover, .bigmenu li a:hover {
-    background:#337ab7 !important;
-}
-
 @media(max-width:767px){
     ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color:#ffffff; !important;
     }
 }
 
-ul.navbar-nav li ul li:hover {
-    background:none !important;
-}
+/*ul.navbar-nav li ul li:hover {*/
+    /*background:none !important;*/
+/*}*/
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{
     background:none;
@@ -4414,6 +4421,19 @@ div.action_buttons form {
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     border-top: none;
+}
+
+.recently_viewed_link_container{
+    width:100%;
+    float:left;
+    overflow: hidden;
+}
+
+.recently_viewed_link_container_sidebar{
+    margin-bottom:10px;
+    width:100%;
+    float:left;
+    overflow: hidden;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
