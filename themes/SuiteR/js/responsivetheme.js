@@ -86,36 +86,36 @@ $('.showsearch').click(function() {
 });
 
 // jQuery to toggle sidebar
-
-$('#buttontoggle').click(function(){
-    $('.sidebar').toggle();
-    if ($('.sidebar').is(':visible')){
-        $.cookie('sidebartoggle', 'expanded');
-        $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
-        $('#buttontoggle').css({
-            'left' : "+=215px"
-        });
-    }
-    if ($('.sidebar').is(':hidden')){
-        $.cookie('sidebartoggle', 'collapsed');
+function loadSidebar() {
+    $('#buttontoggle').click(function () {
+        $('.sidebar').toggle();
+        if ($('.sidebar').is(':visible')) {
+            $.cookie('sidebartoggle', 'expanded');
+            $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+            $('#buttontoggle').css({
+                'left': "+=215px"
+            });
+        }
+        if ($('.sidebar').is(':hidden')) {
+            $.cookie('sidebartoggle', 'collapsed');
+            $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
+            $('#buttontoggle').css({
+                'left': "-=215px"
+            });
+        }
+    });
+    var sidebartoggle = $.cookie('sidebartoggle');
+    if (sidebartoggle == 'collapsed') {
+        $('.sidebar').hide();
         $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
         $('#buttontoggle').css({
-            'left' : "-=215px"
+            'left': "-=215px"
         });
     }
-    console.log($.cookie('sidebartoggle'));
-});
-var sidebartoggle = $.cookie('sidebartoggle');
-if (sidebartoggle == 'collapsed'){
-    $('.sidebar').hide();
-    $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
-    $('#buttontoggle').css({
-        'left' : "-=215px"
-    });
-}
-if (sidebartoggle == 'expanded'){
-    $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
+    else {
+        $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
 
+    }
 }
-
+loadSidebar();
 // End of custom jQuery
