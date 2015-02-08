@@ -1711,8 +1711,13 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 }
 
 #globalLinks li{
-    padding:8px 0 0 0;
-    height:50px;
+    padding:8px 0 8px 0;
+
+}
+
+#globalLinks ul li{
+    padding:0;
+
 }
 
 /* themepicker */
@@ -1727,8 +1732,9 @@ ul.tablist, ul.subpanelTablist
 }
 ul.tablist li a, ul.subpanelTablist li a {
     border-top: 2px solid;
-    border-right: 1px solid;
-    border-bottom: none;
+    border-right-color:#cccccc;
+    border-top:none;
+    border-bottom:none;
 }
 
 ul.tablist li a:hover, ul.subpanelTablist li a:hover {
@@ -2004,18 +2010,18 @@ h5.calSharedUser {
 
 /* for subpanel tabs */
 .subpanelTabForm {
-    border-color: #abc3d7;
+    border-color: #3C8DBC;
     color: #000000;
     background-color: #ffffff;
 }
 
 ul.tablist, ul.subpanelTablist {
-    border-bottom-color: #abc3d7;
+    border-bottom-color: #3C8DBC;
 }
 
 ul.tablist li a:hover, ul.subpanelTablist li a:hover {
     background: #fafafa;
-    border-color: #abc3d7;
+    border-color: #3C8DBC;
 }
 
 ul.tablist li a, ul.subpanelTablist li a {
@@ -2034,9 +2040,9 @@ ul.tablist li a:hover, ul.subpanelTablist li a:hover {
 ul.subpanelTablist li a.current, ul.subpanelTablist li a.current:hover {
     color: #4f4f4f;
     background: #fff;
-    border-right-color: #abc3d7;
-    border-top-color: #abc3d7;
-    border-bottom-color: #fff;
+    border-right-color:#cccccc;
+    border-top:none;
+    border-bottom:none;
 }
 
 ul.tablist li a.current:link, ul.tablist li a.current:visited, ul.tablist li a.current:hover {
@@ -3016,47 +3022,6 @@ div.input-group input{
     max-width:100% !important;
 }
 
-.button-primary {
-    color: #fff;
-    background-color: #008080;
-    border-color: #2e6da4;
-}
-
-.button-primary:hover,
-.button-primary:focus,
-.button-primary.focus,
-.button-primary:active,
-.button-primary.active,
-.open > .dropdown-toggle.btn-primary {
-    color: #fff;
-    background-color: #286090;
-    border-color: #204d74;
-}
-.button:active, .button.active, .open > .dropdown-toggle.btn-primary {
-    background-image: none;
-}
-
-.button .badge {
-    color: #008080;
-    background-color: #fff;
-}
-
-.button-primary {
-    color: #fff;
-    background-color: #35586C;
-    border-color: #2e6da4;
-}
-
-.button-primary:hover,
-.button-primary:focus,
-.button-primary.focus,
-.button-primary:active,
-.button-primary.active,
-.open > .dropdown-toggle.btn-primary {
-    color: #fff;
-    background-color: #286090;
-    border-color: #204d74;
-}
 
 .button-primary:active, .button-primary.active, .open > .dropdown-toggle.btn-primary {
     background-image: none;
@@ -3079,7 +3044,7 @@ fieldset[disabled] .btn-primary.focus,
 fieldset[disabled] .btn-primary:active,
 .button-primary.disabled.active,
 .button-primary[disabled].active,
-fieldset[disabled] .btn-primary.active {
+fieldset[disabled] .btn-primary.active{
     background-color: #3C8DBC;
     border-color: #2e6da4;
 }
@@ -3235,7 +3200,7 @@ li#usermenu:hover {
     background:#3C8DBC !important;
 }
 
-.button {
+.button, input[type=submit], input[type=button] {
     border:none;
     padding:3px 10px;
     -webkit-border-radius: 2px;
@@ -3271,12 +3236,6 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     cursor:pointer;
 }
 
-input[type=submit], input[type=button] {
-    color: #fff;
-    background-color: #3C8DBC;
-    padding:3px 10px;
-    margin:2px;
-}
 .button:hover,
 .button:focus,
 .button.focus,
@@ -3392,8 +3351,8 @@ table legend {
 
 .ui-widget-header {
     background:#ffffff;
+    color:#565656;
     border:none;
-    border-bottom: 1px solid #cccccc;
 }
 
 .ui-tabs .ui-tabs-nav li a {
