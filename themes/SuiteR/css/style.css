@@ -4395,5 +4395,15 @@ div.action_buttons form {
     overflow: hidden;
 }
 
+@media (max-width:979px){
+    .moremenu ul li a {
+        color: #f7f7f7 !important;
+        cursor: pointer;
+        padding: 5px;
+        font-size: 1em;
+        display: block;
+    }
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
