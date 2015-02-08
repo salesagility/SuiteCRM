@@ -3348,8 +3348,8 @@ table legend {
 
 .ui-widget-header {
     background:#ffffff;
+    color:#565656;
     border:none;
-    border-bottom: 1px solid #cccccc;
 }
 
 .ui-tabs .ui-tabs-nav li a {
