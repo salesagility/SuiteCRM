@@ -85,14 +85,14 @@
                                 <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
                                 {foreach from=$recentRecords item=item name=lastViewed}
                                     {if $item.module_name == $name}
-                                        <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
-                                        <li class="recentlinks_top" role="presentation">
-                                            <a title="{$item.module_name}"
-                                               accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                               href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                                <span>{$item.item_summary_short}</span>
-                                            </a>
-                                        </li>
+                                        <div class="recently_viewed_link_container">
+                                            <li class="recentlinks_topedit">
+                                                <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                            </li>
+                                            <li class="recentlinks_top" role="presentation">
+                                                <a title="{$item.module_name}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">{$item.item_summary_short}</a>
+                                            </li>
+                                        </div>
                                     {/if}
                                     {foreachelse}
                                     {$APP.NTC_NO_ITEMS_DISPLAY}
@@ -142,14 +142,16 @@
                         <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
                         {foreach from=$recentRecords item=item name=lastViewed}
                         {if $item.module_name == $name}
-                            <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
+                        <div class="recently_viewed_link_container">
+                        <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
                             <li class="recentlinks_top" role="presentation">
                                 <a title="{$item.module_name}"
                                 accessKey="{$smarty.foreach.lastViewed.iteration}"
                                 href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                <span>{$item.item_summary_short}</span>
+                                {$item.item_summary_short}
                                 </a>
                             </li>
+                            </div>
                         {/if}
                     {foreachelse}
                     {$APP.NTC_NO_ITEMS_DISPLAY}
@@ -174,14 +176,16 @@
                         <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
                         {foreach from=$recentRecords item=item name=lastViewed}
                             {if $item.module_name == $name}
+                        <div class="recently_viewed_link_container">
                                 <li class="recentlinks_topedit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
                                 <li class="recentlinks_top" role="presentation">
                                     <a title="{$item.module_name}"
                                     accessKey="{$smarty.foreach.lastViewed.iteration}"
                                     href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                    <span>{$item.item_summary_short}</span>
+                                    {$item.item_summary_short}
                                     </a>
                                 </li>
+                            </div>
                             {/if}
                             {foreachelse}
                             {$APP.NTC_NO_ITEMS_DISPLAY}
@@ -298,6 +302,7 @@
                 <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                 <ul class="nav nav-pills nav-stacked">
                     {foreach from=$recentRecords item=item name=lastViewed}
+                        <div class="recently_viewed_link_container_sidebar">
                         <li class="recentlinks_edit"><a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a></li>
                         <li class="recentlinks" role="presentation">
                             <a title="{$item.module_name}"
@@ -306,6 +311,7 @@
                                 {$item.image}&nbsp;<span aria-hidden="true">{$item.item_summary_short}</span>
                             </a>
                         </li>
+                        </div>
                     {/foreach}
                 </ul>
             </div>
