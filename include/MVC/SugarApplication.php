@@ -86,7 +86,7 @@ class SugarApplication
         $this->loadLanguages();
 		$this->checkDatabaseVersion();
 		$this->loadDisplaySettings();
-		$this->loadLicense();
+		//$this->loadLicense();
 		$this->loadGlobals();
 		$this->setupResourceManagement($module);
 		$this->controller->execute();
