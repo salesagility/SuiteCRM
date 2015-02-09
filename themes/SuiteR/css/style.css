@@ -4419,5 +4419,8 @@ div.action_buttons form {
     }
 }
 
+h3 span{
+    font-weight:bold;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
