@@ -195,7 +195,7 @@
             {/if}
             {/foreach}
             {if count($moduleExtraMenu) > 0}
-                <li class="dropdown-toggle moremenu" data-toggle="dropdown">
+                <li class="dropdown-toggle moremenu">
                     <a class="dropdown-toggle" data-toggle="dropdown">{$APP.LBL_MORE} &raquo;</a>
                     <ul class="dropdown-menu" role="menu">
                         <div class="bigmenu">
