@@ -103,7 +103,7 @@
             <!-- Construct Dashlets -->
 <div id="pageContainer" class="yui-skin-sam">
     <div id="pageNum_{$activePage}_div">
-        <table>
+        <table width="100%">
             <tr>
                 <td align='right'>
                     {if !$lock_homepage}<input id="add_dashlets" class="button" type="button"
