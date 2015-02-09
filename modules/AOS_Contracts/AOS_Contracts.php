@@ -87,8 +87,11 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	
 	function mark_deleted($id)
 	{
+        $productQuote = new AOS_Products_Quotes();
+        $productQuote->mark_lines_deleted($this);
+        $this->deleteCall();
 		parent::mark_deleted($id);
-		$this->deleteCall();
+
 	}
 	
 	function createReminder(){
