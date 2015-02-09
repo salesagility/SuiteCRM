@@ -325,47 +325,48 @@ function remove_button(){
 
 
 function rows_sortable(){
-    //Helper function used to prevent table rows with from collapsing when using sortable
-    var fixHelperModified = function(e, tr) {
-        var $originals = tr.children();
-        var $helper = tr.clone();
-        $helper.children().each(function(index)
-        {
-            $(this).width($originals.eq(index).width())
+    if ($('#is_editable').length > 0) {
+        //Helper function used to prevent table rows with from collapsing when using sortable
+        var fixHelperModified = function (e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function (index) {
+                $(this).width($originals.eq(index).width())
+            });
+            return $helper;
+        };
+
+        //Make project task table rows sortable
+        $('#Task_table tbody').sortable({
+            items: "tr:not(.disable_sort)",//disable sortable on header row
+            helper: fixHelperModified, //call helper function
+            update: function (event, ui) {
+                var order = {};//create object
+                $('#Task_table tr.row_sortable').each(function () {//loop through rows
+                    //get new row indexes
+                    var rowIndex = $(this).closest('tr').prevAll().length;
+                    var id = $(this).children('td:first-child').find(".order_number").attr("rel");
+                    //var order_number = $(this).children('td:first-child').find(".order_number").val();
+                    var order_number = rowIndex;
+                    //fill object array with keys(task->id) and values (task->order_number)
+                    order[id] = order_number;
+                });
+
+                //convert array to json
+                var jsonArray = JSON.stringify(order);
+                //prepare POST data
+                var dataString = {'orderArray': jsonArray};
+                $.ajax({
+                    type: "POST",
+                    url: "index.php?module=Project&action=update_order",
+                    data: dataString,
+                    success: function () {
+                        gen_chart(1);
+                    }
+                });
+            }
         });
-        return $helper;
-    };
-
-    //Make project task table rows sortable
-    $('#Task_table tbody').sortable({
-        items: "tr:not(.disable_sort)",//disable sortable on header row
-        helper: fixHelperModified, //call helper function
-        update: function(event, ui) {
-            var order = {};//create object
-            $('#Task_table tr.row_sortable').each(function(){//loop through rows
-                //get new row indexes
-                var rowIndex = $(this).closest('tr').prevAll().length;
-                var id = $(this).children('td:first-child').find(".order_number").attr("rel");
-                //var order_number = $(this).children('td:first-child').find(".order_number").val();
-                var order_number = rowIndex;
-                //fill object array with keys(task->id) and values (task->order_number)
-                order[id] = order_number;
-            });
-
-            //convert array to json
-            var jsonArray = JSON.stringify(order);
-            //prepare POST data
-            var dataString = { 'orderArray':jsonArray };
-            $.ajax({
-                type: "POST",
-                url: "index.php?module=Project&action=update_order",
-                data: dataString,
-                success: function() {
-                    gen_chart(1);
-                }
-            });
-        }
-    });
+    }
 }
 //Gets tasks via ajax call from controller functions get_predecessors
 //Used in the add task pop-up form.
@@ -390,7 +391,7 @@ function block(){
     $.blockUI({//ajax loading screen
         message:msg,
         css: {
-            height: '50px',
+            height: '70px',
             width: '240px',
             // top:  ($(window).height() - 50) /2 + 'px',
             left: ($(window).width() - 240) /2 + 'px'//centre box
