@@ -216,4 +216,9 @@ if ( !empty($logindisplay) )
 		</script>";
 	}
 
-$sugar_smarty->display('custom/modules/Users/login.tpl'); ?>
+if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl')) {
+	echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl');
+} else {
+	echo $sugar_smarty->display('custom/modules/Users/login.tpl');
+}
+

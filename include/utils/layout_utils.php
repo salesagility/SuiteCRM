@@ -327,7 +327,7 @@ function insert_popup_header(
     if ($includeJS)
     {
         echo <<<EOHTML
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
 EOHTML;
@@ -345,8 +345,12 @@ EOHTML;
         echo '<meta http-equiv="Content-Type" content="text/html; charset="{$charset}">';
         echo '<script type="text/javascript" src="' . getJSPath('cache/include/javascript/sugar_grp1_yui.js') . '"></script>';
         echo '<script type="text/javascript" src="' . getJSPath('cache/include/javascript/sugar_grp1.js') . '"></script>';
-        echo '</head>';
     }
+    /* Fix to include files required to make pop-ups responsive */
+    echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
+    echo '<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />';
+    echo '<link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">';
+    echo '</head>';
     echo  '<body class="popupBody">';
 }
 
