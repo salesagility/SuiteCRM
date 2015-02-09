@@ -71,8 +71,12 @@
                 'include/javascript/jquery/jquery.dialogTitle.js'         => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.browser.js'         => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.json-2.3.js'        => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/jquery.cookie.js'        => 'include/javascript/sugar_grp1_jquery.js',
 			//bootstrap
-            //'include/javascript/jquery/bootstrap/bootstrap.min.js'              => 'include/javascript/sugar_grp1_jquery.js',			
+            'include/javascript/jquery/bootstrap/bootstrap.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/html5shiv.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/respond.min.js'              => 'include/javascript/sugar_grp1_jquery.js',
+                'include/javascript/jquery/footable.js'              => 'include/javascript/sugar_grp1_jquery.js',
             //jquery for moddule menus
             'include/javascript/jquery/jquery.hoverIntent.js'              => 'include/javascript/sugar_grp1_jquery.js',
             'include/javascript/jquery/jquery.hoverscroll.js'              => 'include/javascript/sugar_grp1_jquery.js',
