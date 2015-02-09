@@ -3180,6 +3180,20 @@ li#usermenu:hover {
     }
 }
 
+@media (max-height:900px) {
+    .moremenu ul, .dropdown-menu {
+        max-height: 700px;
+        overflow: auto;
+    }
+}
+
+@media (max-height:1000px) {
+    .moremenu ul, .dropdown-menu {
+        max-height: 800px;
+        overflow: auto;
+    }
+}
+
 .moremenu ul li a{
     color:#3C8DBC !important;
     cursor:pointer;
