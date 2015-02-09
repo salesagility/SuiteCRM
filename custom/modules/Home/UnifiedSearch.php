@@ -78,44 +78,46 @@ if($queryString){
 </form>
 <table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
     <?php getPaginateHTML($queryString, $start,$amount,$total); ?>
+    <thead>
     <tr height='20'>
-        <th scope='col' width='10%' >
+        <th scope='col' width='10%'data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap;'width='100%' align='left'>
                         <?php echo translate("LBL_SEARCH_RESULT_MODULE","AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
-        <th scope='col' width='30%' >
+        <th scope='col' width='30%' data-toggle="true">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap;'width='100%' align='left'>
                         <?php echo translate("LBL_SEARCH_RESULT_NAME","AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
-        <th scope='col' width='30%' >
+        <th scope='col' width='30%' data-hide="phone">
 				<span sugar="sugar1">
                     <div style='white-space: nowrap;'width='100%' align='left'>
                         <?php echo translate("LBL_SEARCH_RESULT_SUMMARY","AOD_Index"); ?>
                     </div>
                 </span sugar='sugar1'>
         </th>
-        <th scope='col' width='25%' >
+        <th scope='col' width='25%' data-hide="phone,phonelandscape">
             <div style='white-space: nowrap;'width='100%' align='left'>
                 <?php echo translate("LBL_SEARCH_RESULT_DATE_CREATED","AOD_Index"); ?>
             </div>
         </th>
-        <th scope='col' width='25%' >
+        <th scope='col' width='25%' data-hide="phone,phonelandscape">
             <div style='white-space: nowrap;'width='100%' align='left'>
                 <?php echo translate("LBL_SEARCH_RESULT_DATE_MODIFIED","AOD_Index"); ?>
             </div>
         </th>
-        <th scope='col' width='10%' >
+        <th scope='col' width='10%'>
             <div style='white-space: nowrap;'width='100%' align='left'>
                 <?php echo translate("LBL_SEARCH_RESULT_SCORE","AOD_Index"); ?>
             </div>
         </th>
     </tr>
+    </thead>
     <?php
     if($hits){
 foreach($hits as $hit){

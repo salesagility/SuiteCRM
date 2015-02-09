@@ -1,34 +1,30 @@
 .dashboardTabList{
    border:none 0px;
-    width:95%;
-    height:35px;
+    width:97%;
+    height:30px;
+    margin-left:25px;
     border-bottom: 2px solid #e8e8e8;
+}
+
+.dashboardTabList li{
+    margin: 0 !important;
 }
 
 .dashboardTabList li{
     float:left;
     padding:6px 6px 6px 6px;
-    background-color: #f3f3f3;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 1px solid #e8e8e8;
     margin-top:6px;
     font-size: 14px;
 }
 .dashboardTabList li.active{
     float:left;
-    padding:8px 8px 8px 8px;
-    background-color: #ffffff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border: 1px solid #e8e8e8;
+    padding:6px 6px 6px 6px;
     font-weight: bold;
-    margin-top:2px;
+    margin: 0 1px 0 1px;
 }
 
 .dashboardTabList li:hover{
-
-    background-color: #ffffff;
+    color: #777777;
 
 }
 .dashboardTabList a:hover{
@@ -62,4 +58,9 @@
 
 .addButton a:hover{
     text-decoration: none;
+}
+
+.dashboardTabList{
+    padding: 0 !important;
+    margin: 0, 25px, 0, 0 !important;
 }
