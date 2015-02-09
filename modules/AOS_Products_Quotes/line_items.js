@@ -39,7 +39,7 @@ function insertLineItems(product,group){
 	var current_group = 'lineItems';
 	var gid = product.group_id;
 
-	if(group_ids[gid] === null){
+     if(typeof group_ids[gid] === 'undefined'){
 		current_group = insertGroup();
 		group_ids[gid] = current_group;
 		for(var g in group){
@@ -612,7 +612,7 @@ function calculateLine(ln, key){
     if(document.getElementById(key + required + ln) === null){
         required = 'product_unit_price';
     }
-    console.log(key + 'name' + ln);
+
     if (document.getElementById(key + 'name' + ln).value === '' || document.getElementById(key + required + ln).value === ''){
         return;
     }
