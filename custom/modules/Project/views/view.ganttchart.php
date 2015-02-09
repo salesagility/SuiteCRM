@@ -192,7 +192,12 @@ class ProjectViewGanttChart extends SugarView {
                 <tr>
                     <td class="header_gap" colspan="4">
                         <span id="exportToPDFSpan">
-                            <button id="add_button" class="gantt_button">Add New Task</button>
+                            <?php
+                                if(ACLController::checkAccess('Project', 'edit', true)){
+                                    echo '<button id="add_button" class="gantt_button">Add New Task</button>';
+                                    echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
+                                }
+                            ?>
                         </span>
                     </td>
                 </tr>

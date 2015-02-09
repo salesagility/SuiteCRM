@@ -81,9 +81,16 @@ class ProjectTable {
                 }
 
                 echo '<tr class="row_sortable">
-                        <td class="project_table_cells"><input class="order_number" name="order_number[]" rel="'.$task->id.'" type="hidden" value="'.$task->order_number.'" />'.$task->project_task_id.'</td>
-                        <td class="project_table_cells"><span class="Task_name"><a data="'.$task->id.','.$task->predecessors.','.$task->relationship_type_c.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.','.$task->actual_duration.'" onclick="edit_task($(this));"title="'.$mod_strings['LBL_TASK_TITLE'].'" href="#">'.$task->name.'</a></span></td>
-                        <td class="project_table_cells">';
+                        <td class="project_table_cells"><input class="order_number" name="order_number[]" rel="'.$task->id.'" type="hidden" value="'.$task->order_number.'" />'.$task->project_task_id.'</td>';
+
+                        if(ACLController::checkAccess('Project', 'edit', true)){
+                            echo '<td class="project_table_cells" ><span class="Task_name" ><a data = "'.$task->id.','.$task->predecessors.','.$task->relationship_type_c.','.$timeDate->to_display_date($task->date_start, true).','.$task->duration.','.$task->duration_unit.','.$task->assigned_user_id.','.$task->milestone_flag.','.$task->percent_complete.','.$task->description.','.$task->actual_duration.'" onclick = "edit_task($(this));"title = "'.$mod_strings['LBL_TASK_TITLE'].'" href = "#" > '.$task->name.'</a ></span ></td>';
+                        }
+                        else{
+                            echo '<td class="project_table_cells" ><span class="Task_name" >'.$task->name.'</span ></td>';
+                        }
+
+                echo '<td class="project_table_cells">';
 
                                 foreach ($tasks as $predecessor){
 
@@ -135,10 +142,15 @@ class ProjectTable {
                         <td class="project_table_cells">'.$checked.'</td>
                         <td class="project_table_cells">'.$task->actual_duration.'</td>
                         <td class="project_table_cells">
-                            <span id="exportToPDFSpan">
-                                <button style="height:20px;width:20px;" class="remove_button" value="'.$task->id.'" class="gantt_button">Delete Task</button>
-                            </span>
+                            <span id="exportToPDFSpan">';
 
+                                if(ACLController::checkAccess('Project', 'delete', true)) {
+                                   echo '<button style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
+                                }
+                                else{
+                                   echo '<button disabled="disabled" style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
+                                }
+                        echo '</span>
                          </td>
                     </tr>';
 
