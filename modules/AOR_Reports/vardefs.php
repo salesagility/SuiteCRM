@@ -119,6 +119,17 @@ $dictionary['AOR_Report'] = array(
         'id_name' => 'aor_report_id',
         'vname' => 'LBL_AOR_CHARTS',
       ),
+        "aor_scheduled_reports" => array (
+    'name' => 'aor_scheduled_reports',
+    'type' => 'link',
+    'relationship' => 'aor_scheduled_reports_aor_reports',
+    'source' => 'non-db',
+    'module' => 'AOR_Scheduled_Reports',
+    'bean_name' => 'AOR_Scheduled_Reports',
+    'side' => 'right',
+    'vname' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE',
+),
+
 ),
 'relationships'=>array (
     'aor_reports_aor_fields' =>

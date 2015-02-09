@@ -100,6 +100,21 @@
                 </td>
             </tr>
             <tr>
+                <td scope='row'>
+                    {$MOD.LBL_PARAMETERS}
+                </td>
+                <td>
+                    <div id="parameterOptions{$id}">
+                        {foreach from=$parameters item=condition}
+                            <input type='hidden' name='parameter_id[]' value='{$condition.id}'>
+                            <input type='hidden' name='parameter_operator[]' value='{$condition.operator}'>
+                            <input type='hidden' name='parameter_type[]' value='{$condition.value_type}'>
+                            {$condition.module_display} {$condition.field_display} {$condition.operator_display} {$condition.field}
+                        {/foreach}
+                    </div>
+                </td>
+            </tr>
+            <tr>
                 <td align='right'>
                     <input type='submit' class='button' value='{$MOD.LBL_DASHLET_SAVE}'>
                 </td>
@@ -124,8 +139,29 @@
                 }
         );
     }
+    function loadParameters(reportId){
+        $.getJSON('index.php',
+                {module : 'AOR_Reports',
+                    record : reportId,
+                    to_pdf : 1,
+                    action : 'getParametersForReport'}).done(
+                function(data){
+                    var paramContainer = $('#parameterOptions{/literal}{$id}{literal}');
+                    var html = '';
+                    for(var x = 0; x < data.length; x++) {
+                        var cond = data[x];
+                        html += "<input type='hidden' name='parameter_id[]' value='"+cond.id+"'>";
+                        html += "<input type='hidden' name='parameter_operator[]' value='"+cond.operator+"'>";
+                        html += "<input type='hidden' name='parameter_type[]' value='"+cond.value_type+"'>";
+                        html += cond.module_display+" "+cond.field_display+" "+cond.operator_display+" "+cond.field;
+                    }
+                    paramContainer.html(html);
+                }
+        );
+    }
     function aor_report_set_return(ret){
         loadCharts(ret.name_to_value_array.aor_report_id);
+        loadParameters(ret.name_to_value_array.aor_report_id);
         set_return(ret);
     }
     {/literal}
