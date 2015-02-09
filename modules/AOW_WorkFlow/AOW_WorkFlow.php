@@ -613,6 +613,11 @@ class AOW_WorkFlow extends Basic {
                     return false;
                 }
 
+                $custom_action_name = "custom" . $action_name;
+                if(class_exists($custom_action_name)){
+                    $action_name = $custom_action_name;
+                }
+
                 $flow_action = new $action_name($action->id);
                 if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)){
                     $pass = false;
