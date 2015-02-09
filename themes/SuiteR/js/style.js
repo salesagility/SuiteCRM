@@ -286,6 +286,12 @@ var checkContents = setInterval(function(){
         $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $(element).footable();
         $(".footable").find("th:first").attr("data-toggle","true");
+
+        // Button to toggle list view search
+        $('.showsearch').click(function() {
+            $('.search_form').toggle();
+        });
+
         clearInterval(checkContents);
     }
 },1);
@@ -298,11 +304,6 @@ $(window).resize(function () {
     if ($(window).width() > 980 && $('.sidebar').is(':visible')) {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
     }
-});
-
-// Button to toggle list view search
-$('.showsearch').click(function() {
-    $('.search_form').toggle();
 });
 
 // jQuery to toggle sidebar
