@@ -11,8 +11,8 @@ $layout_defs['AOR_Reports'] = array(
             'subpanel_name' => 'default',
             'sort_order' => 'asc',
             'sort_by' => 'id',
-            'title_key' => 'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE',
-            'get_subpanel_data' => 'aor_scheduled_reports_aor_reports',
+            'title_key' => 'AOR_Scheduled_Reports',
+            'get_subpanel_data' => 'aor_scheduled_reports',
             'top_buttons' =>
                 array(
                     0 =>
