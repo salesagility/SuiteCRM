@@ -39,8 +39,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-$module_name = 'AOR_Scheduled_Reports';
 $subpanel_layout = array(
 	'top_buttons' => array(
 		array('widget_class' => 'SubPanelTopCreateButton'),
@@ -53,15 +51,15 @@ $subpanel_layout = array(
 		'name'=>array(
 	 		'vname' => 'LBL_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
-	 		'width' => '45%',
+	 		'width' => '25%',
 		),
-		'industry'=>array(
-	 		'vname' => 'LBL_INDUSTRY',
-	 		'width' => '15%',
+		'status'=>array(
+	 		'vname' => 'LBL_STATUS',
+	 		'width' => '25%',
 		),
-		'phone_office'=>array(
-	 		'vname' => 'LBL_PHONE_OFFICE',
-	 		'width' => '15%',
+		'last_run'=>array(
+	 		'vname' => 'LBL_LAST_RUN',
+	 		'width' => '25%',
 		),
 		'assigned_user_name' => array (
 			'name' => 'assigned_user_name',
@@ -73,13 +71,13 @@ $subpanel_layout = array(
 		'edit_button'=>array(
              'vname' => 'LBL_EDIT_BUTTON',
 			'widget_class' => 'SubPanelEditButton',
-		 	'module' => $module_name,
+		 	'module' => 'AOR_Scheduled_Reports',
 	 		'width' => '4%',
 		),
 		'remove_button'=>array(
             'vname' => 'LBL_REMOVE',
 			'widget_class' => 'SubPanelRemoveButton',
-		 	'module' => $module_name,
+		 	'module' => 'AOR_Scheduled_Reports',
 			'width' => '5%',
 		),
 	),

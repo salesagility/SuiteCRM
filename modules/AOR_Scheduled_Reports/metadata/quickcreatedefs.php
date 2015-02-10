@@ -56,13 +56,13 @@ array (
               'required' => true,
             ),
           ),
+          1 => 'status',
         ),
         1 => 
         array (
           0 => 
           array (
-            'name' => 'aor_reports_name',
-            'label' => 'LBL_AOR_REPORTS_FROM_AOR_REPORTS_TITLE',
+            'name' => 'aor_report_name',
           ),
         ),
         2 => 

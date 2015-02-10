@@ -177,15 +177,6 @@ $dictionary['AOR_Scheduled_Reports'] = array(
 
 ),
 	'relationships'=>array (
-        "aor_scheduled_reports_aor_reports" => array (
-            'lhs_module'=> 'AOR_Reports',
-            'lhs_table'=> 'aor_reports',
-            'lhs_key' => 'id',
-            'rhs_module'=> 'AOR_Scheduled_Reports',
-            'rhs_table'=> 'aor_scheduled_reports',
-            'rhs_key' => 'aor_report_id',
-            'relationship_type'=>'one-to-many',
-        ),
         'aor_scheduled_reports_email_addresses' =>
             array (
                 'lhs_module' => 'AOR_Scheduled_Reports',
