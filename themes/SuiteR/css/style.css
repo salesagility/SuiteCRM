@@ -3437,7 +3437,7 @@ table legend {
 
 #footernav{
     margin: 0 auto; padding: 0;
-    width:200px;
+    width:165px;
 }
 
 @media screen and (min-width:479px) {
