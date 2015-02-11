@@ -45,7 +45,6 @@
     <div id="footernav" class="btn-toolbar" role="toolbar" aria-label="...">
         <div class="btn-group dropup" role="group" aria-label="...">
             <a href="index.php" class="btn btn-success"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
-            <a href="javascript:void(0)" class="btn btn-success" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
             <div class="btn-group" role="group">
                 <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus"></span>
