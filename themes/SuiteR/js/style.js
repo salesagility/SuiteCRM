@@ -254,12 +254,6 @@ $('#backtotop').click(function(event) {
     $('html, body').animate({scrollTop:0}, 500); // Scroll speed to the top
 });
 
-// Refresh function for refresh button on sidebar
-function refresh(reload)
-{
-    window.location.reload(true);
-}
-
 // Tabs jQuery for Admin panel
 $(function() {
     var tabs = $( "#tabs" ).tabs();
