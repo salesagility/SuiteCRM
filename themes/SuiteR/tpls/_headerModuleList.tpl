@@ -47,8 +47,21 @@
             </button>
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
+                        <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
+                        <li role="presentation"><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
+                        <li role="presentation"><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
+                        <li role="presentation"><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
+                        <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
+                        <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                    </ul>
+                </div>
                 <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a href="javascript:void(0)" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
                 <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
             </div>
             <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
@@ -273,12 +286,6 @@
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <div id="userlinks">
-                <a href="index.php" title="Home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
-                <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}" title="{$CURRENT_USER}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a href="javascript:void(0)" onclick="refresh();" title="Refresh"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
-                <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' title="{$LOGOUT_LABEL}"><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
-            </div>
             <div id="sitemapLink">
                 <span id="sitemapLinkSpan">
                     <a href="#"> Create New Record<span id="quickcreateplus" class="glyphicon glyphicon-plus"></span></a>
