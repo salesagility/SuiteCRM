@@ -4422,5 +4422,25 @@ div.action_buttons form {
 h3 span{
     font-weight:bold;
 }
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 10px 5px 10px 5px;
+    margin: 0px 0px 0px;
+    font-size: 14px;
+    text-align: left;
+    list-style: outside none none;
+    background-color: #FFF;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
