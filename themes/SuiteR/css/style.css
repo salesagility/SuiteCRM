@@ -3637,6 +3637,7 @@ body {
 @media (min-width: 480px) and (max-width: 979px) {
     #userlinks_head {
         display:inline;
+        margin:2px 0 0 0;
     }
     #userlinks_head a {
         color: #ffffff;
