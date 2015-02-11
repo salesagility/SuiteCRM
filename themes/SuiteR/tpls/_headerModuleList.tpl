@@ -69,8 +69,10 @@
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
                         <li class="topnav">
-                        <span class="currentTabLeft">&nbsp;</span>
-                        <span class="currentTab" style="color:#ffffff !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                        {if $name != 'Home'}
+                            <span class="currentTabLeft">&nbsp;</span>
+                            <span class="currentTab" style="color:#ffffff !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                        {/if}
                             <ul class="dropdown-menu" role="menu">
                                 {if count($shortcutTopMenu.$name) > 0}
                                     <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
@@ -126,8 +128,10 @@
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                 {if $name == $MODULE_TAB}
                 <li class="topnav">
-                    <span class="currentTabLeft">&nbsp;</span>
-                    {if $name !='Home'}<span class="dropdown-toggle headerlinks currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
+                    {if $name !='Home'}
+                        <span class="currentTabLeft">&nbsp;</span>
+                        <span class="dropdown-toggle headerlinks currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                    {/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
@@ -160,8 +164,10 @@
                 </li>
             {else}
                 <li class="topnav">
-                    <span class="notCurrentTabLeft">&nbsp;</span>
-                    {if $name != 'Home'}<span class="dropdown-toggle headerlinks notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
+                    {if $name != 'Home'}
+                        <span class="notCurrentTabLeft">&nbsp;</span>
+                        <span class="dropdown-toggle headerlinks notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>
+                    {/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
