@@ -3058,6 +3058,7 @@ fieldset[disabled] .btn-primary.active{
     background:#f7f7f7;
     padding:10px;
     min-width: 185px;
+    margin: 0 0 0;
 }
 
 .dropdown-menu em {
@@ -3116,15 +3117,6 @@ fieldset[disabled] .btn-primary.active{
 ul.topnav li a {
     text-decoration:none;
     font-size:1.4em;
-}
-
-ul.topnav li a:hover {
-    color:#ffffff;
-    background:#5CB85C;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
 }
 
 .hr {
@@ -4424,24 +4416,5 @@ h3 span{
     font-weight:bold;
 }
 
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0px;
-    z-index: 1000;
-    display: none;
-    float: left;
-    min-width: 160px;
-    padding: 10px 5px 10px 5px;
-    margin: 0px 0px 0px;
-    font-size: 14px;
-    text-align: left;
-    list-style: outside none none;
-    background-color: #FFF;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.176);
-}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
