@@ -3119,15 +3119,6 @@ ul.topnav li a {
     font-size:1.4em;
 }
 
-ul.topnav li a:hover {
-    color:#ffffff;
-    background:#5CB85C;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-}
-
 .hr {
     height:1px;
     color:#ffffff;
