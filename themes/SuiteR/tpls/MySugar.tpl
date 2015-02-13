@@ -119,7 +119,7 @@
                         <tr>
 
                             <td align='right'>
-                                {if !$lock_homepage}<input id="add_dashlets" class="button" type="button"
+                                {if !$lock_homepage}<input id="add_dashlets" type="button"
                                                            value="{$lblAddDashlets}"
                                                            onclick="return SUGAR.mySugar.showDashletsDialog();"/>{/if}
                             </td>
@@ -176,7 +176,7 @@
             <script type="text/javascript" src="custom/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
             <script type="text/javascript" src="custom/include/MySugar/javascript/retrievePage.js"></script>
 
-            <link rel="stylesheet" type="text/css" href="custom/include/MySugar/dashboardstyle.css">
+            <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/dashboardstyle.css">
 
             <script type="text/javascript">
 
