@@ -28,6 +28,7 @@ class AOS_Products_Quotes_sugar extends Basic {
 	var $module_dir = 'AOS_Products_Quotes';
 	var $object_name = 'AOS_Products_Quotes';
 	var $table_name = 'aos_products_quotes';
+	var $tracker_visibility = false;
 	var $importable = true;
 
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
