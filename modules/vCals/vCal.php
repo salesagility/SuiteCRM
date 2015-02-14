@@ -54,6 +54,7 @@ class vCal extends SugarBean {
 	var $table_name = "vcals";
 
 	var $object_name = "vCal";
+    var $tracker_visibility = false;
 
 	var $new_schema = true;
 
