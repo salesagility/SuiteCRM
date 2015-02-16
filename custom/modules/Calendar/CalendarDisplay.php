@@ -447,7 +447,7 @@ class CalendarDisplay {
 		if($controls){
 			$current_date = str_pad($this->cal->date_time->month,2,'0',STR_PAD_LEFT)."/".str_pad($this->cal->date_time->day,2,'0',STR_PAD_LEFT)."/".$this->cal->date_time->year;
 
-			$tabs = array('day', 'week', 'month', 'year', 'shared','mobile');
+			$tabs = array('day', 'week', 'month', 'year', 'shared');
 			$tabs_params = array();
 			foreach($tabs as $tab){
 				$tabs_params[$tab]['title'] = $cal_strings["LBL_".strtoupper($tab)];
