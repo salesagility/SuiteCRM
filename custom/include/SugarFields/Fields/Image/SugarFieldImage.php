@@ -49,7 +49,6 @@ class SugarFieldImage extends SugarFieldFile
 
         require_once('include/upload_file.php');
         $upload_file = new UploadFile($prefix . $field . '_file');
-
         //remove file
         if (isset($_REQUEST['remove_file_' . $field]) && $params['remove_file_' . $field] == 1) {
             $upload_file->unlink_file($bean->$field);
@@ -61,6 +60,12 @@ class SugarFieldImage extends SugarFieldFile
             if($this->verify_image($upload_file)) {
                 $bean->$field = $upload_file->get_stored_file_name();
                 $move = true;
+            }else{
+                //not valid image.
+                $GLOBALS['log']->fatal("Image Field : Not a Valid Image.");
+                $temp = $vardef['vname'];
+                $temp = translate($temp, $bean->module_name);
+                SugarApplication::appendErrorMessage($temp . " Field :  Not a valid image format.");
             }
 
         }
