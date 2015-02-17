@@ -3153,28 +3153,29 @@ li#usermenu:hover {
 
 @media (max-height:600px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 500px;
+        max-height: 500px !important;
         overflow: auto;
     }
 }
 
 @media (max-height:700px) {
     .moremenu ul, .dropdown-menu  {
-        max-height: 550px;
+        max-height: 550px !important;
         overflow: auto;
     }
 }
 
 @media (max-height:800px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 600px;
+        max-height: 600px !important;
+        max-height: 600px !important;
         overflow: auto;
     }
 }
 
 @media (max-height:900px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 700px;
+        max-height: 700px !important;
         overflow: auto;
     }
 }
@@ -3236,7 +3237,7 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     transition: all 0.3s ease-out;
     margin:2px;
     color: #565656;
-    background-color: #cccccc;
+    background-color: #565656;
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
@@ -4415,6 +4416,13 @@ div.action_buttons form {
 h3 span{
     font-weight:bold;
 }
+.yui-layout{
+    width:85%;
+    overflow:hidden;
+}
 
+.email, #mblayout{
+    overflow:hidden;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
