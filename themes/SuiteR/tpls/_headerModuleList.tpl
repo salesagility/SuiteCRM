@@ -246,6 +246,7 @@
                     <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                 </ul>
             </div>
+
             <div id="search" class="dropdown nav navbar-nav navbar-right">
                 <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
                     <span class="glyphicon glyphicon-search"> </span>
@@ -277,6 +278,20 @@
                     </span>
                 </div>
             </form>
+            <div class="dropdown nav navbar-nav navbar-right">
+                <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
+                    <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
+                    <li role="presentation"><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
+                    <li role="presentation"><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
+                    <li role="presentation"><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
+                    <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
+                    <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -286,16 +301,16 @@
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <div id="sitemapLink">
-                <span id="sitemapLinkSpan">
-                    <a href="#"> Create New Record<span id="quickcreateplus" class="glyphicon glyphicon-plus"></span></a>
-                </span>
-            </div>
-            <hr class="hr">
             <div id="actionMenuSidebar">
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
                         <ul class="nav nav-pills nav-stacked">
+                            {if $name == 'Home' and !$lock_homepage}
+                                <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
+                                <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="addDashboardForm();return false">{$APP.LBL_ADD_TAB}</a></li>
+                                <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
+                                <br>
+                            {/if}
                             {if count($shortcutTopMenu.$name) > 0}
                                 <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
                                 {foreach from=$shortcutTopMenu.$name item=item}
@@ -331,7 +346,5 @@
         </div>
     </div>
 </div>
-<!-- Sitemap for CRM -->
-<span id='sm_holder'></span>
     <!--End Responsive Sidebar -->
     <!--Start Page content -->
