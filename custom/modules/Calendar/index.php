@@ -93,11 +93,19 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
 }
 
 $display = new CalendarDisplay($cal);
-$display->display_title();
-if($cal->view == "shared")
-	$display->display_shared_html();
-$display->display_calendar_header();
-$display->display();
-$display->display_calendar_footer();	
+if($cal->view == "mobile"){
+	$display->display_title();
+	$display->display();
+}else{
+	$display->display_title();
+	if($cal->view == "shared")
+		$display->display_shared_html();
+	$display->display_calendar_header();
+	$display->display();
+	$display->display_calendar_footer();
+}
+
+
+
 
 ?>

@@ -333,6 +333,10 @@ function loadSidebar() {
     }
 
 
+
+
+}
+$( document ).ready(function() {
     $(window).resize(function () {
 
         $.ajax({
@@ -341,8 +345,7 @@ function loadSidebar() {
             data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
         });
     });
-
-}
+});
 
 
 

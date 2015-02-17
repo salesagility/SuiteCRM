@@ -183,13 +183,13 @@ class CalendarGrid {
 
 	public function display_mobile(){
 
+		$today = date("Y-m-d 00:00:00");
 
 		$str = "";
 
 		foreach($this->cal->items as $cal_item){
 
-			$day = date("Dd", $cal_item['ts_start']);
-
+			$day = date("Y-m-d H:i:s", $cal_item['ts_start']);
 			$agenda_array[$day][] = $cal_item;
 
 		}
@@ -198,29 +198,41 @@ class CalendarGrid {
 
 		foreach($days as $day){
 
+			$times = "";
 
-			$str .= "<div style='background-color:#A4B1B6; font-weight:bold; text-align:right; font-size:14px; padding:5px; float:left; width:100%; height:40px; line-height: 30px; color:#f7f7f7;'>";
+			foreach ($agenda_array[$day] as $key => $row) {
+				$times[$key] = $row['timestamp'];
+			}
 
-			$agenda_day_date = date("l, M, Y",  $agenda_array[$day][0]['ts_start']);
+			array_multisort($times, SORT_ASC, $agenda_array[$day]);
 
-			$str .= $agenda_day_date;
 
-			$str .= "</div>";
+			if($day == $today){
+				$str .= "<div class='mobile_calendar_title today'>Today: " . date("l, M, Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+			}else{
+				$str .= "<div class='mobile_calendar_title'>" . date("l, M, Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+			}
+
 
 
 			$i = 0;
+
+
 
 			while($i < count($agenda_array[$day])){
 
 				$day_item = $agenda_array[$day][$i];
 
-				$str .= "<div style='height:120px; background-color: #FFFFFF; float:right; width:100%; line-height:40px;  border-bottom: 1px solid #A4B1B6'>";
-				$str .= "<div style='display:block; width:33%; background-color: #F1F1F1; float:left; height:100%; font-size:20px; font-weight:bold; line-height: 120px; text-align: center;'>" . $day_item['time_start'] . "</div>";
-				$str .= "<div style='display:block; padding-left:16px; width:57%; float:left; text-align: left;'>";
-				$str .= "<div style='font-size:16px; font-weight:bold; line-height: 40px;'><p>" . ucfirst($day_item['type']) . " : " . $day_item['name'] . "</p></div>";
-				$str .= "<div style='height:60%; font-size:14px; line-height: 60px;'><p>" . $day_item['description'] . "</p></div>";
+				$str .= "<div class='mobile_calendar_item'>";
+				$str .= "<div class='mobile_calendar_item_date'>" . $day_item['time_start'] . "</div>";
+				$str .= "<div class='mobile_calendar_item_info'>";
+				$str .= "<div class='font-size:16px;'>" . ucfirst($day_item['type']) . " : " . $day_item['name'] . "</div>";
+				$str .= "<div class='mobile_calendar_item_info_desc'>" . $day_item['description'] . "</div>";
 				$str .= "</div>";
-				$str .= "<div style='display:block; float:right; width:10%; height:100%; font-size:14px; line-height: 120px; text-align: center;'><a href=''>Edit</a></div>";
+
+				$str .= "<div class='mobile_calendar_item_edit'>";
+				$str .= "<a href='#' module_name ='" . ucfirst($day_item['type']) ."s' record = '" . $day_item['record'] ."' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),true);>Edit</a>";
+				$str .= "</div>";
 				$str .= "</div>";
 
 				$i++;
