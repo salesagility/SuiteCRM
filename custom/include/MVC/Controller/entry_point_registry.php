@@ -9,4 +9,6 @@ $entry_point_registry['add_dash_page'] = array('file' => 'custom/modules/Home/Ad
 $entry_point_registry['retrieve_dash_page'] = array('file' => 'custom/include/MySugar/retrieve_dash_page.php' , 'auth' => '1');
 $entry_point_registry['remove_dash_page'] = array('file' => 'custom/modules/Home/RemoveDashboardPages.php' , 'auth' => '1');
 $entry_point_registry['rename_dash_page'] = array('file' => 'custom/modules/Home/RenameDashboardPages.php' , 'auth' => '1');
+$entry_point_registry['image_download'] = array('file' => 'image_download.php' , 'auth' => '1');
+$entry_point_registry['deleteAttachment'] = array('file' => 'custom/include/SugarFields/Fields/Image/deleteAttachment.php' , 'auth' => '1');
 ?>
