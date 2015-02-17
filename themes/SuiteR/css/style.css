@@ -2666,13 +2666,6 @@ button #powered_by {
     margin-top:-50px;
 }
 
-button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
-{
-    border: none;
-    /*background-color: #777777;*/
-    color: #000000;
-}
-
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
 {
     border: none;
@@ -3257,8 +3250,8 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
     margin:2px;
-    color: #565656;
-    background-color: #565656;
+    color: #ffffff;
+    background-color: #777777;
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
