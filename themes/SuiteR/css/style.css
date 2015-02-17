@@ -3668,6 +3668,10 @@ span#quickcreateplus{
     margin: 0 0 15px 12px;
     font-size:1.1em;
 }
+
+#quickcreatetop button{
+    margin:10px 0 0 0;
+}
 /* Main content */
 
 .main {
