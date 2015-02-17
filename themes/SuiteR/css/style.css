@@ -4498,5 +4498,10 @@ table.mceLayout, textarea.tinyMCE {
 #toolbox{
     height:100% !important;
 }
+
+#panels{
+    height:auto !important;
+    overflow:auto;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
