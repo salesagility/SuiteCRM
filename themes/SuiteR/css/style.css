@@ -3239,6 +3239,11 @@ li#usermenu:hover {
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
+    font-size:1em !important;
+}
+
+.yui-layout-hd .button, .yui-layout-hd input[type=submit], .yui-layout-hd input[type=button]{
+    font-size:1.5em !important;
 }
 
 button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
