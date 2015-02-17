@@ -43,6 +43,7 @@ class SugarFieldImage extends SugarFieldFile
 
     public function save(&$bean, $params, $field, $vardef, $prefix = '')
     {
+
         $fakeDisplayParams = array();
         $this->fillInOptions($vardef, $fakeDisplayParams);
 
@@ -57,36 +58,12 @@ class SugarFieldImage extends SugarFieldFile
 
         $move = false;
         if (isset($_FILES[$prefix . $field . '_file']) && $upload_file->confirm_upload()) {
-            $bean->$field = $upload_file->get_stored_file_name();
-            $bean->file_mime_type = $upload_file->mime_type;
-            $bean->file_ext = $upload_file->file_ext;
-            $move = true;
-        }
-
-        if (!empty($params['isDuplicate']) && $params['isDuplicate'] == 'true') {
-            // This way of detecting duplicates is used in Notes
-            $old_id = $params['relate_id'];
-        }
-        if (!empty($params['duplicateSave']) && !empty($params['duplicateId'])) {
-            // It's a duplicate
-            $old_id = $params['duplicateId'];
-        }
-
-        // Backwards compatibility for fields that still use customCode to handle the file uploads
-        if (!$move && empty($old_id) && isset($_FILES['uploadfile'])) {
-            $upload_file = new UploadFile('uploadfile');
-            if ($upload_file->confirm_upload()) {
+            if($this->verify_image($upload_file)) {
                 $bean->$field = $upload_file->get_stored_file_name();
-                $bean->file_mime_type = $upload_file->mime_type;
-                $bean->file_ext = $upload_file->file_ext;
                 $move = true;
-
             }
-        } else if (!$move && !empty($old_id) && isset($_REQUEST['uploadfile']) && !isset($_REQUEST[$prefix . $field . '_file'])) {
-            // I think we are duplicating a backwards compatibility module.
-            $upload_file = new UploadFile('uploadfile');
-        }
 
+        }
 
         if (empty($bean->id)) {
             $bean->id = create_guid();
@@ -127,20 +104,18 @@ class SugarFieldImage extends SugarFieldFile
             }
         }
 
-        if ($vardef['allowEapm'] == true && empty($bean->$field)) {
-            $GLOBALS['log']->info("The $field is empty, clearing out the lot");
-            // Looks like we are emptying this out
-            $clearFields = array('docId', 'docType', 'docUrl', 'docDirectUrl');
-            foreach ($clearFields as $clearMe) {
-                if (!isset($vardef[$clearMe])) {
-                    continue;
-                }
-                $clearField = $vardef[$clearMe];
-                $bean->$clearField = '';
-            }
-        }
     }
 
+    public function verify_image($upload_file){
+        global $sugar_config;
+
+        $img_size = getimagesize($upload_file->temp_file_location);
+        $filetype = $img_size['mime'];
+        $ext = end(explode(".", $path));
+        if( in_array($filetype, array_values($sugar_config['image_ext'])) ) {
+            return true;
+        }
+}
     private function fillInOptions(&$vardef,&$displayParams) {
         if ( isset($vardef['allowEapm']) && $vardef['allowEapm'] == true ) {
             if ( empty($vardef['docType']) ) {
@@ -171,10 +146,6 @@ class SugarFieldImage extends SugarFieldFile
                 $vardef['fileId'] = 'id';
             }
         }
-    }
-
-    public function deleteAttachment(){
-        $var = "test";
     }
 }
 
