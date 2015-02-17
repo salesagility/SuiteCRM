@@ -8,7 +8,7 @@
 
     $field = $_REQUEST['field'];
     $removeFile = "upload://{$_REQUEST['image_c_record_id']}_" . $field;
-    $bean = BeanFactory::getBean("Contacts", $_REQUEST[$field . "_record_id"]);
+    $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST[$field . "_record_id"]);
 
 
 if(file_exists($removeFile)) {
