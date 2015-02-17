@@ -278,7 +278,7 @@
                     </span>
                 </div>
             </form>
-            <div class="dropdown nav navbar-nav navbar-right">
+            <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
                 <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
