@@ -2959,6 +2959,22 @@ input[type=text].cstm_code {
 /* Start SuiteCRM Responsive/Bootstrap additional CSS */
 .headerlinks a:link, .headerlinks a:visited {
     color:#ffffff;
+    padding:18px 5px 18px 0;
+    width:100%;
+}
+
+@media (max-width:480px){
+    .collapsing, .in {
+        background-color: #f7f7f7;
+
+    }
+    .collapsing ul li a, .in ul li a {
+        color: #555!important;
+    }
+    .collapsing ul li a:hover, .in ul li a:hover {
+        color: #f1f1f1!important;
+    }
+
 }
 
 .headerlinks a:hover {
@@ -3106,7 +3122,7 @@ fieldset[disabled] .btn-primary.active{
 }
 
 .topnav{
-    padding:15px 4px 16px 0;
+    padding:15px 0 15px 0;
     font-size:1.1em;
 }
 
@@ -3900,7 +3916,7 @@ li.moremenu {
         border:none;
     }
     /* Responsive dashlet styles */
-    .dashletContainer {
+    .dashletcontainer {
         float:left;
         max-width:95%;
     }
@@ -4457,7 +4473,25 @@ table.mceLayout, textarea.tinyMCE {
     }
 }
 
+#layoutEditor .le_row {
+    margin: 2px 3px;
+    height:25px;
+    clear: both;
+    padding:0 10px 5px 10px !important;
+}
 
+#toolbox .le_panel, #toolbox .le_row, .le_field {
+    width: 150px;
+    float: left;
+    border: 1px solid #808080;
+    background: none repeat scroll 0% 0% #EEE;
+    padding:0 !important;
+    margin: 2px 3px;
+    overflow: hidden;
+}
 
+#toolbox{
+    height:100% !important;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
