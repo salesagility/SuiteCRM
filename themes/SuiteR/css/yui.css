@@ -984,26 +984,12 @@ span.yui-carousel-first-button-disabled {
 
 .yui-module {
     border : 1px solid #C0C0C0;
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
 }
 
-.yui-module .hd {
-
-    -webkit-border-top-left-radius: 5px;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
 
 .yui-module .hd, .yui-panel .hd {
     border-bottom: solid 1px #C0C0C0;
+    padding:10px 0 10px 0;
 }
 
 .yui-module .bd, .yui-panel .bd, .yui-panel .ft {
@@ -1020,8 +1006,8 @@ span.yui-carousel-first-button-disabled {
     line-height: 2;
     line-height: 1.8;
     color: #ffffff;
-    background-color:#777777;
-    background: #777777 none repeat scroll 0 0;
+    background-color:#3C8DBC;
+    background: #3C8DBC none repeat scroll 0 0;
 }
 
 .yui-panel .bd {
@@ -6129,17 +6115,13 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 .yui-layout-unit-right.yui-resize .yui-layout-wrap .yui-layout-hd {
 
     padding:10px 0 10px 0;
-    -webkit-border-top-right-radius: 5px;
-    -moz-border-radius-topright: 5px;
-    border-top-right-radius: 5px;
+
 }
 
 .yui-layout-unit-left.yui-resize .yui-layout-wrap .yui-layout-hd {
 
     padding:10px 0 10px 0;
-    -webkit-border-top-left-radius: 5px;
-    -moz-border-radius-topleft: 5px;
-    border-top-left-radius: 5px;
+
 }
 
 .yui-layout .yui-layout-unit div.yui-layout-hd .collapse {
