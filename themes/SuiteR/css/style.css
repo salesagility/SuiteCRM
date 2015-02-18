@@ -4479,7 +4479,7 @@ table.mceLayout, textarea.tinyMCE {
     margin: 2px 3px;
     height:25px;
     clear: both;
-    padding:0 10px 5px 10px !important;
+    padding:0 10px 5px 20px !important;
 }
 
 #toolbox .le_panel, #toolbox .le_row, .le_field {
