@@ -104,7 +104,6 @@
 	</div>
 {/if}
 {$multiSelectData}
-<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
 {if $hideTable == false}
 	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
 	<thead>
