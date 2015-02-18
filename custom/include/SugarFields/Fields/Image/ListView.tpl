@@ -39,5 +39,5 @@
 
 *}
 
-<img src="index.php?entryPoint=image_download&id={sugar_fetch object=$parentFieldArray key='ID'}_{$col|lower}&type={sugar_fetch object=$vardef key="custom_module"}" style="max-width: 200px;" height="50">
+<img id="{$col|lower}" src="index.php?entryPoint=image_download&id={sugar_fetch object=$parentFieldArray key='ID'}_{$col|lower}&type={sugar_fetch object=$vardef key="custom_module"}" style="max-width: 200px;" height="50">
 
