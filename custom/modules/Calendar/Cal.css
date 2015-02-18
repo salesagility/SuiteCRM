@@ -235,15 +235,15 @@
 }
 
 .mobile_calendar_item_info{
-	display:block; padding-left:16px; padding-top:5px; width:57%; float:left; font-size:16px; text-align: left;
+	display:block; padding-left:16px; padding-top:5px; width:52%; float:left; font-size:16px; text-align: left;
 }
 
 .mobile_calendar_item_info_desc{
-	height:60%; font-size:14px; color:#777777;
+	height:52%; font-size:14px; color:#777777;
 }
 
 .mobile_calendar_item_edit{
-	display:block; float:right; width:10%; height:100%; font-size:14px; line-height: 90px; text-align: center;
+	display:block; float:right; width:15%; height:100%; font-size:14px; line-height: 90px; text-align: center;
 }
 
 .today{

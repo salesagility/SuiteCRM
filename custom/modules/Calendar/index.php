@@ -73,7 +73,7 @@ if($_SESSION['screen_width']  < 500 && isset($_SESSION['screen_width'])){
 $cal = new Calendar($_REQUEST['view']);
 
 if(in_array($cal->view,array('day','week','month',"mobile"))){
-	$cal->add_activities($GLOBALS['current_user']);	
+	$cal->add_activities($GLOBALS['current_user']);
 }else if($cal->view == 'shared'){
 	$cal->init_shared();	
 	global $shared_user;				
