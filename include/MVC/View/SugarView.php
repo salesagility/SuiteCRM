@@ -1302,13 +1302,13 @@ EOHTML;
                $theTitle .= "<h2> $paramString </h2>\n";
            }
 
-
         // bug 56131 - restore conditional so that link doesn't appear where it shouldn't
-        if($show_help) {
+        if($show_help || $this->type == 'list') {
             $theTitle .= "<span class='utils'>";
             $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
-            $theTitle .= <<<EOHTML
+            if($this->type == 'list') $theTitle .= '<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>';$url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            if($show_help) {
+                $theTitle .= <<<EOHTML
 &nbsp;
 <a id="create_image" href="{$url}" class="utilsLink">
 <img src='{$createImageURL}' alt='{$GLOBALS['app_strings']['LNK_CREATE']}'></a>
@@ -1316,6 +1316,7 @@ EOHTML;
 {$GLOBALS['app_strings']['LNK_CREATE']}
 </a>
 EOHTML;
+            }
             $theTitle .= "</span>";
         }
 
