@@ -227,25 +227,61 @@
 
 
 .mobile_calendar_item{
-	height:90px; background-color: #FFFFFF; float:right; width:100%; line-height:40px;  border-bottom: 1px solid #A4B1B6;
+	height:140px; background-color: #F1F1F1; float:right; width:100%; line-height:40px;  border-bottom: 1px solid #A4B1B6;
 }
 
-.mobile_calendar_item_date{
-	display:block; width:33%; background-color: #F1F1F1; color:#A4B1B6; float:left; height:100%; font-size:18px; font-weight:bold; line-height: 90px; text-align: center;
+.mobile_calendar_item p{
+	padding: 0;
+	margin: 0;
+	height: 16px;
+	font-size:14px;
 }
 
-.mobile_calendar_item_info{
-	display:block; padding-left:16px; padding-top:5px; width:52%; float:left; font-size:16px; text-align: left;
+.mobile_calendar_item_left{
+	display:block; width:33%; background-color: #777777;  color:#FFF; float:left; height:100%;font-weight:bold; text-align: center;
 }
 
-.mobile_calendar_item_info_desc{
-	height:52%; font-size:14px; color:#777777;
+.mobile_calendar_item_left_date{
+	display:block; width:100%; color:#FFF; float:left; height:50%; font-size:16px; font-weight:bold; text-align: center;
+}
+
+.mobile_calendar_item_left_status{
+	 display:block; width:100%; background-color: green; float:left; height:25%; font-size:13px; font-weight:bold; text-align: center; color:#FFF; line-height: 35px;
+ }
+
+.mobile_calendar_item_left_type{
+	display:block; width:100%; float:left; height:25%; font-size:16px; font-weight:bold; text-align: center; line-height: 35px;
+}
+
+.mobile_calendar_item_center{
+	display:block; width:52%;  height:100%; float:left;
+}
+
+.mobile_calendar_item_desc{
+	padding-left:5px !important;
+	padding-right:5px !important;
+	float:left;
+	font-size:12px !important;
+	height:auto !important;
+	width:100%;
+	line-height: 20px;
+}
+
+.mobile_calendar_item_name{
+	padding-left:5px !important;
+	padding-right:5px !important;
+	float:left;
+	font-weight: bold;
+	font-size:16px !important;
+	height:auto !important;
+	width:100%;
+
 }
 
 .mobile_calendar_item_edit{
-	display:block; float:right; width:15%; height:100%; font-size:14px; line-height: 90px; text-align: center;
+	display:block; float:right; width:15%; height:100%; font-size:14px; line-height: 140px; text-align: center;
 }
 
 .today{
-	background-color: #337ab7;
+	background-color: #3C8DBC;
 }
