@@ -298,6 +298,11 @@ $(window).resize(function () {
     if ($(window).width() > 980 && $('.sidebar').is(':visible')) {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
     }
+    if ($('.navbar-nav').width() < 768 && $(window).width() > 980){
+        $('#usermenucollapsed #searchbutton').css({
+            'display': "none"
+        });
+    }
 });
 
 // jQuery to toggle sidebar
