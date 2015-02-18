@@ -183,7 +183,7 @@ class CalendarGrid {
 
 	public function display_mobile(){
 
-		$str = "";
+		$str = "<div class='mobile_calendar_container'>";
 
 		foreach($this->cal->items as $cal_item){
 
@@ -218,6 +218,7 @@ class CalendarGrid {
 
 		}
 
+		$str .= "</div>";
 		return $str;
 
 	}
@@ -225,22 +226,26 @@ class CalendarGrid {
 	function mobile_display_items($day_item){
 
 		$end_time = $this->mobile_get_end_time($day_item);
+		$status_color = $this->mobile_get_status_colour($day_item['status']);
+		$type_color = $this->mobile_get_type_colour($day_item['type']);
 
 		$display = "";
 
 		$display .= "<div class='mobile_calendar_item'>";
 
-		$display .= "<div class='mobile_calendar_item_left'>";
+		$display .= "<div class='mobile_calendar_item_left' >";
 
-			$display .= "<div class='mobile_calendar_item_left_type'>";
+			$display .= "<div class='mobile_calendar_item_left_type' style='color:" . $type_color .";'>";
 			$display .=  ucfirst($day_item['type']);
 			$display .= "</div>";
 
 			$display .= "<div class='mobile_calendar_item_left_date'>";
-			$display .= "<p>" . $day_item['time_start'] . "</p><p>to</p><p>" . $end_time . "</p>";
+			$display .= "<div class='mobile_calendar_item_left_time'>" . $day_item['time_start'] . "</div>";
+//			$display .= "<div class='mobile_calendar_item_left_time'>to</div>";
+			$display .= "<div class='mobile_calendar_item_left_time'>" .  $end_time . "</div>";
 			$display .= "</div>";
 
-			$display .= "<div class='mobile_calendar_item_left_status'>";
+			$display .= "<div class='mobile_calendar_item_left_status' style='background-color:" . $status_color ."';>";
 			$display .= $day_item['status'];
 			$display .= "</div>";
 
@@ -266,10 +271,44 @@ class CalendarGrid {
 	}
 
 
-	function mobile_get_status_colour($day_item){
-		$start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
-		$start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
-		return $start_time->format("h:ia");
+	function mobile_get_type_colour($type){
+		switch ($type) {
+			case "meeting":
+				$colour = "#99E2F2";
+				break;
+			case "call":
+				$colour = "#FFC887";
+				break;
+			case "task":
+				$colour = "#B1F5AE";
+				break;
+			default:
+				$colour = "#777777";
+				break;
+		}
+		return $colour;
+	}
+
+	function mobile_get_status_colour($type){
+		switch ($type) {
+			case "Held":
+			case "Completed":
+			$colour = "green";
+				break;
+			case "Planned":
+			case "Not Started":
+			case "In Progress":
+				$colour = "#1B4B94";
+				break;
+			case "Not Held":
+			case "Deferred":
+				$colour = "red";
+				break;
+			default:
+				$colour = "#777777";
+				break;
+		}
+		return $colour;
 	}
 
 	function mobile_sort_items($agenda_array){
