@@ -183,66 +183,73 @@ class CalendarGrid {
 
 	public function display_mobile(){
 
-		$today = date("Y-m-d 00:00:00");
-
 		$str = "";
 
 		foreach($this->cal->items as $cal_item){
 
-			$day = date("Y-m-d H:i:s", $cal_item['ts_start']);
-			$agenda_array[$day][] = $cal_item;
-
+			if($cal_item['ts_start'] >= $this->today_ts){
+				$agenda_array[$cal_item['ts_start']][] = $cal_item;
+				ksort($agenda_array);
+			}
 		}
 
 		$days = array_keys($agenda_array);
 
 		foreach($days as $day){
 
-			$times = "";
+			$agenda_array[$day] = $this->mobile_sort_items($agenda_array[$day]);
 
-			foreach ($agenda_array[$day] as $key => $row) {
-				$times[$key] = $row['timestamp'];
-			}
-
-			array_multisort($times, SORT_ASC, $agenda_array[$day]);
-
-
-			if($day == $today){
-				$str .= "<div class='mobile_calendar_title today'>Today: " . date("l, M, Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+			if($day == $this->today_ts){
+				$str .= "<div class='mobile_calendar_title today'>Today: " . date("l dS, F Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
 			}else{
-				$str .= "<div class='mobile_calendar_title'>" . date("l, M, Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+				$str .= "<div class='mobile_calendar_title'>" . date("l dS, F Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
 			}
-
-
 
 			$i = 0;
-
-
 
 			while($i < count($agenda_array[$day])){
 
 				$day_item = $agenda_array[$day][$i];
 
-				$str .= "<div class='mobile_calendar_item'>";
-				$str .= "<div class='mobile_calendar_item_date'>" . $day_item['time_start'] . "</div>";
-				$str .= "<div class='mobile_calendar_item_info'>";
-				$str .= "<div class='font-size:16px;'>" . ucfirst($day_item['type']) . " : " . $day_item['name'] . "</div>";
-				$str .= "<div class='mobile_calendar_item_info_desc'>" . $day_item['description'] . "</div>";
-				$str .= "</div>";
-
-				$str .= "<div class='mobile_calendar_item_edit'>";
-				$str .= "<a href='#' module_name ='" . ucfirst($day_item['type']) ."s' record = '" . $day_item['record'] ."' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),true);>Edit</a>";
-				$str .= "</div>";
-				$str .= "</div>";
+				$str .= $this->mobile_display_items($day_item);
 
 				$i++;
 			}
-
 
 		}
 
 		return $str;
 
+	}
+
+	function mobile_display_items($day_item){
+		$display = "";
+
+		$display .= "<div class='mobile_calendar_item'>";
+		$display .= "<div class='mobile_calendar_item_date'>" . $day_item['time_start'] . "</div>";
+		$display .= "<div class='mobile_calendar_item_info'>";
+		$display .= "<div class='font-size:16px;'>" . ucfirst($day_item['type']) . " : " . $day_item['name'] . "</div>";
+		$display .= "<div class='mobile_calendar_item_info_desc'>" . $day_item['description'] . "</div>";
+		$display .= "</div>";
+
+		$display .= "<div class='mobile_calendar_item_edit'>";
+		$display .= "<a class='button' href='#' module_name ='" . ucfirst($day_item['type']) ."s' record = '" . $day_item['record'] ."' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),true);>Edit</a>";
+		$display .= "</div>";
+		$display .= "</div>";
+
+		return $display;
+	}
+
+	function mobile_sort_items($agenda_array){
+		$times = "";
+
+		foreach ($agenda_array as $key => $row) {
+			$times[$key] = $row['timestamp'];
+		}
+
+		array_multisort($times, SORT_ASC, $agenda_array);
+
+		return $agenda_array;
 	}
 
 	/**
