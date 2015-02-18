@@ -94,7 +94,7 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
 
 $display = new CalendarDisplay($cal);
 if($cal->view == "mobile"){
-	$display->display_title();
+//	$display->display_title();
 	$display->display();
 }else{
 	$display->display_title();

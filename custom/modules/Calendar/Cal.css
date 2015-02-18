@@ -212,6 +212,13 @@
 	margin: 4px;
 }
 
+.mobile_calendar_container{
+	height:100%;
+	float:left;
+	width:100%;
+	margin-bottom:45px;
+}
+
 .mobile_calendar_title{
 	background-color:#A4B1B6;
 	font-weight:bold;
@@ -227,34 +234,70 @@
 
 
 .mobile_calendar_item{
-	height:140px; background-color: #F1F1F1; float:right; width:100%; line-height:40px;  border-bottom: 1px solid #A4B1B6;
-}
-
-.mobile_calendar_item p{
-	padding: 0;
-	margin: 0;
-	height: 16px;
-	font-size:14px;
+	height:101px;
+	background-color: #f7f7f7;
+	float:right;
+	width:100%;
+	line-height:40px;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 3px;
 }
 
 .mobile_calendar_item_left{
-	display:block; width:33%; background-color: #777777;  color:#FFF; float:left; height:100%;font-weight:bold; text-align: center;
+	display:block;
+	width:33%;
+	background-color: #777777;
+	color:#FFF;
+	float:left;
+	height:100%;
+	font-weight:bold;
+	text-align: center;
 }
 
 .mobile_calendar_item_left_date{
-	display:block; width:100%; color:#FFF; float:left; height:50%; font-size:16px; font-weight:bold; text-align: center;
+	display:block;
+	width:100%;
+	float:left;
+	height:58%;
+	font-size:16px;
+	font-weight:bold;
+	text-align: center;
+}
+
+.mobile_calendar_item_left_time{
+	height:50%;
+	line-height: 18px;
+	padding-top: 5px;
 }
 
 .mobile_calendar_item_left_status{
-	 display:block; width:100%; background-color: green; float:left; height:25%; font-size:13px; font-weight:bold; text-align: center; color:#FFF; line-height: 35px;
+	display:block;
+	width:100%;
+	background-color:
+	#cccccc; float:left;
+	height:21%;
+	font-size:13px;
+	font-weight:bold;
+	text-align: center;
+	line-height: 24px;
+	opacity: 0.7;
  }
 
 .mobile_calendar_item_left_type{
-	display:block; width:100%; float:left; height:25%; font-size:16px; font-weight:bold; text-align: center; line-height: 35px;
+	display:block;
+	width:100%;
+	float:left;
+	height:22%;
+	font-size:16px;
+	font-weight:bold;
+	text-align: center;
+	line-height: 24px;
 }
 
 .mobile_calendar_item_center{
-	display:block; width:52%;  height:100%; float:left;
+	display:block;
+	width:50%;
+	height:100%; float:left;
 }
 
 .mobile_calendar_item_desc{
@@ -279,7 +322,13 @@
 }
 
 .mobile_calendar_item_edit{
-	display:block; float:right; width:15%; height:100%; font-size:14px; line-height: 140px; text-align: center;
+	display:block;
+	float:right;
+	width:17%;
+	height:100%;
+	font-size:14px;
+	line-height: 120px;
+	text-align: center;
 }
 
 .today{
