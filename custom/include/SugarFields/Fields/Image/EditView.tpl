@@ -86,7 +86,7 @@
 
 {{/if}}
 <span id="{{$idName}}_old" style="display:{if !$showRemove}none;{/if}">
-  <a href="index.php?entryPoint=download&id={$fields.{{$vardef.fileId}}.value}&type={{$vardef.linkModule}}" class="tabDetailViewDFLink">{{sugarvar key='value'}}</a>
+  <a href="index.php?entryPoint=image_download&id={$fields.{{$vardef.fileId}}.value}_{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}&type={{$vardef.linkModule}}&time={$fields.date_modified.value}" class="tabDetailViewDFLink">{{sugarvar key='value'}}</a>
 
     {{if isset($vardef.allowEapm) && $vardef.allowEapm}}
     {if isset($fields.{{$vardef.docType}}) && !empty($fields.{{$vardef.docType}}.value) && $fields.{{$vardef.docType}}.value != 'Sugar' && !empty($fields.{{$vardef.docUrl}}.value) }
