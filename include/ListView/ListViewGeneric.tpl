@@ -124,9 +124,12 @@
 			<td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
+            {assign var='datahide' value="phone"}
 			{foreach from=$displayColumns key=colHeader item=params}
-				{if $colCounter == '0'}<th scope='col' width='{$params.width}%' data-toggle="true">
-				{else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
+                {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
+                {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
+                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
+				{else}<th scope='col' data-hide="{$datahide}">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
