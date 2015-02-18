@@ -223,13 +223,32 @@ class CalendarGrid {
 	}
 
 	function mobile_display_items($day_item){
+
+		$end_time = $this->mobile_get_end_time($day_item);
+
 		$display = "";
 
 		$display .= "<div class='mobile_calendar_item'>";
-		$display .= "<div class='mobile_calendar_item_date'>" . $day_item['time_start'] . "</div>";
-		$display .= "<div class='mobile_calendar_item_info'>";
-		$display .= "<div class='font-size:16px;'>" . ucfirst($day_item['type']) . " : " . $day_item['name'] . "</div>";
-		$display .= "<div class='mobile_calendar_item_info_desc'>" . $day_item['description'] . "</div>";
+
+		$display .= "<div class='mobile_calendar_item_left'>";
+
+			$display .= "<div class='mobile_calendar_item_left_type'>";
+			$display .=  ucfirst($day_item['type']);
+			$display .= "</div>";
+
+			$display .= "<div class='mobile_calendar_item_left_date'>";
+			$display .= "<p>" . $day_item['time_start'] . "</p><p>to</p><p>" . $end_time . "</p>";
+			$display .= "</div>";
+
+			$display .= "<div class='mobile_calendar_item_left_status'>";
+			$display .= $day_item['status'];
+			$display .= "</div>";
+
+		$display .= "</div>";
+
+		$display .= "<div class='mobile_calendar_item_center'>";
+			$display .= "<p class='mobile_calendar_item_name'>" . $day_item['name'] . "</p>";
+			$display .= "<p class='mobile_calendar_item_desc'>" . $day_item['description'] . "</p>";
 		$display .= "</div>";
 
 		$display .= "<div class='mobile_calendar_item_edit'>";
@@ -238,6 +257,19 @@ class CalendarGrid {
 		$display .= "</div>";
 
 		return $display;
+	}
+
+	function mobile_get_end_time($day_item){
+		$start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
+		$start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
+		return $start_time->format("h:ia");
+	}
+
+
+	function mobile_get_status_colour($day_item){
+		$start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
+		$start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
+		return $start_time->format("h:ia");
 	}
 
 	function mobile_sort_items($agenda_array){
