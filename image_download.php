@@ -127,7 +127,19 @@ else {
     }
     
 	if(!file_exists( $local_location ) || strpos($local_location, "..")) {
-		die($app_strings['ERR_INVALID_FILE_REFERENCE']);
+
+        if(isset($image_field)) {
+            header("Content-Type: image/png");
+            header("Content-Disposition: attachment; filename=\"No-Image.png\"");
+            header("X-Content-Type-Options: nosniff");
+            header("Content-Length: " . filesize('custom/include/SugarFields/Fields/Image/no_image.png'));
+            header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', time() + 2592000));
+            set_time_limit(0);
+            readfile('custom/include/SugarFields/Fields/Image/no_image.png');
+            die();
+        }else {
+            die($app_strings['ERR_INVALID_FILE_REFERENCE']);
+        }
 	} else {
 		$doQuery = true;
 
