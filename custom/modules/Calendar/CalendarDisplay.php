@@ -498,7 +498,15 @@ class CalendarDisplay {
 	public function display_title(){
 		global $mod_strings;
 		//Hack to make this 6.5 compatible until this module is converted to MVC
-        echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>"; 
+
+		if($this->cal->view == "mobile"){
+			echo "<div style='width:100%; height:20px;' class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
+			echo "<div style='float:right;' class='moduleTitle'><a class='button' href='' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),false);>Add Item</a></div>";
+		}else{
+			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
+
+		}
+
 	}
 
 	/**
