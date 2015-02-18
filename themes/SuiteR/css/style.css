@@ -2666,13 +2666,6 @@ button #powered_by {
     margin-top:-50px;
 }
 
-button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
-{
-    border: none;
-    /*background-color: #777777;*/
-    color: #000000;
-}
-
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
 {
     border: none;
@@ -2959,6 +2952,22 @@ input[type=text].cstm_code {
 /* Start SuiteCRM Responsive/Bootstrap additional CSS */
 .headerlinks a:link, .headerlinks a:visited {
     color:#ffffff;
+    padding:18px 5px 18px 0;
+    width:100%;
+}
+
+@media (max-width:480px){
+    .collapsing, .in {
+        background-color: #f7f7f7;
+
+    }
+    .collapsing ul li a, .in ul li a {
+        color: #555!important;
+    }
+    .collapsing ul li a:hover, .in ul li a:hover {
+        color: #f1f1f1!important;
+    }
+
 }
 
 .headerlinks a:hover {
@@ -3106,7 +3115,7 @@ fieldset[disabled] .btn-primary.active{
 }
 
 .topnav{
-    padding:15px 4px 16px 0;
+    padding:15px 0 15px 0;
     font-size:1.1em;
 }
 
@@ -3223,6 +3232,11 @@ li#usermenu:hover {
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
+    font-size:1em !important;
+}
+
+.yui-layout-hd .button, .yui-layout-hd input[type=submit], .yui-layout-hd input[type=button]{
+    font-size:1.5em !important;
 }
 
 button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
@@ -3236,8 +3250,8 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
     margin:2px;
-    color: #565656;
-    background-color: #565656;
+    color: #ffffff;
+    background-color: #777777;
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
@@ -3647,6 +3661,10 @@ span#quickcreateplus{
     margin: 0 0 15px 12px;
     font-size:1.1em;
 }
+
+#quickcreatetop button{
+    margin:10px 0 0 0;
+}
 /* Main content */
 
 .main {
@@ -3900,7 +3918,7 @@ li.moremenu {
         border:none;
     }
     /* Responsive dashlet styles */
-    .dashletContainer {
+    .dashletcontainer {
         float:left;
         max-width:95%;
     }
@@ -4425,7 +4443,63 @@ h3 span{
     overflow:hidden;
 }
 
+table.mceLayout, textarea.tinyMCE {
+    width: 100% !important;
+}
 
+/* make the toolbar wrap */
+.mceToolbar td {
+    display:table-row;
+    float: left;
+}
+.mceToolbar td:nth-of-type(11){
+    clear: left;
+}
+
+@media only screen and (max-width: 959px) {
+    table.mceLayout, textarea.richEditor, {
+        width: 90% !important;
+        overflow:scroll;
+    }
+
+    /* remove the toolbar wrap */
+    .mceToolbar td {
+        display:table-cell;
+        float: none;
+    }
+    .mceToolbar td:nth-of-type(11){
+        clear: none;
+    }
+    .defaultSkin .mceToolbar{
+        height:auto !important;
+    }
+}
+
+#layoutEditor .le_row {
+    margin: 2px 3px;
+    height:25px;
+    clear: both;
+    padding:0 10px 5px 10px !important;
+}
+
+#toolbox .le_panel, #toolbox .le_row, .le_field {
+    width: 150px;
+    float: left;
+    border: 1px solid #808080;
+    background: none repeat scroll 0% 0% #EEE;
+    padding:0 !important;
+    margin: 2px 3px;
+    overflow: hidden;
+}
+
+#toolbox{
+    height:100% !important;
+}
+
+#panels{
+    height:auto !important;
+    overflow:auto;
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
