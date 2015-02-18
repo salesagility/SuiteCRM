@@ -3480,7 +3480,7 @@ table legend {
 
 /* Media queries for larger screens to hide mobile content */
 
-@media (max-width:1280px){
+@media (max-width:1279px){
     #usermenu, #searchform, #searchmobile{
         display:none;
     }
