@@ -189,6 +189,9 @@ SUGAR.append(SUGAR.themes, {
         if (el) {
             $('#ajaxHeader').html(html);
             loadSidebar();
+            if ($(window).width() < 979) {
+                $('#bootstrap-container').removeClass('main');
+            }
         }
     }, actionMenu: function () {
         $("ul.clickMenu").each(function (index, node) {
@@ -310,7 +313,7 @@ $(window).resize(function () {
             'padding' :'0',
             'border-left' :'1px solid #bbbbbb',
             'margin': '0 0 0 10px',
-            'font-size':'1.1em',
+            'font-size':'1.1em'
         });
 
     }
@@ -347,11 +350,8 @@ function loadSidebar() {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
 
     }
-
-
-
-
 }
+
 $( document ).ready(function() {
     $(window).resize(function () {
 
