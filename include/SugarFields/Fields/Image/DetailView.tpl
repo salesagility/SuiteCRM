@@ -36,8 +36,19 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
 *}
+<span class="sugar_field" id="{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}">
 
-<img id="{$col|lower}" src="index.php?entryPoint=image_download&id={sugar_fetch object=$parentFieldArray key='ID'}_{$col|lower}&type={sugar_fetch object=$vardef key="custom_module"}" style="max-width: 200px;" height="50">
-
+<img src="index.php?entryPoint=download&id={$fields.{{$vardef.fileId}}.value}_{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}&type={{$vardef.linkModule}}&time={$fields.date_modified.value}" style="max-width: 200px;" height="50">
+</span>
+{{if isset($vardef) && isset($vardef.allowEapm) && $vardef.allowEapm}}
+{if isset($fields.{{$vardef.docType}}) && !empty($fields.{{$vardef.docType}}.value) && $fields.{{$vardef.docType}}.value != 'SugarCRM' && !empty($fields.{{$vardef.docUrl}}.value) }
+    {capture name=imageNameCapture assign=imageName}
+        {$fields.{{$vardef.docType}}.value}_image_inline.png
+    {/capture}
+    <a href="{$fields.{{$vardef.docUrl}}.value}" class="tabDetailViewDFLink" target="_blank">{sugar_getimage name=$imageName alt=$imageName other_attributes='border="0" '}</a>
+{/if}
+{{/if}}
+{{if !empty($displayParams.enableConnectors)}}
+{{sugarvar_connector view='DetailView'}}
+{{/if}}
