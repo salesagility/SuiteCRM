@@ -4521,5 +4521,18 @@ table.mceLayout, textarea.tinyMCE {
     overflow:auto;
 }
 
+@media(min-width:1024px) {
+    #dialog1_c {
+        margin-left: 40%;
+        margin-top:100px;
+    }
+    #dlg {
+        left:40%;;
+    }
+    #dlg_c{
+        left:50%;
+    }
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
