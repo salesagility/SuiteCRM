@@ -3841,13 +3841,14 @@ li.moremenu {
         border: none;
     }
 
-    .detail td, .edit td {
+    .detail td, #DEFAULT td {
         display: inline-block;
         border: none;
         margin: 0 5px 0 25px;
         padding:0;
-        max-width:33%;
         font-size:1em;
+        width:auto;
+        min-width:35%;
     }
 }
 
