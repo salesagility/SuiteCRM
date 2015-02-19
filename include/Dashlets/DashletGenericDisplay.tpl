@@ -111,8 +111,14 @@
         </td>
     </tr>
     <tr height='20'>
+        {counter start=0 name="colCounter" print=false assign="colCounter"}
+        {assign var='datahide' value=""}
         {foreach from=$displayColumns key=colHeader item=params}
-	        <th scope='col' width='{$params.width}%'>
+            {if $colCounter == '1'}{assign var='datahide' value="phone"}{/if}
+            {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
+            {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
+            {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
+            {else}<th scope='col' data-hide="{$datahide}">{/if}
 				<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
                 {if $params.sortable|default:true}
 	                <a href='#' onclick='return SUGAR.mySugar.retrieveDashlet("{$dashletId}", "{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}&sugar_body_only=1&id={$dashletId}")' class='listViewThLinkS1' title="{$arrowAlt}">{sugar_translate label=$params.label module=$pageData.bean.moduleDir}</a>&nbsp;&nbsp;
@@ -138,6 +144,7 @@
 	           {/if}
 			   </div>
             </th>
+            {counter name="colCounter"}
         {/foreach}
 		{if !empty($quickViewLinks)}
 		<td  class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>

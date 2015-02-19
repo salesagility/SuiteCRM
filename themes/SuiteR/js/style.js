@@ -279,7 +279,7 @@ var checkContents = setInterval(function(){
             element = $(".list.View");
         }
 
-        $('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $(element).footable();
         $(".footable").find("th:first").attr("data-toggle","true");
