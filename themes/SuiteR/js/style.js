@@ -280,9 +280,9 @@ var checkContents = setInterval(function(){
         }
 
         //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $(element).footable();
-        $(".footable").find("th:first").attr("data-toggle","true");
+        //$(".footable").find("th:first").attr("data-toggle","true");
 
         // Button to toggle list view search
         $('.showsearch').click(function() {
