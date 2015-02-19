@@ -305,12 +305,6 @@
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
                         <ul class="nav nav-pills nav-stacked">
-                            {if $name == 'Home' and !$lock_homepage}
-                                <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
-                                <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="addDashboardForm();return false">{$APP.LBL_ADD_TAB}</a></li>
-                                <li style="margin-top:5px; margin-bottom:5px;"><a href="" onclick="return SUGAR.mySugar.showDashletsDialog();">{$APP.LBL_ADD_DASHLETS}</a></li>
-                                <br>
-                            {/if}
                             {if count($shortcutTopMenu.$name) > 0}
                                 <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
                                 {foreach from=$shortcutTopMenu.$name item=item}
