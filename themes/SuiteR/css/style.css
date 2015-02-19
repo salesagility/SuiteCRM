@@ -4522,7 +4522,7 @@ table.mceLayout, textarea.tinyMCE {
     overflow:auto;
 }
 
-@media(min-width:1024px) {
+@media(min-width:980px) {
     #dialog1_c {
         margin-left: 40%;
         margin-top:100px;
@@ -4535,5 +4535,14 @@ table.mceLayout, textarea.tinyMCE {
     }
 }
 
+@media (max-width:979px) and (max-height:1024px) {
+    #dashletsDialog_c{
+        margin-top:25px;
+        margin-left:0;
+        margin-bottom:25px;
+        height:70%;
+        overflow:scroll;
+    }
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
