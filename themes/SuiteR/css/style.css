@@ -3651,6 +3651,14 @@ body {
         padding: 3px 10px 5px 10px;
         font-size: 1.1em;
     }
+
+    #userlinks_head ul li a{
+        color:#3C8DBC;
+    }
+
+    #userlinks_head ul li a:hover{
+        color:#ffffff;
+    }
 }
 
 span#quickcreateplus{
