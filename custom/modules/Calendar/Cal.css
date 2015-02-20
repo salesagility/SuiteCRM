@@ -170,7 +170,7 @@
 	height: 12px;
 	line-height: 11px;
 	text-align: center;
-	background-image: url(../../index.php?entryPoint=getImage&imageName=calendar_info.png);
+	background-image: url(../../../index.php?entryPoint=getImage&imageName=calendar_info.png);
 	background-repeat: no-repeat;
 	margin-top: 1px;
 	cursor: pointer;
@@ -246,8 +246,8 @@
 .mobile_calendar_item_left{
 	display:block;
 	width:33%;
-	background-color: #777777;
-	color:#FFF;
+	background-color: #f7f7f7;
+	color:#777777;
 	float:left;
 	height:100%;
 	font-weight:bold;
@@ -268,14 +268,15 @@
 	height:50%;
 	line-height: 18px;
 	padding-top: 5px;
+    font-size:14px;
 }
 
 .mobile_calendar_item_left_status{
 	display:block;
 	width:100%;
-	background-color:
-	#cccccc; float:left;
+	background-color: #cccccc; float:left;
 	height:21%;
+    color:#FFF;
 	font-size:13px;
 	font-weight:bold;
 	text-align: center;
@@ -288,6 +289,7 @@
 	width:100%;
 	float:left;
 	height:22%;
+    color:#FFF;
 	font-size:16px;
 	font-weight:bold;
 	text-align: center;
@@ -315,7 +317,7 @@
 	padding-right:5px !important;
 	float:left;
 	font-weight: bold;
-	font-size:16px !important;
+	font-size:14px !important;
 	height:auto !important;
 	width:100%;
 

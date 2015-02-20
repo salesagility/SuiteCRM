@@ -501,7 +501,18 @@ class CalendarDisplay {
 
 		if($this->cal->view == "mobile"){
 			echo "<div style='width:100%; height:20px;' class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
-			echo "<div style='float:right;' class='moduleTitle'><a class='button' href='' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),false);>Add Item</a></div>";
+			echo "<div style='float:right;' class='moduleTitle'>";
+
+            echo '<div class="btn-group">
+                    <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">Add Item <span class="caret"></span></button>
+                       <ul class="dropdown-menu pull-left" style="right: 0; left: auto;">
+                          <li><a href="index.php?module=Meetings&action=EditView">Add Meeting</a></li>
+                          <li><a href="index.php?module=Calls&action=EditView">Add Call</a></li>
+                          <li><a href="index.php?module=Tasks&action=EditView">Add Task</a></li>
+                       </ul>
+                </div>';
+
+            echo "</div>";
 		}else{
 			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 
