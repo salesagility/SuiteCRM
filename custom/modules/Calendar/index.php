@@ -63,7 +63,7 @@ if(empty($_REQUEST['view'])){
 }
 
 if($_SESSION['screen_width']  < 500 && isset($_SESSION['screen_width'])){
-	$_SESSION['CALENDAR_VIEW'] = "mobile";
+//	$_SESSION['CALENDAR_VIEW'] = "mobile";
 	$_REQUEST['view'] = "mobile";
 }else{
 	$_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];

@@ -235,13 +235,12 @@ class CalendarGrid {
 
 		$display .= "<div class='mobile_calendar_item_left' >";
 
-			$display .= "<div class='mobile_calendar_item_left_type' style='color:" . $type_color .";'>";
+			$display .= "<div class='mobile_calendar_item_left_type' style='background-color:" . $type_color .";'>";
 			$display .=  ucfirst($day_item['type']);
 			$display .= "</div>";
 
 			$display .= "<div class='mobile_calendar_item_left_date'>";
 			$display .= "<div class='mobile_calendar_item_left_time'>" . $day_item['time_start'] . "</div>";
-//			$display .= "<div class='mobile_calendar_item_left_time'>to</div>";
 			$display .= "<div class='mobile_calendar_item_left_time'>" .  $end_time . "</div>";
 			$display .= "</div>";
 
@@ -256,10 +255,18 @@ class CalendarGrid {
 			$display .= "<p class='mobile_calendar_item_desc'>" . $day_item['description'] . "</p>";
 		$display .= "</div>";
 
-		$display .= "<div class='mobile_calendar_item_edit'>";
-		$display .= "<a class='button' href='#' module_name ='" . ucfirst($day_item['type']) ."s' record = '" . $day_item['record'] ."' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),true);>Edit</a>";
-		$display .= "</div>";
-		$display .= "</div>";
+
+        if($day_item['type'] == "task"){
+            $display .= "<div class='mobile_calendar_item_edit'>";
+            $display .= "<a class='button' module_name ='" . ucfirst($day_item['type']) ."s' href='index.php?action=EditView&module=Tasks&return_module=Calendar&return_action=index&record=" . $day_item['record'] . "'>Edit</a>";
+            $display .= "</div>";
+            $display .= "</div>";
+        }else{
+            $display .= "<div class='mobile_calendar_item_edit'>";
+            $display .= "<a class='button' href='#' module_name ='" . ucfirst($day_item['type']) ."s' record = '" . $day_item['record'] ."' onclick=CAL.load_form(this.getAttribute('module_name'),this.getAttribute('record'),true);>Edit</a>";
+            $display .= "</div>";
+            $display .= "</div>";
+        }
 
 		return $display;
 	}
