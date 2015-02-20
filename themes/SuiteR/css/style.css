@@ -4086,22 +4086,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     font-size:1em;
 }
 
-#dlg {
-    left:300px;
-    top:75px;
-}
-
-@media (max-width:1360px){
-    #dlg{
-        top:50px;
-    }
-
-    #dlg .bd{
-        max-height:500px;
-        overflow-y:scroll;
-    }
-}
-
 .serverstats{
     margin:0;
     padding:0;
@@ -4455,14 +4439,6 @@ div.action_buttons form {
 h3 span{
     font-weight:bold;
 }
-.yui-layout{
-    width:85%;
-    overflow:hidden;
-}
-
-.email, #mblayout{
-    overflow:hidden;
-}
 
 table.mceLayout, textarea.tinyMCE {
     width: 100% !important;
@@ -4532,6 +4508,22 @@ table.mceLayout, textarea.tinyMCE {
     }
     #dlg_c{
         left:50%;
+    }
+}
+
+#dlg {
+    left:300px;
+    top:75px;
+}
+
+@media (max-width:1360px){
+    #dlg{
+        top:50px;
+    }
+
+    #dlg .bd{
+        max-height:500px;
+        overflow-y:scroll;
     }
 }
 
