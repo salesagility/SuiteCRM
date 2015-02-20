@@ -39,7 +39,7 @@
 
 *}
 <link type="text/css" href="{sugar_getjspath file="custom/modules/Calendar/Cal.css"}" rel="stylesheet" />
-{sugar_getscript file="modules/Calendar/Cal.js"}
+{sugar_getscript file="custom/modules/Calendar/Cal.js"}
 <script type="text/javascript">
 
 	{literal}
