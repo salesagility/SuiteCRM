@@ -258,7 +258,7 @@ class CalendarGrid {
 
         if($day_item['type'] == "task"){
             $display .= "<div class='mobile_calendar_item_edit'>";
-            $display .= "<a class='button' module_name ='" . ucfirst($day_item['type']) ."s' href='index.php?action=EditView&module=Tasks&return_module=Calendar &return_action=index&record=" . $day_item['record'] . "'>Edit</a>";
+            $display .= "<a class='button' module_name ='" . ucfirst($day_item['type']) ."s' href='index.php?action=EditView&module=Tasks&return_module=Calendar&return_action=index&record=" . $day_item['record'] . "'>Edit</a>";
             $display .= "</div>";
             $display .= "</div>";
         }else{
