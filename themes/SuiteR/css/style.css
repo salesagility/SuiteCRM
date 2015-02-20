@@ -3222,10 +3222,6 @@ li#usermenu:hover {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
     margin:2px;
     color: #fff;
     background-color: #3C8DBC;
@@ -3245,10 +3241,6 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
     margin:2px;
     color: #ffffff;
     background-color: #777777;
@@ -3266,10 +3258,6 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     color: #fff;
     background-color: #286090;
     border-color: #204d74;
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
 }
 .button:active,
 .button.active,
@@ -3960,10 +3948,6 @@ li.moremenu {
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
-        -webkit-transition: all 0.3s ease-out;
-        -moz-transition: all 0.3s ease-out;
-        -o-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
         margin: 2px;
     }
     .quickcreate {
