@@ -139,12 +139,6 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					minWidth: 200,
 					resize: true,
 					collapse: true
-				},{
-					header: SUGAR.util.getAndRemove("footerHTML").innerHTML,
-					position: 'bottom',
-					id: 'mbfooter',
-					height: 30,
-					border: false
 				}]
 			});
 			mp.render();
@@ -998,8 +992,8 @@ if (typeof(ModuleBuilder) == 'undefined') {
 		autoSetLayout: function(){
 			var mp = ModuleBuilder.mainPanel;
 			var c = Dom.get("mblayout");
-			mp.set("height", Dom.getViewportHeight() - Dom.getY(c) - 30);
-			mp.set("width", Dom.getViewportWidth() - 40);
+			mp.set("height", Dom.getViewportHeight() - Dom.getY(c) - 75);
+			//mp.set("width", Dom.getViewportWidth() - 40);
 			mp.resize(true);
 			var tabEl = ModuleBuilder.tabPanel.get("element");
 			Dom.setStyle(tabEl.firstChild.nextSibling, "overflow-y", "auto");
