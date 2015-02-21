@@ -194,13 +194,13 @@
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td width='2%' nowrap>
-	                {if $pageData.rowAccess[$id].edit}
-	                <a title='{$editLinkString}' id="edit-{$rowData.ID}"
-	href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-	                >
-	                    {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                        <span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-	                {/if}
+                    {if $pageData.rowAccess[$id].edit}
+                        <a title='{$editLinkString}' id="edit-{$rowData.ID}"
+                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+                                >
+                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                    {/if}
 	            </td>
 
 				{/if}
