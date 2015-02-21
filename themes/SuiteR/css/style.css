@@ -2956,19 +2956,19 @@ input[type=text].cstm_code {
     width:100%;
 }
 
-@media (max-width:480px){
-    .collapsing, .in {
-        background-color: #f7f7f7;
+/*@media (max-width:979px){*/
+    /*.collapsing, .in {*/
+        /*background-color: #f7f7f7;*/
 
-    }
-    .collapsing ul li a, .in ul li a {
-        color: #555!important;
-    }
-    .collapsing ul li a:hover, .in ul li a:hover {
-        color: #f1f1f1!important;
-    }
+    /*}*/
+    /*.collapsing ul li a, .in ul li a {*/
+        /*color: #555!important;*/
+    /*}*/
+    /*.collapsing ul li a:hover, .in ul li a:hover {*/
+        /*color: #f1f1f1!important;*/
+    /*}*/
 
-}
+/*}*/
 
 .headerlinks a:hover {
     color:#428BCA;
@@ -4544,5 +4544,30 @@ table.mceLayout, textarea.tinyMCE {
         overflow:scroll;
     }
 }
+
+#mobile_menu{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#mobile_menu li{
+    list-style: none;
+    height:50px;
+    line-height:50px;
+    border-bottom: 1px solid #cccccc;
+}
+
+#mobile_menu a{
+    color: #ffffff;
+    display:block;
+}
+
+@media (min-width:979px) {
+    #mobile_menu{
+       display:none !important;
+    }
+}
+
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
