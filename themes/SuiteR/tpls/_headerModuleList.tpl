@@ -39,7 +39,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile_menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -75,8 +75,9 @@
                 </span>
             </form>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {if $USE_GROUP_TABS}
+
+        <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
+        {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
@@ -214,7 +215,7 @@
             {/if}
             {/foreach}
             {if count($moduleExtraMenu) > 0}
-                <li class="dropdown-toggle moremenu">
+                <li class="dropdown-toggle moremenu ">
                     <a class="dropdown-toggle" data-toggle="dropdown">{$APP.LBL_MORE} &raquo;</a>
                     <ul class="dropdown-menu" role="menu">
                         <div class="bigmenu">
@@ -293,7 +294,22 @@
                 </ul>
             </div>
         </div>
-    </div>
+
+        <div class="collapse navbar-collapse hidden-lg hidden-md" id="mobile_menu">
+            {foreach from=$groupTabs item=modules key=group name=groupList}
+                {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
+                                {foreach from=$modules.modules item=module key=modulekey}
+                                    <li>
+                                        {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
+                                        {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
+                                    </li>
+                                {/foreach}
+                                {foreach from=$modules.extra item=submodulename key=submodule}
+                                    <li><a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a></li>
+                                {/foreach}
+            {/foreach}
+
+        </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
 <!--Start Page Container and Responsive Sidebar -->
