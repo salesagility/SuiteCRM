@@ -26,7 +26,7 @@ color: #<?php echo $sugar_config['colourselector']['pageheader']; ?>;
 
 /* Pagelink CSS */
 
-a, a:link, a:visited, .dashletPanel .h3Row h3, #dashletbuttons{
+a, a:link, a:visited, .dashletPanel .h3Row h3, #dashletbuttons, .detail tr td a:link, .detail tr td a:visited, .detail tr td a:hover{
 color: #<?php echo $sugar_config['colourselector']['pagelink']; ?>;
 }
 
@@ -41,7 +41,7 @@ background: #<?php echo $sugar_config['colourselector']['dashlet']; ?>;
 /* Top navigation bar CSS */
 
 .navbar-inverse {
-    background:#<?php echo $sugar_config['colourselector']['navbar'];?> !important;
+background:#<?php echo $sugar_config['colourselector']['navbar'];?> !important;
 }
 
 .headerlinks a:link, .headerlinks a:visited, .navbar-inverse .navbar-brand, .moremenu a, {
@@ -55,30 +55,30 @@ color:#<?php echo $sugar_config['colourselector']['navbarfont']; ?>; !important;
 }
 }
 
-ul.topnav li:hover, .dropdown-menu li a:hover, li#usermenu:hover, .moremenu ul li:hover,ul.navbar-nav li:hover, .bigmenu li a:hover  {
+ul.topnav li:hover, .dropdown-menu li a:hover, li#usermenu:hover, .moremenu ul li a:hover,ul.navbar-nav li:hover {
 background:#<?php echo $sugar_config['colourselector']['navbarlihover']; ?> !important;
 }
 
 .headerlinks a:hover, .navbar-inverse .navbar-brand:hover, .moremenu a:hover {
-color:#<?php echo $sugar_config['colourselector']['navbarlinkhover']; ?>;
+color:#<?php echo $sugar_config['colourselector']['navbarlinkhover']; ?> !important;
 }
 
 /* Drop down menu CSS */
 
 .dropdown-menu {
-background:#<?php echo $sugar_config['colourselector']['dropdownmenu']; ?>;
+background:#<?php echo $sugar_config['colourselector']['dropdownmenu']; ?> !important;
 }
 
-.dropdown-menu li a, .dropdown-menu em a, #moremenu ul li a {
-color:#<?php echo $sugar_config['colourselector']['dropdownmenulink']; ?>;
+.dropdown-menu li a, .dropdown-menu em a, .moremenu ul li a , #globalLinks ul li a{
+color:#<?php echo $sugar_config['colourselector']['dropdownmenulink']; ?> !important;
 }
 
 /* Button and action menu CSS */
 
 .btn, .btn-success, .btn-primary, .button, input[type=submit], input[type=button], a#create_link.utilsLink, .btn-group a, ul.clickMenu>li, ul.SugarActionMenuIESub li, ul.SugarActionMenuIESub li a,
 ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a {
-    background:#<?php echo $sugar_config['colourselector']['button1']; ?>;
-    color:#<?php echo $sugar_config['colourselector']['buttoncolour']; ?>;
+background:#<?php echo $sugar_config['colourselector']['button1']; ?> !important;
+color:#<?php echo $sugar_config['colourselector']['buttoncolour']; ?> !important;
 }
 
 .btn:hover, .btn-success:hover, .btn-primary:hover, .button:hover, input[type=submit]:hover, input[type=button]:hover, a#create_link.utilsLink:hover, .btn-group a:hover, #globalLinksModule ul.clickMenu.SugarActionMenu li a:hover,
@@ -86,6 +86,6 @@ ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .l
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    background:#<?php echo $sugar_config['colourselector']['buttonhover']; ?>;
-    color:#<?php echo $sugar_config['colourselector']['buttoncolourhover']; ?>;
+background:#<?php echo $sugar_config['colourselector']['buttonhover']; ?> !important;
+color:#<?php echo $sugar_config['colourselector']['buttoncolourhover']; ?> !important;
 }
