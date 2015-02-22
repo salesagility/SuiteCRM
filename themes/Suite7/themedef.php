@@ -47,4 +47,5 @@ $themedef = array(
         ),
     'group_tabs' => true,
     'classic' => true,
+    'configurable' => true
     );
