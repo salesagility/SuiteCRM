@@ -297,6 +297,7 @@
 
         <div class="collapse navbar-collapse hidden-lg hidden-md" id="mobile_menu">
             {foreach from=$groupTabs item=modules key=group name=groupList}
+                {if $smarty.foreach.groupList.last}
                 {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                                 {foreach from=$modules.modules item=module key=modulekey}
                                     <li>
@@ -307,6 +308,7 @@
                                 {foreach from=$modules.extra item=submodulename key=submodule}
                                     <li><a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a></li>
                                 {/foreach}
+                {/if}
             {/foreach}
 
         </div>
