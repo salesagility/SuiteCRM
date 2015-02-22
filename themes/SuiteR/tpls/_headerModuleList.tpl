@@ -280,9 +280,9 @@
                 </div>
             </form>
             <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
-                <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
+                <a data-toggle="dropdown" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus"></span>
-                </button>
+                </a>
                 <ul class="dropdown-menu" role="menu">
                     <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
                     <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
