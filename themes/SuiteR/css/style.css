@@ -4379,7 +4379,7 @@ div.action_buttons form {
 /* Fix to make Boostrap drop down hover on larger screens */
 
 @media (min-width:1024px) {
-    .navbar-nav > li:hover ul.dropdown-menu, #globalLinks:hover ul.dropdown-menu {
+    .navbar-nav > li:hover ul.dropdown-menu, #globalLinks:hover ul.dropdown-menu, #quickcreatetop:hover ul.dropdown-menu {
         display: block;
     }
 
@@ -4543,9 +4543,26 @@ table.mceLayout, textarea.tinyMCE {
 
 #quickcreatetop a{
     color:#ffffff !important;
-    margin:8px 0 0 0 !important;
+    margin:8px 0 8px 0 !important;
     line-height:50px;
+    padding: 0 5px 0 5px !important;
     cursor:pointer;
+}
+
+#quickcreatetop ul li{
+    padding:0 !important;
+    margin:0 !important;
+}
+
+#quickcreatetop ul li a{
+    color:#3C8DBC !important;
+    padding:0 3px 0 3px !important;
+    margin:0 !important;
+    line-height:35px;
+}
+
+#quickcreatetop ul li a:hover{
+    color:#ffffff !important;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */

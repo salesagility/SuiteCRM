@@ -280,7 +280,7 @@
                 </div>
             </form>
             <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
-                <a data-toggle="dropdown" aria-expanded="false">
+                <a class="dropdown-toggle" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
