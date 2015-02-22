@@ -4541,6 +4541,12 @@ table.mceLayout, textarea.tinyMCE {
     }
 }
 
+#quickcreatetop a{
+    color:#ffffff !important;
+    margin:8px 0 0 0 !important;
+    line-height:50px;
+    cursor:pointer;
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
