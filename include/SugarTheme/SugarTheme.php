@@ -203,6 +203,13 @@ class SugarTheme
      */
     public $classic;
 
+    /**
+     * Is this theme configurable
+     *
+     * @var bool
+     */
+    public $configurable;
+
 
     /**
      * Cache built of all css files locations
@@ -460,6 +467,7 @@ class SugarTheme
             'pieChartColors',
             'group_tabs',
             'classic',
+            'configurable',
             'ignoreParentFiles',
             );
     }
@@ -1386,6 +1394,28 @@ class SugarThemeRegistry
 
         foreach ( self::$_themes as $themename => $themeobject )
             $themelist[$themeobject->dirName] = $themeobject->name;
+
+        return $themelist;
+    }
+
+    /**
+     * Returns an array of all themes def found in the current installation
+     *
+     * @return array
+     */
+    public static function allThemesDefs()
+    {
+        $themelist = array();
+        $disabledThemes = array();
+        if (isset($GLOBALS['sugar_config']['disabled_themes']))
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
+
+        foreach (self::$_themes as $themename => $themeobject) {
+            $themearray['name'] = $themeobject->name;
+            $themearray['configurable'] = $themeobject->configurable;
+            $themearray['enabled'] = !in_array($themename, $disabledThemes);
+            $themelist[$themeobject->dirName] = $themearray;
+        }
 
         return $themelist;
     }

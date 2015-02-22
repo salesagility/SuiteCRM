@@ -38,8 +38,6 @@
  ********************************************************************************/
 
 *}
-<script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js"></script>
-<link rel="stylesheet" type="text/css" href="{sugar_getjspath file='modules/Connectors/tpls/tabs.css'}"/>
 
 <form name="themeSettings" method="POST">
 	<input type="hidden" name="module" value="Administration">
@@ -49,32 +47,44 @@
 	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
 		<tr>
 			<td>
-			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="SUGAR.saveThemeSettings();" type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
 			<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="document.themeSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
 			</td>
 		</tr>
 	</table>
-	
-	<div class='add_table' style='margin-bottom:5px'>
-		<table id="themeSettings" class="themeSettings edit view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
-            <td nowrap><b>{$MOD.DEFAULT_THEME}</b> &nbsp;
-                <select name='default_theme' id='default_theme'>{$THEMES}</select>
-            </td>
-		    <tr>
-				<td width='1%'>
-					<div id="enabled_div"></div>	
-				</td>
-				<td>
-					<div id="disabled_div"></div>
-				</td>
-			</tr>
+
+	<div class='listViewBody' style='margin-bottom:5px'>
+		<table id="themeSettings" class="list view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th>Theme</th>
+					<th>Preview</th>
+					<th>Enabled</th>
+					<th>{$MOD.DEFAULT_THEME}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{counter start=0 name="colCounter" print=false assign="colCounter"}
+			{foreach from=$available_themes key=theme item=themedef}
+				<tr>
+					<td><b>
+					{if $themedef.configurable}<a href="index.php?module=Administration&action=colourAdmin">{$themedef.name}</a>
+					{else} {$themedef.name}
+					{/if}</b></td>
+					<td><img id="themePreview" style="width: 206px; height: 150px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
+					<td><input class="disableTheme" name="disabled_themes[{$colCounter}]" value="{$theme}" type="hidden" {if $themedef.enabled && $theme == $default_theme}disabled="disabled"{/if}><input class="disableTheme" type="checkbox" name="disabled_themes[{$colCounter}]" value="" {if $themedef.enabled} {if $theme == $default_theme}disabled="disabled"{/if}  CHECKED{/if}/></td>
+					<td><input class="defaultTheme" type="radio" name="default_theme" value="{$theme}" {if $theme == $default_theme}CHECKED{elseif !$themedef.enabled}disabled="disabled"{/if} /></td>
+				</tr>
+				{counter name="colCounter"}
+			{/foreach}
+			</tbody>
 		</table>
 	</div>
 	
 	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
 		<tr>
 			<td>
-				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" onclick="SUGAR.saveThemeSettings();" type="button" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
 				<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" class="button" onclick="document.themeSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
 			</td>
 		</tr>
@@ -82,80 +92,23 @@
 </form>
 
 <script type="text/javascript">
-(function(){ldelim}
-    var Connect = YAHOO.util.Connect;
-	Connect.url = 'index.php';
-    Connect.method = 'POST';
-    Connect.timeout = 300000; 
-
-	var enabled_modules = {$enabled_modules};
-	var disabled_modules = {$disabled_modules};
-	var lblEnabled = '{sugar_translate label="LBL_ACTIVE_THEMES"}';
-	var lblDisabled = '{sugar_translate label="LBL_DISABLED_THEMES"}';
 	{literal}
-	SUGAR.themeEnabledTable = new YAHOO.SUGAR.DragDropTable(
-		"enabled_div",
-		[{key:"theme",  label: lblEnabled, width: 200, sortable: false},
-		{key:"dir", hidden:true}],
-		new YAHOO.util.LocalDataSource(enabled_modules, {
-			responseSchema: {fields : [{key : "theme"}, {key : "dir"}]}
-		}),  
-		{height: "300px"}
-	);
-	SUGAR.themeDisabledTable = new YAHOO.SUGAR.DragDropTable(
-		"disabled_div",
-		[{key:"theme",  label: lblDisabled, width: 200, sortable: false},
-		{key:"dir", hidden:true}],
-		new YAHOO.util.LocalDataSource(disabled_modules, {
-			responseSchema: {fields : [{key : "theme"}, {key : "dir"}]}
-		}),
-		{height: "300px"}
-	);
-	SUGAR.themeEnabledTable.disableEmptyRows = true;
-	SUGAR.themeDisabledTable.disableEmptyRows = true;
-	SUGAR.themeEnabledTable.addRow({module: "", label: ""});
-	SUGAR.themeDisabledTable.addRow({module: "", label: ""});
-	SUGAR.themeEnabledTable.render();
-	SUGAR.themeDisabledTable.render();
-	
-	SUGAR.saveThemeSettings = function()
-	{
-		var disabledTable = SUGAR.themeDisabledTable;
-		var themes = [];
-		for(var i=0; i < disabledTable.getRecordSet().getLength(); i++){
-			var data = disabledTable.getRecord(i).getData();
-			if (data.dir && data.dir != '') {
-			    themes[i] = data.dir;
-			    if ( themes[i] == document.getElementById('default_theme').value ) {
-			        if ( !confirm(SUGAR.language.get('Administration', 'LBL_DEFAULT_THEME_IS_DISABLED')) ) {
-			            return false;
-			        }
-			    }
+	$(document).ready(function() {
+		$('.disableTheme').change(function() {
+			if(!$(this).is(":checked")) {
+				$(this).closest('tr').find("input,button,textarea").not(".disableTheme").attr("disabled", "disabled");
+			} else {
+				$(this).closest('tr').find("input,button,textarea").not(".disableTheme").removeAttr("disabled");
 			}
-		}
-		
-		ajaxStatus.showStatus(SUGAR.language.get('Administration', 'LBL_SAVING'));
-        Connect.asyncRequest(
-            Connect.method, 
-            Connect.url, 
-            {success: SUGAR.saveCallBack},
-			'to_pdf=1&module=Administration&action=ThemeSettings&default_theme='+document.getElementById('default_theme').value+'&disabled_themes=' + YAHOO.lang.JSON.stringify(themes)
-        );
-		
-		return true;
-	}
-	SUGAR.saveCallBack = function(o)
-	{
-	   ajaxStatus.flashStatus(SUGAR.language.get('app_strings', 'LBL_DONE'));
-	   if (o.responseText == "true")
-	   {
-	       window.location.assign('index.php?module=Administration&action=ThemeSettings');
-	   } 
-	   else 
-	   {
-	       YAHOO.SUGAR.MessageBox.show({msg:o.responseText});
-	   }
-	}	
-})();
-{/literal}
+
+		});
+		$('.defaultTheme').change(function() {
+			if($(this).is(":checked")) {
+				$(".disableTheme").removeAttr("disabled");
+				$(this).closest('tr').find(".disableTheme").attr("disabled", "disabled");
+			}
+
+		});
+	});
+	{/literal}
 </script>
