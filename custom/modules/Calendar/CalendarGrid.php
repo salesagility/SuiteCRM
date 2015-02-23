@@ -195,28 +195,35 @@ class CalendarGrid {
 
 		$days = array_keys($agenda_array);
 
-		foreach($days as $day){
+        if($days){
+            foreach($days as $day){
 
-			$agenda_array[$day] = $this->mobile_sort_items($agenda_array[$day]);
+                $agenda_array[$day] = $this->mobile_sort_items($agenda_array[$day]);
 
-			if($day == $this->today_ts){
-				$str .= "<div class='mobile_calendar_title today'><b>Today</b> " . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
-			}else{
-				$str .= "<div class='mobile_calendar_title'>" . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
-			}
+                if($day == $this->today_ts){
+                    $str .= "<div class='mobile_calendar_title today'><b>Today</b> " . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+                }else{
+                    $str .= "<div class='mobile_calendar_title'>" . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+                }
 
-			$i = 0;
+                $i = 0;
 
-			while($i < count($agenda_array[$day])){
+                while($i < count($agenda_array[$day])){
 
-				$day_item = $agenda_array[$day][$i];
+                    $day_item = $agenda_array[$day][$i];
 
-				$str .= $this->mobile_display_items($day_item);
+                    $str .= $this->mobile_display_items($day_item);
 
-				$i++;
-			}
+                    $i++;
+                }
 
-		}
+            }
+        }else{
+            $str .= "<div class='mobile_calendar_title' style='text-align:center;'>Your calendar is clear for the week.</div>";
+        }
+
+
+
 
 		$str .= "</div>";
 		return $str;
