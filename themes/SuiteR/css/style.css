@@ -4126,7 +4126,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 }
 
 @media (min-width:321px) and (max-width:380px) {
-    .dashletcontainer {
+     {
         width:88%;
         position:relative;
         margin:0;
@@ -4137,7 +4137,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 @media (min-width:381px) and (max-width:480px) {
     .dashletcontainer {
-        width:98%;
+        width:100%;
         position:relative;
         margin:0;
         float:left;
@@ -4147,7 +4147,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 @media (min-width:481px) and (max-width:640px) {
     .dashletcontainer {
-        width:99%;
+        width:100%;
         position:relative;
         margin:0;
         float:left;
