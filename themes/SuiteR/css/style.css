@@ -4585,5 +4585,9 @@ table.mceLayout, textarea.tinyMCE {
     color:#ffffff !important;
 }
 
+#themePreview{
+    width:250px;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
