@@ -189,7 +189,7 @@ class CalendarGrid {
 
 		foreach($this->cal->items as $cal_item){
 
-			if($cal_item['ts_start'] >= $this->today_ts){
+			if(date("Y-m-d", $cal_item['ts_start']) >= date("Y-m-d", $this->today_ts)){
 				$agenda_array[$cal_item['ts_start']][] = $cal_item;
 				ksort($agenda_array);
 			}
