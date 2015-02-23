@@ -500,19 +500,22 @@ class CalendarDisplay {
 		//Hack to make this 6.5 compatible until this module is converted to MVC
 
 		if($this->cal->view == "mobile"){
+
+            $buttons = array("Meeting","Call","Task");
+
 			echo "<div style='width:100%; height:20px;' class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 			echo "<div style='float:right;' class='moduleTitle'>";
 
             echo '<div class="btn-group">
                     <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">Add Item <span class="caret"></span></button>
-                       <ul class="dropdown-menu pull-left" style="right: 0; left: auto;">
-                          <li><a href="index.php?module=Meetings&action=EditView">Add Meeting</a></li>
-                          <li><a href="index.php?module=Calls&action=EditView">Add Call</a></li>
-                          <li><a href="index.php?module=Tasks&action=EditView">Add Task</a></li>
-                       </ul>
-                </div>';
+                       <ul class="dropdown-menu pull-left" style="right: 0; left: auto;">';
 
-            echo "</div>";
+                        foreach($buttons as $module){
+                            echo '<li><a href="index.php?return_module=Calendar&return_action=index&module=' . $module .'s&action=EditView">Add ' . $module .'</a></li>';
+                        }
+
+            echo '</ul></div></div>';
+
 		}else{
 			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 

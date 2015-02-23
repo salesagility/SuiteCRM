@@ -200,9 +200,9 @@ class CalendarGrid {
 			$agenda_array[$day] = $this->mobile_sort_items($agenda_array[$day]);
 
 			if($day == $this->today_ts){
-				$str .= "<div class='mobile_calendar_title today'>Today: " . date("l dS, F Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+				$str .= "<div class='mobile_calendar_title today'><b>Today</b> " . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
 			}else{
-				$str .= "<div class='mobile_calendar_title'>" . date("l dS, F Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
+				$str .= "<div class='mobile_calendar_title'>" . date("D dS, M Y",  $agenda_array[$day][0]['ts_start']) . "</div>";
 			}
 
 			$i = 0;
@@ -281,10 +281,10 @@ class CalendarGrid {
 	function mobile_get_type_colour($type){
 		switch ($type) {
 			case "meeting":
-				$colour = "#99E2F2";
+				$colour = "#D2E5FC";
 				break;
 			case "call":
-				$colour = "#FFC887";
+				$colour = "#FCDCDC";
 				break;
 			case "task":
 				$colour = "#B1F5AE";

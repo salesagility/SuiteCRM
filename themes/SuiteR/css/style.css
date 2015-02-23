@@ -4541,6 +4541,10 @@ table.mceLayout, textarea.tinyMCE {
     }
 }
 
+.navbar-collapse.collapse{
+    overflow:scroll !important;
+}
+
 #quickcreatetop a{
     color:#ffffff !important;
     margin:8px 0 8px 0 !important;
