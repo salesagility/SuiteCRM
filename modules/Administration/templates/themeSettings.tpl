@@ -57,9 +57,9 @@
 		<table id="themeSettings" class="list view" style='margin-bottom:0px;' border="0" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<th>Theme</th>
-					<th>Preview</th>
-					<th>Enabled</th>
+					<th data-toggle="true">{$MOD.LBL_UW_TYPE_THEME}</th>
+                    <th data-hide="phone,phonelandscape"></th>
+					<th>{$MOD.LBL_ENABLED}</th>
 					<th>{$MOD.DEFAULT_THEME}</th>
 				</tr>
 			</thead>
@@ -71,7 +71,7 @@
 					{if $themedef.configurable}<a href="index.php?module=Administration&action=colourAdmin">{$themedef.name}</a>
 					{else} {$themedef.name}
 					{/if}</b></td>
-					<td><img id="themePreview" style="width: 206px; height: 150px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
+                    <td><img id="themePreview" style="width: 206px; height: 150px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
 					<td><input class="disableTheme" name="disabled_themes[{$colCounter}]" value="{$theme}" type="hidden" {if $themedef.enabled && $theme == $default_theme}disabled="disabled"{/if}><input class="disableTheme" type="checkbox" name="disabled_themes[{$colCounter}]" value="" {if $themedef.enabled} {if $theme == $default_theme}disabled="disabled"{/if}  CHECKED{/if}/></td>
 					<td><input class="defaultTheme" type="radio" name="default_theme" value="{$theme}" {if $theme == $default_theme}CHECKED{elseif !$themedef.enabled}disabled="disabled"{/if} /></td>
 				</tr>
