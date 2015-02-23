@@ -183,6 +183,8 @@ class CalendarGrid {
 
 	public function display_mobile(){
 
+        global $mod_strings;
+
 		$str = "<div class='mobile_calendar_container'>";
 
 		foreach($this->cal->items as $cal_item){
@@ -219,7 +221,7 @@ class CalendarGrid {
 
             }
         }else{
-            $str .= "<div class='mobile_calendar_title' style='text-align:center;'>Your calendar is clear for the week.</div>";
+            $str .= "<div class='mobile_calendar_title no_items'>" . $mod_strings['LBL_NO_ITEMS_MOBILE'] . "</div>";
         }
 
 

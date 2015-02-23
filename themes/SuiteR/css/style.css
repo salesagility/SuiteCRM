@@ -4521,7 +4521,7 @@ table.mceLayout, textarea.tinyMCE {
 
 #mobile_menu{
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: hidden !important;
 }
 
 #mobile_menu li{
@@ -4568,10 +4568,6 @@ table.mceLayout, textarea.tinyMCE {
 
 #quickcreatetop ul li a:hover{
     color:#ffffff !important;
-}
-
-.navbar-header{
-    height:101%;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */

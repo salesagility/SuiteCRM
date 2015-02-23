@@ -503,7 +503,7 @@ class CalendarDisplay {
 
             $buttons = array("Meeting","Call","Task");
 
-			echo "<div style='width:100%; height:20px;' class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
+			echo "<div class='custom_module_title moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 			echo "<div style='float:right;' class='moduleTitle'>";
 
             echo '<div class="btn-group">
