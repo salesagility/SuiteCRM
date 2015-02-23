@@ -68,7 +68,7 @@
 			{foreach from=$available_themes key=theme item=themedef}
 				<tr>
 					<td><b>
-					{if $themedef.configurable}<a href="index.php?module=Administration&action=colourAdmin">{$themedef.name}</a>
+					{if $themedef.configurable}<a href="index.php?module=Administration&action=ThemeConfigSettings&theme={$theme}">{$themedef.name}</a>
 					{else} {$themedef.name}
 					{/if}</b></td>
                     <td><img id="themePreview" style="width: 206px; height: 150px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
