@@ -341,3 +341,12 @@
     float:left;
     padding-left:10px;
 }
+
+.no_items{
+    text-align: center;
+}
+
+.custom_module_title{
+    width:100%;
+    height:20px;
+}
