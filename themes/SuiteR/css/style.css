@@ -2952,7 +2952,7 @@ input[type=text].cstm_code {
 /* Start SuiteCRM Responsive/Bootstrap additional CSS */
 .headerlinks a:link, .headerlinks a:visited {
     color:#ffffff;
-    padding:18px 5px 18px 0;
+    padding:14px 5px 14px 0;
     width:100%;
 }
 
@@ -3067,7 +3067,7 @@ fieldset[disabled] .btn-primary.active{
     background:#f7f7f7;
     padding:10px;
     min-width: 185px;
-    margin: 0 0 0;
+    margin-top:1px !important;
 }
 
 .dropdown-menu em {
@@ -3315,6 +3315,7 @@ ul.dashboardTabList li {
 
 .navbar-inverse .navbar-brand {
     color:#ffffff;
+    height:52px;
 }
 
 .btn-success {
@@ -4567,6 +4568,10 @@ table.mceLayout, textarea.tinyMCE {
 
 #quickcreatetop ul li a:hover{
     color:#ffffff !important;
+}
+
+.navbar-header{
+    height:101%;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
