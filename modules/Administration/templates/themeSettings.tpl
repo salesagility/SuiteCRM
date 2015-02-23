@@ -71,7 +71,7 @@
 					{if $themedef.configurable}<a href="index.php?module=Administration&action=ThemeConfigSettings&theme={$theme}">{$themedef.name}</a>
 					{else} {$themedef.name}
 					{/if}</b></td>
-                    <td><img id="themePreview" style="width: 206px; height: 150px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
+                    <td><img id="themePreview" style="height: 250px;" src="index.php?entryPoint=getImage&themeName={$theme}&imageName=themePreview.png" border="1"></td>
 					<td><input class="disableTheme" name="disabled_themes[{$colCounter}]" value="{$theme}" type="hidden" {if $themedef.enabled && $theme == $default_theme}disabled="disabled"{/if}><input class="disableTheme" type="checkbox" name="disabled_themes[{$colCounter}]" value="" {if $themedef.enabled} {if $theme == $default_theme}disabled="disabled"{/if}  CHECKED{/if}/></td>
 					<td><input class="defaultTheme" type="radio" name="default_theme" value="{$theme}" {if $theme == $default_theme}CHECKED{elseif !$themedef.enabled}disabled="disabled"{/if} /></td>
 				</tr>

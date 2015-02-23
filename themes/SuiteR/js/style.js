@@ -311,7 +311,7 @@ $(window).resize(function () {
             $('#usermenu').css({
             'display': 'inline',
             'padding' :'0',
-            'border-left' :'1px solid #bbbbbb',
+            //'border-left' :'1px solid #bbbbbb',
             'margin': '0 0 0 10px',
             'font-size':'1.1em'
         });

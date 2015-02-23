@@ -2579,7 +2579,7 @@ iframe.teamNoticeBox {
 
 .dashletPanel {
     padding:0;
-    margin:0 0 0 25px;
+    margin:15px;
 }
 
 .hd-center {
@@ -3542,7 +3542,7 @@ table legend {
 
     /* Fix to add some padding on mobile/tablet resolutions */
     #pagecontent{
-        padding:10px;
+        /*padding:10px;*/
     }
 
     #dashletresponsive {
@@ -4115,27 +4115,62 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-@media (max-width:360px) {
-    .dashletcontainer {
-        width:80%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
-}
+/*@media (max-width:360px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
 
-@media (min-width:321px) and (max-width:380px) {
-     {
-        width:88%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
-}
+/*@media (min-width:321px) and (max-width:380px) {*/
+     /*{*/
+        /*width:88%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
 
-@media (min-width:381px) and (max-width:480px) {
+/*@media (min-width:381px) and (max-width:480px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
+
+/*@media (min-width:481px) and (max-width:640px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
+
+/*@media (min-width:641px) and (max-width:980px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
+
+@media (max-width:980px) {
+    .dashletNonTable {
+      display:none;
+
+    }
+
     .dashletcontainer {
         width:100%;
         position:relative;
@@ -4143,26 +4178,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         float:left;
         padding:0;
     }
-}
 
-@media (min-width:481px) and (max-width:640px) {
-    .dashletcontainer {
-        width:100%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
-}
-
-@media (min-width:641px) and (max-width:980px) {
-    .dashletcontainer {
-        width:100%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
 }
 
 .table > thead > tr > th {
@@ -4269,7 +4285,6 @@ table#lineItems{
 
 .dashletPanel{
     border:1px solid #eeeeee; !important;
-    margin: 0 20px 20px 20px;
     box-shadow: #cccccc 0 5px 10px;
     -moz-box-shadow: #cccccc 0 5px 10px;
     -webkit-box-shadow: #cccccc 0 5px 10px;
