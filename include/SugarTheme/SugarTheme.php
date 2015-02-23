@@ -210,6 +210,13 @@ class SugarTheme
      */
     public $configurable;
 
+    /**
+     * theme config options
+     *
+     * @var bool
+     */
+    public $config_options = array();
+
 
     /**
      * Cache built of all css files locations
@@ -468,6 +475,7 @@ class SugarTheme
             'group_tabs',
             'classic',
             'configurable',
+            'config_options',
             'ignoreParentFiles',
             );
     }
@@ -1418,6 +1426,37 @@ class SugarThemeRegistry
         }
 
         return $themelist;
+    }
+
+    /**
+     * get the configurable options for $themeName
+     *
+     * @param  $themeName string
+     */
+    public static function getThemeConfig($themeName)
+    {
+        global $sugar_config;
+
+        if ( !self::exists($themeName) )
+            return false;
+
+        $config = array();
+
+        foreach(self::$_themes[$themeName]->config_options as $name => $def){
+            $config[$name] = $def;
+
+            $value = '';
+            if(isset($sugar_config['theme_settings'][$themeName][$name])){
+                $value = $sugar_config['theme_settings'][$themeName][$name];
+            } else if(isset($def['default'])){
+                $value = $def['default'];
+            }
+            $config[$name]['value'] = $value;
+
+        }
+
+        return $config;
+
     }
 
     /**
