@@ -1,5 +1,4 @@
-<?php
-
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,14 +37,47 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$action_view_map['themesettings'] = 'themesettings';
-$action_view_map['themeconfigsettings'] = 'themeconfigsettings';
-$action_view_map['repair'] = 'repair';
-$action_view_map['configuretabs'] = 'configuretabs';
-$action_view_map['configureajaxui'] = 'configureajaxui';
-$action_view_map['configurefts'] = 'configurefts';
-$action_view_map['configureshortcutbar'] = 'configureshortcutbar';
-$action_view_map['viewofflineclients'] = 'viewofflineclients';
-$action_view_map['backups'] = 'backups';
-$action_view_map['globalsearchsettings'] = 'globalsearchsettings';
-$action_view_map['languages'] = 'languages';
+*}
+
+<form name="themeConfigSettings" method="POST">
+	<input type="hidden" name="module" value="Administration">
+	<input type="hidden" name="action" value="ThemeConfigSettings">
+    <input type="hidden" name="do" value="">
+	
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+		<tr>
+			<td>
+			<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" accessKey="{$APP.LBL_SAVE_BUTTON_TITLE}" class="button primary" onclick="document.themeConfigSettings.do.value='save';" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+			<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="document.themeConfigSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
+			</td>
+		</tr>
+	</table>
+
+	<div class='listViewBody' style='margin-bottom:5px'>
+		<table id="themeSettings" class="list view" style='margin-bottom:0;' border="0" cellspacing="0" cellpadding="0">
+
+            {foreach from=$config key=name item=def}
+                <tr>
+                    <td>{$mod[$def.vname]}</td>
+                    <td>
+                        {if $def.type == 'colour'}
+                            <input type="text" id="{$name}" name="{$name}" class="color" value="{$def.value}" size="15" />
+                        {elseif $def.type == 'bool'}
+                            <input  name="{$name}" value="false" type="hidden">
+                            <input  type="checkbox" name="{$name}" value="true" {if $def.value}CHECKED{/if}/>
+                        {/if}
+                    </td>
+                </tr>
+            {/foreach}
+		</table>
+	</div>
+	
+	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
+		<tr>
+			<td>
+				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+				<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" class="button" onclick="document.themeSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
+			</td>
+		</tr>
+	</table>
+</form>
