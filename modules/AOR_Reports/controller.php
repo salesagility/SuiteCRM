@@ -140,7 +140,7 @@ class AOR_ReportsController extends SugarController {
             $pdf->setAutoFont();
             $pdf->WriteHTML($stylesheet,1);
             $pdf->WriteHTML($head,2);
-            $pdf->WriteHTML($printable,3);
+            $pdf->WriteHTML( str_replace('CHECKED', 'checked="checked"', $printable), 3);
             $pdf->Output($this->bean->name.'.pdf', "D");
 
         }catch(mPDF_exception $e){
