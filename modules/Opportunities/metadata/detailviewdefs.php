@@ -37,69 +37,119 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs['Opportunities']['DetailView'] = array(
-    'templateMeta' => array('form' => array('buttons'=>array('EDIT', 'DUPLICATE', 'DELETE', 'FIND_DUPLICATES',)),
-       						'maxColumns' => '2', 
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-                           ),
-    'panels' => array(                           
-        'default' => array (
-	        array('name',
-	              'account_name', 
-	        ),
-	        
-	        array(
-	        	array('name'=>'amount','label' => '{$MOD.LBL_AMOUNT} ({$CURRENCY})'),
-	        	'date_closed',
-	        ),
-	         
-	        array (
-	        	'sales_stage',
-	        	'opportunity_type'
-	        ),
-	        
-	        array(
-	        	'probability',
-	        	'lead_source',
-	            
-	            
-	        ),  
-	        
-	        array (
-	        	'next_step',
-	            'campaign_name'
-	        ),
-	        array(
-	            array(
-	               'name'=>'description',
-	               'nl2br'=>true
-	            )
-	        )
+$viewdefs ['Opportunities'] = 
+array (
+  'DetailView' => 
+  array (
+    'templateMeta' => 
+    array (
+      'form' => 
+      array (
+        'buttons' => 
+        array (
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+          3 => 'FIND_DUPLICATES',
         ),
-        
-        'LBL_PANEL_ASSIGNMENT' => array(
-	        array (
-	          array (
-	            'name' => 'assigned_user_name',
-	            'label' => 'LBL_ASSIGNED_TO',
-	          ),
-	          array (
-	            'name' => 'date_modified',
-	            'label' => 'LBL_DATE_MODIFIED',
-	            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
-	          ),
-	        ),
-	        array (
-	          array (
-	            'name' => 'date_entered',
-	            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
-	          ),
-	        ),	     
+      ),
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
         ),
-
-    )
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'useTabs' => true,
+      'tabDefs' => 
+      array (
+        'DEFAULT' => 
+        array (
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+        ),
+        'LBL_PANEL_ASSIGNMENT' => 
+        array (
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+        ),
+      ),
+    ),
+    'panels' => 
+    array (
+      'default' => 
+      array (
+        0 => 
+        array (
+          0 => 'name',
+          1 => 'account_name',
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'amount',
+            'label' => '{$MOD.LBL_AMOUNT} ({$CURRENCY})',
+          ),
+          1 => 'date_closed',
+        ),
+        2 => 
+        array (
+          0 => 'sales_stage',
+          1 => 'opportunity_type',
+        ),
+        3 => 
+        array (
+          0 => 'probability',
+          1 => 'lead_source',
+        ),
+        4 => 
+        array (
+          0 => 'next_step',
+          1 => 'campaign_name',
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'description',
+            'nl2br' => true,
+          ),
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'assigned_user_name',
+            'label' => 'LBL_ASSIGNED_TO',
+          ),
+        ),
+      ),
+      'LBL_PANEL_ASSIGNMENT' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'date_modified',
+            'label' => 'LBL_DATE_MODIFIED',
+            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+          ),
+          1 =>
+          array (
+            'name' => 'date_entered',
+            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+          ),
+        ),
+      ),
+    ),
+  ),
 );
 ?>
