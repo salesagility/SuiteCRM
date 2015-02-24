@@ -710,6 +710,7 @@ $mod_strings = array(
                 'iframe' => 'IFrame',
                 'datetimecombo' =>'Datetime',
 				'decimal'=>'Decimal',
+                'image' => 'Image',
 ),
 'labelTypes' => array(
     "" => "Frequently used labels",
