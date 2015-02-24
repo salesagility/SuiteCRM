@@ -87,7 +87,8 @@ class SugarWidgetField extends SugarWidget {
 
 	function & displayDetail($layout_def) {
 
-		return '';
+        $layout_def = '';
+		return $layout_def;
 	}
 	
 	function displayHeaderCellPlain($layout_def) 

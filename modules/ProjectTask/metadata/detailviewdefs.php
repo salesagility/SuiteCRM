@@ -39,94 +39,174 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs['ProjectTask']['DetailView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
-                            'includes'=> array(
-                                         array('file'=>'modules/ProjectTask/ProjectTask.js'),
-                                         	),
-                            'form' => array(
-										'buttons' => array( 'EDIT',
-																'DUPLICATE', 'DELETE',
-														),
-										'hideAudit' => true,
-											),
-
-    ),
- 'panels' =>array (
-  'default' =>
+$viewdefs ['ProjectTask'] =
+array (
+  'DetailView' => 
   array (
-
+    'templateMeta' => 
     array (
-      'name',
-
+      'maxColumns' => '2',
+      'widths' => 
       array (
-        'name' => 'project_task_id',
-        'label' => 'LBL_TASK_ID',
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
       ),
-    ),    
-
-    array (
-      'date_start',
-      'date_finish',
-    ),
-	array (
-		array (
-		        'name' => 'assigned_user_name',
-		        'label' => 'LBL_ASSIGNED_USER_ID',
-		      ),
-		array (
-		),
-	),    
-
-
-    array (
-		'status',
-		'priority',
-    ),    
-    
-    array (
-      'percent_complete',
+      'includes' => 
       array (
-        'name' => 'milestone_flag',
-        'label' => 'LBL_MILESTONE_FLAG',
+        0 => 
+        array (
+          'file' => 'modules/ProjectTask/ProjectTask.js',
+        ),
       ),
-    ),    
-
-
-    array (
-
+      'form' => 
       array (
-        'name' => 'project_name',
-        'customCode' => '<a href="index.php?module=Project&action=DetailView&record={$fields.project_id.value}">{$fields.project_name.value}&nbsp;</a>',
-        'label' => 'LBL_PARENT_ID',
+        'buttons' => 
+        array (
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+        ),
+        'hideAudit' => true,
       ),
-    ),
-    
-    array (
-
-      'task_number',
-      'order_number',
-    ),
-
-    array (
-      'estimated_effort',
-	  'utilization',      
-    ),            
-
-    array (
-
+      'useTabs' => true,
+      'tabDefs' => 
       array (
-        'name' => 'description',
+        'LBL_PANEL_OVERVIEW' =>
+        array (
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+        ),
+        'LBL_PANEL_ASSIGNMENT' =>
+         array (
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+         ),
       ),
     ),
-
+    'panels' => 
+    array (
+      'LBL_PANEL_OVERVIEW' =>
+      array (
+        0 => 
+        array (
+          0 => 'name',
+        ),
+        1 => 
+        array (
+          0 => 'date_start',
+          1 => 'date_finish',
+        ),
+        2 => 
+        array (
+          0 => 'status',
+          1 => 'priority',
+        ),
+        3 => 
+        array (
+          0 => 'percent_complete',
+          1 => 
+          array (
+            'name' => 'predecessors',
+            'label' => 'LBL_PREDECESSORS',
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
+          array (
+            'name' => 'assigned_user_name',
+            'label' => 'LBL_ASSIGNED_USER_ID',
+          ),
+          1 => 
+          array (
+            'name' => 'relationship_type_c',
+            'studio' => 'visible',
+            'label' => 'LBL_RELATIONSHIP_TYPE',
+          ),
+        ),
+        5 => 
+        array (
+          0 => 
+          array (
+            'name' => 'milestone_flag',
+            'label' => 'LBL_MILESTONE_FLAG',
+          ),
+        ),
+        6 => 
+        array (
+          0 => 
+          array (
+            'name' => 'project_name',
+            'customCode' => '<a href="index.php?module=Project&action=DetailView&record={$fields.project_id.value}">{$fields.project_name.value}&nbsp;</a>',
+            'label' => 'LBL_PARENT_ID',
+          ),
+        ),
+        7 => 
+        array (
+          0 => 'task_number',
+          1 => 'order_number',
+        ),
+        8 => 
+        array (
+          0 => 'estimated_effort',
+          1 => 'utilization',
+        ),
+        9 => 
+        array (
+          0 => 
+          array (
+            'name' => 'description',
+          ),
+        ),
+        10 => 
+        array (
+          0 => 
+          array (
+            'name' => 'duration',
+            'label' => 'LBL_DURATION',
+          ),
+          1 => 
+          array (
+            'name' => 'actual_duration',
+            'label' => 'LBL_ACTUAL_DURATION',
+          ),
+        ),
+        11 => 
+        array (
+          0 => 
+          array (
+            'name' => 'duration_unit',
+            'label' => 'LBL_DURATION_UNIT',
+          ),
+        ),
+      ),
+    'LBL_PANEL_ASSIGNMENT' =>
+        array (
+            0 =>
+                array (
+                    0 =>
+                        array (
+                            'name' => 'date_entered',
+                            'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+                            'label' => 'LBL_DATE_ENTERED',
+                        ),
+                    1 =>
+                        array (
+                            'name' => 'date_modified',
+                            'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+                            'label' => 'LBL_DATE_MODIFIED',
+                        ),
+                ),
+        ),
+    ),
   ),
-)
-
-
 );
 ?>

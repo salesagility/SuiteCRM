@@ -38,9 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
-
-
 $listViewDefs ['Accounts'] = 
 array (
   'NAME' => 
@@ -74,6 +71,21 @@ array (
     'label' => 'LBL_LIST_ASSIGNED_USER',
     'module' => 'Employees',
     'id' => 'ASSIGNED_USER_ID',
+    'default' => true,
+  ),
+  'EMAIL1' => 
+  array (
+    'width' => '15%',
+    'label' => 'LBL_EMAIL_ADDRESS',
+    'sortable' => false,
+    'link' => true,
+    'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
+    'default' => true,
+  ),
+  'DATE_ENTERED' => 
+  array (
+    'width' => '5%',
+    'label' => 'LBL_DATE_ENTERED',
     'default' => true,
   ),
   'ACCOUNT_TYPE' => 
@@ -208,20 +220,5 @@ array (
     'label' => 'LBL_MODIFIED',
     'default' => false,
   ),
-  'EMAIL1' => 
-  array(
-    'width' => '15%', 
-    'label' => 'LBL_EMAIL_ADDRESS',
-    'sortable' => false,
-    'link' => true,
-    'customCode' => '{$EMAIL1_LINK}{$EMAIL1}</a>',
-    'default' => true
-  ),  
-  'DATE_ENTERED' => 
-  array (
-    'width' => '5%',
-    'label' => 'LBL_DATE_ENTERED',
-    'default' => true,
-  ),  
 );
 ?>

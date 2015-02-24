@@ -78,7 +78,7 @@ $mod_strings = array (
   'LBL_DURATION' => 'Duration',
   'LBL_INVITE_TEMPLATES' => 'Email Invite Template',
   'LBL_INVITE_PDF' => 'Send Invites',
-  'LBL_EDITVIEW_PANEL1' => 'Event Details', 
+  'LBL_EDITVIEW_PANEL1' => 'Event Details',
   'LBL_DEFAULT_SUBPANEL_TITLE' => 'Delegates',
   'LBL_ACCEPT_REDIRECT' => 'Accept Redirect URL',
   'LBL_DECLINE_REDIRECT' => 'Decline Redirect URL',
@@ -105,5 +105,6 @@ $mod_strings = array (
   'LBL_ERROR_MSG_3' => 'More than 10 emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See the Sugar error log.)',
   'LBL_ERROR_MSG_4' => ' emails have failed to send. Please check that all the contacts you are inviting have a valid email address. (See the Sugar error log.)',
   'LBL_ERROR_MSG_5' => 'Invalid Email Template',
+  'LBL_EMAIL_INVITE' => 'Email Invite',
 );
 //LBL_ERROR_MSG_4 Begins with a number(controller.php line 581) for example 10 emails have failed to send. 
