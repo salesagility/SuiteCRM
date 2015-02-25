@@ -258,16 +258,16 @@ class AOW_WorkFlow extends Basic {
 
                     switch($condition->value_type) {
                         case 'Field':
-                            $data = $condition_module->field_defs[$condition->value];
+                            $data = $module->field_defs[$condition->value];
 
                             if($data['type'] == 'relate' && isset($data['id_name'])) {
                                 $condition->value = $data['id_name'];
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $value = $table_alias.'_cstm.'.$condition->value;
-                                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                                $value = $module->table_name.'_cstm.'.$condition->value;
+                                $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
                             } else {
-                                $value = $table_alias.'.'.$condition->value;
+                                $value = $module->table_name.'.'.$condition->value;
                             }
                             break;
                         case 'Any_Change':
@@ -282,12 +282,12 @@ class AOW_WorkFlow extends Basic {
                                     $value = 'UTC_TIMESTAMP()';
                                 }
                             } else {
-                                $data = $condition_module->field_defs[$params[0]];
+                                $data = $module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                    $value = $table_alias.'_cstm.'.$params[0];
-                                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                                    $value = $module->table_name.'_cstm.'.$params[0];
+                                    $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
                                 } else {
-                                    $value = $table_alias.'.'.$params[0];
+                                    $value = $module->table_name.'.'.$params[0];
                                 }
                             }
 
