@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $subpanel_layout = array(
 	'top_buttons' => array(
 		array('widget_class' => 'SubPanelTopCreateButton'),
-		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
+		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'AOR_Scheduled_Reports'),
 	),
 
 	'where' => '',

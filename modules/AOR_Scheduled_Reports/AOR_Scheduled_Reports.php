@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,16 +37,42 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/**
- * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
- */
-require_once 'modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports_sugar.php';
 require_once 'modules/AOR_Scheduled_Reports/lib/Cron/includeCron.php';
-class AOR_Scheduled_Reports extends AOR_Scheduled_Reports_sugar {
-	
-	function AOR_Scheduled_Reports(){	
-		parent::AOR_Scheduled_Reports_sugar();
+class AOR_Scheduled_Reports extends basic {
+
+    var $new_schema = true;
+    var $module_dir = 'AOR_Scheduled_Reports';
+    var $object_name = 'AOR_Scheduled_Reports';
+    var $table_name = 'aor_scheduled_reports';
+    var $importable = false;
+    var $disable_row_level_security = true;
+    var $id;
+    var $name;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $modified_by_name;
+    var $created_by;
+    var $created_by_name;
+    var $description;
+    var $deleted;
+    var $created_by_link;
+    var $modified_user_link;
+    var $schedule;
+    var $status;
+    var $last_run;
+    var $aor_report_id;
+
+	function AOR_Scheduled_Reports(){
+        parent::Basic();
 	}
+
+    function bean_implements($interface){
+        switch($interface){
+            case 'ACL': return true;
+        }
+        return false;
+    }
 
     function shouldRun(DateTime $date){
         global $timedate;

@@ -461,6 +461,7 @@ $app_list_strings['moduleList']['AOR_Reports'] = 'Reportes';
 $app_list_strings['moduleList']['AOR_Conditions'] = 'Condiciones de Reportes';
 $app_list_strings['moduleList']['AOR_Charts'] = 'Gráficos de Reportes';
 $app_list_strings['moduleList']['AOR_Fields'] = 'Campos de Reportes';
+$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Informes programados';
 $app_list_strings['aor_operator_list']['Equal_To'] = 'Igual a';
 $app_list_strings['aor_operator_list']['Not_Equal_To'] = 'No igual a';
 $app_list_strings['aor_operator_list']['Greater_Than'] = 'Mayor que';
@@ -500,6 +501,33 @@ $app_list_strings['aor_function_list']['MIN'] = 'Minimo';
 $app_list_strings['aor_function_list']['MAX'] = 'Maximo';
 $app_list_strings['aor_function_list']['SUM'] = 'Suma';
 $app_list_strings['aor_function_list']['AVG'] = 'Promedio';
+$app_list_strings['aor_total_options'][''] = '';
+$app_list_strings['aor_total_options']['COUNT'] = 'Cantidad';
+$app_list_strings['aor_total_options']['SUM'] = 'Suma';
+$app_list_strings['aor_total_options']['AVG'] = 'Promedio';
+$app_list_strings['aor_chart_types']['bar'] = 'Gráfico de barras';
+$app_list_strings['aor_chart_types']['line'] = 'Gráfico de líneas';
+$app_list_strings['aor_chart_types']['pie'] = 'Gráfico de sectores';
+$app_list_strings['aor_chart_types']['radar'] = 'Gráfico radial';
+$app_list_strings['aor_chart_types']['polar'] = 'Gráfico de polar';
+$app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Mensual';
+$app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'Semanal';
+$app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'Diario';
+$app_list_strings['aor_scheduled_reports_status_dom']['active'] = 'Active';
+$app_list_strings['aor_scheduled_reports_status_dom']['inactive'] = 'Inactive';
+$app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
+$app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
+$app_strings['LBL_CRON_AT'] = 'at';
+$app_strings['LBL_CRON_RAW'] = 'Advanced';
+$app_strings['LBL_CRON_MIN'] = 'Min';
+$app_strings['LBL_CRON_HOUR'] = 'Hour';
+$app_strings['LBL_CRON_DAY'] = 'Day';
+$app_strings['LBL_CRON_MONTH'] = 'Month';
+$app_strings['LBL_CRON_DOW'] = 'DOW';
+$app_strings['LBL_CRON_DAILY'] = 'Daily';
+$app_strings['LBL_CRON_WEEKLY'] = 'Weekly';
+$app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
+
 
 /**
  * Advanced OpenWorkflow, Automating SugarCRM.

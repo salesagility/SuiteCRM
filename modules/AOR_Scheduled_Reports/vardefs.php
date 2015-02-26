@@ -2,7 +2,6 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -38,180 +37,89 @@
  ********************************************************************************/
 
 $dictionary['AOR_Scheduled_Reports'] = array(
-	'table'=>'aor_scheduled_reports',
-	'audited'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
-            'email1' =>
-                array (
-                    'name' => 'email1',
-                    'vname' => 'LBL_EMAIL',
-                    'group' => 'email1',
-                    'type' => 'varchar',
-                    'function' =>
-                        array (
-                            'name' => 'getEmailAddressWidget',
-                            'returns' => 'html',
-                        ),
-                    'source' => 'non-db',
-                    'studio' =>
-                        array (
-                            'editField' => true,
-                            'searchview' => false,
-                        ),
-                    'full_text_search' =>
-                        array (
-                            'boost' => 3,
-                            'analyzer' => 'whitespace',
-                        ),
-                ),
-            'email_addresses_primary' =>
-                array (
-                    'name' => 'email_addresses_primary',
-                    'type' => 'link',
-                    'relationship' => 'aor_scheduled_reports_email_addresses_primary',
-                    'source' => 'non-db',
-                    'vname' => 'LBL_EMAIL_ADDRESS_PRIMARY',
-                    'duplicate_merge' => 'disabled',
-                ),
-            'email_addresses' =>
-                array (
-                    'name' => 'email_addresses',
-                    'type' => 'link',
-                    'relationship' => 'aor_scheduled_reports_email_addresses',
-                    'source' => 'non-db',
-                    'vname' => 'LBL_EMAIL_ADDRESSES',
-                    'reportable' => false,
-                    'unified_search' => true,
-                    'rel_fields' =>
-                        array (
-                            'primary_address' =>
-                                array (
-                                    'type' => 'bool',
-                                ),
-                        ),
-                ),
-            'email_addresses_non_primary' =>
-                array (
-                    'name' => 'email_addresses_non_primary',
-                    'type' => 'email',
-                    'source' => 'non-db',
-                    'vname' => 'LBL_EMAIL_NON_PRIMARY',
-                    'studio' => false,
-                    'reportable' => false,
-                    'massupdate' => false,
-                ),
-
-
-            'schedule' =>
-  array (
-    'required' => true,
-    'name' => 'schedule',
-    'vname' => 'LBL_SCHEDULE',
-    'type' => 'CronSchedule',
-    'dbType' => 'varchar',
-    'massupdate' => 0,
-    'no_default' => false,
-    'comments' => '',
-    'help' => '',
-    'importable' => 'true',
-    'duplicate_merge' => 'disabled',
-    'duplicate_merge_dom_value' => '0',
+    'table' => 'aor_scheduled_reports',
     'audited' => false,
-    'reportable' => true,
+    'duplicate_merge' => false,
+    'fields' => array(
+        'schedule' => array(
+            'required' => true,
+            'name' => 'schedule',
+            'vname' => 'LBL_SCHEDULE',
+            'type' => 'CronSchedule',
+            'dbType' => 'varchar',
+            'massupdate' => 0,
+            'no_default' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => 'true',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => '0',
+            'audited' => false,
+            'reportable' => true,
+            'unified_search' => false,
+            'merge_filter' => 'disabled',
+            'len' => '100',
+            'size' => '20',
+        ),
+        'last_run' => array(
+            'name' => 'last_run',
+            'vname' => 'LBL_LAST_RUN',
+            'dbtype' => 'datetime',
+            'type' => 'readonly',
+            'required' => false,
+            'reportable' => false,
+        ),
+        'status' => array(
+            'name' => 'status',
+            'vname' => 'LBL_STATUS',
+            'type' => 'enum',
+            'options' => 'aor_scheduled_reports_status_dom',
+            'len' => 100,
+            'editable' => false,
+            'required' => false,
+            'reportable' => false,
+            'importable' => 'required',
+        ),
+        "aor_report" => array(
+            'name' => 'aor_report',
+            'type' => 'link',
+            'relationship' => 'aor_scheduled_reports_aor_reports',
+            'module' => 'AOR_Reports',
+            'bean_name' => 'AOR_Report',
+            'link_type' => 'one',
+            'source' => 'non-db',
+            'vname' => 'LBL_AOR_REPORT',
+            'side' => 'left',
+            'id_name' => 'aor_report_id',
+        ),
+        "aor_report_name" => array(
+            'name' => 'aor_report_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_AOR_REPORT_NAME',
+            'required' => true,
+            'save' => true,
+            'id_name' => 'aor_report_id',
+            'link' => 'aor_scheduled_reports_aor_reports',
+            'table' => 'aor_reports',
+            'module' => 'AOR_Reports',
+            'rname' => 'name',
+        ),
+        "aor_report_id" => array(
+            'name' => 'aor_report_id',
+            'type' => 'id',
+            'reportable' => false,
+            'vname' => 'LBL_AOR_REPORT_ID',
+        ),
+
+
+    ),
+    'relationships' => array(
+    ),
+    'optimistic_locking' => true,
     'unified_search' => false,
-    'merge_filter' => 'disabled',
-    'len' => '100',
-    'size' => '20',
-  ),
-            'last_run' => array (
-                'name' => 'last_run',
-                'vname' => 'LBL_LAST_RUN',
-                'dbtype' => 'datetime',
-                'type' => 'readonly',
-                'required' => false,
-                'reportable' => false,
-            ),
-            'status' => array (
-                'name' => 'status',
-                'vname' => 'LBL_STATUS',
-                'type' => 'enum',
-                'options' => 'aor_scheduled_reports_status_dom',
-                'len' => 100,
-                'editable' => false,
-                'required' => false,
-                'reportable' => false,
-                'importable' => 'required',
-            ),
-            "aor_report" => array (
-                'name' => 'aor_report',
-                'type' => 'link',
-                'relationship' => 'aor_scheduled_reports_aor_reports',
-                'module'=>'AOR_Reports',
-                'bean_name'=>'AOR_Report',
-                'link_type'=>'one',
-                'source' => 'non-db',
-                'vname' => 'LBL_AOR_REPORT',
-                'side' => 'left',
-                'id_name' => 'aor_report_id',
-            ),
-            "aor_report_name" => array (
-                'name' => 'aor_report_name',
-                'type' => 'relate',
-                'source' => 'non-db',
-                'vname' => 'LBL_AOR_REPORT_NAME',
-                'save' => true,
-                'id_name' => 'aor_report_id',
-                'link' => 'aor_scheduled_reports_aor_reports',
-                'table' => 'aor_reports',
-                'module' => 'AOR_Reports',
-                'rname' => 'name',
-            ),
-            "aor_report_id" => array (
-                'name' => 'aor_report_id',
-                'type' => 'id',
-                'reportable' => false,
-                'vname' => 'LBL_AOR_REPORT_ID',
-            ),
-
-
-),
-	'relationships'=>array (
-        'aor_scheduled_reports_email_addresses' =>
-            array (
-                'lhs_module' => 'AOR_Scheduled_Reports',
-                'lhs_table' => 'aor_scheduled_reports',
-                'lhs_key' => 'id',
-                'rhs_module' => 'EmailAddresses',
-                'rhs_table' => 'email_addresses',
-                'rhs_key' => 'id',
-                'relationship_type' => 'many-to-many',
-                'join_table' => 'email_addr_bean_rel',
-                'join_key_lhs' => 'bean_id',
-                'join_key_rhs' => 'email_address_id',
-                'relationship_role_column' => 'bean_module',
-                'relationship_role_column_value' => 'AOR_Scheduled_Reports',
-            ),
-        'aor_scheduled_reports_email_addresses_primary' =>
-            array (
-                'lhs_module' => 'AOR_Scheduled_Reports',
-                'lhs_table' => 'aor_scheduled_reports',
-                'lhs_key' => 'id',
-                'rhs_module' => 'EmailAddresses',
-                'rhs_table' => 'email_addresses',
-                'rhs_key' => 'id',
-                'relationship_type' => 'many-to-many',
-                'join_table' => 'email_addr_bean_rel',
-                'join_key_lhs' => 'bean_id',
-                'join_key_rhs' => 'email_address_id',
-                'relationship_role_column' => 'primary_address',
-                'relationship_role_column_value' => '1',
-            ),
-),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+);
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOR_Scheduled_Reports','AOR_Scheduled_Reports', array('basic','assignable'));
+VardefManager::createVardef('AOR_Scheduled_Reports', 'AOR_Scheduled_Reports', array('basic'));
