@@ -274,6 +274,7 @@ class SugarTheme
     private $imageExtensions = array(
             'gif',
             'png',
+            'svg',
             'jpg',
             'tif',
             'bmp',
@@ -748,7 +749,12 @@ EOHTML;
 			$imageURL = $this->getImageURL($imageName,false);
 			if ( empty($imageURL) )
 				return false;
-	        $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
+            if(strpos($imageURL, '.svg', strlen($imageURL)-4)){
+                $cached_results[$imageName] = '<object class="icon" type="image/svg+xml" data="'.getJSPath($imageURL).'" ';
+            } else {
+                $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
+            }
+
 		}
 
 		$attr_width = (is_null($width)) ? "" : "width=\"$width\"";
