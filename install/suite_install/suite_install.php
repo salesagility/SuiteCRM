@@ -31,6 +31,9 @@ install_aod();
 require_once('install/suite_install/AdvancedOpenEvents.php');
 install_aoe();
 
+require_once('install/suite_install/AdvancedOpenReports.php');
+install_aor();
+
 require_once('install/suite_install/SecurityGroups.php');
 install_ss();
 

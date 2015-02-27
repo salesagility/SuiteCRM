@@ -98,16 +98,7 @@ class AOR_Report extends Basic {
     }
 
 
-
-
-    function build_report_chart($chartIds = null){
-
-        $result = $this->db->query($this->build_report_query());
-        $data = array();
-        while($row = $this->db->fetchByAssoc($result, false))
-        {
-            $data[] = $row;
-        }
+    function getReportFields(){
         $fields = array();
         foreach($this->get_linked_beans('aor_fields','AOR_Fields') as $field){
             $fields[] = $field;
@@ -115,12 +106,37 @@ class AOR_Report extends Basic {
         usort($fields,function($a,$b){
             return $a->field_order - $b->field_order;
         });
-        $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
+        return $fields;
+    }
+
+    const CHART_TYPE_PCHART = 'pchart';
+    const CHART_TYPE_CHARTJS = 'chartjs';
+
+    function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
+
+        $result = $this->db->query($this->build_report_query());
+        $data = array();
+        while($row = $this->db->fetchByAssoc($result, false))
+        {
+            $data[] = $row;
+        }
+        $fields = $this->getReportFields();
+
+        switch($chartType) {
+            case self::CHART_TYPE_PCHART:
+                $html = '<script src="modules/AOR_Charts/lib/pChart/imagemap.js"></script>';
+                break;
+            case self::CHART_TYPE_CHARTJS:
+                $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
+                break;
+        }
+        $x = 0;
         foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
             if($chartIds !== null && !in_array($chart->id,$chartIds)){
                 continue;
             }
-            $html .= $chart->buildChartHTML($data,$fields);
+            $html .= $chart->buildChartHTML($data,$fields,$x, $chartType);
+            $x++;
         }
         return $html;
     }
@@ -454,7 +470,7 @@ class AOR_Report extends Basic {
             if(!$field['display']){
                 continue;
             }
-            if($field['total']){
+            if($field['total'] && isset($totals[$label])){
                 $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
             }else{
                 $html .= "<td></td>";
@@ -476,6 +492,10 @@ class AOR_Report extends Basic {
             default:
                 return '';
         }
+    }
+
+    private function encloseForCSV($field){
+        return '"'.$field.'"';
     }
 
     function build_report_csv(){
@@ -515,7 +535,7 @@ class AOR_Report extends Basic {
 
 
             if($field->display){
-                $csv.= $field->label;
+                $csv.= $this->encloseForCSV($field->label);
                 $csv .= $delimiter;
             }
             ++$i;
@@ -529,9 +549,9 @@ class AOR_Report extends Basic {
             foreach($fields as $name => $att){
                 if($att['display']){
                     if($att['function'] != '' )
-                        $csv .= $row[$name];
+                        $csv .= $this->encloseForCSV($row[$name]);
                     else
-                        $csv .= trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name])));
+                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
                     $csv .= $delimiter;
                 }
             }
@@ -788,8 +808,11 @@ class AOR_Report extends Basic {
 
                 $condition_module = $module;
                 $table_alias = $condition_module->table_name;
-                if($path[0] != $module->module_dir){
+                if(!empty($path[0]) && $path[0] != $module->module_dir){
                     foreach($path as $rel){
+                        if(empty($rel)){
+                            continue;
+                        }
                         $rel = strtolower($rel);
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                         $oldAlias = $table_alias;
@@ -826,6 +849,13 @@ class AOR_Report extends Basic {
                         $query = $this->build_report_query_join($table_alias.'_cstm',$table_alias.'_cstm',$oldAlias, $condition_module, 'custom', $query);
                     } else {
                         $field = $this->db->quoteIdentifier($table_alias).'.'.$condition->field;
+                    }
+
+                    if(!empty($this->user_parameters[$condition->id]) && $condition->parameter){
+                        $condParam = $this->user_parameters[$condition->id];
+                        $condition->value = $condParam['value'];
+                        $condition->operator = $condParam['operator'];
+                        $condition->value_type = $condParam['type'];
                     }
 
                     switch($condition->value_type) {
@@ -909,7 +939,7 @@ class AOR_Report extends Basic {
 
                         case 'Value':
                         default:
-                            $value = "'".$condition->value."'";
+                            $value = "'".$this->db->quote($condition->value)."'";
                             break;
                     }
 

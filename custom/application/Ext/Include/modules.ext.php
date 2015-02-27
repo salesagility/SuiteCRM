@@ -100,8 +100,9 @@ $beanFiles['AOR_Condition'] = 'modules/AOR_Conditions/AOR_Condition.php';
 $modules_exempt_from_availability_check['AOR_Conditions'] = 'AOR_Conditions';
 $report_include_modules['AOR_Conditions'] = 'AOR_Conditions';
 $modInvisList[] = 'AOR_Conditions';
-
-
+$beanList['AOR_Scheduled_Reports'] = 'AOR_Scheduled_Reports';
+$beanFiles['AOR_Scheduled_Reports'] = 'modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports.php';
+$moduleList[] = 'AOR_Scheduled_Reports';
  
  //WARNING: The contents of this file are auto-generated
 $beanList['SecurityGroups'] = 'SecurityGroup';

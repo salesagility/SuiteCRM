@@ -143,6 +143,7 @@
             loadTreeData($(this).val());
             clearFieldLines();
             clearConditionLines();
+            clearChartLines();
         });
 
 
