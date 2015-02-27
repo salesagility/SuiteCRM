@@ -39,7 +39,7 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile_menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -47,8 +47,21 @@
             </button>
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
+                        <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
+                        <li role="presentation"><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
+                        <li role="presentation"><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
+                        <li role="presentation"><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
+                        <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
+                        <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                    </ul>
+                </div>
                 <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a href="javascript:void(0)" onclick="refresh();"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
                 <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
             </div>
             <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
@@ -62,15 +75,18 @@
                 </span>
             </form>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            {if $USE_GROUP_TABS}
+
+        <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
+        {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
                         <li class="topnav">
-                        <span class="currentTabLeft">&nbsp;</span>
-                        <span class="currentTab" style="color:#ffffff !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                        {if $name != 'Home'}
+                            <span class="currentTabLeft">&nbsp;</span>
+                            <span class="currentTab" style="color:#ffffff !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                        {/if}
                             <ul class="dropdown-menu" role="menu">
                                 {if count($shortcutTopMenu.$name) > 0}
                                     <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
@@ -126,8 +142,10 @@
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                 {if $name == $MODULE_TAB}
                 <li class="topnav">
-                    <span class="currentTabLeft">&nbsp;</span>
-                    {if $name !='Home'}<span class="dropdown-toggle headerlinks currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>{/if}
+                    {if $name !='Home'}
+                        <span class="currentTabLeft">&nbsp;</span>
+                        <span class="dropdown-toggle headerlinks currentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span>&nbsp;</span>
+                    {/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
@@ -160,8 +178,10 @@
                 </li>
             {else}
                 <li class="topnav">
-                    <span class="notCurrentTabLeft">&nbsp;</span>
-                    {if $name != 'Home'}<span class="dropdown-toggle headerlinks notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>{/if}
+                    {if $name != 'Home'}
+                        <span class="notCurrentTabLeft">&nbsp;</span>
+                        <span class="dropdown-toggle headerlinks notCurrentTab">{sugar_link id="moduleTab_$name" module=$name data=$module}</span><span class="notCurrentTabRight">&nbsp;</span>
+                    {/if}
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                         <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
@@ -195,7 +215,7 @@
             {/if}
             {/foreach}
             {if count($moduleExtraMenu) > 0}
-                <li class="dropdown-toggle moremenu">
+                <li class="dropdown-toggle moremenu ">
                     <a class="dropdown-toggle" data-toggle="dropdown">{$APP.LBL_MORE} &raquo;</a>
                     <ul class="dropdown-menu" role="menu">
                         <div class="bigmenu">
@@ -227,6 +247,7 @@
                     <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                 </ul>
             </div>
+
             <div id="search" class="dropdown nav navbar-nav navbar-right">
                 <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown" aria-expanded="true">
                     <span class="glyphicon glyphicon-search"> </span>
@@ -258,8 +279,39 @@
                     </span>
                 </div>
             </form>
+            <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
+                <a class="dropdown-toggle" aria-expanded="false">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
+                    <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
+                    <li role="presentation"><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
+                    <li role="presentation"><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
+                    <li role="presentation"><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
+                    <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
+                    <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
+
+        <div class="collapse navbar-collapse hidden-lg hidden-md" id="mobile_menu">
+            {foreach from=$groupTabs item=modules key=group name=groupList}
+                {if $smarty.foreach.groupList.last}
+                {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
+                                {foreach from=$modules.modules item=module key=modulekey}
+                                    <li>
+                                        {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
+                                        {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
+                                    </li>
+                                {/foreach}
+                                {foreach from=$modules.extra item=submodulename key=submodule}
+                                    <li><a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a></li>
+                                {/foreach}
+                {/if}
+            {/foreach}
+
+        </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
 <!--Start Page Container and Responsive Sidebar -->
@@ -267,18 +319,6 @@
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <div id="userlinks">
-                <a href="index.php" title="Home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
-                <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}" title="{$CURRENT_USER}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a href="javascript:void(0)" onclick="refresh();" title="Refresh"><span class=" glyphicon glyphicon-refresh" aria-hidden="true"></span></a>
-                <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' title="{$LOGOUT_LABEL}"><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
-            </div>
-            <div id="sitemapLink">
-                <span id="sitemapLinkSpan">
-                    <a href="#"> Create New Record<span id="quickcreateplus" class="glyphicon glyphicon-plus"></span></a>
-                </span>
-            </div>
-            <hr class="hr">
             <div id="actionMenuSidebar">
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
@@ -318,7 +358,5 @@
         </div>
     </div>
 </div>
-<!-- Sitemap for CRM -->
-<span id='sm_holder'></span>
     <!--End Responsive Sidebar -->
     <!--Start Page content -->

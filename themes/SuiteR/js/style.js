@@ -189,6 +189,9 @@ SUGAR.append(SUGAR.themes, {
         if (el) {
             $('#ajaxHeader').html(html);
             loadSidebar();
+            if ($(window).width() < 979) {
+                $('#bootstrap-container').removeClass('main');
+            }
         }
     }, actionMenu: function () {
         $("ul.clickMenu").each(function (index, node) {
@@ -254,12 +257,6 @@ $('#backtotop').click(function(event) {
     $('html, body').animate({scrollTop:0}, 500); // Scroll speed to the top
 });
 
-// Refresh function for refresh button on sidebar
-function refresh(reload)
-{
-    window.location.reload(true);
-}
-
 // Tabs jQuery for Admin panel
 $(function() {
     var tabs = $( "#tabs" ).tabs();
@@ -282,10 +279,10 @@ var checkContents = setInterval(function(){
             element = $(".list.View");
         }
 
-        $('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        $('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
         $(element).footable();
-        $(".footable").find("th:first").attr("data-toggle","true");
+        //$(".footable").find("th:first").attr("data-toggle","true");
 
         // Button to toggle list view search
         $('.showsearch').click(function() {
@@ -303,6 +300,22 @@ $(window).resize(function () {
     }
     if ($(window).width() > 980 && $('.sidebar').is(':visible')) {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
+    }
+    if ($('.navbar-nav').width() < 600 && $(window).width() > 980){
+        $('#usermenucollapsed, #searchbutton').css({
+            'display': 'none'
+        });
+        $('#searchform').css({
+            'display': 'inline'
+        })
+            $('#usermenu').css({
+            'display': 'inline',
+            'padding' :'0',
+            //'border-left' :'1px solid #bbbbbb',
+            'margin': '0 0 0 10px',
+            'font-size':'1.1em'
+        });
+
     }
 });
 
@@ -338,4 +351,19 @@ function loadSidebar() {
 
     }
 }
+
+update_screen_resolution();
+
+    $(window).resize(function () {
+        update_screen_resolution();
+    });
+
+function update_screen_resolution(){
+    $.ajax({
+        url: 'index.php?module=Calendar&action=processScreenSize',
+        type: 'post',
+        data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
+    });
+}
+
 // End of custom jQuery
