@@ -27,6 +27,7 @@ class AOR_Field extends Basic {
 	var $module_dir = 'AOR_Fields';
 	var $object_name = 'AOR_Field';
 	var $table_name = 'aor_fields';
+    var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 	

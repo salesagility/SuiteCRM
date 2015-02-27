@@ -49,6 +49,7 @@ class AOD_IndexEvent_sugar extends Basic {
 	var $module_dir = 'AOD_IndexEvent';
 	var $object_name = 'AOD_IndexEvent';
 	var $table_name = 'aod_indexevent';
+	var $tracker_visibility = false;
 	var $importable = false;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 		var $id;

@@ -29,6 +29,7 @@ class AOW_Action extends Basic {
 	var $module_dir = 'AOW_Actions';
 	var $object_name = 'AOW_Action';
 	var $table_name = 'aow_actions';
+	var $tracker_visibility = false;
 	var $importable = false;
 	var $disable_row_level_security = true ;
 	
