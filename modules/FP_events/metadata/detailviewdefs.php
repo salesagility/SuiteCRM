@@ -46,12 +46,22 @@ array (
           'field' => '30',
         ),
       ),
-      'useTabs' => false,
+      'useTabs' => true,
       'tabDefs' => 
       array (
-        'LBL_EDITVIEW_PANEL1' => 
+        'LBL_PANEL_OVERVIEW' =>
         array (
-          'newTab' => false,
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+        ),
+        'LBL_EMAIL_INVITE' => 
+        array (
+          'newTab' => true,
+          'panelDefault' => 'expanded',
+        ),
+        'LBL_PANEL_ASSIGNMENT' =>
+        array (
+          'newTab' => true,
           'panelDefault' => 'expanded',
         ),
       ),
@@ -59,7 +69,7 @@ array (
     ),
     'panels' => 
     array (
-      'lbl_editview_panel1' => 
+      'LBL_PANEL_OVERVIEW' =>
       array (
         0 => 
         array (
@@ -79,25 +89,12 @@ array (
           ),
           1 => 
           array (
-            'name' => 'budget',
-            'label' => 'LBL_BUDGET',
-          ),
-        ),
-        2 => 
-        array (
-          0 => 
-          array (
             'name' => 'date_end',
             'comment' => 'Date meeting ends',
             'label' => 'LBL_DATE_END',
           ),
-          1 => 
-          array (
-            'name' => 'created_by_name',
-            'label' => 'LBL_CREATED',
-          ),
         ),
-        3 => 
+        2 => 
         array (
           0 => 
           array (
@@ -107,12 +104,31 @@ array (
           ),
           1 => 
           array (
+            'name' => 'budget',
+            'label' => 'LBL_BUDGET',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 'description',
+        ),
+        4 => 
+        array (
+          0 => 'assigned_user_name',
+        ),
+      ),
+      'LBL_EMAIL_INVITE' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
             'name' => 'invite_templates',
             'studio' => 'visible',
             'label' => 'LBL_INVITE_TEMPLATES',
           ),
         ),
-        4 => 
+        1 => 
         array (
           0 => 
           array (
@@ -125,10 +141,23 @@ array (
             'label' => 'LBL_DECLINE_REDIRECT',
           ),
         ),
-        5 => 
+      ),
+      'LBL_PANEL_ASSIGNMENT' =>
+      array (
+        0 => 
         array (
-          0 => 'description',
-          1 => 'assigned_user_name',
+          0 => 
+          array (
+              'name' => 'date_entered',
+              'customCode' => '{$fields.date_entered.value} {$APP.LBL_BY} {$fields.created_by_name.value}',
+              'label' => 'LBL_DATE_ENTERED',
+          ),
+          1 => 
+          array (
+              'name' => 'date_modified',
+              'customCode' => '{$fields.date_modified.value} {$APP.LBL_BY} {$fields.modified_by_name.value}',
+              'label' => 'LBL_DATE_MODIFIED',
+          ),
         ),
       ),
     ),
