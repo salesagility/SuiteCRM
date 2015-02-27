@@ -143,7 +143,7 @@ class Call extends SugarBean {
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner = 'not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
 		// don't check if call is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -157,7 +157,7 @@ class Call extends SugarBean {
 					}
 			}
 		}
-		return parent::ACLAccess($view,$is_owner);
+		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
     // save date_end by calculating user input
     // this is for calendar
@@ -300,7 +300,7 @@ class Call extends SugarBean {
 		return $query;
 	}
 
-        function create_export_query(&$order_by, &$where, $relate_link_join='')
+        function create_export_query($order_by, $where, $relate_link_join='')
         {
             $custom_join = $this->getCustomJoin(true, true, $where);
             $custom_join['join'] .= $relate_link_join;
@@ -687,8 +687,7 @@ class Call extends SugarBean {
 		return $array_assign;
 	}
 
-	function save_relationship_changes($is_update) {
-		$exclude = array();
+	function save_relationship_changes($is_update, $exclude = array()) {
 		if(empty($this->in_workflow))
         {
             if(empty($this->in_import))

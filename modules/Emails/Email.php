@@ -1223,7 +1223,7 @@ class Email extends SugarBean {
 
 	///////////////////////////////////////////////////////////////////////////
 	////	RETRIEVERS
-	function retrieve($id, $encoded=true, $deleted=true) {
+	function retrieve($id = -1, $encoded=true, $deleted=true) {
 		// cn: bug 11915, return SugarBean's retrieve() call bean instead of $this
 		$ret = parent::retrieve($id, $encoded, $deleted);
 
@@ -2244,7 +2244,7 @@ class Email extends SugarBean {
 	}
 
 
-    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false) {
+    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false) {
 
 		if ($return_array) {
 			return parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, $return_array,$parentbean, $singleSelect);
@@ -2395,7 +2395,7 @@ class Email extends SugarBean {
 
 
 
-	function create_export_query(&$order_by, &$where)
+	function create_export_query($order_by, $where)
     {
 		$contact_required = stristr($where, "contacts");
 		$custom_join = $this->getCustomJoin(true, true, $where);
