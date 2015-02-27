@@ -52,7 +52,7 @@ $license_management = false;
 
 
 //Sugar Connect
-$admin_option_defs=array();
+/*$admin_option_defs=array();
 $license_key = 'no_key';
 
 $admin_option_defs['Administration']['support']= array('Support','LBL_SUPPORT_TITLE','LBL_SUPPORT','./index.php?module=Administration&action=SupportPortal&view=support_portal');
@@ -78,7 +78,7 @@ if(!empty($license->settings['license_latest_versions'])){
 	}
 }
 
-
+*/
 //sugar connect void
 //$admin_group_header[]= array('LBL_SUGAR_NETWORK_TITLE','',false,$admin_option_defs, 'LBL_SUGAR_NETWORK_DESC');
 

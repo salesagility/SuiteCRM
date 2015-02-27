@@ -44,7 +44,7 @@
 *}
 
 
-<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View footable'>
+<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list View'>
 {assign var="link_select_id" value="selectLinkTop"}
 {assign var="link_action_id" value="actionLinkTop"}
 {include file='include/ListView/ListViewPagination.tpl'}
