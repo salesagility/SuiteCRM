@@ -44,61 +44,6 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Intentos de Llamada';
 
 
 
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-$app_list_strings['moduleList']['FP_events'] = 'Eventos';
-$app_list_strings['moduleList']['FP_Event_Locations'] = 'Ubicaciones';
-$app_list_strings['invite_template_list'][''] = '';
-
-$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invitado';
-$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'No Invitado';
-$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Asisti贸';
-$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'No Asisti贸';
-$app_list_strings['fp_event_status_dom']['Accepted'] = 'Aceptado';
-$app_list_strings['fp_event_status_dom']['Declined'] = 'Rechazado';
-$app_list_strings['fp_event_status_dom']['No Response'] = 'Sin Respuesta';
-
-$app_strings['LBL_STATUS_EVENT'] = 'Estado de Invitaci贸n';
-$app_strings['LBL_ACCEPT_STATUS'] = 'Estado de Aceptaci贸n';
-
-
 /**
  *
  * @package Advanced OpenPortal
@@ -145,14 +90,6 @@ $app_list_strings['case_status_dom'] =
       'Closed_Rejected' => 'Rechazado',
       'Closed_Duplicate' => 'Duplicado',
   );
-
-
-$app_list_strings["moduleList"]["SecurityGroups"] = 'Administraci贸n de Grupos de Seguridad';
-$app_strings['LBL_LOGIN_AS'] = "Conexi髇 como ";
-$app_strings['LBL_LOGOUT_AS'] = "Cerrar sesi髇 como ";
-$app_strings['LBL_SECURITYGROUP'] = 'Administraci贸n de Grupo';
-
-
 
 /**
  * Advanced OpenReports, SugarCRM Reporting.
@@ -444,6 +381,69 @@ $app_list_strings['vat_list']['7.5'] = '7.5%';
 $app_list_strings['vat_list']['17.5'] = '17.5%';
 $app_list_strings['vat_list']['20.0'] = '20%';
 $app_list_strings['pdf_template_sample_dom'][''] = '';
+
+
+
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+
+$app_list_strings['moduleList']['FP_events'] = 'Eventos';
+$app_list_strings['moduleList']['FP_Event_Locations'] = 'Ubicaciones';
+$app_list_strings['invite_template_list'][''] = '';
+
+$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invitado';
+$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'No Invitado';
+$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Asisti贸';
+$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'No Asisti贸';
+$app_list_strings['fp_event_status_dom']['Accepted'] = 'Aceptado';
+$app_list_strings['fp_event_status_dom']['Declined'] = 'Rechazado';
+$app_list_strings['fp_event_status_dom']['No Response'] = 'Sin Respuesta';
+
+$app_strings['LBL_STATUS_EVENT'] = 'Estado de Invitaci贸n';
+$app_strings['LBL_ACCEPT_STATUS'] = 'Estado de Aceptaci贸n';
+
+
+
+$app_list_strings["moduleList"]["SecurityGroups"] = 'Administraci贸n de Grupos de Seguridad';
+$app_strings['LBL_LOGIN_AS'] = "Conexi髇 como ";
+$app_strings['LBL_LOGOUT_AS'] = "Cerrar sesi髇 como ";
+$app_strings['LBL_SECURITYGROUP'] = 'Administraci贸n de Grupo';
 
 
 
