@@ -42,7 +42,7 @@ require_once('include/SugarObjects/templates/basic/Basic.php');
 
 class Person extends Basic
 {
-    var $picture;
+    var $photo;
     /**
      * @var bool controls whether or not to invoke the getLocalFormatttedName method with title and salutation
      */
