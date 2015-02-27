@@ -28,6 +28,7 @@ class AOR_Condition extends Basic {
 	var $module_dir = 'AOR_Conditions';
 	var $object_name = 'AOR_Condition';
 	var $table_name = 'aor_conditions';
+    var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 	

@@ -348,8 +348,8 @@ $dictionary['AOS_Line_Item_Groups'] = array(
 'relationships'=>array (
 	'groups_aos_product_quotes' =>
 	array (
-	'lhs_module'=> 'AOS_Products_Quotes_Groups', 
-	'lhs_table'=> 'aos_products_quotes_groups', 
+                'lhs_module' => 'AOS_Line_Item_Groups',
+                'lhs_table' => 'aos_line_item_groups',
 	'lhs_key' => 'id',
 	'rhs_module'=> 'AOS_Products_Quotes', 
 	'rhs_table'=> 'aos_products_quotes', 
