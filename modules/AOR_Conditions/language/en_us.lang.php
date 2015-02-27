@@ -51,7 +51,6 @@ $mod_strings = array (
   'LBL_SEARCH_FORM_TITLE' => 'Search Conditions',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_AOR_CONDITIONS_SUBPANEL_TITLE' => 'Conditions',
   'LBL_NEW_FORM_TITLE' => 'New Conditions',
   'LBL_MODULE_PATH' => 'Module',
   'LBL_FIELD' => 'Field',
@@ -61,4 +60,5 @@ $mod_strings = array (
   'LBL_ORDER' => 'Order',
   'LBL_CONDITION_OPERATOR' => 'Condition Operator',
   'LBL_AOR_REPORT_ID' => 'Report Id',
+  'LBL_PARAMETER' => 'Parameter',
 );

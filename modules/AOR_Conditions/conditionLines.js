@@ -27,7 +27,7 @@ var condln_count = 0;
 var report_fields =  new Array();
 var report_module = '';
 
-function loadConditionLine(condition){
+function loadConditionLine(condition, overrideView){
 
     var prefix = 'aor_conditions_';
     var ln = 0;
@@ -37,25 +37,21 @@ function loadConditionLine(condition){
     for(var a in condition){
         var elem = document.getElementById(prefix + a + ln);
         if(elem != null){
-            if(elem.nodeName != 'INPUT') {
+            if(elem.nodeName !== 'INPUT') {
                 elem.innerHTML = condition[a];
+            }else if(elem.getAttribute('type') === 'checkbox'){
+                elem.setAttribute('checked',true);
             }else {
                 elem.value = condition[a];
             }
         }
     }
 
-    //var select_field = document.getElementById('aor_conditions_field'+ln);
-    //document.getElementById('aor_conditions_field_label'+ln).innerHTML = select_field.options[select_field.selectedIndex].text;
-
     if (condition['value'] instanceof Array) {
         condition['value'] = JSON.stringify(condition['value'])
     }
 
-    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'])
-
-    //getView(ln,action['id']);
-
+    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView);
 }
 
 function showConditionCurrentModuleFields(ln, value){
@@ -93,7 +89,10 @@ function showConditionCurrentModuleFields(ln, value){
 
 }
 
-function showConditionModuleField(ln, operator_value, type_value, field_value){
+function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView){
+    if(overrideView === undefined){
+        overrideView = action_sugar_grp1;
+    }
     if (typeof operator_value === 'undefined') { operator_value = ''; }
     if (typeof type_value === 'undefined') { type_value = ''; }
     if (typeof field_value === 'undefined') { field_value = ''; }
@@ -115,7 +114,7 @@ function showConditionModuleField(ln, operator_value, type_value, field_value){
             success: function(result) {
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
-                document.getElementById('aor_conditions_fieldTypeInput'+ln).onchange = function(){showConditionModuleFieldType(ln);};
+                document.getElementById('aor_conditions_fieldTypeInput'+ln).onchange = function(){showConditionModuleFieldType(ln, undefined, overrideView);};
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
@@ -136,9 +135,9 @@ function showConditionModuleField(ln, operator_value, type_value, field_value){
         var aor_field_type_name = "aor_conditions_value_type["+ln+"]";
         var aor_field_name = "aor_conditions_value["+ln+"]";
 
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleOperatorField&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_operator_name+"&aor_value="+operator_value+"&rel_field="+rel_field,callback);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getFieldTypeOptions&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_type_name+"&aor_value="+type_value+"&rel_field="+rel_field,callback2);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+field_value+"&aor_type="+type_value+"&rel_field="+rel_field,callback3);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleOperatorField&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_operator_name+"&aor_value="+operator_value+"&rel_field="+rel_field,callback);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getFieldTypeOptions&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_type_name+"&aor_value="+type_value+"&rel_field="+rel_field,callback2);
+        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+field_value+"&aor_type="+type_value+"&rel_field="+rel_field,callback3);
 
     } else {
         document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = ''
@@ -147,7 +146,10 @@ function showConditionModuleField(ln, operator_value, type_value, field_value){
     }
 }
 
-function showConditionModuleFieldType(ln, value){
+function showConditionModuleFieldType(ln, value, overrideView){
+    if(overrideView === undefined){
+        overrideView = action_sugar_grp1;
+    }
     if (typeof value === 'undefined') { value = ''; }
 
     var callback = {
@@ -166,7 +168,7 @@ function showConditionModuleFieldType(ln, value){
     var type_value = document.getElementById("aor_conditions_value_type["+ln+"]").value;
     var aor_field_name = "aor_conditions_value["+ln+"]";
 
-    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+value+"&aor_type="+type_value+"&rel_field="+rel_field,callback);
+    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+value+"&aor_type="+type_value+"&rel_field="+rel_field,callback);
 
 }
 
@@ -176,6 +178,7 @@ function showConditionModuleFieldType(ln, value){
  */
 
 function insertConditionHeader(){
+    var view = action_sugar_grp1;
     tablehead = document.createElement("thead");
     tablehead.id = "conditionLines_head";
     document.getElementById('conditionLines').appendChild(tablehead);
@@ -205,10 +208,16 @@ function insertConditionHeader(){
     var f=x.insertCell(5);
     f.style.color="rgb(0,0,0)";
     f.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE');
+
+    if(view === 'EditView') {
+        var h = x.insertCell(-1);
+        h.style.color = "rgb(0,0,0)";
+        h.innerHTML = SUGAR.language.get('AOR_Conditions', 'LBL_PARAMETER');
+    }
 }
 
 function insertConditionLine(){
-
+    var view = action_sugar_grp1;
     if (document.getElementById('conditionLines_head') == null) {
         insertConditionHeader();
     } else {
@@ -229,7 +238,7 @@ function insertConditionLine(){
         a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
         a.innerHTML += "<input type='hidden' name='aor_conditions_deleted[" + condln + "]' id='aor_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
     } else{
-        a.innerHTML = condln +1;
+        a.innerHTML = condln +1 + "<input class='aor_conditions_id' type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
     }
     a.style.width = '5%';
 
@@ -264,6 +273,12 @@ function insertConditionLine(){
     f.id='aor_conditions_fieldInput'+condln;
     f.style.width = '30%';
 
+
+    if(view === 'EditView') {
+        var h = x.insertCell(-1);
+        h.innerHTML += "<input id='aor_conditions_parameter" + condln + "' name='aor_conditions_parameter[" + condln + "]' value='1' type='checkbox'>";
+        h.style.width = '10%';
+    }
     condln++;
     condln_count++;
 
@@ -325,7 +340,7 @@ function addNodeToConditions(node){
     loadConditionLine(
         {
             'label' : node.name,
-            'module_path' : node.module,
+            'module_path' : node.module_path,
             'module_path_display' : node.module_path_display,
             'field' : node.id,
             'field_label' : node.name});

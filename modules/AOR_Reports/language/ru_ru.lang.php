@@ -83,4 +83,5 @@ $mod_strings = array (
   'LBL_DASHLET_SAVE' => 'Сохранить',
   'LBL_DASHLET_CHARTS' => 'Диаграммы',
   'LBL_DASHLET_ONLY_CHARTS' => 'Показывать только карты',
+  'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE' => 'Scheduled Reports',
 );
