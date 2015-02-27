@@ -10,6 +10,8 @@ $mod_strings['LBL_COLOUR_SETTINGS'] = 'Theme Settings';
 $mod_strings['LBL_COLOUR_DESC'] = 'Customise your SuiteCRM theme to match your branding.';
 $mod_strings['LBL_COLOUR_ADMIN_INTRO'] = 'Change these settings to customise your SuiteCRM theme. <strong>Note:</strong> Please remember to refresh (Ctrl + F5) once you have saved your settings.';
 
+$mod_strings['LBL_DISPLAY_SIDEBAR'] = 'Display Sidebar';
+
 $mod_strings['LBL_COLOUR_ADMIN_MENU'] = 'Menu colour config';
 $mod_strings['LBL_COLOUR_ADMIN_PAGE'] = 'Page colour config';
 $mod_strings['LBL_COLOUR_ADMIN_PAGEHEADER'] = 'Page header colour';

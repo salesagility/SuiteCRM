@@ -2579,7 +2579,7 @@ iframe.teamNoticeBox {
 
 .dashletPanel {
     padding:0;
-    margin:0 0 0 25px;
+    margin:15px;
 }
 
 .hd-center {
@@ -2664,13 +2664,6 @@ button #powered_by {
 #dashletsDialog_c{
     margin-left:-125px;
     margin-top:-50px;
-}
-
-button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]
-{
-    border: none;
-    /*background-color: #777777;*/
-    color: #000000;
 }
 
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover
@@ -2959,7 +2952,23 @@ input[type=text].cstm_code {
 /* Start SuiteCRM Responsive/Bootstrap additional CSS */
 .headerlinks a:link, .headerlinks a:visited {
     color:#ffffff;
+    padding:14px 5px 14px 0;
+    width:100%;
 }
+
+/*@media (max-width:979px){*/
+    /*.collapsing, .in {*/
+        /*background-color: #f7f7f7;*/
+
+    /*}*/
+    /*.collapsing ul li a, .in ul li a {*/
+        /*color: #555!important;*/
+    /*}*/
+    /*.collapsing ul li a:hover, .in ul li a:hover {*/
+        /*color: #f1f1f1!important;*/
+    /*}*/
+
+/*}*/
 
 .headerlinks a:hover {
     color:#428BCA;
@@ -3058,6 +3067,7 @@ fieldset[disabled] .btn-primary.active{
     background:#f7f7f7;
     padding:10px;
     min-width: 185px;
+    margin-top:1px !important;
 }
 
 .dropdown-menu em {
@@ -3105,7 +3115,7 @@ fieldset[disabled] .btn-primary.active{
 }
 
 .topnav{
-    padding:15px 4px 16px 0;
+    padding:15px 0 16px 0;
     font-size:1.1em;
 }
 
@@ -3116,15 +3126,6 @@ fieldset[disabled] .btn-primary.active{
 ul.topnav li a {
     text-decoration:none;
     font-size:1.4em;
-}
-
-ul.topnav li a:hover {
-    color:#ffffff;
-    background:#5CB85C;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
 }
 
 .hr {
@@ -3161,28 +3162,29 @@ li#usermenu:hover {
 
 @media (max-height:600px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 500px;
+        max-height: 500px !important;
         overflow: auto;
     }
 }
 
 @media (max-height:700px) {
     .moremenu ul, .dropdown-menu  {
-        max-height: 550px;
+        max-height: 550px !important;
         overflow: auto;
     }
 }
 
 @media (max-height:800px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 600px;
+        max-height: 600px !important;
+        max-height: 600px !important;
         overflow: auto;
     }
 }
 
 @media (max-height:900px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 700px;
+        max-height: 700px !important;
         overflow: auto;
     }
 }
@@ -3220,16 +3222,17 @@ li#usermenu:hover {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
     margin:2px;
     color: #fff;
     background-color: #3C8DBC;
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
+    font-size:1em !important;
+}
+
+.yui-layout-hd .button, .yui-layout-hd input[type=submit], .yui-layout-hd input[type=button]{
+    font-size:1.5em !important;
 }
 
 button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
@@ -3238,13 +3241,9 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
     margin:2px;
-    color: #565656;
-    background-color: #cccccc;
+    color: #ffffff;
+    background-color: #777777;
     padding:3px 10px;
     margin:2px;
     cursor:pointer;
@@ -3259,10 +3258,6 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     color: #fff;
     background-color: #286090;
     border-color: #204d74;
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
 }
 .button:active,
 .button.active,
@@ -3320,6 +3315,7 @@ ul.dashboardTabList li {
 
 .navbar-inverse .navbar-brand {
     color:#ffffff;
+    height:52px;
 }
 
 .btn-success {
@@ -3437,7 +3433,7 @@ table legend {
 
 #footernav{
     margin: 0 auto; padding: 0;
-    width:200px;
+    width:165px;
 }
 
 @media screen and (min-width:479px) {
@@ -3546,7 +3542,7 @@ table legend {
 
     /* Fix to add some padding on mobile/tablet resolutions */
     #pagecontent{
-        padding:10px;
+        /*padding:10px;*/
     }
 
     #dashletresponsive {
@@ -3637,11 +3633,20 @@ body {
 @media (min-width: 480px) and (max-width: 979px) {
     #userlinks_head {
         display:inline;
+        margin:2px 0 0 0;
     }
     #userlinks_head a {
         color: #ffffff;
         padding: 3px 10px 5px 10px;
         font-size: 1.1em;
+    }
+
+    #userlinks_head ul li a{
+        color:#3C8DBC;
+    }
+
+    #userlinks_head ul li a:hover{
+        color:#ffffff;
     }
 }
 
@@ -3652,6 +3657,10 @@ span#quickcreateplus{
 #quickcreatelinks{
     margin: 0 0 15px 12px;
     font-size:1.1em;
+}
+
+#quickcreatetop button{
+    margin:10px 0 0 0;
 }
 /* Main content */
 
@@ -3829,13 +3838,14 @@ li.moremenu {
         border: none;
     }
 
-    .detail td, .edit td {
+    .detail td, #DEFAULT td {
         display: inline-block;
         border: none;
         margin: 0 5px 0 25px;
         padding:0;
-        max-width:33%;
         font-size:1em;
+        width:auto;
+        min-width:35%;
     }
 }
 
@@ -3906,9 +3916,8 @@ li.moremenu {
         border:none;
     }
     /* Responsive dashlet styles */
-    .dashletContainer {
+    .dashletcontainer {
         float:left;
-        max-width:95%;
     }
     .dashletPanel {
         overflow:auto;
@@ -3939,10 +3948,6 @@ li.moremenu {
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;
-        -webkit-transition: all 0.3s ease-out;
-        -moz-transition: all 0.3s ease-out;
-        -o-transition: all 0.3s ease-out;
-        transition: all 0.3s ease-out;
         margin: 2px;
     }
     .quickcreate {
@@ -4012,6 +4017,7 @@ li.recentlinks_edit a:hover {
 
 a[id^=grouptab], a[id^=moduleTab]{
     color: #f7f7f7;
+    padding:15px 0 18px 0;
 }
 
 a[id^=grouptab]:visited, a[id^=grouptab]:active {
@@ -4073,22 +4079,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     font-size:1em;
 }
 
-#dlg {
-    left:300px;
-    top:75px;
-}
-
-@media (max-width:1360px){
-    #dlg{
-        top:50px;
-    }
-
-    #dlg .bd{
-        max-height:500px;
-        overflow-y:scroll;
-    }
-}
-
 .serverstats{
     margin:0;
     padding:0;
@@ -4126,44 +4116,70 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-@media (max-width:320px) {
-    .dashletcontainer {
-        width:67%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
-}
+/*@media (max-width:360px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
 
-@media (min-width:340px) and (max-width:360px) {
-    .dashletcontainer {
-        width:75%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
-}
+/*@media (min-width:321px) and (max-width:380px) {*/
+     /*{*/
+        /*width:88%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
 
-@media (min-width:480px) and (max-width:480px) {
-    .dashletcontainer {
-        width:95%;
-        position:relative;
-        margin:0;
-        float:left;
-        padding:0;
-    }
-}
+/*@media (min-width:381px) and (max-width:480px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
 
-@media (min-width:480px) and (max-width:959px) {
+/*@media (min-width:481px) and (max-width:640px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
+
+/*@media (min-width:641px) and (max-width:980px) {*/
+    /*.dashletcontainer {*/
+        /*width:100%;*/
+        /*position:relative;*/
+        /*margin:0;*/
+        /*float:left;*/
+        /*padding:0;*/
+    /*}*/
+/*}*/
+
+@media (max-width:980px) {
+    .dashletNonTable {
+      display:none;
+
+    }
+
     .dashletcontainer {
-        width:95%;
+        width:100%;
         position:relative;
         margin:0;
         float:left;
         padding:0;
     }
+
 }
 
 .table > thead > tr > th {
@@ -4270,7 +4286,6 @@ table#lineItems{
 
 .dashletPanel{
     border:1px solid #eeeeee; !important;
-    margin: 0 20px 20px 20px;
     box-shadow: #cccccc 0 5px 10px;
     -moz-box-shadow: #cccccc 0 5px 10px;
     -webkit-box-shadow: #cccccc 0 5px 10px;
@@ -4381,7 +4396,7 @@ div.action_buttons form {
 /* Fix to make Boostrap drop down hover on larger screens */
 
 @media (min-width:1024px) {
-    .navbar-nav > li:hover ul.dropdown-menu, #globalLinks:hover ul.dropdown-menu {
+    .navbar-nav > li:hover ul.dropdown-menu, #globalLinks:hover ul.dropdown-menu, #quickcreatetop:hover ul.dropdown-menu {
         display: block;
     }
 
@@ -4422,5 +4437,158 @@ div.action_buttons form {
 h3 span{
     font-weight:bold;
 }
+
+table.mceLayout, textarea.tinyMCE {
+    width: 100% !important;
+}
+
+/* make the toolbar wrap */
+.mceToolbar td {
+    display:table-row;
+    float: left;
+}
+.mceToolbar td:nth-of-type(11){
+    clear: left;
+}
+
+@media only screen and (max-width: 959px) {
+    table.mceLayout, textarea.richEditor, {
+        width: 90% !important;
+        overflow:scroll;
+    }
+
+    /* remove the toolbar wrap */
+    .mceToolbar td {
+        display:table-cell;
+        float: none;
+    }
+    .mceToolbar td:nth-of-type(11){
+        clear: none;
+    }
+    .defaultSkin .mceToolbar{
+        height:auto !important;
+    }
+}
+
+#layoutEditor .le_row {
+    margin: 2px 3px;
+    height:25px;
+    clear: both;
+    padding:0 10px 5px 20px !important;
+}
+
+#toolbox .le_panel, #toolbox .le_row, .le_field {
+    width: 150px;
+    float: left;
+    border: 1px solid #808080;
+    background: none repeat scroll 0% 0% #EEE;
+    padding:0 !important;
+    margin: 2px 3px;
+    overflow: hidden;
+}
+
+#toolbox{
+    height:100% !important;
+}
+
+#panels{
+    height:auto !important;
+    overflow:auto;
+}
+
+@media(min-width:980px) {
+    #dialog1_c {
+        margin-left: 40%;
+        margin-top:100px;
+    }
+    #dlg {
+        left:40%;;
+    }
+    #dlg_c{
+        left:50%;
+    }
+}
+
+#dlg {
+    left:300px;
+    top:75px;
+}
+
+@media (max-width:1360px){
+    #dlg{
+        top:50px;
+    }
+
+    #dlg .bd{
+        max-height:500px;
+        overflow-y:scroll;
+    }
+}
+
+@media (max-width:979px) and (max-height:1024px) {
+    #dashletsDialog_c{
+        margin-top:25px;
+        margin-left:0;
+        margin-bottom:25px;
+        height:70%;
+        overflow:scroll;
+    }
+}
+
+#mobile_menu{
+    overflow-y: scroll;
+    overflow-x: hidden !important;
+}
+
+#mobile_menu li{
+    list-style: none;
+    height:50px;
+    line-height:50px;
+    border-bottom: 1px solid #cccccc;
+}
+
+#mobile_menu a{
+    color: #ffffff;
+    display:block;
+}
+
+@media (min-width:979px) {
+    #mobile_menu{
+       display:none !important;
+    }
+}
+
+.navbar-collapse.collapse{
+    overflow:scroll !important;
+}
+
+#quickcreatetop a{
+    color:#ffffff !important;
+    margin:8px 0 8px 0 !important;
+    line-height:50px;
+    padding: 0 5px 0 5px !important;
+    cursor:pointer;
+}
+
+#quickcreatetop ul li{
+    padding:0 !important;
+    margin:0 !important;
+}
+
+#quickcreatetop ul li a{
+    color:#3C8DBC !important;
+    padding:0 3px 0 3px !important;
+    margin:0 !important;
+    line-height:35px;
+}
+
+#quickcreatetop ul li a:hover{
+    color:#ffffff !important;
+}
+
+#themePreview{
+    width:250px;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

@@ -104,7 +104,6 @@
 	</div>
 {/if}
 {$multiSelectData}
-<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
 {if $hideTable == false}
 	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
 	<thead>
@@ -124,9 +123,12 @@
 			<td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
+            {assign var='datahide' value="phone"}
 			{foreach from=$displayColumns key=colHeader item=params}
-				{if $colCounter == '0'}<th scope='col' width='{$params.width}%' data-toggle="true">
-				{else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
+                {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
+                {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
+                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
+				{else}<th scope='col' data-hide="{$datahide}">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
@@ -192,13 +194,13 @@
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td width='2%' nowrap>
-	                {if $pageData.rowAccess[$id].edit}
-	                <a title='{$editLinkString}' id="edit-{$rowData.ID}"
-	href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-	                >
-	                    {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-                        <span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-	                {/if}
+                    {if $pageData.rowAccess[$id].edit}
+                        <a title='{$editLinkString}' id="edit-{$rowData.ID}"
+                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+                                >
+                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                    {/if}
 	            </td>
 
 				{/if}
