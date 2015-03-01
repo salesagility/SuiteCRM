@@ -87,7 +87,7 @@ array (
           0 => 'assigned_user_name',
           1 => 
           array (
-            'name' => 'relationship_type_c',
+            'name' => 'relationship_type',
             'studio' => 'visible',
             'label' => 'LBL_RELATIONSHIP_TYPE',
           ),
