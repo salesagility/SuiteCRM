@@ -67,6 +67,7 @@ $mod_strings = array (
   'LBL_NEW_FORM_TITLE' => 'New Project Templates',
   'LBL_STATUS' => 'Status',
   'LBL_PRIORITY' => 'Priority',
-  'LBL_EDITVIEW_PANEL1' => 'New Panel 1',
-  'LBL_QUICKCREATE_PANEL1' => 'New Panel 1',
+  'LBL_PROJECT_NAME' => 'Project Name',
+  'LBL_START_DATE' => 'Start Date',
+  'LBL_CREATE_PROJECT_TITLE' => 'Create a new project from this template?',
 );

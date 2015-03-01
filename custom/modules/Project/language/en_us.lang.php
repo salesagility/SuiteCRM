@@ -17,6 +17,7 @@ $mod_strings = array (
   'LBL_LAG' => 'Lag',
   'LBL_DAYS' => 'Days',
   'LBL_HOURS' => 'Hours',
+  'LBL_MONTHS' => 'Months',
   'LBL_SUBTASK' => 'Task',
   'LBL_MILESTONE_FLAG' => 'Milestone',
   'LBL_ADD_NEW_TASK' => 'Add New Task',
@@ -51,5 +52,6 @@ $mod_strings = array (
   'LBL_PROJECT_DELETE_MSG' => 'Are you sure you want to delete this Project and its related Tasks?',
   'LBL_LIST_MY_PROJECT' => 'My Projects',
   'LBL_LIST_ASSIGNED_USER' => 'Project Manager',
+  'LBL_UNASSIGNED' => 'Unassigned',
   'LBL_PROJECT_USERS_1_FROM_USERS_TITLE' => 'Resources',
 );

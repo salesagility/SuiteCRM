@@ -28,7 +28,7 @@ array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
-        'LBL_QUICKCREATE_PANEL1' => 
+        'LBL_PANEL_ASSIGNMENT' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -71,7 +71,7 @@ array (
           1 => '',
         ),
       ),
-      'lbl_quickcreate_panel1' => 
+      'LBL_PANEL_ASSIGNMENT' =>
       array (
         0 => 
         array (
