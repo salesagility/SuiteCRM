@@ -5311,3 +5311,30 @@ div.password {
     max-width:250px !important;
     max-height:250px !important;
 }
+
+
+#layoutEditor .le_row {
+    margin: 2px 3px;
+    height:25px;
+    clear: both;
+    padding:0 10px 5px 20px !important;
+}
+
+#toolbox .le_panel, #toolbox .le_row, .le_field {
+    width: 150px;
+    float: left;
+    border: 1px solid #808080;
+    background: none repeat scroll 0% 0% #EEE;
+    padding:2px !important;
+    margin: 2px 3px;
+    overflow: hidden;
+}
+
+#toolbox{
+    height:100% !important;
+}
+
+#panels{
+    height:auto !important;
+    overflow:auto;
+}
