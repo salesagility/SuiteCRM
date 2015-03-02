@@ -80,6 +80,25 @@ $dictionary['AOR_Scheduled_Reports'] = array(
             'reportable' => false,
             'importable' => 'required',
         ),
+        'email_recipients' =>
+            array (
+                'required' => false,
+                'name' => 'email_recipients',
+                'vname' => 'LBL_EMAIL_RECIPIENTS',
+                'type' => 'longtext',
+                'massupdate' => 0,
+                'importable' => 'false',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => 0,
+                'audited' => false,
+                'reportable' => false,
+                'function' =>
+                    array (
+                        'name' => 'display_email_lines',
+                        'returns' => 'html',
+                        'include' => 'modules/AOR_Scheduled_Reports/emailRecipients.php'
+                    ),
+            ),
         "aor_report" => array(
             'name' => 'aor_report',
             'type' => 'link',
