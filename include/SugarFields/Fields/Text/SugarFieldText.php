@@ -38,13 +38,19 @@
  ********************************************************************************/
 
 require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
-
+require_once 'include/clean.php';
 class SugarFieldText extends SugarFieldBase {
 
-	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
-		$displayParams['nl2br'] = true;
-		$displayParams['htmlescape'] = true;
-		$displayParams['url2html'] = true;
+	function getDetailViewSmarty($parentFieldArray, &$vardef, $displayParams, $tabindex) {
+        if(!isset($displayParams['nl2br'])){
+            $displayParams['nl2br'] = true;
+        }
+        if(!isset($displayParams['htmlescape'])) {
+            $displayParams['htmlescape'] = true;
+        }
+        if(!isset($displayParams['url2html'])) {
+            $displayParams['url2html'] = true;
+        }
 		return parent::getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     function getClassicEditView($field_id='description', $value='', $prefix='', $rich_text=false, $maxlength='', $tabindex=1, $cols=80, $rows=4) {
