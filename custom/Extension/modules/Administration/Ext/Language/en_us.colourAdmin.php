@@ -19,7 +19,9 @@ $mod_strings['LBL_COLOUR_ADMIN_PAGELINK'] = 'Page link colour';
 $mod_strings['LBL_COLOUR_ADMIN_DASHLET'] = 'Dashlet colour config';
 $mod_strings['LBL_COLOUR_ADMIN_BUTTON'] = 'Button colour config';
 
-$mod_strings['LBL_COLOUR_ADMIN_BASE'] = 'Top menu colour: ';
+$mod_strings['LBL_COLOUR_ADMIN_BASE'] = 'Top menu base colour: ';
+$mod_strings['LBL_COLOUR_ADMIN_MENUTOP'] = 'Menu top gradient';
+$mod_strings['LBL_COLOUR_ADMIN_MENUBOTTOM'] = 'Menu bottom gradient';
 $mod_strings['LBL_COLOUR_ADMIN_MENUBRD'] = 'Menu border colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_MENUHOVER'] = 'Menu hover colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_DDLINK'] = 'Drop down link colour: ';
