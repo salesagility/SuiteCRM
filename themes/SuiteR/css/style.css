@@ -3081,9 +3081,15 @@ li#usermenu:hover {
 
 .moremenu a{
     color:#ffffff !important;
-    font-size:1.1em;
+    font-size:1.2em;
     cursor:pointer;
-    padding:7px 0 6px 0;
+    margin:0;
+    padding:8px 0 0 0;
+}
+
+.moremenu ul {
+    margin:0;
+    top:49px;
 }
 
 @media (max-height:600px) {
@@ -3126,7 +3132,7 @@ li#usermenu:hover {
     color:#3C8DBC !important;
     cursor:pointer;
     padding:5px;
-    font-size:1em;
+    font-size:1.2em;
     display: block;
 }
 
