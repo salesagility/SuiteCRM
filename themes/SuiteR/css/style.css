@@ -43,10 +43,11 @@ html {
 body
 {
     background:#ffffff;
-    margin: 0;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    overflow:auto;
     font-size:1.3em;
+    margin: 0;
+    overflow:auto;
+    padding-top: 50px;
 }
 
 .subDmenu {
@@ -2061,11 +2062,11 @@ ul.yui-nav li.selected {
 }
 
 #ajaxStatusDiv {
-    background : #ffffff;
-    color : #c60c30;
-    position : fixed;
-    opacity : .8;
-    filter : alpha(opacity=80);
+    background: #ffffff;
+    color: #c60c30;
+    position: fixed;
+    opacity: .8;
+    filter: alpha(opacity=80);
     z-index: 20;
     top: 7px;
     border: 1px solid #aaa;
@@ -3506,11 +3507,6 @@ table legend {
 
 /* Sidebar CSS */
 
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-    padding-top: 50px;
-}
-
 /* Global add-ons */
 
 .sub-header {
@@ -4077,8 +4073,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     }
 }
 
-#buttontoggle
-{
+#buttontoggle {
     position: fixed;
     left: 0px;
     top: 130px;
