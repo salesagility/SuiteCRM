@@ -50,32 +50,47 @@ $themedef = array(
     'configurable' => true,
     'config_options' => array(
 
-        'navbar' => array(
+        'menu' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BASE',
             'type' => 'colour',
             'default' => '#121212'
         ),
-        'navbar_hover' => array(
-            'vname' => 'LBL_COLOUR_ADMIN_MENUHOVER',
+        'menuto' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUTOP',
             'type' => 'colour',
-            'default' => '#565656'
+            'default' => '#121212'
         ),
-        'navbar_font' => array(
+        'menufrom' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUBOTTOM',
+            'type' => 'colour',
+            'default' => '#333333'
+        ),
+        'menubrd' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUBRD',
+            'type' => 'colour',
+            'default' => '#f10202'
+        ),
+        'modlink' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENUFONT',
             'type' => 'colour',
             'default' => '#cccccc'
         ),
-        'navbar_link_hover' => array(
+        'modlinkhover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENULNKHVR',
             'type' => 'colour',
             'default' => '#cccccc'
         ),
-        'dropdown_menu' => array(
+        'modlisthover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUHOVER',
+            'type' => 'colour',
+            'default' => '#565656'
+        ),
+        'cssmenu' => array(
             'vname' => 'LBL_COLOUR_ADMIN_DDMENU',
             'type' => 'colour',
             'default' => '#333333'
         ),
-        'dropdown_menu_link' => array(
+        'cssmenulink' => array(
             'vname' => 'LBL_COLOUR_ADMIN_DDLINK',
             'type' => 'colour',
             'default' => '#cccccc'
@@ -102,7 +117,7 @@ $themedef = array(
             'default' => '#ffffff'
         ),
 
-        'page_header' => array(
+        'pageheader' => array(
             'vname' => 'LBL_COLOUR_ADMIN_PAGEHEADER',
             'type' => 'colour',
             'default' => '#f10202'
