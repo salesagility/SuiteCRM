@@ -2906,6 +2906,7 @@ input[type=text].cstm_code {
 
 .navbar-inverse {
     background:#3C8DBC !important;
+    max-height:50px !important;
 }
 
 .nav-pills li {
@@ -2952,8 +2953,8 @@ ol, ul, dl {
 }
 
 #bigbutton{
-    padding:10px 0 10px 0;
     border-radius:0;
+    padding:10px 0 10px 0;
 }
 
 div.input-group input{
@@ -3043,12 +3044,13 @@ fieldset[disabled] .btn-primary.active{
     color:#333333;
 }
 
-.topnav{
-    padding:15px 0 15px 0;
+li.topnav{
+    margin:0;
+    padding:16px 0 12px 0;
     font-size:1.1em;
 }
 
-.topnav:hover{
+li.topnav:hover{
     background-color: #597dbc !important;
 }
 
