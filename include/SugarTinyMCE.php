@@ -63,12 +63,12 @@ class SugarTinyMCE {
 	                    'buttonConfig3' => "tablecontrols,separator,advhr,hr,removeformat,separator,insertdate,inserttime,separator,preview"),
 	        'email_compose' => array(
 						'buttonConfig' => "code,help,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,justifyleft,justifycenter,justifyright,
-	                     					justifyfull,separator,forecolor,backcolor,separator,styleselect,formatselect,fontselect,fontsizeselect,",
+	                     					justifyfull,separator,link,unlink,separator,forecolor,backcolor,separator,styleselect,formatselect,fontselect,fontsizeselect,",
 	                    'buttonConfig2' => "",
 	                    'buttonConfig3' => ""),
 	        'email_compose_light' => array(
 						'buttonConfig' => "code,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,justifyleft,justifycenter,justifyright,
-	                     					justifyfull,separator,forecolor,backcolor,separator,styleselect,formatselect,fontselect,fontsizeselect,",
+	                     					justifyfull,separator,link,unlink,separator,forecolor,backcolor,separator,formatselect,fontselect,fontsizeselect,",
 	                    'buttonConfig2' => "",
 	                    'buttonConfig3' => ""),
 	);
