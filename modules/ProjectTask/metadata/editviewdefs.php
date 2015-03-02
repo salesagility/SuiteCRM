@@ -34,6 +34,11 @@ array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
+        'LBL_PANEL_TIMELINE' =>
+        array (
+          'newTab' => false,
+          'panelDefault' => 'expanded',
+        ),
       ),
       'syncDetailEditViews' => false,
     ),
@@ -47,6 +52,11 @@ array (
           array (
             'name' => 'name',
             'label' => 'LBL_NAME',
+          ),
+          1 => 
+          array (
+            'name' => 'status',
+            'customCode' => '<select name="{$fields.status.name}" id="{$fields.status.name}" title="" tabindex="s" onchange="update_percent_complete(this.value);">{if isset($fields.status.value) && $fields.status.value != ""}{html_options options=$fields.status.options selected=$fields.status.value}{else}{html_options options=$fields.status.options selected=$fields.status.default}{/if}</select>',
           ),
         ),
         1 => 
@@ -62,87 +72,59 @@ array (
         ),
         2 => 
         array (
-          0 => 
-          array (
-            'name' => 'status',
-            'customCode' => '<select name="{$fields.status.name}" id="{$fields.status.name}" title="" tabindex="s" onchange="update_percent_complete(this.value);">{if isset($fields.status.value) && $fields.status.value != ""}{html_options options=$fields.status.options selected=$fields.status.value}{else}{html_options options=$fields.status.options selected=$fields.status.default}{/if}</select>',
-          ),
-          1 => 'priority',
-        ),
-        3 => 
-        array (
-          0 => 
+          0 => 'priority',
+          1 => 
           array (
             'name' => 'percent_complete',
             'customCode' => '<input type="text" name="{$fields.percent_complete.name}" id="{$fields.percent_complete.name}" size="30" value="{$fields.percent_complete.value}" title="" tabindex="0" onChange="update_status(this.value);" /></tr>',
           ),
-          1 => 
-          array (
-            'name' => 'predecessors',
-            'label' => 'LBL_PREDECESSORS',
-          ),
         ),
-        4 => 
-        array (
-          0 => 'assigned_user_name',
-          1 => 
-          array (
-            'name' => 'relationship_type_c',
-            'studio' => 'visible',
-            'label' => 'LBL_RELATIONSHIP_TYPE',
-          ),
-        ),
-        5 => 
-        array (
-          0 => 'milestone_flag',
-        ),
-        6 => 
+        3 => 
         array (
           0 => 
           array (
             'name' => 'project_name',
             'label' => 'LBL_PROJECT_NAME',
           ),
+          1 => 'task_number',
         ),
-        7 => 
+        4 => 
         array (
-          0 => 'task_number',
-          1 => 'order_number',
+          0 => 'assigned_user_name',
         ),
-        8 => 
-        array (
-          0 => 'estimated_effort',
-          1 => 'utilization',
-        ),
-        9 => 
+        5 => 
         array (
           0 => 
           array (
             'name' => 'description',
           ),
         ),
-        10 => 
+      ),
+      'LBL_PANEL_TIMELINE' =>
+      array (
+        0 => 
         array (
-          0 => 
-          array (
-            'name' => 'duration',
-            'hideLabel' => true,
-            'customCode' => '<input type="hidden" name="duration" id="projectTask_duration" value="0" />',
-          ),
+          0 => 'estimated_effort',
           1 => 
           array (
-            'name' => 'actual_duration',
-            'label' => 'LBL_ACTUAL_DURATION',
+            'name' => 'actual_effort',
+            'label' => 'LBL_ACTUAL_EFFORT',
           ),
         ),
-        11 => 
+        1 => 
         array (
           0 => 
           array (
-            'name' => 'duration_unit',
-            'hideLabel' => true,
-            'customCode' => '<input type="hidden" name="duration_unit" id="projectTask_durationUnit" value="Days" />',
+            'name' => 'relationship_type',
+            'studio' => 'visible',
+            'label' => 'LBL_RELATIONSHIP_TYPE',
           ),
+          1 => 'utilization',
+        ),
+        2 => 
+        array (
+          0 => 'order_number',
+          1 => 'milestone_flag',
         ),
       ),
     ),
