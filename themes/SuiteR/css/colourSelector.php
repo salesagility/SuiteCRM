@@ -69,7 +69,7 @@ color:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_link_hover']
 background:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu']; ?> !important;
 }
 
-.dropdown-menu li a, .dropdown-menu em a, .moremenu ul li a , #globalLinks ul li a{
+.dropdown-menu li a, .dropdown-menu em a, .moremenu ul li a , #globalLinks ul li a, #quickcreatetop ul li a{
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link']; ?> !important;
 }
 
