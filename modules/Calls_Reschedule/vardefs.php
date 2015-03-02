@@ -61,7 +61,7 @@ $dictionary['Calls_Reschedule'] = array(
     'merge_filter' => 'disabled',
     'len' => 100,
     'size' => '20',
-    'options' => 'reschedual_reason_list',
+    'options' => 'call_reschedule_dom',
     'studio' => 'visible',
     'dependency' => false,
   ),
