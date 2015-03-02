@@ -37,49 +37,33 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Asignado a Usuario con Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Usuario',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Fecha de Creación',
-  'LBL_DATE_MODIFIED' => 'Última Modificación',
-  'LBL_MODIFIED' => 'Modificado Por',
-  'LBL_MODIFIED_ID' => 'Modificado Por Id',
-  'LBL_MODIFIED_NAME' => 'Modificado Por Nombre',
-  'LBL_CREATED' => 'Creado Por',
-  'LBL_CREATED_ID' => 'Creado Por Id',
-  'LBL_DESCRIPTION' => 'Descripción',
-  'LBL_DELETED' => 'Eliminado',
-  'LBL_NAME' => 'Nombre',
-  'LBL_CREATED_USER' => 'Creado Por Usuario',
-  'LBL_MODIFIED_USER' => 'Modificado Por Usuario',
-  'LBL_LIST_NAME' => 'Nombre',
-  'LBL_EDIT_BUTTON' => 'Editar',
-  'LBL_REMOVE' => 'Quitar',
-  'ERR_DELETE_RECORD' => 'Debe especificar un número de registro para eliminar la cuenta.',
-  'LBL_ANY_EMAIL' => 'Cualquier Email:',
-  'LBL_EMAIL_NON_PRIMARY' => 'Correo Electrónico No Principal',
-  'LBL_ASSIGNED_TO' => 'Asignado A:',
-  'LBL_ASSIGNED_USER' => 'Asignado a:',
-  'LBL_EMAIL_RECIPIENTS' => 'Email Recipients:',
-  'LBL_USERS_ASSIGNED_LINK' => 'Usuarios Asignados',
-  'LBL_USERS_CREATED_LINK' => 'Creado por Usuarios',
-  'LBL_USERS_MODIFIED_LINK' => 'Usuarios Modificados',
-  'NTC_DELETE_CONFIRMATION' => '¿Está seguro de que desea eliminar este registro?',
-  'LBL_LIST_FORM_TITLE' => 'Scheduled Reports Lista',
-  'LBL_MODULE_NAME' => 'Scheduled Reports',
-  'LBL_MODULE_TITLE' => 'Scheduled Reports',
-  'LBL_HOMEPAGE_TITLE' => 'Mi Scheduled Reports',
-  'LNK_NEW_RECORD' => 'Crear Scheduled Reports',
-  'LNK_LIST' => 'Vista Scheduled Reports',
-  'LNK_IMPORT_AOR_SCHEDULED_REPORTS' => 'Import Scheduled Reports',
-  'LBL_SEARCH_FORM_TITLE' => 'Buscar Scheduled Reports',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'Ver Historial',
-  'LBL_AOR_SCHEDULED_REPORTS_SUBPANEL_TITLE' => 'Scheduled Reports',
-  'LBL_NEW_FORM_TITLE' => 'Nuevo Scheduled Reports',
-  'LBL_SCHEDULE' => 'Schedule',
-  'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_REPORTS_TITLE' => 'Reportes',
-  'LBL_SCHEDULED_REPORTS_INFORMATION' => 'Scheduled Reports',
-  'LBL_LAST_RUN' => 'Last run',
-  'LBL_STATUS' => 'Status',
-);
+function display_email_lines($focus, $field, $value, $view){
+
+    $params = unserialize(base64_decode($value));
+
+
+    if($view == 'EditView') {
+
+        global $app_list_strings;
+
+        $html = '<script src="modules/AOR_Scheduled_Reports/emailRecipients.js"></script>';
+        $html .= '<input type="hidden" name="aor_email_type_list" id="aor_email_type_list" value="' . get_select_options_with_id($app_list_strings['aor_email_type_list'], '') . '">
+				  <input type="hidden" name="aor_email_to_list" id="aor_email_to_list" value="' . get_select_options_with_id($app_list_strings['aor_email_to_list'], '') . '">';
+
+        $html .= '<button type="button" onclick="add_emailLine()"><img src="' . SugarThemeRegistry::current()->getImageURL('id-ff-add.png') . '"></button>';
+        $html .= '<table id="emailLine_table" width="100%"></table>';
+
+        $html .= "<script>";
+
+        if (isset($params['email_target_type'])) {
+            foreach ($params['email_target_type'] as $key => $field) {
+                if (is_array($params['email'][$key])) $params['email'][$key] = json_encode($params['email'][$key]);
+                $html .= "load_emailline('" . $params['email_to_type'][$key] . "','" . $params['email_target_type'][$key] . "','" . $params['email'][$key] . "');";
+            }
+        }
+        $html .= "</script>";
+
+        return $html;
+    }
+
+}

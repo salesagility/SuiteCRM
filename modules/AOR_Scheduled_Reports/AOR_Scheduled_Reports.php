@@ -59,6 +59,7 @@ class AOR_Scheduled_Reports extends basic {
     var $created_by_link;
     var $modified_user_link;
     var $schedule;
+    var $email_recipients;
     var $status;
     var $last_run;
     var $aor_report_id;
@@ -72,6 +73,87 @@ class AOR_Scheduled_Reports extends basic {
             case 'ACL': return true;
         }
         return false;
+    }
+
+    function save($check_notify = FALSE){
+
+        if(isset($_POST['email_recipients']) && is_array($_POST['email_recipients'])){
+            $this->email_recipients = base64_encode(serialize($_POST['email_recipients']));
+        }
+
+        parent::save($check_notify);
+    }
+
+    function get_email_recipients(){
+
+        $params = unserialize(base64_decode($this->email_recipients));
+
+        $emails = array();
+        if(isset($params['email_target_type'])){
+            foreach($params['email_target_type'] as $key => $field){
+                switch($field){
+                    case 'Email Address':
+                        $emails[] = $params['email'][$key];
+                        break;
+                    case 'Specify User':
+                        $user = new User();
+                        $user->retrieve($params['email'][$key]);
+                        $emails[] = $user->emailAddress->getPrimaryAddress($user);
+                        break;
+                    case 'Users':
+                        $users = array();
+                        switch($params['email'][$key][0]) {
+                            Case 'security_group':
+                                if(file_exists('modules/SecurityGroups/SecurityGroup.php')){
+                                    require_once('modules/SecurityGroups/SecurityGroup.php');
+                                    $security_group = new SecurityGroup();
+                                    $security_group->retrieve($params['email'][$key][1]);
+                                    $users = $security_group->get_linked_beans( 'users','User');
+                                    $r_users = array();
+                                    if($params['email'][$key][2] != ''){
+                                        require_once('modules/ACLRoles/ACLRole.php');
+                                        $role = new ACLRole();
+                                        $role->retrieve($params['email'][$key][2]);
+                                        $role_users = $role->get_linked_beans( 'users','User');
+                                        foreach($role_users as $role_user){
+                                            $r_users[$role_user->id] = $role_user->name;
+                                        }
+                                    }
+                                    foreach($users as $user_id => $user){
+                                        if($params['email'][$key][2] != '' && !isset($r_users[$user->id])){
+                                            unset($users[$user_id]);
+                                        }
+                                    }
+                                    break;
+                                }
+                            //No Security Group module found - fall through.
+                            Case 'role':
+                                require_once('modules/ACLRoles/ACLRole.php');
+                                $role = new ACLRole();
+                                $role->retrieve($params['email'][$key][2]);
+                                $users = $role->get_linked_beans( 'users','User');
+                                break;
+                            Case 'all':
+                            default:
+                                global $db;
+                                $sql = "SELECT id from users WHERE status='Active' AND portal_only=0 ";
+                                $result = $db->query($sql);
+                                while ($row = $db->fetchByAssoc($result)) {
+                                    $user = new User();
+                                    $user->retrieve($row['id']);
+                                    $users[$user->id] = $user;
+                                }
+                                break;
+                        }
+                        foreach($users as $user){
+                            $emails[] = $user->emailAddress->getPrimaryAddress($user);
+                        }
+                        break;
+                }
+            }
+        }
+        return $emails;
+
     }
 
     function shouldRun(DateTime $date){
