@@ -36,17 +36,13 @@
 /* Start Global CSS */
 /* Base SugarCRM Styles */
 
-html {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-body
-{
+body {
     background:#ffffff;
-    margin: 0;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:12px;
+    margin: 0;
     overflow:auto;
-    font-size:1.3em;
+    padding-top: 50px;
 }
 
 .subDmenu {
@@ -105,9 +101,15 @@ fieldset, table, pre {
 }
 
 p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:1.1em;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+a{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:1.1em;
 }
 
 form {
@@ -221,6 +223,7 @@ th, td {
 .moduleTitle h2 {
     display: block;
     float: left;
+    font-size:1.2em;
 }
 
 .moduleTitle h2 span.pointer {
@@ -248,7 +251,6 @@ th, td {
 .view, table.view {
     margin-bottom:3px;
     margin-top:3px;
-    padding:10px 6px 12px 10px;
     padding:20px 16px 22px 30px;
     width: 100%;
 }
@@ -264,13 +266,13 @@ th, td {
 /* DetailView styles */
 .detail h4 {
     font-weight: bold;
+    font-size:1.2em;
     margin: 0;
     text-align: left;
     border: none;
     padding-top: 6px;
     padding-bottom: 6px;
     padding-left: 0;
-    margin-left: 0;
 }
 
 .detail tr td {
@@ -294,7 +296,8 @@ th, td {
 
 /* editviews top buttons */
 #EditView > table {
-    overflow:auto;margin-bottom: 2px;
+    overflow:auto;
+    margin-bottom:2px;
 }
 
 /* editviews */
@@ -309,7 +312,6 @@ th, td {
 
 .edit h4 {
     text-align: left;
-    margin-top: 0;
     padding-top:0;
     margin-top: 10px;
     padding-left:0;
@@ -317,7 +319,6 @@ th, td {
 
 .edit tr td {
     font-weight: normal;
-    padding: 0 !important;
     vertical-align: top;
     padding: 3px !important;
 }
@@ -871,7 +872,6 @@ div#responseTime {
     margin: 0;
     padding: 5px;
     width: 100%;
-    margin-bottom: 5px;
     text-decoration: none !important;
 }
 
@@ -1608,7 +1608,7 @@ a:link, a:visited, a:hover {
 /* for subpanel tabs */
 ul.subTabs {
     padding: 4px 0;
-    margin: 0 0 0 0;
+    margin: 0;
     border: none;
     font: 12px Arial, Verdana, Helvetica, sans-serif;
 }
@@ -1662,10 +1662,10 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 /* global links */
 
 #globalLinks {
-    padding:0;
     border-left:1px solid #bbbbbb;
     margin: 0 0 0 10px;
     font-size:1.1em;
+    height:49px;
 }
 
 #globalLinks a{
@@ -1680,11 +1680,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 #globalLinks ul li a:hover {
     max-width:150px !important;
     color:#ffffff;
-}
-
-#globalLinks li{
-    padding:8px 0 7px 0;
-
 }
 
 #globalLinks ul li{
@@ -2061,11 +2056,11 @@ ul.yui-nav li.selected {
 }
 
 #ajaxStatusDiv {
-    background : #ffffff;
-    color : #c60c30;
-    position : fixed;
-    opacity : .8;
-    filter : alpha(opacity=80);
+    background: #ffffff;
+    color: #c60c30;
+    position: fixed;
+    opacity: .8;
+    filter: alpha(opacity=80);
     z-index: 20;
     top: 7px;
     border: 1px solid #aaa;
@@ -2765,9 +2760,6 @@ input[type=text].cstm_code {
     border:1px solid #cccccc;
     margin:10px;
     padding:10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 }
 
 #caseStyleContact {
@@ -2775,18 +2767,12 @@ input[type=text].cstm_code {
     border:1px solid #cccccc;
     margin:10px;
     padding:10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 }
 
 #caseStyleInternal {
     background:#00EEEE;
     border:1px solid #cccccc;
     padding:10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
     margin: 10px 60px 10px 10px;
 }
 
@@ -2912,6 +2898,7 @@ input[type=text].cstm_code {
 
 .navbar-inverse {
     background:#3C8DBC !important;
+    max-height:50px !important;
 }
 
 .nav-pills li {
@@ -2958,6 +2945,7 @@ ol, ul, dl {
 }
 
 #bigbutton{
+    border-radius:0;
     padding:10px 0 10px 0;
 }
 
@@ -3004,6 +2992,7 @@ fieldset[disabled] .btn-primary.active{
     min-width: 185px;
     margin-top:1px !important;
     border-radius:0;
+    font-size:1em;
 }
 
 .dropdown-menu em {
@@ -3047,18 +3036,14 @@ fieldset[disabled] .btn-primary.active{
     color:#333333;
 }
 
-.topnav{
-    padding:15px 0 16px 0;
+li.topnav{
+    margin:0;
+    padding:15px 0 12px 0;
     font-size:1.1em;
 }
 
-.topnav:hover{
+li.topnav:hover{
     background-color: #597dbc !important;
-}
-
-ul.topnav li a {
-    text-decoration:none;
-    font-size:1.4em;
 }
 
 .hr {
@@ -3088,9 +3073,15 @@ li#usermenu:hover {
 
 .moremenu a{
     color:#ffffff !important;
-    font-size:1.1em;
+    font-size:1.2em;
     cursor:pointer;
-    padding:7px 0 6px 0;
+    margin:0;
+    padding:8px 0 0 0;
+}
+
+.moremenu ul {
+    margin:0;
+    top:49px;
 }
 
 @media (max-height:600px) {
@@ -3133,7 +3124,7 @@ li#usermenu:hover {
     color:#3C8DBC !important;
     cursor:pointer;
     padding:5px;
-    font-size:1em;
+    font-size:1.2em;
     display: block;
 }
 
@@ -3150,36 +3141,27 @@ li#usermenu:hover {
 }
 
 .button, input[type=submit], input[type=button] {
-    border:none;
-    padding:3px 10px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    margin:2px;
-    color: #fff;
     background-color: #3C8DBC;
-    padding:3px 10px;
-    margin:2px;
+    border:none;
+    color: #fff;
     cursor:pointer;
-    font-size:1em !important;
+    font-size:1.1em !important;
+    margin:2px;
+    padding:5px 8px 5px 8px;
+}
+
+button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
+    background-color: #777777;
+    border:none;
+    color: #ffffff;
+    cursor:pointer;
+    font-size:1.1em !important;
+    margin:2px;
+    padding:5px 8px 5px 8px;
 }
 
 .yui-layout-hd .button, .yui-layout-hd input[type=submit], .yui-layout-hd input[type=button]{
     font-size:1.5em !important;
-}
-
-button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
-    border:none;
-    padding:3px 10px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    margin:2px;
-    color: #ffffff;
-    background-color: #777777;
-    padding:3px 10px;
-    margin:2px;
-    cursor:pointer;
 }
 
 .button:hover,
@@ -3248,16 +3230,12 @@ ul.dashboardTabList li {
 
 .navbar-inverse .navbar-brand {
     color:#ffffff;
-    height:52px;
+    height:50px;
 }
 
 .btn-success {
     background:#3C8DBC;
     border: none;
-}
-
-.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success {
-    background:#008080;
 }
 
 .headerlinks a:hover {
@@ -3305,17 +3283,9 @@ table legend {
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     background:#eeeeee;
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
 }
 
 .ui-state-active a, .ui-state-active a:link, .ui-state-default a:hover {
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
     font-weight:bold;
 }
 
@@ -3473,11 +3443,6 @@ table legend {
         display:none;
     }
 
-    /* Fix to add some padding on mobile/tablet resolutions */
-    #pagecontent{
-        /*padding:10px;*/
-    }
-
     #dashletresponsive {
         width:auto;
     }
@@ -3504,13 +3469,6 @@ table legend {
     }
 }
 
-/* Sidebar CSS */
-
-/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-    padding-top: 50px;
-}
-
 /* Global add-ons */
 
 .sub-header {
@@ -3524,7 +3482,7 @@ body {
     border: 0;
 }
 
-/* Sidebar */
+/* Sidebar CSS */
 
 /* Hide for mobile, show later */
 
@@ -3843,9 +3801,6 @@ li.moremenu {
         background-color: #3C8DBC;
         border: none;
         padding: 8px 12px 8px 12px;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
         margin: 2px;
     }
     .quickcreate {
@@ -3981,9 +3936,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 @media (max-width:768px) {
     .View {
         border: 1px solid #cccccc;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
     }
 
     #month-tab, #year-tab, #shared-tab{
@@ -4077,10 +4029,9 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     }
 }
 
-#buttontoggle
-{
+#buttontoggle {
     position: fixed;
-    left: 0px;
+    left: 0;
     top: 130px;
     background:#eeeeee;
     z-index: 100;
@@ -4356,6 +4307,9 @@ h3 span{
 #mobile_menu{
     overflow-y: scroll;
     overflow-x: hidden !important;
+    float:right;
+    width:200px !important;
+    background:#3C8DBC !important;
 }
 
 #mobile_menu li{
