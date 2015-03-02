@@ -67,7 +67,7 @@ class SugarTinyMCE {
 	                    'buttonConfig2' => "",
 	                    'buttonConfig3' => ""),
 	        'email_compose_light' => array(
-						'buttonConfig' => "code,help,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,justifyleft,justifycenter,justifyright,
+						'buttonConfig' => "code,separator,bold,italic,underline,strikethrough,separator,bullist,numlist,separator,justifyleft,justifycenter,justifyright,
 	                     					justifyfull,separator,forecolor,backcolor,separator,styleselect,formatselect,fontselect,fontsizeselect,",
 	                    'buttonConfig2' => "",
 	                    'buttonConfig3' => ""),
@@ -114,7 +114,7 @@ class SugarTinyMCE {
 	 * @param string target Comma delimited list of DOM ID's, <textarea id='someTarget'>
 	 * @return string
 	 */
-	function getInstance($targets = "") {
+	function getInstance($targets = "", $type = 'default') {
 		global $json;
 
 		if(empty($json)) {
@@ -130,9 +130,9 @@ class SugarTinyMCE {
         }
 		$config['directionality'] = SugarThemeRegistry::current()->directionality;
 		$config['elements'] = $targets;
-		$config['theme_advanced_buttons1'] = $this->buttonConfigs['default']['buttonConfig'];
-		$config['theme_advanced_buttons2'] = $this->buttonConfigs['default']['buttonConfig2'];
-		$config['theme_advanced_buttons3'] = $this->buttonConfigs['default']['buttonConfig3'];
+		$config['theme_advanced_buttons1'] = $this->buttonConfigs[$type]['buttonConfig'];
+		$config['theme_advanced_buttons2'] = $this->buttonConfigs[$type]['buttonConfig2'];
+		$config['theme_advanced_buttons3'] = $this->buttonConfigs[$type]['buttonConfig3'];
 
 		$jsConfig = $json->encode($config);
 
