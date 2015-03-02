@@ -3238,16 +3238,12 @@ ul.dashboardTabList li {
 
 .navbar-inverse .navbar-brand {
     color:#ffffff;
-    height:52px;
+    height:50px;
 }
 
 .btn-success {
     background:#3C8DBC;
     border: none;
-}
-
-.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success {
-    background:#008080;
 }
 
 .headerlinks a:hover {
@@ -3295,17 +3291,9 @@ table legend {
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
     background:#eeeeee;
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
 }
 
 .ui-state-active a, .ui-state-active a:link, .ui-state-default a:hover {
-    -webkit-transition: all 0.2s ease-out;
-    -moz-transition: all 0.2s ease-out;
-    -o-transition: all 0.2s ease-out;
-    transition: all 0.2s ease-out;
     font-weight:bold;
 }
 
@@ -3494,8 +3482,6 @@ table legend {
     }
 }
 
-/* Sidebar CSS */
-
 /* Global add-ons */
 
 .sub-header {
@@ -3509,7 +3495,7 @@ table legend {
     border: 0;
 }
 
-/* Sidebar */
+/* Sidebar CSS */
 
 /* Hide for mobile, show later */
 
