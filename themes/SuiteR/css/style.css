@@ -218,11 +218,6 @@ th, td {
     padding-left: 0;
 }
 
-/* module title */
-/*div.moduleTitle {*/
-    /*height:30px;*/
-/*}*/
-
 .moduleTitle h2 {
     display: block;
     float: left;
@@ -1582,29 +1577,6 @@ a:link, a:visited, a:hover {
     border-top:2px solid;
 }
 
-/* DetailView styles */
-
-/* commented out table styles
-.detail table,
-table.detail
-{
-    padding: 0;
-}
-.detail tr td
-{
-    border-bottom: 1px solid;
-}
-.detail tr td[scope=row]
-{
-    border-bottom:1px solid;
-}
-.detail tr th
-{
-    border-bottom: 2px solid;
-    background: #fff;
-}
-*/
-
 /* Listview styles */
 .list {
     border: 1px solid;
@@ -2435,7 +2407,6 @@ ul#detailViewActions.clickMenu {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-
 #quickCreate ul.clickMenu > li {
     width: 50px;
     height: 43px;
@@ -2486,14 +2457,12 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
     opacity: 1;
 }
 
-
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img
 {
     opacity: .6;
 }
 
 /* Table CSS */
-
 .view, table.view td {
     border:none;
 }
@@ -2624,12 +2593,6 @@ iframe.teamNoticeBox {
     height: 100%;
     display: none;
 }
-
-button #powered_by {
-    background:none;
-    border:none;
-}
-
 
 #links {
     float:right;
@@ -2943,20 +2906,6 @@ input[type=text].cstm_code {
     width:100%;
 }
 
-/*@media (max-width:979px){*/
-    /*.collapsing, .in {*/
-        /*background-color: #f7f7f7;*/
-
-    /*}*/
-    /*.collapsing ul li a, .in ul li a {*/
-        /*color: #555!important;*/
-    /*}*/
-    /*.collapsing ul li a:hover, .in ul li a:hover {*/
-        /*color: #f1f1f1!important;*/
-    /*}*/
-
-/*}*/
-
 .headerlinks a:hover {
     color:#428BCA;
 }
@@ -3017,7 +2966,6 @@ div.input-group input{
     min-width:100% !important;
     max-width:100% !important;
 }
-
 
 .button-primary:active, .button-primary.active, .open > .dropdown-toggle.btn-primary {
     background-image: none;
@@ -3537,6 +3485,23 @@ table legend {
     #buttontoggle {
         display:none;
     }
+
+    .recentlyViewedSidebar, .recent_h3{
+        display:none;
+        margin:0;
+        padding:0;
+    }
+    .moremenu ul li a{
+        color:#ffffff;
+    }
+
+    .moremenu ul li a {
+        color: #f7f7f7 !important;
+        cursor: pointer;
+        padding: 5px;
+        font-size: 1em;
+        display: block;
+    }
 }
 
 /* Sidebar CSS */
@@ -3741,12 +3706,6 @@ li.moremenu {
         font-weight: bold;
     }
 
-    /* This border breaks up/defines sections from view
-    .detail tr {
-        border-bottom: 1px solid #cccccc;
-    }
-    */
-
     .detail tr{
         margin:0;
         padding:0;
@@ -3756,6 +3715,7 @@ li.moremenu {
         border: none;
     }
 }
+
 @media only screen and (min-device-width: 480px) and (max-device-width: 767px) {
     /* Force table to not be like tables anymore(deconstruct) */
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
@@ -3901,16 +3861,6 @@ li.moremenu {
     }
 }
 
-@media (max-width:979px){
-.recentlyViewedSidebar, .recent_h3{
-    display:none;
-    margin:0;
-    padding:0;
-}
-    .moremenu ul li a{
-        color:#ffffff;
-    }
-}
 /* Custom styling for recently viewed on sidebar */
 li.recentlinks_top{
     float:left;
@@ -3993,10 +3943,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         color:#ffffff; !important;
     }
 }
-
-/*ul.navbar-nav li ul li:hover {*/
-    /*background:none !important;*/
-/*}*/
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{
     background:none;
@@ -4131,10 +4077,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     }
 }
 
-table#lineItems{
-    max-width:50%;
-}
-
 #buttontoggle
 {
     position: fixed;
@@ -4227,7 +4169,6 @@ table#lineItems{
    }
 }
 
-
 .helpIcon{
     display:none;
 }
@@ -4292,7 +4233,6 @@ div.action_buttons form {
     }
 }
 
-
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     border-top: none;
 }
@@ -4310,34 +4250,25 @@ div.action_buttons form {
     overflow: hidden;
 }
 
-@media (max-width:979px){
-    .moremenu ul li a {
-        color: #f7f7f7 !important;
-        cursor: pointer;
-        padding: 5px;
-        font-size: 1em;
-        display: block;
-    }
-}
-
 h3 span{
     font-weight:bold;
 }
 
-table.mceLayout, textarea.tinyMCE {
-    width: 100% !important;
-}
-
-/* make the toolbar wrap */
-.mceToolbar td {
-    display:table-row;
-    float: left;
-}
-.mceToolbar td:nth-of-type(11){
-    clear: left;
-}
-
 @media only screen and (max-width: 959px) {
+
+    table.mceLayout, textarea.tinyMCE {
+        width: 100% !important;
+    }
+
+    /* make the toolbar wrap */
+    .mceToolbar td {
+        display:table-row;
+        float: left;
+    }
+    .mceToolbar td:nth-of-type(11){
+        clear: left;
+    }
+
     table.mceLayout, textarea.richEditor, {
         width: 90% !important;
         overflow:scroll;
@@ -4421,6 +4352,7 @@ table.mceLayout, textarea.tinyMCE {
     }
 }
 
+/* Customisations to top navigation for mobile. */
 #mobile_menu{
     overflow-y: scroll;
     overflow-x: hidden !important;
@@ -4442,34 +4374,34 @@ table.mceLayout, textarea.tinyMCE {
     #mobile_menu{
        display:none !important;
     }
+
+    #quickcreatetop a{
+        color:#ffffff !important;
+        margin:8px 0 8px 0 !important;
+        line-height:50px;
+        padding: 0 5px 0 5px !important;
+        cursor:pointer;
+    }
+
+    #quickcreatetop ul li{
+        padding:0 !important;
+        margin:0 !important;
+    }
+
+    #quickcreatetop ul li a{
+        color:#3C8DBC !important;
+        padding:0 3px 0 3px !important;
+        margin:0 !important;
+        line-height:35px;
+    }
+
+    #quickcreatetop ul li a:hover{
+        color:#ffffff !important;
+    }
 }
 
 .navbar-collapse.collapse{
     overflow:scroll !important;
-}
-
-#quickcreatetop a{
-    color:#ffffff !important;
-    margin:8px 0 8px 0 !important;
-    line-height:50px;
-    padding: 0 5px 0 5px !important;
-    cursor:pointer;
-}
-
-#quickcreatetop ul li{
-    padding:0 !important;
-    margin:0 !important;
-}
-
-#quickcreatetop ul li a{
-    color:#3C8DBC !important;
-    padding:0 3px 0 3px !important;
-    margin:0 !important;
-    line-height:35px;
-}
-
-#quickcreatetop ul li a:hover{
-    color:#ffffff !important;
 }
 
 #themePreview{
