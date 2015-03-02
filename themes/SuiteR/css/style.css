@@ -4258,20 +4258,21 @@ h3 span{
     font-weight:bold;
 }
 
-table.mceLayout, textarea.tinyMCE {
-    width: 100% !important;
-}
-
-/* make the toolbar wrap */
-.mceToolbar td {
-    display:table-row;
-    float: left;
-}
-.mceToolbar td:nth-of-type(11){
-    clear: left;
-}
-
 @media only screen and (max-width: 959px) {
+
+    table.mceLayout, textarea.tinyMCE {
+        width: 100% !important;
+    }
+
+    /* make the toolbar wrap */
+    .mceToolbar td {
+        display:table-row;
+        float: left;
+    }
+    .mceToolbar td:nth-of-type(11){
+        clear: left;
+    }
+
     table.mceLayout, textarea.richEditor, {
         width: 90% !important;
         overflow:scroll;
