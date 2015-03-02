@@ -1135,7 +1135,7 @@ EOHTML;
             } else if(isset($def['default'])){
                 $value = $def['default'];
             }
-            $config[$name]['value'] = $value;
+            $config[$name] = $value;
 
         }
 

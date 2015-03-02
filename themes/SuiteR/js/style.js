@@ -321,7 +321,7 @@ $(window).resize(function () {
 
 // jQuery to toggle sidebar
 function loadSidebar() {
-    if($('.container-fluid')) {
+    if($('#sidebar_container').length) {
         $('#buttontoggle').click(function () {
             $('.sidebar').toggle();
             if ($('.sidebar').is(':visible')) {

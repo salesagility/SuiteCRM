@@ -314,9 +314,9 @@
         </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
-{if $THEME.display_sidebar}
+{if $THEME_CONFIG.display_sidebar}
 <!--Start Page Container and Responsive Sidebar -->
-<div class="container-fluid">
+<div id='sidebar_container' class="container-fluid">
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
         <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if} class="col-sm-3 col-md-2 sidebar">
