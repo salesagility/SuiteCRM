@@ -69,10 +69,6 @@ $viewdefs [$module_name] =
                                     ),
                                 3 =>
                                     array (
-                                        0 => 'email1',
-                                    ),
-                                4 =>
-                                    array (
                                         0 => 'description',
                                     ),
                             ),
