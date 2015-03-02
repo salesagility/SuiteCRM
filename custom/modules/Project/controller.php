@@ -213,7 +213,7 @@ class CustomProjectController extends SugarController {
         $task->status = $status;
         $task->project_task_id = $project_task_id;
         $task->predecessors = $predecessors;
-        $task->relationship_type_c = $rel_type;
+        $task->relationship_type = $rel_type;
         $task->duration = $duration + 1; //+1 to make duration appear correct in project table
         $task->duration_unit = $duration_unit;
         $task->assigned_user_id = $resource;
@@ -236,7 +236,7 @@ class CustomProjectController extends SugarController {
         $task->status = $status;
         // $task->parent_task_id = $parent_task_id;
         $task->predecessors = $predecessors;
-        $task->relationship_type_c = $rel_type;
+        $task->relationship_type = $rel_type;
         $task->duration = $duration + 1; //+1 to make duration appear correct in project table
         $task->duration_unit = $duration_unit;
         $task->assigned_user_id = $resource;

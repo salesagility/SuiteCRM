@@ -33,7 +33,7 @@ class ProjectViewGanttChart extends SugarView {
 
     public function display() {
 
-        global $db, $mod_strings;
+        global $db, $mod_strings, $app_list_strings;
 
         echo '<link rel="stylesheet" type="text/css" href="custom/modules/Project/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="custom/modules/Project/qtip/jquery.qtip.min.css" />';
@@ -100,9 +100,7 @@ class ProjectViewGanttChart extends SugarView {
                         <label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE'];?></label>
                         <?php
                         echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
-                                <option value="0">None</option>
-                                <option value="FS">Finish to Start</option>
-                                <option value="SS">Start to Start</option>
+                                '.get_select_options_with_id($app_list_strings['relationship_type_list'],'').'
                         </select>';
 
                         ?>
@@ -130,13 +128,14 @@ class ProjectViewGanttChart extends SugarView {
                         <label for="Duration"><?php echo $mod_strings['LBL_DURATION_TITLE'];?></label>
                         <input type="text" name="Duration" id="Duration" class="text ui-widget-content ui-corner-all" />
                         <select id="Duration_unit" name="Duration_unit" class="text ui-widget-content ui-corner-all" />
-                        <option value="Days"><?php echo $mod_strings['LBL_DAYS'];?></option>
-                        <option value="Hours"><?php echo $mod_strings['LBL_HOURS'];?></option>
+                        <?php
+                        echo get_select_options_with_id($app_list_strings['duration_unit_dom'],'');
+                        ?>
                         </select>
                         <label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID'];?></label>
                         <?php
                         echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
-                        echo '<option value="0">Not assigned</option>';
+                        echo '<option value="0">'.$mod_strings['LBL_UNASSIGNED'].'</option>';
                         foreach ($resource_array as $resource) {
                             echo '<option rel="'.$resource->type.'" value="'.$resource->id.'">'.$resource->name.'</opion>';
                         }
@@ -177,13 +176,13 @@ class ProjectViewGanttChart extends SugarView {
                     <td class="heading"><?php echo $mod_strings['LBL_VIEW_GANTT_DURATION'];?></td>
                     <td><?php echo $this->time_range($start_date, $end_date);?></td>
                     <td class="heading"><?php echo $mod_strings['LBL_STATUS'];?></td>
-                    <td><?php echo $project->status;?></td>
+                    <td><?php echo $app_list_strings['project_status_dom'][$project->status];?></td>
                 </tr>
                 <tr>
                     <td class="heading"><?php echo $mod_strings['LBL_ASSIGNED_USER_NAME'];?></td>
                     <td><?php echo $project->assigned_user_name;?></td>
                     <td class="heading"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
-                    <td><?php echo $project->priority;?></td>
+                    <td><?php echo $app_list_strings['projects_priority_options'][$project->priority];?></td>
                 </tr>
                 <tr>
                     <td class="heading"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
@@ -215,11 +214,12 @@ class ProjectViewGanttChart extends SugarView {
 
     //Returns the time span between two dates in years  months and days
     function time_range($start_date, $end_date){
+        global $mod_strings;
 
         $datetime1 = new DateTime($start_date);
         $datetime2 = new DateTime($end_date);
         $datetime2->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
         $interval = $datetime1->diff($datetime2);
-        return $interval->format('%m months and %d days');
+        return $interval->format('%m '.$mod_strings['LBL_MONTHS'].', %d '.$mod_strings['LBL_DAYS']);
     }
 }

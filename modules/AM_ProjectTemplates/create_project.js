@@ -54,7 +54,7 @@ function confirmation(id){
     $( "#dialog-confirm" ).dialog({
         height: 250,
         width: 350,
-        modal: true,
+        modal: false,
         buttons: {
             "Create Project": function() {
 
@@ -63,12 +63,7 @@ function confirmation(id){
                 allFields = $( [] ).add( name).add( start_date ),
                 tips = $( ".validateTips" );
 
-                var bValid = true;
-                allFields.removeClass( "ui-state-error" );
-                bValid = bValid && checkLength( name, "Project name", 3, 16 );
-                bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_ ])+$/i, "Project name may consist of a-z, 0-9, underscores, begin with a letter." );
-
-                if ( bValid ) {
+                if ( check_form('project_form') ) {
                     $( "#users tbody" ).append( "<tr>" +
                         "<td>" + name.val() + "</td>" +
                         "</tr>" );
