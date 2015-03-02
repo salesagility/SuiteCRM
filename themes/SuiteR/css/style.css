@@ -4156,7 +4156,7 @@ table#lineItems{
 #buttontoggle
 {
     position: fixed;
-    left: 215px;
+    left: 0px;
     top: 130px;
     background:#eeeeee;
     z-index: 100;

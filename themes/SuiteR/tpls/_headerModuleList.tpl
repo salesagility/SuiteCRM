@@ -314,11 +314,12 @@
         </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
+{if $THEME.display_sidebar}
 <!--Start Page Container and Responsive Sidebar -->
 <div class="container-fluid">
     <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if} class="col-sm-3 col-md-2 sidebar">
             <div id="actionMenuSidebar">
                 {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
@@ -359,4 +360,5 @@
     </div>
 </div>
     <!--End Responsive Sidebar -->
+{/if}
     <!--Start Page content -->
