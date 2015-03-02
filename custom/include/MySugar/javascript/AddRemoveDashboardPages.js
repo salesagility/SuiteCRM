@@ -1,10 +1,13 @@
 function handleSubmit(){
     $(this).submit();
-    window.location.replace("index.php");
 }
 
 function handleCancel(){
     this.cancel();
+}
+
+function refreshPage() {
+    window.location.replace("index.php");
 }
 
 function removeDashboardForm(page_id) {
@@ -78,8 +81,12 @@ function get_form(data,titleval,myButtons) {
 
     dialog.setHeader(titleval);
     dialog.setBody(form);
-
-
+    dialog.callback.success = function() {
+        refreshPage();
+    }
+    dialog.callback.failure = function() {
+	dialog.setBody(SUGAR.language.get('app_strings', 'ERR_AJAX_LOAD_FAILURE'));
+    }
     dialog.cfg.queueProperty("buttons", myButtons);
     dialog.render(document.body);
     dialog.show();
@@ -137,6 +144,3 @@ function renameTabSubmit(){
         }
     })
 }
-
-
-
