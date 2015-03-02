@@ -155,7 +155,7 @@ $(function() {
                     duration: 500
                 },
                 width: 350,
-                modal: true,
+                modal: false,
                 buttons: {
                     "Add": function() {
                         var Project_id = $('#project_id').val();

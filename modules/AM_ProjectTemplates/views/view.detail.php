@@ -30,6 +30,7 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
     }
 
     function display(){
+        global $app_strings, $mod_strings;
         parent::display();
 
         echo '<style>
@@ -42,15 +43,15 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                     .validateTips { border: 1px solid transparent; padding: 0.3em; }
                 </style>';
 
-        echo '<div style="display: none;" id="dialog-confirm" title="Create a new project from this template?">
-                 <p class="validateTips">Project Name is required.</p>
+        echo '<div style="display: none;" id="dialog-confirm" title="'.$mod_strings['LBL_CREATE_PROJECT_TITLE'].'">
+                 <p class="validateTips"></p>
                 <p class="p_form">
-                     <form id="project_form" action="index.php?module=AM_ProjectTemplates&action=create_project" method="post">
+                     <form id="project_form" name="project_form" action="index.php?module=AM_ProjectTemplates&action=create_project" method="post">
                         <fieldset style="border: none;">
-                             <label for="name">Project Name</label>
+                             <label for="name">'.$mod_strings['LBL_PROJECT_NAME'].':<span class="required">*</span></label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="p_name" id="p_name" class="text ui-widget-content ui-corner-all" />
 
-                             <label for="start_date">Start Date</label>
+                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':</label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="start_date" id="start_date" class="text ui-widget-content ui-corner-all" />
 
                              <script type="text/javascript">
@@ -65,6 +66,9 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                                     weekNumbers: false,
                                     startWeekday: 0
                                 });
+                                addForm("project_form");
+                                addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
+                                addToValidate("project_form", "start_date", "date", false,"'.$mod_strings['LBL_START_DATE'].'" );
                             </script>
                              <input type="hidden" name="template_id" value="'.$this->bean->id .'" />
                         </fieldset>
