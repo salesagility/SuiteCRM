@@ -2943,20 +2943,6 @@ input[type=text].cstm_code {
     width:100%;
 }
 
-/*@media (max-width:979px){*/
-    /*.collapsing, .in {*/
-        /*background-color: #f7f7f7;*/
-
-    /*}*/
-    /*.collapsing ul li a, .in ul li a {*/
-        /*color: #555!important;*/
-    /*}*/
-    /*.collapsing ul li a:hover, .in ul li a:hover {*/
-        /*color: #f1f1f1!important;*/
-    /*}*/
-
-/*}*/
-
 .headerlinks a:hover {
     color:#428BCA;
 }
@@ -3537,6 +3523,23 @@ table legend {
     #buttontoggle {
         display:none;
     }
+
+    .recentlyViewedSidebar, .recent_h3{
+        display:none;
+        margin:0;
+        padding:0;
+    }
+    .moremenu ul li a{
+        color:#ffffff;
+    }
+
+    .moremenu ul li a {
+        color: #f7f7f7 !important;
+        cursor: pointer;
+        padding: 5px;
+        font-size: 1em;
+        display: block;
+    }
 }
 
 /* Sidebar CSS */
@@ -3741,12 +3744,6 @@ li.moremenu {
         font-weight: bold;
     }
 
-    /* This border breaks up/defines sections from view
-    .detail tr {
-        border-bottom: 1px solid #cccccc;
-    }
-    */
-
     .detail tr{
         margin:0;
         padding:0;
@@ -3756,6 +3753,7 @@ li.moremenu {
         border: none;
     }
 }
+
 @media only screen and (min-device-width: 480px) and (max-device-width: 767px) {
     /* Force table to not be like tables anymore(deconstruct) */
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
@@ -3901,16 +3899,6 @@ li.moremenu {
     }
 }
 
-@media (max-width:979px){
-.recentlyViewedSidebar, .recent_h3{
-    display:none;
-    margin:0;
-    padding:0;
-}
-    .moremenu ul li a{
-        color:#ffffff;
-    }
-}
 /* Custom styling for recently viewed on sidebar */
 li.recentlinks_top{
     float:left;
@@ -4311,13 +4299,7 @@ div.action_buttons form {
 }
 
 @media (max-width:979px){
-    .moremenu ul li a {
-        color: #f7f7f7 !important;
-        cursor: pointer;
-        padding: 5px;
-        font-size: 1em;
-        display: block;
-    }
+
 }
 
 h3 span{
