@@ -4307,6 +4307,9 @@ h3 span{
 #mobile_menu{
     overflow-y: scroll;
     overflow-x: hidden !important;
+    float:right;
+    width:200px !important;
+    background:#3C8DBC !important;
 }
 
 #mobile_menu li{
