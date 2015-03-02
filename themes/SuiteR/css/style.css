@@ -4355,6 +4355,7 @@ table.mceLayout, textarea.tinyMCE {
     }
 }
 
+/* Customisations to top navigation for mobile. */
 #mobile_menu{
     overflow-y: scroll;
     overflow-x: hidden !important;
@@ -4376,34 +4377,34 @@ table.mceLayout, textarea.tinyMCE {
     #mobile_menu{
        display:none !important;
     }
+
+    #quickcreatetop a{
+        color:#ffffff !important;
+        margin:8px 0 8px 0 !important;
+        line-height:50px;
+        padding: 0 5px 0 5px !important;
+        cursor:pointer;
+    }
+
+    #quickcreatetop ul li{
+        padding:0 !important;
+        margin:0 !important;
+    }
+
+    #quickcreatetop ul li a{
+        color:#3C8DBC !important;
+        padding:0 3px 0 3px !important;
+        margin:0 !important;
+        line-height:35px;
+    }
+
+    #quickcreatetop ul li a:hover{
+        color:#ffffff !important;
+    }
 }
 
 .navbar-collapse.collapse{
     overflow:scroll !important;
-}
-
-#quickcreatetop a{
-    color:#ffffff !important;
-    margin:8px 0 8px 0 !important;
-    line-height:50px;
-    padding: 0 5px 0 5px !important;
-    cursor:pointer;
-}
-
-#quickcreatetop ul li{
-    padding:0 !important;
-    margin:0 !important;
-}
-
-#quickcreatetop ul li a{
-    color:#3C8DBC !important;
-    padding:0 3px 0 3px !important;
-    margin:0 !important;
-    line-height:35px;
-}
-
-#quickcreatetop ul li a:hover{
-    color:#ffffff !important;
 }
 
 #themePreview{
