@@ -4250,10 +4250,6 @@ div.action_buttons form {
     overflow: hidden;
 }
 
-@media (max-width:979px){
-
-}
-
 h3 span{
     font-weight:bold;
 }
