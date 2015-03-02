@@ -2999,6 +2999,7 @@ fieldset[disabled] .btn-primary.active{
     min-width: 185px;
     margin-top:1px !important;
     border-radius:0;
+    font-size:1em;
 }
 
 .dropdown-menu em {
