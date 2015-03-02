@@ -117,6 +117,7 @@ array (
             'name' => 'description',
             'nl2br' => true,
           ),
+          1 => '',
         ),
         5 => 
         array (
@@ -147,7 +148,6 @@ array (
           array (
             'name' => 'case_update_form',
             'studio' => 'visible',
-            'label' => 'LBL_UPDATE_TEXT',
           ),
         ),
         8 => 
