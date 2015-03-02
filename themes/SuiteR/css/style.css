@@ -36,10 +36,6 @@
 /* Start Global CSS */
 /* Base SugarCRM Styles */
 
-html {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
 body {
     background:#ffffff;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -317,7 +313,6 @@ th, td {
 
 .edit h4 {
     text-align: left;
-    margin-top: 0;
     padding-top:0;
     margin-top: 10px;
     padding-left:0;
@@ -325,7 +320,6 @@ th, td {
 
 .edit tr td {
     font-weight: normal;
-    padding: 0 !important;
     vertical-align: top;
     padding: 3px !important;
 }
@@ -4044,7 +4038,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 #buttontoggle {
     position: fixed;
-    left: 0px;
+    left: 0;
     top: 130px;
     background:#eeeeee;
     z-index: 100;
