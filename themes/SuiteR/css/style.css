@@ -1711,13 +1711,12 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 }
 
 #globalLinks li{
-    padding:8px 0 8px 0;
+    padding:8px 0 7px 0;
 
 }
 
 #globalLinks ul li{
     padding:0;
-
 }
 
 /* themepicker */
@@ -2128,9 +2127,6 @@ ul.clickMenu {
     color: #000000;
     display: inline-block;
     border:1px solid #dddddd;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     background:#eeeeee;
 }
 
@@ -2164,9 +2160,6 @@ ul.clickMenu>li, ul.SugarActionMenuIESub li {
     list-style: none;
     position: relative; /*--Declare X and Y axis base--*/
     cursor: pointer;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     -webkit-transition: all 0.3s ease-out;
     -moz-transition: all 0.3s ease-out;
     -o-transition: all 0.3s ease-out;
@@ -2513,9 +2506,6 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
     padding: 3px 8px 3px 8px;
     margin: 0 3px 0 3px;
     background: #cccccc; /* Old browsers */
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     color: #121212;
     cursor: pointer;
     font-size:12px;
@@ -2526,9 +2516,6 @@ a#create_link.utilsLink {
     background-color: #3C8DBC;
     border:none;
     padding:5px 8px 5px 8px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -o-transition: all 0.2s ease-out;
@@ -3068,6 +3055,7 @@ fieldset[disabled] .btn-primary.active{
     padding:10px;
     min-width: 185px;
     margin-top:1px !important;
+    border-radius:0;
 }
 
 .dropdown-menu em {
@@ -3088,9 +3076,6 @@ fieldset[disabled] .btn-primary.active{
 
 .dropdown-menu li{
     margin:5px 0 5px 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
 }
 
 .dropdown-menu li a {
@@ -3599,24 +3584,6 @@ body {
     }
 }
 
-/* Sidebar navigation */
-
-.nav-sidebar {
-    margin-right: -21px; /* 20px padding + 1px border */
-    margin-bottom: 20px;
-    margin-left: -20px;
-}
-
-.nav-sidebar > li > a {
-    padding-right: 20px;
-    padding-left: 20px;
-}
-
-.nav-sidebar > .active > a, .nav-sidebar > .active > a:hover, .nav-sidebar > .active > a:focus {
-    color: #fff;
-    background-color: #428bca;
-}
-
 #userlinks {
     margin: 0 0 15px 10px;
 }
@@ -3768,12 +3735,6 @@ li.moremenu {
         border: 1px solid #cccccc;
         margin: 10px 0 0 0;
         padding: 8px;
-        -webkit-border-top-left-radius: 5px;
-        -webkit-border-top-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-topright: 5px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
     }
 
     .detail508 tr td[scope="col"] {
@@ -3814,12 +3775,6 @@ li.moremenu {
         border: 1px solid #cccccc;
         margin: 10px 0 0 0;
         padding: 8px;
-        -webkit-border-top-left-radius: 5px;
-        -webkit-border-top-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-topright: 5px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
     }
 
     .detail508 tr td[scope="col"], .edit tr td[scope="col"] {
@@ -3853,14 +3808,6 @@ li.moremenu {
 
 @media (max-width:640px){
 
-    .edit.view {
-        -webkit-border-bottom-right-radius: 5px;
-        -webkit-border-bottom-left-radius: 5px;
-        -moz-border-radius-bottomright: 5px;
-        -moz-border-radius-bottomleft: 5px;
-        border-bottom-right-radius: 5px;
-        border-bottom-left-radius: 5px;
-    }
     /* Force table to not be like tables anymore(deconstruct) */
     .edit table, .edit thead, .edit tbody, .edit th, .edit td, .edit tr,
     .popupBody .edit table, .popupBody .edit thead, .popupBody .edit tbody, .popupBody .edit th, .popupBody .edit td, .popupBody .edit tr {
@@ -3880,12 +3827,6 @@ li.moremenu {
         border:1px solid #cccccc;
         margin:10px 0 0 0;
         padding:8px 0 8px 0;
-        -webkit-border-top-left-radius: 5px;
-        -webkit-border-top-right-radius: 5px;
-        -moz-border-radius-topleft: 5px;
-        -moz-border-radius-topright: 5px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
     }
     .edit tr td[scope="col"] {
         font-weight:bold;
@@ -3905,9 +3846,6 @@ li.moremenu {
         border:none;
     }
     .edit input[type=text] {
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
         font-size:1em;
     }
     /* Fix for how email section/table shows */
@@ -4116,60 +4054,9 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-/*@media (max-width:360px) {*/
-    /*.dashletcontainer {*/
-        /*width:100%;*/
-        /*position:relative;*/
-        /*margin:0;*/
-        /*float:left;*/
-        /*padding:0;*/
-    /*}*/
-/*}*/
-
-/*@media (min-width:321px) and (max-width:380px) {*/
-     /*{*/
-        /*width:88%;*/
-        /*position:relative;*/
-        /*margin:0;*/
-        /*float:left;*/
-        /*padding:0;*/
-    /*}*/
-/*}*/
-
-/*@media (min-width:381px) and (max-width:480px) {*/
-    /*.dashletcontainer {*/
-        /*width:100%;*/
-        /*position:relative;*/
-        /*margin:0;*/
-        /*float:left;*/
-        /*padding:0;*/
-    /*}*/
-/*}*/
-
-/*@media (min-width:481px) and (max-width:640px) {*/
-    /*.dashletcontainer {*/
-        /*width:100%;*/
-        /*position:relative;*/
-        /*margin:0;*/
-        /*float:left;*/
-        /*padding:0;*/
-    /*}*/
-/*}*/
-
-/*@media (min-width:641px) and (max-width:980px) {*/
-    /*.dashletcontainer {*/
-        /*width:100%;*/
-        /*position:relative;*/
-        /*margin:0;*/
-        /*float:left;*/
-        /*padding:0;*/
-    /*}*/
-/*}*/
-
 @media (max-width:980px) {
     .dashletNonTable {
       display:none;
-
     }
 
     .dashletcontainer {
@@ -4179,7 +4066,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         float:left;
         padding:0;
     }
-
 }
 
 .table > thead > tr > th {
@@ -4252,7 +4138,7 @@ table#lineItems{
 #buttontoggle
 {
     position: fixed;
-    left: 215px;
+    left: 0px;
     top: 130px;
     background:#eeeeee;
     z-index: 100;
