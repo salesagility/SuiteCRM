@@ -277,10 +277,7 @@ array (
             'comment' => 'Full text of the note',
             'label' => 'LBL_DESCRIPTION',
           ),
-          1 => 
-          array (
-            'name' => 'aop_case_updates_contacts_1_name',
-          ),
+          1 => '',
         ),
         7 => 
         array (
