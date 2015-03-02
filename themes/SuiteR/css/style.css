@@ -3982,10 +3982,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     }
 }
 
-/*ul.navbar-nav li ul li:hover {*/
-    /*background:none !important;*/
-/*}*/
-
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{
     background:none;
 }
@@ -4119,10 +4115,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     }
 }
 
-table#lineItems{
-    max-width:50%;
-}
-
 #buttontoggle
 {
     position: fixed;
@@ -4215,7 +4207,6 @@ table#lineItems{
    }
 }
 
-
 .helpIcon{
     display:none;
 }
@@ -4279,7 +4270,6 @@ div.action_buttons form {
         content: none;
     }
 }
-
 
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     border-top: none;
