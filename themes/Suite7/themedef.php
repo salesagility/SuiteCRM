@@ -80,6 +80,11 @@ $themedef = array(
             'type' => 'colour',
             'default' => '#cccccc'
         ),
+        'modlisthover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUHOVER',
+            'type' => 'colour',
+            'default' => '#565656'
+        ),
         'cssmenu' => array(
             'vname' => 'LBL_COLOUR_ADMIN_DDMENU',
             'type' => 'colour',
