@@ -3149,28 +3149,27 @@ li#usermenu:hover {
 }
 
 .button, input[type=submit], input[type=button] {
-    border:none;
-    margin:2px;
-    color: #fff;
     background-color: #3C8DBC;
-    padding:5px 8px 5px 8px;
-    margin:2px;
+    border:none;
+    color: #fff;
     cursor:pointer;
-    font-size:1em !important;
+    font-size:1.1em !important;
+    margin:2px;
+    padding:5px 8px 5px 8px;
+}
+
+button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
+    background-color: #777777;
+    border:none;
+    color: #ffffff;
+    cursor:pointer;
+    font-size:1.1em !important;
+    margin:2px;
+    padding:5px 8px 5px 8px;
 }
 
 .yui-layout-hd .button, .yui-layout-hd input[type=submit], .yui-layout-hd input[type=button]{
     font-size:1.5em !important;
-}
-
-button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
-    border:none;
-    margin:2px;
-    color: #ffffff;
-    background-color: #777777;
-    padding:5px 8px 5px 8px;
-    margin:2px;
-    cursor:pointer;
 }
 
 .button:hover,
