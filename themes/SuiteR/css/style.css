@@ -40,11 +40,10 @@ html {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-body
-{
+body {
     background:#ffffff;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size:1.3em;
+    font-size:12px;
     margin: 0;
     overflow:auto;
     padding-top: 50px;
@@ -106,9 +105,15 @@ fieldset, table, pre {
 }
 
 p {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:1.1em;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+a{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size:1.1em;
 }
 
 form {
@@ -222,6 +227,7 @@ th, td {
 .moduleTitle h2 {
     display: block;
     float: left;
+    font-size:1.2em;
 }
 
 .moduleTitle h2 span.pointer {
@@ -265,6 +271,7 @@ th, td {
 /* DetailView styles */
 .detail h4 {
     font-weight: bold;
+    font-size:1.2em;
     margin: 0;
     text-align: left;
     border: none;
@@ -1663,10 +1670,10 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 /* global links */
 
 #globalLinks {
-    padding:0;
     border-left:1px solid #bbbbbb;
     margin: 0 0 0 10px;
     font-size:1.1em;
+    height:50px;
 }
 
 #globalLinks a{
@@ -1681,11 +1688,6 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 #globalLinks ul li a:hover {
     max-width:150px !important;
     color:#ffffff;
-}
-
-#globalLinks li{
-    padding:8px 0 7px 0;
-
 }
 
 #globalLinks ul li{
@@ -2766,9 +2768,6 @@ input[type=text].cstm_code {
     border:1px solid #cccccc;
     margin:10px;
     padding:10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 }
 
 #caseStyleContact {
@@ -2776,18 +2775,12 @@ input[type=text].cstm_code {
     border:1px solid #cccccc;
     margin:10px;
     padding:10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 }
 
 #caseStyleInternal {
     background:#00EEEE;
     border:1px solid #cccccc;
     padding:10px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
     margin: 10px 60px 10px 10px;
 }
 
@@ -2960,6 +2953,7 @@ ol, ul, dl {
 
 #bigbutton{
     padding:10px 0 10px 0;
+    border-radius:0;
 }
 
 div.input-group input{
@@ -3049,17 +3043,12 @@ fieldset[disabled] .btn-primary.active{
 }
 
 .topnav{
-    padding:15px 0 16px 0;
+    padding:15px 0 15px 0;
     font-size:1.1em;
 }
 
 .topnav:hover{
     background-color: #597dbc !important;
-}
-
-ul.topnav li a {
-    text-decoration:none;
-    font-size:1.4em;
 }
 
 .hr {
@@ -3152,14 +3141,10 @@ li#usermenu:hover {
 
 .button, input[type=submit], input[type=button] {
     border:none;
-    padding:3px 10px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     margin:2px;
     color: #fff;
     background-color: #3C8DBC;
-    padding:3px 10px;
+    padding:5px 8px 5px 8px;
     margin:2px;
     cursor:pointer;
     font-size:1em !important;
@@ -3171,14 +3156,10 @@ li#usermenu:hover {
 
 button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled]{
     border:none;
-    padding:3px 10px;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
     margin:2px;
     color: #ffffff;
     background-color: #777777;
-    padding:3px 10px;
+    padding:5px 8px 5px 8px;
     margin:2px;
     cursor:pointer;
 }
@@ -3839,9 +3820,6 @@ li.moremenu {
         background-color: #3C8DBC;
         border: none;
         padding: 8px 12px 8px 12px;
-        -webkit-border-radius: 2px;
-        -moz-border-radius: 2px;
-        border-radius: 2px;
         margin: 2px;
     }
     .quickcreate {
@@ -3977,9 +3955,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 @media (max-width:768px) {
     .View {
         border: 1px solid #cccccc;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        border-radius: 5px;
     }
 
     #month-tab, #year-tab, #shared-tab{
