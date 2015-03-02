@@ -302,6 +302,7 @@ class SugarView
         $ss = new Sugar_Smarty();
         $ss->assign("APP", $app_strings);
         $ss->assign("THEME", $theme);
+        $ss->assign("THEME_CONFIG", $themeObject->getConfig());
         $ss->assign("THEME_IE6COMPAT", $themeObject->ie6compat ? 'true':'false');
         $ss->assign("MODULE_NAME", $this->module);
         $ss->assign("langHeader", get_language_header());

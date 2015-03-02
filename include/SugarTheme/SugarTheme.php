@@ -1111,6 +1111,33 @@ EOHTML;
         return $imageArray;
     }
 
+    /**
+     * Returns an array of all of the config values for the current theme
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        global $sugar_config;
+
+        $config = array();
+
+        foreach($this->config_options as $name => $def){
+            $config[$name] = $def;
+
+            $value = '';
+            if(isset($sugar_config['theme_settings'][$this->dirName][$name])){
+                $value = $sugar_config['theme_settings'][$this->dirName][$name];
+            } else if(isset($def['default'])){
+                $value = $def['default'];
+            }
+            $config[$name]['value'] = $value;
+
+        }
+
+        return $config;
+    }
+
 }
 
 /**
