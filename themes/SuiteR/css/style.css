@@ -4362,5 +4362,18 @@ h3 span{
     width:250px;
 }
 
+.icon{
+    fill: #3c8dbc;
+}
+
+.dashletToolSet{
+    margin: 0 75px 0 0;
+}
+
+object{
+    pointer-events: none;
+}
+
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
