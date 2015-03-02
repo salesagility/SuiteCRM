@@ -59,48 +59,48 @@ $themedef = array(
         'navbar' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BASE',
             'type' => 'colour',
-            'default' => '#121212'
+            'default' => '#3C8DBC'
         ),
         'navbar_hover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENUHOVER',
             'type' => 'colour',
-            'default' => '#565656'
+            'default' => '#204D74'
         ),
         'navbar_font' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENUFONT',
             'type' => 'colour',
-            'default' => '#cccccc'
+            'default' => '#ffffff'
         ),
         'navbar_link_hover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENULNKHVR',
             'type' => 'colour',
-            'default' => '#cccccc'
+            'default' => '#ffffff'
         ),
         'dropdown_menu' => array(
             'vname' => 'LBL_COLOUR_ADMIN_DDMENU',
             'type' => 'colour',
-            'default' => '#333333'
+            'default' => '#f7f7f7'
         ),
         'dropdown_menu_link' => array(
             'vname' => 'LBL_COLOUR_ADMIN_DDLINK',
             'type' => 'colour',
-            'default' => '#cccccc'
+            'default' => '#3C8DBC'
         ),
 
         'button' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNTOP',
             'type' => 'colour',
-            'default' => '#ffffff'
+            'default' => '#3C8DBC'
         ),
         'button_hover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNHOVER',
             'type' => 'colour',
-            'default' => '#ffffff'
+            'default' => '#204D74'
         ),
         'button_link' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNLNK',
             'type' => 'colour',
-            'default' => '#121212'
+            'default' => '#ffffff'
         ),
         'button_link_hover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNLNKHOVER',
@@ -111,18 +111,18 @@ $themedef = array(
         'page_header' => array(
             'vname' => 'LBL_COLOUR_ADMIN_PAGEHEADER',
             'type' => 'colour',
-            'default' => '#f10202'
+            'default' => '#333333'
         ),
         'page_link' => array(
             'vname' => 'LBL_COLOUR_ADMIN_PAGELINK',
             'type' => 'colour',
-            'default' => '#f10202'
+            'default' => '#3C8DBC'
         ),
 
         'dashlet' => array(
             'vname' => 'LBL_COLOUR_ADMIN_DASHHEAD',
             'type' => 'colour',
-            'default' => '#777777'
+            'default' => '#ffffff'
         ),
 
     )
