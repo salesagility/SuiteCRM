@@ -52,7 +52,7 @@ global $cal_strings, $current_language;
 $cal_strings = return_module_language($current_language, 'Calendar');
 
 if(empty($_REQUEST['view'])){
-    if (isset($_SESSION['CALENDAR_VIEW']) && in_array($_SESSION['CALENDAR_VIEW'], array("day","week","month","year","shared")))
+    if (isset($_SESSION['CALENDAR_VIEW']) && in_array($_SESSION['CALENDAR_VIEW'], array("day","week","month","year","shared","mobile")))
     {
         $_REQUEST['view'] = $_SESSION['CALENDAR_VIEW'];
     }
@@ -61,12 +61,19 @@ if(empty($_REQUEST['view'])){
         $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','week');
     }
 }
-$_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
+
+if($_SESSION['screen_width']  < 640 && isset($_SESSION['screen_width'])){
+//	$_SESSION['CALENDAR_VIEW'] = "mobile";
+	$_REQUEST['view'] = "mobile";
+}else{
+	$_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
+}
+
 
 $cal = new Calendar($_REQUEST['view']);
 
-if(in_array($cal->view,array('day','week','month','mobile'))){
-	$cal->add_activities($GLOBALS['current_user']);	
+if(in_array($cal->view,array('day','week','month',"mobile"))){
+	$cal->add_activities($GLOBALS['current_user']);
 }else if($cal->view == 'shared'){
 	$cal->init_shared();	
 	global $shared_user;				
@@ -77,7 +84,7 @@ if(in_array($cal->view,array('day','week','month','mobile'))){
 	}
 }
 
-if(in_array($cal->view, array("day","week","month","shared"))){
+if(in_array($cal->view, array("day","week","month","shared","mobile"))){
 	$cal->load_activities();
 }
 
@@ -86,11 +93,19 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
 }
 
 $display = new CalendarDisplay($cal);
-$display->display_title();
-if($cal->view == "shared")
-	$display->display_shared_html();
-$display->display_calendar_header();
-$display->display();
-$display->display_calendar_footer();	
+if($cal->view == "mobile"){
+	$display->display_title();
+	$display->display();
+}else{
+	$display->display_title();
+	if($cal->view == "shared")
+		$display->display_shared_html();
+	$display->display_calendar_header();
+	$display->display();
+	$display->display_calendar_footer();
+}
+
+
+
 
 ?>
