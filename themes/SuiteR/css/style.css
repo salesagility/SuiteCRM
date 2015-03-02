@@ -1577,29 +1577,6 @@ a:link, a:visited, a:hover {
     border-top:2px solid;
 }
 
-/* DetailView styles */
-
-/* commented out table styles
-.detail table,
-table.detail
-{
-    padding: 0;
-}
-.detail tr td
-{
-    border-bottom: 1px solid;
-}
-.detail tr td[scope=row]
-{
-    border-bottom:1px solid;
-}
-.detail tr th
-{
-    border-bottom: 2px solid;
-    background: #fff;
-}
-*/
-
 /* Listview styles */
 .list {
     border: 1px solid;
@@ -2430,7 +2407,6 @@ ul#detailViewActions.clickMenu {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-
 #quickCreate ul.clickMenu > li {
     width: 50px;
     height: 43px;
@@ -2481,14 +2457,12 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
     opacity: 1;
 }
 
-
 #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowMore a img, #quickCreate ul.clickMenu li ul.subnav li.moduleMenuOverFlowLess a img
 {
     opacity: .6;
 }
 
 /* Table CSS */
-
 .view, table.view td {
     border:none;
 }
@@ -2619,12 +2593,6 @@ iframe.teamNoticeBox {
     height: 100%;
     display: none;
 }
-
-button #powered_by {
-    background:none;
-    border:none;
-}
-
 
 #links {
     float:right;
@@ -2998,7 +2966,6 @@ div.input-group input{
     min-width:100% !important;
     max-width:100% !important;
 }
-
 
 .button-primary:active, .button-primary.active, .open > .dropdown-toggle.btn-primary {
     background-image: none;
