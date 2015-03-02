@@ -39,7 +39,7 @@ function aorRunScheduledReports(){
             $job->target = "class::AORScheduledReportJob";
             $job->assigned_user_id = 1;
             $jq = new SugarJobQueue();
-            $jobid = $jq->submitJob($job);
+            $jq->submitJob($job);
         }
     }
 }
@@ -67,7 +67,7 @@ class AORScheduledReportJob implements RunnableSchedulerJob
         $html .= <<<EOF
         <style>
         h1{
-            color: {$sugar_config['colourselector']['pageheader']};
+            color: black;
         }
         .list
         {
@@ -78,9 +78,9 @@ class AORScheduledReportJob implements RunnableSchedulerJob
         {
             font-size: 14px;
             font-weight: normal;
-            color: {$sugar_config['colourselector']['pageheader']};
+            color: black;
             padding: 10px 8px;
-            border-bottom: 2px solid {$sugar_config['colourselector']['menubrd']};
+            border-bottom: 2px solid black};
         }
         .list td
         {
@@ -113,13 +113,10 @@ EOF;
         $mail->Body=$html;
         $mail->prepForOutbound();
         $success = true;
-        $emails = $bean->get_linked_beans('email_addresses','EmailAddresses');
-        foreach($emails as $email) {
-            if($email->invalid_email){
-                continue;
-            }
+        $emails = $bean->get_email_recipients();
+        foreach($emails as $email_address) {
             $mail->ClearAddresses();
-            $mail->AddAddress($email->email_address);
+            $mail->AddAddress($email_address);
             $success = $mail->Send() && $success;
         }
         $bean->last_run = $timedate->getNow()->asDb(false);
