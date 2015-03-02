@@ -1711,7 +1711,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 }
 
 #globalLinks li{
-    padding:8px 0 8px 0;
+    padding:8px 0 7px 0;
 
 }
 
@@ -3068,6 +3068,7 @@ fieldset[disabled] .btn-primary.active{
     padding:10px;
     min-width: 185px;
     margin-top:1px !important;
+    border-radius:0;
 }
 
 .dropdown-menu em {
@@ -3088,9 +3089,6 @@ fieldset[disabled] .btn-primary.active{
 
 .dropdown-menu li{
     margin:5px 0 5px 0;
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
 }
 
 .dropdown-menu li a {
