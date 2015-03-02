@@ -272,9 +272,9 @@ class SugarTheme
     private $_clearCacheOnDestroy = false;
 
     private $imageExtensions = array(
+            'svg',
             'gif',
             'png',
-            'svg',
             'jpg',
             'tif',
             'bmp',
@@ -759,6 +759,10 @@ EOHTML;
 
 		$attr_width = (is_null($width)) ? "" : "width=\"$width\"";
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
+
+        if(strpos($cached_results[$imageName], 'svg') !== false){
+            return $cached_results[$imageName] ."></object>";
+        }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
     }
 
