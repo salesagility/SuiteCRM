@@ -75,7 +75,7 @@
 	<table border="0" cellspacing="1" cellpadding="1" class="actionsContainer">
 		<tr>
 			<td>
-				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
+				<input title="{$APP.LBL_SAVE_BUTTON_LABEL}" class="button primary" onclick="document.themeConfigSettings.do.value='save';" type="submit" name="button" value="{$APP.LBL_SAVE_BUTTON_LABEL}">
 				<input title="{$APP.LBL_CANCEL_BUTTON_LABEL}" class="button" onclick="document.themeSettings.action.value='';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
 			</td>
 		</tr>
