@@ -1710,3 +1710,17 @@ YAHOO.extend(YAHOO.util.DDCAL, YAHOO.util.DD, {
 });
 CAL.remove_edit_dialog();
 var cal_loaded = true;
+
+update_screen_resolution();
+
+$(window).resize(function () {
+    update_screen_resolution();
+});
+
+function update_screen_resolution(){
+    $.ajax({
+        url: 'index.php?module=Calendar&action=processScreenSize',
+        type: 'post',
+        data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
+    });
+}
