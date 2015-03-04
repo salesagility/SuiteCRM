@@ -34,5 +34,6 @@ $mod_strings['LBL_COLOUR_ADMIN_BTNHOVER'] = 'Button hover colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_BTNLNK'] = 'Button link colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_BTNLNKHOVER'] = 'Button link hover colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_DASHHEAD'] = 'Dashlet header colour: ';
+$mod_strings['LBL_COLOUR_ADMIN_ICON'] = 'Icon colour: ';
 
 $mod_strings['LBL_COLOUR_ADMIN_TABS'] = 'Menu contents config';

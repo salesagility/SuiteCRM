@@ -73,6 +73,10 @@ background:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu'
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link']; ?> !important;
 }
 
+.icon{
+    fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; ?> !important;
+}
+
 /* Button and action menu CSS */
 
 .btn, .btn-success, .btn-primary, .button, input[type=submit], input[type=button], a#create_link.utilsLink, .btn-group a, ul.clickMenu>li, ul.SugarActionMenuIESub li, ul.SugarActionMenuIESub li a,
