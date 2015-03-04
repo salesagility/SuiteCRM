@@ -193,7 +193,7 @@ CAL.arrange_column = function (column) {
     }
 }
 CAL.arrange_advanced = function () {
-    var nodes = CAL.query("#cal-grid #cal-scrollable .col");
+    var nodes = CAL.query("#cal-grid .col");
     for (var i = 0; i < nodes.length; i++) {
         CAL.arrange_column(nodes[i]);
     }
