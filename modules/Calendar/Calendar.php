@@ -128,7 +128,7 @@ class Calendar {
 			$_REQUEST['mobile'] = "";
 
 		// if date is not set in request use current date
-		if(empty($date_arr) || !isset($date_arr['year']) || !isset($date_arr['month']) || !isset($date_arr['day']) || !isset($date_arr['mobile'])){
+		if(empty($date_arr) || !isset($date_arr['year']) || !isset($date_arr['month']) || !isset($date_arr['day'])){
 			$today = $timedate->getNow(true);
 			$date_arr = array(
 			      'year' => $today->year,
