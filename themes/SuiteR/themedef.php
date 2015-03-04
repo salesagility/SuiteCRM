@@ -64,7 +64,7 @@ $themedef = array(
         'navbar_hover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENUHOVER',
             'type' => 'colour',
-            'default' => '#204D74'
+            'default' => '#597dbc'
         ),
         'navbar_font' => array(
             'vname' => 'LBL_COLOUR_ADMIN_MENUFONT',
@@ -95,7 +95,7 @@ $themedef = array(
         'button_hover' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNHOVER',
             'type' => 'colour',
-            'default' => '#204D74'
+            'default' => '#597dbc'
         ),
         'button_link' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNLNK',
