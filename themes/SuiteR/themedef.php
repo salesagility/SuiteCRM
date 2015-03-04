@@ -124,6 +124,11 @@ $themedef = array(
             'type' => 'colour',
             'default' => '#ffffff'
         ),
+        'icon' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_ICON',
+            'type' => 'colour',
+            'default' => '#ffffff'
+        ),
 
     )
 );

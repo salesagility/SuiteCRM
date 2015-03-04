@@ -750,7 +750,7 @@ EOHTML;
 			if ( empty($imageURL) )
 				return false;
             if(strpos($imageURL, '.svg', strlen($imageURL)-4)){
-                $cached_results[$imageName] = '<object class="icon" type="image/svg+xml" data="'.getJSPath($imageURL).'" ';
+                $cached_results[$imageName] = file_get_contents($imageURL);
             } else {
                 $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
             }
@@ -761,7 +761,7 @@ EOHTML;
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
 
         if(strpos($cached_results[$imageName], 'svg') !== false){
-            return $cached_results[$imageName] ."></object>";
+            return $cached_results[$imageName];
         }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
     }

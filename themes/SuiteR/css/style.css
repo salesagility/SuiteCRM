@@ -4364,13 +4364,6 @@ h3 span{
 
 .icon{
     fill: #3c8dbc;
-}
-
-.dashletToolSet{
-    margin: 0 75px 0 0;
-}
-
-object{
     pointer-events: none;
 }
 
