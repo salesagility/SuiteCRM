@@ -2108,7 +2108,7 @@ ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover,ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover { /*--Hover effect for subnav links--*/
 
-   color: #3C8DBC;
+    color: #3C8DBC;
 }
 
 ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
@@ -3322,27 +3322,9 @@ table legend {
     border:1px solid #dddddd;
 }
 
-/* Footer styles for mobile */
-
-#mobilefooter {
-    width:100%;
-    margin:0 auto;
-    padding:5px;
-    max-height:50px !important;
-    background:#3C8DBC;
-    position:fixed;
-    bottom:0;
-}
-
 #footernav{
     margin: 0 auto; padding: 0;
     width:165px;
-}
-
-@media screen and (min-width:479px) {
-    #mobilefooter {
-        display:none
-    }
 }
 
 @media screen and (max-width:801px) {
@@ -3370,10 +3352,17 @@ table legend {
     margin-right:-10px;
 }
 
+@media (min-width:480px) and (max-width:979px){
+    #searchmobile {
+        display:block;
+        width:100%;
+    }
+}
+
 /* Media queries for larger screens to hide mobile content */
 
 @media (max-width:1279px){
-    #usermenu, #searchform, #searchmobile{
+    #usermenu, #searchform{
         display:none;
     }
 
@@ -3430,10 +3419,6 @@ table legend {
         overflow: hidden!important;
     }
 
-    #searchmobile {
-        display:block;
-        width:100%;
-    }
     /* Hide search/admin buttons for mobile/tablet screens */
     #usermenucollapsed{
         margin:0 0 0 5px;display:none;
@@ -3501,7 +3486,7 @@ table legend {
         padding:20px;
         overflow-x: hidden;
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        background-color: #f5f5f5;
+        background-color: #f7f7f7;
         border-right: 1px solid #eee;
         min-width:215px !important;
     }
@@ -3520,10 +3505,25 @@ table legend {
     display:none;
 }
 
-@media (min-width: 480px) and (max-width: 979px) {
+.navbar-toggle{
+    float:left;
+}
+
+@media (max-width:480px){
+    .navbar-brand{
+        float:left;
+        height:50px;
+        padding:15px 0 15px 0;
+        font-size:18px;
+        line-height:20px;
+    }
+}
+
+@media (max-width: 979px) {
     #userlinks_head {
         display:inline;
         margin:2px 0 0 0;
+        float:right;
     }
     #userlinks_head a {
         color: #ffffff;
@@ -3855,7 +3855,7 @@ li.recentlinks_edit a:hover {
 /* Custom styling from group tabs menu structure */
 
 [id^=moduleTab] a:hover{
-        color: hotpink;
+    color: hotpink;
 }
 
 a[id^=grouptab], a[id^=moduleTab]{
@@ -3954,7 +3954,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 @media (max-width:980px) {
     .dashletNonTable {
-      display:none;
+        display:none;
     }
 
     .dashletcontainer {
@@ -4115,9 +4115,9 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 }
 
 @media (min-width: 768px) {
-   .showsearch{
-       display:none;
-   }
+    .showsearch{
+        display:none;
+    }
 }
 
 .helpIcon{
@@ -4326,7 +4326,7 @@ h3 span{
 
 @media (min-width:979px) {
     #mobile_menu{
-       display:none !important;
+        display:none !important;
     }
 
     #quickcreatetop a{
@@ -4363,17 +4363,9 @@ h3 span{
 }
 
 .icon{
-    fill: #3c8dbc;
-}
-
-.dashletToolSet{
-    margin: 0 75px 0 0;
-}
-
-object{
+    fill: #3C8DBC;
     pointer-events: none;
 }
-
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
