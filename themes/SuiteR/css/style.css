@@ -4307,8 +4307,10 @@ h3 span{
 #mobile_menu{
     overflow-y: scroll;
     overflow-x: hidden !important;
-    float:right;
+    float:left;
     width:200px !important;
+    margin:0;
+    padding:0;
     background:#3C8DBC !important;
 }
 
@@ -4316,12 +4318,15 @@ h3 span{
     list-style: none;
     height:50px;
     line-height:50px;
-    border-bottom: 1px solid #cccccc;
+    margin:0;
+    border-bottom: 1px solid #44AEBC;
 }
 
 #mobile_menu a{
     color: #ffffff;
     display:block;
+    padding:0 10px 5px 10px;
+    font-size:1.2em;
 }
 
 @media (min-width:979px) {
