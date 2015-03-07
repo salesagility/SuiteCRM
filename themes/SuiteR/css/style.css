@@ -4305,6 +4305,9 @@ h3 span{
 
 /* Customisations to top navigation for mobile. */
 #mobile_menu{
+    position:absolute;
+    top:50px;
+    left:0;
     overflow-y: scroll;
     overflow-x: hidden !important;
     float:left;
