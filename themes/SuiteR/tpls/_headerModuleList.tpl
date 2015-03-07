@@ -45,10 +45,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
+            <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()" action="index.php" name="UnifiedSearch">
+                <input class="form-control" type="hidden" value="UnifiedSearch" name="action"></input>
+                <input class="form-control" type="hidden" value="Home" name="module"></input>
+                <input class="form-control" type="hidden" value="false" name="search_form"></input>
+                <input class="form-control" type="hidden" value="false" name="advanced"></input>
+                <span class="input-group-btn">
+                    <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string"></input>
+                </span>
+            </form>
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
+                    <button type="button" class="btn dropdown-toggle quickcreate" data-toggle="dropdown" aria-expanded="false">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
@@ -62,18 +72,8 @@
                     </ul>
                 </div>
                 <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+                <a href=""><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
             </div>
-            <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
-            <form id="searchmobile" name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
-                <input type="hidden" class="form-control" name="module" value="Home">
-                <input type="hidden" class="form-control" name="search_form" value="false">
-                <input type="hidden" class="form-control" name="advanced" value="false">
-                <span class="input-group-btn">
-                    <input type="text" class="form-control" name="query_string" id="query_string" placeholder="Search..." />
-                </span>
-            </form>
         </div>
 
         <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
