@@ -3522,7 +3522,7 @@ table legend {
 @media (max-width: 979px) {
     #userlinks_head {
         display:inline;
-        margin:2px 0 0 0;
+        margin:8px 0 0 0;
         float:right;
     }
     #userlinks_head a {

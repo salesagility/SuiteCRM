@@ -46,6 +46,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
+            <div id="mobileheader">
             <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()" action="index.php" name="UnifiedSearch">
                 <input class="form-control" type="hidden" value="UnifiedSearch" name="action"></input>
                 <input class="form-control" type="hidden" value="Home" name="module"></input>
@@ -58,9 +59,9 @@
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
                 <div class="btn-group" role="group">
-                    <button type="button" class="btn dropdown-toggle quickcreate" data-toggle="dropdown" aria-expanded="false">
+                    <a href="" class="dropdown-toggle quickcreate" data-toggle="dropdown" aria-expanded="false">
                         <span class="glyphicon glyphicon-plus"></span>
-                    </button>
+                    </a>
                     <ul class="dropdown-menu" role="menu">
                         <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
                         <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
@@ -73,6 +74,7 @@
                 </div>
                 <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                 <a href=""><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
+            </div>
             </div>
         </div>
 
