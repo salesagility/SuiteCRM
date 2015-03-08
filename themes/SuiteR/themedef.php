@@ -87,6 +87,12 @@ $themedef = array(
             'default' => '#3C8DBC'
         ),
 
+        'dropdown_menu_link_hover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DDLINK_HOVER',
+            'type' => 'colour',
+            'default' => '#ffffff'
+        ),
+
         'button' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNTOP',
             'type' => 'colour',
