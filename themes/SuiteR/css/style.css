@@ -3674,7 +3674,7 @@ li.moremenu {
     }
 }
 
-@media only screen and (min-device-width: 480px) and (max-device-width: 767px) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 767px) {
     /* Force table to not be like tables anymore(deconstruct) */
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
