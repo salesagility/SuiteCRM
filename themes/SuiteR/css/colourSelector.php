@@ -59,7 +59,7 @@ ul.topnav li:hover, .dropdown-menu li a:hover, li#usermenu:hover, .moremenu ul l
 background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_hover']; ?> !important;
 }
 
-.headerlinks a:hover, .navbar-inverse .navbar-brand:hover, .moremenu a:hover {
+.headerlinks a:hover, .navbar-inverse .navbar-brand:hover {
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_link_hover']; ?> !important;
 }
 
@@ -73,13 +73,18 @@ background:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu'
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link']; ?> !important;
 }
 
+.moremenu li a:hover, .dropdown-menu li a:hover, #globalLinks ul li a:hover, #quickcreatetop ul li a:hover{
+color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link_hover']; ?> !important;
+}
+
+
 .icon{
     fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; ?> !important;
 }
 
 /* Button and action menu CSS */
 
-.btn, .btn-success, .btn-primary, .button, input[type=submit], input[type=button], a#create_link.utilsLink, .btn-group a, ul.clickMenu>li, ul.SugarActionMenuIESub li, ul.SugarActionMenuIESub li a,
+button, .button, input[type="button"], input[type="reset"], input[type="submit"], a#create_link.utilsLink, .btn, .btn-success, .btn-primary, .button, input[type=submit], input[type=button], a#create_link.utilsLink, .btn-group a, ul.clickMenu>li, ul.SugarActionMenuIESub li, ul.SugarActionMenuIESub li a,
 ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a {
 background:#<?php echo $sugar_config['theme_settings']['SuiteR']['button']; ?> !important;
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['button_link']; ?> !important;
