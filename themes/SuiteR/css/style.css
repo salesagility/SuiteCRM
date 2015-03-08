@@ -4162,7 +4162,7 @@ div.action_buttons form {
 
 /* Fix to override bootstrap for email module panel collapse/expand */
 
-.yui-layout .yui-layout-clip-right .collapse, .yui-layout-hd .collapse{
+.yui-layout .yui-layout-clip-right .collapse, .yui-layout-hd .collapse, .yui-layout .yui-layout-clip-left .collapse{
     visibility:visible !important;
     display:block !important;
 }
