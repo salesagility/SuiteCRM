@@ -73,7 +73,7 @@
                     </ul>
                 </div>
                 <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a href=""><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                <a href="javascript:void(0)" id="togglemobilesearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
             </div>
             </div>
         </div>

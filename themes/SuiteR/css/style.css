@@ -3352,7 +3352,28 @@ table legend {
     margin-right:-10px;
 }
 
-@media (min-width:480px) and (max-width:979px){
+@media (max-width:480px){
+    #searchmobile{
+        float:left;
+        z-index:50 !important;
+        position:absolute;
+        left:75px;
+    }
+    #searchmobile #query_string{
+        width:100% !important;
+        outline: 0 !important;
+        background:#3C8DBC !important;
+        border:none !important;
+        border-radius:0 !important;
+        border-bottom:1px solid #cccccc !important;
+        color:#f7f7f7 !important;
+        -webkit-appearance: none !important;
+        box-shadow:none !important;
+        float:left;
+    }
+}
+
+@media (min-width:640px) and (max-width:979px){
     #searchmobile {
         display:block;
         width:100%;
@@ -3511,11 +3532,7 @@ table legend {
 
 @media (max-width:480px){
     .navbar-brand{
-        float:left;
-        height:50px;
-        padding:15px 0 15px 0;
-        font-size:18px;
-        line-height:20px;
+       display:none;
     }
 }
 
