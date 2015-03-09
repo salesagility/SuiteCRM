@@ -3549,9 +3549,6 @@ table legend {
 }
 
 @media (max-width:480px){
-    .navbar-brand{
-       display:none;
-    }
     #userlinks_home, .quickcreate, #userlinks_currentuser{
         display:none;
     }
@@ -3576,20 +3573,25 @@ table legend {
     #userlinks_head ul li a:hover{
         color:#ffffff;
     }
-    ::-webkit-input-placeholder {
+    #searchmobile ::-webkit-input-placeholder {
         color: #f7f7f7 !important;
     }
 
-    :-moz-placeholder { /* Firefox 18- */
+    #searchmobile :-moz-placeholder { /* Firefox 18- */
         color: #f7f7f7 !important;
     }
 
-    ::-moz-placeholder {  /* Firefox 19+ */
+    #searchmobile ::-moz-placeholder {  /* Firefox 19+ */
         color: #f7f7f7 !important;
     }
 
-    :-ms-input-placeholder {
+    #searchmobile :-ms-input-placeholder {
         color: #f7f7f7 !important;
+    }
+    a.navbar-brand{
+        text-align:center !important;
+        margin:0 auto !important;
+        max-width:150px !important;
     }
 }
 

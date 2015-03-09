@@ -45,7 +45,26 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
+            <div id="mobileheader">
+            <div id="modulelinks">
+                    {foreach from=$moduleTopMenu item=module key=name name=moduleList}
+                    {if $name == $MODULE_TAB}
+                    <span class="navbar-brand" data-toggle="dropdown" aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
+                    <ul class="dropdown-menu" role="menu">
+                        {if count($shortcutTopMenu.$name) > 0}
+                            <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
+                            {foreach from=$shortcutTopMenu.$name item=item}
+                                {if $item.URL == "-"}
+                                    <li><a></a><span>&nbsp;</span></li>
+                                {else}
+                                    <li><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                {/if}
+                            {/foreach}
+                        {/if}
+                    </ul>
+                    {/if}
+                    {/foreach}
+            </div>
             <div id="mobileheader">
             <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()" action="index.php" name="UnifiedSearch">
                 <input class="form-control" type="hidden" value="UnifiedSearch" name="action"></input>
