@@ -162,7 +162,11 @@ class AOR_Report extends Basic {
             }
 
             if($data['type'] == 'currency' && !stripos($field->field, '_USD') && isset($field_module->field_defs['currency_id'])) {
-                $query_array['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
+                if((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
+                    $query['select'][$table_alias.'_currency_id'] = $table_alias.'_cstm'.".currency_id AS '".$table_alias."_currency_id'";
+                } else {
+                    $query_array['select'][$table_alias . '_currency_id'] = $table_alias . ".currency_id AS '" . $table_alias . "_currency_id'";
+                }
             }
 
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
@@ -594,7 +598,12 @@ class AOR_Report extends Basic {
                 }
 
                 if($data['type'] == 'currency' && isset($field_module->field_defs['currency_id'])) {
-                    $query['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
+                    if((isset($field_module->field_defs['currency_id']['source']) && $field_module->field_defs['currency_id']['source'] == 'custom_fields')) {
+                        $query['select'][$table_alias.'_currency_id'] = $table_alias.'_cstm'.".currency_id AS '".$table_alias."_currency_id'";
+                    } else {
+                        $query['select'][$table_alias.'_currency_id'] = $table_alias.".currency_id AS '".$table_alias."_currency_id'";
+                    }
+
                 }
 
                 if((isset($data['source']) && $data['source'] == 'custom_fields')) {
