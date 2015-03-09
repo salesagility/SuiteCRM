@@ -3588,11 +3588,6 @@ table legend {
     #searchmobile :-ms-input-placeholder {
         color: #f7f7f7 !important;
     }
-    a.navbar-brand{
-        text-align:center !important;
-        margin:0 auto !important;
-        max-width:150px !important;
-    }
 }
 
 span#quickcreateplus{
@@ -4428,6 +4423,40 @@ h3 span{
 .icon{
     fill: #3C8DBC;
     pointer-events: none;
+}
+
+@media (max-width:360px){
+    .modulename{
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:200px;
+    }
+}
+
+@media (max-width:420px){
+    .modulename{
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:225px;
+    }
+}
+
+@media (max-width:480px){
+    .modulename{
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:350px;
+    }
+
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
