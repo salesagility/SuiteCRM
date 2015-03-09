@@ -4432,7 +4432,7 @@ h3 span{
         line-height:50px;
         text-align:center !important;
         margin:0 auto !important;
-        width:200px;
+        width:225px;
     }
 }
 
@@ -4456,7 +4456,12 @@ h3 span{
         margin:0 auto !important;
         width:350px;
     }
+}
 
+#modulelinks ul.dropdown-menu{
+    position:absolute;
+    top:50px;
+    left:35%;
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
