@@ -289,7 +289,7 @@ var checkContents = setInterval(function(){
             $('.search_form').toggle();
         });
         $('#togglemobilesearch').click(function() {
-            $('#searchmobile').slideToggle("500", "linear");
+            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
         });
 
         clearInterval(checkContents);

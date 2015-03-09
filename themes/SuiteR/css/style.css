@@ -3371,6 +3371,9 @@ table legend {
         box-shadow:none !important;
         float:left;
     }
+    .form-control{
+        color:#f7f7f7 !important;
+    }
 }
 
 @media (min-width:480px) and (max-width:979px){
