@@ -3552,6 +3552,9 @@ table legend {
     .navbar-brand{
        display:none;
     }
+    #userlinks_home, .quickcreate, #userlinks_currentuser{
+        display:none;
+    }
 }
 
 @media (max-width: 979px) {
@@ -3572,6 +3575,21 @@ table legend {
 
     #userlinks_head ul li a:hover{
         color:#ffffff;
+    }
+    ::-webkit-input-placeholder {
+        color: #f7f7f7 !important;
+    }
+
+    :-moz-placeholder { /* Firefox 18- */
+        color: #f7f7f7 !important;
+    }
+
+    ::-moz-placeholder {  /* Firefox 19+ */
+        color: #f7f7f7 !important;
+    }
+
+    :-ms-input-placeholder {
+        color: #f7f7f7 !important;
     }
 }
 

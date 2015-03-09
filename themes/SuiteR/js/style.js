@@ -288,7 +288,7 @@ var checkContents = setInterval(function(){
         $('.showsearch').click(function() {
             $('.search_form').toggle();
         });
-        $('#togglemobilesearch').click(function() {
+        $('#userlinks_togglemobilesearch').click(function() {
             $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
         });
 
