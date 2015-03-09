@@ -49,8 +49,9 @@
             <div id="modulelinks">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                     {if $name == $MODULE_TAB}
-                    <span class="navbar-brand" data-toggle="dropdown" aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
-                    <ul class="dropdown-menu" role="menu">
+                    <span class="modulename" data-toggle="dropdown" aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
+                    {if $name !='Home'}
+                        <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
                             {foreach from=$shortcutTopMenu.$name item=item}
                                 {if $item.URL == "-"}
@@ -60,7 +61,8 @@
                                 {/if}
                             {/foreach}
                         {/if}
-                    </ul>
+                        </ul>
+                    {/if}
                     {/if}
                     {/foreach}
             </div>
