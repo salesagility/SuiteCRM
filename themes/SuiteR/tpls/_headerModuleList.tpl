@@ -52,7 +52,6 @@
                     <span class="navbar-brand" data-toggle="dropdown" aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
                     <ul class="dropdown-menu" role="menu">
                         {if count($shortcutTopMenu.$name) > 0}
-                            <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
                             {foreach from=$shortcutTopMenu.$name item=item}
                                 {if $item.URL == "-"}
                                     <li><a></a><span>&nbsp;</span></li>
@@ -78,7 +77,7 @@
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php" id="userlinks_home"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
                 <div id="quicklinks" class="btn-group" role="group">
-                    <a href="" class="dropdown-toggle quickcreate" data-toggle="dropdown" aria-expanded="false">
+                    <a href="javascript:void(0)" class="dropdown-toggle quickcreate" data-toggle="dropdown" aria-expanded="false">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
