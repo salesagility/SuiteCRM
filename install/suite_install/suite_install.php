@@ -40,9 +40,6 @@ install_ss();
 require_once('install/suite_install/GoogleMaps.php');
 install_gmaps();
 
-require_once('install/suite_install/colourSelector.php');
-install_colourSelector();
-
 require_once('modules/Administration/QuickRepairAndRebuild.php');
 $actions = array('clearAll');
 $randc = new RepairAndClear();
