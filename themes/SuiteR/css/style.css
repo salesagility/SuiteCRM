@@ -4436,7 +4436,7 @@ h3 span{
     }
 }
 
-@media (max-width:420px){
+@media (min-width:361px) and (max-width:420px){
     .modulename{
         font-size:1.2em;
         float:left;
@@ -4447,7 +4447,7 @@ h3 span{
     }
 }
 
-@media (max-width:480px){
+@media (min-width:421px) and (max-width:480px){
     .modulename{
         font-size:1.2em;
         float:left;
