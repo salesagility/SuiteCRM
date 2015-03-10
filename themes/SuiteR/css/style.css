@@ -3352,7 +3352,7 @@ table legend {
     margin-right:-10px;
 }
 
-@media (max-width:480px){
+@media (max-width:767px){
     #searchmobile{
         float:left;
         z-index:50 !important;
@@ -3373,28 +3373,6 @@ table legend {
     }
     .form-control{
         color:#f7f7f7 !important;
-    }
-}
-
-@media (min-width:480px) and (max-width:979px){
-    #searchmobile {
-        display:block;
-        float:left;
-        z-index:50 !important;
-        position:absolute;
-        left:75px;
-        width:70%;
-    }
-    #searchmobile #query_string{
-        outline: 0 !important;
-        background:#3C8DBC !important;
-        border:none !important;
-        border-radius:0 !important;
-        border-bottom:1px solid #cccccc !important;
-        color:#f7f7f7 !important;
-        -webkit-appearance: none !important;
-        box-shadow:none !important;
-        float:left;
     }
 }
 
@@ -4425,8 +4403,13 @@ h3 span{
     pointer-events: none;
 }
 
+.modulename{
+    visibility:hidden;
+}
+
 @media (max-width:360px){
     .modulename{
+        visibility:visible;
         font-size:1.2em;
         float:left;
         line-height:50px;
@@ -4438,6 +4421,7 @@ h3 span{
 
 @media (min-width:361px) and (max-width:420px){
     .modulename{
+        visibility:visible;
         font-size:1.2em;
         float:left;
         line-height:50px;
@@ -4449,6 +4433,7 @@ h3 span{
 
 @media (min-width:421px) and (max-width:480px){
     .modulename{
+        visibility:visible;
         font-size:1.2em;
         float:left;
         line-height:50px;
@@ -4458,10 +4443,27 @@ h3 span{
     }
 }
 
-#modulelinks ul.dropdown-menu{
-    position:absolute;
-    top:50px;
-    left:35%;
+@media (min-width:481px) and (max-width:767px){
+    .modulename{
+        visibility:visible;
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:75%;
+    }
+}
+
+@media (max-width:767px) {
+    .modulename{
+        visibility:visible;
+    }
+    #modulelinks ul.dropdown-menu {
+        position: absolute;
+        top: 50px;
+        left: 35%;
+    }
 }
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
