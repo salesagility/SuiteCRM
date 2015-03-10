@@ -79,6 +79,7 @@
                 <a href="javascript:void(0)" id="userlinks_togglemobilesearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
             </div>
             </div>
+        </div>
         <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
         {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
