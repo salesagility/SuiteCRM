@@ -454,7 +454,7 @@ class MssqlManager extends DBManager
                         if (!empty($orderByMatch[3])) {
                             $selectPart = array();
                             preg_match('/^(.*)(\bFROM\b.*)$/isU', $matches[2], $selectPart);
-                            $newSQL = "SELECT TOP $count * FROM
+                            $newSQL = "DECLARE @topcount INT SET @topcount=$count SELECT TOP (@topcount) * FROM
                                 (
                                     " . $matches[1] . $selectPart[1] . ", ROW_NUMBER()
                                     OVER (ORDER BY " . $this->returnOrderBy($sql, $orderByMatch[3]) . ") AS row_number
@@ -463,7 +463,7 @@ class MssqlManager extends DBManager
                                 WHERE row_number > $start";
                         }
                         else {
-                            $newSQL = $matches[1] . " TOP $count " . $matches[2] . $matches[3];
+                            $newSQL = "DECLARE @topcount INT SET @topcount=$count" . $matches[1] . " TOP (@topcount) " . $matches[2] . $matches[3];
                         }
                     }
                     else {
@@ -472,7 +472,7 @@ class MssqlManager extends DBManager
                         //check to see if the distinct is within a function, if so, then proceed as normal
                         if (strpos($up_to_distinct_str,"(")) {
                             //proceed as normal
-                            $newSQL = $matches[1] . " TOP $count " . $matches[2] . $matches[3];
+                            $newSQL = "DECLARE @topcount INT SET @topcount=$count" . $matches[1] . " TOP (@topcount) " . $matches[2] . $matches[3];
                         }
                         else {
                             //if distinct is not within a function, then parse
@@ -489,7 +489,7 @@ class MssqlManager extends DBManager
                             //repopulate matches array
                             $matches[1] = $beg; $matches[2] = $mid; $matches[3] = $end;
 
-                            $newSQL = $matches[1] . " TOP $count " . $matches[2] . $matches[3];
+                            $newSQL = "DECLARE @topcount INT SET @topcount=$count" . $matches[1] . " TOP (@topcount) " . $matches[2] . $matches[3];
                         }
                     }
                 } else {
@@ -547,7 +547,7 @@ class MssqlManager extends DBManager
                     if (!empty($orderByMatch[3])) {
                         //if there is a distinct clause, form query with rownumber after distinct
                         if ($hasDistinct) {
-                            $newSQL = "SELECT TOP $count * FROM
+                            $newSQL = "DECLARE @topcount INT SET @topcount=$count SELECT TOP (@topcount) * FROM
                                         (
                                             SELECT ROW_NUMBER()
                                                 OVER (ORDER BY " . preg_replace('/^' . $dist_str . '\s+/', '', $this->returnOrderBy($sql, $orderByMatch[3])) . ") AS row_number,
@@ -558,7 +558,7 @@ class MssqlManager extends DBManager
                                         WHERE row_number > $start";
                         }
                         else {
-                        $newSQL = "SELECT TOP $count * FROM
+                        $newSQL = "DECLARE @topcount INT SET @topcount=$count SELECT TOP (@topcount) * FROM
                                     (
                                         " . $matches[1] . " ROW_NUMBER()
                                         OVER (ORDER BY " . $this->returnOrderBy($sql, $orderByMatch[3]) . ") AS row_number,
@@ -569,7 +569,7 @@ class MssqlManager extends DBManager
                     }else{
                         //if there is a distinct clause, form query with rownumber after distinct
                         if ($hasDistinct) {
-                             $newSQL = "SELECT TOP $count * FROM
+                             $newSQL = "DECLARE @topcount INT SET @topcount=$count SELECT TOP (@topcount) * FROM
                                             (
                             SELECT ROW_NUMBER() OVER (ORDER BY ".$grpByStr.") AS row_number, count(*) counter, " . $distinctSQLARRAY[0] . "
                                                         " . $distinctSQLARRAY[1] . "
@@ -579,7 +579,7 @@ class MssqlManager extends DBManager
                                             WHERE row_number > $start";
                         }
                         else {
-                             $newSQL = "SELECT TOP $count * FROM
+                             $newSQL = "DECLARE @topcount INT SET @topcount=$count SELECT TOP (@topcount) * FROM
                                            (
                                   " . $matches[1] . " ROW_NUMBER() OVER (ORDER BY " . $sqlArray['FROM'][0]['alias'] . ".id) AS row_number, " . $matches[2] . $matches[3]. "
                                            )
