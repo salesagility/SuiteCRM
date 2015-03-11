@@ -128,16 +128,34 @@ class actionCreateRecord extends actionBase {
             foreach($params['field'] as $key => $field){
 
                 if($field == '') continue;
-
+                $value = '';
                 switch($params['value_type'][$key]) {
                     case 'Field':
                         if($params['value'][$key] == '') continue;
                         $data = $bean->field_defs[$params['value'][$key]];
 
-                        if($data['type'] == 'relate' && isset($data['id_name'])) {
-                            $params['value'][$key] = $data['id_name'];
+                        switch($data['type'] ) {
+                            case 'double':
+                            case 'decimal':
+                            case 'currency':
+                            case 'float':
+                            case 'uint':
+                            case 'ulong':
+                            case 'long':
+                            case 'short':
+                            case 'tinyint':
+                            case 'int':
+                                $value = format_number($bean->$params['value'][$key]);
+                                break;
+                            case 'relate':
+                                if(isset($data['id_name'])) {
+                                    $value = $bean->$data['id_name'];
+                                }
+                                break;
+                            default:
+                                $value = $bean->$params['value'][$key];
+                                break;
                         }
-                        $value = $bean->$params['value'][$key];
                         break;
                     case 'Date':
                         $dformat = 'Y-m-d H:i:s';
