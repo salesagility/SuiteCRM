@@ -421,6 +421,11 @@ class SugarApplication
 			}
 		}
 
+        $available_themes = SugarThemeRegistry::availableThemes();
+        if(!isset($available_themes[$theme])){
+            $theme = $GLOBALS['sugar_config']['default_theme'];
+        }
+
         if(!is_null($theme) && !headers_sent())
         {
             setcookie('sugar_user_theme', $theme, time() + 31536000); // expires in a year
