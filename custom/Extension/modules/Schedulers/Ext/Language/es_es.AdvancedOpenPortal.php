@@ -21,4 +21,4 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$mod_strings['LBL_POLLMONITOREDINBOXESCUSTOMAOP'] = 'AOP Procesar Casillas de Correo Monitorizadas';?>
+$mod_strings['LBL_POLLMONITOREDINBOXESAOP'] = 'AOP Procesar Casillas de Correo Monitorizadas';?>
