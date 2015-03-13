@@ -4366,7 +4366,14 @@ h3 span{
     fill: #3c8dbc;
     pointer-events: none;
 }
+td.inlineEdit:hover{
+    background-color: #cccccc;
+    cursor: pointer !important;
+}
 
+td.inlineEditActive{
+    background-color: #cccccc;
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
