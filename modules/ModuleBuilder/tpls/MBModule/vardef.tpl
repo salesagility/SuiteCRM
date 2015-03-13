@@ -40,6 +40,7 @@
 $dictionary['{{$class.name}}'] = array(
 	'table'=>'{{$class.table_name}}',
 	'audited'=>{{$class.audited}},
+    'inline_edit'=>{{$class.inline_edit}},
 	{{if !($class.templates|strstr:"file")}}
 	'duplicate_merge'=>true,
 	{{/if}}
