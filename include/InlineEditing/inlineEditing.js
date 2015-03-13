@@ -13,7 +13,7 @@ $(".inlineEdit").dblclick(function() {
         $html = loadFieldHTML(field,module,id,value);
     }
 
-    $(this).html($html + "<a onclick='handleSave(\"" +field + "\")'>Save</a>");
+    $(this).html($html + "<a class='button' onclick='handleSave(\"" +field + "\")'>Save</a>");
 
     $(".inlineEdit").off('dblclick');
 
