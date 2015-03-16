@@ -71,14 +71,14 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
             }
 
             // remove the special text entry field function 'getEmailAddressWidget'
-            if ( isset($vardef['function'])
-                && ( $vardef['function'] == 'getEmailAddressWidget'
-                    || $vardef['function']['name'] == 'getEmailAddressWidget' ) )
-                unset($vardef['function']);
-
-            if(isset($vardef['name']) && ($vardef['name'] == 'date_entered' || $vardef['name'] == 'date_modified')){
-                $vardef['name'] = 'aow_temp_date';
-            }
+//            if ( isset($vardef['function'])
+//                && ( $vardef['function'] == 'getEmailAddressWidget'
+//                    || $vardef['function']['name'] == 'getEmailAddressWidget' ) )
+//                unset($vardef['function']);
+//
+//            if(isset($vardef['name']) && ($vardef['name'] == 'date_entered' || $vardef['name'] == 'date_modified')){
+//                $vardef['name'] = 'aow_temp_date';
+//            }
 
             // load SugarFieldHandler to render the field tpl file
             static $sfh;
@@ -140,10 +140,12 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
             require_once($beanFiles[$beanList[$module]]);
         $focus = new $beanList[$module];
         // create the dropdowns for the parent type fields
-        $vardefFields = $focus->getFieldDefinitions();
+        $vardefFields[$fieldname] = $focus->field_defs[$fieldname];
         if ( $vardefFields[$fieldname]['type'] == 'parent_type' ) {
             $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
         }
+
+
         foreach ( $vardefFields as $name => $properties ) {
             $fieldlist[$name] = $properties;
             // fill in enums

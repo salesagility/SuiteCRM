@@ -15,7 +15,7 @@ class HomeController extends SugarController{
 
         if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] && $_REQUEST['value']){
 
-            echo getEditFieldHTML($_REQUEST['current_module'], $_REQUEST['field'], '' , 'EditView', $_REQUEST['value']);
+            echo getEditFieldHTML($_REQUEST['current_module'], $_REQUEST['field'], $_REQUEST['field'] , 'EditView', strip_tags(html_entity_decode($_REQUEST['value'])));
 
         }
 
