@@ -14,7 +14,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
         $mod_strings = return_module_language($current_language,$module);
 
         // set the filename for this control
-        $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . '.tpl';
+        $file = create_cache_directory('include/InlineEditing/') . $module . $view . $alt_type . $fieldname . '.tpl';
 
         if ( !is_file($file)
             || inDeveloperMode()
@@ -257,6 +257,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
             return($sfh->displaySmarty($parentfieldlist, $fieldlist[$fieldname], 'ListView', $displayParams));
         }
 
+
+
         $ss->assign("QS_JS", $quicksearch_js);
         $ss->assign("fields",$fieldlist);
         $ss->assign("form_name",$view);
@@ -268,5 +270,20 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
 
         //$return = str_replace($fieldname,$ss->fetch($file));
 
+//        return $file;
         return json_encode($ss->fetch($file));
+}
+
+function saveField($field, $id, $module, $value){
+
+    $bean = BeanFactory::getBean($module,$id);
+
+    if(is_object($bean) && $bean->id != ""){
+        $bean->$field = $value;
+        $bean->save();
+        return $bean->$field;
+    }else{
+        return false;
+    }
+
 }
