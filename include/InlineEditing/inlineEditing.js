@@ -22,7 +22,14 @@ function buildEditField(){
 }
 
 function getInputValue(field){
-    return $("[field=" + field +"]").find("input").val();
+
+    if($('[field=industry] :selected').text().length > 0){
+        return $('[field=industry] :selected').text();
+    }
+
+    if($("[field=" + field +"]").find("input").val().length > 0) {
+        return $("[field=" + field +"]").find("input").val();
+    }
 }
 
 function handleCancel(field){
