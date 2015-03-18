@@ -6,15 +6,17 @@
  * Time: 13:51
  */
 
-function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = ''){
+function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$id = '', $alt_type = '', $currency_id = ''){
 
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
+
+    $value = getFieldValueFromModule($fieldname,$module,$id);
 
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language,$module);
 
     // set the filename for this control
-    $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . '.tpl';
+    $file = create_cache_directory('include/InlineEditing/') . $module . $view . $alt_type . $fieldname . '.tpl';
 
     if ( !is_file($file)
         || inDeveloperMode()
@@ -40,8 +42,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
 
         //TODO Fix datetimecomebo
         //temp work around
-        if( $vardef['type'] == 'datetimecombo') {
-            $vardef['type'] = 'datetime';
+        if( $vardef['type'] == 'datetime') {
+            $vardef['type'] = 'datetimecombo';
         }
 
         // trim down textbox display
@@ -216,14 +218,24 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$val
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')){
+    } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+//        $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+
+        if(!$value){
+            $var =5;
+        }
+
         $fieldlist[$fieldname]['name'] = $aow_field;
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
+        $fieldlist[$fieldname]['value'] = $value;
+    } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
+//        $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
         $fieldlist[$fieldname]['name'] = $aow_field;
+        if(empty($value) == ""){
+            $value = str_replace("%","",date($date_format));
+        }
+        $fieldlist[$fieldname]['value'] = $value;
     } else {
         $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aow_field;
@@ -327,5 +339,13 @@ function formatDisplayValue($bean,$value,$vardef){
 
 
     return $value;
+
+}
+
+function getFieldValueFromModule($fieldname,$module,$id){
+    $bean = BeanFactory::getBean($module,$id);
+    if(is_object($bean) && $bean->id != ""){
+        return $bean->$fieldname;
+    }
 
 }
