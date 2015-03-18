@@ -7,29 +7,73 @@ buildEditField();
 function buildEditField(){
     $(".inlineEdit").dblclick(function() {
         var field = $(this).attr( "field" );
+        var type = $(this).attr( "type" );
         var module = $("input[name=return_module]").val();
         var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
-        var value = $(this).html();
         $(this).addClass("inlineEditActive");
 
         if(field && module && id){
-            $html = loadFieldHTML(field,module,id,value);
+            var html = loadFieldHTML(field,module,id);
+            console.log(html);
         }
 
-        $(this).html($html + "<a class='button' onclick='handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\")'>Close</a>");
+        $(this).html(html + "<a class='button' onclick='handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\")'>Close</a>");
         $(".inlineEdit").off('dblclick');
     });
 }
 
-function getInputValue(field){
+function getInputValue(field,type){
 
-    if($('[field=industry] :selected').text().length > 0){
-        return $('[field=industry] :selected').text();
+    if($('#'+ field).length > 0 && type){
+
+        switch(type) {
+            case 'phone':
+            case 'name':
+            case 'varchar':
+                if($('#'+ field).val().length > 0) {
+                    return $('#'+ field).val();
+                }
+                break;
+            case 'enum':
+            case 'multienum':
+                console.log('#'+ field + ' :selected');
+                if($('#'+ field + ' :selected').text().length > 0){
+                    return $('#'+ field + ' :selected').text();
+                }
+                break;
+            case 'datetime':
+            case 'datetimecombo':
+
+                console.log('#'+ field + '_date :selected');
+
+                if($('#'+ field + '_date').val().length > 0){
+                    var date = $('#'+ field + '_date').val();
+
+                }
+                if($('#'+ field + '_hours :selected').text().length > 0){
+                    var hours = $('#'+ field + '_hours :selected').text();
+                }
+                if($('#'+ field + '_minutes :selected').text().length > 0){
+                    var minutes = $('#'+ field + '_minutes :selected').text();
+                }
+                if($('#'+ field + '_meridiem :selected').text().length > 0){
+                    var meridiem = $('#'+ field + '_meridiem :selected').text();
+                }
+                return date + " " + hours +":"+ minutes + meridiem;
+
+                break;
+            case 'date':
+                if($('#'+ field + ' :selected').text().length > 0){
+                    return $('#'+ field + ' :selected').text();
+                }
+                break;
+            default:
+                if($('#'+ field).val().length > 0) {
+                    return $('#'+ field).val();
+                }
+        }
     }
 
-    if($("[field=" + field +"]").find("input").val().length > 0) {
-        return $("[field=" + field +"]").find("input").val();
-    }
 }
 
 function handleCancel(field){
@@ -37,8 +81,8 @@ function handleCancel(field){
     var output = setValueClose(output_value);
 }
 
-function handleSave(field,id,module){
-    var value = getInputValue(field);
+function handleSave(field,id,module,type){
+    var value = getInputValue(field,type);
     var output_value = saveFieldHTML(field,module,id,value);
     var output = setValueClose(output_value);
 }
