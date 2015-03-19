@@ -14,10 +14,9 @@ function buildEditField(){
 
         if(field && module && id){
             var html = loadFieldHTML(field,module,id);
-            console.log(html);
         }
 
-        $(this).html(html + "<a class='button' onclick='handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\")'>Close</a>");
+        $(this).html("<div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div>");
         $(".inlineEdit").off('dblclick');
     });
 }
@@ -35,16 +34,12 @@ function getInputValue(field,type){
                 }
                 break;
             case 'enum':
-            case 'multienum':
-                console.log('#'+ field + ' :selected');
                 if($('#'+ field + ' :selected').text().length > 0){
                     return $('#'+ field + ' :selected').text();
                 }
                 break;
             case 'datetime':
             case 'datetimecombo':
-
-                console.log('#'+ field + '_date :selected');
 
                 if($('#'+ field + '_date').val().length > 0){
                     var date = $('#'+ field + '_date').val();
@@ -67,6 +62,11 @@ function getInputValue(field,type){
                     return $('#'+ field + ' :selected').text();
                 }
                 break;
+            case 'multienum':
+                if($('#'+ field + ' :selected').text().length > 0){
+                    return $('select#'+field).val();
+                }
+                break;
             default:
                 if($('#'+ field).val().length > 0) {
                     return $('#'+ field).val();
@@ -76,8 +76,8 @@ function getInputValue(field,type){
 
 }
 
-function handleCancel(field){
-    var output_value = getInputValue(field);
+function handleCancel(field,id,module){
+    var output_value = loadFieldHTMLValue(field,id,module);
     var output = setValueClose(output_value);
 }
 
@@ -113,7 +113,7 @@ function saveFieldHTML(field,module,id,value) {
 }
 
 
-function loadFieldHTML(field,module,id,value) {
+function loadFieldHTML(field,module,id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
@@ -122,11 +122,27 @@ function loadFieldHTML(field,module,id,value) {
             'field': field,
             'current_module': module,
             'id': id,
-            'value': value,
             'to_pdf': true
         }
     );
     $.ajaxSetup({"async": true});
 
     return(JSON.parse(result.responseText));
+}
+
+function loadFieldHTMLValue(field,id,module) {
+    $.ajaxSetup({"async": false});
+    var result = $.getJSON('index.php',
+        {
+            'module': 'Home',
+            'action': 'getDisplayValue',
+            'field': field,
+            'current_module': module,
+            'id': id,
+            'to_pdf': true
+        }
+    );
+    $.ajaxSetup({"async": true});
+
+    return(result.responseText);
 }
