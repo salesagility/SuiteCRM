@@ -78,7 +78,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$id 
                 || $vardef['function']['name'] == 'getEmailAddressWidget' ) )
             unset($vardef['function']);
 
-        if(isset($vardef['name']) && ($vardef['name'] == 'date_entered' || $vardef['name'] == 'date_modified')){
+        if(isset($vardef['name']) && ($vardef['name'] == 'date_modified')){
             $vardef['name'] = 'aow_temp_date';
         }
 
@@ -182,7 +182,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$id 
         }
     }
 
-    if(isset($fieldlist[$fieldname]['name']) && ($fieldlist[$fieldname]['name'] == 'date_entered' || $fieldlist[$fieldname]['name'] == 'date_modified')){
+    if(isset($fieldlist[$fieldname]['name']) && ( $fieldlist[$fieldname]['name'] == 'date_modified')){
         $fieldlist[$fieldname]['name'] = 'aow_temp_date';
         $fieldlist['aow_temp_date'] = $fieldlist[$fieldname];
         $fieldname = 'aow_temp_date';
@@ -223,7 +223,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view='EditView',$id 
 //        $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
 
         if(!$value){
-            $var =5;
+            $value = date($timedate->get_date_time_format());
         }
 
         $fieldlist[$fieldname]['name'] = $aow_field;
@@ -282,9 +282,14 @@ function saveField($field, $id, $module, $value){
     $bean = BeanFactory::getBean($module,$id);
 
     if(is_object($bean) && $bean->id != ""){
-        $bean->$field = $value;
+
+        if($bean->field_defs[$field]['type'] == "multienum"){
+            $bean->$field = encodeMultienumValue($value);
+        }else{
+            $bean->$field = $value;
+        }
         $bean->save();
-        $display_value = getDisplayValue($bean, $field, $bean->$field, $module);
+        $display_value = getDisplayValue($bean, $field);
         return $display_value;
     }else{
         return false;
@@ -292,7 +297,7 @@ function saveField($field, $id, $module, $value){
 
 }
 
-function getDisplayValue($bean, $field, $value, $module){
+function getDisplayValue($bean, $field, $method = "save"){
 
     if(file_exists("custom/modules/Accounts/metadata/listviewdefs.php")){
         $metadata = require("custom/modules/Accounts/metadata/listviewdefs.php");
@@ -305,17 +310,26 @@ function getDisplayValue($bean, $field, $value, $module){
     $fieldlist[$field] = $bean->getFieldDefinition($field);
     $fieldlist[$field] = array_merge($fieldlist[$field],$listViewDefs);
 
-    $value = formatDisplayValue($bean,$value,$fieldlist[$field]);
+    $value = formatDisplayValue($bean,$bean->$field,$fieldlist[$field],$method);
 
     return $value;
 }
 
-function formatDisplayValue($bean,$value,$vardef){
+function formatDisplayValue($bean,$value,$vardef,$method = "save"){
+
+    global $current_user, $app_list_strings;
+
+    include_once("include/generic/LayoutManager.php");
+    $layoutManager = new LayoutManager();
+
+    //Fake the params so we can pass the values through the sugarwidgets to get the correct display html.
 
     $GLOBALS['focus'] = $bean;
     $_REQUEST['record'] = $bean->id;
+    $vardef['fields']['ID'] =  $bean->id;
     $vardef['fields'][strtoupper($vardef['name'])] =  $value;
 
+    // If field is of type email.
     if($vardef['name'] == "email1" && $vardef['group'] == "email1"){
 
         include_once("include/generic/SugarWidgets/SugarWidgetSubPanelEmailLink.php");
@@ -324,11 +338,11 @@ function formatDisplayValue($bean,$value,$vardef){
 
     }
 
+    //If field is of type link and name.
     if($vardef['link'] && $vardef['type'] == "name"){
 
         include_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 
-        $vardef['fields']['ID'] =  $bean->id;
         $vardef['module'] =  $bean->module_dir;
 
 
@@ -337,9 +351,44 @@ function formatDisplayValue($bean,$value,$vardef){
 
     }
 
+    //If field is of type date time or datetimecombo
+    if($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime"){
+
+        global $timedate;
+
+        if($method != "save"){
+            $value = convertDateUserToDB($value);
+        }
+        $datetime_format = $timedate->get_date_time_format();
+        $datetime = DateTime::createFromFormat("Y-m-d H:i:s", $value);
+
+        $value = $datetime->format($datetime_format);
+
+    }
+
+    //If field is of type bool, checkbox.
+    if($vardef['type'] == "bool"){
+
+        include_once("include/generic/SugarWidgets/SugarWidgetFieldbool.php");
+
+        $SugarWidgetFieldbool = new SugarWidgetFieldbool($layoutManager);
+        $value = $SugarWidgetFieldbool->displayListPlain($vardef);
+
+    }
+
+    //if field is of type multienum.
+    if($vardef['type'] == "multienum") {
+        $value =  str_replace("^","",$value);
+
+        $array_values = explode(",",$value);
+
+        foreach($array_values as $value){
+            $values[] = $app_list_strings[$vardef['options']][$value];
+        }
+        $value = implode(", ",$values);
+    }
 
     return $value;
-
 }
 
 function getFieldValueFromModule($fieldname,$module,$id){
@@ -348,4 +397,14 @@ function getFieldValueFromModule($fieldname,$module,$id){
         return $bean->$fieldname;
     }
 
+}
+
+function convertDateUserToDB($value){
+    global $timedate;
+
+    $datetime_format = $timedate->get_date_time_format();
+    $datetime = DateTime::createFromFormat($datetime_format, $value);
+
+    $value = $datetime->format("Y-m-d H:i:s");
+    return $value;
 }

@@ -31,4 +31,20 @@ class HomeController extends SugarController{
 
     }
 
+    public function action_getDisplayValue(){
+
+        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
+
+            $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
+
+            if(is_object($bean) && $bean->id != ""){
+                echo getDisplayValue($bean, $_REQUEST['field'],"close");
+            }else{
+                echo "Could not find value.";
+            }
+
+        }
+
+    }
+
 }
