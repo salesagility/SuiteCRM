@@ -69,6 +69,14 @@ function getInputValue(field,type){
                     return $('select#'+field).val();
                 }
                 break;
+            case 'bool':
+                console.log('#'+ field);
+                if($('#'+ field).is(':checked')){
+                   return "on";
+                }else{
+                    return "off";
+                }
+                break;
             default:
                 if($('#'+ field).val().length > 0) {
                     return $('#'+ field).val();
