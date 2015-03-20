@@ -289,8 +289,7 @@ function saveField($field, $id, $module, $value){
             $bean->$field = $value;
         }
         $bean->save();
-        $display_value = getDisplayValue($bean, $field);
-        return $display_value;
+        return getDisplayValue($bean, $field);
     }else{
         return false;
     }
@@ -317,10 +316,7 @@ function getDisplayValue($bean, $field, $method = "save"){
 
 function formatDisplayValue($bean,$value,$vardef,$method = "save"){
 
-    global $current_user, $app_list_strings;
-
-    include_once("include/generic/LayoutManager.php");
-    $layoutManager = new LayoutManager();
+    global $current_user, $app_list_strings, $timedate;
 
     //Fake the params so we can pass the values through the sugarwidgets to get the correct display html.
 
@@ -332,7 +328,7 @@ function formatDisplayValue($bean,$value,$vardef,$method = "save"){
     // If field is of type email.
     if($vardef['name'] == "email1" && $vardef['group'] == "email1"){
 
-        include_once("include/generic/SugarWidgets/SugarWidgetSubPanelEmailLink.php");
+        require_once("include/generic/SugarWidgets/SugarWidgetSubPanelEmailLink.php");
         $SugarWidgetSubPanelEmailLink = new SugarWidgetSubPanelEmailLink($vardef);
         $value = $SugarWidgetSubPanelEmailLink->displayList($vardef);
 
@@ -341,7 +337,7 @@ function formatDisplayValue($bean,$value,$vardef,$method = "save"){
     //If field is of type link and name.
     if($vardef['link'] && $vardef['type'] == "name"){
 
-        include_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
+        require_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 
         $vardef['module'] =  $bean->module_dir;
 
@@ -354,7 +350,6 @@ function formatDisplayValue($bean,$value,$vardef,$method = "save"){
     //If field is of type date time or datetimecombo
     if($vardef['type'] == "datetimecombo" || $vardef['type'] == "datetime"){
 
-        global $timedate;
 
         if($method != "save"){
             $value = convertDateUserToDB($value);
@@ -369,7 +364,10 @@ function formatDisplayValue($bean,$value,$vardef,$method = "save"){
     //If field is of type bool, checkbox.
     if($vardef['type'] == "bool"){
 
-        include_once("include/generic/SugarWidgets/SugarWidgetFieldbool.php");
+        require_once("include/generic/LayoutManager.php");
+        $layoutManager = new LayoutManager();
+
+        require_once("include/generic/SugarWidgets/SugarWidgetFieldbool.php");
 
         $SugarWidgetFieldbool = new SugarWidgetFieldbool($layoutManager);
         $value = $SugarWidgetFieldbool->displayListPlain($vardef);
@@ -408,3 +406,4 @@ function convertDateUserToDB($value){
     $value = $datetime->format("Y-m-d H:i:s");
     return $value;
 }
+
