@@ -141,10 +141,7 @@ function display_single_update(AOP_Case_Updates $update){
         $html .= "</div></div></div>";
         return $html;
         }
-    }
-
-    /*if contact user*/
-    if($update->contact_id){
+    }else{
         $html = "<div id='extramargin'><div id='caseStyleContact'>".getUpdateDisplayHead($update);
         $html .= "<div id='caseUpdate".$update->id."' class='caseUpdate'>";
         $html .= nl2br(html_entity_decode($update->description));
