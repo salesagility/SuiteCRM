@@ -13,11 +13,18 @@ function buildEditField(){
         $(this).addClass("inlineEditActive");
 
         if(field && module && id){
+
+            if(type == "relate"){
+                var relate_js = getRelateFieldJS(field, module, id);
+                console.log(relate_js);
+            }
+
             var validation = getValidationRules(field,module,id);
             var html = loadFieldHTML(field,module,id);
         }
 
         $(this).html(validation + "<form name='inline_edit_form'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"inline_edit_form\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
+        $(this).append(relate_js);
         $(".inlineEdit").off('dblclick');
 
     });
@@ -175,3 +182,19 @@ function getValidationRules(field,module,id){
     return "<script type='text/javascript'>addToValidate('inline_edit_form', \"" + field + "\", \"" + validation['type'] + "\", " + validation['required'] + ",\"" + validation['label'] + "\");</script>";
 }
 
+function getRelateFieldJS(field, module, id){
+    $.ajaxSetup({"async": false});
+    var result = $.getJSON('index.php',
+        {
+            'module': 'Home',
+            'action': 'getRelateFieldJS',
+            'field': field,
+            'current_module': module,
+            'id': id,
+            'to_pdf': true
+        }
+    );
+    $.ajaxSetup({"async": true});
+
+    return result.responseText;
+}

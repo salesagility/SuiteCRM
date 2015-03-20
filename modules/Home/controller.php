@@ -81,5 +81,30 @@ class HomeController extends SugarController{
         }
 
     }
+    
+    public function action_getRelateFieldJS(){
+        
+        global $beanFiles, $beanList;
+        
+        $fieldlist = array();
+        $view = "EditView";
+
+        if (!isset($focus) || !($focus instanceof SugarBean)){
+            require_once($beanFiles[$beanList[$_REQUEST['current_module']]]);
+            $focus = new $beanList[$_REQUEST['current_module']];
+        }
+
+        // create the dropdowns for the parent type fields
+        $vardefFields[$_REQUEST['field']] = $focus->field_defs[$_REQUEST['field']];
+
+        require_once("include/TemplateHandler/TemplateHandler.php");
+        $template_handler = new TemplateHandler();
+        $quicksearch_js = $template_handler->createQuickSearchCode($vardefFields, $vardefFields, $view);
+        $quicksearch_js = str_replace($_REQUEST['field'], $_REQUEST['field'] . '_display', $quicksearch_js);
+        $quicksearch_js = str_replace($fieldlist[$_REQUEST['field']]['id_name'], $_REQUEST['field'], $quicksearch_js);
+
+        echo $quicksearch_js;
+
+    }
 
 }
