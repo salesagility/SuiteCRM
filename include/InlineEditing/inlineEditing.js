@@ -70,7 +70,6 @@ function getInputValue(field,type){
                 }
                 break;
             case 'bool':
-                console.log('#'+ field);
                 if($('#'+ field).is(':checked')){
                    return "on";
                 }else{
@@ -172,8 +171,6 @@ function getValidationRules(field,module,id){
     $.ajaxSetup({"async": true});
 
     var validation = JSON.parse(result.responseText);
-
-    console.log(validation);
 
     return "<script type='text/javascript'>addToValidate('inline_edit_form', \"" + field + "\", \"" + validation['type'] + "\", " + validation['required'] + ",\"" + validation['label'] + "\");</script>";
 }
