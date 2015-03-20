@@ -16,8 +16,9 @@ function buildEditField(){
             var html = loadFieldHTML(field,module,id);
         }
 
-        $(this).html("<div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div>");
+        $(this).html("<script type='text/javascript'>addToValidate('inline_edit_form', \"" + field + "\", \"" + field + "\", true,\"" + field + "\");</script><form name='inline_edit_form'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"inline_edit_form\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
         $(".inlineEdit").off('dblclick');
+
     });
 }
 
@@ -146,3 +147,4 @@ function loadFieldHTMLValue(field,id,module) {
 
     return(result.responseText);
 }
+
