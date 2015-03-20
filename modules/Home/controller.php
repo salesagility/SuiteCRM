@@ -47,4 +47,39 @@ class HomeController extends SugarController{
 
     }
 
+    public function action_getValidationRules(){
+        global $app_strings, $mod_strings;
+
+        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] ){
+
+            $bean = BeanFactory::getBean($_REQUEST['current_module'],$_REQUEST['id']);
+
+            if(is_object($bean) && $bean->id != ""){
+
+                $fielddef = $bean->field_defs[$_REQUEST['field']];
+
+                if(!$fielddef['required']){
+                    $fielddef['required'] = false;
+                }
+
+                if($fielddef['name'] == "email1" || $fielddef['email2']){
+                    $fielddef['type'] = "email";
+                    $fielddef['vname'] = "LBL_EMAIL_ADDRESSES";
+                }
+
+                if($app_strings[$fielddef['vname']]){
+                    $fielddef['label'] = $app_strings[$fielddef['vname']];
+                }else{
+                    $fielddef['label'] = $mod_strings[$fielddef['vname']];
+                }
+
+                $validate_array = array('type' => $fielddef['type'], 'required' => $fielddef['required'],'label' => $fielddef['label']);
+
+                echo json_encode($validate_array);
+            }
+
+        }
+
+    }
+
 }
