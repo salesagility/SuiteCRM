@@ -188,26 +188,35 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $fieldname = 'aow_temp_date';
     }
 
+    $quicksearch_js = '';
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         $rel_value = $value;
 
-        if (isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users') {
-            $rel_value = get_assigned_user_name($value);
-        } else if (isset($fieldlist[$fieldname]['module'])) {
-            require_once($beanFiles[$beanList[$fieldlist[$fieldname]['module']]]);
-            $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
-            $rel_focus->retrieve($value);
-            if (isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != '') {
-                $rel_value = $rel_focus->$fieldlist[$fieldname]['rname'];
-            } else {
-                $rel_value = $rel_focus->name;
-            }
-        }
+//        require_once("include/TemplateHandler/TemplateHandler.php");
+//        $template_handler = new TemplateHandler();
+//        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist,$fieldlist,$view);
+//        $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
+//        $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
+//
+//        echo $quicksearch_js;
+//
+//        if(isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users'){
+//            $rel_value = get_assigned_user_name($value);
+//        } else if(isset($fieldlist[$fieldname]['module'])){
+//            require_once($beanFiles[$beanList[$fieldlist[$fieldname]['module']]]);
+//            $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
+//            $rel_focus->retrieve($value);
+//            if(isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != ''){
+//                $rel_value = $rel_focus->$fieldlist[$fieldname]['rname'];
+//            } else {
+//                $rel_value = $rel_focus->name;
+//            }
+//        }
 
-        $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $value;
-        $fieldlist[$fieldname]['value'] = $rel_value;
+//        $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $value;
+//        $fieldlist[$fieldname]['value'] = $rel_value;
         $fieldlist[$fieldname]['id_name'] = $aow_field;
-        $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
+//        $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field . '_display';
     } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
@@ -273,9 +282,14 @@ function saveField($field, $id, $module, $value)
 
         if ($bean->field_defs[$field]['type'] == "multienum") {
             $bean->$field = encodeMultienumValue($value);
-        } else {
+        }else if ($bean->field_defs[$field]['type'] == "relate"){
+            $save_field = $bean->field_defs[$field]['id_name'];
+            $bean->$save_field = $value;
+        }else{
             $bean->$field = $value;
         }
+
+
         $bean->save();
         return getDisplayValue($bean, $field);
     } else {
@@ -374,6 +388,19 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $values[] = $app_list_strings[$vardef['options']][$value];
         }
         $value = implode(", ", $values);
+    }
+
+    //if field is of type relate.
+    if ($vardef['type'] == "relate") {
+
+        require_once("include/generic/LayoutManager.php");
+        $layoutManager = new LayoutManager();
+
+        require_once("include/generic/SugarWidgets/SugarWidgetFieldrelate.php");
+
+        $SugarWidgetFieldrelate = new SugarWidgetFieldrelate($layoutManager);
+        $value = $SugarWidgetFieldrelate->displayListPlain($vardef);
+
     }
 
     return $value;
