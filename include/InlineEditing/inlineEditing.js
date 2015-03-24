@@ -16,15 +16,19 @@ function buildEditField(){
 
             if(type == "relate"){
                 var relate_js = getRelateFieldJS(field, module, id);
-                console.log(relate_js);
+            }else{
+                var relate_js = "";
             }
 
             var validation = getValidationRules(field,module,id);
             var html = loadFieldHTML(field,module,id);
         }
 
-        $(this).html(validation + "<form name='inline_edit_form'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"inline_edit_form\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
+        $(this).html(validation + "<form name='EditView' id='EditView'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"EditView\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
         $(this).append(relate_js);
+        console.log(relate_js);
+        SUGAR.util.evalScript($(this).html());
+        enableQS(true);
         $(".inlineEdit").off('dblclick');
 
     });
@@ -35,6 +39,7 @@ function getInputValue(field,type){
     if($('#'+ field).length > 0 && type){
 
         switch(type) {
+            case 'relate':
             case 'phone':
             case 'name':
             case 'varchar':
@@ -195,6 +200,8 @@ function getRelateFieldJS(field, module, id){
         }
     );
     $.ajaxSetup({"async": true});
+
+    SUGAR.util.evalScript(result.responseText);
 
     return result.responseText;
 }
