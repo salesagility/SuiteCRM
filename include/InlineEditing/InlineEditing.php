@@ -12,7 +12,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
     $value = getFieldValueFromModule($fieldname, $module, $id);
-
+    $bean = BeanFactory::getBean($module,$id);
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language, $module);
 
@@ -188,35 +188,14 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $fieldname = 'aow_temp_date';
     }
 
-    $quicksearch_js = '';
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
-        $rel_value = $value;
+        if($value){
+            $rel_value =  $bean->$fieldlist['test_relate_c']['id_name'];
 
-//        require_once("include/TemplateHandler/TemplateHandler.php");
-//        $template_handler = new TemplateHandler();
-//        $quicksearch_js = $template_handler->createQuickSearchCode($fieldlist,$fieldlist,$view);
-//        $quicksearch_js = str_replace($fieldname, $aow_field.'_display', $quicksearch_js);
-//        $quicksearch_js = str_replace($fieldlist[$fieldname]['id_name'], $aow_field, $quicksearch_js);
-//
-//        echo $quicksearch_js;
-//
-//        if(isset($fieldlist[$fieldname]['module']) && $fieldlist[$fieldname]['module'] == 'Users'){
-//            $rel_value = get_assigned_user_name($value);
-//        } else if(isset($fieldlist[$fieldname]['module'])){
-//            require_once($beanFiles[$beanList[$fieldlist[$fieldname]['module']]]);
-//            $rel_focus = new $beanList[$fieldlist[$fieldname]['module']];
-//            $rel_focus->retrieve($value);
-//            if(isset($fieldlist[$fieldname]['rname']) && $fieldlist[$fieldname]['rname'] != ''){
-//                $rel_value = $rel_focus->$fieldlist[$fieldname]['rname'];
-//            } else {
-//                $rel_value = $rel_focus->name;
-//            }
-//        }
-
-//        $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $value;
-//        $fieldlist[$fieldname]['value'] = $rel_value;
+        }
+        $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $rel_value;
+        $fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['id_name'] = $aow_field;
-//        $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field . '_display';
     } else if (isset($fieldlist[$fieldname]['type']) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')) {
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
@@ -262,7 +241,6 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         return ($sfh->displaySmarty($parentfieldlist, $fieldlist[$fieldname], 'ListView', $displayParams));
     }
 
-    $ss->assign("QS_JS", $quicksearch_js);
     $ss->assign("fields", $fieldlist);
     $ss->assign("form_name", $view);
     $ss->assign("bean", $focus);
@@ -345,7 +323,6 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         $vardef['module'] = $bean->module_dir;
 
-
         $SugarWidgetSubPanelDetailViewLink = new SugarWidgetSubPanelDetailViewLink($vardef);
         $value = "<b>" . $SugarWidgetSubPanelDetailViewLink->displayList($vardef) . "</b>";
 
@@ -393,14 +370,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     //if field is of type relate.
     if ($vardef['type'] == "relate") {
 
-        require_once("include/generic/LayoutManager.php");
-        $layoutManager = new LayoutManager();
+        $record = $bean->$vardef['id_name'];
 
-        require_once("include/generic/SugarWidgets/SugarWidgetFieldrelate.php");
+        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['ext2']."&record=$record\">";
 
-        $SugarWidgetFieldrelate = new SugarWidgetFieldrelate($layoutManager);
-        $value = $SugarWidgetFieldrelate->displayListPlain($vardef);
-
+        $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
     }
 
     return $value;

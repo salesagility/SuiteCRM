@@ -4,32 +4,31 @@
 
 buildEditField();
 
+
+
 function buildEditField(){
     $(".inlineEdit").dblclick(function() {
         var field = $(this).attr( "field" );
         var type = $(this).attr( "type" );
-        var module = $("input[name=return_module]").val();
+        var module = $("#displayMassUpdate input[name=module]").val();
         var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
         $(this).addClass("inlineEditActive");
 
-        if(field && module && id){
-
-            if(type == "relate"){
-                var relate_js = getRelateFieldJS(field, module, id);
-            }else{
-                var relate_js = "";
-            }
+        if(field && id && module){
 
             var validation = getValidationRules(field,module,id);
             var html = loadFieldHTML(field,module,id);
-        }
 
-        $(this).html(validation + "<form name='EditView' id='EditView'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"EditView\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
-        $(this).append(relate_js);
-        console.log(relate_js);
-        SUGAR.util.evalScript($(this).html());
-        enableQS(true);
-        $(".inlineEdit").off('dblclick');
+            $(this).html(validation + "<form name='EditView' id='EditView'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"EditView\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
+            $(".inlineEdit").off('dblclick');
+
+            if(type == "relate") {
+                var relate_js = getRelateFieldJS(field, module, id);
+                $(this).append(relate_js);
+                SUGAR.util.evalScript($(this).html());
+                enableQS(true);
+            }
+        }
 
     });
 }
@@ -104,6 +103,9 @@ function handleCancel(field,id,module){
 
 function handleSave(field,id,module,type){
     var value = getInputValue(field,type);
+    if(typeof value === "undefined"){
+        var value = "";
+    }
     var output_value = saveFieldHTML(field,module,id,value);
     var output = setValueClose(output_value);
 }
@@ -184,7 +186,7 @@ function getValidationRules(field,module,id){
 
     var validation = JSON.parse(result.responseText);
 
-    return "<script type='text/javascript'>addToValidate('inline_edit_form', \"" + field + "\", \"" + validation['type'] + "\", " + validation['required'] + ",\"" + validation['label'] + "\");</script>";
+    return "<script type='text/javascript'>addToValidate('EditView', \"" + field + "\", \"" + validation['type'] + "\", " + validation['required'] + ",\"" + validation['label'] + "\");</script>";
 }
 
 function getRelateFieldJS(field, module, id){

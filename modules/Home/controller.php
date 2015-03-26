@@ -23,7 +23,7 @@ class HomeController extends SugarController{
 
     public function action_saveHTMLField(){
 
-        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module'] && $_REQUEST['value']){
+        if($_REQUEST['field'] && $_REQUEST['id'] && $_REQUEST['current_module']){
 
             echo saveField($_REQUEST['field'], $_REQUEST['id'], $_REQUEST['current_module'], $_REQUEST['value']);
 
