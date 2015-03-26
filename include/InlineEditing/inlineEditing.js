@@ -4,18 +4,29 @@
 
 buildEditField();
 
-
+var view = action_sugar_grp1;
 
 function buildEditField(){
     $(".inlineEdit").dblclick(function() {
-        var field = $(this).attr( "field" );
-        var type = $(this).attr( "type" );
-        var module = $("#displayMassUpdate input[name=module]").val();
-        var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
-        $(this).addClass("inlineEditActive");
 
+        console.log(view);
+
+        if(view == "DetailView"){
+            var field = $(this).attr( "field" );
+            var type = $(this).attr( "type" );
+            var module = currentModule;
+            var id = $("input[name=parent_id]").attr( "value" );
+        }else{
+            var field = $(this).attr( "field" );
+            var type = $(this).attr( "type" );
+            var module = $("#displayMassUpdate input[name=module]").val();
+            var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
+        }
+
+        console.log(field + id + module);
         if(field && id && module){
 
+            $(this).addClass("inlineEditActive");
             var validation = getValidationRules(field,module,id);
             var html = loadFieldHTML(field,module,id);
 
