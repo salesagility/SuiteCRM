@@ -304,13 +304,23 @@
                 {if $smarty.foreach.groupList.last}
                 {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                                 {foreach from=$modules.modules item=module key=modulekey}
+                                    {if $modulekey !='Home'}
+                                        <li style="float:right;">
+                                            <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
+                                        </li>
+                                    {/if}
                                     <li>
                                         {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
                                         {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
                                     </li>
                                 {/foreach}
                                 {foreach from=$modules.extra item=submodulename key=submodule}
-                                    <li><a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a></li>
+                                    <li style="float:rightright;">
+                                        <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a>
+                                    </li>
                                 {/foreach}
                 {/if}
             {/foreach}
