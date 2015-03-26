@@ -190,7 +190,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         if($value){
-            $rel_value =  $bean->$fieldlist['test_relate_c']['id_name'];
+            $rel_value =  $bean->$fieldlist[$fieldname]['id_name'];
 
         }
         $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $rel_value;
@@ -370,6 +370,15 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     //if field is of type relate.
     if ($vardef['type'] == "relate") {
 
+        if($vardef['source'] == "non-db"){
+
+            if($vardef['module'] == "Employees"){
+                $vardef['ext2'] = "Users";
+                $vardef['rname'] = "full_name";
+            }
+
+        }
+
         $record = $bean->$vardef['id_name'];
 
         $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['ext2']."&record=$record\">";
@@ -377,11 +386,13 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
         $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
     }
 
+
     return $value;
 }
 
 function getFieldValueFromModule($fieldname, $module, $id)
 {
+
     $bean = BeanFactory::getBean($module, $id);
     if (is_object($bean) && $bean->id != "") {
         return $bean->$fieldname;
