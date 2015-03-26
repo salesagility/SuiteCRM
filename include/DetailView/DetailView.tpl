@@ -155,7 +155,7 @@ class="yui-navset detailview_tabs"
                 {{/if}}
                 {{/if}}
 			</td>
-			<td width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].field}}%' {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+			<td class="{if $fields[$colData.field.name].inline_edit}inlineEdit{/if}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].field}}%' {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
 			    {{if !empty($colData.field.name)}}
 			    {if !$fields.{{$colData.field.name}}.hidden}
 			    {{/if}}
@@ -225,3 +225,4 @@ var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailvi
 {{$module}}_detailview_tabs.selectTab(0);
 </script>
 {{/if}}
+<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
