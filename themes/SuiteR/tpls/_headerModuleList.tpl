@@ -315,7 +315,7 @@
                                     </li>
                                 {/foreach}
                                 {foreach from=$modules.extra item=submodulename key=submodule}
-                                    <li style="float:rightright;">
+                                    <li style="float:right;">
                                         <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
                                     </li>
                                     <li>
