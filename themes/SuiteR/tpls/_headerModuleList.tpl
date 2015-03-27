@@ -75,6 +75,17 @@
                     <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string"></input>
                 </span>
             </form>
+                <div id="mobilegloballinks">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                            <li role="presentation">
+                                <a id="{$gcl_key}_link" href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                            </li>
+                        {/foreach}
+                        <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+                    </ul>
+                </div>
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="javascript:void(0)" id="userlinks_togglemobilesearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
             </div>
@@ -324,7 +335,6 @@
                                 {/foreach}
                 {/if}
             {/foreach}
-
         </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
