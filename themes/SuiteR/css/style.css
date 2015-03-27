@@ -3120,6 +3120,13 @@ li#usermenu:hover {
     }
 }
 
+@media (min-height:1001px) {
+    .moremenu ul, .dropdown-menu {
+        max-height: 850px;
+        overflow: auto;
+    }
+}
+
 .moremenu ul li a{
     color:#3C8DBC !important;
     cursor:pointer;
