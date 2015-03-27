@@ -7,9 +7,8 @@ buildEditField();
 var view = action_sugar_grp1;
 
 function buildEditField(){
-    $(".inlineEdit").dblclick(function() {
-
-        console.log(view);
+    $(".inlineEdit").dblclick(function(e) {
+        e.preventDefault();
 
         if(view == "DetailView"){
             var field = $(this).attr( "field" );
@@ -23,22 +22,54 @@ function buildEditField(){
             var id = $(this).closest('tr').find('[type=checkbox]').attr( "value" );
         }
 
-        console.log(field + id + module);
         if(field && id && module){
 
-            $(this).addClass("inlineEditActive");
             var validation = getValidationRules(field,module,id);
             var html = loadFieldHTML(field,module,id);
 
-            $(this).html(validation + "<form name='EditView' id='EditView'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:left;'><a class='button' onclick='var valid_form = check_form(\"EditView\"); if(valid_form){handleSave(\"" + field + "\",\"" + id + "\",\"" + module + "\",\"" + type + "\")}else{return false};'>Save</a><a class='button' onclick='handleCancel(\"" + field + "\",\"" + id + "\",\"" + module + "\")'>Close</a></div></form>");
-            $(".inlineEdit").off('dblclick');
+            if(html){
+                $(this).html(validation + "<form name='EditView' id='EditView'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:right;'><a id='inlineEditSaveButton' class='button' onclick=''>Save</a></div></form>");
 
-            if(type == "relate") {
-                var relate_js = getRelateFieldJS(field, module, id);
-                $(this).append(relate_js);
-                SUGAR.util.evalScript($(this).html());
-                enableQS(true);
+                if(type == "relate") {
+                    var relate_js = getRelateFieldJS(field, module, id);
+                    $(this).append(relate_js);
+                    SUGAR.util.evalScript($(this).html());
+                    enableQS(true);
+                }
+
+                clickedawayclose(field,id,module);
+                validateFormAndSave(field,id,module,type);
+
+
+
+                $(this).addClass("inlineEditActive");
+                $("#" + field).focus(field,id,module);
+                $(".inlineEdit").off('dblclick');
             }
+
+
+        }
+
+    });
+}
+
+function validateFormAndSave(field,id,module,type){
+    $("#inlineEditSaveButton").on('click', function () {
+        var valid_form = check_form("EditView");
+        if(valid_form){
+            handleSave(field, id, module, type)
+        }else{
+            return false
+        };
+    });
+}
+
+function clickedawayclose(field,id,module){
+    $(document).on('click', function (e) {
+
+        if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
+            handleCancel(field,id,module);
+            $(document).off('click');
         }
 
     });
@@ -160,8 +191,14 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
+     if(result.responseText){
+         console.log("here");
+         return(JSON.parse(result.responseText));
+     }else{
+         return false;
+     }
 
-    return(JSON.parse(result.responseText));
+
 }
 
 function loadFieldHTMLValue(field,id,module) {
