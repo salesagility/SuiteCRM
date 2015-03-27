@@ -3536,12 +3536,11 @@ table legend {
     #userlinks_head {
         display:inline;
         margin:8px 0 0 0;
+        padding:8px;
         float:right;
     }
     #userlinks_head a {
         color: #ffffff;
-        padding: 3px 10px 5px 10px;
-        font-size: 1.1em;
     }
 
     #userlinks_head ul li a{
@@ -4463,6 +4462,26 @@ h3 span{
         position: absolute;
         top: 50px;
         left: 35%;
+    }
+}
+@media (max-width:979px) {
+    #mobilegloballinks a {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0 0;
+        padding: 8px;
+    }
+
+    #mobilegloballinks ul.dropdown-menu {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        float: right;
+        width: 200px;
+    }
+
+    #mobilegloballinks ul li a {
+        color: #3C8DBC !important;
     }
 }
 
