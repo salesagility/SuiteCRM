@@ -4366,9 +4366,19 @@ h3 span{
     fill: #3c8dbc;
     pointer-events: none;
 }
-td.inlineEdit:hover{
-    background-color: #cccccc;
+.inlineEdit{
     cursor: pointer !important;
+}
+
+.inlineEditIcon{
+    display:none;
+    float:right;
+    height:10px;
+    color: #3c8dbc;
+}
+.inlineEdit:hover .inlineEditIcon{
+    cursor: pointer !important;
+    display:inline;
 }
 
 td.inlineEditActive{

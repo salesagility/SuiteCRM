@@ -168,6 +168,7 @@ class="yui-navset detailview_tabs"
 				        {{if $fields[$subField]}}
 				        	{counter name="panelFieldCount"}
 				            {{sugar_field parentFieldArray='fields' tabindex=$tabIndex vardef=$fields[$subField] displayType='DetailView'}}&nbsp;
+
 				        {{else}}
 				        	{counter name="panelFieldCount"}
 				            {{$subField}}
@@ -176,6 +177,7 @@ class="yui-navset detailview_tabs"
 				{{elseif $fields[$colData.field.name]}}
 					{counter name="panelFieldCount"}
 					{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
+
 				{{/if}}
 				{{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
 				    {counter name="panelFieldCount"}
@@ -185,6 +187,9 @@ class="yui-navset detailview_tabs"
 				{{if !empty($colData.field.name)}}
 				{/if}
 				{{/if}}
+
+	            {{if $fields[$colData.field.name].inline_edit == 1}}<div class="inlineEditIcon">Edit {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{{/if}}
+
 			</td>
 	    {{if !empty($colData.field.hideIf)}}
 			{else}
@@ -192,6 +197,7 @@ class="yui-navset detailview_tabs"
 			<td>&nbsp;</td><td>&nbsp;</td>
 			{/if}
 	    {{/if}}
+
 		{{/foreach}}
 	</tr>
 	{/capture}
