@@ -4,6 +4,8 @@
 
 buildEditField();
 
+var inlineEditIcon = $("#Layer_1")[0].outerHTML;
+console.log(inlineEditIcon);
 var view = action_sugar_grp1;
 
 function buildEditField(){
@@ -153,9 +155,13 @@ function handleSave(field,id,module,type){
 }
 
 function setValueClose(value){
-    $(".inlineEditActive").html();
-    $(".inlineEditActive").html(value);
-    $(".inlineEditActive").removeClass("inlineEditActive");
+
+    $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
+        $(".inlineEditActive").html("");
+        $(".inlineEditActive").html(value + '<div class="inlineEditIcon">Edit ' + inlineEditIcon + '</div>');
+        $(".inlineEditActive").removeClass("inlineEditActive");
+    });
+
     buildEditField();
 }
 
