@@ -228,7 +228,7 @@
 						{if $params.link && !$params.customCode}
 							</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
 	                    {/if}
-
+                        {if $displayColumns.$col.inline_edit} {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit" class="inline_edit_icon"}{/if}
 					</td>
 					{/strip}
 	                {assign var='scope_row' value=false}

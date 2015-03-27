@@ -11,8 +11,14 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
-    $value = getFieldValueFromModule($fieldname, $module, $id);
     $bean = BeanFactory::getBean($module,$id);
+
+    if(!checkAccess($bean)){
+        return false;
+    }
+
+
+    $value = getFieldValueFromModule($fieldname, $module, $id);
     // use the mod_strings for this module
     $mod_strings = return_module_language($current_language, $module);
 
@@ -409,5 +415,26 @@ function convertDateUserToDB($value)
 
     $value = $datetime->format("Y-m-d H:i:s");
     return $value;
+}
+
+function checkAccess($bean){
+    $aclaccess_is_owner = false;
+    $aclaccess_in_group = false;
+
+    global $current_user;
+    if(is_admin($current_user)) {
+        $aclaccess_is_owner = true;
+    } else {
+        $aclaccess_is_owner = $bean->isOwner($current_user->id);
+    }
+
+
+    $aclaccess_in_role = $bean->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
+
+    if($aclaccess_is_owner && $aclaccess_in_role){
+        return true;
+    }else {
+        return false;
+    }
 }
 
