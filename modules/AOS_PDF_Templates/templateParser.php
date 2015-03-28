@@ -25,6 +25,15 @@
  */
  
 class templateParser{
+		// ADDED BY NS-TEAM
+		function getMultiEnumVal($options,$module,$val_array){
+			$res = array();
+			foreach($val_array as $key => $val) {
+				$res[$key] = translate($options,$module,$val);
+			}
+			return $res;
+		}
+		// END ADDED BY NS-TEAM
 		function parse_template_bean($string, $key, &$focus) {
 		global $app_strings;
 			$repl_arr = array();
@@ -37,7 +46,8 @@ class templateParser{
                     $repl_arr[$key."_".$field_def['name']] = translate($field_def['options'],$focus->module_dir,$focus->$field_def['name']);
 				}
                 else if($field_def['type'] == 'multienum' && isset($field_def['options'])) {
-					$repl_arr[$key."_".$field_def['name']] = implode(', ', unencodeMultienum($focus->$field_def['name']));
+					// $repl_arr[$key."_".$field_def['name']] = implode(', ', unencodeMultienum($focus->$field_def['name']));
+					$repl_arr[$key."_".$field_def['name']] = implode(', ', templateParser::getMultiEnumVal($field_def['options'],$focus->module_dir,unencodeMultienum($focus->$field_def['name'])));
 				}
                 //Fix for Windows Server as it needed to be converted to a string.
                 else if($field_def['type'] == 'int') {
