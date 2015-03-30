@@ -2,6 +2,7 @@
  * Created by lewis on 13/03/15.
  */
 
+
 buildEditField();
 
 //Global Variables.
@@ -10,18 +11,19 @@ var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
 var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 var view = action_sugar_grp1;
 
-
 function buildEditField(){
     $(".inlineEdit").dblclick(function(e) {
         e.preventDefault();
 
         //depending on what view you are using will find the id,module,type of field, and field name from the view
         if(view == "DetailView"){
+            console.log("here1");
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
             var module = currentModule;
-            var id = $("input[name=parent_id]").attr( "value" );
+            var id = $("input[name=record]").attr( "value" );
         }else{
+            console.log("here2");
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
@@ -291,7 +293,6 @@ function loadFieldHTML(field,module,id) {
     );
     $.ajaxSetup({"async": true});
      if(result.responseText){
-         console.log("here");
          return(JSON.parse(result.responseText));
      }else{
          return false;

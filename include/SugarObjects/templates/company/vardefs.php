@@ -51,7 +51,6 @@ $vardefs= array (
     'unified_search' => true,
     'full_text_search' => array('boost' => 3),
     'audited' => true,
-    'inline_edit' => true,
 	'required'=>true,
     'importable' => 'required',
     'merge_filter' => 'selected',  //field will be enabled for merge and will be a part of the default search criteria..other valid values for this property are enabled and disabled, default value is disabled.
