@@ -4398,8 +4398,11 @@ td.inlineEditActive{
 }
 
 #inlineEditSaveButton svg{
-    background-color: #3c8dbc;
-    fill:#FFF;
+    fill: #3c8dbc;
+}
+
+#inlineEditSaveButton svg:hover{
+    fill: #3c8dbc;
 }
 
 #inline_edit_field{

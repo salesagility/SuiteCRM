@@ -10,6 +10,7 @@ buildEditField();
 var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
 var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 var view = action_sugar_grp1;
+var currentModule = module_sugar_grp1;
 
 function buildEditField(){
     $(".inlineEdit").dblclick(function(e) {
@@ -17,13 +18,17 @@ function buildEditField(){
 
         //depending on what view you are using will find the id,module,type of field, and field name from the view
         if(view == "DetailView"){
-            console.log("here1");
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
-            var module = currentModule;
+
+            if(currentModule){
+                var module = currentModule;
+            }else{
+                var module = module_sugar_grp1;
+            }
+
             var id = $("input[name=record]").attr( "value" );
         }else{
-            console.log("here2");
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
             var module = $("#displayMassUpdate input[name=module]").val();
