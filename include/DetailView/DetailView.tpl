@@ -188,7 +188,7 @@ class="yui-navset detailview_tabs"
 				{/if}
 				{{/if}}
 
-	            {{if $fields[$colData.field.name].inline_edit == 1}}<div class="inlineEditIcon">Edit {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{{/if}}
+	            {{if $fields[$colData.field.name].inline_edit == 1}}<div class="inlineEditIcon"> {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{{/if}}
 
 			</td>
 	    {{if !empty($colData.field.hideIf)}}

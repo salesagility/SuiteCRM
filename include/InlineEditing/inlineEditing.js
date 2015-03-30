@@ -4,8 +4,7 @@
 
 buildEditField();
 
-var inlineEditIcon = $("#Layer_1")[0].outerHTML;
-console.log(inlineEditIcon);
+var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 var view = action_sugar_grp1;
 
 function buildEditField(){
@@ -30,8 +29,8 @@ function buildEditField(){
             var html = loadFieldHTML(field,module,id);
 
             if(html){
-                $(this).html(validation + "<form name='EditView' id='EditView'><div style='float:left;'>" + html + "</div><div style='margin-top:5px; float:right;'><a id='inlineEditSaveButton' class='button' onclick=''>Save</a></div></form>");
-
+                $(this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
+                $("#inlineEditSaveButton").load("themes/SuiteR/images/inline_edit_save_icon.svg");
                 if(type == "relate") {
                     var relate_js = getRelateFieldJS(field, module, id);
                     $(this).append(relate_js);
@@ -158,7 +157,7 @@ function setValueClose(value){
 
     $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
         $(".inlineEditActive").html("");
-        $(".inlineEditActive").html(value + '<div class="inlineEditIcon">Edit ' + inlineEditIcon + '</div>');
+        $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
         $(".inlineEditActive").removeClass("inlineEditActive");
     });
 
