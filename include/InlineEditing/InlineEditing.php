@@ -293,7 +293,10 @@ function getDisplayValue($bean, $field, $method = "save")
     $listViewDefs = $listViewDefs['Accounts'][strtoupper($field)];
 
     $fieldlist[$field] = $bean->getFieldDefinition($field);
-    $fieldlist[$field] = array_merge($fieldlist[$field], $listViewDefs);
+
+    if(is_array($listViewDefs)){
+        $fieldlist[$field] = array_merge($fieldlist[$field], $listViewDefs);
+    }
 
     $value = formatDisplayValue($bean, $bean->$field, $fieldlist[$field], $method);
 
@@ -388,7 +391,13 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['ext2']."&record=$record\">";
 
-        $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
+        if($vardef['ext2']){
+            $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
+
+        }else{
+            $value .= getFieldValueFromModule($vardef['rname'],$vardef['module'],$record) . "</a>";
+
+        }
     }
 
 
