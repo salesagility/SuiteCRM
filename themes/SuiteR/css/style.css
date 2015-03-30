@@ -4487,11 +4487,8 @@ h3 span{
     }
 
     #mobilegloballinks ul.dropdown-menu {
-        position: absolute;
-        top: 50px;
-        right: 0;
-        float: right;
-        width: 200px;
+        position: relative;
+        float:right;
     }
 
     #mobilegloballinks ul li a {
