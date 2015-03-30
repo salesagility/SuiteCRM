@@ -65,7 +65,7 @@ class TemplateField{
 	var $ext3 = '';
 	var $ext4 = '';
 	var $audited= 0;
-    var $inline_edit = 0;
+    var $inline_edit = 1;
     var $massupdate = 0;
 	var $importable = 'true' ;
 	var $duplicate_merge=0;
