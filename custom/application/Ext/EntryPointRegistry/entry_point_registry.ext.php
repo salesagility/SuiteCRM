@@ -2,10 +2,11 @@
  //WARNING: The contents of this file are auto-generated
 
  
-	$entry_point_registry['responseEntryPoint'] = array(
-	    'file' => 'modules/FP_events/responseEntryPoint.php',
+$entry_point_registry['QuickCRMgetConfig'] = array(
+	'file' => 'custom/QuickCRM/getConfig.php',
 	    'auth' => false
 	);
+
 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -49,9 +50,8 @@
 $entry_point_registry['deleteAttachment'] = array('file' => 'include/SugarFields/Fields/Image/deleteAttachment.php' , 'auth' => '1');
 
 
-$entry_point_registry['QuickCRMgetConfig'] = array(
-	'file' => 'custom/QuickCRM/getConfig.php',
+	$entry_point_registry['responseEntryPoint'] = array(
+	    'file' => 'modules/FP_events/responseEntryPoint.php',
 	'auth' => false
 );
-
 ?>

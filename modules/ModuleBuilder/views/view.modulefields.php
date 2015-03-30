@@ -264,6 +264,6 @@ class ViewModulefields extends SugarView
 		  return true;
 		}
 		
-		return true;
+		return false;
 	}
 }
