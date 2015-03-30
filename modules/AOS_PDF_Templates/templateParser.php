@@ -42,7 +42,7 @@ class templateParser{
                 if($field_def['type'] == 'currency'){
                     $repl_arr[$key."_".$field_def['name']] = currency_format_number($focus->$field_def['name'],$params = array('currency_symbol' => false));
                 }
-				else if($field_def['type'] == 'enum' && isset($field_def['options'])) {
+				else if(($field_def['type'] == 'enum' || $field_def['type'] == 'radioenum' || $field_def['type'] == 'dynamicenum') && isset($field_def['options'])) {
                     $repl_arr[$key."_".$field_def['name']] = translate($field_def['options'],$focus->module_dir,$focus->$field_def['name']);
 				}
                 else if($field_def['type'] == 'multienum' && isset($field_def['options'])) {
@@ -53,7 +53,14 @@ class templateParser{
                 else if($field_def['type'] == 'int') {
                     $repl_arr[$key."_".$field_def['name']] = strval($focus->$field_def['name']);
                 }
-                else {
+ 			    else if( $field_def['type'] == 'bool' ){
+					$focus->$field_def['name'] == "0"   || $focus->$field_def['name'] == "off" 
+ 			                		? $val = '' 
+ 			                		: $val = "checked='checked'"; 
+                	$repl_arr[$key."_".$field_def['name']] = 	"<input type='checkbox' value='yes' {$val}/>"; 
+ 								 
+ 			    }
+				else {
 					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
 				}
 			} // end foreach()
