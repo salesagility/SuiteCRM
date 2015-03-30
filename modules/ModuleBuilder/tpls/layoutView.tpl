@@ -302,7 +302,6 @@ var editFieldProperties = function (idCount, label) {ldelim}
 	  + '&name_label=label_' + encodeURIComponent(label) + '&title_label=' + encodeURIComponent(title_label)
 	  + '&value_label=' + encodeURIComponent(value_label) + '&id_tabindex=le_tabindex_' + encodeURIComponent(idCount)
 	  + '&title_tabindex=' + encodeURIComponent(title_tabindex)
-	  + '&title_tabindex=' + encodeURIComponent(title_tabindex)
 	  + '&name_tabindex=tabindex&value_tabindex=' + encodeURIComponent(value_tabindex) );
 
 {rdelim}
