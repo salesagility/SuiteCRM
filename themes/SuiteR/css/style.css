@@ -3357,10 +3357,10 @@ table legend {
         float:left;
         z-index:50 !important;
         position:absolute;
-        left:75px;
+        left:60px;
     }
     #searchmobile #query_string{
-        width:100% !important;
+        width:80% !important;
         outline: 0 !important;
         background:#3C8DBC !important;
         border:none !important;
