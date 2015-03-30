@@ -273,7 +273,6 @@ function saveField($field, $id, $module, $value)
             $bean->$field = $value;
         }
 
-
         $bean->save();
         return getDisplayValue($bean, $field);
     } else {
