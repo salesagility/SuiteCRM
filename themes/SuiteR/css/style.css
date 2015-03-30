@@ -3228,9 +3228,16 @@ ul.dashboardTabList li {
     margin:0 5px 0 5px;
 }
 
-.navbar-inverse .navbar-brand {
-    color:#ffffff;
-    height:50px;
+.navbar-brand{
+    display:none;
+}
+
+@media (min-width:768px){
+    .navbar-inverse .navbar-brand {
+        color: #ffffff;
+        height: 50px;
+        display:inline;
+    }
 }
 
 .btn-success {
@@ -3352,12 +3359,16 @@ table legend {
     margin-right:-10px;
 }
 
+#mobilegloballinks{
+    display:none;
+}
 @media (max-width:767px){
     #searchmobile{
         float:left;
         z-index:50 !important;
         position:absolute;
         left:60px;
+        width:80% !important;
     }
     #searchmobile #query_string{
         width:80% !important;
@@ -3373,6 +3384,9 @@ table legend {
     }
     .form-control{
         color:#f7f7f7 !important;
+    }
+    #mobilegloballinks{
+        display:inline;
     }
 }
 
