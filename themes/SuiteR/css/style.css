@@ -4373,7 +4373,50 @@ h3 span{
     fill: #3c8dbc;
     pointer-events: none;
 }
+.inlineEdit{
+    cursor: pointer !important;
+}
 
+.inlineEditIcon{
+    float:right;
+    height:10px;
+    color: #3c8dbc;
+    width:15px;
+    padding-left:3px;
+}
+
+.inlineEditIcon svg{
+    fill: #3c8dbc;
+    display:none;
+}
+
+.inlineEdit:hover .inlineEditIcon svg{
+    cursor: pointer !important;
+    display:inline;
+}
+
+td.inlineEditActive{
+    background-color: #cccccc;
+}
+
+#inlineEditSaveButton{
+    float:right;
+    display:inline;
+}
+
+#inlineEditSaveButton svg{
+    fill: #3c8dbc;
+}
+
+#inlineEditSaveButton svg:hover{
+    fill: #3c8dbc;
+}
+
+#inline_edit_field{
+    float:left;
+    width:80%;
+    padding-right:5px;
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
