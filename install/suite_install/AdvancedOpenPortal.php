@@ -20,30 +20,7 @@ function install_aop() {
 		}
 		ksort($sugar_config);
 		write_array_to_file('sugar_config', $sugar_config, 'config.php');
-		updateScheduler();
 
-}
-
-function updateScheduler(){
-	require_once('modules/Schedulers/Scheduler.php');
-	$scheduler = new Scheduler();
-	if(count($scheduler->get_full_list('',"job = 'function::pollMonitoredInboxesAOP'"))){
-		return;
-	}
-	$scheduler->name = "AOP Check Inbound Mailboxes";
-	$scheduler->date_time_start = "2005-01-01 11:15:00";
-	$scheduler->date_time_end = "2020-12-31 00:00:00";
-	$scheduler->job_interval = "*/1::*::*::*::*";
-	$scheduler->job = "function::pollMonitoredInboxesAOP";
-	$scheduler->status = "Active";
-	$scheduler->catch_up = 0;
-	$scheduler->save();
-        $oldSchedules = $scheduler->get_full_list('',"job = 'function::pollMonitoredInboxes'");
-
-	foreach($oldSchedules as $oldSchedule){
-		$oldSchedule->status = "Inactive";
-		$oldSchedule->save();
-	}
 }
 
 function getTemplates(){
