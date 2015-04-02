@@ -824,23 +824,47 @@ class Scheduler extends SugarBean {
 		// truncate scheduler-related tables
 		$this->db->query('DELETE FROM schedulers');
 
+        $sched1 = new Scheduler();
+        $sched1->name               = $mod_strings['LBL_OOTB_WORKFLOW'];
+        $sched1->job                = 'function::processAOW_Workflow';
+        $sched1->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched1->date_time_end      = null;
+        $sched1->job_interval       = '*::*::*::*::*';
+        $sched1->status             = 'Active';
+        $sched1->created_by         = '1';
+        $sched1->modified_user_id   = '1';
+        $sched1->catch_up           = '1';
+        $sched1->save();
+
+        $sched2 = new Scheduler();
+        $sched2->name               = $mod_strings['LBL_OOTB_REPORTS'];
+        $sched2->job                = 'function::aorRunScheduledReports';
+        $sched2->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched2->date_time_end      = null;
+        $sched2->job_interval       = '*::*::*::*::*';
+        $sched2->status             = 'Active';
+        $sched2->created_by         = '1';
+        $sched2->modified_user_id   = '1';
+        $sched2->catch_up           = '1';
+        $sched2->save();
 
         $sched3 = new Scheduler();
         $sched3->name               = $mod_strings['LBL_OOTB_TRACKER'];
         $sched3->job                = 'function::trimTracker';
-        $sched3->date_time_start    = create_date(2005,1,1) . ' ' . create_time(0,0,1);
-        $sched3->date_time_end      = create_date(2020,12,31) . ' ' . create_time(23,59,59);
+        $sched3->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched3->date_time_end      = null;
         $sched3->job_interval       = '0::2::1::*::*';
         $sched3->status             = 'Active';
         $sched3->created_by         = '1';
         $sched3->modified_user_id   = '1';
         $sched3->catch_up           = '1';
         $sched3->save();
+
 		$sched4 = new Scheduler();
 		$sched4->name				= $mod_strings['LBL_OOTB_IE'];
-		$sched4->job				= 'function::pollMonitoredInboxes';
-		$sched4->date_time_start	= create_date(2005,1,1) . ' ' . create_time(0,0,1);
-		$sched4->date_time_end		= create_date(2020,12,31) . ' ' . create_time(23,59,59);
+		$sched4->job				= 'function::pollMonitoredInboxesAOP';
+		$sched4->date_time_start	= create_date(2015,1,1) . ' ' . create_time(0,0,1);
+		$sched4->date_time_end		= null;
 		$sched4->job_interval		= '*::*::*::*::*';
 		$sched4->status				= 'Active';
 		$sched4->created_by			= '1';
@@ -851,8 +875,8 @@ class Scheduler extends SugarBean {
 		$sched5 = new Scheduler();
 		$sched5->name				= $mod_strings['LBL_OOTB_BOUNCE'];
 		$sched5->job				= 'function::pollMonitoredInboxesForBouncedCampaignEmails';
-		$sched5->date_time_start	= create_date(2005,1,1) . ' ' . create_time(0,0,1);
-		$sched5->date_time_end		= create_date(2020,12,31) . ' ' . create_time(23,59,59);
+		$sched5->date_time_start	= create_date(2015,1,1) . ' ' . create_time(0,0,1);
+		$sched5->date_time_end		= null;
 		$sched5->job_interval		= '0::2-6::*::*::*';
 		$sched5->status				= 'Active';
 		$sched5->created_by			= '1';
@@ -863,8 +887,8 @@ class Scheduler extends SugarBean {
 		$sched6 = new Scheduler();
 		$sched6->name				= $mod_strings['LBL_OOTB_CAMPAIGN'];
 		$sched6->job				= 'function::runMassEmailCampaign';
-		$sched6->date_time_start	= create_date(2005,1,1) . ' ' . create_time(0,0,1);
-		$sched6->date_time_end		= create_date(2020,12,31) . ' ' . create_time(23,59,59);
+		$sched6->date_time_start	= create_date(2015,1,1) . ' ' . create_time(0,0,1);
+		$sched6->date_time_end		= null;
 		$sched6->job_interval		= '0::2-6::*::*::*';
 		$sched6->status				= 'Active';
 		$sched6->created_by			= '1';
@@ -872,12 +896,11 @@ class Scheduler extends SugarBean {
 		$sched6->catch_up			= '1';
 		$sched6->save();
 
-
         $sched7 = new Scheduler();
         $sched7->name               = $mod_strings['LBL_OOTB_PRUNE'];
         $sched7->job                = 'function::pruneDatabase';
-        $sched7->date_time_start    = create_date(2005,1,1) . ' ' . create_time(0,0,1);
-        $sched7->date_time_end      = create_date(2020,12,31) . ' ' . create_time(23,59,59);
+        $sched7->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched7->date_time_end      = null;
         $sched7->job_interval       = '0::4::1::*::*';
         $sched7->status             = 'Inactive';
         $sched7->created_by         = '1';
@@ -885,14 +908,35 @@ class Scheduler extends SugarBean {
         $sched7->catch_up           = '0';
         $sched7->save();
 
+        $sched8 = new Scheduler();
+        $sched8->name               = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
+        $sched8->job                = 'function::aodIndexUnindexed';
+        $sched8->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched8->date_time_end      = null;
+        $sched8->job_interval       = "0::0::*::*::*";
+        $sched8->status             = 'Active';
+        $sched8->created_by         = '1';
+        $sched8->modified_user_id   = '1';
+        $sched8->catch_up           = '0';
+        $sched8->save();
 
-
+        $sched9 = new Scheduler();
+        $sched9->name               = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
+        $sched9->job                = 'function::aodOptimiseIndex';
+        $sched9->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched9->date_time_end      = null;
+        $sched9->job_interval       = "0::*/3::*::*::*";
+        $sched9->status             = 'Active';
+        $sched9->created_by         = '1';
+        $sched9->modified_user_id   = '1';
+        $sched9->catch_up           = '0';
+        $sched9->save();
 
         $sched12 = new Scheduler();
         $sched12->name               = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
         $sched12->job                = 'function::sendEmailReminders';
-        $sched12->date_time_start    = create_date(2008,1,1) . ' ' . create_time(0,0,1);
-        $sched12->date_time_end      = create_date(2020,12,31) . ' ' . create_time(23,59,59);
+        $sched12->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched12->date_time_end      = null;
         $sched12->job_interval       = '*::*::*::*::*';
         $sched12->status             = 'Active';
         $sched12->created_by         = '1';
@@ -903,8 +947,8 @@ class Scheduler extends SugarBean {
         $sched13 = new Scheduler();
         $sched13->name               = $mod_strings['LBL_OOTB_CLEANUP_QUEUE'];
         $sched13->job                = 'function::cleanJobQueue';
-        $sched13->date_time_start    = create_date(2012,1,1) . ' ' . create_time(0,0,1);
-        $sched13->date_time_end      = create_date(2030,12,31) . ' ' . create_time(23,59,59);
+        $sched13->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched13->date_time_end      = null;
         $sched13->job_interval       = '0::5::*::*::*';
         $sched13->status             = 'Active';
         $sched13->created_by         = '1';
@@ -915,8 +959,8 @@ class Scheduler extends SugarBean {
         $sched14 = new Scheduler();
         $sched14->name              = $mod_strings['LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS'];
         $sched14->job               = 'function::removeDocumentsFromFS';
-        $sched14->date_time_start   = create_date(2012, 1, 1) . ' ' . create_time(0, 0, 1);
-        $sched14->date_time_end     = create_date(2030, 12, 31) . ' ' . create_time(23, 59, 59);
+        $sched14->date_time_start   = create_date(2015, 1, 1) . ' ' . create_time(0, 0, 1);
+        $sched14->date_time_end     = null;
         $sched14->job_interval      = '0::3::1::*::*';
         $sched14->status            = 'Active';
         $sched14->created_by        = '1';
@@ -927,8 +971,8 @@ class Scheduler extends SugarBean {
         $sched15 = new Scheduler();
         $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
         $sched15->job                = 'function::trimSugarFeeds';
-        $sched15->date_time_start    = create_date(2005,1,1) . ' ' . create_time(0,0,1);
-        $sched15->date_time_end      = create_date(2020,12,31) . ' ' . create_time(23,59,59);
+        $sched15->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+        $sched15->date_time_end      = null;
         $sched15->job_interval       = '0::2::1::*::*';
         $sched15->status             = 'Active';
         $sched15->created_by         = '1';
