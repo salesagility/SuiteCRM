@@ -111,6 +111,7 @@ class AM_ProjectTemplatesController extends SugarController {
                 $end = $enddate->format('Y-m-d');
                 $project_task->date_finish = $end;
                 $enddate = $end;
+                $enddate_array[$count] = $end;
             }
             $project_task->save();
             //link tasks to the newly created project
