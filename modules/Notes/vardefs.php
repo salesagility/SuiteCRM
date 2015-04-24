@@ -220,9 +220,11 @@ $dictionary['Note'] = array(
   'description' =>
   array (
     'name' => 'description',
-    'vname' => 'LBL_NOTE_STATUS',
+    'vname' => 'LBL_DESCRIPTION',
     'type' => 'text',
-    'comment' => 'Full text of the note'
+    'comment' => 'Full text of the note',
+    'rows' => 30,
+    'cols' => 90,
   ),
   'deleted' =>
   array (
@@ -269,7 +271,6 @@ $dictionary['Note'] = array(
         'name'=>'contact_phone',
         'vname' => 'LBL_PHONE',
         'type'=>'phone',
-        'vname' => 'LBL_PHONE',
         'source'=>'non-db'
     ),
 
@@ -434,15 +435,6 @@ $dictionary['Note'] = array(
     'source'=>'non-db',
     'vname'=>'LBL_TASKS',
   ),
-  'description' =>
-      array (
-        'name' => 'description',
-        'vname' => 'LBL_DESCRIPTION',
-        'type' => 'text',
-        'comment' => 'Full text of the note',
-        'rows' => 30,
-        'cols' => 90,
-      ),
 ),
 'relationships'=>array(
 'notes_modified_user' =>

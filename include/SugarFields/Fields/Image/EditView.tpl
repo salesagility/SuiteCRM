@@ -196,15 +196,9 @@ document.getElementById("{{$vardef.docType}}").disabled = true;
 {/if}
 
 <script type="text/javascript">
-$( "#{/literal}{{$idName}}_file{literal} " ).change(function() {
+$( "#{{$idName}}_file{literal} " ).change(function() {
         $("#{/literal}{{$idName}}{literal}").val($("#{/literal}{{$idName}}_file{literal}").val());
-});
-        </script>
-
-<script type="text/javascript">
-$( "#{/literal}{{$idName}}_file{literal} " ).change(function() {
-        $("#{/literal}{{$idName}}{literal}").val($("#{/literal}{{$idName}}_file{literal}").val());
-});
+});{/literal}
         </script>
 
 {{if !empty($displayParams.onchangeSetFileNameTo) }}
