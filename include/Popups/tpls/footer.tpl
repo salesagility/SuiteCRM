@@ -41,11 +41,3 @@
 {{if $prerow}}
 	</form>
 {{/if}}
-<!-- Include all boostrap dependencies -->
-<script src="themes/SuiteR/js/bootstrap.min.js"></script>
-<script src="themes/SuiteR/js/html5shiv.min.js"></script>
-<script src="themes/SuiteR/js/respond.min.js"></script>
-<!-- Include custom JS -->
-<script src="themes/SuiteR/js/responsivetheme.js" type="text/javascript"></script>
-<!-- Include footable scripts -->
-<script src="themes/SuiteR/js/footable.js" type="text/javascript"></script>
