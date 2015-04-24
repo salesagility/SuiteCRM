@@ -40,7 +40,7 @@ function loadConditionLine(condition, overrideView){
             if(elem.nodeName !== 'INPUT') {
                 elem.innerHTML = condition[a];
             }else if(elem.getAttribute('type') === 'checkbox'){
-                elem.setAttribute('checked',true);
+                elem.checked = condition[a] == 1;
             }else {
                 elem.value = condition[a];
             }
