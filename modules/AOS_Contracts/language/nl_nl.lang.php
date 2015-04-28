@@ -23,6 +23,7 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  * @author OpenSesame ICT BV <wieger.kunst@osict.com> Dutch Translation package
+ * @author Dutch translation Copyright (c) 2014-2015 Hortindustrias Ltd.  
  */
 
 $mod_strings = array (
@@ -45,7 +46,7 @@ $mod_strings = array (
     'LBL_LIST_NAME' => 'Naam',
     'LBL_LIST_FORM_TITLE' => 'Contracten lijst',
     'LBL_MODULE_NAME' => 'Contracten',
-    'LBL_MODULE_TITLE' => 'Contracten: Home',
+    'LBL_MODULE_TITLE' => 'Contracten: Start',
     'LBL_HOMEPAGE_TITLE' => 'Mijn contracten',
     'LNK_NEW_RECORD' => 'Maak contract',
     'LNK_LIST' => 'Bekijk contracten',
@@ -65,7 +66,50 @@ $mod_strings = array (
     'LBL_COMPANY_SIGNED_DATE' => 'Datum ondertekening',
     'LBL_RENEWAL_REMINDER_DATE' => 'Herinneringsdatum',
     'LBL_CONTRACT_TYPE' => 'Contract type',
-
     'LBL_CONTACT' => 'Contact',
+    'LBL_ADD_GROUP' => 'Toevoegen groep',
+    'LBL_DELETE_GROUP' => 'Verwijderen groep',
+    'LBL_GROUP_NAME' => 'Groep naam',
+    'LBL_GROUP_TOTAL' => 'Groep total',
+    'LBL_PRODUCT_QUANITY' => 'Hoeveelheid',
+    'LBL_PRODUCT_NAME' => 'Product',
+    'LBL_PART_NUMBER' => 'Onderdeel Nummer',
+    'LBL_PRODUCT_NOTE' => 'Notitie',
+    'LBL_PRODUCT_DESCRIPTION' => 'Omschrijving',
+    'LBL_LIST_PRICE' => 'Lijst',
+    'LBL_DISCOUNT_TYPE' => 'Type',
+    'LBL_DISCOUNT_AMT' => 'Korting',
+    'LBL_UNIT_PRICE' => 'Verkoop prijs',
+    'LBL_TOTAL_PRICE' => 'Totaal',
+    'LBL_VAT' => 'BTW',
+    'LBL_VAT_AMT' => 'BTW bedrag',
+    'LBL_SERVICE_NAME' => 'Service',
+    'LBL_SERVICE_LIST_PRICE' => 'Lijst',
+    'LBL_SERVICE_PRICE' => 'Verkoop prijs',
+    'LBL_SERVICE_DISCOUNT' => 'Korting',
+    'LBL_LINE_ITEMS' => 'Lijn items',
+    'LBL_SUBTOTAL_AMOUNT' => 'Sub totaal',
+    'LBL_DISCOUNT_AMOUNT' => 'Korting',
+    'LBL_TAX_AMOUNT' => 'BTW',
+    'LBL_SHIPPING_AMOUNT' => 'Verzend kosten',
+    'LBL_TOTAL_AMT' => 'Totaal',
+    'LBL_GRAND_TOTAL' => 'Grand totaal',
+    'LBL_SHIPPING_TAX' => 'BTW verzend kosten',
+    'LBL_SHIPPING_TAX_AMT' => 'BTW verzend kosten',
+    'LBL_ADD_PRODUCT_LINE' => 'Toevoegen product lijn',
+    'LBL_ADD_SERVICE_LINE' => 'Toevoegen service lijn ',
+    'LBL_PRINT_AS_PDF' => 'Printen als PDF',
+    'LBL_EMAIL_PDF' => 'E-mail PDF',
+    'LBL_PDF_NAME' => 'Contract',
+    'LBL_EMAIL_NAME' => 'Contract voor',
+    'LBL_NO_TEMPLATE' => 'Fout\nGeen sjabloon gevonden. Indien u geen Contract sjabloon gecreëerd heeft, ga dan naar de PDF sjabloon module en maak er een',
+    'LBL_SUBTOTAL_AMOUNT_USDOLLAR' => 'Sub totaal (Standaard valuta)',
+    'LBL_DISCOUNT_AMOUNT_USDOLLAR' => 'Korting (Standaard valuta)',
+    'LBL_TAX_AMOUNT_USDOLLAR' => 'Tax (Standaard valuta)',
+    'LBL_SHIPPING_AMOUNT_USDOLLAR' => 'Verzend kosten (Standaard valuta)',
+    'LBL_TOTAL_AMT_USDOLLAR' => 'Totaal (Standaard valuta)',
+    'LBL_SHIPPING_TAX_USDOLLAR' => 'BTW verzend kosten (Standaard valuta)',
+    'LBL_SHIPPING_TAX_AMT_USDOLLAR' => 'BTW verzend kostem (Standaard valuta)',
+    'LBL_GRAND_TOTAL_USDOLLAR' => 'Grand totaal (Standaard valuta)',
 );
 ?>
