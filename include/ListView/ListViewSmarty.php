@@ -106,7 +106,7 @@ class ListViewSmarty extends ListViewDisplay{
         }
 
         //Check if inline editing is enabled for list view.
-        if($sugar_config['inline_edit_listview']){
+        if($sugar_config['enable_line_editing_list']){
             $this->ss->assign('inline_edit', true);
         }
 
