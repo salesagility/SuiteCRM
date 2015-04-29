@@ -760,7 +760,7 @@ class ViewConvertLead extends SugarView
 		{
 			$beanName = $beanList[$module];
 			$activity = new $beanName();
-			$query = "SELECT id FROM {$activity->table_name} WHERE parent_id = '{$lead->id}' AND parent_type = 'Leads'";
+			$query = "SELECT id FROM {$activity->table_name} WHERE parent_id = '{$lead->id}' AND parent_type = 'Leads' AND deleted = 0";
 			$result = $db->query($query,true);
             while($row = $db->fetchByAssoc($result))
             {
@@ -1015,7 +1015,7 @@ class ViewConvertLead extends SugarView
     	{
     		echo ("<span class='error'>" . translate('LBL_CONVERTLEAD_WARNING'));
     		$dupes = array();
-    		$q = "SELECT id, first_name, last_name FROM contacts WHERE first_name LIKE '{$lead->first_name}' AND last_name LIKE '{$lead->last_name}'";
+    		$q = "SELECT id, first_name, last_name FROM contacts WHERE first_name LIKE '{$lead->first_name}' AND last_name LIKE '{$lead->last_name}' AND deleted = 0";
     		$result = $lead->db->query($q);
     		while($row = $lead->db->fetchByAssoc($result)) {
     			$contact = new Contact();
