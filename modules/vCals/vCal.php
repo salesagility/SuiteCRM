@@ -54,6 +54,7 @@ class vCal extends SugarBean {
 	var $table_name = "vcals";
 
 	var $object_name = "vCal";
+    var $tracker_visibility = false;
 
 	var $new_schema = true;
 
@@ -129,7 +130,7 @@ class vCal extends SugarBean {
 		// get activities.. queries Meetings and Calls
 		$acts_arr =
 		CalendarActivity::get_activities($user_bean->id,
-			array("show_calls" => true),
+			false,
 			$start_date_time,
 			$end_date_time,
 			'freebusy');

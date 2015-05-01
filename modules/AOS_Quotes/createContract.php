@@ -22,6 +22,11 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
+    if(!(ACLController::checkAccess('AOS_Contracts', 'edit', true))){
+        ACLController::displayNoAccess();
+        die;
+    }
+
 	require_once('modules/AOS_Quotes/AOS_Quotes.php');
 	require_once('modules/AOS_Contracts/AOS_Contracts.php');
 	

@@ -21,4 +21,4 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$mod_strings['LBL_POLLMONITOREDINBOXESCUSTOMAOP'] = 'Портал - проверять почтовые ящики для входящей почты';?>
+$mod_strings['LBL_POLLMONITOREDINBOXESAOP'] = 'Портал - проверять почтовые ящики для входящей почты';?>

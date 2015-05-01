@@ -217,7 +217,7 @@ class AOW_WorkFlow extends Basic {
     }
 
     function build_flow_query_where($query = array()){
-        global $beanList, $app_list_strings, $sugar_config;
+        global $beanList, $app_list_strings, $sugar_config, $timedate;
 
         if($beanList[$this->flow_module]){
             $module = new $beanList[$this->flow_module]();
@@ -258,16 +258,16 @@ class AOW_WorkFlow extends Basic {
 
                     switch($condition->value_type) {
                         case 'Field':
-                            $data = $condition_module->field_defs[$condition->value];
+                            $data = $module->field_defs[$condition->value];
 
                             if($data['type'] == 'relate' && isset($data['id_name'])) {
                                 $condition->value = $data['id_name'];
                             }
                             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $value = $table_alias.'_cstm.'.$condition->value;
-                                $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                                $value = $module->table_name.'_cstm.'.$condition->value;
+                                $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
                             } else {
-                                $value = $table_alias.'.'.$condition->value;
+                                $value = $module->table_name.'.'.$condition->value;
                             }
                             break;
                         case 'Any_Change':
@@ -282,20 +282,34 @@ class AOW_WorkFlow extends Basic {
                                     $value = 'UTC_TIMESTAMP()';
                                 }
                             } else {
-                                $data = $condition_module->field_defs[$params[0]];
+                                $data = $module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                    $value = $table_alias.'_cstm.'.$params[0];
-                                    $query = $this->build_flow_query_join($table_alias.'_cstm', $condition_module, 'custom', $query);
+                                    $value = $module->table_name.'_cstm.'.$params[0];
+                                    $query = $this->build_flow_query_join($module->table_name.'_cstm', $module, 'custom', $query);
                                 } else {
-                                    $value = $table_alias.'.'.$params[0];
+                                    $value = $module->table_name.'.'.$params[0];
                                 }
                             }
 
                             if($params[1] != 'now'){
                                 switch($params[3]) {
                                     case 'business_hours';
-                                        //business hours not implemented for query, default to hours
-                                        $params[3] = 'hours';
+                                        if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php') && $params[0] == 'now'){
+                                            require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
+
+                                            $businessHours = new AOBH_BusinessHours();
+
+                                            $amount = $params[2];
+
+                                            if($params[1] != "plus"){
+                                                $amount = 0-$amount;
+                                            }
+                                            $value = $businessHours->addBusinessHours($amount);
+                                            $value = "'".$timedate->asDb( $value )."'";
+                                            break;
+                                        }
+                                        //No business hours module found - fall through.
+                                        $params[3] = 'hour';
                                     default:
                                         if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                                             $value = "DATEADD(".$params[3].",  ".$app_list_strings['aow_date_operator'][$params[1]]." $params[2], $value)";
@@ -373,7 +387,7 @@ class AOW_WorkFlow extends Basic {
     }
 
     function check_valid_bean(SugarBean &$bean){
-        global $beanList, $app_list_strings;
+        global $app_list_strings, $timedate;
 
         require_once('modules/AOW_Processed/AOW_Processed.php');
         $processed = new AOW_Processed();
@@ -482,7 +496,21 @@ class AOW_WorkFlow extends Basic {
                         if($params[1] != 'now'){
                             switch($params[3]) {
                                 case 'business_hours';
-                                    //business hours not implemented for query, default to hours
+                                    if(file_exists('modules/AOBH_BusinessHours/AOBH_BusinessHours.php')){
+                                        require_once('modules/AOBH_BusinessHours/AOBH_BusinessHours.php');
+
+                                        $businessHours = new AOBH_BusinessHours();
+
+                                        $amount = $params[2];
+                                        if($params[1] != "plus"){
+                                            $amount = 0-$amount;
+                                        }
+
+                                        $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($value));
+                                        $value = strtotime($timedate->asDb( $value ));
+                                        break;
+                                    }
+                                    //No business hours module found - fall through.
                                     $params[3] = 'hours';
                                 default:
                                     $value = strtotime($value, $app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
@@ -611,6 +639,11 @@ class AOW_WorkFlow extends Basic {
                     require_once('modules/AOW_Actions/actions/'.$action_name.'.php');
                 } else {
                     return false;
+                }
+
+                $custom_action_name = "custom" . $action_name;
+                if(class_exists($custom_action_name)){
+                    $action_name = $custom_action_name;
                 }
 
                 $flow_action = new $action_name($action->id);

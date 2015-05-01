@@ -28,6 +28,7 @@ class AOR_Condition extends Basic {
 	var $module_dir = 'AOR_Conditions';
 	var $object_name = 'AOR_Condition';
 	var $table_name = 'aor_conditions';
+    var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 	
@@ -80,8 +81,12 @@ class AOR_Condition extends Basic {
                             }
                         } else if($field_def['name'] == 'value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key.$field_def['name']][$i]);
+                        }else if($field_def['name'] == 'parameter'){
+                            $post_data[$key.$field_def['name']][$i] = isset($post_data[$key.$field_def['name']][$i]);
                         }
                         $condition->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
+                    }else if($field_def['name'] == 'parameter'){
+                        $condition->$field_def['name'] = 0;
                     }
 
                 }

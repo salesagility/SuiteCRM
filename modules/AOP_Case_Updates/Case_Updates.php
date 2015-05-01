@@ -90,7 +90,16 @@ EOD;
     return $html;
 }
 
+function display_update_form(){
+    global $mod_strings, $app_strings;
+    $sugar_smarty	= new Sugar_Smarty();
+    $sugar_smarty->assign('MOD', $mod_strings);
+    $sugar_smarty->assign('APP', $app_strings);
+    return $sugar_smarty->fetch('modules/AOP_Case_Updates/tpl/caseUpdateForm.tpl');
+}
+
 function getUpdateDisplayHead(SugarBean $update){
+    global $mod_strings;
     if($update->contact_id){
         $name = $update->getUpdateContact()->name;
     }elseif($update->assigned_user_id){
@@ -101,10 +110,10 @@ function getUpdateDisplayHead(SugarBean $update){
     $html = "<a href='' onclick='toggleCaseUpdate(\"".$update->id."\");return false;'>";
     $html .= "<img  id='caseUpdate".$update->id."Image' class='caseUpdateImage' src='".SugarThemeRegistry::current()->getImageURL('basic_search.gif')."'>";
     $html .= "</a>";
-    $html .= "<span>".($update->internal ? "<strong>Internal</strong> " : '') .$name . " at ".$update->date_entered."</span><br>";
+    $html .= "<span>".($update->internal ? "<strong>" . $mod_strings['LBL_INTERNAL'] . "</strong> " : '') .$name . " ".$update->date_entered."</span><br>";
     $notes = $update->get_linked_beans('notes','Notes');
     if($notes){
-        $html.= "Attachments: ";
+        $html.= $mod_strings['LBL_AOP_CASE_ATTACHMENTS'];
         foreach($notes as $note){
             $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
         }
@@ -143,4 +152,15 @@ function display_single_update(AOP_Case_Updates $update){
         return $html;
     }
 
+}
+
+function display_case_attachments($case){
+    $html = '';
+    $notes = $case->get_linked_beans('notes','Notes');
+    if($notes){
+        foreach($notes as $note){
+            $html .= "<a href='index.php?module=Notes&action=DetailView&record={$note->id}'>{$note->filename}</a>&nbsp;";
+        }
+    }
+    return $html;
 }

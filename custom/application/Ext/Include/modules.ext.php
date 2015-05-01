@@ -34,22 +34,6 @@ $modInvisList[] = 'Calls_Reschedule';
 
  
  //WARNING: The contents of this file are auto-generated
-$beanList['jjwg_Maps'] = 'jjwg_Maps';
-$beanFiles['jjwg_Maps'] = 'modules/jjwg_Maps/jjwg_Maps.php';
-$moduleList[] = 'jjwg_Maps';
-$beanList['jjwg_Markers'] = 'jjwg_Markers';
-$beanFiles['jjwg_Markers'] = 'modules/jjwg_Markers/jjwg_Markers.php';
-$moduleList[] = 'jjwg_Markers';
-$beanList['jjwg_Areas'] = 'jjwg_Areas';
-$beanFiles['jjwg_Areas'] = 'modules/jjwg_Areas/jjwg_Areas.php';
-$moduleList[] = 'jjwg_Areas';
-$beanList['jjwg_Address_Cache'] = 'jjwg_Address_Cache';
-$beanFiles['jjwg_Address_Cache'] = 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php';
-$moduleList[] = 'jjwg_Address_Cache';
-
-
- 
- //WARNING: The contents of this file are auto-generated
 $beanList['AOS_Contracts'] = 'AOS_Contracts';
 $beanFiles['AOS_Contracts'] = 'modules/AOS_Contracts/AOS_Contracts.php';
 $moduleList[] = 'AOS_Contracts';
@@ -100,14 +84,30 @@ $beanFiles['AOR_Condition'] = 'modules/AOR_Conditions/AOR_Condition.php';
 $modules_exempt_from_availability_check['AOR_Conditions'] = 'AOR_Conditions';
 $report_include_modules['AOR_Conditions'] = 'AOR_Conditions';
 $modInvisList[] = 'AOR_Conditions';
-
-
+$beanList['AOR_Scheduled_Reports'] = 'AOR_Scheduled_Reports';
+$beanFiles['AOR_Scheduled_Reports'] = 'modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports.php';
+$moduleList[] = 'AOR_Scheduled_Reports';
  
  //WARNING: The contents of this file are auto-generated
 $beanList['SecurityGroups'] = 'SecurityGroup';
 $beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
 $moduleList[] = 'SecurityGroups';
 
+
+
+$beanList['AM_ProjectTemplates'] = 'AM_ProjectTemplates';
+$beanFiles['AM_ProjectTemplates'] = 'modules/AM_ProjectTemplates/AM_ProjectTemplates.php';
+$moduleList[] = 'AM_ProjectTemplates';
+$beanList['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$beanFiles['AM_TaskTemplates'] = 'modules/AM_TaskTemplates/AM_TaskTemplates.php';
+$modules_exempt_from_availability_check['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$report_include_modules['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$modInvisList[] = 'AM_TaskTemplates';
+$beanList['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
+$beanFiles['AM_ProjectHolidays'] = 'modules/AM_ProjectHolidays/AM_ProjectHolidays.php';
+$modules_exempt_from_availability_check['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
+$report_include_modules['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
+$modInvisList[] = 'AM_ProjectHolidays';
 
  
  //WARNING: The contents of this file are auto-generated

@@ -755,7 +755,7 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    function removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir)
+    static function removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir)
     {
         //load the module dictionary if not supplied.
         if ((!isset($dictionary) or empty($dictionary)) && !empty($module_dir))
@@ -792,7 +792,7 @@ class SugarBean
      * @deprecated 4.5.1 - Nov 14, 2006
      * @static
     */
-    function remove_relationship_meta($key,$db,$log,$tablename,$dictionary,$module_dir)
+    static function remove_relationship_meta($key,$db,$log,$tablename,$dictionary,$module_dir)
     {
         SugarBean::removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir);
     }
@@ -813,7 +813,7 @@ class SugarBean
      *
      *  Internal function, do not override.
      */
-    function createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir,$iscustom=false)
+    static function createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir,$iscustom=false)
     {
         //load the module dictionary if not supplied.
         if (empty($dictionary) && !empty($module_dir))
@@ -931,7 +931,7 @@ class SugarBean
      * @deprecated 4.5.1 - Nov 14, 2006
      * @static
     */
-    function create_relationship_meta($key,&$db,&$log,$tablename,$dictionary,$module_dir)
+    static function create_relationship_meta($key,&$db,&$log,$tablename,$dictionary,$module_dir)
     {
         SugarBean::createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir);
     }
@@ -3246,6 +3246,22 @@ class SugarBean
 
         $used_join_key = array();
 
+	//walk through the fields and for every relationship field add their relationship_info field
+	//relationshipfield-aliases are resolved in SugarBean::create_new_list_query through their relationship_info field
+	$addrelate = array();
+	foreach($fields as $field=>$value)
+	{
+		if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) && 
+			$this->field_defs[$field]['source'] == 'non-db')
+		{
+			$addrelatefield = $this->get_relationship_field($field);
+			if ($addrelatefield)
+				$addrelate[$addrelatefield] = true;
+		}
+	}
+
+	$fields = array_merge($addrelate, $fields);
+
         foreach($fields as $field=>$value)
         {
             //alias is used to alias field names
@@ -3275,20 +3291,20 @@ class SugarBean
             //ignore fields that are a part of the collection and a field has been removed as a result of
             //layout customization.. this happens in subpanel customizations, use case, from the contacts subpanel
             //in opportunities module remove the contact_role/opportunity_role field.
-            $process_field=true;
             if (isset($data['relationship_fields']) and !empty($data['relationship_fields']))
             {
+		$process_field = false;
                 foreach ($data['relationship_fields'] as $field_name)
                 {
-                    if (!isset($fields[$field_name]))
+                    if (isset($fields[$field_name]))
                     {
-                        $process_field=false;
+                        $process_field = true;
+                        break;
                     }
                 }
-            }
-            if (!$process_field)
-            {
-                continue;
+		
+            	if (!$process_field)
+                	continue;
             }
 
             if(  (!isset($data['source']) || $data['source'] == 'db') && (!empty($alias) || !empty($filter) ))
@@ -3547,9 +3563,22 @@ class SugarBean
                     	{
 	                       $db_field = $this->db->concat($params['join_table_alias'], $data['db_concat_fields']);
 	                       $where = preg_replace('/'.$data['name'].'/', $db_field, $where);
+
+				// For relationship fields replace their alias by the corresponsding link table and r_name
+				if(isset($data['relationship_fields']))
+					foreach($data['relationship_fields'] as $r_name=>$alias_name)
+					{
+						$db_field = $this->db->concat($params['join_table_link_alias'], $r_name);
+						$where = preg_replace('/' . $alias_name . '/', $db_field, $where);
+					}
                     	}
                     }else{
                         $where = preg_replace('/(^|[\s(])' . $data['name'] . '/', '${1}' . $params['join_table_alias'] . '.'.$data['rname'], $where);
+
+			// For relationship fields replace their alias by the corresponsding link table and r_name
+			if(isset($data['relationship_fields']))
+				foreach($data['relationship_fields'] as $r_name=>$alias_name)
+					$where = preg_replace('/(^|[\s(])' . $alias_name . '/', '${1}' . $params['join_table_link_alias'] . '.'.$r_name, $where);
                     }
                     if(!$table_joined)
                     {
@@ -3617,6 +3646,20 @@ class SugarBean
 
         return  $ret_array['select'] . $ret_array['from'] . $ret_array['where']. $ret_array['order_by'];
     }
+
+	// Check if field is defined through a relationship_info field, add this field when not present 
+	function get_relationship_field($field)
+	{
+		foreach ($this->field_defs as $field_def => $value)
+		{
+			if (isset($value['relationship_fields']) && 
+				in_array($field, $value['relationship_fields']) )
+				return $field_def;
+		}
+
+		return false;
+	}
+
     /**
      * Returns parent record data for objects that store relationship information
      *

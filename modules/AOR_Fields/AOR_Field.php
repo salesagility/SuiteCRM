@@ -27,6 +27,7 @@ class AOR_Field extends Basic {
 	var $module_dir = 'AOR_Fields';
 	var $object_name = 'AOR_Field';
 	var $table_name = 'aor_fields';
+    var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 	
@@ -74,6 +75,9 @@ class AOR_Field extends Basic {
                             $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
                         } else if($field_def['name'] == 'value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key.$field_def['name']][$i]);
+                        }
+                        if($field_def['name'] == 'module_path'){
+                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize(explode(":",$post_data[$key.$field_def['name']][$i])));
                         }
                         $field->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
                     }

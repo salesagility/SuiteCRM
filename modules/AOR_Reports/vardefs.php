@@ -99,6 +99,7 @@ $dictionary['AOR_Report'] = array(
     'module'=>'AOR_Fields',
     'bean_name'=>'AOR_Field',
     'source'=>'non-db',
+    'id_name' => 'aor_report_id',
   ),
   'aor_conditions' =>
   array (
@@ -109,6 +110,25 @@ $dictionary['AOR_Report'] = array(
      'bean_name'=>'AOR_Condition',
      'source'=>'non-db',
   ),
+  'aor_charts' =>
+      array (
+        'name' => 'aor_charts',
+        'type' => 'link',
+        'relationship' => 'aor_charts_aor_reports',
+        'source' => 'non-db',
+        'id_name' => 'aor_report_id',
+        'vname' => 'LBL_AOR_CHARTS',
+      ),
+  'aor_scheduled_reports' =>
+    array (
+        'name' => 'aor_scheduled_reports',
+        'type' => 'link',
+        'relationship' => 'aor_scheduled_reports_aor_reports',
+        'module'=>'AOR_Scheduled_Reports',
+        'bean_name'=>'AOR_Scheduled_Reports',
+        'source'=>'non-db',
+    ),
+
 ),
 'relationships'=>array (
     'aor_reports_aor_fields' =>
@@ -117,7 +137,7 @@ $dictionary['AOR_Report'] = array(
         'lhs_table'=> 'aor_reports',
         'lhs_key' => 'id',
         'rhs_module'=> 'AOR_Fields',
-        'rhs_table'=> 'aor_field',
+        'rhs_table'=> 'aor_fields',
         'rhs_key' => 'aor_report_id',
         'relationship_type'=>'one-to-many',
     ),
@@ -128,6 +148,15 @@ $dictionary['AOR_Report'] = array(
         'lhs_key' => 'id',
         'rhs_module'=> 'AOR_Conditions',
         'rhs_table'=> 'aor_conditions',
+        'rhs_key' => 'aor_report_id',
+        'relationship_type'=>'one-to-many',
+    ),
+    "aor_scheduled_reports_aor_reports" => array (
+        'lhs_module'=> 'AOR_Reports',
+        'lhs_table'=> 'aor_reports',
+        'lhs_key' => 'id',
+        'rhs_module'=> 'AOR_Scheduled_Reports',
+        'rhs_table'=> 'aor_scheduled_reports',
         'rhs_key' => 'aor_report_id',
         'relationship_type'=>'one-to-many',
     ),

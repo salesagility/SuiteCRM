@@ -157,6 +157,7 @@ $mod_strings = array (
 	'LBL_DATE_END_ERROR' => 'End date is before start date',
 	'ERR_YEAR_BETWEEN' => 'Sorry, calendar cannot handle the year you requested<br>Year must be between 1970 and 2037',
 	'ERR_NEIGHBOR_DATE' => 'get_neighbor_date_str: not defined for this view',
+    'LBL_NO_ITEMS_MOBILE' => 'Your calendar is clear for the week.',
 
 );
 

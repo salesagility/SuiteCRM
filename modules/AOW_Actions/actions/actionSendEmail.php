@@ -127,12 +127,15 @@ class actionSendEmail extends actionBase {
             foreach($params['email_target_type'] as $key => $field){
                 switch($field){
                     case 'Email Address':
-                        $emails[$params['email_to_type'][$key]][] = $params['email'][$key];
+                        if(trim($params['email'][$key]) != '')
+                            $emails[$params['email_to_type'][$key]][] = $params['email'][$key];
                         break;
                     case 'Specify User':
                         $user = new User();
                         $user->retrieve($params['email'][$key]);
-                        $emails[$params['email_to_type'][$key]][] = $user->emailAddress->getPrimaryAddress($user);
+                        $user_email = $user->emailAddress->getPrimaryAddress($user);
+                        if(trim($user_email) != '')
+                            $emails[$params['email_to_type'][$key]][] = $user_email;
                         break;
                     case 'Users':
                         $users = array();
@@ -180,7 +183,9 @@ class actionSendEmail extends actionBase {
                                 break;
                         }
                         foreach($users as $user){
-                            $emails[$params['email_to_type'][$key]][] = $user->emailAddress->getPrimaryAddress($user);
+                            $user_email = $user->emailAddress->getPrimaryAddress($user);
+                            if(trim($user_email) != '')
+                                $emails[$params['email_to_type'][$key]][] = $user_email;
                         }
                         break;
                     case 'Related Field':
@@ -196,13 +201,16 @@ class actionSendEmail extends actionBase {
                         }
                         if($linkedBeans){
                             $linkedBean = $linkedBeans[0];
-                            $emails[$params['email_to_type'][$key]][] = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                            $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                            if(trim($rel_email) != '')
+                                $emails[$params['email_to_type'][$key]][] = $rel_email;
                         }
                         break;
                     case 'Record Email':
                         $recordEmail = $bean->emailAddress->getPrimaryAddress($bean);
                         if($recordEmail == '' && isset($bean->email1)) $recordEmail = $bean->email1;
-                        $emails[$params['email_to_type'][$key]][] = $recordEmail;
+                        if(trim($recordEmail) != '')
+                            $emails[$params['email_to_type'][$key]][] = $recordEmail;
                         break;
                 }
             }
@@ -223,6 +231,10 @@ class actionSendEmail extends actionBase {
         $this->parse_template($bean, $emailTemp);
         $attachments = $this->getAttachments($emailTemp);
         $emails = $this->getEmailsFromParams($bean,$params);
+
+        if(!isset($emails['to']) || empty($emails['to']))
+            return false;
+
         return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
 
     }
@@ -253,8 +265,6 @@ class actionSendEmail extends actionBase {
                 }
             }
         }
-
-        $GLOBALS['log']->fatal('AOW '.print_r($object_arr,true));
 
         $object_arr['Users'] = $bean->assigned_user_id;
 

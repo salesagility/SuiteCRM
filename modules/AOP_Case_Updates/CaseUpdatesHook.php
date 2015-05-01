@@ -21,22 +21,10 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-require_once("util.php");
+require_once 'util.php';
 class CaseUpdatesHook {
     private $slug_size = 50;
 
-
-    function getLastRobin() {
-        global $sugar_config;
-        return $sugar_config['aop']['last_robin'];
-    }
-
-    function setLastRobin($lastRobin) {
-        require_once('modules/Configurator/Configurator.php');
-        $cfg = new Configurator();
-        $cfg->config['aop']['last_robin'] = $lastRobin;
-        $cfg->saveConfig();
-    }
     private function getCaseCounts(){
         global $db;
         $counts = array();
@@ -48,28 +36,30 @@ class CaseUpdatesHook {
     }
 
     private function getAssignToUser(){
-        global $sugar_config;
-        $method = $sugar_config['aop']['distribution_method'];
-        switch($method){
-            case 'singleUser':
-                return $sugar_config['aop']['distribution_user_id'];
-            case 'roundRobin':
-                $counts = $this->getCaseCounts();
-                $ids = array_keys($counts);
-                sort($ids);
-                $lastRobin = $this->getLastRobin();
-                $robin = ($lastRobin+1) % count($ids);
-                $this->setLastRobin($robin);
-                return $ids[$robin];
-            case 'leastBusy':
-            default:
-                $counts = $this->getCaseCounts();
-                asort($counts);
-                return current(array_keys($counts));
-        }
+        require_once 'modules/AOP_Case_Updates/AOPAssignManager.php';
+        $assignManager = new AOPAssignManager();
+        return $assignManager->getNextAssignedUser();
     }
 
+    private function arrangeFilesArray(){
+        $count = 0;
+        foreach($_FILES['case_update_file'] as $key => $vals){
+            foreach($vals as $index => $val){
+                if(!array_key_exists('case_update_file'.$index,$_FILES)){
+                    $_FILES['case_update_file'.$index] = array();
+                    $count++;
+                }
+                $_FILES['case_update_file'.$index][$key] = $val;
+            }
+        }
+        return $count;
+    }
+
+
     public function saveUpdate($bean, $event, $arguments){
+        if(!isAOPEnabled()){
+            return;
+        }
         global $current_user, $app_list_strings;
         if(empty($bean->fetched_row) || !$bean->id){
 
@@ -93,8 +83,8 @@ class CaseUpdatesHook {
         }
         //Grab the update field and create a new update with it.
         $text = $bean->update_text;
-        if(!$text){
-            //No text, so nothing really to save.
+        if(!$text && empty($_FILES['case_update_file'])){
+            //No text or files, so nothing really to save.
             return;
         }
         $bean->update_text = "";
@@ -109,6 +99,51 @@ class CaseUpdatesHook {
         $case_update->description = nl2br($text);
         $case_update->case_id = $bean->id;
         $case_update->save();
+
+        $fileCount = $this->arrangeFilesArray();
+
+        for($x = 0; $x < $fileCount; $x++){
+            if($_FILES['case_update_file']['error'][$x] == UPLOAD_ERR_NO_FILE){
+                continue;
+            }
+            $uploadFile = new UploadFile('case_update_file'.$x);
+            if(!$uploadFile->confirm_upload()){
+                continue;
+            }
+            $note = $this->newNote($case_update->id);
+            $note->name = $uploadFile->get_stored_file_name();
+            $note->file_mime_type = $uploadFile->mime_type;
+            $note->filename = $uploadFile->get_stored_file_name();
+            $note->save();
+            $uploadFile->final_move($note->id);
+        }
+        $postPrefix = 'case_update_id_';
+        foreach($_POST as $key => $val){
+            if(strpos($key, $postPrefix) !== 0 || empty($val)){
+                continue;
+            }
+            //Val is selected doc id
+            $doc = BeanFactory::getBean('Documents',$val);
+            if(!$doc){
+                continue;
+            }
+            $note = $this->newNote($case_update->id);
+            $note->name = $doc->document_name;
+            $note->file_mime_type = $doc->last_rev_mime_type;
+            $note->filename = $doc->filename;
+            $note->save();
+            $srcFile = "upload://{$doc->document_revision_id}";
+            $destFile = "upload://{$note->id}";
+            copy($srcFile,$destFile);
+        }
+    }
+
+    private function newNote($caseUpdateId){
+        $note = BeanFactory::newBean('Notes');
+        $note->parent_type = 'AOP_Case_Updates';
+        $note->parent_id = $caseUpdateId;
+        $note->not_use_rel_in_req = true;
+        return $note;
     }
 
     private function linkAccountAndCase($case_id,$account_id){
@@ -124,6 +159,9 @@ class CaseUpdatesHook {
 
     public function assignAccount($bean, $event, $arguments){
         if($arguments['module'] != "Cases" || $arguments['related_module'] != "Contacts"){
+            return;
+        }
+        if(!isAOPEnabled()){
             return;
         }
         $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
@@ -146,7 +184,9 @@ class CaseUpdatesHook {
             $GLOBALS['log']->warn("CaseUpdatesHook: saveEmailUpdate: Not a create case or wrong parent type");
             return;
         }
-
+        if(!isAOPEnabled()){
+            return;
+        }
         if(!$bean->parent_id ){
             $GLOBALS['log']->warn("CaseUpdatesHook: saveEmailUpdate No parent id");
             return;
@@ -180,9 +220,54 @@ class CaseUpdatesHook {
         $case_update->internal = false;
         $case_update->case_id = $bean->parent_id;
         $case_update->save();
+        $notes = $bean->get_linked_beans('notes','Notes');
+        foreach($notes as $note){
+            //Link notes to case update also
+            $newNote = BeanFactory::newBean('Notes');
+            $newNote->name = $note->name;
+            $newNote->file_mime_type = $note->file_mime_type;
+            $newNote->filename = $note->filename;
+            $newNote->parent_type = 'AOP_Case_Updates';
+            $newNote->parent_id = $case_update->id;
+            $newNote->save();
+            $srcFile = "upload://{$note->id}";
+            $destFile = "upload://{$newNote->id}";
+            copy($srcFile,$destFile);
+        }
+
+        $this->updateCaseStatus($case_update->case_id);
     }
 
-    public function unquoteEmail($text){
+    /**
+     * Changes the status of the supplied case based on the case_status_changes config values.
+     * @param $caseId
+     */
+    private function updateCaseStatus($caseId){
+        global $sugar_config;
+        if(empty($caseId)){
+            return;
+        }
+        if(empty($sugar_config['aop']['case_status_changes'])){
+            return;
+        }
+        $statusMap = json_decode($sugar_config['aop']['case_status_changes'],1);
+        if(empty($statusMap)){
+            return;
+        }
+        $case = BeanFactory::getBean('Cases',$caseId);
+        if(empty($case)){
+            return;
+        }
+        if(array_key_exists($case->status,$statusMap)){
+            $case->status = $statusMap[$case->status];
+            $statusBits = explode('_',$case->status);
+            $case->state = array_shift($statusBits);
+            $case->save();
+        }
+
+    }
+
+    private function unquoteEmail($text){
         global $app_strings;
         $text = html_entity_decode($text);
         $text = preg_replace('/(\r\n|\r|\n)/s',"\n",$text);
@@ -216,6 +301,9 @@ class CaseUpdatesHook {
     }
 
     private function sendClosureEmail(aCase $bean){
+        if(!isAOPEnabled()){
+            return;
+        }
         $GLOBALS['log']->warn("CaseUpdatesHook: sendClosureEmail called");
         require_once("include/SugarPHPMailer.php");
         $mailer=new SugarPHPMailer();
@@ -309,6 +397,9 @@ class CaseUpdatesHook {
     }
 
     private function sendCreationEmail(aCase $bean, $contact){
+        if(!isAOPEnabled()){
+            return;
+        }
         require_once("include/SugarPHPMailer.php");
         $mailer=new SugarPHPMailer();
         $admin = new Administration();
@@ -365,5 +456,9 @@ class CaseUpdatesHook {
         $emailObj->created_by = '1';
         $emailObj->status = 'sent';
         $emailObj->save();
+    }
+
+    public function filterHTML($bean, $event, $arguments){
+        $bean->description = SugarCleaner::cleanHtml($bean->description,true);
     }
 }

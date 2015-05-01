@@ -477,6 +477,12 @@ class AOW_WorkFlowController extends SugarController {
             echo '';
             die;
         }
+
+        $custom_action_name = "custom" . $action_name;
+        if(class_exists($custom_action_name)){
+            $action_name = $custom_action_name;
+        }
+
         $id = '';
         $params = array();
         if(isset($_REQUEST['id'])){

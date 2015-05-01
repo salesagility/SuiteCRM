@@ -22,7 +22,7 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
+require_once 'modules/AOP_Case_Updates/util.php';
 
 global $current_user, $sugar_config;
 global $mod_strings;
@@ -50,10 +50,12 @@ $errors			= array();
 
 if(!array_key_exists('aop',$cfg->config)){
     $cfg->config['aop'] = array(
+        'enable_aop' => 1,
         'enable_portal' => '',
         'joomla_url'=>'',
         'joomla_access_key'=>'',
         'distribution_method'=>'',
+        'distribution_options'=>'',
         'distribution_user_id'=>'',
         'user_email_template_id'=>'',
         'contact_email_template_id'=>'',
@@ -62,7 +64,11 @@ if(!array_key_exists('aop',$cfg->config)){
         'joomla_account_creation_email_template_id'=>'',
         'support_from_address'=>'',
         'support_from_name'=>'',
+        'case_status_changes' => json_encode(array()),
     );
+}
+if(!array_key_exists('enable_aop',$cfg->config['aop'])){
+    $cfg->config['aop']['enable_aop'] = 1;
 }
 if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     if(!empty($_REQUEST['joomla_url'])){
@@ -70,10 +76,12 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     }else{
         $cfg->config['aop']['joomla_url'] = '';
     }
+    $cfg->config['aop']['enable_aop'] = !empty($_REQUEST['enable_aop']);
     $cfg->config['aop']['enable_portal'] = !empty($_REQUEST['enable_portal']);
     $cfg->config['aop']['joomla_access_key'] = $_REQUEST['joomla_access_key'];
     $cfg->config['aop']['distribution_method'] = $_REQUEST['distribution_method'];
     $cfg->config['aop']['distribution_user_id'] = $_REQUEST['distribution_user_id'];
+    $cfg->config['aop']['distribution_options'] = $_REQUEST['distribution_options'];
     $cfg->config['aop']['user_email_template_id'] = $_REQUEST['user_email_template_id'];
     $cfg->config['aop']['contact_email_template_id'] = $_REQUEST['contact_email_template_id'];
     $cfg->config['aop']['case_creation_email_template_id'] = $_REQUEST['case_creation_email_template_id'];
@@ -81,13 +89,19 @@ if(isset($_REQUEST['do']) && $_REQUEST['do'] == 'save') {
     $cfg->config['aop']['joomla_account_creation_email_template_id'] = $_REQUEST['joomla_account_creation_email_template_id'];
     $cfg->config['aop']['support_from_address'] = $_REQUEST['support_from_address'];
     $cfg->config['aop']['support_from_name'] = $_REQUEST['support_from_name'];
+    /*
+     * We save the case_status_changes array as json since the way config changes are persisted to config.php
+     * means that removing entries is tricky. json simplifies this.
+     */
+    $cfg->config['aop']['case_status_changes'] = json_encode(array_combine($_POST['if_status'],$_POST['then_status']));
     $cfg->saveConfig();
     header('Location: index.php?module=Administration&action=index');
     exit();
 }
-
-$distributionMethod = "<OPTION value='singleUser'>".$mod_strings['LBL_SINGLE_USER']."</OPTION>";
-$distributionMethod .= get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $cfg->config['aop']['distribution_method']);
+$distribStrings = $app_list_strings['dom_email_distribution_for_auto_create'];
+unset($distribStrings['AOPDefault']);
+$distributionMethod = get_select_options_with_id($distribStrings, $cfg->config['aop']['distribution_method']);
+$distributionOptions = getAOPAssignField('distribution_options',$cfg->config['aop']['distribution_options']);
 
 
 if(!empty($cfg->config['aop']['distribution_user_id'])){
@@ -113,6 +127,7 @@ $sugar_smarty->assign('CLOSURE_EMAIL_TEMPLATES', $closureEmailTemplateDropdown);
 $sugar_smarty->assign('JOOMLA_EMAIL_TEMPLATES', $joomlaEmailTemplateDropdown);
 
 $sugar_smarty->assign('DISTRIBUTION_METHOD', $distributionMethod);
+$sugar_smarty->assign('DISTRIBUTION_OPTIONS', $distributionOptions);
 $sugar_smarty->assign('MOD', $mod_strings);
 $sugar_smarty->assign('APP', $app_strings);
 $sugar_smarty->assign('APP_LIST', $app_list_strings);
@@ -121,6 +136,16 @@ $sugar_smarty->assign("JAVASCRIPT",get_set_focus_js());
 $sugar_smarty->assign('config', $cfg->config['aop']);
 $sugar_smarty->assign('error', $errors);
 
+$cBean = BeanFactory::getBean('Cases');
+$statusDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']],'');
+$currentStatuses = '';
+foreach(json_decode($cfg->config['aop']['case_status_changes'],true) as $if => $then){
+    $ifDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']],$if);
+    $thenDropdown = get_select_options($app_list_strings[$cBean->field_name_map['status']['options']],$then);
+    $currentStatuses .= getStatusRowTemplate($mod_strings,$ifDropdown,$thenDropdown)."\n";
+}
+
+$sugar_smarty->assign('currentStatuses', $currentStatuses);
 
 $buttons =  <<<EOQ
     <input title="{$app_strings['LBL_SAVE_BUTTON_TITLE']}"
@@ -141,22 +166,52 @@ $javascript = new javascript();
 $javascript->setFormName('ConfigureSettings');
 echo $javascript->getScript();
 ?>
+<script type="text/template" id="statusRowTemplate">
+    <?= getStatusRowTemplate($mod_strings,$statusDropdown,$statusDropdown) ?>
+</script>
 <script language="Javascript" type="text/javascript">
 
     var selectElement = document.getElementById('distribution_method_select');
     selectElement.onchange = function(event){
         var distribRow = document.getElementById('distribution_user_row');
+        var distribOptionsRow = document.getElementById('distribution_options_row');
         if(selectElement.value == 'singleUser'){
-            distribRow.style.display = "";
+            showElem('distribution_user_row');
+            hideElem('distribution_options_row');
             addToValidate('ConfigureSettings','distribution_user_id','relate',true,"Please choose a user to assign cases to.");
         }else{
             SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');
-            distribRow.style.display = "none";
+            hideElem('distribution_user_row');
+            showElem('distribution_options_row');
             removeFromValidate('ConfigureSettings','distribution_user_id');
         }
     };
     selectElement.onchange();
+    function hideElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "none";
+            document.getElementById(id).value = "";
+        }
+    }
 
+    function showElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "";
+        }
+    }
+
+    function assign_field_change(field){
+        hideElem(field + '[1]');
+        hideElem(field + '[2]');
+
+        if(document.getElementById(field + '[0]').value == 'role'){
+            showElem(field + '[2]');
+        }
+        else if(document.getElementById(field + '[0]').value == 'security_group'){
+            showElem(field + '[1]');
+            showElem(field + '[2]');
+        }
+    }
     var currentEmailSelect;
 
     function open_email_template_form(id) {
@@ -244,6 +299,30 @@ echo $javascript->getScript();
     }
 
     refreshEditVisibility();
-
+$(document).ready(function(){
+    $('#addStatusButton').click(function(e){
+        var template = $('#statusRowTemplate').html();
+        $(e.target).closest('tr').before(template);
+    });
+    $(document).on('click','.removeStatusButton',function(e){
+        $(e.target).closest('tr').remove();
+    });
+});
 </script>
-
+<?php
+function getStatusRowTemplate($mod_strings,$ifDropdown,$thenDropdown){
+    $html = <<<EOF
+    <tr>
+        <td  scope="row" width="100">{$mod_strings['LBL_AOP_IF_STATUS']}: </td>
+        <td width="100">
+            <select id='if_status_select[]' name='if_status[]'>{$ifDropdown}</select>
+        </td>
+        <td  scope="row" width="100">{$mod_strings['LBL_AOP_THEN_STATUS']}: </td>
+        <td width="100">
+            <select id='then_status_select[]' name='then_status[]'>{$thenDropdown}</select>
+        </td>
+        <td><button class="removeStatusButton" type="button">{$mod_strings['LBL_AOP_REMOVE_STATUS']}</button></td>
+    </tr>
+EOF;
+    return $html;
+}

@@ -52,7 +52,6 @@ $mod_strings = array (
   'LBL_SEARCH_FORM_TITLE' => 'Buscar Condiciones',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'Ver Historial',
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
-  'LBL_AOR_Condiciones_SUBPANEL_TITLE' => 'Condiciones',
   'LBL_NEW_FORM_TITLE' => 'Nueva Condición',
   'LBL_MODULE_PATH' => 'Módulo',
   'LBL_FIELD' => 'Campo',

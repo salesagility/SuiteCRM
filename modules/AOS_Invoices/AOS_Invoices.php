@@ -38,9 +38,9 @@ class AOS_Invoices extends AOS_Invoices_sugar {
         global $sugar_config;
 
         if (empty($this->id)  || $this->new_with_id){
-            unset($_POST['group_id']);
-            unset($_POST['product_id']);
-            unset($_POST['service_id']);
+            if(isset($_POST['group_id'])) unset($_POST['group_id']);
+            if(isset($_POST['product_id'])) unset($_POST['product_id']);
+            if(isset($_POST['service_id'])) unset($_POST['service_id']);
 
             if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                 $this->number = $this->db->getOne("SELECT MAX(CAST(number as INT))+1 FROM aos_invoices");
@@ -55,7 +55,7 @@ class AOS_Invoices extends AOS_Invoices_sugar {
 
         require_once('modules/AOS_Products_Quotes/AOS_Utils.php');
 
-        perform_save($this);
+        perform_aos_save($this);
 
         parent::save($check_notify);
 

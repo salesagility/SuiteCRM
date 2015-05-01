@@ -34,6 +34,7 @@ class AOP_Case_Events_sugar extends Basic {
 	var $module_dir = 'AOP_Case_Events';
 	var $object_name = 'AOP_Case_Events';
 	var $table_name = 'aop_case_events';
+	var $tracker_visibility = false;
 	var $importable = false;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 		var $id;
