@@ -1754,6 +1754,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
             $orderBy=  'amount';
         }
 		$buttons = false;
+        $col_count = 0;
         foreach($subpanel_def->get_list_fields() as $column_name=>$widget_args)
         {
             $usage = empty($widget_args['usage']) ? '' : $widget_args['usage'];
@@ -1781,6 +1782,13 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
 	                $this->xTemplate->assign('HEADER_CELL', $widget_contents);
 	                static $count;
 	            if(!isset($count))$count = 0; else $count++;
+                    if($col_count == 0 || $column_name == 'name') $footable = 'data-toggle="true"';
+                    else {
+                        $footable = 'data-hide="phone"';
+                        if ($col_count > 2) $footable = 'data-hide="phone,phonelandscape"';
+                        if ($col_count > 4) $footable = 'data-hide="phone,phonelandscape,tablet"';
+                    }
+                    $this->xTemplate->assign('FOOTABLE', $footable);
 	                $this->xTemplate->assign('CELL_COUNT', $count);
 	                $this->xTemplate->assign('CELL_WIDTH', $cell_width);
 	                $this->xTemplate->parse('dyn_list_view.header_cell');
@@ -1788,9 +1796,11 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                 	$buttons = true;
                 }
             }
+            ++$col_count;
         }
 
         if($buttons) {
+                    $this->xTemplate->assign('FOOTABLE', '');
         			$this->xTemplate->assign('HEADER_CELL', "&nbsp;");
         			$this->xTemplate->assign('CELL_COUNT', $count);
 	                $this->xTemplate->assign('CELL_WIDTH', $cell_width);

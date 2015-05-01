@@ -304,10 +304,10 @@ $resources = $sugarChart->getChartResources();
 $mySugarResources = $sugarChart->getMySugarChartResources();
 $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
-if (file_exists("custom/include/MySugar/tpls/MySugar.tpl")) {
-    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+if (file_exists("themes/" . $theme ."/tpls/MySugar.tpl")) {
+    echo $sugar_smarty->fetch("themes/" . $theme ."/tpls/MySugar.tpl");
 } else {
-    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
 }
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time

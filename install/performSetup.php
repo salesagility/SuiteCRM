@@ -90,7 +90,7 @@ $setup_site_log_file                = 'suitecrm.log';  // may be an option later
 $setup_site_session_path            = isset($_SESSION['setup_site_custom_session_path']) ? $_SESSION['setup_site_session_path'] : '';
 $setup_site_log_level				='fatal';
 
-sugar_cache_clear('TeamSetsCache');
+/*sugar_cache_clear('TeamSetsCache');
 if ( file_exists($cache_dir .'modules/Teams/TeamSetCache.php') ) {
 	unlink($cache_dir.'modules/Teams/TeamSetCache.php');
 }
@@ -98,33 +98,36 @@ if ( file_exists($cache_dir .'modules/Teams/TeamSetCache.php') ) {
 sugar_cache_clear('TeamSetsMD5Cache');
 if ( file_exists($cache_dir.'modules/Teams/TeamSetMD5Cache.php') ) {
 	unlink($cache_dir.'modules/Teams/TeamSetMD5Cache.php');
-}
+}*/
 $langHeader = get_language_header();
 $out =<<<EOQ
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <html {$langHeader}>
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta http-equiv="Content-Script-Type" content="text/javascript">
    <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_PERFORM_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="$icon">
    <link rel="stylesheet" href="$css" type="text/css" />
    <script type="text/javascript" src="$common"></script>
+   <link rel="stylesheet" href="install/install.css" type="text/css" />
+   <script type="text/javascript" src="install/installCommon.js"></script>
+   <script type="text/javascript" src="install/siteConfig.js"></script>
+<link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
+<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
+    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
-<table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
-      <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>
-    <tr>
-      <th width="500">
-		<p>
-		<img src="{$sugar_md}" alt="SuiteCRM" border="0">
-		</p>
-		{$mod_strings['LBL_PERFORM_TITLE']}</th>
-    <th width="200" style="text-align: right;"></th>
-</tr>
-<tr>
-   <td colspan="2">
+<!--SuiteCRM installer-->
+<div id="install_container">
+<div id="install_box">
+<header id="install_header">
+            <div id="steps"><p>{$mod_strings['LBL_STEP8']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7" id="complete"></i>
+            </div>
+            <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
+</header>
 EOQ;
 echo $out;
 installLog("calling handleSugarConfig()");
@@ -391,7 +394,7 @@ createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');*/
 
 
 
-    require_once('modules/Connectors/InstallDefaultConnectors.php');
+    //require_once('modules/Connectors/InstallDefaultConnectors.php');
 
 	///////////////////////////////////////////////////////////////////////////////
 	////    INSTALL PASSWORD TEMPLATES
@@ -418,29 +421,15 @@ $errTcpip = '';
     $fpResult =<<<FP
      <form action="install.php" method="post" name="form" id="form">
      <input type="hidden" name="current_step" value="{$next_step}">
-     <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-       <tr>
-         <td>
-            &nbsp;
-         </td>
-         <td><input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2"/></td>
-       </tr>
-     </table>
+     <input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2"/>
      </form>
 FP;
    } else {
         $fpResult =<<<FP
-     <table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-       <tr>
-         <td>&nbsp;</td>
-         <td>
             <form action="index.php" method="post" name="formFinish" id="formFinish">
                 <input type="hidden" name="default_user_name" value="admin" />
                 <input class="button" type="submit" name="next" value="{$mod_strings['LBL_PERFORM_FINISH']}" id="button_next2"/>
             </form>
-         </td>
-       </tr>
-     </table>
 FP;
    }
 
@@ -453,7 +442,6 @@ FP;
         $admin=new Administration();
         $admin->saveSetting('system','name',$_SESSION['setup_system_name']);
     }
-
 
     // Bug 28601 - Set the default list of tabs to show
     $enabled_tabs = array();
@@ -476,7 +464,9 @@ FP;
     $enabled_tabs[] = 'Cases';
     $enabled_tabs[] = 'Prospects';
     $enabled_tabs[] = 'ProspectLists';
-    $enabled_tabs[] = 'Projects';
+    $enabled_tabs[] = 'Project';
+    $enabled_tabs[] = 'AM_ProjectTemplates';
+    $enabled_tabs[] = 'AM_TaskTemplates';
     $enabled_tabs[] = 'FP_events';
     $enabled_tabs[] = 'FP_Event_Locations';
     $enabled_tabs[] = 'AOS_Products';
@@ -489,7 +479,6 @@ FP;
     $enabled_tabs[] = 'AOR_Reports';
     $enabled_tabs[] = 'AOW_WorkFlow';
 
-
     installerHook('pre_setSystemTabs');
     require_once('modules/MySettings/TabController.php');
     $tabs = new TabController();
@@ -501,11 +490,11 @@ FP;
 post_install_modules();
 
 //Call rebuildSprites
-if(function_exists('imagecreatetruecolor'))
+/*if(function_exists('imagecreatetruecolor'))
 {
     require_once('modules/UpgradeWizard/uw_utils.php');
     rebuildSprites(true);
-}
+}*/
 
 ///////////////////////////////////////////////////////////////////////////////
 ////    START DEMO DATA
@@ -533,8 +522,6 @@ if( $_SESSION['demoData'] != 'no' ){
 $endTime = microtime(true);
 $deltaTime = $endTime - $startTime;
 
-
-
 if( count( $bottle ) > 0 ){
     foreach( $bottle as $bottle_message ){
         $bottleMsg .= "{$bottle_message}\n";
@@ -544,29 +531,18 @@ if( count( $bottle ) > 0 ){
 }
 installerHook('post_installModules');
 
-
-
 $out =<<<EOQ
 <br><p><b>{$mod_strings['LBL_PERFORM_OUTRO_1']} {$setup_sugar_version} {$mod_strings['LBL_PERFORM_OUTRO_2']}</b></p>
 
 {$mod_strings['LBL_PERFORM_OUTRO_3']} {$deltaTime} {$mod_strings['LBL_PERFORM_OUTRO_4']}<br />
-{$memoryUsed}
-{$errTcpip}
-    </td>
-</tr>
-<tr>
-<td align="right" colspan="2">
-<hr>
-<table cellspacing="0" cellpadding="0" border="0" class="stdTable">
-<tr>
-<td>
-{$fpResult}
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
+<p><b>{$memoryUsed}</b></p>
+<p><b>{$errTcpip}</b></p>
+<p><b>{$fpResult}</b></p>
+</div>
+<footer id="install_footer">
+    <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
+</footer>
+</div>
 </body>
 </html>
 <!--

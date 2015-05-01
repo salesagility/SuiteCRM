@@ -89,7 +89,7 @@ class Calendar {
 		
 		$this->view = $view;		
 
-		if(!in_array($this->view,array('day','week','month','year','shared')))
+		if(!in_array($this->view,array('day','week','month','year','shared','mobile')))
 			$this->view = 'week';
 		
 		$date_arr = array();
@@ -104,6 +104,8 @@ class Calendar {
 			$date_arr['month'] = $_REQUEST['month'];
 		if (!empty($_REQUEST['week']))
 			$date_arr['week'] = $_REQUEST['week'];
+		if (!empty($_REQUEST['mobile']))
+			$date_arr['mobile'] = $_REQUEST['mobile'];
 
 		if (!empty($_REQUEST['year'])){
 			if ($_REQUEST['year'] > 2037 || $_REQUEST['year'] < 1970){
@@ -122,14 +124,17 @@ class Calendar {
 			$_REQUEST['month'] = "";
 		if(empty($_REQUEST['year']))
 			$_REQUEST['year'] = "";
+		if(empty($_REQUEST['mobile']))
+			$_REQUEST['mobile'] = "";
 
 		// if date is not set in request use current date
-		if(empty($date_arr) || !isset($date_arr['year']) || !isset($date_arr['month']) || !isset($date_arr['day']) ){	
+		if(empty($date_arr) || !isset($date_arr['year']) || !isset($date_arr['month']) || !isset($date_arr['day'])){
 			$today = $timedate->getNow(true);
 			$date_arr = array(
 			      'year' => $today->year,
 			      'month' => $today->month,
 			      'day' => $today->day,
+			      'mobile' => $today->day,
 			);
 		}
 		
@@ -204,7 +209,8 @@ class Calendar {
 					$item['assigned_user_id'] = $act->sugar_bean->assigned_user_id;
 					$item['record'] = $act->sugar_bean->id;		
 					$item['name'] = $act->sugar_bean->name;
-					
+					$item['description'] = $act->sugar_bean->description;
+
 					if(isset($act->sugar_bean->duration_hours)){
 						$item['duration_hours'] = $act->sugar_bean->duration_hours;
 						$item['duration_minutes'] = $act->sugar_bean->duration_minutes;
@@ -313,7 +319,7 @@ class Calendar {
 	public function add_activities($user,$type='sugar'){
 		global $timedate;
 		$start_date_time = $this->date_time;
-		if($this->view == 'week' || $this->view == 'shared'){		
+		if($this->view == 'week' || $this->view == 'shared' || $this->view == 'mobile'){
 			$start_date_time = CalendarUtils::get_first_day_of_week($this->date_time);
 			$end_date_time = $start_date_time->get("+7 days");
 		}else if($this->view == 'month'){

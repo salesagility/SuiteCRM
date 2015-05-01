@@ -13,24 +13,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- *
+ * 
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- *
+ * 
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- *
+ * 
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
@@ -787,16 +787,12 @@ function handleSugarConfig() {
     $sugar_config['log_dir']                        = $setup_site_log_dir;
     $sugar_config['log_file']                       = $setup_site_log_file;
 
-    //Setup FTS
-    if(!empty($_SESSION['fts_type']))
-        $sugar_config['full_text_engine']               = array($_SESSION['fts_type'] => array('host'=> $_SESSION['fts_host'], 'port' => $_SESSION['fts_port']));
-
-    // for silent install
-    if(!empty($_SESSION['setup_fts_type']))
-    {
-        $sugar_config['full_text_engine']               = array($_SESSION['setup_fts_type'] => array('host'=> $_SESSION['setup_fts_host'], 'port' => $_SESSION['setup_fts_port']));
-        if (isset($_SESSION['setup_fts_hide_config']))
-        {
+    // Setup FTS
+    if (!empty($_SESSION['setup_fts_type'])) {
+        $sugar_config['full_text_engine'] = array(
+            $_SESSION['setup_fts_type'] => getFtsSettings()
+        );
+        if (isset($_SESSION['setup_fts_hide_config'])) {
             $sugar_config['hide_full_text_engine_config'] = $_SESSION['setup_fts_hide_config'];
         }
     }
@@ -807,7 +803,7 @@ function handleSugarConfig() {
     	array ('level'=>$setup_site_log_level,
     	 'file' => array(
 			'ext' => '.log',
-			'name' => 'sugarcrm',
+			'name' => 'suitecrm',
 			'dateFormat' => '%c',
 			'maxSize' => '10MB',
 			'maxLogs' => 10,
@@ -883,14 +879,48 @@ function handleSugarConfig() {
     ///////////////////////////////////////////////////////////////////////////////
     return $bottle;
 }
+
+/**
+ * Get FTS settings
+ * @return array
+ */
+function getFtsSettings()
+{
+    // Base settings
+    $ftsSettings = array(
+        'host' => $_SESSION['setup_fts_host'],
+        'port' => $_SESSION['setup_fts_port'],
+    );
+
+    // Add optional settings
+    $ftsOptional = array(
+        'curl',
+        'transport',
+        'index_settings',
+        'index_strategy',
+    );
+
+    foreach ($ftsOptional as $ftsOpt) {
+        $ftsConfigKey = "setup_fts_{$ftsOpt}";
+        if (!empty($_SESSION[$ftsConfigKey])) {
+            $ftsSettings[$ftsOpt] = $_SESSION[$ftsConfigKey];
+        }
+    }
+
+    return $ftsSettings;
+}
+
 /**
  * (re)write the .htaccess file to prevent browser access to the log file
  */
 function handleHtaccess(){
 global $mod_strings;
+global $sugar_config;
 $ignoreCase = (substr_count(strtolower($_SERVER['SERVER_SOFTWARE']), 'apache/2') > 0)?'(?i)':'';
 $htaccess_file   = ".htaccess";
 $contents = '';
+$basePath = parse_url($sugar_config['site_url'], PHP_URL_PATH);
+if(empty($basePath)) $basePath = '/';
 $restrict_str = <<<EOQ
 
 # BEGIN SUGARCRM RESTRICTIONS
@@ -914,6 +944,13 @@ EOQ;
 
 $cache_headers = <<<EOQ
 
+<IfModule mod_rewrite.c>
+    Options +FollowSymLinks
+    RewriteEngine On
+    RewriteBase {$basePath}
+    RewriteRule ^cache/jsLanguage/(.._..).js$ index.php?entryPoint=jslang&module=app_strings&lang=$1 [L,QSA]
+    RewriteRule ^cache/jsLanguage/(\w*)/(.._..).js$ index.php?entryPoint=jslang&module=$1&lang=$2 [L,QSA]
+</IfModule>
 <FilesMatch "\.(jpg|png|gif|js|css|ico)$">
         <IfModule mod_headers.c>
                 Header set ETag ""
@@ -966,7 +1003,7 @@ function handleWebConfig()
     if (empty($setup_site_log_file)) {
         $setup_site_log_file = $sugar_config['log_file'];
         if ( empty($sugar_config['log_file']) ) {
-            $setup_site_log_file = 'sugarcrm.log';
+            $setup_site_log_file = 'suitecrm.log';
         }
     }
     if (empty($setup_site_log_dir)) {
@@ -1449,7 +1486,6 @@ function pullSilentInstallVarsIntoSession() {
     global $mod_strings;
     global $sugar_config;
 
-
     if( file_exists('config_si.php') ){
         require_once('config_si.php');
     }
@@ -1479,7 +1515,8 @@ function pullSilentInstallVarsIntoSession() {
                      'default_currency_iso4217', 'default_currency_name', 'default_currency_significant_digits',
                      'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_seperator',
                      'default_export_charset', 'default_language', 'default_locale_name_format', 'default_number_grouping_seperator',
-                     'export_delimiter', 'cache_dir', 'setup_db_options');
+                     'export_delimiter', 'cache_dir', 'setup_db_options',
+                     'setup_fts_type', 'setup_fts_host', 'setup_fts_port', 'setup_fts_index_settings'. 'setup_fts_transport');
     copyFromArray($sugar_config_si, $needles, $derived);
     $all_config_vars = array_merge( $config_subset, $sugar_config_si, $derived );
 
@@ -2034,7 +2071,7 @@ function post_install_modules(){
 }
 
 function get_help_button_url(){
-    $help_url = 'http://www.suitecrm.com/support';
+    $help_url = 'http://www.sugarcrm.com/docs/Administration_Guides/CommunityEdition_Admin_Guide_5.0/toc.html';
 
     return $help_url;
 }

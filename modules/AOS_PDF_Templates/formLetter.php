@@ -26,8 +26,8 @@
 
 class formLetter{
 
-	function LVSmarty(){
-		global $app_strings, $mod_strings, $sugar_config;
+	static function LVSmarty(){
+		global $app_strings, $sugar_config;
 		if (preg_match('/^6\./', $sugar_config['sugar_version'])) {
 			$script = '<a href="#" style="width: 150px" class="menuItem" onmouseover="hiliteItem(this,\'yes\');" onmouseout="unhiliteItem(this);" onclick="showPopup()">'.$app_strings['LBL_GENERATE_LETTER'].'</a>';
 		}
@@ -38,14 +38,25 @@ class formLetter{
 		return $script;
         }
 
-	function LVPopupHtml($module){
-		global $app_list_strings,$app_strings;
+    static function getModuleTemplates($module){
+        global $db;
+        $templates = array();
+
+        $sql = "SELECT id,name FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0  AND active = 1";
+        $result = $db->query($sql);
+        while ($row = $db->fetchByAssoc($result)) {
+            $templates[$row['id']] = $row['name'];
+        }
+
+        return $templates;
+    }
+
+	static function LVPopupHtml($module){
+		global $app_strings;
+
+        $templates = formLetter::getModuleTemplates($module);
 		
-		$sql = "SELECT * FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0  AND active = 1";
-		$result = $this->bean->db->query($sql);
-		$countLine = $this->bean->db->getRowCount($result);
-		
-		if($countLine != 0){
+		if(!empty($templates)){
 		echo '	<div id="popupDiv_ara" style="display:none;position:fixed;top: 39%; left: 41%;opacity:1;z-index:9999;background:#FFFFFF;">
  				<table style="border: #000 solid 2px;padding-left:40px;padding-right:40px;padding-top:10px;padding-bottom:10px;font-size:110%;" >
 					<tr height="20">
@@ -53,14 +64,13 @@ class formLetter{
 						<b>'.$app_strings['LBL_SELECT_TEMPLATE'].':-</b>
 						</td>
 					</tr>';
-			while ($row = $this->bean->db->fetchByAssoc($result)) {
+			foreach ($templates as $templateid => $template ) {
 				$js = "document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';";
-				$templateid = $row['id'];
 				echo '<tr height="20">
 					<td width="17" valign="center"><a href="#" onclick="document.getElementById(\'popupDiv_ara\').style.display=\'none\';sListView.send_form(true, \''.$_REQUEST['module'].
                                 '\', \'index.php?templateID='.$templateid.'&entryPoint=formLetter\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\');document.getElementById(\'popupDivBack_ara\').style.display=\'none\';"><img src="themes/default/images/txt_image_inline.gif" width="16" height="16" /></a></td>
 					<td scope="row" align="left"><b><a href="#" onclick="document.getElementById(\'popupDiv_ara\').style.display=\'none\';sListView.send_form(true, \''.$_REQUEST['module'].
-                                '\', \'index.php?templateID='.$templateid.'&entryPoint=formLetter\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\');document.getElementById(\'popupDivBack_ara\').style.display=\'none\';">'.$row['name'].'</a></b></td></tr>';
+                                '\', \'index.php?templateID='.$templateid.'&entryPoint=formLetter\',\''.$app_strings['LBL_LISTVIEW_NO_SELECTED'].'\');document.getElementById(\'popupDivBack_ara\').style.display=\'none\';">'.$template.'</a></b></td></tr>';
 			}
 		echo '<tr style="height:10px;"><tr><tr><td colspan="2"><button style=" display: block;margin-left: auto;margin-right: auto" onclick="document.getElementById(\'popupDivBack_ara\').style.display=\'none\';document.getElementById(\'popupDiv_ara\').style.display=\'none\';return false;">Cancel</button></td></tr>
 			</table>
@@ -96,14 +106,12 @@ class formLetter{
 		}
 	}
 	
-	function DVPopupHtml($module){
-		global $app_list_strings,$app_strings;
-		
-		$sql = "SELECT * FROM aos_pdf_templates WHERE type = '".$module."' AND deleted = 0  AND active = 1";
-		$result = $this->bean->db->query($sql);
-		$countLine = $this->bean->db->getRowCount($result);
-		
-		if($countLine != 0){
+	static function DVPopupHtml($module){
+		global $app_strings;
+
+        $templates = formLetter::getModuleTemplates($module);
+
+        if(!empty($templates)){
 		echo '	<div id="popupDiv_ara" style="display:none;position:fixed;top: 39%; left: 41%;opacity:1;z-index:9999;background:#FFFFFF;">
  				<form id="popupForm" action="index.php?entryPoint=formLetter" method="post">
  				<table style="border: #000 solid 2px;padding-left:40px;padding-right:40px;padding-top:10px;padding-bottom:10px;font-size:110%;" >
@@ -112,16 +120,15 @@ class formLetter{
 						<b>'.$app_strings['LBL_SELECT_TEMPLATE'].':-</b>
 						</td>
 					</tr>';
-			while ($row = $this->bean->db->fetchByAssoc($result)) {
-				$templateid = $row['id'];
+            foreach ($templates as $templateid => $template ) {
 				$js = "document.getElementById('popupDivBack_ara').style.display='none';document.getElementById('popupDiv_ara').style.display='none';var form=document.getElementById('popupForm');if(form!=null){form.templateID.value='".$templateid."';form.submit();}else{alert('Error!');}";
 					echo '<tr height="20">
 					<td width="17" valign="center"><a href="#" onclick="'.$js.'"><img src="themes/default/images/txt_image_inline.gif" width="16" height="16" /></a></td>
-					<td scope="row" align="left"><b><a href="#" onclick="'.$js.'">'.$row['name'].'</a></b></td></tr>';
+					<td scope="row" align="left"><b><a href="#" onclick="'.$js.'">'.$template.'</a></b></td></tr>';
 			}
 		echo '		<input type="hidden" name="templateID" value="" />
-				<input type="hidden" name="module" value="'.$_REQUEST['module'].'" />
-				<input type="hidden" name="uid" value="'.$this->bean->id.'" />
+				<input type="hidden" name="module" value="'.$module.'" />
+				<input type="hidden" name="uid" value="'.$_REQUEST['record'].'" />
 				</form>
 				<tr style="height:10px;"><tr><tr><td colspan="2"><button style=" display: block;margin-left: auto;margin-right: auto" onclick="document.getElementById(\'popupDivBack_ara\').style.display=\'none\';document.getElementById(\'popupDiv_ara\').style.display=\'none\';return false;">Cancel</button></td></tr>
 				</table>

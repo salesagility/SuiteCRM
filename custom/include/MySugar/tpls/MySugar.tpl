@@ -69,35 +69,35 @@
         <td>
             {*<div class="yui-module yui-scroll">*}
 
-                {* Start the tabs section *}
-                <ul class="dashboardTabList">
+            {* Start the tabs section *}
+            <ul class="dashboardTabList">
 
-                    {* Display the remove button to allow the addition of more tabs *}
+                {* Display the remove button to allow the addition of more tabs *}
 
 
-                    {* Foreach of the pages generate a tab in the tab section *}
+                {* Foreach of the pages generate a tab in the tab section *}
 
-                    {foreach from=$dashboardPages key=tabNum item=tab}
-                        {if $tabNum == 0} <li id="pageNum_{$tabNum}">
-                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;'  onClick=retrievePage({$tabNum});>
-                                <span>{$tab.pageTitle}</span>
-                            </a>
+                {foreach from=$dashboardPages key=tabNum item=tab}
+                    {if $tabNum == 0} <li id="pageNum_{$tabNum}">
+                        <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;'  onClick=retrievePage({$tabNum});>
+                            <span>{$tab.pageTitle}</span>
+                        </a>
 
-                        </li>
-                        {else} <li id="pageNum_{$tabNum}">
-                            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick=retrievePage({$tabNum});>
-                                <span id="name_{$tabNum}">{$tab.pageTitle}</span>
-                            </a>
+                    </li>
+                    {else} <li id="pageNum_{$tabNum}">
+                        <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick=retrievePage({$tabNum});>
+                            <span id="name_{$tabNum}">{$tab.pageTitle}</span>
+                        </a>
                         {if !$lock_homepage}<a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><img src="themes/default/images/id-ff-clear.png"></a>{/if}
 
-                            </li>{/if}
-                    {/foreach}
+                        </li>{/if}
+                {/foreach}
 
 
 
-                    {* Display the add button to allow the addition of more tabs *}
+                {* Display the add button to allow the addition of more tabs *}
 
-                    {if !$lock_homepage}
+                {if !$lock_homepage}
                     <li class="addButton">
                         <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">{$lblAddDashlets}</a>
                     </li>
@@ -107,9 +107,9 @@
                             <span>{$lblAddTab}</span>
                         </a>
                     </li>
-                    {/if}
+                {/if}
 
-                </ul>
+            </ul>
             {*</div>*}
 
             <div class="clear"></div>
@@ -208,18 +208,18 @@
                         {if !$lock_homepage}
                         for (i in dashletIds) {ldelim}
                             SUGAR.mySugar.homepage_dd[j] = new ygDDList('dashlet_' + dashletIds[i]);
-                        SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
-                        // Bug #47097 : Dashlets not displayed after moving them
-                        // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
-                        SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
-                        SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
-                        SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
-                        j++;
-                        {rdelim}
+                            SUGAR.mySugar.homepage_dd[j].setHandleElId('dashlet_header_' + dashletIds[i]);
+                            // Bug #47097 : Dashlets not displayed after moving them
+                            // add new property to save real id of dashlet, it needs to have ability reload dashlet by id
+                            SUGAR.mySugar.homepage_dd[j].dashletID = dashletIds[i];
+                            SUGAR.mySugar.homepage_dd[j].onMouseDown = SUGAR.mySugar.onDrag;
+                            SUGAR.mySugar.homepage_dd[j].afterEndDrag = SUGAR.mySugar.onDrop;
+                            j++;
+                            {rdelim}
                         {if $hiddenCounter > 0}
                         for (var wp = 0; wp <= {$hiddenCounter}; wp++) {ldelim}
                             SUGAR.mySugar.homepage_dd[j++] = new ygDDListBoundary('page_' + activePage + '_hidden' + wp);
-                        {rdelim}
+                            {rdelim}
                         {/if}
                         YAHOO.util.DDM.mode = 1;
                         {/if}

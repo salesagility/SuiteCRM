@@ -21,4 +21,4 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
-$mod_strings['LBL_POLLMONITOREDINBOXESCUSTOMAOP'] = 'AOP Poll Monitored Inboxes';?>
+$mod_strings['LBL_POLLMONITOREDINBOXESAOP'] = 'AOP Poll Monitored Inboxes';?>

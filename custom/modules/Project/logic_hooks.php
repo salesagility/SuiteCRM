@@ -3,16 +3,8 @@
 // be automatically rebuilt in the future. 
  $hook_version = 1; 
 $hook_array = Array(); 
-// position, file, function 
-$hook_array['before_save'] = Array(); 
-$hook_array['before_save'][] = Array(77, 'updateGeocodeInfo', 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php','ProjectJjwg_MapsLogicHook', 'updateGeocodeInfo'); 
-$hook_array['after_save'] = Array(); 
-$hook_array['after_save'][] = Array(77, 'updateRelatedMeetingsGeocodeInfo', 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php','ProjectJjwg_MapsLogicHook', 'updateRelatedMeetingsGeocodeInfo'); 
-$hook_array['after_relationship_add'] = Array(); 
-$hook_array['after_relationship_add'][] = Array(77, 'addRelationship', 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php','ProjectJjwg_MapsLogicHook', 'addRelationship'); 
-$hook_array['after_relationship_delete'] = Array(); 
-$hook_array['after_relationship_delete'][] = Array(77, 'deleteRelationship', 'custom/modules/Project/ProjectJjwg_MapsLogicHook.php','ProjectJjwg_MapsLogicHook', 'deleteRelationship'); 
+// position, file, function
 
-
-
+$hook_array['before_delete'] = Array();
+$hook_array['before_delete'][] = Array(1, 'Delete Project Tasks', 'custom/modules/Project/delete_project_tasks.php','delete_project_tasks', 'delete_tasks');
 ?>

@@ -164,7 +164,7 @@ class InsideViewLogicHook {
             $extraUrl = 'crm_user_id='.urlencode($GLOBALS['sugar_config']['unique_key']).'&'.$this->handleFieldMap($GLOBALS['current_user'],$myUserFieldMap);
         }
         $extraUrl .= '&crm_org_id='.urlencode($GLOBALS['sugar_config']['unique_key'])
-            .'&crm_org_name='.urlencode($GLOBALS['system_config']->settings['system_name'])
+            .'&crm_org_name='.(!empty($GLOBALS['system_config']->settings['system_name']) ? urlencode($GLOBALS['system_config']->settings['system_name']) : '')
             .'&crm_server_url='.urlencode($GLOBALS['sugar_config']['site_url'])
             .'&crm_session_id=&crm_version=v62&crm_deploy_id=3&crm_size=400&is_embed_version=true';
         

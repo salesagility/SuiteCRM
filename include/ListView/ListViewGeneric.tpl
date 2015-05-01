@@ -56,13 +56,13 @@
         $('.selectActionsDisabled').children().each(function(index) {
             $(this).attr('onclick','').unbind('click');
         });
-        
+
         var selectedTopValue = $("#selectCountTop").attr("value");
         if(typeof(selectedTopValue) != "undefined" && selectedTopValue != "0"){
         	sugarListView.prototype.toggleSelected();
         }
 	});
-{/literal}	
+{/literal}
 </script>
 {assign var="currentModule" value = $pageData.bean.moduleDir}
 {assign var="singularModule" value = $moduleListSingular.$currentModule}
@@ -72,7 +72,7 @@
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
-    {if $displayEmptyDataMesssages}
+		{if $displayEmptyDataMesssages}
         {if strlen($query) == 0}
                 {capture assign="createLink"}<a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
                 {capture assign="importLink"}<a href="?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
@@ -104,10 +104,10 @@
 	</div>
 {/if}
 {$multiSelectData}
-
 {if $hideTable == false}
-	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view'>
-    {assign var="link_select_id" value="selectLinkTop"}
+	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
+	<thead>
+	{assign var="link_select_id" value="selectLinkTop"}
     {assign var="link_action_id" value="actionLinkTop"}
     {assign var="actionsLink" value=$actionsLinkTop}
     {assign var="selectLink" value=$selectLinkTop}
@@ -123,8 +123,12 @@
 			<td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
+            {assign var='datahide' value="phone"}
 			{foreach from=$displayColumns key=colHeader item=params}
-				<th scope='col' width='{$params.width}%'>
+                {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
+                {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
+                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
+				{else}<th scope='col' data-hide="{$datahide}">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
@@ -155,7 +159,7 @@
 						{/if}
 	                    </a>
 					{else}
-	                    {if !isset($params.noHeader) || $params.noHeader == false} 
+	                    {if !isset($params.noHeader) || $params.noHeader == false}
 						  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
 	                    {/if}
 					{/if}
@@ -163,14 +167,14 @@
 				</th>
 				{counter name="colCounter"}
 			{/foreach}
-			<td class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
+
 		</tr>
-			
-		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}	
+	</thead>
+		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
 		    {counter name="offset" print=false}
 	        {assign var='scope_row' value=true}
-	
+
 			{if $smarty.foreach.rowIteration.iteration is odd}
 				{assign var='_rowColor' value=$rowColor[0]}
 			{else}
@@ -190,15 +194,15 @@
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td width='2%' nowrap>
-	                {if $pageData.rowAccess[$id].edit}
-	                <a title='{$editLinkString}' id="edit-{$rowData.ID}"
-	href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-	                >
-	                    {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-	                    {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
-	                {/if}
+                    {if $pageData.rowAccess[$id].edit}
+                        <a title='{$editLinkString}' id="edit-{$rowData.ID}"
+                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+                                >
+                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                    {/if}
 	            </td>
-	
+
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
 				{foreach from=$displayColumns key=col item=params}
@@ -212,11 +216,11 @@
 	{capture assign=url}index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$record}{/capture}
 	                        <{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href="{sugar_ajax_url url=$url}">
 						{/if}
-						{if $params.customCode} 
+						{if $params.customCode}
 							{sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
-						{else}	
+						{else}
 	                       {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
-	                       
+
 						{/if}
 						{if empty($rowData.$col) && empty($params.customCode)}&nbsp;{/if}
 						{if $params.link && !$params.customCode}
@@ -235,7 +239,7 @@
 		    <td colspan="{$colCount}">
 		        <em>{$APP.LBL_NO_DATA}</em>
 		    </td>
-		</tr> 
+		</tr>
 		{/foreach}
     {assign var="link_select_id" value="selectLinkBottom"}
     {assign var="link_action_id" value="actionLinkBottom"}

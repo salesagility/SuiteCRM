@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$searchdefs ['Calls'] = 
+$searchdefs ['Calls'] =
 array (
   'layout' => 
   array (
@@ -57,7 +57,14 @@ array (
         'default' => true,
         'width' => '10%',
       ),
-      array ('name' => 'open_only', 'label' => 'LBL_OPEN_ITEMS', 'type' => 'bool', 'default' => false, 'width' => '10%'),
+      0 => 
+      array (
+        'name' => 'open_only',
+        'label' => 'LBL_OPEN_ITEMS',
+        'type' => 'bool',
+        'default' => false,
+        'width' => '10%',
+      ),
     ),
     'advanced_search' => 
     array (
@@ -97,6 +104,22 @@ array (
         'default' => true,
         'width' => '10%',
       ),
+      'date_start' => 
+      array (
+        'type' => 'datetimecombo',
+        'label' => 'LBL_DATE',
+        'width' => '10%',
+        'default' => true,
+        'name' => 'date_start',
+      ),
+      'date_end' => 
+      array (
+        'type' => 'datetimecombo',
+        'label' => 'LBL_DATE_END',
+        'width' => '10%',
+        'default' => true,
+        'name' => 'date_end',
+      ),
       'assigned_user_id' => 
       array (
         'name' => 'assigned_user_id',
@@ -113,7 +136,6 @@ array (
         'default' => true,
         'width' => '10%',
       ),
-      
     ),
   ),
   'templateMeta' => 

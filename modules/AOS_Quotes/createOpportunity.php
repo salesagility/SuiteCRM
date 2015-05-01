@@ -22,6 +22,11 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
+    if(!(ACLController::checkAccess('Opportunities', 'edit', true))){
+        ACLController::displayNoAccess();
+        die;
+    }
+
     global $app_list_strings;
 
 	require_once('modules/AOS_Quotes/AOS_Quotes.php');
@@ -35,7 +40,7 @@
 	$opportunity = new Opportunity();
     $opportunity->name = $quote->name;
     $opportunity->assigned_user_id = $quote->assigned_user_id;
-    $opportunity->amount = $quote->total_amount;
+    $opportunity->amount = format_number($quote->total_amount);
     $opportunity->account_id = $quote->billing_account_id;
     $opportunity->currency_id = $quote->currency_id;
     $opportunity->sales_stage = 'Proposal/Price Quote';

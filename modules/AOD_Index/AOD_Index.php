@@ -156,7 +156,7 @@ class AOD_Index extends AOD_Index_sugar {
                     break;
 
                 case "multienum":
-                    $vals = unencodeMultienum($bean->$field);
+                    $vals = unencodeMultienum($bean->$key);
                     $document["document"]->addField(Zend_Search_Lucene_Field::unStored($key, strtolower(implode(" ",$vals)),'UTF-8'));
                     break;
                 case "name":

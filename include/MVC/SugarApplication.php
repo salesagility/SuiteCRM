@@ -86,7 +86,7 @@ class SugarApplication
         $this->loadLanguages();
 		$this->checkDatabaseVersion();
 		$this->loadDisplaySettings();
-		$this->loadLicense();
+		//$this->loadLicense();
 		$this->loadGlobals();
 		$this->setupResourceManagement($module);
 		$this->controller->execute();
@@ -420,6 +420,11 @@ class SugarApplication
 				$_SESSION['theme_changed'] = false;
 			}
 		}
+
+        $available_themes = SugarThemeRegistry::availableThemes();
+        if(!isset($available_themes[$theme])){
+            $theme = $GLOBALS['sugar_config']['default_theme'];
+        }
 
         if(!is_null($theme) && !headers_sent())
         {

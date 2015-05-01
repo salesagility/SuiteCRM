@@ -111,6 +111,8 @@ class CalendarDisplay {
 			switch($cal->view){
 				case "day":
 					$height = 250; break;
+				case "mobile":
+					$height = 250; break;
 				case "week":
 					$height = 250; break;
 				case "shared":
@@ -369,6 +371,22 @@ class CalendarDisplay {
 								break;
 						}
 					}
+			}else if($view == 'mobile'){
+				$str .= $date_time->get_day_of_week()." ";
+
+				for($i=0; $i<strlen($dateFormat['date']); $i++){
+					switch($dateFormat['date']{$i}){
+						case "Y":
+							$str .= " ".$date_time->year;
+							break;
+						case "m":
+							$str .= " ".$date_time->get_month_name();
+							break;
+						case "d":
+							$str .= " ".$date_time->get_day();
+							break;
+					}
+				}
 			}else if($view == 'year') {
 				$str .= $date_time->year;
 			}else{
@@ -480,7 +498,29 @@ class CalendarDisplay {
 	public function display_title(){
 		global $mod_strings;
 		//Hack to make this 6.5 compatible until this module is converted to MVC
-        echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>"; 
+
+		if($this->cal->view == "mobile"){
+
+            $buttons = array("Meeting","Call","Task");
+
+			echo "<div class='custom_module_title moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
+			echo "<div style='float:right;' class='moduleTitle'>";
+
+            echo '<div class="btn-group">
+                    <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">Add Item <span class="caret"></span></button>
+                       <ul class="dropdown-menu pull-left" style="right: 0; left: auto;">';
+
+                        foreach($buttons as $module){
+                            echo '<li><a href="index.php?return_module=Calendar&return_action=index&module=' . $module .'s&action=EditView">Add ' . $module .'</a></li>';
+                        }
+
+            echo '</ul></div></div>';
+
+		}else{
+			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
+
+		}
+
 	}
 
 	/**

@@ -186,7 +186,7 @@ class SugarView
                 'favicon' => $this->getFavicon(),
             );
 
-            if(SugarThemeRegistry::current()->name == 'Classic')
+            if(SugarThemeRegistry::current()->name == 'Classic' || SugarThemeRegistry::current()->classic)
                 $ajax_ret['moduleList'] = $this->displayHeader(true);
 
             if(empty($this->responseTime))
@@ -302,6 +302,7 @@ class SugarView
         $ss = new Sugar_Smarty();
         $ss->assign("APP", $app_strings);
         $ss->assign("THEME", $theme);
+        $ss->assign("THEME_CONFIG", $themeObject->getConfig());
         $ss->assign("THEME_IE6COMPAT", $themeObject->ie6compat ? 'true':'false');
         $ss->assign("MODULE_NAME", $this->module);
         $ss->assign("langHeader", get_language_header());
@@ -1302,13 +1303,13 @@ EOHTML;
                $theTitle .= "<h2> $paramString </h2>\n";
            }
 
-
         // bug 56131 - restore conditional so that link doesn't appear where it shouldn't
-        if($show_help) {
+        if($show_help || $this->type == 'list') {
             $theTitle .= "<span class='utils'>";
             $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
-            $theTitle .= <<<EOHTML
+            if($this->type == 'list') $theTitle .= '<a href="#" class="btn btn-success showsearch"><span class=" glyphicon glyphicon-search" aria-hidden="true"></span></a>';$url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            if($show_help) {
+                $theTitle .= <<<EOHTML
 &nbsp;
 <a id="create_image" href="{$url}" class="utilsLink">
 <img src='{$createImageURL}' alt='{$GLOBALS['app_strings']['LNK_CREATE']}'></a>
@@ -1316,6 +1317,7 @@ EOHTML;
 {$GLOBALS['app_strings']['LNK_CREATE']}
 </a>
 EOHTML;
+            }
             $theTitle .= "</span>";
         }
 

@@ -533,6 +533,21 @@ EOQ;
     case 'SilentInstall':
         $si_errors = false;
         pullSilentInstallVarsIntoSession();
+
+        /*
+         * Make sure we are using the correct unique_key. The logic
+         * to save a custom unique_key happens lower in the process.
+         * However because of the initial FTS check we are already
+         * relying on this value which will not get reinitialized
+         * when we actual need it during index creation because
+         * SilentInstaller runs in one single process.
+         */
+        if (!empty($_SESSION['setup_site_specify_guid']) && !empty($_SESSION['setup_site_guid'])) {
+            $sugar_config['unique_key'] = $_SESSION['setup_site_guid'];
+        } else {
+            $sugar_config['unique_key'] = md5(create_guid());
+        }
+
         $validation_errors = validate_dbConfig('a');
         if(count($validation_errors) > 0) {
             $the_file = 'dbConfig_a.php';

@@ -44,7 +44,7 @@ require_once('include/utils/layout_utils.php');
  */
 class Dashlet
 {
-   /**
+    /**
      * Id of the Dashlet
      * @var guid
      */
@@ -107,15 +107,15 @@ class Dashlet
     {
         if($this->isConfigurable) {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet"><a href="javascript:void(0)" onclick="SUGAR.mySugar.configureDashlet(\''
-                               . $this->id . '\'); return false;">'
-                               . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
-                               . '';
+                . $this->id . '\'); return false;">'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-edit','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')).'</a>'
+                . '';
         }
         else {
             $additionalTitle = '<td nowrap width="1%" style="padding-right: 0px;"><div class="dashletToolSet">';
-    	}
+        }
 
-    	return $additionalTitle;
+        return $additionalTitle;
     }
 
     /**
@@ -125,12 +125,12 @@ class Dashlet
      */
     public function setRefreshIcon()
     {
-    	$additionalTitle = '';
+        $additionalTitle = '';
         if($this->isRefreshable) {
             $additionalTitle .= '<a href="javascript:void(0)" onclick="SUGAR.mySugar.retrieveDashlet(\''
-                                . $this->id . '\'); return false;">'
-                                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
-                                . '</a>';
+                . $this->id . '\'); return false;">'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
+                . '</a>';
         }
 
         return $additionalTitle;
@@ -143,16 +143,16 @@ class Dashlet
      */
     public function setDeleteIcon()
     {
-    	global $sugar_config;
+        global $sugar_config;
 
-    	if (!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) {
-			return '</div></td></tr></table>';
-		}
-    	$additionalTitle = '<a href="javascript:void(0)" onclick="SUGAR.mySugar.deleteDashlet(\''
-                            . $this->id . '\'); return false;">'
-                            . SugarThemeRegistry::current()->getImage('dashlet-header-close','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_DELETE', 'Home'))
-                            . '</a></div></td></tr></table>';
-		return $additionalTitle;
+        if (!empty($sugar_config['lock_homepage']) && $sugar_config['lock_homepage'] == true) {
+            return '</div></td></tr></table>';
+        }
+        $additionalTitle = '<a href="javascript:void(0)" onclick="SUGAR.mySugar.deleteDashlet(\''
+            . $this->id . '\'); return false;">'
+            . SugarThemeRegistry::current()->getImage('dashlet-header-close','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_DELETE', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_DELETE', 'Home'))
+            . '</a></div></td></tr></table>';
+        return $additionalTitle;
     }
 
     /**
@@ -239,7 +239,7 @@ class Dashlet
             $dashletOffset = 0;
             $module = $_REQUEST['module'];
             if(isset($_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'])) {
-            	$dashletOffset = $_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'];
+                $dashletOffset = $_REQUEST[$module.'2_'.strtoupper($this->seedBean->object_name).'_offset'];
             }
         }
 
@@ -271,8 +271,8 @@ class Dashlet
             $autoRefresh = 0;
         }
         elseif (!empty($sugar_config['dashlet_auto_refresh_min'])
-                && $this->autoRefresh > 0
-                && $sugar_config['dashlet_auto_refresh_min'] > $this->autoRefresh)
+            && $this->autoRefresh > 0
+            && $sugar_config['dashlet_auto_refresh_min'] > $this->autoRefresh)
         {
             $autoRefresh = $sugar_config['dashlet_auto_refresh_min'];
         }
@@ -308,7 +308,7 @@ class Dashlet
         if(!isset($dashletStrings[$dashletClassname])) {
             // load current language strings for current language, else default to english
             if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')
-                    || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php') ) {
+                || is_file('custom/' . $dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php') ) {
                 if(is_file($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php')) {
                     require($dashletDirectory . $dashletClassname . '/' . $dashletClassname . '.' . $current_language . '.lang.php');
                 }
@@ -366,7 +366,7 @@ class Dashlet
      */
     public function hasAccess()
     {
-    	return true;
+        return true;
     }
 
     /**
@@ -397,7 +397,7 @@ class Dashlet
     protected function isAutoRefreshable()
     {
         return $this->isRefreshable &&
-            ( isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ?
-                $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] != -1 : true );
+        ( isset($GLOBALS['sugar_config']['dashlet_auto_refresh_min']) ?
+            $GLOBALS['sugar_config']['dashlet_auto_refresh_min'] != -1 : true );
     }
 }

@@ -3556,6 +3556,8 @@ protected function checkQuery($sql, $object_name = false)
 	 */
 	abstract public function quote($string);
 
+    abstract public function quoteIdentifier($string);
+
 	/**
 	 * Use when you need to convert a database string to a different value; this function does it in a
 	 * database-backend aware way

@@ -25,7 +25,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once("modules/AOP_Case_Updates/util.php");
 class updatePortal{
     function updateUser($bean, $event, $arguments){
-
+        if(!isAOPEnabled()){
+            return;
+        }
 		if(isset($bean->joomla_account_access) && $bean->joomla_account_access != ''){
             global $sugar_config;
             $aop_config = $sugar_config['aop'];

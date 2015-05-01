@@ -21,7 +21,8 @@ class SecurityGroup extends SecurityGroup_sugar {
      */
     function getGroupWhere($table_name,$module,$user_id)
     {
-
+       
+            
         //need a different query if doing a securitygroups check
         if($module == "SecurityGroups") {
             return " $table_name.id in (
@@ -205,6 +206,13 @@ class SecurityGroup extends SecurityGroup_sugar {
         global $sugar_config;
         global $current_user;
         if(!$isUpdate) {
+            //inherit only for those that support Security Groups
+            $groupFocus = new SecurityGroup();
+            $security_modules = $groupFocus->getSecurityModules();
+            if(!in_array($focus->module_dir,array_keys($security_modules))) {
+                return;
+            }
+            
             $defaultGroups = SecurityGroup::retrieveDefaultGroups();
             foreach($defaultGroups as $default_id => $defaultGroup) {
 

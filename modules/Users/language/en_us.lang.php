@@ -106,7 +106,7 @@ $mod_strings = array (
 	'LBL_ADMIN_DESC'					=> 'User can access the Administration page all records.',
 	'LBL_REGULAR_DESC'					=> 'User can access modules and records based on roles.',
 
-
+    'LBL_PHOTO' => 'Photo',
 
 	'LBL_ADMIN'							=> 'System Administrator',
 	'LBL_ADVANCED'                     => 'Advanced',

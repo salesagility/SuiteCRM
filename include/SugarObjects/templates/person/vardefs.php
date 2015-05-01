@@ -111,6 +111,21 @@ $vardefs =array(
 			'len' => '100',
 			'comment' => 'The title of the contact'
 		),
+    'photo' =>
+        array (
+            'name' => 'photo',
+            'vname' => 'LBL_PHOTO',
+            'type' => 'image',
+            'massupdate' => false,
+            'comments' => '',
+            'help' => '',
+            'importable' => false,
+            'reportable' => true,
+            'len' => 255,
+            'dbType' => 'varchar',
+            'width' => '160',
+            'height' => '160',
+        ),
 	'department' =>
 		array (
 			'name' => 'department',

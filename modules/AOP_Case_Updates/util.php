@@ -21,6 +21,48 @@
  *
  * @author Salesagility Ltd <support@salesagility.com>
  */
+
+function getAOPAssignField($assignField, $value){
+    global $app_list_strings;
+
+
+    $roles = get_bean_select_array(true, 'ACLRole','name', '','name',true);
+
+    if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
+        unset($app_list_strings['aow_assign_options']['security_group']);
+    }
+    else{
+        $securityGroups = get_bean_select_array(true, 'SecurityGroup','name', '','name',true);
+    }
+
+    $field = '';
+
+    $field .= "<select type='text' name='$assignField".'[0]'."' id='$assignField".'[0]'."' onchange='assign_field_change(\"$assignField\")' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_assign_options'], $value[0]) ."</select>&nbsp;&nbsp;";
+    if(!file_exists('modules/SecurityGroups/SecurityGroup.php')){
+        $field .= "<input type='hidden' name='$assignField".'[1]'."' id='$assignField".'[1]'."' value=''  />";
+    }
+    else {
+        $display = 'none';
+        if($value[0] == 'security_group'){
+            $display = '';
+        }
+        $field .= "<select type='text' style='display:$display' name='$assignField".'[1]'."' id='$assignField".'[1]'."' title='' tabindex='116'>". get_select_options_with_id($securityGroups, $value[1]) ."</select>&nbsp;&nbsp;";
+    }
+    $display = 'none';
+    if($value[0] == 'role' || $value[0] == 'security_group') $display = '';
+    $field .= "<select type='text' style='display:$display' name='$assignField".'[2]'."' id='$assignField".'[2]'."' title='' tabindex='116'>". get_select_options_with_id($roles, $value[2]) ."</select>&nbsp;&nbsp;";
+    return $field;
+
+}
+
+function isAOPEnabled(){
+    global $sugar_config;
+    if(array_key_exists("aop",$sugar_config) && array_key_exists('enable_aop',$sugar_config['aop'])){
+        return !empty($sugar_config['aop']['enable_aop']);
+    }
+    return true;//Defaults to enabled.
+}
+
 function getPortalEmailSettings(){
     global $sugar_config;
     $settings = array('from_name'=>'','from_address'=>'');

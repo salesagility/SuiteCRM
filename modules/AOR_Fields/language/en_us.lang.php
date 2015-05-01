@@ -51,7 +51,6 @@ $mod_strings = array (
     'LBL_SEARCH_FORM_TITLE' => 'Search Fields',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-    'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Fields',
     'LBL_NEW_FORM_TITLE' => 'New Fields',
     'LBL_ORDER' => 'Order',
     'LBL_MODULE_PATH' => 'Module',
@@ -65,4 +64,5 @@ $mod_strings = array (
     'LBL_GROUP' => 'Group',
     'LBL_GROUP_ORDER' => 'Group Order',
     'LBL_AUDIT_TABLE' => 'Audit table',
+    'LBL_TOTAL' => 'Total',
 );
