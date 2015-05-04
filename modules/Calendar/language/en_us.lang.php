@@ -58,6 +58,7 @@ $mod_strings = array (
 	'LBL_DAY' => 'Day',
 	'LBL_YEAR' => 'Year',
 	'LBL_WEEK' => 'Week',
+	'LBL_MOBILE' => 'Mobile',
 	'LBL_PREVIOUS_MONTH' => 'Previous Month',
 	'LBL_PREVIOUS_DAY' => 'Previous Day',
 	'LBL_PREVIOUS_YEAR' => 'Previous Year',
