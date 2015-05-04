@@ -435,7 +435,7 @@ class CalendarDisplay {
 	 * display header
 	 * @param boolean $controls display ui contol itmes
 	 */
-	public function display_calendar_header($controls = true,$mobile = false){
+	public function display_calendar_header($controls = true, $mobile=false){
 		global $cal_strings;
 
 		$ss = new Sugar_Smarty();

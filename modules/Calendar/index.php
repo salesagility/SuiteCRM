@@ -90,16 +90,22 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
     $cal->setPrint(true);
 }
 
+if($_SESSION['screen_width']  < 640 && isset($_SESSION['screen_width'])){
+    $mobile_screen=true;
+} else {
+    $mobile_screen=false;
+}
+
 $display = new CalendarDisplay($cal);
 if($cal->view == "mobile"){
 	$display->display_title();
-    $display->display_calendar_header(true, true);
+    $display->display_calendar_header(true,$mobile_screen);
 	$display->display();
 }else{
 	$display->display_title();
 	if($cal->view == "shared")
 		$display->display_shared_html();
-	$display->display_calendar_header();
+	$display->display_calendar_header(true,$mobile_screen);
 	$display->display();
 	$display->display_calendar_footer();
 }
