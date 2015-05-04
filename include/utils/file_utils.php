@@ -440,7 +440,7 @@ function get_mime_content_type_from_filename($filename)
 
     return '';
 }
-
+/*
 function createFTSLogicHook($filePath = 'application/Ext/LogicHooks/logichooks.ext.php')
 {
     $customFileLoc = create_custom_directory($filePath);
@@ -460,7 +460,7 @@ CIA;
     fclose($fp);
 
 }
-
+*/
 function cleanFileName($name)
 {
     return preg_replace('/[^\w-._]+/i', '', $name);
