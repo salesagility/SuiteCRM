@@ -281,9 +281,9 @@ class CalendarGrid {
 	}
 
 	function mobile_get_end_time($day_item){
-		$start_time = DateTime::createFromFormat("h:ia",$day_item['time_start']);
+		$start_time = DateTime::createFromFormat($GLOBALS['timedate']->get_time_format(),$day_item['time_start']);
 		$start_time->modify('+' . $day_item['duration_minutes'] .'minutes');
-		return $start_time->format("h:ia");
+		return $start_time->format($GLOBALS['timedate']->get_time_format());
 	}
 
 
