@@ -337,6 +337,7 @@ class AOR_ReportsController extends SugarController {
                 $valid_opp = array('Value','Field', 'Date');
                 break;
             case 'enum':
+            case 'dynamicenum': 
             case 'multienum':
                 $valid_opp = array('Value','Field', 'Multi');
                 break;
