@@ -425,6 +425,9 @@ class AOR_Report extends Basic {
 
                     switch ($att['function']){
                         case 'COUNT':
+                        case 'YEAR':
+                        case 'MONTH':
+                        case 'DAY':
                         //case 'SUM':
                             $html .= $row[$name];
                             break;
@@ -704,7 +707,14 @@ class AOR_Report extends Basic {
                 }
 
                 if($field->group_by == 1){
-                    $query['group_by'][] = $select_field;
+                    if ($field->field_function == 'DAY' ||
+                        $field->field_function == 'MONTH' ||
+                        $field->field_function == 'YEAR'){
+                        $query['group_by'][] = $field->label;
+                    }
+                    else {
+                        $query['group_by'][] = $select_field;
+                    }
                 }
 
                 if($field->field_function != null){

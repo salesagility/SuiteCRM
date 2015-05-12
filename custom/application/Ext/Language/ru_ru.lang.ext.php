@@ -867,6 +867,9 @@ $app_list_strings['aor_function_list']['MIN'] = 'МИНИМУМ';
 $app_list_strings['aor_function_list']['MAX'] = 'МАКСИМУМ';
 $app_list_strings['aor_function_list']['SUM'] = 'СУММА';
 $app_list_strings['aor_function_list']['AVG'] = 'СРЕДНЕЕ';
+$app_list_strings['aor_function_list']['YEAR'] = 'Year';
+$app_list_strings['aor_function_list']['MONTH'] = 'Month';
+$app_list_strings['aor_function_list']['DAY'] = 'Day';
 
 $app_list_strings['aor_total_options'][''] = '';
 $app_list_strings['aor_total_options']['COUNT'] = 'КОЛИЧЕСТВО';
