@@ -79,6 +79,7 @@ if(file_exists($file_name) && is_file($file_name)) {
     if(!verify_uploaded_image($file_name, $returnArray['forQuotes'] == 'quotes')) {
         $returnArray['data']='other';
         $returnArray['path'] = '';
+        unlink($file_name);
     } else {
         $img_size = getimagesize($file_name);
         $filetype = $img_size['mime'];
