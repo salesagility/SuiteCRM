@@ -917,20 +917,20 @@ $app_list_strings['link_target_dom'] = array (
   '_self' => 'Misma Ventana',
 );
 $app_list_strings['dashlet_auto_refresh_options'] = array (
-  4294967295 => 'No actualizar automáticamente',
-  30 => 'Cada 30 segundos',
-  60 => 'Cada minuto',
-  180 => 'Cada 3 minutos',
-  300 => 'Cada 5 minutos',
-  600 => 'Cada 10 minutos',
+  '-1' => 'No actualizar automáticamente',
+  '30' => 'Cada 30 segundos',
+  '60' => 'Cada minuto',
+  '180' => 'Cada 3 minutos',
+  '300' => 'Cada 5 minutos',
+  '600' => 'Cada 10 minutos',
 );
 $app_list_strings['dashlet_auto_refresh_options_admin'] = array (
-  4294967295 => 'Nunca',
-  30 => 'Cada 30 segundos',
-  60 => 'Cada minuto',
-  180 => 'Cada 3 minutos',
-  300 => 'Cada 5 minutos',
-  600 => 'Cada 10 minutos',
+  '-1' => 'Nunca',
+  '30' => 'Cada 30 segundos',
+  '60' => 'Cada minuto',
+  '180' => 'Cada 3 minutos',
+  '300' => 'Cada 5 minutos',
+  '600' => 'Cada 10 minutos',
 );
 $app_list_strings['date_range_search_dom'] = array (
   '=' => 'Igual a',
@@ -2143,11 +2143,11 @@ $app_strings = array (
   'LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT' => 'Correo de Prueba Enviado',
   'LBL_EMAIL_CHECK_INTERVAL_DOM' => 
   array (
-    4294967295 => 'Manualmente',
-    5 => 'Cada 5 minutos',
-    15 => 'Cada 15 minutos',
-    30 => 'Cada 30 minutos',
-    60 => 'Cada hora',
+    '-1' => 'Manualmente',
+    '5' => 'Cada 5 minutos',
+    '15' => 'Cada 15 minutos',
+    '30' => 'Cada 30 minutos',
+    '60' => 'Cada hora',
   ),
   'LBL_EMAIL_MESSAGE_NO' => 'Mensaje Nº',
   'LBL_EMAIL_IMPORT_SUCCESS' => 'Importación Existosa',

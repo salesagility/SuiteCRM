@@ -377,7 +377,7 @@ if(function_exists('deleteCache'))
 	logThis('Call deleteCache', $path);
 	@deleteCache();
 }
-
+/*
 // creating full text search logic hooks
 // this will be merged into application/Ext/LogicHooks/logichooks.ext.php
 // when rebuild_extensions is called
@@ -401,7 +401,7 @@ CIA;
 } else {
     createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');
 }
-
+*/
 //First repair the databse to ensure it is up to date with the new vardefs/tabledefs
 logThis('About to repair the database.', $path);
 //Use Repair and rebuild to update the database.
