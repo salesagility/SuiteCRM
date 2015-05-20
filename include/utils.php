@@ -330,7 +330,7 @@ function get_sugar_config_defaults() {
 	return_session_value_or_default('translation_string_prefix', false),
 	'upload_badext' => array (
 	'php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py',
-	'asp', 'cfm', 'js', 'vbs', 'html', 'htm' ),
+	'asp', 'cfm', 'js', 'vbs', 'html', 'htm', 'phtml' ),
 	'upload_maxsize' => 30000000,
 	'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
@@ -2873,12 +2873,12 @@ function check_php_version($sys_php_version = '') {
 	// versions below $min_considered_php_version considered invalid by default,
 	// versions equal to or above this ver will be considered depending
 	// on the rules that follow
-	$min_considered_php_version = '5.3.0';
+	$min_considered_php_version = '5.2.2';
 
 	// only the supported versions,
 	// should be mutually exclusive with $invalid_php_versions
 	$supported_php_versions = array (
-    	'5.3.0'
+    	'5.2.2', '5.2.3', '5.2.4', '5.2.5', '5.2.6', '5.2.8', '5.3.0'
 	);
 
 	// invalid versions above the $min_considered_php_version,
