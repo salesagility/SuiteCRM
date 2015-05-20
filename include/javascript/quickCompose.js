@@ -2,7 +2,7 @@
 {SUGAR.email2.addressBook.initFixForDatatableSort();SUGAR.quickCompose.resourcesLoaded=true;var callback={success:function(o)
 {var responseData=JSON.parse(o.responseText);var scriptTag=document.createElement('script');scriptTag.id='quickComposeScript';scriptTag.setAttribute('type','text/javascript');if(YAHOO.env.ua.ie>0)
 scriptTag.text=responseData.jsData;else
-scriptTag.appendChild(document.createTextNode(responseData.jsData));document.getElementsByTagName("head")[0].appendChild(scriptTag);var divTag=document.createElement("div");divTag.innerHTML=responseData.divData;divTag.id='quickCompose';YAHOO.util.Dom.insertBefore(divTag,'footer');SUGAR.quickCompose.frameLoaded=true;SUGAR.quickCompose.initUI(c.data);}}
+scriptTag.appendChild(document.createTextNode(responseData.jsData));document.getElementsByTagName("head")[0].appendChild(scriptTag);var divTag=document.createElement("div");divTag.innerHTML=responseData.divData;divTag.id='quickCompose';YAHOO.util.Dom.insertBefore(divTag,document.getElementsByTagName('footer')[0]);SUGAR.quickCompose.frameLoaded=true;SUGAR.quickCompose.initUI(c.data);}}
 if(!SUGAR.quickCompose.frameLoaded)
 YAHOO.util.Connect.asyncRequest('GET','index.php?entryPoint=GenerateQuickComposeFrame',callback,null);else
 SUGAR.quickCompose.initUI(c.data);},initUI:function(options)
