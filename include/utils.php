@@ -330,7 +330,7 @@ function get_sugar_config_defaults() {
 	return_session_value_or_default('translation_string_prefix', false),
 	'upload_badext' => array (
 	'php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py',
-	'asp', 'cfm', 'js', 'vbs', 'html', 'htm' ),
+	'asp', 'cfm', 'js', 'vbs', 'html', 'htm', 'phtml' ),
 	'upload_maxsize' => 30000000,
 	'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
