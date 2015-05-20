@@ -7,7 +7,7 @@ class facebook_helper{
     var $facebook;
 
     function __construct() {
-        require("custom/modules/Connectors/connectors/sources/ext/rest/facebook/config.php");
+        require_once("custom/modules/Connectors/connectors/sources/ext/rest/facebook/config.php");
 
         $fb_config = array(
             'appId' => $config['properties']['appid'],
