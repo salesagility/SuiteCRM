@@ -49,7 +49,7 @@ SUGAR.quickCompose = function() {
 	               var divTag = document.createElement("div");
 	               divTag.innerHTML = responseData.divData;
 	               divTag.id = 'quickCompose';
-	               YAHOO.util.Dom.insertBefore(divTag, 'footer');
+	               YAHOO.util.Dom.insertBefore(divTag, document.getElementsByTagName('footer')[0]);
 
 	               //Set the flag that we loaded the compose package.
 	               SUGAR.quickCompose.frameLoaded = true;
