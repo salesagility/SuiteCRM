@@ -1,4 +1,4 @@
-##SuiteCRM 7.2.5 Beta
+##SuiteCRM 7.2.6
 
 ### What's in this repository ###
 
