@@ -85,6 +85,9 @@ function populateFromPost($prefix, &$focus, $skipRetrieve = false, $checkACL = f
 	    ($_POST['assigned_user_id'] != $current_user->id)) {
 		$GLOBALS['check_notify'] = true;
 	}
+    if(isset($_POST['dup_checked']) && $_POST['dup_checked'] && isset($_POST['id']) && $_POST['id'] != '' ){
+        $focus->new_with_id = true;
+    }
     require_once('include/SugarFields/SugarFieldHandler.php');
     $sfh = new SugarFieldHandler();
    

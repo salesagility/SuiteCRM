@@ -3091,29 +3091,21 @@ li#usermenu:hover {
     }
 }
 
-@media (max-height:700px) {
-    .moremenu ul, .dropdown-menu  {
-        max-height: 550px !important;
-        overflow: auto;
-    }
-}
-
-@media (max-height:800px) {
+@media (min-height:701px) and (max-height:800px) {
     .moremenu ul, .dropdown-menu {
-        max-height: 600px !important;
-        max-height: 600px !important;
+        max-height: 575px !important;
         overflow: auto;
     }
 }
 
-@media (max-height:900px) {
+@media (min-height:801px) and (max-height:900px) {
     .moremenu ul, .dropdown-menu {
         max-height: 700px !important;
         overflow: auto;
     }
 }
 
-@media (max-height:1000px) {
+@media (min-height:901px) and (max-height:1000px) {
     .moremenu ul, .dropdown-menu {
         max-height: 800px;
         overflow: auto;
@@ -3123,6 +3115,7 @@ li#usermenu:hover {
 @media (min-height:1001px) {
     .moremenu ul, .dropdown-menu {
         max-height: 850px;
+        max-height: 850px !important;
         overflow: auto;
     }
 }

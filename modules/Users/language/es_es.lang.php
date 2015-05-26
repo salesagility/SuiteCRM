@@ -1,7 +1,5 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -532,4 +530,20 @@ $mod_strings = array (
   'LBL_DELETED' => 'Eliminado',
   'LBL_HIDEOPTIONS' => 'Ocultar Opciones',
   'LBL_SHOWOPTIONS' => 'Mostrar Opciones',
+
+  'LBL_SUITE_SUPERCHARGED' => "Supercharged by SuiteCRM",
+  'LBL_SUITE_POWERED_BY' => "Powered By SugarCRM",
+  'LBL_SUITE_TOP' => "Ir arriba",
+  'LBL_SUITE_PRINT' => "Imprimir",
+  'LBL_SUITE_DESC1' => 'SuiteCRM has been written and assembled by SalesAgility, one of the worlds most knowledgeable SugarCRM consultancies.',
+  'LBL_SUITE_DESC2' => 'SuiteCRM is intended to deliver on the promise of SugarCRM - a freely available open source CRM project that combines great functionality, with community and commitment.',
+  'LBL_SUITE_DESC3' => 'There will be no licenced software as part of the project managed by SalesAgility. All the code is free. All the code is available for free download. There is no hidden agenda to charge for access to the code. It is and always will be free and open source. There will be no paid-for versions.',
+  'LBL_QUICK_ACCOUNT' => 'Crear Cuenta',
+  'LBL_QUICK_CONTACT' => 'Crear Contacto',
+  'LBL_QUICK_OPPORTUNITY' => 'Crear Oportunidad',
+  'LBL_QUICK_LEAD' => 'Crear Cliente potencial',
+  'LBL_QUICK_DOCUMENT' => 'Create Documento',
+  'LBL_QUICK_CALL' => 'Crear Llamada',
+  'LBL_QUICK_TASK' => 'Crear Tarea',
+
 );
