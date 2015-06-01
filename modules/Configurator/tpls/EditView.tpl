@@ -190,6 +190,29 @@
         <td colspan="2">&nbsp;</td>
     </tr>
 
+    <tr>
+        <td  scope="row" nowrap>{$MOD.LBL_ENABLE_INLINE_EDITING_LIST}: &nbsp;{sugar_help text=$MOD.LBL_ENABLE_INLINE_EDITING_LIST_DESC}</td>
+        {if isset($config.enable_line_editing_list) && $config.enable_line_editing_list != "true" }
+            {assign var='enable_line_editing_list' value=''}
+        {else}
+            {assign var='enable_line_editing_list' value='CHECKED'}
+        {/if}
+        <td>
+            <input type='hidden' name='enable_line_editing_list' value='false'>
+            <input name='enable_line_editing_list'  type="checkbox" value="true" {$enable_line_editing_list}>
+        </td>
+        <td  scope="row" nowrap>{$MOD.LBL_ENABLE_INLINE_EDITING_DETAIL}: &nbsp;{sugar_help text=$MOD.LBL_ENABLE_INLINE_EDITING_DETAIL_DESC}</td>
+        {if isset($config.enable_line_editing_detail) && $config.enable_line_editing_detail != "true" }
+            {assign var='enable_line_editing_detail' value=''}
+        {else}
+            {assign var='enable_line_editing_detail' value='CHECKED'}
+        {/if}
+        <td>
+            <input type='hidden' name='enable_line_editing_detail' value='false'>
+            <input name='enable_line_editing_detail' type="checkbox" value="true" {$enable_line_editing_detail}>
+        </td>
+    </tr>
+
 
 
 
