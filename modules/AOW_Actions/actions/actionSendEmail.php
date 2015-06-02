@@ -47,13 +47,16 @@ class actionSendEmail extends actionBase {
         $html = '<input type="hidden" name="aow_email_type_list" id="aow_email_type_list" value="'.get_select_options_with_id($app_list_strings['aow_email_type_list'], '').'">
 				  <input type="hidden" name="aow_email_to_list" id="aow_email_to_list" value="'.get_select_options_with_id($app_list_strings['aow_email_to_list'], '').'">';
 
+        $checked = '';
+        if(isset($params['individual_email']) && $params['individual_email']) $checked = 'CHECKED';
+
         $html .= "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
         $html .= "<tr>";
-        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL","AOW_Actions").':<span class="required">*</span></td>';
-        $html .= '<td valign="top" scope="row" width="37.5%">';
-
-        $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
-        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_INDIVIDUAL_EMAILS","AOW_Actions").':';
+        $html .= '</td>';
+        $html .= "<td valign='top' width='37.5%'>";
+        $html .= "<input type='hidden' name='aow_actions_param[".$line."][individual_email]' value='0' >";
+        $html .= "<input type='checkbox' id='aow_actions_param[".$line."][individual_email]' name='aow_actions_param[".$line."][individual_email]' value='1' $checked></td>";
         $html .= '</td>';
 
         if(!isset($params['email_template'])) $params['email_template'] = '';
@@ -67,6 +70,14 @@ class actionSendEmail extends actionBase {
         $html .= "&nbsp;<a href='javascript:open_email_template_form(".$line.")' >".translate('LBL_CREATE_EMAIL_TEMPLATE','AOW_Actions')."</a>";
         $html .= "&nbsp;<span name='edit_template' id='aow_actions_edit_template_link".$line."' $hidden><a href='javascript:edit_email_template_form(".$line.")' >".translate('LBL_EDIT_EMAIL_TEMPLATE','AOW_Actions')."</a></span>";
         $html .= "</td>";
+        $html .= "</tr>";
+        $html .= "<tr>";
+        $html .= '<td id="name_label" scope="row" valign="top" width="12.5%">'.translate("LBL_EMAIL","AOW_Actions").':<span class="required">*</span></td>';
+        $html .= '<td valign="top" scope="row" width="37.5%">';
+
+        $html .='<button type="button" onclick="add_emailLine('.$line.')"><img src="'.SugarThemeRegistry::current()->getImageURL('id-ff-add.png').'"></button>';
+        $html .= '<table id="emailLine'.$line.'_table" width="100%"></table>';
+        $html .= '</td>';
         $html .= "</tr>";
         $html .= "</table>";
 
@@ -134,8 +145,11 @@ class actionSendEmail extends actionBase {
                         $user = new User();
                         $user->retrieve($params['email'][$key]);
                         $user_email = $user->emailAddress->getPrimaryAddress($user);
-                        if(trim($user_email) != '')
+                        if(trim($user_email) != '') {
                             $emails[$params['email_to_type'][$key]][] = $user_email;
+                            $emails['template_override'][$user_email] = array('Users' => $user->id);
+                        }
+
                         break;
                     case 'Users':
                         $users = array();
@@ -184,26 +198,39 @@ class actionSendEmail extends actionBase {
                         }
                         foreach($users as $user){
                             $user_email = $user->emailAddress->getPrimaryAddress($user);
-                            if(trim($user_email) != '')
+                            if(trim($user_email) != '') {
                                 $emails[$params['email_to_type'][$key]][] = $user_email;
+                                $emails['template_override'][$user_email] = array('Users' => $user->id);
+                            }
                         }
                         break;
                     case 'Related Field':
                         $emailTarget = $params['email'][$key];
-                        $relatedFields = $bean->get_related_fields();
+                        $relatedFields = array_merge($bean->get_related_fields(), $bean->get_linked_fields());
                         $field = $relatedFields[$emailTarget];
-                        if($field['type'] == 'relate'){
+                        if($field['type'] == 'relate') {
                             $linkedBeans = array();
                             $id = $bean->$field['id_name'];
-                            $linkedBeans[] = BeanFactory::getBean($field['module'],$id);
+                            $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
+                        }
+                        else if($field['type'] == 'link'){
+                            if(isset($field['module']) && $field['module'] != '') {
+                                $rel_module = $field['module'];
+                            } else if($bean->load_relationship($field['name'])){
+                                $rel_module = $bean->$field['name']->getRelatedModuleName();
+                            }
+                            $linkedBeans = $bean->get_linked_beans($field['name'],$rel_module);
                         }else{
                             $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
                         }
                         if($linkedBeans){
-                            $linkedBean = $linkedBeans[0];
-                            $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
-                            if(trim($rel_email) != '')
-                                $emails[$params['email_to_type'][$key]][] = $rel_email;
+                            foreach($linkedBeans as $linkedBean) {
+                                $rel_email = $linkedBean->emailAddress->getPrimaryAddress($linkedBean);
+                                if (trim($rel_email) != '') {
+                                    $emails[$params['email_to_type'][$key]][] = $rel_email;
+                                    $emails['template_override'][$rel_email] = array($linkedBean->module_dir => $linkedBean->id);
+                                }
+                            }
                         }
                         break;
                     case 'Record Email':
@@ -228,18 +255,31 @@ class actionSendEmail extends actionBase {
             return false;
         }
 
-        $this->parse_template($bean, $emailTemp);
-        $attachments = $this->getAttachments($emailTemp);
         $emails = $this->getEmailsFromParams($bean,$params);
 
         if(!isset($emails['to']) || empty($emails['to']))
             return false;
 
-        return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+        $attachments = $this->getAttachments($emailTemp);
 
+        if(isset($params['individual_email']) && $params['individual_email']){
+
+            foreach($emails['to'] as $email_to){
+                $emailTemp = new EmailTemplate();
+                $emailTemp->retrieve($params['email_template']);
+                $template_override = isset($emails['template_override'][$email_to]) ? $emails['template_override'][$email_to] : array();
+                $this->parse_template($bean, $emailTemp,$template_override);
+                $this->sendEmail(array($email_to), $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+            }
+
+        } else {
+            $this->parse_template($bean, $emailTemp);
+            return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+        }
+        return true;
     }
 
-    function parse_template(SugarBean $bean, &$template){
+    function parse_template(SugarBean $bean, &$template, $object_override = array()){
         global $sugar_config;
 
         require_once('modules/AOW_Actions/actions/templateParser.php');
@@ -267,6 +307,8 @@ class actionSendEmail extends actionBase {
         }
 
         $object_arr['Users'] = $bean->assigned_user_id;
+
+        $object_arr = array_merge($object_arr, $object_override);
 
         $parsedSiteUrl = parse_url($sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];

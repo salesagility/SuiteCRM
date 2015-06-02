@@ -664,18 +664,38 @@ function getEmailableModules(){
 }
 
 function getRelatedEmailableFields($module){
-    global $beanList;
+    global $beanList, $app_list_strings;
     $relEmailFields = array();
+    $checked_link = array();
     $emailableModules = getEmailableModules();
     if ($module != '') {
         if(isset($beanList[$module]) && $beanList[$module]){
             $mod = new $beanList[$module]();
 
             foreach($mod->get_related_fields() as $field){
+                if(isset($field['link'])) $checked_link[] = $field['link'];
                 if(!isset($field['module']) || !in_array($field['module'],$emailableModules) || (isset($field['dbType']) && $field['dbType'] == "id")){
                     continue;
                 }
                 $relEmailFields[$field['name']] = $field['module'].": ".trim(translate($field['vname'],$mod->module_name),":");
+            }
+
+            foreach($mod->get_linked_fields() as $field){
+                if(!in_array($field['name'],$checked_link) && !in_array($field['relationship'],$checked_link)){
+                    if(isset($field['module']) && $field['module'] != '') {
+                        $rel_module = $field['module'];
+                    } else if($mod->load_relationship($field['name'])){
+                        $rel_module = $mod->$field['name']->getRelatedModuleName();
+                    }
+
+                    if(in_array($rel_module,$emailableModules)) {
+                        if (isset($field['vname']) && $field['vname'] != '') {
+                            $relEmailFields[$field['name']] = $app_list_strings['moduleList'][$rel_module] . ' : ' . translate($field['vname'], $mod->module_dir);
+                        } else {
+                            $relEmailFields[$field['name']] = $app_list_strings['moduleList'][$rel_module] . ' : ' . $field['name'];
+                        }
+                    }
+                }
             }
 
             array_multisort($relEmailFields, SORT_ASC, $relEmailFields);
