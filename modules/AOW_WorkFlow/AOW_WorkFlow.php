@@ -513,7 +513,7 @@ class AOW_WorkFlow extends Basic {
                                     //No business hours module found - fall through.
                                     $params[3] = 'hours';
                                 default:
-                                    $value = strtotime($value, $app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
+                                    $value = strtotime($value.' '.$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
                                     break;
                             }
                         } else {
