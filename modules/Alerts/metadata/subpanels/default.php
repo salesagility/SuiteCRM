@@ -1,6 +1,5 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,44 +39,38 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-require_once('include/json_config.php');
+$module_name='Alerts';
+$subpanel_layout = array(
+	'top_buttons' => array(
+//		array('widget_class' => 'SubPanelTopCreateButton'),
+//		array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
+	),
 
-class MeetingsViewEdit extends ViewEdit
-{
- 	/**
- 	 * @see SugarView::preDisplay()
- 	 *
- 	 * Override preDisplay to check for presence of 'status' in $_REQUEST
- 	 * This is to support the "Close And Create New" operation.
- 	 */
- 	public function preDisplay()
- 	{
- 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
-	       $this->bean->status = 'Held';
- 		}
+	'where' => '',
 
- 		parent::preDisplay();
- 	}
+	'list_fields' => array(
+		'name'=>array(
+	 		'vname' => 'LBL_NAME',
+			'widget_class' => 'SubPanelDetailViewLink',
+	 		'width' => '45%',
+		),
+//		'date_modified'=>array(
+//	 		'vname' => 'LBL_DATE_MODIFIED',
+//	 		'width' => '45%',
+//		),
+//		'edit_button'=>array(
+//            'vname' => 'LBL_EDIT_BUTTON',
+//			'widget_class' => 'SubPanelEditButton',
+//		 	'module' => $module_name,
+//	 		'width' => '4%',
+//		),
+//		'remove_button'=>array(
+//            'vname' => 'LBL_REMOVE',
+//			'widget_class' => 'SubPanelRemoveButton',
+//		 	'module' => $module_name,
+//			'width' => '5%',
+//		),
+	),
+);
 
- 	/**
- 	 * @see SugarView::display()
- 	 */
- 	public function display()
- 	{
- 		global $json;
-        $json = getJSONobj();
-        $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
-
- 		parent::display();
- 	}
-}
+?>

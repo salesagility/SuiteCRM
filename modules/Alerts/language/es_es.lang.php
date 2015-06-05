@@ -1,6 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,45 +37,36 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
-require_once('include/json_config.php');
-
-class MeetingsViewEdit extends ViewEdit
-{
- 	/**
- 	 * @see SugarView::preDisplay()
- 	 *
- 	 * Override preDisplay to check for presence of 'status' in $_REQUEST
- 	 * This is to support the "Close And Create New" operation.
- 	 */
- 	public function preDisplay()
- 	{
- 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
-	       $this->bean->status = 'Held';
- 		}
-
- 		parent::preDisplay();
- 	}
-
- 	/**
- 	 * @see SugarView::display()
- 	 */
- 	public function display()
- 	{
- 		global $json;
-        $json = getJSONobj();
-        $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
-
- 		parent::display();
- 	}
-}
+$mod_strings = array (
+  'LBL_ASSIGNED_TO_ID' => 'Asignado a Usuario con Id',
+  'LBL_ASSIGNED_TO_NAME' => 'Usuario',
+  'LBL_ID' => 'ID',
+  'LBL_DATE_ENTERED' => 'Fecha de Creación',
+  'LBL_DATE_MODIFIED' => 'Última Modificación',
+  'LBL_MODIFIED' => 'Modificado Por',
+  'LBL_MODIFIED_ID' => 'Modificado Por Id',
+  'LBL_MODIFIED_NAME' => 'Modificado Por Nombre',
+  'LBL_CREATED' => 'Creado Por',
+  'LBL_CREATED_ID' => 'Creado Por Id',
+  'LBL_DESCRIPTION' => 'Descripción',
+  'LBL_DELETED' => 'Eliminado',
+  'LBL_NAME' => 'Nombre',
+  'LBL_CREATED_USER' => 'Creado Por Usuario',
+  'LBL_MODIFIED_USER' => 'Modificado Por Usuario',
+  'LBL_LIST_NAME' => 'Nombre',
+  'LBL_EDIT_BUTTON' => 'Editar',
+  'LBL_REMOVE' => 'Quitar',
+  'LBL_LIST_FORM_TITLE' => 'Alert Lista',
+  'LBL_MODULE_NAME' => 'Alert',
+  'LBL_MODULE_TITLE' => 'Alert',
+  'LBL_HOMEPAGE_TITLE' => 'Mi Alert',
+  'LNK_NEW_RECORD' => 'Crear Alert',
+  'LNK_LIST' => 'Vista Alert',
+  'LNK_IMPORT_Alert' => 'Import Alert',
+  'LBL_SEARCH_FORM_TITLE' => 'Buscar Alert',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'Ver Historial',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
+  'LBL_Alert_SUBPANEL_TITLE' => 'Alert',
+  'LBL_NEW_FORM_TITLE' => 'Nuevo Alert',
+  'LBL_IS_READ' => 'is read',
+);
