@@ -71,6 +71,11 @@ class AOW_Action extends Basic {
                 }
                 $params = array();
                 foreach($post_data[$key.'param'][$i] as $param_name => $param_value){
+                    if($param_name == 'value'  && $post_data[$key.'param'][$i]['value_type'] == 'Value'){
+                        foreach($param_value as $p_id => $p_value){
+                            if(is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                        }
+                    }
                     $params[$param_name] = $param_value;
                 }
                 $action->parameters = base64_encode(serialize($params));
