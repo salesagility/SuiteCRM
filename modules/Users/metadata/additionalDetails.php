@@ -1,6 +1,5 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,44 +39,57 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-require_once('include/json_config.php');
+function additionalDetailsUser($fields) {
+	static $mod_strings;
+	if(empty($mod_strings)) {
+		global $current_language;
+		$mod_strings = return_module_language($current_language, 'Users');
+	}
+		
+	$overlib_string = '';
+    if(!empty($fields['ID'])) {
+        $overlib_string .= '<input type="hidden" value="'. $fields['ID'];
+        $overlib_string .= '">';
+    }
 
-class MeetingsViewEdit extends ViewEdit
-{
- 	/**
- 	 * @see SugarView::preDisplay()
- 	 *
- 	 * Override preDisplay to check for presence of 'status' in $_REQUEST
- 	 * This is to support the "Close And Create New" operation.
- 	 */
- 	public function preDisplay()
- 	{
- 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
-	       $this->bean->status = 'Held';
- 		}
+    $overlib_string .= '<h2><img src="index.php?entryPoint=getImage&themeName=' . SugarThemeRegistry::current()->name .'&imageName=Users.gif"/> '.$mod_strings['LBL_MODULE_NAME'].':</h2>';
 
- 		parent::preDisplay();
- 	}
+    if(!empty($fields['NAME'])) {
+          	$overlib_string .= '<b>'. $mod_strings['LBL_NAME'] . '</b> ' . $fields['NAME'];
+            $overlib_string .= '<br>';
+    }
 
- 	/**
- 	 * @see SugarView::display()
- 	 */
- 	public function display()
- 	{
- 		global $json;
-        $json = getJSONobj();
-        $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
+    if(!empty($fields['TITLE'])) {
+        $overlib_string .= '<b>'. $mod_strings['LBL_TITLE'] . '</b> ' . $fields['TITLE'];
+        $overlib_string .= '<br>';
+    }
 
- 		parent::display();
- 	}
+    if(!empty($fields['DEPARTMENT'])) {
+        $overlib_string .= '<b>'. $mod_strings['LBL_DEPARTMENT'] . '</b> ' . $fields['DEPARTMENT'];
+        $overlib_string .= '<br>';
+    }
+
+    if(!empty($fields['PHONE_HOME'])) {
+        $overlib_string .= '<b>'. $mod_strings['LBL_HOME_PHONE'] . '</b> ' . $fields['PHONE_HOME'];
+        $overlib_string .= '<br>';
+    }
+
+    if(!empty($fields['PHONE_MOBILE'])) {
+        $overlib_string .= '<b>'. $mod_strings['LBL_MOBILE_PHONE'] . '</b> ' . $fields['PHONE_MOBILE'];
+        $overlib_string .= '<br>';
+    }
+    if(!empty($fields['EMAIL1'])) {
+        $overlib_string .= '<b>'. $mod_strings['LBL_EMAIL'] . '</b> ' . $fields['EMAIL1'];
+        $overlib_string .= '<br>';
+    }
+
+	$editLink = "index.php?action=EditView&module=Users&record={$fields['ID']}";
+	$viewLink = "index.php?action=DetailView&module=Users&record={$fields['ID']}";
+
+	return array('fieldToAddTo' => 'NAME',
+				 'string' => $overlib_string,
+				 'editLink' => $editLink,
+				 'viewLink' => $viewLink);
 }
+ 
+?>

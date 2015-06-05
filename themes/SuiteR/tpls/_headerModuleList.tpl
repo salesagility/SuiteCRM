@@ -48,6 +48,12 @@
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
                 <div class="btn-group" role="group">
+                    <button type="button" class="alertsButton btn btn-success dropdown-toggle quickcreate" data-toggle="dropdown" aria-expanded="false">
+                        <span class="badge"><span class="alert_count">0</span> <span class="glyphicon glyphicon-comment"></span></span>
+                    </button>
+                    <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+                </div>
+                <div class="btn-group" role="group">
                     <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
@@ -292,6 +298,12 @@
                     <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
                     <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
                 </ul>
+            </div>
+            <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
+                <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
+                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
+                </button>
+                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
         </div>
 
