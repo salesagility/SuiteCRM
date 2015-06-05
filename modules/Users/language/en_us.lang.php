@@ -590,6 +590,8 @@ $mod_strings = array (
     'LBL_QUICK_CALL' => 'Log Call',
     'LBL_QUICK_TASK' => 'Create Task',
 
+    'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
+
 ); // END STRINGS DEFS
 
 ?>
