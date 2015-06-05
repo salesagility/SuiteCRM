@@ -367,4 +367,11 @@ function update_screen_resolution(){
     });
 }
 
+// Alerts Notification
+$(document).ready(function() {
+    $('#alert-nav').click(function() {
+        $('#alert-nav #alerts').css('display', 'inherit');
+    });
+});
+
 // End of custom jQuery
