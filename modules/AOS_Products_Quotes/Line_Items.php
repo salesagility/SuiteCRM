@@ -52,32 +52,33 @@ function display_lines($focus, $field, $value, $view){
         }
         $html .= '<input type="hidden" name="vathidden" id="vathidden" value="'.get_select_options_with_id($app_list_strings['vat_list'], '').'">
 				  <input type="hidden" name="discounthidden" id="discounthidden" value="'.get_select_options_with_id($app_list_strings['discount_list'], '').'">';
+        if($focus->id != '') {
+            require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
+            require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
 
-        require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
-        require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
+            $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '" . $focus->object_name . "' AND pg.parent_id = '" . $focus->id . "' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
 
-        $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '".$focus->object_name."' AND pg.parent_id = '".$focus->id."' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
-
-        $result = $focus->db->query($sql);
-        $html .= "<script>
-			if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}
-			</script>";
-
-        while ($row = $focus->db->fetchByAssoc($result)) {
-            $line_item = new AOS_Products_Quotes();
-            $line_item->retrieve($row['id']);
-            $line_item = json_encode($line_item->toArray());
-
-            $group_item = 'null';
-            if($row['group_id'] != null){
-                $group_item = new AOS_Line_Item_Groups();
-                $group_item->retrieve($row['group_id']);
-                $group_item = json_encode($group_item->toArray());
-            }
+            $result = $focus->db->query($sql);
             $html .= "<script>
-					insertLineItems(".$line_item.",".$group_item.");
-				</script>";
+                if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}
+                </script>";
 
+            while ($row = $focus->db->fetchByAssoc($result)) {
+                $line_item = new AOS_Products_Quotes();
+                $line_item->retrieve($row['id']);
+                $line_item = json_encode($line_item->toArray());
+
+                $group_item = 'null';
+                if ($row['group_id'] != null) {
+                    $group_item = new AOS_Line_Item_Groups();
+                    $group_item->retrieve($row['group_id']);
+                    $group_item = json_encode($group_item->toArray());
+                }
+                $html .= "<script>
+                        insertLineItems(" . $line_item . "," . $group_item . ");
+                    </script>";
+
+            }
         }
         if(!$enable_groups){
             $html .= '<script>insertGroup();</script>';
