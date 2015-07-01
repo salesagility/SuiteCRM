@@ -693,7 +693,7 @@ class AOR_Report extends Basic {
                 }
 
                 if((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                    $select_field = $table_alias.'_cstm.'.$field->field;
+                    $select_field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$field->field;
                     $query = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm',$table_alias, $field_module, 'custom', $query);
                 } else {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
@@ -727,7 +727,7 @@ class AOR_Report extends Basic {
 
             switch ($type){
                 case 'custom':
-                    $query['join'][$alias] = 'LEFT JOIN '.$this->db->quoteIdentifier($module->get_custom_table_name()).' '.$this->db->quoteIdentifier($name).' ON '.$module->table_name.'.id = '. $this->db->quoteIdentifier($name).'.id_c ';
+                    $query['join'][$alias] = 'LEFT JOIN '.$this->db->quoteIdentifier($module->get_custom_table_name()).' '.$this->db->quoteIdentifier($name).' ON '.$this->db->quoteIdentifier($parentAlias).'.id = '. $this->db->quoteIdentifier($name).'.id_c ';
                     break;
 
                 case 'relationship':
