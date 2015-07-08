@@ -36,7 +36,10 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+
 buildEditField();
+// check constantly to see if the session is still running
+window.setInterval(ajaxCallToHaveFreshCRM, 10000);
 
 //Global Variables.
 
@@ -45,14 +48,19 @@ var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
 
+
+
 function buildEditField(){
     $(".inlineEdit").dblclick(function(e) {
         e.preventDefault();
 
         //depending on what view you are using will find the id,module,type of field, and field name from the view
+        alert('1');
         if(view == "DetailView"){
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
+
+
 
             if(currentModule){
                 var module = currentModule;
@@ -130,6 +138,21 @@ function validateFormAndSave(field,id,module,type){
     });
 }
 
+// this will make fresh calls to the give live update of session data
+function ajaxCallToHaveFreshCRM(){
+    $.ajax({ url: 'index.php?entryPoint=InlineSessionEntryPoint',
+        type: 'post',
+        success: function(output) {
+            //output is returned from SessionCheck.php
+            if (output == 1){
+                alert("You are out of session. Changes will not be saved\n Please log back in");
+            }else{
+                return;
+            }
+        }
+    });
+}
+
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
  * the current element and have not clicked away from the field. Note we need to check on .cal_panel too for the calendar popup.
@@ -144,11 +167,42 @@ function clickedawayclose(field,id,module){
         if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
             handleCancel(field,id,module);
             $(document).off('click');
+            return confirmNotToSave($(e.target));
         }
 
     });
 }
 
+/**
+ * This method will check if the user wants to not save and carry on without saving possible changes that
+ * they have made. This method operates with a helper method 'CheckIfLeavingPage'.
+ * @param target - this is the element which is in focus currently
+ */
+
+function confirmNotToSave(target){
+    //if the user wants to leave the page then return true and the system will allow the user to carry on
+    if (checkIfLeavingpage(target)==true){
+        return true;
+    } else {
+        // if not, return false
+        return false;
+    }
+}
+
+/**
+ * This checks if the user wants to leave the page
+ * @param target - this is the element which is in focus currently
+ */
+function checkIfLeavingpage(target) {
+    //if there are more than 0 <a> elements, then display a confirm box
+    if (target.closest('a').length > 0) {
+        var confirmation = confirm('Warning! You are about to leave this page with unsaved changes.\n Do you wish to continue?')
+        // if true then the confirmation/var should be true
+        return confirmation;
+    } else {
+        return false;
+    }
+}
 
 /**
  * Depending on what type of field we are editing the parts of the field may differ and need different jquery to pickup the values
@@ -160,63 +214,63 @@ function clickedawayclose(field,id,module){
  * @returns {*}
  */
 
-function getInputValue(field,type){
+function getInputValue(field, type) {
 
-    if($('#'+ field).length > 0 && type){
+    if ($('#' + field).length > 0 && type) {
 
-        switch(type) {
+        switch (type) {
             case 'relate':
             case 'phone':
             case 'name':
             case 'varchar':
-                if($('#'+ field).val().length > 0) {
-                    return $('#'+ field).val();
+                if ($('#' + field).val().length > 0) {
+                    return $('#' + field).val();
                 }
                 break;
             case 'enum':
-                if($('#'+ field + ' :selected').text().length > 0){
-                    return $('#'+ field + ' :selected').text();
+                if ($('#' + field + ' :selected').text().length > 0) {
+                    return $('#' + field + ' :selected').text();
                 }
                 break;
             case 'datetime':
             case 'datetimecombo':
 
-                if($('#'+ field + '_date').val().length > 0){
-                    var date = $('#'+ field + '_date').val();
+                if ($('#' + field + '_date').val().length > 0) {
+                    var date = $('#' + field + '_date').val();
 
                 }
-                if($('#'+ field + '_hours :selected').text().length > 0){
-                    var hours = $('#'+ field + '_hours :selected').text();
+                if ($('#' + field + '_hours :selected').text().length > 0) {
+                    var hours = $('#' + field + '_hours :selected').text();
                 }
-                if($('#'+ field + '_minutes :selected').text().length > 0){
-                    var minutes = $('#'+ field + '_minutes :selected').text();
+                if ($('#' + field + '_minutes :selected').text().length > 0) {
+                    var minutes = $('#' + field + '_minutes :selected').text();
                 }
-                if($('#'+ field + '_meridiem :selected').text().length > 0){
-                    var meridiem = $('#'+ field + '_meridiem :selected').text();
+                if ($('#' + field + '_meridiem :selected').text().length > 0) {
+                    var meridiem = $('#' + field + '_meridiem :selected').text();
                 }
-                return date + " " + hours +":"+ minutes + meridiem;
+                return date + " " + hours + ":" + minutes + meridiem;
 
                 break;
             case 'date':
-                if($('#'+ field + ' :selected').text().length > 0){
-                    return $('#'+ field + ' :selected').text();
+                if ($('#' + field + ' :selected').text().length > 0) {
+                    return $('#' + field + ' :selected').text();
                 }
                 break;
             case 'multienum':
-                if($('#'+ field + ' :selected').text().length > 0){
-                    return $('select#'+field).val();
+                if ($('#' + field + ' :selected').text().length > 0) {
+                    return $('select#' + field).val();
                 }
                 break;
             case 'bool':
-                if($('#'+ field).is(':checked')){
-                   return "on";
-                }else{
+                if ($('#' + field).is(':checked')) {
+                    return "on";
+                } else {
                     return "off";
                 }
                 break;
             default:
-                if($('#'+ field).val().length > 0) {
-                    return $('#'+ field).val();
+                if ($('#' + field).val().length > 0) {
+                    return $('#' + field).val();
                 }
         }
     }
@@ -233,8 +287,8 @@ function getInputValue(field,type){
  * @param module - the module we are editing
  */
 
-function handleCancel(field,id,module){
-    var output_value = loadFieldHTMLValue(field,id,module);
+function handleCancel(field, id, module) {
+    var output_value = loadFieldHTMLValue(field, id, module);
     var output = setValueClose(output_value);
 }
 
@@ -251,12 +305,12 @@ function handleCancel(field,id,module){
  * @param type - the type of the field we are editing.
  */
 
-function handleSave(field,id,module,type){
-    var value = getInputValue(field,type);
-    if(typeof value === "undefined"){
+function handleSave(field, id, module, type) {
+    var value = getInputValue(field, type);
+    if (typeof value === "undefined") {
         var value = "";
     }
-    var output_value = saveFieldHTML(field,module,id,value);
+    var output_value = saveFieldHTML(field, module, id, value);
     var output = setValueClose(output_value);
 }
 
@@ -266,9 +320,9 @@ function handleSave(field,id,module,type){
  * @param value
  */
 
-function setValueClose(value){
+function setValueClose(value) {
 
-    $.get('themes/SuiteR/images/inline_edit_icon.svg', function(data) {
+    $.get('themes/SuiteR/images/inline_edit_icon.svg', function (data) {
         $(".inlineEditActive").html("");
         $(".inlineEditActive").html(value + '<div class="inlineEditIcon">' + inlineEditIcon + '</div>');
         $(".inlineEditActive").removeClass("inlineEditActive");
@@ -288,7 +342,7 @@ function setValueClose(value){
  * @returns {*}
  */
 
-function saveFieldHTML(field,module,id,value) {
+function saveFieldHTML(field, module, id, value) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
@@ -302,7 +356,7 @@ function saveFieldHTML(field,module,id,value) {
         }
     );
     $.ajaxSetup({"async": true});
-    return(result.responseText);
+    return (result.responseText);
 
 }
 
@@ -317,7 +371,7 @@ function saveFieldHTML(field,module,id,value) {
  * @returns {*}
  */
 
-function loadFieldHTML(field,module,id) {
+function loadFieldHTML(field, module, id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
@@ -330,11 +384,11 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         return(JSON.parse(result.responseText));
-     }else{
-         return false;
-     }
+    if (result.responseText) {
+        return (JSON.parse(result.responseText));
+    } else {
+        return false;
+    }
 
 
 }
@@ -349,7 +403,7 @@ function loadFieldHTML(field,module,id) {
  * @returns {*}
  */
 
-function loadFieldHTMLValue(field,id,module) {
+function loadFieldHTMLValue(field, id, module) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
@@ -363,7 +417,7 @@ function loadFieldHTMLValue(field,id,module) {
     );
     $.ajaxSetup({"async": true});
 
-    return(result.responseText);
+    return (result.responseText);
 }
 
 /**
@@ -376,7 +430,7 @@ function loadFieldHTMLValue(field,id,module) {
  * @returns {*}
  */
 
-function getValidationRules(field,module,id){
+function getValidationRules(field, module, id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
@@ -405,7 +459,7 @@ function getValidationRules(field,module,id){
  * @returns {*}
  */
 
-function getRelateFieldJS(field, module, id){
+function getRelateFieldJS(field, module, id) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
