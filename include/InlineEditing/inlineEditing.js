@@ -38,6 +38,8 @@
 
 
 buildEditField();
+// check constantly to see if the session is still running
+window.setInterval(ajaxCallToHaveFreshCRM, 10000);
 
 //Global Variables.
 
@@ -53,6 +55,7 @@ function buildEditField(){
         e.preventDefault();
 
         //depending on what view you are using will find the id,module,type of field, and field name from the view
+        alert('1');
         if(view == "DetailView"){
             var field = $(this).attr( "field" );
             var type = $(this).attr( "type" );
@@ -132,6 +135,21 @@ function validateFormAndSave(field,id,module,type){
         }else{
             return false
         };
+    });
+}
+
+// this will make fresh calls to the give live update of session data
+function ajaxCallToHaveFreshCRM(){
+    $.ajax({ url: 'index.php?entryPoint=InlineSessionEntryPoint',
+        type: 'post',
+        success: function(output) {
+            //output is returned from SessionCheck.php
+            if (output == 1){
+                alert("You are out of session. Changes will not be saved\n Please log back in");
+            }else{
+                return;
+            }
+        }
     });
 }
 
