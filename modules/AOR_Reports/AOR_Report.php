@@ -903,6 +903,14 @@ class AOR_Report extends Basic {
                                 } else {
                                     $value = 'NOW()';
                                 }
+                            } else if($params[0] == 'today'){
+                                if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                                    //$field =
+                                    $value  = 'CAST(GETDATE() AS DATE)';
+                                } else {
+                                    $field = 'DATE('.$field.')';
+                                    $value = 'Curdate()';
+                                }
                             } else {
                                 $data = $condition_module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {

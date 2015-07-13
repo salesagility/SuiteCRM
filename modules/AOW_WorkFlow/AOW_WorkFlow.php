@@ -281,6 +281,14 @@ class AOW_WorkFlow extends Basic {
                                 } else {
                                     $value = 'UTC_TIMESTAMP()';
                                 }
+                            } else if($params[0] == 'today'){
+                                if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                                    //$field =
+                                    $value  = 'CAST(GETDATE() AS DATE)';
+                                } else {
+                                    $field = 'DATE('.$field.')';
+                                    $value = 'Curdate()';
+                                }
                             } else {
                                 $data = $module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
@@ -487,8 +495,13 @@ class AOW_WorkFlow extends Basic {
 
                     case 'Date':
                         $params =  unserialize(base64_decode($value));
+                        $dateType = 'datetime';
                         if($params[0] == 'now'){
                             $value = date('Y-m-d H:i:s');
+                        } else if($params[0] == 'today'){
+                            $dateType = 'date';
+                            $value = date('Y-m-d');
+                            $field = strtotime(date('Y-m-d', $field));
                         } else {
                             $value = $condition_bean->$params[0];
                         }
@@ -507,13 +520,14 @@ class AOW_WorkFlow extends Basic {
                                         }
 
                                         $value = $businessHours->addBusinessHours($amount, $timedate->fromDb($value));
-                                        $value = strtotime($timedate->asDb( $value ));
+                                        $value = strtotime($timedate->asDbType( $value, $dateType ));
                                         break;
                                     }
                                     //No business hours module found - fall through.
                                     $params[3] = 'hours';
                                 default:
                                     $value = strtotime($value.' '.$app_list_strings['aow_date_operator'][$params[1]]." $params[2] ".$params[3]);
+                                    if($dateType == 'date') $value = strtotime(date('Y-m-d', $value));
                                     break;
                             }
                         } else {

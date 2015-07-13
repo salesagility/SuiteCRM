@@ -70,6 +70,7 @@ $app_list_strings['aow_date_type_list']['week'] = 'Weeks';
 $app_list_strings['aow_date_type_list']['month'] = 'Months';
 $app_list_strings['aow_date_type_list']['business_hours'] = 'Business Hours';
 $app_list_strings['aow_date_options']['now'] = 'Now';
+$app_list_strings['aow_date_options']['today'] = 'Today';
 $app_list_strings['aow_date_options']['field'] = 'This Field';
 $app_list_strings['aow_date_operator']['now'] = '';
 $app_list_strings['aow_date_operator']['plus'] = '+';
