@@ -256,6 +256,11 @@ class AOW_WorkFlow extends Basic {
                         $field = $table_alias.'.'.$condition->field;
                     }
 
+                    if($condition->operator == 'is_null'){
+                        $query['where'][] = '('.$field.' '.$app_list_strings['aow_sql_operator_list'][$condition->operator].' OR '.$field.' '.$app_list_strings['aow_sql_operator_list']['Equal_To']." '')";
+                        continue;
+                    }
+
                     switch($condition->value_type) {
                         case 'Field':
                             $data = $module->field_defs[$condition->value];
@@ -541,11 +546,11 @@ class AOW_WorkFlow extends Basic {
                         if($data['type'] == 'multienum') $field = unencodeMultienum($field);
                         switch($condition->operator) {
                             case 'Not_Equal_To';
-                                $condition->operator = 'Not_Contains';
+                                $condition->operator = 'Not_One_of';
                                 break;
                             case 'Equal_To';
                             default:
-                                $condition->operator = 'Contains';
+                                $condition->operator = 'One_of';
                                 break;
                         }
                         break;
@@ -584,7 +589,11 @@ class AOW_WorkFlow extends Basic {
             case "Less_Than":  return $var1 <  $var2;
             case "Greater_Than_or_Equal_To": return $var1 >= $var2;
             case "Less_Than_or_Equal_To": return $var1 <= $var2;
-            case "Contains":
+            case "Contains" : return strpos($var1,$var2);
+            case "Starts_With" : return strrpos($var1,$var2, -strlen($var1));
+            case "Ends_With" : return strpos($var1,$var2,strlen($var1) - strlen($var2));
+            case "is_null": return $var1 == '';
+            case "One_of":
                 if(is_array($var1)){
                     foreach($var1 as $var){
                         if(in_array($var,$var2)) return true;
@@ -592,7 +601,7 @@ class AOW_WorkFlow extends Basic {
                     return false;
                 }
                 else return in_array($var1,$var2);
-            case "Not_Contains":
+            case "Not_One_of":
                 if(is_array($var1)){
                     foreach($var1 as $var){
                         if(in_array($var,$var2)) return false;
