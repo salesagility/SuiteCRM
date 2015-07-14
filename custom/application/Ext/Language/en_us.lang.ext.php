@@ -838,7 +838,9 @@ $app_list_strings['aow_email_to_list']['bcc'] = 'Bcc';
 $app_list_strings['aow_run_on_list']['All_Records'] = 'All Records';
 $app_list_strings['aow_run_on_list']['New_Records'] = 'New Records';
 $app_list_strings['aow_run_on_list']['Modified_Records'] = 'Modified Records';
-
+$app_list_strings['aow_run_when_list']['Always'] = 'Always';
+$app_list_strings['aow_run_when_list']['On_Save'] = 'Only On Save';
+$app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler';
 
 
 
