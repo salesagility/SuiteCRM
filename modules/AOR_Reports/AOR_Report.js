@@ -62,7 +62,7 @@ function setProspectReturn(popup_reply_data){
 function changeReportPage(record, offset, group){
     var callback = {
         success: function(result) {
-           document.getElementById('report_table'+group).innerHTML = result.responseText;
+            document.getElementById('report_table'+group).innerHTML = result.responseText;
         }
     }
     var query = "?module=AOR_Reports&action=changeReportPage&record="+record+"&offset="+offset+"&group="+group;

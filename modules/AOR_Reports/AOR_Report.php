@@ -23,42 +23,42 @@
  */
 
 class AOR_Report extends Basic {
-	var $new_schema = true;
-	var $module_dir = 'AOR_Reports';
-	var $object_name = 'AOR_Report';
-	var $table_name = 'aor_reports';
-	var $importable = true;
-	var $disable_row_level_security = true ;
+    var $new_schema = true;
+    var $module_dir = 'AOR_Reports';
+    var $object_name = 'AOR_Report';
+    var $table_name = 'aor_reports';
+    var $importable = true;
+    var $disable_row_level_security = true ;
 
-	var $id;
-	var $name;
-	var $date_entered;
-	var $date_modified;
-	var $modified_user_id;
-	var $modified_by_name;
-	var $created_by;
-	var $created_by_name;
-	var $description;
-	var $deleted;
-	var $created_by_link;
-	var $modified_user_link;
-	var $assigned_user_id;
-	var $assigned_user_name;
-	var $assigned_user_link;
-	var $report_module;
+    var $id;
+    var $name;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $modified_by_name;
+    var $created_by;
+    var $created_by_name;
+    var $description;
+    var $deleted;
+    var $created_by_link;
+    var $modified_user_link;
+    var $assigned_user_id;
+    var $assigned_user_name;
+    var $assigned_user_link;
+    var $report_module;
 
-	function AOR_Report(){
-		parent::Basic();
+    function AOR_Report(){
+        parent::Basic();
         $this->load_report_beans();
         require_once('modules/AOW_WorkFlow/aow_utils.php');
-	}
+    }
 
-	function bean_implements($interface){
-		switch($interface){
-			case 'ACL': return true;
-		}
-		return false;
-	}
+    function bean_implements($interface){
+        switch($interface){
+            case 'ACL': return true;
+        }
+        return false;
+    }
 
     function save($check_notify = FALSE){
         if (empty($this->id)){
@@ -252,7 +252,7 @@ class AOR_Report extends Basic {
             while ($row = $this->db->fetchByAssoc($result)) {
                 if($html != '') $html .= '<br />';
 
-               $html .= $this->build_report_html($offset, $links, $row[$field_label]);
+                $html .= $this->build_report_html($offset, $links, $row[$field_label]);
 
             }
         }
@@ -425,7 +425,7 @@ class AOR_Report extends Basic {
 
                     switch ($att['function']){
                         case 'COUNT':
-                        //case 'SUM':
+                            //case 'SUM':
                             $html .= $row[$name];
                             break;
                         default:
@@ -714,7 +714,7 @@ class AOR_Report extends Basic {
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
                 if($field->group_display) $query['where'][] = $select_field." = '".$group_value."'";
-                    ++$i;
+                ++$i;
             }
         }
         return $query;
@@ -799,7 +799,7 @@ class AOR_Report extends Basic {
     }
 
     function build_report_query_where($query = array()){
-        global $beanList, $app_list_strings, $sugar_config;
+        global $beanList, $app_list_strings, $sugar_config, $timedate;
 
 
         if($beanList[$this->report_module]){
@@ -896,14 +896,26 @@ class AOR_Report extends Basic {
                             break;
 
                         case 'Date':
-                            $params =  unserialize(base64_decode($condition->value));
+                            /*
+                                                        echo $condition->value;
+                                                        die();*/
+                            if (strpos($condition->value, '|')!== false){
+                                $params = explode('|', $condition->value);
+
+                            }else{
+                                $params =  unserialize(base64_decode($condition->value));
+                            }
+
+
                             if($params[0] == 'now'){
+
                                 if($sugar_config['dbconfig']['db_type'] == 'mssql'){
                                     $value  = 'GetDate()';
                                 } else {
                                     $value = 'NOW()';
                                 }
                             } else {
+                                echo '4';
                                 $data = $condition_module->field_defs[$params[0]];
                                 if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                                     $value = $condition_module->table_name.'_cstm.'.$params[0];
@@ -947,13 +959,34 @@ class AOR_Report extends Basic {
 
                         case 'Value':
                         default:
-                            $value = "'".$this->db->quote($condition->value)."'";
+                            //      ini_set('display_errors',1);
+                            //$data = $condition_module->field_defs[$condition->value];
+                            $data = $condition_module->field_defs[$condition->field];
+
+                            if($data['type'] == 'date'){
+
+                                $dateOb = $timedate->fromUserDate($condition->value);
+                                if($dateOb){
+
+                                    $value = "'".$this->db->quote($timedate->asDbDate($dateOb))."'";
+
+
+                                }else{
+
+                                    $value = "'".$this->db->quote($condition->value)."'";
+
+                                }
+
+                            } else{
+                                $value = "'".$this->db->quote($condition->value)."'";
+
+                            }
+
                             break;
                     }
 
 
                     if(!$where_set) $query['where'][] = $field.' '.$app_list_strings['aor_sql_operator_list'][$condition->operator].' '.$value;
-
 
                 }
             }
