@@ -62,7 +62,7 @@ function setProspectReturn(popup_reply_data){
 function changeReportPage(record, offset, group){
     var callback = {
         success: function(result) {
-           document.getElementById('report_table'+group).innerHTML = result.responseText;
+            document.getElementById('report_table'+group).innerHTML = result.responseText;
         }
     }
     var query = "?module=AOR_Reports&action=changeReportPage&record="+record+"&offset="+offset+"&group="+group;
@@ -75,8 +75,30 @@ function changeReportPage(record, offset, group){
         query += "&parameter_operator[]="+operator;
         var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
         query += "&parameter_type[]="+fieldType;
-        var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
-        query += "&parameter_value[]="+fieldInput;
+        if (fieldType =='Date'){
+            for (i=0;i<4;i++){
+                var logged = $('#aor_conditions_value\\[0\\]\\['+ i +'\\]').val();
+                if(i == 0 ){
+                    var typeOfThing = logged ;
+                }
+                if(i == 1 ){
+                    var operatorForDate = logged;
+                }
+                if(i == 2 ){
+                    var numberForDateVariation = logged;
+                }
+                if(i == 3 ){
+                    var timeOfVariation = logged;
+                }
+            }
+            var fieldInput = typeOfThing +'|'+ operatorForDate + '|'+numberForDateVariation +'|' + timeOfVariation;
+
+            query += "&parameter_value[]"+fieldInput;
+        }
+        else{
+            var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
+            query += "&parameter_value[]"+fieldInput;
+        }
     });
 
     YAHOO.util.Connect.asyncRequest ("GET", "index.php"+query,callback);
