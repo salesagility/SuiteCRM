@@ -180,6 +180,9 @@ function showModuleField(ln, operator_value, type_value, field_value){
     if(operator_value == 'is_null'){
         hideElem('aow_conditions_fieldTypeInput' + ln);
         hideElem('aow_conditions_fieldInput' + ln);
+    } else {
+        showElem('aow_conditions_fieldTypeInput' + ln);
+        showElem('aow_conditions_fieldInput' + ln);
     }
 }
 
