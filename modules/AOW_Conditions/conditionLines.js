@@ -176,6 +176,11 @@ function showModuleField(ln, operator_value, type_value, field_value){
         document.getElementById('aow_conditions_fieldTypeInput'+ln).innerHTML = '';
         document.getElementById('aow_conditions_fieldInput'+ln).innerHTML = '';
     }
+
+    if(operator_value == 'is_null'){
+        hideElem('aow_conditions_fieldTypeInput' + ln);
+        hideElem('aow_conditions_fieldInput' + ln);
+    }
 }
 
 function showModuleFieldType(ln, value){
