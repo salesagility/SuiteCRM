@@ -25,9 +25,9 @@
 var condln = 0;
 var condln_count = 0;
 var report_fields =  new Array();
-var report_module = '';
+var report_module = ''
 
-function loadConditionLine(condition, overrideView){
+function loadConditionLine(condition, overrideView,valuesOfDate){
 
     var prefix = 'aor_conditions_';
     var ln = 0;
@@ -51,7 +51,12 @@ function loadConditionLine(condition, overrideView){
         condition['value'] = JSON.stringify(condition['value'])
     }
 
-    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView);
+    if(typeof valuesOfDate === 'undefined'){
+        showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView);
+    }else{
+        showConditionModuleField(ln, condition['operator'], condition['value_type'], valuesOfDate,overrideView);
+    }
+
 }
 
 function showConditionCurrentModuleFields(ln, value){
@@ -90,6 +95,7 @@ function showConditionCurrentModuleFields(ln, value){
 }
 
 function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView){
+
     if(overrideView === undefined){
         overrideView = action_sugar_grp1;
     }
@@ -130,7 +136,6 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
             }
         }
-
         var aor_operator_name = "aor_conditions_operator["+ln+"]";
         var aor_field_type_name = "aor_conditions_value_type["+ln+"]";
         var aor_field_name = "aor_conditions_value["+ln+"]";
@@ -138,6 +143,7 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleOperatorField&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_operator_name+"&aor_value="+operator_value+"&rel_field="+rel_field,callback);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getFieldTypeOptions&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_type_name+"&aor_value="+type_value+"&rel_field="+rel_field,callback2);
         YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+field_value+"&aor_type="+type_value+"&rel_field="+rel_field,callback3);
+
 
     } else {
         document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = ''

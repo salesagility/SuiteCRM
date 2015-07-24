@@ -446,6 +446,9 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
         $fieldlist[$fieldname]['value'] = $timedate->to_display_date($value);
+        if(!$fieldlist[$fieldname]['value']){
+            $fieldlist[$fieldname]['value'] = $value;
+        }
         //$fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
         //$fieldlist[$fieldname]['value'] = $value;
         $fieldlist[$fieldname]['name'] = $aow_field;

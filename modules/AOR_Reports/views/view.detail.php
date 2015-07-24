@@ -51,7 +51,13 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 $param = $this->bean->user_parameters[$condition->id];
                 $condition_item['operator'] = $param['operator'];
                 $condition_item['value_type'] = $param['type'];
-                $condition_item['value'] = $param['value'];
+                if($param['type'] === 'Date'){
+                    $condition_item['value'] = explode('|',$param['value']);
+                }else{
+                    $condition_item['value'] = $param['value'];
+                }
+
+
             }
             $parameters[] = $condition_item;
         }
