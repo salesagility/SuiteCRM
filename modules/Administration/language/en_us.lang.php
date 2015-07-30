@@ -585,6 +585,7 @@ $mod_strings = array (
     'LBL_PASSWORD_LASTNAME_PROHIBITED'=> 'Last name not allowed',
     'LBL_PASSWORD_SYST_EXPIRATION'=> 'System-Generated Password Expiration',
     'LBL_PASSWORD_SYST_GENERATED_TITLE'=> 'System-Generated Passwords',
+    'LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS' => 'PASSWORD MANAGER SYSTEM SETTINGS',
     'LBL_PASSWORD_USER_EXPIRATION'=> 'User-Generated Password Expiration',
     'ERR_PASSWORD_LINK_EXPIRE_TIME'   => 'Specify the time after which the generated link will expire.',
 	'ERR_PASSWORD_EXPIRE_TIME'   => 'Specify the time after which the password will expire.',
