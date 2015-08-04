@@ -248,6 +248,14 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $vardef = $focus->getFieldDefinition($fieldname);
         }
 
+        // Bug: check for AOR value SecurityGroups value missing
+        if(stristr($fieldname, 'securitygroups') != false && empty($vardef)) {
+            require_once($beanFiles[$beanList['SecurityGroups']]);
+            $module = 'SecurityGroups';
+            $focus = new $beanList[$module];
+            $vardef = $focus->getFieldDefinition($fieldname);
+        }
+
         $displayParams = array();
         //$displayParams['formName'] = 'EditView';
 
@@ -589,7 +597,21 @@ function getAssignField($aow_field, $view, $value){
 
 }
 
-
+function getDropdownList($list_id, $selected_value) {
+    global $app_list_strings;
+    $option = '';
+    foreach($app_list_strings[$list_id] as $key => $value) {
+        if(base64_decode($selected_value) == $key) {
+            $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
+        } else if($selected_value == $key) {
+            $option .= '<option value="'.$key.'" selected>'.$value.'</option>';
+        }
+        else {
+            $option .= '<option value="'.$key.'">'.$value.'</option>';
+        }
+    }
+    return $option;
+}
 function getLeastBusyUser($users, $field, SugarBean $bean) {
     $counts = array();
     foreach($users as $id) {
