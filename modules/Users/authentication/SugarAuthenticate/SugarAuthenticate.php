@@ -77,7 +77,7 @@ class SugarAuthenticate{
 	 * @param string $password
 	 * @return boolean
 	 */
-	function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array (),$val){
+	function loginAuthenticate($username, $password, $fallback=false, $PARAMS = array ()){
 		global $mod_strings;
 		unset($_SESSION['login_error']);
 		$usr= new user();
