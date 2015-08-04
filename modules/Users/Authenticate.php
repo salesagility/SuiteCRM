@@ -91,12 +91,47 @@ if(isset($_SESSION['authenticated_user_id'])) {
     }
 } else {
 	// Login has failed
-	$url ="index.php?module=Users&action=Login";
-    if(!empty($login_vars))
-    {
-        $url .= '&' . http_build_query($login_vars);
+
+    $passwordSecurityON = $GLOBALS['sugar_config']['passwordsetting']['SystemEnableSecurityON'];
+    $userBean = BeanFactory::getBean('Users');
+    $userId = $userBean->retrieve_user_id($user_name);
+
+    if (($passwordSecurityON == 1)&&(isset($userId))){
+        //setup variables
+        if (!empty($userId)) {
+            $attemptsAllowed = $GLOBALS['sugar_config']['passwordsetting']['SystemAttemptLimit'];
+            $timeFrameValue = $GLOBALS['sugar_config']['passwordsetting']['SystemTimeFrameValue'];
+            $timeFrameSetting = $GLOBALS['sugar_config']['passwordsetting']['SystemTimeFrameSetting'];
+
+            $dbDateString = "-" . $timeFrameValue . " " . $timeFrameSetting;
+            $startDate = time();
+
+            $cutoff = date('Y-m-d H:i:s', strtotime($dbDateString, $startDate));
+
+            $loginAttempt = BeanFactory::newBean('UserLoginAttempt');
+            $loginAttempt->assigned_user_id = $userId;
+            $loginAttempt->save();
+
+            $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered > '$cutoff') AND (user_login_attempt.assigned_user_id = '$userId')");
+$sql = "(user_login_attempt.date_entered > '$cutoff') AND (user_login_attempt.assigned_user_id = '$userId')";
+            $mycount = count($loginAttemptList);
+
+            if(count($loginAttemptList) >= $attemptsAllowed){
+                echo 'over the limit';
+                die();
+
+            }
+
+        }
     }
+
+        $url = "index.php?module=Users&action=Login";
+        if (!empty($login_vars)) {
+            $url .= '&' . http_build_query($login_vars);
+        }
+
 }
+
 
 // construct redirect url
 $url = 'Location: '.$url;
