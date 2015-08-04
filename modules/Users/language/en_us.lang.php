@@ -65,6 +65,7 @@ $mod_strings = array (
 	'ERR_IE_FAILURE2'					=> 'There was a problem connecting to the Email Account.  Please check your settings and try again.',
 	'ERR_IE_MISSING_REQUIRED'			=> "Inbound Email settings are missing required information.\n  Please check your settings and try again.\n\nIf you are not setting up Inbound Email, please clear all fields in that section.",
 	'ERR_INVALID_PASSWORD'				=> 'You must specify a valid username and password.',
+    'ERR_USER_LOCKED_OUT'				=> 'Your account has been locked. Please contact the Admin',
 	'ERR_NO_LOGIN_MOBILE'				=> 'Your first login to this application must be completed with a non-mobile browser or in normal mode. Please return with a full browser or click on the normal link below. We apologize for any inconvenience.',
 	'ERR_LAST_ADMIN_1'					=> 'The user name "',
 	'ERR_LAST_ADMIN_2'					=> '" is the last user with administrator access.	At least one user must be an administrator.',
