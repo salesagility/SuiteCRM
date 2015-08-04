@@ -96,7 +96,7 @@ if(isset($_SESSION['authenticated_user_id'])) {
     $userBean = BeanFactory::getBean('Users');
     $userId = $userBean->retrieve_user_id($user_name);
 
-    if (($passwordSecurityON == 1)&&(isset($userId))){
+    if (($passwordSecurityON == 1)&&(!empty($userId))){
         //setup variables
         if (!empty($userId)) {
             $attemptsAllowed = $GLOBALS['sugar_config']['passwordsetting']['SystemAttemptLimit'];
@@ -106,17 +106,19 @@ if(isset($_SESSION['authenticated_user_id'])) {
             $dbDateString = "-" . $timeFrameValue . " " . $timeFrameSetting;
             $startDate = time();
 
-            $cutoff = date('Y-m-d H:i:s', strtotime($dbDateString, $startDate));
+            $preProcessedcutoff = date('Y-m-d H:i:s', strtotime($dbDateString, $startDate));
+            $UTCCutoff = gmdate('Y.m.d H:i.s',strtotime(preProcessedcutoff));
 
             $loginAttempt = BeanFactory::newBean('UserLoginAttempt');
             $loginAttempt->assigned_user_id = $userId;
             $loginAttempt->save();
 
-            $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered > '$cutoff') AND (user_login_attempt.assigned_user_id = '$userId')");
-$sql = "(user_login_attempt.date_entered > '$cutoff') AND (user_login_attempt.assigned_user_id = '$userId')";
+            $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered > '$UTCcutoff') AND (user_login_attempt.assigned_user_id = '$userId')");
             $mycount = count($loginAttemptList);
 
-            if(count($loginAttemptList) >= $attemptsAllowed){
+
+
+            if(count($loginAttemptList) > $attemptsAllowed){
                 echo 'over the limit';
                 die();
 
