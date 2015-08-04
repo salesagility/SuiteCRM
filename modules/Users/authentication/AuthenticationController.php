@@ -121,7 +121,7 @@ class AuthenticationController
 	 * @param array $PARAMS
 	 * @return boolean true if the user successfully logs in or false otherwise.
 	 */
-	public function login($username, $password, $PARAMS = array())
+	public function login($username, $password, $PARAMS = array(),$val)
 	{
 		//kbrill bug #13225
 		$_SESSION['loginAttempts'] = (isset($_SESSION['loginAttempts']))? $_SESSION['loginAttempts'] + 1: 1;
@@ -130,7 +130,7 @@ class AuthenticationController
 		if($this->loggedIn)return $this->loginSuccess;
 		LogicHook::initialize()->call_custom_logic('Users', 'before_login');
 
-		$this->loginSuccess = $this->authController->loginAuthenticate($username, $password, false, $PARAMS);
+		$this->loginSuccess = $this->authController->loginAuthenticate($username, $password, false, $PARAMS,$val);
 		$this->loggedIn = true;
 
 		if($this->loginSuccess){
