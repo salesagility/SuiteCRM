@@ -66,6 +66,23 @@ $dictionary['UserLoginAttempt'] = array(
                 'reportable' => false,
                 'comment' => 'Record deletion indicator',
             ),
+        'assigned_user_id' =>
+            array (
+                'name' => 'assigned_user_id',
+                'rname' => 'user_name',
+                'id_name' => 'assigned_user_id',
+                'vname' => 'LBL_ASSIGNED_TO_ID',
+                'group' => 'assigned_user_name',
+                'type' => 'relate',
+                'table' => 'users',
+                'module' => 'Users',
+                'reportable' => true,
+                'isnull' => 'false',
+                'dbType' => 'id',
+                'audited' => true,
+                'comment' => 'User ID assigned to record',
+                'duplicate_merge' => 'disabled',
+            ),
     ) ,
     'indices' => array(
         array(
