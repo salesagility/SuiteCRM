@@ -207,7 +207,7 @@ class CaseUpdatesHook {
         $beans = $ea->getBeansByEmailAddress($bean->from_addr);
         $contact_id = null;
         foreach($beans as $emailBean){
-            if($emailBean->module_name == "Contacts"){
+            if($emailBean->module_name == "Contacts" && !empty($emailBean->id)){
                 $contact_id = $emailBean->id;
                 $this->linkAccountAndCase($bean->parent_id,$emailBean->account_id);
             }

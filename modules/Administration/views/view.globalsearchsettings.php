@@ -89,7 +89,7 @@ class AdministrationViewGlobalsearchsettings extends SugarView
         echo $sugar_smarty->fetch($tpl);
 
     }
-
+/*
     protected function isFTSConnectionValid()
     {
         require_once('include/SugarSearchEngine/SugarSearchEngineFactory.php');
@@ -100,4 +100,5 @@ class AdministrationViewGlobalsearchsettings extends SugarView
         else
             return FALSE;
     }
+	*/
 }
