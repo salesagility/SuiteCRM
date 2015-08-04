@@ -57,6 +57,102 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
+
+                        <table id = "systemPasswordRequirementsID" name="systemPasswordRequirementsName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+                            <tr>
+                                <th align="left" scope="row" colspan="4">
+                                    <h4>
+                                        {$MOD.LBL_PASSWORD_REQ_SETTING}
+                                    </h4>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <td  scope="row" width='30%'>
+                                    {$MOD.LBL_PASSWORD_SHOULD_CONTAIN_UPPER}
+                                </td>
+                                <td >
+                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
+                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {else}
+                                        {assign var='SystemSecurityFunctionON' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    {$MOD.LBL_UW_ENABLE}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='30%'>
+                                    {$MOD.LBL_SHOULD_CONTAIN_NUMBER}
+                                </td>
+                                <td >
+                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
+                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {else}
+                                        {assign var='SystemSecurityFunctionON' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    {$MOD.LBL_UW_ENABLE}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='30%'>
+                                    {$MOD.LBL_SHOULD_CONTAIN_NON_ALPHA_NUMERIC}
+                                </td>
+                                <td >
+                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
+                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {else}
+                                        {assign var='SystemSecurityFunctionON' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    {$MOD.LBL_UW_ENABLE}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='30%'>
+                                    {$MOD.LBL_SHOULD_HAVE_MINIMUM}
+                                </td>
+                                <td >
+                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
+                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {else}
+                                        {assign var='SystemSecurityFunctionON' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    {$MOD.LBL_UW_ENABLE}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='30%'>
+                                    {$MOD.LBL_SHOULD_HAVE_MAXIMUM}
+                                </td>
+                                <td >
+                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
+                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {else}
+                                        {assign var='SystemSecurityFunctionON' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    {$MOD.LBL_UW_ENABLE}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='25%'>
+                                    {$MOD.LBL_WHAT_IS_THE_MINIMUM}
+                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='3'>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='25%'>
+                                    {$MOD.LBL_WHAT_IS_THEMAXIMUM}
+                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='3'>
+                                </td>
+                            </tr>
+
+
+                        </table>
+
                         <table id="sysPasswordManagerId" name="sysPasswordManagerName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
                             <tr>
                                 <th align="left" scope="row" colspan="4">
