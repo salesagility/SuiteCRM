@@ -1,5 +1,5 @@
 <div>
-    <form action='index.php' name='ConfigureReportDashlet' id='configure_{$id}' method='post' onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
+    <form action='index.php' name='EditView' id='configure_{$id}' method='post' onSubmit='return SUGAR.dashlets.postForm("configure_{$id}", SUGAR.mySugar.uncoverPage);'>
         <input type='hidden' name='id' value='{$id}'>
         <input type='hidden' name='module' value='Home'>
         <input type='hidden' name='action' value='ConfigureDashlet'>
@@ -20,10 +20,6 @@
                     {$MOD.LBL_DASHLET_REPORT}
                 </td>
                 <td>
-
-
-
-
                     <input type="text" name="aor_report_name" class="sqsEnabled" tabindex="0" id="aor_report_name" size="" value="{$aor_report_name}" title='' autocomplete="off">
                     <input type="hidden" name="aor_report_id" id="aor_report_id" value="{$aor_report_id}">
                     <span class="id-ff multiple">
@@ -36,7 +32,7 @@
                                             "",
                                             true,
                                             false,
-                                            {"call_back_function":"aor_report_set_return","form_name":"ConfigureReportDashlet","field_to_name_array":{"id":"aor_report_id","name":"aor_report_name"}},
+                                            {"call_back_function":"aor_report_set_return","form_name":"EditView","field_to_name_array":{"id":"aor_report_id","name":"aor_report_name"}},
                                             "single",
                                             true
                                     );' >
@@ -53,8 +49,8 @@
                         if(typeof sqs_objects == 'undefined'){
                             var sqs_objects = new Array;
                         }
-                        sqs_objects['ConfigureReportDashlet']={
-                            "form":"ConfigureReportDashlet",
+                        sqs_objects['EditView']={
+                            "form":"EditView",
                             "method":"query",
                             "modules": ["AOR_Reports"],
                             "field_list":["name","id"],
@@ -69,19 +65,16 @@
                             "limit":"30",
                             "no_match_text":"No Match"};
                         SUGAR.util.doWhen(
-                                "typeof(sqs_objects) != 'undefined' && typeof(sqs_objects['ConfigureReportDashlet_aor_report_name']) != 'undefined'",
+                                "typeof(sqs_objects) != 'undefined' && typeof(sqs_objects['EditView_aor_report_name']) != 'undefined'",
                                 enableQS
                         );
                         {/literal}
                     </script>
-
-
-
-
                 </td>
             </tr>
             <tr>
-                <td scope='row'><label for="onlyCharts{$id}">
+                <td scope='row'>
+                    <label for="onlyCharts{$id}">
                         {$MOD.LBL_DASHLET_ONLY_CHARTS}
                     </label>
                 </td>
@@ -99,22 +92,37 @@
                     </select>
                 </td>
             </tr>
+            {foreach from=$parameters item=condition}
             <tr>
                 <td scope='row'>
                     {$MOD.LBL_PARAMETERS}
                 </td>
                 <td>
                     <div id="parameterOptions{$id}">
-                        {foreach from=$parameters item=condition}
+
                             <input type='hidden' name='parameter_id[]' value='{$condition.id}'>
                             <input type='hidden' name='parameter_operator[]' value='{$condition.operator}'>
                             <input type='hidden' name='parameter_type[]' value='{$condition.value_type}'>
-                            {$condition.module_display} {$condition.field_display} {$condition.operator_display} {$condition.field}
-                        {/foreach}
+
+                        {if $condition.value_type == "Period"}
+                            {$condition.module_display} - <em>{$condition.field_display}</em> - {$condition.operator_display}
+                            <select name='parameter_value[]'>
+                                {html_options options=$date_time_period_list selected=$condition.value}
+                            </select>
+                        {elseif $condition.value_type == "Relate"}
+
+                        {else}
+                            {$condition.module_display} - <em>{$condition.field_display}</em> - {$condition.operator_display}  {$condition.field}
+                        {/if}
+
                     </div>
                 </td>
             </tr>
+            {/foreach}
             <tr>
+                <td scope='row'>
+
+                </td>
                 <td align='right'>
                     <input type='submit' class='button' value='{$MOD.LBL_DASHLET_SAVE}'>
                 </td>

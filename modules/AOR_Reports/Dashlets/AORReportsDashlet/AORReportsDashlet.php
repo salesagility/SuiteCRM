@@ -19,7 +19,7 @@ class AORReportsDashlet extends Dashlet {
         $this->def = $def;
         if(empty($def['dashletTitle'])) {
             $this->title = translate('LBL_AOR_REPORTS_DASHLET', 'AOR_Reports');
-        }else{
+        } else{
             $this->title = $def['dashletTitle'];
         }
 
@@ -72,7 +72,7 @@ class AORReportsDashlet extends Dashlet {
 
     public function displayOptions() {
         ob_start();
-        global $current_language, $app_list_strings;
+        global $current_language, $app_list_strings, $datetime;
         $mod_strings = return_module_language($current_language, 'AOR_Reports');
         $optionsSmarty = new Sugar_Smarty();
         $optionsSmarty->assign('MOD',$mod_strings);
@@ -81,6 +81,12 @@ class AORReportsDashlet extends Dashlet {
         $optionsSmarty->assign('aor_report_id', $this->report->id);
         $optionsSmarty->assign('aor_report_name', $this->report->name);
         $optionsSmarty->assign('onlyCharts', $this->onlyCharts);
+        $optionsSmarty->assign('aor_date_options', $app_list_strings['aor_date_options']);
+        $optionsSmarty->assign('aor_condition_type_list', $app_list_strings['aor_condition_type_list']);
+        $optionsSmarty->assign('aor_date_operator', $app_list_strings['aor_date_operator']);
+        $optionsSmarty->assign('aor_date_type_list', $app_list_strings['aor_date_type_list']);
+        $optionsSmarty->assign('date_time_period_list', $app_list_strings['date_time_period_list']);
+
         $charts = array();
         if(!empty($this->report->id)){
             foreach($this->report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
@@ -88,6 +94,16 @@ class AORReportsDashlet extends Dashlet {
             }
         }
         $conditions = getConditionsAsParameters($this->report, $this->params);
+        $i = 0;
+        foreach($conditions as $condition) {
+            if($condition["value_type"] == "Date"){
+                if($condition["additionalConditions"][0] == "now") {
+                    $conditions[$i]["value"] = date("d/m/Y");
+                }
+            }
+
+            $i++;
+        }
         $optionsSmarty->assign('parameters', $conditions);
         $chartOptions = get_select_options_with_id($charts,$this->charts);
         $optionsSmarty->assign('chartOptions', $chartOptions);
@@ -96,8 +112,15 @@ class AORReportsDashlet extends Dashlet {
         return $optionsSmarty->fetch($optionsTemplate);
     }
     public function saveOptions($req) {
+//        if(count($req['parameter_value']) == 2) {
+//            $firstValue = $req['parameter_value'][0];
+//            $secondValue = $req['parameter_value'][1];
+//            $req['parameter_value'][0] = $secondValue;
+//            $req['parameter_value'][1] = $firstValue;
+//        }
         $allowedKeys = array_flip(array('aor_report_id','dashletTitle','charts','onlyCharts','parameter_id','parameter_value','parameter_type','parameter_operator'));
-        return array_intersect_key($req,$allowedKeys);
+        $intersected = array_intersect_key($req,$allowedKeys);
+        return $intersected;
     }
 
     public function hasAccess() {
