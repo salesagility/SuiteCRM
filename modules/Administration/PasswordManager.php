@@ -62,6 +62,7 @@ function clearPasswordSettings() {
 	    $_POST['passwordsetting_systexpirationtime'] = '';
 	    $_POST['passwordsetting_systexpirationtype'] = '0';
 	    $_POST['passwordsetting_systexpirationlogin'] = '';
+        $_POST['passwordsetting_SystemSecurityFunctionCheckboxON'] = '';
 
 }
 require_once('modules/Administration/Forms.php');
@@ -92,13 +93,31 @@ if(!empty($_POST['saveConfig'])){
 		$valid_public_key= substr($buffer, 1, 4) == 'var '? true : false;
 	}
 	if ($valid_public_key){
+        //if (isset($_REQUEST['SystemSecurityFunctionCheckboxON']) && $_REQUEST['SystemSecurityFunctionCheckboxON'] == 'on'){
+        if(!empty($_REQUEST['passwordsetting_SystemSecurityFunctionCheckboxON'])){
+            //get value of all boxes and check boxes
+            //write to the config file...and set it
+           $checkBoxSecurityONthis = $_REQUEST['passwordsetting_SystemSecurityFunctionCheckboxON'];
+            $timeFrameValuethis = $_REQUEST['timeFrameValue'];
+            $timeFrameSettingthis = $_REQUEST['timeFrameSetting'];
+            $passwordLimitAttemptthis = $_REQUEST['passwordLimitAttempts'];
+
+            $configurator->config['passwordsetting']['SystemEnableSecurityON'] = $checkBoxSecurityONthis;
+            $configurator->config['passwordsetting']['SystemAttemptLimit'] = $passwordLimitAttemptthis;
+            $configurator->config['passwordsetting']['SystemTimeFrameValue'] = $timeFrameValuethis;
+            $configurator->config['passwordsetting']['SystemTimeFrameSetting'] = $timeFrameSettingthis;
+
+        }else{
+            $_POST['SystemSecurityFunctionCheckboxON'] = 0;
+        }
+
+
 		if (isset($_REQUEST['system_ldap_enabled']) && $_REQUEST['system_ldap_enabled'] == 'on') {
 			$_POST['system_ldap_enabled'] = 1;
 			clearPasswordSettings();
 		} 
 		else 
 			$_POST['system_ldap_enabled'] = 0;
-
 
         if(isset($_REQUEST['authenticationClass']))
         {
@@ -210,4 +229,6 @@ $sugar_smarty->assign("TMPL_DRPDWN_LOST", $TMPL_DRPDWN_LOST);
 $sugar_smarty->assign("TMPL_DRPDWN_GENERATE", $TMPL_DRPDWN_GENERATE);
 
 $sugar_smarty->display('modules/Administration/PasswordManager.tpl');
+
+
 ?>
