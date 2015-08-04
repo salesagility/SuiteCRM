@@ -57,9 +57,20 @@ $user_name = isset($_REQUEST['user_name'])
 $password = isset($_REQUEST['user_password'])
     ? $_REQUEST['user_password'] : '';
 
+$userBeanCheckPref = BeanFactory::getBean('Users');
+$idUser = $userBeanCheckPref->retrieve_user_id($user_name);
+
+$userCheckPref = BeanFactory::getBean('Users',$idUser);
+//$userCheckPref->setPreference('lockout', '');
+//$userCheckPref->savePreferencesToDB();
+$val = $userCheckPref->getPreference('lockout');
+//echo $val;
+//die();
+
 $authController->login($user_name, $password);
 // authController will set the authenticated_user_id session variable
-if(isset($_SESSION['authenticated_user_id'])) {
+
+if((isset($_SESSION['authenticated_user_id']))) {
 	// Login is successful
 	if ( $_SESSION['hasExpiredPassword'] == '1' && $_REQUEST['action'] != 'Save') {
 		$GLOBALS['module'] = 'Users';
@@ -107,7 +118,7 @@ if(isset($_SESSION['authenticated_user_id'])) {
             $startDate = time();
 
             $preProcessedcutoff = date('Y-m-d H:i:s', strtotime($dbDateString, $startDate));
-            $UTCCutoff = gmdate('Y.m.d H:i.s',strtotime(preProcessedcutoff));
+            $UTCCutoff = gmdate('Y.m.d H:i.s',strtotime("$preProcessedcutoff"));
 
             $loginAttempt = BeanFactory::newBean('UserLoginAttempt');
             $loginAttempt->assigned_user_id = $userId;
@@ -119,8 +130,10 @@ if(isset($_SESSION['authenticated_user_id'])) {
 
 
             if(count($loginAttemptList) > $attemptsAllowed){
-                echo 'over the limit';
-                die();
+//ini_set('display_errors',1);
+               $user = BeanFactory::getBean('Users',$userId);
+               $user->setPreference('lockout', '1');
+               $user->savePreferencesToDB();
 
             }
 
