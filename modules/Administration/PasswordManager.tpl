@@ -57,12 +57,60 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
 		<td>
+                        <table id="sysPasswordManagerId" name="sysPasswordManagerName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+                            <tr>
+                                <th align="left" scope="row" colspan="4">
+                                    <h4>
+                                        {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS}
+                                    </h4>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <td  scope="row" width='30%'>
+                                    {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS_ENABLE_SECURITY_FUNCTION}
+                                </td>
+                                <td >
+                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
+                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {else}
+                                        {assign var='SystemSecurityFunctionON' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    {$MOD.LBL_UW_ENABLE}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='25%'>
+                                    {$MOD.LBL_PASSWORD_FOR_SET_TIME}
+                                    <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value='3'>
+                                    <SELECT  NAME="timeFrameSetting">
+
+                                        <OPTION VALUE='minutes' {$sdays}>{$MOD.LBL_MINUTES}
+                                        <OPTION VALUE='hours' {$sdays}>{$MOD.LBL_HOURS}
+                                        <OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
+                                        <OPTION VALUE='weeks' {$sweeks}>{$MOD.LBL_WEEKS}
+                                        <OPTION VALUE='months' {$smonths}>{$MOD.LBL_MONTHS}
+
+                                    </SELECT>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  scope="row" width='25%'>
+                                    {$MOD.LBL_PASSWORD_NUMBER_OF_ATTEMPTS}
+                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='3'>
+                                </td>
+                            </tr>
+
+
+                        </table>
+
 
 						<table id="sysGeneratedId" name="sysGeneratedName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
 								<th align="left" scope="row" colspan="4">
 									<h4>
-										{$MOD.LBL_PASSWORD_SYST_GENERATED_TITLE}
+										{$MOD.LBL_PASSWORD_}
 									</h4>
 								</th>
 							</tr>
@@ -76,8 +124,8 @@
 											{else}
 												{assign var='SystemGeneratedPasswordON' value=''}
 											{/if}
-												<input type='hidden' name='passwordsetting_SystemGeneratedPasswordON' value='0'>
-												<input name='passwordsetting_SystemGeneratedPasswordON' id='SystemGeneratedPassword_checkbox'   type='checkbox' value='1' {$SystemGeneratedPasswordON} onclick='enable_syst_generated_pwd(this);toggleDisplay("SystemGeneratedPassword_warning");'>
+												<input type='hidden' name='passwordsetting_SystemGeneratedPasswordON' value='0'>alse
+												<input name='passwordsetting_SystemGeneratedPasswordON' id='SystemGeneratedPassword_checkbox'   type='checkbox' value='1' onclick='enable_syst_generated_pwd(this);toggleDisplay("SystemGeneratedPassword_warning");'>
 											</td>
 											{if !($config.passwordsetting.SystemGeneratedPasswordON)}
 												{assign var='smtp_warning' value='none'}
@@ -131,9 +179,9 @@
 														{/if}
 															<input type='text' maxlength="3" and style="width:2em"  name='passwordsetting_systexpirationtime' value='{$config.passwordsetting.systexpirationtime}'>
 															<SELECT  NAME="passwordsetting_systexpirationtype">
-																<OPTION VALUE='1' {$sdays}>{$MOD.LBL_DAYS}
-																<OPTION VALUE='7' {$sweeks}>{$MOD.LBL_WEEKS}
-																<OPTION VALUE='30' {$smonths}>{$MOD.LBL_MONTHS}
+																<OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
+																<OPTION VALUE='weeks' {$sweeks}>{$MOD.LBL_WEEKS}
+																<OPTION VALUE='months' {$smonths}>{$MOD.LBL_MONTHS}
 															</SELECT>
 														</td>
 														<td colspan='2' width='40%'>
@@ -162,8 +210,8 @@
 												{else}
 													{assign var='forgotpasswordON' value=''}
 												{/if}
-												<input type='hidden' name='passwordsetting_forgotpasswordON' value='0'>
-												<input name="passwordsetting_forgotpasswordON" id="forgotpassword_checkbox" value="1" class="checkbox" type="checkbox"  onclick='forgot_password_enable(this); toggleDisplay("SystemGeneratedPassword_warning2");' {$forgotpasswordON}>
+												<input type='hidden' name='password_security_setting_function_ON' value='0'>
+												<input name="password_security_setting_function_ON" id="allowSecurity_checkbox" value="1" class="checkbox" type="checkbox"  onclick='forgot_password_enable(this); toggleDisplay("SystemGeneratedPassword_warning2");' {$forgotpasswordON}>
 											</td>
 											{if !($config.passwordsetting.forgotpasswordON)}
 												{assign var='smtp_warning_2' value='none'}
