@@ -56,7 +56,16 @@ $dictionary['UserLoginAttempt'] = array(
                 'editview' => false,
                 'quickcreate' => false,
             ),
-        ) ,
+        ),
+        'deleted' =>
+            array (
+                'name' => 'deleted',
+                'vname' => 'LBL_DELETED',
+                'type' => 'bool',
+                'default' => '0',
+                'reportable' => false,
+                'comment' => 'Record deletion indicator',
+            ),
     ) ,
     'indices' => array(
         array(
@@ -78,4 +87,3 @@ $dictionary['UserLoginAttempt'] = array(
 
 
 );
-VardefManager::createVardef('UserLoginAttempt','UserLoginAttempt', array('assignable',));
