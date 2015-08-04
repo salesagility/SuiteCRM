@@ -98,7 +98,7 @@ class AOW_WorkFlowController extends SugarController {
             case 'decimal':
             case 'float':
             case 'currency':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
                 break;
             case 'uint':
             case 'ulong':
@@ -106,19 +106,19 @@ class AOW_WorkFlowController extends SugarController {
             case 'short':
             case 'tinyint':
             case 'int':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
                 break;
             case 'date':
             case 'datetime':
             case 'datetimecombo':
-                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Greater_Than','Less_Than','Greater_Than_or_Equal_To','Less_Than_or_Equal_To','is_null');
                 break;
             case 'enum':
             case 'multienum':
-                $valid_opp = array('Equal_To','Not_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','is_null');
                 break;
             default:
-                $valid_opp = array('Equal_To','Not_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Contains', 'Starts_With', 'Ends_With','is_null');
                 break;
         }
 
@@ -132,7 +132,7 @@ class AOW_WorkFlowController extends SugarController {
 
         $app_list_strings['aow_operator_list'];
         if($view == 'EditView'){
-            echo "<select type='text' style='width:178px;' name='$aow_field' id='$aow_field ' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_operator_list'], $value) ."</select>";
+            echo "<select type='text' style='width:178px;' name='$aow_field' id='$aow_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aow_operator_list'], $value) ."</select>";
         }else{
             echo $app_list_strings['aow_operator_list'][$value];
         }

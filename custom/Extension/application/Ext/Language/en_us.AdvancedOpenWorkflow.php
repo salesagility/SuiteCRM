@@ -35,12 +35,20 @@ $app_list_strings['aow_operator_list']['Greater_Than'] = 'Greater Than';
 $app_list_strings['aow_operator_list']['Less_Than'] = 'Less Than';
 $app_list_strings['aow_operator_list']['Greater_Than_or_Equal_To'] = 'Greater Than or Equal To';
 $app_list_strings['aow_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or Equal To';
+$app_list_strings['aow_operator_list']['Contains'] = 'Contains';
+$app_list_strings['aow_operator_list']['Starts_With'] = 'Starts With';
+$app_list_strings['aow_operator_list']['Ends_With'] = 'Ends With';
+$app_list_strings['aow_operator_list']['is_null'] = 'Is Null';
 $app_list_strings['aow_sql_operator_list']['Equal_To'] = '=';
 $app_list_strings['aow_sql_operator_list']['Not_Equal_To'] = '!=';
 $app_list_strings['aow_sql_operator_list']['Greater_Than'] = '>';
 $app_list_strings['aow_sql_operator_list']['Less_Than'] = '<';
 $app_list_strings['aow_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
 $app_list_strings['aow_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
+$app_list_strings['aow_sql_operator_list']['Contains'] = 'LIKE';
+$app_list_strings['aow_sql_operator_list']['Starts_With'] = 'LIKE';
+$app_list_strings['aow_sql_operator_list']['Ends_With'] = 'LIKE';
+$app_list_strings['aow_sql_operator_list']['is_null'] = 'IS NULL';
 $app_list_strings['aow_process_status_list']['Complete'] = 'Complete';
 $app_list_strings['aow_process_status_list']['Running'] = 'Running';
 $app_list_strings['aow_process_status_list']['Pending'] = 'Pending';
@@ -70,6 +78,7 @@ $app_list_strings['aow_date_type_list']['week'] = 'Weeks';
 $app_list_strings['aow_date_type_list']['month'] = 'Months';
 $app_list_strings['aow_date_type_list']['business_hours'] = 'Business Hours';
 $app_list_strings['aow_date_options']['now'] = 'Now';
+$app_list_strings['aow_date_options']['today'] = 'Today';
 $app_list_strings['aow_date_options']['field'] = 'This Field';
 $app_list_strings['aow_date_operator']['now'] = '';
 $app_list_strings['aow_date_operator']['plus'] = '+';
@@ -88,7 +97,9 @@ $app_list_strings['aow_email_to_list']['bcc'] = 'Bcc';
 $app_list_strings['aow_run_on_list']['All_Records'] = 'All Records';
 $app_list_strings['aow_run_on_list']['New_Records'] = 'New Records';
 $app_list_strings['aow_run_on_list']['Modified_Records'] = 'Modified Records';
-
+$app_list_strings['aow_run_when_list']['Always'] = 'Always';
+$app_list_strings['aow_run_when_list']['On_Save'] = 'Only On Save';
+$app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler';
 
 
 
