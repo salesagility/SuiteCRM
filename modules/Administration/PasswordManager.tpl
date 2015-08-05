@@ -72,12 +72,7 @@
                                     {$MOD.LBL_PASSWORD_SHOULD_CONTAIN_UPPER}
                                 </td>
                                 <td >
-                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
-                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
-                                    {else}
-                                        {assign var='SystemSecurityFunctionON' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    <input name='passwordsetting_containsUpperON' id='containsUpperONID' type='checkbox' value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -86,12 +81,7 @@
                                     {$MOD.LBL_SHOULD_CONTAIN_NUMBER}
                                 </td>
                                 <td >
-                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
-                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
-                                    {else}
-                                        {assign var='SystemSecurityFunctionON' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    <input name='passwordsetting_containsNumberON' id='containsNumberONID' type='checkbox' value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -100,12 +90,7 @@
                                     {$MOD.LBL_SHOULD_CONTAIN_NON_ALPHA_NUMERIC}
                                 </td>
                                 <td >
-                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
-                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
-                                    {else}
-                                        {assign var='SystemSecurityFunctionON' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    <input name='passwordsetting_containsNONalpaNum' id='containsNONalpaNum' type='checkbox' value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -114,12 +99,7 @@
                                     {$MOD.LBL_SHOULD_HAVE_MINIMUM}
                                 </td>
                                 <td >
-                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
-                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
-                                    {else}
-                                        {assign var='SystemSecurityFunctionON' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    <input name='passwordsetting_hasMinLengthON' id='hasMinLengthONID' type='checkbox' value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -128,25 +108,20 @@
                                     {$MOD.LBL_SHOULD_HAVE_MAXIMUM}
                                 </td>
                                 <td >
-                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
-                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
-                                    {else}
-                                        {assign var='SystemSecurityFunctionON' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    <input name='passwordsetting_hasMaxLengthON' id='hasMaxLengthONID' type='checkbox' value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_WHAT_IS_THE_MINIMUM}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='3'>
+                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMinLengthInput' value='5'>
                                 </td>
                             </tr>
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_WHAT_IS_THEMAXIMUM}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='3'>
+                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMaxLengthInput' value='10'>
                                 </td>
                             </tr>
 
