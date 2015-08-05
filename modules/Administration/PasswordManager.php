@@ -108,8 +108,43 @@ if(!empty($_POST['saveConfig'])){
             $configurator->config['passwordsetting']['SystemTimeFrameSetting'] = $timeFrameSettingthis;
 
         }else{
-            $_POST['SystemSecurityFunctionCheckboxON'] = 0;
+            $configurator->config['passwordsetting']['SystemEnableSecurityON'] = '0';
+
         }
+
+        if(isset($_REQUEST['passwordsetting_containsUpperON'])){
+            $configurator->config['passwordsetting']['oneUpper']  = true;
+
+        }else{
+            $configurator->config['passwordsetting']['oneUpper']  = false;
+        }
+
+        if(isset($_REQUEST['passwordsetting_containsNumberON'])){
+            $configurator->config['passwordsetting']['onenumber']  = true;
+        }else{
+            $configurator->config['passwordsetting']['onenumber']  = false;
+        }
+
+        if(isset($_REQUEST['passwordsetting_containsNONalpaNum'])){
+            $configurator->config['passwordsetting']['nonalpaNumeric']  = true;
+        }else{
+            $configurator->config['passwordsetting']['nonalpaNumeric']  = false;
+        }
+
+        if(isset($_REQUEST['passwordsetting_hasMinLengthON'])){
+            $configurator->config['passwordsetting']['hasMinumLength']  = true;
+            $configurator->config['passwordsetting']['minpwdlength']  = $_REQUEST['passwordMinLengthInput'];
+        }else{
+            $configurator->config['passwordsetting']['hasMinumLength']  = false;
+        }
+
+        if(isset($_REQUEST['passwordsetting_hasMaxLengthON'])){
+            $configurator->config['passwordsetting']['hasMaximumLength']  = true;
+            $configurator->config['passwordsetting']['maxpwdlength']  = $_REQUEST['passwordMaxLengthInput'];
+        }else{
+            $configurator->config['passwordsetting']['hasMaximumLength']  = false;
+        }
+
 
 
 		if (isset($_REQUEST['system_ldap_enabled']) && $_REQUEST['system_ldap_enabled'] == 'on') {
