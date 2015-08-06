@@ -84,6 +84,11 @@ $mod_strings = array (
 	'ERR_USER_NAME_EXISTS_1'			=> 'The user name ',
 	'ERR_USER_NAME_EXISTS_2'			=> ' already exists.	Duplicate user names are not allowed.	Change the user name to be unique.',
 	'ERR_USER_IS_LOCKED_OUT'			=> 'This user is locked out of the Sugar application and cannot log in using his/her existing password.',
+    'ERR_CONTAIN_UPPER'=> 'Your password must contain an upper case letter',
+    'ERR_CONTAIN_NUMBER'=>'Your password must contain a number',
+    'ERR_CONTAIN_ALPHA_NUM' => 'Your password must contain a non Alpha-Numeric Character of:: [|}{~!@#$%^&*()_+=-]',
+    'ERR_MIN_LENGTH' => 'Your password length is too short',
+    'ERR_MAX_LENGTH' => 'Your password length is too long',
 
 	'LBL_PASSWORD_SENT'                => 'Password Updated',
 	'LBL_CANNOT_SEND_PASSWORD'         => 'Cannot send password',
