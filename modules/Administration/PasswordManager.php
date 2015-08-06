@@ -113,10 +113,10 @@ if(!empty($_POST['saveConfig'])){
         }
 
         if(isset($_REQUEST['passwordsetting_containsUpperON'])){
-            $configurator->config['passwordsetting']['oneUpper']  = true;
+            $configurator->config['passwordsetting']['oneupper']  = true;
 
         }else{
-            $configurator->config['passwordsetting']['oneUpper']  = false;
+            $configurator->config['passwordsetting']['oneupper']  = false;
         }
 
         if(isset($_REQUEST['passwordsetting_containsNumberON'])){
@@ -126,9 +126,10 @@ if(!empty($_POST['saveConfig'])){
         }
 
         if(isset($_REQUEST['passwordsetting_containsNONalpaNum'])){
-            $configurator->config['passwordsetting']['nonalpaNumeric']  = true;
+            $configurator->config['passwordsetting']['nonalphaNumeric']  = true;
+
         }else{
-            $configurator->config['passwordsetting']['nonalpaNumeric']  = false;
+            $configurator->config['passwordsetting']['nonalphaNumeric']  = false;
         }
 
         if(isset($_REQUEST['passwordsetting_hasMinLengthON'])){
