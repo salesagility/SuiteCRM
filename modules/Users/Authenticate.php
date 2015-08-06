@@ -106,8 +106,9 @@ if((isset($_SESSION['authenticated_user_id']))) {
     $passwordSecurityON = $GLOBALS['sugar_config']['passwordsetting']['SystemEnableSecurityON'];
     $userBean = BeanFactory::getBean('Users');
     $userId = $userBean->retrieve_user_id($user_name);
+    $isUserAdmin = $userBean->is_admin;
 
-    if (($passwordSecurityON == 1)&&(!empty($userId))){
+    if (($passwordSecurityON == 1)&&(!empty($userId))&&(!$isUserAdmin)){
         //setup variables
         if (!empty($userId)) {
             $attemptsAllowed = $GLOBALS['sugar_config']['passwordsetting']['SystemAttemptLimit'];
