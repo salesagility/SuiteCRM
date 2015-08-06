@@ -185,13 +185,13 @@ var $useForSubpanel = true;
         $RETURN_MODULE = $this->ss->get_template_vars('RETURN_MODULE');
         $RETURN_ID = $this->ss->get_template_vars('RETURN_ID');
 
-        $minpwdlength = !empty($PWDSETTINGS['minpwdlength']) ? $PWDSETTINGS['minpwdlength'] : '';
-        $hasMinumLength =  !empty($PWDSETTINGS['hasMinumLength']) ? $PWDSETTINGS['hasMinumLength'] : '';
-        $hasMaximumLength =  !empty($PWDSETTINGS['hasMaximumLength']) ? $PWDSETTINGS['hasMaximumLength'] : '';
-        $maxpwdlength =  !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : '';
-        $oneupper =  !empty($PWDSETTINGS['oneupper']) ? $PWDSETTINGS['oneupper'] : '';
-        $nonalphaNumeric =  !empty($PWDSETTINGS['nonalphaNumeric']) ? $PWDSETTINGS['nonalphaNumeric'] : '';
-        $onenumber =  !empty($PWDSETTINGS['onenumber']) ? $PWDSETTINGS['onenumber'] : '';
+        $minpwdlength = !empty($PWDSETTINGS['minpwdlength']) ? $PWDSETTINGS['minpwdlength'] : 'false';
+        $hasMinumLength =  !empty($PWDSETTINGS['hasMinumLength']) ? $PWDSETTINGS['hasMinumLength'] : 'false';
+        $hasMaximumLength =  !empty($PWDSETTINGS['hasMaximumLength']) ? $PWDSETTINGS['hasMaximumLength'] : 'false';
+        $maxpwdlength =  !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : 'false';
+        $oneupper =  !empty($PWDSETTINGS['oneupper']) ? $PWDSETTINGS['oneupper'] : 'false';
+        $nonalphaNumeric =  !empty($PWDSETTINGS['nonalphaNumeric']) ? $PWDSETTINGS['nonalphaNumeric'] : 'false';
+        $onenumber =  !empty($PWDSETTINGS['onenumber']) ? $PWDSETTINGS['onenumber'] : 'false';
 
         $action_button_header[] = <<<EOD
                     <input type="button" id="SAVE_HEADER" title="{$APP['LBL_SAVE_BUTTON_TITLE']}" accessKey="{$APP['LBL_SAVE_BUTTON_KEY']}"
