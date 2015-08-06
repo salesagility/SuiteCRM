@@ -186,7 +186,13 @@ var $useForSubpanel = true;
         $RETURN_ID = $this->ss->get_template_vars('RETURN_ID');
 
         $minpwdlength = !empty($PWDSETTINGS['minpwdlength']) ? $PWDSETTINGS['minpwdlength'] : '';
+        $hasMinumLength =  !empty($PWDSETTINGS['hasMinumLength']) ? $PWDSETTINGS['hasMinumLength'] : '';
+        $hasMaximumLength =  !empty($PWDSETTINGS['hasMaximumLength']) ? $PWDSETTINGS['hasMaximumLength'] : '';
         $maxpwdlength =  !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : '';
+        $oneupper =  !empty($PWDSETTINGS['oneupper']) ? $PWDSETTINGS['oneupper'] : '';
+        $nonalphaNumeric =  !empty($PWDSETTINGS['nonalphaNumeric']) ? $PWDSETTINGS['nonalphaNumeric'] : '';
+        $onenumber =  !empty($PWDSETTINGS['onenumber']) ? $PWDSETTINGS['onenumber'] : '';
+
         $action_button_header[] = <<<EOD
                     <input type="button" id="SAVE_HEADER" title="{$APP['LBL_SAVE_BUTTON_TITLE']}" accessKey="{$APP['LBL_SAVE_BUTTON_KEY']}"
                           class="button primary" onclick="var _form = $('#EditView')[0]; if (!set_password(_form,newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))) return false; if (!Admin_check()) return false; _form.action.value='Save'; {$CHOOSER_SCRIPT} {$REASSIGN_JS} if(verify_data(EditView)) _form.submit();"
@@ -204,7 +210,7 @@ EOD
 
         $action_button_footer[] = <<<EOD
                     <input type="button" id="SAVE_FOOTER" title="{$APP['LBL_SAVE_BUTTON_TITLE']}" accessKey="{$APP['LBL_SAVE_BUTTON_KEY']}"
-                          class="button primary" onclick="var _form = $('#EditView')[0]; if (!set_password(_form,newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))) return false; if (!Admin_check()) return false; _form.action.value='Save'; {$CHOOSER_SCRIPT} {$REASSIGN_JS} if(verify_data(EditView)) _form.submit();"
+                          class="button primary" onclick="var _form = $('#EditView')[0]; if (!passwordCheck('{$hasMinumLength}',{$minpwdlength},{$hasMaximumLength},{$maxpwdlength},{$oneupper},{$nonalphaNumeric},{$onenumber},this.form)) return false; if (!Admin_check()) return false; _form.action.value='Save'; {$CHOOSER_SCRIPT} {$REASSIGN_JS} if(verify_data(EditView)) _form.submit();"
                           name="button" value="{$APP['LBL_SAVE_BUTTON_LABEL']}">
 EOD
         ;
