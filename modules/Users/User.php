@@ -823,9 +823,83 @@ EOQ;
 			}
 		}
 
+        if (!$this->checkPasswordRequirements($new_password)){
+            return false;
+        }
+
 		$this->setNewPassword($new_password, $system_generated);
 		return true;
 	}
+
+    function checkPasswordRequirements($userPassswordToBeChecked){
+        global $sugar_config;
+        global $mod_strings;
+
+        $hasMinLength = $sugar_config['passwordsetting']['hasMinumLength'];
+        $minpwdlength = $sugar_config['passwordsetting']['minpwdlength'];
+        $hasMaximumLength = $sugar_config['passwordsetting']['hasMaximumLength'];
+        $maxpwdlength = $sugar_config['passwordsetting']['maxpwdlength'];
+        $hasoneupper = $sugar_config['passwordsetting']['oneupper'];
+        $hasnonalpaNumeric = $sugar_config['passwordsetting']['nonalphaNumeric'];
+        $hasonenumber = $sugar_config['passwordsetting']['onenumber'];
+        $passed = true;
+
+        if($hasMinLength == true){
+            $length = strlen($userPassswordToBeChecked);
+            if(($length < $minpwdlength)&& ($minpwdlength > 0)){
+                $this->error_string .= $mod_strings['ERR_MIN_LENGTH' ];
+                $passed = false;
+            }else{
+                $passed = true;
+            }
+        }
+
+        if($hasMaximumLength == true){
+            $length = strlen($userPassswordToBeChecked);
+            if(($length > $maxpwdlength)&& ($maxpwdlength > 0)){
+                $this->error_string .= $mod_strings['ERR_MAX_LENGTH'];
+                $passed = false;
+            }else{
+                $passed = true;
+            }
+        }
+
+        if($hasoneupper == true){
+            $regexPattern = '/[A-Z]/';
+            if(!preg_match($regexPattern,$userPassswordToBeChecked)){
+                $this->error_string .= $mod_strings['ERR_CONTAIN_UPPER'];
+                $passed = false;
+            }
+
+        }else{
+            $passed = true;
+        }
+
+        if($hasonenumber == true){
+            $regexPattern = '/[0-9]/';
+            if(!preg_match($regexPattern,$userPassswordToBeChecked)){
+                $this->error_string .= $mod_strings['ERR_CONTAIN_NUMBER'];
+                $passed = false;
+            }
+
+        }else{
+            $passed = true;
+        }
+
+        if($hasnonalpaNumeric == true){
+            $regexPattern = '/[|}{~!@#$%^&*()_+=-]/';
+            if(!preg_match($regexPattern,$userPassswordToBeChecked)){
+                $this->error_string .= $mod_strings['ERR_CONTAIN_ALPHA_NUM'];
+                $passed = false;
+            }
+        }else{
+            $passed = true;
+        }
+
+
+        return $passed;
+
+    }
 
 
 	function is_authenticated() {
