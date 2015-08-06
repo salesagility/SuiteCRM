@@ -43,10 +43,10 @@ require_once('modules/Users/UserViewHelper.php');
 
 
 class UsersViewEdit extends ViewEdit {
-var $useForSubpanel = true;
- 	function UsersViewEdit(){
- 		parent::ViewEdit();
- 	}
+    var $useForSubpanel = true;
+    function UsersViewEdit(){
+        parent::ViewEdit();
+    }
 
     function preDisplay() {
         $this->fieldHelper = new UserViewHelper($this->ss, $this->bean, 'EditView');
@@ -115,15 +115,15 @@ var $useForSubpanel = true;
 
 
         ///////////////////////////////////////////////////////////////////////////////
-        ////	REDIRECTS FROM COMPOSE EMAIL SCREEN
+        ////    REDIRECTS FROM COMPOSE EMAIL SCREEN
         if(isset($_REQUEST['type']) && (isset($_REQUEST['return_module']) && $_REQUEST['return_module'] == 'Emails')) {
             $this->ss->assign('REDIRECT_EMAILS_TYPE', $_REQUEST['type']);
         }
-        ////	END REDIRECTS FROM COMPOSE EMAIL SCREEN
+        ////    END REDIRECTS FROM COMPOSE EMAIL SCREEN
         ///////////////////////////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////////////////////////
-        ////	NEW USER CREATION ONLY
+        ////    NEW USER CREATION ONLY
         if(empty($this->bean->id)) {
             $this->ss->assign('SHOW_ADMIN_CHECKBOX','height="30"');
             $this->ss->assign('NEW_USER','1');
@@ -132,7 +132,7 @@ var $useForSubpanel = true;
             $this->ss->assign('NEW_USER_TYPE','DISABLED');
         }
 
-        ////	END NEW USER CREATION ONLY
+        ////    END NEW USER CREATION ONLY
         ///////////////////////////////////////////////////////////////////////////////
 
 
@@ -200,7 +200,7 @@ var $useForSubpanel = true;
 EOD
         ;
         $action_button_header[] = <<<EOD
-                    <input	title="{$APP['LBL_CANCEL_BUTTON_TITLE']}" id="CANCEL_HEADER" accessKey="{$APP['LBL_CANCEL_BUTTON_KEY']}"
+                    <input  title="{$APP['LBL_CANCEL_BUTTON_TITLE']}" id="CANCEL_HEADER" accessKey="{$APP['LBL_CANCEL_BUTTON_KEY']}"
                               class="button" onclick="var _form = $('#EditView')[0]; _form.action.value='{$RETURN_ACTION}'; _form.module.value='{$RETURN_MODULE}'; _form.record.value='{$RETURN_ID}'; _form.submit()"
                               type="button" name="button" value="{$APP['LBL_CANCEL_BUTTON_LABEL']}">
 EOD
@@ -215,7 +215,7 @@ EOD
 EOD
         ;
         $action_button_footer[] = <<<EOD
-                    <input	title="{$APP['LBL_CANCEL_BUTTON_TITLE']}" id="CANCEL_FOOTER" accessKey="{$APP['LBL_CANCEL_BUTTON_KEY']}"
+                    <input  title="{$APP['LBL_CANCEL_BUTTON_TITLE']}" id="CANCEL_FOOTER" accessKey="{$APP['LBL_CANCEL_BUTTON_KEY']}"
                               class="button" onclick="var _form = $('#EditView')[0]; _form.action.value='{$RETURN_ACTION}'; _form.module.value='{$RETURN_MODULE}'; _form.record.value='{$RETURN_ID}'; _form.submit()"
                               type="button" name="button" value="{$APP['LBL_CANCEL_BUTTON_LABEL']}">
 EOD
@@ -230,7 +230,7 @@ EOD
         }
         $this->ev->process($processSpecial,$processFormName);
 
-		echo $this->ev->display($this->showTitle);
+        echo $this->ev->display($this->showTitle);
 
     }
 
@@ -251,9 +251,9 @@ EOD
 
         if($GLOBALS['current_user']->isAdminForModule('Users')
         ) {
-        $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
-        $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
-        $theTitle = <<<EOHTML
+            $createImageURL = SugarThemeRegistry::current()->getImageURL('create-record.gif');
+            $url = ajaxLink("index.php?module=$module&action=EditView&return_module=$module&return_action=DetailView");
+            $theTitle = <<<EOHTML
 &nbsp;
 <img src='{$createImageURL}' alt='{$GLOBALS['app_strings']['LNK_CREATE']}'>
 <a href="{$url}" class="utilsLink">
