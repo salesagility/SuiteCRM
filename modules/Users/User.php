@@ -849,6 +849,7 @@ EOQ;
             if(($length < $minpwdlength)&& ($minpwdlength > 0)){
                 $this->error_string .= $mod_strings['ERR_MIN_LENGTH' ];
                 $passed = false;
+                return $passed;
             }else{
                 $passed = true;
             }
@@ -859,6 +860,7 @@ EOQ;
             if(($length > $maxpwdlength)&& ($maxpwdlength > 0)){
                 $this->error_string .= $mod_strings['ERR_MAX_LENGTH'];
                 $passed = false;
+                return $passed;
             }else{
                 $passed = true;
             }
@@ -869,6 +871,7 @@ EOQ;
             if(!preg_match($regexPattern,$userPassswordToBeChecked)){
                 $this->error_string .= $mod_strings['ERR_CONTAIN_UPPER'];
                 $passed = false;
+                return $passed;
             }
 
         }else{
@@ -880,6 +883,7 @@ EOQ;
             if(!preg_match($regexPattern,$userPassswordToBeChecked)){
                 $this->error_string .= $mod_strings['ERR_CONTAIN_NUMBER'];
                 $passed = false;
+                return $passed;
             }
 
         }else{
@@ -891,6 +895,7 @@ EOQ;
             if(!preg_match($regexPattern,$userPassswordToBeChecked)){
                 $this->error_string .= $mod_strings['ERR_CONTAIN_ALPHA_NUM'];
                 $passed = false;
+                return $passed;
             }
         }else{
             $passed = true;
