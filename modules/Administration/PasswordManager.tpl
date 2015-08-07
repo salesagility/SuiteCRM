@@ -72,7 +72,12 @@
                                     {$MOD.LBL_PASSWORD_SHOULD_CONTAIN_UPPER}
                                 </td>
                                 <td >
-                                    <input name='passwordsetting_containsUpperON' id='containsUpperONID' type='checkbox' value='1' onclick=''>
+                                    {if !empty($config.passwordsetting.oneupper )}
+                                        {assign var='hasupper' value='Checked'}
+                                    {else}
+                                        {assign var='hasupper' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_containsUpperON' id='containsUpperONID' type='checkbox'{$hasupper} value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -81,7 +86,12 @@
                                     {$MOD.LBL_SHOULD_CONTAIN_NUMBER}
                                 </td>
                                 <td >
-                                    <input name='passwordsetting_containsNumberON' id='containsNumberONID' type='checkbox' value='1' onclick=''>
+                                    {if !empty($config.passwordsetting.onenumber )}
+                                        {assign var='hasnumber' value='Checked'}
+                                    {else}
+                                        {assign var='hasnumber' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_containsNumberON' id='containsNumberONID' type='checkbox'{$hasnumber} value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -90,7 +100,12 @@
                                     {$MOD.LBL_SHOULD_CONTAIN_NON_ALPHA_NUMERIC}
                                 </td>
                                 <td >
-                                    <input name='passwordsetting_containsNONalpaNum' id='containsNONalpaNum' type='checkbox' value='1' onclick=''>
+                                    {if !empty($config.passwordsetting.nonalphaNumeric)}
+                                        {assign var='nonalpanumeric' value='Checked'}
+                                    {else}
+                                        {assign var='nonalpanumeric' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_containsNONalpaNum' id='containsNONalpaNum' type='checkbox'{$nonalpanumeric} value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -99,7 +114,12 @@
                                     {$MOD.LBL_SHOULD_HAVE_MINIMUM}
                                 </td>
                                 <td >
-                                    <input name='passwordsetting_hasMinLengthON' id='hasMinLengthONID' type='checkbox' value='1' onclick=''>
+                                    {if !empty($config.passwordsetting.hasMinumLength )}
+                                        {assign var='hasminlength' value='Checked'}
+                                    {else}
+                                        {assign var='hasminlength' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_hasMinLengthON' id='hasMinLengthONID' type='checkbox' {$hasminlength} value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -108,7 +128,12 @@
                                     {$MOD.LBL_SHOULD_HAVE_MAXIMUM}
                                 </td>
                                 <td >
-                                    <input name='passwordsetting_hasMaxLengthON' id='hasMaxLengthONID' type='checkbox' value='1' onclick=''>
+                                    {if !empty($config.passwordsetting.hasMaximumLength)}
+                                        {assign var='hasmaximumlength' value='Checked'}
+                                    {else}
+                                        {assign var='hasmaximumlength' value=''}
+                                    {/if}
+                                    <input name='passwordsetting_hasMaxLengthON' id='hasMaxLengthONID' type='checkbox' {$hasmaximumlength} value='1' onclick=''>
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
@@ -142,19 +167,20 @@
                                     {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS_ENABLE_SECURITY_FUNCTION}
                                 </td>
                                 <td >
-                                    {if ($config.passwordsetting.SystemEnableSecurityON ) == '1'}
-                                        {assign var='SystemSecurityFunctionON' value='CHECKED'}
+                                    {if !empty($config.passwordsetting.SystemEnableSecurityON )}
+                                        {assign var='SystemSecurityFunctionON' value='Checked'}
                                     {else}
                                         {assign var='SystemSecurityFunctionON' value=''}
                                     {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' value='1' onclick=''>
+                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' {$SystemSecurityFunctionON} value='1' onclick=''>
+
                                     {$MOD.LBL_UW_ENABLE}
                                 </td>
                             </tr>
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_PASSWORD_FOR_SET_TIME}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value='3'>
+                                    <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value='0'>
                                     <SELECT  NAME="timeFrameSetting">
 
                                         <OPTION VALUE='minutes' {$sdays}>{$MOD.LBL_MINUTES}
@@ -169,7 +195,7 @@
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_PASSWORD_NUMBER_OF_ATTEMPTS}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='3'>
+                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='0'>
                                 </td>
                             </tr>
 
