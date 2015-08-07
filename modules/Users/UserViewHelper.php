@@ -175,19 +175,24 @@ class UserViewHelper {
             if ($this->bean->id == $current_user->id) {
                 $reset_pref_warning = translate('LBL_RESET_PREFERENCES_WARNING','Users');
                 $reset_home_warning = translate('LBL_RESET_HOMEPAGE_WARNING','Users');
+                $unlock_user_warning = translate('LBL_UNLOCK_USER_WARNING', 'Users');
             }
             else {
                 $reset_pref_warning = translate('LBL_RESET_PREFERENCES_WARNING_USER','Users');
                 $reset_home_warning = translate('LBL_RESET_HOMEPAGE_WARNING_USER','Users');
+                $unlock_user_warning = translate('LBL_UNLOCK_USER_WARNING', 'Users');
             }
 
-            //bug 48170
+            //bug 48170s
             $user_preference_url = "module=Users&action=resetPreferences";
             if(isset($_REQUEST['record'])){
                 $user_preference_url .= "&record=".$_REQUEST['record'];
             }
             $buttons_header[]="<input type='button' class='button' id='reset_user_preferences_header' onclick='if(confirm(\"{$reset_pref_warning}\"))window.location=\"".$_SERVER['PHP_SELF'] .'?'.$user_preference_url."&reset_preferences=true\";' value='".translate('LBL_RESET_PREFERENCES','Users')."' />";
             $buttons_header[]="<input type='button' class='button' id='reset_homepage_header' onclick='if(confirm(\"{$reset_home_warning}\"))window.location=\"".$_SERVER['PHP_SELF'] .'?'.$the_query_string."&reset_homepage=true\";' value='".translate('LBL_RESET_HOMEPAGE','Users')."' />";
+
+            $buttons_header[]="<input type='button' class='button' id='unlock_user' onclick='if(confirm(\"{$unlock_user_warning}\"))window.location=\"".$_SERVER['PHP_SELF'] .'?'.$user_preference_url."&action=unlockUser\";' value='".translate('LBL_UNLOCKING_USER','Users')."' />";
+
 
             $buttons_footer[]="<input type='button' class='button' id='reset_user_preferences_footer' onclick='if(confirm(\"{$reset_pref_warning}\"))window.location=\"".$_SERVER['PHP_SELF'] .'?'.$user_preference_url."&reset_preferences=true\";' value='".translate('LBL_RESET_PREFERENCES','Users')."' />";
             $buttons_footer[]="<input type='button' class='button' id='reset_homepage_footer' onclick='if(confirm(\"{$reset_home_warning}\"))window.location=\"".$_SERVER['PHP_SELF'] .'?'.$the_query_string."&reset_homepage=true\";' value='".translate('LBL_RESET_HOMEPAGE','Users')."' />";
