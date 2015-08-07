@@ -116,6 +116,7 @@ function set_password(form,rules) {
                alert(SUGAR.language.translate('Users','ERR_MIN_LENGTH'));
                 //return false
                 passed = false;
+                return  passed;
 	        }
 	        else{
                 passed = true;
@@ -128,6 +129,7 @@ function set_password(form,rules) {
                 alert(SUGAR.language.translate('Users','ERR_MAX_LENGTH'));
                 //return false
                 passed = false;
+                return  passed;
             }
             else{
                 passed = true;
@@ -148,6 +150,7 @@ function set_password(form,rules) {
 	        if(!passwd.match('[ABCDEFGHIJKLMNOPQRSTUVWXYZ]')){
                 alert(SUGAR.language.translate('Users','ERR_CONTAIN_UPPER'));
                 passed = false;
+                return  passed;
 	        }else{
                 passed = true;
             }
@@ -159,6 +162,7 @@ function set_password(form,rules) {
 	        if(!passwd.match('[0123456789]')){
                 alert(SUGAR.language.translate('Users','ERR_CONTAIN_NUMBER'));
                 passed = false;
+                return  passed;
 	        }
             else {
                 passed = true;
@@ -171,6 +175,7 @@ function set_password(form,rules) {
 	        if(!custom_regex.test(passwd)){
                 alert(SUGAR.language.translate('Users','ERR_CONTAIN_ALPHA_NUM'));
                 passed = false;
+                return  passed;
 	        }else{
                 passed = true;
             }
