@@ -130,7 +130,7 @@ if((isset($_SESSION['authenticated_user_id']))) {
 
 
 
-            if(count($loginAttemptList) > $attemptsAllowed){
+            if(count($loginAttemptList) >= $attemptsAllowed){
 //ini_set('display_errors',1);
                $user = BeanFactory::getBean('Users',$userId);
                $user->setPreference('lockout', '1');
