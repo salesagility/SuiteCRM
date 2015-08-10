@@ -139,14 +139,26 @@
                             </tr>
                             <tr>
                                 <td  scope="row" width='25%'>
+
                                     {$MOD.LBL_WHAT_IS_THE_MINIMUM}
-                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMinLengthInput' value='5'>
+                                    {if !empty($config.passwordsetting.minpwdlength)}
+                                        {assign var='minpwdlength' value=$config.passwordsetting.minpwdlength}
+                                    {else}
+                                        {assign var='minpwdlength' value='5'}
+                                    {/if}
+                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMinLengthInput' value="{$minpwdlength}">
+
                                 </td>
                             </tr>
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_WHAT_IS_THEMAXIMUM}
-                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMaxLengthInput' value='10'>
+                                    {if !empty($config.passwordsetting.minpwdlength)}
+                                        {assign var='maxpwdlength' value=$config.passwordsetting.maxpwdlength}
+                                    {else}
+                                        {assign var='maxpwdlength' value='10'}
+                                    {/if}
+                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMaxLengthInput' value="{$maxpwdlength}">
                                 </td>
                             </tr>
 
@@ -180,11 +192,22 @@
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_PASSWORD_FOR_SET_TIME}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value='0'>
-                                    <SELECT  NAME="timeFrameSetting">
+                                    {if !empty($config.passwordsetting.SystemTimeFrameValue )}
+                                        {assign var='timeFrame' value=$config.passwordsetting.SystemTimeFrameValue}
+                                    {else}
+                                        {assign var='timeFrame' value=''}
+                                    {/if}
 
-                                        <OPTION VALUE='minutes' {$sdays}>{$MOD.LBL_MINUTES}
-                                        <OPTION VALUE='hours' {$sdays}>{$MOD.LBL_HOURS}
+                                    <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value="{$config.passwordsetting.SystemTimeFrameValue}">
+
+                                    {if !empty($config.passwordsetting.SystemTimeFrameSetting )}
+                                        {assign var='timeFrame' value=$config.passwordsetting.SystemTimeFrameSetting}
+                                    {/if}
+
+                                    <SELECT  NAME="timeFrameSetting" selected="{$timeFrame}">
+
+                                        <OPTION VALUE='minutes' {$sminutes}>{$MOD.LBL_MINUTES}
+                                        <OPTION VALUE='hours' {$shours}>{$MOD.LBL_HOURS}
                                         <OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
                                         <OPTION VALUE='weeks' {$sweeks}>{$MOD.LBL_WEEKS}
                                         <OPTION VALUE='months' {$smonths}>{$MOD.LBL_MONTHS}
