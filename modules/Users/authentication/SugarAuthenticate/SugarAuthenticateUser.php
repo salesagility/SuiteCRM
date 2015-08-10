@@ -90,11 +90,12 @@ class SugarAuthenticateUser{
 	 * @param STRING $fallback - is this authentication a fallback from a failed authentication
 	 * @return boolean
 	 */
-	function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array()) {
+	function loadUserOnLogin($name, $password, $fallback = false, $PARAMS = array(),$valPref) {
 		global $login_error;
 
 		$GLOBALS['log']->debug("Starting user load for ". $name);
 		if(empty($name) || empty($password)) return false;
+        if($valPref == 1) return false;
 		$input_hash = $password;
 		$passwordEncrypted = false;
 		if (!empty($PARAMS) && isset($PARAMS['passwordEncrypted']) && $PARAMS['passwordEncrypted']) {

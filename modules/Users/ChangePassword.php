@@ -91,9 +91,18 @@ $pwd_settings=$GLOBALS['sugar_config']['passwordsetting'];
 
 
 $rules = "'','',''";
+
+$minpwdlength = !empty($PWDSETTINGS['minpwdlength']) ? $PWDSETTINGS['minpwdlength'] : 'false';
+$hasMinumLength =  !empty($PWDSETTINGS['hasMinumLength']) ? $PWDSETTINGS['hasMinumLength'] : 'false';
+$hasMaximumLength =  !empty($PWDSETTINGS['hasMaximumLength']) ? $PWDSETTINGS['hasMaximumLength'] : 'false';
+$maxpwdlength =  !empty($PWDSETTINGS['maxpwdlength']) ? $PWDSETTINGS['maxpwdlength'] : 'false';
+$oneupper =  !empty($PWDSETTINGS['oneupper']) ? $PWDSETTINGS['oneupper'] : 'false';
+$nonalphaNumeric =  !empty($PWDSETTINGS['nonalphaNumeric']) ? $PWDSETTINGS['nonalphaNumeric'] : 'false';
+$onenumber =  !empty($PWDSETTINGS['onenumber']) ? $PWDSETTINGS['onenumber'] : 'false';
+
 $sugar_smarty->assign('SUBMIT_BUTTON',
 	'<input title="'.$app_strings['LBL_SAVE_BUTTON_TITLE'].'" class="button" ' 
-  . 'onclick="if (!set_password(form,newrules(' . $rules . '))) return false; this.form.saveConfig.value=\'1\';" ' 
+  . 'onclick="if (!passwordCheck({$hasMinumLength},{$minpwdlength},{$hasMaximumLength},{$maxpwdlength},{$oneupper},{$nonalphaNumeric},{$onenumber},this.form))return false; this.form.saveConfig.value=\'1\';" '
   . 'type="submit" name="button" value="'.$app_strings['LBL_SAVE_BUTTON_LABEL'].'" />');
 
 
