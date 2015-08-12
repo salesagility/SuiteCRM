@@ -106,6 +106,7 @@ if((isset($_SESSION['authenticated_user_id']))) {
     $passwordSecurityON = $GLOBALS['sugar_config']['passwordsetting']['SystemEnableSecurityON'];
     $userBean = BeanFactory::getBean('Users');
     $userId = $userBean->retrieve_user_id($user_name);
+    $userBean = BeanFactory::getBean('Users',$userId);
     $isUserAdmin = $userBean->is_admin;
 
     if (($passwordSecurityON == 1)&&(!empty($userId))&&(!$isUserAdmin)){
@@ -135,6 +136,28 @@ if((isset($_SESSION['authenticated_user_id']))) {
                $user = BeanFactory::getBean('Users',$userId);
                $user->setPreference('lockout', '1');
                $user->savePreferencesToDB();
+
+                $listOfUsers = BeanFactory::getBean('Users');
+                $adminList = $listOfUsers->get_full_list(
+                    'name',
+                    "users.is_admin = 1"
+                );
+
+                foreach($adminList as $key => $adminAccount){
+//                foreach($adminList as $adminAccount){
+                    $alertBean = BeanFactory::newBean('Alerts');
+                    $alertBean->id = null;
+                    $alertBean->name = "User Locked Out";
+                    $body = "The user \"" . $user_name . "\" has been locked out";
+                    $alertBean->description = $body;
+                    $alertBean->is_read = 0;
+                    $alertBean->target_module = 'Users';
+                    $alertBean->type = "warning";
+                    $alertBean->url_redirect="index.php?module=Users&action=DetailView&record=".$userId;
+                    $alertBean->assigned_user_id = $adminAccount->id;
+                    $alertBean->save();
+
+                }
 
             }
 
