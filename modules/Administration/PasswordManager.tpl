@@ -218,7 +218,12 @@
                             <tr>
                                 <td  scope="row" width='25%'>
                                     {$MOD.LBL_PASSWORD_NUMBER_OF_ATTEMPTS}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value='0'>
+                                    {if !empty($config.passwordsetting.SystemAttemptLimit )}
+                                        {assign var='timeFrame' value=$config.passwordsetting.SystemAttemptLimit}
+                                    {else}
+                                        {assign var='timeFrame' value=''}
+                                    {/if}
+                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value="{$config.passwordsetting.SystemAttemptLimit}">
                                 </td>
                             </tr>
 
