@@ -200,12 +200,28 @@
 
                                     <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value="{$config.passwordsetting.SystemTimeFrameValue}">
 
-                                    {if !empty($config.passwordsetting.SystemTimeFrameSetting )}
-                                        {assign var='timeFrame' value=$config.passwordsetting.SystemTimeFrameSetting}
-                                    {/if}
 
-                                    <SELECT  NAME="timeFrameSetting" selected="{$timeFrame}">
-
+                                    <SELECT  NAME="timeFrameSetting">
+                                        {assign var='sminutes' value=''}
+                                        {assign var='shours' value=''}
+                                        {assign var='sdays' value=''}
+                                        {assign var='sweeks' value=''}
+                                        {assign var='smonths' value=''}
+                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'minutes'}
+                                            {assign var='sminutes' value='SELECTED'}
+                                        {/if}
+                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'hours'}
+                                            {assign var='shours' value='SELECTED'}
+                                        {/if}
+                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'days'}
+                                            {assign var='sdays' value='SELECTED'}
+                                        {/if}
+                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'weeks'}
+                                            {assign var='sweeks' value='SELECTED'}
+                                        {/if}
+                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'months'}
+                                            {assign var='smonths' value='SELECTED'}
+                                        {/if}
                                         <OPTION VALUE='minutes' {$sminutes}>{$MOD.LBL_MINUTES}
                                         <OPTION VALUE='hours' {$shours}>{$MOD.LBL_HOURS}
                                         <OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
@@ -293,13 +309,13 @@
 															{assign var='sdays' value=''}
 															{assign var='sweeks' value=''}
 															{assign var='smonths' value=''}
-														{if ($config.passwordsetting.systexpirationtype ) == '1'}
+														{if ($config.passwordsetting.systexpirationtype ) == 'days'}
 															{assign var='sdays' value='SELECTED'}
 														{/if}
-														{if ($config.passwordsetting.systexpirationtype ) == '7'}
+														{if ($config.passwordsetting.systexpirationtype ) == 'weeks'}
 															{assign var='sweeks' value='SELECTED'}
 														{/if}
-														{if ($config.passwordsetting.systexpirationtype ) == '30'}
+														{if ($config.passwordsetting.systexpirationtype ) == 'months'}
 															{assign var='smonths' value='SELECTED'}
 														{/if}
 															<input type='text' maxlength="3" and style="width:2em"  name='passwordsetting_systexpirationtime' value='{$config.passwordsetting.systexpirationtime}'>
