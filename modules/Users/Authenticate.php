@@ -126,7 +126,12 @@ if((isset($_SESSION['authenticated_user_id']))) {
             $loginAttempt->assigned_user_id = $userId;
             $loginAttempt->save();
 
-            $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered > '$UTCcutoff') AND (user_login_attempt.assigned_user_id = '$userId')");
+            if($timeFrameSetting == 'untilTheEndOfTime'){
+                $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered) AND (user_login_attempt.assigned_user_id = '$userId')");
+
+            }else{
+                $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered > '$UTCcutoff') AND (user_login_attempt.assigned_user_id = '$userId')");
+            }
             $mycount = count($loginAttemptList);
 
 
