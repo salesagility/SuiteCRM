@@ -82,6 +82,7 @@ $mod_strings = array (
     'LBL_DAYS'=>'Days',
     'LBL_WEEKS'=>'Weeks',
     'LBL_MONTHS'=>'Months',
+    'LBL_UNTIL_THE_END_TIME' => 'Until The End Of Time',
 
     'LBL_PUBLIC_KEY'=>'Public Key',
     'LBL_PRIVATE_KEY'=>'Private Key',
