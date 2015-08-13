@@ -58,195 +58,6 @@
 	<tr>
 		<td>
 
-                        <table id = "systemPasswordRequirementsID" name="systemPasswordRequirementsName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-                            <tr>
-                                <th align="left" scope="row" colspan="4">
-                                    <h4>
-                                        {$MOD.LBL_PASSWORD_REQ_SETTING}
-                                    </h4>
-                                </th>
-                            </tr>
-
-                            <tr>
-                                <td  scope="row" width='30%'>
-                                    {$MOD.LBL_PASSWORD_SHOULD_CONTAIN_UPPER}
-                                </td>
-                                <td >
-                                    {if !empty($config.passwordsetting.oneupper )}
-                                        {assign var='hasupper' value='Checked'}
-                                    {else}
-                                        {assign var='hasupper' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_containsUpperON' id='containsUpperONID' type='checkbox'{$hasupper} value='1' onclick=''>
-                                    {$MOD.LBL_UW_ENABLE}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='30%'>
-                                    {$MOD.LBL_SHOULD_CONTAIN_NUMBER}
-                                </td>
-                                <td >
-                                    {if !empty($config.passwordsetting.onenumber )}
-                                        {assign var='hasnumber' value='Checked'}
-                                    {else}
-                                        {assign var='hasnumber' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_containsNumberON' id='containsNumberONID' type='checkbox'{$hasnumber} value='1' onclick=''>
-                                    {$MOD.LBL_UW_ENABLE}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='30%'>
-                                    {$MOD.LBL_SHOULD_CONTAIN_NON_ALPHA_NUMERIC}
-                                </td>
-                                <td >
-                                    {if !empty($config.passwordsetting.nonalphaNumeric)}
-                                        {assign var='nonalpanumeric' value='Checked'}
-                                    {else}
-                                        {assign var='nonalpanumeric' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_containsNONalpaNum' id='containsNONalpaNum' type='checkbox'{$nonalpanumeric} value='1' onclick=''>
-                                    {$MOD.LBL_UW_ENABLE}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='30%'>
-                                    {$MOD.LBL_SHOULD_HAVE_MINIMUM}
-                                </td>
-                                <td >
-                                    {if !empty($config.passwordsetting.hasMinumLength )}
-                                        {assign var='hasminlength' value='Checked'}
-                                    {else}
-                                        {assign var='hasminlength' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_hasMinLengthON' id='hasMinLengthONID' type='checkbox' {$hasminlength} value='1' onclick=''>
-                                    {$MOD.LBL_UW_ENABLE}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='30%'>
-                                    {$MOD.LBL_SHOULD_HAVE_MAXIMUM}
-                                </td>
-                                <td >
-                                    {if !empty($config.passwordsetting.hasMaximumLength)}
-                                        {assign var='hasmaximumlength' value='Checked'}
-                                    {else}
-                                        {assign var='hasmaximumlength' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_hasMaxLengthON' id='hasMaxLengthONID' type='checkbox' {$hasmaximumlength} value='1' onclick=''>
-                                    {$MOD.LBL_UW_ENABLE}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='25%'>
-
-                                    {$MOD.LBL_WHAT_IS_THE_MINIMUM}
-                                    {if !empty($config.passwordsetting.minpwdlength)}
-                                        {assign var='minpwdlength' value=$config.passwordsetting.minpwdlength}
-                                    {else}
-                                        {assign var='minpwdlength' value='5'}
-                                    {/if}
-                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMinLengthInput' value="{$minpwdlength}">
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='25%'>
-                                    {$MOD.LBL_WHAT_IS_THEMAXIMUM}
-                                    {if !empty($config.passwordsetting.minpwdlength)}
-                                        {assign var='maxpwdlength' value=$config.passwordsetting.maxpwdlength}
-                                    {else}
-                                        {assign var='maxpwdlength' value='10'}
-                                    {/if}
-                                    <input type='text' maxlength="2" and style="width:2em"  name='passwordMaxLengthInput' value="{$maxpwdlength}">
-                                </td>
-                            </tr>
-
-
-                        </table>
-
-                        <table id="sysPasswordManagerId" name="sysPasswordManagerName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
-                            <tr>
-                                <th align="left" scope="row" colspan="4">
-                                    <h4>
-                                        {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS}
-                                    </h4>
-                                </th>
-                            </tr>
-
-                            <tr>
-                                <td  scope="row" width='30%'>
-                                    {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS_ENABLE_SECURITY_FUNCTION}
-                                </td>
-                                <td >
-                                    {if !empty($config.passwordsetting.SystemEnableSecurityON )}
-                                        {assign var='SystemSecurityFunctionON' value='Checked'}
-                                    {else}
-                                        {assign var='SystemSecurityFunctionON' value=''}
-                                    {/if}
-                                    <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' {$SystemSecurityFunctionON} value='1' onclick=''>
-
-                                    {$MOD.LBL_UW_ENABLE}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='25%'>
-                                    {$MOD.LBL_PASSWORD_FOR_SET_TIME}
-                                    {if !empty($config.passwordsetting.SystemTimeFrameValue )}
-                                        {assign var='timeFrame' value=$config.passwordsetting.SystemTimeFrameValue}
-                                    {else}
-                                        {assign var='timeFrame' value=''}
-                                    {/if}
-
-                                    <input type='text' maxlength="3" and style="width:2em"  name='timeFrameValue' value="{$config.passwordsetting.SystemTimeFrameValue}">
-
-
-                                    <SELECT  NAME="timeFrameSetting">
-                                        {assign var='sminutes' value=''}
-                                        {assign var='shours' value=''}
-                                        {assign var='sdays' value=''}
-                                        {assign var='sweeks' value=''}
-                                        {assign var='smonths' value=''}
-                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'minutes'}
-                                            {assign var='sminutes' value='SELECTED'}
-                                        {/if}
-                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'hours'}
-                                            {assign var='shours' value='SELECTED'}
-                                        {/if}
-                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'days'}
-                                            {assign var='sdays' value='SELECTED'}
-                                        {/if}
-                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'weeks'}
-                                            {assign var='sweeks' value='SELECTED'}
-                                        {/if}
-                                        {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'months'}
-                                            {assign var='smonths' value='SELECTED'}
-                                        {/if}
-                                        <OPTION VALUE='minutes' {$sminutes}>{$MOD.LBL_MINUTES}
-                                        <OPTION VALUE='hours' {$shours}>{$MOD.LBL_HOURS}
-                                        <OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
-                                        <OPTION VALUE='weeks' {$sweeks}>{$MOD.LBL_WEEKS}
-                                        <OPTION VALUE='months' {$smonths}>{$MOD.LBL_MONTHS}
-
-                                    </SELECT>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td  scope="row" width='25%'>
-                                    {$MOD.LBL_PASSWORD_NUMBER_OF_ATTEMPTS}
-                                    {if !empty($config.passwordsetting.SystemAttemptLimit )}
-                                        {assign var='timeFrame' value=$config.passwordsetting.SystemAttemptLimit}
-                                    {else}
-                                        {assign var='timeFrame' value=''}
-                                    {/if}
-                                    <input type='text' maxlength="3" and style="width:2em"  name='passwordLimitAttempts' value="{$config.passwordsetting.SystemAttemptLimit}">
-                                </td>
-                            </tr>
-
-
-                        </table>
-
-
 						<table id="sysGeneratedId" name="sysGeneratedName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
 								<th align="left" scope="row" colspan="4">
@@ -265,7 +76,7 @@
 											{else}
 												{assign var='SystemGeneratedPasswordON' value=''}
 											{/if}
-												<input type='hidden' name='passwordsetting_SystemGeneratedPasswordON' value='0'>alse
+												<input type='hidden' name='passwordsetting_SystemGeneratedPasswordON' value='0'>
 												<input name='passwordsetting_SystemGeneratedPasswordON' id='SystemGeneratedPassword_checkbox'   type='checkbox' value='1' onclick='enable_syst_generated_pwd(this);toggleDisplay("SystemGeneratedPassword_warning");'>
 											</td>
 											{if !($config.passwordsetting.SystemGeneratedPasswordON)}
@@ -336,6 +147,187 @@
 											</td>
 										</tr>
 									</table>
+            <table id = "systemPasswordRequirementsID" name="systemPasswordRequirementsName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+                <tr>
+                    <th align="left" scope="row" colspan="4">
+                        <h4>
+                            {$MOD.LBL_PASSWORD_REQ_SETTING}
+                        </h4>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td  scope="row" width='30%'>
+                        {$MOD.LBL_PASSWORD_SHOULD_CONTAIN_UPPER}
+                    </td>
+                    <td >
+                        {if !empty($config.passwordsetting.oneupper )}
+                            {assign var='hasupper' value='Checked'}
+                        {else}
+                            {assign var='hasupper' value=''}
+                        {/if}
+                        <input name='passwordsetting_containsUpperON' id='containsUpperONID' type='checkbox'{$hasupper} value='1' onclick=''>
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='30%'>
+                        {$MOD.LBL_SHOULD_CONTAIN_NUMBER}
+                    </td>
+                    <td >
+                        {if !empty($config.passwordsetting.onenumber )}
+                            {assign var='hasnumber' value='Checked'}
+                        {else}
+                            {assign var='hasnumber' value=''}
+                        {/if}
+                        <input name='passwordsetting_containsNumberON' id='containsNumberONID' type='checkbox'{$hasnumber} value='1' onclick=''>
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='30%'>
+                        {$MOD.LBL_SHOULD_CONTAIN_NON_ALPHA_NUMERIC}
+                    </td>
+                    <td >
+                        {if !empty($config.passwordsetting.nonalphaNumeric)}
+                            {assign var='nonalpanumeric' value='Checked'}
+                        {else}
+                            {assign var='nonalpanumeric' value=''}
+                        {/if}
+                        <input name='passwordsetting_containsNONalpaNum' id='containsNONalpaNum' type='checkbox'{$nonalpanumeric} value='1' onclick=''>
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='30%'>
+                        {$MOD.LBL_SHOULD_HAVE_MINIMUM}
+                    </td>
+                    <td >
+                        {if !empty($config.passwordsetting.hasMinumLength )}
+                            {assign var='hasminlength' value='Checked'}
+                        {else}
+                            {assign var='hasminlength' value=''}
+                        {/if}
+                        <input name='passwordsetting_hasMinLengthON' id='hasMinLengthONID' type='checkbox' {$hasminlength} value='1' onclick=''>
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='30%'>
+                        {$MOD.LBL_SHOULD_HAVE_MAXIMUM}
+                    </td>
+                    <td >
+                        {if !empty($config.passwordsetting.hasMaximumLength)}
+                            {assign var='hasmaximumlength' value='Checked'}
+                        {else}
+                            {assign var='hasmaximumlength' value=''}
+                        {/if}
+                        <input name='passwordsetting_hasMaxLengthON' id='hasMaxLengthONID' type='checkbox' {$hasmaximumlength} value='1' onclick=''>
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='25%'>
+
+                        {$MOD.LBL_WHAT_IS_THE_MINIMUM}
+                        {if !empty($config.passwordsetting.minpwdlength)}
+                            {assign var='minpwdlength' value=$config.passwordsetting.minpwdlength}
+                        {else}
+                            {assign var='minpwdlength' value='5'}
+                        {/if}
+                        <input type='text' maxlength="2" and style="width:3em"  name='passwordMinLengthInput' value="{$minpwdlength}">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='25%'>
+                        {$MOD.LBL_WHAT_IS_THEMAXIMUM}
+                        {if !empty($config.passwordsetting.minpwdlength)}
+                            {assign var='maxpwdlength' value=$config.passwordsetting.maxpwdlength}
+                        {else}
+                            {assign var='maxpwdlength' value='10'}
+                        {/if}
+                        <input type='text' maxlength="2" and style="width:3em"  name='passwordMaxLengthInput' value="{$maxpwdlength}">
+                    </td>
+                </tr>
+
+
+            </table>
+
+            <table id="sysPasswordManagerId" name="sysPasswordManagerName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+                <tr>
+                    <th align="left" scope="row" colspan="4">
+                        <h4>
+                            {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS}
+                        </h4>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td  scope="row" width='30%'>
+                        {$MOD.LBL_PASSWORD_MANAGER_SYSTEM_SETTINGS_ENABLE_SECURITY_FUNCTION}
+                    </td>
+                    <td >
+                        {if !empty($config.passwordsetting.SystemEnableSecurityON )}
+                            {assign var='SystemSecurityFunctionON' value='Checked'}
+                        {else}
+                            {assign var='SystemSecurityFunctionON' value=''}
+                        {/if}
+                        <input name='passwordsetting_SystemSecurityFunctionCheckboxON' id='SystemSecurityFunctionOCheckboxONID' type='checkbox' {$SystemSecurityFunctionON} value='1' onclick=''>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='25%'>
+                        {$MOD.LBL_PASSWORD_FOR_SET_TIME}
+                        {if !empty($config.passwordsetting.SystemTimeFrameValue )}
+                            {assign var='timeFrame' value=$config.passwordsetting.SystemTimeFrameValue}
+                        {else}
+                            {assign var='timeFrame' value=''}
+                        {/if}
+
+                        <input type='text' maxlength="3" and style="width:3em"  name='timeFrameValue' value="{$config.passwordsetting.SystemTimeFrameValue}">
+
+
+                        <SELECT  NAME="timeFrameSetting">
+                            {assign var='sminutes' value=''}
+                            {assign var='shours' value=''}
+                            {assign var='sdays' value=''}
+                            {assign var='sweeks' value=''}
+                            {assign var='smonths' value=''}
+                            {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'minutes'}
+                                {assign var='sminutes' value='SELECTED'}
+                            {/if}
+                            {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'hours'}
+                                {assign var='shours' value='SELECTED'}
+                            {/if}
+                            {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'days'}
+                                {assign var='sdays' value='SELECTED'}
+                            {/if}
+                            {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'weeks'}
+                                {assign var='sweeks' value='SELECTED'}
+                            {/if}
+                            {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'months'}
+                                {assign var='smonths' value='SELECTED'}
+                            {/if}
+                            <OPTION VALUE='minutes' {$sminutes}>{$MOD.LBL_MINUTES}
+                            <OPTION VALUE='hours' {$shours}>{$MOD.LBL_HOURS}
+                            <OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
+                            <OPTION VALUE='weeks' {$sweeks}>{$MOD.LBL_WEEKS}
+                            <OPTION VALUE='months' {$smonths}>{$MOD.LBL_MONTHS}
+
+                        </SELECT>
+                    </td>
+                </tr>
+                <tr>
+                    <td  scope="row" width='25%'>
+                        {$MOD.LBL_PASSWORD_NUMBER_OF_ATTEMPTS}
+                        {if !empty($config.passwordsetting.SystemAttemptLimit )}
+                            {assign var='timeFrame' value=$config.passwordsetting.SystemAttemptLimit}
+                        {else}
+                            {assign var='timeFrame' value=''}
+                        {/if}
+                        <input type='text' maxlength="3" and style="width:3em"  name='passwordLimitAttempts' value="{$config.passwordsetting.SystemAttemptLimit}">
+                    </td>
+                </tr>
+
+
+            </table>
 
 						<table id="userResetPassId" name="userResetPassName" width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 							<tr>
@@ -735,10 +727,14 @@ function enableDisablePasswordTable(checkbox_id) {
 		document.getElementById("emailTemplatesId").style.display = "none";
 		document.getElementById("sysGeneratedId").style.display = "none";
 		document.getElementById("userResetPassId").style.display = "none";
+        document.getElementById("systemPasswordRequirementsID").style.display = "none";
+        document.getElementById("sysPasswordManagerId").style.display = "none";
 	} else {
 		document.getElementById("emailTemplatesId").style.display = "";
 		document.getElementById("sysGeneratedId").style.display = "";
 		document.getElementById("userResetPassId").style.display = "";
+        document.getElementById("systemPasswordRequirementsID").style.display = "";
+        document.getElementById("sysPasswordManagerId").style.display = "";
 
 	}
 } // if
