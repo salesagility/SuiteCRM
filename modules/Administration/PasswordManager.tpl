@@ -290,6 +290,7 @@
                             {assign var='sdays' value=''}
                             {assign var='sweeks' value=''}
                             {assign var='smonths' value=''}
+                            {assign var='suntilltheendoftime' value=''}
                             {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'minutes'}
                                 {assign var='sminutes' value='SELECTED'}
                             {/if}
@@ -305,11 +306,16 @@
                             {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'months'}
                                 {assign var='smonths' value='SELECTED'}
                             {/if}
+                            {if ($config.passwordsetting.SystemTimeFrameSetting ) == 'untiltheendoftime'}
+                                {assign var='suntilltheendoftime' value='SELECTED'}
+                            {/if}
                             <OPTION VALUE='minutes' {$sminutes}>{$MOD.LBL_MINUTES}
                             <OPTION VALUE='hours' {$shours}>{$MOD.LBL_HOURS}
                             <OPTION VALUE='days' {$sdays}>{$MOD.LBL_DAYS}
                             <OPTION VALUE='weeks' {$sweeks}>{$MOD.LBL_WEEKS}
                             <OPTION VALUE='months' {$smonths}>{$MOD.LBL_MONTHS}
+                            <OPTION VALUE='untilTheEndOfTime' {$suntilltheendoftime}>{$MOD.LBL_UNTIL_THE_END_TIME}
+
 
                         </SELECT>
                     </td>
