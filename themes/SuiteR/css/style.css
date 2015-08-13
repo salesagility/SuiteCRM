@@ -3362,7 +3362,35 @@ table legend {
 #mobilegloballinks{
     display:none;
 }
-@media (max-width:767px){
+
+@media (max-width:480px){
+    #searchmobile{
+        float:left;
+        z-index:50 !important;
+        position:absolute;
+        left:60px;
+        width:70% !important;
+    }
+    #searchmobile #query_string{
+        width:75% !important;
+        outline: 0 !important;
+        background:#3C8DBC !important;
+        border:none !important;
+        border-radius:0 !important;
+        border-bottom:1px solid #cccccc !important;
+        color:#f7f7f7 !important;
+        -webkit-appearance: none !important;
+        box-shadow:none !important;
+        float:left;
+    }
+    .form-control{
+        color:#f7f7f7 !important;
+    }
+    #mobilegloballinks{
+        display:inline;
+    }
+}
+@media (min-width:480px) and (max-width:680px){
     #searchmobile{
         float:left;
         z-index:50 !important;
@@ -3372,6 +3400,34 @@ table legend {
     }
     #searchmobile #query_string{
         width:80% !important;
+        outline: 0 !important;
+        background:#3C8DBC !important;
+        border:none !important;
+        border-radius:0 !important;
+        border-bottom:1px solid #cccccc !important;
+        color:#f7f7f7 !important;
+        -webkit-appearance: none !important;
+        box-shadow:none !important;
+        float:left;
+    }
+    .form-control{
+        color:#f7f7f7 !important;
+    }
+    #mobilegloballinks{
+        display:inline;
+    }
+}
+
+@media (min-width:681px) and (max-width:980px){
+    #searchmobile{
+        float:left;
+        z-index:50 !important;
+        position:absolute;
+        left:60px;
+        width:85% !important;
+    }
+    #searchmobile #query_string{
+        width:85% !important;
         outline: 0 !important;
         background:#3C8DBC !important;
         border:none !important;
@@ -4371,6 +4427,10 @@ h3 span{
     display:block;
     padding:0 10px 5px 10px;
     font-size:1.2em;
+}
+
+#mobileheader #modulelinks ul li a{
+    font-size:1.3em;
 }
 
 @media (min-width:979px) {
