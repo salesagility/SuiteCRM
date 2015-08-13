@@ -45,10 +45,40 @@ var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
 
+
+var clicks = 0;
+timer = null;
+
 function buildEditField(){
+    $(".inlineEdit a").click(function (e) {
+        if(this.id != "inlineEditSaveButton") {
+            var linkUrl = $(this).attr("href");
+            if (typeof clicks == 'undefined') {
+                clicks = 0;
+            }
+            clicks++;
+
+            e.preventDefault();
+            // if single click just want default action of following link, but want to wait in case user is actually trying to double click to edit field
+            if (clicks == 1) {
+
+                timer = setTimeout(function () {
+                    // if reaches end of timeout without another click follow link
+                    window.location.href = linkUrl;
+                    clicks = 0;             //after action performed, reset counter
+
+                }, 500);
+
+            } else {
+
+                clearTimeout(timer);    //prevent single-click action
+                clicks = 0;
+
+            }
+        }
+    });
     $(".inlineEdit").dblclick(function(e) {
         e.preventDefault();
-
         //depending on what view you are using will find the id,module,type of field, and field name from the view
         if(view == "DetailView"){
             var field = $(this).attr( "field" );
@@ -93,14 +123,19 @@ function buildEditField(){
                 //Add the active class so we know which td we are editing as they all have the inlineEdit class.
                 $(this).addClass("inlineEditActive");
 
-                //Put the curser in the field if possible.
-                $("#" + field).focus(field,id,module);
+                //Put the cursor in the field if possible.
+                $("#" + field).focus();
+                if(type == "name" || type == "text") {
+                    // move focus to end of text (multiply by 2 to make absolut certain its end as some browsers count carriage return as more than 1 characted)
+                    var strLength = $("#" + field).val().length * 2;
+                    $("#" + field)[0].setSelectionRange(strLength, strLength);
+                }
 
                 //We can only edit one field at a time currently so turn off the on dblclick event
                 $(".inlineEdit").off('dblclick');
 
                 //Call the click away function to handle if the user has clicked off the field, if they have it will close the form.
-                clickedawayclose(field,id,module);
+                clickedawayclose(field,id,module, type);
 
                 //Make sure the data is valid and save the details to the bean.
                 validateFormAndSave(field,id,module,type);
@@ -118,17 +153,27 @@ function buildEditField(){
  * @param module - the module we are editing
  * @param type - the type of the field we are editing.
  */
-
 function validateFormAndSave(field,id,module,type){
     $("#inlineEditSaveButton").on('click', function () {
         var valid_form = check_form("EditView");
         if(valid_form){
             handleSave(field, id, module, type)
+            $(document).off('click');
         }else{
             return false
         };
     });
+    // also want to save on enter/return being pressed
+    $(document).keypress(function(e) {
+
+        if (e.which == 13) {
+            e.preventDefault();
+            $("#inlineEditSaveButton").click();
+        }
+    });
 }
+
+
 
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
@@ -138,12 +183,26 @@ function validateFormAndSave(field,id,module,type){
  * @param module - the module we are editing
  */
 
-function clickedawayclose(field,id,module){
+function clickedawayclose(field,id,module, type){
     $(document).on('click', function (e) {
 
         if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
-            handleCancel(field,id,module);
-            $(document).off('click');
+            var output_value = loadFieldHTMLValue(field,id,module);
+            var user_value = getInputValue(field, type);
+            if(user_value != output_value) {
+                var r = confirm("You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing " + field);
+                if(r == true) {
+                    var output = setValueClose(output_value);
+                    $(document).off('click');
+                } else {
+                    $("#" + field).focus();
+                    e.preventDefault();
+                }
+            } else {
+                // user hasn't changed value so can close field without warning them first
+                var output = setValueClose(output_value);
+                $(document).off('click');
+            }
         }
 
     });
@@ -195,11 +254,11 @@ function getInputValue(field,type){
                     var meridiem = $('#'+ field + '_meridiem :selected').text();
                 }
                 return date + " " + hours +":"+ minutes + meridiem;
-
                 break;
             case 'date':
-                if($('#'+ field + ' :selected').text().length > 0){
-                    return $('#'+ field + ' :selected').text();
+                //if($('#'+ field + ' :selected').text().length > 0){
+                if($('#'+ field).val().length > 0){
+                    return $('#'+ field).val();
                 }
                 break;
             case 'multienum':
@@ -223,21 +282,6 @@ function getInputValue(field,type){
 
 }
 
-/**
- * Handles the cancel of editing(clickawayfromfield)
- *
- * Does an ajax call to retrieve the old value of the field
- * Replaces the content of the td with the value of the field formatted correctly for detail view.
- * @param field - name of the field we are editing
- * @param id - the id of the record we are editing
- * @param module - the module we are editing
- */
-
-function handleCancel(field,id,module){
-    var output_value = loadFieldHTMLValue(field,id,module);
-    var output = setValueClose(output_value);
-}
-
 
 /**
  * Handles the submit of the form.
@@ -256,6 +300,7 @@ function handleSave(field,id,module,type){
     if(typeof value === "undefined"){
         var value = "";
     }
+
     var output_value = saveFieldHTML(field,module,id,value);
     var output = setValueClose(output_value);
 }
@@ -298,6 +343,7 @@ function saveFieldHTML(field,module,id,value) {
             'current_module': module,
             'id': id,
             'value': value,
+            'view' : view,
             'to_pdf': true
         }
     );
