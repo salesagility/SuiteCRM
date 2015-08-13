@@ -131,7 +131,7 @@ class AOW_WorkFlow extends Basic {
      * Select and run all active flows for the specified bean
      */
     function run_bean_flows(SugarBean &$bean){
-        if( isset($_REQUEST['module']) && $_REQUEST['module'] != 'Import'){
+        if( isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import'){
 
             $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' AND aow_workflow.deleted = 0 ";
 
