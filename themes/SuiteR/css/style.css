@@ -3232,7 +3232,7 @@ ul.dashboardTabList li {
     display:none;
 }
 
-@media (min-width:768px){
+@media (min-width:980px){
     .navbar-inverse .navbar-brand {
         color: #ffffff;
         height: 50px;
@@ -3771,7 +3771,7 @@ li.moremenu {
     }
 }
 
-@media only screen and (min-device-width: 480px) and (max-device-width: 767px) {
+@media only screen and (min-device-width: 480px) and (max-device-width: 980px) {
     /* Force table to not be like tables anymore(deconstruct) */
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
@@ -3907,7 +3907,7 @@ li.moremenu {
 }
 
 /* Hide search form as standard */
-@media (max-width:767px) {
+@media (max-width:980px) {
     .search_form {
         display: none;
     }
@@ -3951,10 +3951,6 @@ li.recentlinks_edit a:hover {
 
 /* Custom styling from group tabs menu structure */
 
-[id^=moduleTab] a:hover{
-    color: hotpink;
-}
-
 a[id^=grouptab], a[id^=moduleTab]{
     color: #f7f7f7;
     padding:15px 0 18px 0;
@@ -3990,7 +3986,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-@media(max-width:767px){
+@media(max-width:980px){
     ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color:#ffffff; !important;
     }
@@ -4516,7 +4512,7 @@ h3 span{
     }
 }
 
-@media (min-width:481px) and (max-width:767px){
+@media (min-width:481px) and (max-width:980px){
     .modulename{
         visibility:visible;
         font-size:1.2em;
@@ -4528,7 +4524,7 @@ h3 span{
     }
 }
 
-@media (max-width:767px) {
+@media (max-width:980px) {
     .modulename{
         visibility:visible;
     }
