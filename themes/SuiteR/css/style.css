@@ -4550,7 +4550,12 @@ h3 span{
     #mobilegloballinks ul li a {
         color: #3C8DBC !important;
     }
+
+    .glyphicon-search, .glyphicon-user {
+        font-size:1.5em;
+    }
 }
+
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
