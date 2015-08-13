@@ -197,7 +197,6 @@ EOD
         $action_button_header[] = <<<EOD
                     <script>
                        $('#EditView').submit(function(){
-                       console.log("In submit");
                                             var theForm =$('#EditView');
                                            if (!set_password(theForm[0],newrules('{$minpwdlength}','{$maxpwdlength}','{$REGEX}'))){
 
