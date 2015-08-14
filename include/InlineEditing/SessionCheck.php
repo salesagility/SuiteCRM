@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,21 +38,13 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['{{$class.name}}'] = array(
-	'table'=>'{{$class.table_name}}',
-	'audited'=>{{$class.audited}},
-    'inline_edit'=>{{$class.inline_edit}},
-	{{if !($class.templates|strstr:"file")}}
-	'duplicate_merge'=>true,
-	{{/if}}
-	'fields'=>{{$class.fields_string}},
-	'relationships'=>{{$class.relationships}},
-	'optimistic_locking'=>true,
-	{{if !empty($class.table_name) && !empty($class.templates)}}
-	'unified_search'=>true,
-	{{/if}}
-);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+/*This file will check if the session is still currently available*/
+
+if (empty($_SESSION)) {
+    // this return 1 to the InlineEditing.js if the session has ended
+    echo json_encode(1);
+
+} else {
+    echo json_encode(0);
+
 }
-VardefManager::createVardef('{{$class.name}}','{{$class.name}}', array({{$class.templates}}));
