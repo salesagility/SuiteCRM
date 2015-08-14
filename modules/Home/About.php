@@ -77,7 +77,7 @@ echo $viewLicenseText;
 
 //		$noteImgRegex = "/<img[^>]*[\s]+src[^=]*=\"index.php\?entryPoint=download\&amp;id=([^\&]*)[^>]*>/im"; /*SKIP_IMAGE_TAG*/
 $imgTagString = '<img style="margin-top: 2px" border="0" width="120" height="34" src="include/images/poweredby_sugarcrm_65.png" alt="'.$mod_strings['LBL_POWERED_BY_SUGAR'].'">';
-		
+
 
 
 
