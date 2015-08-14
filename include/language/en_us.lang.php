@@ -490,7 +490,7 @@ $app_list_strings = array (
     'Opportunities' => 'Opportunity',
     'Cases' => 'Case',
     'Leads' => 'Lead',
-    'Contacts' => 'Contacts', // cn (11/22/2005) added to support Emails
+    'Contacts' => 'Contact', // cn (11/22/2005) added to support Emails
 
 
     'Bugs' => 'Bug',
@@ -896,8 +896,8 @@ $app_list_strings = array (
     'duration_intervals' => array('0'=>'00',
                                     '15'=>'15',
                                     '30'=>'30',
-                                    '45'=>'45'),
-
+                                    '45'=>'45',
+  ),
     'repeat_type_dom' => array(
     	'' => 'None',
     	'Daily'	=> 'Daily',
@@ -1124,7 +1124,7 @@ $app_list_strings = array (
   array(
         'copy' => 'Copy',
         'move' => 'Move',
-        'donothing' => 'Do Nothing'
+        'donothing' => 'Do Nothing',
   ),
 );
 
@@ -1168,10 +1168,10 @@ $app_strings = array (
     'LBL_EDITINLINE'=>'Edit',
     'LBL_VIEWINLINE'=>'View',
     'LBL_INFOINLINE'=>'Info',
-    'LBL_POWERED_BY_SUGARCRM' => "Powered by SugarCRM",
-    'LBL_PRINT' => "Print",
-    'LBL_HELP' => "Help",
-    'LBL_ID_FF_SELECT' => "Select",
+    'LBL_POWERED_BY_SUGARCRM' => 'Powered by SugarCRM',
+    'LBL_PRINT' => 'Print',
+    'LBL_HELP' => 'Help',
+    'LBL_ID_FF_SELECT' => 'Select',
     'DEFAULT'                              => 'Basic',
     'LBL_SORT'                              => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER'         => 'Add Server...',
@@ -1197,9 +1197,9 @@ $app_strings = array (
     'LBL_ROUTING_ACTIONS_PEFORM'            => 'Perform the following actions',
     'LBL_ROUTING_ACTIONS_REPLY'             => 'Reply to Email',
 
-    'LBL_ROUTING_CHECK_RULE'                => "An error was detected:\n",
+    'LBL_ROUTING_CHECK_RULE'                => 'An error was detected:\n',
     'LBL_ROUTING_CHECK_RULE_DESC'           => 'Please verify all fields that are marked.',
-    'LBL_ROUTING_CONFIRM_DELETE'            => "Are you sure you want to delete this rule?\nThis cannot be undone.",
+    'LBL_ROUTING_CONFIRM_DELETE'            => 'Are you sure you want to delete this rule?\nThis cannot be undone.',
 
     'LBL_ROUTING_FLAGGED'                   => 'flag set',
     'LBL_ROUTING_FORM_DESC'                 => 'Saved Rules are immediately active.',
@@ -1320,7 +1320,7 @@ $app_strings = array (
     'LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS_EMPTY' => 'Empty',
     'LBL_EMAIL_DATE_SENT_BY_SENDER'         => 'Date Sent by Sender',
   'LBL_EMAIL_DATE_RECEIVED'               => 'Date Received',
-    'LBL_EMAIL_ASSIGNED_TO_USER'            =>'Assigned to User',
+    'LBL_EMAIL_ASSIGNED_TO_USER'            => 'Assigned to User',
     'LBL_EMAIL_DATE_TODAY'                  => 'Today',
     'LBL_EMAIL_DATE_YESTERDAY'              => 'Yesterday',
     'LBL_EMAIL_DD_TEXT'                     => 'email(s) selected.',
@@ -1601,15 +1601,6 @@ $app_strings = array (
     'LBL_EMAIL_YES'                         => 'Yes',
     'LBL_EMAIL_TEST_OUTBOUND_SETTINGS'      => 'Send Test Email',
     'LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT' => 'Test Email Sent',
-    'LBL_EMAIL_CHECK_INTERVAL_DOM'          => array(
-        '-1' => "Manually",
-        '5' => 'Every 5 minutes',
-        '15' => 'Every 15 minutes',
-        '30' => 'Every 30 minutes',
-        '60' => 'Every hour'
-    ),
-
-
     'LBL_EMAIL_MESSAGE_NO'                  => 'Message No',
     'LBL_EMAIL_IMPORT_SUCCESS'              => 'Import Passed',
     'LBL_EMAIL_IMPORT_FAIL'                 => 'Import Failed because either the message is already imported or deleted from server',
@@ -2103,7 +2094,7 @@ $app_strings = array (
     'NTC_DATE_TIME_FORMAT' => '(yyyy-mm-dd 24:00)',
     'NTC_DELETE_CONFIRMATION_MULTIPLE' => 'Are you sure you want to delete selected record(s)?',
     'NTC_TEMPLATE_IS_USED' => 'The template is used in at least one email marketing record. Are you sure you want to delete it?',
-    'NTC_TEMPLATES_IS_USED' => "The following templates are used in email marketing records. Are you sure you want to delete them?\n",
+    'NTC_TEMPLATES_IS_USED' => 'The following templates are used in email marketing records. Are you sure you want to delete them?\n',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_DELETE_CONFIRMATION_NUM' => 'Are you sure you want to delete the ',
     'NTC_UPDATE_CONFIRMATION_NUM' => 'Are you sure you want to update the ',
@@ -2117,15 +2108,15 @@ $app_strings = array (
     'NTC_WELCOME' => 'Welcome',
     'NTC_YEAR_FORMAT' => '(yyyy)',
     'LOGIN_LOGO_ERROR'=> 'Please replace the SugarCRM logos.',
-    'ERROR_LICENSE_FULLY_EXPIRED'=> "Your Company's Subscription to the SugarCRM Product has expired and needs to be renewed. Only admins may login when a Subscription has expired. If you have any questions, please contact your administrator.",
-    'ERROR_LICENSE_EXPIRED'=> "Your company's license for SugarCRM needs to be updated. Only admins may login",
-    'ERROR_LICENSE_VALIDATION'=> "Your company's license for SugarCRM needs to be validated. Only admins may login",
-    'WARN_BROWSER_VERSION_WARNING' => "<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 32.0<li>Safari 5.1<li>Chrome 37</ul>",
-    'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => "<b>Warning:</b> Your browser is in IE compatibility view which is not supported.",
-    'WARN_LICENSE_SEATS'=>  "Warning: The number of active users is already the maximum number of licenses allowed.",
-    'WARN_LICENSE_SEATS_MAXED'=>  "Warning: The number of active users exceeds the maximum number of licenses allowed.",
-    'WARN_ONLY_ADMINS'=> "Only admins may log in.",
-    'WARN_UNSAVED_CHANGES'=> "You are about to leave this record without saving any changes you may have made to the record. Are you sure you want to navigate away from this record?",
+    'ERROR_LICENSE_FULLY_EXPIRED'=> 'Your Company\'s Subscription to the SugarCRM Product has expired and needs to be renewed. Only admins may login when a Subscription has expired. If you have any questions, please contact your administrator.',
+    'ERROR_LICENSE_EXPIRED'=> 'Your company\'s license for SugarCRM needs to be updated. Only admins may login',
+    'ERROR_LICENSE_VALIDATION'=> 'Your company\'s license for SugarCRM needs to be validated. Only admins may login',
+    'WARN_BROWSER_VERSION_WARNING' => '<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 32.0<li>Safari 5.1<li>Chrome 37</ul>',
+    'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => '<b>Warning:</b> Your browser is in IE compatibility view which is not supported.',
+    'WARN_LICENSE_SEATS'=>  'Warning: The number of active users is already the maximum number of licenses allowed.',
+    'WARN_LICENSE_SEATS_MAXED'=>  'Warning: The number of active users exceeds the maximum number of licenses allowed.',
+    'WARN_ONLY_ADMINS'=> 'Only admins may log in.',
+    'WARN_UNSAVED_CHANGES'=> 'You are about to leave this record without saving any changes you may have made to the record. Are you sure you want to navigate away from this record?',
     'ERROR_NO_RECORD' => 'Error retrieving record.  This record may be deleted or you may not be authorized to view it.',
     'ERROR_TYPE_NOT_VALID' => 'Error. This type is not valid.',
     'ERROR_NO_BEAN' => 'Failed to get bean.', 
@@ -2521,6 +2512,13 @@ $app_strings = array (
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See sugarcrm.log for more information)',
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
+    'LBL_EMAIL_CHECK_INTERVAL_DOM'          => array(
+        '-1' => 'Manually',
+        '5' => 'Every 5 minutes',
+        '15' => 'Every 15 minutes',
+        '30' => 'Every 30 minutes',
+        '60' => 'Every hour',
+    ),
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -2875,7 +2873,7 @@ $app_list_strings['kbdocument_status_dom'] = array (
 
   $app_list_strings['timezone_dom'] = array(
 
-      'Africa/Algiers' => 'Africa/Algiers',
+  'Africa/Algiers' => 'Africa/Algiers',
   'Africa/Luanda' => 'Africa/Luanda',
   'Africa/Porto-Novo' => 'Africa/Porto-Novo',
   'Africa/Gaborone' => 'Africa/Gaborone',
