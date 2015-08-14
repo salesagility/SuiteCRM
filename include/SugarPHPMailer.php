@@ -421,11 +421,15 @@ eoq;
 	// or change the word true to false to disable these notifications.
 	// Default setting is false/disable.
         global $sugar_config; //EspaceNetworks.com
-	if (!empty($sugar_config)) //EspaceNetworks.com
-		if (isset($sugar_config['enable_email_open_notification'])) //EspaceNetworks.com
-			if ($sugar_config['enable_email_open_notification'] == true) { //EspaceNetworks.com
-				$this->ConfirmReadingTo = $this->From;	//EspaceNetworks.com
-	}	//EspaceNetworks.com -- end of Email Open Notification (MDN).
+        $feature = 'enable_email_open_notification';
+	if (!empty($sugar_config)) {
+		if (isset($sugar_config[$feature])) {
+			if ($sugar_config[$feature] == true) {
+				$this->ConfirmReadingTo = $this->From;
+			}
+		}
+		else $sugar_config[$feature] = false;
+	}	//EspaceNetworks.com -- end of Email Open Notification (MDN/Read Receipt).
         return parent::PreSend();
     }
 
