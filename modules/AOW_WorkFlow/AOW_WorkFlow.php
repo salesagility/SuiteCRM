@@ -131,7 +131,7 @@ class AOW_WorkFlow extends Basic {
      * Select and run all active flows for the specified bean
      */
     function run_bean_flows(SugarBean &$bean){
-        if($_REQUEST['module'] != 'Import'){
+        if(!isset($_REQUEST['module']) || $_REQUEST['module'] != 'Import'){
 
             $query = "SELECT id FROM aow_workflow WHERE aow_workflow.flow_module = '".$bean->module_dir."' AND aow_workflow.status = 'Active' AND (aow_workflow.run_when = 'Always' OR aow_workflow.run_when = 'On_Save' OR aow_workflow.run_when = 'Create') AND aow_workflow.deleted = 0 ";
 
@@ -180,7 +180,6 @@ class AOW_WorkFlow extends Basic {
                     }
                     $query .= ' '.$query_where;
                 }
-                echo $query;
                 return $module->process_full_list_query($query);
             }
 
