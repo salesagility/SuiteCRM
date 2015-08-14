@@ -192,7 +192,7 @@ $mod_strings = array(
 'relationshipsBtn' => 'Добавление новых или просмотр существующих <b>Связей</b> модуля.' ,
 'layoutsBtn'=> 'Редактирование следующих макетов: Формы редактирования, Формы просмотра, Формы списка, Формы поиска и Формы быстрого ввода.<br><br> Вы можете указать какие поля и как будут расположены в каждом модуле.',
 'subpanelBtn'=> 'Определение информации, отображаемой в <b>Субпанелях</b> модуля.',
-'portalBtn' => 'Customize the module <b>Layouts</b> that appear in the <b>Sugar Portal</b>.',
+'portalBtn' => 'Customize the module <b>Layouts</b> that appear in the <b>SuiteCRM Portal</b>.',
 'layoutsHelp'=> 'Выберите <b>Макет</b> для редактирования.',
 'subpanelHelp'=> 'Выберите <b>Субпанель</b> для редактирования.',
 'newPackage'=> 'Нажмите ссылку <b>Новый пакет</b> для создания нового пакета.',
@@ -217,8 +217,8 @@ $mod_strings = array(
 'portalHelp' => 'Настройка <b>Портала</b>.',
 'SPUploadCSS' => 'Загрузить <b>Таблицу стилей</b> для Портала.',
 'SPSync' => '<b>Синхронизация</b> настроек Портала.',
-'Layouts' => 'Edit the <b>Layouts</b> of the Sugar Portal modules.', ///
-'portalLayoutHelp' => 'The modules within the Sugar Portal appear in this area.<br><br>Select a module to edit the <b>Layouts</b>.', ///
+'Layouts' => 'Edit the <b>Layouts</b> of the SuiteCRM Portal modules.', ///
+'portalLayoutHelp' => 'The modules within the SuiteCRM Portal appear in this area.<br><br>Select a module to edit the <b>Layouts</b>.', ///
 'relationshipsHelp' => 'Здесь отображаются все связи между текущим и другими модулями.<br><br> <b>Название связи</b> создаётся системой автоматически при её добавлении. <br><br>Все указанные связи принадлежат <b>Основному модулю</b> и сохраняются в соответствующей таблице.<br><br>Нажмите на  заголовке таблицы при необходимости сортировки выбранной колонки, а так же при необходимости изменения отображения колонок.<br><br>Для просмотра свойств связи нажмите на соответствующей строке таблицы.<br/><br/>Для создания новой связи нажмите на кнопку <b>Добавить связь</b>. Связи могут быть установлены между двумя любыми установленными модулями.',
 'relationshipHelp'=> '<b>Связи</b> могут быть установлены между текущим и другими установленными модулями.<br><br> Визуально связи отображаются в виде субпанелей, а так же связанных полей.<br><br> Выберите один из возможных <b>Типов</b> связей модуля:<br><br> <b>Один-к-одному</b> - записи в обеих модулях будут содержать связанные поля.<br><br> <b>Один-ко-многим</b> - запись в главном модуле будет содержать субпанель, а запись в подчинённом модуле будет содержать связанное поле.<br><br> <b>Многие-ко-многим</b> - записи в обеих модулях будут содержать субпанели.<br><br> Выберите Подчинённый модуль для создания связи. <br><br> Если тип связи допускает наличие субпанелей - выберите субпанель для соответствующих модулей.<br><br>Нажмите кнопку <b>Сохранить</b> для создания связи.',
 'convertLeadHelp' => "Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
@@ -248,10 +248,10 @@ You can re-order the modules by dragging their rows in the table.<br/><br/>
 'publishBtn'=> 'Нажмите кнопку <b>Сохранить и установить</b> для сохранения и применения всех изменений.',
 ),
 'portalSync'=>array(
-'default' => 'Enter the <b>Sugar Portal URL</b> of the portal instance to update, and click <b>Go</b>.<br><br>Enter a valid Sugar user name and password, and then click <b>Begin Sync</b>.<br><br>The customizations made to the Sugar Portal <b>Layouts</b>, along with the <b>Style Sheet</b> if one was uploaded, will be transferred to specified the portal instance.',   ///
+'default' => 'Enter the <b>SuiteCRM Portal URL</b> of the portal instance to update, and click <b>Go</b>.<br><br>Enter a valid SuiteCRM user name and password, and then click <b>Begin Sync</b>.<br><br>The customizations made to the Sugar Portal <b>Layouts</b>, along with the <b>Style Sheet</b> if one was uploaded, will be transferred to specified the portal instance.',   ///
 ),
 'portalStyle'=>array(
-'default' => 'From here you can customize the look of the Sugar Portal.',   ///
+'default' => 'From here you can customize the look of the SuiteCRM Portal.',   ///
 ),
 ),
 

@@ -49,7 +49,7 @@ $mod_strings = array (
   'LBL_INHERIT_ASSIGNED' => 'Erf van Toegewezen Aan Gebruiker',
   'LBL_INHERIT_ASSIGNED_DESC' => 'Het record zal alle groepen erven van de gebruiker die is toegewezen aan het record. Andere groepen die zijn toegewezen aan het record worden NIET verwijderd.',
   'LBL_POPUP_SELECT' => 'Gebruik Schepper Groep selecteren',
-  'LBL_POPUP_SELECT_DESC' => 'Wanneer een record wordt aangemaakt door een gebruiker in meer dan een groep tonen een panel voor de selectie op het creëren scherm. Anders erven dat een groep.',
+  'LBL_POPUP_SELECT_DESC' => 'Wanneer een record wordt aangemaakt door een gebruiker in meer dan een groep tonen een panel voor de selectie op het creï¿½ren scherm. Anders erven dat een groep.',
   'LBL_FILTER_USER_LIST' => 'Filter Gebruikers Lijst',
   'LBL_FILTER_USER_LIST_DESC' => "Niet-beheerders kunnen enkel toewijzen aan gebruikers in dezelfde groep(en)",  
   
@@ -82,7 +82,7 @@ $mod_strings = array (
   'LBL_HOOKUP_CONFIRM_PART2' => ". Doorgaan?",
   
   'LBL_GROUP_SELECT' => 'Selecteer welke groepen moeten toegang hebben tot deze record',
-  'LBL_ERROR_DUPLICATE' => 'Als gevolg van een mogelijke duplicaat gedetecteerd door Sugar moet u handmatig beveiligingsgroepen toe te voegen aan uw nieuwe record.',
+  'LBL_ERROR_DUPLICATE' => 'Als gevolg van een mogelijke duplicaat gedetecteerd door SuiteCRM moet u handmatig beveiligingsgroepen toe te voegen aan uw nieuwe record.',
 
   'LBL_INBOUND_EMAIL' => 'Inkomende e-mailaccount',
   'LBL_INBOUND_EMAIL_DESC' => 'Sta alleen toegang tot een e-mailaccount als de gebruiker behoort tot een groep die is toegewezen aan de e-mail account.',
