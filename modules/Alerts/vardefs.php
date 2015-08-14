@@ -83,4 +83,4 @@ $dictionary['Alert'] = array(
 if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('Alert','Alert', array('basic','assignable'));
+VardefManager::createVardef('Alerts','Alert', array('basic','assignable'));
