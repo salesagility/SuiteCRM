@@ -372,6 +372,7 @@ function loadFieldHTML(field,module,id) {
             'field': field,
             'current_module': module,
             'id': id,
+            'view' : view,
             'to_pdf': true
         }
     );
@@ -403,6 +404,7 @@ function loadFieldHTMLValue(field,id,module) {
             'action': 'getDisplayValue',
             'field': field,
             'current_module': module,
+            'view': view,
             'id': id,
             'to_pdf': true
         }

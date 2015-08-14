@@ -423,7 +423,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
 
         $record = $bean->$vardef['id_name'];
 
-        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['ext2']."&record=$record\">";
+        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
 
         if($vardef['ext2']){
             $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
