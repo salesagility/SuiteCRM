@@ -110,9 +110,9 @@ $app_list_strings = array (
     'TrackerQueries' => 'Запросы трекера',
     'FAQ' => 'FAQ',
     'Newsletters' => 'Бюллетени',
-    'SugarFeed'=>'Лента событий',
+    'SugarFeed'=>'SuiteCRM Лента событий',
 	   'KBDocuments' => 'База знаний', ///
-	'SugarFavorites'=>'Избранное', ///
+	'SugarFavorites'=>'SuiteCRM Избранное', ///
 	'OAuthKeys' => 'Клиентские ключи OAuth',
     'OAuthTokens' => 'OAuth-маркёры',
         ),
@@ -141,10 +141,10 @@ $app_list_strings = array (
 	'Prospects' => 'Адресат',
     'Campaigns'=>'Маркетинг' ,
     'Documents'=>'Документ' ,
-	'SugarFollowing'=>'SuiteFollowing', ///
+	'SugarFollowing'=>'SuiteCRM Following', ///
     'Sync'=>'Синхронизация' ,
     'Users' => 'Пользователь' ,
-	'SugarFavorites'=>'SuiteFavorites' ///
+	'SugarFavorites'=>'SuiteCRM Favorites' ///
         ),
 
   'checkbox_dom'=> array (

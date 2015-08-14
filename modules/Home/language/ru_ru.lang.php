@@ -182,8 +182,6 @@ $mod_strings = array (
 
 
 'LBL_SUGAR_COMMUNITY_EDITION' => 'Sugar Community Edition',
-'LBL_SUGAR_PROFESSIONAL' => "Sugar Professional",
-'LBL_SUGAR_ENTERPRISE' => "Sugar Enterprise",
 'LBL_AND' => "and",
 'LBL_ARE' => "are",
 'LBL_TRADEMARKS' => 'trademarks',
@@ -206,7 +204,6 @@ $mod_strings = array (
 'LBL_SUGARCRM_FORUMS' => 'Форумы SuiteCRM',
 'LBL_SUGARFORGE_NEWS' => 'Новости SuiteForge',
 'LBL_ALL_NEWS' => 'Все новости',
-/// 'LBL_LINK_CURRENT_CONTRIBUTORS' => 'Click this link for a current list of Sugar contributors!',
 'LBL_SOURCE_CODE' => 'Source Code',
 'LBL_SOURCE_SUGAR' => 'Sugar - The world\'s most popular sales force automation application created by SugarCRM Inc.',
 'LBL_SOURCE_XTEMPLATE' => 'XTemplate - A template engine for PHP created by BarnabГЎs Debreceni',

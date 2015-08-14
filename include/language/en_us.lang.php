@@ -138,10 +138,10 @@ $app_list_strings = array (
     'Prospects' => 'Target',
     'Campaigns'=>'Campaign',
     'Documents'=>'Document',
-    'SugarFollowing'=>'Following',
+    'SugarFollowing'=>'SuiteCRM Following',
     'Sync'=>'Sync',
     'Users' => 'User',
-  'SugarFavorites'=>'Favorites'
+  'SugarFavorites'=>'SuiteCRM Favorites'
 
         ),
 
