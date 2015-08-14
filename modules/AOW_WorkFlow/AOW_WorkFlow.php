@@ -180,6 +180,7 @@ class AOW_WorkFlow extends Basic {
                     }
                     $query .= ' '.$query_where;
                 }
+                echo $query;
                 return $module->process_full_list_query($query);
             }
 
@@ -396,6 +397,19 @@ class AOW_WorkFlow extends Basic {
                 case 'Value':
                 default:
                     $value = "'".$condition->value."'";
+                    break;
+            }
+
+            //handle like conditions
+            Switch($condition->operator) {
+                case 'Contains':
+                    $value = "CONCAT('%', ".$value." ,'%')";
+                    break;
+                case 'Starts_With':
+                    $value = "CONCAT(".$value." ,'%')";
+                    break;
+                case 'Ends_With':
+                    $value = "CONCAT('%', ".$value.")";
                     break;
             }
 
