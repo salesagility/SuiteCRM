@@ -334,7 +334,7 @@ function getDisplayValue($bean, $field, $method = "save")
     return $value;
 }
 
-function formatDisplayValue($bean, $value, $vardef, $method = "save")
+function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
 {
 
     global $current_user, $app_list_strings, $timedate;
@@ -356,7 +356,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //If field is of type link and name.
-    if ($vardef['link'] && $vardef['type'] == "name") {
+    if ($vardef['link'] && $vardef['type'] == "name" && $_REQUEST['view'] != "DetailView") {
 
         require_once("include/generic/SugarWidgets/SugarWidgetSubPanelDetailViewLink.php");
 
@@ -375,7 +375,10 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value = convertDateUserToDB($value);
         }
         $datetime_format = $timedate->get_date_time_format();
-        $datetime = DateTime::createFromFormat("Y-m-d H:i:s", $value);
+        // create utc date (as it's utc in db)
+        $datetime = DateTime::createFromFormat("Y-m-d H:i:s", $value,new DateTimeZone('UTC'));
+        // convert it to timezone the user uses
+        $datetime = $timedate->tzUser($datetime);
 
         $value = $datetime->format($datetime_format);
 
@@ -420,7 +423,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         $record = $bean->$vardef['id_name'];
 
-        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['ext2']."&record=$record\">";
+        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
 
         if($vardef['ext2']){
             $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
