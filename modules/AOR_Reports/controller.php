@@ -271,7 +271,7 @@ class AOR_ReportsController extends SugarController {
                 $valid_opp = array('Equal_To','Not_Equal_To');
                 break;
             default:
-                $valid_opp = array('Equal_To','Not_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Contains', 'Starts_With', 'Ends_With',);
                 break;
         }
 

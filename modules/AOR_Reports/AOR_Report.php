@@ -981,6 +981,19 @@ class AOR_Report extends Basic {
                             break;
                     }
 
+                    //handle like conditions
+                    Switch($condition->operator) {
+                        case 'Contains':
+                            $value = "CONCAT('%', ".$value." ,'%')";
+                            break;
+                        case 'Starts_With':
+                            $value = "CONCAT(".$value." ,'%')";
+                            break;
+                        case 'Ends_With':
+                            $value = "CONCAT('%', ".$value.")";
+                            break;
+                    }
+
 
                     if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
 
