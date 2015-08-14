@@ -42,7 +42,7 @@ class Alert extends Basic {
     var $new_schema = true;
     var $module_dir = 'Alerts';
     var $object_name = 'Alert';
-    var $table_name = 'alert';
+    var $table_name = 'alerts';
     var $importable = false;
     var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
     var $id;

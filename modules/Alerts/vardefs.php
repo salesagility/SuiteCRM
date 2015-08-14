@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 $dictionary['Alert'] = array(
-	'table'=>'alert',
+	'table'=>'alerts',
 	'audited'=> false,
 		'duplicate_merge'=>true,
 		'fields'=>array (
