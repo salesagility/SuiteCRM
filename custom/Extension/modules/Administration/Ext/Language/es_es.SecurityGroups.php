@@ -14,5 +14,5 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Empuje el mensaje Dashlet al H
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "M�dulo de la transmisi�n en circuito";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Habitaci�n de la seguridad de la transmisi�n en circuito a trabajar con sus m�dulos de encargo";
 $mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
-$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Descarga la �ltima versi�n de SecuritySuite y encontrar otros m�dulos  temas e integraciones con opiniones, documentos, soporte y versiones verificadas de la comunidad.";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Descarga la �ltima versi�n de SecuritySuite y encontrar otros m�dulos SuiteCRM temas e integraciones con opiniones, documentos, soporte y versiones verificadas de la comunidad.";
 

@@ -14,5 +14,5 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Pubblica la Dashlet dei Messag
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Modulo per l'Integrazione";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Integra Security Suite con i tuoi moduli custom.";
 $mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
-$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Scarica l'ultima versione di SecuritySuite e trovare altri moduli, temi e integrazioni con commenti, documenti, supporto, e le versioni verificate comunit�.";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Scarica l'ultima versione di SecuritySuite e trovare altri moduli di SuiteCRM, temi e integrazioni con commenti, documenti, supporto, e le versioni verificate comunit�.";
 
