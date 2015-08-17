@@ -537,7 +537,7 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_NEW_FORM_TITLE' => 'Создать контрагента' ,
 'LBL_NOTIFY_SUBJECT' => 'Тема E-mail:' ,
 'LBL_OC_SEARCH_FORM_TITLE' => 'Offline Client Search', ///
-'LBL_OFFLINE_CLIENT'   => 'View Offline Clients that are connected to this system', ///
+'LBL_OFFLINE_CLIENT'   => 'View Offline Clients that are connected to this SuiteCRM system', ///
 'LBL_OOTB_BOUNCE'       => 'Запускать ночью проверку почтовых ящиков для возвращаемых писем' ,
 'LBL_OOTB_CAMPAIGN'     => 'Запускать ночью массовую рассылку писем' ,
 'LBL_OOTB_IE'           => 'Проверять входящие письма' ,
@@ -932,13 +932,6 @@ If your system environment prohibits your system from communicating to the licen
 'REMOVE_QUESTION'           => 'Вы действительно хотите удалить выбранные пакеты?',
 'WARN_POSSIBLE_JS_OVERWRITE'=> 'Осторожно, это приведёт к перезаписи всех изменений, которые вы могли сделать в файлах javascript. Продолжить?',
 'WARN_INSTALLER_LOCKED'=> 'Предупреждение: Для сохранения ваших данных инсталлятор должен быть заблокирован путём установки переменной installer_locked в значение "true" в файле config.php.' ,
-///'WARN_LICENSE_EXPIRED'=> 'Сообщение: До истечения срока действия вашей лицензии осталось дней: ' ,
-///'WARN_LICENSE_EXPIRED2' => " Пожалуйста, перейдите к <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a>  в панели администратора.",
-///'WARN_LICENSE_SEATS'=> "Warning: User licenses exceeded by ", ///
-///'WARN_LICENSE_SEATS2' => ".  Please contact your sales representative or email <a href='mailto:sales@sugarcrm.com'>sales@sugarcrm.com</a>.", ///
-///'WARN_LICENSE_SEATS_MAXED'=> "Warning: The number of active users is already the maximum number of licenses allowed: ", ///
-///'WARN_LICENSE_SEATS_EDIT_USER'=> "Warning: The number of active users is already the maximum number of licenses allowed", ///
-///'WARN_LICENSE_SEATS_USER_CREATE'=> "Warning: The number of active users allowed by your license matches the number of active users in the system. You will not be able to create additional active users.", ///
 'WARN_REPAIR_CONFIG' => 'Предупреждение: Файл config.php должен быть перестроен. В панели администратора перейдите по ссылке  "<a href=\'index.php?module=Administration&action=RebuildConfig\'>Перестройка файла конфигурации</a>".' ,
 'WARN_UPGRADE_APP'=> 'В данный момент доступна обновлённая версия приложения.' ,
 'WARN_UPGRADE' => 'Внимание: система может быть обновлена до версии ' ,

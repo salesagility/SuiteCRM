@@ -198,7 +198,6 @@ $mod_strings = array (
   'LBL_SUGARCRM_NEWS' => 'SuiteCRM News',
   'LBL_SUGARCRM_TRAINING_NEWS' => 'SuiteCRM Training News',
   'LBL_SUGARCRM_FORUMS' => 'SuiteCRM Forums',
-  'LBL_SUGARFORGE_NEWS' => 'SuiteCRM News',
   'LBL_ALL_NEWS' => 'All News',
   'LBL_SOURCE_CODE' => 'Source Code',
  /// 'LBL_SOURCE_SUGAR' => 'Sugar - The world\'s most popular sales force automation application created by SugarCRM Inc.',

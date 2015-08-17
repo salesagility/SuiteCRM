@@ -108,7 +108,7 @@ $mod_strings = array (
   'LBL_JOB' => 'Tarea',
   'LBL_JOB_URL' => 'URL de la tarea',
   'LBL_LAST_RUN' => 'Última Ejecución Exitosa',
-  'LBL_MODULE_NAME' => 'Planificador',
+  'LBL_MODULE_NAME' => 'Planificador SuiteCRM',
   'LBL_MODULE_TITLE' => 'Planificadores',
   'LBL_NAME' => 'Nombre de Tarea',
   'LBL_NEVER' => 'Nunca',
@@ -154,5 +154,5 @@ $mod_strings = array (
   'LBL_REMOVEDOCUMENTSFROMFS' => 'Extracción de documentos del sistema de archivos',
 );
 
-$mod_strings['LBL_OOTB_SUGARFEEDS'] = 'Limpiar Tablas de Feed';
-$mod_strings['LBL_TRIMSUGARFEEDS'] = 'Limpiar Tablas de Feed';
+$mod_strings['LBL_OOTB_SUGARFEEDS'] = 'Limpiar Tablas de SuiteCRM Feed';
+$mod_strings['LBL_TRIMSUGARFEEDS'] = 'Limpiar Tablas de SuiteCRM Feed';

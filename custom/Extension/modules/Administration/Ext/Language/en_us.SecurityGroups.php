@@ -14,6 +14,6 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Push the Message Dashlet to th
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Hookup Module";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Hookup Security Suite to work with your custom modules";
 $mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
-$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Grab the latest version of SecuritySuite and find other modules, themes, and integrations along with reviews, docs, support, and community verified versions.";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.";
 
 

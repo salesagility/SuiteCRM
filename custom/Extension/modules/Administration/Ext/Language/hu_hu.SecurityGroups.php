@@ -14,5 +14,5 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Minden felhasználó kezdőlap
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Modul Csatlakoztatása";
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Biztonsági Csoport képesség hozzáadása egyedi modulhoz";
 $mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
-$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Fogd meg a legfrissebb SecuritySuite és talál más modul, témákat és integráció, értékelés, docs, támogatás, és a közösség ellenőrizni változatban.";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Fogd meg a legfrissebb SecuritySuite és talál más SuiteCRM modul, témákat és integráció, értékelés, docs, támogatás, és a közösség ellenőrizni változatban.";
 ?>

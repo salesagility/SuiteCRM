@@ -127,7 +127,7 @@ $mod_strings = array (
 	'LOG_SLOW_QUERIES'=>'Log slow queries',
     'LOCK_HOMEPAGE_HELP'=>'This setting is to prevent<BR> 1) the addition of any dashlets to the home page, <BR>2) customization of dashlet placement in the home pages by dragging and dropping.',
     'CURRENT_LOGO'=>'Current Logo:',
-    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the application.',
+    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
     'NEW_LOGO'=>'Select Logo:',
 	'NEW_LOGO_HELP'=>'The image file format can be either .png or .jpg. The maximum height is 17px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
     'NEW_LOGO_HELP_NO_SPACE'=>'The image file format can be either .png or .jpg. The maximum height is 17px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions. Image file name must not contain a space character.',
@@ -237,7 +237,7 @@ $mod_strings = array (
     'PDF_HEADER_LOGO_WIDTH_INFO' => 'Change the scale of the uploaded image that appears in Quotes PDF Documents. (TCPDF only)',
 
     'PDF_SMALL_HEADER_LOGO' => 'For Reports PDF Documents',
-    'PDF_SMALL_HEADER_LOGO_INFO' => 'This image appears in the default Header in Reports PDF Documents.<br> This image also appears in the top left-hand corner of the application.',
+    'PDF_SMALL_HEADER_LOGO_INFO' => 'This image appears in the default Header in Reports PDF Documents.<br> This image also appears in the top left-hand corner of the SuiteCRM application.',
 
     'PDF_NEW_SMALL_HEADER_LOGO' => 'Select New Image for Reports',
     'PDF_NEW_SMALL_HEADER_LOGO_INFO' => 'The file format can be either .jpg or .png. (Only .jpg for EZPDF)<BR>The recommended size is 212x40 px.',
