@@ -4343,15 +4343,9 @@ h3 span{
     background: none repeat scroll 0% 0% #EEE;
     padding:0 !important;
     margin: 2px 3px;
-    overflow: hidden;
 }
 
 #toolbox{
-    height:100% !important;
-}
-
-#panels{
-    height:auto !important;
     overflow:auto;
 }
 
