@@ -134,15 +134,25 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
         // Remove all the copyright comments
         $contents = preg_replace('/\{\*[^\}]*?\*\}/', '', $contents);
+        // remove extra wrong javascript which breaks auto complete on flexi relationship parent fields
+        $contents = preg_replace("/<script language=\"javascript\">if\(typeof sqs_objects == \'undefined\'\){var sqs_objects = new Array;}sqs_objects\[\'EditView_parent_name\'\].*?<\/script>/","",$contents);
+
 
         if ($view == 'EditView' && ($vardef['type'] == 'relate' || $vardef['type'] == 'parent')) {
+
             $contents = str_replace('"' . $vardef['id_name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.id_name}"{literal}', $contents);
             $contents = str_replace('"' . $vardef['name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
+            // regex below fixes button javascript for flexi relationship
+            if($vardef['type'] == 'parent') {
+               $contents = str_replace("onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"{\$fields.parent_name.id_name}", "onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"parent_id", $contents);
+            }
         }
 
         // hack to disable one of the js calls in this control
         if (isset($vardef['function']) && ($vardef['function'] == 'getCurrencyDropDown' || $vardef['function']['name'] == 'getCurrencyDropDown'))
             $contents .= "{literal}<script>function CurrencyConvertAll() { return; }</script>{/literal}";
+
+
 
         // Save it to the cache file
         if ($fh = @sugar_fopen($file, 'w')) {
@@ -181,7 +191,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields[$fieldname] = $focus->field_defs[$fieldname];
-    if ($vardefFields[$fieldname]['type'] == 'parent_type') {
+    if ($vardefFields[$fieldname]['type'] == 'parent') {
         $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
     }
     foreach ($vardefFields as $name => $properties) {
@@ -217,6 +227,10 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         if ((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
             $fieldlist[$fieldname]['module'] = $focus->$fieldlist[$fieldname]['name']->getRelatedModuleName();
         }
+    }
+
+    if($fieldlist[$fieldname]['type'] == 'parent'){
+        $fieldlist['parent_id']['name'] = 'parent_id';
     }
 
     if (isset($fieldlist[$fieldname]['name']) && ($fieldlist[$fieldname]['name'] == 'date_modified')) {
@@ -297,9 +311,13 @@ function saveField($field, $id, $module, $value)
 
         if ($bean->field_defs[$field]['type'] == "multienum") {
             $bean->$field = encodeMultienumValue($value);
-        }else if ($bean->field_defs[$field]['type'] == "relate"){
+        }else if ($bean->field_defs[$field]['type'] == "relate" || $bean->field_defs[$field]['type'] == 'parent'){
             $save_field = $bean->field_defs[$field]['id_name'];
             $bean->$save_field = $value;
+            if ($bean->field_defs[$field]['type'] == 'parent') {
+                $bean->parent_type = $_REQUEST['parent_type'];
+                $bean->fill_in_additional_parent_fields(); // get up to date parent info as need it to display name
+            }
         }else{
             $bean->$field = $value;
         }
@@ -410,7 +428,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
     }
 
     //if field is of type relate.
-    if ($vardef['type'] == "relate") {
+    if ($vardef['type'] == "relate" || $vardef['type'] == "parent")  {
 
         if($vardef['source'] == "non-db"){
 
@@ -420,17 +438,22 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
             }
 
         }
-
+        if($vardef['type'] == "parent") {
+            $vardef['module'] = $bean->parent_type;
+            $name = $bean->parent_name;
+        }
         $record = $bean->$vardef['id_name'];
 
-        $value = "<a target='_blank' class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
+        $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
 
         if($vardef['ext2']){
             $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
 
-        }else{
+        }else if(!empty($vardef['rname'])){
             $value .= getFieldValueFromModule($vardef['rname'],$vardef['module'],$record) . "</a>";
 
+        } else {
+            $value .= $name . "</a>";
         }
     }
 

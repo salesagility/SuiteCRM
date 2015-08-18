@@ -110,9 +110,8 @@ function buildEditField(){
             if(html){
                 $(this).html(validation + "<form name='EditView' id='EditView'><div id='inline_edit_field'>" + html + "</div><a id='inlineEditSaveButton'></a></form>");
                 $("#inlineEditSaveButton").load(inlineEditSaveButtonImg);
-
                 //If the field is a relate field we will need to retrieve the extra js required to make the field work.
-                if(type == "relate") {
+                if(type == "relate" || type == "parent") {
                     var relate_js = getRelateFieldJS(field, module, id);
                     $(this).append(relate_js);
                     SUGAR.util.evalScript($(this).html());
@@ -126,7 +125,7 @@ function buildEditField(){
                 //Put the cursor in the field if possible.
                 $("#" + field).focus();
                 if(type == "name" || type == "text") {
-                    // move focus to end of text (multiply by 2 to make absolut certain its end as some browsers count carriage return as more than 1 characted)
+                    // move focus to end of text (multiply by 2 to make absolute certain its end as some browsers count carriage return as more than 1 character)
                     var strLength = $("#" + field).val().length * 2;
                     $("#" + field)[0].setSelectionRange(strLength, strLength);
                 }
@@ -221,6 +220,8 @@ function clickedawayclose(field,id,module, type){
 
 function getInputValue(field,type){
 
+
+
     if($('#'+ field).length > 0 && type){
 
         switch(type) {
@@ -278,6 +279,8 @@ function getInputValue(field,type){
                     return $('#'+ field).val();
                 }
         }
+    } else if(type == "parent" && $('#parent_id').val().length > 0) {
+        return $('#parent_id').val();
     }
 
 }
@@ -297,11 +300,17 @@ function getInputValue(field,type){
 
 function handleSave(field,id,module,type){
     var value = getInputValue(field,type);
+    var parent_type = "";
     if(typeof value === "undefined"){
         var value = "";
     }
 
-    var output_value = saveFieldHTML(field,module,id,value);
+    if(type == "parent") {
+            parent_type = $('#parent_type').val();
+    }
+
+
+    var output_value = saveFieldHTML(field,module,id,value, parent_type);
     var output = setValueClose(output_value);
 }
 
@@ -333,7 +342,7 @@ function setValueClose(value){
  * @returns {*}
  */
 
-function saveFieldHTML(field,module,id,value) {
+function saveFieldHTML(field,module,id,value, parent_type) {
     $.ajaxSetup({"async": false});
     var result = $.getJSON('index.php',
         {
@@ -344,6 +353,7 @@ function saveFieldHTML(field,module,id,value) {
             'id': id,
             'value': value,
             'view' : view,
+            'parent_type': parent_type,
             'to_pdf': true
         }
     );
