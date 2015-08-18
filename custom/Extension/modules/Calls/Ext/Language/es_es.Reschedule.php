@@ -1,5 +1,5 @@
 <?php
-$mod_strings = array_merge($mod_strings, 
+$mod_strings = array_merge($mod_strings,
 	array (
 		'LBL_RESCHEDULE' => 'Replanificar',
     		'LBL_RESCHEDULE_COUNT' => 'Intentos de llamar',
@@ -9,5 +9,5 @@ $mod_strings = array_merge($mod_strings,
     		'LBL_RESCHEDULE_ERROR2' => 'Por favor seleccione una razón',
     		'LBL_RESCHEDULE_PANEL' => 'Replanificación',
     		'LBL_RESCHEDULE_HISTORY' => 'Historial de Intentos de Llamada'
-	),
+	)
 );
