@@ -388,7 +388,12 @@ function loadFieldHTML(field,module,id) {
     );
     $.ajaxSetup({"async": true});
      if(result.responseText){
-         return(JSON.parse(result.responseText));
+         try {
+             return (JSON.parse(result.responseText));
+         } catch(e) {
+             return false;
+         }
+
      }else{
          return false;
      }
@@ -448,7 +453,12 @@ function getValidationRules(field,module,id){
     );
     $.ajaxSetup({"async": true});
 
-    var validation = JSON.parse(result.responseText);
+    try {
+        var validation = JSON.parse(result.responseText);
+    } catch(e) {
+        alert("There was an error loading the field. Your session may have timed out. Please log in again to fix this");
+        return false;
+    }
 
     return "<script type='text/javascript'>addToValidate('EditView', \"" + field + "\", \"" + validation['type'] + "\", " + validation['required'] + ",\"" + validation['label'] + "\");</script>";
 }
