@@ -524,7 +524,7 @@ $mod_strings = array (
 
 'LBL_WIZARD_FINISH' => 'Нажмите на кнопку <b>Готово</b> для сохранения настроек и перехода к работе с системой. За дополнительной информацией вы можете обратиться к следующим ресурсам:<br /><br />
 <table cellpadding=0 cellspacing=0>
-<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/suitecrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
 <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
 <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="http://www.sugarcrm.com.ua/viewforum.php?f=5" target="_blank"><b>Русскоязычная документация</b></a><br>Русскоязычный форум, посвящённый SugarCRM.</td></tr>
 </table>',
