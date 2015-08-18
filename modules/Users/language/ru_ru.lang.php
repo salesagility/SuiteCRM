@@ -52,7 +52,6 @@ $mod_strings = array (
 'Deleting a User record cannot be undone.',
 'LBL_DELETE_GROUP_CONFIRM'          => 'Вы действительно хотите удалить данного группового пользователя? Нажмите на кнопку <b>ОК</b> для удаления  пользователя из системы<br/>После удаления у вас будет возможность переназначить ответственных для записей, принадлежащих удалённому групповому пользователю.',
 'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.', ///
-'LBL_DELETE_USER_CONFIRM'           => 'When the User record is deleted, the corresponding Employee record will also be deleted.<br/><br/>'.
 'Click OK to delete the User record.',
 
 'LNK_IMPORT_USERS'                 => 'Импорт пользователей',
