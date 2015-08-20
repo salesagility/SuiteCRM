@@ -134,7 +134,7 @@ class vCal extends SugarBean {
 			$start_date_time,
 			$end_date_time,
 			'freebusy');
-        ini_set('display_errors', true);
+
 		// loop thru each activity, get start/end time in UTC, and return FREEBUSY strings
 		foreach($acts_arr as $act)
 		{
