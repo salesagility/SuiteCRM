@@ -404,17 +404,29 @@ class AOW_WorkFlow extends Basic {
             $bean->date_entered = $bean->fetched_row['date_entered'];
         }
 
+
         if($this->flow_run_on){
+
+            // database time correction with the user's time-zoneqq 
+            $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
+            $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
+            $thisDateEnteredTimestamp = strtotime($this->date_entered);
 
             switch($this->flow_run_on){
                 case'New_Records':
-                    if(strtotime($bean->date_entered) < strtotime($this->date_entered))
+                    // it is an invalid bean if the user modify it now because the affection need on new records only!
+                    if(!empty($bean->fetched_row) ||
+                        $beanDateEnteredTimestamp < $thisDateEnteredTimestamp) {
                         return false;
+                    }
                     Break;
 
                 case'Modified_Records':
-                    if(strtotime($bean->date_modified) < strtotime($this->date_entered) && strtotime($bean->date_modified) != strtotime($bean->date_entered))
+                    // it isn't a valid bean if the user create it now because the affection need on already exists records only!
+                    if(empty($bean->fetched_row) ||
+                        ($beanDateModifiedTimestamp < $thisDateEnteredTimestamp && $beanDateModifiedTimestamp != $beanDateEnteredTimestamp)) {
                         return false;
+                    }
                     Break;
 
             }
@@ -645,6 +657,7 @@ class AOW_WorkFlow extends Basic {
                 if(class_exists($custom_action_name)){
                     $action_name = $custom_action_name;
                 }
+
 
                 $flow_action = new $action_name($action->id);
                 if(!$flow_action->run_action($bean, unserialize(base64_decode($action->parameters)), $in_save)){
