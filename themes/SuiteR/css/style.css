@@ -3085,36 +3085,35 @@ li#usermenu:hover {
 }
 
 @media (max-height:600px) {
-    .moremenu ul, .dropdown-menu {
+    .moremenu ul, ul.dropdown-menu {
         max-height: 500px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:701px) and (max-height:800px) {
-    .moremenu ul, .dropdown-menu {
+    .moremenu ul, ul.dropdown-menu {
         max-height: 575px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:801px) and (max-height:900px) {
-    .moremenu ul, .dropdown-menu {
+    .moremenu ul, ul.dropdown-menu {
         max-height: 700px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:901px) and (max-height:1000px) {
-    .moremenu ul, .dropdown-menu {
-        max-height: 800px;
+    .moremenu ul, ul.dropdown-menu {
+        max-height: 800px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:1001px) {
-    .moremenu ul, .dropdown-menu {
-        max-height: 850px;
+    .moremenu ul, ul.dropdown-menu {
         max-height: 850px !important;
         overflow: auto;
     }
@@ -4616,5 +4615,6 @@ td.inlineEditActive{
         display: none;
     }
 }
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
