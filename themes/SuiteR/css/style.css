@@ -4584,7 +4584,7 @@ td.inlineEditActive{
         color: #3C8DBC !important;
     }
 
-    .glyphicon-search, .glyphicon-user {
+    .glyphicon-search, .glyphicon-option-vertical {
         font-size:1.5em;
     }
 }
