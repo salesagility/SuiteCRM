@@ -68,12 +68,12 @@
                     {/foreach}
             </div>
             <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()" action="index.php" name="UnifiedSearch">
-                <input class="form-control" type="hidden" value="UnifiedSearch" name="action"></input>
-                <input class="form-control" type="hidden" value="Home" name="module"></input>
-                <input class="form-control" type="hidden" value="false" name="search_form"></input>
-                <input class="form-control" type="hidden" value="false" name="advanced"></input>
+                <input class="form-control" type="hidden" value="UnifiedSearch" name="action">
+                <input class="form-control" type="hidden" value="Home" name="module">
+                <input class="form-control" type="hidden" value="false" name="search_form">
+                <input class="form-control" type="hidden" value="false" name="advanced">
                 <span class="input-group-btn">
-                    <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string"></input>
+                    <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string">
                 </span>
             </form>
                 <div id="mobilegloballinks">
