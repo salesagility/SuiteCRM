@@ -3644,7 +3644,7 @@ span#quickcreateplus{
     font-size:1.1em;
 }
 
-#quickcreatetop button{
+#quickcreatetop button, #desktop_notifications button{
     margin:10px 0 0 0;
 }
 /* Main content */
@@ -4426,7 +4426,7 @@ h3 span{
         display:none !important;
     }
 
-    #quickcreatetop a{
+    #quickcreatetop a, #desktop_notifications a{
         color:#ffffff !important;
         margin:8px 0 8px 0 !important;
         line-height:50px;
@@ -4434,19 +4434,19 @@ h3 span{
         cursor:pointer;
     }
 
-    #quickcreatetop ul li{
+    #quickcreatetop ul li, #desktop_notifications ul li{
         padding:0 !important;
         margin:0 !important;
     }
 
-    #quickcreatetop ul li a{
+    #quickcreatetop ul li a, #desktop_notifications ul li a{
         color:#3C8DBC !important;
         padding:0 3px 0 3px !important;
         margin:0 !important;
         line-height:35px;
     }
 
-    #quickcreatetop ul li a:hover{
+    #quickcreatetop ul li a:hover, #desktop_notifications ul li a:hover{
         color:#ffffff !important;
     }
 }
