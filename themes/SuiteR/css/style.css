@@ -4609,5 +4609,12 @@ td.inlineEditActive{
     overflow:scroll;
 }
 
+/* Fix to ensure navigation elements are not included in print process */
+
+@media print {
+    .navbar-inverse, .sidebar{
+        display: none;
+    }
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
