@@ -77,7 +77,7 @@
                 </span>
             </form>
                 <div id="mobilegloballinks">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
