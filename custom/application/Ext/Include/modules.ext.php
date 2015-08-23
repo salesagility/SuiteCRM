@@ -3,6 +3,20 @@
 
  
  //WARNING: The contents of this file are auto-generated
+$beanList['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$beanFiles['AOD_IndexEvent'] = 'modules/AOD_IndexEvent/AOD_IndexEvent.php';
+$modules_exempt_from_availability_check['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$report_include_modules['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$modInvisList[] = 'AOD_IndexEvent';
+$beanList['AOD_Index'] = 'AOD_Index';
+$beanFiles['AOD_Index'] = 'modules/AOD_Index/AOD_Index.php';
+$modules_exempt_from_availability_check['AOD_Index'] = 'AOD_Index';
+$report_include_modules['AOD_Index'] = 'AOD_Index';
+$modInvisList[] = 'AOD_Index';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
 $beanList['AOW_Actions'] = 'AOW_Action';
 $beanFiles['AOW_Action'] = 'modules/AOW_Actions/AOW_Action.php';
 $modules_exempt_from_availability_check['AOW_Actions'] = 'AOW_Actions';
@@ -30,6 +44,50 @@ $beanFiles['Calls_Reschedule'] = 'modules/Calls_Reschedule/Calls_Reschedule.php'
 $modules_exempt_from_availability_check['Calls_Reschedule'] = 'Calls_Reschedule';
 $report_include_modules['Calls_Reschedule'] = 'Calls_Reschedule';
 $modInvisList[] = 'Calls_Reschedule';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['SecurityGroups'] = 'SecurityGroup';
+$beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
+$moduleList[] = 'SecurityGroups';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['AOR_Reports'] = 'AOR_Report';
+$beanFiles['AOR_Report'] = 'modules/AOR_Reports/AOR_Report.php';
+$moduleList[] = 'AOR_Reports';
+$beanList['AOR_Fields'] = 'AOR_Field';
+$beanFiles['AOR_Field'] = 'modules/AOR_Fields/AOR_Field.php';
+$modules_exempt_from_availability_check['AOR_Fields'] = 'AOR_Fields';
+$report_include_modules['AOR_Fields'] = 'AOR_Fields';
+$modInvisList[] = 'AOR_Fields';
+$beanList['AOR_Charts'] = 'AOR_Chart';
+$beanFiles['AOR_Chart'] = 'modules/AOR_Charts/AOR_Chart.php';
+$modules_exempt_from_availability_check['AOR_Charts'] = 'AOR_Charts';
+$report_include_modules['AOR_Charts'] = 'AOR_Charts';
+$modInvisList[] = 'AOR_Charts';
+$beanList['AOR_Conditions'] = 'AOR_Condition';
+$beanFiles['AOR_Condition'] = 'modules/AOR_Conditions/AOR_Condition.php';
+$modules_exempt_from_availability_check['AOR_Conditions'] = 'AOR_Conditions';
+$report_include_modules['AOR_Conditions'] = 'AOR_Conditions';
+$modInvisList[] = 'AOR_Conditions';
+$beanList['AOR_Scheduled_Reports'] = 'AOR_Scheduled_Reports';
+$beanFiles['AOR_Scheduled_Reports'] = 'modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports.php';
+$moduleList[] = 'AOR_Scheduled_Reports';
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['AOP_Case_Events'] = 'AOP_Case_Events';
+$beanFiles['AOP_Case_Events'] = 'modules/AOP_Case_Events/AOP_Case_Events.php';
+$modules_exempt_from_availability_check['AOP_Case_Events'] = 'AOP_Case_Events';
+$report_include_modules['AOP_Case_Events'] = 'AOP_Case_Events';
+$modInvisList[] = 'AOP_Case_Events';
+$beanList['AOP_Case_Updates'] = 'AOP_Case_Updates';
+$beanFiles['AOP_Case_Updates'] = 'modules/AOP_Case_Updates/AOP_Case_Updates.php';
+$modules_exempt_from_availability_check['AOP_Case_Updates'] = 'AOP_Case_Updates';
+$report_include_modules['AOP_Case_Updates'] = 'AOP_Case_Updates';
+$modInvisList[] = 'AOP_Case_Updates';
 
 
  
@@ -64,36 +122,6 @@ $beanFiles['AOS_Quotes'] = 'modules/AOS_Quotes/AOS_Quotes.php';
 $moduleList[] = 'AOS_Quotes';
 
 
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['AOR_Reports'] = 'AOR_Report';
-$beanFiles['AOR_Report'] = 'modules/AOR_Reports/AOR_Report.php';
-$moduleList[] = 'AOR_Reports';
-$beanList['AOR_Fields'] = 'AOR_Field';
-$beanFiles['AOR_Field'] = 'modules/AOR_Fields/AOR_Field.php';
-$modules_exempt_from_availability_check['AOR_Fields'] = 'AOR_Fields';
-$report_include_modules['AOR_Fields'] = 'AOR_Fields';
-$modInvisList[] = 'AOR_Fields';
-$beanList['AOR_Charts'] = 'AOR_Chart';
-$beanFiles['AOR_Chart'] = 'modules/AOR_Charts/AOR_Chart.php';
-$modules_exempt_from_availability_check['AOR_Charts'] = 'AOR_Charts';
-$report_include_modules['AOR_Charts'] = 'AOR_Charts';
-$modInvisList[] = 'AOR_Charts';
-$beanList['AOR_Conditions'] = 'AOR_Condition';
-$beanFiles['AOR_Condition'] = 'modules/AOR_Conditions/AOR_Condition.php';
-$modules_exempt_from_availability_check['AOR_Conditions'] = 'AOR_Conditions';
-$report_include_modules['AOR_Conditions'] = 'AOR_Conditions';
-$modInvisList[] = 'AOR_Conditions';
-$beanList['AOR_Scheduled_Reports'] = 'AOR_Scheduled_Reports';
-$beanFiles['AOR_Scheduled_Reports'] = 'modules/AOR_Scheduled_Reports/AOR_Scheduled_Reports.php';
-$moduleList[] = 'AOR_Scheduled_Reports';
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['SecurityGroups'] = 'SecurityGroup';
-$beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
-$moduleList[] = 'SecurityGroups';
-
-
 
 $beanList['AM_ProjectTemplates'] = 'AM_ProjectTemplates';
 $beanFiles['AM_ProjectTemplates'] = 'modules/AM_ProjectTemplates/AM_ProjectTemplates.php';
@@ -111,40 +139,12 @@ $modInvisList[] = 'AM_ProjectHolidays';
 
  
  //WARNING: The contents of this file are auto-generated
-$beanList['AOD_IndexEvent'] = 'AOD_IndexEvent';
-$beanFiles['AOD_IndexEvent'] = 'modules/AOD_IndexEvent/AOD_IndexEvent.php';
-$modules_exempt_from_availability_check['AOD_IndexEvent'] = 'AOD_IndexEvent';
-$report_include_modules['AOD_IndexEvent'] = 'AOD_IndexEvent';
-$modInvisList[] = 'AOD_IndexEvent';
-$beanList['AOD_Index'] = 'AOD_Index';
-$beanFiles['AOD_Index'] = 'modules/AOD_Index/AOD_Index.php';
-$modules_exempt_from_availability_check['AOD_Index'] = 'AOD_Index';
-$report_include_modules['AOD_Index'] = 'AOD_Index';
-$modInvisList[] = 'AOD_Index';
-
-
- 
- //WARNING: The contents of this file are auto-generated
 $beanList['FP_events'] = 'FP_events';
 $beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';
 $moduleList[] = 'FP_events';
 $beanList['FP_Event_Locations'] = 'FP_Event_Locations';
 $beanFiles['FP_Event_Locations'] = 'modules/FP_Event_Locations/FP_Event_Locations.php';
 $moduleList[] = 'FP_Event_Locations';
-
-
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['AOP_Case_Events'] = 'AOP_Case_Events';
-$beanFiles['AOP_Case_Events'] = 'modules/AOP_Case_Events/AOP_Case_Events.php';
-$modules_exempt_from_availability_check['AOP_Case_Events'] = 'AOP_Case_Events';
-$report_include_modules['AOP_Case_Events'] = 'AOP_Case_Events';
-$modInvisList[] = 'AOP_Case_Events';
-$beanList['AOP_Case_Updates'] = 'AOP_Case_Updates';
-$beanFiles['AOP_Case_Updates'] = 'modules/AOP_Case_Updates/AOP_Case_Updates.php';
-$modules_exempt_from_availability_check['AOP_Case_Updates'] = 'AOP_Case_Updates';
-$report_include_modules['AOP_Case_Updates'] = 'AOP_Case_Updates';
-$modInvisList[] = 'AOP_Case_Updates';
 
 
  
