@@ -41,83 +41,203 @@
 
 *}
 
-	{if $fields.reminder_time}            	
-            	
+	{if $fields.reminder_time}
             	{assign var="REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}
-            	{assign var="EMAIL_REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}	
-            	
-            	{if !$fields.reminder_checked.value}            		
-            		{assign var="REMINDER_TIME" value=-1}
-            	{else}
-            		{assign var="REMINDER_TIME" value=$fields.reminder_time.value}
-            	{/if}
-            	{if !$fields.email_reminder_checked.value}            		
-            		{assign var="EMAIL_REMINDER_TIME" value=-1}
-            	{else}
-            		{assign var="EMAIL_REMINDER_TIME" value=$fields.email_reminder_time.value}
-            	{/if}
 	{/if}
-	
-	{assign var="REMINDER_TIME_DISPLAY" value="none"}
-	{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="none"}
-	{if $REMINDER_TIME != -1}
-            	{assign var="REMINDER_CHECKED" value="checked"}
-            	{assign var="REMINDER_TIME_DISPLAY" value="inline"}	
-	{/if}
-        {if $EMAIL_REMINDER_TIME != -1}
-            	{assign var="EMAIL_REMINDER_CHECKED" value="checked"}
-            	{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="inline"}
-        {/if}
+
 
 
 {if $view == "EditView" || $view == "QuickCreate" || $view == "QuickEdit"}
 
-		<div>
-		    	   	
-		    	<input name="reminder_checked" type="hidden" value="0">
-		    	<input name="reminder_checked" id="reminder_checked" onclick="toggleReminder(this,'reminder');" type="checkbox" class="checkbox" value="1" {$REMINDER_CHECKED}>
-		    	<div style="display: inline-block; width: 111px;">{$MOD.LBL_REMINDER_POPUP}</div>
-		    	<div id="reminder_list" style="display: {$REMINDER_TIME_DISPLAY}">
-		    		<select tabindex="{$REMINDER_TABINDEX}" name="reminder_time">
-					{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
-				</select>
-		    	</div>
-            	</div>
-            	<div>
-		    	
-		   	<input name="email_reminder_checked" type="hidden" value="0">
-		    	<input name="email_reminder_checked" id="email_reminder_checked" onclick="toggleReminder(this,'email_reminder');" type="checkbox" class="checkbox" value="1" {$EMAIL_REMINDER_CHECKED}>
-		    	<div style="display: inline-block; width: 111px;">{$MOD.LBL_REMINDER_EMAIL_ALL_INVITEES}</div>
-		    	<div id="email_reminder_list" style="display: {$EMAIL_REMINDER_TIME_DISPLAY}">
-		    		<select tabindex="{$REMINDER_TABINDEX}" name="email_reminder_time">
-					{html_options options=$EMAIL_REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
-				</select>
-		    	</div>
-		</div>
-            	<script type="text/javascript">
-            		{literal} 
-			function toggleReminder(el,field){
-				if(el.checked){
-					document.getElementById(field + "_list").style.display = "inline";
-				}else{
-					document.getElementById(field + "_list").style.display = "none";
-				}
-			}
-			{/literal}
-            	</script>
+	<div>
+		<input type="button" value="Add Alert" class="add-alert">
+	</div>
+	<div class="setup-multiple-alerts">
+
+	</div>
+	<select name="reminder_time" style="visibility: hidden">
+		{html_options options=$REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
+	</select>
+{literal}
+	<script>
+		var alertIndex = 0;
+
+		$(document).ready(function() {
+			$('input[type=button].add-alert').click(function(e) {
+				console.log('Add alert');
+
+				var setupMultipleAlerts = $('.setup-multiple-alerts');
+
+				var alert = $('<div></div>')
+						.attr('name', 'alert['+alertIndex+']');
+				var alertNewFlag = $('<input type="hidden" name="alerts['+ alertIndex +'][flag]" value="new">')
+						.appendTo(alert);
+
+				var alertTimeDiv = $('<div></div>')
+						.appendTo(alert);
+
+				var alertSubscribers = $('<div></div>')
+						.appendTo(alert);
+
+				var alertSubscribersToolbar = $('<div></div>')
+						.appendTo(alert);
+
+				var alertSubscribersToolbarButtons = $('<div></div>')
+						.appendTo(alertSubscribersToolbar);
+
+				var alertActions = $('<div></div>')
+						.appendTo(alert);
+
+
+				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+alertIndex+']">' +
+						'<img src="themes/default/images/glyphicon-16/glyphicon-plus.png"> Add All Invitees</button>')
+						.appendTo(alertSubscribersToolbarButtons);
+
+//				var alertAddSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+alertIndex+']">' +
+//						'</button>')
+//						.appendTo(alertSubscribersToolbarButtons);
+
+//				var alertSubscriberList = $('<ul class="alert-subscriber-list"></ul>')
+//						.appendTo(alertSubscribersToolbar);
+
+				var alertTime = $('select[name=reminder_time]')
+						.clone() // clone the reminder time options
+						.attr('name', 'alerts['+alertIndex+'][time]')
+						.attr('style', ' ') // remove hidden style
+						.appendTo(alertTimeDiv);
+
+				var alertSubscribersList = $('<div></div>')
+						.addClass('panel')
+						.appendTo(alertSubscribers);
+
+				var alertActionPopup =  $('<input type="checkbox" name="alert['+alertIndex+'][action][send_popup]" ' +
+						'id="alert_action_send_popup['+alertIndex+']" value="0"> <label>Popup </label> ');
+				var alertActionEmail =  $('<input type="checkbox" name="alert['+alertIndex+'][action][send_email]" ' +
+						'id="alert_action_send_email['+alertIndex+']" value="0"> <label>Email </label> ');
+
+				alertActionPopup.appendTo(alertActions);
+				alertActionEmail.appendTo(alertActions);
+
+				var alertRemoveBtn =
+						$(' <button class="add-alert" id="alert_remove_btn['+alertIndex+']" title="Remove Alert">' +
+								'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
+								.appendTo(alertTimeDiv);
+
+				alert.appendTo(setupMultipleAlerts);
+
+
+				// events
+				alertRemoveBtn.click(function(e) {
+					$(this).parent().parent().remove();
+					return false;
+				});
+
+				alertAddAllSubscriberBtn.button().click(function(e) {
+					var invitees = $(alertSubscribers);
+					$(invitees).empty();
+					if(typeof GLOBAL_REGISTRY !== "undefined" &&
+							typeof GLOBAL_REGISTRY.focus !== "undefined" &&
+							typeof GLOBAL_REGISTRY.focus.users_arr !== "undefined") {
+						jQuery.each(GLOBAL_REGISTRY.focus.users_arr, function(key, value) {
+							var id, label, bean, li;
+
+							if(value.module == 'User') {
+								id = value.fields.id;
+								label = value.fields.full_name;
+								bean = value.module;
+							} else if(value.module == 'Contact') {
+								id = value.fields.id;
+								label = value.fields.full_name;
+								bean = value.module;
+							} else if(value.module == 'Lead') {
+								id = value.fields.id;
+									label = value.fields.full_name;
+									bean = value.module;
+							}
+
+							invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
+									'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
+									+'s.gif">' +
+									' <label>'+ label +'</label>' +
+									'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][id]" value="'+ id +'">' +
+									'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
+									'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
+
+							invitees.append(invitee);
+
+							invitee.click(function() {
+								$(this).remove();
+							})
+						});
+					}
+					return false;
+				});
+
+//				alertAddSubscriberBtn.button({
+//					text: false,
+//					icons: {
+//						primary: "ui-icon-triangle-1-s"
+//					}
+//				}).click(function() {
+//						var menu = $( this ).parent().next().show().position({
+//							my: "left top",
+//							at: "left bottom",
+//							of: this
+//						});
+//						$( document ).one( "click", function() {
+//							menu.hide();
+//						});
+//						return false;
+//					})
+//					.parent()
+//					.buttonset()
+//					.next()
+//					.hide()
+//					.menu();
+
+				var event = $(document);
+				event.trigger("display:SugarWidgetScheduleRow");
+				alertAddAllSubscriberBtn.trigger('click');
+				alertIndex++;
+			});
+
+			$(document).on('display:SugarWidgetScheduleRow', function(e) {
+				console.log('added row');
+				$('ul.alert-subscriber-list').each(function(key, value) {
+					var ul = $(this);
+					$(this).empty();
+					if(typeof GLOBAL_REGISTRY !== "undefined" &&
+						typeof GLOBAL_REGISTRY.focus !== "undefined" &&
+						typeof GLOBAL_REGISTRY.focus.users_arr !== "undefined") {
+						jQuery.each(GLOBAL_REGISTRY.focus.users_arr, function(key, value) {
+							var id, label, bean, li;
+
+							if(value.module == 'User') {
+								id = value.fields.full_name;
+								label = value.fields.full_name;
+								bean = value.module;
+							} else if(value.module == 'Contact') {
+								id = value.fields.full_name;
+								label = value.fields.full_name;
+								bean = value.module;
+							} else if(value.module == 'Lead') {
+								id = value.fields.full_name,
+								label = value.fields.full_name,
+								bean = value.module;
+							}
+
+							li = $('<li data-id="'+ id +'" data-bean="'+ bean +'">' +
+									'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
+									+'s.gif">' +
+									'<label>'+ label +'</label></li>');
+							ul.append(li);
+						});
+					}
+				});
+			})
+		});
+	</script>
+{/literal}
 	{else}
-		<div>			
-			<input type="checkbox" disabled  {$REMINDER_CHECKED}>
-			{$MOD.LBL_REMINDER_POPUP}
-			{if $REMINDER_TIME != -1}
-				{$REMINDER_TIME_OPTIONS[$REMINDER_TIME]}
-			{/if}			
-		</div>
-		<div>			
-			<input type="checkbox" disabled  {$EMAIL_REMINDER_CHECKED}>
-			{$MOD.LBL_REMINDER_EMAIL_ALL_INVITEES}
-			{if $EMAIL_REMINDER_TIME != -1}
-				{$EMAIL_REMINDER_TIME_OPTIONS[$EMAIL_REMINDER_TIME]}
-			{/if}			
-		</div>
-	{/if}	
+
+	{/if}
