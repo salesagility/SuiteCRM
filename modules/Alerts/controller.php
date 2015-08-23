@@ -41,10 +41,20 @@ class AlertsController extends SugarController
 {
     public function action_get()
     {
-        global $current_user, $app_strings;
-        $bean = BeanFactory::getBean('Alerts');
-
+        global $app_list_strings, $timedate, $current_user, $app_strings, $sugar_config, $db;
+        $minLimit = new DateTime();
+        $minLimit = $minLimit->sub(new DateInterval('PT180S'));
+        $maxLimit = new DateTime();
+        $maxLimit = $maxLimit->add(new DateInterval('PT180S'));
+        $query = "SELECT id FROM alerts WHERE deleted = 0 AND send_popup = 1 AND delivery_datetime >= '".$minLimit->format("Y-m-d H:i:s")."' AND delivery_datetime <= '".$maxLimit->format("Y-m-d H:i:s")."' AND subscribers LIKE '%User%' and subscribers LIKE '%".$current_user->id."%'";
+        $result = $db->query($query);
+        while($row = $db->fetchByAssoc($result)) {
+            $this->view_object_map['Results'][] = $alert = new Alert($row['id']);
+        }
+//        $bean = BeanFactory::getBean('Alerts');
+//
         $this->view_object_map['Flash'] = '';
+//        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
         $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
         if($this->view_object_map['Results'] == '') {
             $this->view_object_map['Flash'] =$app_strings['LBL_EMAIL_ERROR_VIEW_RAW_SOURCE'];
@@ -78,10 +88,6 @@ class AlertsController extends SugarController
             $url_redirect = $_POST['url_redirect'];
         } else {
             $url_redirect == null;
-        }
-
-        if($url_redirect == null) {
-            $url_redirect = 'index.php?fakeid='. uniqid('fake_', true);
         }
 
         if(isset($_POST['target_module'])) {

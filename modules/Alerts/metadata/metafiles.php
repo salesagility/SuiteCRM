@@ -43,7 +43,7 @@
  * To change the template for this generated file go to
  * Window - Preferences - PHPeclipse - PHP - Code Templates
  */
-$module_name = 'Alert';
+$module_name = 'Alerts';
  $metafiles[$module_name] = array(
 	'defaultviewdefs'  => 	'modules/' . $module_name . '/metadata/defaultviewdefs.php',
  );

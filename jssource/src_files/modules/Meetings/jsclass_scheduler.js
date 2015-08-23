@@ -1067,6 +1067,8 @@ SugarWidgetScheduleRow.prototype.display = function() {
         //}
         this.element = tr;
         this.element_index = this.thetable.rows.length - 1;
+		var event = $(document);
+		event.trigger("display:SugarWidgetScheduleRow");
     }, null, this);
 }
 

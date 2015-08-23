@@ -261,6 +261,7 @@ function AlertObj() {
         target_module: null,
         type: 'info'
     };
+    this.subscribers = new Array();
 }
 
 /**
@@ -272,4 +273,6 @@ $(document).ready(function() {
         setTimeout(updateMissed, 60000);
     }
     setTimeout(updateMissed, 2000);
+
+
 });
