@@ -162,19 +162,56 @@ class Meeting extends SugarBean {
 	// this is for calendar
 	function save($check_notify = FALSE) {
 		global $timedate, $current_user, $disable_date_format, $db;
-		if(empty($this->id)) {
-			$this->alerts[0] = new Alert();
-		} else {
-			$query = "SELECT id FROM alerts WHERE alerts.target_module = '$this->module_name' AND alerts.target_module_id = '$this->id'";
-			$alertList = $db->query($query);
-			foreach($alertList as $key => $value) {
-			 	$alert = new Alert($value['id']);
-				$this->alerts[] = $alert;
-			}
-			if(count($this->alerts) == 0) {
-				$this->alerts[0] = new Alert();
+
+		if(isset($_REQUEST['alerts'])) {
+			foreach($_REQUEST['alerts'] as $a => $alert) {
+				if($alert['flag'] == 'new') {
+					$this->alerts[$a] = new Alert();
+				} else {
+					$this->alerts[$a] = new Alert($alert['id']);
+				}
+
+				if(isset($alert['action']['send_popup'])) {
+					$this->alerts[$a]->send_popup = $alert['action']['send_popup'];
+				}
+
+				if(isset($alert['action']['send_email'])) {
+					$this->alerts[$a]->send_email = $alert['action']['send_email'];
+				}
+
+				if(isset($alert['time']) && isset($this->date_start)) {
+					$now = $timedate->fromDb($this->date_start);
+					$this->alerts[$a]->delivery_datetime = $now->sub(new DateInterval('PT'.$alert['time'].'S'));
+					$this->alerts[$a]->delivery_datetime = $this->alerts[$a]->delivery_datetime->format('Y-m-d H:i:s');
+				}
+
+				$this->alerts[$a]->target_module = $this->module_name;
+				$this->alerts[$a]->target_module_id = $this->id;
+				foreach($alert['subscribers'] as $s => $subscriber) {
+					$id = $subscriber['id'];
+					$class = $subscriber['bean'];
+					$bean = new $class();
+					$bean->retrieve($id);
+					$this->alerts[$a]->subscribe($bean);
+				}
+
+				$this->alerts[$a]->save();
 			}
 		}
+
+//		if(empty($this->id)) {
+//			$this->alerts[0] = new Alert();
+//		} else {
+//			$query = "SELECT id FROM alerts WHERE alerts.target_module = '$this->module_name' AND alerts.target_module_id = '$this->id'";
+//			$alertList = $db->query($query);
+//			foreach($alertList as $key => $value) {
+//			 	$alert = new Alert($value['id']);
+//				$this->alerts[] = $alert;
+//			}
+//			if(count($this->alerts) == 0) {
+//				$this->alerts[0] = new Alert();
+//			}
+//		}
 
 
         if(isset($this->date_start))
@@ -186,10 +223,12 @@ class Meeting extends SugarBean {
 
             }
 
-			if($this->reminder_time != -1) {
-				$this->alerts[0]->delivery_datetime = $td->sub(new DateInterval('PT'.$this->reminder_time.'S'));
-				$this->alerts[0]->delivery_datetime = $this->alerts[0]->delivery_datetime->format('Y-m-d H:i:s');
-			}
+//			if($this->reminder_time != -1) {
+//				foreach($this->alerts as $alert) {
+//					$alert->delivery_datetime = $td->sub(new DateInterval('PT'.$this->reminder_time.'S'));
+//					$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
+//				}
+//			}
 
             if($td)
             {
@@ -287,10 +326,6 @@ class Meeting extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
 		}
 
-		$this->alerts[0]->target_module = $this->module_name;
-		$this->alerts[0]->target_module_id = $this->id;
-		$this->alerts[0]->send_popup = true;
-		$this->alerts[0]->save();
 
 		return $return_id;
 	}
@@ -732,7 +767,6 @@ class Meeting extends SugarBean {
 			$notify_user->new_assigned_user_name = $notify_user->full_name;
 			$GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
 			$list[$notify_user->id] = $notify_user;
-			$this->alerts[0]->subscribe($notify_user);
 		}
 
 		foreach($this->contacts_arr as $contact_id) {
@@ -741,7 +775,6 @@ class Meeting extends SugarBean {
 			$notify_user->new_assigned_user_name = $notify_user->full_name;
 			$GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
 			$list[$notify_user->id] = $notify_user;
-			$this->alerts[0]->subscribe($notify_user);
 		}
 
         foreach($this->leads_arr as $lead_id) {
@@ -750,7 +783,6 @@ class Meeting extends SugarBean {
 			$notify_user->new_assigned_user_name = $notify_user->full_name;
 			$GLOBALS['log']->info("Notifications: recipient is $notify_user->new_assigned_user_name");
 			$list[$notify_user->id] = $notify_user;
-			$this->alerts[0]->subscribe($notify_user);
 		}
 
 		global $sugar_config;

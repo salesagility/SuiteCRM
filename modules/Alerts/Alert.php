@@ -62,7 +62,7 @@ class Alert extends Basic {
     var $assigned_user_id;
     var $assigned_user_name;
     var $assigned_user_link;
-    var $delivery_datatime;
+    var $delivery_datetime;
     var $content_type = EAlertContentType::text;
     var $is_read = false;
     var $send_email = false;
@@ -80,7 +80,7 @@ class Alert extends Basic {
      */
     function Alert($id) {
         parent::Basic();
-        if(!empty($id) || $id != null) {
+        if(!empty($id)) {
             $this->retrieve($id);
             // get bean classes (To prevent undefined exception)
             $this->subscribers = str_replace("&quot;",'"', $this->subscribers);
