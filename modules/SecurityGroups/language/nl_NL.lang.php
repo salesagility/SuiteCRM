@@ -49,7 +49,7 @@ $mod_strings = array (
   'LBL_INHERIT_ASSIGNED' => 'Erf van Toegewezen Aan Gebruiker',
   'LBL_INHERIT_ASSIGNED_DESC' => 'Het record zal alle groepen erven van de gebruiker die is toegewezen aan het record. Andere groepen die zijn toegewezen aan het record worden NIET verwijderd.',
   'LBL_POPUP_SELECT' => 'Gebruik Schepper Groep selecteren',
-  'LBL_POPUP_SELECT_DESC' => 'Wanneer een record wordt aangemaakt door een gebruiker in meer dan een groep tonen een panel voor de selectie op het cre�ren scherm. Anders erven dat een groep.',
+  'LBL_POPUP_SELECT_DESC' => 'Wanneer een record wordt aangemaakt door een gebruiker in meer dan een groep tonen een panel voor de selectie op het creëren scherm. Anders erven dat een groep.',
   'LBL_FILTER_USER_LIST' => 'Filter Gebruikers Lijst',
   'LBL_FILTER_USER_LIST_DESC' => "Niet-beheerders kunnen enkel toewijzen aan gebruikers in dezelfde groep(en)",  
   

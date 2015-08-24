@@ -603,7 +603,6 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_PASSWORD_EXP_IN'=> 'Пароль будет недействителен через',
 'LBL_PASSWORD_USER_RESET' => 'Сброс пароля пользователем',
 'LBL_PERFORM_UPDATE'=> 'Выполнение обновления' ,
-'LBL_PLUGINS_TITLE' => 'Sugar Forge' , ///
 'LBL_PLUGINS' => 'Получить плагины и другие расширения.' ,
 'LBL_PRICE_LIST_TITLE' => 'Product and Quotes', ///
 'LBL_PRICE_LIST_DESC' => 'Manage the product catalog, along with the related information on manufacturers and shipping providers.',

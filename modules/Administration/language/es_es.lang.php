@@ -579,7 +579,6 @@ $mod_strings = array (
   'LBL_PASSWORD_EXP_IN' => 'La Contraseña Caduca en',
   'LBL_PASSWORD_USER_RESET' => 'Contraseña Restaurable por Usuario',
   'LBL_PERFORM_UPDATE' => 'Realizar Actualización',
-  'LBL_PLUGINS_TITLE' => 'Sugar Forge',
   'LBL_PLUGINS' => 'Obtiene complementos y otras extensiones de SuiteCRM.',
   'LBL_PRICE_LIST_TITLE' => 'Productos y Presupuestos',
   'LBL_PRICE_LIST_DESC' => 'Administre el catálogo de productos, junto con la información relacionada sobre fabricantes y proveedores de envío.',
