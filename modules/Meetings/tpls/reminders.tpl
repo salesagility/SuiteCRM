@@ -62,100 +62,24 @@
 	<script>
 		var alertIndex = 0;
 
+
 		$(document).ready(function() {
+
+			var createAlert = function(options) {
+
+			}
+
+			var removeSubscriber = function(options) {
+
+			}
+
+			var addAllSubscribers = function(options) {
+
+			}
+
 			// Load existing alerts
 			var loadExistingAlert = function (options) {
-				var setupMultipleAlerts = $('.setup-multiple-alerts');
-
-				var alert = $('<div id="'+options.fields.id+'" data-type="alert"></div>')
-						.attr('name', 'alert['+options.fields.id+']');
-				var alertNewFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="existing">')
-						.appendTo(alert);
-
-				var alertTimeDiv = $('<div></div>')
-						.appendTo(alert);
-
-				var alertSubscribers = $('<div></div>')
-						.appendTo(alert);
-
-				var alertSubscribersToolbar = $('<div></div>')
-						.appendTo(alert);
-
-				var alertSubscribersToolbarButtons = $('<div></div>')
-						.appendTo(alertSubscribersToolbar);
-
-				var alertActions = $('<div></div>')
-						.appendTo(alert);
-
-
-				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+options.fields.id+']">' +
-						'<img src="themes/default/images/glyphicon-16/glyphicon-plus.png"> Add All Invitees</button>')
-						.appendTo(alertSubscribersToolbarButtons);
-				var alertTime = $('select[name=reminder_time]')
-						.clone() // clone the reminder time options
-						.attr('name', 'alerts['+options.fields.id+'][time]')
-						.attr('style', ' ') // remove hidden style
-						.appendTo(alertTimeDiv);
-
-				var alertSubscribersList = $('<div></div>')
-						.addClass('panel')
-						.appendTo(alertSubscribers);
-
-				var alertActionPopup =  $('<input type="checkbox" name="alert['+options.fields.id+'][action][send_popup]" ' +
-						'id="alert_action_send_popup['+options.fields.id+']" value="0"> <label>Popup </label> ');
-				var alertActionEmail =  $('<input type="checkbox" name="alert['+alertIndex+'][action][send_email]" ' +
-						'id="alert_action_send_email['+options.fields.id+']" value="0"> <label>Email </label> ');
-
-				alertActionPopup.appendTo(alertActions);
-				alertActionEmail.appendTo(alertActions);
-
-				var alertRemoveBtn =
-						$(' <button class="add-alert" id="alert_remove_btn['+options.fields.id+']" title="Remove Alert">' +
-								'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
-								.appendTo(alertTimeDiv);
-
-				alert.appendTo(setupMultipleAlerts);
-
-				alertAddAllSubscriberBtn.button().click(function(e) {
-					var invitees = $(alertSubscribers);
-					$(invitees).empty();
-					if(typeof GLOBAL_REGISTRY !== "undefined" &&
-							typeof GLOBAL_REGISTRY.focus !== "undefined" &&
-							typeof GLOBAL_REGISTRY.focus.users_arr !== "undefined") {
-						jQuery.each(GLOBAL_REGISTRY.focus.users_arr, function(key, value) {
-							var id, label, bean, li;
-
-							if(value.module == 'User') {
-								id = value.fields.id;
-								label = value.fields.full_name;
-								bean = value.module;
-							} else if(value.module == 'Contact') {
-								id = value.fields.id;
-								label = value.fields.full_name;
-								bean = value.module;
-							} else if(value.module == 'Lead') {
-								id = value.fields.id;
-								label = value.fields.full_name;
-								bean = value.module;
-							}
-
-							invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
-									'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
-									+'s.gif">' +
-									' <label>'+ label +'</label>' +
-									'<input type="hidden" name="alerts['+ options.fields.id +'][subscribers]['+id+'][id]" value="'+ id +'">' +
-									'<input type="hidden" name="alerts['+ options.fields.id +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
-									'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
-
-							invitees.append(invitee);
-
-							invitee.click(function() {
-								$(this).remove();
-							})
-						});
-					}
-					return false;
-				});
+				createAlertOptions);
 
 			}
 
