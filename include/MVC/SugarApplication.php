@@ -700,7 +700,7 @@ class SugarApplication
 	    $path = '/',
 	    $domain = null,
 	    $secure = false,
-	    $httponly = false
+	    $httponly = true
 	    )
 	{
 	    if ( is_null($domain) )
