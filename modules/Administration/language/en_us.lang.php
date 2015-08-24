@@ -578,7 +578,6 @@ $mod_strings = array (
     'LBL_PASSWORD_EXP_IN'=> 'Password Expires in',
     'LBL_PASSWORD_USER_RESET' => 'User Reset Password',
 	'LBL_PERFORM_UPDATE'=>'Perform Update',
-    'LBL_PLUGINS_TITLE' => 'Sugar Forge',
     'LBL_PLUGINS' => 'Get plug-ins and other SuiteCRM extensions.',
     'LBL_PRICE_LIST_TITLE' => 'Product and Quotes',
     'LBL_PRICE_LIST_DESC' => 'Manage the product catalog, along with the related information on manufacturers and shipping providers.',

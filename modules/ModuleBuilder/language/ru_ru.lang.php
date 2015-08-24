@@ -248,7 +248,7 @@ You can re-order the modules by dragging their rows in the table.<br/><br/>
 'publishBtn'=> 'Нажмите кнопку <b>Сохранить и установить</b> для сохранения и применения всех изменений.',
 ),
 'portalSync'=>array(
-'default' => 'Enter the <b>SuiteCRM Portal URL</b> of the portal instance to update, and click <b>Go</b>.<br><br>Enter a valid SuiteCRM user name and password, and then click <b>Begin Sync</b>.<br><br>The customizations made to the Sugar Portal <b>Layouts</b>, along with the <b>Style Sheet</b> if one was uploaded, will be transferred to specified the portal instance.',   ///
+'default' => 'Enter the <b>SuiteCRM Portal URL</b> of the portal instance to update, and click <b>Go</b>.<br><br>Enter a valid SuiteCRM user name and password, and then click <b>Begin Sync</b>.<br><br>The customizations made to the SuiteCRM Portal <b>Layouts</b>, along with the <b>Style Sheet</b> if one was uploaded, will be transferred to specified the portal instance.',   ///
 ),
 'portalStyle'=>array(
 'default' => 'From here you can customize the look of the SuiteCRM Portal.',   ///

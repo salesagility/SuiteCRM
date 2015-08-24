@@ -427,7 +427,6 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 'LBL_WIZARD_SYSTEM_DESC' => 'Укажите название вашей организации и выберите логотип.',
 'LBL_WIZARD_LOCALE_DESC' => 'Укажите каким образом должны быть представлены данные в системе. Указанные здесь параметры будут являться параметрами по умолчанию. В дальнейшем пользователи смогут изменить данные параметры по своему усмотрению.',
 'LBL_WIZARD_SMTP_DESC' => 'Учётная запись исходящей почты будет использоваться для отправки исходящей почты, в том числе такой как уведомления о назначении ответственного, а также писем с информацией о новом пароле. Электронный адрес данной учётной записи будет фигурировать в получаемых письмах в качестве отправителя.',
-'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Suite Mobile iPhone client.', ///
 'LBL_GMAIL_LOGO' => 'Gmail Logo' /*for 508 compliance fix*/,
 'LBL_YAHOO_MAIL' => 'Yahoo Mail' /*for 508 compliance fix*/,
 'LBL_EXCHANGE_LOGO' => 'Exchange' /*for 508 compliance fix*/,
@@ -435,7 +434,6 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 'LBL_DELETE' => 'Удалить' /*for 508 compliance fix*/,
 'LBL_WELCOME' => 'Добро пожаловать' /*for 508 compliance fix*/,
 'LBL_LOGO' => 'Логотип' /*for 508 compliance fix*/,
-'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Suite Mobile native clients', ///
 'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Дублировать отображение писем контактов в субпанели "История" для следующих модулей',
 
 );

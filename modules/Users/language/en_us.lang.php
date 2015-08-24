@@ -82,7 +82,7 @@ $mod_strings = array (
 	'ERR_USER_INFO_NOT_FOUND'			=> 'User Information not found',
 	'ERR_USER_NAME_EXISTS_1'			=> 'The user name ',
 	'ERR_USER_NAME_EXISTS_2'			=> ' already exists.	Duplicate user names are not allowed.	Change the user name to be unique.',
-	'ERR_USER_IS_LOCKED_OUT'			=> 'This user is locked out of the Sugar application and cannot log in using his/her existing password.',
+	'ERR_USER_IS_LOCKED_OUT'			=> 'This user is locked out of the SuiteCRM application and cannot log in using his/her existing password.',
 
 	'LBL_PASSWORD_SENT'                => 'Password Updated',
 	'LBL_CANNOT_SEND_PASSWORD'         => 'Cannot send password',
