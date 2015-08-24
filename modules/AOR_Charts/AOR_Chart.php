@@ -304,7 +304,7 @@ EOF;
         $data['labels'] = array();
         $datasetData = array();
         foreach($reportData as $row){
-            $data['labels'][] = $row[$xName];
+            $data['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
             $datasetData[] = $row[$yName];
         }
 
@@ -318,6 +318,18 @@ EOF;
             'pointHighlightStroke' => "rgba(151,187,205,1)4",
             'data'=>$datasetData);
         return $data;
+    }
+
+    private function getChartDataNameLabel($name) {
+        if(isset($GLOBALS['app_list_strings'])) {
+            $keys = array_keys($GLOBALS['app_list_strings']);
+            foreach ($keys as $key) {
+                if (isset($GLOBALS['app_list_strings'][$key][$name])) {
+                    return " [{$GLOBALS['app_list_strings'][$key][$name]}]";
+                }
+            }
+        }
+        return '';
     }
 
     private function getLineChartData($reportData, $xName,$yName){
@@ -362,7 +374,7 @@ EOF;
             $colour = $this->getColour($row[$xName]);
             $data[] = array(
                 'value' => (int)$row[$yName],
-                'label' => $row[$xName],
+                'label' => $row[$xName] . $this->getChartDataNameLabel($row[$xName]),
                 'color' => $colour['main'],
                 'highlight' => $colour['highlight'],
             );
