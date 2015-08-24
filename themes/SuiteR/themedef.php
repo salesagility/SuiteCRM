@@ -93,6 +93,18 @@ $themedef = array(
             'default' => '#ffffff'
         ),
 
+        'action_menu_background' => array(
+            'vname' => 'LBL_ACTION_MENU_BACKGROUND',
+            'type' => 'colour',
+            'default' => '#ffffff'
+        ),
+
+        'action_menu_background_hover' => array(
+            'vname' => 'LBL_ACTION_MENU_BACKGROUND_HOVER',
+            'type' => 'colour',
+            'default' => '#3C8DBC'
+        ),
+
         'button' => array(
             'vname' => 'LBL_COLOUR_ADMIN_BTNTOP',
             'type' => 'colour',
