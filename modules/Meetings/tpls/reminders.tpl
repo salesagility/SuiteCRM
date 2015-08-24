@@ -67,7 +67,7 @@
 			var loadExistingAlert = function (options) {
 				var setupMultipleAlerts = $('.setup-multiple-alerts');
 
-				var alert = $('<div></div>')
+				var alert = $('<div id="'+options.fields.id+'" data-type="alert"></div>')
 						.attr('name', 'alert['+options.fields.id+']');
 				var alertNewFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="existing">')
 						.appendTo(alert);
@@ -170,7 +170,7 @@
 
 				var setupMultipleAlerts = $('.setup-multiple-alerts');
 
-				var alert = $('<div></div>')
+				var alert = $('<div id="'+alertIndex+'" data-type="alert"></div>')
 						.attr('name', 'alert['+alertIndex+']');
 				var alertNewFlag = $('<input type="hidden" name="alerts['+ alertIndex +'][flag]" value="new">')
 						.appendTo(alert);
