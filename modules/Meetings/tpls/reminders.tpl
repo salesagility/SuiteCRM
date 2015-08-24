@@ -63,6 +63,68 @@
 		var alertIndex = 0;
 
 		$(document).ready(function() {
+			// Load existing alerts
+			var loadExistingAlert = function (options) {
+				var setupMultipleAlerts = $('.setup-multiple-alerts');
+
+				var alert = $('<div></div>')
+						.attr('name', 'alert['+alertIndex+']');
+				var alertNewFlag = $('<input type="hidden" name="alerts['+ alertIndex +'][flag]" value="new">')
+						.appendTo(alert);
+
+				var alertTimeDiv = $('<div></div>')
+						.appendTo(alert);
+
+				var alertSubscribers = $('<div></div>')
+						.appendTo(alert);
+
+				var alertSubscribersToolbar = $('<div></div>')
+						.appendTo(alert);
+
+				var alertSubscribersToolbarButtons = $('<div></div>')
+						.appendTo(alertSubscribersToolbar);
+
+				var alertActions = $('<div></div>')
+						.appendTo(alert);
+
+
+				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+alertIndex+']">' +
+						'<img src="themes/default/images/glyphicon-16/glyphicon-plus.png"> Add All Invitees</button>')
+						.appendTo(alertSubscribersToolbarButtons);
+				var alertTime = $('select[name=reminder_time]')
+						.clone() // clone the reminder time options
+						.attr('name', 'alerts['+alertIndex+'][time]')
+						.attr('style', ' ') // remove hidden style
+						.appendTo(alertTimeDiv);
+
+				var alertSubscribersList = $('<div></div>')
+						.addClass('panel')
+						.appendTo(alertSubscribers);
+
+				var alertActionPopup =  $('<input type="checkbox" name="alert['+alertIndex+'][action][send_popup]" ' +
+						'id="alert_action_send_popup['+alertIndex+']" value="0"> <label>Popup </label> ');
+				var alertActionEmail =  $('<input type="checkbox" name="alert['+alertIndex+'][action][send_email]" ' +
+						'id="alert_action_send_email['+alertIndex+']" value="0"> <label>Email </label> ');
+
+				alertActionPopup.appendTo(alertActions);
+				alertActionEmail.appendTo(alertActions);
+
+				var alertRemoveBtn =
+						$(' <button class="add-alert" id="alert_remove_btn['+alertIndex+']" title="Remove Alert">' +
+								'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
+								.appendTo(alertTimeDiv);
+
+				alert.appendTo(setupMultipleAlerts);
+
+
+			}
+
+
+			jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
+				loadExistingAlert(alert);
+			});
+
+
 			$('input[type=button].add-alert').click(function(e) {
 				console.log('Add alert');
 
