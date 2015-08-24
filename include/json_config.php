@@ -180,6 +180,13 @@ class json_config {
 			array_push($module_arr['users_arr'], $this->populateBean($lead));
 	  	}
 
+		$module_arr['alerts'] = array();
+		$focus->load_relationship('alerts');
+		$alerts = $focus->get_linked_beans('alerts','Alert');
+		foreach($alerts as $alert) {
+			array_push($module_arr['alerts'], $this->populateBean($alert));
+		}
+
 		return $module_arr;
 	}
 

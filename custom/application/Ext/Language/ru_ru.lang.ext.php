@@ -3,17 +3,53 @@
 
 
 /**
- * en_us.sps.php
- * @author SalesAgility <support@salesagility.com>
- * Date: 27/01/14
- */
+* @package SuiteCRM
+* @copyright SalesAgility Ltd http://www.salesagility.com
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+* the Free Software Foundation; either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+* along with this program; if not, see http://www.gnu.org/licenses
+* or write to the Free Software Foundation,Inc., 51 Franklin Street,
+* Fifth Floor, Boston, MA 02110-1301 USA
+*
+* @author Salesagility Ltd <support@salesagility.com>
+*/
 
+$app_strings['LBL_QUICK_ACCOUNT'] = 'Создать контрагента';
+$app_strings['LBL_QUICK_CONTACT'] = 'Создать контакт';
+$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Создать сделку';
+$app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. контакт';
+$app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
+$app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
+$app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
 
-$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
+$app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
+$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
+$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
+$app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';
+$app_strings['LBL_DELETE_DASHBOARD2'] = '?';
+$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Добавление новой страницы на закладку ГЛАВНАЯ';
+$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Удаление текущей страницы с закладки ГЛАВНАЯ';
+$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Переименование страницы';
 
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
+
+ 
 /**
- * Advanced OpenWorkflow, Automating SugarCRM.
- * @package Advanced OpenWorkflow for SugarCRM
+ * Extensions to SugarCRM
+ * @package Reschedule for SugarCRM
+ * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
  * 
  * This program is free software; you can redistribute it and/or modify
@@ -31,106 +67,94 @@ $app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author SalesAgility <info@salesagility.com>
+ * @author Salesagility Ltd <support@salesagility.com>
  */
 
+ $mod_strings = array (
+    'TWITTER_USER_C' => 'Учётная запись в Twitter',
+    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
+ );
 
-$app_list_strings['moduleList']['AOW_WorkFlow'] = 'Процессы';
-$app_list_strings['moduleList']['AOW_Conditions'] = 'Условия';
-$app_list_strings['moduleList']['AOW_Processed'] = 'Контроль процессов';
-$app_list_strings['moduleList']['AOW_Actions'] = 'Действия';
+$app_list_strings['call_reschedule_dom'][''] = '';
+$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Сотрудник отсутствует';
+$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'Сотрудник занят';
 
-$app_list_strings['aow_status_list']['Active'] = 'Активен';
-$app_list_strings['aow_status_list']['Inactive'] = 'Не активен';
+$app_strings['LBL_RESCHEDULE_LABEL'] = 'Звонок откладывается';
+$app_strings['LBL_RESCHEDULE_TITLE'] = 'Заполните следующие поля:';
+$app_strings['LBL_RESCHEDULE_DATE'] = 'Дата:';
+$app_strings['LBL_RESCHEDULE_REASON'] = 'Причина:';
+$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Укажите правильную дату';
+$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Укажите причину, по которой звонок отложен';
 
-$app_list_strings['aow_operator_list']['Equal_To'] = '=';
-$app_list_strings['aow_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aow_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aow_operator_list']['Less_Than'] = '>';
-$app_list_strings['aow_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aow_operator_list']['Less_Than_or_Equal_To'] = '<=';
-
-$app_list_strings['aow_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aow_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aow_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aow_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aow_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aow_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-
-$app_list_strings['aow_process_status_list']['Complete'] = 'Завершён';
-$app_list_strings['aow_process_status_list']['Running'] = 'Выполняется';
-$app_list_strings['aow_process_status_list']['Pending'] = 'В ожидании';
-$app_list_strings['aow_process_status_list']['Failed'] = 'Ошибка выполнения';
-
-$app_list_strings['aow_condition_operator_list']['And'] = 'И';
-$app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
-$app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
-
-$app_list_strings['aow_condition_type_list']['Value'] = 'Значение';
-$app_list_strings['aow_condition_type_list']['Field'] = 'Поле';
-$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Изменение';
-$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'Состоит в Группе пользователей';
-$app_list_strings['aow_condition_type_list']['Date'] = 'Дата';
-$app_list_strings['aow_condition_type_list']['Multi'] = 'Мультивыбор';
-
-$app_list_strings['aow_action_type_list']['Value'] = 'Значение';
-$app_list_strings['aow_action_type_list']['Field'] = 'Поле';
-$app_list_strings['aow_action_type_list']['Date'] = 'Дата';
-$app_list_strings['aow_action_type_list']['Round_Robin'] = 'Назначение в цикле';
-$app_list_strings['aow_action_type_list']['Least_Busy'] = 'Назначение наименее занятого';
-$app_list_strings['aow_action_type_list']['Random'] = 'Случайное назначение';
-
-$app_list_strings['aow_rel_action_type_list']['Value'] = 'Значение';
-$app_list_strings['aow_rel_action_type_list']['Field'] = 'Поле';
-
-$app_list_strings['aow_date_type_list'][''] = '';
-$app_list_strings['aow_date_type_list']['minute'] = 'минут';
-$app_list_strings['aow_date_type_list']['hour'] = 'часов';
-$app_list_strings['aow_date_type_list']['day'] = 'дней';
-$app_list_strings['aow_date_type_list']['week'] = 'недель';
-$app_list_strings['aow_date_type_list']['month'] = 'месяцев';
-$app_list_strings['aow_date_type_list']['business_hours'] = 'рабочих часов';
-
-$app_list_strings['aow_date_options']['now'] = 'Сейчас';
-$app_list_strings['aow_date_options']['field'] = 'Это поле';
-
-$app_list_strings['aow_date_operator']['now'] = '';
-$app_list_strings['aow_date_operator']['plus'] = '+';
-$app_list_strings['aow_date_operator']['minus'] = '-';
-
-$app_list_strings['aow_assign_options']['all'] = 'ВСЕ пользователи';
-$app_list_strings['aow_assign_options']['role'] = 'ВСЕ пользователи роли';
-$app_list_strings['aow_assign_options']['security_group'] = 'ВСЕ пользователи из Группы';
-
-$app_list_strings['aow_email_type_list']['Email Address'] = 'Вручную';
-$app_list_strings['aow_email_type_list']['Record Email'] = 'Отобранной записи';
-$app_list_strings['aow_email_type_list']['Related Field'] = 'Связанного модуля';
-$app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
-$app_list_strings['aow_email_type_list']['Users'] = 'Пользователей';
-$app_list_strings['aow_email_to_list']['to'] = 'Кому';
-$app_list_strings['aow_email_to_list']['cc'] = 'Копия';
-$app_list_strings['aow_email_to_list']['bcc'] = 'Скрытая копия';
-
-$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
-$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
-$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
-
-$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
-$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
-$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
+$app_strings['LBL_RESCHEDULE_PANEL'] = 'Отложенные звонки';
+$app_strings['LBL_RESCHEDULE_HISTORY'] = 'История дозвона';
+$app_strings['LBL_RESCHEDULE_COUNT'] = 'Попыток дозвона';
+$app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
 
 
 
 
 /**
- * Social Feed Language Strings.
+ *
+ * @package Advanced OpenPortal
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
  */
 
-$app_strings['FACEBOOK_USER_C'] = 'Facebook';
-$app_strings['TWITTER_USER_C'] = 'Twitter';
-$app_strings['LBL_FACEBOOK_USER_C'] = 'Учётная запись в Facebook';
-$app_strings['LBL_TWITTER_USER_C'] = 'Учётная запись в Twitter';
-$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Подробности';
+
+$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'События обращения';
+$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Обновления обращения';
+$app_list_strings['moduleList']['AOP_Case_Events'] = 'События обращения';
+$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Обновления обращения';
+$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Пожалуйста, пишите ответ выше этой линии ==========';
+
+$app_list_strings['case_state_dom'] =
+  array (
+      'Open' => 'Открыто',
+      'Closed' => 'Закрыто',
+  );
+$app_list_strings['case_state_default_key'] = 'Open';
+$app_list_strings['case_status_default_key'] = 'Open_New';
+$app_list_strings['case_status_dom'] =
+  array (
+      'Open_New' => 'Новое',
+      'Open_Assigned' => 'Назначенное',
+      'Closed_Closed' => 'Закрытое',
+      'Open_Pending Input' => 'Ожидание решения',
+      'Closed_Rejected' => 'Отклонённое',
+      'Closed_Duplicate' => 'Продублированное',
+  );
+  
+  $app_list_strings['contact_portal_user_type_dom'] =
+    array (
+        'Single' => 'Указанный пользователь',
+        'Account' => 'Учётная запись пользователя',
+    ); 
+
+
+$app_list_strings["moduleList"]["SecurityGroups"] = 'Управление Группами пользователей';
+$app_strings['LBL_LOGIN_AS'] = "Войти как ";
+$app_strings['LBL_LOGOUT_AS'] = "Выйти как ";
+$app_strings['LBL_SECURITYGROUP'] = 'Управление Группами';
+
+
+
  
 /**
  * Products, Quotations & Invoices modules.
@@ -262,165 +286,6 @@ $app_strings['LBL_NO_TEMPLATE'] = 'ОШИБКА\nШаблоны не обнар�
 
 
 
-/**
- * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author SalesAgility <info@salesagility.com>
- */
-
-
-$app_list_strings['moduleList']['AOR_Reports'] = 'Отчёты';
-$app_list_strings['moduleList']['AOR_Conditions'] = 'Условия отчёта';
-$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчёта';
-$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчёта';
-$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Отчеты по расписанию';
-
-$app_list_strings['aor_operator_list']['Equal_To'] = '=';
-$app_list_strings['aor_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aor_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aor_operator_list']['Less_Than'] = '<';
-$app_list_strings['aor_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = '<=';
-
-$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-
-$app_list_strings['aor_condition_operator_list']['And'] = 'И';
-$app_list_strings['aor_condition_operator_list']['OR'] = 'ИЛИ';
-
-$app_list_strings['aor_condition_type_list']['Value'] = 'Значение';
-$app_list_strings['aor_condition_type_list']['Field'] = 'Поле';
-$app_list_strings['aor_condition_type_list']['Date'] = 'Дата';
-$app_list_strings['aor_condition_type_list']['Multi'] = 'Мультивыбор';
-
-$app_list_strings['aor_date_type_list'][''] = '';
-$app_list_strings['aor_date_type_list']['minute'] = 'мин.';
-$app_list_strings['aor_date_type_list']['hour'] = 'час.';
-$app_list_strings['aor_date_type_list']['day'] = 'дн.';
-$app_list_strings['aor_date_type_list']['week'] = 'нед.';
-$app_list_strings['aor_date_type_list']['month'] = 'мес.';
-$app_list_strings['aor_date_type_list']['business_hours'] = 'рабочих часов';
-
-$app_list_strings['aor_date_options']['now'] = 'Сейчас';
-$app_list_strings['aor_date_options']['field'] = 'Это поле';
-
-$app_list_strings['aor_date_operator']['now'] = '';
-$app_list_strings['aor_date_operator']['plus'] = '+';
-$app_list_strings['aor_date_operator']['minus'] = '-';
-$app_list_strings['aor_sort_operator'][''] = '';
-$app_list_strings['aor_sort_operator']['ASC'] = 'Восходящая';
-$app_list_strings['aor_sort_operator']['DESC'] = 'Нисходящая';
-
-$app_list_strings['aor_function_list'][''] = '';
-$app_list_strings['aor_function_list']['COUNT'] = 'КОЛИЧЕСТВО';
-$app_list_strings['aor_function_list']['MIN'] = 'МИНИМУМ';
-$app_list_strings['aor_function_list']['MAX'] = 'МАКСИМУМ';
-$app_list_strings['aor_function_list']['SUM'] = 'СУММА';
-$app_list_strings['aor_function_list']['AVG'] = 'СРЕДНЕЕ';
-
-$app_list_strings['aor_total_options'][''] = '';
-$app_list_strings['aor_total_options']['COUNT'] = 'КОЛИЧЕСТВО';
-$app_list_strings['aor_total_options']['SUM'] = 'СУММА';
-$app_list_strings['aor_total_options']['AVG'] = 'СРЕДНЕЕ';
-
-$app_list_strings['aor_chart_types']['bar'] = 'гистограмма';
-$app_list_strings['aor_chart_types']['line'] = 'линия график';
-$app_list_strings['aor_chart_types']['pie'] = 'Круговая диаграмма';
-$app_list_strings['aor_chart_types']['radar'] = 'лепестковая диаграмма';
-$app_list_strings['aor_chart_types']['polar'] = 'Полярный график';
-$app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'ежемесячно';
-$app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'еженедельно';
-$app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'ежедневно';
-$app_list_strings['aor_scheduled_reports_status_dom']['active'] = 'Active';
-$app_list_strings['aor_scheduled_reports_status_dom']['inactive'] = 'Inactive';
-$app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
-$app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
-$app_strings['LBL_CRON_AT'] = 'at';
-$app_strings['LBL_CRON_RAW'] = 'Advanced';
-$app_strings['LBL_CRON_MIN'] = 'Min';
-$app_strings['LBL_CRON_HOUR'] = 'Hour';
-$app_strings['LBL_CRON_DAY'] = 'Day';
-$app_strings['LBL_CRON_MONTH'] = 'Month';
-$app_strings['LBL_CRON_DOW'] = 'DOW';
-$app_strings['LBL_CRON_DAILY'] = 'Daily';
-$app_strings['LBL_CRON_WEEKLY'] = 'Weekly';
-$app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
-
-
-/**
- *
- * @package Advanced OpenPortal
- * @copyright SalesAgility Ltd http://www.salesagility.com
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
-
-$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'События обращения';
-$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Обновления обращения';
-$app_list_strings['moduleList']['AOP_Case_Events'] = 'События обращения';
-$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Обновления обращения';
-$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Пожалуйста, пишите ответ выше этой линии ==========';
-
-$app_list_strings['case_state_dom'] =
-  array (
-      'Open' => 'Открыто',
-      'Closed' => 'Закрыто',
-  );
-$app_list_strings['case_state_default_key'] = 'Open';
-$app_list_strings['case_status_default_key'] = 'Open_New';
-$app_list_strings['case_status_dom'] =
-  array (
-      'Open_New' => 'Новое',
-      'Open_Assigned' => 'Назначенное',
-      'Closed_Closed' => 'Закрытое',
-      'Open_Pending Input' => 'Ожидание решения',
-      'Closed_Rejected' => 'Отклонённое',
-      'Closed_Duplicate' => 'Продублированное',
-  );
-  
-  $app_list_strings['contact_portal_user_type_dom'] =
-    array (
-        'Single' => 'Указанный пользователь',
-        'Account' => 'Учётная запись пользователя',
-    ); 
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -477,181 +342,6 @@ $app_strings['LBL_ACCEPT_STATUS'] = 'Статус приглашения';
 $app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Текущая страница';
 $app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Все записи';
 $app_strings['LBL_LISTVIEW_NONE'] = 'Отменить выбор';
- 
-/**
- * Extensions to SugarCRM
- * @package Reschedule for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
-$mod_strings = array (
-    'TWITTER_USER_C' => 'Учётная запись в Twitter',
-    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
-);
-
-
-
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
-$app_list_strings['moduleList']['AOD_Index'] = 'Индекс';
-
-
-
-$app_list_strings["moduleList"]["SecurityGroups"] = 'Управление Группами пользователей';
-$app_strings['LBL_LOGIN_AS'] = "Войти как ";
-$app_strings['LBL_LOGOUT_AS'] = "Выйти как ";
-$app_strings['LBL_SECURITYGROUP'] = 'Управление Группами';
-
-
-
- 
-/**
- * Extensions to SugarCRM
- * @package Reschedule for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
- $mod_strings = array (
-    'TWITTER_USER_C' => 'Учётная запись в Twitter',
-    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
- );
-
-$app_list_strings['call_reschedule_dom'][''] = '';
-$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Сотрудник отсутствует';
-$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'Сотрудник занят';
-
-$app_strings['LBL_RESCHEDULE_LABEL'] = 'Звонок откладывается';
-$app_strings['LBL_RESCHEDULE_TITLE'] = 'Заполните следующие поля:';
-$app_strings['LBL_RESCHEDULE_DATE'] = 'Дата:';
-$app_strings['LBL_RESCHEDULE_REASON'] = 'Причина:';
-$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Укажите правильную дату';
-$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Укажите причину, по которой звонок отложен';
-
-$app_strings['LBL_RESCHEDULE_PANEL'] = 'Отложенные звонки';
-$app_strings['LBL_RESCHEDULE_HISTORY'] = 'История дозвона';
-$app_strings['LBL_RESCHEDULE_COUNT'] = 'Попыток дозвона';
-$app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
-
-
-
-
-/**
-* @package SuiteCRM
-* @copyright SalesAgility Ltd http://www.salesagility.com
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
-* the Free Software Foundation; either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
-* along with this program; if not, see http://www.gnu.org/licenses
-* or write to the Free Software Foundation,Inc., 51 Franklin Street,
-* Fifth Floor, Boston, MA 02110-1301 USA
-*
-* @author Salesagility Ltd <support@salesagility.com>
-*/
-
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Создать контрагента';
-$app_strings['LBL_QUICK_CONTACT'] = 'Создать контакт';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Создать сделку';
-$app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. контакт';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
-$app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
-$app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
-$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
-
-$app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
-$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
-$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
-$app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';
-$app_strings['LBL_DELETE_DASHBOARD2'] = '?';
-$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Добавление новой страницы на закладку ГЛАВНАЯ';
-$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Удаление текущей страницы с закладки ГЛАВНАЯ';
-$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Переименование страницы';
-
-$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
-
 
 
 $app_strings['LBL_MAP'] = 'Показать на карте';
@@ -940,4 +630,314 @@ $app_list_strings['marker_image_list']['days_ven'] = 'Ven(Пт)';
 $app_list_strings['marker_image_list']['days_vie'] = 'Vie(Пт)';
 $app_list_strings['marker_image_list']['wifi'] = 'Wi-Fi';
 
+
+/**
+ * Social Feed Language Strings.
+ */
+
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Учётная запись в Facebook';
+$app_strings['LBL_TWITTER_USER_C'] = 'Учётная запись в Twitter';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Подробности';
+
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+
+$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
+$app_list_strings['moduleList']['AOD_Index'] = 'Индекс';
+
+ 
+/**
+ * Extensions to SugarCRM
+ * @package Reschedule for SugarCRM
+ * @subpackage Products
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+
+$mod_strings = array (
+    'TWITTER_USER_C' => 'Учётная запись в Twitter',
+    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
+);
+
+
+
+/**
+ * Advanced OpenWorkflow, Automating SugarCRM.
+ * @package Advanced OpenWorkflow for SugarCRM
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author SalesAgility <info@salesagility.com>
+ */
+
+
+$app_list_strings['moduleList']['AOW_WorkFlow'] = 'Процессы';
+$app_list_strings['moduleList']['AOW_Conditions'] = 'Условия';
+$app_list_strings['moduleList']['AOW_Processed'] = 'Контроль процессов';
+$app_list_strings['moduleList']['AOW_Actions'] = 'Действия';
+
+$app_list_strings['aow_status_list']['Active'] = 'Активен';
+$app_list_strings['aow_status_list']['Inactive'] = 'Не активен';
+
+$app_list_strings['aow_operator_list']['Equal_To'] = '=';
+$app_list_strings['aow_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aow_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aow_operator_list']['Less_Than'] = '>';
+$app_list_strings['aow_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aow_operator_list']['Less_Than_or_Equal_To'] = '<=';
+
+$app_list_strings['aow_sql_operator_list']['Equal_To'] = '=';
+$app_list_strings['aow_sql_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aow_sql_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aow_sql_operator_list']['Less_Than'] = '<';
+$app_list_strings['aow_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aow_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
+
+$app_list_strings['aow_process_status_list']['Complete'] = 'Завершён';
+$app_list_strings['aow_process_status_list']['Running'] = 'Выполняется';
+$app_list_strings['aow_process_status_list']['Pending'] = 'В ожидании';
+$app_list_strings['aow_process_status_list']['Failed'] = 'Ошибка выполнения';
+
+$app_list_strings['aow_condition_operator_list']['And'] = 'И';
+$app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
+$app_list_strings['aow_condition_operator_list']['OR'] = 'ИЛИ';
+
+$app_list_strings['aow_condition_type_list']['Value'] = 'Значение';
+$app_list_strings['aow_condition_type_list']['Field'] = 'Поле';
+$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Изменение';
+$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'Состоит в Группе пользователей';
+$app_list_strings['aow_condition_type_list']['Date'] = 'Дата';
+$app_list_strings['aow_condition_type_list']['Multi'] = 'Мультивыбор';
+
+$app_list_strings['aow_action_type_list']['Value'] = 'Значение';
+$app_list_strings['aow_action_type_list']['Field'] = 'Поле';
+$app_list_strings['aow_action_type_list']['Date'] = 'Дата';
+$app_list_strings['aow_action_type_list']['Round_Robin'] = 'Назначение в цикле';
+$app_list_strings['aow_action_type_list']['Least_Busy'] = 'Назначение наименее занятого';
+$app_list_strings['aow_action_type_list']['Random'] = 'Случайное назначение';
+
+$app_list_strings['aow_rel_action_type_list']['Value'] = 'Значение';
+$app_list_strings['aow_rel_action_type_list']['Field'] = 'Поле';
+
+$app_list_strings['aow_date_type_list'][''] = '';
+$app_list_strings['aow_date_type_list']['minute'] = 'минут';
+$app_list_strings['aow_date_type_list']['hour'] = 'часов';
+$app_list_strings['aow_date_type_list']['day'] = 'дней';
+$app_list_strings['aow_date_type_list']['week'] = 'недель';
+$app_list_strings['aow_date_type_list']['month'] = 'месяцев';
+$app_list_strings['aow_date_type_list']['business_hours'] = 'рабочих часов';
+
+$app_list_strings['aow_date_options']['now'] = 'Сейчас';
+$app_list_strings['aow_date_options']['field'] = 'Это поле';
+
+$app_list_strings['aow_date_operator']['now'] = '';
+$app_list_strings['aow_date_operator']['plus'] = '+';
+$app_list_strings['aow_date_operator']['minus'] = '-';
+
+$app_list_strings['aow_assign_options']['all'] = 'ВСЕ пользователи';
+$app_list_strings['aow_assign_options']['role'] = 'ВСЕ пользователи роли';
+$app_list_strings['aow_assign_options']['security_group'] = 'ВСЕ пользователи из Группы';
+
+$app_list_strings['aow_email_type_list']['Email Address'] = 'Вручную';
+$app_list_strings['aow_email_type_list']['Record Email'] = 'Отобранной записи';
+$app_list_strings['aow_email_type_list']['Related Field'] = 'Связанного модуля';
+$app_list_strings['aow_email_type_list']['Specify User'] = 'Пользователя';
+$app_list_strings['aow_email_type_list']['Users'] = 'Пользователей';
+$app_list_strings['aow_email_to_list']['to'] = 'Кому';
+$app_list_strings['aow_email_to_list']['cc'] = 'Копия';
+$app_list_strings['aow_email_to_list']['bcc'] = 'Скрытая копия';
+
+$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
+$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
+$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
+
+$app_list_strings['aow_run_on_list']['All_Records'] = 'Всех записей';
+$app_list_strings['aow_run_on_list']['New_Records'] = 'Создаваемых записей';
+$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых записей';
+
+
+
+
+/**
+ * Advanced OpenReports, SugarCRM Reporting.
+ * @package Advanced OpenReports for SugarCRM
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author SalesAgility <info@salesagility.com>
+ */
+
+
+$app_list_strings['moduleList']['AOR_Reports'] = 'Отчёты';
+$app_list_strings['moduleList']['AOR_Conditions'] = 'Условия отчёта';
+$app_list_strings['moduleList']['AOR_Charts'] = 'Диаграммы отчёта';
+$app_list_strings['moduleList']['AOR_Fields'] = 'Поля отчёта';
+$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Отчеты по расписанию';
+
+$app_list_strings['aor_operator_list']['Equal_To'] = '=';
+$app_list_strings['aor_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aor_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aor_operator_list']['Less_Than'] = '<';
+$app_list_strings['aor_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = '<=';
+
+$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
+$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
+$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
+
+$app_list_strings['aor_condition_operator_list']['And'] = 'И';
+$app_list_strings['aor_condition_operator_list']['OR'] = 'ИЛИ';
+
+$app_list_strings['aor_condition_type_list']['Value'] = 'Значение';
+$app_list_strings['aor_condition_type_list']['Field'] = 'Поле';
+$app_list_strings['aor_condition_type_list']['Date'] = 'Дата';
+$app_list_strings['aor_condition_type_list']['Multi'] = 'Мультивыбор';
+
+$app_list_strings['aor_date_type_list'][''] = '';
+$app_list_strings['aor_date_type_list']['minute'] = 'мин.';
+$app_list_strings['aor_date_type_list']['hour'] = 'час.';
+$app_list_strings['aor_date_type_list']['day'] = 'дн.';
+$app_list_strings['aor_date_type_list']['week'] = 'нед.';
+$app_list_strings['aor_date_type_list']['month'] = 'мес.';
+$app_list_strings['aor_date_type_list']['business_hours'] = 'рабочих часов';
+
+$app_list_strings['aor_date_options']['now'] = 'Сейчас';
+$app_list_strings['aor_date_options']['field'] = 'Это поле';
+
+$app_list_strings['aor_date_operator']['now'] = '';
+$app_list_strings['aor_date_operator']['plus'] = '+';
+$app_list_strings['aor_date_operator']['minus'] = '-';
+$app_list_strings['aor_sort_operator'][''] = '';
+$app_list_strings['aor_sort_operator']['ASC'] = 'Восходящая';
+$app_list_strings['aor_sort_operator']['DESC'] = 'Нисходящая';
+
+$app_list_strings['aor_function_list'][''] = '';
+$app_list_strings['aor_function_list']['COUNT'] = 'КОЛИЧЕСТВО';
+$app_list_strings['aor_function_list']['MIN'] = 'МИНИМУМ';
+$app_list_strings['aor_function_list']['MAX'] = 'МАКСИМУМ';
+$app_list_strings['aor_function_list']['SUM'] = 'СУММА';
+$app_list_strings['aor_function_list']['AVG'] = 'СРЕДНЕЕ';
+
+$app_list_strings['aor_total_options'][''] = '';
+$app_list_strings['aor_total_options']['COUNT'] = 'КОЛИЧЕСТВО';
+$app_list_strings['aor_total_options']['SUM'] = 'СУММА';
+$app_list_strings['aor_total_options']['AVG'] = 'СРЕДНЕЕ';
+
+$app_list_strings['aor_chart_types']['bar'] = 'гистограмма';
+$app_list_strings['aor_chart_types']['line'] = 'линия график';
+$app_list_strings['aor_chart_types']['pie'] = 'Круговая диаграмма';
+$app_list_strings['aor_chart_types']['radar'] = 'лепестковая диаграмма';
+$app_list_strings['aor_chart_types']['polar'] = 'Полярный график';
+$app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'ежемесячно';
+$app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'еженедельно';
+$app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'ежедневно';
+$app_list_strings['aor_scheduled_reports_status_dom']['active'] = 'Active';
+$app_list_strings['aor_scheduled_reports_status_dom']['inactive'] = 'Inactive';
+$app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
+$app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
+$app_strings['LBL_CRON_AT'] = 'at';
+$app_strings['LBL_CRON_RAW'] = 'Advanced';
+$app_strings['LBL_CRON_MIN'] = 'Min';
+$app_strings['LBL_CRON_HOUR'] = 'Hour';
+$app_strings['LBL_CRON_DAY'] = 'Day';
+$app_strings['LBL_CRON_MONTH'] = 'Month';
+$app_strings['LBL_CRON_DOW'] = 'DOW';
+$app_strings['LBL_CRON_DAILY'] = 'Daily';
+$app_strings['LBL_CRON_WEEKLY'] = 'Weekly';
+$app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
+
+
+/**
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
+
+
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
 ?>

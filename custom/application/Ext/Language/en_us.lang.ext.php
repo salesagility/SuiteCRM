@@ -1,155 +1,154 @@
 <?php 
  //WARNING: The contents of this file are auto-generated
 
- 
-/**
- * Extensions to SugarCRM
- * @package Reschedule for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
+
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+
+$app_list_strings['moduleList']['FP_events'] = 'Events';
+$app_list_strings['moduleList']['FP_Event_Locations'] = 'Locations';
+$app_list_strings['invite_template_list'][''] = '';
+
+$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invited';
+$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'Not Invited';
+$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Attended';
+$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'Not Attended';
+$app_list_strings['fp_event_status_dom']['Accepted'] = 'Accepted';
+$app_list_strings['fp_event_status_dom']['Declined'] = 'Declined';
+$app_list_strings['fp_event_status_dom']['No Response'] = 'No Response';
+
+$app_strings['LBL_STATUS_EVENT'] = 'Invite Status';
+$app_strings['LBL_ACCEPT_STATUS'] = 'Accept Status';
+$app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Select This Page';
+$app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Select All';
+$app_strings['LBL_LISTVIEW_NONE'] = 'Deselect All';
+
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
-$mod_strings = array (
-    'TWITTER_USER_C' => 'Twitter User',
-    'FACEBOOK_USER_C' => 'Facebook User',
-);
-
-
-
-/**
- * Advanced OpenReports, SugarCRM Reporting.
- * @package Advanced OpenReports for SugarCRM
- * @copyright SalesAgility Ltd http://www.salesagility.com
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author SalesAgility <info@salesagility.com>
- */
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ * 
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ * 
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ * 
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ * 
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ * 
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
 
 
-$app_list_strings['moduleList']['AOR_Reports'] = 'Reports';
-$app_list_strings['moduleList']['AOR_Conditions'] = 'Report Conditions';
-$app_list_strings['moduleList']['AOR_Charts'] = 'Report Charts';
-$app_list_strings['moduleList']['AOR_Fields'] = 'Report Fields';
-$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Scheduled Reports';
-$app_list_strings['aor_operator_list']['Equal_To'] = 'Equal To';
-$app_list_strings['aor_operator_list']['Not_Equal_To'] = 'Not Equal To';
-$app_list_strings['aor_operator_list']['Greater_Than'] = 'Greater Than';
-$app_list_strings['aor_operator_list']['Less_Than'] = 'Less Than';
-$app_list_strings['aor_operator_list']['Greater_Than_or_Equal_To'] = 'Greater Than or Equal To';
-$app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or Equal To';
-$app_list_strings['aor_operator_list']['Contains'] = 'Contains';
-$app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
-$app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
-$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
-$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
-$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
-$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
-$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
-$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
-$app_list_strings['aor_sql_operator_list']['Contains'] = 'LIKE';
-$app_list_strings['aor_sql_operator_list']['Starts_With'] = 'LIKE';
-$app_list_strings['aor_sql_operator_list']['Ends_With'] = 'LIKE';
-$app_list_strings['aor_condition_operator_list']['And'] = 'And';
-$app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
-$app_list_strings['aor_condition_type_list']['Value'] = 'Value';
-$app_list_strings['aor_condition_type_list']['Field'] = 'Field';
-$app_list_strings['aor_condition_type_list']['Date'] = 'Date';
-$app_list_strings['aor_condition_type_list']['Multi'] = 'Multiple';
-$app_list_strings['aor_condition_type_list']['Period'] = 'Period';
-$app_list_strings['aor_condition_type_list']['CurrentUserID'] = 'Current User';
-$app_list_strings['aor_date_type_list'][''] = '';
-$app_list_strings['aor_date_type_list']['minute'] = 'Minutes';
-$app_list_strings['aor_date_type_list']['hour'] = 'Hours';
-$app_list_strings['aor_date_type_list']['day'] = 'Days';
-$app_list_strings['aor_date_type_list']['week'] = 'Weeks';
-$app_list_strings['aor_date_type_list']['month'] = 'Months';
-$app_list_strings['aor_date_type_list']['business_hours'] = 'Business Hours';
-$app_list_strings['aor_date_options']['now'] = 'Now';
-$app_list_strings['aor_date_options']['field'] = 'This Field';
-$app_list_strings['aor_date_operator']['now'] = '';
-$app_list_strings['aor_date_operator']['plus'] = '+';
-$app_list_strings['aor_date_operator']['minus'] = '-';
-$app_list_strings['aor_sort_operator'][''] = '';
-$app_list_strings['aor_sort_operator']['ASC'] = 'Ascending';
-$app_list_strings['aor_sort_operator']['DESC'] = 'Descending';
-$app_list_strings['aor_function_list'][''] = '';
-$app_list_strings['aor_function_list']['COUNT'] = 'Count';
-$app_list_strings['aor_function_list']['MIN'] = 'Minimum';
-$app_list_strings['aor_function_list']['MAX'] = 'Maximum';
-$app_list_strings['aor_function_list']['SUM'] = 'Sum';
-$app_list_strings['aor_function_list']['AVG'] = 'Average';
-$app_list_strings['aor_total_options'][''] = '';
-$app_list_strings['aor_total_options']['COUNT'] = 'Count';
-$app_list_strings['aor_total_options']['SUM'] = 'Sum';
-$app_list_strings['aor_total_options']['AVG'] = 'Average';
-$app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
-$app_list_strings['aor_chart_types']['line'] = 'Line chart';
-$app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
-$app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
-$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
-$app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
-$app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'Weekly';
-$app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'Daily';
-$app_list_strings['aor_scheduled_reports_status_dom']['active'] = 'Active';
-$app_list_strings['aor_scheduled_reports_status_dom']['inactive'] = 'Inactive';
-$app_list_strings['aor_email_type_list']['Email Address'] = 'Email';
-$app_list_strings['aor_email_type_list']['Specify User'] = 'User';
-$app_list_strings['aor_email_type_list']['Users'] = 'Users';
-$app_list_strings['aor_assign_options']['all'] = 'ALL Users';
-$app_list_strings['aor_assign_options']['role'] = 'ALL Users in Role';
-$app_list_strings['aor_assign_options']['security_group'] = 'ALL Users in Security Group';
-$app_list_strings['date_time_period_list']['today'] = 'Today';
-$app_list_strings['date_time_period_list']['yesterday'] = 'Yesterday';
-$app_list_strings['date_time_period_list']['this_week'] = 'This Week';
-$app_list_strings['date_time_period_list']['last_week'] = 'Last Week';
-$app_list_strings['date_time_period_list']['last_month'] = 'Last Month';
-$app_list_strings['date_time_period_list']['this_quarter'] = 'This Quarter';
-$app_list_strings['date_time_period_list']['last_quarter'] = 'Last Quarter';
-$app_list_strings['date_time_period_list']['this_year'] = 'This year';
-$app_list_strings['date_time_period_list']['last_year'] = 'Last year';
-$app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
-$app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
-$app_strings['LBL_CRON_AT'] = 'at';
-$app_strings['LBL_CRON_RAW'] = 'Advanced';
-$app_strings['LBL_CRON_MIN'] = 'Min';
-$app_strings['LBL_CRON_HOUR'] = 'Hour';
-$app_strings['LBL_CRON_DAY'] = 'Day';
-$app_strings['LBL_CRON_MONTH'] = 'Month';
-$app_strings['LBL_CRON_DOW'] = 'DOW';
-$app_strings['LBL_CRON_DAILY'] = 'Daily';
-$app_strings['LBL_CRON_WEEKLY'] = 'Weekly';
-$app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
+$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Project Templates';
+$app_list_strings['moduleList']['AM_TaskTemplates'] = 'Project Task Templates';
+$app_list_strings['relationship_type_list']['FS'] = 'Finish to Start';
+$app_list_strings['relationship_type_list']['SS'] = 'Start to Start';
+$app_list_strings['moduleList']['AM_ProjectHolidays'] = 'Project Holidays';
+$app_list_strings['holiday_resource_dom']['Contacts'] = 'Contacts';
+$app_list_strings['holiday_resource_dom']['Users'] = 'Users';
+$app_list_strings['duration_unit_dom']['Days'] = 'Days';
+$app_list_strings['duration_unit_dom']['Hours'] = 'Hours';
+$app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
+$app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
+$app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
+
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
+
+
+$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
+$app_list_strings['moduleList']['AOD_Index'] = 'Index';
 
 
 /**
@@ -259,14 +258,49 @@ $app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler'
 
 
 /**
- * Social Feed Language Strings.
+ * @package SuiteCRM
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <info@salesagility.com>
  */
 
-$app_strings['FACEBOOK_USER_C'] = 'Facebook';
-$app_strings['TWITTER_USER_C'] = 'Twitter';
-$app_strings['LBL_FACEBOOK_USER_C'] = 'Facebook User';
-$app_strings['LBL_TWITTER_USER_C'] = 'Twitter User';
-$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
+$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
+$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
+$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
+$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
+$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
+$app_strings['LBL_QUICK_CALL'] = 'Log Call';
+$app_strings['LBL_QUICK_TASK'] = 'Create Task';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Type';
+
+$app_strings['LBL_ADD_TAB'] = 'Add Tab';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite Dashboard';
+$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
+$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
+$app_strings['LBL_DELETE_DASHBOARD1'] = 'Are you sure you want to delete the';
+$app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
+$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
+$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
+$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
+
+$app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
  
 /**
  * Extensions to SugarCRM
@@ -309,13 +343,14 @@ $app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
 
 
 
+/**
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
 
-$app_list_strings["moduleList"]["SecurityGroups"] = 'Security Groups Management';
-$app_strings['LBL_LOGIN_AS'] = "Login as ";
-$app_strings['LBL_LOGOUT_AS'] = "Logout as ";
-$app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
-
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
  
 /**
  * Products, Quotations & Invoices modules.
@@ -425,49 +460,6 @@ $app_strings['LBL_GENERATE_LETTER'] = 'Generate Letter';
 $app_strings['LBL_SELECT_TEMPLATE'] = 'Please Select a Template';
 $app_strings['LBL_NO_TEMPLATE'] = 'ERROR\nNo templates found.\nPlease go to the PDF templates module and create one';
 
-
-
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
-$app_list_strings['moduleList']['AOD_Index'] = 'Index';
 
 
 
@@ -759,7 +751,8 @@ $app_list_strings['marker_image_list']['zoo'] = 'Zoo';
 
 
 /**
- * @package SuiteCRM
+ * Advanced OpenReports, SugarCRM Reporting.
+ * @package Advanced OpenReports for SugarCRM
  * @copyright SalesAgility Ltd http://www.salesagility.com
  *
  * This program is free software; you can redistribute it and/or modify
@@ -777,97 +770,104 @@ $app_list_strings['marker_image_list']['zoo'] = 'Zoo';
  * or write to the Free Software Foundation,Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA 02110-1301  USA
  *
- * @author Salesagility Ltd <info@salesagility.com>
- */
-
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
-$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
-$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
-$app_strings['LBL_QUICK_CALL'] = 'Log Call';
-$app_strings['LBL_QUICK_TASK'] = 'Create Task';
-$app_strings['LBL_COLLECTION_TYPE'] = 'Type';
-
-$app_strings['LBL_ADD_TAB'] = 'Add Tab';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite Dashboard';
-$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
-$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
-$app_strings['LBL_DELETE_DASHBOARD1'] = 'Are you sure you want to delete the';
-$app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
-$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
-$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
-$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
-
-$app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
-
-$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
-
-/**
- * en_us.sps.php
- * @author SalesAgility <support@salesagility.com>
- * Date: 27/01/14
+ * @author SalesAgility <info@salesagility.com>
  */
 
 
-$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
+$app_list_strings['moduleList']['AOR_Reports'] = 'Reports';
+$app_list_strings['moduleList']['AOR_Conditions'] = 'Report Conditions';
+$app_list_strings['moduleList']['AOR_Charts'] = 'Report Charts';
+$app_list_strings['moduleList']['AOR_Fields'] = 'Report Fields';
+$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Scheduled Reports';
+$app_list_strings['aor_operator_list']['Equal_To'] = 'Equal To';
+$app_list_strings['aor_operator_list']['Not_Equal_To'] = 'Not Equal To';
+$app_list_strings['aor_operator_list']['Greater_Than'] = 'Greater Than';
+$app_list_strings['aor_operator_list']['Less_Than'] = 'Less Than';
+$app_list_strings['aor_operator_list']['Greater_Than_or_Equal_To'] = 'Greater Than or Equal To';
+$app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or Equal To';
+$app_list_strings['aor_operator_list']['Contains'] = 'Contains';
+$app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
+$app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
+$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
+$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
+$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
+$app_list_strings['aor_sql_operator_list']['Contains'] = 'LIKE';
+$app_list_strings['aor_sql_operator_list']['Starts_With'] = 'LIKE';
+$app_list_strings['aor_sql_operator_list']['Ends_With'] = 'LIKE';
+$app_list_strings['aor_condition_operator_list']['And'] = 'And';
+$app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
+$app_list_strings['aor_condition_type_list']['Value'] = 'Value';
+$app_list_strings['aor_condition_type_list']['Field'] = 'Field';
+$app_list_strings['aor_condition_type_list']['Date'] = 'Date';
+$app_list_strings['aor_condition_type_list']['Multi'] = 'Multiple';
+$app_list_strings['aor_condition_type_list']['Period'] = 'Period';
+$app_list_strings['aor_condition_type_list']['CurrentUserID'] = 'Current User';
+$app_list_strings['aor_date_type_list'][''] = '';
+$app_list_strings['aor_date_type_list']['minute'] = 'Minutes';
+$app_list_strings['aor_date_type_list']['hour'] = 'Hours';
+$app_list_strings['aor_date_type_list']['day'] = 'Days';
+$app_list_strings['aor_date_type_list']['week'] = 'Weeks';
+$app_list_strings['aor_date_type_list']['month'] = 'Months';
+$app_list_strings['aor_date_type_list']['business_hours'] = 'Business Hours';
+$app_list_strings['aor_date_options']['now'] = 'Now';
+$app_list_strings['aor_date_options']['field'] = 'This Field';
+$app_list_strings['aor_date_operator']['now'] = '';
+$app_list_strings['aor_date_operator']['plus'] = '+';
+$app_list_strings['aor_date_operator']['minus'] = '-';
+$app_list_strings['aor_sort_operator'][''] = '';
+$app_list_strings['aor_sort_operator']['ASC'] = 'Ascending';
+$app_list_strings['aor_sort_operator']['DESC'] = 'Descending';
+$app_list_strings['aor_function_list'][''] = '';
+$app_list_strings['aor_function_list']['COUNT'] = 'Count';
+$app_list_strings['aor_function_list']['MIN'] = 'Minimum';
+$app_list_strings['aor_function_list']['MAX'] = 'Maximum';
+$app_list_strings['aor_function_list']['SUM'] = 'Sum';
+$app_list_strings['aor_function_list']['AVG'] = 'Average';
+$app_list_strings['aor_total_options'][''] = '';
+$app_list_strings['aor_total_options']['COUNT'] = 'Count';
+$app_list_strings['aor_total_options']['SUM'] = 'Sum';
+$app_list_strings['aor_total_options']['AVG'] = 'Average';
+$app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
+$app_list_strings['aor_chart_types']['line'] = 'Line chart';
+$app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
+$app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
+$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
+$app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
+$app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'Weekly';
+$app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'Daily';
+$app_list_strings['aor_scheduled_reports_status_dom']['active'] = 'Active';
+$app_list_strings['aor_scheduled_reports_status_dom']['inactive'] = 'Inactive';
+$app_list_strings['aor_email_type_list']['Email Address'] = 'Email';
+$app_list_strings['aor_email_type_list']['Specify User'] = 'User';
+$app_list_strings['aor_email_type_list']['Users'] = 'Users';
+$app_list_strings['aor_assign_options']['all'] = 'ALL Users';
+$app_list_strings['aor_assign_options']['role'] = 'ALL Users in Role';
+$app_list_strings['aor_assign_options']['security_group'] = 'ALL Users in Security Group';
+$app_list_strings['date_time_period_list']['today'] = 'Today';
+$app_list_strings['date_time_period_list']['yesterday'] = 'Yesterday';
+$app_list_strings['date_time_period_list']['this_week'] = 'This Week';
+$app_list_strings['date_time_period_list']['last_week'] = 'Last Week';
+$app_list_strings['date_time_period_list']['last_month'] = 'Last Month';
+$app_list_strings['date_time_period_list']['this_quarter'] = 'This Quarter';
+$app_list_strings['date_time_period_list']['last_quarter'] = 'Last Quarter';
+$app_list_strings['date_time_period_list']['this_year'] = 'This year';
+$app_list_strings['date_time_period_list']['last_year'] = 'Last year';
+$app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
+$app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
+$app_strings['LBL_CRON_AT'] = 'at';
+$app_strings['LBL_CRON_RAW'] = 'Advanced';
+$app_strings['LBL_CRON_MIN'] = 'Min';
+$app_strings['LBL_CRON_HOUR'] = 'Hour';
+$app_strings['LBL_CRON_DAY'] = 'Day';
+$app_strings['LBL_CRON_MONTH'] = 'Month';
+$app_strings['LBL_CRON_DOW'] = 'DOW';
+$app_strings['LBL_CRON_DAILY'] = 'Daily';
+$app_strings['LBL_CRON_WEEKLY'] = 'Weekly';
+$app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
 
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-$app_list_strings['moduleList']['FP_events'] = 'Events';
-$app_list_strings['moduleList']['FP_Event_Locations'] = 'Locations';
-$app_list_strings['invite_template_list'][''] = '';
-
-$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invited';
-$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'Not Invited';
-$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Attended';
-$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'Not Attended';
-$app_list_strings['fp_event_status_dom']['Accepted'] = 'Accepted';
-$app_list_strings['fp_event_status_dom']['Declined'] = 'Declined';
-$app_list_strings['fp_event_status_dom']['No Response'] = 'No Response';
-
-$app_strings['LBL_STATUS_EVENT'] = 'Invite Status';
-$app_strings['LBL_ACCEPT_STATUS'] = 'Accept Status';
-$app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Select This Page';
-$app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Select All';
-$app_strings['LBL_LISTVIEW_NONE'] = 'Deselect All';
 
 /**
  *
@@ -927,53 +927,53 @@ $app_list_strings['dom_email_distribution_for_auto_create']=array (
     'leastBusy' => 'Least-Busy',
     'random' => 'Random',
 );
+ 
+/**
+ * Extensions to SugarCRM
+ * @package Reschedule for SugarCRM
+ * @subpackage Products
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
 
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- * 
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- * 
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- * 
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+$mod_strings = array (
+    'TWITTER_USER_C' => 'Twitter User',
+    'FACEBOOK_USER_C' => 'Facebook User',
+);
 
 
-$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Project Templates';
-$app_list_strings['moduleList']['AM_TaskTemplates'] = 'Project Task Templates';
-$app_list_strings['relationship_type_list']['FS'] = 'Finish to Start';
-$app_list_strings['relationship_type_list']['SS'] = 'Start to Start';
-$app_list_strings['moduleList']['AM_ProjectHolidays'] = 'Project Holidays';
-$app_list_strings['holiday_resource_dom']['Contacts'] = 'Contacts';
-$app_list_strings['holiday_resource_dom']['Users'] = 'Users';
-$app_list_strings['duration_unit_dom']['Days'] = 'Days';
-$app_list_strings['duration_unit_dom']['Hours'] = 'Hours';
-$app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
-$app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
-$app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
+
+/**
+ * Social Feed Language Strings.
+ */
+
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Facebook User';
+$app_strings['LBL_TWITTER_USER_C'] = 'Twitter User';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
+
+
+$app_list_strings["moduleList"]["SecurityGroups"] = 'Security Groups Management';
+$app_strings['LBL_LOGIN_AS'] = "Login as ";
+$app_strings['LBL_LOGOUT_AS'] = "Logout as ";
+$app_strings['LBL_SECURITYGROUP'] = 'Security Group';
+
+
 ?>

@@ -3,16 +3,44 @@
 
  
  //WARNING: The contents of this file are auto-generated
-$beanList['AOD_IndexEvent'] = 'AOD_IndexEvent';
-$beanFiles['AOD_IndexEvent'] = 'modules/AOD_IndexEvent/AOD_IndexEvent.php';
-$modules_exempt_from_availability_check['AOD_IndexEvent'] = 'AOD_IndexEvent';
-$report_include_modules['AOD_IndexEvent'] = 'AOD_IndexEvent';
-$modInvisList[] = 'AOD_IndexEvent';
-$beanList['AOD_Index'] = 'AOD_Index';
-$beanFiles['AOD_Index'] = 'modules/AOD_Index/AOD_Index.php';
-$modules_exempt_from_availability_check['AOD_Index'] = 'AOD_Index';
-$report_include_modules['AOD_Index'] = 'AOD_Index';
-$modInvisList[] = 'AOD_Index';
+$beanList['SecurityGroups'] = 'SecurityGroup';
+$beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
+$moduleList[] = 'SecurityGroups';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['Calls_Reschedule'] = 'Calls_Reschedule';
+$beanFiles['Calls_Reschedule'] = 'modules/Calls_Reschedule/Calls_Reschedule.php';
+$modules_exempt_from_availability_check['Calls_Reschedule'] = 'Calls_Reschedule';
+$report_include_modules['Calls_Reschedule'] = 'Calls_Reschedule';
+$modInvisList[] = 'Calls_Reschedule';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['FP_events'] = 'FP_events';
+$beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';
+$moduleList[] = 'FP_events';
+$beanList['FP_Event_Locations'] = 'FP_Event_Locations';
+$beanFiles['FP_Event_Locations'] = 'modules/FP_Event_Locations/FP_Event_Locations.php';
+$moduleList[] = 'FP_Event_Locations';
+
+
+ 
+ //WARNING: The contents of this file are auto-generated
+$beanList['jjwg_Maps'] = 'jjwg_Maps';
+$beanFiles['jjwg_Maps'] = 'modules/jjwg_Maps/jjwg_Maps.php';
+$moduleList[] = 'jjwg_Maps';
+$beanList['jjwg_Markers'] = 'jjwg_Markers';
+$beanFiles['jjwg_Markers'] = 'modules/jjwg_Markers/jjwg_Markers.php';
+$moduleList[] = 'jjwg_Markers';
+$beanList['jjwg_Areas'] = 'jjwg_Areas';
+$beanFiles['jjwg_Areas'] = 'modules/jjwg_Areas/jjwg_Areas.php';
+$moduleList[] = 'jjwg_Areas';
+$beanList['jjwg_Address_Cache'] = 'jjwg_Address_Cache';
+$beanFiles['jjwg_Address_Cache'] = 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php';
+$moduleList[] = 'jjwg_Address_Cache';
 
 
  
@@ -39,19 +67,32 @@ $modInvisList[] = 'AOW_Conditions';
 
  
  //WARNING: The contents of this file are auto-generated
-$beanList['Calls_Reschedule'] = 'Calls_Reschedule';
-$beanFiles['Calls_Reschedule'] = 'modules/Calls_Reschedule/Calls_Reschedule.php';
-$modules_exempt_from_availability_check['Calls_Reschedule'] = 'Calls_Reschedule';
-$report_include_modules['Calls_Reschedule'] = 'Calls_Reschedule';
-$modInvisList[] = 'Calls_Reschedule';
+$beanList['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$beanFiles['AOD_IndexEvent'] = 'modules/AOD_IndexEvent/AOD_IndexEvent.php';
+$modules_exempt_from_availability_check['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$report_include_modules['AOD_IndexEvent'] = 'AOD_IndexEvent';
+$modInvisList[] = 'AOD_IndexEvent';
+$beanList['AOD_Index'] = 'AOD_Index';
+$beanFiles['AOD_Index'] = 'modules/AOD_Index/AOD_Index.php';
+$modules_exempt_from_availability_check['AOD_Index'] = 'AOD_Index';
+$report_include_modules['AOD_Index'] = 'AOD_Index';
+$modInvisList[] = 'AOD_Index';
 
 
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['SecurityGroups'] = 'SecurityGroup';
-$beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
-$moduleList[] = 'SecurityGroups';
 
+$beanList['AM_ProjectTemplates'] = 'AM_ProjectTemplates';
+$beanFiles['AM_ProjectTemplates'] = 'modules/AM_ProjectTemplates/AM_ProjectTemplates.php';
+$moduleList[] = 'AM_ProjectTemplates';
+$beanList['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$beanFiles['AM_TaskTemplates'] = 'modules/AM_TaskTemplates/AM_TaskTemplates.php';
+$modules_exempt_from_availability_check['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$report_include_modules['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$modInvisList[] = 'AM_TaskTemplates';
+$beanList['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
+$beanFiles['AM_ProjectHolidays'] = 'modules/AM_ProjectHolidays/AM_ProjectHolidays.php';
+$modules_exempt_from_availability_check['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
+$report_include_modules['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
+$modInvisList[] = 'AM_ProjectHolidays';
 
  
  //WARNING: The contents of this file are auto-generated
@@ -120,47 +161,6 @@ $modInvisList[] = 'AOS_Line_Item_Groups';
 $beanList['AOS_Quotes'] = 'AOS_Quotes';
 $beanFiles['AOS_Quotes'] = 'modules/AOS_Quotes/AOS_Quotes.php';
 $moduleList[] = 'AOS_Quotes';
-
-
-
-$beanList['AM_ProjectTemplates'] = 'AM_ProjectTemplates';
-$beanFiles['AM_ProjectTemplates'] = 'modules/AM_ProjectTemplates/AM_ProjectTemplates.php';
-$moduleList[] = 'AM_ProjectTemplates';
-$beanList['AM_TaskTemplates'] = 'AM_TaskTemplates';
-$beanFiles['AM_TaskTemplates'] = 'modules/AM_TaskTemplates/AM_TaskTemplates.php';
-$modules_exempt_from_availability_check['AM_TaskTemplates'] = 'AM_TaskTemplates';
-$report_include_modules['AM_TaskTemplates'] = 'AM_TaskTemplates';
-$modInvisList[] = 'AM_TaskTemplates';
-$beanList['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
-$beanFiles['AM_ProjectHolidays'] = 'modules/AM_ProjectHolidays/AM_ProjectHolidays.php';
-$modules_exempt_from_availability_check['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
-$report_include_modules['AM_ProjectHolidays'] = 'AM_ProjectHolidays';
-$modInvisList[] = 'AM_ProjectHolidays';
-
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['FP_events'] = 'FP_events';
-$beanFiles['FP_events'] = 'modules/FP_events/FP_events.php';
-$moduleList[] = 'FP_events';
-$beanList['FP_Event_Locations'] = 'FP_Event_Locations';
-$beanFiles['FP_Event_Locations'] = 'modules/FP_Event_Locations/FP_Event_Locations.php';
-$moduleList[] = 'FP_Event_Locations';
-
-
- 
- //WARNING: The contents of this file are auto-generated
-$beanList['jjwg_Maps'] = 'jjwg_Maps';
-$beanFiles['jjwg_Maps'] = 'modules/jjwg_Maps/jjwg_Maps.php';
-$moduleList[] = 'jjwg_Maps';
-$beanList['jjwg_Markers'] = 'jjwg_Markers';
-$beanFiles['jjwg_Markers'] = 'modules/jjwg_Markers/jjwg_Markers.php';
-$moduleList[] = 'jjwg_Markers';
-$beanList['jjwg_Areas'] = 'jjwg_Areas';
-$beanFiles['jjwg_Areas'] = 'modules/jjwg_Areas/jjwg_Areas.php';
-$moduleList[] = 'jjwg_Areas';
-$beanList['jjwg_Address_Cache'] = 'jjwg_Address_Cache';
-$beanFiles['jjwg_Address_Cache'] = 'modules/jjwg_Address_Cache/jjwg_Address_Cache.php';
-$moduleList[] = 'jjwg_Address_Cache';
 
 
 ?>
