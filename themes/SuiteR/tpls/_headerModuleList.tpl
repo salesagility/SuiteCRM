@@ -68,16 +68,16 @@
                     {/foreach}
             </div>
             <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()" action="index.php" name="UnifiedSearch">
-                <input class="form-control" type="hidden" value="UnifiedSearch" name="action"></input>
-                <input class="form-control" type="hidden" value="Home" name="module"></input>
-                <input class="form-control" type="hidden" value="false" name="search_form"></input>
-                <input class="form-control" type="hidden" value="false" name="advanced"></input>
+                <input class="form-control" type="hidden" value="UnifiedSearch" name="action">
+                <input class="form-control" type="hidden" value="Home" name="module">
+                <input class="form-control" type="hidden" value="false" name="search_form">
+                <input class="form-control" type="hidden" value="false" name="advanced">
                 <span class="input-group-btn">
-                    <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string"></input>
+                    <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string">
                 </span>
             </form>
                 <div id="mobilegloballinks">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span></a>
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                             <li role="presentation">
@@ -309,7 +309,7 @@
                     <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
                 </ul>
             </div>
-            <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
+            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
                    <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
                 </button>

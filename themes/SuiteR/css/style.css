@@ -3085,36 +3085,35 @@ li#usermenu:hover {
 }
 
 @media (max-height:600px) {
-    .moremenu ul, .dropdown-menu {
+    .moremenu ul, ul.dropdown-menu {
         max-height: 500px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:701px) and (max-height:800px) {
-    .moremenu ul, .dropdown-menu {
+    .moremenu ul, ul.dropdown-menu {
         max-height: 575px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:801px) and (max-height:900px) {
-    .moremenu ul, .dropdown-menu {
+    .moremenu ul, ul.dropdown-menu {
         max-height: 700px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:901px) and (max-height:1000px) {
-    .moremenu ul, .dropdown-menu {
-        max-height: 800px;
+    .moremenu ul, ul.dropdown-menu {
+        max-height: 800px !important;
         overflow: auto;
     }
 }
 
 @media (min-height:1001px) {
-    .moremenu ul, .dropdown-menu {
-        max-height: 850px;
+    .moremenu ul, ul.dropdown-menu {
         max-height: 850px !important;
         overflow: auto;
     }
@@ -3644,7 +3643,7 @@ span#quickcreateplus{
     font-size:1.1em;
 }
 
-#quickcreatetop button{
+#quickcreatetop button, #desktop_notifications button{
     margin:10px 0 0 0;
 }
 /* Main content */
@@ -4343,15 +4342,9 @@ h3 span{
     background: none repeat scroll 0% 0% #EEE;
     padding:0 !important;
     margin: 2px 3px;
-    overflow: hidden;
 }
 
 #toolbox{
-    height:100% !important;
-}
-
-#panels{
-    height:auto !important;
     overflow:auto;
 }
 
@@ -4432,7 +4425,7 @@ h3 span{
         display:none !important;
     }
 
-    #quickcreatetop a{
+    #quickcreatetop a, #desktop_notifications a{
         color:#ffffff !important;
         margin:8px 0 8px 0 !important;
         line-height:50px;
@@ -4440,19 +4433,19 @@ h3 span{
         cursor:pointer;
     }
 
-    #quickcreatetop ul li{
+    #quickcreatetop ul li, #desktop_notifications ul li{
         padding:0 !important;
         margin:0 !important;
     }
 
-    #quickcreatetop ul li a{
+    #quickcreatetop ul li a, #desktop_notifications ul li a{
         color:#3C8DBC !important;
         padding:0 3px 0 3px !important;
         margin:0 !important;
         line-height:35px;
     }
 
-    #quickcreatetop ul li a:hover{
+    #quickcreatetop ul li a:hover, #desktop_notifications ul li a:hover{
         color:#ffffff !important;
     }
 }
@@ -4591,11 +4584,37 @@ td.inlineEditActive{
         color: #3C8DBC !important;
     }
 
-    .glyphicon-search, .glyphicon-user {
+    .glyphicon-search, .glyphicon-option-vertical {
         font-size:1.5em;
     }
 }
 
+/* Fix to address bug with popups overflowing in the emails module*/
+
+#editAccountDialogue_c{
+    height:90% !important;
+}
+
+#editAccountDialogue{
+    height:90% !important;
+    overflow:auto !important;
+}
+
+#settingsDialog_c, #settingsDialog{
+    width:90% !important;
+}
+
+#formEmailSettingsGeneral{
+    overflow:scroll;
+}
+
+/* Fix to ensure navigation elements are not included in print process */
+
+@media print {
+    .navbar-inverse, .sidebar{
+        display: none;
+    }
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

@@ -46,8 +46,7 @@
             <span class="glyphicon glyphicon-globe"></span> {$STATISTICS}
         </div>
         <div id="links">
-            <a id="print_page" onclick="printpage()">{$MOD.LBL_SUITE_PRINT}</a>
-            <a id="backtotop" >{$MOD.LBL_SUITE_TOP}</a>
+            {$BOTTOMLINKS}
         </div>
         <div id="copyright_data">
             <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
@@ -72,10 +71,6 @@
 <!-- END Footer Section -->
 {literal}
 <script>
-function printpage()
-{
-    window.print();
-}
 if(SUGAR.util.isTouchScreen()) {
         setTimeout(resizeHeader,10000);
 }
