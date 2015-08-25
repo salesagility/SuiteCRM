@@ -67,36 +67,13 @@
 
 			var createAlert = function(options) {
 
-			}
-
-			var removeSubscriber = function(options) {
-
-			}
-
-			var addAllSubscribers = function(options) {
-
-			}
-
-			// Load existing alerts
-			var loadExistingAlert = function (options) {
-				createAlertOptions);
-
-			}
-
-
-			jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
-				loadExistingAlert(alert);
-			});
-
-
-			$('input[type=button].add-alert').click(function(e) {
 				console.log('Add alert');
 
 				var setupMultipleAlerts = $('.setup-multiple-alerts');
 
-				var alert = $('<div id="'+alertIndex+'" data-type="alert"></div>')
-						.attr('name', 'alert['+alertIndex+']');
-				var alertNewFlag = $('<input type="hidden" name="alerts['+ alertIndex +'][flag]" value="new">')
+				var alert = $('<div id="'+options.fields.id+'" data-type="alert"></div>')
+						.attr('name', 'alert['+options.fields.id+']');
+				var alertNewFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="'+options.flag+'">')
 						.appendTo(alert);
 
 				var alertTimeDiv = $('<div></div>')
@@ -115,20 +92,13 @@
 						.appendTo(alert);
 
 
-				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+alertIndex+']">' +
+				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+options.fields.id+']">' +
 						'<img src="themes/default/images/glyphicon-16/glyphicon-plus.png"> Add All Invitees</button>')
 						.appendTo(alertSubscribersToolbarButtons);
 
-//				var alertAddSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+alertIndex+']">' +
-//						'</button>')
-//						.appendTo(alertSubscribersToolbarButtons);
-
-//				var alertSubscriberList = $('<ul class="alert-subscriber-list"></ul>')
-//						.appendTo(alertSubscribersToolbar);
-
 				var alertTime = $('select[name=reminder_time]')
 						.clone() // clone the reminder time options
-						.attr('name', 'alerts['+alertIndex+'][time]')
+						.attr('name', 'alerts['+options.fields.id+'][time]')
 						.attr('style', ' ') // remove hidden style
 						.appendTo(alertTimeDiv);
 
@@ -136,16 +106,16 @@
 						.addClass('panel')
 						.appendTo(alertSubscribers);
 
-				var alertActionPopup =  $('<input type="checkbox" name="alerts['+alertIndex+'][action][send_popup]" ' +
-						'id="alert_action_send_popup['+alertIndex+']" value="1"> <label>Popup </label> ');
+				var alertActionPopup =  $('<input type="checkbox" name="alerts['+options.fields.id+'][action][send_popup]" ' +
+						'id="alert_action_send_popup['+options.fields.id+']" value="1"> <label>Popup </label> ');
 				var alertActionEmail =  $('<input type="checkbox" name="alerts['+alertIndex+'][action][send_email]" ' +
-						'id="alert_action_send_email['+alertIndex+']" value="1"> <label>Email </label> ');
+						'id="alert_action_send_email['+options.fields.id+']" value="1"> <label>Email </label> ');
 
 				alertActionPopup.appendTo(alertActions);
 				alertActionEmail.appendTo(alertActions);
 
 				var alertRemoveBtn =
-						$(' <button class="add-alert" id="alert_remove_btn['+alertIndex+']" title="Remove Alert">' +
+						$(' <button class="add-alert" id="alert_remove_btn['+options.fields.id+']" title="Remove Alert">' +
 								'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
 								.appendTo(alertTimeDiv);
 
@@ -177,8 +147,8 @@
 								bean = value.module;
 							} else if(value.module == 'Lead') {
 								id = value.fields.id;
-									label = value.fields.full_name;
-									bean = value.module;
+								label = value.fields.full_name;
+								bean = value.module;
 							}
 
 							invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
@@ -199,32 +169,35 @@
 					return false;
 				});
 
-//				alertAddSubscriberBtn.button({
-//					text: false,
-//					icons: {
-//						primary: "ui-icon-triangle-1-s"
-//					}
-//				}).click(function() {
-//						var menu = $( this ).parent().next().show().position({
-//							my: "left top",
-//							at: "left bottom",
-//							of: this
-//						});
-//						$( document ).one( "click", function() {
-//							menu.hide();
-//						});
-//						return false;
-//					})
-//					.parent()
-//					.buttonset()
-//					.next()
-//					.hide()
-//					.menu();
 
 				var event = $(document);
 				event.trigger("display:SugarWidgetScheduleRow");
 				alertAddAllSubscriberBtn.trigger('click');
-				alertIndex++;
+			}
+
+			var removeSubscriber = function(options) {
+
+			}
+
+			var addAllSubscribers = function(options) {
+
+			}
+
+			jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
+				alert.flag = "existing";
+				createAlert(alert);
+			});
+
+
+			$('input[type=button].add-alert').click(function(e) {
+				alertIndex += 1;
+				var options = {
+					fields: {
+						id:alertIndex
+					},
+					flag: "new"
+				}
+				createAlert(options);
 			});
 
 			$(document).on('display:SugarWidgetScheduleRow', function(e) {

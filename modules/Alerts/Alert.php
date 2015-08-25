@@ -62,7 +62,7 @@ class Alert extends Basic {
     var $assigned_user_id;
     var $assigned_user_name;
     var $assigned_user_link;
-    var $delivery_datetime;
+    var $deilivery_datetime;
     var $content_type = EAlertContentType::text;
     var $is_read = false;
     var $send_email = false;
@@ -78,7 +78,7 @@ class Alert extends Basic {
     /**
      * @param $id
      */
-    function Alert($id) {
+    function Alert($id = FALSE) {
         parent::Basic();
         if(!empty($id)) {
             $this->retrieve($id);
