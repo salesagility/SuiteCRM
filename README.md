@@ -29,11 +29,11 @@ The following links offer various ways to view, contribute and collaborate to th
 + [SuiteCRM Partners - Our partner section where partners of SuiteCRM can be viewed][suitecrm_partners]
 + [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
 
-[suitecrm_demo]: http://suitecrm.com/index.php?option=com_users&view=registration&Itemid=1235
-[suitecrm_forums]: http://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list
-[suitecrm_docs]: http://suitecrm.com/index.php?option=com_wrapper&view=wrapper&Itemid=1383
-[suitecrm_partners]: http://suitecrm.com/index.php?option=com_content&view=article&id=170&Itemid=1172
-[suitecrm_ext]: http://suitecrm.com/index.php?option=com_mtree&view=listcats&cat_id=76&Itemid=1225
+[suitecrm_demo]: https://suitecrm.com/index.php?option=com_users&view=registration&Itemid=1235
+[suitecrm_forums]: https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list
+[suitecrm_docs]: https://suitecrm.com/wiki
+[suitecrm_partners]: https://suitecrm.com/index.php?option=com_content&view=article&id=170&Itemid=1172
+[suitecrm_ext]: https://suitecrm.com/index.php?option=com_mtree&view=listcats&cat_id=76&Itemid=1225
 
 ### Development Roadmap ###
 
