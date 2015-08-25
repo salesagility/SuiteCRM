@@ -82,7 +82,7 @@ $mod_strings = array (
   'LBL_HOOKUP_CONFIRM_PART2' => ". Fortfahren?",
   
   'LBL_GROUP_SELECT' => 'Auswählen, welche Gruppen auf diesen Datensatz Zugriff haben sollen',
-  'LBL_ERROR_DUPLICATE' => 'Bedingt durch eine von Sugar entdeckte mögliche Dublette, müssen Sie die Berechtigungsgruppe(n) manuell zu dem neu erstellten Datensatz hinzufügen.',
+  'LBL_ERROR_DUPLICATE' => 'Bedingt durch eine von SuiteCRM entdeckte mögliche Dublette, müssen Sie die Berechtigungsgruppe(n) manuell zu dem neu erstellten Datensatz hinzufügen.',
 
   'LBL_INBOUND_EMAIL' => 'Eingehendes E-Mail Konto',
   'LBL_INBOUND_EMAIL_DESC' => 'Erlaubt nur dann den Zugriff auf ein E-Mail Konto, wenn der Benutzer zu einer Gruppe gehört, die diesem E-Mail Konto zugewiesen wurde.',

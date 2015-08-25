@@ -66,7 +66,7 @@ class iFrameDashlet extends Dashlet {
 
         if(empty($options['url'])) {
             $this->url = $this->defaultURL;
-            $this->url = 'http://apps.sugarcrm.com/dashlet/go-pro.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';
+            $this->url = 'https://suitecrm.com/';
         } else {
             $this->url = $options['url'];
         }

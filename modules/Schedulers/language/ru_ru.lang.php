@@ -151,7 +151,7 @@ $mod_strings = array (
 'LBL_CRON_INSTRUCTIONS_LINUX' => 'Настройка сrontab' ,
 'LBL_CRON_LINUX_DESC' => 'Примечание: Для запуска планировщика Suite добавьте эту строку в файл crontab: ',
 'LBL_CRON_WINDOWS_DESC' => 'Примечание: Для запуска планировщика Suite создайте пакетный файл и ежеминутно выполняйте его при помощи планировщика Windows. Пакетный файл должен содержать следующие команды: ',
-'LBL_NO_PHP_CLI' => 'Если на вашем хосте не установлен PHP, Вы можете использовать wget или curl для выполнения запланированных задач.<br>для wget: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;wget --quiet --non-verbose '.$sugar_config['site_url'].'/cron.php > /dev/null 2>&1</b><br>для curl: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;curl --silent '.$sugar_config['site_url'].'/cron.php > /dev/null 2>&1',
+'LBL_NO_PHP_CLI' => 'Если на вашем хосте не установлен PHP, Вы можете использовать wget или curl для выполнения запланированных задач.<br>для wget: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;wget --quiet --non-verbose '/'site_url'/'/cron.php > /dev/null 2>&1</b><br>для curl: <b>*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;curl --silent '/'site_url'/'/cron.php > /dev/null 2>&1',
 // Subpanels
 'LBL_JOBS_SUBPANEL_TITLE'=> 'Журнал заданий' ,
 'LBL_EXECUTE_TIME'=> 'Время выполнения' ,
