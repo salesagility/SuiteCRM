@@ -73,7 +73,8 @@
 
 				var alert = $('<div id="'+options.fields.id+'" data-type="alert"></div>')
 						.attr('name', 'alert['+options.fields.id+']');
-				var alertNewFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="'+options.flag+'">')
+
+				var alertFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="'+options.flag+'">')
 						.appendTo(alert);
 
 				var alertTimeDiv = $('<div></div>')
@@ -110,6 +111,20 @@
 						'id="alert_action_send_popup['+options.fields.id+']" value="1"> <label>Popup </label> ');
 				var alertActionEmail =  $('<input type="checkbox" name="alerts['+alertIndex+'][action][send_email]" ' +
 						'id="alert_action_send_email['+options.fields.id+']" value="1"> <label>Email </label> ');
+
+				if(typeof options.fields.send_popup !== "undefined") {
+					if(options.fields.send_popup == 1)
+						alertActionPopup.prop('checked', true);
+					else
+						alertActionPopup.prop('checked', false);
+				}
+
+				if(typeof options.fields.send_email !== "undefined") {
+					if(options.fields.send_email == 1)
+						alertActionEmail.prop('checked', true);
+					else
+						alertActionEmail.prop('checked', false);
+				}
 
 				alertActionPopup.appendTo(alertActions);
 				alertActionEmail.appendTo(alertActions);
@@ -172,7 +187,11 @@
 
 				var event = $(document);
 				event.trigger("display:SugarWidgetScheduleRow");
-				alertAddAllSubscriberBtn.trigger('click');
+
+				if(options.flag == "new") {
+					alertAddAllSubscriberBtn.trigger('click');
+				}
+
 			}
 
 			var removeSubscriber = function(options) {
