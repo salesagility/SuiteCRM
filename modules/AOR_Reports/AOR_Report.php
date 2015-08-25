@@ -265,7 +265,7 @@ class AOR_Report extends Basic {
 
     function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = ''){
 
-        global $beanList;
+        global $beanList, $sugar_config;
 
         $report_sql = $this->build_report_query($group_value);
         $max_rows = 20;
@@ -418,7 +418,7 @@ class AOR_Report extends Basic {
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
                     if($att['link'] && $links){
-                        $html .= "<a href='index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
                     }
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
