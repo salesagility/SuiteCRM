@@ -643,6 +643,12 @@ $mod_strings = array(
 'LBL_AJAX_BUILDPROGRESS' => 'Build In Progress...',
 'LBL_AJAX_DEPLOYPROGRESS' => 'Deploy In Progress...',
 'LBL_AJAX_FIELD_EXISTS' =>'The field name you entered already exists. Please enter a new field name.',
+
+'LBL_AJAX_RESPONSE_TITLE' => 'Result',
+'LBL_AJAX_RESPONSE_MESSAGE' => 'This operation is completed successfully',
+'LBL_AJAX_LOADING_TITLE' => 'In Progress..',
+'LBL_AJAX_LOADING_MESSAGE' => 'Please wait, loading..',
+
 //JS
 'LBL_JS_REMOVE_PACKAGE' => 'Are you sure you wish to remove this package? This will permanently delete all files associated with this package.',
 'LBL_JS_REMOVE_MODULE' => 'Are you sure you wish to remove this module? This will permanently delete all files associated with this module.',

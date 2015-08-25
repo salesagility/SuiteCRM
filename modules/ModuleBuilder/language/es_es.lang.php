@@ -609,6 +609,12 @@ $mod_strings = array (
   'LBL_AJAX_BUILDPROGRESS' => 'Construcción En Progreso...',
   'LBL_AJAX_DEPLOYPROGRESS' => 'Despliegue En Progreso...',
   'LBL_AJAX_FIELD_EXISTS' => 'El nombre del campo que ha introducido ya existe. Por favor, introduzca un nuevo nombre para el campo.',
+
+  'LBL_AJAX_RESPONSE_TITLE' => 'Resultado',
+  'LBL_AJAX_RESPONSE_MESSAGE' => 'Esta operación se ha realizado correctamente',
+  'LBL_AJAX_LOADING_TITLE' => 'En curso..',
+  'LBL_AJAX_LOADING_MESSAGE' => 'Por favor espere, carga..',
+
   'LBL_JS_REMOVE_PACKAGE' => '¿Está seguro de que desea quitar este paquete? Esto eliminará permanentemente todos los archivos asociados con este paquete.',
   'LBL_JS_REMOVE_MODULE' => '¿Está seguro de que desea quitar este módulo? Esto eliminará permanentemente todos los archivos asociados con este módulo.',
   'LBL_JS_DEPLOY_PACKAGE' => 'Cualquier personalización que haya realizado en el Estudio será sobrescrita cuando este módulo sea desplegado de nuevo. ¿Está seguro de que desea proceder?',
