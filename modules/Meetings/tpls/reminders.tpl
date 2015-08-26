@@ -193,6 +193,7 @@
 
 				alertAddAllSubscriberBtn.button().unbind().click(function(e) {
 					var invitees = $(alertSubscribers);
+					var alertFocus = $(alert).attr('id');
 					$(invitees).empty();
 					if(typeof GLOBAL_REGISTRY !== "undefined" &&
 							typeof GLOBAL_REGISTRY.focus !== "undefined" &&
@@ -218,8 +219,8 @@
 									'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
 									+'s.gif">' +
 									' <label>'+ label +'</label>' +
-									'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][id]" value="'+ id +'">' +
-									'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
+									'<input type="hidden" name="alerts['+ alertFocus +'][subscribers]['+id+'][id]" value="'+ id +'">' +
+									'<input type="hidden" name="alerts['+ alertFocus +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
 									'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
 
 							invitees.append(invitee);
