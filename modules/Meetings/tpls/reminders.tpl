@@ -187,7 +187,14 @@
 
 				// events
 				alertRemoveBtn.click(function(e) {
-					$(this).parent().parent().remove();
+					if($(alert).find('input[type=hidden][value=existing]').length > 0) {
+						$(alert).empty();
+						var alertFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="deleted">')
+								.appendTo(alert);
+					} else {
+						$(alertTime).remove();
+					}
+
 					return false;
 				});
 

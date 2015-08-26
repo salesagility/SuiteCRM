@@ -163,13 +163,29 @@ class Meeting extends SugarBean {
 	function save($check_notify = FALSE) {
 		global $timedate, $current_user, $disable_date_format, $db;
 
+		if(empty($this->alerts)) {
+			// Remove all alerts assigned to this record
+			$query = 'UPDATE alerts SET deleted = 1
+						WHERE target_module = "'.$this->module_name.'" AND target_module_id = "'.$this->id.'"';
+			$db->query($query);
+		}
+
+		// Get all alert assigned to this record from the database
+		$query = 'SELECT id FROM alerts WHERE deleted = 0 AND target_module = "'.$this->module_name.'"
+				  AND target_module_id = "'.$this->id.'"';
+		$dbAlerts = $db->query($query);
+
 		foreach($this->alerts as $alertID => $alertArray) {
 			$alert = null;
 			if($alertArray['flag'] == 'new') {
 				$alert = new Alert();
-			} else {
+			} else if($alertArray['flag'] == 'existing') {
 				$alert = new Alert();
 				$alert->retrieve($alertID);
+			} else if($alertArray['flag'] == 'deleted') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+				$alert->deleted = true;
 			}
 
 			if(isset($alertArray['action']['send_popup'])) {
