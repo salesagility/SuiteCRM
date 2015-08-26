@@ -2602,8 +2602,9 @@ iframe.teamNoticeBox {
     height:auto;
 }
 
-#dashletsList {
-    min-height:500px;
+#dashletsList{
+    max-height:500px !important;
+    overflow:hidden;
 }
 
 #dashletsDialog_c{
