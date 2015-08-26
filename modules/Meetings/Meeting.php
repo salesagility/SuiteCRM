@@ -173,11 +173,11 @@ class Meeting extends SugarBean {
 			}
 
 			if(isset($alertArray['action']['send_popup'])) {
-				$alert->send_popup = $alertArray['action']['send_popup'];
+				$alert->send_popup = true;
 			}
 
 			if(isset($alertArray['action']['send_email'])) {
-				$alert->send_email = $alertArray['action']['send_email'];
+				$alert->send_email = true;
 			}
 
 			if(isset($alertArray['time']) && isset($this->date_start)) {

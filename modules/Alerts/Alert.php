@@ -101,16 +101,20 @@ class Alert extends Basic {
         global $mod_strings;
 
         // Assign defaults if empty
-        if($this->redirect_url === null) {
-            $this->redirect_url = 'index.php?fakeid='. uniqid('fake_', true);
+        if($this->url_redirect === null) {
+            $this->url_redirect = 'index.php?fakeid='. uniqid('fake_', true);
         }
+        // Create a copy of subscribers (in its php array form)
+        $subscribers = $this->subscribers;
 
+        // convert to a json string
         $this->subscribers = utf8_encode(json_encode($this->subscribers));
+
+        // save bean
         parent::save($check_notify);
-        $this->subscribers = json_decode($this->subscribers);
-        foreach($this->subscribers as $key => $value) {
-            $this->subscribers[$key] = (array)$value;
-        }
+
+        // convert it back to a php array;
+        $this->subscribers = $subscribers;
         $break = 1;
     }
 
@@ -128,9 +132,13 @@ class Alert extends Basic {
         // (prevents undefined exception)
         $instance->subscribers = str_replace("&quot;",'"', $instance->subscribers);
         $instance->subscribers = json_decode(utf8_decode($instance->subscribers));
+
+        // Convert from stdClass to Array
+        $subscribers = array();
         foreach($instance->subscribers as $key => $value) {
-            $instance->subscribers[$key] = (array)$value;
+            $subscribers[$key] = (array)$value;
         }
+        $this->subscribers = $subscribers;
 
         return $instance;
     }
@@ -144,7 +152,7 @@ class Alert extends Basic {
             'id' => $subscriber_bean->id,
             'module_name' => $subscriber_bean->module_name,
         );
-        array_merge_recursive($this->subscribers, $subscriber);
+        $this->subscribers[$subscriber_bean->id] = $subscriber;
     }
 
     /**
@@ -154,10 +162,10 @@ class Alert extends Basic {
      */
     function subscribe($subscriber_bean, $subscriber_id) {
         $subscriber = array(
-            'id' => $subscriber_bean,
-            'module_name' => $subscriber_module,
+            'id' => $subscriber_id,
+            'module_name' => $subscriber_bean,
         );
-        array_merge_recursive($this->subscribers, $subscriber);
+        $this->subscribers[$subscriber_id] = $subscriber;
     }
 
     /**
