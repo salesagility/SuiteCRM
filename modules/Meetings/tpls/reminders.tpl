@@ -145,6 +145,7 @@
 									typeof GLOBAL_REGISTRY.focus.users_arr !== "undefined"
 							) {
 								jQuery.each(GLOBAL_REGISTRY.focus.users_arr, function(key, value) {
+
 									if(value.module == 'User') {
 										id = value.fields.id;
 										label = value.fields.full_name;
@@ -159,19 +160,21 @@
 										bean = value.module;
 									}
 
-									var invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
-											'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
-											+'s.gif">' +
-											' <label>'+ label +'</label>' +
-											'<input type="hidden" name="alerts['+ options.fields.id +'][subscribers]['+id+'][id]" value="'+ id +'">' +
-											'<input type="hidden" name="alerts['+ options.fields.id +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
-											'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
+									if(id == subscriberID && bean == subscriber.module_name) {
+										var invitee = $('<button data-id="' + id + '" data-bean="' + bean + '">' +
+												'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName=' + bean
+												+ 's.gif">' +
+												' <label>' + label + '</label>' +
+												'<input type="hidden" name="alerts[' + options.fields.id + '][subscribers][' + id + '][id]" value="' + id + '">' +
+												'<input type="hidden" name="alerts[' + options.fields.id + '][subscribers][' + id + '][bean]" value="' + bean + '">' +
+												'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
 
-									invitee.appendTo(alertSubscribersList);
+										invitee.appendTo(alertSubscribersList);
 
-									invitee.click(function() {
-										$(this).remove();
-									});
+										invitee.click(function () {
+											$(this).remove();
+										});
+									}
 
 								});
 							}
@@ -188,7 +191,7 @@
 					return false;
 				});
 
-				alertAddAllSubscriberBtn.button().click(function(e) {
+				alertAddAllSubscriberBtn.button().unbind().click(function(e) {
 					var invitees = $(alertSubscribers);
 					$(invitees).empty();
 					if(typeof GLOBAL_REGISTRY !== "undefined" &&
