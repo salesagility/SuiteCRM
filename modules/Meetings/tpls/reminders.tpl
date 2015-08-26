@@ -134,6 +134,51 @@
 								'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
 								.appendTo(alertTimeDiv);
 
+				if(options.flag == "existing") {
+						// Add existing subscribers
+						jQuery.each(options.fields.subscribers, function (subscriberID, subscriber) {
+							var id, label, bean, li;
+
+							// Add subscribers if they are an invitee
+							if(typeof GLOBAL_REGISTRY !== "undefined" &&
+									typeof GLOBAL_REGISTRY.focus !== "undefined" &&
+									typeof GLOBAL_REGISTRY.focus.users_arr !== "undefined"
+							) {
+								jQuery.each(GLOBAL_REGISTRY.focus.users_arr, function(key, value) {
+									if(value.module == 'User') {
+										id = value.fields.id;
+										label = value.fields.full_name;
+										bean = value.module;
+									} else if(value.module == 'Contact') {
+										id = value.fields.id;
+										label = value.fields.full_name;
+										bean = value.module;
+									} else if(value.module == 'Lead') {
+										id = value.fields.id;
+										label = value.fields.full_name;
+										bean = value.module;
+									}
+
+									var invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
+											'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
+											+'s.gif">' +
+											' <label>'+ label +'</label>' +
+											'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][id]" value="'+ id +'">' +
+											'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
+											'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
+
+									invitee.appendTo(alertSubscribersList);
+
+									invitee.click(function() {
+										$(this).remove();
+									});
+
+								});
+							}
+					});
+				}
+
+
 				alert.appendTo(setupMultipleAlerts);
 
 
@@ -166,7 +211,7 @@
 								bean = value.module;
 							}
 
-							invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
+							var invitee = $('<button data-id="'+ id +'" data-bean="'+ bean +'">' +
 									'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
 									+'s.gif">' +
 									' <label>'+ label +'</label>' +
