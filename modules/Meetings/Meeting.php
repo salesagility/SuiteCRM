@@ -190,10 +190,7 @@ class Meeting extends SugarBean {
 			$alert->target_module_id = $this->id;
 
 			foreach($alertArray['subscribers'] as $s => $subscriber) {
-				$id = $subscriber['id'];
-				$bean = $subscriber['bean'];
-
-				$alert->subscribe($bean, $id);
+				$alert->subscribe($subscriber['bean'], $subscriber['id']);
 			}
 
 			$alert->save();
