@@ -58,6 +58,7 @@ $filesNWPerms = array();
 $skipDirs = array(
 	$sugar_config['upload_dir'],
 	'.svn',
+	'.git',
 );
 $files = uwFindAllFiles(getcwd(), array(), true, $skipDirs);
 
