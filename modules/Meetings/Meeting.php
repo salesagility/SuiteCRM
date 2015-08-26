@@ -169,7 +169,7 @@ class Meeting extends SugarBean {
 				$alert = new Alert();
 			} else {
 				$alert = new Alert();
-				$alert->retrive($alertID);
+				$alert->retrieve($alertID);
 			}
 
 			if(isset($alertArray['action']['send_popup'])) {

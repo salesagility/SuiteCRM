@@ -163,8 +163,8 @@
 											'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName='+ bean
 											+'s.gif">' +
 											' <label>'+ label +'</label>' +
-											'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][id]" value="'+ id +'">' +
-											'<input type="hidden" name="alerts['+ alertIndex +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
+											'<input type="hidden" name="alerts['+ options.fields.id +'][subscribers]['+id+'][id]" value="'+ id +'">' +
+											'<input type="hidden" name="alerts['+ options.fields.id +'][subscribers]['+id+'][bean]" value="'+ bean +'">' +
 											'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button>');
 
 									invitee.appendTo(alertSubscribersList);
