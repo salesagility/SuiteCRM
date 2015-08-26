@@ -163,55 +163,41 @@ class Meeting extends SugarBean {
 	function save($check_notify = FALSE) {
 		global $timedate, $current_user, $disable_date_format, $db;
 
-		if(isset($_REQUEST['alerts'])) {
-			foreach($_REQUEST['alerts'] as $a => $alert) {
-				if($alert['flag'] == 'new') {
-					$this->alerts[$a] = new Alert();
-				} else {
-					$this->alerts[$a] = new Alert($alert['id']);
-				}
-
-				if(isset($alert['action']['send_popup'])) {
-					$this->alerts[$a]->send_popup = $alert['action']['send_popup'];
-				}
-
-				if(isset($alert['action']['send_email'])) {
-					$this->alerts[$a]->send_email = $alert['action']['send_email'];
-				}
-
-				if(isset($alert['time']) && isset($this->date_start)) {
-					$now = $timedate->fromDb($this->date_start);
-					$this->alerts[$a]->delivery_datetime = $now->sub(new DateInterval('PT'.$alert['time'].'S'));
-					$this->alerts[$a]->delivery_datetime = $this->alerts[$a]->delivery_datetime->format('Y-m-d H:i:s');
-				}
-
-				$this->alerts[$a]->target_module = $this->module_name;
-				$this->alerts[$a]->target_module_id = $this->id;
-				foreach($alert['subscribers'] as $s => $subscriber) {
-					$id = $subscriber['id'];
-					$class = $subscriber['bean'];
-					$bean = new $class();
-					$bean->retrieve($id);
-					$this->alerts[$a]->subscribe($bean);
-				}
-
-				$this->alerts[$a]->save();
+		foreach($this->alerts as $alertID => $alertArray) {
+			$alert = null;
+			if($alertArray['flag'] == 'new') {
+				$alert = new Alert();
+			} else {
+				$alert = new Alert();
+				$alert->retrive($alertID);
 			}
-		}
 
-//		if(empty($this->id)) {
-//			$this->alerts[0] = new Alert();
-//		} else {
-//			$query = "SELECT id FROM alerts WHERE alerts.target_module = '$this->module_name' AND alerts.target_module_id = '$this->id'";
-//			$alertList = $db->query($query);
-//			foreach($alertList as $key => $value) {
-//			 	$alert = new Alert($value['id']);
-//				$this->alerts[] = $alert;
-//			}
-//			if(count($this->alerts) == 0) {
-//				$this->alerts[0] = new Alert();
-//			}
-//		}
+			if(isset($alertArray['action']['send_popup'])) {
+				$alert->send_popup = $alertArray['action']['send_popup'];
+			}
+
+			if(isset($alertArray['action']['send_email'])) {
+				$alert->send_email = $alertArray['action']['send_email'];
+			}
+
+			if(isset($alertArray['time']) && isset($this->date_start)) {
+				$now = $timedate->fromDb($this->date_start);
+				$alert->delivery_datetime = $now->sub(new DateInterval('PT'.$alertArray['time'].'S'));
+				$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
+			}
+
+			$alert->target_module = $this->module_name;
+			$alert->target_module_id = $this->id;
+
+			foreach($alertArray['subscribers'] as $s => $subscriber) {
+				$id = $subscriber['id'];
+				$bean = $subscriber['bean'];
+
+				$alert->subscribe($bean, $id);
+			}
+
+			$alert->save();
+		}
 
 
         if(isset($this->date_start))

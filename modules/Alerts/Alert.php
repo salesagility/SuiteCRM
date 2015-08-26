@@ -78,18 +78,8 @@ class Alert extends Basic {
     /**
      * @param $id
      */
-    function Alert($id = FALSE) {
+    function Alert() {
         parent::Basic();
-        if(!empty($id)) {
-            $this->retrieve($id);
-            // get bean classes (To prevent undefined exception)
-            $this->subscribers = str_replace("&quot;",'"', $this->subscribers);
-            $this->subscribers = json_decode(urldecode($this->subscribers));
-            foreach($this->subscribers as $key => $value) {
-                $this->subscribers[$key] = (array)$value;
-            }
-            $break = 1;
-        }
     }
 
     /**
@@ -125,18 +115,49 @@ class Alert extends Basic {
     }
 
     /**
+     * Custom retrieve handling
+     * @param int $id
+     * @param bool|true $encode
+     * @param bool|true $deleted
+     * @return $this (Alert)
+     */
+    function retrieve($id = -1, $encode=true, $deleted=true) {
+        // run normal retrieve
+        $instance = parent::retrieve($id, $encode, $deleted);
+        // custom handling for subscribers
+        // (prevents undefined exception)
+        $instance->subscribers = str_replace("&quot;",'"', $instance->subscribers);
+        $instance->subscribers = json_decode(utf8_decode($instance->subscribers));
+        foreach($instance->subscribers as $key => $value) {
+            $instance->subscribers[$key] = (array)$value;
+        }
+
+        return $instance;
+    }
+
+    /**
      * Add a subscriber to alert (This doesn't save the bean)
      * @param SugarBean $subscriber_bean
      */
-    function subscribe(SugarBean $subscriber_bean) {
-//        array_merge_recursive($this->subscribers, $subscriber);
-//        $this->subscribers[] = $subscriber_bean;
+    function subscribeBean(SugarBean $subscriber_bean) {
         $subscriber = array(
             'id' => $subscriber_bean->id,
             'module_name' => $subscriber_bean->module_name,
         );
         array_merge_recursive($this->subscribers, $subscriber);
-        $break = 1;
+    }
+
+    /**
+     * Add a subscriber to alert (This doesn't save the bean)
+     * @param $subscriber_bean
+     * @param $subscriber_id
+     */
+    function subscribe($subscriber_bean, $subscriber_id) {
+        $subscriber = array(
+            'id' => $subscriber_bean,
+            'module_name' => $subscriber_module,
+        );
+        array_merge_recursive($this->subscribers, $subscriber);
     }
 
     /**
