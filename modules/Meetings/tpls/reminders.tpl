@@ -45,9 +45,7 @@
             	{assign var="REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}
 	{/if}
 
-
-
-{if $view == "EditView" || $view == "QuickCreate" || $view == "QuickEdit"}
+{if !isset($fields.sugar_login) && $view == "EditView" || $view == "QuickCreate" || $view == "QuickEdit"}
 
 	<div>
 		<input type="button" value="Add Alert" class="add-alert">
