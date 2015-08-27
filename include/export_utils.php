@@ -152,11 +152,17 @@ function export($type, $records = null, $members = false, $sample=false) {
     if($members == true){
            $query = $focus->create_export_members_query($records);
     }else{
+        // preset where and join if we have related joins and pick up from session
+        $relateJoin = '';
+        if(!empty($_SESSION['export_where']) && !empty($_SESSION['export_related_joins']) && !empty($_REQUEST['current_post'])) {
+            $where = $_SESSION['export_where'];
+            $relateJoin = $_SESSION['export_related_joins'];
+        }
         $beginWhere = substr(trim($where), 0, 5);
         if ($beginWhere == "where")
             $where = substr(trim($where), 5, strlen($where));
 
-        $query = $focus->create_export_query($order_by,$where);
+        $query = $focus->create_export_query($order_by,$where, $relateJoin);
     }
 
     $result = '';
