@@ -39,6 +39,7 @@ class actionSendEmail extends actionBase {
     function edit_display($line,SugarBean $bean = null, $params = array()){
         global $app_list_strings;
         $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name');
+        array_multisort($email_templates_arr);
 
         if(!in_array($bean->module_dir,getEmailableModules())) unset($app_list_strings['aow_email_type_list']['Record Email']);
         $targetOptions = getRelatedEmailableFields($bean->module_dir);
