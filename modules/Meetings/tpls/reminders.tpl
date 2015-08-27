@@ -103,6 +103,32 @@
 						.attr('style', ' ') // remove hidden style
 						.appendTo(alertTimeDiv);
 
+				if(options.flag == "existing") {
+					// Calculate the number of seconds between delivery date and date start
+					// so we can set the alertTime select option
+
+					// Get & setup the values
+					var alert_datetime = getDateObject(options.fields.delivery_datetime);
+
+					var start_datetime = getDateObject($('#date_start_date').val());
+
+					start_datetime.setHours($('#date_start_hours').find(":selected").val());
+					start_datetime.setMinutes($('#date_start_minutes').find(":selected").val());
+
+					var start_datetime_meridiem = $('#date_start_meridiem').find(":selected").val();
+
+					if(start_datetime_meridiem == "pm") {
+						start_datetime.setHours(parseInt($('#date_start_hours').find(":selected").val()) + 12);
+					}
+
+					// Calculate the difference
+					var alertTimeInSeconds = (start_datetime.getTime() - alert_datetime.getTime())/ 1000;
+					alertTime.val(alertTimeInSeconds);
+
+
+					// Set the alertTime select option
+				}
+
 				var alertSubscribersList = $('<div></div>')
 						.addClass('panel')
 						.appendTo(alertSubscribers);
