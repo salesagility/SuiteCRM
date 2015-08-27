@@ -3258,6 +3258,9 @@ class SugarBean
 			if ($addrelatefield)
 				$addrelate[$addrelatefield] = true;
 		}
+		if(!empty($this->field_defs[$field]['id_name'])){
+			$addrelate[$this->field_defs[$field]['id_name']] = true;
+		}
 	}
 
 	$fields = array_merge($addrelate, $fields);
