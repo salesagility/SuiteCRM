@@ -108,7 +108,6 @@ function set_password(form,rules) {
   
     function newrules(hasMinLength,minpwdlength,hasMaxLength,maxpwdlength,hasUpper,hasAlpha,hasNumber,customregex){
 
-    var alertMessages =[];
     var flag = 0;
 
     var passwd = document.getElementById('new_password').value;
@@ -116,16 +115,20 @@ function set_password(form,rules) {
         if(hasMinLength == true){
         	var length =passwd.length;
 	        if((length < parseInt(minpwdlength) && parseInt(minpwdlength)>0)){
-                alertMessages.push(SUGAR.language.translate('Users','ERR_MIN_LENGTH'));
+                document.getElementById('comfirm_pwd_min_length').style.display = 'inline';
                 flag = flag + 1;
-	        }
+	        }else{
+                document.getElementById('comfirm_pwd_min_length').style.display = 'none';
+            }
        	}
 
         if(hasMaxLength == true){
             var length =passwd.length;
             if((length > parseInt(maxpwdlength) && parseInt(minpwdlength)>0)){
-                alertMessages.push(SUGAR.language.translate('Users','ERR_MAX_LENGTH'));
+                document.getElementById('comfirm_pwd_max_length').style.display = 'inline';
                 flag = flag + 1;
+            }else{
+                document.getElementById('comfirm_pwd_max_length').style.display = 'none';
             }
         }
        
@@ -141,26 +144,31 @@ function set_password(form,rules) {
         // One upper case
         if(hasUpper == true){
 	        if(!passwd.match('[ABCDEFGHIJKLMNOPQRSTUVWXYZ]')){
-                alertMessages.push(SUGAR.language.translate('Users','ERR_CONTAIN_UPPER'));
+                document.getElementById('comfirm_pwd_contains_upper').style.display = 'inline';
                 flag = flag + 1;
-	        }
+	        }else{
+                document.getElementById('comfirm_pwd_contains_upper').style.display = 'none';
+            }
         }
         
         // One number
         if(hasNumber == true){
 	        if(!passwd.match('[0123456789]')){
-                alertMessages.push(SUGAR.language.translate('Users','ERR_CONTAIN_NUMBER'));
-                flag = flag + 1;
-	        }
+                document.getElementById('comfirm_pwd_contains_number').style.display = 'inline';
+	        }else{
+                document.getElementById('comfirm_pwd_contains_number').style.display = 'none';
+            }
         }
         
         // One special character
         if(hasAlpha == true){
             var custom_regex= new RegExp('[|}{~!@#$%^&*()_+=-]');
 	        if(!custom_regex.test(passwd)){
-                alertMessages.push(SUGAR.language.translate('Users','ERR_CONTAIN_ALPHA_NUM'));
+                document.getElementById('comfirm_pwd_contains_non_alphaNum').style.display = 'inline';
                 flag = flag + 1;
-	        }
+	        }else{
+                document.getElementById('comfirm_pwd_contains_non_alphaNum').style.display = 'none';
+            }
         }
         
         
@@ -175,9 +183,6 @@ function set_password(form,rules) {
         //}
 
         if(flag > 0){
-            for(i=0; i < alertMessages.length ; i++){
-                alert (alertMessages[i]);
-            }
             return false;
         }
 
