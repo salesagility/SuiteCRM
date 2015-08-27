@@ -157,6 +157,11 @@
                                 </td>
                                 <td width='40%'>
                                     <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.ERR_PASSWORD_MISMATCH}</div>
+                                    <div id="comfirm_pwd_min_length" class="error" style="display: none;">{$MOD.ERR_MIN_LENGTH}</div>
+                                    <div id="comfirm_pwd_max_length" class="error" style="display: none;">{$MOD.ERR_MAX_LENGTH}</div>
+                                    <div id="comfirm_pwd_contains_upper" class="error" style="display: none;">{$MOD.ERR_CONTAIN_UPPER}</div>
+                                    <div id="comfirm_pwd_contains_number" class="error" style="display: none;">{$MOD.ERR_CONTAIN_NUMBER}</div>
+                                    <div id="comfirm_pwd_contains_non_alphaNum" class="error" style="display: none;">{$MOD.ERR_CONTAIN_ALPHA_NUM}</div>
                                     {*<span id="ext-gen63" class="x-panel-header-text">
                                        Requirements
                                        <span id="Filter.1_help" onclick="return SUGAR.util.showHelpTips(this,help());">
