@@ -123,10 +123,8 @@
 
 					// Calculate the difference
 					var alertTimeInSeconds = (start_datetime.getTime() - alert_datetime.getTime())/ 1000;
+
 					alertTime.val(alertTimeInSeconds);
-
-
-					// Set the alertTime select option
 				}
 
 				var alertSubscribersList = $('<div></div>')
