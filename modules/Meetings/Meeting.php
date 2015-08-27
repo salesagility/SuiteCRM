@@ -163,57 +163,6 @@ class Meeting extends SugarBean {
 	function save($check_notify = FALSE) {
 		global $timedate, $current_user, $disable_date_format, $db;
 
-		if(empty($this->alerts)) {
-			// Remove all alerts assigned to this record
-			$query = 'UPDATE alerts SET deleted = 1
-						WHERE target_module = "'.$this->module_name.'" AND target_module_id = "'.$this->id.'"';
-			$db->query($query);
-		}
-
-		foreach($this->alerts as $alertID => $alertArray) {
-			$alert = null;
-			if($alertArray['flag'] == 'new') {
-				$alert = new Alert();
-			} else if($alertArray['flag'] == 'existing') {
-				$alert = new Alert();
-				$alert->retrieve($alertID);
-			} else if($alertArray['flag'] == 'deleted') {
-				$alert = new Alert();
-				$alert->retrieve($alertID);
-				$alert->deleted = true;
-			}
-
-			if(isset($alertArray['action']['send_popup'])) {
-				$alert->send_popup = true;
-			}
-
-			if(isset($alertArray['action']['send_email'])) {
-				$alert->send_email = true;
-			}
-
-			if(isset($alertArray['time']) && isset($this->date_start)) {
-				$now = $timedate->fromDb($this->date_start);
-				$alert->delivery_datetime = $now->sub(new DateInterval('PT'.$alertArray['time'].'S'));
-				$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
-			}
-
-			$alert->target_module = $this->module_name;
-			$alert->target_module_id = $this->id;
-
-			if(isset($alertArray['subscribers'])) {
-				foreach($alertArray['subscribers'] as $s => $subscriber) {
-					$alert->subscribe($subscriber['bean'], $subscriber['id']);
-				}
-			} else {
-				// no point having an alert with no subscribers
-				$alert->deleted = true;
-			}
-
-
-			$alert->save();
-		}
-
-
         if(isset($this->date_start))
         {
             $td = $timedate->fromDb($this->date_start);
@@ -326,6 +275,55 @@ class Meeting extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
 		}
 
+		if(empty($this->alerts)) {
+			// Remove all alerts assigned to this record
+			$query = 'UPDATE alerts SET deleted = 1
+						WHERE target_module = "'.$this->module_name.'" AND target_module_id = "'.$this->id.'"';
+			$db->query($query);
+		}
+
+		foreach($this->alerts as $alertID => $alertArray) {
+			$alert = null;
+			if($alertArray['flag'] == 'new') {
+				$alert = new Alert();
+			} else if($alertArray['flag'] == 'existing') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+			} else if($alertArray['flag'] == 'deleted') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+				$alert->deleted = true;
+			}
+
+			if(isset($alertArray['action']['send_popup'])) {
+				$alert->send_popup = true;
+			}
+
+			if(isset($alertArray['action']['send_email'])) {
+				$alert->send_email = true;
+			}
+
+			if(isset($alertArray['time']) && isset($this->date_start)) {
+				$now = $timedate->fromDb($this->date_start);
+				$alert->delivery_datetime = $now->sub(new DateInterval('PT'.$alertArray['time'].'S'));
+				$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
+			}
+
+			$alert->target_module = $this->module_name;
+			$alert->target_module_id = $this->id;
+
+			if(isset($alertArray['subscribers'])) {
+				foreach($alertArray['subscribers'] as $s => $subscriber) {
+					$alert->subscribe($subscriber['bean'], $subscriber['id']);
+				}
+			} else {
+				// no point having an alert with no subscribers
+				$alert->deleted = true;
+			}
+
+
+			$alert->save();
+		}
 
 		return $return_id;
 	}

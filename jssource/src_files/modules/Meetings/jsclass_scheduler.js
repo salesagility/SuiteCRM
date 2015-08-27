@@ -1082,7 +1082,7 @@ SugarWidgetScheduleRow.deleteRow = function(bean_id) {
     */
 	for(var i=0;i<GLOBAL_REGISTRY.focus.users_arr.length;i++) {
 		if(GLOBAL_REGISTRY.focus.users_arr[i]['fields']['id']==bean_id) {
-			bean = GLOBAL_REGISTRY.focus.users_arr[i]['fields']['module'];
+			bean = GLOBAL_REGISTRY.focus.users_arr_hash[GLOBAL_REGISTRY.focus.users_arr[i]['fields']['id']]['module'];
 			delete GLOBAL_REGISTRY.focus.users_arr_hash[GLOBAL_REGISTRY.focus.users_arr[i]['fields']['id']];
 			GLOBAL_REGISTRY.focus.users_arr.splice(i,1);
 	     	//set first remove flag to true for processing in display() function

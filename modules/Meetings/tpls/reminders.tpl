@@ -249,11 +249,12 @@
 				}
 
 			}
-
-			jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
-				alert.flag = "existing";
-				createAlert(alert);
-			});
+			if(typeof GLOBAL_REGISTRY.focus.alerts !== "undefined") {
+				jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
+					alert.flag = "existing";
+					createAlert(alert);
+				});
+			}
 
 
 			$('input[type=button].add-alert').click(function(e) {
@@ -304,7 +305,7 @@
 
 			$(document).on('remove:SugarWidgetScheduleRow', function(event, bean, bean_id) {
 				console.log('Removed Row: ' + bean + ' - '+ bean_id);
-				$('button[data-id='+ bean_id +']').remove();
+				$('button[data-id='+ bean_id +'][data-bean='+ bean +']').remove();
 			});
 		});
 	</script>
