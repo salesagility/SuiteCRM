@@ -109,7 +109,7 @@
 
 				var alertActionPopup =  $('<input type="checkbox" name="alerts['+options.fields.id+'][action][send_popup]" ' +
 						'id="alert_action_send_popup['+options.fields.id+']" value="1"> <label>Popup </label> ');
-				var alertActionEmail =  $('<input type="checkbox" name="alerts['+alertIndex+'][action][send_email]" ' +
+				var alertActionEmail =  $('<input type="checkbox" name="alerts['+options.fields.id+'][action][send_email]" ' +
 						'id="alert_action_send_email['+options.fields.id+']" value="1"> <label>Email </label> ');
 
 				if(typeof options.fields.send_popup !== "undefined") {

@@ -170,11 +170,6 @@ class Meeting extends SugarBean {
 			$db->query($query);
 		}
 
-		// Get all alert assigned to this record from the database
-		$query = 'SELECT id FROM alerts WHERE deleted = 0 AND target_module = "'.$this->module_name.'"
-				  AND target_module_id = "'.$this->id.'"';
-		$dbAlerts = $db->query($query);
-
 		foreach($this->alerts as $alertID => $alertArray) {
 			$alert = null;
 			if($alertArray['flag'] == 'new') {
@@ -205,9 +200,12 @@ class Meeting extends SugarBean {
 			$alert->target_module = $this->module_name;
 			$alert->target_module_id = $this->id;
 
-			foreach($alertArray['subscribers'] as $s => $subscriber) {
-				$alert->subscribe($subscriber['bean'], $subscriber['id']);
+			if(isset($alertArray['subscribers'])) {
+				foreach($alertArray['subscribers'] as $s => $subscriber) {
+					$alert->subscribe($subscriber['bean'], $subscriber['id']);
+				}
 			}
+
 
 			$alert->save();
 		}
