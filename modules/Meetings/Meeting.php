@@ -204,6 +204,9 @@ class Meeting extends SugarBean {
 				foreach($alertArray['subscribers'] as $s => $subscriber) {
 					$alert->subscribe($subscriber['bean'], $subscriber['id']);
 				}
+			} else {
+				// no point having an alert with no subscribers
+				$alert->deleted = true;
 			}
 
 

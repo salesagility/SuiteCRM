@@ -250,14 +250,6 @@
 
 			}
 
-			var removeSubscriber = function(options) {
-
-			}
-
-			var addAllSubscribers = function(options) {
-
-			}
-
 			jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
 				alert.flag = "existing";
 				createAlert(alert);
@@ -308,7 +300,12 @@
 						});
 					}
 				});
-			})
+			});
+
+			$(document).on('remove:SugarWidgetScheduleRow', function(event, bean, bean_id) {
+				console.log('Removed Row: ' + bean + ' - '+ bean_id);
+				$('button[data-id='+ bean_id +']').remove();
+			});
 		});
 	</script>
 {/literal}
