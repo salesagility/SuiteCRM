@@ -196,32 +196,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td  scope="row" width='30%'>
-                        {$MOD.LBL_SHOULD_HAVE_MINIMUM}
-                    </td>
-                    <td >
-                        {if !empty($config.passwordsetting.hasMinumLength )}
-                            {assign var='hasminlength' value='Checked'}
-                        {else}
-                            {assign var='hasminlength' value=''}
-                        {/if}
-                        <input name='passwordsetting_hasMinLengthON' id='hasMinLengthONID' type='checkbox' {$hasminlength} value='1' onclick=''>
-                    </td>
-                </tr>
-                <tr>
-                    <td  scope="row" width='30%'>
-                        {$MOD.LBL_SHOULD_HAVE_MAXIMUM}
-                    </td>
-                    <td >
-                        {if !empty($config.passwordsetting.hasMaximumLength)}
-                            {assign var='hasmaximumlength' value='Checked'}
-                        {else}
-                            {assign var='hasmaximumlength' value=''}
-                        {/if}
-                        <input name='passwordsetting_hasMaxLengthON' id='hasMaxLengthONID' type='checkbox' {$hasmaximumlength} value='1' onclick=''>
-                    </td>
-                </tr>
-                <tr>
                     <td  scope="row" width='25%'>
 
                         {$MOD.LBL_WHAT_IS_THE_MINIMUM}
