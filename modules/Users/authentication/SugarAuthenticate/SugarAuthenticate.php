@@ -83,10 +83,15 @@ class SugarAuthenticate{
 		$usr= new user();
 		$usr_id=$usr->retrieve_user_id($username);
 		$usr->retrieve($usr_id);
+        $valPref = $usr->getPreference('lockout');
+        if($valPref){
+            $_SESSION['login_error'] = translate('ERR_USER_LOCKED_OUT', 'Users');
+            return false;
+        }
 		$_SESSION['login_error']='';
 		$_SESSION['waiting_error']='';
 		$_SESSION['hasExpiredPassword']='0';
-		if ($this->userAuthenticate->loadUserOnLogin($username, $password, $fallback, $PARAMS)) {
+		if ($this->userAuthenticate->loadUserOnLogin($username, $password, $fallback, $PARAMS, $valPref)) {
 			require_once('modules/Users/password_utils.php');
 			if(hasPasswordExpired($username)) {
 				$_SESSION['hasExpiredPassword'] = '1';

@@ -93,7 +93,37 @@ class UsersController extends SugarController
 	{
 		$this->view = 'wizard';
 	}
+    protected function action_unlockUser()
+    {
+        //Check current user is an admin!
+        //Unlock user here
+        //logic hook for sending an email?
 
+        if($_REQUEST['record'] != $GLOBALS['current_user']->id && ($GLOBALS['current_user']->isAdminForModule('Users'))) {
+        $u = new User();
+        $u->retrieve($_REQUEST['record']);
+            $u->setPreference('lockout', '');
+            $u->savePreferencesToDB();
+
+            //notify that the user has been unlocked
+            //get $user email address
+            //generate
+            $userBean = BeanFactory::getBean('Users', $_REQUEST['record']);
+            $userEmail = $userBean->email1;
+            $userName = $userBean->user_name;
+
+            $_POST['Users0emailAddress0'] = $userEmail;
+            $_POST['user_email'] = $userEmail;
+            $_POST['username'] = $userName;
+
+
+            require('modules/Users/GeneratePassword.php');
+
+
+            SugarApplication::redirect("index.php?module=Users&action=index");
+        }
+
+    }
 	protected function action_saveuserwizard() 
 	{
 	    global $current_user, $sugar_config;

@@ -67,6 +67,7 @@ $moduleList[] = 'Cases';
 $moduleList[] = 'Project';
 $moduleList[] = 'Bugs';
 
+$moduleList[] = 'UserLoginAttempt';
 
 // this list defines all of the module names and bean names in the app
 // to create a new module's bean class, add the bean definition here
@@ -137,7 +138,7 @@ $beanList['EmailText'] = 'EmailText';
 $beanList['Relationships'] = 'Relationship';
 $beanList['Employees']      = 'Employee';
 
-
+$beanList['UserLoginAttempt'] = 'UserLoginAttempt';
 
 
 // this list defines all of the files that contain the SugarBean class definitions from $beanList
@@ -208,6 +209,8 @@ $beanFiles['UserPreference']  = 'modules/UserPreferences/UserPreference.php';
 $beanFiles['MergeRecord']  = 'modules/MergeRecords/MergeRecord.php';
 $beanFiles['EmailAddress'] = 'modules/EmailAddresses/EmailAddress.php';
 $beanFiles['EmailText'] = 'modules/EmailText/EmailText.php';
+
+$beanFiles['UserLoginAttempt'] = 'modules/UserLoginAttempt/UserLoginAttempt.php';
 
 
 
@@ -307,6 +310,8 @@ $beanList['OAuthTokens'] = 'OAuthToken';
 $beanFiles['OAuthToken'] = 'modules/OAuthTokens/OAuthToken.php';
 $modules_exempt_from_availability_check['OAuthTokens'] = 'OAuthTokens';
 $modInvisList[] = 'OAuthTokens';
+
+$modInvisList[] = 'UserLoginAttempt';
 
 
 //Object list is only here to correct for modules that break

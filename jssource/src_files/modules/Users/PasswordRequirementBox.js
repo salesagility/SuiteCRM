@@ -57,7 +57,23 @@ function password_confirmation() {
         document.getElementById('password_change').value = 'false';
 }
 
+function passwordCheck(hasMinLength,minpwdlength,hasMaxLength,maxpwdlength,hasUpper,hasAlpha,hasNumber,form,rules){
+
+
+    var setpasswordreturn = set_password(form,rules);
+    var newrulesreturn = newrules(hasMinLength,minpwdlength,hasMaxLength,maxpwdlength,hasUpper,hasAlpha,hasNumber);
+    if((newrulesreturn==true) && (setpasswordreturn==true)){
+        return true;
+    }else{
+        return false;
+    }
+
+
+}
+
 function set_password(form,rules) {
+
+
 	if(form.password_change.value == 'true'){
     	if( rules=='1'){
         	alert(ERR_RULES_NOT_MET);
@@ -90,67 +106,87 @@ function set_password(form,rules) {
 		return true;
 }
   
-    function newrules(minpwdlength,maxpwdlength,customregex){
-    var good_rules=0;	            
+    function newrules(hasMinLength,minpwdlength,hasMaxLength,maxpwdlength,hasUpper,hasAlpha,hasNumber,customregex){
+
+    var flag = 0;
+
     var passwd = document.getElementById('new_password').value;
         // length
-        if(document.getElementById('lengths')){
-        	var length =document.getElementById('new_password').value.length;
-	        if((length < parseInt(minpwdlength) && parseInt(minpwdlength)>0)  || (length > parseInt(maxpwdlength) && parseInt(maxpwdlength)>0 )){
-	            document.getElementById('lengths').className='bad';
-	            good_rules=1;
-	        }
-	        else{document.getElementById('lengths').className='good';}
+        if(hasMinLength == true){
+        	var length =passwd.length;
+	        if((length < parseInt(minpwdlength) && parseInt(minpwdlength)>0)){
+                document.getElementById('comfirm_pwd_min_length').style.display = 'inline';
+                flag = flag + 1;
+	        }else{
+                document.getElementById('comfirm_pwd_min_length').style.display = 'none';
+            }
        	}
+
+        if(hasMaxLength == true){
+            var length =passwd.length;
+            if((length > parseInt(maxpwdlength) && parseInt(minpwdlength)>0)){
+                document.getElementById('comfirm_pwd_max_length').style.display = 'inline';
+                flag = flag + 1;
+            }else{
+                document.getElementById('comfirm_pwd_max_length').style.display = 'none';
+            }
+        }
        
         // One lower case
-        if(document.getElementById('1lowcase')){
-	        if(!passwd.match('[abcdefghijklmnopqrstuvwxyz]')){
-	            document.getElementById('1lowcase').className='bad';
-	            good_rules=1;
-	        }
-	        else{document.getElementById('1lowcase').className='good';}
-        }
+        //if(document.getElementById('1lowcase')){
+	     //   if(!passwd.match('[abcdefghijklmnopqrstuvwxyz]')){
+	     //       document.getElementById('1lowcase').className='bad';
+	     //       good_rules=1;
+	     //   }
+	     //   else{document.getElementById('1lowcase').className='good';}
+        //}
         
         // One upper case
-        if(document.getElementById('1upcase')){
+        if(hasUpper == true){
 	        if(!passwd.match('[ABCDEFGHIJKLMNOPQRSTUVWXYZ]')){
-	            document.getElementById('1upcase').className='bad';
-	            good_rules=1;
-	        }
-	        else{document.getElementById('1upcase').className='good';}
+                document.getElementById('comfirm_pwd_contains_upper').style.display = 'inline';
+                flag = flag + 1;
+	        }else{
+                document.getElementById('comfirm_pwd_contains_upper').style.display = 'none';
+            }
         }
         
         // One number
-        if(document.getElementById('1number')){
+        if(hasNumber == true){
 	        if(!passwd.match('[0123456789]')){
-	            document.getElementById('1number').className='bad';
-	            good_rules=1;
-	        }
-	        else{document.getElementById('1number').className='good';}
+                document.getElementById('comfirm_pwd_contains_number').style.display = 'inline';
+	        }else{
+                document.getElementById('comfirm_pwd_contains_number').style.display = 'none';
+            }
         }
         
         // One special character
-        if(document.getElementById('1special')){
+        if(hasAlpha == true){
             var custom_regex= new RegExp('[|}{~!@#$%^&*()_+=-]');
 	        if(!custom_regex.test(passwd)){
-	            document.getElementById('1special').className='bad';
-	            good_rules=1;
-	        }
-	        else{document.getElementById('1special').className='good';}
+                document.getElementById('comfirm_pwd_contains_non_alphaNum').style.display = 'inline';
+                flag = flag + 1;
+	        }else{
+                document.getElementById('comfirm_pwd_contains_non_alphaNum').style.display = 'none';
+            }
         }
         
         
         // Custom regex
-        if(document.getElementById('regex')){
-            var regex = new RegExp(customregex);
-	        if(regex.test(passwd)){
-	            document.getElementById('regex').className='bad';
-	            good_rules=1;
-	        }
-	        else{document.getElementById('regex').className='good';}
+        //if(document.getElementById('regex')){
+        //    var regex = new RegExp(customregex);
+	     //   if(regex.test(passwd)){
+	     //       document.getElementById('regex').className='bad';
+	     //       good_rules=1;
+	     //   }
+	     //   else{document.getElementById('regex').className='good';}
+        //}
+
+        if(flag > 0){
+            return false;
         }
-    return good_rules;
+
+    return  true;
     } 
     
 	

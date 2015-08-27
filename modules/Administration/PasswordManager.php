@@ -62,6 +62,7 @@ function clearPasswordSettings() {
 	    $_POST['passwordsetting_systexpirationtime'] = '';
 	    $_POST['passwordsetting_systexpirationtype'] = '0';
 	    $_POST['passwordsetting_systexpirationlogin'] = '';
+        $_POST['passwordsetting_SystemSecurityFunctionCheckboxON'] = '';
 
 }
 require_once('modules/Administration/Forms.php');
@@ -92,13 +93,67 @@ if(!empty($_POST['saveConfig'])){
 		$valid_public_key= substr($buffer, 1, 4) == 'var '? true : false;
 	}
 	if ($valid_public_key){
+        //if (isset($_REQUEST['SystemSecurityFunctionCheckboxON']) && $_REQUEST['SystemSecurityFunctionCheckboxON'] == 'on'){
+        if(!empty($_REQUEST['passwordsetting_SystemSecurityFunctionCheckboxON'])){
+            //get value of all boxes and check boxes
+            //write to the config file...and set it
+           $checkBoxSecurityONthis = $_REQUEST['passwordsetting_SystemSecurityFunctionCheckboxON'];
+            $timeFrameValuethis = $_REQUEST['timeFrameValue'];
+            $timeFrameSettingthis = $_REQUEST['timeFrameSetting'];
+            $passwordLimitAttemptthis = $_REQUEST['passwordLimitAttempts'];
+
+            $configurator->config['passwordsetting']['SystemEnableSecurityON'] = $checkBoxSecurityONthis;
+            $configurator->config['passwordsetting']['SystemAttemptLimit'] = $passwordLimitAttemptthis;
+            $configurator->config['passwordsetting']['SystemTimeFrameValue'] = $timeFrameValuethis;
+            $configurator->config['passwordsetting']['SystemTimeFrameSetting'] = $timeFrameSettingthis;
+
+        }else{
+            $configurator->config['passwordsetting']['SystemEnableSecurityON'] = '0';
+
+        }
+
+        if(isset($_REQUEST['passwordsetting_containsUpperON'])){
+            $configurator->config['passwordsetting']['oneupper']  = true;
+
+        }else{
+            $configurator->config['passwordsetting']['oneupper']  = false;
+        }
+
+        if(isset($_REQUEST['passwordsetting_containsNumberON'])){
+            $configurator->config['passwordsetting']['onenumber']  = true;
+        }else{
+            $configurator->config['passwordsetting']['onenumber']  = false;
+        }
+
+        if(isset($_REQUEST['passwordsetting_containsNONalpaNum'])){
+            $configurator->config['passwordsetting']['nonalphaNumeric']  = true;
+
+        }else{
+            $configurator->config['passwordsetting']['nonalphaNumeric']  = false;
+        }
+
+        if((isset($_REQUEST['passwordMinLengthInput'])) && (($_REQUEST['passwordMinLengthInput']) != 0)){
+            $configurator->config['passwordsetting']['hasMinumLength']  = true;
+            $configurator->config['passwordsetting']['minpwdlength']  = $_REQUEST['passwordMinLengthInput'];
+        }else{
+            $configurator->config['passwordsetting']['hasMinumLength']  = false;
+        }
+
+        if((isset($_REQUEST['passwordMaxLengthInput'])) && (($_REQUEST['passwordMaxLengthInput']) != 0)){
+            $configurator->config['passwordsetting']['hasMaximumLength']  = true;
+            $configurator->config['passwordsetting']['maxpwdlength']  = $_REQUEST['passwordMaxLengthInput'];
+        }else{
+            $configurator->config['passwordsetting']['hasMaximumLength']  = false;
+        }
+
+
+
 		if (isset($_REQUEST['system_ldap_enabled']) && $_REQUEST['system_ldap_enabled'] == 'on') {
 			$_POST['system_ldap_enabled'] = 1;
 			clearPasswordSettings();
 		} 
 		else 
 			$_POST['system_ldap_enabled'] = 0;
-
 
         if(isset($_REQUEST['authenticationClass']))
         {
@@ -210,4 +265,6 @@ $sugar_smarty->assign("TMPL_DRPDWN_LOST", $TMPL_DRPDWN_LOST);
 $sugar_smarty->assign("TMPL_DRPDWN_GENERATE", $TMPL_DRPDWN_GENERATE);
 
 $sugar_smarty->display('modules/Administration/PasswordManager.tpl');
+
+
 ?>

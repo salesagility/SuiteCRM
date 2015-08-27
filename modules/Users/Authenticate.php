@@ -57,9 +57,20 @@ $user_name = isset($_REQUEST['user_name'])
 $password = isset($_REQUEST['user_password'])
     ? $_REQUEST['user_password'] : '';
 
+$userBeanCheckPref = BeanFactory::getBean('Users');
+$idUser = $userBeanCheckPref->retrieve_user_id($user_name);
+
+$userCheckPref = BeanFactory::getBean('Users',$idUser);
+//$userCheckPref->setPreference('lockout', '');
+//$userCheckPref->savePreferencesToDB();
+$val = $userCheckPref->getPreference('lockout');
+//echo $val;
+//die();
+
 $authController->login($user_name, $password);
 // authController will set the authenticated_user_id session variable
-if(isset($_SESSION['authenticated_user_id'])) {
+
+if((isset($_SESSION['authenticated_user_id']))) {
 	// Login is successful
 	if ( $_SESSION['hasExpiredPassword'] == '1' && $_REQUEST['action'] != 'Save') {
 		$GLOBALS['module'] = 'Users';
@@ -91,12 +102,80 @@ if(isset($_SESSION['authenticated_user_id'])) {
     }
 } else {
 	// Login has failed
-	$url ="index.php?module=Users&action=Login";
-    if(!empty($login_vars))
-    {
-        $url .= '&' . http_build_query($login_vars);
+
+    $passwordSecurityON = $GLOBALS['sugar_config']['passwordsetting']['SystemEnableSecurityON'];
+    $userBean = BeanFactory::getBean('Users');
+    $userId = $userBean->retrieve_user_id($user_name);
+    $userBean = BeanFactory::getBean('Users',$userId);
+    $isUserAdmin = $userBean->is_admin;
+
+    if (($passwordSecurityON == 1)&&(!empty($userId))&&(!$isUserAdmin)){
+        //setup variables
+        if (!empty($userId)) {
+            $attemptsAllowed = $GLOBALS['sugar_config']['passwordsetting']['SystemAttemptLimit'];
+            $timeFrameValue = $GLOBALS['sugar_config']['passwordsetting']['SystemTimeFrameValue'];
+            $timeFrameSetting = $GLOBALS['sugar_config']['passwordsetting']['SystemTimeFrameSetting'];
+
+            $dbDateString = "-" . $timeFrameValue . " " . $timeFrameSetting;
+            $startDate = time();
+
+            $preProcessedcutoff = date('Y-m-d H:i:s', strtotime($dbDateString, $startDate));
+            $UTCCutoff = gmdate('Y.m.d H:i.s',strtotime("$preProcessedcutoff"));
+
+            $loginAttempt = BeanFactory::newBean('UserLoginAttempt');
+            $loginAttempt->assigned_user_id = $userId;
+            $loginAttempt->save();
+
+            if($timeFrameSetting == 'untilTheEndOfTime'){
+                $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered) AND (user_login_attempt.assigned_user_id = '$userId')");
+
+            }else{
+                $loginAttemptList = $loginAttempt->get_full_list('', "(user_login_attempt.date_entered > '$UTCcutoff') AND (user_login_attempt.assigned_user_id = '$userId')");
+            }
+            $mycount = count($loginAttemptList);
+
+
+
+            if(count($loginAttemptList) >= $attemptsAllowed){
+//ini_set('display_errors',1);
+               $user = BeanFactory::getBean('Users',$userId);
+               $user->setPreference('lockout', '1');
+               $user->savePreferencesToDB();
+
+                $listOfUsers = BeanFactory::getBean('Users');
+                $adminList = $listOfUsers->get_full_list(
+                    'name',
+                    "users.is_admin = 1"
+                );
+
+                foreach($adminList as $key => $adminAccount){
+//                foreach($adminList as $adminAccount){
+                    $alertBean = BeanFactory::newBean('Alerts');
+                    $alertBean->id = null;
+                    $alertBean->name = "User Locked Out";
+                    $body = "The user \"" . $user_name . "\" has been locked out";
+                    $alertBean->description = $body;
+                    $alertBean->is_read = 0;
+                    $alertBean->target_module = 'Users';
+                    $alertBean->type = "warning";
+                    $alertBean->url_redirect="index.php?module=Users&action=DetailView&record=".$userId;
+                    $alertBean->assigned_user_id = $adminAccount->id;
+                    $alertBean->save();
+
+                }
+
+            }
+
+        }
     }
+
+        $url = "index.php?module=Users&action=Login";
+        if (!empty($login_vars)) {
+            $url .= '&' . http_build_query($login_vars);
+        }
+
 }
+
 
 // construct redirect url
 $url = 'Location: '.$url;
