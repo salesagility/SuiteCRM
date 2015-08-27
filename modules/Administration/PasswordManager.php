@@ -132,14 +132,14 @@ if(!empty($_POST['saveConfig'])){
             $configurator->config['passwordsetting']['nonalphaNumeric']  = false;
         }
 
-        if(isset($_REQUEST['passwordsetting_hasMinLengthON'])){
+        if((isset($_REQUEST['passwordMinLengthInput'])) && (($_REQUEST['passwordMinLengthInput']) != 0)){
             $configurator->config['passwordsetting']['hasMinumLength']  = true;
             $configurator->config['passwordsetting']['minpwdlength']  = $_REQUEST['passwordMinLengthInput'];
         }else{
             $configurator->config['passwordsetting']['hasMinumLength']  = false;
         }
 
-        if(isset($_REQUEST['passwordsetting_hasMaxLengthON'])){
+        if((isset($_REQUEST['passwordMaxLengthInput'])) && (($_REQUEST['passwordMaxLengthInput']) != 0)){
             $configurator->config['passwordsetting']['hasMaximumLength']  = true;
             $configurator->config['passwordsetting']['maxpwdlength']  = $_REQUEST['passwordMaxLengthInput'];
         }else{
