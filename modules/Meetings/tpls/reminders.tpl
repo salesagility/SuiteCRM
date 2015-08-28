@@ -273,13 +273,15 @@
 				}
 
 			}
-			if(typeof GLOBAL_REGISTRY.focus.alerts !== "undefined") {
-				jQuery.each(GLOBAL_REGISTRY.focus.alerts, function(key, alert) {
-					alert.flag = "existing";
-					createAlert(alert);
-				});
-			}
 
+            $(document).on('loaded:json_config', function(e) {
+                if (typeof GLOBAL_REGISTRY.focus.alerts !== "undefined") {
+                    jQuery.each(GLOBAL_REGISTRY.focus.alerts, function (key, alert) {
+                        alert.flag = "existing";
+                        createAlert(alert);
+                    });
+                }
+            });
 
 			$('input[type=button].add-alert').click(function(e) {
 				alertIndex += 1;
