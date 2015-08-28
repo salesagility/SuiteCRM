@@ -189,6 +189,9 @@ $query .= 			"LEFT JOIN users
                                 ON opportunities.id=$this->rel_account_table.opportunity_id
                                 LEFT JOIN accounts
                                 ON $this->rel_account_table.account_id=accounts.id ";
+
+		$query .= $this->getExportRelatedJoinBySearchField('campaign_name');
+
         $query .= $custom_join['join'];
 		$where_auto = "
 			($this->rel_account_table.deleted is null OR $this->rel_account_table.deleted=0)
@@ -206,6 +209,22 @@ $query .= 			"LEFT JOIN users
                 $query .= " ORDER BY opportunities.name";
         return $query;
     }
+
+	/**
+	 * Create a related join for export all data by search field name if bean has related field
+	 * @param $fieldName string search name
+	 * @return string join query string
+	 */
+	protected function getExportRelatedJoinBySearchField($fieldName) {
+		$joins = array();
+		if(isset($this->field_name_map[$fieldName])) {
+			$field = $this->field_name_map[$fieldName];
+			$fieldId = !empty($this->field_name_map[$field['id_name']]['rname']) ? $this->field_name_map[$field['id_name']]['rname'] : 'id';
+			$joins[] = "LEFT JOIN (SELECT $fieldId, {$field['rname']} AS {$field['name']} FROM {$field['table']}) {$field['table']}_relate ON {$field['table']}_relate.$fieldId = {$this->table_name}.{$field['id_name']}";
+		}
+		$join = implode('\n', $joins);
+		return $join;
+	}
 
 	function fill_in_additional_list_fields()
 	{
