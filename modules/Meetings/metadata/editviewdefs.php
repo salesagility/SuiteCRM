@@ -99,7 +99,7 @@ array (
           'field' => '30',
         ),
       ),
-      'javascript' => '<script type="text/javascript">{$JSON_CONFIG_JAVASCRIPT}</script>
+      'javascript' => '<script type="text/javascript">{$JSON_CONFIG_JAVASCRIPT}var event = $(document); event.trigger("loaded:json_config");</script>
 {sugar_getscript file="cache/include/javascript/sugar_grp_jsolait.js"}
 <script>toggle_portal_flag();function toggle_portal_flag()  {ldelim} {$TOGGLE_JS} {rdelim} 
 function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.EditView.submit();{rdelim}{rdelim}</script>',
