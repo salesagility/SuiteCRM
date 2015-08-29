@@ -189,5 +189,6 @@ $mod_strings = array (
     
     'LBL_SYNCED_RECURRING_MSG' => 'This meeting originated in another system and was synced to Sugar. To make changes, go to the original meeting within the other system. Changes made in the other system can be synced to this record.',
     'LBL_RELATED_TO' => 'Related to:',
+	'LBL_ALERTS' => 'Alerts'
 );
 ?>

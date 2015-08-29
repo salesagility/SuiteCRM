@@ -182,6 +182,14 @@ class Alert extends Basic {
     }
 
     /**
+     * Clears subscription
+     */
+    function unsubscribeAll() {
+        foreach($this->subscribers as $key => $subscriber) {
+            unset($this->subscribers[$key]);
+        }
+    }
+    /**
      * @param SugarBean $bean
      * @return Alert - An Array of all the alerts in which $bean is subscribed to
      */
