@@ -313,6 +313,7 @@ class Meeting extends SugarBean {
 			$alert->target_module_id = $this->id;
 
 			if(isset($alertArray['subscribers'])) {
+				$alert->unsubscribeAll(); // overwrite subscribers
 				foreach($alertArray['subscribers'] as $s => $subscriber) {
 					$alert->subscribe($subscriber['bean'], $subscriber['id']);
 				}
