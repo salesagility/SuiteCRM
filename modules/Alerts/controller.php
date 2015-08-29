@@ -41,26 +41,101 @@ class AlertsController extends SugarController
 {
     public function action_get()
     {
-        global $app_list_strings, $timedate, $current_user, $app_strings, $sugar_config, $db;
-        $minLimit = new DateTime();
-        $minLimit = $minLimit->sub(new DateInterval('PT180S'));
-        $maxLimit = new DateTime();
-        $maxLimit = $maxLimit->add(new DateInterval('PT180S'));
-        $query = "SELECT id FROM alerts WHERE deleted = 0 AND send_popup = 1 AND delivery_datetime >= '".$minLimit->format("Y-m-d H:i:s")."' AND delivery_datetime <= '".$maxLimit->format("Y-m-d H:i:s")."' AND subscribers LIKE '%User%' and subscribers LIKE '%".$current_user->id."%'";
+        die();
+    }
+
+    public function action_getCurrentAlerts() {
+        global $current_user, $db;
+        $query = 'SELECT id FROM alerts WHERE deleted = 0 AND
+                  delivery_datetime >= NOW() - INTERVAL 5 MINUTE AND delivery_datetime <= NOW()
+                  AND subscribers LIKE \'%"is_read":false%\' AND subscribers LIKE \'%' . $current_user->id . '%\'';
+        $alerts = array();
+        $result = $db->query($query);
+        while ($row = $db->fetchByAssoc($result)) {
+            $alert = new Alert();
+            $alert->retrieve($row['id']);
+            if (array_key_exists($current_user->id, $alert->subscribers)) {
+                $alerts[] = array(
+                    "id" => $alert->id,
+                    "name" => $alert->name,
+                    "description" => $alert->description,
+                    "target_module" => $alert->target_module,
+                    "target_module_id" => $alert->target_module_id,
+                    "url_redirect" => $alert->url_redirect,
+                    "send_email" => $alert->send_email,
+                    "send_sms" => $alert->send_sms,
+                    "send_popup" => $alert->send_popup,
+                    "send_to_manager" => $alert->send_to_manager,
+                    "content_type" => $alert->content_type,
+                    "delivery_datetime" => $alert->delivery_datetime,
+                    "type" => $alert->type,
+                    "was_sent" => $alert->was_sent
+                );
+            }
+        }
+        header('Content-Type: application/json');
+        $return_value = json_encode($alerts);
+        echo $return_value;
+        die();
+    }
+
+    public function action_getUnread() {
+        global  $current_user, $db;
+        $query = 'SELECT id FROM alerts WHERE deleted = 0 AND
+                  delivery_datetime >= NOW() - INTERVAL 1 DAY AND delivery_datetime <= NOW()
+                  AND subscribers LIKE \'%"is_read":false%\' AND subscribers LIKE \'%'.$current_user->id.'%\'';
+        $alerts = array();
         $result = $db->query($query);
         while($row = $db->fetchByAssoc($result)) {
-            $this->view_object_map['Results'][] = $alert = new Alert($row['id']);
+            $alert = new Alert();
+            $alert->retrieve($row['id']);
+            if(array_key_exists($current_user->id, $alert->subscribers)) {
+                $alerts[] = array(
+                    "id" => $alert->id,
+                    "name" => $alert->name,
+                    "description" => $alert->description,
+                    "target_module" => $alert->target_module,
+                    "target_module_id" => $alert->target_module_id,
+                    "url_redirect" => $alert->url_redirect,
+                    "send_email" => $alert->send_email,
+                    "send_sms" => $alert->send_sms,
+                    "send_popup" => $alert->send_popup,
+                    "send_to_manager" => $alert->send_to_manager,
+                    "content_type" => $alert->content_type,
+                    "delivery_datetime" => $alert->delivery_datetime,
+                    "type" => $alert->type,
+                    "was_sent" => $alert->was_sent
+                );
+            }
         }
-//        $bean = BeanFactory::getBean('Alerts');
-//
-        $this->view_object_map['Flash'] = '';
-//        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
-        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
-        if($this->view_object_map['Results'] == '') {
-            $this->view_object_map['Flash'] =$app_strings['LBL_EMAIL_ERROR_VIEW_RAW_SOURCE'];
-        }
-        $this->view = 'default';
+
+        header('Content-Type: application/json');
+        $return_value = json_encode($alerts);
+        echo $return_value;
+        die();
     }
+
+    public function action_countUnread() {
+        global  $current_user, $db;
+        $query = 'SELECT id FROM alerts WHERE deleted = 0 AND
+                  delivery_datetime >= NOW() - INTERVAL 1 DAY AND delivery_datetime <= NOW()
+                  AND subscribers LIKE \'%"is_read":false%\' AND subscribers LIKE \'%'.$current_user->id.'%\'';
+        $count = 0;
+        $result = $db->query($query);
+        while($row = $db->fetchByAssoc($result)) {
+            $alert = new Alert();
+            $alert->retrieve($row['id']);
+            if(array_key_exists($current_user->id, $alert->subscribers)) {
+                $count++;
+            }
+        }
+
+        header('Content-Type: application/json');
+        echo "{count:".$count."}";
+        die();
+    }
+
+    public function action_countMissed() {}
 
     public function action_add()
     {

@@ -64,14 +64,14 @@ $dictionary['Alert'] = array(
                     'studio'    => 'false',
                     'comment'   => 'Determines when a subscriber receives the alert.',
                 ),
-            'is_read' =>
+            'was_sent' =>
                 array(
-                    'name'		=> 'is_read',
-                    'vname'     => 'LBL_IS_READ',
+                    'name'		=> 'was_sent',
+                    'vname'     => 'LBL_WAS_SENT',
                     'type'		=> 'bool',
                     'massupdate'=> false,
                     'studio'    => 'false',
-                    'comment'   => 'Determines if the alert manager has marked it up as read.',
+                    'comment'   => 'Determines if the alert has been sent.',
                 ),
             'send_email' =>
                 array(

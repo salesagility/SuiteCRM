@@ -48,7 +48,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-class AlertsViewDefault extends SugarView
+class AlertsViewJsonDefault extends SugarView
 {
     /**
      * @see SugarView::_getModuleTitleParams()

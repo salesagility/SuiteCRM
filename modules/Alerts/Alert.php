@@ -64,7 +64,7 @@ class Alert extends Basic {
     var $assigned_user_link;
     var $deilivery_datetime;
     var $content_type = EAlertContentType::text;
-    var $is_read = false;
+    var $was_sent = false;
     var $send_email = false;
     var $send_popup = false;
     var $send_sms = false;
@@ -164,6 +164,7 @@ class Alert extends Basic {
         $subscriber = array(
             'id' => $subscriber_id,
             'module_name' => $subscriber_bean,
+            'is_read' => false
         );
         $this->subscribers[$subscriber_id] = $subscriber;
     }
