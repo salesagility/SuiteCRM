@@ -272,14 +272,22 @@
 
 			}
 
-            $(document).on('loaded:json_config', function(e) {
-                if (typeof GLOBAL_REGISTRY.focus.alerts !== "undefined") {
-                    jQuery.each(GLOBAL_REGISTRY.focus.alerts, function (key, alert) {
-                        alert.flag = "existing";
-                        createAlert(alert);
-                    });
-                }
-            });
+//            $(document).on('loaded:json_config', function(e) {
+			var checkForGlobalRegistry = function() {
+				if (typeof GLOBAL_REGISTRY !== "undefined") {
+					if (typeof GLOBAL_REGISTRY.focus.alerts !== "undefined") {
+						jQuery.each(GLOBAL_REGISTRY.focus.alerts, function (key, alert) {
+							alert.flag = "existing";
+							createAlert(alert);
+						});
+					}
+				} else {
+					setTimeout(checkForGlobalRegistry, 1000);
+				}
+			}
+			checkForGlobalRegistry();
+
+//            });
 
 			$('input[type=button].add-alert').click(function(e) {
 				alertIndex += 1;
