@@ -60,6 +60,11 @@ function buildEditField(){
 
             e.preventDefault();
             // if single click just want default action of following link, but want to wait in case user is actually trying to double click to edit field
+            // Proposed fix for issue #364 (click X icon to close redirects to bad url /undefined causing a 404 http error).
+            // Fix issue when click a close ( X ) button
+            if (typeof linkUrl === "undefined") {
+                return false;
+            }
             if (clicks == 1) {
 
                 timer = setTimeout(function () {
