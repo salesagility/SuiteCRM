@@ -53,7 +53,7 @@ class AlertsController extends SugarController
         $MOMENT = new DateTime();
         $MOMENT = $MOMENT->sub(new DateInterval('PT10S'));
         $query = "SELECT id FROM alerts WHERE deleted = 0 AND
-                  delivery_datetime >= '$MOMENT' AND delivery_datetime <= '$NOW'
+                  delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."'
                   AND subscribers LIKE '%\"is_read\":false%' AND subscribers LIKE '%$current_user->id%'";
         $alerts = array();
         $result = $db->query($query);
