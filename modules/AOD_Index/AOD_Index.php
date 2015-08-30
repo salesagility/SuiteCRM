@@ -211,6 +211,13 @@ class AOD_Index extends AOD_Index_sugar {
         $indexEvents = $indexEventBean->get_full_list('',"aod_indexevent.record_id = '".$beanId."' AND aod_indexevent.record_module = '".$module."'");
         if($indexEvents){
             $indexEvent = $indexEvents[0];
+            if(count($indexEvents) > 1){
+                for($x = 1; $x < count($indexEvents); $x++){
+                    $duplicateIE = $indexEvents[$x];
+                    $duplicateIE->mark_deleted($duplicateIE->id);
+                }
+            }
+
         }else{
             $indexEvent = BeanFactory::newBean("AOD_IndexEvent");
             $indexEvent->record_id = $beanId;
