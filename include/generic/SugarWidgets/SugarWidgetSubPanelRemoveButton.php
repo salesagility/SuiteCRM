@@ -104,7 +104,7 @@ class SugarWidgetSubPanelRemoveButton extends SugarWidgetField
 		}
 		$return_url = "index.php?module=$return_module&action=$return_action&subpanel=$subpanel&record=$return_id&sugar_body_only=1&inline=1";
 
-		$icon_remove_text = strtolower($app_strings['LBL_ID_FF_REMOVE']);
+		$icon_remove_text = mb_strtolower($app_strings['LBL_ID_FF_REMOVE'], 'UTF-8');
 		
          if($linked_field == 'get_emails_by_assign_or_link')
             $linked_field = 'emails';

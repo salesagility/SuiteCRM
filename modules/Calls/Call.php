@@ -658,27 +658,64 @@ class Call extends SugarBean {
 	function listviewACLHelper(){
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->parent_name)){
 
 			if(!empty($this->parent_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->parent_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//parent_name_owner not being set for whatever reason so we need to figure this out
+			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+        	/* END - SECURITY GROUPS */
 		}
+
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)){
+			*/
+			if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['PARENT'] = 'a';
 			}else{
 				$array_assign['PARENT'] = 'span';
 			}
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->contact_name)){
 
 			if(!empty($this->contact_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->contact_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//contact_name_owner not being set for whatever reason so we need to figure this out
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if( ACLController::checkAccess('Contacts', 'view', $is_owner)){
+			*/
+			if( ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['CONTACT'] = 'a';
 			}else{
 				$array_assign['CONTACT'] = 'span';

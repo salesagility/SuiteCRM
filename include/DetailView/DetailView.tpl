@@ -155,7 +155,7 @@ class="yui-navset detailview_tabs"
                 {{/if}}
                 {{/if}}
 			</td>
-			<td width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].field}}%' {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+			<td class="{{if $inline_edit && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].field}}%' {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
 			    {{if !empty($colData.field.name)}}
 			    {if !$fields.{{$colData.field.name}}.hidden}
 			    {{/if}}
@@ -168,6 +168,7 @@ class="yui-navset detailview_tabs"
 				        {{if $fields[$subField]}}
 				        	{counter name="panelFieldCount"}
 				            {{sugar_field parentFieldArray='fields' tabindex=$tabIndex vardef=$fields[$subField] displayType='DetailView'}}&nbsp;
+
 				        {{else}}
 				        	{counter name="panelFieldCount"}
 				            {{$subField}}
@@ -176,6 +177,7 @@ class="yui-navset detailview_tabs"
 				{{elseif $fields[$colData.field.name]}}
 					{counter name="panelFieldCount"}
 					{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
+
 				{{/if}}
 				{{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
 				    {counter name="panelFieldCount"}
@@ -185,6 +187,9 @@ class="yui-navset detailview_tabs"
 				{{if !empty($colData.field.name)}}
 				{/if}
 				{{/if}}
+
+	            {{if $inline_edit && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}<div class="inlineEditIcon"> {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{{/if}}
+
 			</td>
 	    {{if !empty($colData.field.hideIf)}}
 			{else}
@@ -192,6 +197,7 @@ class="yui-navset detailview_tabs"
 			<td>&nbsp;</td><td>&nbsp;</td>
 			{/if}
 	    {{/if}}
+
 		{{/foreach}}
 	</tr>
 	{/capture}
@@ -225,3 +231,4 @@ var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailvi
 {{$module}}_detailview_tabs.selectTab(0);
 </script>
 {{/if}}
+<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>

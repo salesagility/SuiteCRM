@@ -56,11 +56,13 @@
 }
 #toolbox { background:#f7f7f7; float:left; width: 175px; padding:5px; margin:10px 10px;    border: 1px solid #cccccc;}
 #panels {
-	float:right; 
-	padding:5px 10px 5px 5px;
-	margin-left:20px;
-	border: 1px solid #cccccc;
-    width:100%;
+    border: 1px solid #cccccc;
+    float: right;
+    margin-left: 200px;
+    padding: 5px 10px 5px 5px;
+    position: absolute;
+    width: 100%;
+
 }
 .le_panel { 
     background: #eee;
