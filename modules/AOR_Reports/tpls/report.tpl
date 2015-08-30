@@ -3,6 +3,7 @@
     report_module = '{$report_module}';
 </script>
 <div id='detailpanel_parameters' class='detail view  detail508 expanded'>
+    <form onsubmit="return false" id="EditView" name="EditView">
     <h4>
         <a href="javascript:void(0)" class="collapseLink" onclick="collapsePanel('parameters');">
             <img border="0" id="detailpanel_parameters_img_hide" src="{sugar_getimagepath file="basic_search.gif"}"></a>
@@ -43,6 +44,7 @@
         {/literal}
     </script>
     <script type="text/javascript">SUGAR.util.doWhen("typeof initPanel == 'function'", function() {ldelim} initPanel('parameters', 'expanded'); {rdelim}); </script>
+    </form>
 </div>
 
 <div id='detailpanel_report' class='detail view  detail508 expanded'>
@@ -80,3 +82,5 @@
     </table>
     <script type="text/javascript">SUGAR.util.doWhen("typeof initPanel == 'function'", function() {ldelim} initPanel('report', 'expanded'); {rdelim}); </script>
 </div>
+
+<script src="modules/AOR_Reports/Dashlets/AORReportsDashlet/AORReportsDashlet.js"></script>

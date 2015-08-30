@@ -104,7 +104,7 @@ array (
     'vname' => 'LBL_RUN_WHEN',
     'type' => 'enum',
     'massupdate' => 0,
-    'default' => 'Create',
+    'default' => 'Always',
     'comments' => '',
     'help' => '',
     'importable' => 'true',

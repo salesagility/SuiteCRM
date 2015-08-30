@@ -53,20 +53,6 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
     <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form" onsubmit="return document.getElementById('cant_login').value == ''">
         <div class="companylogo">{$LOGIN_IMAGE}</div>
         <span class="error" id="browser_warning" style="display:none">
-		{sugar_translate label="WARN_BROWSER_VERSION_WARNING"}
-		</span>
-		<span class="error" id="ie_compatibility_mode_warning" style="display:none">
-		{sugar_translate label="WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING"}
-		</span>
-        {if $LOGIN_ERROR !=''}
-            <span class="error">{$LOGIN_ERROR}</span>
-            {if $WAITING_ERROR !=''}
-            <span class="error">{$WAITING_ERROR}</span>
-        {/if}
-        {else}
-                <span id='post_error' class="error"></span>
-        {/if}
-        <span class="error" id="browser_warning" style="display:none">
             {sugar_translate label="WARN_BROWSER_VERSION_WARNING"}
         </span>
 		<span class="error" id="ie_compatibility_mode_warning" style="display:none">
