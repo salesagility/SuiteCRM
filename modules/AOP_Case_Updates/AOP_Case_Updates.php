@@ -78,10 +78,6 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
             }
         }
 
-        if($emails && $email_template){
-            $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
-            $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter);
-        }
     }
 
     /**

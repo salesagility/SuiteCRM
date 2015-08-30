@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 SugarClass.inherit("SugarWidgetListView","SugarClass");function SugarWidgetListView(){this.init();}
 SugarWidgetListView.prototype.init=function(){}
@@ -64,7 +67,7 @@ SugarWidgetSchedulerSearch.createInvitee=function(form){if(!(check_form('createI
 document.getElementById('create-invitee-btn').setAttribute('disabled','disabled');document.getElementById('cancel-create-invitee-btn').setAttribute('disabled','disabled');ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var callback={success:function(response){var rObj=eval("("+response.responseText+")");ajaxStatus.hideStatus();if(typeof rObj.noAccess!='undefined'){var alertMsg=GLOBAL_REGISTRY['meeting_strings']['LBL_NO_ACCESS'];alertMsg=alertMsg.replace("\$module",rObj.module);SugarWidgetSchedulerSearch.hideCreateForm();alert(alertMsg);return false;}
 GLOBAL_REGISTRY.focus.users_arr[GLOBAL_REGISTRY.focus.users_arr.length]=rObj;GLOBAL_REGISTRY.scheduler_attendees_obj.display();SugarWidgetSchedulerSearch.hideCreateForm();SugarWidgetSchedulerSearch.resetSearchForm();document.getElementById('create-invitee-btn').removeAttribute('disabled');document.getElementById('cancel-create-invitee-btn').removeAttribute('disabled');}};var fieldList=['id','full_name','email1','phone_work'];var t=[];for(i in fieldList){t.push("fieldList[]="+encodeURIComponent(fieldList[i]));}
 var postData=t.join("&");var url="index.php?module=Calendar&action=CreateInvitee&sugar_body_only=true";YAHOO.util.Connect.setForm(document.forms['createInviteeForm']);YAHOO.util.Connect.asyncRequest('POST',url,callback,postData);}
-SugarClass.inherit("SugarWidgetScheduler","SugarClass");function SugarWidgetScheduler(){this.init();}
+SugarClass.inherit("SugarWidgetScheduler","SugarClass");SugarWidgetScheduler.popupControl=null;SugarWidgetScheduler.popupControlDelayTime=600;SugarWidgetScheduler.mouseX=0;SugarWidgetScheduler.mouseY=0;SugarWidgetScheduler.isMouseOverToolTip=false;function SugarWidgetScheduler(){this.init();}
 SugarWidgetScheduler.prototype.init=function(){}
 SugarWidgetScheduler.prototype.load=function(parentNode){this.parentNode=parentNode;this.display();}
 SugarWidgetScheduler.fill_invitees=function(form){for(var i=0;i<GLOBAL_REGISTRY.focus.users_arr.length;i++){if(GLOBAL_REGISTRY.focus.users_arr[i].module=='User'){form.user_invitees.value+=GLOBAL_REGISTRY.focus.users_arr[i].fields.id+",";}else if(GLOBAL_REGISTRY.focus.users_arr[i].module=='Contact'){form.contact_invitees.value+=GLOBAL_REGISTRY.focus.users_arr[i].fields.id+",";}else if(GLOBAL_REGISTRY.focus.users_arr[i].module=='Lead'){form.lead_invitees.value+=GLOBAL_REGISTRY.focus.users_arr[i].fields.id+",";}}}
@@ -76,7 +79,18 @@ return;var date_start=document.forms[form_name].date_start.value;if(date_start.l
 var hour_start=parseInt(date_start.substring(11,13),10);var minute_start=parseInt(date_start.substring(14,16),10);var has_meridiem=/am|pm/i.test(date_start);if(has_meridiem){var meridiem=trim(date_start.substring(16));}
 GLOBAL_REGISTRY.focus.fields.date_start=date_start;if(has_meridiem){GLOBAL_REGISTRY.focus.fields.time_start=hour_start+time_separator+minute_start+meridiem;}else{GLOBAL_REGISTRY.focus.fields.time_start=hour_start+time_separator+minute_start;}
 GLOBAL_REGISTRY.focus.fields.duration_hours=document.forms[form_name].duration_hours.value;GLOBAL_REGISTRY.focus.fields.duration_minutes=document.forms[form_name].duration_minutes.value;GLOBAL_REGISTRY.focus.fields.datetime_start=SugarDateTime.mysql2jsDateTime(GLOBAL_REGISTRY.focus.fields.date_start,GLOBAL_REGISTRY.focus.fields.time_start);GLOBAL_REGISTRY.scheduler_attendees_obj.init();GLOBAL_REGISTRY.scheduler_attendees_obj.display();}
-SugarWidgetScheduler.prototype.display=function(){this.parentNode.innerHTML='';var attendees=new SugarWidgetSchedulerAttendees();attendees.load(this.parentNode);var search=new SugarWidgetSchedulerSearch();search.load(this.parentNode);}
+SugarWidgetScheduler.prototype.display=function(){this.parentNode.innerHTML='';var attendees=new SugarWidgetSchedulerAttendees();attendees.load(this.parentNode);var search=new SugarWidgetSchedulerSearch();search.load(this.parentNode);$('div#scheduler').append('<div id="SugarWidgetSchedulerPopup"></div>');YUI().use('overlay','event','widget-anim',function(Y){SugarWidgetScheduler.popupControl=new Y.Overlay({srcNode:"#SugarWidgetSchedulerPopup",visible:false,width:"50em"}).plug(Y.Plugin.WidgetAnim);SugarWidgetScheduler.popupControl.render();});$('div#SugarWidgetSchedulerPopup').hover(function(e){SugarWidgetScheduler.isMouseOverToolTip=true;},function(e){SugarWidgetScheduler.isMouseOverToolTip=false;SugarWidgetScheduler.popupControl.hide();});}
+SugarWidgetScheduler.sortByStartdate=function(a,b){var dateA=new Date($('<div></div>').append(a).find('span[data-field=DATE_START]').attr('data-date'));var dateB=new Date($('<div></div>').append(b).find('span[data-field=DATE_START]').attr('data-date'));if(dateA<dateB){return-1;}
+else if(dateA>dateB){return 1;}
+return 0;}
+SugarWidgetScheduler.sortByType=function(a,b){var valueA=$('<div></div>').append(a).find('input[id=type]').attr('value');var valueB=$('<div></div>').append(b).find('input[id=type]').attr('value');if(valueA==valueB){return 0;}
+else if(valueB=='Meeting'){return 1;}
+return 0;}
+SugarWidgetScheduler.createDialog=function(elementId,body,caption,width,theme){caption=caption.replace(SUGAR.language.get('app_strings','LBL_ADDITIONAL_DETAILS'),'');$(".ui-dialog").find(".open").dialog("close");var $dialog=$('<div class="open"></div>').html(body).dialog({autoOpen:false,title:caption,width:width,height:250,position:{my:'right top',at:'left top',of:$(elementId)},open:function(){var closeBtn=$('.ui-dialog-titlebar-close');closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span>');}});$("a[title='Edit']").remove();$("a[title='View']").remove();var width=$dialog.dialog("option","width");var pos=$(elementId).offset({top:SugarWidgetScheduler.mouseY,left:SugarWidgetScheduler.mouseX});var ofWidth=$(elementId).width();if((pos.left+ofWidth)-40<width){$dialog.dialog("option","position",{my:'left top',at:'right top',of:$(elementId)});}
+$dialog.dialog('open');$(".ui-dialog").appendTo("#content");return $dialog;}
+SugarWidgetScheduler.getScheduleDetails=function(beans,ids){var elementId='#SugarWidgetSchedulerPopup';var show_buttons=true;var caption='';var body=new Array();var width=300;var theme='';var $dialog=SugarWidgetScheduler.createDialog(elementId,body,caption,width,theme);var getScheduleItems=function(){var deffereds=[];$dialog.html(SUGAR.language.get('app_strings','LBL_LOADING'));body='';jQuery.each(ids,function(index,value){var url='index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean='+beans[index]+'&id='+ids[index]+'&show_buttons=true';deffereds.push($.ajax(url).done(function(){}).fail(function(){}).always(function(){}));});return deffereds;}
+var requests=getScheduleItems();$.when.apply(null,requests).done(function(){var containers=[];if(typeof arguments[0]==="string"){var oldArgs=arguments;arguments=new Array();arguments[0]=oldArgs;}
+$.each(arguments,function(index,value){eval(value[0]);var container=result.body;containers.push(container);});containers.sort(SugarWidgetScheduler.sortByStartdate);containers.sort(SugarWidgetScheduler.sortByType);$dialog.html(containers);});}
 SugarClass.inherit("SugarWidgetSchedulerAttendees","SugarClass");function SugarWidgetSchedulerAttendees(){this.init();}
 SugarWidgetSchedulerAttendees.prototype.init=function(){var form_name;if(typeof document.EditView!='undefined')
 form_name="EditView";else if(typeof document.CalendarEditView!='undefined')
@@ -111,7 +125,7 @@ SugarWidgetScheduleRow.prototype.init=function(timeslots){this.timeslots=timeslo
 SugarWidgetScheduleRow.prototype.load=function(thetableid){this.thetableid=thetableid;var self=this;vcalClient=new SugarVCalClient();if(typeof(GLOBAL_REGISTRY['freebusy_adjusted'])=='undefined'||typeof(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id])=='undefined'){global_request_registry[req_count]=[this,'display'];vcalClient.load(this.focus_bean.fields.id,req_count);req_count++;}else{this.display();}}
 SugarWidgetScheduleRow.prototype.display=function(){SUGAR.util.doWhen("document.getElementById('"+this.thetableid+"') != null",function(){var tr;this.thetable=document.getElementById(this.thetableid);if(typeof(this.element)!='undefined'){if(this.element.parentNode!=null)
 this.thetable.deleteRow(this.element.rowIndex);tr=document.createElement('tr');this.thetable.appendChild(tr);}else{tr=this.thetable.insertRow(this.thetable.rows.length);}
-tr.className="schedulerAttendeeRow";td=document.createElement('td');tr.appendChild(td);td.scope='row';var img='<img align="absmiddle" src="index.php?entryPoint=getImage&themeName='
+tr.className="schedulerAttendeeRow";$(tr).attr('data-id',this.focus_bean.fields.id);$(tr).attr('data-module',this.focus_bean.module+'s');td=document.createElement('td');tr.appendChild(td);td.scope='row';var img='<img align="absmiddle" src="index.php?entryPoint=getImage&themeName='
 +SUGAR.themes.theme_name+'&imageName='+this.focus_bean.module+'s.gif"/>&nbsp;';td.innerHTML=img;td.innerHTML=td.innerHTML;if(this.focus_bean.fields.full_name)
 td.innerHTML+=' '+this.focus_bean.fields.full_name;else
 td.innerHTML+=' '+this.focus_bean.fields.name;this.add_freebusy_nodes(tr);var td=document.createElement('td');tr.appendChild(td);td.className='schedulerAttendeeDeleteCell';td.noWrap=true;td.innerHTML='<a title="'+GLOBAL_REGISTRY['meeting_strings']['LBL_REMOVE']
@@ -130,4 +144,12 @@ return nTopPos;}
 SugarWidgetScheduleRow.prototype.add_freebusy_nodes=function(tr,attendee){var hours=9;var segments=4;var html='';var is_loaded=false;if(typeof GLOBAL_REGISTRY['freebusy_adjusted']!='undefined'&&typeof GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id]!='undefined'){is_loaded=true;}
 for(var i=0;i<this.timeslots.length;i++){var td=document.createElement('td');tr.appendChild(td);td.innerHTML='&nbsp;';if(typeof(this.timeslots[i]['is_start'])!='undefined'){td.className='schedulerSlotCellStartTime';}
 if(typeof(this.timeslots[i]['is_end'])!='undefined'){td.className='schedulerSlotCellEndTime';}
-if(is_loaded){if(typeof(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash])!='undefined'){td.style.backgroundColor="#4D5EAA";if(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash]>1){td.style.backgroundColor="#AA4D4D";}}}}}
+if(is_loaded){if(typeof(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash])!='undefined'){td.style.backgroundColor="#4D5EAA";var dataid='',module='';$.each(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash]['records'],function(index,value){if(dataid=='')
+dataid=index;else
+dataid+=','+index;if(module=='')
+module=value+'s';else
+module+=','+value+'s';});$(td).attr('data-id',dataid);$(td).attr('data-module',module);if((dataid.split(',').length)>1){td.style.backgroundColor="#AA4D4D";}}}
+$(td).hover(function(e){var domElement=$(this);if(domElement.css("background-color")||domElement.hasClass('schedulerSlotCellStartTime')){if(domElement.attr('data-id')!=null){var id=domElement.attr('data-id').split(',');var module=domElement.attr('data-module').split(',');if(module=="undefined"||module==null){module='Meetings';}
+setTimeout(function(){if($(domElement).is(":hover")){SugarWidgetScheduler.getScheduleDetails(module,id);}},SugarWidgetScheduler.popupControlDelayTime);}}},function(e){});}
+$(tr).find('td').first().hover(function(e){var domElement=$(this);var module=domElement.closest('tr').attr('data-module').split(','),id=domElement.closest('tr').attr('data-id').split(',');if(id!='undefined'||id!=null){setTimeout(function(){if($(domElement).is(":hover")){SugarWidgetScheduler.getScheduleDetails(module,id);}},SugarWidgetScheduler.popupControlDelayTime);}},function(e){});}
+$().ready(function(e){$(document).on("mousemove",function(event){SugarWidgetScheduler.mouseX=event.pageX;SugarWidgetScheduler.mouseY=event.pageY;});});
