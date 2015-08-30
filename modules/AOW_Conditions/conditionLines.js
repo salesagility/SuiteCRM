@@ -135,6 +135,8 @@ function showModuleField(ln, operator_value, type_value, field_value){
             success: function(result) {
                 document.getElementById('aow_conditions_operatorInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
+                document.getElementById('aow_conditions_operatorInput'+ln).onchange = function(){changeOperator(ln);};
+
             },
             failure: function(result) {
                 document.getElementById('aow_conditions_operatorInput'+ln).innerHTML = '';
@@ -173,6 +175,14 @@ function showModuleField(ln, operator_value, type_value, field_value){
         document.getElementById('aow_conditions_operatorInput'+ln).innerHTML = ''
         document.getElementById('aow_conditions_fieldTypeInput'+ln).innerHTML = '';
         document.getElementById('aow_conditions_fieldInput'+ln).innerHTML = '';
+    }
+
+    if(operator_value == 'is_null'){
+        hideElem('aow_conditions_fieldTypeInput' + ln);
+        hideElem('aow_conditions_fieldInput' + ln);
+    } else {
+        showElem('aow_conditions_fieldTypeInput' + ln);
+        showElem('aow_conditions_fieldInput' + ln);
     }
 }
 
@@ -296,6 +306,22 @@ function insertConditionLine(){
 
     return condln -1;
 }
+
+function changeOperator(ln){
+
+    var aow_operator = document.getElementById("aow_conditions_operator["+ln+"]").value;
+
+    if(aow_operator == 'is_null'){
+        showModuleField(ln,aow_operator);
+    } else {
+        showElem('aow_conditions_fieldTypeInput' + ln);
+        showElem('aow_conditions_fieldInput' + ln);
+    }
+
+
+}
+
+
 
 function markConditionLineDeleted(ln)
 {

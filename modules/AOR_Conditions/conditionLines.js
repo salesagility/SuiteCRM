@@ -247,7 +247,7 @@ function insertConditionLine(){
     b.style.width = '15%';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    b.innerHTML = "<input type='hidden' name='aor_conditions_module_path["+ condln +"][0]' id='aor_conditions_module_path" + condln + "' value=''>";
+    b.innerHTML = "<input type='hidden' name='aor_conditions_module_path["+ condln +"]' id='aor_conditions_module_path" + condln + "' value=''>";
     if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
     b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
 

@@ -56,7 +56,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
   	$mod_strings=return_module_language('','Users');
   	$res=$GLOBALS['sugar_config']['passwordsetting'];
-	$regexmail = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+\$/";
+	$regexmail = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 
 ///////////////////////////////////////////////////
 ///////  Retrieve user

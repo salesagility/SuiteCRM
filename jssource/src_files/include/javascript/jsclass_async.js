@@ -108,10 +108,18 @@ SugarVCalClient.prototype.load = function(user_id, request_id) {
 
 // parse vCal freebusy info and return object
 SugarVCalClient.prototype.parseResults = function(textResult, adjusted) {
-    var match = /FREEBUSY.*?\:([\w]+)\/([\w]+)/g;
+    var matchXFREEBUSYID = /X\-FREEBUSY\-ID.*?\:([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)/g;
+    var matchFREEBUSY = /FREEBUSY.*?\:([\w]+)\/([\w]+)/g;
+    var matchFREEBUSYTYPE = /X\-FREEBUSY\-TYPE.*?\:([\w]+)/g;
+    //var resultFREEBUSYID = matchXFREEBUSYID.exec(textResult);
+    //var resultFREEBUSY = matchFREEBUSY.exec(textResult);
+    //var resultFREEBUSYTYPETEST = matchFREEBUSYTYPE.exec(textResult);
+
+
     //  datetime = new SugarDateTime();
-    var result;
+    //var result;
     var timehash = new Object();
+    var dst_id;
     var dst_start;
     var dst_end;
 
@@ -126,17 +134,23 @@ SugarVCalClient.prototype.parseResults = function(textResult, adjusted) {
         dst_end = GLOBAL_REGISTRY.current_user.fields.dst_end.replace(/ /gi, 'T').replace(/:/gi, '').replace(/-/gi, '') + 'Z';
 
     gmt_offset_secs = GLOBAL_REGISTRY.current_user.fields.gmt_offset * 60;
-    // loop thru all FREEBUSY matches
-    while (((result = match.exec(textResult))) != null) {
+
+    var index = 0;
+    // New loop through all FREEBUSY & Customer Values
+    while (
+            ((resultFREEBUSYID = matchXFREEBUSYID.exec(textResult))) != null &&
+            ((resultFREEBUSY = matchFREEBUSY.exec(textResult))) != null &&
+            ((resultFREEBUSYTYPE = matchFREEBUSYTYPE.exec(textResult))) != null
+        ) {
         var startdate;
         var enddate;
         if (adjusted) {// send back adjusted for current_user
-            startdate = SugarDateTime.parseAdjustedDate(result[1], dst_start, dst_end, gmt_offset_secs);
-            enddate = SugarDateTime.parseAdjustedDate(result[2], dst_start, dst_end, gmt_offset_secs);
+            startdate = SugarDateTime.parseAdjustedDate(resultFREEBUSY[1], dst_start, dst_end, gmt_offset_secs);
+            enddate = SugarDateTime.parseAdjustedDate(resultFREEBUSY[2], dst_start, dst_end, gmt_offset_secs);
         }
         else { // GMT
-            startdate = SugarDateTime.parseUTCDate(result[1]);
-            enddate = SugarDateTime.parseUTCDate(result[2]);
+            startdate = SugarDateTime.parseUTCDate(resultFREEBUSY[1]);
+            enddate = SugarDateTime.parseUTCDate(resultFREEBUSY[2]);
         }
 
         var startmins = startdate.getUTCMinutes();
@@ -157,15 +171,29 @@ SugarVCalClient.prototype.parseResults = function(textResult, adjusted) {
 
         // starting at startdate, create hash of each busy 15 min
         // timeslot and store as a key
-		while (startdate.valueOf() < enddate.valueOf()) {
-			var hash = SugarDateTime.getUTCHash(startdate);
-			if (typeof (timehash[hash]) == 'undefined') {
-				timehash[hash] = 0;
-			}
-			timehash[hash] += 1;
-			startdate = new Date(startdate.valueOf() + (15 * 60 * 1000));
+        while (startdate.valueOf() < enddate.valueOf()) {
+            var hash = SugarDateTime.getUTCHash(startdate);
+            id = resultFREEBUSYID[1] + '-' +
+                resultFREEBUSYID[2] + '-' +
+                resultFREEBUSYID[3] + '-' +
+                resultFREEBUSYID[4] + '-' +
+                resultFREEBUSYID[5];
 
-		}
+            if (typeof (timehash[hash]) == 'undefined') {
+                timehash[hash] = {
+                    records : {}
+                    //'items' : 1
+                }
+                timehash[hash]['records'][id] = resultFREEBUSYTYPE[1];
+
+            } else {
+                //timehash[hash]['items'] += 1;
+                timehash[hash]['records'][id] = resultFREEBUSYTYPE[1];
+            }
+
+            startdate = new Date(startdate.valueOf() + (15 * 60 * 1000));
+        }
+        index++;
     }
 
     return timehash;
