@@ -102,7 +102,7 @@ class Alert extends Basic {
 
         // Assign defaults if empty
         if($this->url_redirect === null) {
-            $this->url_redirect = 'index.php?fakeid='. uniqid('fake_', true);
+            $this->url_redirect = 'index.php?module='.$this->target_module.'&record='.$this->target_module_id;
         }
         // Create a copy of subscribers (in its php array form)
         $subscribers = $this->subscribers;
