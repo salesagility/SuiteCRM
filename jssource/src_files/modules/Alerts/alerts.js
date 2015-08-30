@@ -212,15 +212,16 @@ Alerts.prototype.updateManager = function() {
         Alerts.prototype.managerFailureCount--;
         if(Alerts.prototype.managerFailureCount < 0) {
             Alerts.prototype.managerFailureCount = 0;
+            Alerts.prototype.refreshPeriod = 10000;
         }
 
     }).fail(function() {
         Alerts.prototype.managerFailureCount++;
         switch (Alerts.prototype.managerFailureCount) {
-            case 0:
-                Alerts.prototype.refreshPeriod = 15000;
-                break
             case 1:
+                Alerts.prototype.refreshPeriod = 15000;
+                break;
+            case 2:
                 // turn off refreshing
                 Alerts.prototype.refreshPeriod = -1;
                 break;
