@@ -197,10 +197,10 @@ Alerts.prototype.addToManager = function(AlertObj) {
             type: type
         }
     ).done(function(data) {
-    }).fail(function(data) {
-    }).always(function() {
+        }).fail(function(data) {
+        }).always(function() {
             Alerts.prototype.updateManager();
-    });
+        });
 }
 
 /**
@@ -208,24 +208,22 @@ Alerts.prototype.addToManager = function(AlertObj) {
  */
 Alerts.prototype.updateManager = function() {
     var url = 'index.php?module=Alerts&action=getCurrentAlerts';
-    $.ajax(url).done(function(data) {
-        $json = jQuery.parseJSON(data);
-        if($json == null) {
-            // Stop refreshing
-            Alerts.prototype.refreshPeriod = -1;
-        } else {
-            Alerts.prototype.managerFailureCount--;
-            if(Alerts.prototype.managerFailureCount < 0) {
-                Alerts.prototype.managerFailureCount = 0;
-            }
+    $.getJSON(url).done(function(data) {
+        Alerts.prototype.managerFailureCount--;
+        if(Alerts.prototype.managerFailureCount < 0) {
+            Alerts.prototype.managerFailureCount = 0;
         }
 
     }).fail(function() {
-        // change up to for three minutes for the next update
         Alerts.prototype.managerFailureCount++;
-        if(Alerts.prototype.managerFailureCount >= 3) {
-            // turn off refreshing
-            Alerts.prototype.refreshPeriod = -1;
+        switch (Alerts.prototype.managerFailureCount) {
+            case 0:
+                Alerts.prototype.refreshPeriod = 15000;
+                break
+            case 1:
+                // turn off refreshing
+                Alerts.prototype.refreshPeriod = -1;
+                break;
         }
     }).always(function() {
     });
