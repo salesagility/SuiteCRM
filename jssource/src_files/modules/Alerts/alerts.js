@@ -210,7 +210,7 @@ Alerts.prototype.updateManager = function() {
     var url = 'index.php?module=Alerts&action=getCurrentAlerts';
     $.getJSON(url).done(function(data) {
         Alerts.prototype.managerFailureCount--;
-        if(Alerts.prototype.managerFailureCount < 0) {
+        if(Alerts.prototype.managerFailureCount <= 0) {
             Alerts.prototype.managerFailureCount = 0;
             Alerts.prototype.refreshPeriod = 10000;
         }
@@ -219,7 +219,7 @@ Alerts.prototype.updateManager = function() {
         Alerts.prototype.managerFailureCount++;
         switch (Alerts.prototype.managerFailureCount) {
             case 1:
-                Alerts.prototype.refreshPeriod = 15000;
+                Alerts.prototype.refreshPeriod = 30000;
                 break;
             case 2:
                 // turn off refreshing
