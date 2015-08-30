@@ -48,20 +48,23 @@ class AlertsController extends SugarController
      * Use by Alerts.js to get the current alerts
      */
     public function action_getCurrentAlerts() {
-        global $current_user, $db, $tiemdate;
+        global $current_user, $db, $timedate;
         $NOW = new DateTime();
         $MOMENT = new DateTime();
-        $MOMENT = $MOMENT->sub(new DateInterval('PT10S'));
-        $query = "SELECT id FROM alerts WHERE deleted = 0 AND
+        $MOMENT = $MOMENT->sub(new DateInterval('PT30S'));
+        $query = "SELECT id, delivery_datetime FROM alerts WHERE deleted = 0 AND
                   delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."'
                   AND subscribers LIKE '%\"is_read\":false%' AND subscribers LIKE '%$current_user->id%'";
-        $alerts = array();
+        $alerts = new stdClass();
+        $alerts->response = array();
         $result = $db->query($query);
         while ($row = $db->fetchByAssoc($result)) {
             $alert = new Alert();
             $alert->retrieve($row['id']);
             if (array_key_exists($current_user->id, $alert->subscribers)) {
-                $alerts[] = array(
+                $reminder_time = new DateTime($row['delivery_datetime']);
+                $reminder_time = $reminder_time->getTimestamp() - $NOW->getTimestamp();
+                $alerts->response[] = array(
                     "id" => $alert->id,
                     "name" => $alert->name,
                     "description" => $alert->description,
@@ -74,6 +77,7 @@ class AlertsController extends SugarController
                     "send_to_manager" => $alert->send_to_manager,
                     "content_type" => $alert->content_type,
                     "delivery_datetime" => $alert->delivery_datetime,
+                    "reminder_time" => $reminder_time,
                     "type" => $alert->type,
                     "was_sent" => $alert->was_sent
                 );
