@@ -1,4 +1,4 @@
-{*
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,46 +37,41 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-*}
-<script src="{if $smarty.server.HTTPS === 'on'}index.php?entryPoint=get_url&type=linkedin{else}{{$config.properties.company_url}}{/if}" type="text/javascript"></script>
-<script type="text/javascript" src="{sugar_getjspath file='include/connectors/formatters/default/company_detail.js'}"></script>
-{literal}
-<style type="text/css">
-.yui-panel .hd {
-	background-color:#3D77CB;
-	border-color:#FFFFFF #FFFFFF #000000;
-	border-style:solid;
-	border-width:1px;
-	color:#000000;
-	font-size:100%;
-	font-weight:bold;
-	line-height:100%;
-	padding:4px;
-	white-space:nowrap;
+class Alert extends Basic {
+
+    var $new_schema = true;
+    var $module_dir = 'Alerts';
+    var $object_name = 'Alert';
+    var $table_name = 'alerts';
+    var $importable = false;
+    var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    var $id;
+    var $name;
+    var $date_entered;
+    var $date_modified;
+    var $modified_user_id;
+    var $modified_by_name;
+    var $created_by;
+    var $created_by_name;
+    var $description;
+    var $deleted;
+    var $created_by_link;
+    var $modified_user_link;
+    var $assigned_user_id;
+    var $assigned_user_name;
+    var $assigned_user_link;
+    var $is_read;
+
+    function Alert(){
+        parent::Basic();
+    }
+
+    function bean_implements($interface){
+        switch($interface){
+            case 'ACL': return true;
+        }
+        return false;
+    }
+
 }
-</style>
-{/literal}
-<script type="text/javascript">
-function show_ext_rest_linkedin(event)
-{literal} 
-{
-
-var xCoordinate = event.clientX;
-var yCoordinate = event.clientY;
-var isIE = document.all?true:false;
-      
-if(isIE) {
-    xCoordinate = xCoordinate + document.body.scrollLeft;
-    yCoordinate = yCoordinate + document.body.scrollTop;
-}
-
-{/literal}
-
-cd = new CompanyDetailsDialog("linkedin_popup_div", '<div id="linkedin_div"></div>', xCoordinate, yCoordinate);
-cd.setHeader("{$fields.{{$mapping_name}}.value}");
-cd.display();
-linked_in_popup = new LinkedIn.CompanyInsiderBox("linkedin_div", "{$fields.{{$mapping_name}}.value}");
-{literal}
-} 
-{/literal}
-</script>
+?>

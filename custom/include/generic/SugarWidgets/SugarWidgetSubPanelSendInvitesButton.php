@@ -8,10 +8,8 @@ class SugarWidgetSubPanelSendInvitesButton extends SugarWidgetSubPanelTopButton
     function display($defines, $additionalFormFields = null)
     {
         global $mod_strings;
-        
-        $button  = "<form id='ManageAcceptancesForm' name='ManageAcceptancesForm' method='post' action=''>";
        
-        $button .= '<input class="button" onclick="document.location=\'index.php?module=FP_events&action=sendinvitemails&record='.$defines['focus']->id.'\'" name="sendinvites" value="'.$mod_strings['LBL_INVITE_PDF'].'" type="button">';
+        $button = '<input class="button" onclick="document.location=\'index.php?module=FP_events&action=sendinvitemails&record='.$defines['focus']->id.'\'" name="sendinvites" value="'.$mod_strings['LBL_INVITE_PDF'].'" type="button">';
         return $button; 
     }
 }

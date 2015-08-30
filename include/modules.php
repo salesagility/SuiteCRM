@@ -111,8 +111,8 @@ $beanList['Import_2']       = 'UsersLastImport';
 $beanList['Versions']       = 'Version';
 $beanList['Administration'] = 'Administration';
 $beanList['vCals']          = 'vCal';
-$beanList['CustomFields']       = 'CustomFields';
-
+$beanList['CustomFields']   = 'CustomFields';
+$beanList['Alerts']  = 'Alert';
 
 
 
@@ -184,7 +184,7 @@ $beanFiles['UsersLastImport']= 'modules/Import/UsersLastImport.php';
 $beanFiles['Administration']= 'modules/Administration/Administration.php';
 $beanFiles['UpgradeHistory']= 'modules/Administration/UpgradeHistory.php';
 $beanFiles['vCal']          = 'modules/vCals/vCal.php';
-
+$beanFiles['Alert']          = 'modules/Alerts/Alert.php';
 $beanFiles['Version']           = 'modules/Versions/Version.php';
 
 
@@ -233,6 +233,7 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'DocumentRevisions',
     'ProjectTask',
     'ModuleBuilder',
+    'Alert'
     );
 $adminOnlyList = array(
                     //module => list of actions  (all says all actions are admin only)
@@ -306,7 +307,6 @@ $beanList['OAuthTokens'] = 'OAuthToken';
 $beanFiles['OAuthToken'] = 'modules/OAuthTokens/OAuthToken.php';
 $modules_exempt_from_availability_check['OAuthTokens'] = 'OAuthTokens';
 $modInvisList[] = 'OAuthTokens';
-
 
 
 //Object list is only here to correct for modules that break

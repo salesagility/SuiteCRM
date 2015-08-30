@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,16 +37,50 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-// created: 2008-10-03 14:31:59
-$config = array (
-  'name' => 'LinkedIn&#169;',
-  'order' => 1,
-  'eapm' => array(
-    'enabled' => true,
-  ),
-  'properties' => 
-  array (
-    'company_url'=>'http://www.linkedin.com/companyInsider?script&useBorder=no',
-  ),
-);
-?>
+$dictionary['Alert'] = array(
+	'table'=>'alerts',
+	'audited'=> false,
+		'duplicate_merge'=>true,
+		'fields'=>array (
+            'is_read' =>
+                array(
+                    'name'		=> 'is_read',
+                    'vname'     => 'LBL_IS_READ',
+                    'type'		=> 'bool',
+                    'massupdate' => false,
+                    'studio'=> 'false',
+                ),
+            'target_module' =>
+                array(
+                    'name'		=> 'target_module',
+                    'vname'     => 'LBL_TYPE',
+                    'type'		=> 'varchar',
+                    'massupdate' => false,
+                    'studio'=> 'false',
+                ),
+            'type' =>
+                array(
+                    'name'		=> 'type',
+                    'vname'     => 'LBL_TYPE',
+                    'type'		=> 'varchar',
+                    'massupdate' => false,
+                    'studio'=> 'false',
+                ),
+            'url_redirect' =>
+                array(
+                    'name'		=> 'url_redirect',
+                    'vname'     => 'LBL_TYPE',
+                    'type'		=> 'varchar',
+                    'massupdate' => false,
+                    'studio'=> 'false',
+                )
+),
+	'relationships'=>array (
+),
+	'optimistic_locking'=>true,
+		'unified_search'=>true,
+	);
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
+}
+VardefManager::createVardef('Alerts','Alert', array('basic','assignable'));

@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,29 +37,36 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/**
- * Use this script to fetch linkedin js code.
- */
-
-$url = '';
-$type = !empty($_GET['type']) ? $_GET['type'] : '';
-switch ($type)
-{
-    case 'linkedin' :
-        require_once('include/connectors/formatters/FormatterFactory.php');
-        $formatter = FormatterFactory::getInstance('ext_rest_linkedin');
-        $url = $formatter->getComponent()->getSource()->getConfig();
-        $url = $url['properties']['company_url'];
-        break;
-}
-
-if ($url == '')
-{
-    return;
-}
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_TIMEOUT, '30');
-curl_exec($ch);
-curl_close($ch);
+$mod_strings = array (
+  'LBL_ASSIGNED_TO_ID' => 'Ответственный(ая)',
+  'LBL_ASSIGNED_TO_NAME' => 'Ответственный(ая)',
+  'LBL_ID' => 'ID',
+  'LBL_DATE_ENTERED' => 'Дата создания',
+  'LBL_DATE_MODIFIED' => 'Дата изменения',
+  'LBL_MODIFIED' => 'Изменено',
+  'LBL_MODIFIED_ID' => 'Изменено(ID)',
+  'LBL_MODIFIED_NAME' => 'Изменено',
+  'LBL_CREATED' => 'Создано',
+  'LBL_CREATED_ID' => 'Создано(ID)',
+  'LBL_DESCRIPTION' => 'Описание',
+  'LBL_DELETED' => 'Удалено',
+  'LBL_NAME' => 'Название',
+  'LBL_CREATED_USER' => 'Создано',
+  'LBL_MODIFIED_USER' => 'Изменено',
+  'LBL_LIST_NAME' => 'Название',
+  'LBL_EDIT_BUTTON' => 'Править',
+  'LBL_REMOVE' => 'Удалить',
+  'LBL_LIST_FORM_TITLE' => 'Alert Список',
+  'LBL_MODULE_NAME' => 'Alert',
+  'LBL_MODULE_TITLE' => 'Alert',
+  'LBL_HOMEPAGE_TITLE' => 'Мой Alert',
+  'LNK_NEW_RECORD' => 'Создать Alert',
+  'LNK_LIST' => 'View Alert',
+  'LNK_IMPORT_Alert' => 'Import Alert',
+  'LBL_SEARCH_FORM_TITLE' => 'Поиск Alert',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'Просмотр истории',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Мероприятия',
+  'LBL_Alert_SUBPANEL_TITLE' => 'Alert',
+  'LBL_NEW_FORM_TITLE' => 'Новый Alert',
+  'LBL_IS_READ' => 'is read',
+);

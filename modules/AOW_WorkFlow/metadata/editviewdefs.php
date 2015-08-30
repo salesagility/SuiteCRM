@@ -91,8 +91,8 @@ $viewdefs ['AOW_WorkFlow'] =
                     array (
                         0 =>
                         array (
-                            'name' => 'multiple_runs',
-                            'label' => 'LBL_MULTIPLE_RUNS',
+                            'name' => 'run_when',
+                            'label' => 'LBL_RUN_WHEN',
                         ),
                         1 =>
                             array (
@@ -102,6 +102,14 @@ $viewdefs ['AOW_WorkFlow'] =
                             ),
                     ),
                     3 =>
+                    array (
+                        0 =>
+                        array (
+                            'name' => 'multiple_runs',
+                            'label' => 'LBL_MULTIPLE_RUNS',
+                        ),
+                    ),
+                    4 =>
                     array (
                         0 => 'description',
                     ),

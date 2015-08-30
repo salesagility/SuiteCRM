@@ -65,6 +65,7 @@ class FieldsMetaData extends SugarBean {
   	var $ext2;
   	var $ext3;
 	var $audited;
+	var $inline_edit;
     var $duplicate_merge;
     var $reportable;
 	var $required_fields =  array("name"=>1, "date_start"=>2, "time_start"=>3,);
@@ -86,6 +87,7 @@ class FieldsMetaData extends SugarBean {
 		'ext2',
 		'ext3',
 		'audited',
+		'inline_edit',
 		'massupdate',
         'duplicate_merge',
         'reportable',
@@ -100,6 +102,7 @@ class FieldsMetaData extends SugarBean {
 		'required',
 		'default_value',
 		'audited',
+        'inline_edit',
 		'massupdate',
         'duplicate_merge',
         'reportable',

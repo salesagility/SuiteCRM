@@ -786,6 +786,8 @@ function handleSugarConfig() {
     $sugar_config['disable_convert_lead']           = false;
     $sugar_config['log_dir']                        = $setup_site_log_dir;
     $sugar_config['log_file']                       = $setup_site_log_file;
+    $sugar_config['enable_line_editing_detail']     = true;
+    $sugar_config['enable_line_editing_list']       = true;
 
     // Setup FTS
     if (!empty($_SESSION['setup_fts_type'])) {
