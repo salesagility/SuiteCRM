@@ -198,7 +198,6 @@ Alerts.prototype.addToManager = function(AlertObj) {
         }
     ).done(function(data) {
     }).fail(function(data) {
-            console.log(data);
     }).always(function() {
             Alerts.prototype.updateManager();
     });
@@ -210,8 +209,24 @@ Alerts.prototype.addToManager = function(AlertObj) {
 Alerts.prototype.updateManager = function() {
     var url = 'index.php?module=Alerts&action=getCurrentAlerts';
     $.ajax(url).done(function(data) {
-        console.log(data);
+        $json = jQuery.parseJSON(data);
+        if($json == null) {
+            // Stop refreshing
+            Alerts.prototype.refreshPeriod = -1;
+        } else {
+            Alerts.prototype.managerFailureCount--;
+            if(Alerts.prototype.managerFailureCount < 0) {
+                Alerts.prototype.managerFailureCount = 0;
+            }
+        }
+
     }).fail(function() {
+        // change up to for three minutes for the next update
+        Alerts.prototype.managerFailureCount++;
+        if(Alerts.prototype.managerFailureCount >= 3) {
+            // turn off refreshing
+            Alerts.prototype.refreshPeriod = -1;
+        }
     }).always(function() {
     });
 }
@@ -252,6 +267,13 @@ function AlertObj() {
     };
     this.subscribers = new Array();
 }
+/**
+ * Determins the how often the manager updatess
+ * @type {number}
+ */
+Alerts.prototype.refreshPeriod = 10000;
+
+Alerts.prototype.managerFailureCount = 0;
 
 /**
  * Wait for document to be ready before updating the alert notification manager.
@@ -259,7 +281,9 @@ function AlertObj() {
 $(document).ready(function() {
     var updateMissed  = function() {
         Alerts.prototype.updateManager();
-        setTimeout(updateMissed, 10000);
+        if(Alerts.prototype.refreshPeriod > 0) {
+            setTimeout(updateMissed, Alerts.prototype.refreshPeriod);
+        }
     }
     updateMissed();
 });
