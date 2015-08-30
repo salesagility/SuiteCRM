@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,24 +37,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*********************************************************************************
-
-* Description:  Defines the English language pack for the base application.
-* Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-* All Rights Reserved.
-* Contributor(s): ______________________________________..
-********************************************************************************/
-
-$connector_strings = array (
-    //licensing information shown in config screen
-    'LBL_LICENSING_INFO' => '<table border="0" cellspacing="1"><tr><td valign="top" width="35%" class="dataLabel">This is the URL for the Company Insider plug-in that is used to display LinkedIn&#169; company information. You will not need to change the URL unless LinkedIn&#169; changes the URL for the plug-in.</td></tr></table>',
-
-    'LBL_NAME' => 'Company Name',
-
-	//Configuration labels
-	'company_url' => 'URL',
-    'oauth_consumer_key' => 'API Key',
-    'oauth_consumer_secret' => 'Secret Key'
-);
-
+/*
+ * Created on August 2 2007
+ *
+ * To change the template for this generated file go to
+ * Window - Preferences - PHPeclipse - PHP - Code Templates
+ */
+$module_name = 'Alert';
+ $metafiles[$module_name] = array(
+	'defaultviewdefs'  => 	'modules/' . $module_name . '/metadata/defaultviewdefs.php',
+ );
 ?>

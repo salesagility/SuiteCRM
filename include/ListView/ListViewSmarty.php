@@ -85,7 +85,7 @@ class ListViewSmarty extends ListViewDisplay{
      */
 	function process($file, $data, $htmlVar) {
 		if(!$this->should_process)return;
-		global $odd_bg, $even_bg, $hilite_bg, $click_bg, $app_strings;
+		global $odd_bg, $even_bg, $hilite_bg, $click_bg, $app_strings, $sugar_config;
 		parent::process($file, $data, $htmlVar);
 
 		$this->tpl = $file;
@@ -104,6 +104,13 @@ class ListViewSmarty extends ListViewDisplay{
             if(!empty($params['contextMenu']['objectType']))
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
         }
+
+        //Check if inline editing is enabled for list view.
+        if($sugar_config['enable_line_editing_list']){
+            $this->ss->assign('inline_edit', true);
+        }
+
+		$this->ss->assign('sugarconfig', $this->displayColumns);
 		$this->ss->assign('displayColumns', $this->displayColumns);
 		$this->ss->assign('APP',$app_strings);
 
