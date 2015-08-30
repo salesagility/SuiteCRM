@@ -208,20 +208,9 @@ Alerts.prototype.addToManager = function(AlertObj) {
  * Updates the alert notification manager
  */
 Alerts.prototype.updateManager = function() {
-    var url = 'index.php?module=Alerts&action=get&to_pdf=1';
+    var url = 'index.php?module=Alerts&action=getCurrentAlerts';
     $.ajax(url).done(function(data) {
-        $('div#alerts').html(data);
-        $('div.alerts').css('width', '200px');
-
-        var alertCount = $('#alerts').find('div.module-alert').size();
-        $('.alert_count').html(alertCount);
-
-        if(alertCount > 0) {
-            $('.alertsButton').removeClass('btn-').addClass('btn-danger');
-        }
-        else {
-            $('.alertsButton').removeClass('btn-danger').addClass('btn-success');
-        }
+        console.log(data);
     }).fail(function() {
     }).always(function() {
     });
@@ -270,9 +259,7 @@ function AlertObj() {
 $(document).ready(function() {
     var updateMissed  = function() {
         Alerts.prototype.updateManager();
-        setTimeout(updateMissed, 60000);
+        setTimeout(updateMissed, 10000);
     }
-    setTimeout(updateMissed, 2000);
-
-
+    updateMissed();
 });

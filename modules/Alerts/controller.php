@@ -207,7 +207,7 @@ class AlertsController extends SugarController
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
         $bean->is_read = 1;
         $bean->save();
-
+        die();
         $this->view = 'json';
     }
 
