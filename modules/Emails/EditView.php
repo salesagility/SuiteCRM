@@ -727,6 +727,11 @@ if($sig = $current_user->getDefaultSignature()) {
 	}
 }
 $xtpl->assign('DESCRIPTION', $description);
+
+$fdow = $current_user->get_first_day_of_week();
+$fdow = $fdow ? $fdow : 0;
+$xtpl->assign("CALENDAR_FDOW", $fdow);
+
 // sigs
 /////////////////////////////////////////////////
 $tiny = new SugarTinyMCE();

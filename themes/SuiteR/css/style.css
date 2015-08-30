@@ -3228,9 +3228,16 @@ ul.dashboardTabList li {
     margin:0 5px 0 5px;
 }
 
-.navbar-inverse .navbar-brand {
-    color:#ffffff;
-    height:50px;
+.navbar-brand{
+    display:none;
+}
+
+@media (min-width:980px){
+    .navbar-inverse .navbar-brand {
+        color: #ffffff;
+        height: 50px;
+        display:inline;
+    }
 }
 
 .btn-success {
@@ -3322,27 +3329,9 @@ table legend {
     border:1px solid #dddddd;
 }
 
-/* Footer styles for mobile */
-
-#mobilefooter {
-    width:100%;
-    margin:0 auto;
-    padding:5px;
-    max-height:50px !important;
-    background:#3C8DBC;
-    position:fixed;
-    bottom:0;
-}
-
 #footernav{
     margin: 0 auto; padding: 0;
     width:165px;
-}
-
-@media screen and (min-width:479px) {
-    #mobilefooter {
-        display:none
-    }
 }
 
 @media screen and (max-width:801px) {
@@ -3370,10 +3359,95 @@ table legend {
     margin-right:-10px;
 }
 
+#mobilegloballinks{
+    display:none;
+}
+
+@media (max-width:480px){
+    #searchmobile{
+        float:left;
+        z-index:50 !important;
+        position:absolute;
+        left:60px;
+        width:70% !important;
+    }
+    #searchmobile #query_string{
+        width:75% !important;
+        outline: 0 !important;
+        background:#3C8DBC !important;
+        border:none !important;
+        border-radius:0 !important;
+        border-bottom:1px solid #cccccc !important;
+        color:#f7f7f7 !important;
+        -webkit-appearance: none !important;
+        box-shadow:none !important;
+        float:left;
+    }
+
+    #mobilegloballinks{
+        display:inline;
+    }
+}
+@media (min-width:480px) and (max-width:680px){
+    #searchmobile{
+        float:left;
+        z-index:50 !important;
+        position:absolute;
+        left:60px;
+        width:80% !important;
+    }
+    #searchmobile #query_string{
+        width:80% !important;
+        outline: 0 !important;
+        background:#3C8DBC !important;
+        border:none !important;
+        border-radius:0 !important;
+        border-bottom:1px solid #cccccc !important;
+        color:#f7f7f7 !important;
+        -webkit-appearance: none !important;
+        box-shadow:none !important;
+        float:left;
+    }
+    .form-control{
+        color:#f7f7f7 !important;
+    }
+    #mobilegloballinks{
+        display:inline;
+    }
+}
+
+@media (min-width:681px) and (max-width:980px){
+    #searchmobile{
+        float:left;
+        z-index:50 !important;
+        position:absolute;
+        left:60px;
+        width:85% !important;
+    }
+    #searchmobile #query_string{
+        width:85% !important;
+        outline: 0 !important;
+        background:#3C8DBC !important;
+        border:none !important;
+        border-radius:0 !important;
+        border-bottom:1px solid #cccccc !important;
+        color:#f7f7f7 !important;
+        -webkit-appearance: none !important;
+        box-shadow:none !important;
+        float:left;
+    }
+    .form-control{
+        color:#f7f7f7 !important;
+    }
+    #mobilegloballinks{
+        display:inline;
+    }
+}
+
 /* Media queries for larger screens to hide mobile content */
 
 @media (max-width:1279px){
-    #usermenu, #searchform, #searchmobile{
+    #usermenu, #searchform{
         display:none;
     }
 
@@ -3430,10 +3504,6 @@ table legend {
         overflow: hidden!important;
     }
 
-    #searchmobile {
-        display:block;
-        width:100%;
-    }
     /* Hide search/admin buttons for mobile/tablet screens */
     #usermenucollapsed{
         margin:0 0 0 5px;display:none;
@@ -3501,7 +3571,7 @@ table legend {
         padding:20px;
         overflow-x: hidden;
         overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-        background-color: #f5f5f5;
+        background-color: #f7f7f7;
         border-right: 1px solid #eee;
         min-width:215px !important;
     }
@@ -3520,15 +3590,25 @@ table legend {
     display:none;
 }
 
-@media (min-width: 480px) and (max-width: 979px) {
+.navbar-toggle{
+    float:left;
+}
+
+@media (max-width:480px){
+    #userlinks_home, .quickcreate, #userlinks_currentuser{
+        display:none;
+    }
+}
+
+@media (max-width: 979px) {
     #userlinks_head {
         display:inline;
-        margin:2px 0 0 0;
+        margin:8px 0 0 0;
+        padding:8px;
+        float:right;
     }
     #userlinks_head a {
         color: #ffffff;
-        padding: 3px 10px 5px 10px;
-        font-size: 1.1em;
     }
 
     #userlinks_head ul li a{
@@ -3537,6 +3617,21 @@ table legend {
 
     #userlinks_head ul li a:hover{
         color:#ffffff;
+    }
+    #searchmobile ::-webkit-input-placeholder {
+        color: #f7f7f7 !important;
+    }
+
+    #searchmobile :-moz-placeholder { /* Firefox 18- */
+        color: #f7f7f7 !important;
+    }
+
+    #searchmobile ::-moz-placeholder {  /* Firefox 19+ */
+        color: #f7f7f7 !important;
+    }
+
+    #searchmobile :-ms-input-placeholder {
+        color: #f7f7f7 !important;
     }
 }
 
@@ -3674,7 +3769,7 @@ li.moremenu {
     }
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 767px) {
+@media only screen and (min-device-width: 480px) and (max-device-width: 980px) {
     /* Force table to not be like tables anymore(deconstruct) */
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
@@ -3810,7 +3905,7 @@ li.moremenu {
 }
 
 /* Hide search form as standard */
-@media (max-width:767px) {
+@media (max-width:980px) {
     .search_form {
         display: none;
     }
@@ -3854,10 +3949,6 @@ li.recentlinks_edit a:hover {
 
 /* Custom styling from group tabs menu structure */
 
-[id^=moduleTab] a:hover{
-        color: hotpink;
-}
-
 a[id^=grouptab], a[id^=moduleTab]{
     color: #f7f7f7;
     padding:15px 0 18px 0;
@@ -3893,7 +3984,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border:none;
 }
 
-@media(max-width:767px){
+@media(max-width:980px){
     ul.navbar-nav li a,.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
         color:#ffffff; !important;
     }
@@ -4115,9 +4206,9 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 }
 
 @media (min-width: 768px) {
-   .showsearch{
-       display:none;
-   }
+    .showsearch{
+        display:none;
+    }
 }
 
 .helpIcon{
@@ -4305,10 +4396,15 @@ h3 span{
 
 /* Customisations to top navigation for mobile. */
 #mobile_menu{
+    position:absolute;
+    top:50px;
+    left:0;
     overflow-y: scroll;
     overflow-x: hidden !important;
-    float:right;
+    float:left;
     width:200px !important;
+    margin:0;
+    padding:0;
     background:#3C8DBC !important;
 }
 
@@ -4316,17 +4412,24 @@ h3 span{
     list-style: none;
     height:50px;
     line-height:50px;
-    border-bottom: 1px solid #cccccc;
+    margin:0;
+    border-bottom: 1px solid #44AEBC;
 }
 
 #mobile_menu a{
     color: #ffffff;
     display:block;
+    padding:0 10px 5px 10px;
+    font-size:1.2em;
+}
+
+#mobileheader #modulelinks ul li a{
+    font-size:1.3em;
 }
 
 @media (min-width:979px) {
     #mobile_menu{
-       display:none !important;
+        display:none !important;
     }
 
     #quickcreatetop a{
@@ -4361,10 +4464,136 @@ h3 span{
 #themePreview{
     width:250px;
 }
-
+.modulename{
+    visibility:hidden;
+}
 .icon{
     fill: #3c8dbc;
     pointer-events: none;
+    fill: #3C8DBC;
+    pointer-events: none;
+}
+.inlineEdit{
+    cursor: pointer !important;
+}
+
+.inlineEditIcon {
+    float: right;
+    height: 10px;
+    color: #3c8dbc;
+    width: 15px;
+    padding-left: 3px;
+}
+
+.inlineEditIcon svg {
+    fill: #3c8dbc;
+    display: none;
+}
+
+.inlineEdit:hover .inlineEditIcon svg{
+    cursor: pointer !important;
+    display:inline;
+}
+
+td.inlineEditActive{
+    background-color: #cccccc;
+}
+
+#inlineEditSaveButton{
+    float:right;
+    display:inline;
+}
+
+#inlineEditSaveButton svg{
+    fill: #3c8dbc;
+}
+
+#inlineEditSaveButton svg:hover{
+    fill: #3c8dbc;
+}
+
+#inline_edit_field{
+    float:left;
+    width:80%;
+    padding-right:5px;
+}
+@media (max-width:360px){
+    .modulename{
+        visibility:visible;
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:225px;
+    }
+}
+@media (min-width:361px) and (max-width:420px){
+    .modulename{
+        visibility:visible;
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:225px;
+    }
+}
+
+@media (min-width:421px) and (max-width:480px){
+    .modulename{
+        visibility:visible;
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:350px;
+    }
+}
+
+@media (min-width:481px) and (max-width:980px){
+    .modulename{
+        visibility:visible;
+        font-size:1.2em;
+        float:left;
+        line-height:50px;
+        text-align:center !important;
+        margin:0 auto !important;
+        width:75%;
+    }
+}
+
+@media (max-width:980px) {
+    .modulename{
+        visibility:visible;
+    }
+    #modulelinks ul.dropdown-menu {
+        position: absolute;
+        top: 50px;
+        left: 35%;
+    }
+}
+@media (max-width:979px) {
+    #mobilegloballinks a {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0 0;
+        padding: 8px;
+    }
+
+    #mobilegloballinks ul.dropdown-menu {
+        position: relative;
+        float:right;
+    }
+
+    #mobilegloballinks ul li a {
+        color: #3C8DBC !important;
+    }
+
+    .glyphicon-search, .glyphicon-user {
+        font-size:1.5em;
+    }
 }
 
 

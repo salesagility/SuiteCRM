@@ -69,11 +69,9 @@ class MeetingsViewEdit extends ViewEdit
         $json_config = new json_config();
 		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
 			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-
 		} else {
 			$this->bean->json_id = $this->bean->id;
 			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-
 		}
  		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
  		if($this->ev->isDuplicate){

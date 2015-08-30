@@ -65,7 +65,8 @@ class TemplateField{
 	var $ext3 = '';
 	var $ext4 = '';
 	var $audited= 0;
-	var $massupdate = 0;
+    var $inline_edit = 1;
+    var $massupdate = 0;
 	var $importable = 'true' ;
 	var $duplicate_merge=0;
 	var $new_field_definition;
@@ -88,6 +89,7 @@ class TemplateField{
 		'required'=>'required',
 		'type'=>'type',
 		'audited'=>'audited',
+		'inline_edit'=>'inline_edit',
 		'massupdate'=>'massupdate',
 		'options'=>'ext1',
 		'help'=>'help',
@@ -343,7 +345,8 @@ class TemplateField{
 			'duplicate_merge'=>$this->duplicate_merge,
 			'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
 			'audited'=>$this->convertBooleanValue($this->audited),
-			'reportable'=>$this->convertBooleanValue($this->reportable),
+            'inline_edit'=>$this->convertBooleanValue($this->inline_edit),
+            'reportable'=>$this->convertBooleanValue($this->reportable),
             'unified_search'=>$this->convertBooleanValue($this->unified_search),
             'merge_filter' => empty($this->merge_filter) ? "disabled" : $this->merge_filter
 		);
