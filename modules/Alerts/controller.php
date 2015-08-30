@@ -44,11 +44,17 @@ class AlertsController extends SugarController
         die();
     }
 
+    /**
+     * Use by Alerts.js to get the current alerts
+     */
     public function action_getCurrentAlerts() {
-        global $current_user, $db;
-        $query = 'SELECT id FROM alerts WHERE deleted = 0 AND
-                  delivery_datetime >= NOW() - INTERVAL 5 MINUTE AND delivery_datetime <= NOW()
-                  AND subscribers LIKE \'%"is_read":false%\' AND subscribers LIKE \'%' . $current_user->id . '%\'';
+        global $current_user, $db, $tiemdate;
+        $NOW = new DateTime();
+        $MOMENT = new DateTime();
+        $MOMENT = $MOMENT->sub(new DateInterval('PT10S'));
+        $query = "SELECT id FROM alerts WHERE deleted = 0 AND
+                  delivery_datetime >= '$MOMENT' AND delivery_datetime <= '$NOW'
+                  AND subscribers LIKE '%\"is_read\":false%' AND subscribers LIKE '%$current_user->id%'";
         $alerts = array();
         $result = $db->query($query);
         while ($row = $db->fetchByAssoc($result)) {
@@ -71,6 +77,9 @@ class AlertsController extends SugarController
                     "type" => $alert->type,
                     "was_sent" => $alert->was_sent
                 );
+                // Since this is technically sending a popup.
+                $alert->was_sent = true;
+                $alert->save();
             }
         }
         header('Content-Type: application/json');
