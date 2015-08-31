@@ -49,8 +49,8 @@ class AlertsController extends SugarController
      */
     public function action_getCurrentAlerts() {
         global $current_user, $db, $timedate;
-        $NOW = new DateTime();
-        $MOMENT = new DateTime();
+        $NOW = new DateTime(gmdate("Y-m-d H:i:s"));
+        $MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
         $MOMENT = $MOMENT->sub(new DateInterval('PT30S'));
         $query = "SELECT id, delivery_datetime FROM alerts WHERE deleted = 0 AND
                   delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."'
