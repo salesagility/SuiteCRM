@@ -1764,12 +1764,12 @@ $app_strings = array (
 	'LBL_EMAIL_ADDRESSES'				=> 'E-mail',
     'LBL_EMAIL_ADDRESS_PRIMARY'     => 'Адрес Email',
     'LBL_EMAIL_ADDRESSES_TITLE'		=> 'Адреса E-mail',
-	'LBL_EMAIL_ARCHIVE_TO_SUGAR'	=> 'Импорт в Suite',
+	'LBL_EMAIL_ARCHIVE_TO_SUGAR'	=> 'Импорт в SuiteCRM',
     'LBL_EMAIL_ASSIGNMENT'          => 'Назначение',
     'LBL_EMAIL_ATTACH_FILE_TO_EMAIL'=> 'Добавить вложение',
 	'LBL_EMAIL_ATTACHMENT'				=> 'Вложения',
 	'LBL_EMAIL_ATTACHMENTS'				=> 'Вложения',
-	'LBL_EMAIL_ATTACHMENTS2'			=> 'Добавить документы Suite',
+	'LBL_EMAIL_ATTACHMENTS2'			=> 'Добавить документы SuiteCRM',
 	'LBL_EMAIL_ATTACHMENTS3'			=> 'Вложения шаблона',
         'LBL_EMAIL_ATTACHMENTS_FILE'                    => 'Файл',
         'LBL_EMAIL_ATTACHMENTS_DOCUMENT'                => 'Документ',
@@ -1892,7 +1892,7 @@ $app_strings = array (
 	'LBL_EMAIL_IE_DELETE_SUCCESSFUL'	=> 'Удаление успешно завершено.',
 	'LBL_EMAIL_IE_SAVE'				    => 'Сохранение учётной записи',
 	'LBL_EMAIL_IMPORTING_EMAIL'			=> 'Импортирование E-mail',
-	'LBL_EMAIL_IMPORT_EMAIL'			=> 'Импорт в Suite',
+	'LBL_EMAIL_IMPORT_EMAIL'			=> 'Импорт в SuiteCRM',
         'LBL_EMAIL_IMPORT_SETTINGS'     => 'Параметры импорта',
         'LBL_EMAIL_INVALID'				=> 'Неверный',
 
@@ -1921,14 +1921,14 @@ $app_strings = array (
         'LBL_EMAIL_MENU_RENAMING_FOLDER'                => 'Переименование папки',
 	'LBL_EMAIL_MENU_MAKE_SELECTION'			=> 'Сделайте необходимый выбор перед выполнением данной операции',
 
- 	'LBL_EMAIL_MENU_HELP_ADD_FOLDER'		=> 'Создать папку (удалённо или в Suite)',
-	'LBL_EMAIL_MENU_HELP_ARCHIVE'			=> 'Архивировать указанные E-mail в Suite',
+ 	'LBL_EMAIL_MENU_HELP_ADD_FOLDER'		=> 'Создать папку (удалённо или в SuiteCRM)',
+	'LBL_EMAIL_MENU_HELP_ARCHIVE'			=> 'Архивировать указанные E-mail в SuiteCRM',
 	'LBL_EMAIL_MENU_HELP_COMPOSE_TO_LIST'   	=> 'Написать выбранным адресатам',
 	'LBL_EMAIL_MENU_HELP_CONTACT_COMPOSE'   	=> 'Написать выбранному Контакту',
 	
 	'LBL_EMAIL_MENU_HELP_CONTACT_REMOVE'	    => 'Удалить контакт',
 	'LBL_EMAIL_MENU_HELP_DELETE'			=> 'Удалить указанные E-mail',
-	'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'		=> 'Удалить папку (удалённо или в Suite)',
+	'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'		=> 'Удалить папку (удалённо или в SuiteCRM)',
 	'LBL_EMAIL_MENU_HELP_EDIT_CONTACT'		=> 'Править Контакт',
 	'LBL_EMAIL_MENU_HELP_EDIT_LIST'			=> 'Править список рассылки',
 	'LBL_EMAIL_MENU_HELP_EMPTY_TRASH'		=> 'Очистить все папки-корзины для вашей учётной записи',
@@ -1937,7 +1937,7 @@ $app_strings = array (
 	'LBL_EMAIL_MENU_HELP_MARK_UNFLAGGED'    	=> 'Снять отметку с указанных E-mail',
 	'LBL_EMAIL_MENU_HELP_MARK_UNREAD'		=> 'Пометить указанные E-mail как непрочтенные',
 	'LBL_EMAIL_MENU_HELP_REMOVE_LIST'		=> 'Удалить списки рассылки',
-	'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'		=> 'Переименовать папку(удалённо или в Suite)',
+	'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'		=> 'Переименовать папку(удалённо или в SuiteCRM)',
 	'LBL_EMAIL_MENU_HELP_REPLY'			=> 'Ответить на указанные E-mail',
 	'LBL_EMAIL_MENU_HELP_REPLY_ALL'			=> 'Ответить всем получателям указанных E-mail',
 
@@ -2074,11 +2074,11 @@ $app_strings = array (
 	'LBL_SMTPTYPE_EXCHANGE'                 => 'Microsoft Exchange',
 	'LBL_SMTPTYPE_OTHER'                    => 'Другое',
 	'LBL_EMAIL_SPACER_MAIL_SERVER'			=> '[ Удалённые папки ]',
-	'LBL_EMAIL_SPACER_LOCAL_FOLDER'			=> '[ Папки Suite ]',
+	'LBL_EMAIL_SPACER_LOCAL_FOLDER'			=> '[ Папки SuiteCRM ]',
 	'LBL_EMAIL_SUBJECT'				=> 'Тема',
         'LBL_EMAIL_TO'                     		=> 'Кому',
 	'LBL_EMAIL_SUCCESS'				=> 'Готово',
-	'LBL_EMAIL_SUGAR_FOLDER'			=> 'Папка Suite',
+	'LBL_EMAIL_SUGAR_FOLDER'			=> 'Папка SuiteCRM',
 
 
     'LBL_EMAIL_TEMPLATE_EDIT_PLAIN_TEXT'    => 'Шаблон письма пуст',
@@ -2171,7 +2171,7 @@ $app_strings = array (
     'ERR_DB_FAIL' => 'Ошибка базы данных. Более подробная информация находится в файле sugarcrm.log.',
     'ERR_EXTERNAL_API_403' => 'Доступ запрещён. Данный тип файлов не поддерживается.',
 	'ERR_EXTERNAL_API_NO_OAUTH_TOKEN' => 'OAuth-маркёр доступа не обнаружен.',
-    'ERR_DB_VERSION' => 'Suite CRM версии {0} работает только с базой данных версии {1}.',
+    'ERR_DB_VERSION' => 'SuiteCRM версии {0} работает только с базой данных версии {1}.',
 
     'LBL_ACCOUNT'=>'Контрагент',
     'LBL_OLD_ACCOUNT_LINK'=>'Old Account', ///
@@ -2823,8 +2823,8 @@ $app_strings = array (
 	'MSG_SHOULD_BE' => 'should be',
 	'MSG_OR_GREATER' => 'or greater',
 
-    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to Suite Portal',
-    'LBL_PORTAL_WELCOME_INFO' => 'Suite Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
+    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal',
+    'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
     'LBL_CREATE_CASE' => 'Создать обращение',
     'LBL_CREATE_BUG' => 'Create Bug',
@@ -3783,7 +3783,7 @@ $app_list_strings['project_priority_options'] = array (
 
     $app_list_strings['moduleList']['Sugar_Favorites'] = 'Favorites';
 	  $app_list_strings['eapm_list']= array(
-  	'Sugar'=>'Suite',
+  	'Sugar'=>'SuiteCRM',
   	'WebEx'=>'WebEx',
   	'GoToMeeting'=>'GoToMeeting',
   	'IBMSmartCloud'=>'IBM SmartCloud',
@@ -4574,7 +4574,7 @@ $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
 
 $app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM - основная страница';
 $app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
 $app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
 $app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';

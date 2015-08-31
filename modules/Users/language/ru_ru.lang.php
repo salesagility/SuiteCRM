@@ -168,7 +168,7 @@ $mod_strings = array (
 'LBL_EMAIL_GMAIL_DEFAULTS'=> 'Использовать настройки Gmail&#153;',
 'LBL_EMAIL_LINK_TYPE'=> 'Почтовый клиент' ,
 
-'LBL_EMAIL_LINK_TYPE_HELP'=> '<b>Почтовый клиент Suite</b> - отправка электронных писем при помощи встроенного в Suite почтового клиента.<br><b>Внешний почтовый клиент</b> - любой другой почтовый клиент, например Microsoft Outlook.',
+'LBL_EMAIL_LINK_TYPE_HELP'=> '<b>Почтовый клиент SuiteCRM</b> - отправка электронных писем при помощи встроенного в SuiteCRM почтового клиента.<br><b>Внешний почтовый клиент</b> - любой другой почтовый клиент, например Microsoft Outlook.',
 
 'LBL_EMAIL_NOT_SENT'                => 'Система не в состоянии выполнить ваш запрос. Пожалуйста, свяжитесь с системным администратором.',
 'LBL_EMAIL_PROVIDER'               => 'Почтовая служба',
@@ -191,7 +191,7 @@ $mod_strings = array (
 'LBL_GENERATE_PASSWORD_BUTTON_LABEL'   => 'Сменить пароль',
 'LBL_GENERATE_PASSWORD_BUTTON_TITLE'   => 'Сменить пароль',
 'LBL_GENERATE_PASSWORD'             => 'Сменить пароль',
-'LBL_GROUP_DESC'=> 'Используется только для назначения пользователей в указанную группу (например, для входящих писем) и не может авторизоваться через Веб-интерфейс Suite.' ,
+'LBL_GROUP_DESC'=> 'Используется только для назначения пользователей в указанную группу (например, для входящих писем) и не может авторизоваться через Веб-интерфейс SuiteCRM.' ,
 'LBL_GROUP_USER_STATUS'=> 'Групповой пользователь' ,
 'LBL_GROUP_USER'=> 'Групповой пользователь' ,
 'LBL_HIDE_TABS'=> 'Скрытые закладки' ,
@@ -321,7 +321,7 @@ $mod_strings = array (
 'LBL_RECEIVE_NOTIFICATIONS'=> 'Уведомление о назначении' ,
 'LBL_REGISTER'                      => 'Новый пользователь? Пожалуйста, зарегистрируйтесь',
 'LBL_REGULAR_USER'                  => 'Обычный пользователь',
-'LBL_REMINDER_TEXT'=> 'Временной интервал по умолчанию для напоминания о предстоящем телефонном разговоре или встрече. Напоминания в виде всплывающих окон появляются у всех приглашённых пользователей Suite. Напоминания по электронной почте отправляются ВСЕМ приглашённым.' ,
+'LBL_REMINDER_TEXT'=> 'Временной интервал по умолчанию для напоминания о предстоящем телефонном разговоре или встрече. Напоминания в виде всплывающих окон появляются у всех приглашённых пользователей SuiteCRM. Напоминания по электронной почте отправляются ВСЕМ приглашённым.' ,
 'LBL_REMINDER'=> 'Напоминание о мероприятии' ,
 'LBL_REMINDER_POPUP' => 'Во всплывающем окне',
 'LBL_REMINDER_EMAIL' => 'E-mail',
@@ -525,7 +525,7 @@ $mod_strings = array (
 
 'LBL_WIZARD_FINISH' => 'Нажмите на кнопку <b>Готово</b> для сохранения настроек и перехода к работе с системой. За дополнительной информацией вы можете обратиться к следующим ресурсам:<br /><br />
 <table cellpadding=0 cellspacing=0>
-<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>SuiteCRM</b></a></td></tr>
 <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
 <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="http://www.sugarcrm.com.ua/viewforum.php?f=5" target="_blank"><b>Русскоязычная документация</b></a><br>Русскоязычный форум, посвящённый SugarCRM.</td></tr>
 </table>',
