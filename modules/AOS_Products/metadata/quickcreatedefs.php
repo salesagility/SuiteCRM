@@ -108,6 +108,11 @@ array (
             'name' => 'product_image',
             'customCode' => '{$PRODUCT_IMAGE}',
           ),
+            1 =>
+                array (
+                    'name' => 'aos_product_category_name',
+                    'label' => 'LBL_AOS_PRODUCT_CATEGORYS_NAME',
+                ),
         ),
       ),
     ),
