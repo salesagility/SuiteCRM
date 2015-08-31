@@ -519,7 +519,7 @@ $mod_strings = array (
 
     'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
-<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>SuiteCRM</b></a></td></tr>
 </table>',
 
     'LBL_WIZARD_FINISH1' => 'What would you like to do next?',

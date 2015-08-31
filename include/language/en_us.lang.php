@@ -138,10 +138,10 @@ $app_list_strings = array (
     'Prospects' => 'Target',
     'Campaigns'=>'Campaign',
     'Documents'=>'Document',
-    'SugarFollowing'=>'SuiteFollowing',
+    'SugarFollowing'=>'SuiteCRM Following',
     'Sync'=>'Sync',
     'Users' => 'User',
-  'SugarFavorites'=>'Favorites'
+  'SugarFavorites'=>'SuiteCRM Favorites'
 
         ),
 
@@ -1186,7 +1186,7 @@ $app_strings = array (
     'LBL_ROUTING_BUTTON_SAVE'               => 'Save Rule',
 
     'LBL_ROUTING_ACTIONS_COPY_MAIL'         => 'Copy Mail',
-    'LBL_ROUTING_ACTIONS_DELETE_BEAN'       => 'Delete Suite Object',
+    'LBL_ROUTING_ACTIONS_DELETE_BEAN'       => 'Delete SuiteCRM Object',
     'LBL_ROUTING_ACTIONS_DELETE_FILE'       => 'Delete File',
     'LBL_ROUTING_ACTIONS_DELETE_MAIL'       => 'Delete Email',
     'LBL_ROUTING_ACTIONS_FORWARD'           => 'Forward Email',
@@ -1279,12 +1279,12 @@ $app_strings = array (
     'LBL_EMAIL_ADDRESSES'                   => 'Email',
     'LBL_EMAIL_ADDRESS_PRIMARY'             => 'Email Address',
     'LBL_EMAIL_ADDRESSES_TITLE'             => 'Email Addresses',
-    'LBL_EMAIL_ARCHIVE_TO_SUGAR'            => 'Import to Suite',
+    'LBL_EMAIL_ARCHIVE_TO_SUGAR'            => 'Import to SuiteCRM',
     'LBL_EMAIL_ASSIGNMENT'                  => 'Assignment',
     'LBL_EMAIL_ATTACH_FILE_TO_EMAIL'        => 'Attach',
     'LBL_EMAIL_ATTACHMENT'                  => 'Attach',
     'LBL_EMAIL_ATTACHMENTS'                 => 'From Local System',
-    'LBL_EMAIL_ATTACHMENTS2'                => 'From Suite Documents',
+    'LBL_EMAIL_ATTACHMENTS2'                => 'From SuiteCRM Documents',
     'LBL_EMAIL_ATTACHMENTS3'                => 'Template Attachments',
     'LBL_EMAIL_ATTACHMENTS_FILE'            => 'File',
     'LBL_EMAIL_ATTACHMENTS_DOCUMENT'        => 'Document',
@@ -1404,7 +1404,7 @@ $app_strings = array (
     'LBL_EMAIL_IE_DELETE_SUCCESSFUL'        => 'Deletion successful.',
     'LBL_EMAIL_IE_SAVE'                     => 'Saving Mail Account Information',
     'LBL_EMAIL_IMPORTING_EMAIL'             => 'Importing Email',
-    'LBL_EMAIL_IMPORT_EMAIL'                => 'Import to Suite',
+    'LBL_EMAIL_IMPORT_EMAIL'                => 'Import to SuiteCRM',
     'LBL_EMAIL_IMPORT_SETTINGS'                => 'Import Settings',
     'LBL_EMAIL_INVALID'                     => 'Invalid',
     'LBL_EMAIL_LOADING'                     => 'Loading...',
@@ -1428,13 +1428,13 @@ $app_strings = array (
     'LBL_EMAIL_MENU_RENAMING_FOLDER'        => 'Renaming Folder',
     'LBL_EMAIL_MENU_MAKE_SELECTION'         => 'Please make a selection before trying this operation.',
 
-    'LBL_EMAIL_MENU_HELP_ADD_FOLDER'        => 'Create a Folder (remote or in Suite)',
+    'LBL_EMAIL_MENU_HELP_ADD_FOLDER'        => 'Create a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_ARCHIVE'           => 'Archive these email(s) to SuiteCRM',
     'LBL_EMAIL_MENU_HELP_COMPOSE_TO_LIST'   => 'Email selected Mailing Lists',
     'LBL_EMAIL_MENU_HELP_CONTACT_COMPOSE'   => 'Email this Contact',
     'LBL_EMAIL_MENU_HELP_CONTACT_REMOVE'    => 'Remove a Contact',
     'LBL_EMAIL_MENU_HELP_DELETE'            => 'Delete these email(s)',
-    'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'     => 'Delete a Folder (remote or in Suite)',
+    'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'     => 'Delete a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_EDIT_CONTACT'      => 'Edit a Contact',
     'LBL_EMAIL_MENU_HELP_EDIT_LIST'         => 'Edit a Mailing List',
     'LBL_EMAIL_MENU_HELP_EMPTY_TRASH'       => 'Empties all Trash folders for your mail accounts',
@@ -1443,7 +1443,7 @@ $app_strings = array (
     'LBL_EMAIL_MENU_HELP_MARK_UNFLAGGED'    => 'Mark these email(s) unflagged',
     'LBL_EMAIL_MENU_HELP_MARK_UNREAD'       => 'Mark these email(s) unread',
     'LBL_EMAIL_MENU_HELP_REMOVE_LIST'       => 'Removes Mailing Lists',
-    'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'     => 'Rename a Folder (remote or in Suite)',
+    'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'     => 'Rename a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_REPLY'             => 'Reply to these email(s)',
     'LBL_EMAIL_MENU_HELP_REPLY_ALL'         => 'Reply to all recipients for these email(s)',
 
@@ -1577,7 +1577,7 @@ $app_strings = array (
   'LBL_SMTPTYPE_EXCHANGE'                 => 'Microsoft Exchange',
     'LBL_SMTPTYPE_OTHER'                  => 'Other',
     'LBL_EMAIL_SPACER_MAIL_SERVER'          => '[ Remote Folders ]',
-    'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ Suite Folders ]',
+    'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ SuiteCRM Folders ]',
     'LBL_EMAIL_SUBJECT'                     => 'Subject',
     'LBL_EMAIL_TO'                        => 'To',
     'LBL_EMAIL_SUCCESS'                     => 'Success',
@@ -2217,16 +2217,16 @@ $app_strings = array (
 
     // MySugar status strings
     'LBL_CREATING_NEW_PAGE' => 'Creating New Page ...',
-    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Suite Dashlets menu option.',
+    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Dashlets menu option.',
     'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
     'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title ...',
     'LBL_RETRIEVING_PAGE' => 'Retrieving Page ...',
-    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of Suite Dashlets your adminstrator has set. Please remove a Suite Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding Suite Dashlet ...',
-    'LBL_ADDED_DASHLET' => 'Suite Dashlet Added',
-    'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this Suite Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing Suite Dashlet ...',
-    'LBL_REMOVED_DASHLET' => 'Suite Dashlet Removed',
+    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
+    'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
     'LBL_ADD_PAGE' => 'Add Page',
@@ -2236,7 +2236,7 @@ $app_strings = array (
 
     'LBL_LOADING_PAGE' => 'Loading page, please wait...',
 
-    'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this Suite Dashlet.',
+    'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this SuiteCRM Dashlet.',
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
@@ -2300,8 +2300,8 @@ $app_strings = array (
   'MSG_SHOULD_BE' => 'should be',
   'MSG_OR_GREATER' => 'or greater',
 
-    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to Suite Portal 5.1.0',
-    'LBL_PORTAL_WELCOME_INFO' => 'Suite Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to Suite that can be deployed within any website.',
+    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal 5.1.0',
+    'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
     'LBL_CREATE_CASE' => 'Create Case',
     'LBL_CREATE_BUG' => 'Create Bug',
