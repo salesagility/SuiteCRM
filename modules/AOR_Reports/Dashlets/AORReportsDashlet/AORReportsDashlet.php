@@ -30,7 +30,7 @@ class AORReportsDashlet extends Dashlet {
                     'id' => $parameterId,
                     'operator' => $def['parameter_operator'][$key],
                     'type' => $def['parameter_type'][$key],
-                    'value' => $def['parameter_value'][$key]);
+                    'value' => $def['parameter_value'][1]);
             }
         }
         if(!empty($def['aor_report_id'])) {
