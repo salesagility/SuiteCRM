@@ -215,6 +215,10 @@ Alerts.prototype.updateManager = function() {
             Alerts.prototype.refreshPeriod = 10000;
         }
 
+        if(data.response.length > 0) {
+            console.log('found alerts');
+        }
+
     }).fail(function() {
         Alerts.prototype.managerFailureCount++;
         switch (Alerts.prototype.managerFailureCount) {
