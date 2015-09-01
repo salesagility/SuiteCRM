@@ -334,4 +334,15 @@ class Account extends Company {
 		return get_unlinked_email_query($type, $this);
 	}
 
+	/**
+	 * Create a query string for select Products/Services Purchased list from database.
+	 * @return string final query
+	 */
+	public function getProductsServicesPurchasedQuery() {
+		$query = "SELECT aos_products_quotes.* FROM aos_products_quotes
+					JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted'
+					JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '{$this->id}'";
+		return $query;
+	}
+
 }
