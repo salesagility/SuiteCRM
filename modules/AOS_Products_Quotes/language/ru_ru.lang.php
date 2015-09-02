@@ -78,5 +78,6 @@ $mod_strings = array (
   
   'LBL_SERVICE_MODULE_NAME' => 'Услуги',
   'LBL_LIST_NUM' => '№',
+    'LBL_PRODUCTS_SERVICES' => 'Продукт / Услуга',
 );
 ?>

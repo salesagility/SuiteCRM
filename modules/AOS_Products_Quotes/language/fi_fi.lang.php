@@ -72,5 +72,6 @@ $mod_strings = array (
   
   'LBL_SERVICE_MODULE_NAME' => 'Palvelut',
   'LBL_LIST_NUM' => 'Num.',
+    'LBL_PRODUCTS_SERVICES' => 'Tuote / palvelu',
 );
 ?>
