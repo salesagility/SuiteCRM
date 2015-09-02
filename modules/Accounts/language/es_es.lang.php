@@ -199,4 +199,5 @@ $mod_strings = array (
   'LBL_PHONE_ALTERNATE' => 'Teléfono alternativo',
   'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Usuario asignado',
   'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Emails de contactos relacionados',
+    'LBL_PRODUCTS_SERVICES_PURCHASED_SUBPANEL_TITLE' => 'Productos y servicios adquiridos',
 );
