@@ -53,6 +53,8 @@ function buildEditField(){
     $(".inlineEdit a").click(function (e) {
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
+			var linkTarget = $(this).attr("target");
+			
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
@@ -64,7 +66,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-                    window.location.href = linkUrl;
+					if (linkTarget)
+						window.open(linkUrl, linkTarget);
+					else
+						window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
