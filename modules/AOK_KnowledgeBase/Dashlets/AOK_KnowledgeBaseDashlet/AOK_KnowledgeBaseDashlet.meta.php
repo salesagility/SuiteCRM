@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,44 +38,18 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-*}
-<!DOCTYPE html>
-<html {$langHeader}>
-<head>
-    <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
-    <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <!-- Bootstrap -->
-    <link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">
-    <link href="themes/SuiteR/css/footable.core.css" rel="stylesheet" type="text/css" />
+/*********************************************************************************
 
-    <!-- qtip -->
-    <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
+ * Description:  Defines the English language pack for the base application.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
+ 
+global $app_strings;
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <![endif]-->
-    <title>{$APP.LBL_BROWSER_TITLE}</title>
-    {$SUGAR_JS}
-    {literal}
-    <script type="text/javascript">
-        <!--
-        SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
-        SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-        SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-        SUGAR.themes.loading_image   = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-        if ( YAHOO.env.ua )
-            UA = YAHOO.env.ua;
-        -->
-    </script>
-    {/literal}
-    {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteR/js/jscolor.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-</head>
+$dashletMeta['AOK_KnowledgeBaseDashlet'] = array('module'		=> 'AOK_KnowledgeBase',
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'AOK_KnowledgeBase'), 
+                                          'description' => 'A customizable view into AOK_KnowledgeBase',
+                                          'icon'        => 'icon_AOK_KnowledgeBase_32.gif',
+                                          'category'    => 'Module Views');

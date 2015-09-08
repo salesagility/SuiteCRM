@@ -48,6 +48,17 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
 	'ERR_DELETE_RECORD'					=> 'You must specify a record number to delete the account.',
+    'LBL_TOOL_TIP_BOX_TITLE' => 'KnowledgeBase Suggestions',
+    'LBL_TOOL_TIP_TITLE' => 'Title: ',
+    'LBL_TOOL_TIP_BODY'  => 'Body: ',
+    'LBL_TOOL_TIP_INFO'  => 'Additional Info: ',
+    'LBL_TOOL_TIP_USE'   => 'Use as: ',
+    'LBL_SUGGESTION_BOX' => 'Suggestions',
+    'LBL_NO_SUGGESTIONS' => 'No Suggestions',
+    'LBL_RESOLUTION_BUTTON'  => 'Resolution',
+    'LBL_SUGGESTION_BOX_STATUS' => 'Status',
+    'LBL_SUGGESTION_BOX_TITLE' => 'Title',
+    'LBL_SUGGESTION_BOX_REL' => 'Relevance',
 
 	'LBL_ACCOUNT_ID'					=> 'Account ID',
 	'LBL_ACCOUNT_NAME'					=> 'Account Name:',
@@ -64,7 +75,7 @@ $mod_strings = array (
 	'LBL_CONTACTS_SUBPANEL_TITLE'		=> 'Contacts',
 	'LBL_DEFAULT_SUBPANEL_TITLE'		=> 'Cases',
 	'LBL_DESCRIPTION'					=> 'Description:',
-	'LBL_FILENANE_ATTACHMENT' 			=> 'File Attachment',	
+    'LBL_FILENANE_ATTACHMENT' 			=> 'File Attachment',
 	'LBL_HISTORY_SUBPANEL_TITLE'		=> 'History',
 	'LBL_INVITEE'						=> 'Contacts',
 	'LBL_MEMBER_OF'						=> 'Account',
