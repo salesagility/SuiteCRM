@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Cases'] = 
+$viewdefs ['Cases'] =
 array (
   'EditView' => 
   array (
@@ -56,6 +56,21 @@ array (
           'label' => '10',
           'field' => '30',
         ),
+      ),
+      'includes' => 
+      array (
+          0 =>
+              array (
+                  'file' => 'include/javascript/bindWithDelay.js',
+              ),
+        1 =>
+        array (
+          'file' => 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.js',
+        ),
+          2 =>
+              array (
+                  'file' => 'include/javascript/qtip/jquery.qtip.min.js',
+              ),
       ),
       'useTabs' => false,
       'tabDefs' => 
@@ -117,7 +132,12 @@ array (
             'name' => 'description',
             'nl2br' => true,
           ),
-          1 => '',
+          1 =>
+          array (
+            'name' => 'suggestion_box',
+            //'studio' => 'visible',
+            'label' => 'LBL_SUGGESTION_BOX',
+          ),
         ),
         5 => 
         array (

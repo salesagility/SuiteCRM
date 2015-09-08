@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,44 +38,26 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-*}
-<!DOCTYPE html>
-<html {$langHeader}>
-<head>
-    <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
-    <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <!-- Bootstrap -->
-    <link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">
-    <link href="themes/SuiteR/css/footable.core.css" rel="stylesheet" type="text/css" />
 
-    <!-- qtip -->
-    <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <![endif]-->
-    <title>{$APP.LBL_BROWSER_TITLE}</title>
-    {$SUGAR_JS}
-    {literal}
-    <script type="text/javascript">
-        <!--
-        SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
-        SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-        SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-        SUGAR.themes.loading_image   = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-        if ( YAHOO.env.ua )
-            UA = YAHOO.env.ua;
-        -->
-    </script>
-    {/literal}
-    {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteR/js/jscolor.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-</head>
+
+global $current_user;
+
+$dashletData['AOK_Knowledge_Base_CategoriesDashlet']['searchFields'] = array('date_entered'     => array('default' => ''),
+                                                          'date_modified'    => array('default' => ''),
+                                                          'assigned_user_id' => array('type'    => 'assigned_user_name', 
+                                                                                      'default' => $current_user->name));
+$dashletData['AOK_Knowledge_Base_CategoriesDashlet']['columns'] =  array(   'name' => array('width'   => '40', 
+                                                                      'label'   => 'LBL_LIST_NAME',
+                                                                      'link'    => true,
+                                                                      'default' => true), 
+                                                      'date_entered' => array('width'   => '15', 
+                                                                              'label'   => 'LBL_DATE_ENTERED',
+                                                                              'default' => true),
+                                                      'date_modified' => array('width'   => '15', 
+                                                                              'label'   => 'LBL_DATE_MODIFIED'),    
+                                                      'created_by' => array('width'   => '8', 
+                                                                            'label'   => 'LBL_CREATED'),
+                                                      'assigned_user_name' => array('width'   => '8', 
+                                                                                     'label'   => 'LBL_LIST_ASSIGNED_USER'),
+                                               );

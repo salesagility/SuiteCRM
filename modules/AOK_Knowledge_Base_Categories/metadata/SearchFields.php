@@ -1,4 +1,5 @@
-{*
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,44 +38,20 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-*}
-<!DOCTYPE html>
-<html {$langHeader}>
-<head>
-    <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
-    <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <!-- Bootstrap -->
-    <link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">
-    <link href="themes/SuiteR/css/footable.core.css" rel="stylesheet" type="text/css" />
-
-    <!-- qtip -->
-    <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <![endif]-->
-    <title>{$APP.LBL_BROWSER_TITLE}</title>
-    {$SUGAR_JS}
-    {literal}
-    <script type="text/javascript">
-        <!--
-        SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
-        SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-        SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-        SUGAR.themes.loading_image   = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-        if ( YAHOO.env.ua )
-            UA = YAHOO.env.ua;
-        -->
-    </script>
-    {/literal}
-    {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteR/js/jscolor.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-</head>
+$module_name = 'AOK_Knowledge_Base_Categories';
+$searchFields[$module_name] = 
+	array (
+		'name' => array( 'query_type'=>'default'),
+		'current_user_only'=> array('query_type'=>'default','db_field'=>array('assigned_user_id'),'my_items'=>true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+		'assigned_user_id'=> array('query_type'=>'default'),
+	    
+		//Range Search Support 
+	   'range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'start_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'end_range_date_entered' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+	   'start_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_modified' => array ('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),	
+	    //Range Search Support 		
+	);
+?>

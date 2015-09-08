@@ -1,4 +1,4 @@
-{*
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,44 +37,42 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-*}
-<!DOCTYPE html>
-<html {$langHeader}>
-<head>
-    <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
-    <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <!-- Bootstrap -->
-    <link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">
-    <link href="themes/SuiteR/css/footable.core.css" rel="stylesheet" type="text/css" />
-
-    <!-- qtip -->
-    <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <![endif]-->
-    <title>{$APP.LBL_BROWSER_TITLE}</title>
-    {$SUGAR_JS}
-    {literal}
-    <script type="text/javascript">
-        <!--
-        SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
-        SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-        SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-        SUGAR.themes.loading_image   = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-        if ( YAHOO.env.ua )
-            UA = YAHOO.env.ua;
-        -->
-    </script>
-    {/literal}
-    {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteR/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteR/js/jscolor.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-</head>
+$mod_strings = array (
+  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
+  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
+  'LBL_ID' => 'ID',
+  'LBL_DATE_ENTERED' => 'Date Created',
+  'LBL_DATE_MODIFIED' => 'Date Modified',
+  'LBL_MODIFIED' => 'Modified By',
+  'LBL_MODIFIED_ID' => 'Modified By Id',
+  'LBL_MODIFIED_NAME' => 'Modified By Name',
+  'LBL_CREATED' => 'Created By',
+  'LBL_CREATED_ID' => 'Created By Id',
+  'LBL_DESCRIPTION' => 'Body',
+  'LBL_ADDITIONAL_INFO' => 'Additional Info (private)',
+  'LBL_DELETED' => 'Deleted',
+  'LBL_NAME' => 'Title',
+  'LBL_CREATED_USER' => 'Created by User',
+  'LBL_MODIFIED_USER' => 'Modified by User',
+  'LBL_LIST_NAME' => 'Name',
+  'LBL_EDIT_BUTTON' => 'Edit',
+  'LBL_REMOVE' => 'Remove',
+  'LBL_LIST_FORM_TITLE' => 'Knowledge Base List',
+  'LBL_MODULE_NAME' => 'Knowledge Base',
+  'LBL_MODULE_TITLE' => 'Knowledge Base',
+  'LBL_HOMEPAGE_TITLE' => 'My Knowledge Base',
+  'LNK_NEW_RECORD' => 'Create Knowledge Base',
+  'LNK_LIST' => 'View Knowledge Base',
+  'LNK_IMPORT_AOK_KNOWLEDGEBASE' => 'Import Knowledge Base',
+  'LBL_SEARCH_FORM_TITLE' => 'Search Knowledge Base',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
+  'LBL_AOK_KNOWLEDGEBASE_SUBPANEL_TITLE' => 'Knowledge Base',
+  'LBL_NEW_FORM_TITLE' => 'New Knowledge Base',
+  'LBL_STATUS' => 'Status',
+  'LBL_REVISION' => 'Revision',
+  'LBL_AUTHOR_USER_ID' => 'Author (related User ID)',
+  'LBL_AUTHOR' => 'Author',
+  'LBL_APPROVER_USER_ID' => 'Approver (related User ID)',
+  'LBL_APPROVER' => 'Approver',
+);

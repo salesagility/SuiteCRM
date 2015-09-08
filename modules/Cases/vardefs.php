@@ -43,6 +43,12 @@ $dictionary['Case'] = array('table' => 'cases','audited'=>true, 'unified_search'
 		'comment' => 'Cases are issues or problems that a customer asks a support representative to resolve'
                                ,'fields' => array (
 
+        'suggestion_box' => array(
+            'name' => 'suggestion_box',
+            'vname' => 'LBL_SUGGESTION_BOX',
+            'type' => 'readonly',
+            'source' => 'non-db',
+        ),
 
    'account_name' =>
   array (
