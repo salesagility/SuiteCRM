@@ -2950,6 +2950,6 @@ $app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categorí
 $app_list_strings['aok_status_list']['Draft'] = 'Calado';
 $app_list_strings['aok_status_list']['Expired'] = 'Expirado';
 $app_list_strings['aok_status_list']['In_Review'] = 'En revisión';
-$app_list_strings['aok_status_list']['Published'] = 'Publicado';
+//$app_list_strings['aok_status_list']['Published'] = 'Publicado';
 $app_list_strings['aok_status_list']['published_private'] = 'Particular';
 $app_list_strings['aok_status_list']['published_public'] = 'Público';

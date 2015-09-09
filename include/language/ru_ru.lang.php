@@ -4675,7 +4675,7 @@ $app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB кате�
 $app_list_strings['aok_status_list']['Draft'] = 'проект';
 $app_list_strings['aok_status_list']['Expired'] = 'истек';
 $app_list_strings['aok_status_list']['In_Review'] = 'В обзоре';
-$app_list_strings['aok_status_list']['Published'] = 'опубликованный';
+//$app_list_strings['aok_status_list']['Published'] = 'опубликованный';
 $app_list_strings['aok_status_list']['published_private'] = 'Частный';
 $app_list_strings['aok_status_list']['published_public'] = 'общественного';
 
