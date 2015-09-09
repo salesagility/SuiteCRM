@@ -49,10 +49,6 @@
     <!-- Bootstrap -->
     <link href="themes/SuiteR/css/bootstrap.min.css" rel="stylesheet">
     <link href="themes/SuiteR/css/footable.core.css" rel="stylesheet" type="text/css" />
-
-    <!-- qtip -->
-    <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
