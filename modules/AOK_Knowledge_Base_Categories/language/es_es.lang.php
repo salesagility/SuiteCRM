@@ -69,3 +69,5 @@ $mod_strings = array (
   'LBL_AOK_KNOWLEDGE_BASE_CATEGORIES_SUBPANEL_TITLE' => 'KB Categories',
   'LBL_NEW_FORM_TITLE' => 'Nuevo KB Categories',
 );
+
+$mod_strings['LBL_AOK_KNOWLEDGEBASE_AOK_KNOWLEDGE_BASE_CATEGORIES_FROM_AOK_KNOWLEDGEBASE_TITLE'] = 'Knowledge Base';
