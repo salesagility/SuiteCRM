@@ -258,6 +258,18 @@ $dictionary['AOK_KnowledgeBase'] = array(
 	'optimistic_locking'=>true,
 		'unified_search'=>true,
 	);
+
+// created: 2015-03-04 12:01:39
+$dictionary["AOK_KnowledgeBase"]["fields"]["aok_knowledgebase_aok_knowledge_base_categories"] = array (
+    'name' => 'aok_knowledgebase_aok_knowledge_base_categories',
+    'type' => 'link',
+    'relationship' => 'aok_knowledgebase_aok_knowledge_base_categories',
+    'source' => 'non-db',
+    'module' => 'AOK_Knowledge_Base_Categories',
+    'bean_name' => false,
+    'vname' => 'LBL_AOK_KNOWLEDGEBASE_AOK_KNOWLEDGE_BASE_CATEGORIES_FROM_AOK_KNOWLEDGE_BASE_CATEGORIES_TITLE',
+);
+
 if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }

@@ -3299,4 +3299,16 @@ $app_strings ['documentation'] = array (
 	'PRO' => '04_Sugar_Professional',
 	'COM' => '05_Sugar_Community_Edition'
 );
+
+
+// knowledge base
+$app_list_strings['moduleList']['AOK_KnowledgeBase'] = 'Knowledge Base';
+$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categories';
+$app_list_strings['aok_status_list']['Draft'] = 'Draft';
+$app_list_strings['aok_status_list']['Expired'] = 'Expired';
+$app_list_strings['aok_status_list']['In_Review'] = 'In Review';
+$app_list_strings['aok_status_list']['Published'] = 'Published';
+$app_list_strings['aok_status_list']['published_private'] = 'Private';
+$app_list_strings['aok_status_list']['published_public'] = 'Public';
+
 ?>

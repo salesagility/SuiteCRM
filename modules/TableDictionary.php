@@ -99,6 +99,9 @@ include("metadata/documents_bugsMetaData.php");
 include("metadata/oauth_nonce.php");
 include("metadata/cron_remove_documentsMetaData.php");
 
+//konwledge base
+include('metadata/aok_knowledgebase_aok_knowledge_base_categoriesMetaData.php');
+
 if(file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')){
 	include('custom/application/Ext/TableDictionary/tabledictionary.ext.php');
 }
