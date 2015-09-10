@@ -196,8 +196,10 @@ $next_step = 0;
 // use a simple array to map out the steps of the installer page flow
 $workflow = array(  'welcome.php',
                     'ready.php',
-                    'license.php',
-                    'installType.php',
+
+                    // TODO remove these files..
+                    //'license.php',
+                    //'installType.php',
 );
 $workflow[] =  'systemOptions.php';
 $workflow[] = 'dbConfig_a.php';
@@ -360,8 +362,8 @@ if($next_clicked) {
         case 'welcome.php':
         	$_SESSION['language'] = $_REQUEST['language'];
    			$_SESSION['setup_site_admin_user_name'] = 'admin';
-        break;
-      case 'license.php':
+//        break;
+//      case 'license.php':
                 $_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
                 $_SESSION['license_submitted']      = true;
 

@@ -288,6 +288,7 @@ $mod_strings = array(
     'LBL_LICENSE_CHKENV_HEADER'         => 'Checking Environment',
     'LBL_LICENSE_CHKDB_HEADER'          => 'Verifying DB Credentials.',
     'LBL_LICENSE_CHECK_PASSED'          => 'System passed check for compatibility.',
+	'LBL_CREATE_CACHE' => 'Preparing to Install...',
     'LBL_LICENSE_REDIRECT'              => 'Redirecting in ',
 	'LBL_LICENSE_DIRECTIONS'			=> 'If you have your license information, please enter it in the fields below.',
 	'LBL_LICENSE_DOWNLOAD_KEY'			=> 'Enter Download Key',
