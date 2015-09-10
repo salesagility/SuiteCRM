@@ -311,6 +311,7 @@ $mod_strings = array(
     'LBL_LICENSE_CHKENV_HEADER'         => 'Verificando el entorno',
     'LBL_LICENSE_CHKDB_HEADER'          => 'Verificando las credenciales de BD.',
     'LBL_LICENSE_CHECK_PASSED'          => 'El sistema cumplió los requisitos.',
+	'LBL_CREATE_CACHE' => 'Preparando para instalar...',
     'LBL_LICENSE_REDIRECT'              => 'Redireccionando en ',
 	'LBL_LICENSE_DIRECTIONS'			=> 'Si tiene la información de su licencia, por favor ingrésela en los siguientes campos.',
 	'LBL_LICENSE_DOWNLOAD_KEY'			=> 'Ingresar Clave de Descarga',

@@ -302,6 +302,7 @@ $mod_strings = array(
 'LBL_LICENSE_CHKENV_HEADER'         => 'Проверка системного окружения',
 'LBL_LICENSE_CHKDB_HEADER'          => 'Проверка прав доступа к БД',
 'LBL_LICENSE_CHECK_PASSED'          => 'Проверка совместимости успешно пройдена',
+    'LBL_CREATE_CACHE' => 'Подготовка к установке...',
 'LBL_LICENSE_REDIRECT'              => 'Перенаправление через ',
 'LBL_LICENSE_DIRECTIONS'=> 'Если у вас есть лицензионная информация, пожалуйста, введите её в указанные поля.' ,
 'LBL_LICENSE_DOWNLOAD_KEY'=> 'Загрузить ключ' ,
