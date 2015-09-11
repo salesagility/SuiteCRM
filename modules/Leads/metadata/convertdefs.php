@@ -78,20 +78,23 @@ $viewdefs['Contacts']['ConvertLead'] = array(
                 
             ),
             array (
-                array('name'=>'primary_address_state', 'label' => 'LBL_STATE'),
+                array('name'=>'primary_address_city', 'label' => 'LBL_CITY'),
                 'phone_mobile',
             ),
             array (
-                array('name'=>'primary_address_postalcode', 'label' => 'LBL_POSTAL_CODE'),
+                array('name'=>'primary_address_state', 'label' => 'LBL_STATE'),
                 'phone_other',
             ),
             array (
-                array('name'=>'primary_address_country', 'label' => 'LBL_COUNTRY'),
+                array('name'=>'primary_address_postalcode', 'label' => 'LBL_POSTAL_CODE'),
                 'phone_fax',
             ),
             array (
-                'email1',
+                array('name'=>'primary_address_country', 'label' => 'LBL_COUNTRY'),
                 'lead_source',
+            ),
+            array (
+                'email1'
             ),
             array(
                 'description'
