@@ -75,7 +75,6 @@ $viewdefs['Contacts']['ConvertLead'] = array(
             array (
                 array('name' => 'primary_address_street', 'label' => 'LBL_PRIMARY_ADDRESS'),
                 'phone_work',
-                
             ),
             array (
                 array('name'=>'primary_address_city', 'label' => 'LBL_CITY'),
