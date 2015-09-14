@@ -544,6 +544,70 @@ input[type=password] {
 }
 */
 
+
+.smtp_tab_toggler.selected {
+    border: 1px solid #B41C4F;
+}
+
+.form_section {
+    padding: 10px;
+}
+
+.form_section .clear {
+    display: block;
+    float: none;
+    clear: both;
+}
+
+.form_section .formrow {
+    display: block;
+    float: left;
+    width: 430px;
+}
+
+.form_section .formrow label {
+    display: block;
+    float: left;
+    width: 180px;
+    margin-top: 11px;
+}
+.form_section .formrow input[type="checkbox"] {
+    margin-top: 11px;
+}
+
+.form_section .formrow label i {
+    cursor: pointer;
+    /* border: 1px solid lightgrey; */
+    padding: 0 6px;
+    position: relative;
+    z-index: 1000;
+}
+.form_section .formrow label i .tooltip {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 500px;
+    border: 1px solid #B41C4F;
+    background: white;
+    padding: 10px 20px;
+    -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    z-index: 1001;
+}
+.form_section .formrow label i:hover .tooltip {
+    display: block;
+}
+
+.form_section .formrow img {
+    margin-top: 11px;
+}
+
+.text-right {
+    text-align: right;
+}
+
 /************************************************************************************
 MEDIA QUERIES
 *************************************************************************************/
