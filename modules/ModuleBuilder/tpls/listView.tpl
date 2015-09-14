@@ -178,7 +178,9 @@ function dragDropInit(){
             studiotabs.fields["subslot"+ msi] = new Studio2.ListDD("subslot" + msi, "subTabs", false);
     }
 
-    studiotabs.fields["subslot"+ (msi - 1) ].updateTabs();
+    if(studiotabs.modCount > 0) {
+        studiotabs.fields["subslot" + (msi - 1)].updateTabs();
+    }
 };
 
 resizeDDLists = function() {
