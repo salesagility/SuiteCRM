@@ -587,6 +587,75 @@ Click on the link below to reset your password:
 $contact_user_link_guid',
         'name' => 'Forgot Password email',
         ),
+
+	// SMTP settings
+
+	'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from Sugar, as sent from the specified email account.',
+	'LBL_CHOOSE_EMAIL_PROVIDER'        => 'Choose your Email provider:',
+
+	'LBL_SMTPTYPE_GMAIL'                    => 'Gmail',
+	'LBL_SMTPTYPE_YAHOO'                    => 'Yahoo! Mail',
+	'LBL_SMTPTYPE_EXCHANGE'                 => 'Microsoft Exchange',
+	'LBL_SMTPTYPE_OTHER'                  => 'Other',
+	'LBL_MAIL_SMTP_SETTINGS'           => 'SMTP Server Specification',
+	'LBL_MAIL_SMTPSERVER'				=> 'SMTP Server:',
+	'LBL_MAIL_SMTPPORT'					=> 'SMTP Port:',
+	'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',
+	'LBL_EMAIL_SMTP_SSL_OR_TLS'         => 'Enable SMTP over SSL or TLS?',
+	'LBL_GMAIL_SMTPUSER'					=> 'Gmail Email Address:',
+	'LBL_GMAIL_SMTPPASS'					=> 'Gmail Password:',
+	'LBL_ALLOW_DEFAULT_SELECTION'           => 'Allow users to use this account for outgoing email:',
+	'LBL_ALLOW_DEFAULT_SELECTION_HELP'          => 'When this option is selected, all users will be able to send emails using the same outgoing mail account used to send system notifications and alerts.  If the option is not selected, users can still use the outgoing mail server after providing their own account information.',
+
+	'LBL_YAHOOMAIL_SMTPPASS'					=> 'Yahoo! Mail Password:',
+	'LBL_YAHOOMAIL_SMTPUSER'					=> 'Yahoo! Mail ID:',
+
+	'LBL_EXCHANGE_SMTPPASS'					=> 'Exchange Password:',
+	'LBL_EXCHANGE_SMTPUSER'					=> 'Exchange Username:',
+	'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port:',
+	'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server:',
+
+
+	'LBL_MAIL_SMTPUSER'					=> 'SMTP Username:',
+	'LBL_MAIL_SMTPPASS'					=> 'SMTP Password:',
+
+	// Branding
+
+	'LBL_WIZARD_SYSTEM_TITLE' => 'Branding',
+	'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your Sugar.',
+	'SYSTEM_NAME_WIZARD'=>'Name:',
+	'SYSTEM_NAME_HELP'=>'This is the name that displays in the title bar of your browser.',
+	'NEW_LOGO'=>'Select Logo:',
+	'NEW_LOGO_HELP'=>'The image file format can be either .png or .jpg. The maximum height is 17px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
+	'COMPANY_LOGO_UPLOAD_BTN' => 'Upload',
+	'CURRENT_LOGO'=>'Current Logo:',
+    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the Sugar application.',
+
+	// System Local Settings
+
+
+	'LBL_LOCALE_TITLE' => 'System Locale Settings',
+	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in Sugar to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
+	'LBL_DATE_FORMAT' => 'Date Format:',
+	'LBL_TIME_FORMAT' => 'Time Format:',
+	'LBL_LANGUAGE'=>'Language:',
+	'LBL_CURRENCY'=>'Currency:',
+	'LBL_CURRENCY_SYMBOL'=>'Currency Symbol:',
+	'LBL_CURRENCY_ISO4217' => 'ISO 4217 Currency Code:',
+	'LBL_NUMBER_GROUPING_SEP' => '1000s separator:',
+	'LBL_DECIMAL_SEP' => 'Decimal symbol:',
+	'LBL_NAME_FORMAT' => 'Name Format:',
+	'UPLOAD_LOGO' => 'Please wait, logo uploading..',
+	'ERR_UPLOAD_FILETYPE' => 'File type do not allowed, please upload a jpeg or png.',
+	'ERR_LANG_UPLOAD_UNKNOWN' => 'Unknown file upload error occured.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE' => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE' => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_PARTIAL' => 'The uploaded file was only partially uploaded.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_NO_FILE' => 'No file was uploaded.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_NO_TMP_DIR' => 'Missing a temporary folder.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_CANT_WRITE' => 'Failed to write file to disk.',
+	'ERR_UPLOAD_FILE_UPLOAD_ERR_EXTENSION' => 'A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop.',
+
 );
 
 ?>

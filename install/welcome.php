@@ -154,6 +154,7 @@ $out = <<<EOQ
     </div>
     </div>
 	<footer id="install_footer">
+	    <!-- TODO-g: fix it on layout! -->
         <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
     </footer>
 </div>
@@ -243,6 +244,7 @@ function callSysCheck(){
                         if ( YAHOO.util.Selector.query('button', 'p_msg', true) != null )
                             YAHOO.util.Selector.query('button', 'p_msg', true).style.display = 'none';
                         scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
+                        // TODO-g: add more language files..
                         scsbody += "<p><img src='install/processing.gif' alt=\"{$mod_strings['LBL_CREATE_CACHE']}\"></p>";
                         scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}<br>{$mod_strings['LBL_CREATE_CACHE']}</p>";
                         //scsbody += "<div id='cntDown'>{$mod_strings['LBL_THREE']}</div>";
