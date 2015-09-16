@@ -49,7 +49,7 @@ class AOW_WorkFlowController extends SugarController {
             } else {
                 $module = $_REQUEST['aow_module'];
             }
-            echo $module;
+            echo htmlspecialchars($module);
         }
         die;
 
