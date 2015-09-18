@@ -32,12 +32,12 @@ array (
       'useTabs' => false,
       'tabDefs' => 
       array (
-        'LBL_ACCOUNT_INFORMATION' => 
+        'LBL_PANEL_OVERVIEW' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
-        'LBL_ADDRESS_INFORMATION' => 
+        'LBL_INVOICE_TO' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -51,7 +51,7 @@ array (
     ),
     'panels' => 
     array (
-      'lbl_account_information' => 
+      'LBL_PANEL_OVERVIEW' =>
       array (
         0 => 
         array (
@@ -80,16 +80,16 @@ array (
           ),
           1 => 
           array (
-            'name' => 'due_date',
-            'label' => 'LBL_DUE_DATE',
+            'name' => 'quote_date',
+            'label' => 'LBL_QUOTE_DATE',
           ),
         ),
         2 => 
         array (
           0 => 
           array (
-            'name' => 'quote_date',
-            'label' => 'LBL_QUOTE_DATE',
+            'name' => 'due_date',
+            'label' => 'LBL_DUE_DATE',
           ),
           1 => 
           array (
@@ -119,7 +119,7 @@ array (
           ),
         ),
       ),
-      'lbl_address_information' => 
+      'LBL_INVOICE_TO' =>
       array (
         0 => 
         array (

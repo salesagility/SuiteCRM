@@ -47,4 +47,92 @@ $themedef = array(
         ),
     'group_tabs' => true,
     'classic' => true,
-    );
+    'configurable' => true,
+    'config_options' => array(
+
+        'menu' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_BASE',
+            'type' => 'colour',
+            'default' => '#121212'
+        ),
+        'menuto' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUTOP',
+            'type' => 'colour',
+            'default' => '#121212'
+        ),
+        'menufrom' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUBOTTOM',
+            'type' => 'colour',
+            'default' => '#333333'
+        ),
+        'menubrd' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUBRD',
+            'type' => 'colour',
+            'default' => '#f10202'
+        ),
+        'modlink' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUFONT',
+            'type' => 'colour',
+            'default' => '#cccccc'
+        ),
+        'modlinkhover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENULNKHVR',
+            'type' => 'colour',
+            'default' => '#cccccc'
+        ),
+        'modlisthover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_MENUHOVER',
+            'type' => 'colour',
+            'default' => '#565656'
+        ),
+        'cssmenu' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DDMENU',
+            'type' => 'colour',
+            'default' => '#333333'
+        ),
+        'cssmenulink' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DDLINK',
+            'type' => 'colour',
+            'default' => '#cccccc'
+        ),
+
+        'button' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_BTNTOP',
+            'type' => 'colour',
+            'default' => '#ffffff'
+        ),
+        'button_hover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_BTNHOVER',
+            'type' => 'colour',
+            'default' => '#ffffff'
+        ),
+        'button_link' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_BTNLNK',
+            'type' => 'colour',
+            'default' => '#121212'
+        ),
+        'button_link_hover' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_BTNLNKHOVER',
+            'type' => 'colour',
+            'default' => '#ffffff'
+        ),
+
+        'pageheader' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_PAGEHEADER',
+            'type' => 'colour',
+            'default' => '#f10202'
+        ),
+        'page_link' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_PAGELINK',
+            'type' => 'colour',
+            'default' => '#f10202'
+        ),
+
+        'dashlet' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DASHHEAD',
+            'type' => 'colour',
+            'default' => '#777777'
+        ),
+    )
+
+);

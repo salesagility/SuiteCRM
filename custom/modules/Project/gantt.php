@@ -68,7 +68,7 @@ class Gantt {
                 echo '</tr><tr>';
 
                 foreach($days as $d){
-                    echo '<td class="inner_td"><div class="cell_width">'.$d[0].'</div></td>';//First letter of the days name shown
+                    echo '<td class="inner_td"><div class="cell_width">'.$this->substr_unicode($d,0,1).'</div></td>';//First letter of the days name shown
                 }
                 echo '</tr></table></td>';//end table containing the days in each month
                 $m++;
@@ -100,7 +100,7 @@ class Gantt {
                         if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                            <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@ class Gantt {
                         else if($task_duration == 0 || $task_duration == 1){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                        <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                         </div>
                                     </div>
@@ -118,7 +118,7 @@ class Gantt {
                         else {
                             echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                     <div class="task_block_inner">
-                                        <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                        <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <div class="task_percent" rel="'.$task->percent_complete.'">'.$task->name.'</div>
                                         </div>
                                     </div>
@@ -129,7 +129,7 @@ class Gantt {
                         if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@ class Gantt {
                         else if($task_duration == 0 || $task_duration == 1){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
-                                     <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                     <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                         <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                     </div>
                                 </div>
@@ -147,7 +147,7 @@ class Gantt {
                         else {
                             echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                     <div class="task_block_inner">
-                                        <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                        <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <div class="task_percent" rel="'.$task->percent_complete.'">'.$task->name.'</div>
                                         </div>
                                     </div>
@@ -159,7 +159,7 @@ class Gantt {
                         if($task->milestone_flag == '1' && ($task_duration == 0 || $task_duration == 1)){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                     <div class="task_block_inner">
-                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                        <div class="milestone link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                             <img src="custom/modules/Project/images/add_milestone.png" />
                                         </div>
                                     </div>
@@ -168,7 +168,7 @@ class Gantt {
                         else if($task_duration == 0 || $task_duration == 1){
                             echo '<td class="task_td2"><div class="cell_width task_block1">
                                 <div class="task_block_inner">
-                                     <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                     <div class="task1 link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                         <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@ class Gantt {
                         else {
                             echo '<td class="task_td" colspan="'.$task_duration.'"><div class="cell_width task_block">
                                 <div class="task_block_inner">
-                                     <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type_c.'" rel="'.$task->name.'">
+                                     <div class="task link" id="'.$task->project_task_id.'" pre="'.$task->predecessors.'" link="'.$task->relationship_type.'" rel="'.$task->name.'">
                                         <div class="task_percent" rel="'.$task->percent_complete.'"></div>
                                     </div>
                                 </div>
@@ -217,7 +217,7 @@ class Gantt {
 
         foreach ( $period as $dt )
         {
-            $aResult[$dt->format('Y')][$dt->format('F')][$dt->format('j')] = $dt->format('D');
+            $aResult[$dt->format('Y')][strftime("%B", $dt->getTimestamp())][$dt->format('j')] = strftime("%a", $dt->getTimestamp());
         }
 
         return $aResult;
@@ -249,9 +249,13 @@ class Gantt {
         return $interval->format('%y years %m months and %d days');
     }
 
+    public function substr_unicode($str, $s, $l = null) {
+        return join("", array_slice(
+            preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY), $s, $l));
+    }
+
     // Function for basic field validation (present and neither empty nor only white space
     public function IsNullOrEmptyString($question){
         return (!isset($question) || trim($question)==='');
     }
-
 }

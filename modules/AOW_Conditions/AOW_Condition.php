@@ -29,6 +29,7 @@ class AOW_Condition extends Basic {
 	var $module_dir = 'AOW_Conditions';
 	var $object_name = 'AOW_Condition';
 	var $table_name = 'aow_conditions';
+    var $tracker_visibility = false;
 	var $importable = false;
 	var $disable_row_level_security = true ;
 	

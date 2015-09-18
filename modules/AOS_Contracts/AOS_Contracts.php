@@ -41,10 +41,10 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 
             $default_time = "12:00:00";
 
-            $period = (int)$sugar_config['aos']['contracts']['renewalReminderPeriod'];
+            $period = empty($sugar_config['aos'])?false:(int)$sugar_config['aos']['contracts']['renewalReminderPeriod'];
 
             //Calculate renewal date from end_date minus $period days and format this.
-            if($period){
+            if($period && !empty($this->end_date)){
                 $renewal_date = $timedate->fromUserDate($this->end_date);
 
                 $renewal_date->modify("-$period days");
@@ -87,8 +87,11 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 	
 	function mark_deleted($id)
 	{
+        $productQuote = new AOS_Products_Quotes();
+        $productQuote->mark_lines_deleted($this);
+        $this->deleteCall();
 		parent::mark_deleted($id);
-		$this->deleteCall();
+
 	}
 	
 	function createReminder(){

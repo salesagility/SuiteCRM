@@ -34,10 +34,8 @@ class CasesViewEdit extends ViewEdit {
     function display(){
         parent::display();
         global $sugar_config;
-        $enabled = !empty($sugar_config['aop']['enable_aop']);
         $new = empty($this->bean->id);
-        $show = $enabled && !$new;
-        if(!$show){
+        if($new){
             ?>
             <script>
                 $(document).ready(function(){
@@ -45,12 +43,14 @@ class CasesViewEdit extends ViewEdit {
                     $('#update_text_label').closest('td').html('');
                     $('#internal').closest('td').html('');
                     $('#internal_label').closest('td').html('');
+                    $('#addFileButton').closest('td').html('');
+                    $('#case_update_form_label').closest('td').html('');
                 });
             </script>
         <?php
         }
         $tiny = new SugarTinyMCE();
-        echo $tiny->getInstance('update_text,description');
+        echo $tiny->getInstance('update_text,description', 'email_compose_light');
     }
 
 }

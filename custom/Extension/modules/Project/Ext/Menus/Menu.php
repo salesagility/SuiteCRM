@@ -66,7 +66,7 @@ if(ACLController::checkAccess('Project', 'list', true)) {
 }
 
 // Project List
-if(ACLController::checkAccess('Project', 'resourcelist', true)) {
+if(ACLController::checkAccess('Project', 'list', true)) {
     $module_menu[] = array(
         'index.php?module=Project&action=ResourceList',
         isset($mod_strings['LBL_RESOURCE_CHART']) ? $mod_strings['LBL_RESOURCE_CHART'] : '',

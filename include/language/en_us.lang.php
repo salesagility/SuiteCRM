@@ -1875,6 +1875,7 @@ $app_strings = array (
     'LBL_OPPORTUNITY'=>'Opportunity',
     'LBL_OR' => 'OR',
     'LBL_LOWER_OR' => 'or',
+    'LBL_PANEL_OVERVIEW' => 'Overview',
     'LBL_PANEL_ASSIGNMENT' => 'Other',
     'LBL_PANEL_ADVANCED' => 'More Information',
     'LBL_PARENT_TYPE' => 'Parent Type',

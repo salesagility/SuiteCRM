@@ -111,6 +111,7 @@ array (
 			'importable' => 'false',
             'duplicate_merge'=> 'disabled',
 			'studio' => false,
+			'join_primary' => false,
 		),
 	'opportunity_role_id' =>
 		array(

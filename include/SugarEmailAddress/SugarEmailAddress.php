@@ -85,7 +85,7 @@ class SugarEmailAddress extends SugarBean {
      */
     function handleLegacySave($bean, $prefix = "") {
         if(!isset($_REQUEST) || !isset($_REQUEST['useEmailWidget'])) {
-            if (empty($this->addresses) && !isset($_REQUEST['massupdate'])) {
+            if (empty($this->addresses) || !isset($_REQUEST['massupdate'])) {
                 $this->addresses = array();
                 $optOut = (isset($bean->email_opt_out) && $bean->email_opt_out == "1") ? true : false;
                 $invalid = (isset($bean->invalid_email) && $bean->invalid_email == "1") ? true : false;

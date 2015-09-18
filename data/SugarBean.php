@@ -755,7 +755,7 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    function removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir)
+    static function removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir)
     {
         //load the module dictionary if not supplied.
         if ((!isset($dictionary) or empty($dictionary)) && !empty($module_dir))
@@ -792,7 +792,7 @@ class SugarBean
      * @deprecated 4.5.1 - Nov 14, 2006
      * @static
     */
-    function remove_relationship_meta($key,$db,$log,$tablename,$dictionary,$module_dir)
+    static function remove_relationship_meta($key,$db,$log,$tablename,$dictionary,$module_dir)
     {
         SugarBean::removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir);
     }
@@ -813,7 +813,7 @@ class SugarBean
      *
      *  Internal function, do not override.
      */
-    function createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir,$iscustom=false)
+    static function createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir,$iscustom=false)
     {
         //load the module dictionary if not supplied.
         if (empty($dictionary) && !empty($module_dir))
@@ -931,7 +931,7 @@ class SugarBean
      * @deprecated 4.5.1 - Nov 14, 2006
      * @static
     */
-    function create_relationship_meta($key,&$db,&$log,$tablename,$dictionary,$module_dir)
+    static function create_relationship_meta($key,&$db,&$log,$tablename,$dictionary,$module_dir)
     {
         SugarBean::createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir);
     }
@@ -3257,6 +3257,9 @@ class SugarBean
 			$addrelatefield = $this->get_relationship_field($field);
 			if ($addrelatefield)
 				$addrelate[$addrelatefield] = true;
+		}
+		if(!empty($this->field_defs[$field]['id_name'])){
+			$addrelate[$this->field_defs[$field]['id_name']] = true;
 		}
 	}
 

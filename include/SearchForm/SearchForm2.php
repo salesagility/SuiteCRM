@@ -844,13 +844,6 @@ require_once('include/EditView/EditView2.php');
 
 
                              }
-				// Relationship fields get the name directly from the field_name_map
-				else if (isset($this->seed->field_name_map[$field]) && 
-					isset($this->seed->field_name_map[$field]['source']) && 
-					$this->seed->field_name_map[$field]['source'] == 'non-db')
-				{
-					$db_field = $this->seed->field_name_map[$field]['name'];
-				}
                              else if ($type == 'parent') {
                                  if (!empty($this->searchFields['parent_type'])) {
                                      $parentType = $this->searchFields['parent_type'];
@@ -870,7 +863,8 @@ require_once('include/EditView/EditView2.php');
                             else if(!$customField){
                                 if ( !empty($this->seed->field_name_map[$field]['db_concat_fields']) )
                                     $db_field = $db->concat($this->seed->table_name, $this->seed->field_name_map[$db_field]['db_concat_fields']);
-                                else
+                                // Relationship fields get the name directly from the field_name_map
+                                else if (!(isset($this->seed->field_name_map[$db_field]) && isset($this->seed->field_name_map[$db_field]['source']) && $this->seed->field_name_map[$db_field]['source'] == 'non-db'))
                                     $db_field = $this->seed->table_name .  "." . $db_field;
                              }else{
                                  if ( !empty($this->seed->field_name_map[$field]['db_concat_fields']) )

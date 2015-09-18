@@ -37,13 +37,27 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs['Campaigns']['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2',
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'),
-                                            array('label' => '10', 'field' => '30')
-                                            ),
- 'javascript' => '<script type="text/javascript" src="' . getJSPath('include/javascript/popup_parent_helper.js') . '"></script>
+$viewdefs ['Campaigns'] =
+array (
+  'EditView' => 
+  array (
+    'templateMeta' => 
+    array (
+      'maxColumns' => '2',
+      'widths' => 
+      array (
+        0 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+        1 => 
+        array (
+          'label' => '10',
+          'field' => '30',
+        ),
+      ),
+      'javascript' => '<script type="text/javascript" src="include/javascript/popup_parent_helper.js?v=igGzALk_bn-xeyTYyoHxog"></script>
 <script type="text/javascript">
 function type_change() {ldelim}
 	type = document.getElementsByName(\'campaign_type\');
@@ -88,66 +102,125 @@ function ConvertItems(id)  {ldelim}
 	actual_cost.value = formatNumber(actual_cost.value, num_grp_sep, dec_sep);
  {rdelim}
 </script>',
-),
- 'panels' =>array (
-  'lbl_campaign_information' =>
-  array (
-
-    array (
-      array('name'=>'name'),
-      array('name' => 'status'),
-    ),
-
-    array (
-       array('name'=>'start_date', 'displayParams'=>array('required'=>false, 'showFormats'=>true)),
-       array('name'=>'campaign_type',
-            'displayParams'=>array('javascript'=>'onchange="type_change();"'),
-       ),
-    ),
-
-    array (
-      array('name'=>'end_date', 'displayParams'=>array('showFormats'=>true)),
+      'useTabs' => false,
+      'tabDefs' => 
       array (
- 		  'name' => 'frequency',
-	      'customCode' => '<div style=\'none\' id=\'freq_field\'>{html_options name="frequency" options=$fields.frequency.options selected=$fields.frequency.value}</div></TD>',
-	      'customLabel' => '<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>',
-	  ),
-    ),
-
-   array (
-      'currency_id',
-      'impressions',
-    ),
-
-    array (
-        'budget',
-    	'expected_cost',
-    ),
-
-    array (
-    	'actual_cost',
-        'expected_revenue',
-    ),
-
-    array (
-      array('name'=>'objective','displayParams'=>array('rows'=>8,'cols'=>80)),
-    ),
-
-    array (
-      array('name'=>'content','displayParams'=>array('rows'=>8, 'cols'=>80)),
-    ),
-
-  ),
-  'LBL_PANEL_ASSIGNMENT' => array(
+        'LBL_CAMPAIGN_INFORMATION' => 
         array (
+          'newTab' => false,
+          'panelDefault' => 'expanded',
+        ),
+        'LBL_NAVIGATION_MENU_GEN2' =>
+        array (
+          'newTab' => false,
+          'panelDefault' => 'expanded',
+        ),
+      ),
+    ),
+    'panels' => 
+    array (
+      'lbl_campaign_information' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            'name' => 'name',
+          ),
+          1 => 
+          array (
+            'name' => 'status',
+          ),
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            'name' => 'start_date',
+            'displayParams' => 
+            array (
+              'required' => false,
+              'showFormats' => true,
+            ),
+          ),
+          1 => 
+          array (
+            'name' => 'campaign_type',
+            'displayParams' => 
+            array (
+              'javascript' => 'onchange="type_change();"',
+            ),
+          ),
+        ),
+        2 => 
+        array (
+          0 => 
+          array (
+            'name' => 'end_date',
+            'displayParams' => 
+            array (
+              'showFormats' => true,
+            ),
+          ),
+          1 => 
+          array (
+            'name' => 'frequency',
+            'customCode' => '<div style=\'none\' id=\'freq_field\'>{html_options name="frequency" options=$fields.frequency.options selected=$fields.frequency.value}</div></TD>',
+            'customLabel' => '<div style=\'none\' id=\'freq_label\'>{$MOD.LBL_CAMPAIGN_FREQUENCY}</div>',
+          ),
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'content',
+            'displayParams' => 
+            array (
+              'rows' => 8,
+              'cols' => 80,
+            ),
+          ),
+        ),
+        4 => 
+        array (
+          0 => 
           array (
             'name' => 'assigned_user_name',
             'label' => 'LBL_ASSIGNED_TO',
           ),
-        ),  
+        ),
+      ),
+      'LBL_NAVIGATION_MENU_GEN2' =>
+      array (
+        0 => 
+        array (
+          0 => 'currency_id',
+          1 => 'impressions',
+        ),
+        1 => 
+        array (
+          0 => 'budget',
+          1 => 'expected_cost',
+        ),
+        2 => 
+        array (
+          0 => 'actual_cost',
+          1 => 'expected_revenue',
+        ),
+        3 => 
+        array (
+          0 => 
+          array (
+            'name' => 'objective',
+            'displayParams' => 
+            array (
+              'rows' => 8,
+              'cols' => 80,
+            ),
+          ),
+        ),
+      ),
+    ),
   ),
-)
-
-
 );
 ?>
