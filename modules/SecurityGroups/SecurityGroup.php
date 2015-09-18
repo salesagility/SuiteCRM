@@ -485,6 +485,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     }
 
     function retrieveDefaultGroups() {
+        global $db;
 
         $default_groups = array();
         $query = "select securitygroups_default.id, securitygroups.name, securitygroups_default.module, securitygroups_default.securitygroup_id "
@@ -492,8 +493,8 @@ class SecurityGroup extends SecurityGroup_sugar {
                 ."inner join securitygroups on securitygroups_default.securitygroup_id = securitygroups.id "
                 ."where securitygroups_default.deleted = 0 and securitygroups.deleted = 0";
         $GLOBALS['log']->debug("SecuritySuite: Retrieve Default Groups: $query");
-        $result = $this->db->query($query);
-        while(($row=$this->db->fetchByAssoc($result)) != null) {
+        $result = $db->query($query);
+        while(($row=$db->fetchByAssoc($result)) != null) {
             $default_groups[$row['id']] = array('group'=>$row['name'],'module'=>$row['module'],'securitygroup_id'=>$row['securitygroup_id']);
         }
 
