@@ -4532,6 +4532,7 @@ class SugarBean
 	{
 		global $current_user;
 		$date_modified = $GLOBALS['timedate']->nowDb();
+        $id = $this->db->quote($id);
 		if(isset($_SESSION['show_deleted']))
 		{
 			$this->mark_undeleted($id);
