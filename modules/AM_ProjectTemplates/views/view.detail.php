@@ -68,7 +68,7 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                                 });
                                 addForm("project_form");
                                 addToValidate("project_form", "p_name", "name", true,"'.$mod_strings['LBL_PROJECT_NAME'].'" );
-                                addToValidate("project_form", "start_date", "date", false,"'.$mod_strings['LBL_START_DATE'].'" );
+                                addToValidate("project_form", "start_date", "date", true,"'.$mod_strings['LBL_START_DATE'].'" );
                             </script>
                              <input type="hidden" name="template_id" value="'.$this->bean->id .'" />
                         </fieldset>
