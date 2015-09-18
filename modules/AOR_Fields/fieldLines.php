@@ -74,16 +74,6 @@ function display_field_lines($focus, $field, $value, $view){
         }
 
     }
-    else if($view == 'DetailView'){
-        /*$html .= '<script src="include/SugarCharts/Jit/js/sugarCharts.js"></script>';
-
-        $html .= '<script language="javascript" type="text/javascript" src="include/MySugar/javascript/MySugar.js"></script>';
-        $html .= '<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/Jit/jit.js"></script>';
-        $html .= '<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/sugarCharts.js"></script>';
-        $html .= '<script language="javascript" type="text/javascript" src="include/SugarCharts/Jit/js/mySugarCharts.js"></script>';*/
-        $html .= $focus->build_group_report(0).'<br />';
-
-    }
     return $html;
 }
 

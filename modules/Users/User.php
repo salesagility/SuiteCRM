@@ -72,6 +72,7 @@ class User extends Person {
 	var $address_country;
 	var $status;
 	var $title;
+    var $photo;
 	var $portal_only;
 	var $department;
 	var $authenticated = false;

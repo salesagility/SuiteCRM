@@ -1,5 +1,5 @@
 .dashboardTabList{
-   border:none 0px;
+    border:none 0px;
     width:95%;
     height:35px;
     border-bottom: 2px solid #e8e8e8;
@@ -37,7 +37,7 @@
 
 
 .dashboardTabList img{
-   height:9px;
+    height:9px;
     width:9px;
 
 }
@@ -57,7 +57,7 @@
 }
 
 .addButton:hover{
-  background-color: #cccccc;
+    background-color: #cccccc;
 }
 
 .addButton a:hover{

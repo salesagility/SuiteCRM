@@ -13,24 +13,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
+ * 
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- *
+ * 
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- *
+ * 
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
+ * 
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- *
+ * 
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
@@ -63,7 +63,7 @@ public function getDuplicateQuery($focus, $prefix='')
     // add team security
 
     $query .= " WHERE deleted != 1 AND (status <> 'Converted' OR status IS NULL) AND ";
-    
+
     //Use the first and last name from the $_POST to filter.  If only last name supplied use that
 	if(isset($_POST[$prefix.'first_name']) && strlen($_POST[$prefix.'first_name']) != 0 && isset($_POST[$prefix.'last_name']) && strlen($_POST[$prefix.'last_name']) != 0) {
 		$query .= " (first_name='". $_POST[$prefix.'first_name'] . "' AND last_name = '". $_POST[$prefix.'last_name'] ."')";
@@ -300,20 +300,19 @@ function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $
 			    $get .= "Leads";
             }
 
-			$get .= "&return_action=";
-			if(!empty($_POST['return_action'])) $get .= $_POST['return_action'];
-			if(!empty($_POST['return_id'])) $get .= "&return_id=".$_POST['return_id'];
-			if(!empty($_POST['popup'])) $get .= '&popup='.$_POST['popup'];
-			if(!empty($_POST['create'])) $get .= '&create='.$_POST['create'];
-
-			// for InboundEmail flow
-			if(!empty($_POST['start'])) $get .= '&start='.$_POST['start'];
-
-            $_SESSION['SHOW_DUPLICATES'] = $get;
+            //add return_module, return_action, and return_id to redirect get string
+			$urlData = array('return_module' => 'Leads', 'return_action' => '');
+			foreach (array('return_module', 'return_action', 'return_id', 'popup', 'create', 'start') as $var) {
+			    if (!empty($_POST[$var])) {
+			        $urlData[$var] = $_POST[$var];
+			    }
+			}
+			$get .= "&".http_build_query($urlData);
+			$_SESSION['SHOW_DUPLICATES'] = $get;
 
             if (!empty($_POST['is_ajax_call']) && $_POST['is_ajax_call'] == '1')
             {
-            	ob_clean();
+                ob_clean();
                 $json = getJSONobj();
                 echo $json->encode(array('status' => 'dupe', 'get' => $location));
             } else if(!empty($_REQUEST['ajax_load'])) {
@@ -321,7 +320,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $
             } else {
                 if(!empty($_POST['to_pdf']))
                 {
-                    $location .= '&to_pdf='.$_POST['to_pdf'];
+                    $location .= '&to_pdf='.urlencode($_POST['to_pdf']);
                 }
                 header("Location: index.php?$location");
             }
@@ -381,11 +380,11 @@ function handleSave($prefix,$redirect=true, $useRequired=false, $do_save=true, $
 		$email->load_relationship('leads');
 		$email->leads->add($focus->id);
 
-		header("Location: index.php?&module=Emails&action=EditView&type=out&inbound_email_id=".$_REQUEST['inbound_email_id']."&parent_id=".$email->parent_id."&parent_type=".$email->parent_type.'&start='.$_REQUEST['start']);
-		exit();
-	}
-	////	END INBOUND EMAIL HANDLING
-	///////////////////////////////////////////////////////////////////////////////
+            header("Location: index.php?&module=Emails&action=EditView&type=out&inbound_email_id=".urlencode($_REQUEST['inbound_email_id'])."&parent_id=".$email->parent_id."&parent_type=".$email->parent_type.'&start='.urlencode($_REQUEST['start']));
+            exit();
+        }
+        ////	END INBOUND EMAIL HANDLING
+        ///////////////////////////////////////////////////////////////////////////////
 
 	$GLOBALS['log']->debug("Saved record with id of ".$return_id);
 	if($redirect){

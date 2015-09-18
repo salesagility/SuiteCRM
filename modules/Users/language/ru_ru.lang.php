@@ -52,7 +52,6 @@ $mod_strings = array (
 'Deleting a User record cannot be undone.',
 'LBL_DELETE_GROUP_CONFIRM'          => 'Вы действительно хотите удалить данного группового пользователя? Нажмите на кнопку <b>ОК</b> для удаления  пользователя из системы<br/>После удаления у вас будет возможность переназначить ответственных для записей, принадлежащих удалённому групповому пользователю.',
 'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.', ///
-'LBL_DELETE_USER_CONFIRM'           => 'When the User record is deleted, the corresponding Employee record will also be deleted.<br/><br/>'.
 'Click OK to delete the User record.',
 
 'LNK_IMPORT_USERS'                 => 'Импорт пользователей',
@@ -525,7 +524,7 @@ $mod_strings = array (
 
 'LBL_WIZARD_FINISH' => 'Нажмите на кнопку <b>Готово</b> для сохранения настроек и перехода к работе с системой. За дополнительной информацией вы можете обратиться к следующим ресурсам:<br /><br />
 <table cellpadding=0 cellspacing=0>
-<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/suitecrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
 <tr><td colspan=2><hr style="margin: 5px 0px;"></td></tr>
 <tr><td><img src=include/images/forums.png style="margin-right: 5px;"></td><td><a href="http://www.sugarcrm.com.ua/viewforum.php?f=5" target="_blank"><b>Русскоязычная документация</b></a><br>Русскоязычный форум, посвящённый SugarCRM.</td></tr>
 </table>',
@@ -598,6 +597,7 @@ $mod_strings = array (
 'LBL_QUICK_CALL' => 'Назначить звонок',
 'LBL_QUICK_TASK' => 'Создать задачу',
 
+    'LBL_ENABLE_NOTIFICATIONS' => 'Включить оповещений'
 ); // END STRINGS DEFS
 
 ?>

@@ -28,7 +28,7 @@ array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
-        'LBL_EDITVIEW_PANEL1' => 
+        'LBL_PANEL_ASSIGNMENT' =>
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
@@ -65,7 +65,7 @@ array (
           0 => 'description',
         ),
       ),
-      'lbl_editview_panel1' => 
+      'LBL_PANEL_ASSIGNMENT' =>
       array (
         0 => 
         array (

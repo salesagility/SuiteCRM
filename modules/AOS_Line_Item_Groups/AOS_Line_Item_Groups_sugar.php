@@ -36,6 +36,7 @@ class AOS_Line_Item_Groups_sugar extends Basic {
 	var $module_dir = 'AOS_Line_Item_Groups';
 	var $object_name = 'AOS_Line_Item_Groups';
 	var $table_name = 'aos_line_item_groups';
+	var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 

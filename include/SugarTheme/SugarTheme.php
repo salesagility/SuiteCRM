@@ -203,6 +203,20 @@ class SugarTheme
      */
     public $classic;
 
+    /**
+     * Is this theme configurable
+     *
+     * @var bool
+     */
+    public $configurable;
+
+    /**
+     * theme config options
+     *
+     * @var bool
+     */
+    public $config_options = array();
+
 
     /**
      * Cache built of all css files locations
@@ -258,6 +272,7 @@ class SugarTheme
     private $_clearCacheOnDestroy = false;
 
     private $imageExtensions = array(
+            'svg',
             'gif',
             'png',
             'jpg',
@@ -460,6 +475,8 @@ class SugarTheme
             'pieChartColors',
             'group_tabs',
             'classic',
+            'configurable',
+            'config_options',
             'ignoreParentFiles',
             );
     }
@@ -732,11 +749,20 @@ EOHTML;
 			$imageURL = $this->getImageURL($imageName,false);
 			if ( empty($imageURL) )
 				return false;
-	        $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
+            if(strpos($imageURL, '.svg', strlen($imageURL)-4)){
+                $cached_results[$imageName] = file_get_contents($imageURL);
+            } else {
+                $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
+            }
+
 		}
 
 		$attr_width = (is_null($width)) ? "" : "width=\"$width\"";
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
+
+        if(strpos($cached_results[$imageName], 'svg') !== false){
+            return $cached_results[$imageName];
+        }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
     }
 
@@ -1089,6 +1115,33 @@ EOHTML;
         return $imageArray;
     }
 
+    /**
+     * Returns an array of all of the config values for the current theme
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        global $sugar_config;
+
+        $config = array();
+
+        foreach($this->config_options as $name => $def){
+            $config[$name] = $def;
+
+            $value = '';
+            if(isset($sugar_config['theme_settings'][$this->dirName][$name])){
+                $value = $sugar_config['theme_settings'][$this->dirName][$name];
+            } else if(isset($def['default'])){
+                $value = $def['default'];
+            }
+            $config[$name] = $value;
+
+        }
+
+        return $config;
+    }
+
 }
 
 /**
@@ -1388,6 +1441,59 @@ class SugarThemeRegistry
             $themelist[$themeobject->dirName] = $themeobject->name;
 
         return $themelist;
+    }
+
+    /**
+     * Returns an array of all themes def found in the current installation
+     *
+     * @return array
+     */
+    public static function allThemesDefs()
+    {
+        $themelist = array();
+        $disabledThemes = array();
+        if (isset($GLOBALS['sugar_config']['disabled_themes']))
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
+
+        foreach (self::$_themes as $themename => $themeobject) {
+            $themearray['name'] = $themeobject->name;
+            $themearray['configurable'] = $themeobject->configurable;
+            $themearray['enabled'] = !in_array($themename, $disabledThemes);
+            $themelist[$themeobject->dirName] = $themearray;
+        }
+
+        return $themelist;
+    }
+
+    /**
+     * get the configurable options for $themeName
+     *
+     * @param  $themeName string
+     */
+    public static function getThemeConfig($themeName)
+    {
+        global $sugar_config;
+
+        if ( !self::exists($themeName) )
+            return false;
+
+        $config = array();
+
+        foreach(self::$_themes[$themeName]->config_options as $name => $def){
+            $config[$name] = $def;
+
+            $value = '';
+            if(isset($sugar_config['theme_settings'][$themeName][$name])){
+                $value = $sugar_config['theme_settings'][$themeName][$name];
+            } else if(isset($def['default'])){
+                $value = $def['default'];
+            }
+            $config[$name]['value'] = $value;
+
+        }
+
+        return $config;
+
     }
 
     /**

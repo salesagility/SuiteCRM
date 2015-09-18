@@ -16,12 +16,6 @@ $searchdefs = array (
     array (
     ),
   ),
-  'ext_rest_linkedin' => 
-  array (
-    'Accounts' => 
-    array (
-    ),
-  ),
   'ext_rest_twitter' => 
   array (
     'Accounts' => 

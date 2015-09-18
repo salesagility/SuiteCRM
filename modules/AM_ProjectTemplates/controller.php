@@ -81,7 +81,7 @@ class AM_ProjectTemplatesController extends SugarController {
             $project_task->percent_complete = $row['percent_complete'];
             $project_task->predecessors = $row['predecessors'];
             $project_task->milestone_flag = $row['milestone_flag'];
-            $project_task->relationship_type_c = $row['relationship_type'];
+            $project_task->relationship_type = $row['relationship_type'];
             $project_task->task_number = $row['task_number'];
             $project_task->order_number = $row['order_number'];
             $project_task->estimated_effort = $row['estimated_effort'];
@@ -111,6 +111,7 @@ class AM_ProjectTemplatesController extends SugarController {
                 $end = $enddate->format('Y-m-d');
                 $project_task->date_finish = $end;
                 $enddate = $end;
+                $enddate_array[$count] = $end;
             }
             $project_task->save();
             //link tasks to the newly created project

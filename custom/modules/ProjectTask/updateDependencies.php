@@ -22,7 +22,7 @@ class updateDependencies {
 
             foreach($tasks as $task){ //loop through all dependant tasks
 
-                $rel_type = $task->relationship_type_c;//Determine their dependency type
+                $rel_type = $task->relationship_type;//Determine their dependency type
 
                 if($rel_type == 'FS'){//if its a Finish to start
                     //Modify the task's start and end date dependant on the difference in days

@@ -130,18 +130,17 @@ var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}'
 			</table>
 			</div>
 			<div class="password">
-			
 			<form action="index.php" method="post" name="fp_form" id="fp_form" >
-								<table cellpadding="0" cellspacing="2" border="0" align="center" width="100%">
-									<tr>
-										<td colspan="2" class="login_more">
-										<div  style="cursor: hand; cursor: pointer; display:{$DISPLAY_FORGOT_PASSWORD_FEATURE};" onclick='toggleDisplay("forgot_password_dialog");'>
-											<a href='javascript:void(0)'><IMG src="{sugar_getimagepath file='advanced_search.gif'}" border="0" alt="Hide Options" id="forgot_password_dialog_options">{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
-										</div>
-											<div id="forgot_password_dialog" style="display:none" >
-												<input type="hidden" name="entryPoint" value="GeneratePassword">
-												<table cellpadding="0" cellspacing="2" border="0" align="center" width="100%" >
-													<tr>
+			<table>
+				<tr>
+					<td colspan="2" class="login_more">
+						<div  style="cursor: hand; cursor: pointer; display:{$DISPLAY_FORGOT_PASSWORD_FEATURE};" onclick='toggleDisplay("forgot_password_dialog");'>
+							<a href='javascript:void(0)'><IMG src="{sugar_getimagepath file='advanced_search.gif'}" border="0" alt="Hide Options" id="forgot_password_dialog_options">{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
+						</div>
+						<div id="forgot_password_dialog" style="display:none" >
+							<input type="hidden" name="entryPoint" value="GeneratePassword">
+							<table>
+							<tr>
 														<td colspan="2">
 															<div id="generate_success" class='error' style="display:inline;"> </div>
 														</td>

@@ -1,4 +1,4 @@
-##SuiteCRM 7.1.4
+##SuiteCRM 7.3
 
 ### What's in this repository ###
 
@@ -10,9 +10,9 @@ This repository has been created to allow community members to collaborate and c
 
 #####Important: Please read before developing code intended for inclusion in the SuiteCRM project.#####
 
-Please read, print, sign, scan and email the following [contributor agreement][cont_agrmt]
+Please read and sign the following [contributor agreement][cont_agrmt]
 
-[cont_agrmt]: http://suitecrm.com/git/suitecrmcontributorlicenseagreement.pdf
+[cont_agrmt]: https://www.clahub.com/agreements/salesagility/SuiteCRM
 
 The Contributor Agreement only needs to be signed once for all pull requests and contributions. 
 
@@ -29,11 +29,11 @@ The following links offer various ways to view, contribute and collaborate to th
 + [SuiteCRM Partners - Our partner section where partners of SuiteCRM can be viewed][suitecrm_partners]
 + [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
 
-[suitecrm_demo]: http://suitecrm.com/index.php?option=com_users&view=registration&Itemid=1235
-[suitecrm_forums]: http://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list
-[suitecrm_docs]: http://suitecrm.com/index.php?option=com_wrapper&view=wrapper&Itemid=1383
-[suitecrm_partners]: http://suitecrm.com/index.php?option=com_content&view=article&id=170&Itemid=1172
-[suitecrm_ext]: http://suitecrm.com/index.php?option=com_mtree&view=listcats&cat_id=76&Itemid=1225
+[suitecrm_demo]: https://suitecrm.com/index.php?option=com_users&view=registration&Itemid=1235
+[suitecrm_forums]: https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list
+[suitecrm_docs]: https://suitecrm.com/wiki
+[suitecrm_partners]: https://suitecrm.com/index.php?option=com_content&view=article&id=170&Itemid=1172
+[suitecrm_ext]: https://suitecrm.com/index.php?option=com_mtree&view=listcats&cat_id=76&Itemid=1225
 
 ### Development Roadmap ###
 

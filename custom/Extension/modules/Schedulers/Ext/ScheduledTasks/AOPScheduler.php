@@ -22,12 +22,12 @@
  * @author Salesagility Ltd <support@salesagility.com>
  */
 
-$job_strings[] = 'pollMonitoredInboxesCustomAOP';
+$job_strings[] = 'pollMonitoredInboxesAOP';
 
-function pollMonitoredInboxesCustomAOP() {
+function pollMonitoredInboxesAOP() {
     require_once 'custom/modules/InboundEmail/AOPInboundEmail.php';
     $_bck_up = array('team_id' => $GLOBALS['current_user']->team_id, 'team_set_id' => $GLOBALS['current_user']->team_set_id);
-    $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxesCustomAOP()');
+    $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxesAOP()');
     global $dictionary;
     global $app_strings;
     global $sugar_config;

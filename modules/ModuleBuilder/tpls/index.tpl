@@ -83,18 +83,4 @@ MBLoader.addModule({
 MBLoader.insert();
 {/literal}
 </script>
-<div id="footerHTML" class="y-hidden">
-    <table width="100%" cellpadding="0" cellspacing="0"><tr><td nowrap="nowrap">
-    <input type="button" class="button" value="{$mod.LBL_HOME}" onclick="ModuleBuilder.main('home');">
-    {if $TEST_STUDIO == true}
-    <input type="button" class="button" value="{$mod.LBL_STUDIO}" onclick="ModuleBuilder.main('studio');">
-    {/if}
-    {if $ADMIN == true}
-    <input type="button" class="button" value="{$mod.LBL_MODULEBUILDER}" onclick="ModuleBuilder.main('mb');">
-    {/if}
-    <input type="button" class="button" value="{$mod.LBL_DROPDOWNEDITOR}" onclick="ModuleBuilder.main('dropdowns');">
-    </td><td align="left">
-        <img height="25" width="83" class="img" src="include/images/poweredby_sugarcrm_65.png" border="0" align="absmiddle"/>
-     </td></tr></table>
-</div>
 {include file='modules/ModuleBuilder/tpls/assistantJavascript.tpl'}

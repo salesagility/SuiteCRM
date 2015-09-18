@@ -1962,13 +1962,13 @@ protected function checkQuery($sql, $object_name = false)
     		if(!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
 			    $val = $this->truncate($val, $fieldDef['len']);
 			}
-
+		$columnName = $this->quoteIdentifier($fieldDef['name']);
     		if(!is_null($val) || !empty($fieldDef['required'])) {
-    			$columns[] = "{$fieldDef['name']}=".$this->massageValue($val, $fieldDef);
+    			$columns[] = "{$columnName}=".$this->massageValue($val, $fieldDef);
     		} elseif($this->isNullable($fieldDef)) {
-    			$columns[] = "{$fieldDef['name']}=NULL";
+    			$columns[] = "{$columnName}=NULL";
     		} else {
-    		    $columns[] = "{$fieldDef['name']}=".$this->emptyValue($fieldDef['type']);
+    		    $columns[] = "{$columnName}=".$this->emptyValue($fieldDef['type']);
     		}
 		}
 
@@ -3555,6 +3555,8 @@ protected function checkQuery($sql, $object_name = false)
 	 * @return string
 	 */
 	abstract public function quote($string);
+
+    abstract public function quoteIdentifier($string);
 
 	/**
 	 * Use when you need to convert a database string to a different value; this function does it in a

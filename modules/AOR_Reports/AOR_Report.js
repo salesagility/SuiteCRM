@@ -59,14 +59,25 @@ function setProspectReturn(popup_reply_data){
 }
 
 
-function changeReportPage(offset, group){
+function changeReportPage(record, offset, group){
     var callback = {
         success: function(result) {
            document.getElementById('report_table'+group).innerHTML = result.responseText;
         }
     }
+    var query = "?module=AOR_Reports&action=changeReportPage&record="+record+"&offset="+offset+"&group="+group;
+    $('.aor_conditions_id').each(function(index, elem){
+        $elem = $(elem);
+        var ln = $elem.attr('id').substr(17);
+        var id = $elem.val();
+        query += "&parameter_id[]="+id;
+        var operator = $("#aor_conditions_operator\\["+ln+"\\]").val();
+        query += "&parameter_operator[]="+operator;
+        var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
+        query += "&parameter_type[]="+fieldType;
+        var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
+        query += "&parameter_value[]="+fieldInput;
+    });
 
-    var record = document.getElementsByName('record')[0].value;
-
-    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=changeReportPage&record="+record+"&offset="+offset+"&group="+group,callback);
+    YAHOO.util.Connect.asyncRequest ("GET", "index.php"+query,callback);
 }
