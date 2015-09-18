@@ -92,7 +92,7 @@ class Relationship extends SugarBean {
 	}
 
 	/*returns true if a relationship with provided name exists*/
-	function exists($relationship_name,&$db) {
+	static function exists($relationship_name,&$db) {
 		$query = "SELECT relationship_name FROM relationships WHERE deleted=0 AND relationship_name = '".$relationship_name."'";
 		$result = $db->query($query,true," Error searching relationships table..");
 		$row  =  $db->fetchByAssoc($result);
@@ -103,7 +103,7 @@ class Relationship extends SugarBean {
 		return false;
 	}
 
-	function delete($relationship_name,&$db) {
+	static function delete($relationship_name,&$db) {
 
 		$query = "UPDATE relationships SET deleted=1 WHERE deleted=0 AND relationship_name = '".$relationship_name."'";
 		$result = $db->query($query,true," Error updating relationships table for ".$relationship_name);

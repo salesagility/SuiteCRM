@@ -171,9 +171,9 @@ class aCase extends Basic {
 		return $array_assign;
 	}
 
-	function save_relationship_changes($is_update)
+	function save_relationship_changes($is_update, $exclude = array())
 	{
-		parent::save_relationship_changes($is_update);
+		parent::save_relationship_changes($is_update, $exclude);
 
 		if (!empty($this->contact_id)) {
 			$this->set_case_contact_relationship($this->contact_id);

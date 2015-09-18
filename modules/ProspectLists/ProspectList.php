@@ -284,9 +284,9 @@ FROM prospect_lists_prospects plp
 		return $query;
 	}
 	
-	function save_relationship_changes($is_update)
+	function save_relationship_changes($is_update, $exclude = array())
     {
-    	parent::save_relationship_changes($is_update);
+    	parent::save_relationship_changes($is_update, $exclude);
 		if($this->lead_id != "")
 	   		$this->set_prospect_relationship($this->id, $this->lead_id, "lead");
     	if($this->contact_id != "")
