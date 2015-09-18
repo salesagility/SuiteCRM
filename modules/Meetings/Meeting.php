@@ -131,7 +131,7 @@ class Meeting extends SugarBean {
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner = 'not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
 		// don't check if meeting is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -145,7 +145,7 @@ class Meeting extends SugarBean {
 					}
 			}
 		}
-		return parent::ACLAccess($view,$is_owner);
+		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
 
 	/**
@@ -288,7 +288,7 @@ class Meeting extends SugarBean {
 		return "$this->name";
 	}
 
-    function create_export_query(&$order_by, &$where, $relate_link_join='')
+    function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -812,8 +812,7 @@ class Meeting extends SugarBean {
 	}
 
 
-	function save_relationship_changes($is_update) {
-		$exclude = array();
+	function save_relationship_changes($is_update, $exclude = array()) {
 	    if(empty($this->in_workflow)) {
            if(empty($this->in_import)){//if a meeting is being imported then contact_id  should not be excluded
            //if the global soap_server_object variable is not empty (as in from a soap/OPI call), then process the assigned_user_id relationship, otherwise

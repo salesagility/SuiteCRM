@@ -203,10 +203,9 @@ class Dashlet
     /**
      * Called when Dashlet is displayed, override this
      *
-     * @param string $text text after the title
      * @return string title HTML
      */
-    public function display($text = '')
+    public function display()
     {
         return '';
     }
