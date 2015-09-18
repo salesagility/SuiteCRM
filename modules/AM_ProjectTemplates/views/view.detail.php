@@ -51,7 +51,7 @@ class AM_ProjectTemplatesViewDetail extends ViewDetail {
                              <label for="name">'.$mod_strings['LBL_PROJECT_NAME'].':<span class="required">*</span></label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="p_name" id="p_name" class="text ui-widget-content ui-corner-all" />
 
-                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':</label>
+                             <label for="start_date">'.$mod_strings['LBL_START_DATE'].':<span class="required">*</span></label>
                              <input style="margin-bottom:12px; width:95%; padding: .4em;" type="text" name="start_date" id="start_date" class="text ui-widget-content ui-corner-all" />
 
                              <script type="text/javascript">
