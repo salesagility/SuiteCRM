@@ -975,6 +975,7 @@ class Smarty_Compiler extends Smarty {
             $this->_syntax_error("missing 'file' attribute in include tag", E_USER_ERROR, __FILE__, __LINE__);
         }
 
+        $theme_template = 'false';
         foreach ($attrs as $arg_name => $arg_value) {
             if ($arg_name == 'file') {
                 $include_file = $arg_value;
@@ -982,11 +983,17 @@ class Smarty_Compiler extends Smarty {
             } else if ($arg_name == 'assign') {
                 $assign_var = $arg_value;
                 continue;
+            } else if ($arg_name == 'theme_template') {
+                $theme_template = $arg_value;
+                continue;
             }
             if (is_bool($arg_value))
                 $arg_value = $arg_value ? 'true' : 'false';
             $arg_list[] = "'$arg_name' => $arg_value";
         }
+
+        if ( $theme_template == 'true' )
+            $include_file = '"'.SugarThemeRegistry::current()->getTemplate(str_replace(array('"',"'"),'',$include_file)).'"';
 
         $output = '<?php ';
 
