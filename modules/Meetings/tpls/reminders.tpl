@@ -214,7 +214,7 @@
 						var alertFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="deleted">')
 								.appendTo(alert);
 					} else {
-						$(alertTime).remove();
+						$(this).parents('[data-type=alert]').remove();
 					}
 
 					return false;
