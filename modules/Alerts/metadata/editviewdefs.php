@@ -1,4 +1,5 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,14 +38,17 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$module_name = 'Alerts';
- $metafiles[$module_name] = array(
-	'defaultviewdefs'  => 	'modules/' . $module_name . '/metadata/defaultviewdefs.php',
-	'listviewdefs'  => 	'modules/' . $module_name . '/metadata/listviewdefs.php',
-	'detailviewdefs'  => 	'modules/' . $module_name . '/metadata/detailviewdefs.php',
-	'editviewdefs'  => 	'modules/' . $module_name . '/metadata/editviewdefs.php',
-	'popupviewdefs'  => 	'modules/' . $module_name . '/metadata/popupviewdefs.php',
-//	'searchfields'  => 	'modules/' . $module_name . '/metadata/searchfields.php',
 
- );
-?>
+
+
+$editViewDefs['Alerts'] = array(
+    'NAME' => array(
+        'width' => '20',
+        'label' => 'LBL_NAME',
+        'link' => true,
+        'default' => true),
+    'DESCRIPTION' => array(
+        'width' => '80',
+        'label' => 'LBL_DESCRIPTION',
+        'default' => true),
+);

@@ -37,14 +37,15 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$module_name = 'Alerts';
- $metafiles[$module_name] = array(
-	'defaultviewdefs'  => 	'modules/' . $module_name . '/metadata/defaultviewdefs.php',
-	'listviewdefs'  => 	'modules/' . $module_name . '/metadata/listviewdefs.php',
-	'detailviewdefs'  => 	'modules/' . $module_name . '/metadata/detailviewdefs.php',
-	'editviewdefs'  => 	'modules/' . $module_name . '/metadata/editviewdefs.php',
-	'popupviewdefs'  => 	'modules/' . $module_name . '/metadata/popupviewdefs.php',
-//	'searchfields'  => 	'modules/' . $module_name . '/metadata/searchfields.php',
-
- );
+  $searchdefs['Alerts'] = array(
+		'templateMeta' => array(
+				'maxColumns' => '3',
+				'maxColumnsBasic' => '4',
+				'widths' => array('label' => '10', 'field' => '30'),
+			   ),
+		'layout' => array(
+			'basic_search' => array(),
+			'advanced_search' => array(),
+		),
+   );
 ?>
