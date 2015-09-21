@@ -235,6 +235,114 @@ class ParserLabel extends ModuleBuilderParser
 	            }
 	        }
 
+        // Fix for bug #51
+        // when the label is recreated it defaults back to the original value (In this case its "User").
+
+        // Solution:
+        // 1. Changes to the label names should go to custom/Extension/modules/{ModuleName}/Ext/Language
+        // This is done in case different users edit the same Relationship concurrently.
+        // The changes from custom/Extension/modules/{ModuleName}/Ext/Language
+        // will overwrite stuff in custom/modules/{ModuleName}/Ext/Language/en_us.lang.ext.php after
+        //  Quick Repair and Rebuild is applied.
+        if($forRelationshipLabel) {
+            if(!empty($_POST[view_module]) && !empty($_POST[relationship_name]) && !empty($_POST[rhs_label]) && !empty($_POST[lhs_module])) {
+                // 1. Overwrite custom/Extension/modules/{ModuleName}/Ext/Language
+                $extension_basepath = "custom/Extension/modules/" . $_POST[view_module] . "/Ext/Language";
+                mkdir_recursive($extension_basepath);
+
+                $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n";
+                $out = $headerString;
+
+                $extension_filename = "$extension_basepath/$language.custom" . $_POST[relationship_name] . ".php";
+
+                $mod_strings = array();
+                if (file_exists($extension_filename)) {
+                    // obtain $mod_strings
+                    include($extension_filename);
+                }
+
+                $changed_mod_strings = false;
+                foreach ($labels as $key => $value) {
+                    foreach ($mod_strings as $key_mod_string => $value_mod_string) {
+                        if (strpos($key_mod_string, strtoupper($_POST[relationship_name])) !== false) {
+                            $mod_strings[$key_mod_string] = to_html(strip_tags(from_html($_POST[rhs_label]))); // must match encoding used in view.labels.php
+                            $changed_mod_strings = true;
+                        }
+                    }
+                }
+
+                foreach ($mod_strings as $key => $val)
+                    $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+
+                $failed_to_write = false;
+                try {
+                    $file_contents = fopen($extension_filename, 'w');
+                    fputs($file_contents, $out, strlen($out));
+                    fclose($file_contents);
+                } catch (Exception $e) {
+                    $GLOBALS ['log']->fatal("Could not write $filename");
+                    $GLOBALS ['log']->fatal("Exception " . $e->getMessage());
+                    $failed_to_write = true;
+                }
+
+                //2. Overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
+                // Also need to overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
+                // because whenever new relationship is created this place is checked by the system to get
+                // all the label names
+                $relationships_basepath = "custom/Extension/modules/relationships/language";
+                mkdir_recursive($relationships_basepath);
+
+                $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n";
+                $out = $headerString;
+
+                $relationships_filename = "$relationships_basepath/" . $_POST[lhs_module] . ".php";
+
+
+                $mod_strings = array();
+                if (file_exists($relationships_filename)) {
+                    // obtain $mod_strings
+                    include($relationships_filename);
+                }
+
+                $changed_mod_strings = false;
+                foreach ($labels as $key => $value) {
+                    foreach ($mod_strings as $key_mod_string => $value_mod_string) {
+                        if (strpos($key_mod_string, strtoupper($_POST[relationship_name])) !== false) {
+                            $mod_strings[$key_mod_string] = to_html(strip_tags(from_html($_POST[rhs_label]))); // must match encoding used in view.labels.php
+                            $changed_mod_strings = true;
+                        }
+                    }
+                }
+
+                foreach ($mod_strings as $key => $val)
+                    $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+
+                $failed_to_write = false;
+                try {
+                    $file_contents = fopen($relationships_filename, 'w');
+                    fputs($file_contents, $out, strlen($out));
+                    fclose($file_contents);
+                } catch (Exception $e) {
+                    $GLOBALS ['log']->fatal("Could not write $filename");
+                    $GLOBALS ['log']->fatal("Exception " . $e->getMessage());
+                    $failed_to_write = true;
+                }
+
+                if ($changed_mod_strings) {
+                    if (!$failed_to_write) {
+                        // if we have a cache to worry about, then clear it now
+                        if ($deployedModule) {
+                            SugarCache::cleanOpcodes();
+                            $GLOBALS ['log']->debug("PaserLabel->addLabels: clearing language cache");
+                            $cache_key = "module_language." . $language . $moduleName;
+                            sugar_cache_clear($cache_key);
+                            LanguageManager::clearLanguageCache($moduleName, $language);
+                        }
+                    }
+                }
+            }
+        }
+
         return true ;
     }
 
