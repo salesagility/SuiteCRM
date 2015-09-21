@@ -649,7 +649,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						ModuleBuilder.preloader.off();
 						// call the original callback
 						if(ModuleBuilder.updateContent(o)) {
-							// show results
+							// show results - this confirmation/response also adresses issue #370
 							YAHOO.SUGAR.MessageBox.show({
 								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
 								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
