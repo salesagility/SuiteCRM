@@ -81,6 +81,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  	 	$this->_viewdefs = $this->mergeFieldDefinitions($this->_viewdefs, $this->_fielddefs);
  	 }
 
+	 /**
+	  * Update all _fielddefs so they are consistent with the current data which comes from viewDefs.
+	  *
+	  */
+	 function updateFieldDefs () {
+		 foreach($this->_fielddefs as $fieldKey => $fieldValue) {
+			 if(isset($this->_viewdefs[$fieldKey]) && isset($this->_viewdefs[$fieldKey]['default'])){
+				 $this->_fielddefs[$fieldKey]['default'] = true;
+			 } else {
+				 $this->_fielddefs[$fieldKey]['default'] = false;
+			 }
+		 }
+	 }
+
  	 /**
  	  * Dashlets contain both a searchview and list view definition, therefore we need to merge only the relevant info
  	  */
