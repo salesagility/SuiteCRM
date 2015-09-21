@@ -651,7 +651,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						if(ModuleBuilder.updateContent(o)) {
 							// show results
 							YAHOO.SUGAR.MessageBox.show({
-								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
+								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result --- these messages address issue 416
 								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
 								width: 500
 							});
