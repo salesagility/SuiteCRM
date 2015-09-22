@@ -91,8 +91,7 @@ require_once('include/EditView/EditView2.php');
          {
              foreach($bean->field_defs as $field_name => $def)
              {
-
-                 $data[$module_dir][$field_name]['name'] = $def['name'];
+                 $data[$module_dir][$field_name] = $def;
 
                  if (isset($def['required']))
                  {
