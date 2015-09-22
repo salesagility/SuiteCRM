@@ -514,7 +514,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     }
 
     function removeDefaultGroup($default_id) {
-        $query = "delete from securitygroups_default where id = '$default_id' ";
+        $query = "delete from securitygroups_default where id = '" . htmlspecialchars($default_id) ."' ";
         $this->db->query($query);
     }
 
