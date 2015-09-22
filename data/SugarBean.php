@@ -4582,7 +4582,7 @@ class SugarBean
         $this->call_custom_logic("before_restore", $custom_logic_arguments);
 
 		$date_modified = $GLOBALS['timedate']->nowDb();
-		$query = "UPDATE $this->table_name set deleted=0 , date_modified = '$date_modified' where id='$id'";
+		$query = "UPDATE $this->table_name set deleted=0 , date_modified = '$date_modified' where id='" . $this->db->quote($id) ."'";
 		$this->db->query($query, true,"Error marking record undeleted: ");
 
         $this->restoreFiles();
