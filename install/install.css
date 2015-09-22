@@ -74,7 +74,7 @@ h3 {
 	color: #333333;
 	font-size: 16px; 
 	font-weight: bold; 
-	margin-bottom: 4px;
+	margin-bottom: 8px;
 }
 
 h4 {
@@ -571,6 +571,12 @@ input[type=password] {
     width: 180px;
     margin-top: 11px;
 }
+.form_section .formrow.big {
+    width: 580px;
+}
+.form_section .formrow.big label {
+    width: 250px;
+}
 .form_section .formrow input[type="checkbox"] {
     margin-top: 11px;
 }
@@ -606,6 +612,15 @@ input[type=password] {
 
 .text-right {
     text-align: right;
+}
+
+
+#steps {
+    text-align: right;
+}
+
+.field-error {
+    background: lightcoral;
 }
 
 /************************************************************************************

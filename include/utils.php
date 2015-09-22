@@ -299,9 +299,7 @@ function get_sugar_config_defaults() {
 	'email_default_client' => 'sugar',
 	'email_default_delete_attachments' => true,
 	'history_max_viewed' => 50,
-		//TODO-g: set to true
-		// orig: 'installer_locked' => true,
-	'installer_locked' => false,
+	'installer_locked' => true,
 	'import_max_records_per_file' => 100,
     'import_max_records_total_limit' => '',
 	'languages' => array('en_us' => 'English (US)'),

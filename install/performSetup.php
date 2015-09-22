@@ -38,10 +38,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-// TODO-g: check error log messages!!
-// TODO-g: remove testmode everywhere
-$testmode = false;
-$testmode_createAdmin = false;
+function installStatus($msg) {
+    file_put_contents('install/status.html', $msg);
+}
+installStatus('');
 
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
@@ -127,12 +127,17 @@ $out =<<<EOQ
 <div id="install_container">
 <div id="install_box">
 <header id="install_header">
-            <div id="steps"><p>{$mod_strings['LBL_STEP8']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7" id="complete"></i>
-            </div>
+                    <div id="steps">
+                        <p>{$mod_strings['LBL_STEP2']}</p>
+                        <i class="icon-progress-0" id="complete"></i>
+                        <i class="icon-progress-1" id="complete"></i>
+                        <i class="icon-progress-2"></i>
+                    </div>
             <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
 </header>
 EOQ;
 echo $out;
+installStatus($mod_strings['STAT_CONFIGURATION']);
 installLog("calling handleSugarConfig()");
 $bottle = handleSugarConfig();
 //installLog("calling handleLog4Php()");
@@ -158,10 +163,7 @@ echo "<br>";
 if($setup_db_create_database) {
     installLog("calling handleDbCreateDatabase()");
     installerHook('pre_handleDbCreateDatabase');
-    // TODO-g: hack: ADD THIS LINE!!! we remove this line because we need the database for testing...
-    if(!$testmode) {
-        handleDbCreateDatabase();
-    }
+    handleDbCreateDatabase();
     installerHook('post_handleDbCreateDatabase');
 } else {
 
@@ -216,16 +218,12 @@ $nonStandardModules = array (
 /**
  * loop through all the Beans and create their tables
  */
+installStatus($mod_strings['STAT_CREATE_DB']);
  installLog("looping through all the Beans and create their tables");
  //start by clearing out the vardefs
  VardefManager::clearVardef();
 installerHook('pre_createAllModuleTables');
 
-////TODO: hack REMOVE IT!! - we just jump over this step, couse the table creation so slow...
-if($testmode) {
-    $_bf = $beanFiles;
-    $beanFiles = array();
-}
 
 foreach( $beanFiles as $bean => $file ) {
 	$doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
@@ -240,6 +238,7 @@ foreach( $beanFiles as $bean => $file ) {
 	    continue;
 
     $table_name = $focus->table_name;
+    installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
      installLog("processing table ".$focus->table_name);
     // check to see if we have already setup this table
     if(!in_array($table_name, $processed_tables)) {
@@ -285,10 +284,6 @@ foreach( $beanFiles as $bean => $file ) {
     } // end if()
 }
 
-// TODO-g: hack!! REMOVE IT!
-if($testmode) {
-    $beanFiles = $_bf;
-}
 
 installerHook('post_createAllModuleTables');
 
@@ -320,6 +315,7 @@ echo "<br>";
     echo "<br>";
     echo "<b>{$mod_strings['LBL_PERFORM_CREATE_DEFAULT']}</b><br>";
     echo "<br>";
+installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
     installLog("Begin creating Defaults");
     installerHook('pre_createDefaultSettings');
     if ($new_config) {
@@ -336,10 +332,7 @@ echo "<br>";
     if ($new_tables) {
         echo $line_entry_format.$mod_strings['LBL_PERFORM_DEFAULT_USERS'].$line_exit_format;
         installLog($mod_strings['LBL_PERFORM_DEFAULT_USERS']);
-        // TODO-g: remove this condition
-        if(!$testmode || $testmode_createAdmin) {
-            create_default_users();
-        }
+        create_default_users();
         echo $mod_strings['LBL_PERFORM_DONE'];
     } else {
         echo $line_entry_format.$mod_strings['LBL_PERFORM_ADMIN_PASSWORD'].$line_exit_format;
@@ -425,8 +418,7 @@ createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');*/
 ///////////////////////////////////////////////////////////////////////////////
 ////    SETUP DONE
 installLog("Installation has completed *********");
-// TODO-g: remove $testmode everywhere!!!!!
-if(!$testmode) {
+
     $memoryUsed = '';
     if (function_exists('memory_get_usage')) {
         $memoryUsed = $mod_strings['LBL_PERFORM_OUTRO_5'] . memory_get_usage() . $mod_strings['LBL_PERFORM_OUTRO_6'];
@@ -456,7 +448,6 @@ FP;
             </form>
 FP;
     }
-}
 
     if( isset($_SESSION['setup_site_sugarbeet_automatic_checks']) && $_SESSION['setup_site_sugarbeet_automatic_checks'] == true){
         set_CheckUpdates_config_setting('automatic');
@@ -509,9 +500,7 @@ FP;
     $tabs = new TabController();
     $tabs->set_system_tabs($enabled_tabs);
     installerHook('post_setSystemTabs');
-if(!$testmode) {
     include_once('install/suite_install/suite_install.php');
-}
 
 post_install_modules();
 
@@ -556,62 +545,78 @@ $varStack['defined_vars'] = get_defined_vars();
 $_REQUEST = array_merge($_REQUEST, $_SESSION);
 $_POST = array_merge($_POST, $_SESSION);
 
-// TODO-g: remove it
-//var_dump($_SESSION);
-//return;
-//die();
-//exit;
 
-// TODO-g: text language or remove it
+installStatus($mod_strings['STAT_INSTALL_FINISH']);
 installLog('Save configuration settings..');
 
 //      <--------------------------------------------------------
 //          from ConfigurationConroller->action_saveadminwizard()
 //          ---------------------------------------------------------->
+
+installLog('save locale');
+
+
+
+
 //global $current_user;
-installLog('DBG: new Administration');
+installLog('new Administration');
 $focus = new Administration();
-installLog('DBG: retrieveSettings');
-$focus->retrieveSettings();
-installLog('DBG: saveConfig');
+installLog('retrieveSettings');
+//$focus->retrieveSettings();
 // switch off the adminwizard (mark that we have got past this point)
-installLog('DBG: AdminWizard OFF');
+installLog('AdminWizard OFF');
 $focus->saveSetting('system','adminwizard',1);
 
+installLog('saveConfig');
 $focus->saveConfig();
 
-installLog('DBG: new Configurator');
+installLog('new Configurator');
 $configurator = new Configurator();
-installLog('DBG: populateFromPost');
+installLog('populateFromPost');
 $configurator->populateFromPost();
-installLog('DBG: handleOverride');
-$configurator->handleOverride();
-installLog('DBG: parseLoggerSettings');
-$configurator->parseLoggerSettings();
-installLog('DBG: saveConfig');
+
+
+
+
+installLog('handleOverride');
+// add local settings to config overrides
+if(!empty($_SESSION['default_date_format'])) $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
+if(!empty($_SESSION['default_time_format'])) $sugar_config['default_date_format'] = $_SESSION['default_time_format'];
+if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
+if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
+//$configurator->handleOverride();
+
+
+installLog('saveConfig');
 $configurator->saveConfig();
 
+
+
+
+
+
+
+
 // Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
-installLog('DBG: new Currency');
+installLog('new Currency');
 $currency = new Currency;
-installLog('DBG: retrieve');
+installLog('retrieve');
 $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
 if ( !empty($currency->id)
     && $currency->symbol == $_REQUEST['default_currency_symbol']
     && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
     $currency->deleted = 1;
-    installLog('DBG: save');
+    installLog('DBG: save currency');
     $currency->save();
 }
 
 
-// TODO-g: text language or remove it
 installLog('Save user settings..');
 
 //      <------------------------------------------------
 //          from UsersController->action_saveuserwizard()
 //          ---------------------------------------------------------->
-//global $current_user, $sugar_config;
+
 
 // set all of these default parameters since the Users save action will undo the defaults otherwise
 
@@ -636,7 +641,6 @@ $_REQUEST['return_module'] = 'Home';
 $_REQUEST['return_action'] = 'index';
 installLog('DBG: require modules/Users/Save.php');
 require('modules/Users/Save.php');
-
 
 // restore superglobals and vars
 $GLOBALS = $varStack['GLOBALS'];
@@ -677,5 +681,6 @@ EOQ;
 
 echo $out;
 
+installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ) );
 
 ?>
