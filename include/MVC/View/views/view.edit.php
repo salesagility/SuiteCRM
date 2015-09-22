@@ -80,5 +80,31 @@ require_once('include/EditView/EditView2.php');
     {
         return new EditView();
     }
-}
 
+
+     function getVardefsData($module_dir)
+     {
+         $data = array();
+         $bean = SugarModule::get($module_dir)->loadBean();
+
+         if($bean !== false)
+         {
+             foreach($bean->field_defs as $field_name => $def)
+             {
+
+                 $data[$module_dir][$field_name]['name'] = $def['name'];
+
+                 if (isset($def['required']))
+                 {
+                     $data[$module_dir][$field_name]['required'] = $def['required'];
+                 }
+                 else
+                 {
+                     $data[$module_dir][$field_name]['required'] = false;
+                 }
+             }
+         }
+         unset($bean);
+         return array($data);
+     }
+}

@@ -83,6 +83,7 @@ class SugarView
     var $responseTime;
     var $fileResources;
 
+    private $settings = array();
     /**
      * Constructor which will peform the setup.
      */
@@ -639,7 +640,7 @@ class SugarView
 
 
         }
-        
+
         if ( isset($extraTabs) && is_array($extraTabs) ) {
             // Adding shortcuts array to extra menu array for displaying shortcuts associated with each module
             $shortcutExtraMenu = array();
@@ -659,12 +660,12 @@ class SugarView
             }
             $ss->assign("shortcutExtraMenu",$shortcutExtraMenu);
         }
-       
+
        if(!empty($current_user)){
        	$ss->assign("max_tabs", $current_user->getPreference("max_tabs"));
-       } 
-      
-       
+       }
+
+
         $imageURL = SugarThemeRegistry::current()->getImageURL("dashboard.png");
         $homeImage = "<img src='$imageURL'>";
 		$ss->assign("homeImage",$homeImage);
@@ -826,6 +827,15 @@ EOHTML;
             $config_js = $this->getSugarConfigJS();
             if(!empty($config_js)){
                 echo "<script>\n".implode("\n", $config_js)."</script>\n";
+            }
+
+            if ($this->hasDomJS())
+            {
+                echo "
+                        <script type='text/javascript'>
+                        SUGAR.append(SUGAR, { settings:".$this->getDomJS()." } );
+                        </script>
+                        ";
             }
 
             if ( isset($sugar_config['email_sugarclient_listviewmaxselect']) ) {
@@ -1244,7 +1254,7 @@ EOHTML;
 		$userTabs = query_module_access_list($current_user);
 		//If the home tab is in the user array use it as the default tab, otherwise use the first element in the tab array
 		$defaultTab = (in_array("Home",$userTabs)) ? "Home" : key($userTabs);
-		
+
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
         if ( !empty($_REQUEST['module_tab']) )
             return $_REQUEST['module_tab'];
@@ -1666,5 +1676,46 @@ EOHTML;
         return false;
     }
 
+    public function addDomJS($data, $scope)
+    {
+        $this->settings[$scope] = $this->suite_array_merge_deep_array($data);
+    }
 
+    public function getDomJS()
+    {
+        return(json_encode($this->settings));
+    }
+
+    public function hasDomJS()
+    {
+        return(!empty($this->settings));
+    }
+    /**
+     * Merges multiple arrays, recursively, and returns the merged array.
+     * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_array_merge_deep_array/7
+     */
+    function suite_array_merge_deep_array($arrays) {
+        $result = array();
+
+        foreach ($arrays as $array) {
+            foreach ($array as $key => $value) {
+                // Renumber integer keys as array_merge_recursive() does. Note that PHP
+                // automatically converts array keys that are integer strings (e.g., '1')
+                // to integers.
+                if (is_integer($key)) {
+                    $result [] = $value;
+                }
+                // Recurse when both values are arrays.
+                elseif (isset($result [$key]) && is_array($result [$key]) && is_array($value)) {
+                    $result [$key] = $this->sugar_array_merge_deep_array(array($result [$key], $value));
+                }
+                // Otherwise, use the latter value, overriding any previous value.
+                else {
+                    $result [$key] = $value;
+                }
+            }
+        }
+
+        return $result;
+    }
 }
