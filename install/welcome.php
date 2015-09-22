@@ -120,22 +120,23 @@ $out = <<<EOQ
                 </div>
             </div>
 
+            <div id='licenseDivToggler' style="text-align: center;"><a href="javascript:$('#licenseDiv').toggle();">Show Software License</a></div>
 
-            <div id='licenseDiv'>
+            <div id='licenseDiv' style="display: none;">
                 <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
-                <br>
-                <hr>
-                <div id="licenseaccept">
-                    <input type="checkbox" class="checkbox" name="setup_license_accept" id="button_next2" onClick='toggleNextButton();' {$checked} />
-                    <a href='javascript:void(0)' onClick='toggleLicenseAccept();toggleNextButton();'>{$mod_strings['LBL_LICENSE_I_ACCEPT']}</a>
-                    <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
-                    onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
-                </div>
+            </div>
+            <hr>
+            <div id="licenseaccept">
+                <input type="checkbox" class="checkbox" name="setup_license_accept" id="button_next2" onClick='toggleNextButton();' {$checked} />
+                <a href='javascript:void(0)' onClick='toggleLicenseAccept();toggleNextButton();'>{$mod_strings['LBL_LICENSE_I_ACCEPT']}</a>
+                <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
+                onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
             </div>
             <div id="installcontrols">
+
                 <input type="hidden" name="current_step" value="{$next_step}">
                 {$mod_strings['LBL_WELCOME_CHOOSE_LANGUAGE']}: <select name="language" onchange='onLangSelect(this);';>{$langDropDown}</select>
-                <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" onclick="callSysCheck();"/>
+                <input class="acceptButton" type="button" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next" disabled="disabled" title="{$mod_strings['LBL_LICENCE_TOOLTIP']}" onclick="callSysCheck();"/>
                 <input type="hidden" name="goto" id='hidden_goto' value="{$mod_strings['LBL_BACK']}" />
             </div>
 
@@ -151,13 +152,10 @@ $out = <<<EOQ
             <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
         </td></tr></table>
     </div>
-    </div>
-    </div>
 	<footer id="install_footer">
-	    <!-- TODO-g: fix it on layout! -->
         <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
     </footer>
-</div>
+    </div>
 <script>
     function showtime(div){
 
@@ -244,7 +242,6 @@ function callSysCheck(){
                         if ( YAHOO.util.Selector.query('button', 'p_msg', true) != null )
                             YAHOO.util.Selector.query('button', 'p_msg', true).style.display = 'none';
                         scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
-                        // TODO-g: add more language files..
                         scsbody += "<p><img src='install/processing.gif' alt=\"{$mod_strings['LBL_CREATE_CACHE']}\"></p>";
                         scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}<br>{$mod_strings['LBL_CREATE_CACHE']}</p>";
                         //scsbody += "<div id='cntDown'>{$mod_strings['LBL_THREE']}</div>";

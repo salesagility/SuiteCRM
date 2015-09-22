@@ -38,6 +38,11 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+//  recover smtp settings
+if(isset($_POST['smtp_tab_selected'])) {
+    $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
+}
+
 //session_destroy();
 if (version_compare(phpversion(),'5.2.0') < 0) {
 	$msg = 'Minimum PHP version required is 5.2.0.  You are using PHP version  '. phpversion();
@@ -160,128 +165,126 @@ if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint')
 }
 
 if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
-//if this is a system check, then just run the check and return,
-//this is an ajax call and there is no need for further processing
+    //if this is a system check, then just run the check and return,
+    //this is an ajax call and there is no need for further processing
 
-if(isset($_REQUEST['uploadLogoFrame']) && ($_REQUEST['uploadLogoFrame'])){
-    echo 'I\'m an uploader iframe!';
-    return;
-}
-
-if(isset($_REQUEST['uploadLogo']) && ($_REQUEST['uploadLogo'])){
-    $filepath = '';
-    $errors = [];
-    // TODO-g: remove this
-    //var_dump($_FILES);
-    //print_r(get_defined_vars());
-
-    switch($_FILES['company_logo']['error']) {
-
-        case UPLOAD_ERR_OK:
-            $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG/*, IMAGETYPE_GIF */);
-            $detectedType = exif_imagetype($_FILES['company_logo']['tmp_name']);
-            if(!in_array($detectedType, $allowedTypes)) {
-                $errors[] = $mod_strings['ERR_UPLOAD_FILETYPE'];
-            }
-            else {
-                // TODO-g: bug: uploaded image stored in the original theme directory insted of put to the /custom path..
-                // upload company logo
-                mkdir_recursive('custom/'.SugarThemeRegistry::current()->getDefaultImagePath(), true);
-                $destFile = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'))[0];
-                if (!move_uploaded_file($_FILES['company_logo']['tmp_name'], $destFile)) {
-                    $errors[] = $mod_strings['ERR_LANG_UPLOAD_1'];
-                }
-                else {
-                    $filepath = $destFile;
-                }
-            }
-            break;
-
-        case UPLOAD_ERR_INI_SIZE:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE'];
-            break;
-
-        case UPLOAD_ERR_FORM_SIZE:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE'];
-            break;
-
-        case UPLOAD_ERR_PARTIAL:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_PARTIAL'];
-            break;
-
-        case UPLOAD_ERR_NO_FILE:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_FILE'];
-            break;
-
-        case UPLOAD_ERR_NO_TMP_DIR:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_TMP_DIR'];
-            break;
-
-        case UPLOAD_ERR_CANT_WRITE:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_CANT_WRITE'];
-            break;
-
-        case UPLOAD_ERR_EXTENSION:
-            $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_EXTENSION'];
-            break;
-        default:
-            $errors[] = $mod_strings['ERR_LANG_UPLOAD_UNKNOWN'];
-            break;
+    if(isset($_REQUEST['uploadLogoFrame']) && ($_REQUEST['uploadLogoFrame'])){
+        echo 'I\'m an uploader iframe!';
+        return;
     }
 
+        // upload company logo
+    if(isset($_REQUEST['uploadLogo']) && ($_REQUEST['uploadLogo'])){
+        $filepath = '';
+        $errors = [];
 
-    $result['filepath'] = $filepath;
-    $result['errors'] = $errors ? $errors : false;
+        switch($_FILES['company_logo']['error']) {
 
-    // TODO-g: validate file and save, show status result to client js
-    // TODO-g: check file size & image width/height
-    echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
-    return;
-}
+            case UPLOAD_ERR_OK:
+                $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG/*, IMAGETYPE_GIF */);
+                $detectedType = exif_imagetype($_FILES['company_logo']['tmp_name']);
+                if(!in_array($detectedType, $allowedTypes)) {
+                    $errors[] = $mod_strings['ERR_UPLOAD_FILETYPE'];
+                }
+                else {
+                    // uploaded image stored in the /custom path instead of put into the original theme directory..
 
-if(isset($_REQUEST['storeConfig']) && ($_REQUEST['storeConfig'])){
-    // store configuration by form to session
-    if(!isset($_SESSION)) session_start();
-    $_SESSION = array_merge($_SESSION, $_POST);
+                    mkdir_recursive('custom/' . SugarThemeRegistry::current()->getDefaultImagePath(), true);
+                    $destFile = 'custom/' . explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'))[0];
+                    if (!move_uploaded_file($_FILES['company_logo']['tmp_name'], $destFile)) {
+                        $errors[] = $mod_strings['ERR_LANG_UPLOAD_1'];
+                    }
+                    else {
+                        $filepath = $destFile;
+                    }
+                }
+                break;
 
-    // TODO-g: don't forget the custom type install settings! validate here..
-//    if(count($validation_errors = validate_dbConfig('a')) > 0) {
-//        $si_errors = true;
-//    }
-//    else if(count($validation_errors = validate_siteConfig('a')) > 0) {
-//        $si_errors = true;
-//    }
-//    else if(count($validation_errors = validate_siteConfig('b')) > 0) {
-//        $si_errors = true;
-//    }
-//    $errors = '';
-//    if( isset($validation_errors) && is_array($validation_errors)){
-//        if( count($validation_errors) > 0 ){
-//           // $errors  = '<div id="errorMsgs">';
-//            $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
-//            foreach( $validation_errors as $error ){
-//                $errors .= '<li class="error">' . $error . '</li>';
-//            }
-//            $errors .= '</ul>'; //</div>';
+            case UPLOAD_ERR_INI_SIZE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE'];
+                break;
+
+            case UPLOAD_ERR_FORM_SIZE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE'];
+                break;
+
+            case UPLOAD_ERR_PARTIAL:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_PARTIAL'];
+                break;
+
+            case UPLOAD_ERR_NO_FILE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_FILE'];
+                break;
+
+            case UPLOAD_ERR_NO_TMP_DIR:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_TMP_DIR'];
+                break;
+
+            case UPLOAD_ERR_CANT_WRITE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_CANT_WRITE'];
+                break;
+
+            case UPLOAD_ERR_EXTENSION:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_EXTENSION'];
+                break;
+            default:
+                $errors[] = $mod_strings['ERR_LANG_UPLOAD_UNKNOWN'];
+                break;
+        }
+
+
+        $result['filepath'] = $filepath;
+        $result['errors'] = $errors ? $errors : false;
+
+        // TODO--low: validate file size & image width/height and save, show status result to client js
+
+        echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
+        return;
+    }
+
+    if(isset($_REQUEST['storeConfig']) && ($_REQUEST['storeConfig'])){
+        // store configuration by form to session
+        if(!isset($_SESSION)) session_start();
+        $_SESSION = array_merge($_SESSION, $_POST);
+
+        // TODO--low: don't forget the custom type install settings! validate here..
+//        if(count($validation_errors = validate_dbConfig('a')) > 0) {
+//            $si_errors = true;
 //        }
-//    }
-    echo $errors;
-    return;
-}
+//        else if(count($validation_errors = validate_siteConfig('a')) > 0) {
+//            $si_errors = true;
+//        }
+//        else if(count($validation_errors = validate_siteConfig('b')) > 0) {
+//            $si_errors = true;
+//        }
+        $errors = '';
+        if( isset($validation_errors) && is_array($validation_errors)){
+            if( count($validation_errors) > 0 ){
+               // $errors  = '<div id="errorMsgs">';
+                $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
+                foreach( $validation_errors as $error ){
+                    $errors .= '<li class="error">' . $error . '</li>';
+                }
+                $errors .= '</ul>'; //</div>';
+            }
+        }
+        echo $errors;
+        return;
+    }
 
-if(isset($_REQUEST['checkInstallSystem']) && ($_REQUEST['checkInstallSystem'])){
-    require_once('install/installSystemCheck.php');
-    echo runCheck($install_script, $mod_strings);
-    return;
-}
+    if(isset($_REQUEST['checkInstallSystem']) && ($_REQUEST['checkInstallSystem'])){
+        require_once('install/installSystemCheck.php');
+        echo runCheck($install_script, $mod_strings);
+        return;
+    }
 
-//if this is a DB Settings check, then just run the check and return,
-//this is an ajax call and there is no need for further processing
-if(isset($_REQUEST['checkDBSettings']) && ($_REQUEST['checkDBSettings'])){
-    require_once('install/checkDBSettings.php');
-    echo checkDBSettings();
-    return;
-}
+    //if this is a DB Settings check, then just run the check and return,
+    //this is an ajax call and there is no need for further processing
+    if(isset($_REQUEST['checkDBSettings']) && ($_REQUEST['checkDBSettings'])){
+        require_once('install/checkDBSettings.php');
+        echo checkDBSettings();
+        return;
+    }
 }
 
 //maintaining the install_type if earlier set to custom
@@ -382,8 +385,6 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
 // increment/decrement the workflow pointer
 if(!empty($_REQUEST['goto'])) {
     switch($_REQUEST['goto']) {
-        case 'resend':
-            $next_clicked = true;
         case $mod_strings['LBL_CHECKSYS_RECHECK']:
             $next_step = $_REQUEST['current_step'];
             break;
@@ -494,7 +495,7 @@ if($next_clicked) {
             }
 
             break;
-        //TODO-g: add this functionality to installConfig.php
+        //TODO--low: add this functionality to installConfig.php
         case 'installType.php':
             $_SESSION['install_type']   = $_REQUEST['install_type'];
             if(isset($_REQUEST['setup_license_key']) && !empty($_REQUEST['setup_license_key'])){
@@ -544,8 +545,8 @@ if($next_clicked) {
             if(count($validation_errors) > 0) {
                 $next_step--;
             }
-            break;
-            //TODO-g: add old custom install settings to new install form
+            //break;
+            // add old custom install settings to new install form
         //case 'siteConfig_b.php':
             $_SESSION['setup_site_sugarbeet_automatic_checks'] = get_boolean_from_request('setup_site_sugarbeet_automatic_checks');
 
@@ -732,22 +733,10 @@ EOQ;
 
 $the_file = clean_string($the_file, 'FILE');
 
-// TODO-g: remove this (print_r and var_dump everywhere!)
-//var_dump($the_file);
-//var_dump($workflow);
-
 installerHook('pre_installFileRequire', array('the_file' => $the_file));
 
 // change to require to get a good file load error message if the file is not available.
 
-// TODO-g: remove this
-//if($the_file=='performSetup.php') {
-//    // TODO-g: DO NOT PERFORM SETUP YET!!!!! remove this!!
-//    echo 'do not perform yet!!!!';
-//    die();
-//    exit;
-//    return;
-//}
 require('install/' . $the_file);
 
 installerHook('post_installFileRequire', array('the_file' => $the_file));
