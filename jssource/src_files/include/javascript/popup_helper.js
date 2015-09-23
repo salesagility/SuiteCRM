@@ -159,6 +159,13 @@ function send_back(module, id)
 	var popupConfirm = confirmDialog(array_contents, form_name);
 	
 	eval("var name_to_value_array = {" + array_contents.join(",") + "}");
+
+	// Fix for issue #413 and #116
+	if(window.opener.document.getElementById('aos_product_category_name_advanced') !== null) {
+		if(associated_row_data.hasOwnProperty("NAME")) {
+			window.opener.document.getElementById('aos_product_category_name_advanced').value += associated_row_data.NAME;
+		}
+	}
 	
 	closePopup();
 
