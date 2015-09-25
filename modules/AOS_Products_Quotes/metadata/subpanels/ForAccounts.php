@@ -54,6 +54,12 @@ $subpanel_layout = array(
 			'widget_class' => 'SubPanelDetailViewLink',
 			'width' => '45%',
 		),
+		'parent_name'=>array(
+			'vname' => 'LBL_ACCOUNT_PRODUCT_QUOTE_LINK',
+			'widget_class' => 'SubPanelDetailViewLink',
+			'target_record_key' => 'parent_id',
+			'target_module_key'=>'parent_type', // or 'target_module' => 'AOS_Quotes',
+		),
 		'product_qty'=>array(
 			'vname' => 'LBL_PRODUCT_QTY',
 		),
