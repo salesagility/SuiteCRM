@@ -2522,6 +2522,7 @@ $app_strings = array (
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See sugarcrm.log for more information)',
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
     'LBL_ACCOUNT_PRODUCT_QUOTE_LINK' => 'Quote',
+    'LBL_ACCOUNT_PRODUCT_SALE_PRICE' => 'Sale Price',
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';

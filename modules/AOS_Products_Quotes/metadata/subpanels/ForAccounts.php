@@ -76,7 +76,7 @@ $subpanel_layout = array(
 //			'vname' => 'LBL_PRODUCT_COST_PRICE',
 //		),
 		'product_unit_price'=>array(
-			'vname' => 'LBL_PRODUCT_UNIT_PRICE',
+			'vname' => 'LBL_ACCOUNT_PRODUCT_SALE_PRICE',
 		),
 		'product_total_price'=>array(
 			'vname' => 'LBL_PRODUCT_TOTAL_PRICE',
