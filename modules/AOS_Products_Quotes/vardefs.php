@@ -112,7 +112,7 @@ $dictionary['AOS_Products_Quotes'] = array(
     'required' => false,
     'name' => 'product_qty',
     'vname' => 'LBL_PRODUCT_QTY',
-    'type' => 'decimal',
+    'type' => 'integer',  // it was: 'type' => 'decimal',
     'massupdate' => 0,
     'comments' => '',
     'help' => '',
