@@ -63,9 +63,9 @@ $subpanel_layout = array(
 		'product_discount'=>array(
 			'vname' => 'LBL_PRODUCT_DISCOUNT',
 		),
-		'product_discount_amount'=>array(
-			'vname' => 'LBL_PRODUCT_DISCOUNT_AMOUNT',
-		),
+//		'product_discount_amount'=>array(
+//			'vname' => 'LBL_PRODUCT_DISCOUNT_AMOUNT',
+//		),
 		'product_cost_price'=>array(
 			'vname' => 'LBL_PRODUCT_COST_PRICE',
 		),
