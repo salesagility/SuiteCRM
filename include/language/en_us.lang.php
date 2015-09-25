@@ -2521,6 +2521,7 @@ $app_strings = array (
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See sugarcrm.log for more information)',
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
+    'LBL_ACCOUNT_PRODUCT_QUOTE_LINK' => 'Quote',
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
