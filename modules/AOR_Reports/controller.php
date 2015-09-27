@@ -152,21 +152,43 @@ class AOR_ReportsController extends SugarController {
 
     protected function action_export()
     {
-        $this->bean->build_report_csv();
-        die;
+        if(!$this->bean->ACLAccess('Export')){
+            SugarApplication::appendErrorMessage("<script type='text/javascript'>SUGAR.ajaxUI.displayCustomMessage('LBL_NO_ACCESS');</script>");
+            $params = array(
+                'module'=> 'AOR_Reports',
+                'action'=>'DetailView',
+                'record' => $this->bean->id
+            );
+            SugarApplication::redirect('index.php?' . http_build_query($params));
+        } else {
+            $this->bean->build_report_csv();
+            die;
+        }
     }
 
     protected function action_downloadPDF()
     {
-        error_reporting(0);
-        require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+        if(!$this->bean->ACLAccess('Export')){
+            //ACLController::displayNoAccess(true);
+            //sugar_cleanup(true);
 
-        $d_image = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
-        $head =  '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
+            SugarApplication::appendErrorMessage("<script type='text/javascript'>SUGAR.ajaxUI.displayCustomMessage('LBL_NO_ACCESS');</script>");
+            $params = array(
+                'module'=> 'AOR_Reports',
+                'action'=>'DetailView',
+                'record' => $this->bean->id
+            );
+            SugarApplication::redirect('index.php?' . http_build_query($params));
+        } else {
+            error_reporting(0);
+            require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
+
+            $d_image = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+            $head = '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
                 <tbody style="text-align: left;">
                 <tr style="text-align: left;">
                 <td style="text-align: left;">
-                <p><img src="'.$d_image[0].'" style="float: left;"/>&nbsp;</p>
+                <p><img src="' . $d_image[0] . '" style="float: left;"/>&nbsp;</p>
                 </td>
                 <tr style="text-align: left;">
                 <td style="text-align: left;"></td>
@@ -179,30 +201,31 @@ class AOR_ReportsController extends SugarController {
                 </tr>
                 <tr style="text-align: left;">
                 <td style="text-align: left;">
-                <b>'.strtoupper($this->bean->name).'</b>
+                <b>' . strtoupper($this->bean->name) . '</b>
                 </td>
                 </tr>
                 </tbody>
                 </table><br />';
 
 
-        $printable = $this->bean->build_group_report(-1,false);
-        $stylesheet = file_get_contents('themes/Suite7/css/style.css');
+            $printable = $this->bean->build_group_report(-1, false);
+            $stylesheet = file_get_contents('themes/Suite7/css/style.css');
 
-        ob_clean();
-        try{
-            $pdf=new mPDF('en','A4','','DejaVuSansCondensed');
-            $pdf->setAutoFont();
-            $pdf->WriteHTML($stylesheet,1);
-            $pdf->WriteHTML($head,2);
-            $pdf->WriteHTML($printable,3);
-            $pdf->Output($this->bean->name.'.pdf', "D");
+            ob_clean();
+            try {
+                $pdf = new mPDF('en', 'A4', '', 'DejaVuSansCondensed');
+                $pdf->setAutoFont();
+                $pdf->WriteHTML($stylesheet, 1);
+                $pdf->WriteHTML($head, 2);
+                $pdf->WriteHTML($printable, 3);
+                $pdf->Output($this->bean->name . '.pdf', "D");
 
-        }catch(mPDF_exception $e){
-            echo $e;
+            } catch (mPDF_exception $e) {
+                echo $e;
+            }
+
+            die;
         }
-
-        die;
     }
 
     protected function action_getModuleFunctionField(){
