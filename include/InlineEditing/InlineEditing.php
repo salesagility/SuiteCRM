@@ -496,7 +496,7 @@ function checkAccess($bean){
 
     $aclaccess_in_role = $bean->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
 
-    if($aclaccess_is_owner && $aclaccess_in_role){
+    if($aclaccess_is_owner || $aclaccess_in_role){
         return true;
     }else {
         return false;
