@@ -176,7 +176,7 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
         // upload company logo
     if(isset($_REQUEST['uploadLogo']) && ($_REQUEST['uploadLogo'])){
         $filepath = '';
-        $errors = [];
+        $errors = array();
 
         switch($_FILES['company_logo']['error']) {
 
