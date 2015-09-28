@@ -190,7 +190,8 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
                     // uploaded image stored in the /custom path instead of put into the original theme directory..
 
                     mkdir_recursive('custom/' . SugarThemeRegistry::current()->getDefaultImagePath(), true);
-                    $destFile = 'custom/' . explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'))[0];
+                    $tmpvar = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+                    $destFile = 'custom/' . $tmpvar[0];
                     if (!move_uploaded_file($_FILES['company_logo']['tmp_name'], $destFile)) {
                         $errors[] = $mod_strings['ERR_LANG_UPLOAD_1'];
                     }
