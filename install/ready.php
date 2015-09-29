@@ -242,6 +242,7 @@ $out .= $envString;
 $out .=<<<EOQ
 
 </div>
+<div class="clear"></div>
 EOQ;
 
 $sugar_config_defaults = get_sugar_config_defaults();
@@ -300,7 +301,7 @@ $out = <<<EOQ
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta http-equiv="Content-Style-Type" content="text/css">
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_ARE_YOU_READY']}</title>   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
-   <link rel="stylesheet" href="install/install.css" type="text/css">
+   <link rel="stylesheet" href="install/ready.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
@@ -327,7 +328,7 @@ $out = <<<EOQ
 	        <form action="install.php" method="post" name="form" id="form">
 	        	<div id="install_content">
 	        	{$sysEnv}
-			    {$mod_strings['LBL_TITLE_ARE_YOU_READY']}
+			    <h3>{$mod_strings['LBL_TITLE_ARE_YOU_READY']}</h3>
 				<p><strong>{$mod_strings['LBL_WELCOME_PLEASE_READ_BELOW']}</strong></p>
 				<span onclick="showtime('sys_comp');" style="cursor:pointer;cursor:hand">
 				    <span id='basic_sys_comp'><img alt="{$mod_strings['LBL_BASIC_SEARCH']}" src="themes/default/images/basic_search.gif" border="0"></span>
