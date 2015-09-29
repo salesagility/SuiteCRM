@@ -4449,6 +4449,11 @@ h3 span{
     #quickcreatetop ul li a:hover, #desktop_notifications ul li a:hover{
         color:#ffffff !important;
     }
+
+    #quickcreatetop .dropdown-menu{
+        margin-top:0px !important;
+    }
+
 }
 
 .navbar-collapse.collapse{
