@@ -99,7 +99,7 @@ class InstallLayout
     private function getHeaderStyles() {
         $out = <<<EOQ
        <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
-       <link rel="stylesheet" href="install/install.css" type="text/css">
+       <link rel="stylesheet" href="install/ready.css" type="text/css">
        <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
        <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
        <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
@@ -183,7 +183,7 @@ EOQ;
     <!DOCTYPE HTML>
     <html {$langHeader}>
     $header
-    <body onload="document.getElementById('button_next2').focus();">
+    <body onload="//document.getElementById('button_next2').focus();">
         <!--SuiteCRM installer-->
         <div id="install_container">
             <div id="install_box">
@@ -661,7 +661,7 @@ EOQ;
     {$mod_strings['LBL_SITECFG_URL_MSG']}
     <span class="required">*</span>
     <label><b>{$mod_strings['LBL_SITECFG_URL']}</b></label>
-    <input type="text" name="setup_site_url" id="button_next2" value="{$_SESSION['setup_site_url']}" size="40" />
+    <input type="text" name="setup_site_url" value="{$_SESSION['setup_site_url']}" size="40" />
     <br>{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}
     <span class="required">*</span>
     <label><b>{$mod_strings['LBL_SYSTEM_NAME']}</b></label>
@@ -723,7 +723,7 @@ EOQ;
 
     <div class="formrow big">
         <label>{$mod_strings['LBL_SITECFG_URL']} <span class="required">*</span></label>
-        <input type="text" name="setup_site_url" id="button_next2" value="{$_SESSION['setup_site_url']}" size="40" />
+        <input type="text" name="setup_site_url" value="{$_SESSION['setup_site_url']}" size="40" />
     </div>
 
     <div class="clear"></div>
@@ -731,7 +731,7 @@ EOQ;
 
     <div class="formrow big">
         <label>{$mod_strings['LBL_EMAIL_ADDRESS']} <span class="required">*</span></label>
-        <input type="email" name="email1" id="button_next2" value="{$_SESSION['email1']}" size="40" />
+        <input type="email" name="email1" value="{$_SESSION['email1']}" size="40" />
     </div>
 
     <div class="clear"></div>
