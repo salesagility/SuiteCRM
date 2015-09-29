@@ -82,7 +82,7 @@ $out = <<<EOQ
    <meta http-equiv="Content-Style-Type" content="text/css">
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}, {$mod_strings['LBL_LICENSE_ACCEPTANCE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
-   <link rel="stylesheet" href="install/install.css" type="text/css">
+   <link rel="stylesheet" href="install/install2.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
    <script src="include/javascript/jquery/jquery-min.js"></script>
@@ -98,7 +98,12 @@ $out = <<<EOQ
     <script type="text/javascript" src="install/license.js"></script>
     <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
     <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
-
+    <style>
+        #install_box {
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+    </style>
 </head>
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
     <!--SuiteCRM installer-->
@@ -120,7 +125,7 @@ $out = <<<EOQ
                 </div>
             </div>
 
-            <div id='licenseDivToggler' style="text-align: center;"><a href="javascript:$('#licenseDiv').toggle();">Show Software License</a></div>
+            <div id='licenseDivToggler' style="text-align: center;"><a href="javascript:void(0);" onclick="javascript:$('#licenseDiv').toggle();">Show Software License</a></div>
 
             <div id='licenseDiv' style="display: none;">
                 <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
