@@ -83,6 +83,7 @@ class SugarView
     var $responseTime;
     var $fileResources;
 
+    private $_js = array();
     /**
      * Constructor which will peform the setup.
      */
@@ -327,6 +328,14 @@ class SugarView
 
         $ss->assign("SUGAR_JS",ob_get_contents().$themeObject->getJS());
         ob_end_clean();
+
+
+
+        // Add custom JS files from the view
+        if($this->hasCustomJS())
+        {
+            $ss->assign('GCOOP_JS', $this->getCustomJSURL());
+        }
 
         // get favicon
         if(isset($GLOBALS['sugar_config']['default_module_favicon']))
@@ -639,7 +648,7 @@ class SugarView
 
 
         }
-        
+
         if ( isset($extraTabs) && is_array($extraTabs) ) {
             // Adding shortcuts array to extra menu array for displaying shortcuts associated with each module
             $shortcutExtraMenu = array();
@@ -659,12 +668,12 @@ class SugarView
             }
             $ss->assign("shortcutExtraMenu",$shortcutExtraMenu);
         }
-       
+
        if(!empty($current_user)){
        	$ss->assign("max_tabs", $current_user->getPreference("max_tabs"));
-       } 
-      
-       
+       }
+
+
         $imageURL = SugarThemeRegistry::current()->getImageURL("dashboard.png");
         $homeImage = "<img src='$imageURL'>";
 		$ss->assign("homeImage",$homeImage);
@@ -826,6 +835,11 @@ EOHTML;
             $config_js = $this->getSugarConfigJS();
             if(!empty($config_js)){
                 echo "<script>\n".implode("\n", $config_js)."</script>\n";
+            }
+
+            if ($this->hasCustomJS())
+            {
+                echo getVersionedScript($this->getCustomJSURL());
             }
 
             if ( isset($sugar_config['email_sugarclient_listviewmaxselect']) ) {
@@ -1244,7 +1258,7 @@ EOHTML;
 		$userTabs = query_module_access_list($current_user);
 		//If the home tab is in the user array use it as the default tab, otherwise use the first element in the tab array
 		$defaultTab = (in_array("Home",$userTabs)) ? "Home" : key($userTabs);
-		
+
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
         if ( !empty($_REQUEST['module_tab']) )
             return $_REQUEST['module_tab'];
@@ -1666,5 +1680,70 @@ EOHTML;
         return false;
     }
 
+    /**
+     * Add custom JS files to the _js property
+     * This function should be called in the constructor of the view like this:
+     *
+     * $this->addCustomJS('custom/include/js/dom_selector.js');
+     *
+     **/
+    public function addCustomJS($path)
+    {
+        $this->_js[] = $path;
+    }
+    public function delCustomJS($path)
+    {
+        $key = array_search($path, $this->_js);
+        if ($key !== false)
+        {
+            unset($this->_js[$key]);
+        }
+    }
+    public function getCustomJS()
+    {
+        return($this->_js);
+    }
+    public function hasCustomJS()
+    {
+        return(!empty($this->_js));
+    }
 
+    private function getCustomJSURL()
+    {
+        $customJSURL = '';
+        if ($this->hasCustomJS())
+        {
+            $jsFiles = $this->getCustomJS();
+            $target = SugarThemeRegistry::current()->getJSPath() . '/' . md5(implode('|', $jsFiles)) . '.js';
+            if (!sugar_is_file(sugar_cached($target)))
+            {
+                $customJSContents = '';
+                foreach ($jsFiles as $jsFileName)
+                {
+                    $jsFileContents = '';
+                    if (sugar_is_file('custom/' . $jsFileName))
+                    {
+                        $jsFileContents .= sugar_file_get_contents('custom/' . $jsFileName);
+                    }
+                    elseif (sugar_is_file($jsFileName))
+                    {
+                        $jsFileContents .= sugar_file_get_contents($jsFileName);
+                    }
+                    if (empty($jsFileContents))
+                    {
+                        $GLOBALS['log']->warn("JS File $jsFileName not found");
+                    }
+                    $customJSContents .= $jsFileContents;
+                }
+                $customJSPath = create_cache_directory($target);
+                if ((!inDeveloperMode()) && (!sugar_is_file($customJSPath)))
+                {
+                    $customJSContents = SugarMin::minify($customJSContents);
+                }
+                sugar_file_put_contents($customJSPath, $customJSContents);
+            }
+            $customJSURL = sugar_cached($target);
+        }
+        return($customJSURL);
+    }
 }
