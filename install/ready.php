@@ -301,7 +301,7 @@ $out = <<<EOQ
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta http-equiv="Content-Style-Type" content="text/css">
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_ARE_YOU_READY']}</title>   <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
-   <link rel="stylesheet" href="install/ready.css" type="text/css">
+   <link rel="stylesheet" href="install/install2.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/responsiveslides.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/themes.css" type="text/css">
    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
