@@ -95,6 +95,7 @@
 	$header = preg_replace($search, $replace, $template->pdfheader);
 	$footer = preg_replace($search, $replace, $template->pdffooter);
 	$text = preg_replace($search, $replace, $template->description);
+	$text = str_replace("<p><pagebreak /></p>", "<pagebreak />", $text);
 	$text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
 		function ($matches) { return date($matches[1]); },
 		$text );
