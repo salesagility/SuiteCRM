@@ -232,3 +232,4 @@ var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailvi
 </script>
 {{/if}}
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
+<script type="text/javascript" src="modules/Favorites/favorites.js"></script>

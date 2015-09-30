@@ -4597,5 +4597,21 @@ td.inlineEditActive{
 }
 
 
+object{
+    pointer-events: none;
+}
+
+.favorite{
+    width:20px;
+    float:left;
+    margin-left:5px;
+}
+
+.favorite:hover{
+    cursor: pointer;
+}
+
+
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
