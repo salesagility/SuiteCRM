@@ -752,7 +752,7 @@ EOQ;
 
     <div class="clear"></div>
 
-    <a href="javascript:(void);" onclick="$('.security-block').toggle();">More..</a><br/><br/>
+    <a href="javascript:;" onclick="$('.security-block').toggle();">More..</a><br/><br/>
 
 <div class="security-block" style="display:none;">
 <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
@@ -1166,8 +1166,11 @@ EOQ;
                      */
                     var startStatusReader = function() {
                         setInterval(function(){
-                            $.get('install/status.html?' + Math.random(), function(resp){
-                                preloaderSetStatus(resp);
+                            $.getJSON('install/status.json?' + Math.random(), function(resp){
+                                preloaderSetStatus(resp.message);
+                                if(resp.command && resp.command.function == 'redirect') {
+                                    document.location.href = resp.command.arguments;
+                                }
                             });
                         }, 1200);
                     };

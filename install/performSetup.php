@@ -38,8 +38,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function installStatus($msg) {
-    file_put_contents('install/status.html', $msg);
+function installStatus($msg, $cmd = null) {
+    file_put_contents('install/status.json', json_encode(array(
+        'message' => $msg,
+        'command' => $cmd,
+    )));
 }
 installStatus('');
 
@@ -681,6 +684,7 @@ EOQ;
 
 echo $out;
 
-installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]") ) );
+$loginURL = str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL ) , array('function' => 'redirect', 'arguments' => $loginURL) );
 
 ?>
