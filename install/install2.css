@@ -14,6 +14,7 @@ body {
 h3 {
     font-size: 16px;
     font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.5);
 }
 b, strong {
     font-weight: bold;
@@ -172,7 +173,7 @@ p#footer_links {
 /* configuration step */
 
 div.install_block{
-    overflow:hidden;
+    /*overflow:hidden;*/
 }
 div.install_block label{
     max-width:50% !important;
@@ -341,6 +342,7 @@ h2 {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 6px;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.5);
 }
 
 
@@ -440,6 +442,7 @@ h1 {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 8px;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.5);
 }
 
 /* slider */
@@ -497,4 +500,47 @@ form #wrapper {
 
 #licenseDivToggler {
     margin-bottom: 10px;
+}
+
+
+
+/* install config step */
+.floatbox {
+    width:48%;
+    min-width: 400px;
+    display: block;
+    float: left;
+}
+.floatbox.full {
+    width: 98%;
+}
+
+
+
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 1300px or less */
+@media screen and (max-width: 1300px) {
+   .formrow.big label {float: none;}
+}
+
+
+/* for 700px or less */
+@media screen and (max-width: 700px) {
+    #install_header {border: none;}
+}
+
+/* for 500px or less */
+@media screen and (max-width: 500px) {
+    .floatbox {float: none;}
+    .floatbox.full {min-width: initial;}
+    #install_box .formrow label {float: none;}
+    #install_box label {float: none;}
+    .install_block input {display: block; float: none; max-width: 40%;}
+    .ibmsg {width: 70%;}
+    #syscred p {width: initial; min-width: initial;}
+    .licensetext {width: 70%;}
+    #licenseaccept {width: initial; diaplay: block; float: none;}
 }
