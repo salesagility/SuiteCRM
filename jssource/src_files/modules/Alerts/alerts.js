@@ -119,6 +119,11 @@ Alerts.prototype.show = function(AlertObj) {
                 }
             }
 
+            // Make desktop notifications persistent
+            if(typeof AlertObj.options.requireInteraction === "undefined") {
+                AlertObj.options.requireInteraction = true;
+            }
+
             var notification = new Notification(AlertObj.title, AlertObj.options);
             if(typeof AlertObj.options !== "undefined") {
                 if(typeof AlertObj.options.url_redirect!== "undefined") {
