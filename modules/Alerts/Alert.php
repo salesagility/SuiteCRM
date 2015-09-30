@@ -62,7 +62,7 @@ class Alert extends Basic {
     var $assigned_user_id;
     var $assigned_user_name;
     var $assigned_user_link;
-    var $deilivery_datetime;
+    var $delivery_datetime;
     var $content_type = EAlertContentType::text;
     var $was_sent = false;
     var $send_email = false;
