@@ -127,6 +127,7 @@ EOQ;
     <head>
        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
        <meta http-equiv="Content-Style-Type" content="text/css">
+       <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
        <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_SYSOPTS_DB_TITLE']}</title>
        $styles
        $scripts
@@ -157,6 +158,7 @@ EOQ;
                         $items
                     </div>
                 </div>
+                <div class="clear"></div>
                 <hr>
                 <div id="installcontrols">
                     $controlls
@@ -223,6 +225,7 @@ EOQ;
 
 
         $out3 =<<<EOQ3
+        <div class="floatbox">
             <div class="install_block">
                 <h2>{$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}</h2>
                 <div class="form_section">
@@ -232,10 +235,11 @@ EOQ;
                 </div>
                 </div>
             </div>
+        </div>
 EOQ3;
 
         // database selection
-        $out = $out3 . "<h2>{$mod_strings['LBL_SYSOPTS_DB']}</h2>
+        $out = $out3 . "<div class=\"floatbox\"><h2>{$mod_strings['LBL_SYSOPTS_DB']}</h2>
         <div class=\"form_section\">";
         foreach($drivers as $type => $driver) {
             $oci = ($type == "oci8")?"":'none'; // hack for special oracle message
@@ -262,6 +266,8 @@ EOQ;
         if(empty($_SESSION['smtp_tab_selected'])) $_SESSION['smtp_tab_selected'] = 'smtp_tab_other';
 
         $out .= <<<EOQ
+        </div>
+        <div class="floatbox full">
             <!-- smtp settings -->
             <h2>{$mod_strings['LBL_MAIL_SMTP_SETTINGS']}</h2>
             <br>
@@ -512,6 +518,8 @@ EOQ;
         // db setup (dbConfig_a.php)
         $out2 =<<<EOQ2
             <input type='hidden' name='setup_db_drop_tables' id='setup_db_drop_tables' value=''>
+        </div>
+        <div class="floatbox">
             <h2>{$mod_strings['LBL_DBCONF_TITLE']}</h2>
 
             <div class="form_section">
@@ -609,8 +617,9 @@ FORM;
 
             $out2 .= <<<EOQ2
 <br>
-
-{$mod_strings['LBL_DBCONFIG_SECURITY']}
+<div class='install_block'>
+    <div class="ibmsg">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div>
+</div>
 <div class='install_block'>
     <div class="formrow">
         <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</label>
@@ -647,6 +656,8 @@ EOQ2;
         // ------ siteConfig_a.php
         $out .=<<<EOQ
         </div>
+    </div>
+    <div class="floatbox">
                     <h2>{$mod_strings['LBL_SITECFG_TITLE']}</h2>
                     <div class="form_section">
                     <p>{$errors}</p>
@@ -698,7 +709,7 @@ EOQ;
         $out .=<<<EOQ
 <div class='install_block'>
 
-    <p>{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
+    <p class="ibmsg">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
 
     <div class="formrow big">
         <label>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></label>
@@ -741,6 +752,9 @@ EOQ;
 
     <div class="clear"></div>
 
+    <a href="javascript:(void);" onclick="$('.security-block').toggle();">More..</a><br/><br/>
+
+<div class="security-block" style="display:none;">
 <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
       <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>
     <tr>
@@ -824,6 +838,7 @@ EOQ;
 </td>
 </tr>
 </table>
+</div>
 
 </div>
 EOQ;
@@ -848,13 +863,15 @@ EOQ;
 
             <!-- Branding  -->
             </div>
+        </div>
+        <div class="floatbox">
             <h2>{$mod_strings['LBL_WIZARD_SYSTEM_TITLE']}</h2>
 
             <div class="form_section">
 
-                <p>{$mod_strings['LBL_WIZARD_SYSTEM_DESC']}</p>
+                <p class="ibmsg">{$mod_strings['LBL_WIZARD_SYSTEM_DESC']}</p>
 
-                <p>{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}</p>
+                <p class="ibmsg">{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}</p>
 
                 <div class="formrow">
                     <label>{$mod_strings['SYSTEM_NAME_WIZARD']} <i>i<div class="tooltip">{$mod_strings['SYSTEM_NAME_HELP']}</div></i></label>
@@ -905,15 +922,15 @@ EOQ;
         $defaultLocalNameFormatSelect = self::getSelect('default_locale_name_format', $sugarConfigDefaults['name_formats'], empty($_SESSION['default_locale_name_format']) ? $sugarConfigDefaults['default_locale_name_format'] : $_SESSION['default_locale_name_format']);
 
         $out .= <<<EOQ
-
+        </div>
             <!-- System Local Settings  -->
             <!-- TODO--low: add the time-zone settings here!! -->
-
+        <div class="floatbox">
             <h2>{$mod_strings['LBL_LOCALE_TITLE']}</h2>
 
             <div class="form_section">
 
-                <p>{$mod_strings['LBL_WIZARD_LOCALE_DESC']}</p>
+                <p class="ibmsg">{$mod_strings['LBL_WIZARD_LOCALE_DESC']}</p>
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_DATE_FORMAT']}</label>
@@ -973,6 +990,7 @@ EOQ;
 
                 <div class="clear"></div>
             </div>
+        </div>
 
 EOQ;
 
@@ -1241,7 +1259,9 @@ EOQ;
                             });
                         }
                         else {
-                            alert(errors.join());
+                            $('#errorMsgs').html("<p><b>Please fix the following errors before proceeding:</b></p><ul><li class=\"error\">" + errors.join('</li><li>') + "</li></ul>");
+                            $('#errorMsgs').show();
+                            //alert(errors.join('</li><li>'));
                         }
                         return false;
                     };

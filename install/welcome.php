@@ -80,6 +80,7 @@ $out = <<<EOQ
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
    <meta http-equiv="Content-Style-Type" content="text/css">
+   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
    <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_TITLE_WELCOME']} {$setup_sugar_version} {$mod_strings['LBL_WELCOME_SETUP_WIZARD']}, {$mod_strings['LBL_LICENSE_ACCEPTANCE']}</title>
    <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
    <link rel="stylesheet" href="install/install2.css" type="text/css">
