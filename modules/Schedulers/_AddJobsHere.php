@@ -529,6 +529,30 @@ function cleanJobQueue($job)
 }
 
 function handleMissedAlerts() {
+	global $current_user, $db, $timedate;
+	$NOW = new DateTime(gmdate("Y-m-d H:i:s"));
+	$MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
+	$MOMENT = $MOMENT->sub(new DateInterval('PT60S'));
+
+	$query = "SELECT * FROM alerts WHERE delevery_datetime >= $MOMENT";
+	$query_result = $db->query($query);
+
+	// Search for subscribers with is_read set to false.
+	while ($row = $db->fetchByAssoc($query_result)) {
+		$subscribers_json = json_decode(utf8_decode($row['subscribers']));
+
+		// Convert from stdClass to Array
+		$subscribers = array();
+		foreach($subscribers_json as $key => $value) {
+			$subscribers[$key] = (array)$value;
+		}
+
+		foreach($subscribers as $s => $subscriber) {
+			if(!$subscriber['is_read']) {
+				// Send email / SMS / Mark up as missed for the alerts manager
+			}
+		}
+	}
 	return true;
 }
 
