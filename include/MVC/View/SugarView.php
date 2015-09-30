@@ -809,7 +809,7 @@ EOHTML;
             echo getVersionedScript('cache/include/javascript/sugar_grp1.js');
             echo getVersionedScript('include/javascript/calendar.js');
 
-            // And alerts
+            // Add "new" alerts
             echo getVersionedScript('include/javascript/alerts.js');
 
             // output necessary config js in the top of the page
