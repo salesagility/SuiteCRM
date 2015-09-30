@@ -258,6 +258,7 @@ Alerts.prototype.markAsRead = function(id) {
  *                  url_redirect: 'url to redirect to on click action';
  *                  target_module: 'this module that alert it related to eg meeting, call etc... sets up the icon';
  *                  type: 'success|warning|danger|info'
+ *                  requireInteraction: true | false - Determines if desktop notifications is persistent.
  *             }
  */
 function AlertObj() {
@@ -266,7 +267,8 @@ function AlertObj() {
         body: ' ',
         url_redirect: null,
         target_module: null,
-        type: 'info'
+        type: 'info',
+        requireInteraction: true,
     };
     this.subscribers = new Array();
 }
