@@ -529,7 +529,7 @@ function cleanJobQueue($job)
 }
 
 function handleMissedAlerts() {
-	global $current_user, $db, $timedate;
+	global $current_user, $db;
 	$NOW = new DateTime(gmdate("Y-m-d H:i:s"));
 	$MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
 	$MOMENT = $MOMENT->sub(new DateInterval('PT60S'));
