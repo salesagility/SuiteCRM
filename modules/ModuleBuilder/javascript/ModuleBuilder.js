@@ -371,6 +371,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
 		state: {
 			isDirty: false,
 			saving: false,
+			newFieldtoSave: false,
             hideFailedMesage: false,
 			intended_view: {
 				url: null,
@@ -513,6 +514,13 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			ModuleBuilder.asyncRequest(url, successCall);
 		},
 		updateContent: function(o){
+
+			// Temporary fix for issue #360
+			// Documents module will need to be rewritten as it has a hardcoded popup form.
+			var sheet = document.createElement('style')
+			sheet.innerHTML = "#ygtv202 {display: none;}";
+			document.body.appendChild(sheet);
+
 			ModuleBuilder.callInProgress = false;
 			//Check if a save action was called and now we need to move-on
 			if (ModuleBuilder.state.saving) {
@@ -995,6 +1003,11 @@ if (typeof(ModuleBuilder) == 'undefined') {
 				formsWithFieldLogic = 'undefined';
 			ModuleBuilder.getContent('module=ModuleBuilder&action=modulefield&view_package=' + ModuleBuilder.MBpackage + 
 				'&view_module=' + ModuleBuilder.module + '&field=' + name + '&type=' + type);
+
+			// If the user creates a new field, then we need to save this field first and then save its dropdown list items
+			if (name == 'newFieldtoSave') {
+				ModuleBuilder.newFieldtoSave = true;
+			}
 		},
 		moduleLoadLabels: function(type){
 			if (typeof(type) == 'undefined')
