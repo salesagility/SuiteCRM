@@ -535,7 +535,7 @@ function handleMissedAlerts() {
 	$MOMENT = $MOMENT->sub(new DateInterval('PT60S'));
 
 	// Get recent alerts from the last n seconds (see $MOMENT)
-	$query = "SELECT * FROM alerts WHERE delevery_datetime >= $MOMENT";
+	$query = "SELECT * FROM alerts WHERE delevery_datetime >= '$MOMENT->format('Y-m-d H:i:s')' AND was_sent = '0'";
 	$query_result = $db->query($query);
 
 	// Search for subscribers with is_read set to false.
