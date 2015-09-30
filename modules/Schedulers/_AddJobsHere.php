@@ -70,6 +70,7 @@ $job_strings = array (
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
+	17 => 'handleMissedAlerts',
 
 );
 
@@ -525,6 +526,10 @@ function cleanJobQueue($job)
     $hard_cutoff_date = $job->db->quoted($td->getNow()->modify("- $hard_cutoff days")->asDb());
     $job->db->query("DELETE FROM {$job->table_name} WHERE status='done' AND date_modified < ".$job->db->convert($hard_cutoff_date, 'datetime'));
     return true;
+}
+
+function handleMissedAlerts() {
+	return true;
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {
