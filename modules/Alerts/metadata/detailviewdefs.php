@@ -38,10 +38,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+$detailViewDefs['Alerts']['DetailView']['templateMeta'] = array(
 
+'form' =>
+      array (
+          'buttons' =>
+              array (
+                  0 => 'EDIT',
+              ),
+      ),
+      'maxColumns' => '2',
+      'widths' =>
+      array (
+          0 =>
+              array (
+                  'label' => '10',
+                  'field' => '30',
+              ),
+          1 =>
+              array (
+                  'label' => '10',
+                  'field' => '30',
+              ),
+      ),
+      'includes' => array (),
+      'useTabs' => false,
+      'tabDefs' => array (
+          'LBL_ACCOUNT_INFORMATION' =>
+              array (
+                  'newTab' => true,
+                  'panelDefault' => 'expanded',
+              ),
+      ),
+);
 
-
-$detailViewDefs['Alerts'] = array(
+$detailViewDefs['Alerts']['DetailView']['panels'] = array(
     'NAME' => array(
         'width' => '20',
         'label' => 'LBL_NAME',

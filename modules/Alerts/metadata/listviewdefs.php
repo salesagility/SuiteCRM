@@ -51,5 +51,4 @@ $listViewDefs['Alerts'] = array(
         'label' => 'LBL_NAME',
         'link' => true,
         'default' => true),
-
 );
