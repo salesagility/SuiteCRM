@@ -534,6 +534,7 @@ function handleMissedAlerts() {
 	$MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
 	$MOMENT = $MOMENT->sub(new DateInterval('PT60S'));
 
+	// Get recent alerts from the last n seconds (see $MOMENT)
 	$query = "SELECT * FROM alerts WHERE delevery_datetime >= $MOMENT";
 	$query_result = $db->query($query);
 
