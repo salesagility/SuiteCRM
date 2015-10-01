@@ -478,6 +478,8 @@ FP;
     $enabled_tabs[] = 'jjwg_Address_Cache';
     $enabled_tabs[] = 'AOR_Reports';
     $enabled_tabs[] = 'AOW_WorkFlow';
+    $enabled_tabs[] = 'AOK_KnowledgeBase';
+    $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
 
     installerHook('pre_setSystemTabs');
     require_once('modules/MySettings/TabController.php');

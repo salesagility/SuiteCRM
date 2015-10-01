@@ -317,6 +317,17 @@ $objectList['Cases'] =  'Case';
 $objectList['Groups'] =  'User';
 $objectList['Users'] =  'User';
 
+
+// knowledge base
+$beanList['AOK_Knowledge_Base_Categories'] = 'AOK_Knowledge_Base_Categories';
+$beanFiles['AOK_Knowledge_Base_Categories'] = 'modules/AOK_Knowledge_Base_Categories/AOK_Knowledge_Base_Categories.php';
+$moduleList[] = 'AOK_Knowledge_Base_Categories';
+$beanList['AOK_KnowledgeBase'] = 'AOK_KnowledgeBase';
+$beanFiles['AOK_KnowledgeBase'] = 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php';
+$moduleList[] = 'AOK_KnowledgeBase';
+
+
+
 if (file_exists('include/modules_override.php'))
 {
     include('include/modules_override.php');

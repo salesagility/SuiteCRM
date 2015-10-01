@@ -2942,3 +2942,14 @@ $app_strings['LBL_CHOOSE_START_AND_END_DATES'] = 'Por favor seleccione un rango 
 $app_strings['LBL_CHOOSE_START_AND_END_ENTRIES'] = 'Por favor seleccione un rango de entrada de inicio y de finalización';
 $app_strings['UPLOAD_REQUEST_ERROR'] = 'Ocurrió un error. Por favor actualice su página y vuelva a intentarlo.';
 $app_strings['ERR_BAD_RESPONSE_FROM_SERVER'] = 'Respuesta incorrecta del servidor';
+
+
+// knowledge base
+$app_list_strings['moduleList']['AOK_KnowledgeBase'] = 'Knowledge Base';
+$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categorías';
+$app_list_strings['aok_status_list']['Draft'] = 'Calado';
+$app_list_strings['aok_status_list']['Expired'] = 'Expirado';
+$app_list_strings['aok_status_list']['In_Review'] = 'En revisión';
+//$app_list_strings['aok_status_list']['Published'] = 'Publicado';
+$app_list_strings['aok_status_list']['published_private'] = 'Particular';
+$app_list_strings['aok_status_list']['published_public'] = 'Público';
