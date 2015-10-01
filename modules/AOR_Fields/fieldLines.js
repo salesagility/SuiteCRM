@@ -46,7 +46,6 @@ function loadFieldLine(field){
     ln = insertFieldLine();
 
     for(var a in field){
-
         var elem = document.getElementById(prefix + a + ln);
 
         if(elem != null){
@@ -62,7 +61,11 @@ function loadFieldLine(field){
         }
     }
 
-    showFieldModuleField(ln, field['field_function'], field['label']);
+    if (field.add_aggregate_function === true || field.add_aggregate_function === 'true') {
+        showFieldModuleField(ln, 'add_aggregate_function', field['label']);
+    } else {
+        showFieldModuleField(ln, field['field_function'], field['label']);
+    }
 }
 
 function showFieldCurrentModuleFields(ln, value){
@@ -99,34 +102,40 @@ function showFieldCurrentModuleFields(ln, value){
 }
 
 function showFieldModuleField(ln, function_value, label_value){
-    if (typeof function_value === 'undefined') { function_value = ''; }
-    if (typeof label_value === 'undefined') { label_value = ''; }
-
-    var aor_field = document.getElementById('aor_fields_field'+ln).value;
-    if(aor_field != ''){
-
-        var callback = {
-            success: function(result) {
-                document.getElementById('aor_fields_fieldFunction'+ln).innerHTML = result.responseText;
-                SUGAR.util.evalScript(result.responseText);
-
-                var select_field = document.getElementById('aor_fields_field'+ln);
-                if(label_value === ''){
-                    document.getElementById('aor_fields_label'+ln).value = select_field.options[select_field.selectedIndex].text;
-                }
-
-            },
-            failure: function(result) {
-                fieldResetLine(ln);
-            }
+    if (function_value === 'add_aggregate_function') {
+        if (typeof function_value === 'undefined') {
+            function_value = '';
+        }
+        if (typeof label_value === 'undefined') {
+            label_value = '';
         }
 
-        var aor_field_name = "aor_fields_field_function["+ln+"]";
+        var aor_field = document.getElementById('aor_fields_field' + ln).value;
+        if (aor_field != '') {
 
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFunctionField&view="+action_sugar_grp1+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+function_value,callback);
+            var callback = {
+                success: function (result) {
+                    document.getElementById('aor_fields_fieldFunction' + ln).innerHTML = result.responseText;
+                    SUGAR.util.evalScript(result.responseText);
 
-    } else {
-        fieldResetLine(ln);
+                    var select_field = document.getElementById('aor_fields_field' + ln);
+                    if (label_value === '') {
+                        document.getElementById('aor_fields_label' + ln).value = select_field.options[select_field.selectedIndex].text;
+                    }
+
+                },
+                failure: function (result) {
+                    fieldResetLine(ln);
+                }
+            }
+
+            var aor_field_name = "aor_fields_field_function[" + ln + "]";
+
+            YAHOO.util.Connect.asyncRequest("GET", "index.php?module=AOR_Reports&action=getModuleFunctionField&view=" + action_sugar_grp1 + "&aor_module=" + report_module + "&aor_fieldname=" + aor_field + "&aor_newfieldname=" + aor_field_name + "&aor_value=" + function_value, callback);
+
+        } else {
+            fieldResetLine(ln);
+        }
     }
 }
 
@@ -375,12 +384,29 @@ function date_field_change(field){
 }
 
 function addNodeToFields(node){
+
+    var add_aggregate_function = '';
+
+    $.ajax({
+        type: "POST",
+        url:'index.php?module=AOR_Reports&action=getNewFieldLine',
+        //dataType: 'json',
+        //data: { arguments: the_string},
+        data: { 'field' : node.id, 'module_path_display' : node.module_path_display },
+        success:function(output) {
+            add_aggregate_function = output.substr(0, output.indexOf('<'));
+        },
+        async: false
+    });
+
     loadFieldLine(
         {
             'label' : node.name,
             'module_path' : node.module_path,
             'module_path_display' : node.module_path_display,
             'field' : node.id,
-            'field_label' : node.name});
+            'field_label' : node.name,
+            'add_aggregate_function' : add_aggregate_function
+        });
 }
 
