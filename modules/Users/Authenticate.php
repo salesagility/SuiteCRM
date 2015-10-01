@@ -90,8 +90,13 @@ if(isset($_SESSION['authenticated_user_id'])) {
         $url = $GLOBALS['app']->getLoginRedirect();
     }
 } else {
-	// Login has failed
-	$url ="index.php?module=Users&action=Login";
+    // Login has failed
+    if(isset($_POST['login_language']) && !empty($_POST['login_language'])) {
+        $url ="index.php?module=Users&action=Login&login_language=". $_POST['login_language'];
+    } else {
+        $url ="index.php?module=Users&action=Login";
+    }
+
     if(!empty($login_vars))
     {
         $url .= '&' . http_build_query($login_vars);
