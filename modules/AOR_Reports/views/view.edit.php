@@ -104,11 +104,34 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $field_name->retrieve($row['id']);
             $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
+            $my = $this->bean->report_module;
             $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
             $arr['module_path_display'] = $display['module'];
             $arr['field_label'] = $display['field'];
+
+            // Fix for issue #439
+            $add_aggregate_function = false;
+            $field_name_to_test =  $arr[field];
+            $module_name_to_test = $arr[module_path_display];
+            foreach($GLOBALS['dictionary'] as $dictionary_item) {
+                if(strcasecmp($dictionary_item[table], $module_name_to_test) == 0) {
+                    foreach($dictionary_item[fields] as $dictionary_item_field_key => $dictionary_item_field_value) {
+                        if(strcasecmp($dictionary_item_field_key, $field_name_to_test) == 0) {
+                            if($dictionary_item_field_value['type'] == 'decimal' || $dictionary_item_field_value['type'] == 'currency' || $dictionary_item_field_value['float'] || $dictionary_item_field_value['int'] ) {
+                                $add_aggregate_function = true;
+                                $arr['add_aggregate_function'] = true;
+                            } else {
+                                $add_aggregate_function = false;
+                                $arr['add_aggregate_function'] = false;
+                            }
+                        }
+                    }
+                }
+            }
+
             $fields[] = $arr;
         }
+
         return $fields;
     }
 
