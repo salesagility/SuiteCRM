@@ -197,6 +197,9 @@ Alerts.prototype.addToManager = function(AlertObj) {
             type: type
         }
     ).done(function(data) {
+            if(data.redirect) {
+                Alerts.prototype.refreshPeriod = -1;
+            }
     }).fail(function(data) {
             console.log(data);
     }).always(function() {
@@ -209,7 +212,14 @@ Alerts.prototype.addToManager = function(AlertObj) {
  */
 Alerts.prototype.updateManager = function() {
     var url = 'index.php?module=Alerts&action=get&to_pdf=1';
-    $.ajax(url).done(function(data) {
+    $.ajax(url).done(function(data, textStatus, jqXHR) {
+
+        // Detect if use is logged out by looking for the login form
+        if($('form.form-signin').length > 0) {
+            Alerts.prototype.refreshPeriod = -1;
+            return;
+        }
+
         $('div#alerts').html(data);
         $('div.alerts').css('width', '200px');
 
@@ -242,6 +252,7 @@ Alerts.prototype.markAsRead = function(id) {
     });
 }
 
+Alerts.prototype.refreshPeriod = 60000;
 /**
  * Alert structure
  * @constructor
@@ -269,7 +280,9 @@ function AlertObj() {
 $(document).ready(function() {
     var updateMissed  = function() {
         Alerts.prototype.updateManager();
-        setTimeout(updateMissed, 60000);
+        if(Alerts.prototype.refreshPeriod != -1) {
+            setTimeout(updateMissed, Alerts.prototype.refreshPeriod);
+        }
     }
-    setTimeout(updateMissed, 2000);
+    updateMissed();
 });
