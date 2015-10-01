@@ -3085,9 +3085,9 @@ li#usermenu:hover {
     top:49px;
 }
 
-@media (max-height:600px) {
+@media (max-height:700px) {
     .moremenu ul, ul.dropdown-menu {
-        max-height: 500px !important;
+        max-height: 525px !important;
         overflow: auto;
     }
 }
