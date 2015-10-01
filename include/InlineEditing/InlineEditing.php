@@ -460,20 +460,20 @@ function convertDateUserToDB($value)
 }
 
 function checkAccess($bean){
-    $aclaccess_is_owner = false;
-    $aclaccess_in_group = false;
+    /*    $aclaccess_is_owner = false;
+        $aclaccess_in_group = false;
 
-    global $current_user;
-    if(is_admin($current_user)) {
-        $aclaccess_is_owner = true;
-    } else {
-        $aclaccess_is_owner = $bean->isOwner($current_user->id);
-    }
+        global $current_user;
+        if(is_admin($current_user)) {
+            $aclaccess_is_owner = true;
+        } else {
+            $aclaccess_is_owner = $bean->isOwner($current_user->id);
+        }
 
 
-    $aclaccess_in_role = $bean->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
+        $aclaccess_in_role = $bean->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);*/
 
-    if($aclaccess_is_owner && $aclaccess_in_role){
+    if($bean->ACLAccess('EditView')) {
         return true;
     }else {
         return false;
