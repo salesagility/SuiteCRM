@@ -66,6 +66,9 @@ $mod_strings = array (
     'LBL_AOS_PRODUCT_CATEGORY' => 'Product Category ID',
     'LBL_COST_USDOLLAR' => 'Cost (Default Currency)',
     'LBL_PRICE_USDOLLAR' => 'Price (Default Currency)',
-    'LBL_FILE_URL' => 'File URL'
+    'LBL_FILE_URL' => 'File URL',
+    'LBL_CUSTOMERS_PURCHASED_PRODUCTS_SUBPANEL_TITLE' => 'Customers who purchased',
+    'LBL_AOS_QUOTE_NAME' => 'Quote',
+    'LBL_ACCOUNT_NAME' => 'Account',
 );
 ?>

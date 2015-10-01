@@ -28,6 +28,33 @@ $dictionary['AOS_Products'] = array(
 	'table'=>'aos_products',
 	'audited'=>true,
 	'fields'=>array (
+
+        // for Purchased Products sub-panel
+        'aos_quote_id' =>
+            array(
+                'name' => 'aos_quote_id',
+                'vname' => 'LBL_AOS_QUOTE_ID',
+                'source' => 'non-db',
+            ),
+        'aos_quote_name' =>
+            array(
+                'name' => 'aos_quote_name',
+                'vname' => 'LBL_AOS_QUOTE_NAME',
+                'source' => 'non-db',
+            ),
+        'account_id' =>
+            array(
+                'name' => 'account_id',
+                'vname' => 'LBL_ACCOUNT_ID',
+                'source' => 'non-db',
+            ),
+        'account_name' =>
+            array(
+                'name' => 'account_name',
+                'vname' => 'LBL_ACCOUNT_NAME',
+                'source' => 'non-db',
+            ),
+
   'maincode' => 
   array (
     'required' => '0',

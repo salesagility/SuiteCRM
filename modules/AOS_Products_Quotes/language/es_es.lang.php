@@ -70,6 +70,7 @@ $mod_strings = array (
   
   'LBL_SERVICE_MODULE_NAME' => 'Servicios',
   'LBL_LIST_NUM' => 'No.',
+    'LBL_PRODUCTS_SERVICES' => 'Producto / Servicio',
 );
 
 $mod_strings['LBL_PART_NUMBER'] = 'Nro de Parte';
