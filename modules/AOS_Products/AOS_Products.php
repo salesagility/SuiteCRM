@@ -68,17 +68,13 @@ class AOS_Products extends AOS_Products_sugar {
 	public function getCustomersPurchasedProductsQuery() {
 		$query = "
  			SELECT * FROM (
-				SELECT
-					aos_products.id,
-					-- AS aos_product_id,
+ 				SELECT
+					aos_products.*,
 					aos_products.name AS aos_product_name,
-
 					aos_quotes.id AS aos_quote_id,
 					aos_quotes.name AS aos_quote_name,
-
 					accounts.id AS account_id,
 					accounts.name AS account_name
-
 				FROM
 					aos_products
 
