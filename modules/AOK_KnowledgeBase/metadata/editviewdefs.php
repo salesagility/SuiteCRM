@@ -37,7 +37,8 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Cases'] =
+$module_name = 'AOK_KnowledgeBase';
+$viewdefs [$module_name] = 
 array (
   'EditView' => 
   array (
@@ -59,120 +60,87 @@ array (
       ),
       'includes' => 
       array (
-          0 =>
-              array (
-                  'file' => 'include/javascript/bindWithDelay.js',
-              ),
-        1 =>
+        0 => 
         array (
-          'file' => 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.js',
+          'file' => 'include/javascript/tiny_mce/tiny_mce.js',
         ),
-          2 =>
-              array (
-                  'file' => 'include/javascript/qtip/jquery.qtip.min.js',
-              ),
       ),
       'useTabs' => false,
       'tabDefs' => 
       array (
-        'LBL_CASE_INFORMATION' => 
+        'DEFAULT' => 
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
-      'form' => 
-      array (
-        'enctype' => 'multipart/form-data',
-      ),
+      'syncDetailEditViews' => true,
     ),
     'panels' => 
     array (
-      'lbl_case_information' => 
+      'default' => 
       array (
         0 => 
         array (
-          0 => 
-          array (
-            'name' => 'case_number',
-            'type' => 'readonly',
-          ),
-          1 => 'priority',
+          0 => 'name',
         ),
         1 => 
         array (
           0 => 
           array (
-            'name' => 'state',
-            'comment' => 'The state of the case (i.e. open/closed)',
-            'label' => 'LBL_STATE',
+            'name' => 'status',
+            'studio' => 'visible',
+            'label' => 'LBL_STATUS',
           ),
-          1 => 'status',
+          1 => 
+          array (
+            'name' => 'revision',
+            'label' => 'LBL_REVISION',
+          ),
         ),
         2 => 
         array (
-          0 => 'type',
-          1 => 'account_name',
+          0 => 'description',
         ),
         3 => 
         array (
           0 => 
           array (
-            'name' => 'name',
-            'displayParams' => 
-            array (
-              'size' => 75,
-            ),
+            'name' => 'additional_info',
+            'comment' => 'Full text of the note',
+            'studio' => 'visible',
+            'label' => 'LBL_ADDITIONAL_INFO',
           ),
         ),
         4 => 
         array (
           0 => 
           array (
-            'name' => 'description',
-            'nl2br' => true,
+            'name' => 'date_entered',
+            'comment' => 'Date record created',
+            'label' => 'LBL_DATE_ENTERED',
           ),
-          1 =>
+          1 => 
           array (
-            'name' => 'suggestion_box',
-            //'studio' => 'visible',
-            'label' => 'LBL_SUGGESTION_BOX',
+            'name' => 'author',
+            'studio' => 'visible',
+            'label' => 'LBL_AUTHOR',
           ),
         ),
         5 => 
         array (
           0 => 
           array (
-            'name' => 'resolution',
-            'nl2br' => true,
-          ),
-        ),
-        6 => 
-        array (
-          0 => 
-          array (
-            'name' => 'update_text',
-            'studio' => 'visible',
-            'label' => 'LBL_UPDATE_TEXT',
+            'name' => 'date_modified',
+            'comment' => 'Date record last modified',
+            'label' => 'LBL_DATE_MODIFIED',
           ),
           1 => 
           array (
-            'name' => 'internal',
+            'name' => 'approver',
             'studio' => 'visible',
-            'label' => 'LBL_INTERNAL',
+            'label' => 'LBL_APPROVER',
           ),
-        ),
-        7 => 
-        array (
-          0 => 
-          array (
-            'name' => 'case_update_form',
-            'studio' => 'visible',
-          ),
-        ),
-        8 => 
-        array (
-          0 => 'assigned_user_name',
         ),
       ),
     ),

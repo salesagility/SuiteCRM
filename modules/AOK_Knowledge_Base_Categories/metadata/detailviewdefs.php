@@ -37,12 +37,23 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$viewdefs ['Cases'] =
+$module_name = 'AOK_Knowledge_Base_Categories';
+$viewdefs [$module_name] = 
 array (
-  'EditView' => 
+  'DetailView' => 
   array (
     'templateMeta' => 
     array (
+      'form' => 
+      array (
+        'buttons' => 
+        array (
+          0 => 'EDIT',
+          1 => 'DUPLICATE',
+          2 => 'DELETE',
+          3 => 'FIND_DUPLICATES',
+        ),
+      ),
       'maxColumns' => '2',
       'widths' => 
       array (
@@ -57,122 +68,38 @@ array (
           'field' => '30',
         ),
       ),
-      'includes' => 
-      array (
-          0 =>
-              array (
-                  'file' => 'include/javascript/bindWithDelay.js',
-              ),
-        1 =>
-        array (
-          'file' => 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.js',
-        ),
-          2 =>
-              array (
-                  'file' => 'include/javascript/qtip/jquery.qtip.min.js',
-              ),
-      ),
       'useTabs' => false,
       'tabDefs' => 
       array (
-        'LBL_CASE_INFORMATION' => 
+        'DEFAULT' => 
         array (
           'newTab' => false,
           'panelDefault' => 'expanded',
         ),
       ),
-      'form' => 
-      array (
-        'enctype' => 'multipart/form-data',
-      ),
+      'syncDetailEditViews' => true,
     ),
     'panels' => 
     array (
-      'lbl_case_information' => 
+      'default' => 
       array (
         0 => 
         array (
-          0 => 
-          array (
-            'name' => 'case_number',
-            'type' => 'readonly',
-          ),
-          1 => 'priority',
+          0 => 'name',
+          1 => '',
         ),
         1 => 
         array (
-          0 => 
-          array (
-            'name' => 'state',
-            'comment' => 'The state of the case (i.e. open/closed)',
-            'label' => 'LBL_STATE',
-          ),
-          1 => 'status',
+          0 => 'description',
         ),
         2 => 
         array (
-          0 => 'type',
-          1 => 'account_name',
-        ),
-        3 => 
-        array (
           0 => 
           array (
-            'name' => 'name',
-            'displayParams' => 
-            array (
-              'size' => 75,
-            ),
+            'name' => 'created_by_name',
+            'label' => 'LBL_CREATED',
           ),
-        ),
-        4 => 
-        array (
-          0 => 
-          array (
-            'name' => 'description',
-            'nl2br' => true,
-          ),
-          1 =>
-          array (
-            'name' => 'suggestion_box',
-            //'studio' => 'visible',
-            'label' => 'LBL_SUGGESTION_BOX',
-          ),
-        ),
-        5 => 
-        array (
-          0 => 
-          array (
-            'name' => 'resolution',
-            'nl2br' => true,
-          ),
-        ),
-        6 => 
-        array (
-          0 => 
-          array (
-            'name' => 'update_text',
-            'studio' => 'visible',
-            'label' => 'LBL_UPDATE_TEXT',
-          ),
-          1 => 
-          array (
-            'name' => 'internal',
-            'studio' => 'visible',
-            'label' => 'LBL_INTERNAL',
-          ),
-        ),
-        7 => 
-        array (
-          0 => 
-          array (
-            'name' => 'case_update_form',
-            'studio' => 'visible',
-          ),
-        ),
-        8 => 
-        array (
-          0 => 'assigned_user_name',
+          1 => 'date_entered',
         ),
       ),
     ),
