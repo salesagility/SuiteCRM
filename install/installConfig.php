@@ -1164,14 +1164,18 @@ EOQ;
                     /**
                      * Show and refresh status message to user.
                      */
+                    statReaderStop = false;
                     var startStatusReader = function() {
                         setInterval(function(){
-                            $.getJSON('install/status.json?' + Math.random(), function(resp){
-                                preloaderSetStatus(resp.message);
-                                if(resp.command && resp.command.function == 'redirect') {
-                                    document.location.href = resp.command.arguments;
-                                }
-                            });
+                            if(!statReaderStop) {
+                                $.getJSON('install/status.json?' + Math.random(), function(resp){
+                                    preloaderSetStatus(resp.message);
+                                    if(resp.command && resp.command.function == 'redirect') {
+                                        document.location.href = resp.command.arguments;
+                                        statReaderStop = true;
+                                    }
+                                });
+                            }
                         }, 1200);
                     };
 
