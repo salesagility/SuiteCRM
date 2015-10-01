@@ -50,9 +50,8 @@ $subpanel_layout = array(
 			'target_module' => 'AOS_Quotes',
 		),
 		'account_name'=>array(
-			'vname' => 'LBL_ACOUNT_NAME',
+			'vname' => 'LBL_ACCOUNT_NAME',
 			'widget_class' => 'SubPanelDetailViewLink',
-			'link' => true,
 			'target_record_key' => 'account_id',
 			'target_module' => 'Accounts',
 		),

@@ -69,6 +69,6 @@ $mod_strings = array (
     'LBL_FILE_URL' => 'File URL',
     'LBL_CUSTOMERS_PURCHASED_PRODUCTS_SUBPANEL_TITLE' => 'Customers who purchased',
     'LBL_AOS_QUOTE_NAME' => 'Quote',
-    'LBL_ACOUNT_NAME' => 'Account',
+    'LBL_ACCOUNT_NAME' => 'Account',
 );
 ?>
