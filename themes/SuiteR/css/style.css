@@ -3408,9 +3408,6 @@ table legend {
         box-shadow:none !important;
         float:left;
     }
-    .form-control{
-        color:#f7f7f7 !important;
-    }
     #mobilegloballinks{
         display:inline;
     }
@@ -3435,9 +3432,6 @@ table legend {
         -webkit-appearance: none !important;
         box-shadow:none !important;
         float:left;
-    }
-    .form-control{
-        color:#f7f7f7 !important;
     }
     #mobilegloballinks{
         display:inline;
@@ -3694,9 +3688,20 @@ li.moremenu {
 
 /* Fix so that sidebar does not oversize on larger screens */
 
-@media (min-width:979px) {
+@media (min-width:320px) and (max-width:978px){
     .col-sm-3 {
+        display:none;
+    }
+    .col-sm-offset-3 {
+        margin:0;
+    }
+    .col-sm-9{
+        width:99%;
+    }
+}
 
+@media (min-width:979px) and (max-width:1024px) {
+    .col-sm-3 {
         max-width:215px !important;
     }
     .col-sm-offset-3 {
@@ -3707,7 +3712,7 @@ li.moremenu {
     }
 }
 
-@media (min-width:1024px) {
+@media (min-width:1024px) and (max-width:1535px) {
     .col-md-2 {
 
         max-width:215px !important;
@@ -3720,13 +3725,27 @@ li.moremenu {
     }
 }
 
-@media (min-width:1536px) {
+@media (min-width:1536px) and (max-width:2559px) {
+    .col-md-2 {
+
+        max-width:215px !important;
+    }
+    .col-md-offset-2 {
+        margin-left:215px;
+    }
     .col-md-10{
         width:88%;
     }
 }
 
 @media (min-width:2560px) {
+    .col-md-2 {
+
+        max-width:215px !important;
+    }
+    .col-md-offset-2 {
+        margin-left:215px;
+    }
     .col-md-10{
         width:91%;
     }
@@ -4078,9 +4097,27 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     }
 }
 
+@media(min-width:641px) and (max-width:978px){
+    #cal-edit{
+        max-height:50% !important;
+        max-width:55% !important;
+        overflow:scroll;
+        margin:0 0 0 50px;
+    }
+}
+
+@media(min-width:979px) and (max-width:1279px){
+    #cal-edit{
+        max-height:50% !important;
+        max-width:55% !important;
+        overflow:scroll;
+        margin:0 0 0 250px;
+    }
+}
+
 @media(min-width:1280px){
     #cal-edit{
-        margin:50px 0 0 200px;
+        margin:0 0 0 200px;
     }
 }
 
