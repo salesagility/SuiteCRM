@@ -241,7 +241,7 @@ if(!make_writable('./custom')) {
 	{
 		$dirname = sugar_cached($c_file);
 		$ok = false;
-		if ((is_dir($dirname)) || @sugar_mkdir($dirname,0555)) // set permissions to restrictive - use make_writable to change in a standard way to the required permissions
+		if ((is_dir($dirname)) || @sugar_mkdir($dirname,0555, true)) // set permissions to restrictive - use make_writable to change in a standard way to the required permissions
 		{
 			$ok = make_writable($dirname);
 		}
