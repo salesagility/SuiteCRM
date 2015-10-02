@@ -513,6 +513,13 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			ModuleBuilder.asyncRequest(url, successCall);
 		},
 		updateContent: function(o){
+
+			// Temporary fix for issue #360
+			// Documents module will need to be rewritten as it has a hardcoded popup form.
+			var sheet = document.createElement('style')
+			sheet.innerHTML = "#ygtv202 {display: none;}";
+			document.body.appendChild(sheet);
+
 			ModuleBuilder.callInProgress = false;
 			//Check if a save action was called and now we need to move-on
 			if (ModuleBuilder.state.saving) {
