@@ -316,6 +316,8 @@ $beanFiles['AM_TaskTemplates'] = 'modules/AM_TaskTemplates/AM_TaskTemplates.php'
 $modules_exempt_from_availability_check['AM_TaskTemplates'] = 'AM_TaskTemplates';
 $report_include_modules['AM_TaskTemplates'] = 'AM_TaskTemplates';
 $modInvisList[] = 'AM_TaskTemplates';
+$beanList['Favorites'] = 'Favorites';
+$beanFiles['Favorites'] = 'modules/Favorites/Favorites.php';
 
 //Object list is only here to correct for modules that break
 //the bean class name == dictionary entry/object name convention
