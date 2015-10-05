@@ -39,43 +39,59 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
+            <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mobile_menu">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div id="userlinks_head" class="navbar-toggle collapsed">
-                <a href="index.php"></span><span class="glyphicon glyphicon-home" aria-hidden="true"></a>
-                <div class="btn-group" role="group">
-                    <button type="button" class="btn dropdown-toggle btn-success quickcreate" data-toggle="dropdown" aria-expanded="false">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
-                        <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
-                        <li role="presentation"><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
-                        <li role="presentation"><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
-                        <li role="presentation"><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
-                        <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
-                        <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+            <div id="mobileheader">
+                <div id="modulelinks">
+                    {foreach from=$moduleTopMenu item=module key=name name=moduleList}
+                        {if $name == $MODULE_TAB}
+                            <span class="modulename" data-toggle="dropdown" aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
+                            {if $name !='Home'}
+                                <ul class="dropdown-menu" role="menu">
+                                    {if count($shortcutTopMenu.$name) > 0}
+                                        {foreach from=$shortcutTopMenu.$name item=item}
+                                            {if $item.URL == "-"}
+                                                <li><a></a><span>&nbsp;</span></li>
+                                            {else}
+                                                <li><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                            {/if}
+                                        {/foreach}
+                                    {/if}
+                                </ul>
+                            {/if}
+                        {/if}
+                    {/foreach}
+                </div>
+                <form id="searchmobile" onsubmit="return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()" action="index.php" name="UnifiedSearch">
+                    <input class="form-control" type="hidden" value="UnifiedSearch" name="action">
+                    <input class="form-control" type="hidden" value="Home" name="module">
+                    <input class="form-control" type="hidden" value="false" name="search_form">
+                    <input class="form-control" type="hidden" value="false" name="advanced">
+                <span class="input-group-btn">
+                    <input id="query_string" class="form-control" type="text" placeholder="Search..." name="query_string">
+                </span>
+                </form>
+                <div id="mobilegloballinks">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-option-vertical"></span></a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                            <li role="presentation">
+                                <a id="{$gcl_key}_link" href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                            </li>
+                        {/foreach}
+                        <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}' class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                     </ul>
                 </div>
-                <a href="index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'><span class=" glyphicon glyphicon-log-out" aria-hidden="true"></span></a>
+                <div id="userlinks_head" class="navbar-toggle collapsed">
+                    <a href="javascript:void(0)" id="userlinks_togglemobilesearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                </div>
             </div>
-            <a class="navbar-brand" href="index.php">{$APP.LBL_BROWSER_TITLE}</a>
-            <form id="searchmobile" name='UnifiedSearch' action='index.php' onsubmit='return SUGAR.unifiedSearchAdvanced.checkUsaAdvanced()'>
-                <input type="hidden" class="form-control" name="action" value="UnifiedSearch">
-                <input type="hidden" class="form-control" name="module" value="Home">
-                <input type="hidden" class="form-control" name="search_form" value="false">
-                <input type="hidden" class="form-control" name="advanced" value="false">
-                <span class="input-group-btn">
-                    <input type="text" class="form-control" name="query_string" id="query_string" placeholder="Search..." />
-                </span>
-            </form>
         </div>
-
         <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
@@ -189,6 +205,21 @@
                                         {foreachelse}
                                         {$APP.NTC_NO_ITEMS_DISPLAY}
                                     {/foreach}
+                                    <h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>
+                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                        {if $item.module == $name}
+                                            <div class="recently_viewed_link_container">
+                                                <li class="recentlinks_topedit">
+                                                    <a href="{sugar_link module=$item.module action='EditView' record=$item.id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                </li>
+                                                <li class="recentlinks_top" role="presentation">
+                                                    <a title="{$item.module}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module action='DetailView' record=$item.id link_only=1}">{$item.name}</a>
+                                                </li>
+                                            </div>
+                                        {/if}
+                                        {foreachelse}
+                                        {$APP.NTC_NO_ITEMS_DISPLAY}
+                                    {/foreach}
                                 </ul>
                             </li>
                         {else}
@@ -219,6 +250,21 @@
                                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
                                                         {$item.item_summary_short}
                                                     </a>
+                                                </li>
+                                            </div>
+                                        {/if}
+                                        {foreachelse}
+                                        {$APP.NTC_NO_ITEMS_DISPLAY}
+                                    {/foreach}
+                                    <h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>
+                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                        {if $item.module == $name}
+                                            <div class="recently_viewed_link_container">
+                                                <li class="recentlinks_topedit">
+                                                    <a href="{sugar_link module=$item.module action='EditView' record=$item.id link_only=1}" style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                </li>
+                                                <li class="recentlinks_top" role="presentation">
+                                                    <a title="{$item.module}" accessKey="{$smarty.foreach.lastViewed.iteration}" href="{sugar_link module=$item.module action='DetailView' record=$item.id link_only=1}">{$item.name}</a>
                                                 </li>
                                             </div>
                                         {/if}
@@ -274,7 +320,7 @@
                         <input type="hidden" class="form-control" name="search_form" value="false">
                         <input type="hidden" class="form-control" name="advanced" value="false">
                         <div class="input-group">
-                            <input type="text" class="form-control"  name="query_string" id="query_string" placeholder="{$APP.LBL_SEARCH}..." />
+                            <input type="text" class="form-control"  name="query_string" id="query_string" placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}" />
                             <span class="input-group-btn">
                                 <button  type="submit" class="btn btn-default" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                             </span>
@@ -288,7 +334,7 @@
                 <input type="hidden" class="form-control" name="search_form" value="false">
                 <input type="hidden" class="form-control" name="advanced" value="false">
                 <div class="input-group">
-                    <input type="text" class="form-control"  name="query_string" id="query_string" placeholder="{$APP.LBL_SEARCH}..." />
+                    <input type="text" class="form-control"  name="query_string" id="query_string" placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}" />
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-default" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     </span>
@@ -299,14 +345,20 @@
                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li role="presentation"><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
-                    <li role="presentation"><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
-                    <li role="presentation"><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
-                    <li role="presentation"><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
-                    <li role="presentation"><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
-                    <li role="presentation"><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
-                    <li role="presentation"><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
+                    <li><a href="index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=DetailView">{$APP.LBL_QUICK_ACCOUNT}</a></li>
+                    <li><a href="index.php?module=Contacts&action=EditView&return_module=Contacts&return_action=DetailView">{$APP.LBL_QUICK_CONTACT}</a></li>
+                    <li><a href="index.php?module=Opportunities&action=EditView&return_module=Opportunities&return_action=DetailView">{$APP.LBL_QUICK_OPPORTUNITY}</a></li>
+                    <li><a href="index.php?module=Leads&action=EditView&return_module=Leads&return_action=DetailView">{$APP.LBL_QUICK_LEAD}</a></li>
+                    <li><a href="index.php?module=Documents&action=EditView&return_module=Documents&return_action=DetailView">{$APP.LBL_QUICK_DOCUMENT}</a></li>
+                    <li><a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a></li>
+                    <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
                 </ul>
+            </div>
+            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
+                <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
+                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
+                </button>
+                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
         </div>
 
@@ -315,17 +367,26 @@
                 {if $smarty.foreach.groupList.last}
                     {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                     {foreach from=$modules.modules item=module key=modulekey}
+                        {if $modulekey !='Home'}
+                            <li style="float:right;">
+                                <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
+                            </li>
+                        {/if}
                         <li>
                             {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
                             {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
                         </li>
                     {/foreach}
                     {foreach from=$modules.extra item=submodulename key=submodule}
-                        <li><a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a></li>
+                        <li style="float:right;">
+                            <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
+                        </li>
+                        <li>
+                            <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a>
+                        </li>
                     {/foreach}
                 {/if}
             {/foreach}
-
         </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
