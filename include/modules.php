@@ -308,6 +308,8 @@ $beanFiles['OAuthToken'] = 'modules/OAuthTokens/OAuthToken.php';
 $modules_exempt_from_availability_check['OAuthTokens'] = 'OAuthTokens';
 $modInvisList[] = 'OAuthTokens';
 
+$beanList['Favorites'] = 'Favorites';
+$beanFiles['Favorites'] = 'modules/Favorites/Favorites.php';
 
 //Object list is only here to correct for modules that break
 //the bean class name == dictionary entry/object name convention
