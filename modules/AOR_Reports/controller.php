@@ -213,9 +213,14 @@ class AOR_ReportsController extends SugarController {
         $module = $_REQUEST['aor_module'];
         $fieldname = $_REQUEST['aor_fieldname'];
         $aor_field = $_REQUEST['aor_newfieldname'];
+        $add_aggregate_function = $_REQUEST['add_aggregate_function'];
 
         if($view == 'EditView'){
-            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list'], $value) ."</select>";
+            if($add_aggregate_function) {
+                echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list_count_only'], $value) ."</select>";
+            } else {
+                echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list'], $value) ."</select>";
+            }
         }else{
             echo $app_list_strings['aor_function_list'][$value];
         }
@@ -614,6 +619,35 @@ class AOR_ReportsController extends SugarController {
         }
         die;
 
+    }
+
+    // Fix for issue #439
+    protected function action_getNewFieldLine() {
+        $add_aggregate_function = false;
+        if(isset($_POST['field']) && !empty($_POST['field'])) {
+            $field_name_to_test = $_POST['field'];
+        }
+        if(isset($_POST['module_path_display']) && !empty($_POST['module_path_display'])) {
+            $module_name_to_test = $_POST['module_path_display'];
+        }
+        // Update $GLOBAL['dictionary'];
+        $display = getDisplayForField('', $field_name_to_test, $module_name_to_test);
+        foreach($GLOBALS['dictionary'] as $dictionary_item) {
+            if(strcasecmp($dictionary_item[table], $module_name_to_test) == 0) {
+                foreach($dictionary_item[fields] as $dictionary_item_field_key => $dictionary_item_field_value) {
+                    if(strcasecmp($dictionary_item_field_key, $field_name_to_test) == 0) {
+                        if($dictionary_item_field_value['type'] == 'decimal' || $dictionary_item_field_value['type'] == 'currency' || $dictionary_item_field_value['float'] || $dictionary_item_field_value['int'] ) {
+                            $add_aggregate_function = true;
+                        } else {
+                            $add_aggregate_function = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        $output = json_encode($add_aggregate_function);
+        echo $output;
     }
 
 }
