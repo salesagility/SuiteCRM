@@ -956,7 +956,12 @@ class AOR_Report extends Basic {
                                 $value = '(';
                                 foreach ($multi_values as $multi_value) {
                                     if ($value != '(') $value .= $sep;
-                                    $value .= $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . " '" . $multi_value . "'";
+                                    // $value .= $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . " '" . $multi_value . "'";
+                                    if($condition->operator == 'Equal_To') {
+                                        $value .= $field . ' ' . 'REGEXP' . " '" . $multi_value . "'";
+                                    } else {
+                                        $value .= $field . ' ' . 'NOT REGEXP' . " '" . $multi_value . "'";
+                                    }
                                 }
                                 $value .= ')';
                             }
@@ -994,9 +999,39 @@ class AOR_Report extends Basic {
                             break;
                     }
 
+                    if ($condition->value_type == "Period") {
 
-                    if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                        $date = date('Y-m-d H:i:s');
+                        if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
+                            $params = $condition->value;
+                        } else {
+                            $params = base64_decode($condition->value);
+                        }
+                        $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
 
+                        switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
+                            case "=":
+                                if (!$where_set) $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                break;
+                            case "!=":
+                                if (!$where_set) $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                break;
+                            case ">":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                            case "<":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                            case ">=":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                            case "<=":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                        }
+                    } else {
+                        if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                    }
                 }
             }
 
