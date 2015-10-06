@@ -141,7 +141,7 @@ a:hover {
     vertical-align:middle;
     padding: 10px 20px;
     margin: 20px;
-    min-height: 800px;
+    /* min-height: 800px; */
 
     -webkit-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
     -moz-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
@@ -528,6 +528,10 @@ form #wrapper {
     width: 98%;
 }
 
+
+.toggler {
+    cursor: pointer;
+}
 
 
 
