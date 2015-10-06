@@ -383,7 +383,7 @@ if($error_found){
 ////    BEGIN PAGE OUTPUT
     $out =<<<EOQ
     <h2>{$mod_strings['LBL_CHECKSYS_TITLE']}</h2>
-      <div width="200" height="30" style="float: right;">
+      <div width="200" height="30" style="/*float: right;*/">
         <p>{$mod_strings['ERR_CHECKSYS']}</p>
         <hr>
       </div>

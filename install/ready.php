@@ -329,6 +329,9 @@ $out = <<<EOQ
 	        <form action="install.php" method="post" name="form" id="form">
 	        	<div id="install_content">
 	        	{$sysEnv}
+
+	        	<!--
+
 			    <h3>{$mod_strings['LBL_TITLE_ARE_YOU_READY']}</h3>
 				<p><strong>{$mod_strings['LBL_WELCOME_PLEASE_READ_BELOW']}</strong></p>
 				<span onclick="showtime('sys_comp');" style="cursor:pointer;cursor:hand">
@@ -350,6 +353,9 @@ $out = <<<EOQ
 				</span>
 				<div id='installType' >{$mod_strings['REQUIRED_INSTALLTYPE_MSG']}</div>
 				<hr>
+
+				-->
+
 				</div>
                 <div id="installcontrols">
 				    <input type="hidden" name="current_step" value="{$next_step}">
