@@ -38,13 +38,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function installStatus($msg, $cmd = null) {
-    file_put_contents('install/status.json', json_encode(array(
+function installStatus($msg, $cmd = null, $overwrite = false) {
+    $fname = 'install/status.json';
+    if(!$overwrite && file_exists($fname)) {
+        $stat = json_decode(file_get_contents($fname));
+        //$msg = json_encode($stat);
+        $msg = $stat->message . '[ok]<br>' . $msg;
+    }
+    file_put_contents($fname, json_encode(array(
         'message' => $msg,
         'command' => $cmd,
     )));
 }
-installStatus('');
+installStatus('', null, true);
 
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
@@ -116,9 +122,9 @@ $out =<<<EOQ
    <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_PERFORM_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="$icon">
-   <link rel="stylesheet" href="$css" type="text/css" />
+   <!-- <link rel="stylesheet" href="$css" type="text/css" /> -->
    <script type="text/javascript" src="$common"></script>
-   <link rel="stylesheet" href="install/install.css" type="text/css" />
+   <link rel="stylesheet" href="install/install2.css" type="text/css" />
    <script type="text/javascript" src="install/installCommon.js"></script>
    <script type="text/javascript" src="install/siteConfig.js"></script>
 <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
@@ -241,7 +247,7 @@ foreach( $beanFiles as $bean => $file ) {
 	    continue;
 
     $table_name = $focus->table_name;
-    installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
+    //installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
      installLog("processing table ".$focus->table_name);
     // check to see if we have already setup this table
     if(!in_array($table_name, $processed_tables)) {

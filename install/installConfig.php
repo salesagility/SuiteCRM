@@ -146,7 +146,7 @@ EOQ;
      * @param $controlls form controll buttons (string)
      * @return string
      */
-    private function getForm($name, $id, $errs, $items, $controlls, $scripts, $next_step)
+    private function getForm($mod_strings, $name, $id, $errs, $items, $controlls, $scripts, $next_step)
     {
         $out = <<<EOQ
             <iframe id="upload_target" name="upload_target" src="install.php?sugar_body_only=1&uploadLogoFrame=1" style="width:0;height:0;border:0px solid #fff;"></iframe>
@@ -167,6 +167,10 @@ EOQ;
                     $scripts;
                 </script>
             </form>
+            <div id="installStatus" style="display: none;">
+                <h2>{$mod_strings['LBL_INSTALL_PROCESS']}</h2>
+                <p><img alt="Status" src="install/processing.gif"><br><span class="preloader-status"></span></p>
+            </div>
 EOQ;
 
         return $out;
@@ -271,11 +275,14 @@ EOQ;
             <!-- smtp settings -->
             <h2>{$mod_strings['LBL_MAIL_SMTP_SETTINGS']}</h2>
             <br>
+            <!--
             <p>{$mod_strings['LBL_WIZARD_SMTP_DESC']}</p>
+            -->
 
             <!-- smtp types toggler buttons -->
 
-            <p>{$mod_strings['LBL_CHOOSE_EMAIL_PROVIDER']}</p>
+            <p style="display: inline;">{$mod_strings['LBL_CHOOSE_EMAIL_PROVIDER']} </p><div class="tooltip-toggle"> <em>i</em> <div class="tooltip">{$mod_strings['LBL_WIZARD_SMTP_DESC']}</div></div>
+            <div class="clear"></div>
             <div>
                 <input type="button" class="smtp_tab_toggler" id="smtp_tab_gmail_toggler" for="smtp_tab_gmail" value="{$mod_strings['LBL_SMTPTYPE_GMAIL']}" />
                 <input type="button" class="smtp_tab_toggler" id="smtp_tab_yahoo_toggler" for="smtp_tab_yahoo" value="{$mod_strings['LBL_SMTPTYPE_YAHOO']}" />
@@ -323,7 +330,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_GMAIL_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_gmail[mail_smtppass]" size="25" maxlength="64" value="mysmtppassword" tabindex="1">
+                    <input type="password" name="smtp_tab_gmail[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -353,7 +360,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_YAHOOMAIL_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_yahoo[mail_smtppass]" size="25" maxlength="64" value="mysmtppassword" tabindex="1">
+                    <input type="password" name="smtp_tab_yahoo[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -405,7 +412,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_EXCHANGE_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_exchange[mail_smtppass]" size="25" maxlength="64" value="mysmtppassword" tabindex="1">
+                    <input type="password" name="smtp_tab_exchange[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -458,7 +465,7 @@ EOQ;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_other[mail_smtppass]" size="25" maxlength="64" value="mysmtppassword" tabindex="1">
+                    <input type="password" name="smtp_tab_other[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
                 </div>
 
                 <div class="clear"></div>
@@ -531,7 +538,9 @@ EOQ2;
         $form = '';
         foreach($config_params as $group => $gdata) {
             $form.= "<div class='install_block'>";
-            $form .= "<label>{$mod_strings[$group]}</label><br>\n";
+            if($mod_strings[$group . '_LABEL']) {
+                $form .= "<label>{$mod_strings[$group . '_LABEL']}" . "<i> i <div class=\"tooltip\">{$mod_strings[$group]}</div></i></label>\n";
+            }
             foreach($gdata as $name => $value) {
 
                 if(!empty($value)) {
@@ -618,11 +627,13 @@ FORM;
             $out2 .= <<<EOQ2
 <br>
 <div class='install_block'>
+<!--
     <div class="ibmsg">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div>
+    -->
 </div>
 <div class='install_block'>
     <div class="formrow">
-        <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}</label>
+        <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}<i> i <div class="tooltip">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div></i></label>
         $dbUSRDD
     </div>
     <div class="clear"></div>
@@ -663,7 +674,7 @@ EOQ2;
                     <p>{$errors}</p>
                     <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
 
-                    <h3>{$mod_strings['LBL_SITECFG_TITLE2']}</h3>
+                    <h3>{$mod_strings['LBL_SITECFG_TITLE2']}<div class="tooltip-toggle"><em> i </em><div class="tooltip">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</div></div></h3>
 EOQ;
         //hide this in typical mode
         if(!empty($_SESSION['install_type']) && strtolower($_SESSION['install_type'])=='custom'){
@@ -708,9 +719,9 @@ EOQ;
 
         $out .=<<<EOQ
 <div class='install_block'>
-
+    <!--
     <p class="ibmsg">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
-
+    -->
     <div class="formrow big">
         <label>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></label>
         <input type="text" name="setup_site_admin_user_name" value="{$_SESSION['setup_site_admin_user_name']}" size="20" maxlength="60" />
@@ -1188,8 +1199,15 @@ EOQ;
                                 // TODO--low: add correct form validation for all fields (number is number, server name a valid server name etc)
                                 $('#installForm').attr('action', 'install.php');
 
-                                preloaderOn('{$mod_strings['LBL_INSTALL_PROCESS']}', '...');
+                                //preloaderOn('{$mod_strings['LBL_INSTALL_PROCESS']}', '...');
                                 startStatusReader();
+
+                                //console.log('TODO.. submit!!');
+                                $('#installForm').hide();
+                                $('#installStatus').show();
+                                $("html, body").animate({
+                                     scrollTop:0
+                                });
                                 document.installForm.submit();
                     };
 
@@ -1447,11 +1465,17 @@ EOQ;
 
                                 msgPanel.hide();
 
-                                preloaderOn('{$mod_strings['LBL_INSTALL_PROCESS']}', '...');
+                                //preloaderOn('{$mod_strings['LBL_INSTALL_PROCESS']}', '...');
                                 startStatusReader();
 
                                 removeSMTPSettings();
 
+                                //console.log('TODO submit2');
+                                $('#installForm').hide();
+                                $('#installStatus').show();
+                                $("html, body").animate({
+                                     scrollTop:0
+                                });
                                 document.installForm.submit();
 
                     }else{
@@ -1485,6 +1509,7 @@ EOQ;
                 $this->getHeaderScripts($sugar_version, $js_custom_version)
             ),
             $this->getForm(
+                $mod_strings,
                 $formId,
                 $formId,
                 $errs,

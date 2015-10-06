@@ -100,10 +100,12 @@ $out = <<<EOQ
     <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
     <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <style>
+        /*
         #install_box {
             max-width: 1000px;
             margin: 20px auto;
         }
+        */
     </style>
 </head>
 <body onload="javascript:toggleNextButton();document.getElementById('button_next2').focus();">
@@ -126,9 +128,11 @@ $out = <<<EOQ
                 </div>
             </div>
 
+            <!--
             <div id='licenseDivToggler' style="text-align: center;"><a href="javascript:void(0);" onclick="javascript:$('#licenseDiv').toggle();">Show Software License</a></div>
+            -->
 
-            <div id='licenseDiv' style="display: none;">
+            <div id='licenseDiv' style="/* display: none; */">
                 <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
             </div>
             <hr>
@@ -199,7 +203,7 @@ $out = <<<EOQ
     $("#slider2").responsiveSlides({
         nav: true,
         speed: 500,
-        maxwidth: 750,
+        //maxwidth: 750,
         namespace: "centered-btns",
         speed: 800,            // Integer: Speed of the transition, in milliseconds
         timeout: 6000,          // Integer: Time between slide transitions, in milliseconds
@@ -263,7 +267,7 @@ function callSysCheck(){
                         //turn off loading message
                         msgPanel.hide();
                         document.getElementById('sysCheckMsg').style.display = '';
-                        document.getElementById('licenseDiv').style.display = 'none';
+                        /* document.getElementById('licenseDiv').style.display = 'none'; */
                         document.getElementById('sysCheckMsg').innerHTML=o.responseText;
                     }
 
