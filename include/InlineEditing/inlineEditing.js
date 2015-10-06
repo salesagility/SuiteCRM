@@ -174,8 +174,10 @@ function validateFormAndSave(field,id,module,type){
     });
     // also want to save on enter/return being pressed
     $(document).keypress(function(e) {
-
-        if (e.which == 13) {
+        console.log(e);
+        if ((e.which == 13) && (e.shiftKey)) {
+        }
+        else if (e.which == 13) {
             e.preventDefault();
             $("#inlineEditSaveButton").click();
         }
