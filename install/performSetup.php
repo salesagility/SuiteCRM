@@ -50,7 +50,7 @@ function installStatus($msg, $cmd = null, $overwrite = false) {
         'command' => $cmd,
     )));
 }
-installStatus('', null, true);
+installStatus($mod_strings['LBL_START'], null, true);
 
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.

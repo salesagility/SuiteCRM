@@ -223,38 +223,327 @@ EOQ;
     private function getFormItems($mod_strings, $app_list_strings, $sugarConfigDefaults, $drivers, $checked, $db, $errors, $supportedLanguages,
                                   $current_language, $customSession, $customLog, $customId, $customSessionHidden, $customLogHidden, $customIdHidden) {
 
+
+
+        // ------------------------------
+        //  DB Type and DB configuration
+        // ---------------------------------->
+
+
+        // database selection
+        $out_dbtypesel = "
+    <div class=\"floatbox\" id=\"fb5\">
+        <h2>{$mod_strings['LBL_DBCONF_TITLE']}</h2>
+
+        <div class=\"form_section\">
+          <h3>{$mod_strings['LBL_SYSOPTS_DB']}</h3>";
+
+        foreach($drivers as $type => $driver) {
+            $oci = ($type == "oci8")?"":'none'; // hack for special oracle message
+            $out_dbtypesel.=<<<EOQ
+                <input type="radio" class="checkbox" name="setup_db_type" id="setup_db_type" value="$type" {$checked[$type]} onclick="onDBTypeClick(this);//document.getElementById('ociMsg').style.display='$oci'"/>{$mod_strings[$driver->label]}<br>
+EOQ;
+        }
+        $out_dbtypesel.=<<<EOQ
+        </div>
+            <div name="ociMsg" id="ociMsg" style="display:none"></div>
+    <!-- </div> -->
+EOQ;
+
+
+        $out2.= $out_dbtypesel;
+
+
+        $out2.=<<<EOQ2
+
+        <!-- <div class="floatbox"> -->
+
+            <div class="form_section">
+            <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
+            <h3>{$mod_strings['LBL_DBCONF_TITLE_NAME']}</h3>
+EOQ2;
+
+        $config_params = $db->installConfig();
+        $form = '';
+        foreach($config_params as $group => $gdata) {
+            $form.= "<div class='install_block'>";
+            if($mod_strings[$group . '_LABEL']) {
+                $form .= "<label>{$mod_strings[$group . '_LABEL']}" . "<i> i <div class=\"tooltip\">{$mod_strings[$group]}</div></i></label>\n";
+            }
+            foreach($gdata as $name => $value) {
+
+                if(!empty($value)) {
+                    if(!empty($value['required'])) {
+                        $form .= "<span class=\"required\">*</span>";
+                    }
+                    else {
+                    }
+                    if(!empty($_SESSION[$name])) {
+                        $sessval = $_SESSION[$name];
+                    } else {
+                        $sessval = '';
+                    }
+                    if(!empty($value["type"])) {
+                        $type = $value["type"];
+                    } else {
+                        $type = '';
+                    }
+
+                    $form .= <<<FORM
+
+FORM;
+                    //if the type is password, set a hidden field to capture the value.  This is so that we can properly encode special characters, which is a limitation with password fields
+                    if($type=='password'){
+                        $form .= "<input type='$type' name='{$name}_entry' id='{$name}_entry' value='".urldecode($sessval)."'><input type='hidden' name='$name' id='$name' value='".urldecode($sessval)."'>";
+                    }else{
+                        $form .= "<input type='$type' name='$name' id='$name' value='$sessval'>";
+                    }
+
+
+
+                    $form .= <<<FORM
+FORM;
+
+                } else {
+                    $form .= "<input name=\"$name\" id=\"$name\" value=\"\" type=\"hidden\">\n";
+                }
+            }
+            $form .= "</div>";
+        }
+
+        $out2 .= $form;
+
+
+
+        // ---------- user data set (dbConfig_a.php)
+
+
+//if we are installing in custom mode, include the following html
+        if($db->supports("create_user")) {
+// create / set db user dropdown
+            $auto_select = '';
+            $provide_select = '';
+            $create_select = '';
+            $same_select = '';
+            if (isset($_SESSION['dbUSRData'])) {
+//    if($_SESSION['dbUSRData']=='auto')    {$auto_select ='selected';}
+                if ($_SESSION['dbUSRData'] == 'provide') {
+                    $provide_select = 'selected';
+                }
+                if (isset($_SESSION['install_type']) && !empty($_SESSION['install_type']) && strtolower($_SESSION['install_type']) == 'custom') {
+                    if ($_SESSION['dbUSRData'] == 'create') {
+                        $create_select = 'selected';
+                    }
+                }
+                if ($_SESSION['dbUSRData'] == 'same') {
+                    $same_select = 'selected';
+                }
+            } else {
+                $same_select = 'selected';
+            }
+            $dbUSRDD = "<select name='dbUSRData' id='dbUSRData' onchange='toggleDBUser();'>";
+            $dbUSRDD .= "<option value='provide' $provide_select>" . $mod_strings['LBL_DBCONFIG_PROVIDE_DD'] . "</option>";
+            $dbUSRDD .= "<option value='create' $create_select>" . $mod_strings['LBL_DBCONFIG_CREATE_DD'] . "</option>";
+            $dbUSRDD .= "<option value='same' $same_select>" . $mod_strings['LBL_DBCONFIG_SAME_DD'] . "</option>";
+            $dbUSRDD .= "</select><br>&nbsp;";
+
+
+            $setup_db_sugarsales_password = urldecode($_SESSION['setup_db_sugarsales_password']);
+            $setup_db_sugarsales_user = urldecode($_SESSION['setup_db_sugarsales_user']);
+            $setup_db_sugarsales_password_retype = urldecode($_SESSION['setup_db_sugarsales_password_retype']);
+
+
+            $out2 .= <<<EOQ2
+<br>
+<div class='install_block'>
+<!--
+    <div class="ibmsg">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div>
+    -->
+</div>
+<div class='install_block'>
+    <div class="formrow">
+        <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}<i> i <div class="tooltip">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div></i></label>
+        $dbUSRDD
+    </div>
+    <div class="clear"></div>
+    <span id='connection_user_div' style="display:none">
+        <div class="formrow">
+            <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']} <span class="required">*</span></label>
+            <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+        </div>
+        <div class="clear"></div>
+        <div class="formrow">
+            <label>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</label>
+            <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />
+            <input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
+            <input type="hidden" name="setup_db_sugarsales_password" value="{$_SESSION['setup_db_sugarsales_password']}" />
+        </div>
+        <div class="clear"></div>
+        <div class="formrow">
+            <label>{$mod_strings['LBL_DBCONF_DB_PASSWORD2']}</label>
+            <input type="password" name="setup_db_sugarsales_password_retype_entry" value="{$setup_db_sugarsales_password_retype}"  />
+            <input type="hidden" name="setup_db_sugarsales_password_retype" value="{$setup_db_sugarsales_password_retype}" />
+        </div>
+    </span>
+</div>
+
+EOQ2;
+        }
+        $out =$out2;
+
+
+
+        // ------ siteConfig_a.php
+        $out .=<<<EOQ
+        </div>
+    </div>
+    <div class="floatbox" id="fb6">
+                    <h2>{$mod_strings['LBL_SITECFG_TITLE']}</h2>
+                    <div class="form_section">
+                    <p>{$errors}</p>
+                    <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
+
+                    <h3>{$mod_strings['LBL_SITECFG_TITLE2']}<div class="tooltip-toggle"><em> i </em><div class="tooltip">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</div></div></h3>
+EOQ;
+        //hide this in typical mode
+        if(!empty($_SESSION['install_type']) && strtolower($_SESSION['install_type'])=='custom'){
+            $out .=<<<EOQ
+<div class='install_block'>
+    {$mod_strings['LBL_SITECFG_URL_MSG']}
+    <span class="required">*</span>
+    <label><b>{$mod_strings['LBL_SITECFG_URL']}</b></label>
+    <input type="text" name="setup_site_url" value="{$_SESSION['setup_site_url']}" size="40" />
+    <br>{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}
+    <span class="required">*</span>
+    <label><b>{$mod_strings['LBL_SYSTEM_NAME']}</b></label>
+    <input type="text" name="setup_system_name" value="{$_SESSION['setup_system_name']}" size="40" /><br>
+</div>
+EOQ;
+            $db = getDbConnection();
+            if($db->supports("collation")) {
+                $collationOptions = $db->getCollationList();
+            }
+            if(!empty($collationOptions)) {
+                if(isset($_SESSION['setup_db_options']['collation'])) {
+                    $default = $_SESSION['setup_db_options']['collation'];
+                } else {
+                    $default = $db->getDefaultCollation();
+                }
+                $options = get_select_options_with_id(array_combine($collationOptions, $collationOptions), $default);
+                $out .=<<<EOQ
+     <div class='install_block'>
+        <br>{$mod_strings['LBL_SITECFG_COLLATION_MSG']}
+        <span class="required">*</span>
+        <label><b>{$mod_strings['LBL_COLLATION']}</b></label>
+        <select name="setup_db_collation" id="setup_db_collation">$options</select><br>
+     </div>
+EOQ;
+            }
+        }
+
+        $help_url = get_help_button_url();
+        if(!isset($_SESSION['email1'])) {
+            $_SESSION['email1'] = null;
+        }
+
+        $out .=<<<EOQ
+<div class='install_block'>
+    <!--
+    <p class="ibmsg">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
+    -->
+    <div class="formrow big">
+        <label>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></label>
+        <input type="text" name="setup_site_admin_user_name" value="{$_SESSION['setup_site_admin_user_name']}" size="20" maxlength="60" />
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="formrow big">
+        <label>{$mod_strings['LBL_SITECFG_ADMIN_PASS']} <span class="required">*</span></label>
+        <input type="password" name="setup_site_admin_password" value="{$_SESSION['setup_site_admin_password']}" size="20" />
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="formrow big">
+        <label>{$mod_strings['LBL_SITECFG_ADMIN_PASS_2']} <span class="required">*</span></label>
+        <input type="password" name="setup_site_admin_password_retype" value="{$_SESSION['setup_site_admin_password_retype']}" size="20" />
+    </div>
+
+    <div class="clear"></div>
+
+    <div class="formrow big">
+        <label>{$mod_strings['LBL_SITECFG_URL']} <span class="required">*</span></label>
+        <input type="text" name="setup_site_url" value="{$_SESSION['setup_site_url']}" size="40" />
+    </div>
+
+    <div class="clear"></div>
+
+
+    <div class="formrow big">
+        <label>{$mod_strings['LBL_EMAIL_ADDRESS']} <span class="required">*</span></label>
+        <input type="email" name="email1" value="{$_SESSION['email1']}" size="40" />
+    </div>
+
+    <div class="clear"></div>
+
+
+    <div class="clear"></div>
+<!--
+    <a href="javascript:;" onclick="$('.security-block').toggle();">More..</a><br/><br/>
+-->
+EOQ;
+
+
+        $out.=<<<EOQ
+</div><!-- dbg2 -->
+EOQ;
+
+        $out .= <<<EOQ
+
+EOQ;
+
+
+
+        // ------------------
+        //  Choose Demo Data
+        // ------------------------->
+
+
         //demo data select
         $demoDD = "<select name='demoData' id='demoData' class='select'><option value='no' >".$mod_strings['LBL_NO']."</option><option value='yes'>".$mod_strings['LBL_YES']."</option>";
         $demoDD .= "</select>";
 
+        $out .=<<<EOQ3
+        </div>
+        </div>
 
-        $out3 =<<<EOQ3
-        <div class="floatbox">
+        <div class="floatbox full" id="fb0">
+            <h2>{$mod_strings['LBL_MORE_OPTIONS_TITLE']}</h2>
+        </div>
+
+        <div class="floatbox full" id="fb1">
             <div class="install_block">
-                <h2>{$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}</h2>
-                <div class="form_section">
-                <div class="formrow big">
-                    <label>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</label>
-                    {$demoDD}
-                </div>
+                <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}..</h3>
+
+                <div class="form_section" style="display: none;">
+                <div class="clear"></div>
+                    <div class="formrow big">
+                        <label>{$mod_strings['LBL_DBCONF_DEMO_DATA']}</label>
+                        {$demoDD}
+                    </div>
                 </div>
             </div>
         </div>
 EOQ3;
 
-        // database selection
-        $out = $out3 . "<div class=\"floatbox\"><h2>{$mod_strings['LBL_SYSOPTS_DB']}</h2>
-        <div class=\"form_section\">";
-        foreach($drivers as $type => $driver) {
-            $oci = ($type == "oci8")?"":'none'; // hack for special oracle message
-            $out.=<<<EOQ
-                <input type="radio" class="checkbox" name="setup_db_type" id="setup_db_type" value="$type" {$checked[$type]} onclick="onDBTypeClick(this);//document.getElementById('ociMsg').style.display='$oci'"/>{$mod_strings[$driver->label]}<br>
-EOQ;
-        }
-        $out.=<<<EOQ
-        </div>
-            <div name="ociMsg" id="ociMsg" style="display:none"></div>
-EOQ;
+
+
+
+        //---------------
+        // SMTP Settings
+        //-------------------->
+
 
         // smtp
         // TODO-t: test it for all types
@@ -270,10 +559,11 @@ EOQ;
         if(empty($_SESSION['smtp_tab_selected'])) $_SESSION['smtp_tab_selected'] = 'smtp_tab_other';
 
         $out .= <<<EOQ
-        </div>
-        <div class="floatbox full">
+        <div class="floatbox full" id="fb2">
             <!-- smtp settings -->
-            <h2>{$mod_strings['LBL_MAIL_SMTP_SETTINGS']}</h2>
+            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_MAIL_SMTP_SETTINGS']}..</h3>
+            <div style="display: none;">
+
             <br>
             <!--
             <p>{$mod_strings['LBL_WIZARD_SMTP_DESC']}</p>
@@ -477,7 +767,7 @@ EOQ;
                 </div>
 
                 <div class="clear"></div>
-            </div>
+            <!-- </div> -->
 
             <!-- smtp default values & tabs toggler js & tooltip help -->
 
@@ -519,6 +809,7 @@ EOQ;
                 });
             </script>
 
+            </div> <!-- toggle hidden box end -->
 EOQ;
 
 
@@ -526,248 +817,173 @@ EOQ;
         $out2 =<<<EOQ2
             <input type='hidden' name='setup_db_drop_tables' id='setup_db_drop_tables' value=''>
         </div>
-        <div class="floatbox">
-            <h2>{$mod_strings['LBL_DBCONF_TITLE']}</h2>
-
-            <div class="form_section">
-            <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
-            <h3>{$mod_strings['LBL_DBCONF_TITLE_NAME']}</h3>
 EOQ2;
 
-        $config_params = $db->installConfig();
-        $form = '';
-        foreach($config_params as $group => $gdata) {
-            $form.= "<div class='install_block'>";
-            if($mod_strings[$group . '_LABEL']) {
-                $form .= "<label>{$mod_strings[$group . '_LABEL']}" . "<i> i <div class=\"tooltip\">{$mod_strings[$group]}</div></i></label>\n";
-            }
-            foreach($gdata as $name => $value) {
-
-                if(!empty($value)) {
-                    if(!empty($value['required'])) {
-                        $form .= "<span class=\"required\">*</span>";
-                    }
-                    else {
-                    }
-                    if(!empty($_SESSION[$name])) {
-                        $sessval = $_SESSION[$name];
-                    } else {
-                        $sessval = '';
-                    }
-                    if(!empty($value["type"])) {
-                        $type = $value["type"];
-                    } else {
-                        $type = '';
-                    }
-
-                    $form .= <<<FORM
-
-FORM;
-                    //if the type is password, set a hidden field to capture the value.  This is so that we can properly encode special characters, which is a limitation with password fields
-                    if($type=='password'){
-                        $form .= "<input type='$type' name='{$name}_entry' id='{$name}_entry' value='".urldecode($sessval)."'><input type='hidden' name='$name' id='$name' value='".urldecode($sessval)."'>";
-                    }else{
-                        $form .= "<input type='$type' name='$name' id='$name' value='$sessval'>";
-                    }
 
 
 
-                    $form .= <<<FORM
-FORM;
 
-                } else {
-                    $form .= "<input name=\"$name\" id=\"$name\" value=\"\" type=\"hidden\">\n";
-                }
-            }
-            $form .= "</div>";
+
+
+        // ----------
+        //  Branding
+        // ------------->
+
+        // company logo
+        $currentLogoLink = SugarThemeRegistry::current()->getImageURL('company_logo.png');
+        // show logo if we have
+        $hiddenLogo = '';
+        if(!file_exists($currentLogoLink)) {
+            $hiddenLogo = 'display:none;';
         }
 
-        $out2 .= $form;
 
+        // TODO--low: check the tooltip text at the logo image!
 
+        $out .= <<<EOQ
 
-        // ---------- user data set (dbConfig_a.php)
-
-
-//if we are installing in custom mode, include the following html
-        if($db->supports("create_user")) {
-// create / set db user dropdown
-            $auto_select = '';
-            $provide_select = '';
-            $create_select = '';
-            $same_select = '';
-            if (isset($_SESSION['dbUSRData'])) {
-//    if($_SESSION['dbUSRData']=='auto')    {$auto_select ='selected';}
-                if ($_SESSION['dbUSRData'] == 'provide') {
-                    $provide_select = 'selected';
-                }
-                if (isset($_SESSION['install_type']) && !empty($_SESSION['install_type']) && strtolower($_SESSION['install_type']) == 'custom') {
-                    if ($_SESSION['dbUSRData'] == 'create') {
-                        $create_select = 'selected';
-                    }
-                }
-                if ($_SESSION['dbUSRData'] == 'same') {
-                    $same_select = 'selected';
-                }
-            } else {
-                $same_select = 'selected';
-            }
-            $dbUSRDD = "<select name='dbUSRData' id='dbUSRData' onchange='toggleDBUser();'>";
-            $dbUSRDD .= "<option value='provide' $provide_select>" . $mod_strings['LBL_DBCONFIG_PROVIDE_DD'] . "</option>";
-            $dbUSRDD .= "<option value='create' $create_select>" . $mod_strings['LBL_DBCONFIG_CREATE_DD'] . "</option>";
-            $dbUSRDD .= "<option value='same' $same_select>" . $mod_strings['LBL_DBCONFIG_SAME_DD'] . "</option>";
-            $dbUSRDD .= "</select><br>&nbsp;";
-
-
-            $setup_db_sugarsales_password = urldecode($_SESSION['setup_db_sugarsales_password']);
-            $setup_db_sugarsales_user = urldecode($_SESSION['setup_db_sugarsales_user']);
-            $setup_db_sugarsales_password_retype = urldecode($_SESSION['setup_db_sugarsales_password_retype']);
-
-
-            $out2 .= <<<EOQ2
-<br>
-<div class='install_block'>
-<!--
-    <div class="ibmsg">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div>
-    -->
-</div>
-<div class='install_block'>
-    <div class="formrow">
-        <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']}<i> i <div class="tooltip">{$mod_strings['LBL_DBCONFIG_SECURITY']}</div></i></label>
-        $dbUSRDD
-    </div>
-    <div class="clear"></div>
-    <span id='connection_user_div' style="display:none">
-        <div class="formrow">
-            <label>{$mod_strings['LBL_DBCONF_SUGAR_DB_USER']} <span class="required">*</span></label>
-            <input type="text" name="setup_db_sugarsales_user" maxlength="16" value="{$_SESSION['setup_db_sugarsales_user']}" />
+            <!-- Branding  -->
+            </div>
         </div>
-        <div class="clear"></div>
-        <div class="formrow">
-            <label>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</label>
-            <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />
-            <input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
-            <input type="hidden" name="setup_db_sugarsales_password" value="{$_SESSION['setup_db_sugarsales_password']}" />
-        </div>
-        <div class="clear"></div>
-        <div class="formrow">
-            <label>{$mod_strings['LBL_DBCONF_DB_PASSWORD2']}</label>
-            <input type="password" name="setup_db_sugarsales_password_retype_entry" value="{$setup_db_sugarsales_password_retype}"  />
-            <input type="hidden" name="setup_db_sugarsales_password_retype" value="{$setup_db_sugarsales_password_retype}" />
-        </div>
-    </span>
-</div>
+        <div class="floatbox full" id="fb3">
+            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_WIZARD_SYSTEM_TITLE']}..</h3>
 
-EOQ2;
-        }
-        $out.=$out2;
+            <div class="form_section" style="display: none;">
+
+                <p class="ibmsg">{$mod_strings['LBL_WIZARD_SYSTEM_DESC']}</p>
+
+                <p class="ibmsg">{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}</p>
+
+                <div class="formrow">
+                    <label>{$mod_strings['SYSTEM_NAME_WIZARD']} <i>i<div class="tooltip">{$mod_strings['SYSTEM_NAME_HELP']}</div></i></label>
+                    <input type="text" name="setup_system_name" size="25" maxlength="64" value="{$_SESSION['setup_system_name']}">
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="formrow">
+                    <!-- file upload -->
+                    <label>{$mod_strings['NEW_LOGO']} <i>i<div class="tooltip">{$mod_strings['NEW_LOGO_HELP']}</div></i></label>
+                    <input type="file" name="company_logo" id="company_logo">
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="formrow">
+                    <label>&nbsp;</label>
+                    <input type="button" name="company_logo_upload_btn" value="{$mod_strings['COMPANY_LOGO_UPLOAD_BTN']}" onclick="onUploadImageClick(this);">
+                </div>
 
 
+                <div class="clear"></div>
 
-        // ------ siteConfig_a.php
-        $out .=<<<EOQ
-        </div>
-    </div>
-    <div class="floatbox">
-                    <h2>{$mod_strings['LBL_SITECFG_TITLE']}</h2>
-                    <div class="form_section">
-                    <p>{$errors}</p>
-                    <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
+                <div class="formrow" id="current_logo_row">
+                    <label>{$mod_strings['CURRENT_LOGO']} <i>i<div class="tooltip">{$mod_strings['CURRENT_LOGO_HELP']}</div></i> </label>
+                    <img height="100" src="$currentLogoLink" alt="Company Logo" style="max-height: 100px; max-width: 230px; float:left; $hiddenLogo" />
+                </div>
 
-                    <h3>{$mod_strings['LBL_SITECFG_TITLE2']}<div class="tooltip-toggle"><em> i </em><div class="tooltip">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</div></div></h3>
+                <div class="clear"></div>
+            </div>
+
 EOQ;
-        //hide this in typical mode
-        if(!empty($_SESSION['install_type']) && strtolower($_SESSION['install_type'])=='custom'){
-            $out .=<<<EOQ
-<div class='install_block'>
-    {$mod_strings['LBL_SITECFG_URL_MSG']}
-    <span class="required">*</span>
-    <label><b>{$mod_strings['LBL_SITECFG_URL']}</b></label>
-    <input type="text" name="setup_site_url" value="{$_SESSION['setup_site_url']}" size="40" />
-    <br>{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}
-    <span class="required">*</span>
-    <label><b>{$mod_strings['LBL_SYSTEM_NAME']}</b></label>
-    <input type="text" name="setup_system_name" value="{$_SESSION['setup_system_name']}" size="40" /><br>
-</div>
+
+
+        // System location defaults
+
+        // TODO--low: 1000s sep, Decimal Symb, Name Format
+
+        $defaultDateFormatSelect = self::getSelect('default_date_format', $sugarConfigDefaults['date_formats'], empty($_SESSION['default_date_format']) ? $sugarConfigDefaults['datef'] : $_SESSION['default_date_format']);
+        $defaultTimeFormatSelect = self::getSelect('default_time_format', $sugarConfigDefaults['time_formats'], empty($_SESSION['default_time_format']) ? 'h:ia' : $_SESSION['default_time_format'] /* $sugarConfigDefaults['timef'] */);
+        //$defaultLanguageSelect = get_select_options_with_id($supportedLanguages, $current_language);
+        $defaultLanguageSelect = self::getSelect('default_language', $supportedLanguages, $current_language);
+
+        // example name formats (its are in the original language file so may this functionality was there in the original sugarcrm installer also)
+        $nonDBLocalization = new NonDBLocalization();
+        $sugarConfigDefaults['name_formats'] = $nonDBLocalization->getUsableLocaleNameOptions($sugarConfigDefaults['name_formats']);
+        $defaultLocalNameFormatSelect = self::getSelect('default_locale_name_format', $sugarConfigDefaults['name_formats'], empty($_SESSION['default_locale_name_format']) ? $sugarConfigDefaults['default_locale_name_format'] : $_SESSION['default_locale_name_format']);
+
+        $out .= <<<EOQ
+        </div>
+            <!-- System Local Settings  -->
+            <!-- TODO--low: add the time-zone settings here!! -->
+        <div class="floatbox full" id="fb4">
+            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_LOCALE_TITLE']}..</h3>
+
+            <div class="form_section" style="display: none;">
+
+                <p class="ibmsg">{$mod_strings['LBL_WIZARD_LOCALE_DESC']}</p>
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_DATE_FORMAT']}</label>
+                    $defaultDateFormatSelect
+                </div>
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_TIME_FORMAT']}</label>
+                    $defaultTimeFormatSelect
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="formrow" style="display: none;">
+                    <label>{$mod_strings['LBL_LANGUAGE']}</label>
+                    $defaultLanguageSelect
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_CURRENCY']}</label>
+                    <input type="text" name="default_currency_name" value="{$sugarConfigDefaults['default_currency_name']}">
+                </div>
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_CURRENCY_SYMBOL']}</label>
+                    <input type="text" name="default_currency_symbol" size="4" value="{$sugarConfigDefaults['default_currency_symbol']}">
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_CURRENCY_ISO4217']}</label>
+                    <input type="text" name="default_currency_iso4217" size="4" value="{$sugarConfigDefaults['default_currency_iso4217']}">
+                </div>
+
+                <!--
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_NUMBER_GROUPING_SEP']}</label>
+                    <input type="text" name="default_number_grouping_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_seperator']}">
+                </div>
+
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_DECIMAL_SEP']}</label>
+                    <input type="text" name="default_decimal_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_seperator']}">
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="formrow">
+                    <label>{$mod_strings['LBL_NAME_FORMAT']}</label>
+                    $defaultLocalNameFormatSelect
+                </div>
+                -->
+
+                <div class="clear"></div>
+            </div>
+        </div>
+
 EOQ;
-            $db = getDbConnection();
-            if($db->supports("collation")) {
-                $collationOptions = $db->getCollationList();
-            }
-            if(!empty($collationOptions)) {
-                if(isset($_SESSION['setup_db_options']['collation'])) {
-                    $default = $_SESSION['setup_db_options']['collation'];
-                } else {
-                    $default = $db->getDefaultCollation();
-                }
-                $options = get_select_options_with_id(array_combine($collationOptions, $collationOptions), $default);
-                $out .=<<<EOQ
-     <div class='install_block'>
-        <br>{$mod_strings['LBL_SITECFG_COLLATION_MSG']}
-        <span class="required">*</span>
-        <label><b>{$mod_strings['LBL_COLLATION']}</b></label>
-        <select name="setup_db_collation" id="setup_db_collation">$options</select><br>
-     </div>
-EOQ;
-            }
-        }
-
-        $help_url = get_help_button_url();
-        if(!isset($_SESSION['email1'])) {
-            $_SESSION['email1'] = null;
-        }
-
-        $out .=<<<EOQ
-<div class='install_block'>
-    <!--
-    <p class="ibmsg">{$mod_strings['LBL_SITECFG_PASSWORD_MSG']}</p>
-    -->
-    <div class="formrow big">
-        <label>{$mod_strings['LBL_SITECFG_ADMIN_Name']} <span class="required">*</span></label>
-        <input type="text" name="setup_site_admin_user_name" value="{$_SESSION['setup_site_admin_user_name']}" size="20" maxlength="60" />
-    </div>
-
-    <div class="clear"></div>
-
-    <div class="formrow big">
-        <label>{$mod_strings['LBL_SITECFG_ADMIN_PASS']} <span class="required">*</span></label>
-        <input type="password" name="setup_site_admin_password" value="{$_SESSION['setup_site_admin_password']}" size="20" />
-    </div>
-
-    <div class="clear"></div>
-
-    <div class="formrow big">
-        <label>{$mod_strings['LBL_SITECFG_ADMIN_PASS_2']} <span class="required">*</span></label>
-        <input type="password" name="setup_site_admin_password_retype" value="{$_SESSION['setup_site_admin_password_retype']}" size="20" />
-    </div>
-
-    <div class="clear"></div>
-
-    <div class="formrow big">
-        <label>{$mod_strings['LBL_SITECFG_URL']} <span class="required">*</span></label>
-        <input type="text" name="setup_site_url" value="{$_SESSION['setup_site_url']}" size="40" />
-    </div>
-
-    <div class="clear"></div>
 
 
-    <div class="formrow big">
-        <label>{$mod_strings['LBL_EMAIL_ADDRESS']} <span class="required">*</span></label>
-        <input type="email" name="email1" value="{$_SESSION['email1']}" size="40" />
-    </div>
+$out.= "<div class=\"floatbox full\">";
+$out.= "    <h3 onclick=\"$(this).next().toggle();\" class=\"toggler\">&raquo; {$mod_strings['LBL_SITECFG_SECURITY_TITLE']}..</h3>";
 
-    <div class="clear"></div>
-
-
-    <h3>{$mod_strings['LBL_SITECFG_SECURITY_TITLE']}</h3>
-
-    <div class="clear"></div>
-
-    <a href="javascript:;" onclick="$('.security-block').toggle();">More..</a><br/><br/>
+        $out.=<<<EOQ
 
 <div class="security-block" style="display:none;">
 <table cellspacing="0" cellpadding="0" border="0" align="center" class="shell">
-      <tr><td colspan="2" id="help"><a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a></td></tr>
+      <tr><td colspan="2" id="help"><!-- <a href="{$help_url}" target='_blank'>{$mod_strings['LBL_HELP']} </a> --></td></tr>
     <tr>
       <th width="500">
    </th>
@@ -849,161 +1065,11 @@ EOQ;
 </td>
 </tr>
 </table>
-</div>
-
-</div>
+</div><!-- dbg1 -->
 EOQ;
 
-        $out .= <<<EOQ
+$out.= "</div>";
 
-EOQ;
-
-        // ---------------- Branding
-        // company logo
-        $currentLogoLink = SugarThemeRegistry::current()->getImageURL('company_logo.png');
-        // show logo if we have
-        $hiddenLogo = '';
-        if(!file_exists($currentLogoLink)) {
-            $hiddenLogo = 'display:none;';
-        }
-
-
-        // TODO--low: check the tooltip text at the logo image!
-
-        $out .= <<<EOQ
-
-            <!-- Branding  -->
-            </div>
-        </div>
-        <div class="floatbox">
-            <h2>{$mod_strings['LBL_WIZARD_SYSTEM_TITLE']}</h2>
-
-            <div class="form_section">
-
-                <p class="ibmsg">{$mod_strings['LBL_WIZARD_SYSTEM_DESC']}</p>
-
-                <p class="ibmsg">{$mod_strings['LBL_SITECFG_SYS_NAME_MSG']}</p>
-
-                <div class="formrow">
-                    <label>{$mod_strings['SYSTEM_NAME_WIZARD']} <i>i<div class="tooltip">{$mod_strings['SYSTEM_NAME_HELP']}</div></i></label>
-                    <input type="text" name="setup_system_name" size="25" maxlength="64" value="{$_SESSION['setup_system_name']}">
-                </div>
-
-                <div class="clear"></div>
-
-                <div class="formrow">
-                    <!-- file upload -->
-                    <label>{$mod_strings['NEW_LOGO']} <i>i<div class="tooltip">{$mod_strings['NEW_LOGO_HELP']}</div></i></label>
-                    <input type="file" name="company_logo" id="company_logo">
-                </div>
-
-                <div class="clear"></div>
-
-                <div class="formrow">
-                    <label>&nbsp;</label>
-                    <input type="button" name="company_logo_upload_btn" value="{$mod_strings['COMPANY_LOGO_UPLOAD_BTN']}" onclick="onUploadImageClick(this);">
-                </div>
-
-
-                <div class="clear"></div>
-
-                <div class="formrow" id="current_logo_row">
-                    <label>{$mod_strings['CURRENT_LOGO']} <i>i<div class="tooltip">{$mod_strings['CURRENT_LOGO_HELP']}</div></i> </label>
-                    <img height="100" src="$currentLogoLink" alt="Company Logo" style="max-height: 100px; max-width: 230px; float:left; $hiddenLogo" />
-                </div>
-
-                <div class="clear"></div>
-            </div>
-
-EOQ;
-
-
-        // System location defaults
-
-        // TODO--low: 1000s sep, Decimal Symb, Name Format
-
-        $defaultDateFormatSelect = self::getSelect('default_date_format', $sugarConfigDefaults['date_formats'], empty($_SESSION['default_date_format']) ? $sugarConfigDefaults['datef'] : $_SESSION['default_date_format']);
-        $defaultTimeFormatSelect = self::getSelect('default_time_format', $sugarConfigDefaults['time_formats'], empty($_SESSION['default_time_format']) ? 'h:ia' : $_SESSION['default_time_format'] /* $sugarConfigDefaults['timef'] */);
-        //$defaultLanguageSelect = get_select_options_with_id($supportedLanguages, $current_language);
-        $defaultLanguageSelect = self::getSelect('default_language', $supportedLanguages, $current_language);
-
-        // example name formats (its are in the original language file so may this functionality was there in the original sugarcrm installer also)
-        $nonDBLocalization = new NonDBLocalization();
-        $sugarConfigDefaults['name_formats'] = $nonDBLocalization->getUsableLocaleNameOptions($sugarConfigDefaults['name_formats']);
-        $defaultLocalNameFormatSelect = self::getSelect('default_locale_name_format', $sugarConfigDefaults['name_formats'], empty($_SESSION['default_locale_name_format']) ? $sugarConfigDefaults['default_locale_name_format'] : $_SESSION['default_locale_name_format']);
-
-        $out .= <<<EOQ
-        </div>
-            <!-- System Local Settings  -->
-            <!-- TODO--low: add the time-zone settings here!! -->
-        <div class="floatbox">
-            <h2>{$mod_strings['LBL_LOCALE_TITLE']}</h2>
-
-            <div class="form_section">
-
-                <p class="ibmsg">{$mod_strings['LBL_WIZARD_LOCALE_DESC']}</p>
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_DATE_FORMAT']}</label>
-                    $defaultDateFormatSelect
-                </div>
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_TIME_FORMAT']}</label>
-                    $defaultTimeFormatSelect
-                </div>
-
-                <div class="clear"></div>
-
-                <div class="formrow" style="display: none;">
-                    <label>{$mod_strings['LBL_LANGUAGE']}</label>
-                    $defaultLanguageSelect
-                </div>
-
-                <div class="clear"></div>
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_CURRENCY']}</label>
-                    <input type="text" name="default_currency_name" value="{$sugarConfigDefaults['default_currency_name']}">
-                </div>
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_CURRENCY_SYMBOL']}</label>
-                    <input type="text" name="default_currency_symbol" size="4" value="{$sugarConfigDefaults['default_currency_symbol']}">
-                </div>
-
-                <div class="clear"></div>
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_CURRENCY_ISO4217']}</label>
-                    <input type="text" name="default_currency_iso4217" size="4" value="{$sugarConfigDefaults['default_currency_iso4217']}">
-                </div>
-
-                <!--
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_NUMBER_GROUPING_SEP']}</label>
-                    <input type="text" name="default_number_grouping_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_number_grouping_seperator']}">
-                </div>
-
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_DECIMAL_SEP']}</label>
-                    <input type="text" name="default_decimal_seperator" size="3" maxlength="1" value="{$sugarConfigDefaults['default_decimal_seperator']}">
-                </div>
-
-                <div class="clear"></div>
-
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_NAME_FORMAT']}</label>
-                    $defaultLocalNameFormatSelect
-                </div>
-                -->
-
-                <div class="clear"></div>
-            </div>
-        </div>
-
-EOQ;
 
 
         return $out;
@@ -1202,7 +1268,6 @@ EOQ;
                                 //preloaderOn('{$mod_strings['LBL_INSTALL_PROCESS']}', '...');
                                 startStatusReader();
 
-                                //console.log('TODO.. submit!!');
                                 $('#installForm').hide();
                                 $('#installStatus').show();
                                 $("html, body").animate({
@@ -1470,7 +1535,6 @@ EOQ;
 
                                 removeSMTPSettings();
 
-                                //console.log('TODO submit2');
                                 $('#installForm').hide();
                                 $('#installStatus').show();
                                 $("html, body").animate({
