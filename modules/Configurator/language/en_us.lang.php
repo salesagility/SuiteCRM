@@ -308,7 +308,7 @@ $mod_strings = array (
     'PDF_UNIT_INFO' => 'document unit of measure',
 	'PDF_GD_WARNING'=>'You do not have the GD library installed for PHP. Without the GD library installed, only JPEG logos can be displayed in PDF documents.',
     'ERR_EZPDF_DISABLE'=>'Warning : The EZPDF class is disabled from the config table and it set as the PDF class. Please "Save" this form to set TCPDF as the PDF Class and return in a stable state.',
-    'LBL_IMG_RESIZED'=>"(resized for display)",
+    'LBL_IMG_RESIZED'=> '(resized for display)',
 
 
     'LBL_FONTMANAGER_BUTTON' => 'PDF Font Manager',
@@ -333,7 +333,7 @@ $mod_strings = array (
     'LBL_FONT_LIST_EMBEDDED' => 'Embedded',
     'LBL_FONT_LIST_EMBEDDED_INFO' => 'Check to embed the font into the PDF file',
     'LBL_FONT_LIST_CIDINFO' => 'CID Information',
-    'LBL_FONT_LIST_CIDINFO_INFO' => "Examples :".
+    'LBL_FONT_LIST_CIDINFO_INFO' => '"Examples :".
 "<ul><li>".
 "Chinese Traditional :<br>".
 "<pre>\$enc=\'UniCNS-UTF16-H\';<br>".
@@ -355,7 +355,7 @@ $mod_strings = array (
 "\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>".
 "include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>".
 "</li></ul>".
-"More help : www.tcpdf.org",
+"More help : www.tcpdf.org"',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
@@ -423,8 +423,7 @@ BSOFR',
     'LBL_WIZARD_CONTINUE_BUTTON' => 'Continue',
     'LBL_WIZARD_FINISH_TAB' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'Basic system configuration is complete',
-    'LBL_WIZARD_FINISH' => 'Click <b>Continue</b> to configure your user settings.<br/><br />
-To configure additional system settings, click <a href="index.php?module=Administration&action=index" target="_blank">here</a>.',
+    'LBL_WIZARD_FINISH' => 'Click <b>Continue</b> to configure your user settings.<br/><br />To configure additional system settings, click <a href="index.php?module=Administration&action=index" target="_blank">here</a>.',
     'LBL_WIZARD_SYSTEM_TITLE' => 'Branding',
     'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your SuiteCRM.',
     'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
