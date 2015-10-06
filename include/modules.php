@@ -308,6 +308,16 @@ $beanFiles['OAuthToken'] = 'modules/OAuthTokens/OAuthToken.php';
 $modules_exempt_from_availability_check['OAuthTokens'] = 'OAuthTokens';
 $modInvisList[] = 'OAuthTokens';
 
+$beanList['AM_ProjectTemplates'] = 'AM_ProjectTemplates';
+$beanFiles['AM_ProjectTemplates'] = 'modules/AM_ProjectTemplates/AM_ProjectTemplates.php';
+$moduleList[] = 'AM_ProjectTemplates';
+$beanList['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$beanFiles['AM_TaskTemplates'] = 'modules/AM_TaskTemplates/AM_TaskTemplates.php';
+$modules_exempt_from_availability_check['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$report_include_modules['AM_TaskTemplates'] = 'AM_TaskTemplates';
+$modInvisList[] = 'AM_TaskTemplates';
+$beanList['Favorites'] = 'Favorites';
+$beanFiles['Favorites'] = 'modules/Favorites/Favorites.php';
 
 //Object list is only here to correct for modules that break
 //the bean class name == dictionary entry/object name convention
@@ -316,6 +326,17 @@ $objectList = array();
 $objectList['Cases'] =  'Case';
 $objectList['Groups'] =  'User';
 $objectList['Users'] =  'User';
+
+
+// knowledge base
+$beanList['AOK_Knowledge_Base_Categories'] = 'AOK_Knowledge_Base_Categories';
+$beanFiles['AOK_Knowledge_Base_Categories'] = 'modules/AOK_Knowledge_Base_Categories/AOK_Knowledge_Base_Categories.php';
+$moduleList[] = 'AOK_Knowledge_Base_Categories';
+$beanList['AOK_KnowledgeBase'] = 'AOK_KnowledgeBase';
+$beanFiles['AOK_KnowledgeBase'] = 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php';
+$moduleList[] = 'AOK_KnowledgeBase';
+
+
 
 if (file_exists('include/modules_override.php'))
 {

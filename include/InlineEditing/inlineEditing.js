@@ -53,8 +53,8 @@ function buildEditField(){
     $(".inlineEdit a").click(function (e) {
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
-			var linkTarget = $(this).attr("target");
-			
+            var linkTarget = $(this).attr("target");
+
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
@@ -71,10 +71,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-					if (linkTarget)
-						window.open(linkUrl, linkTarget);
-					else
-						window.location.href = linkUrl;
+                    if (linkTarget)
+                        window.open(linkUrl, linkTarget);
+                    else
+                        window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
@@ -174,15 +174,15 @@ function validateFormAndSave(field,id,module,type){
     });
     // also want to save on enter/return being pressed
     $(document).keypress(function(e) {
-
-        if (e.which == 13) {
-            e.preventDefault();
-            $("#inlineEditSaveButton").click();
-        }
+        console.log(e);
+           if ((e.which == 13) && (e.shiftKey)) {
+           }
+          else if (e.which == 13) {
+               e.preventDefault();
+         $("#inlineEditSaveButton").click();
+         }
     });
 }
-
-
 
 /**
  * Checks if any of the parent elemenets of the current element have the class inlineEditActive this means they are within
@@ -279,7 +279,7 @@ function getInputValue(field,type){
                 break;
             case 'bool':
                 if($('#'+ field).is(':checked')){
-                   return "on";
+                    return "on";
                 }else{
                     return "off";
                 }
@@ -316,7 +316,7 @@ function handleSave(field,id,module,type){
     }
 
     if(type == "parent") {
-            parent_type = $('#parent_type').val();
+        parent_type = $('#parent_type').val();
     }
 
 
@@ -397,16 +397,16 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         try {
-             return (JSON.parse(result.responseText));
-         } catch(e) {
-             return false;
-         }
+    if(result.responseText){
+        try {
+            return (JSON.parse(result.responseText));
+        } catch(e) {
+            return false;
+        }
 
-     }else{
-         return false;
-     }
+    }else{
+        return false;
+    }
 
 
 }

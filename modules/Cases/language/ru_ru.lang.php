@@ -50,6 +50,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $mod_strings = array (
 'ERR_DELETE_RECORD'=> 'Вы должны указать номер записи перед удалением.' ,
 
+	'LBL_TOOL_TIP_BOX_TITLE' => 'KnowledgeBase Предложения',
+	'LBL_TOOL_TIP_TITLE' => 'название: ',
+	'LBL_TOOL_TIP_BODY'  => 'тело: ',
+	'LBL_TOOL_TIP_INFO'  => 'Дополнительная информация: ',
+	'LBL_TOOL_TIP_USE'   => 'Использовать как: ',
+	'LBL_SUGGESTION_BOX' => 'Предложения',
+	'LBL_NO_SUGGESTIONS' => 'Нет Предложения',
+	'LBL_RESOLUTION_BUTTON'  => 'разрешение',
+	'LBL_SUGGESTION_BOX_STATUS' => 'статус',
+	'LBL_SUGGESTION_BOX_TITLE' => 'название',
+	'LBL_SUGGESTION_BOX_REL' => 'Актуальность',
+
 'LBL_ACCOUNT_ID'=> 'ID контрагента' ,
 'LBL_ACCOUNT_NAME'=> 'Контрагент:' ,
 'LBL_ACCOUNTS_SUBPANEL_TITLE'=> 'Контрагенты',

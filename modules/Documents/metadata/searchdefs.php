@@ -6,6 +6,7 @@ array (
     'basic_search' => 
     array (
       0 => 'document_name',
+      1 => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
     ),
     'advanced_search' => 
     array (

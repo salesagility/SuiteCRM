@@ -2521,6 +2521,8 @@ $app_strings = array (
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
     'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See sugarcrm.log for more information)',
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
+    'LBL_ACCOUNT_PRODUCT_QUOTE_LINK' => 'Quote',
+    'LBL_ACCOUNT_PRODUCT_SALE_PRICE' => 'Sale Price',
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -3299,4 +3301,16 @@ $app_strings ['documentation'] = array (
 	'PRO' => '04_Sugar_Professional',
 	'COM' => '05_Sugar_Community_Edition'
 );
+
+
+// knowledge base
+$app_list_strings['moduleList']['AOK_KnowledgeBase'] = 'Knowledge Base';
+$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categories';
+$app_list_strings['aok_status_list']['Draft'] = 'Draft';
+$app_list_strings['aok_status_list']['Expired'] = 'Expired';
+$app_list_strings['aok_status_list']['In_Review'] = 'In Review';
+//$app_list_strings['aok_status_list']['Published'] = 'Published';
+$app_list_strings['aok_status_list']['published_private'] = 'Private';
+$app_list_strings['aok_status_list']['published_public'] = 'Public';
+
 ?>

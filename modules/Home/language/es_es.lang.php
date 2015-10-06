@@ -265,4 +265,24 @@ $mod_strings = array (
   'LNK_TOUR_DOCUMENTATION' => 'documentation',
   'LBL_TOUR_CALENDAR_URL_1' => 'Do you share your SugarCRM calendar with 3rd party applications, such as Microsoft Outlook or Exchange? If so, you have a new URL. This new, more secure URL includes a personal key which will prevent unauthorized publishing of your calendar.',
   'LBL_TOUR_CALENDAR_URL_2' => 'Retrieve your new shared calendar URL.',
+
+    'LBL_ABOUT'  =>'Acerca de',
+  'LBL_CONTRIBUTORS'  =>'Contribuidores',
+  'LBL_ABOUT_SUITE'  =>'Acerca de SuiteCRM',
+  'LBL_PARTNERS'  =>'Partners',
+  'LBL_FEATURING'  =>'Los módulos de AOS, AOW, AOR, AOP, AOE y Replanificación son de SalesAgility.',
+
+  'LBL_CONTRIBUTOR_SUITECRM'  =>'La alternativa gratuita y open source a SugarCRM Professional Edition.',
+  'LBL_CONTRIBUTOR_SECURITY_SUITE'  =>'SecuritySuite por Jason Eggers',
+  'LBL_CONTRIBUTOR_JJW_GMAPS'  =>'JJWDesign Google Maps por Jeffrey J. Walters',
+  'LBL_CONTRIBUTOR_QUICKCRM'  =>'QuickCRM Mobile por Benoit Luquet',
+  'LBL_CONTRIBUTOR_CONSCIOUS'  =>'SuiteCRM LOGO provisto por Conscious Solutions',
+
+  'LBL_ABOUT_SUITE_1'  =>'SuiteCRM es un derivado (fork) de SugarCRM. Hay muchos artículos en la web explicando las razones por las cuales fue necesario realizar un fork de SugarCRM.',
+  'LBL_ABOUT_SUITE_2'  =>'SuiteCRM es publicado bajo licencia open source - GPL3',
+  'LBL_ABOUT_SUITE_3'  =>'SuiteCRM es totalmente compatible con SugarCRM 6.5.x',
+  'LBL_ABOUT_SUITE_4'  =>'Todo el código de SuiteCRM desarrollado y administrado por el proyecto será lanzado como open source - GPL3',
+  'LBL_ABOUT_SUITE_5'  =>'El soporte sobre SuiteCRM está disponible tanto de forma gratuita como paga',
+
+  'LBL_SUITE_PARTNERS'  =>'Tenemos leales partners de SuiteCRM entusiastas del open source. Para ver nuestra lista completa de partners, vea nuestro website.',
 );
