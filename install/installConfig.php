@@ -376,7 +376,6 @@ FORM;
             <label>{$mod_strings['LBL_DBCONF_DB_PASSWORD']}</label>
             <input type="password" name="setup_db_sugarsales_password_entry" value="{$setup_db_sugarsales_password}" />
             <input type="hidden" name="setup_db_sugarsales_password" value="{$setup_db_sugarsales_password}" />
-            <input type="hidden" name="setup_db_sugarsales_password" value="{$_SESSION['setup_db_sugarsales_password']}" />
         </div>
         <div class="clear"></div>
         <div class="formrow">
