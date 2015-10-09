@@ -135,13 +135,13 @@ $out = <<<EOQ
             <div id='licenseDiv' style="/* display: none; */">
                 <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
             </div>
-            <hr>
             <div id="licenseaccept">
                 <input type="checkbox" class="checkbox" name="setup_license_accept" id="button_next2" onClick='toggleNextButton();' {$checked} />
                 <a href='javascript:void(0)' onClick='toggleLicenseAccept();toggleNextButton();'>{$mod_strings['LBL_LICENSE_I_ACCEPT']}</a>
                 <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
                 onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
             </div>
+            <hr>
             <div id="installcontrols">
 
                 <input type="hidden" name="current_step" value="{$next_step}">

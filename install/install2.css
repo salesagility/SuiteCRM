@@ -508,7 +508,8 @@ form #wrapper {
 
 #licenseaccept {
     padding:10px;
-    float:left;
+    float:none;
+    text-align: center;
 }
 
 #licenseDivToggler {
