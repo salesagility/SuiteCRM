@@ -101,7 +101,7 @@ $(document).ready(function() {
                     adjust: {
                         mouse: false,
                         scroll: true,
-                        y: -100,
+                        y: 0,
                         x: 0
                     }
                 },
@@ -137,4 +137,17 @@ $(document).ready(function() {
             $('#resolution').val(text);
         }, 300 );
     };
+});
+
+
+$(function(){
+    setInterval(function(){
+        // qtip forced into screen area
+        $('.qtip').each(function(i,e){
+            if(parseInt($(e).css('left'))<0) {
+                $(e).animate({left: 0});
+            }
+        });
+
+    }, 300);
 });

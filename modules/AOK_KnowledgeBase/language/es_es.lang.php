@@ -77,4 +77,4 @@ $mod_strings = array (
   'LBL_APPROVER' => 'Approver',
 );
 
-$mod_strings['LBL_AOK_KNOWLEDGEBASE_AOK_KNOWLEDGE_BASE_CATEGORIES_FROM_AOK_KNOWLEDGE_BASE_CATEGORIES_TITLE'] = 'Categorías';
+$mod_strings['LBL_AOK_KB_CATEGORIES_TITLE'] = 'Categorías';

@@ -1,4 +1,3 @@
-<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,79 +36,77 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary["aok_knowledgebase_aok_knowledge_base_categories"] = array (
-  'true_relationship_type' => 'many-to-many',
-  'relationships' => 
-  array (
-    'aok_knowledgebase_aok_knowledge_base_categories' => 
-    array (
-      'lhs_module' => 'AOK_KnowledgeBase',
-      'lhs_table' => 'aok_knowledgebase',
-      'lhs_key' => 'id',
-      'rhs_module' => 'AOK_Knowledge_Base_Categories',
-      'rhs_table' => 'aok_knowledge_base_categories',
-      'rhs_key' => 'id',
-      'relationship_type' => 'many-to-many',
-      'join_table' => 'aok_knowledgebase_aok_knowledge_base_categories',
-      'join_key_lhs' => 'aok_knowledgebase_id',
-      'join_key_rhs' => 'aok_knowledge_base_categories_id',
-    ),
-  ),
-  'table' => 'aok_knowledgebase_aok_knowledge_base_categories',
-  'fields' => 
-  array (
-    0 => 
-    array (
-      'name' => 'id',
-      'type' => 'varchar',
-      'len' => 36,
-    ),
-    1 => 
-    array (
-      'name' => 'date_modified',
-      'type' => 'datetime',
-    ),
-    2 => 
-    array (
-      'name' => 'deleted',
-      'type' => 'bool',
-      'len' => '1',
-      'default' => '0',
-      'required' => true,
-    ),
-    3 => 
-    array (
-      'name' => 'aok_knowledgebase_id',
-      'type' => 'varchar',
-      'len' => 36,
-    ),
-    4 => 
-    array (
-      'name' => 'aok_knowledge_base_categories_id',
-      'type' => 'varchar',
-      'len' => 36,
-    ),
-  ),
-  'indices' => 
-  array (
-    0 => 
-    array (
-      'name' => 'aok_knowledgebase_aok_knowledge_base_categoriesspk',
-      'type' => 'primary',
-      'fields' => 
-      array (
-        0 => 'id',
-      ),
-    ),
-    1 => 
-    array (
-      'name' => 'aok_knowledgebase_aok_knowledge_base_categories_alt',
-      'type' => 'alternate_key',
-      'fields' => 
-      array (
-        0 => 'aok_knowledgebase_id',
-        1 => 'aok_knowledge_base_categories_id',
-      ),
-    ),
-  ),
-);
+
+#suggestion_box table {
+    border: 1px solid #cccccc;
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 100%;
+    color: #337ab7;
+}
+#suggestion_box table tr:hover {
+    background-color: #dfeffe;
+    cursor: pointer;
+}
+#suggestion_box table tr th {
+    padding: 4px!important;
+    text-align:left;
+    background-color: #f0f0ee;
+    border-bottom: 1px solid #cccccc;
+    color: #333333;
+}
+#suggestion_box table tr td {
+    padding: 4px!important;
+    border-bottom: 1px solid #d6d6d6;
+}
+#tool-tip-separator {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tool-tip-title {
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+#use_resolution {
+    margin-top: 4px;
+}
+#additional_info_p {
+    margin-bottom: 4px;
+}
+.transfer {
+    border: 2px dotted gray;
+}
+
+.qtip-content {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+/* suggestion box has to be responsive */
+
+   #suggestion_box table {
+       max-width: 400px;
+   }
+
+@media (max-width: 640px) {
+
+    #suggestion_box table {
+        border: none;
+    }
+
+    #suggestion_box table tbody tr {
+        display: table-row;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        padding: 0;
+    }
+
+    #suggestion_box table tbody tr th,
+    #suggestion_box table tbody tr td {
+        display: table-cell;
+        width: auto;
+    }
+
+}

@@ -599,8 +599,9 @@ class SugarTheme
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('deprecated.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
         $html .= '
-            <!-- qtip -->
-            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+            <!-- qtip & suggestion box -->
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
+            <link rel="stylesheet" type="text/css" href="modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.css" />';
 
 
 		// sprites

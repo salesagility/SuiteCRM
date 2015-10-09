@@ -37,37 +37,79 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Ответственный(ая)',
-  'LBL_ASSIGNED_TO_NAME' => 'Ответственный(ая)',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Дата создания',
-  'LBL_DATE_MODIFIED' => 'Дата изменения',
-  'LBL_MODIFIED' => 'Изменено',
-  'LBL_MODIFIED_ID' => 'Изменено(ID)',
-  'LBL_MODIFIED_NAME' => 'Изменено',
-  'LBL_CREATED' => 'Создано',
-  'LBL_CREATED_ID' => 'Создано(ID)',
-  'LBL_DESCRIPTION' => 'Описание',
-  'LBL_DELETED' => 'Удалено',
-  'LBL_NAME' => 'Название',
-  'LBL_CREATED_USER' => 'Создано',
-  'LBL_MODIFIED_USER' => 'Изменено',
-  'LBL_LIST_NAME' => 'Название',
-  'LBL_EDIT_BUTTON' => 'Править',
-  'LBL_REMOVE' => 'Удалить',
-  'LBL_LIST_FORM_TITLE' => 'KB Categories Список',
-  'LBL_MODULE_NAME' => 'KB Categories',
-  'LBL_MODULE_TITLE' => 'KB Categories',
-  'LBL_HOMEPAGE_TITLE' => 'Мой KB Categories',
-  'LNK_NEW_RECORD' => 'Создать KB Categories',
-  'LNK_LIST' => 'View KB Categories',
-  'LNK_IMPORT_AOK_KB_CATEGORIES' => 'Import KB Categories',
-  'LBL_SEARCH_FORM_TITLE' => 'Поиск KB Categories',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'Просмотр истории',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Мероприятия',
-  'LBL_AOK_KB_CATEGORIES_SUBPANEL_TITLE' => 'KB Categories',
-  'LBL_NEW_FORM_TITLE' => 'Новый KB Categories',
+$dictionary["aok_knowledgebase_categories"] = array (
+  'true_relationship_type' => 'many-to-many',
+  'relationships' => 
+  array (
+    'aok_knowledgebase_categories' =>
+    array (
+      'lhs_module' => 'AOK_KnowledgeBase',
+      'lhs_table' => 'aok_knowledgebase',
+      'lhs_key' => 'id',
+      'rhs_module' => 'AOK_Knowledge_Base_Categories',
+      'rhs_table' => 'aok_knowledge_base_categories',
+      'rhs_key' => 'id',
+      'relationship_type' => 'many-to-many',
+      'join_table' => 'aok_knowledgebase_categories',
+      'join_key_lhs' => 'aok_knowledgebase_id',
+      'join_key_rhs' => 'aok_knowledge_base_categories_id',
+    ),
+  ),
+  'table' => 'aok_knowledgebase_categories',
+  'fields' => 
+  array (
+    0 => 
+    array (
+      'name' => 'id',
+      'type' => 'varchar',
+      'len' => 36,
+    ),
+    1 => 
+    array (
+      'name' => 'date_modified',
+      'type' => 'datetime',
+    ),
+    2 => 
+    array (
+      'name' => 'deleted',
+      'type' => 'bool',
+      'len' => '1',
+      'default' => '0',
+      'required' => true,
+    ),
+    3 => 
+    array (
+      'name' => 'aok_knowledgebase_id',
+      'type' => 'varchar',
+      'len' => 36,
+    ),
+    4 => 
+    array (
+      'name' => 'aok_knowledge_base_categories_id',
+      'type' => 'varchar',
+      'len' => 36,
+    ),
+  ),
+  'indices' => 
+  array (
+    0 => 
+    array (
+      'name' => 'aok_knowledgebase_categoriesspk',
+      'type' => 'primary',
+      'fields' => 
+      array (
+        0 => 'id',
+      ),
+    ),
+    1 => 
+    array (
+      'name' => 'aok_knowledgebase_categories_alt',
+      'type' => 'alternate_key',
+      'fields' => 
+      array (
+        0 => 'aok_knowledgebase_id',
+        1 => 'aok_knowledge_base_categories_id',
+      ),
+    ),
+  ),
 );
-
-$mod_strings['LBL_AOK_KB_TITLE'] = 'Knowledge Base';
