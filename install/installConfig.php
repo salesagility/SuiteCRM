@@ -258,7 +258,7 @@ EOQ;
 
         <!-- <div class="floatbox"> -->
 
-            <div class="form_section">
+            <div class="form_section starhook">
             <!-- <div class="required">{$mod_strings['LBL_REQUIRED']}</div> -->
             <h3>{$mod_strings['LBL_DBCONF_TITLE_NAME']}</h3>
 EOQ2;
@@ -294,7 +294,7 @@ EOQ2;
 FORM;
                     //if the type is password, set a hidden field to capture the value.  This is so that we can properly encode special characters, which is a limitation with password fields
                     if($type=='password'){
-                        $form .= "<input type='$type' name='{$name}_entry' id='{$name}_entry' value='".urldecode($sessval)."'><input type='hidden' name='$name' id='$name' value='".urldecode($sessval)."'>";
+                        $form .= "</div><div class=\"install_block\"><label>{$mod_strings['LBL_DBCONF_TITLE_PSWD_INFO_LABEL']}</label><span>&nbsp;</span><input type='$type' name='{$name}_entry' id='{$name}_entry' value='".urldecode($sessval)."'><input type='hidden' name='$name' id='$name' value='".urldecode($sessval)."'></div><div class=\"install_block\">";
                     }else{
                         $form .= "<input type='$type' name='$name' id='$name' value='$sessval'>";
                     }
