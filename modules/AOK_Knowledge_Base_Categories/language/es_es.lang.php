@@ -62,12 +62,12 @@ $mod_strings = array (
   'LBL_HOMEPAGE_TITLE' => 'Mi KB Categories',
   'LNK_NEW_RECORD' => 'Crear KB Categories',
   'LNK_LIST' => 'Vista KB Categories',
-  'LNK_IMPORT_AOK_KNOWLEDGE_BASE_CATEGORIES' => 'Import KB Categories',
+  'LNK_IMPORT_AOK_KB_CATEGORIES' => 'Import KB Categories',
   'LBL_SEARCH_FORM_TITLE' => 'Buscar KB Categories',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'Ver Historial',
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Actividades',
-  'LBL_AOK_KNOWLEDGE_BASE_CATEGORIES_SUBPANEL_TITLE' => 'KB Categories',
+  'LBL_AOK_KB_CATEGORIES_SUBPANEL_TITLE' => 'KB Categories',
   'LBL_NEW_FORM_TITLE' => 'Nuevo KB Categories',
 );
 
-$mod_strings['LBL_AOK_KNOWLEDGEBASE_AOK_KNOWLEDGE_BASE_CATEGORIES_FROM_AOK_KNOWLEDGEBASE_TITLE'] = 'Knowledge Base';
+$mod_strings['LBL_AOK_KB_TITLE'] = 'Knowledge Base';
