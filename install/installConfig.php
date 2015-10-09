@@ -251,7 +251,7 @@ EOQ;
 EOQ;
 
 
-        $out2.= $out_dbtypesel;
+        $out2 = $out_dbtypesel;
 
 
         $out2.=<<<EOQ2
