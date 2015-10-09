@@ -259,7 +259,7 @@ EOQ;
         <!-- <div class="floatbox"> -->
 
             <div class="form_section">
-            <div class="required">{$mod_strings['LBL_REQUIRED']}</div>
+            <!-- <div class="required">{$mod_strings['LBL_REQUIRED']}</div> -->
             <h3>{$mod_strings['LBL_DBCONF_TITLE_NAME']}</h3>
 EOQ2;
 
