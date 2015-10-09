@@ -131,7 +131,7 @@ $out = <<<EOQ
             <!--
             <div id='licenseDivToggler' style="text-align: center;"><a href="javascript:void(0);" onclick="javascript:$('#licenseDiv').toggle();">Show Software License</a></div>
             -->
-
+		<div id="content">
             <div id='licenseDiv' style="/* display: none; */">
                 <textarea class="licensetext" cols="80" rows="20" readonly>{$license_file}</textarea>
             </div>
@@ -141,6 +141,7 @@ $out = <<<EOQ
                 <input type="button" class="button" name="print_license" id="button_print_license" value="{$mod_strings['LBL_LICENSE_PRINTABLE']}"
                 onClick='window.open("install.php?page=licensePrint&language={$current_language}");' />
             </div>
+		</div>
             <hr>
             <div id="installcontrols">
 
@@ -158,9 +159,9 @@ $out = <<<EOQ
 	    <div style="clear:both;"></div>
 	</div>
 	<div id="checkingDiv" style="display:none">
-	    <table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>
+	    <!-- <table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td> -->
             <p><img src='install/processing.gif' alt="{$mod_strings['LBL_LICENSE_CHECKING']}"> <br>{$mod_strings['LBL_LICENSE_CHECKING']}</p>
-        </td></tr></table>
+        <!-- </td></tr></table> -->
     </div>
 	<footer id="install_footer">
         <p id="footer_links"><a href="https://suitecrm.com" target="_blank">Visit suitecrm.com</a> | <a href="https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list" target="_blank">Support Forums</a> | <a href="https://suitecrm.com/wiki/index.php/Installation" target="_blank">Installation Guide</a> | <a href="LICENSE.txt" target="_blank">License</a>
@@ -251,14 +252,16 @@ function callSysCheck(){
                     if (o.responseText.indexOf('passed')>=0){
                         if ( YAHOO.util.Selector.query('button', 'p_msg', true) != null )
                             YAHOO.util.Selector.query('button', 'p_msg', true).style.display = 'none';
-                        scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
+                        //scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
+						scsbody = '<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>';
                         scsbody += "<p><img src='install/processing.gif' alt=\"{$mod_strings['LBL_CREATE_CACHE']}\"></p>";
                         scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}<br>{$mod_strings['LBL_CREATE_CACHE']}</p>";
                         //scsbody += "<div id='cntDown'>{$mod_strings['LBL_THREE']}</div>";
-                        scsbody += "</td></tr></table>";
+                        //scsbody += "</td></tr></table>";
                         //scsbody += "<script>countdown(3);<\/script>";
-                        msgPanel.setBody(scsbody);
-                        msgPanel.render();
+                        //msgPanel.setBody(scsbody);
+                        //msgPanel.render();
+						$('#content').html(scsbody);
                         //countdown(3);
                         //window.setTimeout('passed("install.php?goto=next")', 2500);
                         passed("install.php?goto=next");
@@ -282,8 +285,12 @@ function callSysCheck(){
                         return;
                     }
 
-                getPanel();
-                msgPanel.show;
+                //getPanel();
+                //msgPanel.show;
+				
+				$('#content').addClass('preloading');
+				$('#content').html('<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>' + document.getElementById("checkingDiv").innerHTML);
+						
                 var ajxProgress = YAHOO.util.Connect.asyncRequest('POST','install.php', {success: success, failure: success}, postData);
 
 
@@ -293,12 +300,14 @@ function callSysCheck(){
 }
 
     function countdown(num){
-        scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
+        //scsbody =  "<table cellspacing='0' cellpadding='0' border='0' align='center'><tr><td>";
+		scsbody = '<h1>{$mod_strings['LBL_LICENSE_CHKENV_HEADER']}</h1>';
         scsbody += "<p>{$mod_strings['LBL_LICENSE_CHECK_PASSED']}</p>";
         scsbody += "<div id='cntDown'>{$mod_strings['LBL_LICENSE_REDIRECT']}"+num+"</div>";
-        scsbody += "</td></tr></table>";
-        msgPanel.setBody(scsbody);
-        msgPanel.render();
+        //scsbody += "</td></tr></table>";
+        //msgPanel.setBody(scsbody);
+        //msgPanel.render();
+		$('#content').html(scsbody);
         if(num >0){
              num = num-1;
              setTimeout("countdown("+num+")",1000);
