@@ -516,6 +516,10 @@ form #wrapper {
     margin-bottom: 10px;
 }
 
+/* system check preloader */
+.preloading {
+	text-align: left;
+}
 
 
 /* install config step */
