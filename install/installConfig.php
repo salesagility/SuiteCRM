@@ -523,7 +523,7 @@ EOQ;
 
         <div class="floatbox full" id="fb1">
             <div class="install_block">
-                <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}..</h3>
+                <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_DBCONF_DEMO_DATA_TITLE']}</h3>
 
                 <div class="form_section" style="display: none;">
                 <div class="clear"></div>
@@ -560,7 +560,7 @@ EOQ3;
         $out .= <<<EOQ
         <div class="floatbox full" id="fb2">
             <!-- smtp settings -->
-            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_MAIL_SMTP_SETTINGS']}..</h3>
+            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_MAIL_SMTP_SETTINGS']}</h3>
             <div style="display: none;">
 
             <br>
@@ -845,7 +845,7 @@ EOQ2;
             </div>
         </div>
         <div class="floatbox full" id="fb3">
-            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_WIZARD_SYSTEM_TITLE']}..</h3>
+            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_WIZARD_SYSTEM_TITLE']}</h3>
 
             <div class="form_section" style="display: none;">
 
@@ -906,7 +906,7 @@ EOQ;
             <!-- System Local Settings  -->
             <!-- TODO--low: add the time-zone settings here!! -->
         <div class="floatbox full" id="fb4">
-            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_LOCALE_TITLE']}..</h3>
+            <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_LOCALE_TITLE']}</h3>
 
             <div class="form_section" style="display: none;">
 
@@ -976,7 +976,7 @@ EOQ;
 
 
 $out.= "<div class=\"floatbox full\">";
-$out.= "    <h3 onclick=\"$(this).next().toggle();\" class=\"toggler\">&raquo; {$mod_strings['LBL_SITECFG_SECURITY_TITLE']}..</h3>";
+$out.= "    <h3 onclick=\"$(this).next().toggle();\" class=\"toggler\">&raquo; {$mod_strings['LBL_SITECFG_SECURITY_TITLE']}</h3>";
 
         $out.=<<<EOQ
 
