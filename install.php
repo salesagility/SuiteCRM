@@ -38,6 +38,14 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+if(isset($_REQUEST['clear_session'])) {
+	session_start();
+	session_destroy();
+	header('Location: install.php');
+	echo 'session clean, page refresh...';
+	exit;
+}
+ 
 //  recover smtp settings
 if(isset($_POST['smtp_tab_selected'])) {
     $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
