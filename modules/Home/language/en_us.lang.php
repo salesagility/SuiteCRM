@@ -89,7 +89,6 @@ $mod_strings  = array(
   'LBL_CHANGE_LAYOUT' => 'Change Layout',
   'LBL_RENAME_PAGE' => 'Rename Page',
   'LBL_CLOSE_DASHLETS' => 'Close',
-  'LBL_CLOSE_SITEMAP' => 'Close',
   'LBL_OPTIONS' => 'Options',
   // dashlet search fields
   'LBL_TODAY'=>'Today',
@@ -201,7 +200,7 @@ $mod_strings  = array(
   'LBL_SUGARFORGE_NEWS' => 'SugarForge News',
   'LBL_ALL_NEWS' => 'All News',
   'LBL_SOURCE_CODE' => 'Source Code',
-  'LBL_SOURCE_SUGAR' => 'Sugar - The world\'s most popular sales force automation application created by SugarCRM Inc.',
+    'LBL_SOURCE_SUGAR' => 'SugarCRM Inc - providers of CE framework',
   'LBL_SOURCE_XTEMPLATE' => 'XTemplate - A template engine for PHP created by Barnabás Debreceni',
   'LBL_SOURCE_NUSOAP' => 'NuSOAP - A set of PHP classes that allow developers to create and consume web services created by NuSphere Corporation and Dietrich Ayala',
   'LBL_SOURCE_JSCALENDAR' => 'JS Calendar - A calendar for entering dates created by Mihai Bazon',
@@ -303,6 +302,3 @@ $mod_strings  = array(
     'LBL_SUITE_PARTNERS' => 'We have loyal SuiteCRM partners who are passionate about open source. To view our full partner list, see our website.',
 
 );
-
-
-?>
