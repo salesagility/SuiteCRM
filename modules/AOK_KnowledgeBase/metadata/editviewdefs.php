@@ -1,4 +1,5 @@
 <?php
+ if(!defined('sugarEntry'))define('sugarEntry', true);
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -116,12 +117,6 @@ array (
         array (
           0 => 
           array (
-            'name' => 'date_entered',
-            'comment' => 'Date record created',
-            'label' => 'LBL_DATE_ENTERED',
-          ),
-          1 => 
-          array (
             'name' => 'author',
             'studio' => 'visible',
             'label' => 'LBL_AUTHOR',
@@ -130,12 +125,6 @@ array (
         5 => 
         array (
           0 => 
-          array (
-            'name' => 'date_modified',
-            'comment' => 'Date record last modified',
-            'label' => 'LBL_DATE_MODIFIED',
-          ),
-          1 => 
           array (
             'name' => 'approver',
             'studio' => 'visible',
