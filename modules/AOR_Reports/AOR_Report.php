@@ -566,7 +566,7 @@ class AOR_Report extends Basic {
         ob_clean();
         header("Pragma: cache");
         header("Content-type: text/comma-separated-values; charset=".$GLOBALS['locale']->getExportCharset());
-        header("Content-Disposition: attachment; filename={$this->name}.csv");
+        header("Content-Disposition: attachment; filename=\"{$this->name}.csv\"");
         header("Content-transfer-encoding: binary");
         header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
         header("Last-Modified: " . TimeDate::httpTime() );
