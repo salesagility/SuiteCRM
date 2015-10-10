@@ -54,7 +54,7 @@ $mod_strings['LBL_CRON_URL'] = 'CRON URL';
 $mod_strings['LBL_CRON_INSTRUCTIONS'] = 'Para procesar las solicitudes de códigos geográficos, se recomienda que configure las tareas programadas durante la noche. '.
 'Un punto de acceso personalizado se ha creado para este fin y se puede acceder sin autenticación. '.
 'La URL que se muestra a continuación está destinada a ser utilizada dentro de la tarea programada. '.
-'Por favor, consulte la documentación de SugarCRM para más información.';
+'Por favor, consulte la documentación  para más información.';
 $mod_strings['LBL_EXPORT_ADDRESS_URL'] = 'Exportación de URLs';
 $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Utilice los enlaces siguientes para exportar las direcciones completas si necesita la información geocodificada. '.
 'A continuación, utilice una herramienta geocodificar las direcciones. '.
@@ -128,7 +128,7 @@ $mod_strings['LBL_CONFIG_ADDRESS_CACHE_SAVE_ENABLED_DESC'] = "'address_cache_sav
 
 $mod_strings['LBL_CONFIG_LOGIC_HOOKS_SETTINGS_TITLE'] = 'Configuración de Logic Hooks:';
 $mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_TITLE'] = 'Habilita todos los Logic Hooks: ';
-$mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_DESC'] = "'logic_hooks_enabled' permite que los logic hooks actualicen automáticamente basado en los objetos relacionados. Se recomienda deshabilitar cuando se actualiza SugarCRM.";
+$mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_DESC'] = "'logic_hooks_enabled' permite que los logic hooks actualicen automáticamente basado en los objetos relacionados. Se recomienda deshabilitar cuando se actualiza SuiteCRM.";
 
 $mod_strings['LBL_CONFIG_MARKER_MAPPING_SETTINGS_TITLE'] = 'Configuración de Marcadores/Mapas:';
 $mod_strings['LBL_CONFIG_MAP_MARKERS_LIMIT_TITLE'] = "Límite de Marcadores de Mapa:";

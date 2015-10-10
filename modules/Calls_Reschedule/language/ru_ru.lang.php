@@ -45,7 +45,7 @@
 
 $mod_strings = array (
   'LBL_ASSIGNED_TO_ID' => 'Ответственный(ая)-ID',
-  'LBL_ASSIGNED_TO_NAME' => 'Пользователь Suite',
+  'LBL_ASSIGNED_TO_NAME' => 'Пользователь SuiteCRM',
   'LBL_ID' => 'ID',
   'LBL_DATE_ENTERED' => 'Дата создания',
   'LBL_DATE_MODIFIED' => 'Дата изменения',

@@ -31,7 +31,7 @@ $app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
 
 $app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM - основная страница';
 $app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
 $app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
 $app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';
