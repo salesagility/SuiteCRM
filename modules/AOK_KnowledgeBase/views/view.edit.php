@@ -46,8 +46,15 @@ class AOK_KnowledgeBaseViewEdit extends ViewEdit
     {
         parent::ViewEdit();
     }
+	
+	public function preDisplay() {
+		global $current_user;
+		parent::preDisplay();
+		$this->bean->author = $current_user->name;
+		$this->bean->user_id_c = $current_user->id;
+	}
 
-    function display()
+	function display()
     {
         parent::display();
         $this->displayTMCE();
