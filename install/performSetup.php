@@ -38,19 +38,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function installStatus($msg, $cmd = null, $overwrite = false) {
+function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>') {
     $fname = 'install/status.json';
     if(!$overwrite && file_exists($fname)) {
         $stat = json_decode(file_get_contents($fname));
         //$msg = json_encode($stat);
-        $msg = $stat->message . '[ok]<br>' . $msg;
+        $msg = $stat->message . $before . $msg;
     }
     file_put_contents($fname, json_encode(array(
         'message' => $msg,
         'command' => $cmd,
     )));
 }
-installStatus($mod_strings['LBL_START'], null, true);
+installStatus($mod_strings['LBL_START'], null, true, '');
 
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
@@ -146,7 +146,7 @@ $out =<<<EOQ
 </header>
 EOQ;
 echo $out;
-installStatus($mod_strings['STAT_CONFIGURATION']);
+installStatus($mod_strings['STAT_CONFIGURATION'], null, false, '');
 installLog("calling handleSugarConfig()");
 $bottle = handleSugarConfig();
 //installLog("calling handleLog4Php()");

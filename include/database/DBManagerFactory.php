@@ -201,7 +201,7 @@ class DBManagerFactory
             $classname = substr($name, 0, -4);
             if(!class_exists($classname)) continue;
             $driver = new $classname;
-            if(!$validate || $driver->valid()) {
+            if(42||!$validate || $driver->valid()) {
                 if(empty($drivers[$driver->dbType])) {
                     $drivers[$driver->dbType]  = array();
                 }

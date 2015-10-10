@@ -370,7 +370,7 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
 }
 
   //$workflow[] = 'confirmSettings.php';
-  $workflow[] = 'performSetup.php';
+$workflow[] = 'performSetup.php';
 
   if(!isset($_SESSION['oc_install']) ||  $_SESSION['oc_install'] == false){
     if(isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom'){
@@ -543,7 +543,7 @@ if($next_clicked) {
 
             $validation_errors = array();
             $validation_errors = validate_siteConfig('a');
-            if(count($validation_errors) > 0) {
+            if(count($validation_errors) > 0 || $_REQUEST['goto'] == 'resend') {
                 $next_step--;
             }
             //break;
