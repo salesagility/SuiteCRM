@@ -637,6 +637,22 @@ $current_user->retrieve(1);
 $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
 
+// set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
+
+//$_POST[''] = $_REQUEST['default_locale_name_format'];
+$_POST['dateformat'] = $_REQUEST['default_date_format'];
+//$_POST[''] = $_REQUEST['default_time_format'];
+//$_POST[''] = $_REQUEST['default_language'];
+//$_POST[''] = $_REQUEST['default_currency_name'];
+//$_POST[''] = $_REQUEST['default_currency_symbol'];
+//$_POST[''] = $_REQUEST['default_currency_iso4217'];
+//$_POST[''] = $_REQUEST['setup_site_session_path'];
+//$_POST[''] = $_REQUEST['setup_site_log_dir'];
+//$_POST[''] = $_REQUEST['setup_site_guid'];
+//$_POST[''] = $_REQUEST['default_email_charset'];
+//$_POST[''] = $_REQUEST['default_export_charset'];
+//$_POST[''] = $_REQUEST['export_delimiter'];
+
 $_POST['record'] = $current_user->id;
 $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
 $_POST['use_real_names'] = true;
