@@ -678,7 +678,7 @@ $contact_user_link_guid',
 	'LBL_LICENCE_TOOLTIP' => 'Please accept license first',
 
 	'LBL_MORE_OPTIONS_TITLE' => 'More options',
-	'LBL_START' => 'Start...',
+	'LBL_START' => '',
 
 
 );
