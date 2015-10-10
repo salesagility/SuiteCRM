@@ -48,7 +48,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
 	'LBL_ADD_ANOTHER_FILE'		=> 'Add Another File',
-	'LBL_ADD_DOCUMENT'			=> 'Add a Sugar Document',
+	'LBL_ADD_DOCUMENT'			=> 'Add a Document',
 	'LBL_ADD_FILE'				=> 'Add a file',
 	'LBL_ATTACHMENTS'			=> 'Attachments',
 	'LBL_BODY'					=> 'Body:',
@@ -76,7 +76,7 @@ $mod_strings = array (
 	'LBL_SEARCH_FORM_TITLE'		=> 'Email Templates Search',
 	'LBL_SHOW_ALT_TEXT'			=> 'Show Plain Text',
 	'LBL_SUBJECT'				=> 'Subject:',
-    'LBL_SUGAR_DOCUMENT'        => 'Sugar Document',
+    'LBL_SUGAR_DOCUMENT'        => 'Document',
 	'LBL_TEAMS'					=> 'Teams:',
 	'LBL_TEAMS_LINK'			=> 'Teams',
 	'LBL_TEXT_BODY'				=> 'Text Body',
