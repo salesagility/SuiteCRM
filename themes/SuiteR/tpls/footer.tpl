@@ -71,9 +71,6 @@
 <!-- END Footer Section -->
 {literal}
 <script>
-if(SUGAR.util.isTouchScreen()) {
-        setTimeout(resizeHeader,10000);
-}
 
 //qe_init function sets listeners to click event on elements of 'quickEdit' class
  if(typeof(DCMenu) !='undefined'){
