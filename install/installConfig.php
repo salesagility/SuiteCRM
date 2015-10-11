@@ -445,6 +445,10 @@ EOQ;
             $_SESSION['email1'] = null;
         }
 
+		if(!isset($_SESSION['setup_site_admin_user_name'])) {
+			$_SESSION['setup_site_admin_user_name'] = null;
+		}
+		
         $out .=<<<EOQ
 <div class='install_block'>
     <!--
