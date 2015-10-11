@@ -28,37 +28,15 @@ $dictionary['AOS_Products'] = array(
 	'table'=>'aos_products',
 	'audited'=>true,
 	'fields'=>array (
-
-        // for Purchased Products sub-panel
-        'aos_quote_id' =>
-            array(
-                'name' => 'aos_quote_id',
-                'vname' => 'LBL_AOS_QUOTE_ID',
-				'type' => 'varchar',
-                'source' => 'non-db',
-            ),
-        'aos_quote_name' =>
-            array(
-                'name' => 'aos_quote_name',
-                'vname' => 'LBL_AOS_QUOTE_NAME',
-				'type' => 'varchar',
-                'source' => 'non-db',
-            ),
-        'account_id' =>
-            array(
-                'name' => 'account_id',
-                'vname' => 'LBL_ACCOUNT_ID',
-				'type' => 'varchar',
-                'source' => 'non-db',
-            ),
-        'account_name' =>
-            array(
-                'name' => 'account_name',
-                'vname' => 'LBL_ACCOUNT_NAME',
-				'type' => 'varchar',
-                'source' => 'non-db',
-            ),
-
+		'aos_products_purchases' => array(
+			'name' => 'aos_products_purchases',
+			'type' => 'link',
+			'relationship' => 'aos_products_purchases',
+			'source' => 'non-db',
+			'module' => 'AOS_Quotes',
+			'bean_name' => 'AOS_Quotes',
+			'vname' => 'LBL_AOS_PRODUCTS_PURCHASES_FROM_AOS_QUOTES_TITLE',
+		),
   'maincode' => 
   array (
     'required' => '0',
