@@ -37,8 +37,9 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-if(isset($_REQUEST['clear_session'])) {
+ 
+@session_start();
+if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
 	session_start();
 	session_destroy();
 	header('Location: install.php');
