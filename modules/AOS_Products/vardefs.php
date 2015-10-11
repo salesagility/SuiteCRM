@@ -34,24 +34,28 @@ $dictionary['AOS_Products'] = array(
             array(
                 'name' => 'aos_quote_id',
                 'vname' => 'LBL_AOS_QUOTE_ID',
+				'type' => 'varchar',
                 'source' => 'non-db',
             ),
         'aos_quote_name' =>
             array(
                 'name' => 'aos_quote_name',
                 'vname' => 'LBL_AOS_QUOTE_NAME',
+				'type' => 'varchar',
                 'source' => 'non-db',
             ),
         'account_id' =>
             array(
                 'name' => 'account_id',
                 'vname' => 'LBL_ACCOUNT_ID',
+				'type' => 'varchar',
                 'source' => 'non-db',
             ),
         'account_name' =>
             array(
                 'name' => 'account_name',
                 'vname' => 'LBL_ACCOUNT_NAME',
+				'type' => 'varchar',
                 'source' => 'non-db',
             ),
 
