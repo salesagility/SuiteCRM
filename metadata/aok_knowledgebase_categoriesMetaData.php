@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,28 +37,79 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
-$layout_defs['AOS_Products'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-
-		'aos_products_purchases' => array(
-			'order' => 100,
-			'module' => 'AOS_Quotes',
-			'subpanel_name' => 'ForProductPurchases',
-			'sort_order' => 'asc',
-			'sort_by' => 'id',
-			'title_key' => 'LBL_CUSTOMERS_PURCHASED_PRODUCTS_SUBPANEL_TITLE',
-			//'get_subpanel_data' => 'aos_products_aos_quotes_1',
-			'get_subpanel_data' => 'function:getCustomersPurchasedProductsQuery',
-			'top_buttons' =>
-			array(
-			),
-		),
-
-	),
+$dictionary["aok_knowledgebase_categories"] = array (
+  'true_relationship_type' => 'many-to-many',
+  'relationships' => 
+  array (
+    'aok_knowledgebase_categories' =>
+    array (
+      'lhs_module' => 'AOK_KnowledgeBase',
+      'lhs_table' => 'aok_knowledgebase',
+      'lhs_key' => 'id',
+      'rhs_module' => 'AOK_Knowledge_Base_Categories',
+      'rhs_table' => 'aok_knowledge_base_categories',
+      'rhs_key' => 'id',
+      'relationship_type' => 'many-to-many',
+      'join_table' => 'aok_knowledgebase_categories',
+      'join_key_lhs' => 'aok_knowledgebase_id',
+      'join_key_rhs' => 'aok_knowledge_base_categories_id',
+    ),
+  ),
+  'table' => 'aok_knowledgebase_categories',
+  'fields' => 
+  array (
+    0 => 
+    array (
+      'name' => 'id',
+      'type' => 'varchar',
+      'len' => 36,
+    ),
+    1 => 
+    array (
+      'name' => 'date_modified',
+      'type' => 'datetime',
+    ),
+    2 => 
+    array (
+      'name' => 'deleted',
+      'type' => 'bool',
+      'len' => '1',
+      'default' => '0',
+      'required' => true,
+    ),
+    3 => 
+    array (
+      'name' => 'aok_knowledgebase_id',
+      'type' => 'varchar',
+      'len' => 36,
+    ),
+    4 => 
+    array (
+      'name' => 'aok_knowledge_base_categories_id',
+      'type' => 'varchar',
+      'len' => 36,
+    ),
+  ),
+  'indices' => 
+  array (
+    0 => 
+    array (
+      'name' => 'aok_knowledgebase_categoriesspk',
+      'type' => 'primary',
+      'fields' => 
+      array (
+        0 => 'id',
+      ),
+    ),
+    1 => 
+    array (
+      'name' => 'aok_knowledgebase_categories_alt',
+      'type' => 'alternate_key',
+      'fields' => 
+      array (
+        0 => 'aok_knowledgebase_id',
+        1 => 'aok_knowledge_base_categories_id',
+      ),
+    ),
+  ),
 );
-
-
-
-?>

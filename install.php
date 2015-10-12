@@ -37,7 +37,16 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
+ 
+@session_start();
+if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
+	session_start();
+	session_destroy();
+	header('Location: install.php');
+	echo 'session clean, page refresh...';
+	exit;
+}
+ 
 //  recover smtp settings
 if(isset($_POST['smtp_tab_selected'])) {
     $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
@@ -370,7 +379,7 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
 }
 
   //$workflow[] = 'confirmSettings.php';
-  $workflow[] = 'performSetup.php';
+$workflow[] = 'performSetup.php';
 
   if(!isset($_SESSION['oc_install']) ||  $_SESSION['oc_install'] == false){
     if(isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom'){
@@ -543,7 +552,7 @@ if($next_clicked) {
 
             $validation_errors = array();
             $validation_errors = validate_siteConfig('a');
-            if(count($validation_errors) > 0) {
+            if(count($validation_errors) > 0 || $_REQUEST['goto'] == 'resend') {
                 $next_step--;
             }
             //break;
