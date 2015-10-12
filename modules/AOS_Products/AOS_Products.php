@@ -69,12 +69,15 @@ class AOS_Products extends AOS_Products_sugar {
 		$query = "
  			SELECT * FROM (
  				SELECT
-					aos_products.*,
-					aos_products.name AS aos_product_name,
-					aos_quotes.id AS aos_quote_id,
-					aos_quotes.name AS aos_quote_name,
+					aos_quotes.*,
 					accounts.id AS account_id,
-					accounts.name AS account_name
+					accounts.name AS billing_account,
+					
+					opportunity_id AS opportunity,
+					billing_contact_id AS billing_contact,
+					'' AS created_by_name,
+					'' AS modified_by_name,
+					'' AS assigned_user_name
 				FROM
 					aos_products
 
@@ -83,11 +86,11 @@ class AOS_Products extends AOS_Products_sugar {
 				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
 
 				GROUP BY accounts.id
-			) AS aos_products
+			) AS aos_quotes
 
 		";
 		return $query;
-	}
+	}	
 	
 }
 ?>

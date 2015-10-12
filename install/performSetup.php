@@ -38,13 +38,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-function installStatus($msg, $cmd = null) {
-    file_put_contents('install/status.json', json_encode(array(
+function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>') {
+    $fname = 'install/status.json';
+    if(!$overwrite && file_exists($fname)) {
+        $stat = json_decode(file_get_contents($fname));
+        //$msg = json_encode($stat);
+        $msg = $stat->message . $before . $msg;
+    }
+    file_put_contents($fname, json_encode(array(
         'message' => $msg,
         'command' => $cmd,
     )));
 }
-installStatus('');
+installStatus($mod_strings['LBL_START'], null, true, '');
 
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
@@ -116,9 +122,9 @@ $out =<<<EOQ
    <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_PERFORM_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="$icon">
-   <link rel="stylesheet" href="$css" type="text/css" />
+   <!-- <link rel="stylesheet" href="$css" type="text/css" /> -->
    <script type="text/javascript" src="$common"></script>
-   <link rel="stylesheet" href="install/install.css" type="text/css" />
+   <link rel="stylesheet" href="install/install2.css" type="text/css" />
    <script type="text/javascript" src="install/installCommon.js"></script>
    <script type="text/javascript" src="install/siteConfig.js"></script>
 <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
@@ -140,7 +146,7 @@ $out =<<<EOQ
 </header>
 EOQ;
 echo $out;
-installStatus($mod_strings['STAT_CONFIGURATION']);
+installStatus($mod_strings['STAT_CONFIGURATION'], null, false, '');
 installLog("calling handleSugarConfig()");
 $bottle = handleSugarConfig();
 //installLog("calling handleLog4Php()");
@@ -241,7 +247,7 @@ foreach( $beanFiles as $bean => $file ) {
 	    continue;
 
     $table_name = $focus->table_name;
-    installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
+    //installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
      installLog("processing table ".$focus->table_name);
     // check to see if we have already setup this table
     if(!in_array($table_name, $processed_tables)) {
@@ -630,6 +636,22 @@ $current_user = new User();
 $current_user->retrieve(1);
 $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
+
+// set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
+
+//$_POST[''] = $_REQUEST['default_locale_name_format'];
+$_POST['dateformat'] = $_REQUEST['default_date_format'];
+//$_POST[''] = $_REQUEST['default_time_format'];
+//$_POST[''] = $_REQUEST['default_language'];
+//$_POST[''] = $_REQUEST['default_currency_name'];
+//$_POST[''] = $_REQUEST['default_currency_symbol'];
+//$_POST[''] = $_REQUEST['default_currency_iso4217'];
+//$_POST[''] = $_REQUEST['setup_site_session_path'];
+//$_POST[''] = $_REQUEST['setup_site_log_dir'];
+//$_POST[''] = $_REQUEST['setup_site_guid'];
+//$_POST[''] = $_REQUEST['default_email_charset'];
+//$_POST[''] = $_REQUEST['default_export_charset'];
+//$_POST[''] = $_REQUEST['export_delimiter'];
 
 $_POST['record'] = $current_user->id;
 $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
