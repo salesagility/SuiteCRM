@@ -65,7 +65,6 @@
     <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
     <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
     <link rel="stylesheet" type="text/css" href="themes/Suite7/css/colourSelector.php">
-    <link rel="stylesheet" type="text/css" href="themes/Suite7/css/suggestion.php">
     <script type="text/javascript" src='{sugar_getjspath file="themes/Suite7/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
 </head>
