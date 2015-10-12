@@ -600,8 +600,8 @@ class SugarTheme
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
         $html .= '
             <!-- qtip & suggestion box -->
-            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />
-            <link rel="stylesheet" type="text/css" href="modules/AOK_KnowledgeBase/AOK_KnowledgeBase_SuggestionBox.css" />';
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('suggestion.css').'" />';
 
 
 		// sprites

@@ -36,13 +36,18 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+/* suggestion-box */
 
 #suggestion_box table {
-    border: 1px solid #cccccc;
     padding-left: 10px;
     padding-top: 10px;
     width: 100%;
+    max-width: 400px;
     color: #337ab7;
+    border-spacing: 0px;
+    border: 1px solid #cccccc;
+}
+#suggestion_box table tr {
 }
 #suggestion_box table tr:hover {
     background-color: #dfeffe;
@@ -52,12 +57,11 @@
     padding: 4px!important;
     text-align:left;
     background-color: #f0f0ee;
-    border-bottom: 1px solid #cccccc;
     color: #333333;
 }
 #suggestion_box table tr td {
     padding: 4px!important;
-    border-bottom: 1px solid #d6d6d6;
+    margin: 0px;
 }
 #tool-tip-separator {
     margin-top: 10px;
@@ -84,29 +88,18 @@
     overflow-y: auto;
 }
 
-/* suggestion box has to be responsive */
+.qtip {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
 
-   #suggestion_box table {
-       max-width: 400px;
-   }
-
-@media (max-width: 640px) {
-
-    #suggestion_box table {
-        border: none;
-    }
-
-    #suggestion_box table tbody tr {
-        display: table-row;
-        border: 1px solid #ccc;
-        border-bottom: none;
-        padding: 0;
-    }
-
-    #suggestion_box table tbody tr th,
-    #suggestion_box table tbody tr td {
-        display: table-cell;
-        width: auto;
-    }
-
+.qtip-tipped .qtip-titlebar {
+    background-color: #3c8dbc;
+    padding: 10px 40px 10px 10px;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#333333),to(#222));
+    background-image: -webkit-linear-gradient(top,#333333,#222);
 }
