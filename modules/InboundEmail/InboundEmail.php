@@ -4613,7 +4613,7 @@ eoq;
 		$service = empty($service) ? $this->getServiceString() : $service;
 		$mbox = empty($mbox) ? $this->mailbox : $mbox;
 
-		$connectString = '{'.$this->server_url.':'.$this->port.'/service='.$this->protocol.$service.'}';
+		$connectString = '{'.$this->server_url.':'.$this->port.'/'.$this->protocol.'/'.$this->ssl.'}';
 		$connectString .= ($includeMbox) ? $mbox : "";
 
 		return $connectString;
