@@ -35,19 +35,37 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+<?php
+
+// config|_override.php
+if(is_file('../../../config.php')) {
+    require_once('../../../config.php'); // provides $sugar_config
+}
+
+// load up the config_override.php file.  This is used to provide default user settings
+if(is_file('../../../config_override.php')) {
+    require_once('../../../config_override.php');
+}
+
+//if(!isset($sugar_config['theme_settings']['Suite7'])) return;
+
+//set file type back to css from php
+header("Content-type: text/css; charset: UTF-8");
+
+?>
 
 /* suggestion-box */
 
 #suggestion_box table {
-    padding-left: 10px;
-    padding-top: 10px;
+    border: 1px solid #cccccc;
+    padding: 0px !important;
     width: 100%;
     max-width: 400px;
     color: #337ab7;
     border-spacing: 0px;
-    border: 1px solid #cccccc;
 }
 #suggestion_box table tr {
+    border-bottom: 1px solid #cccccc;
 }
 #suggestion_box table tr:hover {
     background-color: #dfeffe;
@@ -60,8 +78,8 @@
     color: #333333;
 }
 #suggestion_box table tr td {
-    padding: 4px!important;
     margin: 0px;
+    border: none;
 }
 #tool-tip-separator {
     margin-top: 10px;
@@ -75,6 +93,7 @@
 
 #use_resolution {
     margin-top: 4px;
+    padding: 8px;
 }
 #additional_info_p {
     margin-bottom: 4px;
@@ -97,9 +116,35 @@
     border-radius: 0px;
 }
 
+/*
+<?php print_r($sugar_config); ?>
+*/
+
 .qtip-tipped .qtip-titlebar {
-    background-color: #3c8dbc;
+    background-color: #<?php echo $sugar_config['theme_settings']['SuiteR']['suggestion_popup_from']; ?>;
     padding: 10px 40px 10px 10px;
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#333333),to(#222));
-    background-image: -webkit-linear-gradient(top,#333333,#222);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#<?php echo $sugar_config['theme_settings']['SuiteR']['suggestion_popup_from']; ?>),to(#<?php echo $sugar_config['theme_settings']['SuiteR']['suggestion_popup_to']; ?>));
+    background-image: -webkit-linear-gradient(top,#<?php echo $sugar_config['theme_settings']['SuiteR']['suggestion_popup_from']; ?>,#<?php echo $sugar_config['theme_settings']['SuiteR']['suggestion_popup_to']; ?>);
+}
+
+/* suggestion box has to be responsive */
+
+@media (max-width: 640px) {
+
+    #suggestion_box table {
+        border: none;
+    }
+
+    #suggestion_box table tbody tr {
+        display: table-row;
+        border: 1px solid #ccc;
+        padding: 0;
+    }
+
+    #suggestion_box table tbody tr th,
+    #suggestion_box table tbody tr td {
+        display: table-cell;
+        width: auto;
+    }
+
 }

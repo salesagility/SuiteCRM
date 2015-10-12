@@ -601,7 +601,6 @@ class SugarTheme
         $html .= '
             <!-- qtip & suggestion box -->
             <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
-        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('suggestion.css').'" />';
 
 
 		// sprites
