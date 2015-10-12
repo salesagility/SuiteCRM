@@ -106,7 +106,7 @@ class CampaignTracker extends SugarBean {
         parent::SugarBean();
     }
 
-    function save() {
+    function save($check_notify = false) {
         //make sure that the url has a scheme, if not then add http:// scheme
         if ($this->is_optout!=1 ){
             $url = strtolower(trim($this->tracker_url));
@@ -115,7 +115,7 @@ class CampaignTracker extends SugarBean {
             }
         }
 
-        parent::save();
+        parent::save($check_notify);
     }
 
     /* This method should return the summary text which is used to build the bread crumb navigation*/

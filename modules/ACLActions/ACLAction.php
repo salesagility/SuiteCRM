@@ -438,7 +438,7 @@ class ACLAction  extends SugarBean{
 	 * @param STRING $type
 	 * @return boolean
 	 */
-	function userNeedsSecurityGroup($user_id, $category, $action,$type='module'){
+	static function userNeedsSecurityGroup($user_id, $category, $action,$type='module'){
 		//check if we don't have it set in the cache if not lets reload the cache
 		
 		if(empty($_SESSION['ACL'][$user_id][$category][$type][$action])){
@@ -598,7 +598,7 @@ class ACLAction  extends SugarBean{
     *
     * @return array of fields with id, name, access and category
     */
-    function toArray(){
+    function toArray($dbOnly = false, $stringOnly = false, $upperKeys = false){
         $array_fields = array('id', 'aclaccess');
         $arr = array();
         foreach($array_fields as $field){

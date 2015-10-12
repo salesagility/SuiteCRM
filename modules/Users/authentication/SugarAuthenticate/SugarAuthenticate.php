@@ -101,7 +101,8 @@ class SugarAuthenticate{
 		}
 		else
 		{
-			if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
+			//if(!empty($usr_id) && $res['lockoutexpiration'] > 0){
+            if(!empty($usr_id)){
 				if (($logout=$usr->getPreference('loginfailed'))=='')
 	        		$usr->setPreference('loginfailed','1');
 	    		else
@@ -330,7 +331,7 @@ class SugarAuthenticate{
 	 * @param STRING $password
 	 * @return STRING $encoded_password
 	 */
-	function encodePassword($password){
+	static function encodePassword($password){
 		return strtolower(md5($password));
 	}
 
