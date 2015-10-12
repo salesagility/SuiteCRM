@@ -51,7 +51,7 @@ class ACLController {
 	/**
 	function checkAccess($category, $action, $is_owner=false, $type='module'){
 	*/
-	function checkAccess($category, $action, $is_owner=false, $type='module',$in_group=false){
+	static function checkAccess($category, $action, $is_owner=false, $type='module',$in_group=false){
 
 		global $current_user;
 		if(is_admin($current_user))return true;
@@ -76,21 +76,21 @@ class ACLController {
 	}
 	/* END - SECURITY GROUPS */	
 
-	function requireOwner($category, $value, $type='module'){
+	static function requireOwner($category, $value, $type='module'){
 			global $current_user;
 			if(is_admin($current_user))return false;
 			return ACLAction::userNeedsOwnership($current_user->id, $category, $value,$type);
 	}
 
 	/* BEGIN - SECURITY GROUPS */
-	function requireSecurityGroup($category, $value, $type='module'){
+	static function requireSecurityGroup($category, $value, $type='module'){
 			global $current_user;
 			if(is_admin($current_user))return false;
 			return ACLAction::userNeedsSecurityGroup($current_user->id, $category, $value,$type);
 	}
 	/* END - SECURITY GROUPS */
 	
-	function filterModuleList(&$moduleList, $by_value=true){
+	static function filterModuleList(&$moduleList, $by_value=true){
 
 		global $aclModuleList, $current_user;
 		if(is_admin($current_user)) return;
@@ -144,7 +144,7 @@ class ACLController {
 	 * @param String $module_name
 	 * @return true if they are allowed.  false otherwise.
 	 */
-	function checkModuleAllowed($module_name, $actions)
+	static function checkModuleAllowed($module_name, $actions)
 	{
 	    if(!empty($actions[$module_name]['module']['access']['aclaccess']) &&
 			ACL_ALLOW_ENABLED == $actions[$module_name]['module']['access']['aclaccess'])
@@ -218,7 +218,7 @@ class ACLController {
 		echo $jscontroller->getJavascript();
 	}
 
-	function moduleSupportsACL($module){
+	static function moduleSupportsACL($module){
 		static $checkModules = array();
 		global $beanFiles, $beanList;
 		if(isset($checkModules[$module])){
