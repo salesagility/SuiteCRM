@@ -78,12 +78,12 @@ class AlertsController extends SugarController
                     "send_to_manager" => $alert->send_to_manager,
                     "content_type" => $alert->content_type,
                     "delivery_datetime" => $alert->delivery_datetime,
-                    "reminder_time" => $reminder_time,
+                    "delivery_datetime" => $reminder_time,
                     "type" => $alert->type,
                     "was_sent" => $alert->was_sent
                 );
                 // Since this is technically sending a popup.
-                $alert->was_sent = true;
+//                $alert->$alert->subscribers->$current_user->id['is_read'] = true;
                 $alert->save();
             }
         }

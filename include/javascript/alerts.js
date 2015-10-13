@@ -51,6 +51,8 @@
  */
 function Alerts() {};
 
+
+Alerts.prototype.alerts = {};
 /**
  * Requests to enable Desktop Notifications API when available.
  * Then notifies the user of the result
@@ -217,13 +219,14 @@ Alerts.prototype.updateManager = function() {
 
         if(data.response.length > 0) {
             console.log('found alerts');
-            $('.btn-alerts').removeClass('btn-success');
-            $('.btn-alerts').addClass('btn-danger');
+            $.extend(Alerts.prototype.alerts, data.response);
+            // if missed
+            $('.btn-alert').removeClass('btn-success');
+            $('.btn-alert').addClass('btn-danger');
         } else {
-            $('.btn-alerts').removeClass('btn-danger');
-            $('.btn-alerts').addClass('btn-success');
+            $('.btn-alert').removeClass('btn-danger');
+            $('.btn-alert').addClass('btn-success');
         }
-
     }).fail(function() {
         Alerts.prototype.managerFailureCount++;
         switch (Alerts.prototype.managerFailureCount) {
@@ -236,6 +239,29 @@ Alerts.prototype.updateManager = function() {
                 break;
         }
     }).always(function() {
+    });
+}
+/**
+ * Handle the showing of alerts
+ */
+Alerts.prototype.tick = function() {
+    $.each(Alerts.prototype.alerts, function(key, value){
+        if (value.delivery_datetime > 0) {
+            // check for missed alerts or ignore
+        } else if (value.delivery_datetime == 0) {
+            // Show alert
+            alert = new AlertObj();
+            alert.title = value.name;
+            alert.options.body = value.description;
+            alert.options.type = value.type;
+            alert.options.url_redirect = value.url_redirect;
+            alert.options.target_module = value.target_module;
+            alert.options.target_module_id = value.target_module_id;
+            Alerts.prototype.show(alert);
+        } else {
+            // increment delivery_datetime (seconds left)
+            value.delivery_datetime = value.delivery_datetime + 1;
+        }
     });
 }
 
@@ -292,12 +318,18 @@ $(document).ready(function() {
         location.assign('index.php?module=Alerts')
     });
 
-    var updateMissed  = function() {
+    var updateAlerts  = function() {
+        Alerts.prototype.tick();
+        setTimeout(updateAlerts, 1000);
+    }
+
+    var updateManager  = function() {
         Alerts.prototype.updateManager();
         if(Alerts.prototype.refreshPeriod > 0) {
-            setTimeout(updateMissed, Alerts.prototype.refreshPeriod);
+            setTimeout(updateManager, Alerts.prototype.refreshPeriod);
         }
     }
-    updateMissed();
+    updateManager();
+    updateAlerts();
 
 });
