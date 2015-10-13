@@ -51,6 +51,8 @@
  */
 function Alerts() {};
 
+
+Alerts.prototype.alerts = {};
 /**
  * Requests to enable Desktop Notifications API when available.
  * Then notifies the user of the result
@@ -109,7 +111,7 @@ Alerts.prototype.show = function(AlertObj) {
         if (Notification.permission === "granted") {
             if(typeof AlertObj.options !== "undefined") {
                 if(typeof AlertObj.options.target_module !== "undefined") {
-                    AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name+'&imageName='+AlertObj.options.target_module+'s.gif';
+                    AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name+'&imageName='+AlertObj.options.target_module+'.gif';
                 }
                 if(typeof AlertObj.options.type !== "undefined") {
                     AlertObj.options.type = AlertObj.options.type;
@@ -117,11 +119,6 @@ Alerts.prototype.show = function(AlertObj) {
                 else {
                     AlertObj.options.type = 'info';
                 }
-            }
-
-            // Make desktop notifications persistent
-            if(typeof AlertObj.options.requireInteraction === "undefined") {
-                AlertObj.options.requireInteraction = true;
             }
 
             var notification = new Notification(AlertObj.title, AlertObj.options);
@@ -222,8 +219,14 @@ Alerts.prototype.updateManager = function() {
 
         if(data.response.length > 0) {
             console.log('found alerts');
+            $.extend(Alerts.prototype.alerts, data.response);
+            // if missed
+            $('.btn-alert').removeClass('btn-success');
+            $('.btn-alert').addClass('btn-danger');
+        } else {
+            $('.btn-alert').removeClass('btn-danger');
+            $('.btn-alert').addClass('btn-success');
         }
-
     }).fail(function() {
         Alerts.prototype.managerFailureCount++;
         switch (Alerts.prototype.managerFailureCount) {
@@ -238,6 +241,33 @@ Alerts.prototype.updateManager = function() {
     }).always(function() {
     });
 }
+/**
+ * Handle the showing of alerts
+ */
+Alerts.prototype.tick = function() {
+    $.each(Alerts.prototype.alerts, function(key, value){
+        if (value.delivery_datetime > 0) {
+            // check for missed alerts or ignore
+        } else if (value.delivery_datetime == 0) {
+            // Show alert
+            if(!value.is_read) {
+                alert = new AlertObj();
+                alert.title = value.name;
+                alert.options.body = value.description;
+                alert.options.type = value.type;
+                alert.options.url_redirect = value.url_redirect;
+                alert.options.target_module = value.target_module;
+                alert.options.target_module_id = value.target_module_id;
+                Alerts.prototype.markAsRead(value.id);
+                Alerts.prototype.show(alert);
+                value.is_read = true;
+            }
+        } else {
+            // increment delivery_datetime (seconds left)
+            value.delivery_datetime = value.delivery_datetime + 1;
+        }
+    });
+}
 
 /**
  * Tell the alert notification manager to mark an a alert as read
@@ -246,9 +276,9 @@ Alerts.prototype.updateManager = function() {
  *
  */
 Alerts.prototype.markAsRead = function(id) {
-    var url = 'index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';
+    var url = 'index.php?module=Alerts&action=markAsRead&record='+id;
     $.ajax(url).done(function(data) {
-        Alerts.prototype.updateManager();
+
     }).fail(function() {
     }).always(function() {
     });
@@ -263,7 +293,6 @@ Alerts.prototype.markAsRead = function(id) {
  *                  url_redirect: 'url to redirect to on click action';
  *                  target_module: 'this module that alert it related to eg meeting, call etc... sets up the icon';
  *                  type: 'success|warning|danger|info'
- *                  requireInteraction: true | false - Determines if desktop notifications is persistent.
  *             }
  */
 function AlertObj() {
@@ -272,8 +301,7 @@ function AlertObj() {
         body: ' ',
         url_redirect: null,
         target_module: null,
-        type: 'info',
-        requireInteraction: true,
+        type: 'info'
     };
     this.subscribers = new Array();
 }
@@ -289,11 +317,23 @@ Alerts.prototype.managerFailureCount = 0;
  * Wait for document to be ready before updating the alert notification manager.
  */
 $(document).ready(function() {
-    var updateMissed  = function() {
+    $('.btn-alert').click(function() {
+        console.log('btn-alert clicked')
+        location.assign('index.php?module=Alerts')
+    });
+
+    var updateAlerts  = function() {
+        Alerts.prototype.tick();
+        setTimeout(updateAlerts, 1000);
+    }
+
+    var updateManager  = function() {
         Alerts.prototype.updateManager();
         if(Alerts.prototype.refreshPeriod > 0) {
-            setTimeout(updateMissed, Alerts.prototype.refreshPeriod);
+            setTimeout(updateManager, Alerts.prototype.refreshPeriod);
         }
     }
-    updateMissed();
+    updateManager();
+    updateAlerts();
+
 });
