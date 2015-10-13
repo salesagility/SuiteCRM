@@ -111,7 +111,7 @@ Alerts.prototype.show = function(AlertObj) {
         if (Notification.permission === "granted") {
             if(typeof AlertObj.options !== "undefined") {
                 if(typeof AlertObj.options.target_module !== "undefined") {
-                    AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name+'&imageName='+AlertObj.options.target_module+'s.gif';
+                    AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name+'&imageName='+AlertObj.options.target_module+'.gif';
                 }
                 if(typeof AlertObj.options.type !== "undefined") {
                     AlertObj.options.type = AlertObj.options.type;
