@@ -172,13 +172,6 @@ class Meeting extends SugarBean {
 
             }
 
-//			if($this->reminder_time != -1) {
-//				foreach($this->alerts as $alert) {
-//					$alert->delivery_datetime = $td->sub(new DateInterval('PT'.$this->reminder_time.'S'));
-//					$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
-//				}
-//			}
-
             if($td)
             {
                 if (isset($this->duration_hours) && $this->duration_hours != '')
@@ -322,6 +315,8 @@ class Meeting extends SugarBean {
 				$alert->deleted = true;
 			}
 
+			$alert->name = $this->name;
+			$alert->description = $this->description;
 
 			$alert->save();
 		}

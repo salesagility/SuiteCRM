@@ -262,6 +262,8 @@ class Call extends SugarBean {
 				$alert->deleted = true;
 			}
 
+			$alert->name = $this->name;
+			$alert->description = $this->description;
 
 			$alert->save();
 		}
