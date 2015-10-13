@@ -268,7 +268,8 @@ function callSysCheck(){
 
                     }else{
                         //turn off loading message
-                        msgPanel.hide();
+                        //msgPanel.hide();
+                        $('#content p').remove();
                         document.getElementById('sysCheckMsg').style.display = '';
                         /* document.getElementById('licenseDiv').style.display = 'none'; */
                         document.getElementById('sysCheckMsg').innerHTML=o.responseText;
