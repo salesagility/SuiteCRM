@@ -90,28 +90,31 @@ class EmailReminder
 
         $admin = new Administration();
         $admin->retrieveSettings();
-        
-        $meetings = $this->getMeetingsForRemind();
-        foreach($meetings as $id ) {
-            $recipients = $this->getRecipients($id,'Meetings');
-            $bean = new Meeting();
-            $bean->retrieve($id);
+        $alerts = $this->getAlerts();
+        foreach($alerts as $id => $alert) {
+            $recipients = $this->getRecipients($alert['target_module_id'], $alert['target_module']);
+            $bean = new $alert['target_module_id']();
+            $bean->retrieve($alert['target_module_id']);
             if ( $this->sendReminders($bean, $admin, $recipients) ) {
+                $alertBean = new Alert();
+                $alert->retrieve($id);
+                $alertBean->was_sent = 1;
                 $bean->email_reminder_sent = 1;
                 $bean->save();
-            }            
-        }
-        
-        $calls = $this->getCallsForRemind();
-        foreach($calls as $id ) {
-            $recipients = $this->getRecipients($id,'Calls');
-            $bean = new Call();
-            $bean->retrieve($id);
-            if ( $this->sendReminders($bean, $admin, $recipients) ) {
-                $bean->email_reminder_sent = 1;
-                $bean->save();
+                $alertBean->save();
             }
         }
+//
+//        $calls = $this->getCallsForRemind();
+//        foreach($calls as $id ) {
+//            $recipients = $this->getRecipients($id,'Calls');
+//            $bean = new Call();
+//            $bean->retrieve($id);
+//            if ( $this->sendReminders($bean, $admin, $recipients) ) {
+//                $bean->email_reminder_sent = 1;
+//                $bean->save();
+//            }
+//        }
         
         return true;
     }
@@ -213,7 +216,31 @@ class EmailReminder
 
         return $xtpl;
     }
-    
+    /**
+     * get meeting ids list for remind
+     * @return array
+     */
+    public function getAlerts()
+    {
+        global $current_user, $db, $timedate;
+        $NOW = new DateTime(gmdate("Y-m-d H:i:s"));
+        $MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
+        $MOMENT = $MOMENT->add(new DateInterval('PT30S'));
+        $query = "SELECT id, delivery_datetime FROM alerts WHERE deleted = 0 AND send_email = 1 AND
+                  delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."'
+                  AND subscribers LIKE '%\"is_read\":false%' AND subscribers LIKE '%$current_user->id%'
+                  ORDER BY delivery_datetime DESC";
+        $alerts = array();
+        $result = $db->query($query);
+        while ($row = $db->fetchByAssoc($result)) {
+            $alerts[$row['id']] = array(
+                'target_module' => $row['target_module'],
+                'target_module_id' => $row['target_module_id'],
+                );
+        }
+        echo $alerts;
+    }
+
     /**
      * get meeting ids list for remind
      * @return array
