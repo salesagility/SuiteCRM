@@ -69,16 +69,22 @@
 
 				var setupMultipleAlerts = $('.setup-multiple-alerts');
 
-				var alert = $('<div id="'+options.fields.id+'" data-type="alert"></div>')
+				var alert = $('<div id="'+options.fields.id+'" data-type="alert" class="well"></div>')
 						.attr('name', 'alert['+options.fields.id+']');
+
+				var removeAlertDiv = $('<div class="text-right" style="text-align: right;"></div>')
+						.appendTo(alert);
+
+				var alertActions = $('<div>Actions:<br></div>')
+						.appendTo(alert);
 
 				var alertFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="'+options.flag+'">')
 						.appendTo(alert);
 
-				var alertTimeDiv = $('<div></div>')
+				var alertTimeDiv = $('<div>When: </div>')
 						.appendTo(alert);
 
-				var alertSubscribers = $('<div></div>')
+				var alertSubscribers = $('<div>Invitees:</div>')
 						.appendTo(alert);
 
 				var alertSubscribersToolbar = $('<div></div>')
@@ -87,11 +93,10 @@
 				var alertSubscribersToolbarButtons = $('<div></div>')
 						.appendTo(alertSubscribersToolbar);
 
-				var alertActions = $('<div></div>')
-						.appendTo(alert);
 
 
-				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+options.fields.id+']">' +
+
+				var alertAddAllSubscriberBtn = $('<button class="add-alert" id="alert_add_subscriber_btn['+options.fields.id+']" style="margin-top: 4px;">' +
 						'<img src="themes/default/images/glyphicon-16/glyphicon-plus.png"> Add All Invitees</button>')
 						.appendTo(alertSubscribersToolbarButtons);
 
@@ -130,9 +135,9 @@
 						.appendTo(alertSubscribers);
 
 				var alertActionPopup =  $('<input type="checkbox" name="alerts['+options.fields.id+'][action][send_popup]" ' +
-						'id="alert_action_send_popup['+options.fields.id+']" value="1"> <label>Popup </label> ');
+						'id="alert_action_send_popup['+options.fields.id+']" value="1"> <label> Send invitees a popup or a desktop notification </label><br>');
 				var alertActionEmail =  $('<input type="checkbox" name="alerts['+options.fields.id+'][action][send_email]" ' +
-						'id="alert_action_send_email['+options.fields.id+']" value="1"> <label>Email </label> ');
+						'id="alert_action_send_email['+options.fields.id+']" value="1"> <label>Send invitees an email </label><br>');
 
 				if(typeof options.fields.send_popup !== "undefined") {
 					if(options.fields.send_popup == 1)
@@ -152,9 +157,9 @@
 				alertActionEmail.appendTo(alertActions);
 
 				var alertRemoveBtn =
-						$(' <button class="add-alert" id="alert_remove_btn['+options.fields.id+']" title="Remove Alert">' +
-								'<img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
-								.appendTo(alertTimeDiv);
+						$('<button class="add-alert" id="alert_remove_btn['+options.fields.id+']" title="Remove Alert">' +
+								'<label>Remove Alert</label><img src="themes/default/images/glyphicon-16/glyphicon-remove.png"></button> ')
+								.appendTo(removeAlertDiv);
 
 				if(options.flag == "existing") {
 						// Add existing subscribers
@@ -213,6 +218,7 @@
 						$(alert).empty();
 						var alertFlag = $('<input type="hidden" name="alerts['+ options.fields.id +'][flag]" value="deleted">')
 								.appendTo(alert);
+						alert.removeClass('well')
 					} else {
 						$(this).parents('[data-type=alert]').remove();
 					}
