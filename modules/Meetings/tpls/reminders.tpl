@@ -188,7 +188,7 @@
 									}
 
 									if(id == subscriberID && bean == subscriber.module_name) {
-										var invitee = $('<button data-id="' + id + '" data-bean="' + bean + '">' +
+										var invitee = $('<button data-id="' + id + '" data-bean="' + bean + '" style="margin-right: 4px;">' +
 												'<img src="index.php?entryPoint=getImage&amp;themeName=Suite R&amp;imageName=' + bean
 												+ 's.gif">' +
 												' <label>' + label + '</label>' +
