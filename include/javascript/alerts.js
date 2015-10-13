@@ -217,6 +217,11 @@ Alerts.prototype.updateManager = function() {
 
         if(data.response.length > 0) {
             console.log('found alerts');
+            $('.btn-alerts').removeClass('btn-success');
+            $('.btn-alerts').addClass('btn-danger');
+        } else {
+            $('.btn-alerts').removeClass('btn-danger');
+            $('.btn-alerts').addClass('btn-success');
         }
 
     }).fail(function() {
