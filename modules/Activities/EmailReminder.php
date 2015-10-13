@@ -226,7 +226,7 @@ class EmailReminder
         $NOW = new DateTime(gmdate("Y-m-d H:i:s"));
         $MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
         $MOMENT = $MOMENT->add(new DateInterval('PT30S'));
-        $query = "SELECT id, delivery_datetime FROM alerts WHERE deleted = 0 AND send_email = 1 AND was_sent = 0
+        $query = "SELECT id, delivery_datetime FROM alerts WHERE deleted = 0 AND send_email = 1 AND was_sent = 0 AND
                   delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."'
                   AND subscribers LIKE '%\"is_read\":false%' AND subscribers LIKE '%$current_user->id%'
                   ORDER BY delivery_datetime DESC";
