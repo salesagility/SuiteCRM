@@ -250,7 +250,7 @@ Alerts.prototype.tick = function() {
             // check for missed alerts or ignore
         } else if (value.delivery_datetime == 0) {
             // Show alert
-            if(Qvalue.is_read) {
+            if(!value.is_read) {
                 alert = new AlertObj();
                 alert.title = value.name;
                 alert.options.body = value.description;
