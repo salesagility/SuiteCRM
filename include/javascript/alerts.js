@@ -250,14 +250,18 @@ Alerts.prototype.tick = function() {
             // check for missed alerts or ignore
         } else if (value.delivery_datetime == 0) {
             // Show alert
-            alert = new AlertObj();
-            alert.title = value.name;
-            alert.options.body = value.description;
-            alert.options.type = value.type;
-            alert.options.url_redirect = value.url_redirect;
-            alert.options.target_module = value.target_module;
-            alert.options.target_module_id = value.target_module_id;
-            Alerts.prototype.show(alert);
+            if(Qvalue.is_read) {
+                alert = new AlertObj();
+                alert.title = value.name;
+                alert.options.body = value.description;
+                alert.options.type = value.type;
+                alert.options.url_redirect = value.url_redirect;
+                alert.options.target_module = value.target_module;
+                alert.options.target_module_id = value.target_module_id;
+                Alerts.prototype.markAsRead(value.id);
+                Alerts.prototype.show(alert);
+                value.is_read = true;
+            }
         } else {
             // increment delivery_datetime (seconds left)
             value.delivery_datetime = value.delivery_datetime + 1;
@@ -272,9 +276,9 @@ Alerts.prototype.tick = function() {
  *
  */
 Alerts.prototype.markAsRead = function(id) {
-    var url = 'index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';
+    var url = 'index.php?module=Alerts&action=markAsRead&record='+id;
     $.ajax(url).done(function(data) {
-        Alerts.prototype.updateManager();
+
     }).fail(function() {
     }).always(function() {
     });

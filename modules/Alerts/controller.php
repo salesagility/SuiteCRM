@@ -83,6 +83,7 @@ class AlertsController extends SugarController
                     "was_sent" => $alert->was_sent
                 );
                 // Since this is technically sending a popup.
+                $alert->subscribers[$current_user->id]['is_read'] = true;
 //                $alert->$alert->subscribers->$current_user->id['is_read'] = true;
                 $alert->save();
             }
@@ -209,7 +210,9 @@ class AlertsController extends SugarController
 
     public function action_markAsRead()
     {
+        global $current_user;
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
+        $bean->subscribers[$current_user->id]['is_read'] = true;
         $bean->is_read = 1;
         $bean->save();
         die();
