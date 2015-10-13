@@ -282,6 +282,11 @@ Alerts.prototype.managerFailureCount = 0;
  * Wait for document to be ready before updating the alert notification manager.
  */
 $(document).ready(function() {
+    $('.btn-alert').click(function() {
+        console.log('btn-alert clicked')
+        location.assign('index.php?module=Alerts')
+    });
+
     var updateMissed  = function() {
         Alerts.prototype.updateManager();
         if(Alerts.prototype.refreshPeriod > 0) {
@@ -289,4 +294,5 @@ $(document).ready(function() {
         }
     }
     updateMissed();
+
 });
