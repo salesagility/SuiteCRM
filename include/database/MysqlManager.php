@@ -281,7 +281,7 @@ class MysqlManager extends DBManager
 	/**
 	 * @see DBManager::checkQuery()
 	 */
-	protected function checkQuery($sql)
+	protected function checkQuery($sql, $object_name = false)
 	{
 		$result   = $this->query('EXPLAIN ' . $sql);
 		$badQuery = array();

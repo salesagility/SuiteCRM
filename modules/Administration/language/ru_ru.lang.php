@@ -104,7 +104,6 @@ $mod_strings = array (
 'ERR_NOT_IMPLEMENTED'=>'Эта функция не работает в данной конфигурации.',
 'ERR_NUM_OFFLINE_CLIENTS_MET' => 'You have already met the number of Offline Clients for your license key.  You must either disable an existing Offline Client or update your license.',
 'ERR_OC_USER_ALREADY_EXISTS' => 'Выбранный вами пользователь уже существует в системе.',
-'ERR_SUGAR_DEPOT_DOWN'    => 'Невозможно установить соединение с Suite Exchange для выбора и загрузки модулей.',
 'ERR_SMTP_SERVER_NOT_SET'=> 'Внимание: SMTP-сервер для исходящей почты не настроен. Настройте его в параметрах почты для того, чтобы иметь возможность отослать пароли пользователям.',
 'ERR_UW_ACCEPT_LICENSE'                  => 'Вы должны принять лицензионное соглашение перед тем как продолжить',
 'ERR_UW_CONFIG_FAILED'                      => "Ошибка записи в файл config.php",
@@ -131,14 +130,14 @@ $mod_strings = array (
 'ERR_UW_RUN_SQL'                            => "Ошибка запуска sql-скрипта: ",
 'ERR_UW_UPDATE_CONFIG'                      => "Ошибка при добавлении в файл config.php информации о новой версии.",
 'ERR_UW_UPLOAD_ERROR'                       => "Ошибка загрузки файла, пожалуйста, попробуйте  ещё раз!<br>\n",
-'ERROR_FLAVOR_INCOMPATIBLE' => 'Загруженный файл не совместим с установленной версией Suite: ' ,
+'ERROR_FLAVOR_INCOMPATIBLE' => 'Загруженный файл не совместим с установленной версией SuiteCRM: ' ,
 'ERROR_LICENSE_EXPIRED'=> 'Ошибка: ваша лицензия закончилась' ,
 'ERROR_LICENSE_EXPIRED2' => " дней назад. Пожалуйста, перейдите <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a>  в панель администратора для ввода нового лицензионного ключа.  Если вы не введёте новый ключ в течение 7 дней с момента истечения лицензии, то вы не сможете войти в систему.",
 'ERROR_MANIFEST_TYPE' => 'В Manifest-файле должен быть указан тип пакета.' ,
 'ERROR_PACKAGE_TYPE' => 'В Manifest-файле указан неизвестный тип пакета' ,
 'ERROR_VALIDATION_EXPIRED'=> 'Ошибка: Срок действия лицензионного ключа истёк' ,
 'ERROR_VALIDATION_EXPIRED2' => " дней назад. Пожалуйста, перейдите <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a> в панель администратора для ввода нового лицензионного ключа.  Если вы не введёте новый ключ в течение 7 дней с момента истечения лицензии, то вы не сможете войти в систему.",
-'ERROR_VERSION_INCOMPATIBLE' => 'Загружаемый файл не совместим с установленной версией Suite: ' ,
+'ERROR_VERSION_INCOMPATIBLE' => 'Загружаемый файл не совместим с установленной версией SuiteCRM: ' ,
 
 'FATAL_LICENSE_ALTERED' => 'Your license has been altered since the last time you were able to validate it. ',
 'FATAL_LICENSE_EXPIRED'=> 'Ошибка: ваша лицензия истекла более 7 дней назад' ,
@@ -224,11 +223,11 @@ $mod_strings = array (
 'LBL_CONFIGURE_SETTINGS_TITLE' => 'Настройка конфигурации' ,
 'LBL_CONFIGURE_SETTINGS' => 'Системные установки' ,
 'LBL_CONFIGURE_TABS_AND_SUBPANELS' => 'Настройка отображения закладок и субпанелей',
-'LBL_CONFIGURE_UPDATER'=> 'Настройка обновлений Suite' ,
+'LBL_CONFIGURE_UPDATER'=> 'Настройка обновлений SuiteCRM' ,
 'LBL_CONTRACT_TITLE'=> 'Договоры',
 'LBL_CONTRACT_DESC'=> 'Define contract types for the Contracts module. When users create a contract, the Types drop-down menu displays the contract types for selection.', ///
 'LBL_CONTRACT_TYPES'=> 'Manage Contract Types', ///
-'LBL_COULD_NOT_CONNECT'=>'Error: Could not connect to the Suite Server.
+'LBL_COULD_NOT_CONNECT'=>'Error: Could not connect to the SuiteCRM Server.
 Please check your Proxy Settings value in the <a href="index.php?module=Configurator&action=EditView">System Settings</a> admin panel.
 Last attempted connection @ ',
 'LBL_CREATE_RESOTRE_FILE' => 'Файл restoreExpand.sql был успешно создан. Вы можете использовать этот файл для восстановления прежних размеров полей.',
@@ -377,11 +376,11 @@ Last attempted connection @ ',
 
 'LBL_LDAP_TITLE'=> 'LDAP-аутентификация',
 'LBL_LDAP_ENABLE'=> 'Включить LDAP-аутентификацию',
-'LBL_LDAP_HELP_TXT'=> 'При включении LDAP-аутентификации управление паролями осуществляется только через LDAP. Настройки системы управления паролями Sugar не будут учитываться.',
+'LBL_LDAP_HELP_TXT'=> 'При включении LDAP-аутентификации управление паролями осуществляется только через LDAP. Настройки системы управления паролями SuiteCRM не будут учитываться.',
 'LBL_LDAP_SERVER_HOSTNAME'=> 'Сервер:',
 'LBL_LDAP_SERVER_PORT'=> 'Порт:',
 'LBL_LDAP_ADMIN_USER'=> 'Имя пользователя:',
-'LBL_LDAP_ADMIN_USER_DESC'=> 'Поиск пользователя Sugar. В случае отсутствия параметра будет выполнен анонимный вход.',
+'LBL_LDAP_ADMIN_USER_DESC'=> 'Поиск пользователя SuiteCRM. В случае отсутствия параметра будет выполнен анонимный вход.',
 'LBL_LDAP_ADMIN_PASSWORD'=> 'Пароль:',
 'LBL_LDAP_AUTHENTICATION'=> 'Аутентификация:',
 'LBL_LDAP_AUTHENTICATION_DESC'=> 'Аутентификация на сервере LDAP, используя данные пользователя',
@@ -399,7 +398,7 @@ Last attempted connection @ ',
 	'LBL_LDAP_GROUP_ATTR_REQ_DN' => 'Добавить DN пользователя:',
 	'LBL_LDAP_GROUP_ATTR_REQ_DN_DESC' => 'Проверять DN пользователя вместе с атрибутом пользователя при проверке членства в группе',
 
-'LBL_LDAP_USER_FILTER_DESC'=> 'Любые дополнительные параметры, применяемые в процессе аутентификации пользователей, например: <em>is_sugar_user=1 или (is_sugar_user=1)(is_sales=1)</em>',
+'LBL_LDAP_USER_FILTER_DESC'=> 'Любые дополнительные параметры, применяемые в процессе аутентификации пользователей, например: <em>is_SuiteCRM_user=1 или (is_SuiteCRM_user=1)(is_sales=1)</em>',
 'LBL_LDAP_LOGIN_ATTRIBUTE'=> 'Login-атрибут:',
 'LBL_LDAP_BIND_ATTRIBUTE'=> 'Bind-атрибут:',
 'LBL_LDAP_BIND_ATTRIBUTE_DESC'=> 'Аутентификация пользователя LDAP, например:[<b>AD:</b>&nbsp;userPrincipalName] [<b>openLDAP:</b>&nbsp;userPrincipalName] [<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;uid] ',
@@ -407,9 +406,9 @@ Last attempted connection @ ',
 'LBL_LDAP_SERVER_HOSTNAME_DESC'=> 'Пример: ldap.example.com или ldaps://ldap.example.com при включении SSL',
 'LBL_LDAP_SERVER_PORT_DESC'=> 'Пример: 389 или 636 при включении SSL',
 'LBL_LDAP_GROUP_NAME'=> 'Название группы:',
-'LBL_LDAP_GROUP_NAME_DESC'=> 'Пример: <em>cn=sugarcrm</em>',
+'LBL_LDAP_GROUP_NAME_DESC'=> 'Пример: <em>cn=SuiteCRM</em>',
 'LBL_LDAP_USER_DN_DESC'=> 'Пример: <em>ou=people,dc=example,dc=com</eM>',
-'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'Если аутентифицированный пользователь не существует в базе Suite, то он будет создан.',
+'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'Если аутентифицированный пользователь не существует в базе SuiteCRM, то он будет создан.',
 'LBL_LDAP_ENC_KEY'=> 'Ключ шифрования:',
 
 'LBL_LOADING'              => 'Идёт загрузка модулей...',
@@ -473,7 +472,7 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_MASS_EMAIL_MANAGER_DESC'=> 'Управление очерёдностью рассылки исходящей почты' ,
 'LBL_MASS_EMAIL_MANAGER_HEADER'=> 'Управление рассылкой' ,
 'LBL_MASS_EMAIL_MANAGER_TITLE'=> 'Управление очередью E-mail' ,
-'LBL_MASSAGE_MASS_EMAIL_DESC'=> 'SugarCRM 3.5.1+ предполагает обновление для массовой рассылки E-mail.  Нажмите на кнопку "Начать обновление" для продолжения.' ,
+'LBL_MASSAGE_MASS_EMAIL_DESC'=> 'SuiteCRM предполагает обновление для массовой рассылки E-mail.  Нажмите на кнопку "Начать обновление" для продолжения.' ,
 'LBL_MASSAGE_MASS_EMAIL'=> 'GMT-исправление даты и времени при рассылке E-mail' ,
 'LBL_MISSING_GLOBAL'=> 'We have noticed that there are users missing global team membership. If you would like to have a global team, please check the option below.', ///
 'LBL_MISSING_PRIVATE'=> 'We have noticed that some users do not have private teams. If you would like to ensure that all users have private teams, we recommend that you repair the option below.', ///
@@ -488,8 +487,8 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_MI_COMPLETE' => 'Готово',
 'LBL_MI_UN_BEAN' => 'Удаление Bean :',
 'LBL_MI_IN_BEAN' => 'Установка Bean :',
-'LBL_MI_IN_DASHLETS' => 'Установка Suite Dashlet ',
-'LBL_MI_UN_DASHLETS' => 'Удаление Suite Dashlet ',
+'LBL_MI_IN_DASHLETS' => 'Установка SuiteCRM Dashlet ',
+'LBL_MI_UN_DASHLETS' => 'Удаление SuiteCRM Dashlet ',
 'LBL_MI_IN_IMAGES' => 'Установка иконок',
 'LBL_MI_IN_MENUS' => 'Установка меню',
 'LBL_MI_UN_MENUS' => 'Удаление меню',
@@ -537,7 +536,7 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_NEW_FORM_TITLE' => 'Создать контрагента' ,
 'LBL_NOTIFY_SUBJECT' => 'Тема E-mail:' ,
 'LBL_OC_SEARCH_FORM_TITLE' => 'Offline Client Search', ///
-'LBL_OFFLINE_CLIENT'   => 'View Offline Clients that are connected to this Sugar system', ///
+'LBL_OFFLINE_CLIENT'   => 'View Offline Clients that are connected to this SuiteCRM system', ///
 'LBL_OOTB_BOUNCE'       => 'Запускать ночью проверку почтовых ящиков для возвращаемых писем' ,
 'LBL_OOTB_CAMPAIGN'     => 'Запускать ночью массовую рассылку писем' ,
 'LBL_OOTB_IE'           => 'Проверять входящие письма' ,
@@ -603,7 +602,6 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_PASSWORD_EXP_IN'=> 'Пароль будет недействителен через',
 'LBL_PASSWORD_USER_RESET' => 'Сброс пароля пользователем',
 'LBL_PERFORM_UPDATE'=> 'Выполнение обновления' ,
-'LBL_PLUGINS_TITLE' => 'Sugar Forge' , ///
 'LBL_PLUGINS' => 'Получить плагины и другие расширения.' ,
 'LBL_PRICE_LIST_TITLE' => 'Product and Quotes', ///
 'LBL_PRICE_LIST_DESC' => 'Manage the product catalog, along with the related information on manufacturers and shipping providers.',
@@ -763,15 +761,15 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_STUDIO_TITLE' => 'Инструментарий разработчика' ,
 'LBL_STUDIO' => 'Студия',
 'LBL_SUGAR_NETWORK_TITLE' => 'Поддержка' ,
-'LBL_SUGAR_NETWORK_DESC' => 'Доступ к порталу тех. поддержки, форумам SuiteCRM, Suite Wiki, просмотр FAQs (часто задаваемых вопросов), загрузка последних версий Suite, возможность сообщения о найденных в системе ошибках и многое другое...',
+'LBL_SUGAR_NETWORK_DESC' => 'Доступ к порталу тех. поддержки, форумам SuiteCRM, SuiteCRM Wiki, просмотр FAQs (часто задаваемых вопросов), загрузка последних версий SuiteCRM, возможность сообщения о найденных в системе ошибках и многое другое...',
 'LBL_SUGAR_SCHEDULER_TITLE' => 'Планировщик' ,
 'LBL_SUGAR_SCHEDULER' => 'Настройка плановых заданий' ,
-'LBL_SUGAR_SERVER_URL_DESC'          => '- The URL of the server this client will connect to (e.g., http://localhost/sugarserver).',  ///
+'LBL_SUGAR_SERVER_URL_DESC'          => '- The URL of the server this client will connect to (e.g., http://localhost/SuiteCRMServer).',  ///
 'LBL_SUGAR_SERVER_URL'                => 'URL сервера:',
 'LBL_SUGAR_UPDATE_TITLE'=> 'Обновление SuiteCRM' ,
 'LBL_SUGAR_UPDATE'=> 'Проверить наличие свежей версии SuiteCRM.' ,
 'LBL_SUGARCRM_HELP' => 'Справка по SuiteCRM ',
-'LBL_SUPPORT_TITLE' => 'Suite  - портал технической поддержки' ,
+'LBL_SUPPORT_TITLE' => 'SuiteCRM  - портал технической поддержки' ,
 'LBL_SUPPORT' => 'Доступ к технической поддержке',
 'LBL_SYSTEM_NAME' => 'Название системы',
 'LBL_TAXRATES_TITLE' => 'Tax Rates',
@@ -793,12 +791,12 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_UPDATE_CHECK_MANUAL'=> 'Вручную' ,
 'LBL_UPDATE_CHECK_TYPE'=> 'Автоматически проверять доступные обновления' ,
 'LBL_UPDATE_DESCRIPTIONS'=> 'Описание' ,
-'LBL_UPDATE_TITLE'=> 'Доступные обновления Suite:' ,
+'LBL_UPDATE_TITLE'=> 'Доступные обновления SuiteCRM:' ,
 'LBL_UPGRADE_ADDED_TO_GROUP' => 'Добавлен в группу',
 'LBL_UPGRADE_ALREADY_EXISTS_GROUP' => 'группа уже существует',
 'LBL_UPGRADE_ALREADY_EXISTS_IN_GROUP' => 'Уже присутствуют в группе:',
 'LBL_UPGRADE_CONVERT_DISC_CLIENT_TITLE' => 'Convert to Offline Client', ///
-'LBL_UPGRADE_CONVERT_DISC_CLIENT'      => 'Convert this Sugar installation to an Offline Client', ///
+'LBL_UPGRADE_CONVERT_DISC_CLIENT'      => 'Convert this installation to an Offline Client', ///
 'LBL_UPGRADE_CONVERT_DISC_DESCRIPTION'  => '<b>Warning: Please ensure this is a fresh install with no seed data.</b><br>Enter the following information and press Save to convert this system into an offline client.', ///
 'LBL_UPGRADE_CURRENCY' => 'Обновление валютной суммы в модуле ' ,
 'LBL_UPGRADE_CUSTOM_LABELS_DESC'=> 'Обновление форматов пользовательских меток полей в каждом языковом файле.' ,
@@ -823,7 +821,7 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_UPGRADE_VERSION'=> 'Информация о версии обновления' ,
 'LBL_UPGRADE_WIZARD_TITLE' => 'Мастер обновления' ,
 'LBL_UPGRADE_WIZARD' => 'Управление обновлениями' ,
-'LBL_UPGRADE' => 'Проверка и восстановление Suite' ,
+'LBL_UPGRADE' => 'Проверка и восстановление SuiteCRM' ,
 'LBL_UPLOAD_UPGRADE' => 'Загрузка обновления: ' ,
 'LBL_UPTODATE'=> 'У вас установлена самая последняя версия' ,
 'LBL_USER_NAME' => 'Имя пользователя:',
@@ -912,7 +910,7 @@ If your system environment prohibits your system from communicating to the licen
 'ML_LBL_DO_NOT_REMOVE_TABLES' => 'Не удалять таблицы',
 'ML_LBL_DOCUMENTATION'      => 'Документация',
 'ML_LBL_INSTALL_FROM_LOCAL'=> 'Установить из локальной папки',
-'ML_LBL_INSTALL_FROM_SERVER' => 'Установить с сервера Suite',
+'ML_LBL_INSTALL_FROM_SERVER' => 'Установить с сервера SuiteCRM',
 'ML_LBL_OVERWRITE_FILES'    => 'Со времени вашей последней работы с модулем файлы изменились. Что вы хотите предпринять?',
 'ML_LBL_REMOVE_TABLES' => 'Удалить таблицы',
 'ML_LBL_REVIEWS'            => 'Обзоры',
@@ -932,13 +930,6 @@ If your system environment prohibits your system from communicating to the licen
 'REMOVE_QUESTION'           => 'Вы действительно хотите удалить выбранные пакеты?',
 'WARN_POSSIBLE_JS_OVERWRITE'=> 'Осторожно, это приведёт к перезаписи всех изменений, которые вы могли сделать в файлах javascript. Продолжить?',
 'WARN_INSTALLER_LOCKED'=> 'Предупреждение: Для сохранения ваших данных инсталлятор должен быть заблокирован путём установки переменной installer_locked в значение "true" в файле config.php.' ,
-'WARN_LICENSE_EXPIRED'=> 'Сообщение: До истечения срока действия вашей лицензии осталось дней: ' ,
-'WARN_LICENSE_EXPIRED2' => " Пожалуйста, перейдите к <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a>  в панели администратора.",
-'WARN_LICENSE_SEATS'=> "Warning: User licenses exceeded by ", ///
-'WARN_LICENSE_SEATS2' => ".  Please contact your sales representative or email <a href='mailto:sales@sugarcrm.com'>sales@sugarcrm.com</a>.", ///
-'WARN_LICENSE_SEATS_MAXED'=> "Warning: The number of active users is already the maximum number of licenses allowed: ", ///
-'WARN_LICENSE_SEATS_EDIT_USER'=> "Warning: The number of active users is already the maximum number of licenses allowed", ///
-'WARN_LICENSE_SEATS_USER_CREATE'=> "Warning: The number of active users allowed by your license matches the number of active users in the system. You will not be able to create additional active users.", ///
 'WARN_REPAIR_CONFIG' => 'Предупреждение: Файл config.php должен быть перестроен. В панели администратора перейдите по ссылке  "<a href=\'index.php?module=Administration&action=RebuildConfig\'>Перестройка файла конфигурации</a>".' ,
 'WARN_UPGRADE_APP'=> 'В данный момент доступна обновлённая версия приложения.' ,
 'WARN_UPGRADE' => 'Внимание: система может быть обновлена до версии ' ,
@@ -1012,11 +1003,6 @@ If your system environment prohibits your system from communicating to the licen
 
 'ML_PACKAGE_SCANNING'=> 'Сканирование {PACKAGE}',
 'ML_INSTALLATION_FAILED'=> 'Установка прервана!',
-'ML_PACKAGE_NOT_CONFIRM'=> 'Пакет, который вы пытаетесь установить, не соответствует политике в рамках <b>Suite Open Cloud</b> или политике, установленной вашим системным администратором.',
-'ML_TO_RESOLVE'=> 'Для решения данной проблемы:',
-'ML_OBTAIN_NEW_PACKAGE'=> 'Клиенты <b>Suite Open Cloud</b> должны получить новый установочный пакет от поставщика для устранения нижеописанных проблем.',
-'ML_RELAX_LOCAL'=> 'Если Suite используется только в локальной сети, вы можете уменьшить ограничения Загрузчика Модулей на разрешение установки пакета.',
-'ML_SUGAR_LOADING_POLICY'=> 'Политики загрузки пакета <b>Suite Open Cloud</b> подробно изложены в',
 'ML_SUGAR_KB'=> 'База знаний SuiteCRM',
 'ML_SUGAR_DZ'=> 'Зона разработчика SuiteCRM',
 'ML_AVAIL_RESTRICTION'=> 'Имеющиеся ограничения и исключения подробно изложены в',
@@ -1121,7 +1107,7 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_SELECT_MODULES_TITLE' => 'Модули, перемещённые в левую колонку, будут задействованы в процессе глобального поиска. В этой же колонке вы можете сортировать модули для отображения результатов поиска в необходимой вам последовательности.',
 'LBL_SELECT_FTS_MODULES_TITLE' => 'Drag and drop to select modules to be used in the Global Search. Click Save to apply the changes.', ///
 'LBL_EAPM_SETTINGS' => 'Внешние учётные записи',
-'LBL_EAPM_SETTINGS_DESC' => 'Выберите  приложения, доступ к которым из Suite возможен с использованием указанных учётных данных.',
+'LBL_EAPM_SETTINGS_DESC' => 'Выберите  приложения, доступ к которым из SuiteCRM возможен с использованием указанных учётных данных.',
 	'LBL_LANGUAGE_PACKS' => 'Языковые пакеты' /*for 508 compliance fix*/,
 	'LBL_PATCH_UPGRADES' => 'Обновления' /*for 508 compliance fix*/,
 	'LBL_ADVANCED_SEARCH' => 'Расширенный поиск' /*for 508 compliance fix*/,
@@ -1139,7 +1125,7 @@ If your system environment prohibits your system from communicating to the licen
 'LBL_SNIP_TITLE' => 'Email Archiving', ///
 'LBL_SNIP_DESC' => 'Configure offline archiving (Email Archiving)', ///
 'LBL_CONFIGURE_SNIP' => 'Email Archiving', ///
-'LBL_CONFIGURE_SNIP_DESC' => 'Enable/disable the Sugar Email Archiving Service', ///
+'LBL_CONFIGURE_SNIP_DESC' => 'Enable/disable the SuiteCRM Email Archiving Service', ///
 
     //Sprites Support
     'LBL_SPRITES_NOT_SUPPORTED' => 'Ошибка: Создание спрайтов невозможно: функция  imagecreatetruecolor не может быть загружена',
@@ -1152,7 +1138,7 @@ If your system environment prohibits your system from communicating to the licen
     'LBL_FTS_TYPE' => 'System Type', ///
     'LBL_FTS_HOST' => 'Host',
     'LBL_FTS_PORT' => 'Port',
-    'LBL_FTS_TYPE_HELP' => 'Select the engine to use for full text searching. The system detects the engines that are supported and displays them within this list. Sugar includes built-in support for the elasticsearch engine.',
+    'LBL_FTS_TYPE_HELP' => 'Select the engine to use for full text searching. The system detects the engines that are supported and displays them within this list. SuiteCRM includes built-in support for the elasticsearch engine.',
     'LBL_FTS_HOST_HELP' => 'Enter the name of the host where the full text search engine resides.',
     'LBL_FTS_PORT_HELP' => 'Enter the number of the port where the full text search engine resides.',
 
@@ -1174,7 +1160,7 @@ If your system environment prohibits your system from communicating to the licen
     'LBL_FTS_PAGE_DESC' => 'To enable full text searching:<br>
 1) Select the search engine that will be used<br>
 2) Enter the host and port of the search engine<br>
-3) Click Test to make sure Sugar can connect to the search engine<br>
+3) Click Test to make sure SuiteCRM can connect to the search engine<br>
 4) Click Schedule System Index. Make sure that crontab is set up to run cron.php. This will handle indexing as well as the fallback mechanism when the connection to the search engine is interrupted.', ///
     'LBL_FTS_DISABLED' => 'Full Text Search has been disabled because the system is not able to connect to the search engine.', ///
     'LBL_FTS_CONNECTION_INVALID' => 'The Full Text Search Settings you have entered are invalid and may slow down system performance.  Please change or clear your settings.', ///
@@ -1244,7 +1230,7 @@ $mod_strings['LBL_SECURITYGROUPS_DASHLETPUSH'] = "Push the Message Dashlet to th
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP_TITLE'] = "Hookup Module"; ///
 $mod_strings['LBL_SECURITYGROUPS_HOOKUP'] = "Hookup Security Suite to work with your custom modules"; ///
 $mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE'] = "SugarOutfitters";
-$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Grab the latest version of SecuritySuite and find other SugarCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.";
+$mod_strings['LBL_SECURITYGROUPS_SUGAROUTFITTERS'] = "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.";
 
 
 
