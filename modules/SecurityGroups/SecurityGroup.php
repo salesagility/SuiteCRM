@@ -132,7 +132,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     /**
      * @returns true if group is assigned to the record
      */
-    function groupHasAccess($module,$id, $action = '')
+    static function groupHasAccess($module,$id, $action = '')
     {
         if(!isset($id) || $id == '[SELECT_ID_LIST]')
         {
@@ -168,7 +168,7 @@ class SecurityGroup extends SecurityGroup_sugar {
         return false;
     }
 
-    function inherit(&$focus,$isUpdate)
+    static function inherit(&$focus,$isUpdate)
     {
         global $sugar_config;
         SecurityGroup::assign_default_groups($focus,$isUpdate); //this must be first because it does not check for dups
@@ -201,7 +201,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function assign_default_groups(&$focus,$isUpdate)
+    static function assign_default_groups(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -238,7 +238,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_creator(&$focus,$isUpdate)
+    static function inherit_creator(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -275,7 +275,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_assigned(&$focus,$isUpdate)
+    static function inherit_assigned(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -311,7 +311,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_parent(&$focus,$isUpdate)
+    static function inherit_parent(&$focus,$isUpdate)
     {
         global $sugar_config;
         //new record or if update from soap api for cases or bugs
@@ -485,6 +485,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     }
 
     function retrieveDefaultGroups() {
+        global $db;
 
         $default_groups = array();
         $query = "select securitygroups_default.id, securitygroups.name, securitygroups_default.module, securitygroups_default.securitygroup_id "
@@ -492,8 +493,8 @@ class SecurityGroup extends SecurityGroup_sugar {
                 ."inner join securitygroups on securitygroups_default.securitygroup_id = securitygroups.id "
                 ."where securitygroups_default.deleted = 0 and securitygroups.deleted = 0";
         $GLOBALS['log']->debug("SecuritySuite: Retrieve Default Groups: $query");
-        $result = $this->db->query($query);
-        while(($row=$this->db->fetchByAssoc($result)) != null) {
+        $result = $db->query($query);
+        while(($row=$db->fetchByAssoc($result)) != null) {
             $default_groups[$row['id']] = array('group'=>$row['name'],'module'=>$row['module'],'securitygroup_id'=>$row['securitygroup_id']);
         }
 

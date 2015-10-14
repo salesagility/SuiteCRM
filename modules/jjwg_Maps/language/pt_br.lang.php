@@ -54,7 +54,7 @@ $mod_strings['LBL_CRON_URL'] = 'CRON URL';
 $mod_strings['LBL_CRON_INSTRUCTIONS'] = 'Para processar os pedidos de geocodificação, é recomendado configurar uma noite Cron Job. '.
 'Um ponto de acesso personalizado tenha sido criado para esse fim e pode ser acessada sem autenticação. '.
 'O URL mostrado abaixo é para ser usado com um Scheduled Task Administrativo. '.
-'Por favor, consulte a documentação do SugarCRM para obter mais informações.';
+'Por favor, consulte a documentação para obter mais informações.';
 $mod_strings['LBL_EXPORT_ADDRESS_URL'] = 'Exportação URLs';
 $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use os links abaixo para exportar endereços completos na necessidade de geocodeing informação. '.
 'Em seguida, use um lote online ou offline geocoding ferramenta para o georreferenciamento dos endereços. '.
@@ -128,7 +128,7 @@ $mod_strings['LBL_CONFIG_ADDRESS_CACHE_SAVE_ENABLED_DESC'] = "'address_cache_sav
 
 $mod_strings['LBL_CONFIG_LOGIC_HOOKS_SETTINGS_TITLE'] = 'Logic Ganchos Ambiente:';
 $mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_TITLE'] = 'Ativar tudo Logic Ganchos:';
-$mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_DESC'] = "'logic_hooks_enabled' permite ganchos de lógica para a atualização automática com base em objetos relacionados Recomenda-se desativar quando atualizar seu SugarCRM.";
+$mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_DESC'] = "'logic_hooks_enabled' permite ganchos de lógica para a atualização automática com base em objetos relacionados Recomenda-se desativar quando atualizar seu SuiteCRM.";
 
 $mod_strings['LBL_CONFIG_MARKER_MAPPING_SETTINGS_TITLE'] = 'marcador / Mapping configurações:';
 $mod_strings['LBL_CONFIG_MAP_MARKERS_LIMIT_TITLE'] = "Map Markers Limite:";

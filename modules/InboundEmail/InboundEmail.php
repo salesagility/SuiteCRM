@@ -192,7 +192,7 @@ class InboundEmail extends SugarBean {
 	 * @param string id
 	 * @return object Bean
 	 */
-	function retrieve($id, $encode=true, $deleted=true) {
+	function retrieve($id = -1, $encode=true, $deleted=true) {
 		$ret = parent::retrieve($id,$encode,$deleted);
 		// if I-E bean exist
 		if (!is_null($ret)) {
@@ -4950,7 +4950,7 @@ eoq;
 	 * Override's SugarBean's
 	 */
 	function create_export_query($order_by, $where, $show_deleted = 0) {
-		return $this->create_new_list_query($order_by, $where, $show_deleted = 0);
+		return $this->create_new_list_query($order_by, $where,array(), array(), $show_deleted);
 	}
 
 	/**

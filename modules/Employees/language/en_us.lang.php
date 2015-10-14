@@ -105,7 +105,7 @@ $mod_strings = array (
   'LBL_FAX' => 'Fax:',
   'LBL_EMAIL' => 'Email Address:',
   'LBL_EMAIL_LINK_TYPE'				=> 'Email Client',
-  'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>Sugar Mail Client:</b> Send emails using the email client in the Sugar application.<br><b>External Mail Client:</b> Send email using an email client outside of the Sugar application, such as Microsoft Outlook.',
+  'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
   'LBL_HOME_PHONE' => 'Home Phone:',
   'LBL_WORK_PHONE' => 'Work Phone:',
   'LBL_ADDRESS_INFORMATION' => 'Address Information',
@@ -127,7 +127,7 @@ $mod_strings = array (
   'ERR_DELETE_RECORD' => 'You must specify a record number to delete the account.',
   'LBL_LIST_EMPLOYEE_STATUS' => 'Employee Status',
 
-  'LBL_SUGAR_LOGIN' => 'Is Sugar User',  
+  'LBL_SUGAR_LOGIN' => 'Is User',
   'LBL_RECEIVE_NOTIFICATIONS' => 'Notify on Assignment',  
   'LBL_IS_ADMIN' => 'Is Administrator',  
   'LBL_GROUP' => 'Group User',

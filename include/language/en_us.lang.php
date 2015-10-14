@@ -104,9 +104,9 @@ $app_list_strings = array (
     'TrackerQueries' => 'Tracker Queries',
     'FAQ' => 'FAQ',
     'Newsletters' => 'Newsletters',
-    'SugarFeed'=>'Sugar Feed',
+    'SugarFeed'=>'SuiteCRM Feed',
     'KBDocuments' => 'Knowledge Base',
-  'SugarFavorites'=>'Favorites',
+  'SugarFavorites'=>'SuiteCRM Favorites',
 
     'OAuthKeys' => 'OAuth Consumer Keys',
     'OAuthTokens' => 'OAuth Tokens',
@@ -138,10 +138,10 @@ $app_list_strings = array (
     'Prospects' => 'Target',
     'Campaigns'=>'Campaign',
     'Documents'=>'Document',
-    'SugarFollowing'=>'SugarFollowing',
+    'SugarFollowing'=>'SuiteCRM Following',
     'Sync'=>'Sync',
     'Users' => 'User',
-  'SugarFavorites'=>'SugarFavorites'
+  'SugarFavorites'=>'SuiteCRM Favorites'
 
         ),
 
@@ -366,7 +366,7 @@ $app_list_strings = array (
   'meeting_type_dom' =>
    array (
       'Other' => 'Other',
-      'Sugar' => 'SugarCRM',
+      'Sugar' => 'SuiteCRM',
    ),
   'call_status_default' => 'Planned',
   'call_status_dom' =>
@@ -490,7 +490,7 @@ $app_list_strings = array (
     'Opportunities' => 'Opportunity',
     'Cases' => 'Case',
     'Leads' => 'Lead',
-    'Contacts' => 'Contacts', // cn (11/22/2005) added to support Emails
+    'Contacts' => 'Contact', // cn (11/22/2005) added to support Emails
 
 
     'Bugs' => 'Bug',
@@ -810,7 +810,7 @@ $app_list_strings = array (
                                         'off' => 'No',
                                         '' => 'No', ),
 
-    'dom_email_link_type'   => array(   'sugar'     => 'Sugar Email Client',
+    'dom_email_link_type'   => array(   'sugar'     => 'SuiteCRM Email Client',
                                         'mailto'    => 'External Email Client'),
 
 
@@ -896,8 +896,8 @@ $app_list_strings = array (
     'duration_intervals' => array('0'=>'00',
                                     '15'=>'15',
                                     '30'=>'30',
-                                    '45'=>'45'),
-
+                                    '45'=>'45',
+  ),
     'repeat_type_dom' => array(
     	'' => 'None',
     	'Daily'	=> 'Daily',
@@ -1124,7 +1124,7 @@ $app_list_strings = array (
   array(
         'copy' => 'Copy',
         'move' => 'Move',
-        'donothing' => 'Do Nothing'
+        'donothing' => 'Do Nothing',
   ),
 );
 
@@ -1168,10 +1168,10 @@ $app_strings = array (
     'LBL_EDITINLINE'=>'Edit',
     'LBL_VIEWINLINE'=>'View',
     'LBL_INFOINLINE'=>'Info',
-    'LBL_POWERED_BY_SUGARCRM' => "Powered by SugarCRM",
-    'LBL_PRINT' => "Print",
-    'LBL_HELP' => "Help",
-    'LBL_ID_FF_SELECT' => "Select",
+    'LBL_POWERED_BY_SUGARCRM' => 'Powered by SugarCRM',
+    'LBL_PRINT' => 'Print',
+    'LBL_HELP' => 'Help',
+    'LBL_ID_FF_SELECT' => 'Select',
     'DEFAULT'                              => 'Basic',
     'LBL_SORT'                              => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER'         => 'Add Server...',
@@ -1186,7 +1186,7 @@ $app_strings = array (
     'LBL_ROUTING_BUTTON_SAVE'               => 'Save Rule',
 
     'LBL_ROUTING_ACTIONS_COPY_MAIL'         => 'Copy Mail',
-    'LBL_ROUTING_ACTIONS_DELETE_BEAN'       => 'Delete Sugar Object',
+    'LBL_ROUTING_ACTIONS_DELETE_BEAN'       => 'Delete SuiteCRM Object',
     'LBL_ROUTING_ACTIONS_DELETE_FILE'       => 'Delete File',
     'LBL_ROUTING_ACTIONS_DELETE_MAIL'       => 'Delete Email',
     'LBL_ROUTING_ACTIONS_FORWARD'           => 'Forward Email',
@@ -1197,9 +1197,9 @@ $app_strings = array (
     'LBL_ROUTING_ACTIONS_PEFORM'            => 'Perform the following actions',
     'LBL_ROUTING_ACTIONS_REPLY'             => 'Reply to Email',
 
-    'LBL_ROUTING_CHECK_RULE'                => "An error was detected:\n",
+    'LBL_ROUTING_CHECK_RULE'                => 'An error was detected:\n',
     'LBL_ROUTING_CHECK_RULE_DESC'           => 'Please verify all fields that are marked.',
-    'LBL_ROUTING_CONFIRM_DELETE'            => "Are you sure you want to delete this rule?\nThis cannot be undone.",
+    'LBL_ROUTING_CONFIRM_DELETE'            => 'Are you sure you want to delete this rule?\nThis cannot be undone.',
 
     'LBL_ROUTING_FLAGGED'                   => 'flag set',
     'LBL_ROUTING_FORM_DESC'                 => 'Saved Rules are immediately active.',
@@ -1279,12 +1279,12 @@ $app_strings = array (
     'LBL_EMAIL_ADDRESSES'                   => 'Email',
     'LBL_EMAIL_ADDRESS_PRIMARY'             => 'Email Address',
     'LBL_EMAIL_ADDRESSES_TITLE'             => 'Email Addresses',
-    'LBL_EMAIL_ARCHIVE_TO_SUGAR'            => 'Import to Sugar',
+    'LBL_EMAIL_ARCHIVE_TO_SUGAR'            => 'Import to SuiteCRM',
     'LBL_EMAIL_ASSIGNMENT'                  => 'Assignment',
     'LBL_EMAIL_ATTACH_FILE_TO_EMAIL'        => 'Attach',
     'LBL_EMAIL_ATTACHMENT'                  => 'Attach',
     'LBL_EMAIL_ATTACHMENTS'                 => 'From Local System',
-    'LBL_EMAIL_ATTACHMENTS2'                => 'From Sugar Documents',
+    'LBL_EMAIL_ATTACHMENTS2'                => 'From SuiteCRM Documents',
     'LBL_EMAIL_ATTACHMENTS3'                => 'Template Attachments',
     'LBL_EMAIL_ATTACHMENTS_FILE'            => 'File',
     'LBL_EMAIL_ATTACHMENTS_DOCUMENT'        => 'Document',
@@ -1320,7 +1320,7 @@ $app_strings = array (
     'LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS_EMPTY' => 'Empty',
     'LBL_EMAIL_DATE_SENT_BY_SENDER'         => 'Date Sent by Sender',
   'LBL_EMAIL_DATE_RECEIVED'               => 'Date Received',
-    'LBL_EMAIL_ASSIGNED_TO_USER'            =>'Assigned to User',
+    'LBL_EMAIL_ASSIGNED_TO_USER'            => 'Assigned to User',
     'LBL_EMAIL_DATE_TODAY'                  => 'Today',
     'LBL_EMAIL_DATE_YESTERDAY'              => 'Yesterday',
     'LBL_EMAIL_DD_TEXT'                     => 'email(s) selected.',
@@ -1343,14 +1343,14 @@ $app_strings = array (
     'LBL_EMAIL_EMPTY_MSG'                   => 'No emails to display.',
     'LBL_EMAIL_EMPTY_ADDR_MSG'              => 'No email addresses to display.',
 
-    'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER'      => 'Folder name be unique and not empty. Please try again.',
+    'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER'      => 'Folder name must be unique and not empty. Please try again.',
     'LBL_EMAIL_ERROR_DELETE_GROUP_FOLDER'   => 'Cannot delete a folder. Either the folder or its children has emails or a mail box associated to it.',
     'LBL_EMAIL_ERROR_CANNOT_FIND_NODE'      => 'Cannot determine the intended folder from context.  Try again.',
     'LBL_EMAIL_ERROR_CHECK_IE_SETTINGS'     => 'Please check your settings.',
     'LBL_EMAIL_ERROR_CONTACT_NAME'          => 'Please make sure you enter a last name.',
     'LBL_EMAIL_ERROR_DESC'                  => 'Errors were detected: ',
     'LBL_EMAIL_DELETE_ERROR_DESC'           => 'You do not have access to this area. Contact your site administrator to obtain access.',
-    'LBL_EMAIL_ERROR_DUPE_FOLDER_NAME'      => 'Sugar Folder names must be unique.',
+    'LBL_EMAIL_ERROR_DUPE_FOLDER_NAME'      => 'SuiteCRM Folder names must be unique.',
     'LBL_EMAIL_ERROR_EMPTY'                 => 'Please enter some search criteria.',
     'LBL_EMAIL_ERROR_GENERAL_TITLE'         => 'An error has occurred',
     'LBL_EMAIL_ERROR_LIST_NAME'             => 'An email list with that name already exists',
@@ -1404,7 +1404,7 @@ $app_strings = array (
     'LBL_EMAIL_IE_DELETE_SUCCESSFUL'        => 'Deletion successful.',
     'LBL_EMAIL_IE_SAVE'                     => 'Saving Mail Account Information',
     'LBL_EMAIL_IMPORTING_EMAIL'             => 'Importing Email',
-    'LBL_EMAIL_IMPORT_EMAIL'                => 'Import to Sugar',
+    'LBL_EMAIL_IMPORT_EMAIL'                => 'Import to SuiteCRM',
     'LBL_EMAIL_IMPORT_SETTINGS'                => 'Import Settings',
     'LBL_EMAIL_INVALID'                     => 'Invalid',
     'LBL_EMAIL_LOADING'                     => 'Loading...',
@@ -1428,13 +1428,13 @@ $app_strings = array (
     'LBL_EMAIL_MENU_RENAMING_FOLDER'        => 'Renaming Folder',
     'LBL_EMAIL_MENU_MAKE_SELECTION'         => 'Please make a selection before trying this operation.',
 
-    'LBL_EMAIL_MENU_HELP_ADD_FOLDER'        => 'Create a Folder (remote or in Sugar)',
-    'LBL_EMAIL_MENU_HELP_ARCHIVE'           => 'Archive these email(s) to SugarCRM',
+    'LBL_EMAIL_MENU_HELP_ADD_FOLDER'        => 'Create a Folder (remote or in SuiteCRM)',
+    'LBL_EMAIL_MENU_HELP_ARCHIVE'           => 'Archive these email(s) to SuiteCRM',
     'LBL_EMAIL_MENU_HELP_COMPOSE_TO_LIST'   => 'Email selected Mailing Lists',
     'LBL_EMAIL_MENU_HELP_CONTACT_COMPOSE'   => 'Email this Contact',
     'LBL_EMAIL_MENU_HELP_CONTACT_REMOVE'    => 'Remove a Contact',
     'LBL_EMAIL_MENU_HELP_DELETE'            => 'Delete these email(s)',
-    'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'     => 'Delete a Folder (remote or in Sugar)',
+    'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'     => 'Delete a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_EDIT_CONTACT'      => 'Edit a Contact',
     'LBL_EMAIL_MENU_HELP_EDIT_LIST'         => 'Edit a Mailing List',
     'LBL_EMAIL_MENU_HELP_EMPTY_TRASH'       => 'Empties all Trash folders for your mail accounts',
@@ -1443,7 +1443,7 @@ $app_strings = array (
     'LBL_EMAIL_MENU_HELP_MARK_UNFLAGGED'    => 'Mark these email(s) unflagged',
     'LBL_EMAIL_MENU_HELP_MARK_UNREAD'       => 'Mark these email(s) unread',
     'LBL_EMAIL_MENU_HELP_REMOVE_LIST'       => 'Removes Mailing Lists',
-    'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'     => 'Rename a Folder (remote or in Sugar)',
+    'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'     => 'Rename a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_REPLY'             => 'Reply to these email(s)',
     'LBL_EMAIL_MENU_HELP_REPLY_ALL'         => 'Reply to all recipients for these email(s)',
 
@@ -1577,11 +1577,11 @@ $app_strings = array (
   'LBL_SMTPTYPE_EXCHANGE'                 => 'Microsoft Exchange',
     'LBL_SMTPTYPE_OTHER'                  => 'Other',
     'LBL_EMAIL_SPACER_MAIL_SERVER'          => '[ Remote Folders ]',
-    'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ Sugar Folders ]',
+    'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ SuiteCRM Folders ]',
     'LBL_EMAIL_SUBJECT'                     => 'Subject',
     'LBL_EMAIL_TO'                        => 'To',
     'LBL_EMAIL_SUCCESS'                     => 'Success',
-    'LBL_EMAIL_SUGAR_FOLDER'                => 'SugarFolder',
+    'LBL_EMAIL_SUGAR_FOLDER'                => 'SuiteCRM Folder',
     'LBL_EMAIL_TEMPLATE_EDIT_PLAIN_TEXT'    => 'Email template body is empty',
     'LBL_EMAIL_TEMPLATES'                   => 'Templates',
     'LBL_EMAIL_TEXT_FIRST'                  => 'First Page',
@@ -1601,15 +1601,6 @@ $app_strings = array (
     'LBL_EMAIL_YES'                         => 'Yes',
     'LBL_EMAIL_TEST_OUTBOUND_SETTINGS'      => 'Send Test Email',
     'LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT' => 'Test Email Sent',
-    'LBL_EMAIL_CHECK_INTERVAL_DOM'          => array(
-        '-1' => "Manually",
-        '5' => 'Every 5 minutes',
-        '15' => 'Every 15 minutes',
-        '30' => 'Every 30 minutes',
-        '60' => 'Every hour'
-    ),
-
-
     'LBL_EMAIL_MESSAGE_NO'                  => 'Message No',
     'LBL_EMAIL_IMPORT_SUCCESS'              => 'Import Passed',
     'LBL_EMAIL_IMPORT_FAIL'                 => 'Import Failed because either the message is already imported or deleted from server',
@@ -1656,7 +1647,7 @@ $app_strings = array (
     'ERR_NOTHING_SELECTED' =>'Please make a selection before proceeding.',
     'ERR_OPPORTUNITY_NAME_DUPE' => 'An opportunity with the name %s already exists.  Please enter another name below.',
     'ERR_OPPORTUNITY_NAME_MISSING' => 'An opportunity name was not entered.  Please enter an opportunity name below.',
-    'ERR_POTENTIAL_SEGFAULT' => 'A potential Apache segmentation fault was detected.  Please notify your system administrator to confirm this problem and have her/him report it to SugarCRM.',
+    'ERR_POTENTIAL_SEGFAULT' => 'A potential Apache segmentation fault was detected.  Please notify your system administrator to confirm this problem and have her/him report it to SuiteCRM.',
     'ERR_SELF_REPORTING' => 'User cannot report to him or herself.',
     'ERR_SINGLE_QUOTE'  => 'Using the single quote is not supported for this field.  Please change the value.',
     'ERR_SQS_NO_MATCH_FIELD' => 'No match for field: ',
@@ -1670,7 +1661,7 @@ $app_strings = array (
     'ERR_DB_FAIL' => 'Database failure. Please refer to sugarcrm.log for details.',
     'ERR_EXTERNAL_API_403' => 'Permission Denied. File type is not supported.',
     'ERR_EXTERNAL_API_NO_OAUTH_TOKEN' => 'OAuth Access Token is missing.',
-    'ERR_DB_VERSION' => 'Sugar CRM {0} Files May Only Be Used With A Sugar CRM {1} Database.',
+    'ERR_DB_VERSION' => 'SuiteCRM {0} Files May Only Be Used With A SuiteCRM {1} Database.',
 
 
     'LBL_ACCOUNT'=>'Account',
@@ -1701,7 +1692,7 @@ $app_strings = array (
     'LBL_BILL_TO_CONTACT'=>'Bill to Contact',
     'LBL_BILLING_ADDRESS'=>'Billing Address',
     'LBL_QUICK_CREATE_TITLE' => 'Quick Create',
-    'LBL_BROWSER_TITLE' => 'SugarCRM - Commercial Open Source CRM',
+    'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS'=>'Bugs',
     'LBL_BY' => 'by',
     'LBL_CALLS'=>'Calls',
@@ -2103,7 +2094,7 @@ $app_strings = array (
     'NTC_DATE_TIME_FORMAT' => '(yyyy-mm-dd 24:00)',
     'NTC_DELETE_CONFIRMATION_MULTIPLE' => 'Are you sure you want to delete selected record(s)?',
     'NTC_TEMPLATE_IS_USED' => 'The template is used in at least one email marketing record. Are you sure you want to delete it?',
-    'NTC_TEMPLATES_IS_USED' => "The following templates are used in email marketing records. Are you sure you want to delete them?\n",
+    'NTC_TEMPLATES_IS_USED' => 'The following templates are used in email marketing records. Are you sure you want to delete them?\n',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_DELETE_CONFIRMATION_NUM' => 'Are you sure you want to delete the ',
     'NTC_UPDATE_CONFIRMATION_NUM' => 'Are you sure you want to update the ',
@@ -2112,21 +2103,15 @@ $app_strings = array (
     'NTC_NO_ITEMS_DISPLAY' => 'none',
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this relationship? Only the relationship will be removed. The record will not be deleted.',
     'NTC_REQUIRED' => 'Indicates required field',
-    'NTC_SUPPORT_SUGARCRM' => 'Support the SugarCRM open source project with a donation through PayPal - it\'s fast, free and secure!',
     'NTC_TIME_FORMAT' => '(24:00)',
     'NTC_WELCOME' => 'Welcome',
     'NTC_YEAR_FORMAT' => '(yyyy)',
-    'LOGIN_LOGO_ERROR'=> 'Please replace the SugarCRM logos.',
-    'ERROR_LICENSE_FULLY_EXPIRED'=> "Your Company's Subscription to the SugarCRM Product has expired and needs to be renewed. Only admins may login when a Subscription has expired. If you have any questions, please contact your administrator.",
-    'ERROR_LICENSE_EXPIRED'=> "Your company's license for SugarCRM needs to be updated. Only admins may login",
-    'ERROR_LICENSE_VALIDATION'=> "Your company's license for SugarCRM needs to be validated. Only admins may login",
-    'WARN_BROWSER_VERSION_WARNING' => "<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 32.0<li>Safari 5.1<li>Chrome 37</ul>",
-    'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => "<b>Warning:</b> Your browser is in IE compatibility view which is not supported.",
-    'WARN_LICENSE_SEATS'=>  "Warning: The number of active users is already the maximum number of licenses allowed.",
-    'WARN_LICENSE_SEATS_MAXED'=>  "Warning: The number of active users exceeds the maximum number of licenses allowed.",
+    'LOGIN_LOGO_ERROR'=> 'Please replace the SuiteCRM logos.',
     'WARN_ONLY_ADMINS'=> "Only admins may log in.",
     'WARN_UNSAVED_CHANGES'=> "You are about to leave this record without saving any changes you may have made to the record. Are you sure you want to navigate away from this record?",
     'ERROR_NO_RECORD' => 'Error retrieving record.  This record may be deleted or you may not be authorized to view it.',
+    'WARN_BROWSER_VERSION_WARNING' => "<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 32.0<li>Safari 5.1<li>Chrome 37</ul>",
+    'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => "<b>Warning:</b> Your browser is in IE compatibility view which is not supported.",
     'ERROR_TYPE_NOT_VALID' => 'Error. This type is not valid.',
     'ERROR_NO_BEAN' => 'Failed to get bean.', 
     'LBL_DUP_MERGE'=>'Find Duplicates',
@@ -2223,16 +2208,16 @@ $app_strings = array (
 
     // MySugar status strings
     'LBL_CREATING_NEW_PAGE' => 'Creating New Page ...',
-    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Sugar Dashlets menu option.',
+    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Dashlets menu option.',
     'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
     'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title ...',
     'LBL_RETRIEVING_PAGE' => 'Retrieving Page ...',
-    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of Sugar Dashlets your adminstrator has set. Please remove a Sugar Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding Sugar Dashlet ...',
-    'LBL_ADDED_DASHLET' => 'Sugar Dashlet Added',
-    'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove the Sugar Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing Sugar Dashlet ...',
-    'LBL_REMOVED_DASHLET' => 'Sugar Dashlet Removed',
+    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
+    'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
     'LBL_ADD_PAGE' => 'Add Page',
@@ -2242,7 +2227,7 @@ $app_strings = array (
 
     'LBL_LOADING_PAGE' => 'Loading page, please wait...',
 
-    'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this Sugar Dashlet.',
+    'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this SuiteCRM Dashlet.',
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
@@ -2306,8 +2291,8 @@ $app_strings = array (
   'MSG_SHOULD_BE' => 'should be',
   'MSG_OR_GREATER' => 'or greater',
 
-    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to Sugar Portal 5.1.0',
-    'LBL_PORTAL_WELCOME_INFO' => 'Sugar Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to Sugar that can be deployed within any website.  Stay tuned for more customer self service features like Project Management and Forums in our future releases.',
+    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal 5.1.0',
+    'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
     'LBL_CREATE_CASE' => 'Create Case',
     'LBL_CREATE_BUG' => 'Create Bug',
@@ -2523,6 +2508,13 @@ $app_strings = array (
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
     'LBL_ACCOUNT_PRODUCT_QUOTE_LINK' => 'Quote',
     'LBL_ACCOUNT_PRODUCT_SALE_PRICE' => 'Sale Price',
+    'LBL_EMAIL_CHECK_INTERVAL_DOM'          => array(
+        '-1' => 'Manually',
+        '5' => 'Every 5 minutes',
+        '15' => 'Every 15 minutes',
+        '30' => 'Every 30 minutes',
+        '60' => 'Every hour',
+    ),
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -2877,7 +2869,7 @@ $app_list_strings['kbdocument_status_dom'] = array (
 
   $app_list_strings['timezone_dom'] = array(
 
-      'Africa/Algiers' => 'Africa/Algiers',
+  'Africa/Algiers' => 'Africa/Algiers',
   'Africa/Luanda' => 'Africa/Luanda',
   'Africa/Porto-Novo' => 'Africa/Porto-Novo',
   'Africa/Gaborone' => 'Africa/Gaborone',
@@ -3256,7 +3248,7 @@ $app_list_strings['kbdocument_status_dom'] = array (
 
   $app_list_strings['moduleList']['Sugar_Favorites'] = 'Favorites';
   $app_list_strings['eapm_list']= array(
-    'Sugar'=>'Sugar',
+    'Sugar'=>'SuiteCRM',
     'WebEx'=>'WebEx',
     'GoToMeeting'=>'GoToMeeting',
     'IBMSmartCloud'=>'IBM SmartCloud',

@@ -46,7 +46,7 @@ class SugarConfig
 {
     var $_cached_values = array();
 
-    function getInstance() {
+    static function getInstance() {
         static $instance = null;
         if (is_null($instance)) {
             $instance = new SugarConfig();

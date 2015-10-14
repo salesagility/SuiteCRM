@@ -652,7 +652,7 @@ class UploadStream
     /**
      * Register the stream
      */
-    public function register()
+    public static function register()
     {
         stream_register_wrapper(self::STREAM_NAME, __CLASS__);
     }

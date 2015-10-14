@@ -134,26 +134,26 @@ class SugarFieldDatetimecombo extends SugarFieldBase {
         return TimeDate::getInstance()->to_display_date_time($inputField, true, true, $user);
     }
     
-    public function save(&$bean, &$inputData, &$field, &$def, $prefix = '') {
+    public function save($bean, $params, $field, $properties, $prefix = '') {
         global $timedate;
-        if ( !isset($inputData[$prefix.$field]) ) {
+        if ( !isset($params[$prefix.$field]) ) {
             //$bean->$field = '';
             return;
         }
 
-        if(strpos($inputData[$prefix.$field], ' ') > 0) {
-            if ($timedate->check_matching_format($inputData[$prefix.$field], TimeDate::DB_DATETIME_FORMAT)) {
-	            $bean->$field = $inputData[$prefix.$field];
+        if(strpos($params[$prefix.$field], ' ') > 0) {
+            if ($timedate->check_matching_format($params[$prefix.$field], TimeDate::DB_DATETIME_FORMAT)) {
+	            $bean->$field = $params[$prefix.$field];
             } else {
-                $bean->$field = $timedate->to_db($inputData[$prefix.$field]);
+                $bean->$field = $timedate->to_db($params[$prefix.$field]);
             }
         } else {
-        	$GLOBALS['log']->error('Field ' . $prefix.$field . ' expecting datetime format, but got value: ' . $inputData[$prefix.$field]);
+        	$GLOBALS['log']->error('Field ' . $prefix.$field . ' expecting datetime format, but got value: ' . $params[$prefix.$field]);
 	        //Default to assume date format value
-        	if ($timedate->check_matching_format($inputData[$prefix.$field], TimeDate::DB_DATE_FORMAT)) {
-                $bean->$field = $inputData[$prefix.$field];
+        	if ($timedate->check_matching_format($params[$prefix.$field], TimeDate::DB_DATE_FORMAT)) {
+                $bean->$field = $params[$prefix.$field];
             } else {
-                $bean->$field = $timedate->to_db_date($inputData[$prefix.$field]);
+                $bean->$field = $timedate->to_db_date($params[$prefix.$field]);
             }
         }
     }

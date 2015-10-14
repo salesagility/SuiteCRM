@@ -1,31 +1,4 @@
 <?php
-
-/*
-
-Modification information for LGPL compliance
-
-r56990 - 2010-06-16 13:05:36 -0700 (Wed, 16 Jun 2010) - kjing - snapshot "Mango" svn branch to a new one for GitHub sync
-
-r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" svn dev branch before github cutover
-
-r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
-
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
-
-r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
-
-r50375 - 2009-08-24 18:07:43 -0700 (Mon, 24 Aug 2009) - dwong - branch kobe2 from tokyo r50372
-
-r42807 - 2008-12-29 11:16:59 -0800 (Mon, 29 Dec 2008) - dwong - Branch from trunk/sugarcrm r42806 to branches/tokyo/sugarcrm
-
-r10971 - 2006-01-12 14:58:30 -0800 (Thu, 12 Jan 2006) - chris - Bug 4128: updating Smarty templates to 2.6.11, a version supposedly that plays better with PHP 5.1
-
-r8230 - 2005-10-03 17:47:19 -0700 (Mon, 03 Oct 2005) - majed - Added Sugar_Smarty to the code tree.
-
-
-*/
-
-
 /**
  * Smarty plugin
  * @package Smarty
@@ -49,18 +22,20 @@ r8230 - 2005-10-03 17:47:19 -0700 (Mon, 03 Oct 2005) - majed - Added Sugar_Smart
  *                month values (Gary Loescher)
  *           - 1.3.1 added support for choosing format for
  *                day values (Marcus Bointon)
- *           - 1.3.2 suppport negative timestamps, force year
+ *           - 1.3.2 support negative timestamps, force year
  *             dropdown to include given date unless explicitly set (Monte)
+ *           - 1.3.4 fix behaviour of 0000-00-00 00:00:00 dates to match that
+ *             of 0000-00-00 dates (cybot, boots)
  * @link http://smarty.php.net/manual/en/language.function.html.select.date.php {html_select_date}
  *      (Smarty online manual)
- * @version 1.3.2
+ * @version 1.3.4
  * @author Andrei Zmievski
  * @author Monte Ohrt <monte at ohrt dot com>
  * @param array
  * @param Smarty
  * @return string
  */
-function smarty_function_html_select_date($params, $smarty)
+function smarty_function_html_select_date($params, &$smarty)
 {
     require_once $smarty->_get_plugin_filepath('shared','escape_special_chars');
     require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
@@ -158,12 +133,14 @@ function smarty_function_html_select_date($params, $smarty)
         }
     }
 
-    if(preg_match('!^-\d+$!',$time)) {
+    if (preg_match('!^-\d+$!', $time)) {
         // negative timestamp, use date()
-        $time = date('Y-m-d',$time);
+        $time = date('Y-m-d', $time);
     }
     // If $time is not in format yyyy-mm-dd
-    if (!preg_match('/^\d{0,4}-\d{0,2}-\d{0,2}$/', $time)) {
+    if (preg_match('/^(\d{0,4}-\d{0,2}-\d{0,2})/', $time, $found)) {
+        $time = $found[1];
+    } else {
         // use smarty_make_timestamp to get an unix timestamp and
         // strftime to make yyyy-mm-dd
         $time = strftime('%Y-%m-%d', smarty_make_timestamp($time));
@@ -201,7 +178,9 @@ function smarty_function_html_select_date($params, $smarty)
 
     $html_result = $month_result = $day_result = $year_result = "";
 
+    $field_separator_count = -1;
     if ($display_months) {
+    	$field_separator_count++;
         $month_names = array();
         $month_values = array();
         if(isset($month_empty)) {
@@ -239,6 +218,7 @@ function smarty_function_html_select_date($params, $smarty)
     }
 
     if ($display_days) {
+    	$field_separator_count++;
         $days = array();
         if (isset($day_empty)) {
             $days[''] = $day_empty;
@@ -274,6 +254,7 @@ function smarty_function_html_select_date($params, $smarty)
     }
 
     if ($display_years) {
+    	$field_separator_count++;
         if (null !== $field_array){
             $year_name = $field_array . '[' . $prefix . 'Year]';
         } else {
@@ -337,7 +318,7 @@ function smarty_function_html_select_date($params, $smarty)
                 break;
         }
         // Add the field seperator
-        if($i != 2) {
+        if($i < $field_separator_count) {
             $html_result .= $field_separator;
         }
     }
