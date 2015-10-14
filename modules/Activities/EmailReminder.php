@@ -101,7 +101,7 @@ class EmailReminder
                 $bean->save();
 
                 $alertBean = new Alert();
-                $alertBean->retrieve($id);
+                $alertBean->retrieve($alerts['id']);
                 $alertBean->was_sent = 1;
                 $alertBean->save();
                 $GLOBALS['log']->fatal("send reminder");
