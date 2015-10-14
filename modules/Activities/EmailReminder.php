@@ -229,8 +229,10 @@ class EmailReminder
     {
         global $current_user, $db, $timedate;
         $NOW = new DateTime(gmdate("Y-m-d H:i:s"));
+//        $NOW->setTime($NOW->format('Y'), $NOW->format('i'), 0);
         $MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
-        $MOMENT = $MOMENT->add(new DateInterval('PT30S'));
+        $MOMENT = $MOMENT->sub(new DateInterval('PT180S'));
+//        $MOMENT->setTime($MOMENT->format('Y'), $MOMENT->format('i'), 0);
         $query = "SELECT * FROM alerts WHERE deleted = '0' AND send_email = '1' AND was_sent = '0' AND
                   delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."' AND
                   subscribers LIKE '%$current_user->id%'
@@ -243,7 +245,7 @@ class EmailReminder
                 'target_module_id' => $row['target_module_id'],
                 );
         }
-        echo $alerts;
+        return $alerts;
     }
 
     /**
