@@ -131,7 +131,8 @@ class SugarWidgetField extends SugarWidget {
 			$sort_by_name = $layout_def['sort_by'];
 		}
 
-		$sort_by = ListView :: getSessionVariableName($html_var, "ORDER_BY").'='.$sort_by_name;
+		$objListView = new ListView();
+		$sort_by = $objListView->getSessionVariableName($html_var, "ORDER_BY").'='.$sort_by_name;
 
 		$start = (empty ($layout_def['start_link_wrapper'])) ? '' : $layout_def['start_link_wrapper'];
 		$end = (empty ($layout_def['end_link_wrapper'])) ? '' : $layout_def['end_link_wrapper'];
