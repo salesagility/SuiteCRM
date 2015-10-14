@@ -93,9 +93,7 @@ class EmailReminder
         $alerts = $this->getAlerts();
         foreach($alerts as $id => $alert) {
             $recipients = $this->getRecipients($alert['target_module_id'], $alert['target_module']);
-//            $bean = new $alert['target_module']();
             $bean = BeanFactory::getBean($alert['target_module'], $alert['target_module_id']);
-//            $bean->retrieve($alert['target_module_id']);
             if ( $this->sendReminders($bean, $admin, $recipients) ) {
                 $bean->email_reminder_sent = 1;
                 $bean->save();
@@ -109,17 +107,6 @@ class EmailReminder
                 $GLOBALS['log']->fatal("didn't send reminder");
             }
         }
-//
-//        $calls = $this->getCallsForRemind();
-//        foreach($calls as $id ) {
-//            $recipients = $this->getRecipients($id,'Calls');
-//            $bean = new Call();
-//            $bean->retrieve($id);
-//            if ( $this->sendReminders($bean, $admin, $recipients) ) {
-//                $bean->email_reminder_sent = 1;
-//                $bean->save();
-//            }
-//        }
         
         return true;
     }
