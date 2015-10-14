@@ -1,5 +1,4 @@
 <?php
-
 /*
 
 Modification information for LGPL compliance
