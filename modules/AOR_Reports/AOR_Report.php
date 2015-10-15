@@ -1009,26 +1009,22 @@ class AOR_Report extends Basic {
                         }
                         $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
 
-                        switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
-                            case "=":
-                                if (!$where_set) $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
-                                break;
-                            case "!=":
-                                if (!$where_set) $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
-                                break;
-                            case ">":
-                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                break;
-                            case "<":
-                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                break;
-                            case ">=":
-                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                break;
-                            case "<=":
-                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                break;
-                        }
+			if (!$where_set) {
+	                        switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
+	                            case "=":
+	                                $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+	                                break;
+	                            case "!=":
+	                                $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+	                                break;
+	                            case ">":
+	                            case "<":
+	                            case ">=":
+	                            case "<=":
+	                            default:
+        				$query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+	                        }
+			}
                     } else {
                         if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                     }
