@@ -183,7 +183,11 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
         $parts = explode($firstValue,$text);
         $text = $parts[0];
         $parts = explode($lastValue,$parts[1]);
-        $groupPart = $firstValue . $parts[0] . $lastValue;
+        if($lastValue == $firstValue) {
+            $groupPart = $firstValue . $parts[0];
+        } else {
+            $groupPart = $firstValue . $parts[0] . $lastValue;
+        }
 
         if(count($lineItemsGroups) != 0){
             //Read line start <tr> value
