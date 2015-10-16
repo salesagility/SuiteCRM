@@ -228,7 +228,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	   sugar_cleanup(true);
 	}
 
-    // if dates changed
+/*    // if dates changed
     if (!empty($focus->id)) {
         $oldBean = new Meeting();
         $oldBean->retrieve($focus->id);
@@ -237,7 +237,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
         } else {
             $focus->date_changed = false;
         }
-    }
+    }*/
 
     $newBean = true;
     if (!empty($focus->id)) {
@@ -424,7 +424,8 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	    		if(!isset($acceptStatusUsers[$user_id])) {
 	    			$focus->users->add($user_id);
-	    		} else if (!$focus->date_changed) {
+	    		// } else if (!$focus->date_changed) { -- fix for issue #540
+				} else {
 	    			// update query to preserve accept_status
 	    			$qU  = 'UPDATE meetings_users SET deleted = 0, accept_status = \''.$acceptStatusUsers[$user_id].'\' ';
 	    			$qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
@@ -446,7 +447,8 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	    		if(!isset($acceptStatusContacts[$contact_id])) {
 	    		    $focus->contacts->add($contact_id);
-	    		} else if (!$focus->date_changed) {
+				// } else if (!$focus->date_changed) { -- fix for issue #540
+				} else {
 	    			// update query to preserve accept_status
 	    			$qU  = 'UPDATE meetings_contacts SET deleted = 0, accept_status = \''.$acceptStatusContacts[$contact_id].'\' ';
 	    			$qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
@@ -467,7 +469,8 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	    		if(!isset($acceptStatusLeads[$lead_id])) {
 	    		    $focus->leads->add($lead_id);
-	    		} else if (!$focus->date_changed) {
+				// } else if (!$focus->date_changed) { -- fix for issue #540
+				} else {
 	    			// update query to preserve accept_status
 	    			$qU  = 'UPDATE meetings_leads SET deleted = 0, accept_status = \''.$acceptStatusLeads[$lead_id].'\' ';
 	    			$qU .= 'WHERE meeting_id = \''.$focus->id.'\' ';
