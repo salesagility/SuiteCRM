@@ -322,7 +322,7 @@
                 {if $smarty.foreach.groupList.last}
                 {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
                                 {foreach from=$modules.modules item=module key=modulekey}
-                                    {if $modulekey !='Home'}
+                                    {if $modulekey !='Home' && $modulekey !='Calendar'}
                                         <li style="float:right;">
                                             <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
                                         </li>
