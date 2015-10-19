@@ -51,6 +51,8 @@
  */
 function Alerts() {};
 
+
+Alerts.prototype.alerts = {};
 /**
  * Requests to enable Desktop Notifications API when available.
  * Then notifies the user of the result
@@ -109,7 +111,7 @@ Alerts.prototype.show = function(AlertObj) {
         if (Notification.permission === "granted") {
             if(typeof AlertObj.options !== "undefined") {
                 if(typeof AlertObj.options.target_module !== "undefined") {
-                    AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name+'&imageName='+AlertObj.options.target_module+'s.gif';
+                    AlertObj.options.icon = 'index.php?entryPoint=getImage&themeName=' + SUGAR.themes.theme_name+'&imageName='+AlertObj.options.target_module+'.gif';
                 }
                 if(typeof AlertObj.options.type !== "undefined") {
                     AlertObj.options.type = AlertObj.options.type;
@@ -197,33 +199,73 @@ Alerts.prototype.addToManager = function(AlertObj) {
             type: type
         }
     ).done(function(data) {
-    }).fail(function(data) {
-            console.log(data);
-    }).always(function() {
+        }).fail(function(data) {
+        }).always(function() {
             Alerts.prototype.updateManager();
-    });
+        });
 }
 
 /**
  * Updates the alert notification manager
  */
 Alerts.prototype.updateManager = function() {
-    var url = 'index.php?module=Alerts&action=get&to_pdf=1';
-    $.ajax(url).done(function(data) {
-        $('div#alerts').html(data);
-        $('div.alerts').css('width', '200px');
-
-        var alertCount = $('#alerts').find('div.module-alert').size();
-        $('.alert_count').html(alertCount);
-
-        if(alertCount > 0) {
-            $('.alertsButton').removeClass('btn-').addClass('btn-danger');
+    var url = 'index.php?module=Alerts&action=getCurrentAlerts';
+    $.getJSON(url).done(function(data) {
+        Alerts.prototype.managerFailureCount--;
+        if(Alerts.prototype.managerFailureCount <= 0) {
+            Alerts.prototype.managerFailureCount = 0;
+            Alerts.prototype.refreshPeriod = 10000;
         }
-        else {
-            $('.alertsButton').removeClass('btn-danger').addClass('btn-success');
+
+        if(data.response.length > 0) {
+            console.log('found alerts');
+            $.extend(Alerts.prototype.alerts, data.response);
+            // if missed
+            $('.btn-alert').removeClass('btn-success');
+            $('.btn-alert').addClass('btn-danger');
+        } else {
+            $('.btn-alert').removeClass('btn-danger');
+            $('.btn-alert').addClass('btn-success');
         }
     }).fail(function() {
+        Alerts.prototype.managerFailureCount++;
+        switch (Alerts.prototype.managerFailureCount) {
+            case 1:
+                Alerts.prototype.refreshPeriod = 30000;
+                break;
+            case 2:
+                // turn off refreshing
+                Alerts.prototype.refreshPeriod = -1;
+                break;
+        }
     }).always(function() {
+    });
+}
+/**
+ * Handle the showing of alerts
+ */
+Alerts.prototype.tick = function() {
+    $.each(Alerts.prototype.alerts, function(key, value){
+        if (value.delivery_datetime > 0) {
+            // check for missed alerts or ignore
+        } else if (value.delivery_datetime == 0) {
+            // Show alert
+            if(!value.is_read) {
+                alert = new AlertObj();
+                alert.title = value.name;
+                alert.options.body = value.description;
+                alert.options.type = value.type;
+                alert.options.url_redirect = value.url_redirect;
+                alert.options.target_module = value.target_module;
+                alert.options.target_module_id = value.target_module_id;
+                Alerts.prototype.markAsRead(value.id);
+                Alerts.prototype.show(alert);
+                value.is_read = true;
+            }
+        } else {
+            // increment delivery_datetime (seconds left)
+            value.delivery_datetime = value.delivery_datetime + 1;
+        }
     });
 }
 
@@ -234,9 +276,9 @@ Alerts.prototype.updateManager = function() {
  *
  */
 Alerts.prototype.markAsRead = function(id) {
-    var url = 'index.php?module=Alerts&action=markAsRead&record='+id+'&to_pdf=1';
+    var url = 'index.php?module=Alerts&action=markAsRead&record='+id;
     $.ajax(url).done(function(data) {
-        Alerts.prototype.updateManager();
+
     }).fail(function() {
     }).always(function() {
     });
@@ -261,15 +303,37 @@ function AlertObj() {
         target_module: null,
         type: 'info'
     };
+    this.subscribers = new Array();
 }
+/**
+ * Determins the how often the manager updatess
+ * @type {number}
+ */
+Alerts.prototype.refreshPeriod = 10000;
+
+Alerts.prototype.managerFailureCount = 0;
 
 /**
  * Wait for document to be ready before updating the alert notification manager.
  */
 $(document).ready(function() {
-    var updateMissed  = function() {
-        Alerts.prototype.updateManager();
-        setTimeout(updateMissed, 60000);
+    $('.btn-alert').click(function() {
+        console.log('btn-alert clicked')
+        location.assign('index.php?module=Alerts')
+    });
+
+    var updateAlerts  = function() {
+        Alerts.prototype.tick();
+        setTimeout(updateAlerts, 1000);
     }
-    setTimeout(updateMissed, 2000);
+
+    var updateManager  = function() {
+        Alerts.prototype.updateManager();
+        if(Alerts.prototype.refreshPeriod > 0) {
+            setTimeout(updateManager, Alerts.prototype.refreshPeriod);
+        }
+    }
+    updateManager();
+    updateAlerts();
+
 });

@@ -2,6 +2,290 @@
  //WARNING: The contents of this file are auto-generated
 
 
+/**
+* @package SuiteCRM
+* @copyright SalesAgility Ltd http://www.salesagility.com
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+* the Free Software Foundation; either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+* along with this program; if not, see http://www.gnu.org/licenses
+* or write to the Free Software Foundation,Inc., 51 Franklin Street,
+* Fifth Floor, Boston, MA 02110-1301 USA
+*
+* @author Salesagility Ltd <support@salesagility.com>
+*/
+
+$app_strings['LBL_QUICK_ACCOUNT'] = 'Создать контрагента';
+$app_strings['LBL_QUICK_CONTACT'] = 'Создать контакт';
+$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Создать сделку';
+$app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. контакт';
+$app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
+$app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
+$app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
+
+$app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
+$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
+$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
+$app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';
+$app_strings['LBL_DELETE_DASHBOARD2'] = '?';
+$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Добавление новой страницы на закладку ГЛАВНАЯ';
+$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Удаление текущей страницы с закладки ГЛАВНАЯ';
+$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Переименование страницы';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
+
+ 
+/**
+ * Extensions to SugarCRM
+ * @package Reschedule for SugarCRM
+ * @subpackage Products
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+
+ $mod_strings = array (
+    'TWITTER_USER_C' => 'Учётная запись в Twitter',
+    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
+ );
+
+$app_list_strings['call_reschedule_dom'][''] = '';
+$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Сотрудник отсутствует';
+$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'Сотрудник занят';
+
+$app_strings['LBL_RESCHEDULE_LABEL'] = 'Звонок откладывается';
+$app_strings['LBL_RESCHEDULE_TITLE'] = 'Заполните следующие поля:';
+$app_strings['LBL_RESCHEDULE_DATE'] = 'Дата:';
+$app_strings['LBL_RESCHEDULE_REASON'] = 'Причина:';
+$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Укажите правильную дату';
+$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Укажите причину, по которой звонок отложен';
+
+$app_strings['LBL_RESCHEDULE_PANEL'] = 'Отложенные звонки';
+$app_strings['LBL_RESCHEDULE_HISTORY'] = 'История дозвона';
+$app_strings['LBL_RESCHEDULE_COUNT'] = 'Попыток дозвона';
+$app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
+
+
+
+
+/**
+ *
+ * @package Advanced OpenPortal
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+
+
+$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'События обращения';
+$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Обновления обращения';
+$app_list_strings['moduleList']['AOP_Case_Events'] = 'События обращения';
+$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Обновления обращения';
+$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Пожалуйста, пишите ответ выше этой линии ==========';
+
+$app_list_strings['case_state_dom'] =
+  array (
+      'Open' => 'Открыто',
+      'Closed' => 'Закрыто',
+  );
+$app_list_strings['case_state_default_key'] = 'Open';
+$app_list_strings['case_status_default_key'] = 'Open_New';
+$app_list_strings['case_status_dom'] =
+  array (
+      'Open_New' => 'Новое',
+      'Open_Assigned' => 'Назначенное',
+      'Closed_Closed' => 'Закрытое',
+      'Open_Pending Input' => 'Ожидание решения',
+      'Closed_Rejected' => 'Отклонённое',
+      'Closed_Duplicate' => 'Продублированное',
+  );
+  
+  $app_list_strings['contact_portal_user_type_dom'] =
+    array (
+        'Single' => 'Указанный пользователь',
+        'Account' => 'Учётная запись пользователя',
+    ); 
+
+
+$app_list_strings["moduleList"]["SecurityGroups"] = 'Управление Группами пользователей';
+$app_strings['LBL_LOGIN_AS'] = "Войти как ";
+$app_strings['LBL_LOGOUT_AS'] = "Выйти как ";
+$app_strings['LBL_SECURITYGROUP'] = 'Управление Группами';
+
+
+
+ 
+/**
+ * Products, Quotations & Invoices modules.
+ * Extensions to SugarCRM
+ * @package Advanced OpenSales for SugarCRM
+ * @subpackage Products
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
+
+$app_list_strings['moduleList']['AOS_Contracts'] = 'Договоры';
+$app_list_strings['moduleList']['AOS_Invoices'] = 'Счета';
+$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF-шаблоны';
+$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Категории товаров';
+$app_list_strings['moduleList']['AOS_Products'] = 'Товары';
+$app_list_strings['moduleList']['AOS_Products_Quotes'] = 'Позиции';
+$app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Группа позиций';
+$app_list_strings['moduleList']['AOS_Quotes'] = 'Предложения';
+
+$app_list_strings['aos_quotes_type_dom'][''] = '';
+// Added by RAPIRA -->
+$app_list_strings['aos_quotes_type_dom']['Provider'] = 'Поставщик';
+$app_list_strings['aos_quotes_type_dom']['Delivery service'] = 'Служба доставки';
+// Added by RAPIRA <--
+$app_list_strings['aos_quotes_type_dom']['Analyst'] = 'Аналитик';
+$app_list_strings['aos_quotes_type_dom']['Competitor'] = 'Конкурент';
+$app_list_strings['aos_quotes_type_dom']['Customer'] = 'Клиент';
+$app_list_strings['aos_quotes_type_dom']['Integrator'] = 'Интегратор';
+$app_list_strings['aos_quotes_type_dom']['Investor'] = 'Инвестор';
+$app_list_strings['aos_quotes_type_dom']['Partner'] = 'Партнёр';
+$app_list_strings['aos_quotes_type_dom']['Press'] = 'Пресса';
+$app_list_strings['aos_quotes_type_dom']['Prospect'] = 'Потенциальный клиент';
+$app_list_strings['aos_quotes_type_dom']['Reseller'] = 'Реселлер';
+$app_list_strings['aos_quotes_type_dom']['Other'] = 'Другое';
+
+$app_list_strings['template_ddown_c_list'][''] = '';
+
+$app_list_strings['quote_stage_dom']['Draft'] = 'Черновик';
+$app_list_strings['quote_stage_dom']['Negotiation'] = 'Согласование';
+$app_list_strings['quote_stage_dom']['Delivered'] = 'Поставлено';
+$app_list_strings['quote_stage_dom']['On Hold'] = 'Ведётся';
+$app_list_strings['quote_stage_dom']['Confirmed'] = 'Подтверждено';
+$app_list_strings['quote_stage_dom']['Closed Accepted'] = 'Принято и закрыто';
+$app_list_strings['quote_stage_dom']['Closed Lost'] = 'Закрыто с потерями';
+$app_list_strings['quote_stage_dom']['Closed Dead'] = 'Закрыто с прекращением';
+
+$app_list_strings['quote_term_dom']['Net 15'] = 'Net 15';
+$app_list_strings['quote_term_dom']['Net 30'] = 'Net 30';
+$app_list_strings['quote_term_dom'][''] = '';
+
+$app_list_strings['approval_status_dom']['Approved'] = 'Утверждено';
+$app_list_strings['approval_status_dom']['Not Approved'] = 'Не утверждено';
+$app_list_strings['approval_status_dom'][''] = '';
+
+$app_list_strings['vat_list']['18.0'] = '18.0';
+$app_list_strings['vat_list']['0.0'] = '0.0';
+$app_list_strings['vat_list']['10.0'] = '10.0';
+
+
+$app_list_strings['discount_list']['Percentage'] = 'Процент';
+$app_list_strings['discount_list']['Amount'] = 'Сумма';
+
+$app_list_strings['aos_invoices_type_dom'][''] = '';
+$app_list_strings['aos_invoices_type_dom']['Analyst'] = 'Аналитик';
+$app_list_strings['aos_invoices_type_dom']['Competitor'] = 'Конкурент';
+$app_list_strings['aos_invoices_type_dom']['Customer'] = 'Клиент';
+$app_list_strings['aos_invoices_type_dom']['Integrator'] = 'Интегратор';
+$app_list_strings['aos_invoices_type_dom']['Investor'] = 'Инвестор';
+$app_list_strings['aos_invoices_type_dom']['Partner'] = 'Партнёр';
+$app_list_strings['aos_invoices_type_dom']['Press'] = 'Пресса';
+$app_list_strings['aos_invoices_type_dom']['Prospect'] = 'Потенциальный клиент';
+$app_list_strings['aos_invoices_type_dom']['Reseller'] = 'Реселлер';
+$app_list_strings['aos_invoices_type_dom']['Other'] = 'Другое';
+
+$app_list_strings['invoice_status_dom']['Paid'] = 'Оплачен';
+$app_list_strings['invoice_status_dom']['Unpaid'] = 'Не оплачен';
+$app_list_strings['invoice_status_dom']['Cancelled'] = 'Аннулирован';
+$app_list_strings['invoice_status_dom'][''] = '';
+
+$app_list_strings['quote_invoice_status_dom']['Not Invoiced'] = 'Не преобразовано в счёт'; 
+$app_list_strings['quote_invoice_status_dom']['Invoiced'] = 'Преобразовано в счёт'; 
+
+$app_list_strings['product_code_dom']['XXXX'] = 'XXXX';
+$app_list_strings['product_code_dom']['YYYY'] = 'YYYY';
+
+$app_list_strings['product_category_dom']['Laptops'] = 'Ноутбуки';
+$app_list_strings['product_category_dom']['Desktops'] = 'Системные блоки';
+$app_list_strings['product_category_dom'][''] = '';
+
+$app_list_strings['product_type_dom']['Good'] = 'Товар';
+$app_list_strings['product_type_dom']['Service'] = 'Услуга';
+
+$app_list_strings['product_quote_parent_type_dom']['AOS_Quotes'] = 'Предложения';
+$app_list_strings['product_quote_parent_type_dom']['AOS_Invoices'] = 'Счета';
+
+$app_list_strings['pdf_template_type_dom']['AOS_Quotes'] = 'Предложений';
+$app_list_strings['pdf_template_type_dom']['AOS_Invoices'] = 'Счетов';
+$app_list_strings['pdf_template_type_dom']['Accounts'] = 'Контрагентов';
+$app_list_strings['pdf_template_type_dom']['Contacts'] = 'Контактов';
+$app_list_strings['pdf_template_type_dom']['Leads'] = 'Предварит. контактов';
+
+$app_list_strings['pdf_template_sample_dom'][''] = '';
+
+$app_list_strings['contract_status_list']['Not Started'] = 'Проект';
+$app_list_strings['contract_status_list']['In Progress'] = 'В процессе подписания';
+$app_list_strings['contract_status_list']['Signed'] = 'Подписан';
+
+$app_list_strings['contract_type_list']['Type'] = 'Тип';
+
+$app_strings['LBL_GENERATE_LETTER'] = 'Создать письмо (PDF)';
+$app_strings['LBL_SELECT_TEMPLATE'] = 'Пожалуйста, выберите шаблон';
+$app_strings['LBL_NO_TEMPLATE'] = 'ОШИБКА\nШаблоны не обнаружены.\nОткройте модуль PDF-шаблонов и создайте необходимый шаблон.';
+
+
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -41,19 +325,23 @@
  ********************************************************************************/
 
 
-$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
-$app_list_strings['moduleList']['AOD_Index'] = 'Индекс';
+$app_list_strings['moduleList']['FP_events'] = 'События';
+$app_list_strings['moduleList']['FP_Event_Locations'] = 'Места';
+$app_list_strings['invite_template_list'][''] = '';
 
+$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Приглашён';
+$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'Не приглашён';
+$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Участвовал';
+$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'Не участвовал';
+$app_list_strings['fp_event_status_dom']['Accepted'] = 'Принято';
+$app_list_strings['fp_event_status_dom']['Declined'] = 'Отклонено';
+$app_list_strings['fp_event_status_dom']['No Response'] = 'Ответ не получен';
 
-/**
- * Social Feed Language Strings.
- */
-
-$app_strings['FACEBOOK_USER_C'] = 'Facebook';
-$app_strings['TWITTER_USER_C'] = 'Twitter';
-$app_strings['LBL_FACEBOOK_USER_C'] = 'Учётная запись в Facebook';
-$app_strings['LBL_TWITTER_USER_C'] = 'Учётная запись в Twitter';
-$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Подробности';
+$app_strings['LBL_STATUS_EVENT'] = 'Статус приглашения';
+$app_strings['LBL_ACCEPT_STATUS'] = 'Статус приглашения';
+$app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Текущая страница';
+$app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Все записи';
+$app_strings['LBL_LISTVIEW_NONE'] = 'Отменить выбор';
 
 
 $app_strings['LBL_MAP'] = 'Показать на карте';
@@ -344,71 +632,61 @@ $app_list_strings['marker_image_list']['wifi'] = 'Wi-Fi';
 
 
 /**
- *
- * @package Advanced OpenPortal
- * @copyright SalesAgility Ltd http://www.salesagility.com
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
+ * Social Feed Language Strings.
  */
 
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Учётная запись в Facebook';
+$app_strings['LBL_TWITTER_USER_C'] = 'Учётная запись в Twitter';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Подробности';
 
-$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'События обращения';
-$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Обновления обращения';
-$app_list_strings['moduleList']['AOP_Case_Events'] = 'События обращения';
-$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Обновления обращения';
-$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Пожалуйста, пишите ответ выше этой линии ==========';
+/*********************************************************************************
+ * SugarCRM Community Edition is a customer relationship management program developed by
+ * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
-$app_list_strings['case_state_dom'] =
-  array (
-      'Open' => 'Открыто',
-      'Closed' => 'Закрыто',
-  );
-$app_list_strings['case_state_default_key'] = 'Open';
-$app_list_strings['case_status_default_key'] = 'Open_New';
-$app_list_strings['case_status_dom'] =
-  array (
-      'Open_New' => 'Новое',
-      'Open_Assigned' => 'Назначенное',
-      'Closed_Closed' => 'Закрытое',
-      'Open_Pending Input' => 'Ожидание решения',
-      'Closed_Rejected' => 'Отклонённое',
-      'Closed_Duplicate' => 'Продублированное',
-  );
-  
-  $app_list_strings['contact_portal_user_type_dom'] =
-    array (
-        'Single' => 'Указанный пользователь',
-        'Account' => 'Учётная запись пользователя',
-    ); 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Affero General Public License version 3 as published by the
+ * Free Software Foundation with the addition of the following permission added
+ * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
+ * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
+ * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
+ * details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with
+ * this program; if not, see http://www.gnu.org/licenses or write to the Free
+ * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ *
+ * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
+ * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
+ *
+ * The interactive user interfaces in modified source and object code versions
+ * of this program must display Appropriate Legal Notices, as required under
+ * Section 5 of the GNU Affero General Public License version 3.
+ *
+ * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
+ * these Appropriate Legal Notices must retain the display of the "Powered by
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ ********************************************************************************/
 
 
-$app_list_strings["moduleList"]["SecurityGroups"] = 'Управление Группами пользователей';
-$app_strings['LBL_LOGIN_AS'] = "Войти как ";
-$app_strings['LBL_LOGOUT_AS'] = "Выйти как ";
-$app_strings['LBL_SECURITYGROUP'] = 'Управление Группами';
-
-
+$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
+$app_list_strings['moduleList']['AOD_Index'] = 'Индекс';
 
  
 /**
- * Products, Quotations & Invoices modules.
  * Extensions to SugarCRM
- * @package Advanced OpenSales for SugarCRM
+ * @package Reschedule for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
  * 
@@ -430,108 +708,10 @@ $app_strings['LBL_SECURITYGROUP'] = 'Управление Группами';
  * @author Salesagility Ltd <support@salesagility.com>
  */
 
-$app_list_strings['moduleList']['AOS_Contracts'] = 'Договоры';
-$app_list_strings['moduleList']['AOS_Invoices'] = 'Счета';
-$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF-шаблоны';
-$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Категории товаров';
-$app_list_strings['moduleList']['AOS_Products'] = 'Товары';
-$app_list_strings['moduleList']['AOS_Products_Quotes'] = 'Позиции';
-$app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Группа позиций';
-$app_list_strings['moduleList']['AOS_Quotes'] = 'Предложения';
-
-$app_list_strings['aos_quotes_type_dom'][''] = '';
-// Added by RAPIRA -->
-$app_list_strings['aos_quotes_type_dom']['Provider'] = 'Поставщик';
-$app_list_strings['aos_quotes_type_dom']['Delivery service'] = 'Служба доставки';
-// Added by RAPIRA <--
-$app_list_strings['aos_quotes_type_dom']['Analyst'] = 'Аналитик';
-$app_list_strings['aos_quotes_type_dom']['Competitor'] = 'Конкурент';
-$app_list_strings['aos_quotes_type_dom']['Customer'] = 'Клиент';
-$app_list_strings['aos_quotes_type_dom']['Integrator'] = 'Интегратор';
-$app_list_strings['aos_quotes_type_dom']['Investor'] = 'Инвестор';
-$app_list_strings['aos_quotes_type_dom']['Partner'] = 'Партнёр';
-$app_list_strings['aos_quotes_type_dom']['Press'] = 'Пресса';
-$app_list_strings['aos_quotes_type_dom']['Prospect'] = 'Потенциальный клиент';
-$app_list_strings['aos_quotes_type_dom']['Reseller'] = 'Реселлер';
-$app_list_strings['aos_quotes_type_dom']['Other'] = 'Другое';
-
-$app_list_strings['template_ddown_c_list'][''] = '';
-
-$app_list_strings['quote_stage_dom']['Draft'] = 'Черновик';
-$app_list_strings['quote_stage_dom']['Negotiation'] = 'Согласование';
-$app_list_strings['quote_stage_dom']['Delivered'] = 'Поставлено';
-$app_list_strings['quote_stage_dom']['On Hold'] = 'Ведётся';
-$app_list_strings['quote_stage_dom']['Confirmed'] = 'Подтверждено';
-$app_list_strings['quote_stage_dom']['Closed Accepted'] = 'Принято и закрыто';
-$app_list_strings['quote_stage_dom']['Closed Lost'] = 'Закрыто с потерями';
-$app_list_strings['quote_stage_dom']['Closed Dead'] = 'Закрыто с прекращением';
-
-$app_list_strings['quote_term_dom']['Net 15'] = 'Net 15';
-$app_list_strings['quote_term_dom']['Net 30'] = 'Net 30';
-$app_list_strings['quote_term_dom'][''] = '';
-
-$app_list_strings['approval_status_dom']['Approved'] = 'Утверждено';
-$app_list_strings['approval_status_dom']['Not Approved'] = 'Не утверждено';
-$app_list_strings['approval_status_dom'][''] = '';
-
-$app_list_strings['vat_list']['18.0'] = '18.0';
-$app_list_strings['vat_list']['0.0'] = '0.0';
-$app_list_strings['vat_list']['10.0'] = '10.0';
-
-
-$app_list_strings['discount_list']['Percentage'] = 'Процент';
-$app_list_strings['discount_list']['Amount'] = 'Сумма';
-
-$app_list_strings['aos_invoices_type_dom'][''] = '';
-$app_list_strings['aos_invoices_type_dom']['Analyst'] = 'Аналитик';
-$app_list_strings['aos_invoices_type_dom']['Competitor'] = 'Конкурент';
-$app_list_strings['aos_invoices_type_dom']['Customer'] = 'Клиент';
-$app_list_strings['aos_invoices_type_dom']['Integrator'] = 'Интегратор';
-$app_list_strings['aos_invoices_type_dom']['Investor'] = 'Инвестор';
-$app_list_strings['aos_invoices_type_dom']['Partner'] = 'Партнёр';
-$app_list_strings['aos_invoices_type_dom']['Press'] = 'Пресса';
-$app_list_strings['aos_invoices_type_dom']['Prospect'] = 'Потенциальный клиент';
-$app_list_strings['aos_invoices_type_dom']['Reseller'] = 'Реселлер';
-$app_list_strings['aos_invoices_type_dom']['Other'] = 'Другое';
-
-$app_list_strings['invoice_status_dom']['Paid'] = 'Оплачен';
-$app_list_strings['invoice_status_dom']['Unpaid'] = 'Не оплачен';
-$app_list_strings['invoice_status_dom']['Cancelled'] = 'Аннулирован';
-$app_list_strings['invoice_status_dom'][''] = '';
-
-$app_list_strings['quote_invoice_status_dom']['Not Invoiced'] = 'Не преобразовано в счёт'; 
-$app_list_strings['quote_invoice_status_dom']['Invoiced'] = 'Преобразовано в счёт'; 
-
-$app_list_strings['product_code_dom']['XXXX'] = 'XXXX';
-$app_list_strings['product_code_dom']['YYYY'] = 'YYYY';
-
-$app_list_strings['product_category_dom']['Laptops'] = 'Ноутбуки';
-$app_list_strings['product_category_dom']['Desktops'] = 'Системные блоки';
-$app_list_strings['product_category_dom'][''] = '';
-
-$app_list_strings['product_type_dom']['Good'] = 'Товар';
-$app_list_strings['product_type_dom']['Service'] = 'Услуга';
-
-$app_list_strings['product_quote_parent_type_dom']['AOS_Quotes'] = 'Предложения';
-$app_list_strings['product_quote_parent_type_dom']['AOS_Invoices'] = 'Счета';
-
-$app_list_strings['pdf_template_type_dom']['AOS_Quotes'] = 'Предложений';
-$app_list_strings['pdf_template_type_dom']['AOS_Invoices'] = 'Счетов';
-$app_list_strings['pdf_template_type_dom']['Accounts'] = 'Контрагентов';
-$app_list_strings['pdf_template_type_dom']['Contacts'] = 'Контактов';
-$app_list_strings['pdf_template_type_dom']['Leads'] = 'Предварит. контактов';
-
-$app_list_strings['pdf_template_sample_dom'][''] = '';
-
-$app_list_strings['contract_status_list']['Not Started'] = 'Проект';
-$app_list_strings['contract_status_list']['In Progress'] = 'В процессе подписания';
-$app_list_strings['contract_status_list']['Signed'] = 'Подписан';
-
-$app_list_strings['contract_type_list']['Type'] = 'Тип';
-
-$app_strings['LBL_GENERATE_LETTER'] = 'Создать письмо (PDF)';
-$app_strings['LBL_SELECT_TEMPLATE'] = 'Пожалуйста, выберите шаблон';
-$app_strings['LBL_NO_TEMPLATE'] = 'ОШИБКА\nШаблоны не обнаружены.\nОткройте модуль PDF-шаблонов и создайте необходимый шаблон.';
+$mod_strings = array (
+    'TWITTER_USER_C' => 'Учётная запись в Twitter',
+    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
+);
 
 
 
@@ -645,151 +825,6 @@ $app_list_strings['aow_run_on_list']['Modified_Records'] = 'Изменяемых
 
 
 
- 
-/**
- * Extensions to SugarCRM
- * @package Reschedule for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
-$mod_strings = array (
-    'TWITTER_USER_C' => 'Учётная запись в Twitter',
-    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
-);
-
-
-
-/**
- * en_us.sps.php
- * @author SalesAgility <support@salesagility.com>
- * Date: 27/01/14
- */
-
-
-$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
-
-/*********************************************************************************
- * SugarCRM Community Edition is a customer relationship management program developed by
- * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Affero General Public License version 3 as published by the
- * Free Software Foundation with the addition of the following permission added
- * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
- * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
- * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
- * details.
- *
- * You should have received a copy of the GNU Affero General Public License along with
- * this program; if not, see http://www.gnu.org/licenses or write to the Free
- * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- * 02110-1301 USA.
- *
- * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
- * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- *
- * The interactive user interfaces in modified source and object code versions
- * of this program must display Appropriate Legal Notices, as required under
- * Section 5 of the GNU Affero General Public License version 3.
- *
- * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
- * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-$app_list_strings['moduleList']['FP_events'] = 'События';
-$app_list_strings['moduleList']['FP_Event_Locations'] = 'Места';
-$app_list_strings['invite_template_list'][''] = '';
-
-$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Приглашён';
-$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'Не приглашён';
-$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Участвовал';
-$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'Не участвовал';
-$app_list_strings['fp_event_status_dom']['Accepted'] = 'Принято';
-$app_list_strings['fp_event_status_dom']['Declined'] = 'Отклонено';
-$app_list_strings['fp_event_status_dom']['No Response'] = 'Ответ не получен';
-
-$app_strings['LBL_STATUS_EVENT'] = 'Статус приглашения';
-$app_strings['LBL_ACCEPT_STATUS'] = 'Статус приглашения';
-$app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Текущая страница';
-$app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Все записи';
-$app_strings['LBL_LISTVIEW_NONE'] = 'Отменить выбор';
- 
-/**
- * Extensions to SugarCRM
- * @package Reschedule for SugarCRM
- * @subpackage Products
- * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
- * along with this program; if not, see http://www.gnu.org/licenses
- * or write to the Free Software Foundation,Inc., 51 Franklin Street,
- * Fifth Floor, Boston, MA 02110-1301  USA
- *
- * @author Salesagility Ltd <support@salesagility.com>
- */
-
- $mod_strings = array (
-    'TWITTER_USER_C' => 'Учётная запись в Twitter',
-    'FACEBOOK_USER_C' => 'Учётная запись в Facebook',
- );
-
-$app_list_strings['call_reschedule_dom'][''] = '';
-$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Сотрудник отсутствует';
-$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'Сотрудник занят';
-
-$app_strings['LBL_RESCHEDULE_LABEL'] = 'Звонок откладывается';
-$app_strings['LBL_RESCHEDULE_TITLE'] = 'Заполните следующие поля:';
-$app_strings['LBL_RESCHEDULE_DATE'] = 'Дата:';
-$app_strings['LBL_RESCHEDULE_REASON'] = 'Причина:';
-$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Укажите правильную дату';
-$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Укажите причину, по которой звонок отложен';
-
-$app_strings['LBL_RESCHEDULE_PANEL'] = 'Отложенные звонки';
-$app_strings['LBL_RESCHEDULE_HISTORY'] = 'История дозвона';
-$app_strings['LBL_RESCHEDULE_COUNT'] = 'Попыток дозвона';
-$app_strings['LBL_RESCHEDULE'] = 'Отложить звонок';
-
-
-
 
 /**
  * Advanced OpenReports, SugarCRM Reporting.
@@ -898,46 +933,11 @@ $app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
 
 
 /**
-* @package SuiteCRM
-* @copyright SalesAgility Ltd http://www.salesagility.com
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
-* the Free Software Foundation; either version 3 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
-* along with this program; if not, see http://www.gnu.org/licenses
-* or write to the Free Software Foundation,Inc., 51 Franklin Street,
-* Fifth Floor, Boston, MA 02110-1301 USA
-*
-* @author Salesagility Ltd <support@salesagility.com>
-*/
+ * en_us.sps.php
+ * @author SalesAgility <support@salesagility.com>
+ * Date: 27/01/14
+ */
 
-$app_strings['LBL_QUICK_ACCOUNT'] = 'Создать контрагента';
-$app_strings['LBL_QUICK_CONTACT'] = 'Создать контакт';
-$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Создать сделку';
-$app_strings['LBL_QUICK_LEAD'] = 'Создать предварит. контакт';
-$app_strings['LBL_QUICK_DOCUMENT'] = 'Создать документ';
-$app_strings['LBL_QUICK_CALL'] = 'Назначить звонок';
-$app_strings['LBL_QUICK_TASK'] = 'Создать задачу';
-$app_strings['LBL_COLLECTION_TYPE'] = 'Тип';
 
-$app_strings['LBL_ADD_TAB'] = 'Добавить страницу';
-$app_strings['LBL_SUITE_DASHBOARD'] = 'Suite - основная страница';
-$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Название страницы:';
-$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Количество колонок на странице:';
-$app_strings['LBL_DELETE_DASHBOARD1'] = 'Вы действительно хотите удалить страницу';
-$app_strings['LBL_DELETE_DASHBOARD2'] = '?';
-$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Добавление новой страницы на закладку ГЛАВНАЯ';
-$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Удаление текущей страницы с закладки ГЛАВНАЯ';
-$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Переименование страницы';
-
-$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Задачи', 'Meetings' => 'Встречи', 'Calls' => 'Звонки', 'Notes' => 'Заметки', 'Emails' => 'E-mail' );
-
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Фильтр';
 ?>

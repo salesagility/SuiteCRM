@@ -37,14 +37,14 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*
- * Created on August 2 2007
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
-$module_name = 'Alert';
+$module_name = 'Alerts';
  $metafiles[$module_name] = array(
 	'defaultviewdefs'  => 	'modules/' . $module_name . '/metadata/defaultviewdefs.php',
+	'listviewdefs'  => 	'modules/' . $module_name . '/metadata/listviewdefs.php',
+	'detailviewdefs'  => 	'modules/' . $module_name . '/metadata/detailviewdefs.php',
+	'editviewdefs'  => 	'modules/' . $module_name . '/metadata/editviewdefs.php',
+	'popupviewdefs'  => 	'modules/' . $module_name . '/metadata/popupviewdefs.php',
+//	'searchfields'  => 	'modules/' . $module_name . '/metadata/searchfields.php',
+
  );
 ?>

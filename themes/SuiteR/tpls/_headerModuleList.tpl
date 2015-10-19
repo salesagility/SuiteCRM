@@ -89,7 +89,13 @@
                 </div>
             <div id="userlinks_head" class="navbar-toggle collapsed">
                 <a href="javascript:void(0)" id="userlinks_togglemobilesearch"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                <div class="navbar-right">
+                    <button class="btn btn-success btn-alert" data-toggle="dropdown" aria-expanded="false">
+                        <span class="badge"><span class="glyphicon glyphicon-bell"></span>
+                    </button>
+                </div>
             </div>
+
             </div>
         </div>
         <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
@@ -295,6 +301,7 @@
                     </span>
                 </div>
             </form>
+
             <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
                 <a class="dropdown-toggle" aria-expanded="false">
                     <span class="glyphicon glyphicon-plus"></span>
@@ -309,11 +316,10 @@
                     <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
                 </ul>
             </div>
-            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
-                <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
-                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
+            <div class="navbar-form navbar-right">
+                <button class="btn btn-success btn-alert" data-toggle="dropdown" aria-expanded="false">
+                   <span class="badge"><span class="glyphicon glyphicon-bell"></span>
                 </button>
-                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
         </div>
 

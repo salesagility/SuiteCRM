@@ -180,6 +180,13 @@ class json_config {
 			array_push($module_arr['users_arr'], $this->populateBean($lead));
 	  	}
 
+		$module_arr['alerts'] = array();
+		$focus->load_relationship('alerts');
+		$alerts = $focus->get_linked_beans('alerts','Alert');
+		foreach($alerts as $alert) {
+			array_push($module_arr['alerts'], $this->populateBean($alert));
+		}
+
 		return $module_arr;
 	}
 
@@ -214,10 +221,14 @@ class json_config {
 
 		foreach($all_fields as $field) {
 			if(isset($focus->$field) && !is_object($focus->$field)) {
-				$focus->$field =  from_html($focus->$field);
-				$focus->$field =  preg_replace("/\r\n/","<BR>",$focus->$field);
-				$focus->$field =  preg_replace("/\n/","<BR>",$focus->$field);
-				$module_arr['fields'][$field] = $focus->$field;
+				if(is_array($focus->$field)){
+					$module_arr['fields'][$field] = (array)$focus->$field;
+				}else {
+					$focus->$field = from_html($focus->$field);
+					$focus->$field = preg_replace("/\r\n/", "<BR>", $focus->$field);
+					$focus->$field = preg_replace("/\n/", "<BR>", $focus->$field);
+					$module_arr['fields'][$field] = $focus->$field;
+				}
 			}
 		}
 			$GLOBALS['log']->debug("JSON_SERVER:populate bean:");
