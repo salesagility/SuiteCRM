@@ -653,6 +653,7 @@ class AOR_Report extends Basic {
 
                 $field_module = $module;
                 $table_alias = $field_module->table_name;
+                $oldAlias = $table_alias;
                 if(!empty($path[0]) && $path[0] != $module->module_dir){
                     foreach($path as $rel){
                         $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$rel)];
@@ -820,6 +821,7 @@ class AOR_Report extends Basic {
 
                 $condition_module = $module;
                 $table_alias = $condition_module->table_name;
+                $oldAlias = $table_alias;
                 if(!empty($path[0]) && $path[0] != $module->module_dir){
                     foreach($path as $rel){
                         if(empty($rel)){
@@ -849,12 +851,11 @@ class AOR_Report extends Basic {
                         $data = $data_new;
                     }
 
-                    if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                        $relModule = getRelatedModule($condition_module->module_dir, $data['relationship']);
-                        $new_field_module = new $beanList[$relModule];
-                        $query = $this->build_report_query_join($data['relationship'], $table_alias . ':' . strtolower($relModule), $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
-                        $field_module = $new_field_module;
-                        $table_alias = $table_alias . ':' . $data['relationship'];
+                    if($data['type'] == 'link' && $data['source'] == 'non-db') {
+                        $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir,$data['relationship'])];
+                        $table_alias = $data['relationship'];
+                        $query = $this->build_report_query_join($data['relationship'],$table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
+                        $condition_module = $new_field_module;
 
                         // Debugging: security groups conditions - It's a hack to just get the query working
                         if($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
@@ -892,11 +893,11 @@ class AOR_Report extends Basic {
                             }
 
                             if ($data['type'] == 'link' && $data['source'] == 'non-db') {
-                                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $data['relationship'])];
-                                $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
-                                $field_module = $new_field_module;
+                                $new_field_module = new $beanList[getRelatedModule($condition_module->module_dir, $data['relationship'])];
                                 $table_alias = $data['relationship'];
-                                $field->field = 'id';
+                                $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
+                                $condition_module = $new_field_module;
+                                $condition->field = 'id';
                             }
                             if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                                 $value = $condition_module->table_name . '_cstm.' . $condition->value;
