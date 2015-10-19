@@ -39,46 +39,126 @@
 
 $dictionary['Alert'] = array(
 	'table'=>'alerts',
-	'audited'=> false,
-		'duplicate_merge'=>true,
+    'audited'   =>  false,
+    'unified_search' => false,
+    'full_text_search' => false,
+    'unified_search_default_enabled' => false,
+    'optimistic_locking' => true,
+    'duplicate_merge'=>false,
 		'fields'=>array (
-            'is_read' =>
+            'content_type' =>
                 array(
-                    'name'		=> 'is_read',
-                    'vname'     => 'LBL_IS_READ',
-                    'type'		=> 'bool',
-                    'massupdate' => false,
+                    'name'		=> 'content_type',
+                    'vname'     => 'LBL_CONTENT_TYPE',
+                    'type'		=> 'varchar',
+                    'massupdate'=> false,
                     'studio'=> 'false',
+                    'comment'   => 'Defines the type of content use in alert eg HTML, SMARTY, TEXT etc...',
+                ),
+            'delivery_datetime' =>
+                array(
+                    'name'		=> 'delivery_datetime',
+                    'vname'     => 'LBL_DELIVERY_DATE',
+                    'type'		=> 'datetime',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'Determines when a subscriber receives the alert.',
+                ),
+            'was_sent' =>
+                array(
+                    'name'		=> 'was_sent',
+                    'vname'     => 'LBL_WAS_SENT',
+                    'type'		=> 'bool',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'Determines if the alert has been sent.',
+                ),
+            'send_email' =>
+                array(
+                    'name'		=> 'send_email',
+                    'vname'     => 'LBL_SEND_EMAIL',
+                    'type'		=> 'bool',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'Determines if an email is sent to the subscriber',
+                ),
+            'send_popup' =>
+                array(
+                    'name'		=> 'send_popup',
+                    'vname'     => 'LBL_SEND_POPUP',
+                    'type'		=> 'bool',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'Determines if an a subscriber receives a popup / desktop notification.',
+                ),
+            'send_sms' =>
+                array(
+                    'name'		=> 'send_sms',
+                    'vname'     => 'LBL_SEND_POPUP',
+                    'type'		=> 'bool',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'Determines if an a subscriber receives text / sms message.',
+                ),
+            'send_to_manager' =>
+                array(
+                    'name'		=> 'send_to_manager',
+                    'vname'     => 'LBL_SEND_TO_MANGER',
+                    'type'		=> 'bool',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'Determines if an a subscriber receives text / sms message.',
                 ),
             'target_module' =>
                 array(
                     'name'		=> 'target_module',
-                    'vname'     => 'LBL_TYPE',
+                    'vname'     => 'LBL_TARGET_MODULE',
                     'type'		=> 'varchar',
-                    'massupdate' => false,
+                    'massupdate'=> false,
                     'studio'=> 'false',
+                    'comment'   => 'The module related to the alert.',
+                ),
+            'target_module_id' =>
+                array(
+                    'name'		=> 'target_module_id',
+                    'vname'     => 'LBL_TARGET_MODULE_ID',
+                    'type'		=> 'id',
+                    'length'    => 36,
+                    'massupdate'=> false,
+                    'studio'=> 'false',
+                    'comment'   => 'The id of the module record related to the alert.',
                 ),
             'type' =>
                 array(
                     'name'		=> 'type',
                     'vname'     => 'LBL_TYPE',
                     'type'		=> 'varchar',
-                    'massupdate' => false,
+                    'massupdate'=> false,
                     'studio'=> 'false',
+                    'comment'   => 'Type of alert eg info, warning, danger, success.',
                 ),
             'url_redirect' =>
                 array(
                     'name'		=> 'url_redirect',
-                    'vname'     => 'LBL_TYPE',
+                    'vname'     => 'LBL_URL_REDIRECT',
                     'type'		=> 'varchar',
-                    'massupdate' => false,
-                    'studio'=> 'false',
-                )
-),
-	'relationships'=>array (
-),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'The url to redirect to on action (click/touch).',
+                ),
+            'subscribers' =>
+                array(
+                    'name'		=> 'subscribers',
+                    'vname'     => 'LBL_SUBSCRIBERS',
+                    'type'		=> 'varchar',
+                    'len'       => '65534',
+                    'massupdate'=> false,
+                    'studio'    => 'false',
+                    'comment'   => 'A serialized array of (SugarBean type => id) which can receive this alert.',
+                ),
+    ),
+	'relationships'=>array (),
+
 	);
 if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');

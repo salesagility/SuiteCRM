@@ -445,6 +445,14 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
     'reportable' => false,
     'studio' => false,
   ),
+    'alerts' =>
+        array(
+            'name' => 'alerts',
+            'type' => 'link',
+            'relationship' => 'calls_alerts',
+            'source' => 'non-db',
+            'vname' => 'LBL_ALERTS',
+        ),
 ),
 'indices' => array (
 	array(
@@ -511,6 +519,17 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
       'relationship_role_column'=>'parent_type',
       'relationship_role_column_value'=>'Calls',
 		),
+        'calls_alerts' => array(
+            'lhs_module' => 'Calls',
+            'lhs_table' => 'calls',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Alerts',
+            'rhs_table' => 'alerts',
+            'rhs_key' => 'target_module_id',
+            'relationship_type' => 'one-to-many',
+            'relationship_role_column' => 'target_module',
+            'relationship_role_column_value' => 'Calls'
+        ),
 	),
 //This enables optimistic locking for Saves From EditView
 	'optimistic_locking'	=> true,

@@ -354,11 +354,10 @@
                     <li><a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a></li>
                 </ul>
             </div>
-            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
-                <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false">
-                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
+            <div class="navbar-form navbar-right">
+                <button class="btn btn-success btn-alert" data-toggle="dropdown" aria-expanded="false">
+                   <span class="badge"><span class="glyphicon glyphicon-bell"></span>
                 </button>
-                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
         </div>
 

@@ -72,6 +72,7 @@ class Meeting extends SugarBean {
 	var $email_reminder_time;
 	var $email_reminder_checked;
 	var $email_reminder_sent;
+	var $alerts = array();
 	var $required;
 	var $accept_status;
 	var $parent_name;
@@ -110,6 +111,7 @@ class Meeting extends SugarBean {
 	var $cached_get_users = null;
 	var $new_schema = true;
     var $date_changed = false;
+
 
 	/**
 	 * sole constructor
@@ -159,18 +161,17 @@ class Meeting extends SugarBean {
 	// save date_end by calculating user input
 	// this is for calendar
 	function save($check_notify = FALSE) {
-		global $timedate;
-		global $current_user;
-
-		global $disable_date_format;
+		global $timedate, $current_user, $disable_date_format, $db;
 
         if(isset($this->date_start))
         {
             $td = $timedate->fromDb($this->date_start);
             if(!$td){
-            		$this->date_start = $timedate->to_db($this->date_start);
-            		$td = $timedate->fromDb($this->date_start);
+            	$this->date_start = $timedate->to_db($this->date_start);
+            	$td = $timedate->fromDb($this->date_start);
+
             }
+
             if($td)
             {
                 if (isset($this->duration_hours) && $this->duration_hours != '')
@@ -183,6 +184,8 @@ class Meeting extends SugarBean {
                 }
                 $this->date_end = $td->asDb();
             }
+
+
         }
 
 		$check_notify =(!empty($_REQUEST['send_invites']) && $_REQUEST['send_invites'] == '1') ? true : false;
@@ -247,7 +250,6 @@ class Meeting extends SugarBean {
                     foreach($notifyList as $person) {
                         $api->inviteAttendee($this,$person,$check_notify);
                     }
-
                 }
             } else {
                 // Generic Message Provides no value to End User - Log the issue with message detail and continue
@@ -256,7 +258,9 @@ class Meeting extends SugarBean {
             }
 
             $api->logoff();
-        }
+        } else {
+			$this->get_notification_recipients();
+		}
 
 		$return_id = parent::save($check_notify);
 
@@ -264,7 +268,58 @@ class Meeting extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
 		}
 
+		if(empty($this->alerts)) {
+			// Remove all alerts assigned to this record
+			$query = 'UPDATE alerts SET deleted = 1
+						WHERE target_module = "'.$this->module_name.'" AND target_module_id = "'.$this->id.'"';
+			$db->query($query);
+		}
 
+		foreach($this->alerts as $alertID => $alertArray) {
+			$alert = null;
+			if($alertArray['flag'] == 'new') {
+				$alert = new Alert();
+			} else if($alertArray['flag'] == 'existing') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+			} else if($alertArray['flag'] == 'deleted') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+				$alert->deleted = true;
+			}
+
+			if(isset($alertArray['action']['send_popup'])) {
+				$alert->send_popup = true;
+			}
+
+			if(isset($alertArray['action']['send_email'])) {
+				$alert->send_email = true;
+			}
+
+			if(isset($alertArray['time']) && isset($this->date_start)) {
+				$now = $timedate->fromDb($this->date_start);
+				$alert->delivery_datetime = $now->sub(new DateInterval('PT'.$alertArray['time'].'S'));
+				$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
+			}
+
+			$alert->target_module = $this->module_name;
+			$alert->target_module_id = $this->id;
+
+			if(isset($alertArray['subscribers'])) {
+				$alert->unsubscribeAll(); // overwrite subscribers
+				foreach($alertArray['subscribers'] as $s => $subscriber) {
+					$alert->subscribe($subscriber['bean'], $subscriber['id']);
+				}
+			} else {
+				// no point having an alert with no subscribers
+				$alert->deleted = true;
+			}
+
+			$alert->name = $this->name;
+			$alert->description = $this->description;
+
+			$alert->save();
+		}
 
 		return $return_id;
 	}
