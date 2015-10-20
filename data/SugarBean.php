@@ -3909,7 +3909,8 @@ class SugarBean
         $num_rows_in_query = 0;
         if (!$is_count_query)
         {
-            $count_query = SugarBean::create_list_count_query($query);
+            $objSugarBean = new SugarBean();
+            $count_query = $objSugarBean->create_list_count_query($query);
         } else
             $count_query=$query;
 

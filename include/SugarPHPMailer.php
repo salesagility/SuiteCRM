@@ -393,7 +393,7 @@ eoq;
 		parent::SetError($msg);
 	}
 
-	function SmtpConnect() {
+	function SmtpConnect($options = array()) {
 		$connection = parent::SmtpConnect();
 		if (!$connection) {
 			global $app_strings;
