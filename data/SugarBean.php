@@ -3267,6 +3267,7 @@ class SugarBean
 
         foreach($fields as $field=>$value)
         {
+            $relatedJoins = '';
             //alias is used to alias field names
             $alias='';
             if 	(isset($value['alias']))
@@ -3519,7 +3520,10 @@ class SugarBean
                         }
                         if(!$table_joined)
                         {
-                            $ret_array['from'] .= ' ' . $join['join']. ' AND ' . $params['join_table_alias'].'.deleted=0';
+                            $relatedJoin = $join['join']. ' AND ' . $params['join_table_alias'].'.deleted=0';
+                            // collect the related joins for exports
+                            $relatedJoins .= ' ' . $relatedJoin . ' ';
+                            $ret_array['from'] .= ' ' . $relatedJoin;
                             if(!empty($beanList[$rel_module]) && !empty($beanFiles[$beanList[$rel_module]]))
                             {
                                 require_once($beanFiles[$beanList[$rel_module]]);
@@ -3592,6 +3596,10 @@ class SugarBean
                     $jtcount++;
                 }
             }
+        }
+        // if we have stored related join for exports we have to remember that
+        if($relatedJoins && (empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup')) {
+            $_SESSION['export_related_joins'] = $relatedJoins;
         }
         if(!empty($filter))
         {

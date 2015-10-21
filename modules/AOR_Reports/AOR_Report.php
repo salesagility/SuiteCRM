@@ -700,16 +700,17 @@ class AOR_Report extends Basic {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
 
-                if($field->sort_by != ''){
-                    $query['sort_by'][] = $select_field." ".$field->sort_by;
-                }
-
                 if($field->group_by == 1){
                     $query['group_by'][] = $select_field;
                 }
 
+                // add function to selected field before sort the result
                 if($field->field_function != null){
                     $select_field = $field->field_function.'('.$select_field.')';
+                }
+
+                if($field->sort_by != ''){
+                    $query['sort_by'][] = $select_field." ".$field->sort_by;
                 }
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
