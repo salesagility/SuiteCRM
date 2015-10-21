@@ -38,26 +38,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once('include/connectors/formatters/default/formatter.php');
-
-class ext_rest_linkedin_formatter extends default_formatter {
-	
-public function getDetailViewFormat() { 
-   $mapping = $this->getSourceMapping();
-   $mapping_name = !empty($mapping['beans'][$this->_module]['name']) ? $mapping['beans'][$this->_module]['name'] : '';
-
-   if(!empty($mapping_name)) {
-	   $this->_ss->assign('mapping_name', $mapping_name);
-	   return $this->fetchSmarty();
-   }
-
-   $GLOBALS['log']->error($GLOBALS['app_strings']['ERR_MISSING_MAPPING_ENTRY_FORM_MODULE']);
-   return '';
-}	
-
-public function getIconFilePath() {
-   return 'modules/Connectors/connectors/formatters/ext/rest/linkedin/tpls/linkedin.gif';
-}   
-
-}
+$module_name = 'Alert';
+$object_name = 'Alert';
+$_module_name = 'Alert';
+$popupMeta = array('moduleMain' => $module_name,
+						'varName' => $object_name,
+						'orderBy' => $_module_name.'.name',
+						'whereClauses' => 
+							array('name' => $_module_name . '.name', 
+								),
+						    'searchInputs'=> array($_module_name. '_number', 'name', 'priority','status'),
+							
+						);
 ?>
+ 
+ 

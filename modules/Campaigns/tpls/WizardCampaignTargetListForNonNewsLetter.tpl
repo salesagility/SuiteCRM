@@ -152,8 +152,8 @@
 					{literal}
 					//construct html to display chosen tracker
 					var trgt_name_html = "<input id='target_name"+targets_added +"' type='hidden' size='20' maxlength='255' name='added_target_name"+targets_added+"' value='"+trgt_name.value+"' >"+trgt_name.value;
-					var trgt_id_html = "<input type='hidden' name='added_target_id"+trackers_added+"' id='added_target_id"+trackers_added+"' value='"+trgt_id.value+"' >";
-					var trgt_type_html = "<input name='added_target_type"+trackers_added+"' id='added_target_type"+trackers_added+"' type='hidden' value='"+trgt_type.value+"'/>"+trgt_type_text;
+					var trgt_id_html = "<input type='hidden' name='added_target_id"+targets_added+"' id='added_target_id"+targets_added+"' value='"+trgt_id.value+"' >";
+					var trgt_type_html = "<input name='added_target_type"+targets_added+"' id='added_target_type"+targets_added+"' type='hidden' value='"+trgt_type.value+"'/>"+trgt_type_text;
 
 					{/literal}
 					//display the html

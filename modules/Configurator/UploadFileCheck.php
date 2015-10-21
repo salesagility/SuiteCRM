@@ -60,6 +60,13 @@ if(isset($_FILES['file_1'])){
     if($upload->confirm_upload()) {
         $upload_dir  = 'upload://' . $upload_path;
         UploadStream::ensureDir($upload_dir);
+        if(!verify_uploaded_image($upload->temp_file_location, $returnArray['forQuotes'] == 'quotes')){
+            $returnArray['data']='other';
+            $returnArray['path'] = '';
+            echo $json->encode($returnArray);
+            sugar_cleanup();
+            exit();
+        }
         $file_name = $upload_dir."/".$upload->get_stored_file_name();
         if($upload->final_move($file_name)) {
             $upload_ok = true;

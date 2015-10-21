@@ -260,15 +260,35 @@ function checkAlerts() {
 	for(mj = 0 ; mj < alertList.length; mj++) {
 		if(alertList[mj]['done'] == 0) {
 			if(alertList[mj]['time'] < secondsSinceLoad && alertList[mj]['time'] > -1 ) {
-				alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
-				alertList[mj]['done'] = 1;
-				if(alertList[mj]['redirect'] == '') {
-					alert(alertmsg);
-				}
-				else if(confirm(alertmsg)) {
-					window.location = alertList[mj]['redirect'];
-				}
-			}
+                alertList[mj]['done'] = 1;
+                if(typeof Alerts !== "undefined") {
+                    //
+                    // Use Alerts module
+                    Alerts.prototype.show(
+                        {
+                            title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
+                            options: {
+                                body: alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n",
+                                url_redirect: alertList[mj]['redirect'],
+                                target_module: alertList[mj]['type']
+                            }
+                        }
+                    );
+                } else {
+                    //
+                    // Revert back to the legacy
+                    alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
+                    alertList[mj]['done'] = 1;
+                    alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
+                    alertList[mj]['done'] = 1;
+                    if(alertList[mj]['redirect'] == '') {
+                        alert(alertmsg);
+                    }
+                    else if(confirm(alertmsg)) {
+                        window.location = alertList[mj]['redirect'];
+                    }
+                }
+            }
 		}
 	}
 
@@ -3094,7 +3114,7 @@ SUGAR.util = function () {
 		    		if(typeof spans[wp].innerHTML != 'undefined' && spans[wp].innerHTML == ('wp_shortcut_fill_' + je)) {
 		    			if(typeof spans[wp].parentNode.parentNode == 'object') {
 		    				if(typeof spans[wp].parentNode.parentNode.onclick != 'undefined') {
-		    					spans[wp].parentNode.parentNode.onclick = null;
+		    					spans[wp].parentNode.parentNode.onclick = nulld;
 		    				}
 		    				// If the wp_shortcut span is contained by an A tag, replace the A with a DIV.
 		    				if(spans[wp].parentNode.tagName == 'A' && !isIE) {

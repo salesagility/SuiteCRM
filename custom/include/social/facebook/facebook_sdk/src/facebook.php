@@ -109,7 +109,7 @@ class Facebook extends BaseFacebook
     $_COOKIE[$cookie_name] = $cookie_value;
     if (!headers_sent()) {
       $expire = time() + self::FBSS_COOKIE_EXPIRE;
-      setcookie($cookie_name, $cookie_value, $expire, '/', '.'.$base_domain);
+        SugarApplication::setCookie($cookie_name, $cookie_value, $expire, '/', '.'.$base_domain, false, true);
     } else {
       // @codeCoverageIgnoreStart
       self::errorLog(
@@ -197,7 +197,7 @@ class Facebook extends BaseFacebook
     $cookie_name = $this->getSharedSessionCookieName();
     unset($_COOKIE[$cookie_name]);
     $base_domain = $this->getBaseDomain();
-    setcookie($cookie_name, '', 1, '/', '.'.$base_domain);
+    setcookie($cookie_name, '', 1, '/', '.'.$base_domain, false, true);
   }
 
   /**

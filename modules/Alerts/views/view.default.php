@@ -1,5 +1,7 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,22 +42,38 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /*********************************************************************************
 
-* Description:  Defines the English language pack for the base application.
-* Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-* All Rights Reserved.
-* Contributor(s): ______________________________________..
-********************************************************************************/
+ * Description:  TODO: To be written.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
 
-$connector_strings = array (
-    //licensing information shown in config screen
-    'LBL_LICENSING_INFO' => '<table border="0" cellspacing="1"><tr><td valign="top" width="35%" class="dataLabel">Esta es la URL para el plug-in Interno de la Companía utilizado para mostrar información de la compañía de LinkedIn&#169;. No debería ser necesario cambiar la URL a menos que LinkedIn&#169; cambie su URL para el plugin.</td></tr></table>',
+class AlertsViewDefault extends SugarView
+{
+    /**
+     * @see SugarView::_getModuleTitleParams()
+     */
+    protected function _getModuleTitleParams($browserTitle = false)
+    {
+        return array('Alerts');
+    }
 
-    'LBL_NAME' => 'Nombre de Compañía',
+    /**
+     * @see SugarView::preDisplay()
+     */
+    public function preDisplay()
+    {
 
-	//Configuration labels
-	'company_url' => 'URL',
-    'oauth_consumer_key' => 'API Key',
-    'oauth_consumer_secret' => 'Secret Key'
-);
+    }
 
-?>
+    /**
+     * @see SugarView::display()
+     */
+    public function display()
+    {
+        $this->ss->assign('Flash', $this->view_object_map['Flash']);
+        $this->ss->assign('Results', $this->view_object_map['Results']);
+        echo $this->ss->fetch('modules/Alerts/templates/default.tpl');
+        die();
+    }
+}

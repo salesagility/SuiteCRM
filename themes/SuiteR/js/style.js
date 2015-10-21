@@ -288,6 +288,9 @@ var checkContents = setInterval(function(){
         $('.showsearch').click(function() {
             $('.search_form').toggle();
         });
+        $('#userlinks_togglemobilesearch').click(function() {
+            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
+        });
 
         clearInterval(checkContents);
     }
@@ -366,5 +369,12 @@ function update_screen_resolution(){
         data: { 'width' : $( window ).width(), 'height' : $( window ).height(), 'to_pdf': true}
     });
 }
+
+// Alerts Notification
+$(document).ready(function() {
+    $('#alert-nav').click(function() {
+        $('#alert-nav #alerts').css('display', 'inherit');
+    });
+});
 
 // End of custom jQuery
