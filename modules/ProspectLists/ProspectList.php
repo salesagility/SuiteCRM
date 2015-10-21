@@ -247,6 +247,7 @@ FROM prospect_lists_prospects plp
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0 
 				AND c.deleted=0
+				AND ac.deleted=0
                 AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
 		$prospects_query = "SELECT p.id AS id, 'Prospects' AS related_type, '' AS \"name\", p.first_name AS first_name, p.last_name AS last_name,p.title AS title, p.salutation AS salutation, 

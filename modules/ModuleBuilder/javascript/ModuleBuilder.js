@@ -524,7 +524,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
                 return false; 
 			
 			try {
-			var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
+				var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
 			} catch (err) {
 				YAHOO.SUGAR.MessageBox.show({
                     title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
@@ -596,11 +596,12 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						comp.set('content', "<div class='bodywrapper'><div>" + ajaxResponse[maj].crumb + "</div>" + ajaxResponse[maj].content + "</div>");
 						if (ajaxResponse[maj].title != "no_change")
 							comp.set('label', ajaxResponse[maj].title);
-						SUGAR.util.evalScript(ajaxResponse[maj].content);	
+						SUGAR.util.evalScript(ajaxResponse[maj].content);
 					}
 				}
 				ModuleBuilder.history.update();
 			}
+			return true;
 		},
 		checkForErrors: function(o){
 			if (SUGAR.util.isLoginPage(o.responseText))
@@ -618,9 +619,55 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			return false;
 		},
 		submitForm: function(formname, successCall){
+			var failureCall = ModuleBuilder.failed;
 			ajaxStatus.showStatus(SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'));
 			if (typeof(successCall) == 'undefined') {
 				successCall = ModuleBuilder.updateContent;
+
+				// get bookmarked url state
+				var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
+				var urlVars = {};
+				var splits = YUI_HistoryBookmarkedState.split('&');
+				for(key in splits) {
+					var urlVar = splits[key].split('=');
+					urlVars[urlVar[0]] = urlVar[1];
+				}
+
+				// check where we are and do it if we are in field editor in module builder
+				if(
+					// user came from studio/fields layout by ajax urls
+					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
+					// user refresh the page or came from direct url
+					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == '')
+				) {
+					// switch on the preloader message
+					ModuleBuilder.preloader.on();
+
+					// set callback functions
+					successCall = function(o){
+						// switch off preloader
+						ModuleBuilder.preloader.off();
+						// call the original callback
+						if(ModuleBuilder.updateContent(o)) {
+							// show results
+							YAHOO.SUGAR.MessageBox.show({
+								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
+								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
+								width: 500
+							});
+						}
+						// refresh page content
+						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+					};
+					failureCall = function(o) {
+						// switch off preloader
+						ModuleBuilder.preloader.off();
+						// call the original callback
+						ModuleBuilder.failed(o);
+						// refresh page content
+						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+					};
+				}
 			}
 			else {
 				ModuleBuilder.callLock = true;
@@ -629,9 +676,47 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			Connect.asyncRequest(
 			    Connect.method, 
 			    Connect.url, 
-			    {success: successCall, failure: ModuleBuilder.failed}
+			    {success: successCall, failure: failureCall}
 			);
 		},
+
+		/**
+		 * show/hide preload message for user
+		 */
+		preloader: {
+
+			/**
+			 * Show a preload message
+			 * @param title string title of message
+			 * @param message string
+			 */
+			on: function(title, message) {
+				// set default title and/or message
+				if(typeof title == 'undefined') {
+					title = SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING_TITLE'); // In Progress..
+				}
+				if(typeof message == 'undefined') {
+					message = SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING_MESSAGE'); // Please wait, loading..
+				}
+				// switch off preloader, maybe was another one
+				ModuleBuilder.preloader.off();
+				// show message
+				YAHOO.SUGAR.MessageBox.show({
+					title: title,
+					msg: message,
+					width: 500,
+					close: false
+				});
+			},
+
+			/**
+			 * Hide message
+			 */
+			off: function() {
+				YAHOO.SUGAR.MessageBox.hide();
+			}
+		},
+
 		setMode: function(reqMode){
 			ModuleBuilder.mode = reqMode;
 		},

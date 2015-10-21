@@ -69,8 +69,8 @@ class AOR_Report extends Basic {
         parent::save($check_notify);
 
         require_once('modules/AOR_Fields/AOR_Field.php');
-        $condition = new AOR_Field();
-        $condition->save_lines($_POST, $this, 'aor_fields_');
+        $field = new AOR_Field();
+        $field->save_lines($_POST, $this, 'aor_fields_');
 
         require_once('modules/AOR_Conditions/AOR_Condition.php');
         $condition = new AOR_Condition();
@@ -265,7 +265,7 @@ class AOR_Report extends Basic {
 
     function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = ''){
 
-        global $beanList;
+        global $beanList, $sugar_config;
 
         $report_sql = $this->build_report_query($group_value);
         $max_rows = 20;
@@ -418,7 +418,7 @@ class AOR_Report extends Basic {
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
                     if($att['link'] && $links){
-                        $html .= "<a href='index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
                     }
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
@@ -693,7 +693,7 @@ class AOR_Report extends Basic {
                 }
 
                 if((isset($data['source']) && $data['source'] == 'custom_fields')) {
-                    $select_field = $table_alias.'_cstm.'.$field->field;
+                    $select_field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$field->field;
                     $query = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm',$table_alias, $field_module, 'custom', $query);
                 } else {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
@@ -727,7 +727,7 @@ class AOR_Report extends Basic {
 
             switch ($type){
                 case 'custom':
-                    $query['join'][$alias] = 'LEFT JOIN '.$this->db->quoteIdentifier($module->get_custom_table_name()).' '.$this->db->quoteIdentifier($name).' ON '.$module->table_name.'.id = '. $this->db->quoteIdentifier($name).'.id_c ';
+                    $query['join'][$alias] = 'LEFT JOIN '.$this->db->quoteIdentifier($module->get_custom_table_name()).' '.$this->db->quoteIdentifier($name).' ON '.$this->db->quoteIdentifier($parentAlias).'.id = '. $this->db->quoteIdentifier($name).'.id_c ';
                     break;
 
                 case 'relationship':
@@ -798,6 +798,10 @@ class AOR_Report extends Basic {
         return $where;
     }
 
+    /**
+     * @param array $query
+     * @return array
+     */
     function build_report_query_where($query = array()){
         global $beanList, $app_list_strings, $sugar_config;
 
@@ -821,7 +825,8 @@ class AOR_Report extends Basic {
                         if(empty($rel)){
                             continue;
                         }
-                        $rel = strtolower($rel);
+                        // Bug: Prevents relationships from loading.
+                        //$rel = strtolower($rel);
                         $new_condition_module = new $beanList[getRelatedModule($condition_module->module_dir,$rel)];
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
@@ -829,100 +834,114 @@ class AOR_Report extends Basic {
                         $condition_module = $new_condition_module;
                     }
                 }
-                if(isset($app_list_strings['aor_sql_operator_list'][$condition->operator])){
+                if(isset($app_list_strings['aor_sql_operator_list'][$condition->operator])) {
                     $where_set = false;
 
                     $data = $condition_module->field_defs[$condition->field];
 
-                    if($data['type'] == 'relate' && isset($data['id_name'])) {
+                    if ($data['type'] == 'relate' && isset($data['id_name'])) {
                         $condition->field = $data['id_name'];
                         $data_new = $condition_module->field_defs[$condition->field];
-                        if(!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
+                        if (!empty($data_new['source']) && $data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
                             $data_new['type'] = 'link';
                             $data_new['relationship'] = $data['link'];
                         }
                         $data = $data_new;
                     }
 
-                    if($data['type'] == 'link' && $data['source'] == 'non-db'){
-                        $relModule = getRelatedModule($condition_module->module_dir,$data['relationship']);
+                    if ($data['type'] == 'link' && $data['source'] == 'non-db') {
+                        $relModule = getRelatedModule($condition_module->module_dir, $data['relationship']);
                         $new_field_module = new $beanList[$relModule];
-                        $query = $this->build_report_query_join($data['relationship'], $table_alias.':'.strtolower($relModule), $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
+                        $query = $this->build_report_query_join($data['relationship'], $table_alias . ':' . strtolower($relModule), $oldAlias, $condition_module, 'relationship', $query, $new_field_module);
                         $field_module = $new_field_module;
-                        $table_alias = $table_alias.':'.$data['relationship'];
+                        $table_alias = $table_alias . ':' . $data['relationship'];
+
+                        // Debugging: security groups conditions - It's a hack to just get the query working
+                        if($condition_module->module_dir = 'SecurityGroups' && count($path) > 1) {
+//                            $table_alias = 'opportunities:assigned_user_link:SecurityGroups' ;
+                            $table_alias = $oldAlias. ':' .$rel;
+                        }
                         $condition->field = 'id';
                     }
-                    if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                        $field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$condition->field;
-                        $query = $this->build_report_query_join($table_alias.'_cstm',$table_alias.'_cstm',$oldAlias, $condition_module, 'custom', $query);
+                    if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+                        $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
+                        $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm', $oldAlias, $condition_module, 'custom', $query);
                     } else {
-                        $field = $this->db->quoteIdentifier($table_alias).'.'.$condition->field;
+                        $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
                     }
 
-                    if(!empty($this->user_parameters[$condition->id]) && $condition->parameter){
+                    if (!empty($this->user_parameters[$condition->id]) && $condition->parameter) {
                         $condParam = $this->user_parameters[$condition->id];
                         $condition->value = $condParam['value'];
                         $condition->operator = $condParam['operator'];
                         $condition->value_type = $condParam['type'];
                     }
 
-                    switch($condition->value_type) {
+                    switch ($condition->value_type) {
                         case 'Field':
                             $data = $condition_module->field_defs[$condition->value];
 
-                            if($data['type'] == 'relate' && isset($data['id_name'])) {
+                            if ($data['type'] == 'relate' && isset($data['id_name'])) {
                                 $condition->value = $data['id_name'];
                                 $data_new = $condition_module->field_defs[$condition->value];
-                                if($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])){
+                                if ($data_new['source'] == 'non-db' && $data_new['type'] != 'link' && isset($data['link'])) {
                                     $data_new['type'] = 'link';
                                     $data_new['relationship'] = $data['link'];
                                 }
                                 $data = $data_new;
                             }
 
-                            if($data['type'] == 'link' && $data['source'] == 'non-db'){
-                                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$data['relationship'])];
-                                $query = $this->build_report_query_join($data['relationship'], $table_alias,$oldAlias, $field_module, 'relationship', $query, $new_field_module);
+                            if ($data['type'] == 'link' && $data['source'] == 'non-db') {
+                                $new_field_module = new $beanList[getRelatedModule($field_module->module_dir, $data['relationship'])];
+                                $query = $this->build_report_query_join($data['relationship'], $table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
                                 $field_module = $new_field_module;
                                 $table_alias = $data['relationship'];
                                 $field->field = 'id';
                             }
-                            if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                $value = $condition_module->table_name.'_cstm.'.$condition->value;
-                                $query = $this->build_report_query_join($condition_module->table_name.'_cstm', $table_alias.'_cstm',$table_alias, $condition_module, 'custom', $query);
+                            if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+                                $value = $condition_module->table_name . '_cstm.' . $condition->value;
+                                $query = $this->build_report_query_join($condition_module->table_name . '_cstm', $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
                             } else {
-                                $value = $condition_module->table_name.'.'.$condition->value;
+                                $value = $condition_module->table_name . '.' . $condition->value;
                             }
                             break;
 
                         case 'Date':
-                            $params =  unserialize(base64_decode($condition->value));
-                            if($params[0] == 'now'){
-                                if($sugar_config['dbconfig']['db_type'] == 'mssql'){
-                                    $value  = 'GetDate()';
+                            $params = unserialize(base64_decode($condition->value));
+                            if ($params[0] == 'now') {
+                                if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                    $value = 'GetDate()';
                                 } else {
                                     $value = 'NOW()';
                                 }
+                            } else if($params[0] == 'today'){
+                                if($sugar_config['dbconfig']['db_type'] == 'mssql'){
+                                    //$field =
+                                    $value  = 'CAST(GETDATE() AS DATE)';
+                                } else {
+                                    $field = 'DATE('.$field.')';
+                                    $value = 'Curdate()';
+                                }
                             } else {
                                 $data = $condition_module->field_defs[$params[0]];
-                                if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                                    $value = $condition_module->table_name.'_cstm.'.$params[0];
-                                    $query = $this->build_report_query_join($condition_module->table_name.'_cstm', $table_alias.'_cstm',$table_alias, $condition_module, 'custom', $query);
+                                if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
+                                    $value = $condition_module->table_name . '_cstm.' . $params[0];
+                                    $query = $this->build_report_query_join($condition_module->table_name . '_cstm', $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
                                 } else {
-                                    $value = $condition_module->table_name.'.'.$params[0];
+                                    $value = $condition_module->table_name . '.' . $params[0];
                                 }
                             }
 
-                            if($params[1] != 'now'){
-                                switch($params[3]) {
+                            if ($params[1] != 'now') {
+                                switch ($params[3]) {
                                     case 'business_hours';
                                         //business hours not implemented for query, default to hours
                                         $params[3] = 'hours';
                                     default:
-                                        if($sugar_config['dbconfig']['db_type'] == 'mssql'){
-                                            $value = "DATEADD(".$params[3].",  ".$app_list_strings['aor_date_operator'][$params[1]]." $params[2], $value)";
+                                        if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
+                                            $value = "DATEADD(" . $params[3] . ",  " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2], $value)";
                                         } else {
-                                            $value = "DATE_ADD($value, INTERVAL ".$app_list_strings['aor_date_operator'][$params[1]]." $params[2] ".$params[3].")";
+                                            $value = "DATE_ADD($value, INTERVAL " . $app_list_strings['aor_date_operator'][$params[1]] . " $params[2] " . $params[3] . ")";
                                         }
                                         break;
                                 }
@@ -931,29 +950,52 @@ class AOR_Report extends Basic {
 
                         case 'Multi':
                             $sep = ' AND ';
-                            if($condition->operator == 'Equal_To') $sep = ' OR ';
+                            if ($condition->operator == 'Equal_To') $sep = ' OR ';
                             $multi_values = unencodeMultienum($condition->value);
-                            if(!empty($multi_values)){
+                            if (!empty($multi_values)) {
                                 $value = '(';
-                                foreach($multi_values as $multi_value){
-                                    if($value != '(') $value .= $sep;
-                                    $value .= $field.' '.$app_list_strings['aor_sql_operator_list'][$condition->operator]." '".$multi_value."'";
+                                foreach ($multi_values as $multi_value) {
+                                    if ($value != '(') $value .= $sep;
+                                    $value .= $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . " '" . $multi_value . "'";
                                 }
                                 $value .= ')';
                             }
                             $query['where'][] = $value;
                             $where_set = true;
                             break;
-
+                        case "Period":
+                            if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
+                                $params = $condition->value;
+                            } else {
+                                $params = base64_decode($condition->value);
+                            }
+                            $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+                            break;
+                        case "CurrentUserID":
+                            global $current_user;
+                            $value = '"' . $current_user->id . '"';
+                            break;
                         case 'Value':
                         default:
-                            $value = "'".$this->db->quote($condition->value)."'";
+                            $value = "'" . $this->db->quote($condition->value) . "'";
+                            break;
+                    }
+
+                    //handle like conditions
+                    Switch($condition->operator) {
+                        case 'Contains':
+                            $value = "CONCAT('%', ".$value." ,'%')";
+                            break;
+                        case 'Starts_With':
+                            $value = "CONCAT(".$value." ,'%')";
+                            break;
+                        case 'Ends_With':
+                            $value = "CONCAT('%', ".$value.")";
                             break;
                     }
 
 
-                    if(!$where_set) $query['where'][] = $field.' '.$app_list_strings['aor_sql_operator_list'][$condition->operator].' '.$value;
-
+                    if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
 
                 }
             }

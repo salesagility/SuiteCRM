@@ -532,4 +532,6 @@ $mod_strings = array (
   'LBL_DELETED' => 'Eliminado',
   'LBL_HIDEOPTIONS' => 'Ocultar Opciones',
   'LBL_SHOWOPTIONS' => 'Mostrar Opciones',
+
+    'LBL_ENABLE_NOTIFICATIONS' => 'Activar notificaciones del escritorio',
 );

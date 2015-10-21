@@ -51,6 +51,7 @@ class CampaignLog extends SugarBean {
     var $target_tracker_key;
     var $target_id;
     var $target_type;
+    var $date_modified;
     var $activity_type;
     var $activity_date;
     var $related_id;
