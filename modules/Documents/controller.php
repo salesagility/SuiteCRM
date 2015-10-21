@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,12 +38,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-
-require_once('modules/Documents/Popup_picker.php');
-
-$popup = new Popup_Picker();
-
-echo $popup->process_page();
-
+class DocumentsController extends SugarController
+{
+    function action_Popup(){
+        $this->view = 'popup';
+    }
+}
 ?>
