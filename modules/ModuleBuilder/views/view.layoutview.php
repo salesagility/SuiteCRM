@@ -91,6 +91,11 @@ class ViewLayoutView extends SugarView
 
         global $mod_strings ;
         $parser = ParserFactory::getParser($this->editLayout,$this->editModule,$this->package);
+
+        if(isset($this->view_object_map['new_parser'])) {
+            $parser = $this->view_object_map['new_parser'];
+        }
+
         $history = $parser->getHistory () ;
         $smarty = new Sugar_Smarty ( ) ;
         //Add in the module we are viewing to our current mod strings
