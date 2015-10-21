@@ -109,15 +109,6 @@ array (
             'name' => 'name',
             'comment' => 'Name of the Company',
             'label' => 'LBL_NAME',
-            'displayParams' => 
-            array (
-              'enableConnectors' => true,
-              'module' => 'Accounts',
-              'connectors' => 
-              array (
-                0 => 'ext_rest_linkedin',
-              ),
-            ),
           ),
           1 => 
           array (

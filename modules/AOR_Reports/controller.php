@@ -271,7 +271,7 @@ class AOR_ReportsController extends SugarController {
                 $valid_opp = array('Equal_To','Not_Equal_To');
                 break;
             default:
-                $valid_opp = array('Equal_To','Not_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Contains', 'Starts_With', 'Ends_With',);
                 break;
         }
 
@@ -334,7 +334,7 @@ class AOR_ReportsController extends SugarController {
             case 'date':
             case 'datetime':
             case 'datetimecombo':
-                $valid_opp = array('Value','Field', 'Date');
+                $valid_opp = array('Value','Field', 'Date', 'Period');
                 break;
             case 'enum':
             case 'dynamicenum': 
@@ -342,7 +342,13 @@ class AOR_ReportsController extends SugarController {
                 $valid_opp = array('Value','Field', 'Multi');
                 break;
             default:
-                $valid_opp = array('Value','Field');
+                // Added to compare fields like assinged to with the current user
+                if($vardef['module'] == "Users" || $vardef['name'] = 'id') {
+                    $valid_opp = array('Value','Field', 'CurrentUserID');
+                } else {
+                    $valid_opp = array('Value','Field');
+                }
+
                 break;
         }
 
@@ -465,6 +471,16 @@ class AOR_ReportsController extends SugarController {
                 break;
             case 'Multi':
                 echo getModuleField($rel_module,$fieldname, $aor_field, $view, $value,'multienum');
+                break;
+            case 'Period':
+                if($view == 'EditView'){
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getDropdownList('date_time_period_list',$_REQUEST['aor_value']) ."</select>";
+                }else{
+                    echo getDropdownList('date_time_period_list',$_REQUEST['aor_value']);
+                }
+
+                break;
+            case 'CurrentUserID':
                 break;
             case 'Value':
             default:

@@ -125,15 +125,6 @@ array (
           0 => 
           array (
             'name' => 'account_name',
-            'displayParams' => 
-            array (
-              'enableConnectors' => true,
-              'module' => 'Leads',
-              'connectors' => 
-              array (
-                0 => 'ext_rest_linkedin',
-              ),
-            ),
           ),
           1 => 'website',
         ),

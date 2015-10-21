@@ -147,7 +147,7 @@ $dictionary['AM_ProjectTemplates'] = array(
     'source' => 'non-db',
     'table' => 'users',
     'id_name' => 'assigned_user_id',
-    'module' => '',
+    'module' => 'Users',
     'duplicate_merge' => 'disabled',
     'required' => false,
     'massupdate' => 0,
@@ -174,4 +174,4 @@ $dictionary['AM_ProjectTemplates'] = array(
 if (!class_exists('VardefManager')){
         require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AM_ProjectTemplates','AM_ProjectTemplates', array('basic','assignable'));
+VardefManager::createVardef('AM_ProjectTemplates','AM_ProjectTemplates', array('basic','assignable'));

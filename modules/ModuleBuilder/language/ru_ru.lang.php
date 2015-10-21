@@ -652,6 +652,12 @@ You can re-order the modules by dragging their rows in the table.<br/><br/>
 'LBL_AJAX_BUILDPROGRESS' => 'Выполняется создание...',
 'LBL_AJAX_DEPLOYPROGRESS' => 'Выполняется установка...',
 'LBL_AJAX_FIELD_EXISTS' => 'Указанное название поля уже существует. Введите другое название.',
+
+'LBL_AJAX_RESPONSE_TITLE' => 'Pезультат',
+'LBL_AJAX_RESPONSE_MESSAGE' => 'Эта операция завершена успешно',
+'LBL_AJAX_LOADING_TITLE' => 'В процессе..',
+'LBL_AJAX_LOADING_MESSAGE' => 'Пожалуйста, подождите, идет загрузка ..',
+
 //JS
 'LBL_JS_REMOVE_PACKAGE' => 'Вы действительно хотите удалить этот пакет? Это приведёт к удалению всех файлов, связанных с этим пакетом.',
 'LBL_JS_REMOVE_MODULE' => 'Вы действительно хотите удалить этот модуль? Это приведёт к удалению всех файлов, связанных с этим модулем.',
