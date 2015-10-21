@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,20 +37,36 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mapping = array(
-	'beans' => array (
-		'Accounts' => array (
-		    'name'=>'name',
-		),
-		'Contacts' => array (
-		    'name'=>'account_name',
-		),
-		'Leads' => array (
-		    'name'=>'account_name',
-		),
-		'Prospects' => array(
-		    'name'=>'account_name',
-		)
-	),
+$mod_strings = array (
+  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
+  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
+  'LBL_ID' => 'ID',
+  'LBL_DATE_ENTERED' => 'Date Created',
+  'LBL_DATE_MODIFIED' => 'Date Modified',
+  'LBL_MODIFIED' => 'Modified By',
+  'LBL_MODIFIED_ID' => 'Modified By Id',
+  'LBL_MODIFIED_NAME' => 'Modified By Name',
+  'LBL_CREATED' => 'Created By',
+  'LBL_CREATED_ID' => 'Created By Id',
+  'LBL_DESCRIPTION' => 'Description',
+  'LBL_DELETED' => 'Deleted',
+  'LBL_NAME' => 'Name',
+  'LBL_CREATED_USER' => 'Created by User',
+  'LBL_MODIFIED_USER' => 'Modified by User',
+  'LBL_LIST_NAME' => 'Name',
+  'LBL_EDIT_BUTTON' => 'Edit',
+  'LBL_REMOVE' => 'Remove',
+  'LBL_LIST_FORM_TITLE' => 'Alert List',
+  'LBL_MODULE_NAME' => 'Alert',
+  'LBL_MODULE_TITLE' => 'Alert',
+  'LBL_HOMEPAGE_TITLE' => 'My Alert',
+  'LNK_NEW_RECORD' => 'Create Alert',
+  'LNK_LIST' => 'View Alert',
+  'LNK_IMPORT_Alert' => 'Import Alert',
+  'LBL_SEARCH_FORM_TITLE' => 'Search Alert',
+  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
+  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
+  'LBL_Alert_SUBPANEL_TITLE' => 'Alert',
+  'LBL_NEW_FORM_TITLE' => 'New Alert',
+  'LBL_IS_READ' => 'is read',
 );
-?>

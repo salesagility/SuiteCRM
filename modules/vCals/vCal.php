@@ -138,12 +138,16 @@ class vCal extends SugarBean {
 		// loop thru each activity, get start/end time in UTC, and return FREEBUSY strings
 		foreach($acts_arr as $act)
 		{
+            $ID = $act->sugar_bean->id;
 			$startTimeUTC = $act->start_time->format(self::UTC_FORMAT);
 			$endTimeUTC = $act->end_time->format(self::UTC_FORMAT);
-
             $ical_array[] = array("FREEBUSY", $startTimeUTC ."/". $endTimeUTC);
+            $ical_array[] = array("X-FREEBUSY-ID", $ID);
+            $ical_array[] = array("X-FREEBUSY-TYPE", get_class($act->sugar_bean));
+            //$ical_array[] = array(array("X-FREEBUSYID", $ID), array("FREEBUSY", $startTimeUTC ."/". $endTimeUTC));
 		}
         return self::create_ical_string_from_array($ical_array);
+//        return $ical_array;
 
 	}
 
@@ -190,15 +194,21 @@ class vCal extends SugarBean {
            // retrieve cached freebusy lines from vcals
 		   if ($timeOffset != 0)
 		   {
-           if ($cached == true)
-           {
-             $str .= $this->get_freebusy_lines_cache($user_focus);
-           }
-           // generate freebusy from Meetings and Calls
-           else
-           {
-               $str .= $this->create_sugar_freebusy($user_focus,$start_date_time,$end_date_time);
-			}
+//               $freebusy = $this->create_sugar_freebusy($user_focus,$start_date_time,$end_date_time);
+//               $str .= self::create_ical_string_from_array($freebusy[0]);
+//               $str .= self::create_ical_string_from_array($freebusy[1]);
+               // TODO: add back once the previous works!!!!
+//               if ($cached == true)
+//               {
+//                 $str .= $this->get_freebusy_lines_cache($user_focus);
+//               }
+//               // generate freebusy from Meetings and Calls
+//               else
+//               {
+                   //$freebusy = self::create_ical_string_from_array($user_focus,$start_date_time,$end_date_time);
+
+                   $str .= $this->create_sugar_freebusy($user_focus, $start_date_time, $end_date_time);
+//               }
            }
 
            // UID:20030724T213406Z-10358-1000-1-12@phoenix

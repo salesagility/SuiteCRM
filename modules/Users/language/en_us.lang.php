@@ -51,7 +51,6 @@ $mod_strings = array (
                                                 'Deleting a User record cannot be undone.',
 	'LBL_DELETE_GROUP_CONFIRM'          => 'Are you sure you want to delete this Group User? Click OK to delete the User record.<br/>After clicking OK, you will be given the ability to reassign records assigned to the Group User to another user.',
 	'LBL_DELETE_PORTAL_CONFIRM'         => 'Are you sure you want to delete this Portal API User? Click OK to delete the User record.',
-    'LBL_DELETE_USER_CONFIRM'           => 'When the User record is deleted, the corresponding Employee record will also be deleted.<br/><br/>'.
                                                   'Click OK to delete the User record.',
 
 	'LNK_IMPORT_USERS'                 => 'Import Users',
@@ -519,7 +518,7 @@ $mod_strings = array (
 
     'LBL_WIZARD_FINISH' => 'Click <b>Finish</b> below to save your settings and to begin using SuiteCRM. For more information on using SuiteCRM:<br /><br />
 <table cellpadding=0 cellspacing=0>
-<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/sugarcrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
+<tr><td><!--not_in_theme!-->Visit www.suitecrm.com <img src=include/images/suitecrm_login.png style="margin-right: 5px;"></td><td><a href="http://www.suitecrm.com/" target="_blank"><b>Suite CRM</b></a></td></tr>
 </table>',
 
     'LBL_WIZARD_FINISH1' => 'What would you like to do next?',
@@ -589,6 +588,8 @@ $mod_strings = array (
     'LBL_QUICK_DOCUMENT' => 'Create Document',
     'LBL_QUICK_CALL' => 'Log Call',
     'LBL_QUICK_TASK' => 'Create Task',
+
+    'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
 
 ); // END STRINGS DEFS
 

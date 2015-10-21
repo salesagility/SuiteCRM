@@ -69,26 +69,31 @@ class AOR_Condition extends Basic {
                 foreach($this->field_defs as $field_def) {
                     if(isset($post_data[$key.$field_def['name']][$i])){
                         if(is_array($post_data[$key.$field_def['name']][$i])){
-                            if($field_def['name'] == 'module_path'){
-                                $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
-                            }else {
+
                                 switch($condition->value_type) {
                                     case 'Date':
                                         $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
                                     default:
                                         $post_data[$key.$field_def['name']][$i] = encodeMultienumValue($post_data[$key.$field_def['name']][$i]);
                                 }
-                            }
                         } else if($field_def['name'] == 'value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key.$field_def['name']][$i]);
                         }else if($field_def['name'] == 'parameter'){
                             $post_data[$key.$field_def['name']][$i] = isset($post_data[$key.$field_def['name']][$i]);
+                        }else if($field_def['name'] == 'module_path'){
+                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize(explode(":",$post_data[$key.$field_def['name']][$i])));
                         }
                         $condition->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
                     }else if($field_def['name'] == 'parameter'){
                         $condition->$field_def['name'] = 0;
                     }
 
+                }
+                // Period must be saved as a string instead of a base64 encoded datetime.
+                // Overwriting value
+                if($condition->value_type == 'Period') {
+                    $condition->value = base64_encode($_POST['aor_conditions_value'][$i]);
+//                    $condition->value = $_POST['aor_conditions_value'][$i];
                 }
                 if(trim($condition->field) != ''){
                     $condition->condition_order = ++$j;
