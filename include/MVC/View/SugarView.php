@@ -147,19 +147,6 @@ class SugarView
             $GLOBALS['logic_hook']->call_custom_logic('', 'after_ui_frame');
         }
 
-        // We have to update jsAlerts as soon as possible
-        if (
-            !isset($_SESSION['isMobile'])
-            &&
-            (
-                $this instanceof ViewList
-                || $this instanceof ViewDetail
-                || $this instanceof ViewEdit
-            )
-        ) {
-            $jsAlerts = new jsAlerts();
-            echo $jsAlerts->getScript();
-        }
 
         if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) $this->_displaySubPanels();
 
@@ -821,6 +808,9 @@ EOHTML;
             echo getVersionedScript('cache/include/javascript/sugar_grp1_yui.js');
             echo getVersionedScript('cache/include/javascript/sugar_grp1.js');
             echo getVersionedScript('include/javascript/calendar.js');
+
+            // Add "new" alerts
+            echo getVersionedScript('include/javascript/alerts.js');
 
             // output necessary config js in the top of the page
             $config_js = $this->getSugarConfigJS();

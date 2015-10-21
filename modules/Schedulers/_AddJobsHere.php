@@ -70,6 +70,7 @@ $job_strings = array (
     14 => 'cleanJobQueue',
     15 => 'removeDocumentsFromFS',
     16 => 'trimSugarFeeds',
+	17 => 'handleMissedAlerts',
 
 );
 
@@ -525,6 +526,35 @@ function cleanJobQueue($job)
     $hard_cutoff_date = $job->db->quoted($td->getNow()->modify("- $hard_cutoff days")->asDb());
     $job->db->query("DELETE FROM {$job->table_name} WHERE status='done' AND date_modified < ".$job->db->convert($hard_cutoff_date, 'datetime'));
     return true;
+}
+
+function handleMissedAlerts() {
+	global $current_user, $db;
+	$NOW = new DateTime(gmdate("Y-m-d H:i:s"));
+	$MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
+	$MOMENT = $MOMENT->sub(new DateInterval('PT60S'));
+
+	// Get recent alerts from the last n seconds (see $MOMENT)
+	$query = "SELECT * FROM alerts WHERE delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."'";
+	$query_result = $db->query($query);
+
+	// Search for subscribers with is_read set to false.
+	while ($row = $db->fetchByAssoc($query_result)) {
+		$subscribers_json = json_decode(utf8_decode($row['subscribers']));
+
+		// Convert from stdClass to Array
+		$subscribers = array();
+		foreach($subscribers_json as $key => $value) {
+			$subscribers[$key] = (array)$value;
+		}
+
+		foreach($subscribers as $s => $subscriber) {
+			if(!$subscriber['is_read']) {
+				// Send email / SMS / Mark up as missed for the alerts manager
+			}
+		}
+	}
+	return true;
 }
 
 if (file_exists('custom/modules/Schedulers/_AddJobsHere.php')) {
