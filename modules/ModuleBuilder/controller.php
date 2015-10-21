@@ -798,7 +798,6 @@ class ModuleBuilderController extends SugarController
     }
 
 	function action_popupSave(){
-		$this->view = 'popupview' ;
         $packageName = (isset ( $_REQUEST [ 'view_package' ] ) && (strtolower($_REQUEST['view_package']) != 'studio')) ? $_REQUEST [ 'view_package' ] : null ;
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
         $parser = ParserFactory::getParser ( $_REQUEST [ 'view' ], $_REQUEST [ 'view_module' ], $packageName ) ;
@@ -814,6 +813,8 @@ class ModuleBuilderController extends SugarController
 			$repair->clearTpls();
         }
 
+        $this->view_object_map['new_parser'] = $parser;
+        $this->view = 'popupview';
 	}
 
     function action_searchViewSave ()
