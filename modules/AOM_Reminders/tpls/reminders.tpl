@@ -83,9 +83,8 @@
 			$('table#schedulerTable tr.schedulerAttendeeRow').each(function(i,e){
 				var dataModule = $(e).attr('data-module');
 				var dataId = $(e).attr('data-id');
-				var imageSrc = $(e).find('td[scope="row"]').first().find('img').first().attr('src');
 				var relatedValue = $(e).find('td[scope="row"]').first().text();
-				inviteesList += '<li class="invitees_item"><button class="invitee_btn" data-id="' + dataId + '" data-module="' + dataModule + '" onclick="Reminders.onInviteeClick(this);"><img src="'+ imageSrc +'"><span class="related-value">' + relatedValue + '</span>&nbsp<span>[x]</span></button></li>';
+				inviteesList += '<li class="invitees_item"><button class="invitee_btn" data-id="' + dataId + '" data-module="' + dataModule + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName='+ dataModule +'.gif"><span class="related-value">' + relatedValue + '</span>&nbsp<span>[x]</span></button></li>';
 			});
 			$(e).parent().find('.invitees_list').first().html(inviteesList);
 		},
