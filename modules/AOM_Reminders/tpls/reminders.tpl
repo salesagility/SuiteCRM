@@ -119,7 +119,6 @@
 		},
 
 		createRemindersPostData: function() {
-			//document.EditView.reminders_data.value='asdasdasdasdasdasdasdw232222222222222222222222';
 			var reminders = [];
 			$('#reminder_view .reminder_item').each(function(i,e) {
 				reminders.push({
@@ -131,12 +130,20 @@
 			});
 			document.EditView.reminders_data.value = JSON.stringify(reminders);
 			console.log(JSON.stringify(reminders));
-		}
+		},
+		
+		init: function(data) {
+			$.each(data, function(i,e){
+				
+			});
+		},
 
 	};
 
 
 	$(function(){
+		Reminders.init({/literal}{$remindersDataJson}{literal});
+		
 		$('#reminder_add_btn').click(function(){
 			Reminders.onAddClick(this);
 		});
