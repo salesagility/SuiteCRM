@@ -41,16 +41,116 @@ class AlertsController extends SugarController
 {
     public function action_get()
     {
-        global $current_user, $app_strings;
-        $bean = BeanFactory::getBean('Alerts');
-
-        $this->view_object_map['Flash'] = '';
-        $this->view_object_map['Results'] = $bean->get_full_list("alerts.date_entered","alerts.assigned_user_id = '".$current_user->id."' AND is_read != '1'");
-        if($this->view_object_map['Results'] == '') {
-            $this->view_object_map['Flash'] =$app_strings['LBL_EMAIL_ERROR_VIEW_RAW_SOURCE'];
-        }
-        $this->view = 'default';
+        die();
     }
+
+    /**
+     * Use by Alerts.js to get the current alerts
+     */
+    public function action_getCurrentAlerts() {
+        global $current_user, $db, $timedate;
+        $NOW = new DateTime(gmdate("Y-m-d H:i:s"));
+        $MOMENT = new DateTime(gmdate("Y-m-d H:i:s"));
+        $MOMENT = $MOMENT->sub(new DateInterval('PT30S'));
+        $query = "SELECT id, delivery_datetime FROM alerts WHERE deleted = 0 AND send_popup = '1' AND
+                  delivery_datetime >= '".$MOMENT->format('Y-m-d H:i:s')."' AND delivery_datetime <= '".$NOW->format('Y-m-d H:i:s')."'
+                  AND subscribers LIKE '%\"is_read\":false%' AND subscribers LIKE '%$current_user->id%'
+                  ORDER BY delivery_datetime DESC";
+        $alerts = new stdClass();
+        $alerts->response = array();
+        $result = $db->query($query);
+        while ($row = $db->fetchByAssoc($result)) {
+            $alert = new Alert();
+            $alert->retrieve($row['id']);
+            if (array_key_exists($current_user->id, $alert->subscribers)) {
+                $reminder_time = new DateTime($row['delivery_datetime']);
+                $reminder_time = $reminder_time->getTimestamp() - $NOW->getTimestamp();
+                $alerts->response[] = array(
+                    "id" => $alert->id,
+                    "name" => $alert->name,
+                    "description" => $alert->description,
+                    "target_module" => $alert->target_module,
+                    "target_module_id" => $alert->target_module_id,
+                    "url_redirect" => $alert->url_redirect,
+                    "send_email" => $alert->send_email,
+                    "send_sms" => $alert->send_sms,
+                    "send_popup" => $alert->send_popup,
+                    "send_to_manager" => $alert->send_to_manager,
+                    "content_type" => $alert->content_type,
+                    "delivery_datetime" => $alert->delivery_datetime,
+                    "delivery_datetime" => $reminder_time,
+                    "type" => $alert->type,
+                    "was_sent" => $alert->was_sent
+                );
+                // Since this is technically sending a popup.
+                $alert->subscribers[$current_user->id]['is_read'] = true;
+//                $alert->$alert->subscribers->$current_user->id['is_read'] = true;
+                $alert->save();
+            }
+        }
+        header('Content-Type: application/json');
+        $return_value = json_encode($alerts);
+        echo $return_value;
+        die();
+    }
+
+    public function action_getUnread() {
+        global  $current_user, $db;
+        $query = 'SELECT id FROM alerts WHERE deleted = 0 AND
+                  delivery_datetime >= NOW() - INTERVAL 1 DAY AND delivery_datetime <= NOW()
+                  AND subscribers LIKE \'%"is_read":false%\' AND subscribers LIKE \'%'.$current_user->id.'%\'';
+        $alerts = array();
+        $result = $db->query($query);
+        while($row = $db->fetchByAssoc($result)) {
+            $alert = new Alert();
+            $alert->retrieve($row['id']);
+            if(array_key_exists($current_user->id, $alert->subscribers)) {
+                $alerts[] = array(
+                    "id" => $alert->id,
+                    "name" => $alert->name,
+                    "description" => $alert->description,
+                    "target_module" => $alert->target_module,
+                    "target_module_id" => $alert->target_module_id,
+                    "url_redirect" => $alert->url_redirect,
+                    "send_email" => $alert->send_email,
+                    "send_sms" => $alert->send_sms,
+                    "send_popup" => $alert->send_popup,
+                    "send_to_manager" => $alert->send_to_manager,
+                    "content_type" => $alert->content_type,
+                    "delivery_datetime" => $alert->delivery_datetime,
+                    "type" => $alert->type,
+                    "was_sent" => $alert->was_sent
+                );
+            }
+        }
+
+        header('Content-Type: application/json');
+        $return_value = json_encode($alerts);
+        echo $return_value;
+        die();
+    }
+
+    public function action_countUnread() {
+        global  $current_user, $db;
+        $query = 'SELECT id FROM alerts WHERE deleted = 0 AND
+                  delivery_datetime >= NOW() - INTERVAL 1 DAY AND delivery_datetime <= NOW()
+                  AND subscribers LIKE \'%"is_read":false%\' AND subscribers LIKE \'%'.$current_user->id.'%\'';
+        $count = 0;
+        $result = $db->query($query);
+        while($row = $db->fetchByAssoc($result)) {
+            $alert = new Alert();
+            $alert->retrieve($row['id']);
+            if(array_key_exists($current_user->id, $alert->subscribers)) {
+                $count++;
+            }
+        }
+
+        header('Content-Type: application/json');
+        echo "{count:".$count."}";
+        die();
+    }
+
+    public function action_countMissed() {}
 
     public function action_add()
     {
@@ -78,10 +178,6 @@ class AlertsController extends SugarController
             $url_redirect = $_POST['url_redirect'];
         } else {
             $url_redirect == null;
-        }
-
-        if($url_redirect == null) {
-            $url_redirect = 'index.php?fakeid='. uniqid('fake_', true);
         }
 
         if(isset($_POST['target_module'])) {
@@ -114,10 +210,12 @@ class AlertsController extends SugarController
 
     public function action_markAsRead()
     {
+        global $current_user;
         $bean = BeanFactory::getBean('Alerts', $_GET['record']);
+        $bean->subscribers[$current_user->id]['is_read'] = true;
         $bean->is_read = 1;
         $bean->save();
-
+        die();
         $this->view = 'json';
     }
 

@@ -241,7 +241,7 @@ if(!make_writable('./custom')) {
 	{
 		$dirname = sugar_cached($c_file);
 		$ok = false;
-		if ((is_dir($dirname)) || @sugar_mkdir($dirname,0555)) // set permissions to restrictive - use make_writable to change in a standard way to the required permissions
+		if ((is_dir($dirname)) || @sugar_mkdir($dirname,0755, true)) // set permissions to restrictive - use make_writable to change in a standard way to the required permissions
 		{
 			$ok = make_writable($dirname);
 		}
@@ -383,7 +383,7 @@ if($error_found){
 ////    BEGIN PAGE OUTPUT
     $out =<<<EOQ
     <h2>{$mod_strings['LBL_CHECKSYS_TITLE']}</h2>
-      <div width="200" height="30" style="float: right;">
+      <div width="200" height="30" style="/*float: right;*/">
         <p>{$mod_strings['ERR_CHECKSYS']}</p>
         <hr>
       </div>

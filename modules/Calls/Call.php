@@ -76,6 +76,7 @@ class Call extends SugarBean {
 	var $email_reminder_time;
 	var $email_reminder_checked;
 	var $email_reminder_sent;
+    var $alerts = array();
 	var $required;
 	var $accept_status;
 	var $created_by;
@@ -143,7 +144,7 @@ class Call extends SugarBean {
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner = 'not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
 		// don't check if call is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -157,14 +158,14 @@ class Call extends SugarBean {
 					}
 			}
 		}
-		return parent::ACLAccess($view,$is_owner);
+		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
     // save date_end by calculating user input
     // this is for calendar
 	function save($check_notify = FALSE) {
-		global $timedate,$current_user;
+        global $timedate, $current_user, $disable_date_format, $db;
 
-	    if(isset($this->date_start) && isset($this->duration_hours) && isset($this->duration_minutes))
+	    if(isset($this->date_start))
         {
     	    $td = $timedate->fromDb($this->date_start);
     	    if($td)
@@ -209,12 +210,63 @@ class Call extends SugarBean {
 		}*/
 
         $return_id = parent::save($check_notify);
-        global $current_user;
-
 
         if($this->update_vcal) {
 			vCal::cache_sugar_vcal($current_user);
         }
+
+		if(empty($this->alerts)) {
+			// Remove all alerts assigned to this record
+			$query = 'UPDATE alerts SET deleted = 1
+						WHERE target_module = "'.$this->module_name.'" AND target_module_id = "'.$this->id.'"';
+			$db->query($query);
+		}
+
+		foreach($this->alerts as $alertID => $alertArray) {
+			$alert = null;
+			if($alertArray['flag'] == 'new') {
+				$alert = new Alert();
+			} else if($alertArray['flag'] == 'existing') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+			} else if($alertArray['flag'] == 'deleted') {
+				$alert = new Alert();
+				$alert->retrieve($alertID);
+				$alert->deleted = true;
+			}
+
+			if(isset($alertArray['action']['send_popup'])) {
+				$alert->send_popup = true;
+			}
+
+			if(isset($alertArray['action']['send_email'])) {
+				$alert->send_email = true;
+			}
+
+			if(isset($alertArray['time']) && isset($this->date_start)) {
+				$now = $timedate->fromDb($this->date_start);
+				$alert->delivery_datetime = $now->sub(new DateInterval('PT'.$alertArray['time'].'S'));
+				$alert->delivery_datetime = $alert->delivery_datetime->format('Y-m-d H:i:s');
+			}
+
+			$alert->target_module = $this->module_name;
+			$alert->target_module_id = $this->id;
+
+			if(isset($alertArray['subscribers'])) {
+				$alert->unsubscribeAll(); // overwrite subscribers
+				foreach($alertArray['subscribers'] as $s => $subscriber) {
+					$alert->subscribe($subscriber['bean'], $subscriber['id']);
+				}
+			} else {
+				// no point having an alert with no subscribers
+				$alert->deleted = true;
+			}
+
+			$alert->name = $this->name;
+			$alert->description = $this->description;
+
+			$alert->save();
+		}
 
         return $return_id;
 	}
@@ -300,7 +352,7 @@ class Call extends SugarBean {
 		return $query;
 	}
 
-        function create_export_query(&$order_by, &$where, $relate_link_join='')
+        function create_export_query($order_by, $where, $relate_link_join='')
         {
             $custom_join = $this->getCustomJoin(true, true, $where);
             $custom_join['join'] .= $relate_link_join;
@@ -724,8 +776,7 @@ class Call extends SugarBean {
 		return $array_assign;
 	}
 
-	function save_relationship_changes($is_update) {
-		$exclude = array();
+	function save_relationship_changes($is_update, $exclude = array()) {
 		if(empty($this->in_workflow))
         {
             if(empty($this->in_import))

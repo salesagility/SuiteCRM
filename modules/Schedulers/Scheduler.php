@@ -979,6 +979,18 @@ class Scheduler extends SugarBean {
         $sched15->modified_user_id   = '1';
         $sched15->catch_up           = '1';
         $sched15->save();
+
+		$sched16 = new Scheduler();
+		$sched16->name               = $mod_strings['LBL_HANDLEMISSEDALERTS'];
+		$sched16->job                = 'function::handleMissedAlerts';
+		$sched16->date_time_start    = create_date(2015,1,1) . ' ' . create_time(0,0,1);
+		$sched16->date_time_end      = null;
+		$sched16->job_interval       = '*::*::*::*::*';
+		$sched16->status             = 'Active';
+		$sched16->created_by         = '1';
+		$sched16->modified_user_id   = '1';
+		$sched16->catch_up           = '1';
+		$sched16->save();
 	}
 
 	////	END SCHEDULER HELPER FUNCTIONS
@@ -991,7 +1003,7 @@ class Scheduler extends SugarBean {
 	 * function overrides the one in SugarBean.php
 	 */
 	function create_export_query($order_by, $where, $show_deleted = 0) {
-		return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted = 0);
+		return $this->create_new_list_query($order_by, $where,array(),array(), $show_deleted);
 	}
 
 	/**

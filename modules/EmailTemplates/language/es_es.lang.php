@@ -50,7 +50,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  
 $mod_strings = array (
   'LBL_ADD_ANOTHER_FILE' => 'Agregar Otro Archivo',
-  'LBL_ADD_DOCUMENT' => 'Agregar un Documento Sugar',
+  'LBL_ADD_DOCUMENT' => 'Agregar un Documento',
   'LBL_ADD_FILE' => 'Agregar un archivo',
   'LBL_ATTACHMENTS' => 'Adjuntos',
   'LBL_BODY' => 'Cuerpo:',
@@ -78,7 +78,7 @@ $mod_strings = array (
   'LBL_SEARCH_FORM_TITLE' => 'Búsqueda de Plantillas de Email',
   'LBL_SHOW_ALT_TEXT' => 'Mostrar Texto Plano',
   'LBL_SUBJECT' => 'Asunto:',
-  'LBL_SUGAR_DOCUMENT' => 'Documento Sugar',
+  'LBL_SUGAR_DOCUMENT' => 'Documento',
   'LBL_TEAMS' => 'Equipos:',
   'LBL_TEAMS_LINK' => 'Equipos',
   'LBL_TEXT_BODY' => 'Cuerpo de Texto',

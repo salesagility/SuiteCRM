@@ -44,7 +44,7 @@ require_once('include/TemplateHandler/TemplateHandler.php');
 require_once('include/EditView/EditView2.php');
 
 
- class SearchForm extends EditView{
+ class SearchForm{
  	var $seed = null;
  	var $module = '';
  	var $action = 'index';

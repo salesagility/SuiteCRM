@@ -82,7 +82,7 @@ $mod_strings = array (
   'LBL_HOOKUP_CONFIRM_PART2' => ". Continue?",
   
   'LBL_GROUP_SELECT' => 'Wählen Sie die Gruppen sollten Zugriff auf diesen Datensatz haben',
-  'LBL_ERROR_DUPLICATE' => 'Durch eine mögliche von Sugar erkannt Duplikat müssen Sie manuell hinzufügen Security Groups, um Ihre neu erstellte Datensatz.',
+  'LBL_ERROR_DUPLICATE' => 'Durch eine mögliche von SuiteCRM erkannt Duplikat müssen Sie manuell hinzufügen Security Groups, um Ihre neu erstellte Datensatz.',
   
   'LBL_INBOUND_EMAIL' => 'Inbound-Mail-Konto',
   'LBL_INBOUND_EMAIL_DESC' => 'Nur den Zugriff auf ein E-Mailkonto, wenn der Benutzer zu einer Gruppe gehört, die mit dem Mail-Konto zugewiesen ist.',

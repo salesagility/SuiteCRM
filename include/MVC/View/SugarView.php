@@ -147,19 +147,6 @@ class SugarView
             $GLOBALS['logic_hook']->call_custom_logic('', 'after_ui_frame');
         }
 
-        // We have to update jsAlerts as soon as possible
-        if (
-            !isset($_SESSION['isMobile'])
-            &&
-            (
-                $this instanceof ViewList
-                || $this instanceof ViewDetail
-                || $this instanceof ViewEdit
-            )
-        ) {
-            $jsAlerts = new jsAlerts();
-            echo $jsAlerts->getScript();
-        }
 
         if ($this->_getOption('show_subpanels') && !empty($_REQUEST['record'])) $this->_displaySubPanels();
 
@@ -458,6 +445,11 @@ class SugarView
             $ss->assign("CURRENT_USER_ID", $current_user->id);
 
             // get the last viewed records
+            require_once("modules/Favorites/Favorites.php");
+            $favorites = new Favorites();
+            $favorite_records = $favorites->getCurrentUserSidebarFavorites();
+            $ss->assign("favoriteRecords",$favorite_records);
+
             $tracker = new Tracker();
             $history = $tracker->get_recently_viewed($current_user->id);
             $ss->assign("recentRecords",$this->processRecentRecords($history));
@@ -821,6 +813,9 @@ EOHTML;
             echo getVersionedScript('cache/include/javascript/sugar_grp1_yui.js');
             echo getVersionedScript('cache/include/javascript/sugar_grp1.js');
             echo getVersionedScript('include/javascript/calendar.js');
+
+            // Add "new" alerts
+            echo getVersionedScript('include/javascript/alerts.js');
 
             // output necessary config js in the top of the page
             $config_js = $this->getSugarConfigJS();
@@ -1300,7 +1295,12 @@ EOHTML;
         }
 
         if(!empty($paramString)){
-               $theTitle .= "<h2> $paramString </h2>\n";
+               $theTitle .= "<h2> $paramString </h2>";
+
+            if($this->type == "detail"){
+                $theTitle .= "<div class='favorite' record_id='" . $this->bean->id . "' module='" . $this->bean->module_dir . "'><div class='favorite_icon_outline'>" . SugarThemeRegistry::current()->getImage('favorite-star-outline','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')) . "</div>
+                                                    <div class='favorite_icon_fill'>" . SugarThemeRegistry::current()->getImage('favorite-star','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')) . "</div></div>";
+            }
            }
 
         // bug 56131 - restore conditional so that link doesn't appear where it shouldn't

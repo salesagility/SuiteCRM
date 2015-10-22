@@ -38,7 +38,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
+function installStatus($msg, $cmd = null, $overwrite = false, $before = '[ok]<br>') {
+    $fname = 'install/status.json';
+    if(!$overwrite && file_exists($fname)) {
+        $stat = json_decode(file_get_contents($fname));
+        //$msg = json_encode($stat);
+        $msg = $stat->message . $before . $msg;
+    }
+    file_put_contents($fname, json_encode(array(
+        'message' => $msg,
+        'command' => $cmd,
+    )));
+}
+installStatus($mod_strings['LBL_START'], null, true, '');
 
 // This file will load the configuration settings from session data,
 // write to the config file, and execute any necessary database steps.
@@ -110,9 +122,9 @@ $out =<<<EOQ
    <meta http-equiv="Content-Style-Type" content="text/css">
     <title>{$mod_strings['LBL_WIZARD_TITLE']} {$mod_strings['LBL_PERFORM_TITLE']}</title>
    <link REL="SHORTCUT ICON" HREF="$icon">
-   <link rel="stylesheet" href="$css" type="text/css" />
+   <!-- <link rel="stylesheet" href="$css" type="text/css" /> -->
    <script type="text/javascript" src="$common"></script>
-   <link rel="stylesheet" href="install/install.css" type="text/css" />
+   <link rel="stylesheet" href="install/install2.css" type="text/css" />
    <script type="text/javascript" src="install/installCommon.js"></script>
    <script type="text/javascript" src="install/siteConfig.js"></script>
 <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
@@ -124,12 +136,17 @@ $out =<<<EOQ
 <div id="install_container">
 <div id="install_box">
 <header id="install_header">
-            <div id="steps"><p>{$mod_strings['LBL_STEP8']}</p><i class="icon-progress-0" id="complete"></i><i class="icon-progress-1" id="complete"></i><i class="icon-progress-2" id="complete"></i><i class="icon-progress-3" id="complete"></i><i class="icon-progress-4" id="complete"></i><i class="icon-progress-5" id="complete"></i><i class="icon-progress-6" id="complete"></i><i class="icon-progress-7" id="complete"></i>
-            </div>
+                    <div id="steps">
+                        <p>{$mod_strings['LBL_STEP2']}</p>
+                        <i class="icon-progress-0" id="complete"></i>
+                        <i class="icon-progress-1" id="complete"></i>
+                        <i class="icon-progress-2"></i>
+                    </div>
             <div class="install_img"><a href="https://suitecrm.com" target="_blank"><img src="{$sugar_md}" alt="SuiteCRM"></a></div>
 </header>
 EOQ;
 echo $out;
+installStatus($mod_strings['STAT_CONFIGURATION'], null, false, '');
 installLog("calling handleSugarConfig()");
 $bottle = handleSugarConfig();
 //installLog("calling handleLog4Php()");
@@ -210,10 +227,13 @@ $nonStandardModules = array (
 /**
  * loop through all the Beans and create their tables
  */
+installStatus($mod_strings['STAT_CREATE_DB']);
  installLog("looping through all the Beans and create their tables");
  //start by clearing out the vardefs
  VardefManager::clearVardef();
 installerHook('pre_createAllModuleTables');
+
+
 foreach( $beanFiles as $bean => $file ) {
 	$doNotInit = array('Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers');
 
@@ -227,6 +247,7 @@ foreach( $beanFiles as $bean => $file ) {
 	    continue;
 
     $table_name = $focus->table_name;
+    //installStatus(sprintf($mod_strings['STAT_CREATE_DB_TABLE'], $focus->table_name ));
      installLog("processing table ".$focus->table_name);
     // check to see if we have already setup this table
     if(!in_array($table_name, $processed_tables)) {
@@ -271,6 +292,8 @@ foreach( $beanFiles as $bean => $file ) {
 
     } // end if()
 }
+
+
 installerHook('post_createAllModuleTables');
 
 echo "<br>";
@@ -301,6 +324,7 @@ echo "<br>";
     echo "<br>";
     echo "<b>{$mod_strings['LBL_PERFORM_CREATE_DEFAULT']}</b><br>";
     echo "<br>";
+installStatus($mod_strings['STAT_CREATE_DEFAULT_SETTINGS']);
     installLog("Begin creating Defaults");
     installerHook('pre_createDefaultSettings');
     if ($new_config) {
@@ -403,35 +427,36 @@ createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');*/
 ///////////////////////////////////////////////////////////////////////////////
 ////    SETUP DONE
 installLog("Installation has completed *********");
-$memoryUsed = '';
-    if(function_exists('memory_get_usage')) {
-    $memoryUsed = $mod_strings['LBL_PERFORM_OUTRO_5'].memory_get_usage().$mod_strings['LBL_PERFORM_OUTRO_6'];
+
+    $memoryUsed = '';
+    if (function_exists('memory_get_usage')) {
+        $memoryUsed = $mod_strings['LBL_PERFORM_OUTRO_5'] . memory_get_usage() . $mod_strings['LBL_PERFORM_OUTRO_6'];
     }
 
 
-$errTcpip = '';
+    $errTcpip = '';
     $fp = @fsockopen("www.suitecrm.com", 80, $errno, $errstr, 3);
     if (!$fp) {
-    $errTcpip = "<p>{$mod_strings['ERR_PERFORM_NO_TCPIP']}</p>";
+        $errTcpip = "<p>{$mod_strings['ERR_PERFORM_NO_TCPIP']}</p>";
     }
-   if ($fp && (!isset( $_SESSION['oc_install']) ||  $_SESSION['oc_install'] == false)) {
-      @fclose($fp);
-      if ( $next_step == 9999 )
-          $next_step = 8;
-    $fpResult =<<<FP
+    if ($fp && (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false)) {
+        @fclose($fp);
+        if ($next_step == 9999)
+            $next_step = 8;
+        $fpResult = <<<FP
      <form action="install.php" method="post" name="form" id="form">
      <input type="hidden" name="current_step" value="{$next_step}">
      <input class="button" type="submit" name="goto" value="{$mod_strings['LBL_NEXT']}" id="button_next2"/>
      </form>
 FP;
-   } else {
-        $fpResult =<<<FP
+    } else {
+        $fpResult = <<<FP
             <form action="index.php" method="post" name="formFinish" id="formFinish">
                 <input type="hidden" name="default_user_name" value="admin" />
                 <input class="button" type="submit" name="next" value="{$mod_strings['LBL_PERFORM_FINISH']}" id="button_next2"/>
             </form>
 FP;
-   }
+    }
 
     if( isset($_SESSION['setup_site_sugarbeet_automatic_checks']) && $_SESSION['setup_site_sugarbeet_automatic_checks'] == true){
         set_CheckUpdates_config_setting('automatic');
@@ -478,13 +503,14 @@ FP;
     $enabled_tabs[] = 'jjwg_Address_Cache';
     $enabled_tabs[] = 'AOR_Reports';
     $enabled_tabs[] = 'AOW_WorkFlow';
+    $enabled_tabs[] = 'AOK_KnowledgeBase';
+    $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
 
     installerHook('pre_setSystemTabs');
     require_once('modules/MySettings/TabController.php');
     $tabs = new TabController();
     $tabs->set_system_tabs($enabled_tabs);
     installerHook('post_setSystemTabs');
-
     include_once('install/suite_install/suite_install.php');
 
 post_install_modules();
@@ -519,6 +545,136 @@ if( $_SESSION['demoData'] != 'no' ){
     installerHook('post_installDemoData');
 }
 
+/////////////////////////////////////////////////////////////
+//// Store information by installConfig.php form
+
+// save current superglobals and vars
+$varStack['GLOBALS'] = $GLOBALS;
+$varStack['defined_vars'] = get_defined_vars();
+
+// restore previously posted form
+$_REQUEST = array_merge($_REQUEST, $_SESSION);
+$_POST = array_merge($_POST, $_SESSION);
+
+
+installStatus($mod_strings['STAT_INSTALL_FINISH']);
+installLog('Save configuration settings..');
+
+//      <--------------------------------------------------------
+//          from ConfigurationConroller->action_saveadminwizard()
+//          ---------------------------------------------------------->
+
+installLog('save locale');
+
+
+
+
+//global $current_user;
+installLog('new Administration');
+$focus = new Administration();
+installLog('retrieveSettings');
+//$focus->retrieveSettings();
+// switch off the adminwizard (mark that we have got past this point)
+installLog('AdminWizard OFF');
+$focus->saveSetting('system','adminwizard',1);
+
+installLog('saveConfig');
+$focus->saveConfig();
+
+installLog('new Configurator');
+$configurator = new Configurator();
+installLog('populateFromPost');
+$configurator->populateFromPost();
+
+
+
+
+installLog('handleOverride');
+// add local settings to config overrides
+if(!empty($_SESSION['default_date_format'])) $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
+if(!empty($_SESSION['default_time_format'])) $sugar_config['default_date_format'] = $_SESSION['default_time_format'];
+if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
+if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
+//$configurator->handleOverride();
+
+
+installLog('saveConfig');
+$configurator->saveConfig();
+
+
+
+
+
+
+
+
+// Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
+installLog('new Currency');
+$currency = new Currency;
+installLog('retrieve');
+$currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
+if ( !empty($currency->id)
+    && $currency->symbol == $_REQUEST['default_currency_symbol']
+    && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
+    $currency->deleted = 1;
+    installLog('DBG: save currency');
+    $currency->save();
+}
+
+
+installLog('Save user settings..');
+
+//      <------------------------------------------------
+//          from UsersController->action_saveuserwizard()
+//          ---------------------------------------------------------->
+
+
+// set all of these default parameters since the Users save action will undo the defaults otherwise
+
+// load admin
+$current_user = new User();
+$current_user->retrieve(1);
+$current_user->is_admin = '1';
+$sugar_config = get_sugar_config_defaults();
+
+// set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
+
+//$_POST[''] = $_REQUEST['default_locale_name_format'];
+$_POST['dateformat'] = $_REQUEST['default_date_format'];
+//$_POST[''] = $_REQUEST['default_time_format'];
+//$_POST[''] = $_REQUEST['default_language'];
+//$_POST[''] = $_REQUEST['default_currency_name'];
+//$_POST[''] = $_REQUEST['default_currency_symbol'];
+//$_POST[''] = $_REQUEST['default_currency_iso4217'];
+//$_POST[''] = $_REQUEST['setup_site_session_path'];
+//$_POST[''] = $_REQUEST['setup_site_log_dir'];
+//$_POST[''] = $_REQUEST['setup_site_guid'];
+//$_POST[''] = $_REQUEST['default_email_charset'];
+//$_POST[''] = $_REQUEST['default_export_charset'];
+//$_POST[''] = $_REQUEST['export_delimiter'];
+
+$_POST['record'] = $current_user->id;
+$_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
+$_POST['use_real_names'] = true;
+$_POST['reminder_checked'] = '1';
+$_POST['reminder_time'] = 1800;
+$_POST['mailmerge_on'] = 'on';
+$_POST['receive_notifications'] = $current_user->receive_notifications;
+installLog('DBG: SugarThemeRegistry::getDefault');
+$_POST['user_theme'] = (string) SugarThemeRegistry::getDefault();
+
+// save and redirect to new view
+$_REQUEST['return_module'] = 'Home';
+$_REQUEST['return_action'] = 'index';
+installLog('DBG: require modules/Users/Save.php');
+require('modules/Users/Save.php');
+
+// restore superglobals and vars
+$GLOBALS = $varStack['GLOBALS'];
+foreach($varStack['defined_vars'] as $__key => $__value) $$__key = $__value;
+
+
+
 $endTime = microtime(true);
 $deltaTime = $endTime - $startTime;
 
@@ -552,5 +708,7 @@ EOQ;
 
 echo $out;
 
+$loginURL = str_replace('install.php', 'index.php', "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+installStatus(sprintf($mod_strings['STAT_INSTALL_FINISH_LOGIN'], $loginURL ) , array('function' => 'redirect', 'arguments' => $loginURL) );
 
 ?>
