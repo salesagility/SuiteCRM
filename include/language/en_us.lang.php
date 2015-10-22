@@ -3305,4 +3305,8 @@ $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
 $app_list_strings['aok_status_list']['published_private'] = 'Private';
 $app_list_strings['aok_status_list']['published_public'] = 'Public';
 
+
+$app_list_strings['moduleList']['AOM_Reminders'] = 'Reminders';
+$app_list_strings['moduleListSingular']['AOM_Reminders'] = 'Reminder';
+
 ?>
