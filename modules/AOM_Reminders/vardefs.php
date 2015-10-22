@@ -1,8 +1,8 @@
 <?php
 
-$dictionary['AOM_Reminders']['table']= 'aom_reminders';
-$dictionary['AOM_Reminders']['audited']= true;
-$dictionary['AOM_Reminders']['fields']= array(
+$dictionary['AOM_Reminder']['table']= 'aom_reminders';
+$dictionary['AOM_Reminder']['audited']= true;
+$dictionary['AOM_Reminder']['fields']= array(
     'popup' => array(
         'name' => 'popup',
         'vname' => 'LBL_POPUP',
@@ -59,7 +59,24 @@ $dictionary['AOM_Reminders']['fields']= array(
         'required' => true,
         'massupdate' => false,
         'studio' => false,
-    )
+    ),
+    'related_module' => array(
+        'name' => 'related_module',
+        'vname' => 'LBL_RELATED_MODULE',
+        'type' => 'varchar',
+        'len' => 32,
+        'required' => true,
+        'massupdate' => false,
+        'studio' => false,
+    ),
+    'related_module_id' => array(
+        'name' => 'related_module_id',
+        'vname' => 'LBL_RELATED_MODULE_ID',
+        'type' => 'id',
+        'required' => true,
+        'massupdate' => false,
+        'studio' => false,
+    ),
 );
 
 

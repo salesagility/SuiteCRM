@@ -336,7 +336,7 @@ $beanList['AOK_KnowledgeBase'] = 'AOK_KnowledgeBase';
 $beanFiles['AOK_KnowledgeBase'] = 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php';
 $moduleList[] = 'AOK_KnowledgeBase';
 
-$beanList['AOM_Reminders'] = 'Reminders';
+$beanList['AOM_Reminders'] = 'AOM_Reminder';
 $beanFiles['AOM_Reminder'] = 'modules/AOM_Reminders/AOM_Reminder.php';
 $moduleList[] = 'AOM_Reminders';
 $modInvisList[] = 'AOM_Reminders';
