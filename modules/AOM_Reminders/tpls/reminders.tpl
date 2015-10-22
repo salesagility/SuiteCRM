@@ -119,7 +119,6 @@
 		},
 
 		createRemindersPostData: function() {
-			//document.EditView.reminders_data.value='asdasdasdasdasdasdasdw232222222222222222222222';
 			var reminders = [];
 			$('#reminder_view .reminder_item').each(function(i,e) {
 				reminders.push({
@@ -131,12 +130,23 @@
 			});
 			document.EditView.reminders_data.value = JSON.stringify(reminders);
 			console.log(JSON.stringify(reminders));
-		}
+		},
+		
+		init: function(data) {
+			// TODO !@#
+			alert('itt jarok! a "data" alapjan ujra kell epiteni az invajtokat!');
+			$.each(data, function(i,e){
+				
+			});
+			// TODO mentesnel figyelj, hogy ha van mar reminder ehhez a beanhez akkor azokat felulirni kell es nem hozzaadni!
+		},
 
 	};
 
 
 	$(function(){
+		Reminders.init({/literal}{$remindersDataJson}{literal});
+		
 		$('#reminder_add_btn').click(function(){
 			Reminders.onAddClick(this);
 		});

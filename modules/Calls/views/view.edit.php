@@ -75,6 +75,13 @@ class CallsViewEdit extends ViewEdit
 
 		}
  		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
+		
+		$remindersData = AOM_Reminder::loadRemindersData('Calls', $this->bean->id);
+		$remindersDataJson = json_encode($remindersData);
+		if(!$remindersDataJson && json_last_error()) {
+			throw new Exception(json_last_error_msg());
+		}
+		$this->ss->assign('remindersDataJson', $remindersDataJson);
 
  		if($this->ev->isDuplicate){
 	        $this->bean->status = $this->bean->getDefaultStatus();

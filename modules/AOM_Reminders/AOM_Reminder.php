@@ -43,6 +43,21 @@ class AOM_Reminder extends Basic {
             AOM_Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
         }
     }
+	
+	public static function loadRemindersData($eventModule, $eventModuleId) {
+		$ret = array();
+		$reminderBeen = new AOM_Reminder();
+		$reminders = $reminderBeen->get_full_list("aom_reminders.date_entered", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
+		foreach($reminders as $reminder) {
+			$ret[] = array(
+				'popup' => $reminder->popup,
+				'email' => $reminder->email,
+				'duration' => $reminder->duration,
+				'invitees' => AOM_Reminder_Invitee::loadRemindersInviteesData($reminder->id),
+			);
+		}
+		return $ret;
+	}
 
 }
 ?>
