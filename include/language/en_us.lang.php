@@ -3309,4 +3309,7 @@ $app_list_strings['aok_status_list']['published_public'] = 'Public';
 $app_list_strings['moduleList']['AOM_Reminders'] = 'Reminders';
 $app_list_strings['moduleListSingular']['AOM_Reminders'] = 'Reminder';
 
+$app_list_strings['moduleList']['AOM_Reminders_Invitees'] = 'Reminders_Invitees';
+$app_list_strings['moduleListSingular']['AOM_Reminders_Invitees'] = 'Reminder_Invitee';
+
 ?>

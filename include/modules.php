@@ -336,10 +336,16 @@ $beanList['AOK_KnowledgeBase'] = 'AOK_KnowledgeBase';
 $beanFiles['AOK_KnowledgeBase'] = 'modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php';
 $moduleList[] = 'AOK_KnowledgeBase';
 
+
 $beanList['AOM_Reminders'] = 'AOM_Reminder';
 $beanFiles['AOM_Reminder'] = 'modules/AOM_Reminders/AOM_Reminder.php';
 $moduleList[] = 'AOM_Reminders';
 $modInvisList[] = 'AOM_Reminders';
+
+$beanList['AOM_Reminders_Invitees'] = 'AOM_Reminder_Invitee';
+$beanFiles['AOM_Reminder_Invitee'] = 'modules/AOM_Reminders_Invitees/AOM_Reminder_Invitee.php';
+$moduleList[] = 'AOM_Reminders_Invitees';
+$modInvisList[] = 'AOM_Reminders_Invitees';
 
 
 if (file_exists('include/modules_override.php'))

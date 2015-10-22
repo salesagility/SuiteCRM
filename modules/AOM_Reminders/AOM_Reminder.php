@@ -16,8 +16,8 @@ class AOM_Reminder extends Basic {
     var $email_sent = false;
     var $email_read = false;
     var $duration;
-    var $related_module;
-    var $related_module_id;
+    var $related_event_module;
+    var $related_event_module_id;
 
     public function __construct() {
         parent::Basic();
@@ -30,20 +30,18 @@ class AOM_Reminder extends Basic {
         return false;
     }
 
-    public static function saveRemindersData($senderModule, $senderModuleId, $remindersData) {
-        echo '<pre>';
+    public static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
         foreach($remindersData as $reminderData) {
-            print_r($reminderData);
             $reminderBean = new AOM_Reminder();
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
             $reminderBean->duration = $reminderData->duration;
-            // todo invitees...
-            $reminderBean->related_module = $senderModule;
-            $reminderBean->related_module_id = $senderModuleId;
+            $reminderBean->related_event_module = $eventModule;
+            $reminderBean->related_event_module_id = $eventModuleId;
             $reminderBean->save();
+            $reminderId = $reminderBean->id;
+            AOM_Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
         }
-        exit;
     }
 
 }
