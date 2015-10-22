@@ -173,7 +173,15 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             'label' => 'LBL_REMINDER',
           ),
         ),
-        3 => 
+        3 => array(
+            0 =>
+                array (
+                    'name' => 'reminders',
+                    'customCode' => '{include file="modules/AOM_Reminders/tpls/reminders.tpl"}',
+                    'label' => 'LBL_REMINDERS',
+                ),
+        ),
+        4 =>
         array (
           0 => 
           array (
@@ -182,7 +190,7 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
-        4 => 
+        5 =>
         array (
           0 => 
           array (
