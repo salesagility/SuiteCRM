@@ -33,6 +33,19 @@ class AOM_Reminder_Invitee extends Basic {
             $reminderInviteeBean->save();
         }
     }
+	
+	public static function loadRemindersInviteesData($reminderId) {
+		$ret = array();
+		$reminderInviteeBeen = new AOM_Reminder_Invitee();
+		$reminderInvitees = $reminderInviteeBeen->get_full_list("aom_reminders_invitees.date_entered", "aom_reminders_invitees.reminder_id = '$reminderId'");
+		foreach($reminderInvitees as $reminderInvitee) {
+			$ret[] = array(
+				'module' => $reminderInvitee->related_invitee_module,
+				'id' => $reminderInvitee->related_invitee_module_id,
+			);
+		}
+		return $ret;
+	}
 
 }
 ?>
