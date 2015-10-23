@@ -83,8 +83,8 @@
 
 		<input class="remove-reminder-btn" type="button" value="Remove reminder [x]" onclick="Reminders.onRemoveClick(this);"><br>
 		<label>Actions:</label><br>
-		<input type="checkbox" class="popup_chkbox" checked><label>Send invitees a popup or a desktop notification</label><br>
-		<input type="checkbox" class="email_chkbox" checked><label>Send invitees an email</label><br>
+		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>Send invitees a popup or a desktop notification</label><br>
+		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>Send invitees an email</label><br>
 		<label>When:</label>
 		<select tabindex="0" class="duration_sel">
 			<option label="1 minute prior" value="60">1 minute prior</option>
@@ -141,8 +141,29 @@
 			$(e).parent().find('.invitees_list').first().html(inviteesList);
 		},
 
-		addReminder: function(e, reminderId, invitees) {
+		setCheckboxValue(sel, value) {
+			if(!value || value === false || value === 0 || value === '0' || value === '' || value.toLowerCase() === 'false') {
+				value = false;
+			}
+			else {
+				value = true;
+			}
+			sel.prop('checked', value);
+			sel.attr('checked', value);
+		},
+
+		setReminderPopupChkbox: function(e, value) {
+			Reminders.setCheckboxValue($(e).find('.popup_chkbox'), value);
+		},
+
+		setReminderEmailChkbox: function(e, value) {
+			Reminders.setCheckboxValue($(e).find('.email_chkbox'), value);
+		},
+
+		addReminder: function(e, popup, email, reminderId, invitees) {
 			if(!reminderId) reminderId = '';
+			Reminders.setReminderPopupChkbox($('#reminder_template'), popup);
+			Reminders.setReminderEmailChkbox($('#reminder_template'), email);
 			if(!invitees) {
 				Reminders.addAllInvitees($('#reminder_template'));
 			}
@@ -153,7 +174,7 @@
 		},
 
 		onAddClick: function(e){
-			Reminders.addReminder(e);
+			Reminders.addReminder(e, true, true);
 			Reminders.createRemindersPostData();
 		},
 		onRemoveClick: function(e) {
@@ -194,13 +215,22 @@
 				});
 			});
 			document.EditView.reminders_data.value = JSON.stringify(reminders);
+			console.log('created state:');
 			console.log(JSON.stringify(reminders));
 		},
 		
 		init: function(data) {
 			$.each(data, function(i,e){
-				Reminders.addReminder(false, e.id, e.invitees);
+				Reminders.addReminder(false, e.popup, e.email, e.id, e.invitees);
 			});
+			Reminders.createRemindersPostData();
+		},
+
+		onPopupChkboxClick: function(e) {
+			Reminders.createRemindersPostData();
+		},
+
+		onEmailChkboxClick: function(e) {
 			Reminders.createRemindersPostData();
 		},
 
@@ -208,6 +238,8 @@
 
 
 	$(function(){
+		console.log('server stored state:');
+		console.log('{/literal}{$remindersDataJson}{literal}');
 		Reminders.init({/literal}{$remindersDataJson}{literal});
 		
 		$('#reminder_add_btn').click(function(){
