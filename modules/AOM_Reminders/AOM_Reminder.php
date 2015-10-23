@@ -30,7 +30,17 @@ class AOM_Reminder extends Basic {
         return false;
     }
 
-    public static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
+    public static function saveRemindersDataJson($eventModule, $eventModuleId, $remindersDataJson) {
+        $reminderData = json_decode($remindersDataJson);
+        if(!json_last_error()) {
+            AOM_Reminder::saveRemindersData($eventModule, $eventModuleId, $reminderData);
+        }
+        else {
+            throw new Exception(json_last_error_msg());
+        }
+    }
+
+    private static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
         $reminderDataIds = array();
         foreach($remindersData as $reminderData) {
             $reminderDataIds[] = $reminderData->id;
@@ -53,11 +63,19 @@ class AOM_Reminder extends Basic {
             }
         }
     }
-	
-	public static function loadRemindersData($eventModule, $eventModuleId) {
+
+    public static function loadRemindersDataJson($eventModule, $eventModuleId) {
+        $remindersData = self::loadRemindersData($eventModule, $eventModuleId);
+        $remindersDataJson = json_encode($remindersData);
+        if(!$remindersDataJson && json_last_error()) {
+            throw new Exception(json_last_error_msg());
+        }
+        return $remindersDataJson;
+    }
+
+	private static function loadRemindersData($eventModule, $eventModuleId) {
 		$ret = array();
-		$reminderBeen = new AOM_Reminder();
-		$reminders = $reminderBeen->get_full_list("aom_reminders.date_entered", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
+		$reminders = BeanFactory::getBean('AOM_Reminders')->get_full_list("aom_reminders.date_entered", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
         if($reminders) {
             foreach ($reminders as $reminder) {
                 $ret[] = array(

@@ -30,9 +30,9 @@ $dictionary['AOM_Reminder_Invitee']['fields']= array(
     ),
 );
 
-$dictionary['AOM_Reminder_Invitee']['indices'] = array(
-    array('name' => 'reminder_invitee_uk', 'type' => 'unique', 'fields' => array('reminder_id', 'related_invitee_module', 'related_invitee_module_id')),
-);
+//$dictionary['AOM_Reminder_Invitee']['indices'] = array(
+//    array('name' => 'reminder_invitee_uk', 'type' => 'unique', 'fields' => array('reminder_id', 'related_invitee_module', 'related_invitee_module_id')),
+//);
 
 
 if (!class_exists('VardefManager')){
