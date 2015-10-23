@@ -77,31 +77,24 @@
 }
 
 </style>
+{/literal}
+
 
 <div style="display:none;">
 	<div id="reminder_template">
 
-		<input class="remove-reminder-btn" type="button" value="Remove reminder [x]" onclick="Reminders.onRemoveClick(this);"><br>
-		<label>Actions:</label><br>
-		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>Send invitees a popup or a desktop notification</label><br>
-		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>Send invitees an email</label><br>
-		<label>When:</label>
+		<input class="remove-reminder-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
+		<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
+		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
+		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
+		<label>{$MOD.LBL_REMINDERS_WHEN}</label>
 		<select tabindex="0" class="duration_sel" onchange="Reminders.onDurationSelChange(this);">
-			<option label="1 minute prior" value="60">1 minute prior</option>
-			<option label="5 minutes prior" value="300">5 minutes prior</option>
-			<option label="10 minutes prior" value="600">10 minutes prior</option>
-			<option label="15 minutes prior" value="900">15 minutes prior</option>
-			<option label="30 minutes prior" value="1800">30 minutes prior</option>
-			<option label="1 hour prior" value="3600">1 hour prior</option>
-			<option label="2 hours prior" value="7200">2 hours prior</option>
-			<option label="3 hours prior" value="10800">3 hours prior</option>
-			<option label="5 hours prior" value="18000">5 hours prior</option>
-			<option label="1 day prior" value="86400">1 day prior</option>
+			{html_options options=$fields.reminder_time.options}
 		</select>
 		<br>
 		<ul class="invitees_list"></ul>
 		<div class="clear"></div>
-		<input type="button" value="[+] Add All Invitees" onclick="Reminders.onAddAllClick(this);"><br>
+		<input type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);"><br>
 
 	</div>
 </div>
@@ -109,9 +102,10 @@
 <div id="reminders">
 	<input type="hidden" id="reminders_data" name="reminders_data" />
 	<ul id="reminder_view"></ul>
-	<input id="reminder_add_btn" type="button" value="Add reminder">
+	<input id="reminder_add_btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}">
 </div>
 
+{literal}
 <script type="text/javascript">
 
 	var Reminders = {
