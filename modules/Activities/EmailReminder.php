@@ -112,9 +112,39 @@ class EmailReminder
                 $bean->save();
             }
         }
+
+        $this->sendMultipleEmailReminders();
         
         return true;
     }
+
+    private function sendMultipleEmailReminders() {
+        if($reminders = $this->getUnsentMultipleEmailReminders()) {
+            foreach($reminders as $reminderId => $reminderArr) {
+                $relatedEventBean = BeanFactory::getBean($reminderArr['related_event_module'], $reminderArr['related_event_module_id']);
+                $allRecipientEmails = array();
+                if($relatedEventBean->status != 'held') {
+                    $allRecipientEmails = array_merge($allRecipientEmails, $this->getRecipients($reminderArr['related_event_module_id'], $reminderArr['related_event_module']));
+                }
+            }
+        }
+    }
+
+    private function getUnsentMultipleEmailReminders() {
+        global $db;
+        $query = "SELECT * FROM aom_reminders WHERE email = 1 AND email_sent = 0 AND deleted = 0";
+        $re = $db->query($query);
+        $reminders = array();
+        while($row = $db->fetchByAssoc($re) ) {
+            $remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($row['date_start'],'datetime'))->modify("-{$row['duration']} seconds")->ts;
+            $now_ts = $GLOBALS['timedate']->getNow()->ts;
+            if ( $now_ts >= $remind_ts ) {
+                $reminders[$row['id']] = $row;
+            }
+        }
+        return $reminders;
+    }
+
     
     /**
      * send reminders
@@ -222,7 +252,7 @@ class EmailReminder
     {
         global $db;
         $query = "
-            SELECT id, date_start, email_reminder_time FROM meetings 
+            SELECT id, date_start, email_reminder_time FROM meetings
             WHERE email_reminder_time != -1
             AND deleted = 0
             AND email_reminder_sent = 0
