@@ -78,20 +78,45 @@
 <script type="text/javascript">
 
 	var Reminders = {
+		getInviteeView: function(id, module, moduleId, relatedValue) {
+			if(!id) id = '';
+			var inviteeView = '<li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName='+ module +'.gif"><span class="related-value">' + relatedValue + '</span>&nbsp<span>[x]</span></button></li>';
+			return inviteeView;
+		},
+
 		addAllInvitees: function(e) {
 			var inviteesList = '';
 			$('table#schedulerTable tr.schedulerAttendeeRow').each(function(i,e){
 				var dataModule = $(e).attr('data-module');
 				var dataId = $(e).attr('data-id');
 				var relatedValue = $(e).find('td[scope="row"]').first().text();
-				inviteesList += '<li class="invitees_item"><button class="invitee_btn" data-id="' + dataId + '" data-module="' + dataModule + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName='+ dataModule +'.gif"><span class="related-value">' + relatedValue + '</span>&nbsp<span>[x]</span></button></li>';
+				inviteesList += Reminders.getInviteeView(false, dataModule, dataId, relatedValue);
 			});
 			$(e).parent().find('.invitees_list').first().html(inviteesList);
 		},
 
+		addInvitees: function(e, invitees) {
+			if(!e) e = document.getElementById('reminder_template');
+			var inviteesList = '';
+			$.each(invitees, function(i,e){
+				inviteesList += Reminders.getInviteeView(e.id, e.module, e.module_id, e.value);
+			});
+			$(e).parent().find('.invitees_list').first().html(inviteesList);
+		},
+
+		addReminder: function(e, reminderId, invitees) {
+			if(!reminderId) reminderId = '';
+			if(!invitees) {
+				Reminders.addAllInvitees($('#reminder_template'));
+			}
+			else {
+				Reminders.addInvitees(e, invitees);
+			}
+			$('#reminder_view').append('<li class="reminder_item" data-reminder-id="' + reminderId + '">' + $('#reminder_template').html() + '</li>');
+		},
+
 		onAddClick: function(e){
-			Reminders.addAllInvitees($('#reminder_template'));
-			$('#reminder_view').append('<li class="reminder_item">' + $('#reminder_template').html() + '</li>');
+			Reminders.addReminder(e);
 			Reminders.createRemindersPostData();
 		},
 		onRemoveClick: function(e) {
@@ -111,8 +136,9 @@
 			var ret = [];
 			$(e).find('.invitee_btn').each(function(i,e){
 				ret.push({
+					id: $(e).attr('data-invitee-id'),
 					module: $(e).attr('data-module'),
-					id: $(e).attr('data-id')
+					module_id: $(e).attr('data-id')
 				});
 			});
 			return ret;
@@ -121,7 +147,9 @@
 		createRemindersPostData: function() {
 			var reminders = [];
 			$('#reminder_view .reminder_item').each(function(i,e) {
+				//console.log(e);
 				reminders.push({
+					id: $(e).attr('data-reminder-id'),
 					popup: $(e).find('.popup_chkbox').prop('checked'),
 					email: $(e).find('.email_chkbox').prop('checked'),
 					duration: $(e).find('.duration_sel').val(),
@@ -134,8 +162,9 @@
 		
 		init: function(data) {
 			$.each(data, function(i,e){
-				
+				Reminders.addReminder(false, e.id, e.invitees);
 			});
+			Reminders.createRemindersPostData();
 		},
 
 	};
