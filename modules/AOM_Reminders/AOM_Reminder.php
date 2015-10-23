@@ -32,7 +32,7 @@ class AOM_Reminder extends Basic {
 
     public static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
         foreach($remindersData as $reminderData) {
-            $reminderBean = new AOM_Reminder();
+            $reminderBean = BeanFactory::getBean('AOM_Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
             $reminderBean->duration = $reminderData->duration;
@@ -48,14 +48,17 @@ class AOM_Reminder extends Basic {
 		$ret = array();
 		$reminderBeen = new AOM_Reminder();
 		$reminders = $reminderBeen->get_full_list("aom_reminders.date_entered", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
-		foreach($reminders as $reminder) {
-			$ret[] = array(
-				'popup' => $reminder->popup,
-				'email' => $reminder->email,
-				'duration' => $reminder->duration,
-				'invitees' => AOM_Reminder_Invitee::loadRemindersInviteesData($reminder->id),
-			);
-		}
+        if($reminders) {
+            foreach ($reminders as $reminder) {
+                $ret[] = array(
+                    'id' => $reminder->id,
+                    'popup' => $reminder->popup,
+                    'email' => $reminder->email,
+                    'duration' => $reminder->duration,
+                    'invitees' => AOM_Reminder_Invitee::loadRemindersInviteesData($reminder->id),
+                );
+            }
+        }
 		return $ret;
 	}
 
