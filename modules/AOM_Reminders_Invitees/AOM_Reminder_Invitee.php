@@ -82,10 +82,10 @@ class AOM_Reminder_Invitee extends Basic {
         return $retValue;
     }
 
-    public static function deleteRemindersInviteesMultiple($reminderId, $inviteeDataIds = array()) {
+    public static function deleteRemindersInviteesMultiple($reminderId, $inviteeDataIds = null) {
         $invitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list("", "aom_reminders_invitees.reminder_id = '$reminderId'");
         foreach($invitees as $invitee) {
-            if(!in_array($invitee->id, $inviteeDataIds)) {
+            if(!is_null($inviteeDataIds) && !in_array($invitee->id, $inviteeDataIds)) {
                 $invitee->mark_deleted();
                 $invitee->save();
             }
