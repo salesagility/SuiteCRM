@@ -25,17 +25,18 @@ class AOM_Reminder_Invitee extends Basic {
     }
 
     public static function saveRemindersInviteesData($reminderId, $inviteesData) {
+        $inviteeDataIds = array();
         foreach($inviteesData as $inviteeData) {
+            $inviteeDataIds[] = $inviteeData->id;
             $reminderInviteeBean = BeanFactory::getBean('AOM_Reminders_Invitees', $inviteeData->id);
-
             $reminderInviteeBean->reminder_id = $reminderId;
             $reminderInviteeBean->related_invitee_module = $inviteeData->module;
             $reminderInviteeBean->related_invitee_module_id = $inviteeData->module_id;
-
             if(!BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list("", "aom_reminders_invitees.reminder_id = '{$reminderInviteeBean->reminder_id}' AND aom_reminders_invitees.related_invitee_module = '{$reminderInviteeBean->related_invitee_module}' AND aom_reminders_invitees.related_invitee_module_id = '{$reminderInviteeBean->related_invitee_module_id}'")) {
                 $reminderInviteeBean->save();
             }
         }
+        self::deleteRemindersInviteesMultiple($reminderId, $inviteeDataIds);
     }
 	
 	public static function loadRemindersInviteesData($reminderId) {
@@ -79,6 +80,16 @@ class AOM_Reminder_Invitee extends Basic {
                 break;
         }
         return $retValue;
+    }
+
+    public static function deleteRemindersInviteesMultiple($reminderId, $inviteeDataIds = array()) {
+        $invitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list("", "aom_reminders_invitees.reminder_id = '$reminderId'");
+        foreach($invitees as $invitee) {
+            if(!in_array($invitee->id, $inviteeDataIds)) {
+                $invitee->mark_deleted();
+                $invitee->save();
+            }
+        }
     }
 
 }

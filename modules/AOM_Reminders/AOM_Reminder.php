@@ -31,7 +31,9 @@ class AOM_Reminder extends Basic {
     }
 
     public static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
+        $reminderDataIds = array();
         foreach($remindersData as $reminderData) {
+            $reminderDataIds[] = $reminderData->id;
             $reminderBean = BeanFactory::getBean('AOM_Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
@@ -41,6 +43,14 @@ class AOM_Reminder extends Basic {
             $reminderBean->save();
             $reminderId = $reminderBean->id;
             AOM_Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
+        }
+        $reminders = BeanFactory::getBean('AOM_Reminders')->get_full_list("", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
+        foreach($reminders as $reminder) {
+            if(!in_array($reminder->id, $reminderDataIds)) {
+                AOM_Reminder_Invitee::deleteRemindersInviteesMultiple($reminder->id);
+                $reminder->mark_deleted();
+                $reminder->save();
+            }
         }
     }
 	
