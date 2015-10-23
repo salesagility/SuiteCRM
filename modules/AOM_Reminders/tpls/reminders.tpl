@@ -42,10 +42,46 @@
 *}
 {literal}
 
+<style type="text/css">
+/* reminders on meeting and calls */
+#reminders .clear {clear:both;}
+#reminders .remove-reminder-btn {float: right;}
+#reminders #reminder_view {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+#reminders #reminder_view .reminder_item {
+	list-style-type: none;
+	margin: 10px 0;
+	padding: 10px;
+	border: 1px solid lightgray;
+}
+#reminders #reminder_view .reminder_item .invitees_list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	display: block;
+}
+#reminders #reminder_view .reminder_item .invitees_list .invitees_item {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	border: none;
+	float: left;
+}
+#reminders #reminder_view .reminder_item .invitees_list .invitees_item .invitee_btn {
+	margin: 4px;
+}
+
+</style>
+
 <div style="display:none;">
 	<div id="reminder_template">
 
-		<input type="button" value="Remove reminder [x]" onclick="Reminders.onRemoveClick(this);"><br>
+		<input class="remove-reminder-btn" type="button" value="Remove reminder [x]" onclick="Reminders.onRemoveClick(this);"><br>
 		<label>Actions:</label><br>
 		<input type="checkbox" class="popup_chkbox" checked><label>Send invitees a popup or a desktop notification</label><br>
 		<input type="checkbox" class="email_chkbox" checked><label>Send invitees an email</label><br>
@@ -64,6 +100,7 @@
 		</select>
 		<br>
 		<ul class="invitees_list"></ul>
+		<div class="clear"></div>
 		<input type="button" value="[+] Add All Invitees" onclick="Reminders.onAddAllClick(this);"><br>
 
 	</div>
