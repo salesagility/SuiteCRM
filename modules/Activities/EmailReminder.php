@@ -113,22 +113,49 @@ class EmailReminder
             }
         }
 
-        $this->sendMultipleEmailReminders();
+        $this->sendMultipleEmailReminders($admin);
         
         return true;
     }
 
-    private function sendMultipleEmailReminders() {
+    private function sendMultipleEmailReminders(Administration $admin) {
         if($reminders = $this->getUnsentMultipleEmailReminders()) {
             foreach($reminders as $reminderId => $reminderArr) {
-                $relatedEventBean = BeanFactory::getBean($reminderArr['related_event_module'], $reminderArr['related_event_module_id']);
-                $allRecipientEmails = array();
-                if($relatedEventBean->status != 'held') {
-                    $allRecipientEmails = array_merge($allRecipientEmails, $this->getRecipients($reminderArr['related_event_module_id'], $reminderArr['related_event_module']));
-                }
+				$recipients = $this->getMultipleEmailReminderInviteesRecipients($reminderId);
+				$eventBean = BeanFactory::getBean($reminderArr['related_event_module'], $reminderArr['related_event_module_id']);
+				if ( $this->sendReminders($eventBean, $admin, $recipients) ) {
+					$reminderBean = BeanFactory::getBean('AOM_Reminders', $reminderId);
+					$reminderBean->email_sent = 1;
+					$reminderBean->save();
+				}
             }
         }
     }
+	
+	private function getMultipleEmailReminderInviteesRecipients($reminderId) {
+		$emails = array();
+		$reminder = BeanFactory::getBean('AOM_Reminders', $reminderId);		
+		$eventModule = $reminder->related_event_module;
+		$eventModuleId = $reminder->related_event_module_id;		
+		$event = BeanFactory::getBean($eventModule, $eventModuleId);
+		if(!isset($event->status) || $event->status != 'Held') {
+			$invitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list("aom_reminders_invitees.reminder_id = '$reminderId'");
+			foreach($invitees as $invitee) {
+				$inviteeModule = $invitee->related_invitee_module;
+				$inviteeModuleId = $invitee->related_invitee_module_id;
+				$personBean = BeanFactory::getBean($inviteeModule, $inviteeModuleId);
+				if ( !empty($personBean->email1) ) {
+					$arr = array(
+						'type' => $inviteeModule,
+						'name' => $personBean->full_name,
+						'email' => $personBean->email1,
+					);
+					$emails[] = $arr;
+				}
+			}
+		}
+		return $emails;
+	}
 
     private function getUnsentMultipleEmailReminders() {
         global $db;
