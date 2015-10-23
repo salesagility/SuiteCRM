@@ -226,9 +226,11 @@
 		},
 		
 		init: function(data) {
-			$.each(data, function(i,e){
-				Reminders.addReminder(false, e.popup, e.email, e.duration, e.id, e.invitees);
-			});
+			if(data) {
+				$.each(data, function(i,e){
+					Reminders.addReminder(false, e.popup, e.email, e.duration, e.id, e.invitees);
+				});
+			}
 			Reminders.createRemindersPostData();
 		},
 
