@@ -133,12 +133,9 @@
 		},
 		
 		init: function(data) {
-			// TODO !@#
-			alert('itt jarok! a "data" alapjan ujra kell epiteni az invajtokat!');
 			$.each(data, function(i,e){
 				
 			});
-			// TODO mentesnel figyelj, hogy ha van mar reminder ehhez a beanhez akkor azokat felulirni kell es nem hozzaadni!
 		},
 
 	};
