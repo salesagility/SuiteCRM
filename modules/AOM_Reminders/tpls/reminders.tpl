@@ -86,7 +86,7 @@
 		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>Send invitees a popup or a desktop notification</label><br>
 		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>Send invitees an email</label><br>
 		<label>When:</label>
-		<select tabindex="0" class="duration_sel">
+		<select tabindex="0" class="duration_sel" onchange="Reminders.onDurationSelChange(this);">
 			<option label="1 minute prior" value="60">1 minute prior</option>
 			<option label="5 minutes prior" value="300">5 minutes prior</option>
 			<option label="10 minutes prior" value="600">10 minutes prior</option>
@@ -142,7 +142,7 @@
 		},
 
 		setCheckboxValue(sel, value) {
-			if(!value || value === false || value === 0 || value === '0' || value === '' || value.toLowerCase() === 'false') {
+			if(!value || value === false || value === 0 || value === '0' || value === '' || (typeof value == 'string' && value.toLowerCase() === 'false') ) {
 				value = false;
 			}
 			else {
@@ -150,6 +150,13 @@
 			}
 			sel.prop('checked', value);
 			sel.attr('checked', value);
+		},
+
+		setSelectValue: function(sel, value) {
+			sel.val(value);
+			sel.find('option').prop('selected', false);
+			sel.find('option[value="' + value + '"]').attr('selected', 'selected');
+			sel.find('option[value="' + value + '"]').prop('selected', true);
 		},
 
 		setReminderPopupChkbox: function(e, value) {
@@ -160,10 +167,15 @@
 			Reminders.setCheckboxValue($(e).find('.email_chkbox'), value);
 		},
 
-		addReminder: function(e, popup, email, reminderId, invitees) {
+		setDurationSelectValue: function(e, value) {
+			Reminders.setSelectValue(e.find('.duration_sel'), value);
+		},
+
+		addReminder: function(e, popup, email, duration, reminderId, invitees) {
 			if(!reminderId) reminderId = '';
 			Reminders.setReminderPopupChkbox($('#reminder_template'), popup);
 			Reminders.setReminderEmailChkbox($('#reminder_template'), email);
+			Reminders.setDurationSelectValue($('#reminder_template'), duration);
 			if(!invitees) {
 				Reminders.addAllInvitees($('#reminder_template'));
 			}
@@ -174,7 +186,7 @@
 		},
 
 		onAddClick: function(e){
-			Reminders.addReminder(e, true, true);
+			Reminders.addReminder(e, true, true, 60);
 			Reminders.createRemindersPostData();
 		},
 		onRemoveClick: function(e) {
@@ -221,7 +233,7 @@
 		
 		init: function(data) {
 			$.each(data, function(i,e){
-				Reminders.addReminder(false, e.popup, e.email, e.id, e.invitees);
+				Reminders.addReminder(false, e.popup, e.email, e.duration, e.id, e.invitees);
 			});
 			Reminders.createRemindersPostData();
 		},
@@ -231,6 +243,10 @@
 		},
 
 		onEmailChkboxClick: function(e) {
+			Reminders.createRemindersPostData();
+		},
+
+		onDurationSelChange: function(e) {
 			Reminders.createRemindersPostData();
 		},
 
