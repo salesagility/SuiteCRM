@@ -10,12 +10,9 @@ class AOM_Reminder extends Basic {
     var $disable_row_level_security = true;
 
     var $popup;
-//    var $popup_sent = false;
-//    var $popup_read = false;
     var $email;
     var $email_sent = false;
-//    var $email_read = false;
-    var $duration;
+    var $timer;
     var $related_event_module;
     var $related_event_module_id;
 
@@ -48,7 +45,7 @@ class AOM_Reminder extends Basic {
             $reminderBean = BeanFactory::getBean('AOM_Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
-            $reminderBean->duration = $reminderData->duration;
+            $reminderBean->timer = $reminderData->timer;
             $reminderBean->related_event_module = $eventModule;
             $reminderBean->related_event_module_id = $eventModuleId;
             $reminderBean->save();
@@ -86,7 +83,7 @@ class AOM_Reminder extends Basic {
                     'id' => $reminder->id,
                     'popup' => $reminder->popup,
                     'email' => $reminder->email,
-                    'duration' => $reminder->duration,
+                    'timer' => $reminder->timer,
                     'invitees' => AOM_Reminder_Invitee::loadRemindersInviteesData($reminder->id),
                 );
             }
@@ -143,7 +140,7 @@ class AOM_Reminder extends Basic {
 			$dateStart = $eventBean->date_start;
 			$time = strtotime($db->fromConvert($dateStart,'datetime'));
 			$dateStart = date(TimeDate::DB_DATETIME_FORMAT, $time);
-			$remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart,'datetime'))->modify("-{$reminderBean->duration} seconds")->ts;
+			$remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart,'datetime'))->modify("-{$reminderBean->timer} seconds")->ts;
             $now_ts = $GLOBALS['timedate']->getNow()->ts;
             if ( $now_ts >= $remind_ts ) {
                 $reminders[$reminderBean->id] = $reminderBean;
@@ -200,7 +197,7 @@ class AOM_Reminder extends Basic {
 						foreach($invitees as $invitee) {
 							// need to concatenate since GMT times can bridge two local days
 							$timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
-							$timeRemind = $popupReminders->duration;
+							$timeRemind = $popupReminders->timer;
 							$timeStart -= $timeRemind;
 
 							$url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
