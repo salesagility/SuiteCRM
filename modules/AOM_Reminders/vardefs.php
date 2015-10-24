@@ -11,22 +11,6 @@ $dictionary['AOM_Reminder']['fields']= array(
         'massupdate' => false,
         'studio' => false,
     ),
-//    'popup_sent' => array(
-//        'name' => 'popup_sent',
-//        'vname' => 'LBL_POPUP_SENT',
-//        'type' => 'bool',
-//        'required' => false,
-//        'massupdate' => false,
-//        'studio' => false,
-//    ),
-//    'popup_read' => array(
-//        'name' => 'popup_read',
-//        'vname' => 'LBL_POPUP_READ',
-//        'type' => 'bool',
-//        'required' => false,
-//        'massupdate' => false,
-//        'studio' => false,
-//    ),
     'email' => array(
         'name' => 'email',
         'vname' => 'LBL_EMAIL',
@@ -43,17 +27,9 @@ $dictionary['AOM_Reminder']['fields']= array(
         'massupdate' => false,
         'studio' => false,
     ),
-//    'email_read' => array(
-//        'name' => 'email_read',
-//        'vname' => 'LBL_EMAIL_READ',
-//        'type' => 'bool',
-//        'required' => false,
-//        'massupdate' => false,
-//        'studio' => false,
-//    ),
-    'duration' => array(
-        'name' => 'duration',
-        'vname' => 'LBL_DURATION',
+    'timer' => array(
+        'name' => 'timer',
+        'vname' => 'LBL_TIMER',
         'type' => 'varchar',
         'len' => 32,
         'required' => true,

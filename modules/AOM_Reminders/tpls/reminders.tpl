@@ -88,7 +88,7 @@
 		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
 		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
 		<label>{$MOD.LBL_REMINDERS_WHEN}</label>
-		<select tabindex="0" class="duration_sel" onchange="Reminders.onDurationSelChange(this);">
+		<select tabindex="0" class="timer_sel" onchange="Reminders.onTimerSelChange(this);">
 			{html_options options=$fields.reminder_time.options}
 		</select>
 		<br>
@@ -161,15 +161,15 @@
 			Reminders.setCheckboxValue($(e).find('.email_chkbox'), value);
 		},
 
-		setDurationSelectValue: function(e, value) {
-			Reminders.setSelectValue(e.find('.duration_sel'), value);
+		setTimerSelectValue: function(e, value) {
+			Reminders.setSelectValue(e.find('.timer_sel'), value);
 		},
 
-		addReminder: function(e, popup, email, duration, reminderId, invitees) {
+		addReminder: function(e, popup, email, timer, reminderId, invitees) {
 			if(!reminderId) reminderId = '';
 			Reminders.setReminderPopupChkbox($('#reminder_template'), popup);
 			Reminders.setReminderEmailChkbox($('#reminder_template'), email);
-			Reminders.setDurationSelectValue($('#reminder_template'), duration);
+			Reminders.setTimerSelectValue($('#reminder_template'), timer);
 			if(!invitees) {
 				Reminders.addAllInvitees($('#reminder_template'));
 			}
@@ -211,24 +211,21 @@
 		createRemindersPostData: function() {
 			var reminders = [];
 			$('#reminder_view .reminder_item').each(function(i,e) {
-				//console.log(e);
 				reminders.push({
 					id: $(e).attr('data-reminder-id'),
 					popup: $(e).find('.popup_chkbox').prop('checked'),
 					email: $(e).find('.email_chkbox').prop('checked'),
-					duration: $(e).find('.duration_sel').val(),
+					timer: $(e).find('.timer_sel').val(),
 					invitees: Reminders.getInviteesData(e)
 				});
 			});
 			document.EditView.reminders_data.value = JSON.stringify(reminders);
-			console.log('created state:');
-			console.log(JSON.stringify(reminders));
 		},
 		
 		init: function(data) {
 			if(data) {
 				$.each(data, function(i,e){
-					Reminders.addReminder(false, e.popup, e.email, e.duration, e.id, e.invitees);
+					Reminders.addReminder(false, e.popup, e.email, e.timer, e.id, e.invitees);
 				});
 			}
 			Reminders.createRemindersPostData();
@@ -242,7 +239,7 @@
 			Reminders.createRemindersPostData();
 		},
 
-		onDurationSelChange: function(e) {
+		onTimerSelChange: function(e) {
 			Reminders.createRemindersPostData();
 		},
 
@@ -250,8 +247,6 @@
 
 
 	$(function(){
-		console.log('server stored state:');
-		console.log('{/literal}{$remindersDataJson}{literal}');
 		Reminders.init({/literal}{$remindersDataJson}{literal});
 		
 		$('#reminder_add_btn').click(function(){
