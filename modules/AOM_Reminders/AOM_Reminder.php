@@ -10,11 +10,11 @@ class AOM_Reminder extends Basic {
     var $disable_row_level_security = true;
 
     var $popup;
-    var $popup_sent = false;
-    var $popup_read = false;
+//    var $popup_sent = false;
+//    var $popup_read = false;
     var $email;
     var $email_sent = false;
-    var $email_read = false;
+//    var $email_read = false;
     var $duration;
     var $related_event_module;
     var $related_event_module_id;
@@ -151,5 +151,97 @@ class AOM_Reminder extends Basic {
 		}
         return $reminders;
     }
+	
+	// ---- popup and alert reminers
+	
+	public static function addNotifications(jsAlerts $alert) {
+		global $current_user, $timedate, $app_list_strings, $db, $sugar_config, $app_strings;
+
+		if (empty($current_user->id)) {
+            return;
+		}
+		
+		//Create separate variable to hold timedate value
+        $alertDateTimeNow = $timedate->nowDb();
+
+		// cn: get a boundary limiter
+		$dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
+		$dateTimeNow = $timedate->nowDb();
+
+		$dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
+		$dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');
+		
+		// Original jsAlert used to a meeting integration.
+		
+		///////////////////////////////////////////////////////////////////////
+		////	MEETING INTEGRATION
+		$meetingIntegration = null;
+		if(isset($sugar_config['meeting_integration']) && !empty($sugar_config['meeting_integration'])) {
+			if(!class_exists($sugar_config['meeting_integration'])) {
+				require_once("modules/{$sugar_config['meeting_integration']}/{$sugar_config['meeting_integration']}.php");
+			}
+			$meetingIntegration = new $sugar_config['meeting_integration']();
+		}
+		////	END MEETING INTEGRATION
+		///////////////////////////////////////////////////////////////////////
+		
+		$popupReminders = BeanFactory::getBean('AOM_Reminders')->get_full_list('', "aom_reminders.popup = 1");
+		
+		if($popupReminders) {
+			foreach($popupReminders as $popupReminder) {
+				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
+				if(
+					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planed') && 
+					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) )
+				) {
+					// TODO: The original popup/alert remainders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
+					$iniviees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list('', "aom_reminders_invitees.reminder_id = '{$popupReminder->id}' AND aom_reminders_invitees.related_invitee_module_id = '{$current_user->id}'");
+					if($invitees) {
+						foreach($invitees as $invitee) {
+							// need to concatenate since GMT times can bridge two local days
+							$timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
+							$timeRemind = $popupReminders->duration;
+							$timeStart -= $timeRemind;
+
+							$url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
+							$instructions = $app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG'];
+
+							if($popupReminder->related_event_module == 'Meetings') {
+								///////////////////////////////////////////////////////////////////
+								////	MEETING INTEGRATION
+								if(!empty($meetingIntegration) && $meetingIntegration->isIntegratedMeeting($popupReminder->related_event_module_id)) {
+									$url = $meetingIntegration->miUrlGetJsAlert($this->toArray($popupReminder));
+									$instructions = $meetingIntegration->miGetJsAlertInstructions();
+								}
+								////	END MEETING INTEGRATION
+								///////////////////////////////////////////////////////////////////								
+							}
+							
+							// TODO: language file!!
+							$meetingName = from_html(isset($relatedEvent->name) ? $relatedEvent->name : 'Event');
+							$desc1 = from_html(isset($relatedEvent->description) ? $relatedEvent->description : '');
+							$location = from_html(isset($relatedEvent->location) ? $relatedEvent->location : 'Location isn\'t set.');
+							
+							$relatedToMeeting = $alert->getRelatedName($popupReminder->related_event_module, $popupReminder->related_event_module_id);
+							
+							$description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'].$desc1."\n";
+							$description = $description  ."\n" .$app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($relatedEvent->status) ? $relatedEvent->status : '') ."\n". $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO']. $relatedToMeeting;
+							
+							// standard functionality
+							$alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
+								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert(  (isset($relatedEvent->date_start) ? $relatedEvent->date_start : '')  , 'datetime')),
+								$app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'].$location.
+								$description.
+								$instructions,
+								$timeStart - strtotime($alertDateTimeNow),
+								$url
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }
 ?>
