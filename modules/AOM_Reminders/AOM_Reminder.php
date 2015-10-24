@@ -218,9 +218,9 @@ class AOM_Reminder extends Basic {
 							}
 							
 							// TODO: language file!!
-							$meetingName = from_html(isset($relatedEvent->name) ? $relatedEvent->name : 'Event');
-							$desc1 = from_html(isset($relatedEvent->description) ? $relatedEvent->description : '');
-							$location = from_html(isset($relatedEvent->location) ? $relatedEvent->location : 'Location isn\'t set.');
+							$meetingName = from_html(isset($relatedEvent->name) ? $relatedEvent->name : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME']);
+							$desc1 = from_html(isset($relatedEvent->description) ? $relatedEvent->description : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION']);
+							$location = from_html(isset($relatedEvent->location) ? $relatedEvent->location : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION']);
 							
 							$relatedToMeeting = $alert->getRelatedName($popupReminder->related_event_module, $popupReminder->related_event_module_id);
 							
@@ -229,7 +229,7 @@ class AOM_Reminder extends Basic {
 							
 							// standard functionality
 							$alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
-								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert(  (isset($relatedEvent->date_start) ? $relatedEvent->date_start : '')  , 'datetime')),
+								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert(  (isset($relatedEvent->date_start) ? $relatedEvent->date_start : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'])  , 'datetime')),
 								$app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'].$location.
 								$description.
 								$instructions,
