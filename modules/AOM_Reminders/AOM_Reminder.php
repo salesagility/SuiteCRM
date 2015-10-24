@@ -30,6 +30,8 @@ class AOM_Reminder extends Basic {
         return false;
     }
 
+	// ---- save and load remainders on EditViews
+	
     public static function saveRemindersDataJson($eventModule, $eventModuleId, $remindersDataJson) {
         $reminderData = json_decode($remindersDataJson);
         if(!json_last_error()) {
@@ -91,6 +93,63 @@ class AOM_Reminder extends Basic {
         }
 		return $ret;
 	}
+	
+	// ---- sending email reminders
+	
+	public static function sendEmailReminders(EmailReminder $emailReminder, Administration $admin) {
+        if($reminders = self::getUnsentEmailReminders()) {
+            foreach($reminders as $reminderId => $reminder) {
+				$recipients = self::getEmailReminderInviteesRecipients($reminderId);
+				$eventBean = BeanFactory::getBean($reminder->related_event_module, $reminder->related_event_module_id);
+				if ( $emailReminder->sendReminders($eventBean, $admin, $recipients) ) {
+					$reminder->email_sent = 1;
+					$reminder->save();
+				}
+            }
+        }
+    }
+	
+	private static function getEmailReminderInviteesRecipients($reminderId) {
+		$emails = array();
+		$reminder = BeanFactory::getBean('AOM_Reminders', $reminderId);		
+		$eventModule = $reminder->related_event_module;
+		$eventModuleId = $reminder->related_event_module_id;		
+		$event = BeanFactory::getBean($eventModule, $eventModuleId);
+		if(!isset($event->status) || $event->status != 'Held') {
+			$invitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list('', "aom_reminders_invitees.reminder_id = '$reminderId'");
+			foreach($invitees as $invitee) {
+				$inviteeModule = $invitee->related_invitee_module;
+				$inviteeModuleId = $invitee->related_invitee_module_id;
+				$personBean = BeanFactory::getBean($inviteeModule, $inviteeModuleId);
+				if ( !empty($personBean->email1) ) {
+					$arr = array(
+						'type' => $inviteeModule,
+						'name' => $personBean->full_name,
+						'email' => $personBean->email1,
+					);
+					$emails[] = $arr;
+				}
+			}
+		}		
+		return $emails;
+	}
 
+    private static function getUnsentEmailReminders() {
+        global $db;
+		// TODO: The original email remainders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
+		$reminderBeans = BeanFactory::getBean('AOM_Reminders')->get_full_list('', "aom_reminders.email = 1 AND aom_reminders.email_sent = 0");
+		foreach($reminderBeans as $reminderBean) {
+			$eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
+			$dateStart = $eventBean->date_start;
+			$time = strtotime($db->fromConvert($dateStart,'datetime'));
+			$dateStart = date(TimeDate::DB_DATETIME_FORMAT, $time);
+			$remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart,'datetime'))->modify("-{$reminderBean->duration} seconds")->ts;
+            $now_ts = $GLOBALS['timedate']->getNow()->ts;
+            if ( $now_ts >= $remind_ts ) {
+                $reminders[$reminderBean->id] = $reminderBean;
+            }
+		}
+        return $reminders;
+    }
 }
 ?>
