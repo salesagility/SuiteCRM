@@ -298,6 +298,8 @@ class Contact extends Person {
 						$query .=  ' LEFT JOIN  email_addr_bean_rel on contacts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module=\'Contacts\' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1 ';
 						$query .=  ' LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id ' ;
 
+			$query .= $this->getExportRelatedJoinBySearchField('campaign_name');
+
             $query .= $custom_join['join'];
 
 		$where_auto = "( accounts.deleted IS NULL OR accounts.deleted=0 )
@@ -315,6 +317,22 @@ class Contact extends Person {
 
                 return $query;
         }
+
+	/**
+	 * Create a related join for export all data by search field name if bean has related field
+	 * @param $fieldName string search name
+	 * @return string join query string
+	 */
+	protected function getExportRelatedJoinBySearchField($fieldName) {
+		$joins = array();
+		if(isset($this->field_name_map[$fieldName])) {
+			$field = $this->field_name_map[$fieldName];
+			$fieldId = !empty($this->field_name_map[$field['id_name']]['rname']) ? $this->field_name_map[$field['id_name']]['rname'] : 'id';
+			$joins[] = "LEFT JOIN (SELECT $fieldId, {$field['rname']} AS {$field['name']} FROM {$field['table']}) {$field['table']}_relate ON {$field['table']}_relate.$fieldId = {$this->table_name}.{$field['id_name']}";
+		}
+		$join = implode('\n', $joins);
+		return $join;
+	}
 
 	function fill_in_additional_list_fields() {
 		parent::fill_in_additional_list_fields();
