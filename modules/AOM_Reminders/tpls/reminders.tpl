@@ -79,7 +79,7 @@
 </style>
 {/literal}
 
-
+<!-- Template for reminders  -->
 <div style="display:none;">
 	<div id="reminder_template">
 
@@ -99,6 +99,7 @@
 	</div>
 </div>
 
+<!-- Reminders field in EditViews -->
 <div id="reminders">
 	<input type="hidden" id="reminders_data" name="reminders_data" />
 	<ul id="reminder_view"></ul>
@@ -108,9 +109,16 @@
 {literal}
 <script type="text/javascript">
 
+	/**
+	 * Remainers handling
+	 * Use Calls/Meatings module EditView. 
+	 * The Remainders need a Scheduler table.
+	 */
 	var Reminders = {
+		
 		getInviteeView: function(id, module, moduleId, relatedValue) {
 			if(!id) id = '';
+			// TODO: add a template for this
 			var inviteeView = '<li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName='+ module +'.gif"><span class="related-value">' + relatedValue + '</span>&nbsp<span>[x]</span></button></li>';
 			return inviteeView;
 		},
