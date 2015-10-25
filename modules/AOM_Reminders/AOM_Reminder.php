@@ -93,10 +93,10 @@ class AOM_Reminder extends Basic {
 	
 	// ---- sending email reminders
 	
-	public static function sendEmailReminders(EmailReminder $emailReminder, Administration $admin) {
+	public static function sendEmailReminders(EmailReminder $emailReminder, Administration $admin, $checkDecline = true) {
         if($reminders = self::getUnsentEmailReminders()) {
             foreach($reminders as $reminderId => $reminder) {
-				$recipients = self::getEmailReminderInviteesRecipients($reminderId);
+				$recipients = self::getEmailReminderInviteesRecipients($reminderId, $checkDecline);
 				$eventBean = BeanFactory::getBean($reminder->related_event_module, $reminder->related_event_module_id);
 				if ( $emailReminder->sendReminders($eventBean, $admin, $recipients) ) {
 					$reminder->email_sent = 1;
@@ -106,7 +106,7 @@ class AOM_Reminder extends Basic {
         }
     }
 	
-	private static function getEmailReminderInviteesRecipients($reminderId) {
+	private static function getEmailReminderInviteesRecipients($reminderId, $checkDecline = true) {
 		$emails = array();
 		$reminder = BeanFactory::getBean('AOM_Reminders', $reminderId);		
 		$eventModule = $reminder->related_event_module;
@@ -118,22 +118,24 @@ class AOM_Reminder extends Basic {
 				$inviteeModule = $invitee->related_invitee_module;
 				$inviteeModuleId = $invitee->related_invitee_module_id;
 				$personBean = BeanFactory::getBean($inviteeModule, $inviteeModuleId);
-				if ( !empty($personBean->email1) ) {
-					$arr = array(
-						'type' => $inviteeModule,
-						'name' => $personBean->full_name,
-						'email' => $personBean->email1,
-					);
-					$emails[] = $arr;
+				// The original email reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
+				if($checkDecline && !self::isDecline($event, $personBean)) {
+					if ( !empty($personBean->email1) ) {
+						$arr = array(
+							'type' => $inviteeModule,
+							'name' => $personBean->full_name,
+							'email' => $personBean->email1,
+						);
+						$emails[] = $arr;
+					}
 				}
 			}
-		}		
+		}
 		return $emails;
-	}
+	}	
 
     private static function getUnsentEmailReminders() {
-        global $db;
-		// TODO: The original email remainders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
+        global $db;		
 		$reminderBeans = BeanFactory::getBean('AOM_Reminders')->get_full_list('', "aom_reminders.email = 1 AND aom_reminders.email_sent = 0");
 		foreach($reminderBeans as $reminderBean) {
 			$eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
@@ -151,7 +153,7 @@ class AOM_Reminder extends Basic {
 	
 	// ---- popup and alert reminers
 	
-	public static function addNotifications(jsAlerts $alert) {
+	public static function addNotifications(jsAlerts $alert, $checkDecline = true) {
 		global $current_user, $timedate, $app_list_strings, $db, $sugar_config, $app_strings;
 
 		if (empty($current_user->id)) {
@@ -189,9 +191,10 @@ class AOM_Reminder extends Basic {
 				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
 				if(
 					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planed') && 
-					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) )
+					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) ) && 
+					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->is))))
 				) {
-					// TODO: The original popup/alert remainders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
+					// The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
 					$iniviees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list('', "aom_reminders_invitees.reminder_id = '{$popupReminder->id}' AND aom_reminders_invitees.related_invitee_module_id = '{$current_user->id}'");
 					if($invitees) {
 						foreach($invitees as $invitee) {
@@ -214,7 +217,6 @@ class AOM_Reminder extends Basic {
 								///////////////////////////////////////////////////////////////////								
 							}
 							
-							// TODO: language file!!
 							$meetingName = from_html(isset($relatedEvent->name) ? $relatedEvent->name : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME']);
 							$desc1 = from_html(isset($relatedEvent->description) ? $relatedEvent->description : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION']);
 							$location = from_html(isset($relatedEvent->location) ? $relatedEvent->location : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION']);
@@ -238,6 +240,51 @@ class AOM_Reminder extends Basic {
 				}
 			}
 		}
+	}
+	
+	// --- test for accept status decline is?
+	
+	private static function isDecline(SugarBean $event, SugarBean $person) {
+		return self::testEventPersonAcceptStatus($event, $person, 'decline');
+	}
+	
+	private static function testEventPersonAcceptStatus(SugarBean $event, SugarBean $person, $acceptStatus = 'decline') {
+		if($acceptStats = self::getEventPersonAcceptStatus($event, $person)) {
+			$acceptStatusLower = strtolower($acceptStatus);
+			foreach((array) $acceptStats as $acceptStat) {
+				if(strtolower($acceptStat) == $acceptStatusLower) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	private static function getEventPersonAcceptStatus(SugarBean $event, SugarBean $person) {
+		global $db;
+		$rel_person_table_Key = "rel_{$person->table_name}_table";
+		$rel_person_table_Value = "{$event->table_name}_{$person->table_name}";
+		if(isset($event->$rel_person_table_Key) && $event->$rel_person_table_Key == $rel_person_table_Value) {
+			$eventIdField = array_search($event->table_name, $event->relationship_fields);
+			$personIdField = strtolower($person->object_name) . '_id';
+			$query = "
+				SELECT * FROM {$event->table_name}_{$person->table_name} 
+				WHERE 
+					{$eventIdField} = '{$event->id}' AND 
+					{$personIdField} = '{$person->id}' AND 
+					deleted = 0
+			";
+			$re = $db->query($query);
+			$ret = array();
+			while($row = $db->fetchByAssoc($re) ) {
+				if(!isset($row['accept_status'])) {
+					return null;
+				}
+				$ret[] = $row['accept_status'];
+			}
+			return $ret;
+		}
+		return null;
 	}
 	
 }
