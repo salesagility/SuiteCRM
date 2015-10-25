@@ -117,6 +117,7 @@
 
 		addAllInvitees: function(e) {
 			var inviteesList = '';
+			// this function need a scheduler table!
 			$('table#schedulerTable tr.schedulerAttendeeRow').each(function(i,e){
 				var dataModule = $(e).attr('data-module');
 				var dataId = $(e).attr('data-id');
