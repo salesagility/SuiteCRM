@@ -112,6 +112,8 @@ class EmailReminder
                 $bean->save();
             }
         }
+
+		AOM_Reminder::sendEmailReminders($this, $admin);
         
         return true;
     }
@@ -123,7 +125,7 @@ class EmailReminder
      * @param array $recipients
      * @return boolean
      */
-    protected function sendReminders(SugarBean $bean, Administration $admin, $recipients)
+    public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
         
         if ( empty($_SESSION['authenticated_user_language']) ) {
