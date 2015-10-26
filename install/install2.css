@@ -141,6 +141,7 @@ a:hover {
     vertical-align:middle;
     padding: 10px 20px;
     margin: 20px;
+    /* min-height: 800px; */
 
     -webkit-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
     -moz-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
@@ -197,6 +198,7 @@ div.install_block .select{
     margin-left:4px;
     float:left;
 }
+.starhook div.install_block span {display: inline; float: left; width: 5px; padding-top:8px; padding-left:3px;}
 input {
     padding:5px;
     margin:5px;
@@ -366,7 +368,7 @@ h2 {
     width: 430px;
 }
 
-.form_section .formrow label {
+.form_section .formrow label, label {
     display: block;
     float: left;
     width: 180px;
@@ -382,14 +384,18 @@ h2 {
     margin-top: 11px;
 }
 
-.form_section .formrow label i {
+.form_section .formrow label i,
+label i,
+.tooltip-toggle {
     cursor: pointer;
     /* border: 1px solid lightgrey; */
     padding: 0 6px;
     position: relative;
     z-index: 1000;
 }
-.form_section .formrow label i .tooltip {
+.form_section .formrow label i .tooltip,
+label i .tooltip,
+.tooltip-toggle .tooltip {
     display: none;
     position: absolute;
     top: 0;
@@ -403,8 +409,15 @@ h2 {
     box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
     z-index: 1001;
 }
-.form_section .formrow label i:hover .tooltip {
+.form_section .formrow label i:hover .tooltip,
+label i:hover .tooltip,
+.tooltip-toggle:hover .tooltip {
     display: block;
+}
+
+div.tooltip-toggle {
+    display: inline;
+
 }
 
 .form_section .formrow img {
@@ -453,7 +466,7 @@ form #wrapper {
 }
 .sliderimg {
 
-    max-height:400px !important;
+    /* max-height:400px !important; */
 }
 
 .rslides {
@@ -463,6 +476,7 @@ form #wrapper {
     width: 100%;
     padding: 0;
     margin: 0;
+    max-height: 500px;
 }
 
 .rslides li {
@@ -495,13 +509,18 @@ form #wrapper {
 
 #licenseaccept {
     padding:10px;
-    float:left;
+    float:none;
+    text-align: center;
 }
 
 #licenseDivToggler {
     margin-bottom: 10px;
 }
 
+/* system check preloader */
+.preloading {
+	text-align: left;
+}
 
 
 /* install config step */
@@ -515,6 +534,10 @@ form #wrapper {
     width: 98%;
 }
 
+
+.toggler {
+    cursor: pointer;
+}
 
 
 

@@ -160,8 +160,20 @@ $mod_strings = array (
     'LBL_REPEAT_PARENT_ID' => 'Repeat Parent ID',
     'LBL_RECURRING_SOURCE' => 'Recurring Source',
     
-    'LBL_SYNCED_RECURRING_MSG' => 'This call originated in another system and was synced to Sugar. To make changes, go to the original call within the other system. Changes made in the other system can be synced to this record.',
+    'LBL_SYNCED_RECURRING_MSG' => 'This call originated in another system and was synced to SuiteCRM. To make changes, go to the original call within the other system. Changes made in the other system can be synced to this record.',
     'LBL_RELATED_TO' => 'Related to:',
+
+    // for reminders
+    'LBL_REMINDERS' => 'Reminders (new)',
+    'LBL_REMINDERS_ACTIONS' => 'Actions:',
+    'LBL_REMINDERS_POPUP' => 'Send invitees a popup or a desktop notification',
+    'LBL_REMINDERS_EMAIL' => 'Send invitees an email',
+    'LBL_REMINDERS_WHEN' => 'When:',
+    'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder [x]',
+    'LBL_REMINDERS_ADD_ALL_INVITEES' => '[+] Add All Invitees',
+    'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
+    'LBL_REMINDERS_REMOVE' => '',
+    'LBL_REMINDERS_REMOVE' => '',
 
 );
 

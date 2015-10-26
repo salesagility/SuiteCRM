@@ -60,11 +60,13 @@ class DetailView2 extends EditView
      * @param $metadataFile String value of file location to use in overriding default metadata file
      * @param tpl String value of file location to use in overriding default Smarty template
      */
+
     function setup(
         $module,
-        $focus,
+        $focus  = null,
         $metadataFile = null,
-        $tpl = 'include/DetailView/DetailView.tpl'
+        $tpl = 'include/DetailView/DetailView.tpl',
+        $createFocus = true
         )
     {
         global $sugar_config;

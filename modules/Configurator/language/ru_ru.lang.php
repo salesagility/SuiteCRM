@@ -100,7 +100,7 @@ $mod_strings = array (
 'LBL_MODULE_TITLE'=> 'Пользовательский интерфейс' ,
 'LBL_NOTIFY_FROMADDRESS' => '"От" (Адрес):' ,
 'LBL_NOTIFY_SUBJECT' => 'Тема E-mail:' ,
-'LBL_PORTAL_ON_DESC' => 'Allows users to manage portal user information within contact records. Portal users can access Cases, Bugs, Knowledge Base articles and other data through the Sugar Portal application.', ///
+'LBL_PORTAL_ON_DESC' => 'Allows users to manage portal user information within contact records. Portal users can access Cases, Bugs, Knowledge Base articles and other data through the SuiteCRM Portal application.', ///
 'LBL_PORTAL_ON' => 'Enable Portal User Management', ///
 'LBL_PORTAL_TITLE' => 'Пользовательский портал' ,
 'LBL_PROXY_AUTH'=> 'Аутентификация?' ,
@@ -150,7 +150,7 @@ $mod_strings = array (
 'LBL_LDAP_SERVER_HOSTNAME'=> 'Сервер:',
 'LBL_LDAP_SERVER_PORT'=> 'Порт:',
 'LBL_LDAP_ADMIN_USER'=> 'Имя пользователя:',
-'LBL_LDAP_ADMIN_USER_DESC'=> 'Поиск пользователя Suite. В случае отсутствия параметра будет выполнен анонимный вход.',
+'LBL_LDAP_ADMIN_USER_DESC'=> 'Поиск пользователя SuiteCRM. В случае отсутствия параметра будет выполнен анонимный вход.',
 'LBL_LDAP_ADMIN_PASSWORD'=> 'Пароль:',
 'LBL_LDAP_AUTHENTICATION'=> 'Аутентификация:',
 'LBL_LDAP_AUTHENTICATION_DESC'=> 'Аутентификация на сервере LDAP, используя данные пользователя',
@@ -165,7 +165,7 @@ $mod_strings = array (
 'LBL_LDAP_GROUP_USER_ATTR_DESC'=> 'Уникальный идентификатор пользователя, используемый для проверки принадлежности пользователя к определённой группе, например: <em>uid</em>',
 'LBL_LDAP_GROUP_ATTR_DESC'=> 'Уникальный Атрибут группы, например: <em>memberUid</em>',
 'LBL_LDAP_GROUP_ATTR'=> 'Атрибут группы:',
-'LBL_LDAP_USER_FILTER_DESC'=> 'Любые дополнительные параметры, применяемые в процессе аутентификации пользователей, например: <em>is_sugar_user=1 или (is_sugar_user=1)(is_sales=1)</em>',
+'LBL_LDAP_USER_FILTER_DESC'=> 'Любые дополнительные параметры, применяемые в процессе аутентификации пользователей, например: <em>is_SuiteCRM_user=1 или (is_SuiteCRM_user=1)(is_sales=1)</em>',
 'LBL_LDAP_LOGIN_ATTRIBUTE'=> 'Login-атрибут:',
 'LBL_LDAP_BIND_ATTRIBUTE'=> 'Bind-атрибут:',
 'LBL_LDAP_BIND_ATTRIBUTE_DESC'=> 'Аутентификация пользователя LDAP, например:[<b>AD:</b>&nbsp;userPrincipalName] [<b>openLDAP:</b>&nbsp;userPrincipalName] [<b>Mac&nbsp;OS&nbsp;X:</b>&nbsp;uid] ',
@@ -175,12 +175,12 @@ $mod_strings = array (
 'LBL_LDAP_GROUP_NAME'=> 'Название группы:',
 'LBL_LDAP_GROUP_NAME_DESC'=> 'Пример: <em>cn=suitecrm</em>',
 'LBL_LDAP_USER_DN_DESC'=> 'Пример: <em>ou=people,dc=example,dc=com</eM>',
-'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'Если аутентифицированный пользователь не существует в базе Suite, то он будет создан.',
+'LBL_LDAP_AUTO_CREATE_USERS_DESC'=> 'Если аутентифицированный пользователь не существует в базе SuiteCRM, то он будет создан.',
 'LBL_LDAP_ENC_KEY'=> 'Ключ шифрования:',
 'DEVELOPER_MODE'=> 'Режим разработчика',
 
 'SHOW_DOWNLOADS_TAB' => 'Отображать закладку загрузок',
-'SHOW_DOWNLOADS_TAB_HELP' => 'Отображение закладки загрузок в настройках пользователя, обеспечивая доступ пользователя к плагинам и другим файлам Suite',
+'SHOW_DOWNLOADS_TAB_HELP' => 'Отображение закладки загрузок в настройках пользователя, обеспечивая доступ пользователя к плагинам и другим файлам SuiteCRM',
 'LBL_LDAP_ENC_KEY_DESC'=> 'Для SOAP-аутентификации при использовании LDAP.',
 'LDAP_ENC_KEY_NO_FUNC_DESC' => 'Расширение php_mcrypt должно быть включено в файле php.ini или же php должен быть скомпилирован с указанием соответствующего ключа.',
 'LBL_ALL' => 'Показать все',
@@ -372,7 +372,7 @@ $mod_strings = array (
 'JS_ALERT_PDF_WRONG_EXTENSION' => 'This file do not have a good file extension.',
 'LBL_PDF_INSTRUCTIONS' => 'Instructions',
 'PDF_INSTRUCTIONS_ADD_FONT' => <<<BSOFR
-Fonts supported by SugarPDF :
+Fonts supported by the PDF :
 <ul>
 <li>TrueTypeUnicode (UTF-8 Unicode)</li>
 <li>OpenTypeUnicode</li>
@@ -384,14 +384,14 @@ Fonts supported by SugarPDF :
 <br>
 If you choose to not embed your font in the PDF, the generated PDF file will be lighter but a substitution will be use if the font is not available in the system of your reader.
 <br><br>
-Adding a PDF font to SugarCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
+Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>Load the metric file generated in step 2 and your font file below.
 BSOFR
 ,
 'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
 'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
-'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SugarCRM.',
+'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
 'LBL_STATUS_FONT_ERROR' => 'ERROR : The font has not been added. Look at the log below.',
 'LBL_FONT_MOVE_DEFFILE' => 'Font definition file move to : ',
 'LBL_FONT_MOVE_FILE' => 'Font file move to : ',
@@ -412,7 +412,7 @@ BSOFR
 // Wizard
 'LBL_WIZARD_TITLE' => 'Мастер настройки параметров SuiteCRM',
 'LBL_WIZARD_WELCOME_TAB' => 'Добро пожаловать',
-'LBL_WIZARD_WELCOME_TITLE' => 'Добро пожаловать в Suite!',
+'LBL_WIZARD_WELCOME_TITLE' => 'Добро пожаловать в SuiteCRM!',
 'LBL_WIZARD_WELCOME' => 'Нажмите на кнопку <b>Вперёд</b> для настройки параметров системы. Если Вы хотите сделать это позже, нажмите на кнопку <b>Пропустить</b>.',
 'LBL_WIZARD_NEXT_BUTTON' => 'Вперёд >',
 'LBL_WIZARD_BACK_BUTTON' => '< Назад',
@@ -427,7 +427,6 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 'LBL_WIZARD_SYSTEM_DESC' => 'Укажите название вашей организации и выберите логотип.',
 'LBL_WIZARD_LOCALE_DESC' => 'Укажите каким образом должны быть представлены данные в системе. Указанные здесь параметры будут являться параметрами по умолчанию. В дальнейшем пользователи смогут изменить данные параметры по своему усмотрению.',
 'LBL_WIZARD_SMTP_DESC' => 'Учётная запись исходящей почты будет использоваться для отправки исходящей почты, в том числе такой как уведомления о назначении ответственного, а также писем с информацией о новом пароле. Электронный адрес данной учётной записи будет фигурировать в получаемых письмах в качестве отправителя.',
-'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Suite Mobile iPhone client.', ///
 'LBL_GMAIL_LOGO' => 'Gmail Logo' /*for 508 compliance fix*/,
 'LBL_YAHOO_MAIL' => 'Yahoo Mail' /*for 508 compliance fix*/,
 'LBL_EXCHANGE_LOGO' => 'Exchange' /*for 508 compliance fix*/,
@@ -435,7 +434,6 @@ To configure additional system settings, click <a href="index.php?module=Adminis
 'LBL_DELETE' => 'Удалить' /*for 508 compliance fix*/,
 'LBL_WELCOME' => 'Добро пожаловать' /*for 508 compliance fix*/,
 'LBL_LOGO' => 'Логотип' /*for 508 compliance fix*/,
-'LBL_MOBILE_MOD_REPORTS_RESTRICTION' => '* The Reports module is only available for the Suite Mobile native clients', ///
 'LBL_ENABLE_HISTORY_CONTACTS_EMAILS' => 'Дублировать отображение писем контактов в субпанели "История" для следующих модулей',
 
 );

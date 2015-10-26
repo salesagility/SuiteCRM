@@ -48,7 +48,7 @@
  // Replaced by RAPIRA <--
 $mod_strings = array (
 'LBL_ASSIGNED_TO_ID' => 'Ответственный(ая)-ID',
-'LBL_ASSIGNED_TO_NAME' => 'Пользователь Suite',
+'LBL_ASSIGNED_TO_NAME' => 'Пользователь SuiteCRM',
 'LBL_ID' => 'ID',
 'LBL_DATE_ENTERED' => 'Дата создания',
 'LBL_DATE_MODIFIED' => 'Дата изменения',
@@ -114,8 +114,8 @@ $mod_strings = array (
 'LBL_REAUTHENTICATE_KEY' => 'a',
 'LBL_APPLICATION_FOUND_NOTICE' => 'Учётная запись для данного приложения уже существует. Мы восстановили существующую учётную запись.',
 'LBL_OMIT_URL' => '(Без http:// или https://)',
-'LBL_OAUTH_SAVE_NOTICE' => 'Нажмите на кнопку <b>Подключить</b> для перенаправления на страницу ввода регистрационной информации. После успешного подключения вы автоматически вернётесь в Sugar.',
-'LBL_BASIC_SAVE_NOTICE' => 'Нажмите на кнопку <b>Подключить</b> для подключения данной учётной записи к Sugar.',
+'LBL_OAUTH_SAVE_NOTICE' => 'Нажмите на кнопку <b>Подключить</b> для перенаправления на страницу ввода регистрационной информации. После успешного подключения вы автоматически вернётесь в SuiteCRM.',
+'LBL_BASIC_SAVE_NOTICE' => 'Нажмите на кнопку <b>Подключить</b> для подключения данной учётной записи к SuiteCRM.',
 'LBL_ERR_FACEBOOK' => 'Facebook returned an error, and the feed cannot be displayed.', ///
 'LBL_ERR_OAUTH_FACEBOOK_1' => 'Facebook authentication was not successful. To attempt authentication, please', ///
 'LBL_ERR_OAUTH_FACEBOOK_2' => 'login to Facebook again', ///

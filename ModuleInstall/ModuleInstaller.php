@@ -68,7 +68,7 @@ class ModuleInstaller{
 	function ModuleInstaller(){
 		$this->ms = new ModuleScanner();
 		$this->modules = get_module_dir_list();
-		$this->db = & DBManagerFactory::getInstance();
+		$this->db = DBManagerFactory::getInstance();
         include("ModuleInstall/extensions.php");
         $this->extensions = $extensions;
 	}

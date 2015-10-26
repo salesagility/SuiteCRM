@@ -76,7 +76,7 @@ class EmailMarketing extends SugarBean
 
 	}
 
-	function retrieve($id, $encode=true, $deleted=true) {
+	function retrieve($id = -1, $encode=true, $deleted=true) {
 	    parent::retrieve($id,$encode,$deleted);
 
         global $timedate;

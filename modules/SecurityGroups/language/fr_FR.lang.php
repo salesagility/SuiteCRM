@@ -81,7 +81,7 @@ $mod_strings = array (
   'LBL_HOOKUP_CONFIRM_PART2' => ". Continue?",
   
   'LBL_GROUP_SELECT' => 'Sélectionnez les groupes devraient avoir accès à ce dossier',
-  'LBL_ERROR_DUPLICATE' => 'En raison d\'un possible double détectés par Sugar, vous devrez ajouter manuellement des groupes de sécurité pour votre dossier nouvellement créé.',
+  'LBL_ERROR_DUPLICATE' => 'En raison d\'un possible double détectés par SuiteCRM, vous devrez ajouter manuellement des groupes de sécurité pour votre dossier nouvellement créé.',
 
   'LBL_INBOUND_EMAIL' => 'Compte de messagerie entrant',
   'LBL_INBOUND_EMAIL_DESC' => "Ne permettre l'accès à un compte de messagerie si l'utilisateur appartient à un groupe qui est affecté au compte de messagerie.",

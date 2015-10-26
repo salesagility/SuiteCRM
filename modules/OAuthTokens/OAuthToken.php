@@ -132,7 +132,7 @@ class OAuthToken extends SugarBean
         return new self($t, $s);
     }
 
-    public function save()
+    public function save($check_notify = false)
     {
         $this->token_ts = time();
         if(!isset($this->id)) {
