@@ -99,7 +99,7 @@ array (
           'field' => '30',
         ),
       ),
-      'javascript' => '<script type="text/javascript">{$JSON_CONFIG_JAVASCRIPT}var event = $(document); event.trigger("loaded:json_config");</script>
+      'javascript' => '<script type="text/javascript">{$JSON_CONFIG_JAVASCRIPT}</script>
 {sugar_getscript file="cache/include/javascript/sugar_grp_jsolait.js"}
 <script>toggle_portal_flag();function toggle_portal_flag()  {ldelim} {$TOGGLE_JS} {rdelim} 
 function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.EditView.submit();{rdelim}{rdelim}</script>',
@@ -183,13 +183,20 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
             'customCodeReadOnly' => '{$fields.duration_hours.value}{$MOD.LBL_HOURS_ABBREV} {$fields.duration_minutes.value}{$MOD.LBL_MINSS_ABBREV} ',
           ),
         ),
-        array (
-          array (
-            'name' => 'reminder_time',
-            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
-            'label' => 'LBL_REMINDER',
+//        array (
+//          array (
+//            'name' => 'reminder_time',
+//            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
+//            'label' => 'LBL_REMINDER',
+//          ),
+//        ),
+          array(
+              array (
+                  'name' => 'reminders',
+                  'customCode' => '{include file="modules/AOM_Reminders/tpls/reminders.tpl"}',
+                  'label' => 'LBL_REMINDERS',
+              ),
           ),
-        ),
         array (
           array (
             'name' => 'description',

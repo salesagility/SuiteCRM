@@ -169,6 +169,5 @@ $mod_strings = array (
 'LBL_SENDEMAILREMINDERS'=> 'Run Email Reminders Sending',
 'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
 'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
-'LBL_HANDLEMISSEDALERTS' => 'Handle Missed Alerts',
 );
 ?>

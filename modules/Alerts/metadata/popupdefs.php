@@ -38,9 +38,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$module_name = 'Alerts';
+$module_name = 'Alert';
 $object_name = 'Alert';
-$_module_name = 'Alerts';
+$_module_name = 'Alert';
 $popupMeta = array('moduleMain' => $module_name,
 						'varName' => $object_name,
 						'orderBy' => $_module_name.'.name',

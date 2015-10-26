@@ -2157,6 +2157,10 @@ $app_strings = array (
     'MSG_JS_ALERT_MTG_REMINDER_RELATED_TO' => 'Related To: ',
     'MSG_JS_ALERT_MTG_REMINDER_CALL_MSG' => "\nClick OK to view this call or click Cancel to dismiss this message.",
   	'MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG' => "\nClick OK to view this meeting or click Cancel to dismiss this message.",
+	'MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME' => 'Event',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION' => '',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION' => 'Location isn\'t set.',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE' => 'Start date isn\'t defined.',
  	'MSG_LIST_VIEW_NO_RESULTS_BASIC' => "No results found.",
 	'MSG_LIST_VIEW_NO_RESULTS' => "No results found for <item1>",
  	'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => "Create <item1> as a new <item2>",
@@ -3304,5 +3308,12 @@ $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
 //$app_list_strings['aok_status_list']['Published'] = 'Published';
 $app_list_strings['aok_status_list']['published_private'] = 'Private';
 $app_list_strings['aok_status_list']['published_public'] = 'Public';
+
+
+$app_list_strings['moduleList']['AOM_Reminders'] = 'Reminders';
+$app_list_strings['moduleListSingular']['AOM_Reminders'] = 'Reminder';
+
+$app_list_strings['moduleList']['AOM_Reminders_Invitees'] = 'Reminders_Invitees';
+$app_list_strings['moduleListSingular']['AOM_Reminders_Invitees'] = 'Reminder_Invitee';
 
 ?>
