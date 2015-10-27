@@ -44,7 +44,6 @@
 
 <style type="text/css">
 
-
 </style>
 {/literal}
 
@@ -52,7 +51,7 @@
 <div style="display:none;">
 	<div id="reminder_template">
 
-		<input class="remove-reminder-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
+		<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
 		<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
 		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
 		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
@@ -63,7 +62,7 @@
 		<br>
 		<ul class="invitees_list"></ul>
 		<div class="clear"></div>
-		<input type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);"><br>
+		<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);"><br>
 
 	</div>
 </div>
@@ -72,7 +71,7 @@
 <div id="reminders">
 	<input type="hidden" id="reminders_data" name="reminders_data" />
 	<ul id="reminder_view"></ul>
-	<input id="reminder_add_btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
+	<input id="reminder_add_btn" class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
 </div>
 
 {literal}
