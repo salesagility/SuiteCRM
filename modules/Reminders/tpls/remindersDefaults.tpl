@@ -46,40 +46,65 @@
 
 </style>
 {/literal}
+	{if $fields.reminder_time}            	
+            	
+            	{assign var="REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}
+            	{assign var="EMAIL_REMINDER_TIME_OPTIONS" value=$fields.reminder_time.options}	
+            	
+            	{if !$fields.reminder_checked.value}            		
+            		{assign var="REMINDER_TIME" value=-1}
+            	{else}
+            		{assign var="REMINDER_TIME" value=$fields.reminder_time.value}
+            	{/if}
+            	{if !$fields.email_reminder_checked.value}            		
+            		{assign var="EMAIL_REMINDER_TIME" value=-1}
+            	{else}
+            		{assign var="EMAIL_REMINDER_TIME" value=$fields.email_reminder_time.value}
+            	{/if}
+	{/if}
+	
+	{assign var="REMINDER_TIME_DISPLAY" value="none"}
+	{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="none"}
+	{if $REMINDER_TIME != -1}
+            	{* {assign var="REMINDER_CHECKED" value="checked"} *}
+            	{assign var="REMINDER_TIME_DISPLAY" value="inline"}	
+	{/if}
+        {if $EMAIL_REMINDER_TIME != -1}
+            	{* {assign var="EMAIL_REMINDER_CHECKED" value="checked"} *}
+            	{assign var="EMAIL_REMINDER_TIME_DISPLAY" value="inline"}
+        {/if}
 
-<!-- Template for reminders  -->
-<div style="display:none;">
-	<div id="reminder_template">
 
-		<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
-		<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
-		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
-		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
-		<label>{$MOD.LBL_REMINDERS_WHEN}</label>
-		<select tabindex="0" class="timer_sel" onchange="Reminders.onTimerSelChange(this);">
-			{html_options options=$fields.reminder_time.options}
-		</select>
-		<br>
-		<ul class="invitees_list"></ul>
-		<div class="clear"></div>
-		<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);"><br>
+{if $view == "EditView" || $view == "QuickCreate" || $view == "QuickEdit"}
+{else}
+	{assign var="disabled" value="disabled"}
+{/if}
 
-	</div>
-</div>
 
-<!-- Reminders field in EditViews -->
+<!-- Reminders field default in EditViews -->
 <div id="reminders">
-	<input type="hidden" id="reminders_data" name="reminders_data" />
-	<ul id="reminder_view"></ul>
-	<input id="reminder_add_btn" class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
+	<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
+	<input name="reminder_checked" type="hidden" value="0">
+	<input name="reminder_checked" type="checkbox" class="popup_chkbox" value="1"{if $REMINDER_CHECKED} checked="checked"{/if} {$disabled}><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
+	<input name="email_reminder_checked" type="hidden" value="0">
+	<input name="email_reminder_checked" type="checkbox" class="email_chkbox" value="1"{if $EMAIL_REMINDER_CHECKED} checked="checked"{/if} {$disabled}><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
+	<label>{$MOD.LBL_REMINDERS_WHEN}</label>
+	<select tabindex="0" class="timer_sel" name="reminder_time"{$disabled}>
+		{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
+	</select>
+	<br>
 </div>
 
 {literal}
 <script type="text/javascript">
 
 	$(function(){
-		Reminders.init({/literal}{$remindersDataJson}, {$remindersDefaultValuesDataJson}{literal});
+		
 	});
 
 </script>
 {/literal}
+
+
+
+
