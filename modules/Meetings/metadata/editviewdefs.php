@@ -193,7 +193,7 @@ function formSubmitCheck(){ldelim}if(check_form(\'EditView\')){ldelim}document.E
           array(
               array (
                   'name' => 'reminders',
-                  'customCode' => '{include file="modules/AOM_Reminders/tpls/reminders.tpl"}',
+                  'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
                   'label' => 'LBL_REMINDERS',
               ),
           ),

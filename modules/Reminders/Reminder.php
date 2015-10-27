@@ -38,17 +38,16 @@
  ********************************************************************************/
 
 /**
- * AOM_Reminder class
- * 
- * @author Gyula Madarasz <gyula.madarasz@salesagility.com>
+ * Reminder class
+ *
  */
-class AOM_Reminder extends Basic {
+class Reminder extends Basic {
     var $name;
 
     var $new_schema = true;
-    var $module_dir = 'AOM_Reminders';
-    var $object_name = 'AOM_Reminder';
-    var $table_name = 'aom_reminders';
+    var $module_dir = 'Reminders';
+    var $object_name = 'Reminder';
+    var $table_name = 'reminders';
     var $importable = false;
     var $disable_row_level_security = true;
 
@@ -84,7 +83,7 @@ class AOM_Reminder extends Basic {
     public static function saveRemindersDataJson($eventModule, $eventModuleId, $remindersDataJson) {
         $reminderData = json_decode($remindersDataJson);
         if(!json_last_error()) {
-            AOM_Reminder::saveRemindersData($eventModule, $eventModuleId, $reminderData);
+            Reminder::saveRemindersData($eventModule, $eventModuleId, $reminderData);
         }
         else {
             throw new Exception(json_last_error_msg());
@@ -94,7 +93,7 @@ class AOM_Reminder extends Basic {
     private static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
         $savedReminderIds = array();
         foreach($remindersData as $reminderData) {
-            $reminderBean = BeanFactory::getBean('AOM_Reminders', $reminderData->id);
+            $reminderBean = BeanFactory::getBean('Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
             $reminderBean->timer = $reminderData->timer;
@@ -103,13 +102,13 @@ class AOM_Reminder extends Basic {
             $reminderBean->save();
             $savedReminderIds[] = $reminderBean->id;
             $reminderId = $reminderBean->id;
-            AOM_Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
+            Reminder_Invitee::saveRemindersInviteesData($reminderId, $reminderData->invitees);
         }
-        $reminders = BeanFactory::getBean('AOM_Reminders')->get_full_list("", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
+        $reminders = BeanFactory::getBean('Reminders')->get_full_list("", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
         if($reminders) {
             foreach ($reminders as $reminder) {
                 if (!in_array($reminder->id, $savedReminderIds)) {
-                    AOM_Reminder_Invitee::deleteRemindersInviteesMultiple($reminder->id);
+                    Reminder_Invitee::deleteRemindersInviteesMultiple($reminder->id);
                     $reminder->mark_deleted($reminder->id);
                     $reminder->save();
                 }
@@ -137,7 +136,7 @@ class AOM_Reminder extends Basic {
 
 	private static function loadRemindersData($eventModule, $eventModuleId) {
 		$ret = array();
-		$reminders = BeanFactory::getBean('AOM_Reminders')->get_full_list("aom_reminders.date_entered", "aom_reminders.related_event_module = '$eventModule' AND aom_reminders.related_event_module_id = '$eventModuleId'");
+		$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
         if($reminders) {
             foreach ($reminders as $reminder) {
                 $ret[] = array(
@@ -145,7 +144,7 @@ class AOM_Reminder extends Basic {
                     'popup' => $reminder->popup,
                     'email' => $reminder->email,
                     'timer' => $reminder->timer,
-                    'invitees' => AOM_Reminder_Invitee::loadRemindersInviteesData($reminder->id),
+                    'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id),
                 );
             }
         }
@@ -177,12 +176,12 @@ class AOM_Reminder extends Basic {
 	
 	private static function getEmailReminderInviteesRecipients($reminderId, $checkDecline = true) {
 		$emails = array();
-		$reminder = BeanFactory::getBean('AOM_Reminders', $reminderId);		
+		$reminder = BeanFactory::getBean('Reminders', $reminderId);
 		$eventModule = $reminder->related_event_module;
 		$eventModuleId = $reminder->related_event_module_id;		
 		$event = BeanFactory::getBean($eventModule, $eventModuleId);
 		if(!isset($event->status) || $event->status != 'Held') {
-			$invitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list('', "aom_reminders_invitees.reminder_id = '$reminderId'");
+			$invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', "reminders_invitees.reminder_id = '$reminderId'");
 			foreach($invitees as $invitee) {
 				$inviteeModule = $invitee->related_invitee_module;
 				$inviteeModuleId = $invitee->related_invitee_module_id;
@@ -205,7 +204,7 @@ class AOM_Reminder extends Basic {
 
     private static function getUnsentEmailReminders() {
         global $db;		
-		$reminderBeans = BeanFactory::getBean('AOM_Reminders')->get_full_list('', "aom_reminders.email = 1 AND aom_reminders.email_sent = 0");
+		$reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.email = 1 AND reminders.email_sent = 0");
 		foreach($reminderBeans as $reminderBean) {
 			$eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
 			$dateStart = $eventBean->date_start;
@@ -267,7 +266,7 @@ class AOM_Reminder extends Basic {
 		////	END MEETING INTEGRATION
 		///////////////////////////////////////////////////////////////////////
 		
-		$popupReminders = BeanFactory::getBean('AOM_Reminders')->get_full_list('', "aom_reminders.popup = 1");
+		$popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.popup = 1");
 		
 		if($popupReminders) {
 			foreach($popupReminders as $popupReminder) {
@@ -278,7 +277,7 @@ class AOM_Reminder extends Basic {
 					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->is))))
 				) {
 					// The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
-					$iniviees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list('', "aom_reminders_invitees.reminder_id = '{$popupReminder->id}' AND aom_reminders_invitees.related_invitee_module_id = '{$current_user->id}'");
+					$invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', "reminders_invitees.reminder_id = '{$popupReminder->id}' AND reminders_invitees.related_invitee_module_id = '{$current_user->id}'");
 					if($invitees) {
 						foreach($invitees as $invitee) {
 							// need to concatenate since GMT times can bridge two local days
@@ -293,7 +292,7 @@ class AOM_Reminder extends Basic {
 								///////////////////////////////////////////////////////////////////
 								////	MEETING INTEGRATION
 								if(!empty($meetingIntegration) && $meetingIntegration->isIntegratedMeeting($popupReminder->related_event_module_id)) {
-									$url = $meetingIntegration->miUrlGetJsAlert($this->toArray($popupReminder));
+									$url = $meetingIntegration->miUrlGetJsAlert((array) $popupReminder);
 									$instructions = $meetingIntegration->miGetJsAlertInstructions();
 								}
 								////	END MEETING INTEGRATION

@@ -177,7 +177,7 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             0 =>
                 array (
                     'name' => 'reminders',
-                    'customCode' => '{include file="modules/AOM_Reminders/tpls/reminders.tpl"}',
+                    'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
                     'label' => 'LBL_REMINDERS',
                 ),
         ),

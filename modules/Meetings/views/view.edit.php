@@ -78,7 +78,7 @@ class MeetingsViewEdit extends ViewEdit
 	        $this->bean->status = $this->bean->getDefaultStatus();
  		} //if
 
-		$remindersDataJson = AOM_Reminder::loadRemindersDataJson('Meetings', $this->bean->id);
+		$remindersDataJson = Reminder::loadRemindersDataJson('Meetings', $this->bean->id);
 		$this->ss->assign('remindersDataJson', $remindersDataJson);
 
  		parent::display();
