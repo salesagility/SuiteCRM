@@ -219,7 +219,7 @@ class Reminder extends Basic {
         return $reminders;
     }
 	
-	// ---- popup and alert reminers
+	// ---- popup and alert reminders
 	
 	/**
 	 * Show a popup and/or desktop notification alert for related users with related Event information.
@@ -367,6 +367,21 @@ class Reminder extends Basic {
 			return $ret;
 		}
 		return null;
+	}
+	
+	// --- user preferences as default values in reminders
+	
+	public static function loadRemindersDefaultValuesDataJson() {
+		global $current_user;
+		$ret = json_encode(array(
+			'popup' => $current_user->getPreference('reminder_checked'),
+			'email' => $current_user->getPreference('email_reminder_checked'),
+			'timer' => $current_user->getPreference('reminder_time'),
+		));
+		if(!$ret && json_last_error()) {
+            throw new Exception(json_last_error_msg());
+        }
+		return $ret;
 	}
 	
 }
