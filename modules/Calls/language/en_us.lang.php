@@ -172,8 +172,6 @@ $mod_strings = array (
     'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
     'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
     'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
-    'LBL_REMINDERS_REMOVE' => '',
-    'LBL_REMINDERS_REMOVE' => '',
 
 );
 
