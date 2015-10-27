@@ -113,7 +113,7 @@ class EmailReminder
             }
         }
 
-		AOM_Reminder::sendEmailReminders($this, $admin);
+		Reminder::sendEmailReminders($this, $admin);
         
         return true;
     }
