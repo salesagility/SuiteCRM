@@ -42,6 +42,13 @@
  * The Remainders need a Scheduler table.
  */
 var Reminders = {
+	
+	// override this by user preferences on reminder init
+	defaultValues: {
+		popup: true,
+		email: true,
+		timer: 60
+	},
 
     getInviteeView: function(id, module, moduleId, relatedValue) {
         if(!id) id = '';
@@ -116,7 +123,7 @@ var Reminders = {
     },
 
     onAddClick: function(e){
-        Reminders.addReminder(e, true, true, 60);
+        Reminders.addReminder(e, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer);
         Reminders.createRemindersPostData();
     },
     onRemoveClick: function(e) {
@@ -158,12 +165,17 @@ var Reminders = {
         document.EditView.reminders_data.value = JSON.stringify(reminders);
     },
 
-    init: function(data) {
+    init: function(data, defaultValues) {
         if(data) {
             $.each(data, function(i,e){
                 Reminders.addReminder(false, e.popup, e.email, e.timer, e.id, e.invitees);
             });
         }
+		if(defaultValues) {
+			if(defaultValues.popup) Reminders.defaultValues.popup = defaultValues.popup;
+			if(defaultValues.email) Reminders.defaultValues.email = defaultValues.email;
+			if(defaultValues.timer) Reminders.defaultValues.timer = defaultValues.timer;
+		}
         Reminders.createRemindersPostData();
     },
 

@@ -320,6 +320,18 @@ $mod_strings = array (
 	'LBL_REMINDER_POPUP' => 'Popup',
 	'LBL_REMINDER_EMAIL' => 'Email',
     'LBL_REMINDER_EMAIL_ALL_INVITEES'   => 'Email all invitees',
+	
+	// new reminders
+	
+    'LBL_REMINDERS' => 'Reminders',
+    'LBL_REMINDERS_ACTIONS' => 'Actions:',
+    'LBL_REMINDERS_POPUP' => 'Send invitees a popup or a desktop notification',
+    'LBL_REMINDERS_EMAIL' => 'Send invitees an email',
+    'LBL_REMINDERS_WHEN' => 'When:',
+    'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
+    'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
+    'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
+	
 	'LBL_REMOVED_TABS'					=> 'Admin Remove Tabs',
 	'LBL_REPORTS_TO_NAME'				=> 'Reports to',
 	'LBL_REPORTS_TO'					=> 'Reports to',

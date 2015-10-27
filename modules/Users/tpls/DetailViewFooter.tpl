@@ -94,12 +94,17 @@
                 <td><slot><input class="checkbox" type="checkbox" disabled {$RECEIVE_NOTIFICATIONS}></slot></td>
                 <td><slot>{$MOD.LBL_RECEIVE_NOTIFICATIONS_TEXT}&nbsp;</slot></td>
                 </tr>
+				
                 <tr>
                 <td scope="row" valign="top"><slot>{$MOD.LBL_REMINDER|strip_semicolon}:</td>
+				<!--
                 <td valign="top" nowrap><slot>{include file="modules/Meetings/tpls/reminders.tpl"}</slot></td>
+				-->
+                <td valign="top" nowrap><slot>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</slot></td>
                 <td ><slot>{$MOD.LBL_REMINDER_TEXT}&nbsp;</slot></td>
 
                 </tr>
+				
                 <tr>
                 <td valign="top" scope="row"><slot>{$MOD.LBL_MAILMERGE|strip_semicolon}:</slot></td>
                 <td valign="top" nowrap><slot><input tabindex='3' name='mailmerge_on' disabled class="checkbox" type="checkbox" {$MAILMERGE_ON}></slot></td>
