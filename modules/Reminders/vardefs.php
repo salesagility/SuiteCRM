@@ -37,9 +37,9 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dictionary['AOM_Reminder']['table']= 'aom_reminders';
-$dictionary['AOM_Reminder']['audited']= true;
-$dictionary['AOM_Reminder']['fields']= array(
+$dictionary['Reminder']['table']= 'reminders';
+$dictionary['Reminder']['audited']= true;
+$dictionary['Reminder']['fields']= array(
     'popup' => array(
         'name' => 'popup',
         'vname' => 'LBL_POPUP',
@@ -96,6 +96,6 @@ $dictionary['AOM_Reminder']['fields']= array(
 if (!class_exists('VardefManager')){
     require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOM_Reminders','AOM_Reminder', array('basic','assignable'));
+VardefManager::createVardef('Reminders','Reminder', array('basic','assignable'));
 
 ?>

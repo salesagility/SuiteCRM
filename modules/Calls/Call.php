@@ -216,7 +216,7 @@ class Call extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
         }
 
-		AOM_Reminder::saveRemindersDataJson('Calls', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+		Reminder::saveRemindersDataJson('Calls', $return_id, html_entity_decode($_REQUEST['reminders_data']));
 
         return $return_id;
 	}

@@ -38,17 +38,16 @@
  ********************************************************************************/
 
 /**
- * AOM_Reminder_Invitee class
- * 
- * @author Gyula Madarasz <gyula.madarasz@salesagility.com>
+ * Reminder_Invitee class
+ *
  */
-class AOM_Reminder_Invitee extends Basic {
+class Reminder_Invitee extends Basic {
     var $name;
 
     var $new_schema = true;
-    var $module_dir = 'AOM_Reminders_Invitees';
-    var $object_name = 'AOM_Reminder_Invitee';
-    var $table_name = 'aom_reminders_invitees';
+    var $module_dir = 'Reminders_Invitees';
+    var $object_name = 'Reminder_Invitee';
+    var $table_name = 'reminders_invitees';
     var $importable = false;
     var $disable_row_level_security = true;
 
@@ -76,7 +75,7 @@ class AOM_Reminder_Invitee extends Basic {
     public static function saveRemindersInviteesData($reminderId, $inviteesData) {
         $savedInviteeIds = array();
         foreach($inviteesData as $k => $inviteeData) {
-            $reminderInviteeBean = BeanFactory::getBean('AOM_Reminders_Invitees', $inviteeData->id);
+            $reminderInviteeBean = BeanFactory::getBean('Reminders_Invitees', $inviteeData->id);
             $reminderInviteeBean->reminder_id = $reminderId;
             $reminderInviteeBean->related_invitee_module = $inviteeData->module;
             $reminderInviteeBean->related_invitee_module_id = $inviteeData->module_id;
@@ -85,7 +84,7 @@ class AOM_Reminder_Invitee extends Basic {
                 $savedInviteeIds[] = $reminderInviteeBean->id;
             }
             else {
-                $addedInvitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list("", "aom_reminders_invitees.id != '{$inviteeData->id}' AND aom_reminders_invitees.reminder_id = '{$reminderInviteeBean->reminder_id}' AND aom_reminders_invitees.related_invitee_module = '{$reminderInviteeBean->related_invitee_module}' AND aom_reminders_invitees.related_invitee_module_id = '{$reminderInviteeBean->related_invitee_module_id}'");
+                $addedInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.id != '{$inviteeData->id}' AND reminders_invitees.reminder_id = '{$reminderInviteeBean->reminder_id}' AND reminders_invitees.related_invitee_module = '{$reminderInviteeBean->related_invitee_module}' AND reminders_invitees.related_invitee_module_id = '{$reminderInviteeBean->related_invitee_module_id}'");
                 if (!$addedInvitees) {
                     $reminderInviteeBean->save();
                     $savedInviteeIds[] = $reminderInviteeBean->id;
@@ -105,8 +104,8 @@ class AOM_Reminder_Invitee extends Basic {
 	 */
 	public static function loadRemindersInviteesData($reminderId) {
 		$ret = array();
-		$reminderInviteeBeen = new AOM_Reminder_Invitee();
-		$reminderInvitees = $reminderInviteeBeen->get_full_list("aom_reminders_invitees.date_entered", "aom_reminders_invitees.reminder_id = '$reminderId'");
+		$reminderInviteeBeen = new Reminder_Invitee();
+		$reminderInvitees = $reminderInviteeBeen->get_full_list("reminders_invitees.date_entered", "reminders_invitees.reminder_id = '$reminderId'");
         if($reminderInvitees) {
             foreach ($reminderInvitees as $reminderInvitee) {
                 $ret[] = array(
@@ -153,7 +152,7 @@ class AOM_Reminder_Invitee extends Basic {
 	 * @param array $inviteeIds (optional) Exluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
 	 */
     public static function deleteRemindersInviteesMultiple($reminderId, $inviteeIds = array()) {
-        $invitees = BeanFactory::getBean('AOM_Reminders_Invitees')->get_full_list("", "aom_reminders_invitees.reminder_id = '$reminderId'");
+        $invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list("", "reminders_invitees.reminder_id = '$reminderId'");
         if($invitees) {
             foreach ($invitees as $invitee) {
                 if (!in_array($invitee->id, $inviteeIds)) {
