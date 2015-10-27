@@ -43,6 +43,9 @@ array (
   array (
     'templateMeta' =>
     array (
+        'includes' => array(
+            array('file' => 'modules/Reminders/Reminders.js'),
+        ),
       'maxColumns' => '2',
       'form' =>
       array (
