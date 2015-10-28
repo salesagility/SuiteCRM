@@ -50,10 +50,18 @@ var Reminders = {
 		timer: 60
 	},
 
+    // we have to disabled the reminders on details view - override this on initialization
+    disabled: false,
+
     getInviteeView: function(id, module, moduleId, relatedValue) {
         if(!id) id = '';
         // TODO: add a template for this
-        var inviteeView = '<li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName='+ module +'.gif"><span class="related-value">' + relatedValue + '</span></button></li>';
+        if(!Reminders.disabled) {
+            var inviteeView = '<!-- enabled --><li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" onclick="Reminders.onInviteeClick(this);"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName=' + module + '.gif"><span class="related-value">' + relatedValue + '</span></button></li>';
+        }
+        else {
+            var inviteeView = '<!-- diabled --><li class="invitees_item"><button class="invitee_btn" data-invitee-id="' + id + '" data-id="' + moduleId + '" data-module="' + module + '" disabled="disabled"><img src=index.php?entryPoint=getImage&themeName=SuiteR+&imageName=' + module + '.gif"><span class="related-value">' + relatedValue + '</span></button></li>';
+        }
         return inviteeView;
     },
 
@@ -165,7 +173,8 @@ var Reminders = {
         document.EditView.reminders_data.value = JSON.stringify(reminders);
     },
 
-    init: function(data, defaultValues) {
+    init: function(data, defaultValues, disabled) {
+        Reminders.disabled = disabled ? true : false;
         if(data) {
             $.each(data, function(i,e){
                 Reminders.addReminder(false, e.popup, e.email, e.timer, e.id, e.invitees);

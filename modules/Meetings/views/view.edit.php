@@ -80,6 +80,7 @@ class MeetingsViewEdit extends ViewEdit
 
 		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id));
 		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
+		$this->ss->assign('remindersDisabled', json_encode(false));
 
  		parent::display();
  	}
