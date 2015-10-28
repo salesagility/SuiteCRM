@@ -83,16 +83,24 @@
 
 <!-- Reminders field default in EditViews -->
 <div id="reminders">
-	<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
+	{if !$disabled}
+	<span>{$MOD.LBL_REMINDERS_ACTIONS}</span><br>
+	{/if}
 	<input name="reminder_checked" type="hidden" value="0">
-	<input name="reminder_checked" type="checkbox" class="popup_chkbox" value="1"{if $REMINDER_CHECKED} checked="checked"{/if} {$disabled}><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
+	<input name="reminder_checked" type="checkbox" class="popup_chkbox" value="1"{if $REMINDER_CHECKED} checked="checked"{/if} {$disabled}>
+	<span>{$MOD.LBL_REMINDERS_POPUP}</span><br>
 	<input name="email_reminder_checked" type="hidden" value="0">
-	<input name="email_reminder_checked" type="checkbox" class="email_chkbox" value="1"{if $EMAIL_REMINDER_CHECKED} checked="checked"{/if} {$disabled}><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
-	<label>{$MOD.LBL_REMINDERS_WHEN}</label>
+	<input name="email_reminder_checked" type="checkbox" class="email_chkbox" value="1"{if $EMAIL_REMINDER_CHECKED} checked="checked"{/if} {$disabled}>
+	<span>{$MOD.LBL_REMINDERS_EMAIL}</span><br>
+	{if !$disabled}
+	<span>{$MOD.LBL_REMINDERS_WHEN}</span>
 	<select tabindex="0" class="timer_sel" name="reminder_time"{$disabled}>
 		{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
 	</select>
 	<br>
+	{else}
+		{$REMINDER_TIME_OPTIONS.$REMINDER_TIME}
+	{/if}
 </div>
 
 {literal}
