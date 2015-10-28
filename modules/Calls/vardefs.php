@@ -221,7 +221,7 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'reportable' => false,
             'function' =>
                 array(
-                    'name' => 'Reminder::getReminderListView',
+                    'name' => 'Reminder::getRemindersListView',
                     'returns' => 'html',
                     'include' => 'modules/Reminders/Reminder.php'
                 ),

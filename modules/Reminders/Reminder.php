@@ -392,12 +392,12 @@ class Reminder extends Basic {
 	// --- reminders list on detail views
 
 	/**
-	 * Return a list of related reminders for specified event (Calls/Meetings). Call it from DetailsViews.
+	 * Return a list of related reminders for specified event (Calls/Meetings). Call it from DetailViews.
 	 * @param SugarBean $event a Call or Meeting Bean
 	 * @return mixed|string|void output of list (html)
 	 * @throws Exception on json error in Remainders
 	 */
-	public static function getReminderListView(SugarBean $event) {
+	public static function getRemindersListView(SugarBean $event) {
 		global $mod_strings, $app_list_strings;
 		$tpl = new Sugar_Smarty();
 		$tpl->assign('MOD', $mod_strings);
@@ -406,6 +406,16 @@ class Reminder extends Basic {
 		$tpl->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
 		$tpl->assign('remindersDisabled', json_encode(true));
 		return $tpl->fetch('modules/Reminders/tpls/reminders.tpl');
+	}
+
+	/*
+	 * @todo implenent it
+	 */
+	public static function getRemindersListInlineEditView(SugarBean $event) {
+		// TODO: getEditFieldHTML() function in InlineEditing.php:218 doesn't pass the Bean ID to this custom inline edit view function but we have to know which Bean are in the focus to editing.
+		if(!$event->id) {
+			throw new Exception("No GUID for edit.");
+		}
 	}
 
 }
