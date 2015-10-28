@@ -325,8 +325,8 @@ $mod_strings = array (
 	
     'LBL_REMINDERS' => 'Reminders',
     'LBL_REMINDERS_ACTIONS' => 'Actions:',
-    'LBL_REMINDERS_POPUP' => 'Send invitees a popup or a desktop notification',
-    'LBL_REMINDERS_EMAIL' => 'Send invitees an email',
+    'LBL_REMINDERS_POPUP' => 'Popup',
+    'LBL_REMINDERS_EMAIL' => 'Email invitees',
     'LBL_REMINDERS_WHEN' => 'When:',
     'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
     'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
