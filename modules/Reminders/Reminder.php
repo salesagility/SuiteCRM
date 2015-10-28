@@ -370,7 +370,12 @@ class Reminder extends Basic {
 	}
 	
 	// --- user preferences as default values in reminders
-	
+
+	/**
+	 * Default values for Reminders from User Preferences
+	 * @return string JSON encoded default values
+	 * @throws Exception on json_encode error
+	 */
 	public static function loadRemindersDefaultValuesDataJson() {
 		global $current_user;
 		$ret = json_encode(array(
@@ -383,6 +388,25 @@ class Reminder extends Basic {
         }
 		return $ret;
 	}
-	
+
+	// --- reminders list on detail views
+
+	/**
+	 * Return a list of related reminders for specified event (Calls/Meetings). Call it from DetailsViews.
+	 * @param SugarBean $event a Call or Meeting Bean
+	 * @return mixed|string|void output of list (html)
+	 * @throws Exception on json error in Remainders
+	 */
+	public static function getReminderListView(SugarBean $event) {
+		global $mod_strings, $app_list_strings;
+		$tpl = new Sugar_Smarty();
+		$tpl->assign('MOD', $mod_strings);
+		$tpl->assign('reminder_time_options', $app_list_strings['reminder_time_options']);
+		$tpl->assign('remindersDataJson', Reminder::loadRemindersDataJson($event->module_name, $event->id));
+		$tpl->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
+		$tpl->assign('remindersDisabled', json_encode(true));
+		return $tpl->fetch('modules/Reminders/tpls/reminders.tpl');
+	}
+
 }
 ?>

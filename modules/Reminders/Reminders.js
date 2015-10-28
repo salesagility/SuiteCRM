@@ -113,7 +113,7 @@ var Reminders = {
     },
 
     setTimerSelectValue: function(e, value) {
-        Reminders.setSelectValue(e.find('.timer_sel'), value);
+        Reminders.setSelectValue($(e).find('.timer_sel'), value);
     },
 
     addReminder: function(e, popup, email, timer, reminderId, invitees) {
@@ -160,17 +160,20 @@ var Reminders = {
     },
 
     createRemindersPostData: function() {
-        var reminders = [];
-        $('#reminder_view .reminder_item').each(function(i,e) {
-            reminders.push({
-                id: $(e).attr('data-reminder-id'),
-                popup: $(e).find('.popup_chkbox').prop('checked'),
-                email: $(e).find('.email_chkbox').prop('checked'),
-                timer: $(e).find('.timer_sel').val(),
-                invitees: Reminders.getInviteesData(e)
+        // do not create post data if disabled and/or it is not an EditView!
+        if(!Reminders.disabled) {
+            var reminders = [];
+            $('#reminder_view .reminder_item').each(function (i, e) {
+                reminders.push({
+                    id: $(e).attr('data-reminder-id'),
+                    popup: $(e).find('.popup_chkbox').prop('checked'),
+                    email: $(e).find('.email_chkbox').prop('checked'),
+                    timer: $(e).find('.timer_sel').val(),
+                    invitees: Reminders.getInviteesData(e)
+                });
             });
-        });
-        document.EditView.reminders_data.value = JSON.stringify(reminders);
+            document.EditView.reminders_data.value = JSON.stringify(reminders);
+        }
     },
 
     init: function(data, defaultValues, disabled) {
