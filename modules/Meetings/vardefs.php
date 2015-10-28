@@ -307,7 +307,7 @@ $dictionary['Meeting'] = array('table' => 'meetings',
           'reportable' => false,
           'function' =>
               array(
-                  'name' => 'Reminder::getReminderListView',
+                  'name' => 'Reminder::getRemindersListView',
                   'returns' => 'html',
                   'include' => 'modules/Reminders/Reminder.php'
               ),
