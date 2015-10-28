@@ -86,6 +86,9 @@
 		<input type="checkbox" class="email_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_EMAIL}</span><br>
 		<span>{$MOD.LBL_REMINDERS_WHEN}</span>
 		<span type="text" class="reminder_when_value" /></span>
+		<select tabindex="0" class="timer_sel" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
+			{html_options options=$reminder_time_options}
+		</select>
 		<br>
 		<ul class="invitees_list disabled"></ul>
 		<div class="clear"></div>

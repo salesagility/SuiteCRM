@@ -43,6 +43,9 @@ array (
   array (
     'templateMeta' => 
     array (
+        'includes' => array(
+            array('file' => 'modules/Reminders/Reminders.js'),
+        ),
       'form' => 
       array (
         'buttons' => 
@@ -145,6 +148,10 @@ array (
 //            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
 //            'label' => 'LBL_REMINDER',
 //            ),
+          array(
+            'name' => 'reminders',
+            'label' => 'LBL_REMINDERS',
+            ),
           'location',
         ),
         array (
