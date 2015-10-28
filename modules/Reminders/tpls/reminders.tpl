@@ -40,6 +40,13 @@
 
 
 *}
+
+{if $remindersDisabled == 'false' || !$remindersDisabled}
+	{assign var=REMINDERS_DISABLED value=false}
+{else}
+	{assign var=REMINDERS_DISABLED value=true}
+{/if}
+
 {literal}
 
 <style type="text/css">
@@ -48,7 +55,11 @@
 {/literal}
 
 <!-- Template for reminders  -->
+
 <div style="display:none;">
+
+	{if !$REMINDERS_DISABLED}
+
 	<div id="reminder_template">
 
 		<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
@@ -65,20 +76,39 @@
 		<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);"><br>
 
 	</div>
-</div>
 
+	{else}
+
+	<div id="reminder_template">
+
+		<span>{$MOD.LBL_REMINDERS_ACTIONS}</span><br>
+		<input type="checkbox" class="popup_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_POPUP}</span><br>
+		<input type="checkbox" class="email_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_EMAIL}</span><br>
+		<span>{$MOD.LBL_REMINDERS_WHEN}</span>
+		<span type="text" class="reminder_when_value" /></span>
+		<br>
+		<ul class="invitees_list disabled"></ul>
+		<div class="clear"></div>
+
+	</div>
+
+	{/if}
+
+</div>
 <!-- Reminders field in EditViews -->
 <div id="reminders">
 	<input type="hidden" id="reminders_data" name="reminders_data" />
 	<ul id="reminder_view"></ul>
+	{if !$REMINDERS_DISABLED}
 	<input id="reminder_add_btn" class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
+	{/if}
 </div>
 
 {literal}
 <script type="text/javascript">
 
 	$(function(){
-		Reminders.init({/literal}{$remindersDataJson}, {$remindersDefaultValuesDataJson}{literal});
+		Reminders.init({/literal}{$remindersDataJson}, {$remindersDefaultValuesDataJson}, {$remindersDisabled}{literal});
 	});
 
 </script>
