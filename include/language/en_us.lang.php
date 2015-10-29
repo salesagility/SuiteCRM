@@ -2519,6 +2519,11 @@ $app_strings = array (
         '30' => 'Every 30 minutes',
         '60' => 'Every hour',
     ),
+
+    'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
+    'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
+    'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.'
+
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';

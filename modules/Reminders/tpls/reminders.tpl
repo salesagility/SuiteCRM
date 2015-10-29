@@ -62,6 +62,8 @@
 
 	<div id="reminder_template">
 
+		<span class="error-msg"></span>
+
 		<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
 		<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
 		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
@@ -80,6 +82,8 @@
 	{else}
 
 	<div id="reminder_template">
+
+		<span class="error-msg"></span>
 
 		<span>{$MOD.LBL_REMINDERS_ACTIONS}</span><br>
 		<input type="checkbox" class="popup_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_POPUP}</span><br>

@@ -5574,3 +5574,13 @@ div.password {
 #reminders input[type="checkbox"] {
     margin-right: 5px;
 }
+
+/* invalid reminders */
+#reminders #reminder_view .reminder_item.reminder-error {
+    border: 1px solid red;
+    background-color: #fff8f8;
+}
+#reminders #reminder_view .reminder_item .error-msg {
+    font-weight: bold;
+    color: red;
+}
