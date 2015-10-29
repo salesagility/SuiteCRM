@@ -53,6 +53,8 @@ var Reminders = {
     // we have to disabled the reminders on details view - override this on initialization
     disabled: false,
 
+    errors: [],
+
     getInviteeView: function(id, module, moduleId, relatedValue) {
         if(!id) id = '';
         // TODO: add a template for this
@@ -173,6 +175,7 @@ var Reminders = {
                 });
             });
             document.EditView.reminders_data.value = JSON.stringify(reminders);
+            Reminders.isValid('EditView', 'reminders_data');
         }
     },
 
@@ -188,6 +191,14 @@ var Reminders = {
 			if(defaultValues.email) Reminders.defaultValues.email = defaultValues.email;
 			if(defaultValues.timer) Reminders.defaultValues.timer = defaultValues.timer;
 		}
+
+        // add validations on edit view
+        if(!Reminders.disabled) {
+            addToValidateCallback('EditView', 'reminders_data', 'function', false, SUGAR.language.get('app_strings', 'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT'), function (formname, nameIndex) {
+                return Reminders.isValid(formname, nameIndex);
+            });
+        }
+
         Reminders.createRemindersPostData();
     },
 
@@ -202,5 +213,54 @@ var Reminders = {
     onTimerSelChange: function(e) {
         Reminders.createRemindersPostData();
     },
+
+    isValid:function (formname, nameIndex) {
+        Reminders.clearErrors();
+        try {
+            var remindersData = JSON.parse(document[formname][nameIndex].value);
+            $.each(remindersData, function(i,e){
+                if(!e.popup && !e.email) {
+                    Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL'));
+                    error = true;
+                }
+                if(e.invitees.length == 0) {
+                    Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_NO_INVITEES_FOR_REMINDER'));
+                }
+            });
+        }
+        catch(e) {
+            throw e;
+        }
+
+        Reminders.showErrors();
+
+        return Reminders.getErrors().length > 0 ? false : true;
+    },
+
+    clearErrors: function() {
+        Reminders.errors = [];
+    },
+
+    addError: function(id, msg) {
+        Reminders.errors.push({'id':id, 'msg':msg});
+    },
+
+    getErrors: function() {
+        return Reminders.errors;
+    },
+
+    showErrors: function() {
+        $('.reminder_item').removeClass('reminder-error');
+        $('.reminder_item .error-msg').html('');
+        $.each(Reminders.getErrors(), function(i,err){
+            var _err = err;
+            $('.reminder_item').each(function(i,elem){
+                if($(elem).attr('data-reminder-id')==_err.id) {
+                    $(elem).find('.error-msg').html(_err.msg);
+                    $(elem).addClass('reminder-error');
+                }
+            });
+        });
+    }
 
 };
