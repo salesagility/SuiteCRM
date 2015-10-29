@@ -76,7 +76,7 @@ var Reminders = {
             var relatedValue = $(e).find('td[scope="row"]').first().text();
             inviteesList += Reminders.getInviteeView(false, dataModule, dataId, relatedValue);
         });
-        $(e).parent().find('.invitees_list').first().html(inviteesList);
+        $(e).find('.invitees_list').first().html(inviteesList);
     },
 
     addInvitees: function(e, invitees) {
@@ -85,7 +85,7 @@ var Reminders = {
         $.each(invitees, function(i,e){
             inviteesList += Reminders.getInviteeView(e.id, e.module, e.module_id, e.value);
         });
-        $(e).parent().find('.invitees_list').first().html(inviteesList);
+        $(e).find('.invitees_list').first().html(inviteesList);
     },
 
     setCheckboxValue: function(sel, value) {
@@ -137,15 +137,15 @@ var Reminders = {
         Reminders.createRemindersPostData();
     },
     onRemoveClick: function(e) {
-        $(e).parent().remove();
+        $(e).closest('.reminder_item').remove();
         Reminders.createRemindersPostData();
     },
     onAddAllClick: function(e) {
-        Reminders.addAllInvitees(e);
+        Reminders.addAllInvitees($(e).closest('.reminder_item'));
         Reminders.createRemindersPostData();
     },
     onInviteeClick: function(e) {
-        $(e).parent().remove();
+        $(e).closest('.invitees_item').remove();
         Reminders.createRemindersPostData();
     },
 
