@@ -60,6 +60,10 @@ class ImportController extends SugarController
     {
         global $mod_strings;
 
+	// Don't load the bean for AJAX request "RefreshTable"
+	if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'RefreshTable')
+		return;
+
         $this->importModule = isset($_REQUEST['import_module']) ? $_REQUEST['import_module'] : '';
 
         $this->bean = loadBean($this->importModule);
