@@ -50,7 +50,8 @@
 {literal}
 
 <style type="text/css">
-
+#reminders #reminder_view .col {float: left;}
+#reminders #reminder_view .btns {float: left;}
 </style>
 {/literal}
 
@@ -64,19 +65,34 @@
 
 		<span class="error-msg"></span>
 
-		<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);"><br>
-		<label>{$MOD.LBL_REMINDERS_ACTIONS}</label><br>
-		<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label><br>
-		<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label><br>
-		<label>{$MOD.LBL_REMINDERS_WHEN}</label>
-		<select tabindex="0" class="timer_sel" onchange="Reminders.onTimerSelChange(this);">
-			{html_options options=$fields.reminder_time.options}
-		</select>
-		<br>
-		<ul class="invitees_list"></ul>
 		<div class="clear"></div>
-		<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);"><br>
 
+		<div class="col">
+			<label>{$MOD.LBL_REMINDERS_ACTIONS}</label>&nbsp;
+			<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label>&nbsp;
+			<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label>&nbsp;
+		</div>
+		<div class="col">
+			<label>{$MOD.LBL_REMINDERS_WHEN}</label>
+			<select tabindex="0" class="timer_sel" onchange="Reminders.onTimerSelChange(this);">
+				{html_options options=$fields.reminder_time.options}
+			</select>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="col">
+			<ul class="invitees_list"></ul>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="btns">
+			<input class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_ALL_INVITEES}" onclick="Reminders.onAddAllClick(this);">
+			<input class="remove-reminder-btn remove-btn" type="button" value="{$MOD.LBL_REMINDERS_REMOVE_REMINDER}" onclick="Reminders.onRemoveClick(this);">
+		</div>
+
+		<div class="clear"></div>
 	</div>
 
 	{else}
@@ -85,18 +101,28 @@
 
 		<span class="error-msg"></span>
 
-		<span>{$MOD.LBL_REMINDERS_ACTIONS}</span><br>
-		<input type="checkbox" class="popup_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_POPUP}</span><br>
-		<input type="checkbox" class="email_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_EMAIL}</span><br>
-		<span>{$MOD.LBL_REMINDERS_WHEN}</span>
-		<span type="text" class="reminder_when_value" /></span>
-		<select tabindex="0" class="timer_sel" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
-			{html_options options=$reminder_time_options}
-		</select>
-		<br>
-		<ul class="invitees_list disabled"></ul>
 		<div class="clear"></div>
 
+		<div class="col">
+			<span>{$MOD.LBL_REMINDERS_ACTIONS}</span>&nbsp;
+			<input type="checkbox" class="popup_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
+			<input type="checkbox" class="email_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
+		</div>
+		<div class="col">
+			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
+			<span type="text" class="reminder_when_value" /></span>
+			<select tabindex="0" class="timer_sel" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
+				{html_options options=$reminder_time_options}
+			</select>
+		</div>
+
+		<div class="clear"></div>
+
+		<div class="col">
+			<ul class="invitees_list disabled"></ul>
+		</div>
+
+		<div class="clear"></div>
 	</div>
 
 	{/if}
