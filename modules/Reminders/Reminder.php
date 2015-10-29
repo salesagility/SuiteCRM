@@ -272,9 +272,9 @@ class Reminder extends Basic {
 			foreach($popupReminders as $popupReminder) {
 				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
 				if(
-					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planed') && 
-					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) ) && 
-					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->is))))
+					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
+					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) ) &&
+					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
 				) {
 					// The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
 					$invitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', "reminders_invitees.reminder_id = '{$popupReminder->id}' AND reminders_invitees.related_invitee_module_id = '{$current_user->id}'");
@@ -282,7 +282,7 @@ class Reminder extends Basic {
 						foreach($invitees as $invitee) {
 							// need to concatenate since GMT times can bridge two local days
 							$timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
-							$timeRemind = $popupReminders->timer;
+							$timeRemind = $popupReminder->timer;
 							$timeStart -= $timeRemind;
 
 							$url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
