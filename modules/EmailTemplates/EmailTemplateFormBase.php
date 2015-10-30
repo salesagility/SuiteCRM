@@ -211,7 +211,7 @@ EOQ;
 			$note = new Note();
 			$where = "notes.parent_id='{$focus->id}'";
 			if(!empty($_REQUEST['old_id'])) { // to support duplication of email templates
-				$where .= " OR notes.parent_id='".$_REQUEST['old_id']."'";
+				$where .= " OR notes.parent_id='".htmlspecialchars($_REQUEST['old_id'], ENT_QUOTES)."'";
 			}
 			$notes_list = $note->get_full_list("", $where, true);
 		}
