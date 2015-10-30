@@ -51,13 +51,13 @@ class SugarWidgetSubPanelTopSelectContactsButton extends SugarWidgetSubPanelTopS
 		$this->button_properties=$button_properties;
 	}
 
-    public function getWidgetId()
+    public function getWidgetId($buttonSuffix = true)
     {
         return parent::getWidgetId() . '_select_button';
     }
 
 	//widget_data is the collection of attributes associated with the button in the layout_defs file.
-	function display(&$widget_data)
+	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
 	{
 		global $app_strings;
 		$initial_filter = '';

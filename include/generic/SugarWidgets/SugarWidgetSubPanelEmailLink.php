@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelEmailLink extends SugarWidgetField {
 
-	function displayList(&$layout_def) {
+	function displayList($layout_def) {
 		global $current_user;
 		global $beanList;
 		global $focus;
