@@ -191,7 +191,7 @@ $mod_strings = array (
     'LBL_RELATED_TO' => 'Related to:',
 
 	// for reminders
-	'LBL_REMINDERS' => 'Reminders (new)',
+	'LBL_REMINDERS' => 'Reminders',
 	'LBL_REMINDERS_ACTIONS' => 'Actions:',
 	'LBL_REMINDERS_POPUP' => 'Popup',
 	'LBL_REMINDERS_EMAIL' => 'Email invitees',
