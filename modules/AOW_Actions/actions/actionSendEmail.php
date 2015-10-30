@@ -306,7 +306,7 @@ class actionSendEmail extends actionBase {
             }
         }
 
-        $object_arr['Users'] = $bean->assigned_user_id;
+        $object_arr['Users'] = is_a($bean, 'User') ? $bean->id : $bean->assigned_user_id;
 
         $object_arr = array_merge($object_arr, $object_override);
 
