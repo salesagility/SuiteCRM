@@ -68,7 +68,7 @@ EOQ;
         }
     }
     
-    function createModuleStringsCache($moduleDir, $lang = 'en_us', $return = false) {
+    static function createModuleStringsCache($moduleDir, $lang = 'en_us', $return = false) {
         $json = getJSONobj();
 
         // cn: bug 8242 - non-US langpack chokes
