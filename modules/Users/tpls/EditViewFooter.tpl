@@ -244,7 +244,10 @@
                             <slot>{$MOD.LBL_REMINDER}:</slot>&nbsp;{sugar_help text=$MOD.LBL_REMINDER_TEXT }
                             </td>
                             <td valign="top"  nowrap>
+								<!--
                                 <slot>{include file="modules/Meetings/tpls/reminders.tpl"}</slot>
+								-->
+								<slot>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</slot>
                             </td>
                         </tr>
             <tr>
