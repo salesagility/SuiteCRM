@@ -185,7 +185,7 @@ class MBLanguage{
 			
 			foreach($this->appListStrings as $lang=>$values){
 				// Load previously created modules data
-				$app_list_strings = array ();
+				// $app_list_strings = array (); --- fix for issue #305
 				$neededFile = $app_save_path . '/'. $lang;
 				if (file_exists($neededFile)) {
 					include $neededFile;
@@ -197,7 +197,7 @@ class MBLanguage{
 				}
 				
 
-				$values = sugarLangArrayMerge($values, $app_list_strings);
+				// $values = sugarLangArrayMerge($values, $app_list_strings); --- fix for issue #305
 				$values['moduleList'][$key_name]= $this->label;
 				
 				
