@@ -95,8 +95,8 @@ class EmailReminder
         foreach($meetings as $id ) {
             $recipients = $this->getRecipients($id,'Meetings');
             $bean = new Meeting();
-            $bean->retrieve($id);
-            if ( $this->sendReminders($bean, $admin, $recipients) ) {
+            $bean->retrieve($id);			
+			if ( $this->sendReminders($bean, $admin, $recipients) ) {
                 $bean->email_reminder_sent = 1;
                 $bean->save();
             }            
@@ -112,10 +112,12 @@ class EmailReminder
                 $bean->save();
             }
         }
+
+		Reminder::sendEmailReminders($this, $admin);
         
         return true;
     }
-    
+	
     /**
      * send reminders
      * @param SugarBean $bean
@@ -123,7 +125,7 @@ class EmailReminder
      * @param array $recipients
      * @return boolean
      */
-    protected function sendReminders(SugarBean $bean, Administration $admin, $recipients)
+    public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
         
         if ( empty($_SESSION['authenticated_user_language']) ) {
@@ -177,7 +179,7 @@ class EmailReminder
             $GLOBALS['log']->fatal("Email Reminder: error sending email, system smtp server is not set");
             return;
         }
-
+				
         foreach($recipients as $r ) {
             $mail->ClearAddresses();
             $mail->AddAddress($r['email'],$GLOBALS['locale']->translateCharsetMIME(trim($r['name']), 'UTF-8', $OBCharset));    
@@ -186,7 +188,7 @@ class EmailReminder
                 $GLOBALS['log']->fatal("Email Reminder: error sending e-mail (method: {$mail->Mailer}), (error: {$mail->ErrorInfo})");
             }
         }
-    
+		
         return true;
     }
     
@@ -222,7 +224,7 @@ class EmailReminder
     {
         global $db;
         $query = "
-            SELECT id, date_start, email_reminder_time FROM meetings 
+            SELECT id, date_start, email_reminder_time FROM meetings
             WHERE email_reminder_time != -1
             AND deleted = 0
             AND email_reminder_sent = 0
