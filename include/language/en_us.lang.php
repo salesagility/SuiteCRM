@@ -1164,7 +1164,6 @@ $app_strings = array (
     'LBL_MODULE_FILTER' => 'Filter By',
     'LBL_CONNECTORS_POPUPS'=>'Connectors Popups',
     'LBL_CLOSEINLINE'=>'Close',
-    'LBL_MOREDETAIL'=>'More Detail',
     'LBL_EDITINLINE'=>'Edit',
     'LBL_VIEWINLINE'=>'View',
     'LBL_INFOINLINE'=>'Info',
@@ -1579,7 +1578,6 @@ $app_strings = array (
     'LBL_EMAIL_SPACER_MAIL_SERVER'          => '[ Remote Folders ]',
     'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ SuiteCRM Folders ]',
     'LBL_EMAIL_SUBJECT'                     => 'Subject',
-    'LBL_EMAIL_TO'                        => 'To',
     'LBL_EMAIL_SUCCESS'                     => 'Success',
     'LBL_EMAIL_SUGAR_FOLDER'                => 'SuiteCRM Folder',
     'LBL_EMAIL_TEMPLATE_EDIT_PLAIN_TEXT'    => 'Email template body is empty',
@@ -1887,10 +1885,8 @@ $app_strings = array (
 
     'LBL_PROSPECTS'=>'Prospects',
     'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
-    'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
     'LBL_PRODUCTS'=>'Products',
     'LBL_PROJECT_TASKS'=>'Project Tasks',
-    'LBL_PROJECTS'=>'Projects',
     'LBL_PROJECTS'=>'Projects',
     'LBL_QUOTE_TO_OPPORTUNITY_KEY' => 'O',
     'LBL_QUOTE_TO_OPPORTUNITY_LABEL' => 'Create Opportunity from Quote',
@@ -2021,7 +2017,6 @@ $app_strings = array (
     'LBL_SUGAR_COPYRIGHT_SUB' => '&copy; 2004-2013 <a href="http://www.sugarcrm.com" target="_blank" class="copyRightLink">SugarCRM Inc.</a> All Rights Reserved.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
 
-    'LBL_SYNC' => 'Sync',
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
     'LBL_TABGROUP_ACTIVITIES' => 'Activities',
@@ -2185,7 +2180,6 @@ $app_strings = array (
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
     'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
-    'LBL_REMOVE' => 'Remove',
     'LBL_TRAINING' => 'Support',
     'ERR_DATABASE_CONN_DROPPED'=>'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
     'ERR_MSSQL_DB_CONTEXT' =>'Changed database context to',
@@ -2294,7 +2288,6 @@ $app_strings = array (
     'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal 5.1.0',
     'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
-    'LBL_CREATE_CASE' => 'Create Case',
     'LBL_CREATE_BUG' => 'Create Bug',
     'LBL_NO_RECORDS_FOUND' => '- 0 Records Found -',
 
@@ -2345,13 +2338,10 @@ $app_strings = array (
   'ERROR_MISSING_COLLECTION_SELECTION' => 'Empty required field',
     'LBL_COLLECTION_EXACT' => 'Exact',
 
-    // fastcgi checks
-    'LBL_FASTCGI_LOGGING'      => 'For optimal experience using IIS/FastCGI sapi, set fastcgi.logging to 0 in your php.ini file.',
     //MB -Fixed Bug #32812 -Max
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_DESCRIPTION' => 'Description',
 
-  'LBL_NONE' => '-none-',
   'LBL_YESTERDAY'=> 'yesterday',
   'LBL_TODAY'=>'today',
   'LBL_TOMORROW'=>'tomorrow',
@@ -2521,12 +2511,6 @@ $app_list_strings['moduleList']['Library'] = 'Library';
 $app_list_strings['library_type'] = array('Books'=>'Book', 'Music'=>'Music', 'DVD'=>'DVD', 'Magazines'=>'Magazines');
 $app_list_strings['moduleList']['EmailAddresses'] = 'Email Address';
 $app_list_strings['project_priority_default'] = 'Medium';
-$app_list_strings['project_priority_options'] = array (
-    'High' => 'High',
-    'Medium' => 'Medium',
-    'Low' => 'Low',
-);
-
 
 $app_list_strings['kbdocument_status_dom'] = array (
     'Draft' => 'Draft',
