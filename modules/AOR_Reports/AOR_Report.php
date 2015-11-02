@@ -452,7 +452,7 @@ class AOR_Report extends Basic {
         return $html;
     }
 
-    function getTotalHTML($fields,$totals){
+    function getTotalHTML($fields,$totals) {
         global $app_list_strings;
         $html = '';
         $html .= "<tbody>";
@@ -475,7 +475,13 @@ class AOR_Report extends Basic {
                 continue;
             }
             if($field['total'] && isset($totals[$label])){
-                $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
+                $report_sql = $this->build_report_query('');
+                $result = $this->db->query($report_sql);
+                $row = $this->db->fetchByAssoc($result);
+                $currency_id = isset($row[$field['alias'].'_currency_id']) ? $row[$field['alias'].'_currency_id'] : '';
+
+                $result_value = getModuleField($field['module'], $field['field'], $field['field'], 'DetailView', $this->calculateTotal($field['total'],$totals[$label]), '', $currency_id);
+                $html .= "<td>" . $result_value . "</td>";
             }else{
                 $html .= "<td></td>";
             }
