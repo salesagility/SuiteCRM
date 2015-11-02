@@ -308,7 +308,6 @@ $mod_strings = array (
   'LBL_MAILBOX'                               => 'Monitored Folder',
   'LBL_NAVIGATION_MENU_SETUP'                 => 'Setup Email',
   'LBL_NAVIGATION_MENU_NEW_MAILBOX'           => 'New Mail Account',
-  'LBL_NAVIGATION_MENU_SUMMARY'               => 'Summary',
   'LBL_MAILBOX_CHECK_WIZ_GOOD'                => 'Mail account(s) with bounce handling were detected.  You do not need to create a new one, but you can still do so below.',
   'LBL_MAILBOX_CHECK_WIZ_BAD'                 => 'No mail accounts with bounce handling were detected, please create a new one below.',
   'LBL_CAMP_MESSAGE_COPY'                     => 'Keep copies of campaign messages:',
