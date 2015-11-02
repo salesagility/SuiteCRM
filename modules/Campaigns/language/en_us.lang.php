@@ -315,7 +315,6 @@ $mod_strings = array (
   'LBL_CAMP_MESSAGE_COPY_DESC'                     => 'Would you like to store complete copies of <bold>EACH</bold> email message sent during all campaigns?  <bold>We recommend and default to no</bold>.  Choosing no will store only the template that is sent and the needed variables to recreate the individual message.',
   'LBL_YES'                                   => 'Yes',
   'LBL_NO'                                    => 'No',
-  'LBL_FROM_ADDR'                             => '"From" Address',
   'LBL_DEFAULT_FROM_ADDR'                     => 'Default: ',
   'LBL_EMAIL_SETUP_DESC'                      => 'Fill out the form below to modify your system settings so that campaign emails can be sent out.',
   'LBL_CREATE_MAILBOX'                        => 'Create New Mail Account',
