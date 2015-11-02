@@ -653,7 +653,6 @@ $mod_strings = array (
     'LBL_REBUILD_WORKFLOW_CACHE' => 'Rebuilding Workflow Cache...<BR>',
     'LBL_REBUILD_WORKFLOW_COMPILING' => 'Compiling Plugins... <BR>',
     'LBL_REBUILD' => 'Rebuild',
-    'LBL_REBUILD'=>'Rebuild',
     'LBL_REGEX_HELP_TITLE'		=>'Regex Description',
     'LBL_REGEX_HELP_TEXT'		=>'<b>Regular Expressions </b> provide a concise and flexible means for identifying strings of the password, such as particular characters or patterns of characters. You can create custom password rules by providing a regex that will be used in a NOT MATCH condition; the password must not contain a match to any expressions in the regex.',
     'LBL_REGEX_DESC_HELP_TEXT'	=>'This description should explain the Regex Requirement and will be displayed in the list of requirements for users when they provide new passwords.',
@@ -966,7 +965,6 @@ $mod_strings = array (
     'LBL_QR_CBOX_CLEARPDFFONT'=> 'Clear PDF Font Cache File',
     'LBL_QR_CLEARPDFFONT'=>'Clearing PDF Font Cache File...done',
     'LBL_QR_CLEAR_EXT_API'=>'Clearing External API Cache File...done',
-	'LBL_TRACKER_SETTINGS' => 'Tracker',
 	'LBL_REPAIR_SEED_USERS_TITLE'	=> 'Enable/Disable Seed Users',
 	'LBL_REPAIR_SEED_USERS_ACTIVATE'	=> 'Activate',
 	'LBL_REPAIR_SEED_USERS_DECACTIVATE'	=> 'DeActivate',
@@ -1096,7 +1094,6 @@ $mod_strings = array (
 	// OAuth
     'LBL_OAUTH_TITLE' => "OAuth Keys",
     'LBL_OAUTH' => "OAuth key management",
-    'LBL_SAML_LOGIN_URL_DESC' => 'Enter Login URL',
 
     // SNIP / Sugar Ease / Email Archiving
     'LBL_SNIP_TITLE' => 'Email Archiving',
