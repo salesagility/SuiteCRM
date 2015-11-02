@@ -80,7 +80,6 @@ $mod_strings = array (
   'LBL_INDEXED_RECORDS' => 'Indexed records',
   'LBL_UNINDEXED_RECORDS' => 'Unindexed records',
   'LBL_FAILED_RECORDS' => 'Failed records',
-  'LBL_LAST_OPTIMISED' => 'Last optimised',
   'LBL_INDEX_FILES' => 'Index file count',
   'LBL_SEARCH_RESULT_SCORE' => 'Search Score',
   'LBL_SEARCH_RESULT_MODULE' => 'Module',
