@@ -152,7 +152,6 @@ $mod_strings = array (
   'LBL_SYSTEM_GENERATED_PASSWORD' =>'System Generated Password',
   'LBL_DESCRIPTION'	=> 'Description',
   'LBL_FAX_PHONE'						=> 'Fax',
-  'LBL_FAX'							=> 'Fax',
   'LBL_STATUS'						=> 'Status',
   'LBL_ADDRESS_CITY'					=> 'Address City',
   'LBL_ADDRESS_COUNTRY'				=> 'Address Country',
@@ -160,7 +159,6 @@ $mod_strings = array (
   'LBL_ADDRESS_POSTALCODE'			=> 'Address Postal Code',
   'LBL_ADDRESS_STATE'					=> 'Address State',
   'LBL_ADDRESS_STREET'				=> 'Address Street',
-  'LBL_ADDRESS'						=> 'Address',
   
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_DATE_ENTERED' => 'Date Entered',
