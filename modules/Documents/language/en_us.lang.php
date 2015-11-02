@@ -159,7 +159,6 @@ $mod_strings = array (
 	'LBL_TREE_TITLE' => 'Documents',
 	//sub-panel vardefs.
 	'LBL_LIST_DOCUMENT_NAME'=>'Name',
-	'LBL_CONTRACT_NAME'=>'Contract Name:',
 	'LBL_LIST_IS_TEMPLATE'=>'Template?',
 	'LBL_LIST_TEMPLATE_TYPE'=>'Document Type',
 	'LBL_LIST_SELECTED_REVISION'=>'Selected Revision',
