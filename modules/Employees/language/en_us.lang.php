@@ -108,7 +108,6 @@ $mod_strings = array (
   'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
   'LBL_HOME_PHONE' => 'Home Phone:',
   'LBL_WORK_PHONE' => 'Work Phone:',
-  'LBL_ADDRESS_INFORMATION' => 'Address Information',
   'LBL_EMPLOYEE_STATUS' => 'Employee Status:',
   'LBL_PRIMARY_ADDRESS' => 'Primary Address:',
   'LBL_SAVED_SEARCH' => 'Layout Options',
