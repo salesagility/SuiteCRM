@@ -601,7 +601,6 @@ $mod_strings = array(
 'LBL_HISTORY'=>'View History',
 'LBL_RESTORE_DEFAULT'=>'Restore Default',
 'LBL_ACTIVITIES'=>'Activities',
-'LBL_SEARCH'=>'Search',
 'LBL_NEW'=>'New',
 'LBL_TYPE_BASIC'=>'basic',
 'LBL_TYPE_COMPANY'=>'company',
@@ -688,10 +687,6 @@ $mod_strings = array(
 'LBL_RESET_LAYOUTS' => 'Reset Layouts"',
 'LBL_REMOVE_FIELDS' => 'Remove Custom Fields',
 'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
-'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
-
-
-
 'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',
 'LBL_HISTORY_TITLE' => ' history',
 
