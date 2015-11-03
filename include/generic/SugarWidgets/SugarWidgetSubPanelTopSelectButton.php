@@ -51,7 +51,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
 		$this->button_properties=$button_properties;
 	}
 
-    public function getWidgetId($buttonSuffix = true)
+    public function getWidgetId()
     {
         return parent::getWidgetId(false) . 'select_button';
     }
@@ -61,7 +61,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
         return $GLOBALS['app_strings']['LBL_SELECT_BUTTON_LABEL'];
     }
 	//widget_data is the collection of attributes associated with the button in the layout_defs file.
-	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
+	function display(&$widget_data)
 	{
 		global $app_strings;
 		$initial_filter = '';

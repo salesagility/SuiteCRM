@@ -47,7 +47,7 @@ class SugarWidgetSubPanelTopButtonQuickCreate extends SugarWidgetSubPanelTopButt
 {
 
 
-	function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
+	function &_get_form($defines, $additionalFormFields = null)
 	{
 		global $app_strings;
 		global $currentModule;
