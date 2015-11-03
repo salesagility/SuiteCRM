@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
-	function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
+	function &_get_form($defines, $additionalFormFields = null)
 	{
 		global $app_strings;
 		global $currentModule;
@@ -151,7 +151,7 @@ class SugarWidgetSubPanelTopScheduleCallButton extends SugarWidgetSubPanelTopBut
 		return $button;
 	}
 
-	function display($defines, $additionalFormFields = null, $nonbutton = false)
+	function display($defines, $additionalFormFields = null)
 	{
 	    $focus = new Call;
 		if ( !$focus->ACLAccess('EditView') ) {

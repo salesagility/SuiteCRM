@@ -8,7 +8,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopFilterButton  extends SugarWidgetSubPanelTopButton{
 
-    function display($defines, $additionalFormFields = NULL, $nonbutton = false)
+    function display($defines)
     {
         global $app_strings;
 

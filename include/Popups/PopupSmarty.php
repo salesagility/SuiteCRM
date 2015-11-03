@@ -201,8 +201,7 @@ class PopupSmarty extends ListViewSmarty{
 
         if(!is_file(sugar_cached("jsLanguage/{$GLOBALS['current_language']}.js"))) {
             require_once('include/language/jsLanguage.php');
-			$jsLanguage = new jsLanguage();
-			$jsLanguage->createAppStringsCache($GLOBALS['current_language']);
+            jsLanguage::createAppStringsCache($GLOBALS['current_language']);
         }
         $jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js",  $GLOBALS['sugar_config']['js_lang_version']);
 
@@ -273,11 +272,7 @@ class PopupSmarty extends ListViewSmarty{
 	/*
 	 * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
 	 */
-	function setup($seed, $file = null, $where = null, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id') {
-		$args = func_get_args();
-		return call_user_func_array(array($this, '_setup'), $args);
-	}
-	function _setup($file) {
+	function setup($file) {
 
 	    if(isset($this->_popupMeta)){
 			if(isset($this->_popupMeta['create']['formBase'])) {

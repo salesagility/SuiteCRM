@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopCreateTaskButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
-	function &_get_form($defines, $additionalFormFields = null, $asUrl = false)
+	function &_get_form($defines, $additionalFormFields = null)
 	{
 		global $app_strings;
 		global $currentModule;
@@ -152,7 +152,7 @@ class SugarWidgetSubPanelTopCreateTaskButton extends SugarWidgetSubPanelTopButto
 	}
 
 
-	function display($defines, $additionalFormFields = null, $nonbutton = false)
+	function display($defines, $additionalFormFields = null)
 	{
 	    $focus = new Task;
 		if ( !$focus->ACLAccess('EditView') ) {

@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopCreateCampaignLogEntryButton extends SugarWidgetSubPanelTopButton
 {
-    public function getWidgetId($buttonSuffix = true)
+    public function getWidgetId()
     {
         return parent::getWidgetId() . '_select_button';
     }
