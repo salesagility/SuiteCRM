@@ -58,7 +58,7 @@ class templateParser{
 						if($repl_arr['aos_products_quotes_discount'] == 'Pct' || $repl_arr['aos_products_quotes_discount'] == 'Percentage')
 						{
 							$sep = get_number_seperators();
-							$value=rtrim(rtrim(format_number($value), '0'),$sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
+							$value=rtrim(rtrim(format_number($value), '0'),$sep[1]) . $app_strings['LBL_PERCENTAGE_SYMBOL'];
 						}
 						else
 						{
