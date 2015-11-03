@@ -1,0 +1,11 @@
+{
+  "name": "salesagility/SuiteCRM",
+  "description": "SuiteCRM",
+  "keywords": [
+    "SuiteCRM",
+    "SugarCRM",
+    "CRM"
+  ],
+  "homepage": "http://www.suitecrm.com/",
+  "type": "library"
+}
