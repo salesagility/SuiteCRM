@@ -272,7 +272,11 @@ class PopupSmarty extends ListViewSmarty{
 	/*
 	 * Setup up the smarty template. we added an extra step here to add the order by from the popupdefs.
 	 */
-	function setup($file) {
+	function setup($seed, $file = null, $where = null, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id') {
+		$args = func_get_args();
+		return call_user_func_array(array($this, '_setup'), $args);
+	}
+	function _setup($file) {
 
 	    if(isset($this->_popupMeta)){
 			if(isset($this->_popupMeta['create']['formBase'])) {

@@ -45,12 +45,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 //this widget is used only by the document subpanel under contracts.
 class SugarWidgetSubPanelLoadSignedButton extends SugarWidgetField
 {
-	function displayHeaderCell(&$layout_def)
+	function displayHeaderCell($layout_def)
 	{
 		return '&nbsp;';
 	}
 
-	function displayList(&$layout_def)
+	function displayList($layout_def)
 	{
 		global $app_strings;
 		
