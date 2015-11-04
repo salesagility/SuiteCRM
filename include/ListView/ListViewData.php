@@ -184,7 +184,7 @@ class ListViewData {
 		if(!empty($this->count_query)){
 		    $count_query = $this->count_query;
 		}else{
-	        $count_query = SugarBean::create_list_count_query($main_query);
+	        $count_query = $this->seed->create_list_count_query($main_query);
 	    }
 		$result = $this->db->query($count_query);
 		if($row = $this->db->fetchByAssoc($result)){
