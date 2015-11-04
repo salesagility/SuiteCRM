@@ -1822,6 +1822,10 @@ function getSingleMessage($ie) {
 			$filename = $_REQUEST['mbox'].$md5uidl.".php";
 		} // if
 
+		if(isset($filename) && strpos($filename, "..") !== false){
+			die("Directory navigation attack denied.");
+		}
+
 		if($this->validCacheFileExists($_REQUEST['ieId'], 'messages', $filename)) {
 			$out = $this->getCacheValue($_REQUEST['ieId'], 'messages', $filename, 'out');
 			$noCache = false;

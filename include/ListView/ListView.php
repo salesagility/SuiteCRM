@@ -1098,7 +1098,8 @@ function getUserVariable($localVarName, $varName) {
             $response =& $this->response;
             echo 'cached';
         }else{
-            $response = SugarBean::get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
+            $objSugarBean = new SugarBean();
+            $response = $objSugarBean->get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
             $this->response =& $response;
         }
         $list = $response['list'];
@@ -1228,15 +1229,15 @@ function getUserVariable($localVarName, $varName) {
                 $end_URL = $this->start_link_wrapper.$end_URL.$this->end_link_wrapper;
             }
 
-            $moduleString = "{$currentModule}_{$html_varName}_offset";
-            $moduleStringOrder = "{$currentModule}_{$html_varName}_ORDER_BY";
+            $moduleString = htmlspecialchars("{$currentModule}_{$html_varName}_offset");
+            $moduleStringOrder = htmlspecialchars("{$currentModule}_{$html_varName}_ORDER_BY");
             if($this->shouldProcess && !$this->multi_select_popup) {
                 // check the checkboxes onload
                 echo "<script>YAHOO.util.Event.addListener(window, \"load\", sListView.check_boxes);</script>\n";
 
                 $massUpdateRun = isset($_REQUEST['massupdate']) && $_REQUEST['massupdate'] == 'true';
                 $uids = empty($_REQUEST['uid']) || $massUpdateRun ? '' : $_REQUEST['uid'];
-                $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? $_REQUEST['select_entire_list'] : 0));
+                $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? htmlspecialchars($_REQUEST['select_entire_list']) : 0));
 
                 echo "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" .
                     "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".
@@ -1452,7 +1453,8 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                     if(!empty($this->response)){
                         $response =& $this->response;
                     }else{
-                        $response = SugarBean::get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
+                        $objSugarBean = new SugarBean();
+                        $response = $objSugarBean->get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
                         $this->response = $response;
                     }
                     //if query is present, then pass it in as parameter
