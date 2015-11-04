@@ -31,25 +31,25 @@ if(!isset($focus->id)) $focus->date_due_flag = 1;
 
 //needed when creating a new case with default values passed in
 if(isset($_REQUEST['contact_name']) && is_null($focus->contact_name)) {
-    $focus->contact_name = $_REQUEST['contact_name'];
+    $focus->contact_name = htmlspecialchars($_REQUEST['contact_name'], ENT_QUOTES);
 }
 if(isset($_REQUEST['contact_id']) && is_null($focus->contact_id)) {
-    $focus->contact_id = $_REQUEST['contact_id'];
+    $focus->contact_id = htmlspecialchars($_REQUEST['contact_id'], ENT_QUOTES);
 }
 if(isset($_REQUEST['parent_name']) && is_null($focus->parent_name)) {
-    $focus->parent_name = $_REQUEST['parent_name'];
+    $focus->parent_name = htmlspecialchars($_REQUEST['parent_name'], ENT_QUOTES);
 }
 if(isset($_REQUEST['parent_id']) && is_null($focus->parent_id)) {
-    $focus->parent_id = $_REQUEST['parent_id'];
+    $focus->parent_id = htmlspecialchars($_REQUEST['parent_id'], ENT_QUOTES);
 }
 if(isset($_REQUEST['parent_type'])) {
-    $focus->parent_type = $_REQUEST['parent_type'];
+    $focus->parent_type = htmlspecialchars($_REQUEST['parent_type'], ENT_QUOTES);
 }
 elseif(!isset($focus->parent_type)) {
     $focus->parent_type = $app_list_strings['record_type_default_key'];
 }
 if(isset($_REQUEST['filename']) && $_REQUEST['isDuplicate'] != 'true') {
-        $focus->filename = $_REQUEST['filename'];
+        $focus->filename = htmlspecialchars($_REQUEST['filename'], ENT_QUOTES);
 }
 
 if($has_campaign || $inboundEmail) {
@@ -138,7 +138,8 @@ $xtpl->assign("JAVASCRIPT", get_set_focus_js() . $quicksearch_js);
 
 if(!is_file(sugar_cached('jsLanguage/') . $GLOBALS['current_language'] . '.js')) {
     require_once('include/language/jsLanguage.php');
-    jsLanguage::createAppStringsCache($GLOBALS['current_language']);
+    $jsLanguage = new jsLanguage();
+    $jsLanguage->createAppStringsCache($GLOBALS['current_language']);
 }
 $jsLang = getVersionedScript("cache/jsLanguage/{$GLOBALS['current_language']}.js",  $GLOBALS['sugar_config']['js_lang_version']);
 $xtpl->assign("JSLANG", $jsLang);

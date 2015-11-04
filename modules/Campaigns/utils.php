@@ -53,15 +53,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strings=array()) {
 
-    //find prospect list attached to this campaign..
-    $query =  "SELECT prospect_list_id, prospect_lists.name ";
-    $query .= "FROM prospect_list_campaigns ";
-    $query .= "INNER join prospect_lists on prospect_lists.id = prospect_list_campaigns.prospect_list_id ";
-    $query .= "WHERE prospect_lists.deleted = 0 ";
-    $query .= "AND prospect_list_campaigns.deleted=0 ";
-    $query .= "AND campaign_id='".$campaign_id."'";
-    $query.=" and prospect_lists.list_type not like 'exempt%'";
-
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
     }
@@ -69,6 +60,15 @@ function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strin
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Campaigns');
     }
+
+    //find prospect list attached to this campaign..
+    $query =  "SELECT prospect_list_id, prospect_lists.name ";
+    $query .= "FROM prospect_list_campaigns ";
+    $query .= "INNER join prospect_lists on prospect_lists.id = prospect_list_campaigns.prospect_list_id ";
+    $query .= "WHERE prospect_lists.deleted = 0 ";
+    $query .= "AND prospect_list_campaigns.deleted=0 ";
+    $query .= "AND campaign_id='". $db->quote($campaign_id)."'";
+    $query.=" and prospect_lists.list_type not like 'exempt%'";
 
     //add campaign to the result array.
     //$return_array[$campaign_id]= $campaign_name . ' (' . $mod_strings['LBL_DEFAULT'] . ')';
@@ -317,6 +317,8 @@ function get_campaign_urls($campaign_id) {
     if (!empty($campaign_id)) {
 
         $db = DBManagerFactory::getInstance();
+
+        $campaign_id = $db->quote($campaign_id);
 
         $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
         $current=$db->query($query1);

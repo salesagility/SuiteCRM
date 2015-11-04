@@ -95,6 +95,7 @@
 	$header = preg_replace($search, $replace, $template->pdfheader);
 	$footer = preg_replace($search, $replace, $template->pdffooter);
 	$text = preg_replace($search, $replace, $template->description);
+	$text = str_replace("<p><pagebreak /></p>", "<pagebreak />", $text);
 	$text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
 		function ($matches) { return date($matches[1]); },
 		$text );
@@ -183,7 +184,11 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
         $parts = explode($firstValue,$text);
         $text = $parts[0];
         $parts = explode($lastValue,$parts[1]);
-        $groupPart = $firstValue . $parts[0] . $lastValue;
+        if($lastValue == $firstValue) {
+            $groupPart = $firstValue . $parts[0];
+        } else {
+            $groupPart = $firstValue . $parts[0] . $lastValue;
+        }
 
         if(count($lineItemsGroups) != 0){
             //Read line start <tr> value

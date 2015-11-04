@@ -3909,7 +3909,8 @@ class SugarBean
         $num_rows_in_query = 0;
         if (!$is_count_query)
         {
-            $count_query = SugarBean::create_list_count_query($query);
+            $objSugarBean = new SugarBean();
+            $count_query = $objSugarBean->create_list_count_query($query);
         } else
             $count_query=$query;
 
@@ -4535,6 +4536,7 @@ class SugarBean
 	{
 		global $current_user;
 		$date_modified = $GLOBALS['timedate']->nowDb();
+        $id = $this->db->quote($id);
 		if(isset($_SESSION['show_deleted']))
 		{
 			$this->mark_undeleted($id);
@@ -4584,7 +4586,7 @@ class SugarBean
         $this->call_custom_logic("before_restore", $custom_logic_arguments);
 
 		$date_modified = $GLOBALS['timedate']->nowDb();
-		$query = "UPDATE $this->table_name set deleted=0 , date_modified = '$date_modified' where id='$id'";
+		$query = "UPDATE $this->table_name set deleted=0 , date_modified = '$date_modified' where id='" . $this->db->quote($id) ."'";
 		$this->db->query($query, true,"Error marking record undeleted: ");
 
         $this->restoreFiles();
