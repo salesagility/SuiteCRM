@@ -176,7 +176,7 @@ class Employee extends Person {
         return $user_fields;
 	}
 
-	function list_view_parse_additional_sections(&$list_form, $xTemplateSection){
+	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/){
 		return $list_form;
 	}
 
