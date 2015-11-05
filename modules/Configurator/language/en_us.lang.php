@@ -354,8 +354,8 @@ $mod_strings = array (
 "<pre>\$enc=\'UniJIS-UTF16-H\';<br>".
 "\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>".
 "include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>".
-"</li></ul>"'.
-"More help : www.tcpdf.org",
+"</li></ul>".
+"More help : www.tcpdf.org"',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
