@@ -2511,6 +2511,11 @@ $app_list_strings['moduleList']['Library'] = 'Library';
 $app_list_strings['library_type'] = array('Books'=>'Book', 'Music'=>'Music', 'DVD'=>'DVD', 'Magazines'=>'Magazines');
 $app_list_strings['moduleList']['EmailAddresses'] = 'Email Address';
 $app_list_strings['project_priority_default'] = 'Medium';
+$app_list_strings['project_priority_options'] = array (
+    'High' => 'High',
+    'Medium' => 'Medium',
+    'Low' => 'Low',
+);
 
 $app_list_strings['kbdocument_status_dom'] = array (
     'Draft' => 'Draft',
