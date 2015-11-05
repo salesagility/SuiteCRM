@@ -299,7 +299,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 	        $deleteUsers = array();
 	    	$focus->load_relationship('users');
 	    	// Get all users for the meeting
-	    	$q = 'SELECT mu.user_id, mu.accept_status FROM meetings_users mu WHERE mu.meeting_id = \''.$focus->id.'\'';
+	    	$q = 'SELECT mu.user_id, mu.accept_status FROM meetings_users mu WHERE mu.meeting_id = \''.$focus->id.'\' AND mu.deleted=0';
 	    	$r = $focus->db->query($q);
 	    	$acceptStatusUsers = array();
 	    	while($a = $focus->db->fetchByAssoc($r)) {
@@ -330,7 +330,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	        $deleteContacts = array();
 	    	$focus->load_relationship('contacts');
-	    	$q = 'SELECT mu.contact_id, mu.accept_status FROM meetings_contacts mu WHERE mu.meeting_id = \''.$focus->id.'\'';
+	    	$q = 'SELECT mu.contact_id, mu.accept_status FROM meetings_contacts mu WHERE mu.meeting_id = \''.$focus->id.'\' AND mu.deleted=0';
 	    	$r = $focus->db->query($q);
 	    	$acceptStatusContacts = array();
 	    	while($a = $focus->db->fetchByAssoc($r)) {
@@ -359,7 +359,7 @@ function handleSave($prefix,$redirect=true, $useRequired=false) {
 
 	        $deleteLeads = array();
 	    	$focus->load_relationship('leads');
-	    	$q = 'SELECT mu.lead_id, mu.accept_status FROM meetings_leads mu WHERE mu.meeting_id = \''.$focus->id.'\'';
+	    	$q = 'SELECT mu.lead_id, mu.accept_status FROM meetings_leads mu WHERE mu.meeting_id = \''.$focus->id.'\' AND mu.deleted=0';
 	    	$r = $focus->db->query($q);
 	    	$acceptStatusLeads = array();
 	    	while($a = $focus->db->fetchByAssoc($r)) {
