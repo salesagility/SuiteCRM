@@ -45,12 +45,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopCreateAccountNameButton extends SugarWidgetSubPanelTopButtonQuickCreate
 {
-    public function getWidgetId()
+    public function getWidgetId($buttonSuffix = true)
     {
         return parent::getWidgetId();
     }
 
-	function display($defines)
+	function display($defines, $additionalFormFields = NULL, $nonbutton = false)
 	{
 		global $app_strings;
 		global $currentModule;

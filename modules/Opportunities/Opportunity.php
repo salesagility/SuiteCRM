@@ -173,7 +173,7 @@ $query .= 			"LEFT JOIN users
 	}
 
 
-    function create_export_query(&$order_by, &$where, $relate_link_join='')
+    function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -363,7 +363,7 @@ $query .= 			"LEFT JOIN users
 
 	}
 
-	function save_relationship_changes($is_update)
+	function save_relationship_changes($is_update, $exclude = array())
 	{
 		//if account_id was replaced unlink the previous account_id.
 		//this rel_fields_before_value is populated by sugarbean during the retrieve call.

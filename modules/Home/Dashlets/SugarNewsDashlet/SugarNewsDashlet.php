@@ -45,7 +45,7 @@ require_once('modules/Home/Dashlets/iFrameDashlet/iFrameDashlet.php');
 class SugarNewsDashlet extends iFrameDashlet {
     var $displayTpl = 'modules/Home/Dashlets/SugarNewsDashlet/display.tpl';
     var $configureTpl = 'modules/Home/Dashlets/SugarNewsDashlet/configure.tpl';
-    var $defaultURL = 'http://apps.sugarcrm.com/dashlet/sugarcrm-news-dashlet.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';
+    var $defaultURL = 'https://suitecrm.com/';
     var $url;
 
     function SugarNewsDashlet($id, $options = null) {

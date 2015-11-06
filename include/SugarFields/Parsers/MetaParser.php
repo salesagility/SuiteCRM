@@ -342,7 +342,7 @@ return $this->parseDelimiters($javascript);
 
 }
 
-function parseDelimiters($javascript) {
+static function parseDelimiters($javascript) {
 	$newJavascript = '';
 	$scriptLength = strlen($javascript);
 	$count = 0;

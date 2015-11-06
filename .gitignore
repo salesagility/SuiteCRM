@@ -13,6 +13,7 @@ custom/working/*
 custom/modules/*/Ext/
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
+install/status.json
 # Custom configuration should also be ignored.
 /config.php
 # Connector configuration should also be ignored.

@@ -5450,3 +5450,72 @@ div.password {
 #toolbox{
     overflow:auto;
 }
+
+
+/* suggestion-box */
+
+#suggestion_box table {
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 100%;
+    max-width: 400px;
+    color: #3C8DBC;
+    border-spacing: 0px;
+    border: 1px solid #cccccc;
+}
+#suggestion_box table tr {
+}
+#suggestion_box table tr:hover {
+    background-color: #dfeffe;
+    cursor: pointer;
+}
+#suggestion_box table tr th {
+    padding: 4px!important;
+    text-align:left;
+    background-color: #f0f0ee;
+    color: #333333;
+}
+#suggestion_box table tr td {
+    padding: 4px!important;
+    margin: 0px;
+}
+#tool-tip-separator {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tool-tip-title {
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+#use_resolution {
+    margin-top: 4px;
+}
+#additional_info_p {
+    margin-bottom: 4px;
+}
+.transfer {
+    border: 2px dotted gray;
+}
+
+.qtip-content {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.qtip {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.qtip-tipped .qtip-titlebar {
+    background-color: #333333;
+    padding: 10px 40px 10px 10px;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#333333),to(#222222));
+    background-image: -webkit-linear-gradient(top,#333333,#222222);
+}

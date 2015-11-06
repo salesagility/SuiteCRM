@@ -163,7 +163,8 @@ class StudioModule
         	$nodes [ $source ] [ 'name' ] = translate ( $source ) ;
         	if ( isset ( $def [ 'children' ] ) )
         	{
-        		$childNodes = $this->$def [ 'children' ] () ;
+                $defChildren = $def [ 'children' ];
+        		$childNodes = $this->$defChildren () ;
         		if ( !empty ( $childNodes ) )
         		{
         			$nodes [ $source ] [ 'type' ] = 'Folder' ;

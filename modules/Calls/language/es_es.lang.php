@@ -169,5 +169,5 @@ $mod_strings = array (
   'LBL_REPEAT_COUNT' => 'Número de repeticiones',
   'LBL_REPEAT_PARENT_ID' => 'Repita el ID principal',
   'LBL_RECURRING_SOURCE' => 'Fuente periódica',
-  'LBL_SYNCED_RECURRING_MSG' => 'Esta convocatoria se originó en otro sistema y se sincronizan con el Sugar. Para realizar cambios, vaya a la llamada original en el otro sistema. Los cambios realizados en el otro sistema se puede sincronizar con este registro.',
+  'LBL_SYNCED_RECURRING_MSG' => 'Esta convocatoria se originó en otro sistema y se sincronizan con el SuiteCRM. Para realizar cambios, vaya a la llamada original en el otro sistema. Los cambios realizados en el otro sistema se puede sincronizar con este registro.',
 );

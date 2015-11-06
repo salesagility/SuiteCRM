@@ -65,7 +65,7 @@ class ListViewData {
 	 */
 	function ListViewData() {
 		$this->limitName = 'list_max_entries_per_page';
-		$this->db = &DBManagerFactory::getInstance('listviews');
+		$this->db = DBManagerFactory::getInstance('listviews');
 	}
 
 	/**
@@ -184,7 +184,8 @@ class ListViewData {
 		if(!empty($this->count_query)){
 		    $count_query = $this->count_query;
 		}else{
-	        $count_query = SugarBean::create_list_count_query($main_query);
+            $objSugarBean = new SugarBean();
+	        $count_query = $objSugarBean->create_list_count_query($main_query);
 	    }
 		$result = $this->db->query($count_query);
 		if($row = $this->db->fetchByAssoc($result)){

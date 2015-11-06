@@ -258,6 +258,14 @@ $layout_defs['Accounts'] = array(
 			'subpanel_name' => 'ForTargets',
 			'title_key' => 'LBL_CAMPAIGNS',
 		),
+
+		'products_services_purchased' => array(
+			'order' => 100,
+			'module' => 'AOS_Products_Quotes',
+			'subpanel_name' => 'ForAccounts',
+			'get_subpanel_data' => 'function:getProductsServicesPurchasedQuery',
+			'title_key' => 'LBL_PRODUCTS_SERVICES_PURCHASED_SUBPANEL_TITLE',
+		),
 	),
 );
 ?>

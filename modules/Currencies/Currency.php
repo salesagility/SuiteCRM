@@ -186,7 +186,7 @@ class Currency extends SugarBean
 	 	return '';
 	}
 	
-    function retrieve($id, $encode = true, $deleted = true){
+    function retrieve($id = -99, $encode = true, $deleted = true){
      	if($id == '-99'){
      		$this->name = 	$this->getDefaultCurrencyName();
      		$this->symbol = $this->getDefaultCurrencySymbol();
