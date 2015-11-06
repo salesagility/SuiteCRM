@@ -82,7 +82,7 @@ $mod_strings = array (
   'LBL_HOOKUP_CONFIRM_PART2' => ". Folytatja?",
   
   'LBL_GROUP_SELECT' => 'Válassza ki, mely csoport(ok) férhet(nek) hozzá ehhez a rekordhoz',
-  'LBL_ERROR_DUPLICATE' => 'Lehetséges Duplikációt észlelt a Sugar, ezért manuálisan rendelje az újonnan létrehozott rekordot Biztonsági Csoport(ok)hoz.',
+  'LBL_ERROR_DUPLICATE' => 'Lehetséges Duplikációt észlelt a SuiteCRM, ezért manuálisan rendelje az újonnan létrehozott rekordot Biztonsági Csoport(ok)hoz.',
 
   'LBL_INBOUND_EMAIL' => 'Bejöv? Email Fiók',
   'LBL_INBOUND_EMAIL_DESC' => 'Csak akkor férhet hozzá az email fiókhoz, ha a felhasználó tagja annak a csoportnak mely az email fiókhoz van rendelve.',

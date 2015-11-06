@@ -150,4 +150,16 @@ $mod_strings = array (
   'LBL_UPDATE_TEXT' => 'Actualizado',
   'LBL_INTERNAL' => 'Interno',
   'LBL_AOP_CASE_UPDATES' => 'Actualizaciones del Caso',
+
+    'LBL_TOOL_TIP_BOX_TITLE' => 'KnowledgeBase Sugerencias',
+    'LBL_TOOL_TIP_TITLE' => 'Título: ',
+    'LBL_TOOL_TIP_BODY'  => 'Cuerpo: ',
+    'LBL_TOOL_TIP_INFO'  => 'Información adicional: ',
+    'LBL_TOOL_TIP_USE'   => 'Usar como: ',
+    'LBL_SUGGESTION_BOX' => 'Sugerencias',
+    'LBL_NO_SUGGESTIONS' => 'No hay Sugerencias',
+    'LBL_RESOLUTION_BUTTON'  => 'Resolución',
+    'LBL_SUGGESTION_BOX_STATUS' => 'Estado',
+    'LBL_SUGGESTION_BOX_TITLE' => 'Título',
+    'LBL_SUGGESTION_BOX_REL' => 'Pertinencia',
 );

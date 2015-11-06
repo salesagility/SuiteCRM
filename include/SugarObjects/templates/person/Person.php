@@ -232,7 +232,7 @@ class Person extends Basic
      *
      * @see SugarBean::create_export_query()
      */
-    function create_export_query(&$order_by, &$where, $relate_link_join = '')
+    function create_export_query($order_by, $where, $relate_link_join = '')
     {
         $custom_join = $this->custom_fields->getJOIN(true, true, $where);
 

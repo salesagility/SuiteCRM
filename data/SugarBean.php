@@ -1036,8 +1036,8 @@ class SugarBean
      * Method will load the relationship if not done so already.
      *
      * @param string $field_name relationship to be loaded.
-     * @param string $bean name  class name of the related bean.
-     * @param array $sort_array optional, unused
+     * @param string $bean name  class name of the related bean.legacy
+     * @param string $order_by, Optional, default empty.
      * @param int $begin_index Optional, default 0, unused.
      * @param int $end_index Optional, default -1
      * @param int $deleted Optional, Default 0, 0  adds deleted=0 filter, 1  adds deleted=1 filter.
@@ -1045,8 +1045,7 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    function get_linked_beans($field_name,$bean_name, $sort_array = array(), $begin_index = 0, $end_index = -1,
-                              $deleted=0, $optional_where="")
+    function get_linked_beans($field_name,$bean_name = '', $order_by = '', $begin_index = 0, $end_index = -1, $deleted=0, $optional_where="")
     {
         //if bean_name is Case then use aCase
         if($bean_name=="Case")
@@ -1055,14 +1054,15 @@ class SugarBean
         if($this->load_relationship($field_name)) {
             if ($this->$field_name instanceof Link) {
                 // some classes are still based on Link, e.g. TeamSetLink
-                return array_values($this->$field_name->getBeans(new $bean_name(), $sort_array, $begin_index, $end_index, $deleted, $optional_where));
+                return array_values($this->$field_name->getBeans(new $bean_name(), $order_by, $begin_index, $end_index, $deleted, $optional_where));
             } else {
                 // Link2 style
-                if ($end_index != -1 || !empty($deleted) || !empty($optional_where))
+                if ($end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by))
                     return array_values($this->$field_name->getBeans(array(
                         'where' => $optional_where,
                         'deleted' => $deleted,
-                        'limit' => ($end_index - $begin_index)
+                        'limit' => ($end_index - $begin_index),
+                        'order_by' => $order_by
                     )));
                 else
                     return array_values($this->$field_name->getBeans());
@@ -3909,7 +3909,8 @@ class SugarBean
         $num_rows_in_query = 0;
         if (!$is_count_query)
         {
-            $count_query = SugarBean::create_list_count_query($query);
+            $objSugarBean = new SugarBean();
+            $count_query = $objSugarBean->create_list_count_query($query);
         } else
             $count_query=$query;
 

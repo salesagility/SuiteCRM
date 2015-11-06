@@ -35,3 +35,5 @@ $mod_strings['LBL_COLOUR_ADMIN_BTNLNKHOVER'] = 'Button link hover colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_DASHHEAD'] = 'Dashlet header colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_ICON'] = 'Icon colour: ';
 $mod_strings['LBL_COLOUR_ADMIN_TABS'] = 'Menu contents config';
+$mod_strings['LBL_SUGGESTION_POPUP_FROM'] = 'Suggestion & Pop-up gradient (from):';
+$mod_strings['LBL_SUGGESTION_POPUP_TO'] = 'Suggestion & Pop-up gradient (to):';

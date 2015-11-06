@@ -127,7 +127,7 @@ class Tracker extends SugarBean
         }
     }
 
-    function logPage(){
+    static function logPage(){
         $time_on_last_page = 0;
         //no need to calculate it if it is a redirection page
         if(empty($GLOBALS['app']->headerDisplayed ))return;

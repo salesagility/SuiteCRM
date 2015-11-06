@@ -1098,7 +1098,8 @@ function getUserVariable($localVarName, $varName) {
             $response =& $this->response;
             echo 'cached';
         }else{
-            $response = SugarBean::get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
+            $objSugarBean = new SugarBean();
+            $response = $objSugarBean->get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
             $this->response =& $response;
         }
         $list = $response['list'];
@@ -1452,7 +1453,8 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
                     if(!empty($this->response)){
                         $response =& $this->response;
                     }else{
-                        $response = SugarBean::get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
+                        $objSugarBean = new SugarBean();
+                        $response = $objSugarBean->get_union_related_list($sugarbean,$this->sortby, $this->sort_order, $this->query_where, $current_offset, -1, $this->records_per_page,$this->query_limit,$subpanel_def);
                         $this->response = $response;
                     }
                     //if query is present, then pass it in as parameter

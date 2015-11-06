@@ -458,6 +458,11 @@ class SugarView
             $ss->assign("CURRENT_USER_ID", $current_user->id);
 
             // get the last viewed records
+            require_once("modules/Favorites/Favorites.php");
+            $favorites = new Favorites();
+            $favorite_records = $favorites->getCurrentUserSidebarFavorites();
+            $ss->assign("favoriteRecords",$favorite_records);
+
             $tracker = new Tracker();
             $history = $tracker->get_recently_viewed($current_user->id);
             $ss->assign("recentRecords",$this->processRecentRecords($history));
@@ -838,7 +843,8 @@ EOHTML;
             echo self::getJavascriptValidation();
             if (!is_file(sugar_cached('jsLanguage/') . $GLOBALS['current_language'] . '.js')) {
                 require_once ('include/language/jsLanguage.php');
-                jsLanguage::createAppStringsCache($GLOBALS['current_language']);
+                $jsLanguage = new jsLanguage();
+                $jsLanguage->createAppStringsCache($GLOBALS['current_language']);
             }
             echo getVersionedScript('cache/jsLanguage/'. $GLOBALS['current_language'] . '.js', $GLOBALS['sugar_config']['js_lang_version']);
 
@@ -1300,7 +1306,12 @@ EOHTML;
         }
 
         if(!empty($paramString)){
-               $theTitle .= "<h2> $paramString </h2>\n";
+               $theTitle .= "<h2> $paramString </h2>";
+
+            if($this->type == "detail"){
+                $theTitle .= "<div class='favorite' record_id='" . $this->bean->id . "' module='" . $this->bean->module_dir . "'><div class='favorite_icon_outline'>" . SugarThemeRegistry::current()->getImage('favorite-star-outline','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')) . "</div>
+                                                    <div class='favorite_icon_fill'>" . SugarThemeRegistry::current()->getImage('favorite-star','title="' . translate('LBL_DASHLET_EDIT', 'Home') . '" border="0"  align="absmiddle"', null,null,'.gif',translate('LBL_DASHLET_EDIT', 'Home')) . "</div></div>";
+            }
            }
 
         // bug 56131 - restore conditional so that link doesn't appear where it shouldn't
