@@ -146,7 +146,6 @@ class SugarWidgetField extends SugarWidget {
 		if (isset ($layout_def['sort'])) {
 			$imgArrow = $layout_def['sort'];
 		}
-
 		$arrow_start = $objListView->getArrowUpDownStart($imgArrow);
 		$arrow_end = $objListView->getArrowUpDownEnd($imgArrow);
 		$header_cell .= " ".$arrow_start.$arrow_end."</a>";
