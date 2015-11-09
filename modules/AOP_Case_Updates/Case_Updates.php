@@ -69,7 +69,7 @@ function caseUpdates(record){
     loadingMessgPanl.render(document.body);
     loadingMessgPanl.show();
 
-    var update_data = document.getElementById('update_text').value;
+    var update_data = encodeURIComponent(document.getElementById('update_text').value);
     var checkbox = document.getElementById('internal').checked;
     var internal = "";
     if(checkbox){
