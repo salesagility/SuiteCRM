@@ -104,4 +104,10 @@ $viewdefs['AOR_Reports']['DetailView'] = array(
     ),
 )
 );
+
+if(!ACLController::checkAccess('AOR_Reports', 'export', true)) {
+    unset($viewdefs['AOR_Reports']['DetailView']['templateMeta']['form']['buttons'][3]);
+    unset($viewdefs['AOR_Reports']['DetailView']['templateMeta']['form']['buttons'][4]);
+};
+
 ?>

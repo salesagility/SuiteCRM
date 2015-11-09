@@ -359,6 +359,34 @@ SUGAR.ajaxUI = {
         SUGAR.ajaxUI.loadingPanel.show();
 
     },
+    displayCustomMessage: function(label) // This can be used inside SugarApplication::appendErrorMessage()
+    {
+        setTimeout(function(){
+            SUGAR.ajaxUI.messagePanel = new YAHOO.widget.Panel("ajaxloading",
+                {
+                    width:"240px",
+                    fixedcenter:true,
+                    close:false,
+                    draggable:false,
+                    constraintoviewport:false,
+                    modal:true,
+                    visible:false
+                });
+            SUGAR.ajaxUI.messagePanel.setBody('<div id="messagePage" align="center" style="vertical-align:middle;"><img src="' + SUGAR.themes.loading_image + '" align="absmiddle" /> <b style=\'color: red\'>' + SUGAR.language.get('app_strings', label) +'</b></div>');
+            SUGAR.ajaxUI.messagePanel.render(document.body);
+
+            if (document.getElementById('ajaxloading_c'))
+                document.getElementById('ajaxloading_c').style.display = '';
+
+            SUGAR.ajaxUI.messagePanel.show();
+
+            setTimeout(function() {
+                SUGAR.ajaxUI.messagePanel.destroy(true);
+                if (document.getElementById('ajaxloading_c'))
+                    document.getElementById('ajaxloading_c').style.display = 'none';
+            }, 3000); // how long the message will display
+        }, 2000); // when the message will appear
+    },
     hideLoadingPanel: function()
     {
         SUGAR.ajaxUI.loadingPanel.hide();

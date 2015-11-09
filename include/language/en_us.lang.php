@@ -2444,7 +2444,7 @@ $app_strings = array (
     'LBL_EXPORT_TEAM_ID' => 'Team ID',
     'LBL_EXPORT_TEAM_NAME' => 'Teams',
     'LBL_EXPORT_TEAM_SET_ID' => 'Team Set ID',
-
+    'LBL_NO_ACCESS' => 'You do not have access to this area. Contact your site administrator to obtain access.',
     'LBL_QUICKEDIT_NODEFS_NAVIGATION'=> 'Navigating... ',
 
     'LBL_PENDING_NOTIFICATIONS' => 'Notifications',
