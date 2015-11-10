@@ -36,8 +36,6 @@ function display_updates($focus, $field, $value, $view){
     $hideImage = SugarThemeRegistry::current()->getImageURL('basic_search.gif');
     $showImage = SugarThemeRegistry::current()->getImageURL('advanced_search.gif');
 
-
-
     $html = <<<EOD
 <script>
 var hideUpdateImage = '$hideImage';
