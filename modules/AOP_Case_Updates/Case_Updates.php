@@ -26,19 +26,11 @@
 function display_updates($focus, $field, $value, $view){
     global $mod_strings;
 
-    $updates = $focus->get_linked_beans('aop_case_updates',"AOP_Case_Updates");
-    if(!$updates){
-        $html = quick_edit_case_updates();
-        return $html;
-        //return $mod_strings['LBL_NO_CASE_UPDATES'];
-    }
-
     $hideImage = SugarThemeRegistry::current()->getImageURL('basic_search.gif');
     $showImage = SugarThemeRegistry::current()->getImageURL('advanced_search.gif');
 
-
-
-    $html = <<<EOD
+    //Javascript for Asynchronous update
+    $html = <<<A
 <script>
 var hideUpdateImage = '$hideImage';
 var showUpdateImage = '$showImage';
@@ -62,6 +54,92 @@ function toggleCaseUpdate(updateId){
     }
     updateElem.slideToggle('fast');
 }
+function caseUpdates(record){
+    loadingMessgPanl = new YAHOO.widget.SimpleDialog('loading', {
+                    width: '200px',
+                    close: true,
+                    modal: true,
+                    visible: true,
+                    fixedcenter: true,
+                    constraintoviewport: true,
+                    draggable: false
+                });
+    loadingMessgPanl.setHeader(SUGAR.language.get('app_strings', 'LBL_EMAIL_PERFORMING_TASK'));
+    loadingMessgPanl.setBody(SUGAR.language.get('app_strings', 'LBL_EMAIL_ONE_MOMENT'));
+    loadingMessgPanl.render(document.body);
+    loadingMessgPanl.show();
+
+    var update_data = document.getElementById('update_text').value;
+    var checkbox = document.getElementById('internal').checked;
+    var internal = "";
+    if(checkbox){
+        internal=1;
+    }
+
+    //Post parameters
+
+    var params =
+        "record="+record+"&module=Cases&return_module=Cases&action=Save&return_id="+record+"&return_action=DetailView&relate_to=Cases&relate_id="+record+"&offset=1&update_text="
+        + update_data + "&internal=" + internal;
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("POST", "index.php", true);
+
+
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader("Content-length", params.length);
+    xmlhttp.setRequestHeader("Connection", "close");
+
+    //When button is clicked
+    xmlhttp.onreadystatechange = function() {
+
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+
+            showSubPanel('history', null, true);
+            //Reload the case updates stream and history panels
+		    $("#LBL_AOP_CASE_UPDATES").load("index.php?module=Cases&action=DetailView&record="+record + " #LBL_AOP_CASE_UPDATES", function(){
+
+
+            //Collapse all except newest update
+            $('.caseUpdateImage').attr("src",showUpdateImage);
+            $('.caseUpdate').slideUp('fast');
+
+            var id = $('.caseUpdate').last().attr('id');
+            if(id){
+            toggleCaseUpdate(id.replace('caseUpdate',''));
+            }
+
+
+            loadingMessgPanl.hide();
+
+            }
+
+        );
+	}
+}
+
+        xmlhttp.send(params);
+
+
+
+}
+</script>
+A;
+
+    $updates = $focus->get_linked_beans('aop_case_updates',"AOP_Case_Updates");
+    if(!$updates){
+        $html .= quick_edit_case_updates();
+        return $html;
+        //return $mod_strings['LBL_NO_CASE_UPDATES'];
+    }
+
+
+
+
+
+    $html .= <<<EOD
+<script>
 $(document).ready(function(){
     collapseAllUpdates();
     var id = $('.caseUpdate').last().attr('id');
@@ -94,6 +172,8 @@ EOD;
     $html .= quick_edit_case_updates();
     return $html;
 }
+
+
 
 /**
  * @return mixed|string|void
@@ -215,86 +295,6 @@ function quick_edit_case_updates(){
         return;
     }
 
-
-
-
-//Javascript for Asynchronous update
-    $javascript = <<<A
-<script>
-function caseUpdates(){
-    loadingMessgPanl = new YAHOO.widget.SimpleDialog('loading', {
-                    width: '200px',
-                    close: true,
-                    modal: true,
-                    visible: true,
-                    fixedcenter: true,
-                    constraintoviewport: true,
-                    draggable: false
-                });
-    loadingMessgPanl.setHeader(SUGAR.language.get('app_strings', 'LBL_EMAIL_PERFORMING_TASK'));
-    loadingMessgPanl.setBody(SUGAR.language.get('app_strings', 'LBL_EMAIL_ONE_MOMENT'));
-    loadingMessgPanl.render(document.body);
-    loadingMessgPanl.show();
-
-    var update_data = document.getElementById('update_text').value;
-    var checkbox = document.getElementById('internal').checked;
-    var internal = "";
-    if(checkbox){
-        internal=1;
-    }
-
-    //Post parameters
-
-    var params =
-        "record=$record&module=Cases&return_module=Cases&action=Save&return_id=$record&return_action=DetailView&relate_to=Cases&relate_id=$record&offset=1&update_text="
-        + update_data + "&internal=" + internal;
-
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("POST", "index.php", true);
-
-
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.setRequestHeader("Content-length", params.length);
-    xmlhttp.setRequestHeader("Connection", "close");
-
-    //When button is clicked
-    xmlhttp.onreadystatechange = function() {
-
-        if(xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-
-
-            showSubPanel('history', null, true);
-            //Reload the case updates stream and history panels
-		    $("#LBL_AOP_CASE_UPDATES").load("index.php?module=Cases&action=DetailView&record=$record" + " #LBL_AOP_CASE_UPDATES", function(){
-
-
-            //Collapse all except newest update
-            $('.caseUpdateImage').attr("src",showUpdateImage);
-            $('.caseUpdate').slideUp('fast');
-
-            var id = $('.caseUpdate').last().attr('id');
-            if(id){
-            toggleCaseUpdate(id.replace('caseUpdate',''));
-            }
-
-
-            loadingMessgPanl.hide();
-
-            }
-
-        );
-	}
-}
-
-        xmlhttp.send(params);
-
-
-
-}
-</script>
-A;
-
-
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
@@ -303,7 +303,7 @@ A;
 
     <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1'> Internal</input>
     </br>
-    <input type='button' value='Save' onclick="caseUpdates()" title="Save" name="button"> </input>
+    <input type='button' value='Save' onclick="caseUpdates('$record')" title="Save" name="button"> </input>
 
 
     </br>
@@ -315,6 +315,6 @@ EOD;
 
 
 
-    return $javascript.$html;
+    return $html;
 
 }
