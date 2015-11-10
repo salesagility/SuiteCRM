@@ -1269,8 +1269,8 @@ class SugarThemeRegistry
         if ( isset($GLOBALS['sugar_config']['default_theme']) && self::exists($GLOBALS['sugar_config']['default_theme']) ) {
             return self::get($GLOBALS['sugar_config']['default_theme']);
         }
-
-        return self::get(array_pop(array_keys(self::availableThemes())));
+        $array_keys = array_keys(self::availableThemes());
+        return self::get(array_pop($array_keys));
     }
 
     /**
@@ -1386,8 +1386,8 @@ class SugarThemeRegistry
                 return $key;
             }
         }
-
-        return array_pop(array_keys($availableThemes));
+        $array_keys = array_keys($availableThemes);
+        return array_pop($array_keys);
     }
 
 

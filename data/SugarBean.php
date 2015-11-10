@@ -2880,7 +2880,7 @@ class SugarBean
      *
      * Internal Function, do not overide.
      */
-    function get_union_related_list($parentbean, $order_by = "", $sort_order='', $where = "",
+    static function get_union_related_list($parentbean, $order_by = "", $sort_order='', $where = "",
     $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $subpanel_def)
     {
         $secondary_queries = array();
@@ -3909,8 +3909,7 @@ class SugarBean
         $num_rows_in_query = 0;
         if (!$is_count_query)
         {
-            $objSugarBean = new SugarBean();
-            $count_query = $objSugarBean->create_list_count_query($query);
+            $count_query = SugarBean::create_list_count_query($query);
         } else
             $count_query=$query;
 

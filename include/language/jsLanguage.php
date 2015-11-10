@@ -47,7 +47,7 @@ class jsLanguage {
     function jsLanguage() {
     }
     
-    function createAppStringsCache($lang = 'en_us') {
+    static function createAppStringsCache($lang = 'en_us') {
         // cn: bug 8242 - non-US langpack chokes
         $app_strings = return_application_language($lang);
         $app_list_strings = return_app_list_strings_language($lang);
