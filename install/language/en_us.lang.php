@@ -597,7 +597,7 @@ $contact_user_link_guid',
 
 	// SMTP settings
 
-	'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from Sugar, as sent from the specified email account.',
+	'LBL_WIZARD_SMTP_DESC' => 'Provide the email account that will be used to send emails, such as the assignment notifications and new user passwords. Users will receive emails from SuiteCRM, as sent from the specified email account.',
 	'LBL_CHOOSE_EMAIL_PROVIDER'        => 'Choose your Email provider:',
 
 	'LBL_SMTPTYPE_GMAIL'                    => 'Gmail',
@@ -629,20 +629,20 @@ $contact_user_link_guid',
 	// Branding
 
 	'LBL_WIZARD_SYSTEM_TITLE' => 'Branding',
-	'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your Sugar.',
+	'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your SuiteCRM.',
 	'SYSTEM_NAME_WIZARD'=>'Name:',
 	'SYSTEM_NAME_HELP'=>'This is the name that displays in the title bar of your browser.',
 	'NEW_LOGO'=>'Select Logo:',
 	'NEW_LOGO_HELP'=>'The image file format can be either .png or .jpg. The maximum height is 17px, and the maximum width is 450px. Any image uploaded that is larger in any direction will be scaled to these max dimensions.',
 	'COMPANY_LOGO_UPLOAD_BTN' => 'Upload',
 	'CURRENT_LOGO'=>'Current Logo:',
-    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the Sugar application.',
+    'CURRENT_LOGO_HELP'=>'This logo is displayed in the left-hand corner of the footer of the SuiteCRM application.',
 
 	// System Local Settings
 
 
 	'LBL_LOCALE_TITLE' => 'System Locale Settings',
-	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in Sugar to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
+	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
 	'LBL_DATE_FORMAT' => 'Date Format:',
 	'LBL_TIME_FORMAT' => 'Time Format:',
 	'LBL_LANGUAGE'=>'Language:',
