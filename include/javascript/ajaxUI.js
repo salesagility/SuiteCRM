@@ -38,6 +38,8 @@ window.onbeforeunload=null;scroll(0,0);try{var r=YAHOO.lang.JSON.parse(o.respons
 {document.title=html_entity_decode(r.title);}
 if(r.action)
 {action_sugar_grp1=r.action;}
+if (r.menu.module)
+{module_sugar_grp1 = r.menu.module;}
 if(r.favicon)
 {SUGAR.ajaxUI.setFavicon(r.favicon);}
 var c=document.getElementById("content");c.style.visibility='hidden';c.innerHTML=cont;SUGAR.util.evalScript(cont);c.style.visibility='visible';if(r.moduleList)

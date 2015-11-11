@@ -122,7 +122,7 @@ class SugarWidgetField extends SugarWidget {
 		$html_var = $subpanel_module . "_CELL";
 		if (empty ($this->base_URL)) {
 			$objListView = new ListView();
-			$this->base_URL = $objListView->getBaseURL($html_var);
+			$this->base_URL = $objListView -> getBaseURL($html_var);
 			$split_url = explode('&to_pdf=true&action=SubPanelViewer&subpanel=', $this->base_URL);
 			$this->base_URL = $split_url[0];
 			$this->base_URL .= '&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=';
@@ -146,7 +146,6 @@ class SugarWidgetField extends SugarWidget {
 		if (isset ($layout_def['sort'])) {
 			$imgArrow = $layout_def['sort'];
 		}
-		$objListView = new ListView();
 		$arrow_start = $objListView->getArrowUpDownStart($imgArrow);
 		$arrow_end = $objListView->getArrowUpDownEnd($imgArrow);
 		$header_cell .= " ".$arrow_start.$arrow_end."</a>";

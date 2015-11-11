@@ -109,7 +109,6 @@ $mod_strings = array (
   'LBL_ACTIVITIES_REPORTS' => 'Activities Report',
   'LBL_TASK_INFORMATION' => 'Task Overview',
   'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
-  'LBL_TASK_INFORMATION' => 'Overview',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'Notes',
   //For export labels
   'LBL_DATE_DUE' => 'Date Due',

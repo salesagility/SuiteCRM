@@ -187,7 +187,6 @@ $mod_strings = array(
 	'LNK_LIST_TEST_IMPORT'	=> 'Test Email Import',
 	'LNK_NEW_QUEUES'		=> 'Create New Queue',
 	'LNK_SEED_QUEUES'		=> 'Seed Queues From Teams',
-	'LBL_IS_PERSONAL'       => 'Personal Mail Account',
 	'LBL_GROUPFOLDER_ID'	=> 'Group Folder Id',
 	'LBL_ASSIGN_TO_GROUP_FOLDER' => 'Assign To Group Folder',
     'LBL_ALLOW_OUTBOUND_GROUP_USAGE' => 'Allow users to send emails using the "From" Name and Address as the reply to address',
