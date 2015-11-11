@@ -191,7 +191,7 @@ function sugar_file_put_contents_atomic($filename, $data, $mode='wb', $use_inclu
         {
             // cleaning up temp file to avoid filling up temp dir
             @unlink($temp);
-            trigger_error("sugar_file_put_contents_atomic() : fatal rename failure '$temp' -> '$filename'", E_USER_ERROR);
+            trigger_error("sugar_file_put_contents_atomic() : fatal rename failure '$temp' -> '$filename'", E_USER_WARNING);
         }
     }
 
