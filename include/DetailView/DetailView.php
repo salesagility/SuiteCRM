@@ -55,7 +55,7 @@ class DetailView extends ListView {
 		$this->local_app_strings =$app_strings;
 	}
 
-	function processSugarBean($html_varName, $seed, &$offset, $isfirstview=0) {
+	function processSugarBean($html_varName, $seed, $offset/*, $isfirstview=0*/) {
 		global $row_count, $sugar_config;
 
 		global $next_offset;
@@ -253,7 +253,7 @@ class DetailView extends ListView {
 		}
 	}
 
-	function processListNavigation( &$xtpl, $html_varName, $current_offset, $display_audit_link = false){
+	function processListNavigation( $xtpl, $html_varName, $current_offset, $display_audit_link = false , $next_offset = null, $previous_offset = null, $row_count = null, $sugarbean = NULL, $subpanel_def = NULL, $col_count = 20){
 		global $export_module, $sugar_config, $current_user;
         //intialize audit_link
         $audit_link = '';

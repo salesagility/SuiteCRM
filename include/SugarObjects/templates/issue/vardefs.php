@@ -53,6 +53,7 @@ $vardefs = array (
 			'duplicate_merge' => 'disabled',
 			'disable_num_format' => true,
 			'studio' => array('quickcreate' => false),
+			'inline_edit' => false,
 		),
 
 		'name' => array (

@@ -354,9 +354,6 @@ $mod_strings = array (
     'LBL_TEST_EMAIL_BODY' => 'This email was sent in order to test the outgoing mail server information provided in the SuiteCRM application.  A successful receipt of this email indicates that the outgoing mail server information provided is valid.',
 
     // for outbound email dialog
-    'LBL_MAIL_SMTPUSER'	=> 'Username',
-	'LBL_MAIL_SMTPPASS'	=> 'Password',
-	'LBL_MAIL_SMTPSERVER' => 'SMTP Mail Server',
 	'LBL_SMTP_SERVER_HELP' => 'This SMTP Mail Server can be used for outgoing mail. Provide a username and password for your email account in order to use the mail server.',
     'LBL_MISSING_DEFAULT_OUTBOUND_SMTP_SETTINGS' => 'The administator has not yet configured the default outbound account.  Unable to send test email.',
     'LBL_MAIL_SMTPAUTH_REQ'				=> 'Use SMTP Authentication?',

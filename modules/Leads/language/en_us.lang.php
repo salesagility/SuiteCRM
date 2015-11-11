@@ -214,7 +214,6 @@ $mod_strings = array (
     'LBL_TARGET_BUTTON_LABEL'=>'Targeted',
     'LBL_TARGET_BUTTON_TITLE'=>'Targeted',
     'LBL_TARGET_BUTTON_KEY'=>'T',
-    'LBL_CAMPAIGN_ID'=>'Campaign Id',
     'LBL_CAMPAIGN' => 'Campaign:',
   	'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
     'LBL_PROSPECT_LIST' => 'Prospect List',

@@ -5,7 +5,6 @@ $mod_strings['LBL_MANAGE_SECURITYGROUPS'] = 'Security Suite Group Editor';
 $mod_strings['LBL_SECURITYGROUPS'] = 'Security Suite';
 $mod_strings['LBL_CONFIG_SECURITYGROUPS_TITLE'] = 'Security Suite Settings';
 $mod_strings['LBL_CONFIG_SECURITYGROUPS'] = 'Configure Security Suite settings such as group inheritance, additive security, etc';
-$mod_strings['LBL_SECURITYGROUPS'] = 'Security Suite';
 $mod_strings['LBL_SECURITYGROUPS_UPGRADE_INFO_TITLE'] = "Upgrade and General Info";
 $mod_strings['LBL_SECURITYGROUPS_INFO_TITLE'] = "Security Suite Info";
 $mod_strings['LBL_SECURITYGROUPS_INFO'] = "General information";
