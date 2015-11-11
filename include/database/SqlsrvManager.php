@@ -300,7 +300,7 @@ class SqlsrvManager extends MssqlManager
      * @param  array  $fielddef2
      * @return bool   true if they match, false if they don't
      */
-    public function compareVarDefs($fielddef1,$fielddef2)
+    public function compareVarDefs($fielddef1,$fielddef2, $ignoreName = false)
     {
         if((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match('/(_id$|^id$)/', $fielddef2['name'])){
             if(isset($fielddef1['type']) && isset($fielddef2['type'])){
