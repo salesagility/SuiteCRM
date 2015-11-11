@@ -197,7 +197,7 @@ function sugar_file_put_contents_atomic($filename, $data, $mode='wb', $use_inclu
 
     if(file_exists($filename))
     {
-       return sugar_chmod($filename, 0655);
+       return sugar_chmod($filename, 0755);
     }
 
     return false;
