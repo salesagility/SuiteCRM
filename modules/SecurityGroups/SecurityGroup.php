@@ -213,7 +213,7 @@ class SecurityGroup extends SecurityGroup_sugar {
                 return;
             }
             
-            $defaultGroups = SecurityGroup::retrieveDefaultGroups();
+            $defaultGroups = $groupFocus->retrieveDefaultGroups();
             foreach($defaultGroups as $default_id => $defaultGroup) {
 
                 if($defaultGroup['module'] == "All" || $defaultGroup['module'] == $focus->module_dir) {
