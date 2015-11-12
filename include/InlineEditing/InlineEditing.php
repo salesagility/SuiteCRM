@@ -333,10 +333,10 @@ function saveField($field, $id, $module, $value)
 function getDisplayValue($bean, $field, $method = "save")
 {
 
-    if (file_exists("custom/modules/Accounts/metadata/listviewdefs.php")) {
-        $metadata = require("custom/modules/Accounts/metadata/listviewdefs.php");
+    if (file_exists("custom/modules/".$bean->module_dir."/metadata/listviewdefs.php")) {
+        $metadata = require("custom/modules/".$bean->module_dir."/metadata/listviewdefs.php");
     } else {
-        $metadata = require("modules/Accounts/metadata/listviewdefs.php");
+        $metadata = require("modules/".$bean->module_dir."/metadata/listviewdefs.php");
     }
 
     $listViewDefs = $listViewDefs['Accounts'][strtoupper($field)];
@@ -370,6 +370,24 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
         require_once("include/generic/SugarWidgets/SugarWidgetSubPanelEmailLink.php");
         $SugarWidgetSubPanelEmailLink = new SugarWidgetSubPanelEmailLink($vardef);
         $value = $SugarWidgetSubPanelEmailLink->displayList($vardef);
+
+    }
+
+    // If field is of type currency
+    if ($vardef['type'] == "currency") {
+
+        require_once("include/generic/LayoutManager.php");
+        $layoutManager = new LayoutManager();
+
+        require_once("include/generic/SugarWidgets/SugarWidgetFieldcurrency.php");
+        $SugarWidgetFieldcurrency = new SugarWidgetFieldCurrency($layoutManager);
+
+        // Require to include currency to display record's custom currency.
+        if(!$SugarWidgetFieldcurrency->isSystemCurrency($vardef)){
+            $vardef['currency_id'] = $bean->currency_id;
+            $vardef['currency_symbol'] = $bean->currency_symbol;
+        }
+        $value = $SugarWidgetFieldcurrency->displayList($vardef);
 
     }
 
