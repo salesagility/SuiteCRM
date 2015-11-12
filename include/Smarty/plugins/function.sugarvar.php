@@ -91,11 +91,11 @@ function smarty_function_sugarvar($params, &$smarty)
     $_contents =  '$'. $object . '.' . $member . '.' . $params['key'];
 	if(empty($params['stringFormat']) && empty($params['string'])) {
 		$_contents = '{' . $_contents;
-		if(!empty($params['htmlentitydecode'])){
-		    $_contents .= '|escape:\'htmlentitydecode\'';
-		}
 		if(!empty($displayParams['htmlescape'])){
-		    $_contents .= '|escape:\'html\'';
+			$_contents .= '|escape:\'html\'';
+		}
+		if(!empty($params['htmlentitydecode'])){
+			$_contents .= '|escape:\'html_entity_decode\'';
 		}
 		if(!empty($displayParams['strip_tags'])){
 			$_contents .= '|strip_tags';
