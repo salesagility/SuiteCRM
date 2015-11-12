@@ -4800,19 +4800,19 @@ object{
     margin: 4px;
 }
 #reminders .add-btn {
-    background-image: url(../../../../themes/default/images/glyphicon-16/glyphicon-plus.png);
+    background-image: url(../../../../themes/default/images/id-ff-add.png);
     background-repeat: no-repeat;
     background-position: 5px center;
     padding-left: 25px;
 }
 #reminders .remove-btn {
-    background-image: url(../../../../themes/default/images/glyphicon-16/glyphicon-remove.png);
+    background-image: url(../../../../themes/default/images/id-ff-clear.png);
     background-repeat: no-repeat;
     background-position: right 5px center;
     padding-right: 25px;
 }
 #reminders .invitee_btn {
-    background-image: url(../../../../themes/default/images/glyphicon-16/glyphicon-remove.png);
+    background-image: url(../../../../themes/default/images/id-ff-clear.png);
     background-repeat: no-repeat;
     background-position: right 5px center;
     padding: 4px 25px 4px 10px;

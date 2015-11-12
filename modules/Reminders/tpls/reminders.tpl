@@ -50,7 +50,7 @@
 {literal}
 
 <style type="text/css">
-#reminders #reminder_view .col {float: left;}
+#reminders #reminder_view .col {float: left; padding-right: 15px;}
 #reminders #reminder_view .btns {float: left;}
 </style>
 {/literal}
