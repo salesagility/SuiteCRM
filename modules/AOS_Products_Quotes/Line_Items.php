@@ -171,7 +171,8 @@ function display_lines($focus, $field, $value, $view){
                 $product .= "<tr>";
                 $product_note = wordwrap($line_item->description,40,"<br />\n");
                 $product .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".++$productCount."</td>";
-                $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".rtrim(rtrim(format_number($line_item->product_qty), '0'),$sep[1])."</td>";
+                $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->product_qty),$sep[1])."</td>";
+
                 $product .= "<td class='tabDetailViewDF' style='padding:2px;'><a href='index.php?module=AOS_Products&action=DetailView&record=".$line_item->product_id."' class='tabDetailViewDFLink'>".$line_item->name."</a><br />".$product_note."</td>";
                 $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price,$params)."</td>";
 
@@ -221,6 +222,17 @@ function display_lines($focus, $field, $value, $view){
         $html .= "</table>";
     }
     return $html;
+}
+
+//Bug #598
+//The original approach to trimming the characters was rtrim(rtrim(format_number($line_item->product_qty), '0'),$sep[1])
+//This however had the unwanted side-effect of turning 1000 (or 10 or 100) into 1 when the Currency Significant Digits
+//field was 0.
+//The approach below will strip off the fractional part if it is only zeroes (and in this case the decimal separator
+//will also be stripped off) The custom decimal separator is passed in to the function from the locale settings
+function stripDecimalPointsAndTrailingZeroes($inputString,$decimalSeparator)
+{
+    return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/','',$inputString);
 }
 
 function get_discount_string($type, $amount, $params, $locale, $sep){
