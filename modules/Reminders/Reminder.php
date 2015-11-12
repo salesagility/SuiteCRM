@@ -54,9 +54,10 @@ class Reminder extends Basic {
     var $popup;
     var $email;
     var $email_sent = false;
-    var $timer;
-    var $related_event_module;
-    var $related_event_module_id;
+	var $timer_popup;
+	var $timer_email;
+	var $related_event_module;
+	var $related_event_module_id;
 
     public function __construct() {
         parent::Basic();
@@ -96,7 +97,8 @@ class Reminder extends Basic {
             $reminderBean = BeanFactory::getBean('Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
-            $reminderBean->timer = $reminderData->timer;
+            $reminderBean->timer_popup = $reminderData->timer_popup;
+            $reminderBean->timer_email = $reminderData->timer_email;
             $reminderBean->related_event_module = $eventModule;
             $reminderBean->related_event_module_id = $eventModuleId;
             $reminderBean->save();
@@ -143,7 +145,8 @@ class Reminder extends Basic {
                     'id' => $reminder->id,
                     'popup' => $reminder->popup,
                     'email' => $reminder->email,
-                    'timer' => $reminder->timer,
+                    'timer_popup' => $reminder->timer_popup,
+                    'timer_email' => $reminder->timer_email,
                     'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id),
                 );
             }
@@ -381,7 +384,8 @@ class Reminder extends Basic {
 		$ret = json_encode(array(
 			'popup' => $current_user->getPreference('reminder_checked'),
 			'email' => $current_user->getPreference('email_reminder_checked'),
-			'timer' => $current_user->getPreference('reminder_time'),
+			'timer_popup' => $current_user->getPreference('reminder_time'),
+			'timer_email' => $current_user->getPreference('email_reminder_time'),
 		));
 		if(!$ret && json_last_error()) {
             throw new Exception(json_last_error_msg());
