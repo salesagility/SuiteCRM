@@ -115,6 +115,7 @@ function sugar_fopen($filename, $mode, $use_include_path=false, $context=null){
 	}
 
 	if(empty($context)) {
+
 		return fopen($filename, $mode, $use_include_path);
 	} else {
 		return fopen($filename, $mode, $use_include_path, $context);

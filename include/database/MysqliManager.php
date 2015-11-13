@@ -273,7 +273,7 @@ class MysqliManager extends MysqlManager
 
 			//mysqli connector has a separate parameter for port.. We need to separate it out from the host name
 			$dbhost=$configOptions['db_host_name'];
-            $dbport=$configOptions['db_port'] == '' ? null : $configOptions['db_port'];
+            $dbport=isset($configOptions['db_port']) ? ($configOptions['db_port'] == '' ? null : $configOptions['db_port']) : null;
 			
 			$pos=strpos($configOptions['db_host_name'],':');
 			if ($pos !== false) {
