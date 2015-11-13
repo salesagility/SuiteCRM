@@ -56,6 +56,8 @@ var Reminders = {
 
     errors: [],
 
+    addDefaultReminderInterval: null,
+
     getInviteeView: function(id, module, moduleId, relatedValue) {
         if(!id) id = '';
         // TODO: add a template for this
@@ -200,11 +202,21 @@ var Reminders = {
 			if(defaultValues.timer_email) Reminders.defaultValues.timer_email = defaultValues.timer_email;
 		}
 
-        // add validations on edit view
+        // on edit view
         if(!Reminders.disabled) {
+            // add validations on edit view
             addToValidateCallback('EditView', 'reminders_data', 'function', false, SUGAR.language.get('app_strings', 'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT'), function (formname, nameIndex) {
                 return Reminders.isValid(formname, nameIndex);
             });
+            // add one reminder by default into the edit view if we don't have any reminders
+            Reminders.addDefaultReminderInterval = setInterval(function(){
+                // we have to wait for the scheduler table loaded
+                if($('#schedulerTable .schedulerAttendeeRow').length>0) {
+                    clearInterval(Reminders.addDefaultReminderInterval);
+                    Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
+                    Reminders.createRemindersPostData();
+                }
+            }, 300);
         }
 
         Reminders.createRemindersPostData();
