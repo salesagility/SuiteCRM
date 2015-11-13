@@ -54,9 +54,10 @@ class Reminder extends Basic {
     var $popup;
     var $email;
     var $email_sent = false;
-    var $timer;
-    var $related_event_module;
-    var $related_event_module_id;
+	var $timer_popup;
+	var $timer_email;
+	var $related_event_module;
+	var $related_event_module_id;
 
     public function __construct() {
         parent::Basic();
@@ -96,7 +97,8 @@ class Reminder extends Basic {
             $reminderBean = BeanFactory::getBean('Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
-            $reminderBean->timer = $reminderData->timer;
+            $reminderBean->timer_popup = $reminderData->timer_popup;
+            $reminderBean->timer_email = $reminderData->timer_email;
             $reminderBean->related_event_module = $eventModule;
             $reminderBean->related_event_module_id = $eventModuleId;
             $reminderBean->save();
@@ -143,7 +145,8 @@ class Reminder extends Basic {
                     'id' => $reminder->id,
                     'popup' => $reminder->popup,
                     'email' => $reminder->email,
-                    'timer' => $reminder->timer,
+                    'timer_popup' => $reminder->timer_popup,
+                    'timer_email' => $reminder->timer_email,
                     'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id),
                 );
             }
@@ -267,13 +270,13 @@ class Reminder extends Basic {
 		///////////////////////////////////////////////////////////////////////
 		
 		$popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.popup = 1");
-		
+
 		if($popupReminders) {
 			foreach($popupReminders as $popupReminder) {
 				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
 				if(
 					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
-					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) ) &&
+					(!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax))) ) &&
 					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
 				) {
 					// The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
@@ -282,7 +285,7 @@ class Reminder extends Basic {
 						foreach($invitees as $invitee) {
 							// need to concatenate since GMT times can bridge two local days
 							$timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
-							$timeRemind = $popupReminder->timer;
+							$timeRemind = $popupReminder->timer_popup;
 							$timeStart -= $timeRemind;
 
 							$url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
@@ -307,7 +310,7 @@ class Reminder extends Basic {
 							
 							$description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'].$desc1."\n";
 							$description = $description  ."\n" .$app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($relatedEvent->status) ? $relatedEvent->status : '') ."\n". $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO']. $relatedToMeeting;
-							
+
 							// standard functionality
 							$alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
 								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert(  (isset($relatedEvent->date_start) ? $relatedEvent->date_start : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'])  , 'datetime')),
@@ -322,6 +325,14 @@ class Reminder extends Basic {
 				}
 			}
 		}
+	}
+
+	private static function unQuoteTime($timestr) {
+		$ret = '';
+		for($i=0; $i<strlen($timestr); $i++) {
+			if($timestr[$i]!="'") $ret .= $timestr[$i];
+		}
+		return $ret;
 	}
 	
 	// --- test for accept status decline is?
@@ -381,7 +392,8 @@ class Reminder extends Basic {
 		$ret = json_encode(array(
 			'popup' => $current_user->getPreference('reminder_checked'),
 			'email' => $current_user->getPreference('email_reminder_checked'),
-			'timer' => $current_user->getPreference('reminder_time'),
+			'timer_popup' => $current_user->getPreference('reminder_time'),
+			'timer_email' => $current_user->getPreference('email_reminder_time'),
 		));
 		if(!$ret && json_last_error()) {
             throw new Exception(json_last_error_msg());

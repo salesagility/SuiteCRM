@@ -127,14 +127,14 @@ class EmailReminder
      */
     public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
-        
+
         if ( empty($_SESSION['authenticated_user_language']) ) {
             $current_language = $GLOBALS['sugar_config']['default_language'];
         }else{
             $current_language = $_SESSION['authenticated_user_language'];
         }            
-                
-                if ( !empty($bean->created_by) ) {
+
+        if ( !empty($bean->created_by) ) {
             $user_id = $bean->created_by;
         }else if ( !empty($bean->assigned_user_id) ) {
             $user_id = $bean->assigned_user_id;
@@ -171,9 +171,9 @@ class EmailReminder
         $xtpl->parse($template_name . "_Subject");
         
         $mail->Body = from_html(trim($xtpl->text($template_name)));
-               $mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
-               
-               $oe = new OutboundEmail();
+        $mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
+
+        $oe = new OutboundEmail();
         $oe = $oe->getSystemMailerSettings();
         if ( empty($oe->mail_smtpserver) ) {
             $GLOBALS['log']->fatal("Email Reminder: error sending email, system smtp server is not set");

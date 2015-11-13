@@ -64,9 +64,18 @@ $dictionary['Reminder']['fields']= array(
         'massupdate' => false,
         'studio' => false,
     ),
-    'timer' => array(
-        'name' => 'timer',
-        'vname' => 'LBL_TIMER',
+    'timer_popup' => array(
+        'name' => 'timer_popup',
+        'vname' => 'LBL_TIMER_POPUP',
+        'type' => 'varchar',
+        'len' => 32,
+        'required' => true,
+        'massupdate' => false,
+        'studio' => false,
+    ),
+    'timer_email' => array(
+        'name' => 'timer_email',
+        'vname' => 'LBL_TIMER_EMAIL',
         'type' => 'varchar',
         'len' => 32,
         'required' => true,

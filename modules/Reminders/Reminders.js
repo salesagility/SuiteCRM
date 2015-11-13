@@ -47,13 +47,16 @@ var Reminders = {
 	defaultValues: {
 		popup: true,
 		email: true,
-		timer: 60
+		timer_popup: 1800,
+        timer_email: 3600
 	},
 
     // we have to disabled the reminders on details view - override this on initialization
     disabled: false,
 
     errors: [],
+
+    addDefaultReminderInterval: null,
 
     getInviteeView: function(id, module, moduleId, relatedValue) {
         if(!id) id = '';
@@ -114,15 +117,20 @@ var Reminders = {
         Reminders.setCheckboxValue($(e).find('.email_chkbox'), value);
     },
 
-    setTimerSelectValue: function(e, value) {
-        Reminders.setSelectValue($(e).find('.timer_sel'), value);
+    setPopupTimerSelectValue: function(e, value) {
+        Reminders.setSelectValue($(e).find('.timer_sel_popup'), value);
     },
 
-    addReminder: function(e, popup, email, timer, reminderId, invitees) {
+    setEmailTimerSelectValue: function(e, value) {
+        Reminders.setSelectValue($(e).find('.timer_sel_email'), value);
+    },
+
+    addReminder: function(e, popup, email, timer_popup, timer_email, reminderId, invitees) {
         if(!reminderId) reminderId = '';
         Reminders.setReminderPopupChkbox($('#reminder_template'), popup);
         Reminders.setReminderEmailChkbox($('#reminder_template'), email);
-        Reminders.setTimerSelectValue($('#reminder_template'), timer);
+        Reminders.setPopupTimerSelectValue($('#reminder_template'), timer_popup);
+        Reminders.setEmailTimerSelectValue($('#reminder_template'), timer_email);
         if(!invitees) {
             Reminders.addAllInvitees($('#reminder_template'));
         }
@@ -133,7 +141,7 @@ var Reminders = {
     },
 
     onAddClick: function(e){
-        Reminders.addReminder(e, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer);
+        Reminders.addReminder(e, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
         Reminders.createRemindersPostData();
     },
     onRemoveClick: function(e) {
@@ -170,7 +178,8 @@ var Reminders = {
                     id: $(e).attr('data-reminder-id'),
                     popup: $(e).find('.popup_chkbox').prop('checked'),
                     email: $(e).find('.email_chkbox').prop('checked'),
-                    timer: $(e).find('.timer_sel').val(),
+                    timer_popup: $(e).find('.timer_sel_popup').val(),
+                    timer_email: $(e).find('.timer_sel_email').val(),
                     invitees: Reminders.getInviteesData(e)
                 });
             });
@@ -183,20 +192,31 @@ var Reminders = {
         Reminders.disabled = disabled ? true : false;
         if(data) {
             $.each(data, function(i,e){
-                Reminders.addReminder(false, e.popup, e.email, e.timer, e.id, e.invitees);
+                Reminders.addReminder(false, e.popup, e.email, e.timer_popup, e.timer_email, e.id, e.invitees);
             });
         }
 		if(defaultValues) {
 			if(defaultValues.popup) Reminders.defaultValues.popup = defaultValues.popup;
 			if(defaultValues.email) Reminders.defaultValues.email = defaultValues.email;
-			if(defaultValues.timer) Reminders.defaultValues.timer = defaultValues.timer;
+			if(defaultValues.timer_popup) Reminders.defaultValues.timer_popup = defaultValues.timer_popup;
+			if(defaultValues.timer_email) Reminders.defaultValues.timer_email = defaultValues.timer_email;
 		}
 
-        // add validations on edit view
+        // on edit view
         if(!Reminders.disabled) {
+            // add validations on edit view
             addToValidateCallback('EditView', 'reminders_data', 'function', false, SUGAR.language.get('app_strings', 'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT'), function (formname, nameIndex) {
                 return Reminders.isValid(formname, nameIndex);
             });
+            // add one reminder by default into the edit view if we don't have any reminders
+            Reminders.addDefaultReminderInterval = setInterval(function(){
+                // we have to wait for the scheduler table loaded
+                if($('#schedulerTable .schedulerAttendeeRow').length>0) {
+                    clearInterval(Reminders.addDefaultReminderInterval);
+                    Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
+                    Reminders.createRemindersPostData();
+                }
+            }, 300);
         }
 
         Reminders.createRemindersPostData();
@@ -210,7 +230,11 @@ var Reminders = {
         Reminders.createRemindersPostData();
     },
 
-    onTimerSelChange: function(e) {
+    onPopupTimerSelChange: function(e) {
+        Reminders.createRemindersPostData();
+    },
+
+    onEmailTimerSelChange: function(e) {
         Reminders.createRemindersPostData();
     },
 
