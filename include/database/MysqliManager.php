@@ -193,7 +193,9 @@ class MysqliManager extends MysqlManager
 	 */
 	public function disconnect()
 	{
-		$GLOBALS['log']->debug('Calling MySQLi::disconnect()');
+		if(isset($GLOBALS['log']) && !is_null($GLOBALS['log'])) {
+			$GLOBALS['log']->debug('Calling MySQLi::disconnect()');
+		}
 		if(!empty($this->database)){
 			$this->freeResult();
 			mysqli_close($this->database);
