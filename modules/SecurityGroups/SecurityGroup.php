@@ -400,7 +400,7 @@ class SecurityGroup extends SecurityGroup_sugar {
         } //end if new record
     }
 
-    function inherit_parentQuery(&$focus, $parent_type, $parent_id, $focus_id, $focus_module_dir) {
+    static function inherit_parentQuery(&$focus, $parent_type, $parent_id, $focus_id, $focus_module_dir) {
         if(empty($parent_type) || empty($parent_id)) return; //no info passed
 
         /** can speed this up by doing one query */
