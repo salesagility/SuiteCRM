@@ -263,11 +263,12 @@ class SecurityGroup extends SecurityGroup_sugar {
                 } else if($focus->db->dbType == 'mssql') {
                     $query .= " lower(newid()) ";
                 }
+                $currentUserId = isset($current_user->id) ? $current_user->id : null;
                 $query .= ",u.securitygroup_id,'$focus->id','$focus->module_dir',".db_convert('','today').",0 "
                         ."from securitygroups_users u "
                         ."inner join securitygroups g on u.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) "
                         ."left join securitygroups_records d on d.securitygroup_id = u.securitygroup_id and d.record_id = '$focus->id' and d.module = '$focus->module_dir' and d.deleted = 0 "
-                        ."where d.id is null and u.user_id = '$current_user->id' and u.deleted = 0 and (u.noninheritable is null or u.noninheritable <> 1)";
+                        ."where d.id is null and u.user_id = '$currentUserId' and u.deleted = 0 and (u.noninheritable is null or u.noninheritable <> 1)";
                 $GLOBALS['log']->debug("SecuritySuite: Inherit from Creator: $query");
                 $focus->db->query($query,true);
             }
