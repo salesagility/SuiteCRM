@@ -107,6 +107,6 @@ class SAMLAuthenticate extends SugarAuthenticate {
         $authRequest = new SamlAuthRequest($settings);
         $url = $authRequest->create();
 
-        $app->redirect($url);
+        SugarApplication::redirect($url);
     }
 }
