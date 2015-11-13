@@ -858,7 +858,7 @@ function return_app_list_strings_language($language)
 		return $cache_entry;
 	}
 
-	$default_language = $sugar_config['default_language'];
+	$default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : 'en_us';
 	$temp_app_list_strings = $app_list_strings;
 
 	$langs = array();
