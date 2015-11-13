@@ -61,7 +61,8 @@ EOQ;
 	}
 	function addAlert($type, $name, $subtitle, $description, $countdown, $redirect='')
     {
-        $this->script .= 'addAlert(' . json_encode($type) .',' . json_encode($name). ',' . json_encode($subtitle). ','. json_encode(str_replace(array("\r", "\n"), array('','<br>'),$description)) . ',' . $countdown . ','.json_encode($redirect).')' . "\n";
+		$script = 'addAlert(' . json_encode($type) .',' . json_encode($name). ',' . json_encode($subtitle). ','. json_encode(str_replace(array("\r", "\n"), array('','<br>'),$description)) . ',' . $countdown . ','.json_encode($redirect).');' . "\n";
+        $this->script .= $script;
 	}
 
     function getScript()

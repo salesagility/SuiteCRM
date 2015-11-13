@@ -270,13 +270,13 @@ class Reminder extends Basic {
 		///////////////////////////////////////////////////////////////////////
 		
 		$popupReminders = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.popup = 1");
-		
+
 		if($popupReminders) {
 			foreach($popupReminders as $popupReminder) {
 				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
 				if(
 					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
-					(!isset($relatedEvent->date_start) || ($relatedEvent->date_start >= $dateTimeNow && $relatedEvent->date_start <= $dateTimeMax) ) &&
+					(!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax))) ) &&
 					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
 				) {
 					// The original popup/alert reminders check the accept_status field in related users/leads/contacts etc. and filtered these users who not decline this event.
@@ -285,7 +285,7 @@ class Reminder extends Basic {
 						foreach($invitees as $invitee) {
 							// need to concatenate since GMT times can bridge two local days
 							$timeStart = strtotime($db->fromConvert(isset($relatedEvent->date_start) ? $relatedEvent->date_start : date(TimeDate::DB_DATETIME_FORMAT), 'datetime'));
-							$timeRemind = $popupReminder->timer;
+							$timeRemind = $popupReminder->timer_popup;
 							$timeStart -= $timeRemind;
 
 							$url = 'index.php?action=DetailView&module=' . $popupReminder->related_event_module . '&record=' . $popupReminder->related_event_module_id;
@@ -310,7 +310,7 @@ class Reminder extends Basic {
 							
 							$description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'].$desc1."\n";
 							$description = $description  ."\n" .$app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($relatedEvent->status) ? $relatedEvent->status : '') ."\n". $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO']. $relatedToMeeting;
-							
+
 							// standard functionality
 							$alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
 								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert(  (isset($relatedEvent->date_start) ? $relatedEvent->date_start : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'])  , 'datetime')),
@@ -325,6 +325,14 @@ class Reminder extends Basic {
 				}
 			}
 		}
+	}
+
+	private static function unQuoteTime($timestr) {
+		$ret = '';
+		for($i=0; $i<strlen($timestr); $i++) {
+			if($timestr[$i]!="'") $ret .= $timestr[$i];
+		}
+		return $ret;
 	}
 	
 	// --- test for accept status decline is?
