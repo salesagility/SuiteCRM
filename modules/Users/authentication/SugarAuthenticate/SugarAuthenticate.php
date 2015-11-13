@@ -377,6 +377,6 @@ class SugarAuthenticate{
     public function redirectToLogin(SugarApplication $app)
     {
         $loginVars = $app->createLoginVars();
-        $app->redirect('index.php?action=Login&module=Users' . $loginVars);
+		SugarApplication::redirect('index.php?action=Login&module=Users' . $loginVars);
     }
 }
