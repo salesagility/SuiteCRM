@@ -123,7 +123,7 @@
 			<input type="checkbox" class="popup_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
 			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
 			<span type="text" class="reminder_when_value" /></span>
-			<select tabindex="0" class="timer_sel" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
+			<select tabindex="0" class="timer_sel_popup" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
 				{html_options options=$reminder_time_options}
 			</select>
 		</div>
@@ -132,7 +132,7 @@
 			<input type="checkbox" class="email_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
 			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
 			<span type="text" class="reminder_when_value" /></span>
-			<select tabindex="0" class="timer_sel" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
+			<select tabindex="0" class="timer_sel_email" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
 				{html_options options=$reminder_time_options}
 			</select>
 		</div>
