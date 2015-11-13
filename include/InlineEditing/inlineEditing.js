@@ -51,6 +51,11 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
+    	
+    	if(e.which !== undefined && e.which === 2){
+            return;
+        }
+        
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
 			var linkTarget = $(this).attr("target");

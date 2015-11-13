@@ -48,7 +48,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 $mod_strings = array (
 	'LBL_MODULE_TITLE' => 'My Saved Searches',
-	'LBL_MODULE_TITLE' => 'My Saved Searches',
 	'LBL_SEARCH_FORM_TITLE' => 'My Saved Searches : Search',
 	'LBL_LIST_FORM_TITLE' => 'My Saved Searches List', 
 	'LBL_DELETE_CONFIRM' => 'Are you sure you want to delete the selected Saved Search?',

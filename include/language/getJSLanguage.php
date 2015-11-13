@@ -44,8 +44,7 @@ function getJSLanguage()
     if (empty($_REQUEST['module']) || $_REQUEST['module'] === 'app_strings') {
         $file = sugar_cached('jsLanguage/') . $lang . '.js';
         if (!sugar_is_file($file)) {
-            $jsLanguage = new jsLanguage();
-            $jsLanguage->createAppStringsCache($lang);
+            jsLanguage::createAppStringsCache($lang);
         }
     } else {
         $module = clean_path($_REQUEST['module']);

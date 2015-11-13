@@ -230,7 +230,6 @@ $mod_strings = array (
     'LBL_PHONE_WORK' => 'Phone Work',
     'LBL_PHONE_OTHER' => 'Phone Other',
     'LBL_PHONE_FAX' => 'Phone Fax',
-    'LBL_CAMPAIGN_ID' => 'Campaign ID',
 
     'LBL_EXPORT_ASSIGNED_USER_NAME' => 'Assigned User Name',
     'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',

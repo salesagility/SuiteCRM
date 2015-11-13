@@ -102,7 +102,6 @@ $mod_strings = array (
 	'LBL_LIST_PRIORITY'					=> 'Priority',
 	'LBL_LIST_STATUS'					=> 'Status',
 	'LBL_LIST_SUBJECT'					=> 'Subject',
-	'LBL_LIST_ASSIGNED_TO_NAME'   		=> 'Assigned User',
 
 	'LNK_CASE_LIST'						=> 'View Cases',
 	'LNK_NEW_CASE'						=> 'Create Case',
