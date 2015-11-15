@@ -4769,6 +4769,9 @@ object{
 
 
 
-
+#content a:link:after, 
+#content a:visited:after { 
+	display: none;
+}
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
