@@ -213,7 +213,7 @@ class Reminder extends Basic {
 			$dateStart = $eventBean->date_start;
 			$time = strtotime($db->fromConvert($dateStart,'datetime'));
 			$dateStart = date(TimeDate::DB_DATETIME_FORMAT, $time);
-			$remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart,'datetime'))->modify("-{$reminderBean->timer} seconds")->ts;
+			$remind_ts = $GLOBALS['timedate']->fromDb($db->fromConvert($dateStart,'datetime'))->modify("-{$reminderBean->timer_email} seconds")->ts;
             $now_ts = $GLOBALS['timedate']->getNow()->ts;
             if ( $now_ts >= $remind_ts ) {
                 $reminders[$reminderBean->id] = $reminderBean;
