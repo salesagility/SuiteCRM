@@ -311,9 +311,24 @@ class Reminder extends Basic {
 							$description = empty($desc1) ? '' : $app_strings['MSG_JS_ALERT_MTG_REMINDER_AGENDA'].$desc1."\n";
 							$description = $description  ."\n" .$app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] . (isset($relatedEvent->status) ? $relatedEvent->status : '') ."\n". $app_strings['MSG_JS_ALERT_MTG_REMINDER_RELATED_TO']. $relatedToMeeting;
 
+
+							if(isset($relatedEvent->date_start)) {
+								$time_dbFromConvert = $db->fromConvert($relatedEvent->date_start, 'datetime');
+								$time = $timedate->to_display_date_time($time_dbFromConvert);
+								if(!$time) {
+									$time = $relatedEvent->date_start;
+								}
+								if(!$time) {
+									$time = $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'];
+								}
+							}
+							else {
+								$time = $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'];
+							}
+
 							// standard functionality
 							$alert->addAlert($app_strings['MSG_JS_ALERT_MTG_REMINDER_MEETING'], $meetingName,
-								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$timedate->to_display_date_time($db->fromConvert(  (isset($relatedEvent->date_start) ? $relatedEvent->date_start : $app_strings['MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE'])  , 'datetime')),
+								$app_strings['MSG_JS_ALERT_MTG_REMINDER_TIME'].$time,
 								$app_strings['MSG_JS_ALERT_MTG_REMINDER_LOC'].$location.
 								$description.
 								$instructions,
