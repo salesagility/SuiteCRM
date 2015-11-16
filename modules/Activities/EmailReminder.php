@@ -90,6 +90,8 @@ class EmailReminder
 
         $admin = new Administration();
         $admin->retrieveSettings();
+
+        Reminder::sendEmailReminders($this, $admin);
         
         $meetings = $this->getMeetingsForRemind();
         foreach($meetings as $id ) {
@@ -112,8 +114,6 @@ class EmailReminder
                 $bean->save();
             }
         }
-
-		Reminder::sendEmailReminders($this, $admin);
         
         return true;
     }

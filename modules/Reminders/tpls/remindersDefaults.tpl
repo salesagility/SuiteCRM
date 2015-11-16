@@ -96,10 +96,12 @@
 		<span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
 
 		{if !$disabled}
-			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
+			<br>
+			<!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
 			<select tabindex="0" class="popup_timer_sel" name="reminder_time"{$disabled}>
 				{html_options options=$REMINDER_TIME_OPTIONS selected=$REMINDER_TIME}
 			</select>
+			<br>
 			&nbsp;
 		{else}
 			{$REMINDER_TIME_OPTIONS.$REMINDER_TIME}
@@ -112,10 +114,12 @@
 		<span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
 
 		{if !$disabled}
-			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
+			<!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
+			<br>
 			<select tabindex="0" class="email_timer_sel" name="email_reminder_time"{$disabled}>
 				{html_options options=$REMINDER_TIME_OPTIONS selected=$EMAIL_REMINDER_TIME}
 			</select>
+			<br>
 			&nbsp;
 		{else}
 			{$REMINDER_TIME_OPTIONS.$EMAIL_REMINDER_TIME}
