@@ -75,7 +75,7 @@
 
         <div class="col">
 			<input type="checkbox" class="popup_chkbox" onclick="Reminders.onPopupChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_POPUP}</label>&nbsp;
-			<label>{$MOD.LBL_REMINDERS_WHEN}</label>
+			<!-- <label>{$MOD.LBL_REMINDERS_WHEN}</label> -->
 			<select tabindex="0" class="timer_sel_popup" onchange="Reminders.onPopupTimerSelChange(this);">
 				{html_options options=$fields.reminder_time.options}
 			</select>
@@ -83,7 +83,7 @@
 
         <div class="col">
 			<input type="checkbox" class="email_chkbox" onclick="Reminders.onEmailChkboxClick(this);"><label>{$MOD.LBL_REMINDERS_EMAIL}</label>&nbsp;
-			<label>{$MOD.LBL_REMINDERS_WHEN}</label>
+			<!-- <label>{$MOD.LBL_REMINDERS_WHEN}</label> -->
 			<select tabindex="0" class="timer_sel_email" onchange="Reminders.onEmailTimerSelChange(this);">
 				{html_options options=$fields.reminder_time.options}
 			</select>
@@ -121,7 +121,7 @@
 
         <div class="col">
 			<input type="checkbox" class="popup_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
-			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
+			<!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
 			<span type="text" class="reminder_when_value" /></span>
 			<select tabindex="0" class="timer_sel_popup" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
 				{html_options options=$reminder_time_options}
@@ -130,7 +130,7 @@
 
 		<div class="col">
 			<input type="checkbox" class="email_chkbox" disabled="disabled"><span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
-			<span>{$MOD.LBL_REMINDERS_WHEN}</span>
+			<!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
 			<span type="text" class="reminder_when_value" /></span>
 			<select tabindex="0" class="timer_sel_email" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
 				{html_options options=$reminder_time_options}
