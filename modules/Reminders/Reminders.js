@@ -169,20 +169,25 @@ var Reminders = {
         return ret;
     },
 
+    getRemindersData: function() {
+        var reminders = [];
+        $('#reminder_view .reminder_item').each(function (i, e) {
+            reminders.push({
+                id: $(e).attr('data-reminder-id'),
+                popup: $(e).find('.popup_chkbox').prop('checked'),
+                email: $(e).find('.email_chkbox').prop('checked'),
+                timer_popup: $(e).find('.timer_sel_popup').val(),
+                timer_email: $(e).find('.timer_sel_email').val(),
+                invitees: Reminders.getInviteesData(e)
+            });
+        });
+        return reminders;
+    },
+
     createRemindersPostData: function() {
         // do not create post data if disabled and/or it is not an EditView!
         if(!Reminders.disabled) {
-            var reminders = [];
-            $('#reminder_view .reminder_item').each(function (i, e) {
-                reminders.push({
-                    id: $(e).attr('data-reminder-id'),
-                    popup: $(e).find('.popup_chkbox').prop('checked'),
-                    email: $(e).find('.email_chkbox').prop('checked'),
-                    timer_popup: $(e).find('.timer_sel_popup').val(),
-                    timer_email: $(e).find('.timer_sel_email').val(),
-                    invitees: Reminders.getInviteesData(e)
-                });
-            });
+            var reminders = Reminders.getRemindersData();
             document.EditView.reminders_data.value = JSON.stringify(reminders);
             Reminders.isValid('EditView', 'reminders_data');
         }
@@ -202,6 +207,8 @@ var Reminders = {
 			if(defaultValues.timer_email) Reminders.defaultValues.timer_email = defaultValues.timer_email;
 		}
 
+        Reminders.createRemindersPostData();
+
         // on edit view
         if(!Reminders.disabled) {
             // add validations on edit view
@@ -209,17 +216,18 @@ var Reminders = {
                 return Reminders.isValid(formname, nameIndex);
             });
             // add one reminder by default into the edit view if we don't have any reminders
-            Reminders.addDefaultReminderInterval = setInterval(function(){
-                // we have to wait for the scheduler table loaded
-                if($('#schedulerTable .schedulerAttendeeRow').length>0) {
-                    clearInterval(Reminders.addDefaultReminderInterval);
-                    Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
-                    Reminders.createRemindersPostData();
-                }
-            }, 300);
+            if(Reminders.getRemindersData().length == 0) {
+                Reminders.addDefaultReminderInterval = setInterval(function () {
+                    // we have to wait for the scheduler table loaded
+                    if ($('#schedulerTable .schedulerAttendeeRow').length > 0) {
+                        clearInterval(Reminders.addDefaultReminderInterval);
+                        Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
+                        Reminders.createRemindersPostData();
+                    }
+                }, 1);
+            }
         }
 
-        Reminders.createRemindersPostData();
     },
 
     onPopupChkboxClick: function(e) {
@@ -245,7 +253,6 @@ var Reminders = {
             $.each(remindersData, function(i,e){
                 if(!e.popup && !e.email) {
                     Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL'));
-                    error = true;
                 }
                 if(e.invitees.length == 0) {
                     Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_NO_INVITEES_FOR_REMINDER'));
