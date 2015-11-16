@@ -224,7 +224,7 @@ var Reminders = {
                         Reminders.addReminder(null, Reminders.defaultValues.popup, Reminders.defaultValues.email, Reminders.defaultValues.timer_popup, Reminders.defaultValues.timer_email);
                         Reminders.createRemindersPostData();
                     }
-                }, 300);
+                }, 1);
             }
         }
 
@@ -253,7 +253,6 @@ var Reminders = {
             $.each(remindersData, function(i,e){
                 if(!e.popup && !e.email) {
                     Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL'));
-                    error = true;
                 }
                 if(e.invitees.length == 0) {
                     Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_NO_INVITEES_FOR_REMINDER'));
