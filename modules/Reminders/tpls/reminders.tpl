@@ -152,12 +152,71 @@
 <!-- Reminders field in EditViews -->
 <div id="reminders">
 	<input type="hidden" id="reminders_data" name="reminders_data" />
-	<ul id="reminder_view"></ul>
+	<ul id="reminder_view">
+	{if $REMINDERS_DISABLED}
+
+        {foreach from=$remindersData item=reminder}
+
+            <ul class="reminder_item" data-reminder-id="{$reminder.id}">
+
+                <span class="error-msg"></span>
+
+                <div class="clear"></div>
+
+                <div class="col">
+                    <span>{$MOD.LBL_REMINDERS_ACTIONS}</span>&nbsp;
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="col">
+                    <input type="checkbox" class="popup_chkbox" disabled="disabled"{if $reminder.popup} checked="checked"{/if}><span>{$MOD.LBL_REMINDERS_POPUP}</span>&nbsp;
+                    <!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
+                    <span type="text" class="reminder_when_value" /></span>
+                    <select tabindex="0" class="timer_sel_popup" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
+                        {html_options options=$reminder_time_options selected=$reminder.timer_popup}
+                    </select>
+                </div>
+
+                <div class="col">
+                    <input type="checkbox" class="email_chkbox" disabled="disabled"{if $reminder.popup} checked="checked"{/if}><span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
+                    <!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
+                    <span type="text" class="reminder_when_value" /></span>
+                    <select tabindex="0" class="timer_sel_email" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
+                        {html_options options=$reminder_time_options selected=$reminder.timer_email}
+                    </select>
+                </div>
+
+                <div class="clear"></div>
+
+                <div class="col">
+                    <ul class="invitees_list disabled">
+                    {foreach from=$reminder.invitees item=invitee}
+                        <li class="invitees_item">
+                            <button class="invitee_btn" data-invitee-id="{$invitees.id}" data-id="{$invitee.module_id}" data-module="{$invitee.module}" disabled="disabled">
+                                <img src="index.php?entryPoint=getImage&amp;themeName=SuiteR+&amp;imageName=Users.gif&quot;">
+                                <span class="related-value"> {$invitee.value}</span>
+                            </button>
+                        </li>
+                    {/foreach}
+                    </ul>
+                </div>
+
+                <div class="clear"></div>
+
+            </ul>
+
+        {/foreach}
+
+	{/if}
+    </ul>
 	{if !$REMINDERS_DISABLED}
 	<input id="reminder_add_btn" class="add-btn" type="button" value="{$MOD.LBL_REMINDERS_ADD_REMINDER}" onclick="Reminders.onAddClick(this);">
 	{/if}
 </div>
 
+
+{if !$REMINDERS_DISABLED}
 {literal}
 <script type="text/javascript">
 
@@ -167,3 +226,4 @@
 
 </script>
 {/literal}
+{/if}
