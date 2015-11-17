@@ -658,6 +658,7 @@ $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
 $_POST['use_real_names'] = true;
 $_POST['reminder_checked'] = '1';
 $_POST['reminder_time'] = 1800;
+$_POST['email_reminder_time'] = 3600;
 $_POST['mailmerge_on'] = 'on';
 $_POST['receive_notifications'] = $current_user->receive_notifications;
 installLog('DBG: SugarThemeRegistry::getDefault');

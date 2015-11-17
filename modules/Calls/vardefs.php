@@ -205,7 +205,28 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
     'comment' => 'Whether email reminder is already sent',
     'studio' => false,
     'massupdate'=> false,
-   ), 
+   ),
+
+        'reminders' => array(
+            'required' => false,
+            'name' => 'reminders',
+            'vname' => 'LBL_REMINDER',
+            'type' => 'function',
+            'source' => 'non-db',
+            'massupdate' => 0,
+            'importable' => 'false',
+            'duplicate_merge' => 'disabled',
+            'duplicate_merge_dom_value' => 0,
+            'audited' => false,
+            'reportable' => false,
+            'function' =>
+                array(
+                    'name' => 'Reminder::getRemindersListView',
+                    'returns' => 'html',
+                    'include' => 'modules/Reminders/Reminder.php'
+                ),
+        ),
+
   'outlook_id' =>
   array (
     'name' => 'outlook_id',
