@@ -136,7 +136,7 @@ class Reminder extends Basic {
         return $remindersDataJson;
     }
 
-	private static function loadRemindersData($eventModule, $eventModuleId) {
+	public static function loadRemindersData($eventModule, $eventModuleId) {
 		$ret = array();
 		$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
         if($reminders) {
@@ -429,6 +429,7 @@ class Reminder extends Basic {
 		$tpl = new Sugar_Smarty();
 		$tpl->assign('MOD', $mod_strings);
 		$tpl->assign('reminder_time_options', $app_list_strings['reminder_time_options']);
+		$tpl->assign('remindersData', Reminder::loadRemindersData($event->module_name, $event->id));
 		$tpl->assign('remindersDataJson', Reminder::loadRemindersDataJson($event->module_name, $event->id));
 		$tpl->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
 		$tpl->assign('remindersDisabled', json_encode(true));
