@@ -1,6 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,50 +37,44 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+$dictionary['Reminder_Invitee']['table']= 'reminders_invitees';
+$dictionary['Reminder_Invitee']['audited']= true;
+$dictionary['Reminder_Invitee']['fields']= array(
+    'reminder_id' => array(
+        'name' => 'reminder_id',
+        'vname' => 'LBL_REMINDER_ID',
+        'type' => 'id',
+        'required' => true,
+        'massupdate' => false,
+        'studio' => false,
+    ),
+    'related_invitee_module' => array(
+        'name' => 'related_invitee_module',
+        'vname' => 'LBL_RELATED_INVITEE_MODULE',
+        'type' => 'varchar',
+        'len' => 32,
+        'required' => true,
+        'massupdate' => false,
+        'studio' => false,
+    ),
+    'related_invitee_module_id' => array(
+        'name' => 'related_invitee_module_id',
+        'vname' => 'LBL_RELATED_INVITEE_MODULE_ID',
+        'type' => 'id',
+        'required' => true,
+        'massupdate' => false,
+        'studio' => false,
+    ),
+);
 
-require_once('include/json_config.php');
+//$dictionary['Reminder_Invitee']['indices'] = array(
+//    array('name' => 'reminder_invitee_uk', 'type' => 'unique', 'fields' => array('reminder_id', 'related_invitee_module', 'related_invitee_module_id')),
+//);
 
-class MeetingsViewEdit extends ViewEdit
-{
- 	/**
- 	 * @see SugarView::preDisplay()
- 	 *
- 	 * Override preDisplay to check for presence of 'status' in $_REQUEST
- 	 * This is to support the "Close And Create New" operation.
- 	 */
- 	public function preDisplay()
- 	{
- 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
-	       $this->bean->status = 'Held';
- 		}
 
- 		parent::preDisplay();
- 	}
-
- 	/**
- 	 * @see SugarView::display()
- 	 */
- 	public function display()
- 	{
- 		global $json;
-        $json = getJSONobj();
-        $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
-
-		$this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id));
-		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id));
-		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-		$this->ss->assign('remindersDisabled', json_encode(false));
-
- 		parent::display();
- 	}
+if (!class_exists('VardefManager')){
+    require_once('include/SugarObjects/VardefManager.php');
 }
+VardefManager::createVardef('Reminders_Invitees','Reminder_Invitee', array('basic','assignable'));
+
+?>

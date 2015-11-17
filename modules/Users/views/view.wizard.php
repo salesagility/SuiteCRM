@@ -125,6 +125,7 @@ class ViewWizard extends SugarView
         if ( empty($use_real_names) )
             $current_user->setPreference('use_real_names', 'on');
         $current_user->setPreference('reminder_time', 1800);
+        $current_user->setPreference('email_reminder_time', 3600);
         $current_user->setPreference('mailmerge_on', 'on');
 
 		//// Timezone
