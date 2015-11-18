@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 $dictionary['Reminder_Invitee']['table']= 'reminders_invitees';
-$dictionary['Reminder_Invitee']['audited']= true;
+$dictionary['Reminder_Invitee']['audited']= false;
 $dictionary['Reminder_Invitee']['fields']= array(
     'reminder_id' => array(
         'name' => 'reminder_id',

@@ -48,6 +48,7 @@ class Reminder_Invitee extends Basic {
     var $module_dir = 'Reminders_Invitees';
     var $object_name = 'Reminder_Invitee';
     var $table_name = 'reminders_invitees';
+    var $tracker_visibility = false;
     var $importable = false;
     var $disable_row_level_security = true;
 
