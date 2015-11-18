@@ -84,7 +84,6 @@ global $sugar_config, $mod_strings;
             <li><?php echo $mod_strings['LBL_CONTRIBUTOR_CONSCIOUS']; ?> (<a href="http://www.conscious.co.uk" target="_blank">http://www.conscious.co.uk</a>)</li>
             <li><?php echo $mod_strings['LBL_CONTRIBUTOR_RESPONSETAP']; ?> (<a href="https://www.responsetap.com">https://www.responsetap.com</a>)</li>
             <li><?php echo $mod_strings['LBL_LANGUAGE_SPANISH']; ?> (<a href="http://www.disytel.com" target="_blank">http://www.disytel.com</a>)</li>
-            <li><?php echo $mod_strings['LBL_LANGUAGE_RUSSIAN']; ?> (<a href="mailto:likhobory@mail.ru" target="_blank">likhobory@mail.ru</a>)</li>
             <li><?php echo $mod_strings['LBL_SOURCE_SUGAR']; ?> (<a href="http://www.sugarcrm.com" target="_blank">http://www.sugarcrm.com</a>)</li>
         </ul>
     </div>
