@@ -91,13 +91,18 @@ var Reminders = {
         $(e).find('.invitees_list').first().html(inviteesList);
     },
 
-    setCheckboxValue: function(sel, value) {
+    getBool: function(value) {
         if(!value || value === false || value === 0 || value === '0' || value === '' || (typeof value == 'string' && value.toLowerCase() === 'false') ) {
             value = false;
         }
         else {
             value = true;
         }
+        return value;
+    },
+
+    setCheckboxValue: function(sel, value) {
+        value = Reminders.getBool(value);
         sel.prop('checked', value);
         sel.attr('checked', value);
     },
@@ -212,8 +217,8 @@ var Reminders = {
             addToValidateCallback('EditView', 'reminders_data', 'function', false, SUGAR.language.get('app_strings', 'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT'), function (formname, nameIndex) {
                 return Reminders.isValid(formname, nameIndex);
             });
-            // add one reminder by default into the edit view if we don't have any reminders
-            if(Reminders.getRemindersData().length == 0) {
+            // add one reminder by default into the edit view if we don't have any reminders BUT we checked any remainders in user preferences!
+            if(Reminders.getRemindersData().length == 0 && (Reminders.getBool(Reminders.defaultValues.popup) || Reminders.getBool(Reminders.defaultValues.email))) {
                 Reminders.addDefaultReminderInterval = setInterval(function () {
                     // we have to wait for the scheduler table loaded
                     if ($('#schedulerTable .schedulerAttendeeRow').length > 0) {
