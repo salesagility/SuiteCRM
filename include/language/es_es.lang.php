@@ -2202,8 +2202,8 @@ $app_strings = array (
   'ERR_COMPATIBLE_PRECISION_VALUE' => 'El valor del campo no es compatible con el tipo de precisión',
   'ERR_EXTERNAL_API_SAVE_FAIL' => 'Se produjo un error al tratar de salvar en la cuenta externa.',
   'ERR_EXTERNAL_API_UPLOAD_FAIL' => 'Se produjo un error durante la carga. Asegúrese de que el archivo que está cargando no está vacío.',
-  'ERR_NO_DB' => 'No se ha podido realizar una conexión a la base de datos. Por favor, consulte sugarcrm.log para más detalles.',
-  'ERR_DB_FAIL' => 'Error de base de datos. Por favor, consulte sugarcrm.log para más detalles.',
+  'ERR_NO_DB' => 'No se ha podido realizar una conexión a la base de datos. Por favor, consulte suitecrm.log para más detalles.',
+  'ERR_DB_FAIL' => 'Error de base de datos. Por favor, consulte suitecrm.log para más detalles.',
   'ERR_EXTERNAL_API_403' => 'Permiso denegado. El tipo de archivo no es compatible.',
   'ERR_DB_VERSION' => 'Archivos de SuiteCRM {0} sólo se puede utilizar con una base de datos de SuiteCRM {1}.',
   'LBL_ACCOUNT' => 'Cuenta',
@@ -2903,7 +2903,7 @@ $app_strings = array (
   'LBL_KEYBOARD_SHORTCUTS_HELP_TITLE' => 'Atajos de teclado',
   'LBL_KEYBOARD_SHORTCUTS_HELP' => '<p><strong>Funcionalidad en formularios- Alt+</strong><br/> I = editar (detailview)<br/> U = duplicar (detailview)<br/> D = borrar (detailview)<br/> A = guardar (editview)<br/> L = cancelar (editview) <br/><br/></p><p><strong>Búsquedas y Navegación  - Alt+</strong><br/> 7 = Primer elemento en el formulario de edición<br/> 8 = Enlace de búsqueda avanzada<br/> 9 = Primer elemento en el formulario de búsqueda<br/> 0 = Elemento en búsqueda unificada<br></p>',
   'ERR_CONNECTOR_NOT_ARRAY' => 'conector serie en {0} ha definido incorrectamente o está vacío y no se podían usar.',
-  'ERR_SUHOSIN' => 'El flujo de subida está bloqueado por Suhosin, añade un "upload" en suhosin.executor.include.whitelist (Ver sugarcrm.log para más información)',
+  'ERR_SUHOSIN' => 'El flujo de subida está bloqueado por Suhosin, añade un "upload" en suhosin.executor.include.whitelist (Ver suitecrm.log para más información)',
   'LBL_CREATE_KB_DOCUMENT' => 'Crear artículo',
   'documentation' => 
   array (
@@ -2925,9 +2925,9 @@ $app_strings['LBL_EMAIL_FOLDERS_SHORT'] = '<img src="themes/Suite7/images/icon_e
 $app_strings['LBL_EMAIL_SEARCH'] = '<img src="themes/Suite7/images/Search.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    align=absmiddle border=0 alt="" />';
 $app_strings['LBL_EMAIL_SEARCH_SHORT'] = '<img src="themes/Suite7/images/Search.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    align=absmiddle border=0 alt="" />';
 $app_strings['ERR_EXTERNAL_API_NO_OAUTH_TOKEN'] = 'No se encuentra el Token de Acceso OAuth.';
-$app_strings['LBL_EMPTY_REQUIRED_VCARD'] = 'La vCard no tiene todos los campos requeridos para este módulo. Por favor consulte sugarcrm.log para más detalles.';
+$app_strings['LBL_EMPTY_REQUIRED_VCARD'] = 'La vCard no tiene todos los campos requeridos para este módulo. Por favor consulte suitecrm.log para más detalles.';
 $app_strings['LBL_VCARD_ERROR_FILESIZE'] = 'El archivo subido excede el límite de tamaño, el cual se especificó en el formulario HTML.';
-$app_strings['LBL_VCARD_ERROR_DEFAULT'] = 'Hubo un error subiendo el archivo vCard. Por favor consulte sugarcrm.log para más detalles.';
+$app_strings['LBL_VCARD_ERROR_DEFAULT'] = 'Hubo un error subiendo el archivo vCard. Por favor consulte suitecrm.log para más detalles.';
 ///$app_strings['ERROR_LICENSE_FULLY_EXPIRED'] = 'La Suscripción de su Companía al Producto SugarCRM ha expirado y necesita ser renovada. Sólo los administradores pueden ingresar cuando expiró una Suscripción. Si tiene alguna inquietud, por favor contacte con su administrador.';
 $app_strings['WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING'] = '<b>Advertencia:</b> Su navegador está en modo compatibilidad IE el cual no es soportado.';
 $app_strings['MSG_JS_ALERT_MTG_REMINDER_STATUS'] = 'Estado: ';
