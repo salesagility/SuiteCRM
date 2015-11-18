@@ -429,7 +429,7 @@ protected function checkQuery($sql, $object_name = false)
 			$orderBy = trim($orderBy);
 			if (empty($orderBy))
 				continue;
-			$orderBy = strtolower($orderBy);
+			$orderBy = suite_strtolower($orderBy);
 			if ($orderBy == 'asc' || $orderBy == 'desc')
 				continue;
 
@@ -518,7 +518,7 @@ protected function checkQuery($sql, $object_name = false)
 				// clean the incoming value..
 				$val = from_html($data[$field]);
 			} else {
-				if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+				if(isset($fieldDef['default']) && suite_strlen($fieldDef['default']) > 0) {
 					$val = $fieldDef['default'];
 				} else {
 					$val = null;
@@ -730,7 +730,7 @@ protected function checkQuery($sql, $object_name = false)
 	protected function isNullable($vardef)
 	{
 
-		if(isset($vardef['isnull']) && (strtolower($vardef['isnull']) == 'false' || $vardef['isnull'] === false)
+		if(isset($vardef['isnull']) && (suite_strtolower($vardef['isnull']) == 'false' || $vardef['isnull'] === false)
 			&& !empty($vardef['required'])) {
 				/* required + is_null=false => not null */
 			return false;
@@ -799,7 +799,7 @@ protected function checkQuery($sql, $object_name = false)
                 continue;
             }
 
-			$name = strtolower($value['name']);
+			$name = suite_strtolower($value['name']);
 			// add or fix the field defs per what the DB is expected to give us back
 			$this->massageFieldDef($value,$tablename);
 
@@ -873,8 +873,8 @@ protected function checkQuery($sql, $object_name = false)
 
 		// do indices comparisons case-insensitive
 		foreach($compareIndices as $k => $value){
-			$value['name'] = strtolower($value['name']);
-			$compareIndices_case_insensitive[strtolower($k)] = $value;
+			$value['name'] = suite_strtolower($value['name']);
+			$compareIndices_case_insensitive[suite_strtolower($k)] = $value;
 		}
 		$compareIndices = $compareIndices_case_insensitive;
 		unset($compareIndices_case_insensitive);
@@ -888,7 +888,7 @@ protected function checkQuery($sql, $object_name = false)
 			if (isset($compareIndices[$validDBName])) {
 				$value['name'] = $validDBName;
 			}
-		    $name = strtolower($value['name']);
+		    $name = suite_strtolower($value['name']);
 
 			//Don't attempt to fix the same index twice in one pass;
 			if (isset($correctedIndexs[$name]))
@@ -977,14 +977,14 @@ protected function checkQuery($sql, $object_name = false)
             {
                 if (!is_array($fielddef1[$key]) && !is_array($fielddef2[$key]))
                 {
-                    if (strtolower($fielddef1[$key]) == strtolower($fielddef2[$key]))
+                    if (suite_strtolower($fielddef1[$key]) == suite_strtolower($fielddef2[$key]))
                     {
                         continue;
                     }
                 }
                 else
                 {
-                    if (array_map('strtolower', $fielddef1[$key]) == array_map('strtolower',$fielddef2[$key]))
+                    if (array_map('suite_strtolower', $fielddef1[$key]) == array_map('suite_strtolower',$fielddef2[$key]))
                     {
                         continue;
                     }
@@ -1429,7 +1429,7 @@ protected function checkQuery($sql, $object_name = false)
 			if(!empty($values)){
 				$row_array[] = $values;
 			}
-			if(!empty($cstm_values) && !empty($cstm_values['id_c']) && (strlen($cstm_values['id_c']) > 7)){
+			if(!empty($cstm_values) && !empty($cstm_values['id_c']) && (suite_strlen($cstm_values['id_c']) > 7)){
 				$cstm_row_array[] = $cstm_values;
 			}
 		}
@@ -1753,7 +1753,7 @@ protected function checkQuery($sql, $object_name = false)
 	{
 		if ( is_numeric($len) && $len > 0)
 		{
-			$string = mb_substr($string,0,(int) $len, "UTF-8");
+			$string = suite_substr($string,0,(int) $len, "UTF-8");
 		}
 		return $string;
 	}
@@ -1951,15 +1951,15 @@ protected function checkQuery($sql, $object_name = false)
     			$val = $bean->getFieldValue($field);
     		}
 
-    		if(strlen($val) == 0) {
-    			if(isset($fieldDef['default']) && strlen($fieldDef['default']) > 0) {
+    		if(suite_strlen($val) == 0) {
+    			if(isset($fieldDef['default']) && suite_strlen($fieldDef['default']) > 0) {
     				$val = $fieldDef['default'];
     			} else {
     				$val = null;
     			}
     		}
 
-    		if(!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+    		if(!empty($val) && !empty($fieldDef['len']) && suite_strlen($val) > $fieldDef['len']) {
 			    $val = $this->truncate($val, $fieldDef['len']);
 			}
 		$columnName = $this->quoteIdentifier($fieldDef['name']);
@@ -2113,7 +2113,7 @@ protected function checkQuery($sql, $object_name = false)
 					break;
 			}
 		} else {
-		    if(!empty($val) && !empty($fieldDef['len']) && strlen($val) > $fieldDef['len']) {
+		    if(!empty($val) && !empty($fieldDef['len']) && suite_strlen($val) > $fieldDef['len']) {
 			    $val = $this->truncate($val, $fieldDef['len']);
 			}
 		}
@@ -2172,14 +2172,14 @@ protected function checkQuery($sql, $object_name = false)
 	public function getSelectFieldsFromQuery($selectStatement)
 	{
 		$selectStatement = trim($selectStatement);
-		if (strtoupper(substr($selectStatement, 0, 6)) == "SELECT")
-			$selectStatement = trim(substr($selectStatement, 6));
+		if (suite_strtoupper(suite_substr($selectStatement, 0, 6)) == "SELECT")
+			$selectStatement = trim(suite_substr($selectStatement, 6));
 
 		//Due to sql functions existing in many selects, we can't use php explode
 		$fields = array();
 		$level = 0;
 		$selectField = "";
-		$strLen = strlen($selectStatement);
+		$strLen = suite_strlen($selectStatement);
 		for($i = 0; $i < $strLen; $i++)
 		{
 			$char = $selectStatement[$i];
@@ -2216,17 +2216,17 @@ protected function checkQuery($sql, $object_name = false)
 	protected function getFieldNameFromSelect($string)
 	{
 		if(strncasecmp($string, "DISTINCT ", 9) == 0) {
-			$string = substr($string, 9);
+			$string = suite_substr($string, 9);
 		}
 		if (stripos($string, " as ") !== false)
 			//"as" used for an alias
-			return trim(substr($string, strripos($string, " as ") + 4));
-		else if (strrpos($string, " ") != 0)
+			return trim(suite_substr($string, strripos($string, " as ") + 4));
+		else if (suite_strrpos($string, " ") != 0)
 			//Space used as a delimiter for an alias
-			return trim(substr($string, strrpos($string, " ")));
-		else if (strpos($string, ".") !== false)
+			return trim(suite_substr($string, suite_strrpos($string, " ")));
+		else if (suite_strpos($string, ".") !== false)
 			//No alias, but a table.field format was used
-			return substr($string, strpos($string, ".") + 1);
+			return suite_substr($string, suite_strpos($string, ".") + 1);
 		else
 			//Give up and assume the whole thing is the field name
 			return $string;
@@ -2454,7 +2454,7 @@ protected function checkQuery($sql, $object_name = false)
           	    $colType = "$colBaseType(${fieldDef['len']})";
             } elseif(($colBaseType == 'decimal' || $colBaseType == 'float')){
                   if(!empty($fieldDef['precision']) && is_numeric($fieldDef['precision']))
-                      if(strpos($fieldDef['len'],',') === false){
+                      if(suite_strpos($fieldDef['len'],',') === false){
                           $colType = $colBaseType . "(".$fieldDef['len'].",".$fieldDef['precision'].")";
                       }else{
                           $colType = $colBaseType . "(".$fieldDef['len'].")";
@@ -2475,7 +2475,7 @@ protected function checkQuery($sql, $object_name = false)
         {
             // nothing to do
         }
-        elseif (isset($fieldDef['default']) && strlen($fieldDef['default']) > 0)
+        elseif (isset($fieldDef['default']) && suite_strlen($fieldDef['default']) > 0)
         {
             $default = " DEFAULT ".$this->quoted($fieldDef['default']);
         }
@@ -2490,13 +2490,13 @@ protected function checkQuery($sql, $object_name = false)
 
 		$required = 'NULL';  // MySQL defaults to NULL, SQL Server defaults to NOT NULL -- must specify
 		//Starting in 6.0, only ID and auto_increment fields will be NOT NULL in the DB.
-		if ((empty($fieldDef['isnull']) || strtolower($fieldDef['isnull']) == 'false') &&
+		if ((empty($fieldDef['isnull']) || suite_strtolower($fieldDef['isnull']) == 'false') &&
 			(!empty($auto_increment) || $name == 'id' || ($fieldDef['type'] == 'id' && !empty($fieldDef['required'])))) {
 			$required =  "NOT NULL";
 		}
 		// If the field is marked both required & isnull=>false - alwqys make it not null
 		// Use this to ensure primary key fields never defined as null
-		if(isset($fieldDef['isnull']) && (strtolower($fieldDef['isnull']) == 'false' || $fieldDef['isnull'] === false)
+		if(isset($fieldDef['isnull']) && (suite_strtolower($fieldDef['isnull']) == 'false' || $fieldDef['isnull'] === false)
 			&& !empty($fieldDef['required'])) {
 			$required =  "NOT NULL";
 		}
@@ -2720,21 +2720,21 @@ protected function checkQuery($sql, $object_name = false)
 		    }
 			// first strip any invalid characters - all but word chars (which is alphanumeric and _)
 			$name = preg_replace( '/[^\w]+/i', '', $name ) ;
-			$len = strlen( $name ) ;
+			$len = suite_strlen( $name ) ;
 			$maxLen = empty($this->maxNameLengths[$type]) ? $this->maxNameLengths[$type]['column'] : $this->maxNameLengths[$type];
 			if ($len <= $maxLen && !$force) {
-				return strtolower($name);
+				return suite_strtolower($name);
 			}
 			if ($ensureUnique) {
 				$md5str = md5($name);
-				$tail = substr ( $name, -11) ;
-				$temp = substr($md5str , strlen($md5str)-4 );
-				$result = substr( $name, 0, 10) . $temp . $tail ;
+				$tail = suite_substr ( $name, -11) ;
+				$temp = suite_substr($md5str , suite_strlen($md5str)-4 );
+				$result = suite_substr( $name, 0, 10) . $temp . $tail ;
 			} else {
-				$result = substr( $name, 0, 11) . substr( $name, 11 - $maxLen);
+				$result = suite_substr( $name, 0, 11) . suite_substr( $name, 11 - $maxLen);
 			}
 
-			return strtolower( $result ) ;
+			return suite_strtolower( $result ) ;
 		}
 	}
 
@@ -3233,9 +3233,9 @@ protected function checkQuery($sql, $object_name = false)
 	protected function isSelect($query)
 	{
 		$query = trim($query);
-		$select_check = strpos(strtolower($query), strtolower("SELECT"));
+		$select_check = suite_strpos(suite_strtolower($query), suite_strtolower("SELECT"));
 		//Checks to see if there is union select which is valid
-		$select_check2 = strpos(strtolower($query), strtolower("(SELECT"));
+		$select_check2 = suite_strpos(suite_strtolower($query), suite_strtolower("(SELECT"));
 		if($select_check==0 || $select_check2==0){
 			//Returning false means query is ok!
 			return true;
@@ -3271,14 +3271,14 @@ protected function checkQuery($sql, $object_name = false)
 				$item = trim($item, '"');
 			}
 			if($item[0] == '+') {
-                if (strlen($item) > 1) {
-                    $must_terms[] = substr($item, 1);
+                if (suite_strlen($item) > 1) {
+                    $must_terms[] = suite_substr($item, 1);
                 }
                 continue;
 			}
 			if($item[0] == '-') {
-                if (strlen($item) > 1) {
-				    $not_terms[] = substr($item, 1);
+                if (suite_strlen($item) > 1) {
+				    $not_terms[] = suite_substr($item, 1);
                 }
                 continue;
 			}
@@ -3308,9 +3308,9 @@ protected function checkQuery($sql, $object_name = false)
         $query = preg_replace('/[^A-Za-z0-9_\s]/', "", $query);
         $query = trim(str_replace(array_keys($this->standardQueries), '', $query));
 
-        $firstSpc = strpos($query, " ");
-        $end = ($firstSpc > 0) ? $firstSpc : strlen($query);
-        $table = substr($query, 0, $end);
+        $firstSpc = suite_strpos($query, " ");
+        $end = ($firstSpc > 0) ? $firstSpc : suite_strlen($query);
+        $table = suite_substr($query, 0, $end);
 
         return $table;
 	}
@@ -3326,7 +3326,7 @@ protected function checkQuery($sql, $object_name = false)
 	{
 		$query = trim($query);
 		foreach($this->standardQueries as $qstart => $check) {
-			if(strncasecmp($qstart, $query, strlen($qstart)) == 0) {
+			if(strncasecmp($qstart, $query, suite_strlen($qstart)) == 0) {
 				if(is_callable(array($this, $check))) {
 					$table = $this->extractTableName($query);
 					if(!in_array($table, $skipTables)) {
@@ -3358,7 +3358,7 @@ protected function checkQuery($sql, $object_name = false)
 		$tempname = $table."__uw_temp";
 		$tempTableQuery = str_replace("CREATE TABLE {$table}", "CREATE TABLE $tempname", $query);
 
-		if(strpos($tempTableQuery, '__uw_temp') === false) {
+		if(suite_strpos($tempTableQuery, '__uw_temp') === false) {
 			return 'Could not use a temp table to test query!';
 		}
 

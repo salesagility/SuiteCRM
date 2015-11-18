@@ -246,7 +246,7 @@ class SqlsrvManager extends MssqlManager
         foreach ( sqlsrv_field_metadata($result) as $fieldMetadata ) {
             $key = $fieldMetadata['Name'];
             if($make_lower_case==true)
-                $key = strtolower($key);
+                $key = suite_strtolower($key);
 
             $field_array[] = $key;
         }
@@ -371,32 +371,32 @@ class SqlsrvManager extends MssqlManager
 
         $columns = array();
         while (($row=$this->fetchByAssoc($result)) !=null) {
-            $column_name = strtolower($row['COLUMN_NAME']);
+            $column_name = suite_strtolower($row['COLUMN_NAME']);
             $columns[$column_name]['name']=$column_name;
-            $columns[$column_name]['type']=strtolower($row['TYPE_NAME']);
+            $columns[$column_name]['type']=suite_strtolower($row['TYPE_NAME']);
             if ( $row['TYPE_NAME'] == 'decimal' ) {
-                $columns[$column_name]['len']=strtolower($row['PRECISION']);
-                $columns[$column_name]['len'].=','.strtolower($row['SCALE']);
+                $columns[$column_name]['len']=suite_strtolower($row['PRECISION']);
+                $columns[$column_name]['len'].=','.suite_strtolower($row['SCALE']);
             }
 			elseif ( in_array($row['TYPE_NAME'],array('nchar','nvarchar')) ) {
-				$columns[$column_name]['len']=strtolower($row['PRECISION']);
+				$columns[$column_name]['len']=suite_strtolower($row['PRECISION']);
 				if ( $row['TYPE_NAME'] == 'nvarchar' && $row['PRECISION'] == '0' ) {
 				    $columns[$column_name]['len']='max';
 				}
 			}
             elseif ( !in_array($row['TYPE_NAME'],array('datetime','text')) ) {
-                $columns[$column_name]['len']=strtolower($row['LENGTH']);
+                $columns[$column_name]['len']=suite_strtolower($row['LENGTH']);
             }
             if ( stristr($row['TYPE_NAME'],'identity') ) {
                 $columns[$column_name]['auto_increment'] = '1';
-                $columns[$column_name]['type']=str_replace(' identity','',strtolower($row['TYPE_NAME']));
+                $columns[$column_name]['type']=str_replace(' identity','',suite_strtolower($row['TYPE_NAME']));
             }
 
             if (!empty($row['IS_NULLABLE']) && $row['IS_NULLABLE'] == 'NO' && (empty($row['KEY']) || !stristr($row['KEY'],'PRI')))
-                $columns[strtolower($row['COLUMN_NAME'])]['required'] = 'true';
+                $columns[suite_strtolower($row['COLUMN_NAME'])]['required'] = 'true';
 
             $column_def = 1;
-            if ( strtolower($tablename) == 'relationships' ) {
+            if ( suite_strtolower($tablename) == 'relationships' ) {
                 $column_def = $this->getOne("select cdefault from syscolumns where id = object_id('relationships') and name = '$column_name'");
             }
             if ( $column_def != 0 && ($row['COLUMN_DEF'] != null)) {	// NOTE Not using !empty as an empty string may be a viable default value.
@@ -507,14 +507,14 @@ EOSQL;
         $messages = array();
         foreach($errors as $error) {
             $sqlmsg = $error['message'];
-            $sqlpos = strpos($sqlmsg, 'Changed database context to');
-            $sqlpos2 = strpos($sqlmsg, 'Warning:');
-            $sqlpos3 = strpos($sqlmsg, 'Checking identity information:');
+            $sqlpos = suite_strpos($sqlmsg, 'Changed database context to');
+            $sqlpos2 = suite_strpos($sqlmsg, 'Warning:');
+            $sqlpos3 = suite_strpos($sqlmsg, 'Checking identity information:');
             if ( $sqlpos !== false || $sqlpos2 !== false || $sqlpos3 !== false ) {
                 continue;
             }
-            $sqlpos = strpos($sqlmsg, $app_strings['ERR_MSSQL_DB_CONTEXT']);
-            $sqlpos2 = strpos($sqlmsg, $app_strings['ERR_MSSQL_WARNING']);
+            $sqlpos = suite_strpos($sqlmsg, $app_strings['ERR_MSSQL_DB_CONTEXT']);
+            $sqlpos2 = suite_strpos($sqlmsg, $app_strings['ERR_MSSQL_WARNING']);
     		if ( $sqlpos !== false || $sqlpos2 !== false) {
                     continue;
             }
