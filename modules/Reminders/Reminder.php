@@ -420,12 +420,13 @@ class Reminder extends Basic {
 
 		// if it's unchecked in last version
 		if(!$current_user->getPreference('reminder_multiple')) {
-			$current_user->setPreference('reminder_multiple', 1);
 
 			$preferencePopupReminderChecked = $preferencePopupReminderTime > -1;
 			$preferenceEmailReminderChecked = $preferenceEmailReminderTime > -1;
 			$current_user->setPreference('reminder_checked', $preferencePopupReminderChecked);
 			$current_user->setPreference('email_reminder_checked', $preferenceEmailReminderChecked);
+
+			$current_user->setPreference('reminder_multiple', 1);
 		}
 
 		return array(
