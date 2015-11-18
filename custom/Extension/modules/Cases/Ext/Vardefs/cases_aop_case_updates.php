@@ -91,6 +91,7 @@ $dictionary["Case"]["fields"]['aop_case_updates_threaded'] =
         'duplicate_merge_dom_value' => 0,
         'audited' => false,
         'reportable' => false,
+        'inline_edit' => 0,
         'function' =>
         array (
             'name' => 'display_updates',

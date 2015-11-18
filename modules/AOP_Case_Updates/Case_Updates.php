@@ -128,7 +128,7 @@ function caseUpdates(record){
 A;
 
     $updates = $focus->get_linked_beans('aop_case_updates',"AOP_Case_Updates");
-    if(!$updates){
+    if(!$updates || is_null($focus->id)){
         $html .= quick_edit_case_updates();
         return $html;
         //return $mod_strings['LBL_NO_CASE_UPDATES'];
