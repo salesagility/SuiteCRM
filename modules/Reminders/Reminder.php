@@ -403,17 +403,37 @@ class Reminder extends Basic {
 	 * @throws Exception on json_encode error
 	 */
 	public static function loadRemindersDefaultValuesDataJson() {
-		global $current_user;
-		$ret = json_encode(array(
-			'popup' => $current_user->getPreference('reminder_checked'),
-			'email' => $current_user->getPreference('email_reminder_checked'),
-			'timer_popup' => $current_user->getPreference('reminder_time'),
-			'timer_email' => $current_user->getPreference('email_reminder_time'),
-		));
+		$ret = json_encode(self::loadRemindersDefaultValuesData());
 		if(!$ret && json_last_error()) {
             throw new Exception(json_last_error_msg());
         }
 		return $ret;
+	}
+
+	public static function loadRemindersDefaultValuesData() {
+		global $current_user;
+
+		$preferencePopupReminderTime = $current_user->getPreference('reminder_time');
+		$preferenceEmailReminderTime = $current_user->getPreference('email_reminder_time');
+		$preferencePopupReminderChecked = $current_user->getPreference('reminder_checked');
+		$preferenceEmailReminderChecked = $current_user->getPreference('email_reminder_checked');
+
+		// if it's unchecked in last version
+		if(!$current_user->getPreference('reminder_multiple')) {
+			$current_user->setPreference('reminder_multiple', 1);
+
+			$preferencePopupReminderChecked = $preferencePopupReminderTime > -1;
+			$preferenceEmailReminderChecked = $preferenceEmailReminderTime > -1;
+			$current_user->setPreference('reminder_checked', $preferencePopupReminderChecked);
+			$current_user->setPreference('email_reminder_checked', $preferenceEmailReminderChecked);
+		}
+
+		return array(
+			'popup' => $preferencePopupReminderChecked,
+			'email' => $preferenceEmailReminderChecked,
+			'timer_popup' => $preferencePopupReminderTime,
+			'timer_email' => $preferenceEmailReminderTime,
+		);
 	}
 
 	// --- reminders list on detail views

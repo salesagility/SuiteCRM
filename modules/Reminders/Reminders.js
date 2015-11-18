@@ -201,10 +201,7 @@ var Reminders = {
             });
         }
 		if(defaultValues) {
-			if(defaultValues.popup) Reminders.defaultValues.popup = defaultValues.popup;
-			if(defaultValues.email) Reminders.defaultValues.email = defaultValues.email;
-			if(defaultValues.timer_popup) Reminders.defaultValues.timer_popup = defaultValues.timer_popup;
-			if(defaultValues.timer_email) Reminders.defaultValues.timer_email = defaultValues.timer_email;
+            Reminders.defaultValues = defaultValues;
 		}
 
         Reminders.createRemindersPostData();

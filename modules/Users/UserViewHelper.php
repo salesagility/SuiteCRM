@@ -427,9 +427,10 @@ class UserViewHelper {
         $this->ss->assign("EMAIL_REMINDER_TIME_OPTIONS", $app_list_strings['reminder_time_options']);
 	    $this->ss->assign("REMINDER_TIME", $reminder_time);
 	    $this->ss->assign("EMAIL_REMINDER_TIME", $email_reminder_time);
-		
-		$this->ss->assign("REMINDER_CHECKED", $this->bean->getPreference('reminder_checked'));
-	    $this->ss->assign("EMAIL_REMINDER_CHECKED", $this->bean->getPreference('email_reminder_checked'));
+
+        $remindersDefaultPreferences = Reminder::loadRemindersDefaultValuesData();
+		$this->ss->assign("REMINDER_CHECKED", $remindersDefaultPreferences['popup']);
+	    $this->ss->assign("EMAIL_REMINDER_CHECKED", $remindersDefaultPreferences['email']);
 		
 	    $this->ss->assign("REMINDER_TABINDEX", "12");
 	    $publish_key = $this->bean->getPreference('calendar_publish_key' );
