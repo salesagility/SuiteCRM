@@ -291,7 +291,6 @@ $mod_strings  = array(
 
 
     'LBL_LANGUAGE_SPANISH' => 'Spanish Translation Provided by Disytel openConsulting',
-    'LBL_LANGUAGE_RUSSIAN' => 'Russian Translation Provided by likhobory',
 
     'LBL_ABOUT_SUITE_1' => 'SuiteCRM is a fork of SugarCRM. There are many articles on the web that explain the reasons why a fork of SugarCRM became necessary.',
     'LBL_ABOUT_SUITE_2' => 'SuiteCRM is published under an open source licence - GPL3',
