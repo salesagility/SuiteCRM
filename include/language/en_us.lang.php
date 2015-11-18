@@ -2442,6 +2442,7 @@ $app_strings = array (
     'LBL_QUICKEDIT_NODEFS_NAVIGATION'=> 'Navigating... ',
 
     'LBL_PENDING_NOTIFICATIONS' => 'Notifications',
+    'LBL_NOTIFICATIONS_NONE' => 'No Current Notifications',
     'LBL_ALT_ADD_TEAM_ROW' => 'Add new team row',
     'LBL_ALT_REMOVE_TEAM_ROW' => 'Remove team',
     'LBL_ALT_SPOT_SEARCH' => 'Spot Search',
