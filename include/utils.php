@@ -5081,3 +5081,52 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
     }
 }
 
+define("DEFAULT_UTIL_SUITE_ENCODING","UTF-8");
+
+function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strlen'))
+		return mb_strlen($input,$encoding);
+	else
+		return strlen($input);
+}
+
+function suite_substr($input, $start, $length = null,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_substr'))
+		return mb_substr($input,$start,$length,$encoding);
+	else
+		return substr($input,$start,$length);
+}
+
+function suite_strtoupper($input,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strtoupper'))
+		return mb_strtoupper($input,$encoding);
+	else
+		return strtoupper($input);
+}
+function suite_strtolower($input,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strtolower'))
+		return mb_strtolower($input,$encoding);
+	else
+		return strtolower($input);
+}
+
+function suite_strpos($haystack,$needle,$offset=0,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strpos'))
+		return mb_strpos($haystack,$needle,$offset,$encoding);
+	else
+		return strpos($haystack,$needle,$offset);
+}
+
+function suite_strrpos($haystack,$needle,$offset=0,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strrpos'))
+		return mb_strrpos($haystack,$needle,$offset,$encoding);
+	else
+		return strrpos($haystack,$needle,$offset);
+}
+
