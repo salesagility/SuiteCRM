@@ -48,6 +48,7 @@ class Reminder extends Basic {
     var $module_dir = 'Reminders';
     var $object_name = 'Reminder';
     var $table_name = 'reminders';
+	var $tracker_visibility = false;
     var $importable = false;
     var $disable_row_level_security = true;
 

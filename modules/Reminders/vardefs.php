@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 $dictionary['Reminder']['table']= 'reminders';
-$dictionary['Reminder']['audited']= true;
+$dictionary['Reminder']['audited']= false;
 $dictionary['Reminder']['fields']= array(
     'popup' => array(
         'name' => 'popup',
