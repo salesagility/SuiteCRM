@@ -2,7 +2,7 @@
 
 // config|_override.php
 if(is_file('../../../config.php')) {
-    require_once('../../../config.php'); // provides $sugar_config
+    require_once('../../../config.php');
 }
 
 // load up the config_override.php file.  This is used to provide default user settings
