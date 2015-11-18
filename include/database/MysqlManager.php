@@ -289,7 +289,7 @@ class MysqlManager extends DBManager
 			if (empty($row['table']))
 				continue;
 			$badQuery[$row['table']] = '';
-			if (strtoupper($row['type']) == 'ALL')
+			if (suite_strtoupper($row['type']) == 'ALL')
 				$badQuery[$row['table']]  .=  ' Full Table Scan;';
 			if (empty($row['key']))
 				$badQuery[$row['table']] .= ' No Index Key Used;';
@@ -328,13 +328,13 @@ class MysqlManager extends DBManager
 
 		$columns = array();
 		while (($row=$this->fetchByAssoc($result)) !=null) {
-			$name = strtolower($row['Field']);
+			$name = suite_strtolower($row['Field']);
 			$columns[$name]['name']=$name;
 			$matches = array();
 			preg_match_all('/(\w+)(?:\(([0-9]+,?[0-9]*)\)|)( unsigned)?/i', $row['Type'], $matches);
-			$columns[$name]['type']=strtolower($matches[1][0]);
-			if ( isset($matches[2][0]) && in_array(strtolower($matches[1][0]),array('varchar','char','varchar2','int','decimal','float')) )
-				$columns[$name]['len']=strtolower($matches[2][0]);
+			$columns[$name]['type']=suite_strtolower($matches[1][0]);
+			if ( isset($matches[2][0]) && in_array(suite_strtolower($matches[1][0]),array('varchar','char','varchar2','int','decimal','float')) )
+				$columns[$name]['len']=suite_strtolower($matches[2][0]);
 			if ( stristr($row['Extra'],'auto_increment') )
 				$columns[$name]['auto_increment'] = '1';
 			if ($row['Null'] == 'NO' && !stristr($row['Key'],'PRI'))
@@ -362,7 +362,7 @@ class MysqlManager extends DBManager
 				return array();
 
 			if($make_lower_case == true)
-				$meta->name = strtolower($meta->name);
+				$meta->name = suite_strtolower($meta->name);
 
 			$field_array[] = $meta->name;
 		}
@@ -569,7 +569,7 @@ class MysqlManager extends DBManager
 		$sql = preg_replace("!alter table $tablename!is",', ', $sql);
 
 		// re-add it at the beginning
-		$sql = substr_replace($sql,'',strpos($sql,','),1);
+		$sql = substr_replace($sql,'',suite_strpos($sql,','),1);
 		$sql = str_replace(";","",$sql);
 		$sql = str_replace("\n","",$sql);
 		$sql = "ALTER TABLE $tablename $sql";
@@ -596,7 +596,7 @@ class MysqlManager extends DBManager
 		}
 		$all_strings = implode(',', $all_parameters);
 
-		switch (strtolower($type)) {
+		switch (suite_strtolower($type)) {
 			case 'today':
 				return "CURDATE()";
 			case 'left':
@@ -674,12 +674,12 @@ class MysqlManager extends DBManager
 	{
 		if(!is_string($engine)) return false;
 
-		$engine = strtoupper($engine);
+		$engine = suite_strtoupper($engine);
 
 		$r = $this->query("SHOW ENGINES");
 
 		while ( $row = $this->fetchByAssoc($r) )
-			if ( strtoupper($row['Engine']) == $engine )
+			if ( suite_strtoupper($row['Engine']) == $engine )
 				return ($row['Support']=='YES' || $row['Support']=='DEFAULT');
 
 		return false;
@@ -740,7 +740,7 @@ class MysqlManager extends DBManager
      */
     public function isTextType($type)
     {
-        $type = $this->getColumnType(strtolower($type));
+        $type = $this->getColumnType(suite_strtolower($type));
         return in_array($type, array('blob','text','longblob', 'longtext'));
     }
 
@@ -915,10 +915,10 @@ class MysqlManager extends DBManager
 			elseif ( $row['Non_unique'] == '0' ) {
 				$index_type='unique';
 			}
-			$name = strtolower($row['Key_name']);
+			$name = suite_strtolower($row['Key_name']);
 			$indices[$name]['name']=$name;
 			$indices[$name]['type']=$index_type;
-			$indices[$name]['fields'][]=strtolower($row['Column_name']);
+			$indices[$name]['fields'][]=suite_strtolower($row['Column_name']);
 		}
 		return $indices;
 	}
@@ -1141,7 +1141,7 @@ class MysqlManager extends DBManager
 	 */
 	protected function quoteTerm($term)
 	{
-		if(strpos($term, ' ') !== false) {
+		if(suite_strpos($term, ' ') !== false) {
 			return '"'.$term.'"';
 		}
 		return $term;
@@ -1243,7 +1243,7 @@ class MysqlManager extends DBManager
 		$this->log->debug("verifying ALTER TABLE");
 		// Skipping ALTER TABLE [table] DROP PRIMARY KEY because primary keys are not being copied
 		// over to the temp tables
-		if(strpos(strtoupper($query), 'DROP PRIMARY KEY') !== false) {
+		if(suite_strpos(suite_strtoupper($query), 'DROP PRIMARY KEY') !== false) {
 			$this->log->debug("Skipping DROP PRIMARY KEY");
 			return '';
 		}
@@ -1254,8 +1254,8 @@ class MysqlManager extends DBManager
 		// test the query on the test table
 		$this->log->debug('testing query: ['.$query.']');
 		$tempTableTestQuery = str_replace("ALTER TABLE `{$table}`", "ALTER TABLE `{$table}__uw_temp`", $query);
-		if (strpos($tempTableTestQuery, 'idx') === false) {
-			if(strpos($tempTableTestQuery, '__uw_temp') === false) {
+		if (suite_strpos($tempTableTestQuery, 'idx') === false) {
+			if(suite_strpos($tempTableTestQuery, '__uw_temp') === false) {
 				return 'Could not use a temp table to test query!';
 			}
 
@@ -1286,7 +1286,7 @@ class MysqlManager extends DBManager
 		// test the query on the test table
 		$this->log->debug('testing query: ['.$query.']');
 		$tempTableTestQuery = str_replace("$querytype `{$table}`", "$querytype `{$table}__uw_temp`", $query);
-		if(strpos($tempTableTestQuery, '__uw_temp') === false) {
+		if(suite_strpos($tempTableTestQuery, '__uw_temp') === false) {
 			return 'Could not use a temp table to test query!';
 		}
 
