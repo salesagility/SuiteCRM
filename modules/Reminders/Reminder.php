@@ -59,6 +59,8 @@ class Reminder extends Basic {
 	var $related_event_module;
 	var $related_event_module_id;
 
+	private static $remindersData = array();
+
     public function __construct() {
         parent::Basic();
     }
@@ -137,21 +139,24 @@ class Reminder extends Basic {
     }
 
 	public static function loadRemindersData($eventModule, $eventModuleId) {
-		$ret = array();
-		$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
-        if($reminders) {
-            foreach ($reminders as $reminder) {
-                $ret[] = array(
-                    'id' => $reminder->id,
-                    'popup' => $reminder->popup,
-                    'email' => $reminder->email,
-                    'timer_popup' => $reminder->timer_popup,
-                    'timer_email' => $reminder->timer_email,
-                    'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id),
-                );
-            }
-        }
-		return $ret;
+		if(!isset(self::$remindersData[$eventModule][$eventModuleId])) {
+			$ret = array();
+			$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
+			if ($reminders) {
+				foreach ($reminders as $reminder) {
+					$ret[] = array(
+							'id' => $reminder->id,
+							'popup' => $reminder->popup,
+							'email' => $reminder->email,
+							'timer_popup' => $reminder->timer_popup,
+							'timer_email' => $reminder->timer_email,
+							'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id),
+					);
+				}
+			}
+			self::$remindersData[$eventModule][$eventModuleId] = $ret;
+		}
+		return self::$remindersData[$eventModule][$eventModuleId];
 	}
 	
 	// ---- sending email reminders
