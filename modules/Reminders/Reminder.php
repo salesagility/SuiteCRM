@@ -138,6 +138,15 @@ class Reminder extends Basic {
         return $remindersDataJson;
     }
 
+	/**
+	 * Load multiple reminders data for related Event module EditViews.
+	 * Call this function in module display function.
+	 *
+	 * @param string $eventModule Related event module name (Meetings/Calls)
+	 * @param string $eventModuleId Related event GUID
+	 * @return array contains the remainders
+	 * @throws Exception
+	 */
 	public static function loadRemindersData($eventModule, $eventModuleId) {
 		if(!isset(self::$remindersData[$eventModule][$eventModuleId])) {
 			$ret = array();
@@ -420,6 +429,10 @@ class Reminder extends Basic {
 		return $ret;
 	}
 
+	/**
+	 * Default values for Reminders from User Preferences
+	 * @return array default values
+	 */
 	public static function loadRemindersDefaultValuesData() {
 		global $current_user;
 
@@ -427,20 +440,6 @@ class Reminder extends Basic {
 		$preferenceEmailReminderTime = $current_user->getPreference('email_reminder_time');
 		$preferencePopupReminderChecked = $current_user->getPreference('reminder_checked');
 		$preferenceEmailReminderChecked = $current_user->getPreference('email_reminder_checked');
-
-		// TODO!!!!!!!!!
-		// if it's unchecked in last version
-//		if(!$current_user->getPreference('reminder_multiple__12')) {
-//			self::upgrade();
-////			$preferencePopupReminderChecked = $preferencePopupReminderTime > -1;
-////			$preferenceEmailReminderChecked = $preferenceEmailReminderTime > -1;
-////			$current_user->setPreference('reminder_checked', $preferencePopupReminderChecked);
-////			$current_user->setPreference('email_reminder_checked', $preferenceEmailReminderChecked);
-//
-//			exit;
-//			$current_user->setPreference('reminder_multiple__12', 1);
-//			return self::loadRemindersDefaultValuesData();
-//		}
 
 		return array(
 			'popup' => $preferencePopupReminderChecked,
@@ -452,6 +451,10 @@ class Reminder extends Basic {
 
 	// --- upgrade
 
+	/**
+	 * Reminders upgrade, old reminders migrate to multiple-reminders.
+	 * @throws Exception unknown event type or any error
+	 */
 	public static function upgrade() {
 		self::upgradeUserPreferences();
 
