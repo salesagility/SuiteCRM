@@ -261,7 +261,8 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'reportable' => false,
     'massupdate' => false,
     'default'=> -1,
-    'comment' => 'Specifies when a reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start'
+    'comment' => 'Specifies when a reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
+		  'studio' => false,
   ),
   'email_reminder_checked' => array(
     'name' => 'email_reminder_checked',
@@ -281,7 +282,8 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'reportable' => false,
     'massupdate' => false,
     'default'=> -1,
-    'comment' => 'Specifies when a email reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start'
+    'comment' => 'Specifies when a email reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
+		  'studio' => false,
   ),
   'email_reminder_sent' => array(
     'name' => 'email_reminder_sent',
