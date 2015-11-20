@@ -1,4 +1,5 @@
 <?php
- // created: 2014-01-20 12:22:35
+ // created: 2015-05-31 21:24:08
+$dictionary['Prospect']['fields']['jjwg_maps_address_c']['inline_edit']=1;
 
  ?>
