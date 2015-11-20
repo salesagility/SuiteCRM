@@ -42,6 +42,9 @@
  *
  */
 class Reminder extends Basic {
+
+	const UPGRADE_VERSION = '7.4.2';
+
     var $name;
 
     var $new_schema = true;
@@ -456,25 +459,9 @@ class Reminder extends Basic {
 	 * @throws Exception unknown event type or any error
 	 */
 	public static function upgrade() {
-		if(!self::isUpgraded()) {
-
-			self::upgradeUserPreferences();
-
-			self::upgradeEventReminders('Calls');
-			self::upgradeEventReminders('Meetings');
-
-			self::isUpgraded(true);
-		}
-	}
-
-	private static function isUpgraded($set = null) {
-		$fname = 'modules/Reminders/reminders.upgrd';
-		if(is_null($set)) {
-			return file_exists($fname) && file_get_contents($fname);
-		}
-		else {
-			file_put_contents($fname, $set);
-		}
+		self::upgradeUserPreferences();
+		self::upgradeEventReminders('Calls');
+		self::upgradeEventReminders('Meetings');
 	}
 
 	private static function upgradeUserPreferences() {
@@ -501,19 +488,22 @@ class Reminder extends Basic {
 
 		$persons = array();
 
-		$personList = BeanFactory::getBean('Users')->get_full_list();
-		foreach($personList as $personItem) {
-			$persons[] = $personItem;
+		if($personList = BeanFactory::getBean('Users')->get_full_list()) {
+			foreach ($personList as $personItem) {
+				$persons[] = $personItem;
+			}
 		}
 
-		$personList = BeanFactory::getBean('Leads')->get_full_list();
-		foreach($personList as $personItem) {
-			$persons[] = $personItem;
+		if($personList = BeanFactory::getBean('Leads')->get_full_list()) {
+			foreach ($personList as $personItem) {
+				$persons[] = $personItem;
+			}
 		}
 
-		$personList = BeanFactory::getBean('Contacts')->get_full_list();
-		foreach($personList as $personItem) {
-			$persons[] = $personItem;
+		if($personList = BeanFactory::getBean('Contacts')->get_full_list()) {
+			foreach ($personList as $personItem) {
+				$persons[] = $personItem;
+			}
 		}
 
 		$eventBean = BeanFactory::getBean($eventModule);
