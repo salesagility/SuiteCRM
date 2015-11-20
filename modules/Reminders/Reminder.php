@@ -456,10 +456,25 @@ class Reminder extends Basic {
 	 * @throws Exception unknown event type or any error
 	 */
 	public static function upgrade() {
-		self::upgradeUserPreferences();
+		if(!self::isUpgraded()) {
 
-		self::upgradeEventReminders('Calls');
-		self::upgradeEventReminders('Meetings');
+			self::upgradeUserPreferences();
+
+			self::upgradeEventReminders('Calls');
+			self::upgradeEventReminders('Meetings');
+
+			self::isUpgraded(true);
+		}
+	}
+
+	private static function isUpgraded($set = null) {
+		$fname = 'modules/Reminders/reminders.upgrd';
+		if(is_null($set)) {
+			return file_exists($fname) && file_get_contents($fname);
+		}
+		else {
+			file_put_contents($fname, $set);
+		}
 	}
 
 	private static function upgradeUserPreferences() {
