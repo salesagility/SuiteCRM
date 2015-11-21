@@ -562,6 +562,11 @@ class ViewConvertLead extends SugarView
             {
                 $bean = $this->setMeetingsUsersRelationship($bean);
             }
+            //create calls-users relationship so that it appears in calendar
+            else if ($bean->object_name == "Call")
+            {
+                $bean = $this->setCallsUsersRelationship($bean);
+            }
             $this->copyAddressFields($bean, $beans['Contacts']);
 
             $bean->save();
@@ -590,6 +595,21 @@ class ViewConvertLead extends SugarView
         {
             $bean->load_relationship($meetingsRel);
             $bean->$meetingsRel->add($current_user->id);
+            return $bean;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public function setCallsUsersRelationship($bean)
+    {
+        global $current_user;
+        $callsRel = $this->findRelationshipByName($bean, $this->defs['Calls']['ConvertLead']['relationship']);
+        if (!empty($callsRel))
+        {
+            $bean->load_relationship($callsRel);
+			$bean->$callsRel->add($bean->assigned_user_id);
             return $bean;
         }
         else

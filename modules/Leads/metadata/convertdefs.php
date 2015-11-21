@@ -206,6 +206,7 @@ $viewdefs['Notes']['ConvertLead'] = array(
 $viewdefs['Calls']['ConvertLead'] = array(
     'copyData' => false,
     'required' => false,
+    'relationship' => 'calls_users',
     'templateMeta' => array(
         'form'=>array(
             'hidden'=>array(
