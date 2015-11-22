@@ -435,7 +435,7 @@ class CalendarDisplay {
 	 * display header
 	 * @param boolean $controls display ui contol itmes
 	 */
-	public function display_calendar_header($controls = true){
+	public function display_calendar_header($controls = true, $mobile=false){
 		global $cal_strings;
 
 		$ss = new Sugar_Smarty();
@@ -447,7 +447,11 @@ class CalendarDisplay {
 		if($controls){
 			$current_date = str_pad($this->cal->date_time->month,2,'0',STR_PAD_LEFT)."/".str_pad($this->cal->date_time->day,2,'0',STR_PAD_LEFT)."/".$this->cal->date_time->year;
 
-			$tabs = array('day', 'week', 'month', 'year', 'shared');
+			if ($mobile) {
+				$tabs = array('mobile', 'day', 'week', 'month', 'year', 'shared');
+			} else {
+				$tabs = array('day', 'week', 'month', 'year', 'shared');
+			}
 			$tabs_params = array();
 			foreach($tabs as $tab){
 				$tabs_params[$tab]['title'] = $cal_strings["LBL_".strtoupper($tab)];

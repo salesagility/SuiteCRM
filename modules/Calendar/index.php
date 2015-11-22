@@ -58,17 +58,15 @@ if(empty($_REQUEST['view'])){
     }
     else
     {
-        $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','week');
+        if($_SESSION['screen_width']  < 640 && isset($_SESSION['screen_width'])){
+            $_REQUEST['view'] = "mobile";
+        }else{
+            $_REQUEST['view'] = SugarConfig::getInstance()->get('calendar.default_view','week');
+        }
     }
 }
 
-if($_SESSION['screen_width']  < 640 && isset($_SESSION['screen_width'])){
-//	$_SESSION['CALENDAR_VIEW'] = "mobile";
-	$_REQUEST['view'] = "mobile";
-}else{
-	$_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
-}
-
+$_SESSION['CALENDAR_VIEW'] = $_REQUEST['view'];
 
 $cal = new Calendar($_REQUEST['view']);
 
@@ -92,15 +90,22 @@ if (!empty($_REQUEST['print']) && $_REQUEST['print'] == 'true') {
     $cal->setPrint(true);
 }
 
+if($_SESSION['screen_width']  < 640 && isset($_SESSION['screen_width'])){
+    $mobile_screen=true;
+} else {
+    $mobile_screen=false;
+}
+
 $display = new CalendarDisplay($cal);
 if($cal->view == "mobile"){
 	$display->display_title();
+    $display->display_calendar_header(true,$mobile_screen);
 	$display->display();
 }else{
 	$display->display_title();
 	if($cal->view == "shared")
 		$display->display_shared_html();
-	$display->display_calendar_header();
+	$display->display_calendar_header(true,$mobile_screen);
 	$display->display();
 	$display->display_calendar_footer();
 }
