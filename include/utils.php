@@ -5129,4 +5129,3 @@ function suite_strrpos($haystack,$needle,$offset=0,$encoding = DEFAULT_UTIL_SUIT
 	else
 		return strrpos($haystack,$needle,$offset);
 }
-
