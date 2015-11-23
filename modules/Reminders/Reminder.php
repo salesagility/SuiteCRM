@@ -43,7 +43,7 @@
  */
 class Reminder extends Basic {
 
-	const UPGRADE_VERSION = '7.4.2';
+	const UPGRADE_VERSION = '7.4.3';
 
     var $name;
 
@@ -405,6 +405,17 @@ class Reminder extends Basic {
 		return null;
 	}
 
+	private function upgradeEventPersonQuery(SugarBean $event, $person_table) {
+		$eventIdField = array_search($event->table_name, $event->relationship_fields);
+		$query = "
+			SELECT * FROM {$event->table_name}_{$person_table}
+			WHERE
+				{$eventIdField} = '{$event->id}' AND
+				deleted = 0
+		";
+		return $query;
+	}
+
 	private function getEventPersonQuery(SugarBean $event, SugarBean $person) {
 		$eventIdField = array_search($event->table_name, $event->relationship_fields);
 		$personIdField = strtolower($person->object_name) . '_id';
@@ -487,7 +498,7 @@ class Reminder extends Basic {
 	}
 
 	private static function upgradeUserPreferences() {
-		$users = User::getAllUsers();
+		$users = User::getActiveUsers();
 		foreach($users as $user_id => $user_name) {
 			$user = new User();
 			$user->retrieve($user_id);
@@ -508,28 +519,8 @@ class Reminder extends Basic {
 	 */
 	private static function upgradeEventReminders($eventModule) {
 
-		$persons = array();
-
-		if($personList = BeanFactory::getBean('Users')->get_full_list()) {
-			foreach ($personList as $personItem) {
-				$persons[] = $personItem;
-			}
-		}
-
-		if($personList = BeanFactory::getBean('Leads')->get_full_list()) {
-			foreach ($personList as $personItem) {
-				$persons[] = $personItem;
-			}
-		}
-
-		if($personList = BeanFactory::getBean('Contacts')->get_full_list()) {
-			foreach ($personList as $personItem) {
-				$persons[] = $personItem;
-			}
-		}
-
 		$eventBean = BeanFactory::getBean($eventModule);
-		$events = BeanFactory::getBean($eventModule)->get_full_list('', "({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
+		$events = BeanFactory::getBean($eventModule)->get_full_list('', "{$eventBean->table_name}.date_start >  '2015-11-01 00:00:00' AND ({$eventBean->table_name}.reminder_time != -1 OR ({$eventBean->table_name}.email_reminder_time != -1 AND {$eventBean->table_name}.email_reminder_sent != 1))");
 		if ($events) {
 			foreach ($events as $event) {
 
@@ -547,24 +538,18 @@ class Reminder extends Basic {
 					$oldReminderEmailTimer = $event->email_reminder_time;
 				}
 
-				if ($persons) {
-					foreach ($persons as $person) {
+				if( ($oldInvitees = self::getOldEventInvitees($event)) && ($event->reminder_time != -1 || ($event->email_reminder_time != -1 && $event->email_reminder_sent != 1)) ) {
 
-						if( ($oldInvitees = self::getOldEventInvitees($event, $person)) && ($event->reminder_time != -1 || ($event->email_reminder_time != -1 && $event->email_reminder_sent != 1)) ) {
+					self::migrateReminder(
+							$eventModule,
+							$event->id,
+							$oldReminderPopupChecked,
+							$oldReminderPopupTimer,
+							$oldReminderEmailChecked,
+							$oldReminderEmailTimer,
+							$oldInvitees
+					);
 
-							self::migrateReminder(
-									$eventModule,
-									$event->id,
-									$oldReminderPopupChecked,
-									$oldReminderPopupTimer,
-									$oldReminderEmailChecked,
-									$oldReminderEmailTimer,
-									$oldInvitees
-							);
-
-						}
-
-					}
 				}
 			}
 		}
@@ -572,13 +557,16 @@ class Reminder extends Basic {
 	}
 
 
-	private static function getOldEventInvitees(SugarBean $event, SugarBean $person) {
+	private static function getOldEventInvitees(SugarBean $event) {
 		global $db;
-		$query = self::getEventPersonQuery($event, $person);
-		$re = $db->query($query);
-		$ret = array();
-		while($row = $db->fetchByAssoc($re) ) {
-			$ret[] = $row;
+		$persons = array('users','contacts','leads');
+		foreach($persons as $person){
+			$query = self::upgradeEventPersonQuery($event, $person);
+			$re = $db->query($query);
+			$ret = array();
+			while($row = $db->fetchByAssoc($re) ) {
+				$ret[] = $row;
+			}
 		}
 		return $ret;
 	}
