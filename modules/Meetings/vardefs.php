@@ -261,8 +261,9 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'reportable' => false,
     'massupdate' => false,
     'default'=> -1,
-    'comment' => 'Specifies when a reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start'
-  ),  
+    'comment' => 'Specifies when a reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
+		  'studio' => false,
+  ),
   'email_reminder_checked' => array(
     'name' => 'email_reminder_checked',
     'vname' => 'LBL_EMAIL_REMINDER',
@@ -270,7 +271,7 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'source' => 'non-db',
     'comment' => 'checkbox indicating whether or not the email reminder value is set (Meta-data only)',
     'massupdate' => false,
-   ),  
+   ),
   'email_reminder_time' =>
   array (
     'name' => 'email_reminder_time',
@@ -281,9 +282,10 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'reportable' => false,
     'massupdate' => false,
     'default'=> -1,
-    'comment' => 'Specifies when a email reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start'
-  ),  
-  'email_reminder_sent' => array( 
+    'comment' => 'Specifies when a email reminder alert should be issued; -1 means no alert; otherwise the number of seconds prior to the start',
+		  'studio' => false,
+  ),
+  'email_reminder_sent' => array(
     'name' => 'email_reminder_sent',
     'vname' => 'LBL_EMAIL_REMINDER_SENT',
     'default' => 0,
