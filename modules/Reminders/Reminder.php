@@ -463,6 +463,27 @@ class Reminder extends Basic {
 		self::upgradeUserPreferences();
 		self::upgradeEventReminders('Calls');
 		self::upgradeEventReminders('Meetings');
+		self::upgradeRestoreReminders();
+	}
+
+	private static function upgradeRestoreReminders() {
+		if($reminders = BeanFactory::getBean('Reminders')->get_full_list('', 'reminders.deleted = 1')) {
+			foreach($reminders as $reminder) {
+				$reminder->deleted = 0;
+				$reminder->save();
+			}
+		}
+		if($reminderInvitees = BeanFactory::getBean('Reminders_Invitees')->get_full_list('', 'reminders_invitees.deleted = 1')) {
+			foreach($reminderInvitees as $invitee) {
+				$invitee->deleted = 0;
+				$invitee->save();
+			}
+		}
+		global $db;
+		$q = "UPDATE reminders SET deleted = 0";
+		$db->query($q);
+		$q = "UPDATE reminders_invitees SET deleted = 0";
+		$db->query($q);
 	}
 
 	private static function upgradeUserPreferences() {
