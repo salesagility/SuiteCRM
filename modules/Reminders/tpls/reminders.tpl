@@ -179,7 +179,7 @@
                 </div>
 
                 <div class="col">
-                    <input type="checkbox" class="email_chkbox" disabled="disabled"{if $reminder.popup} checked="checked"{/if}><span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
+                    <input type="checkbox" class="email_chkbox" disabled="disabled"{if $reminder.email} checked="checked"{/if}><span>{$MOD.LBL_REMINDERS_EMAIL}</span>&nbsp;
                     <!-- <span>{$MOD.LBL_REMINDERS_WHEN}</span> -->
                     <span type="text" class="reminder_when_value" /></span>
                     <select tabindex="0" class="timer_sel_email" disabled="disabled" style="-webkit-appearance: none; -webkit-border-radius: 0px; border: none;">
