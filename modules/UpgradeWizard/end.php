@@ -125,6 +125,12 @@ foreach ($beanFiles as $bean => $file) {
 	}
 }
 
+// add suite version into upgrade pack!
+if(isset($repairedTables['reminders']) && $repairedTables['reminders'] && isset($_SESSION['suitecrm_version_before_upgrade']) && version_compare($_SESSION['suitecrm_version_before_upgrade'], Reminder::UPGRADE_VERSION, '<')) {
+	Reminder::upgrade();
+	unset($_SESSION['suitecrm_version_before_upgrade']);
+}
+
 $olddictionary = $dictionary;
 
 unset ($dictionary);
