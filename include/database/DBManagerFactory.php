@@ -195,10 +195,10 @@ class DBManagerFactory
         $scandir = opendir($dir);
         if($scandir === false) return;
         while(($name = readdir($scandir)) !== false) {
-            if(suite_substr($name, -11) != "Manager.php") continue;
+            if(substr($name, -11) != "Manager.php") continue;
             if($name == "DBManager.php") continue;
             require_once("$dir/$name");
-            $classname = suite_substr($name, 0, -4);
+            $classname = substr($name, 0, -4);
             if(!class_exists($classname)) continue;
             $driver = new $classname;
             if(!$validate || $driver->valid()) {
@@ -261,7 +261,7 @@ class DBManagerFactory
     		$info=ob_get_contents();
     		ob_end_clean();
 
-    		$is_freetds = (suite_strpos($info,'FreeTDS') !== false);
+    		$is_freetds = (strpos($info,'FreeTDS') !== false);
         }
 
         return $is_freetds;

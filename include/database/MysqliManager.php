@@ -145,7 +145,7 @@ class MysqliManager extends MysqlManager
 		/*
 		$bt = debug_backtrace();
 		for ( $i = count($bt) ; $i-- ; $i > 0 ) {
-			if ( suite_strpos('MysqliManager.php',$bt[$i]['file']) === false ) {
+			if ( strpos('MysqliManager.php',$bt[$i]['file']) === false ) {
 				$line = $bt[$i];
 			}
 		}
@@ -227,7 +227,7 @@ class MysqliManager extends MysqlManager
 				return 0;
 
 			if($make_lower_case == true)
-				$meta->name = suite_strtolower($meta->name);
+				$meta->name = strtolower($meta->name);
 
 			$field_array[] = $meta->name;
 
@@ -273,10 +273,10 @@ class MysqliManager extends MysqlManager
 			$dbhost=$configOptions['db_host_name'];
             $dbport=$configOptions['db_port'] == '' ? null : $configOptions['db_port'];
 			
-			$pos=suite_strpos($configOptions['db_host_name'],':');
+			$pos=strpos($configOptions['db_host_name'],':');
 			if ($pos !== false) {
-				$dbhost=suite_substr($configOptions['db_host_name'],0,$pos);
-				$dbport=suite_substr($configOptions['db_host_name'],$pos+1);
+				$dbhost=substr($configOptions['db_host_name'],0,$pos);
+				$dbport=substr($configOptions['db_host_name'],$pos+1);
 			}
 
 			$this->database = mysqli_connect($dbhost,$configOptions['db_user_name'],$configOptions['db_password'],isset($configOptions['db_name'])?$configOptions['db_name']:'',$dbport);
