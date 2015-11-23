@@ -76,6 +76,7 @@ class Reminder_Invitee extends Basic {
     public static function saveRemindersInviteesData($reminderId, $inviteesData) {
         $savedInviteeIds = array();
         foreach($inviteesData as $k => $inviteeData) {
+            if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $inviteeData->id = '';
             $reminderInviteeBean = BeanFactory::getBean('Reminders_Invitees', $inviteeData->id);
             $reminderInviteeBean->reminder_id = $reminderId;
             $reminderInviteeBean->related_invitee_module = $inviteeData->module;

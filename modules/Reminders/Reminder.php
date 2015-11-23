@@ -100,6 +100,7 @@ class Reminder extends Basic {
     private static function saveRemindersData($eventModule, $eventModuleId, $remindersData) {
         $savedReminderIds = array();
         foreach($remindersData as $reminderData) {
+			if(isset($_POST['isDuplicate']) && $_POST['isDuplicate']) $reminderData->id = '';
             $reminderBean = BeanFactory::getBean('Reminders', $reminderData->id);
             $reminderBean->popup = $reminderData->popup;
             $reminderBean->email = $reminderData->email;
@@ -406,7 +407,7 @@ class Reminder extends Basic {
 	}
 
 	private function upgradeEventPersonQuery(SugarBean $event, $person_table) {
-		$eventIdField = array_search($event->table_name, $event->relationship_fields);
+		$eventIdField = strtolower($event->object_name).'_id';
 		$query = "
 			SELECT * FROM {$event->table_name}_{$person_table}
 			WHERE
@@ -559,11 +560,11 @@ class Reminder extends Basic {
 
 	private static function getOldEventInvitees(SugarBean $event) {
 		global $db;
+		$ret = array();
 		$persons = array('users','contacts','leads');
 		foreach($persons as $person){
 			$query = self::upgradeEventPersonQuery($event, $person);
 			$re = $db->query($query);
-			$ret = array();
 			while($row = $db->fetchByAssoc($re) ) {
 				$ret[] = $row;
 			}
