@@ -121,6 +121,7 @@ class Reminder extends Basic {
                 }
             }
         }
+		unset(self::$remindersData[$eventModule][$eventModuleId]);
     }
 
 	/**
@@ -132,8 +133,8 @@ class Reminder extends Basic {
 	 * @return string JSON string contains the remainders
 	 * @throws Exception
 	 */
-    public static function loadRemindersDataJson($eventModule, $eventModuleId) {
-        $remindersData = self::loadRemindersData($eventModule, $eventModuleId);
+    public static function loadRemindersDataJson($eventModule, $eventModuleId, $isDuplicate = false) {
+        $remindersData = self::loadRemindersData($eventModule, $eventModuleId, $isDuplicate);
         $remindersDataJson = json_encode($remindersData);
         if(!$remindersDataJson && json_last_error()) {
             throw new Exception(json_last_error_msg());
@@ -150,19 +151,19 @@ class Reminder extends Basic {
 	 * @return array contains the remainders
 	 * @throws Exception
 	 */
-	public static function loadRemindersData($eventModule, $eventModuleId) {
-		if(!isset(self::$remindersData[$eventModule][$eventModuleId])) {
+	public static function loadRemindersData($eventModule, $eventModuleId, $isDuplicate = false) {
+		if(!isset(self::$remindersData[$eventModule][$eventModuleId]) || !$eventModuleId || $isDuplicate) {
 			$ret = array();
 			$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
 			if ($reminders) {
 				foreach ($reminders as $reminder) {
 					$ret[] = array(
-							'id' => $reminder->id,
+							'id' => $isDuplicate ? null : $reminder->id,
 							'popup' => $reminder->popup,
 							'email' => $reminder->email,
 							'timer_popup' => $reminder->timer_popup,
 							'timer_email' => $reminder->timer_email,
-							'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id),
+							'invitees' => Reminder_Invitee::loadRemindersInviteesData($reminder->id, $isDuplicate),
 					);
 				}
 			}
