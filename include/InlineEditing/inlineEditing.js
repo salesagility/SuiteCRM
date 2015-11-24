@@ -289,6 +289,11 @@ function getInputValue(field,type){
                     return "off";
                 }
                 break;
+            case 'radioenum':
+                if($('input[name='+field+']:checked').val()){
+                    return $('input[name='+field+']:checked').val();
+                }
+                break;
             default:
                 if($('#'+ field).val().length > 0) {
                     return $('#'+ field).val();

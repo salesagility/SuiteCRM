@@ -202,9 +202,6 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         // Bug 32626: fall back on checking the mod_strings if not in the app_list_strings
         elseif (isset($fieldlist[$name]['options']) && is_string($fieldlist[$name]['options']) && isset($mod_strings[$fieldlist[$name]['options']]))
             $fieldlist[$name]['options'] = $mod_strings[$fieldlist[$name]['options']];
-        // Bug 22730: make sure all enums have the ability to select blank as the default value.
-        if (!isset($fieldlist[$name]['options']['']))
-            $fieldlist[$name]['options'][''] = '';
     }
 
     // fill in function return values
@@ -425,6 +422,11 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
             $values[] = $app_list_strings[$vardef['options']][$value];
         }
         $value = implode(", ", $values);
+    }
+
+    //if field is of type radio.
+    if ($vardef['type'] == "radioenum") {
+        $value = $app_list_strings[$vardef['options']][$value];
     }
 
     //if field is of type relate.
