@@ -153,7 +153,7 @@ class Reminder extends Basic {
 	 * @throws Exception
 	 */
 	public static function loadRemindersData($eventModule, $eventModuleId) {
-		if(!isset(self::$remindersData[$eventModule][$eventModuleId])) {
+		if(!$eventModuleId || !isset(self::$remindersData[$eventModule][$eventModuleId])) {
 			$ret = array();
 			$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
 			if ($reminders) {
