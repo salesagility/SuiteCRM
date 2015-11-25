@@ -333,7 +333,7 @@ $mod_strings = array (
     'LBL_FONT_LIST_EMBEDDED' => 'Embedded',
     'LBL_FONT_LIST_EMBEDDED_INFO' => 'Check to embed the font into the PDF file',
     'LBL_FONT_LIST_CIDINFO' => 'CID Information',
-    'LBL_FONT_LIST_CIDINFO_INFO' => "Examples :".
+    'LBL_FONT_LIST_CIDINFO_INFO' => '"Examples :".
 "<ul><li>".
 "Chinese Traditional :<br>".
 "<pre>\$enc=\'UniCNS-UTF16-H\';<br>".
@@ -355,7 +355,7 @@ $mod_strings = array (
 "\$cidinfo=array(\'Registry\'=>\'Adobe\', \'Ordering\'=>\'Japan1\',\'Supplement\'=>5);<br>".
 "include(\'include/tcpdf/fonts/uni2cid_aj16.php\');</pre>".
 "</li></ul>".
-"More help : www.tcpdf.org",
+"More help : www.tcpdf.org"',
     'LBL_FONT_LIST_FILESIZE' => 'Font Size (KB)',
     'LBL_ADD_FONT' => 'Add a font',
     'LBL_BACK' => 'Back',
@@ -374,7 +374,7 @@ $mod_strings = array (
     'LBL_ADD_FONT_BUTTON' => 'Add',
     'JS_ALERT_PDF_WRONG_EXTENSION' => 'This file do not have a good file extension.',
     'LBL_PDF_INSTRUCTIONS' => 'Instructions',
-    'PDF_INSTRUCTIONS_ADD_FONT' => <<<BSOFR
+    'PDF_INSTRUCTIONS_ADD_FONT' => '<<<BSOFR
 Fonts supported by the PDF :
 <ul>
 <li>TrueTypeUnicode (UTF-8 Unicode)</li>
@@ -390,8 +390,7 @@ If you choose to not embed your font in the PDF, the generated PDF file will be 
 Adding a PDF font to SuiteCRM requires to follow steps 1 and 2 of the TCPDF Fonts documentation available in the "DOCS" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>The pfm2afm and ttf2ufm utils are available in fonts/utils in the TCPDF package that you can download on the "DOWNLOAD" section of the <a href="http://www.tcpdf.org" target="_blank">TCPDF website</a>.
 <br><br>Load the metric file generated in step 2 and your font file below.
-BSOFR
-,
+BSOFR',
     'ERR_MISSING_CIDINFO' => 'The field CID Information cannot be empty.',
     'LBL_ADDFONTRESULT_TITLE' => 'Result of the add font process',
     'LBL_STATUS_FONT_SUCCESS' => 'SUCCESS : The font has been added to SuiteCRM.',
@@ -424,8 +423,7 @@ BSOFR
     'LBL_WIZARD_CONTINUE_BUTTON' => 'Continue',
     'LBL_WIZARD_FINISH_TAB' => 'Finish',
     'LBL_WIZARD_FINISH_TITLE' => 'Basic system configuration is complete',
-    'LBL_WIZARD_FINISH' => 'Click <b>Continue</b> to configure your user settings.<br/><br />
-To configure additional system settings, click <a href="index.php?module=Administration&action=index" target="_blank">here</a>.',
+    'LBL_WIZARD_FINISH' => 'Click <b>Continue</b> to configure your user settings.<br/><br />To configure additional system settings, click <a href="index.php?module=Administration&action=index" target="_blank">here</a>.',
     'LBL_WIZARD_SYSTEM_TITLE' => 'Branding',
     'LBL_WIZARD_SYSTEM_DESC' => 'Provide your organization\'s name and logo in order to brand your SuiteCRM.',
     'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
