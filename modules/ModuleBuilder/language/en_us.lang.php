@@ -376,7 +376,6 @@ $mod_strings = array(
 'LBL_EDIT_ROWS'=>'Edit Rows',
 'LBL_EDIT_COLUMNS'=>'Edit Columns',
 'LBL_EDIT_LABELS'=>'Edit Labels',
-'LBL_EDIT_FIELDS'=>'Edit Custom Fields',
 'LBL_EDIT_PORTAL'=>'Edit Portal for ',
 'LBL_EDIT_FIELDS'=>'Edit Fields',
 'LBL_EDITVIEW'=>'EditView',
@@ -580,7 +579,6 @@ $mod_strings = array(
 'LBL_DESCRIPTION'=>'Description:',
 'LBL_KEY'=>'Key:',
 'LBL_ADD_README'=>' Readme',
-'LBL_MODULES'=>'Modules:',
 'LBL_LAST_MODIFIED'=>'Last Modified:',
 'LBL_NEW_MODULE'=>'New Module',
 'LBL_LABEL'=>'Label:',
@@ -603,7 +601,6 @@ $mod_strings = array(
 'LBL_HISTORY'=>'View History',
 'LBL_RESTORE_DEFAULT'=>'Restore Default',
 'LBL_ACTIVITIES'=>'Activities',
-'LBL_SEARCH'=>'Search',
 'LBL_NEW'=>'New',
 'LBL_TYPE_BASIC'=>'basic',
 'LBL_TYPE_COMPANY'=>'company',
@@ -690,10 +687,6 @@ $mod_strings = array(
 'LBL_RESET_LAYOUTS' => 'Reset Layouts"',
 'LBL_REMOVE_FIELDS' => 'Remove Custom Fields',
 'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
-'LBL_CLEAR_EXTENSIONS' => 'Clear Extensions',
-
-
-
 'LBL_HISTORY_TIMESTAMP' => 'TimeStamp',
 'LBL_HISTORY_TITLE' => ' history',
 

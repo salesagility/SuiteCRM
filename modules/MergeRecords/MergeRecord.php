@@ -176,7 +176,7 @@ class MergeRecord extends SugarBean {
         return false;
     }
     
-    function ACLAccess($view,$is_owner='not_set'){
+    function ACLAccess($view,$is_owner='not_set', $in_group = 'not_set'){
         global $current_user;
 
         //if the module doesn't implement ACLS or is empty  

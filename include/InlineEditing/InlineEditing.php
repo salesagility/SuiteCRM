@@ -352,10 +352,10 @@ function getDisplayValue($bean, $field, $method = "save")
     return $value;
 }
 
-function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
+function formatDisplayValue($bean, $value, $vardef, $method = "save")
 {
 
-    global $current_user, $app_list_strings, $timedate;
+    global $app_list_strings, $timedate;
 
     //Fake the params so we can pass the values through the sugarwidgets to get the correct display html.
 
@@ -483,18 +483,6 @@ function convertDateUserToDB($value)
 }
 
 function checkAccess($bean){
-    /*    $aclaccess_is_owner = false;
-        $aclaccess_in_group = false;
-
-        global $current_user;
-        if(is_admin($current_user)) {
-            $aclaccess_is_owner = true;
-        } else {
-            $aclaccess_is_owner = $bean->isOwner($current_user->id);
-        }
-
-
-        $aclaccess_in_role = $bean->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);*/
 
     if($bean->ACLAccess('EditView')) {
         return true;

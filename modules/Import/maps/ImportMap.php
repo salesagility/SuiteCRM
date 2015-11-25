@@ -201,7 +201,7 @@ class ImportMap extends SugarBean
      * @param  string $enclosure
      * @return bool
      */
-    function save($check_notify = FALSE) {
+    public function save($check_notify = FALSE) {
         $args = func_get_args();
         return call_user_func_array(array($this, '_save'), $args);
     }

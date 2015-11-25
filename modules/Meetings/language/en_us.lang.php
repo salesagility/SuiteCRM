@@ -189,5 +189,15 @@ $mod_strings = array (
     
     'LBL_SYNCED_RECURRING_MSG' => 'This meeting originated in another system and was synced to SuiteCRM. To make changes, go to the original meeting within the other system. Changes made in the other system can be synced to this record.',
     'LBL_RELATED_TO' => 'Related to:',
+
+	// for reminders
+	'LBL_REMINDERS' => 'Reminders',
+	'LBL_REMINDERS_ACTIONS' => 'Actions:',
+	'LBL_REMINDERS_POPUP' => 'Popup',
+	'LBL_REMINDERS_EMAIL' => 'Email invitees',
+	'LBL_REMINDERS_WHEN' => 'When:',
+	'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
+	'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
+	'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
 );
 ?>

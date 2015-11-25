@@ -152,7 +152,7 @@ $mod_strings  = array(
   'LBL_HOME_PAGE_3_NAME' => 'Support',
   'LBL_HOME_PAGE_6_NAME' => 'Marketing',//bug 16510, separate the support and marketing page from each other
   'LBL_HOME_PAGE_4_NAME' => 'Tracker',
-  'LBL_CLOSE_SITEMAP' =>'Close',
+  'LBL_CLOSE_SITEMAP' => 'Close',
 
     'LBL_SEARCH' => 'Search',
     'LBL_CLEAR' => 'Clear',
@@ -182,9 +182,9 @@ $mod_strings  = array(
   'LBL_TRADEMARKS' => 'trademarks',
   'LBL_OF' => 'of',
   'LBL_FOUNDERS' => 'Founders',
-  'LBL_JOIN_SUGAR_COMMUNITY' => 'Join the Sugar Community',
-  'LBL_DETAILS_SUGARFORGE' => 'Collaborate and develop Sugar extensions',
-  'LBL_DETAILS_SUGAREXCHANGE' => 'Buy and sell certified Sugar extensions',
+  'LBL_JOIN_SUGAR_COMMUNITY' => 'Join the SuiteCRM Community',
+  'LBL_DETAILS_SUGARFORGE' => 'Collaborate and develop SuiteCRM extensions',
+  'LBL_DETAILS_SUGAREXCHANGE' => 'Buy and sell certified SuiteCRM extensions',
   'LBL_TRAINING' => 'Training',
   'LBL_DETAILS_TRAINING' => 'Learn about SuiteCRM using online and interactive learning content',
   'LBL_FORUMS' => 'Forums',
@@ -193,11 +193,11 @@ $mod_strings  = array(
   'LBL_DETAILS_WIKI' => 'Search the knowledge base of user and developer topics',
   'LBL_DEVSITE' => 'Developer Site',
   'LBL_DETAILS_DEVSITE' => 'Discover resources, tutorials, and helpful links to get you up to speed on SuiteCRM development',
- 'LBL_GET_SUGARCRM_RSS' => 'Get SugarCRM RSS',
-  'LBL_SUGARCRM_NEWS' => 'SugarCRM News',
-  'LBL_SUGARCRM_TRAINING_NEWS' => 'SugarCRM Training News',
-  'LBL_SUGARCRM_FORUMS' => 'SugarCRM Forums',
-  'LBL_SUGARFORGE_NEWS' => 'SugarForge News',
+ 'LBL_GET_SUGARCRM_RSS' => 'Get SuiteCRM RSS',
+  'LBL_SUGARCRM_NEWS' => 'SuiteCRM News',
+  'LBL_SUGARCRM_TRAINING_NEWS' => 'SuiteCRM Training News',
+  'LBL_SUGARCRM_FORUMS' => 'SuiteCRM Forums',
+  'LBL_SUGARFORGE_NEWS' => 'SuiteCRM News',
   'LBL_ALL_NEWS' => 'All News',
   'LBL_SOURCE_CODE' => 'Source Code',
     'LBL_SOURCE_SUGAR' => 'SugarCRM Inc - providers of CE framework',
@@ -291,7 +291,6 @@ $mod_strings  = array(
 
 
     'LBL_LANGUAGE_SPANISH' => 'Spanish Translation Provided by Disytel openConsulting',
-    'LBL_LANGUAGE_RUSSIAN' => 'Russian Translation Provided by likhobory',
 
     'LBL_ABOUT_SUITE_1' => 'SuiteCRM is a fork of SugarCRM. There are many articles on the web that explain the reasons why a fork of SugarCRM became necessary.',
     'LBL_ABOUT_SUITE_2' => 'SuiteCRM is published under an open source licence - GPL3',
