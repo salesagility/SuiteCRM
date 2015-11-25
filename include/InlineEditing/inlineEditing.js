@@ -51,6 +51,11 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
+    	
+    	if(e.which !== undefined && e.which === 2){
+            return;
+        }
+        
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
 			var linkTarget = $(this).attr("target");
@@ -250,20 +255,14 @@ function getInputValue(field,type){
                 break;
             case 'datetime':
             case 'datetimecombo':
-
-                if($('#'+ field + '_date').val().length > 0){
-                    var date = $('#'+ field + '_date').val();
-
-                }
-                if($('#'+ field + '_hours :selected').text().length > 0){
-                    var hours = $('#'+ field + '_hours :selected').text();
-                }
-                if($('#'+ field + '_minutes :selected').text().length > 0){
-                    var minutes = $('#'+ field + '_minutes :selected').text();
-                }
-                if($('#'+ field + '_meridiem :selected').text().length > 0){
-                    var meridiem = $('#'+ field + '_meridiem :selected').text();
-                }
+                if($('#'+ field + '_date').val().length > 0){var date = $('#'+ field + '_date').val();}
+                else var date = 00;
+                if($('#'+ field + '_hours :selected').text().length > 0){var hours = $('#'+ field + '_hours :selected').text();}
+                else var hours = 00;
+                if($('#'+ field + '_minutes :selected').text().length > 0){var minutes = $('#'+ field + '_minutes :selected').text();}
+                else var minutes = 00;
+                if($('#'+ field + '_meridiem :selected').text().length > 0){var meridiem = $('#'+ field + '_meridiem :selected').text();}
+                else var meridiem = "";
                 return date + " " + hours +":"+ minutes + meridiem;
                 break;
             case 'date':

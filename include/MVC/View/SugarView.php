@@ -843,8 +843,7 @@ EOHTML;
             echo self::getJavascriptValidation();
             if (!is_file(sugar_cached('jsLanguage/') . $GLOBALS['current_language'] . '.js')) {
                 require_once ('include/language/jsLanguage.php');
-                $jsLanguage = new jsLanguage();
-                $jsLanguage->createAppStringsCache($GLOBALS['current_language']);
+                jsLanguage::createAppStringsCache($GLOBALS['current_language']);
             }
             echo getVersionedScript('cache/jsLanguage/'. $GLOBALS['current_language'] . '.js', $GLOBALS['sugar_config']['js_lang_version']);
 

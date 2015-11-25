@@ -55,7 +55,6 @@ $app_list_strings['aow_process_status_list']['Pending'] = 'Pending';
 $app_list_strings['aow_process_status_list']['Failed'] = 'Failed';
 $app_list_strings['aow_condition_operator_list']['And'] = 'And';
 $app_list_strings['aow_condition_operator_list']['OR'] = 'OR';
-$app_list_strings['aow_condition_operator_list']['OR'] = 'OR';
 $app_list_strings['aow_condition_type_list']['Value'] = 'Value';
 $app_list_strings['aow_condition_type_list']['Field'] = 'Field';
 $app_list_strings['aow_condition_type_list']['Any_Change'] = 'Any Change';

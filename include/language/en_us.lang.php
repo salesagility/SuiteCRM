@@ -1164,7 +1164,6 @@ $app_strings = array (
     'LBL_MODULE_FILTER' => 'Filter By',
     'LBL_CONNECTORS_POPUPS'=>'Connectors Popups',
     'LBL_CLOSEINLINE'=>'Close',
-    'LBL_MOREDETAIL'=>'More Detail',
     'LBL_EDITINLINE'=>'Edit',
     'LBL_VIEWINLINE'=>'View',
     'LBL_INFOINLINE'=>'Info',
@@ -1579,7 +1578,6 @@ $app_strings = array (
     'LBL_EMAIL_SPACER_MAIL_SERVER'          => '[ Remote Folders ]',
     'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ SuiteCRM Folders ]',
     'LBL_EMAIL_SUBJECT'                     => 'Subject',
-    'LBL_EMAIL_TO'                        => 'To',
     'LBL_EMAIL_SUCCESS'                     => 'Success',
     'LBL_EMAIL_SUGAR_FOLDER'                => 'SuiteCRM Folder',
     'LBL_EMAIL_TEMPLATE_EDIT_PLAIN_TEXT'    => 'Email template body is empty',
@@ -1657,8 +1655,8 @@ $app_strings = array (
     'ERR_COMPATIBLE_PRECISION_VALUE' => 'Field value is not compatible with precision value',
     'ERR_EXTERNAL_API_SAVE_FAIL' => 'An error occurred when trying to save to the external account.',
     'ERR_EXTERNAL_API_UPLOAD_FAIL' => 'An error occurred while uploading.  Please ensure the file you are uploading is not empty.',
-    'ERR_NO_DB' => 'Could not connect to the database. Please refer to sugarcrm.log for details.',
-    'ERR_DB_FAIL' => 'Database failure. Please refer to sugarcrm.log for details.',
+    'ERR_NO_DB' => 'Could not connect to the database. Please refer to suitecrm.log for details.',
+    'ERR_DB_FAIL' => 'Database failure. Please refer to suitecrm.log for details.',
     'ERR_EXTERNAL_API_403' => 'Permission Denied. File type is not supported.',
     'ERR_EXTERNAL_API_NO_OAUTH_TOKEN' => 'OAuth Access Token is missing.',
     'ERR_DB_VERSION' => 'SuiteCRM {0} Files May Only Be Used With A SuiteCRM {1} Database.',
@@ -1758,9 +1756,9 @@ $app_strings = array (
     'LBL_FILTER_MENU_BY' => 'Filter Menu By',
     'LBL_VCARD' => 'vCard',
     'LBL_EMPTY_VCARD' => 'Please select a vCard file',
-    'LBL_EMPTY_REQUIRED_VCARD' => 'vCard does not have all the required fields for this module. Please refer to sugarcrm.log for details.',
+    'LBL_EMPTY_REQUIRED_VCARD' => 'vCard does not have all the required fields for this module. Please refer to suitecrm.log for details.',
     'LBL_VCARD_ERROR_FILESIZE' => 'The uploaded file exceeds the 30000 bytes size limit which was specified in the HTML form.',
-    'LBL_VCARD_ERROR_DEFAULT' => 'There was an error uploading the vCard file. Please refer to sugarcrm.log for details.',
+    'LBL_VCARD_ERROR_DEFAULT' => 'There was an error uploading the vCard file. Please refer to suitecrm.log for details.',
     'LBL_IMPORT_VCARD' => 'Import vCard:',
     'LBL_IMPORT_VCARD_BUTTON_KEY' => 'I',
     'LBL_IMPORT_VCARD_BUTTON_LABEL' => 'Import vCard',
@@ -1887,10 +1885,8 @@ $app_strings = array (
 
     'LBL_PROSPECTS'=>'Prospects',
     'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
-    'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
     'LBL_PRODUCTS'=>'Products',
     'LBL_PROJECT_TASKS'=>'Project Tasks',
-    'LBL_PROJECTS'=>'Projects',
     'LBL_PROJECTS'=>'Projects',
     'LBL_QUOTE_TO_OPPORTUNITY_KEY' => 'O',
     'LBL_QUOTE_TO_OPPORTUNITY_LABEL' => 'Create Opportunity from Quote',
@@ -2021,7 +2017,6 @@ $app_strings = array (
     'LBL_SUGAR_COPYRIGHT_SUB' => '&copy; 2004-2013 <a href="http://www.sugarcrm.com" target="_blank" class="copyRightLink">SugarCRM Inc.</a> All Rights Reserved.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
 
-    'LBL_SYNC' => 'Sync',
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
     'LBL_TABGROUP_ACTIVITIES' => 'Activities',
@@ -2157,6 +2152,10 @@ $app_strings = array (
     'MSG_JS_ALERT_MTG_REMINDER_RELATED_TO' => 'Related To: ',
     'MSG_JS_ALERT_MTG_REMINDER_CALL_MSG' => "\nClick OK to view this call or click Cancel to dismiss this message.",
   	'MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG' => "\nClick OK to view this meeting or click Cancel to dismiss this message.",
+	'MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME' => 'Event',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION' => '',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION' => 'Location isn\'t set.',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE' => 'Start date isn\'t defined.',
  	'MSG_LIST_VIEW_NO_RESULTS_BASIC' => "No results found.",
 	'MSG_LIST_VIEW_NO_RESULTS' => "No results found for <item1>",
  	'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => "Create <item1> as a new <item2>",
@@ -2185,7 +2184,6 @@ $app_strings = array (
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
     'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
-    'LBL_REMOVE' => 'Remove',
     'LBL_TRAINING' => 'Support',
     'ERR_DATABASE_CONN_DROPPED'=>'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
     'ERR_MSSQL_DB_CONTEXT' =>'Changed database context to',
@@ -2294,7 +2292,6 @@ $app_strings = array (
     'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal 5.1.0',
     'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
-    'LBL_CREATE_CASE' => 'Create Case',
     'LBL_CREATE_BUG' => 'Create Bug',
     'LBL_NO_RECORDS_FOUND' => '- 0 Records Found -',
 
@@ -2345,13 +2342,10 @@ $app_strings = array (
   'ERROR_MISSING_COLLECTION_SELECTION' => 'Empty required field',
     'LBL_COLLECTION_EXACT' => 'Exact',
 
-    // fastcgi checks
-    'LBL_FASTCGI_LOGGING'      => 'For optimal experience using IIS/FastCGI sapi, set fastcgi.logging to 0 in your php.ini file.',
     //MB -Fixed Bug #32812 -Max
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_DESCRIPTION' => 'Description',
 
-  'LBL_NONE' => '-none-',
   'LBL_YESTERDAY'=> 'yesterday',
   'LBL_TODAY'=>'today',
   'LBL_TOMORROW'=>'tomorrow',
@@ -2448,6 +2442,7 @@ $app_strings = array (
     'LBL_QUICKEDIT_NODEFS_NAVIGATION'=> 'Navigating... ',
 
     'LBL_PENDING_NOTIFICATIONS' => 'Notifications',
+    'LBL_NOTIFICATIONS_NONE' => 'No Current Notifications',
     'LBL_ALT_ADD_TEAM_ROW' => 'Add new team row',
     'LBL_ALT_REMOVE_TEAM_ROW' => 'Remove team',
     'LBL_ALT_SPOT_SEARCH' => 'Spot Search',
@@ -2504,7 +2499,7 @@ $app_strings = array (
     'LBL_KEYBOARD_SHORTCUTS_HELP' => '<p><strong>Form Functionality - Alt+</strong><br/> I = ed<b>I</b>t (detailview)<br/> U = d<b>U</b>plicate (detailview)<br/> D = <b>D</b>elete (detailview)<br/> A = s<b>A</b>ve (editview)<br/> L = cance<b>L</b> (editview) <br/><br/></p><p><strong>Search and Navigation  - Alt+</strong><br/> 7 = first input on Edit form<br/> 8 = Advanced Search link<br/> 9 = First Search Form input<br/> 0 = Unified search input<br></p>' ,
 
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
-    'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See sugarcrm.log for more information)',
+    'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See suitecrm.log for more information)',
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
     'LBL_ACCOUNT_PRODUCT_QUOTE_LINK' => 'Quote',
     'LBL_ACCOUNT_PRODUCT_SALE_PRICE' => 'Sale Price',
@@ -2515,6 +2510,11 @@ $app_strings = array (
         '30' => 'Every 30 minutes',
         '60' => 'Every hour',
     ),
+
+    'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
+    'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
+    'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.'
+
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -2526,7 +2526,6 @@ $app_list_strings['project_priority_options'] = array (
     'Medium' => 'Medium',
     'Low' => 'Low',
 );
-
 
 $app_list_strings['kbdocument_status_dom'] = array (
     'Draft' => 'Draft',
@@ -3304,5 +3303,12 @@ $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
 //$app_list_strings['aok_status_list']['Published'] = 'Published';
 $app_list_strings['aok_status_list']['published_private'] = 'Private';
 $app_list_strings['aok_status_list']['published_public'] = 'Public';
+
+
+$app_list_strings['moduleList']['Reminders'] = 'Reminders';
+$app_list_strings['moduleListSingular']['Reminders'] = 'Reminder';
+
+$app_list_strings['moduleList']['Reminders_Invitees'] = 'Reminders_Invitees';
+$app_list_strings['moduleListSingular']['Reminders_Invitees'] = 'Reminder_Invitee';
 
 ?>

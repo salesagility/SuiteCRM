@@ -30,36 +30,10 @@ $viewdefs['AOR_Reports']['DetailView'] = array(
             'DUPLICATE',
             'DELETE',
             array (
-                'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'Export\';" value="{$MOD.LBL_EXPORT}">',
-                'sugar_html' =>
-                array (
-                    'type' => 'submit',
-                    'value' => '{$MOD.LBL_EXPORT}',
-                    'htmlOptions' =>
-                    array (
-                        'class' => 'button',
-                        'id' => 'export_button',
-                        'title' => '{$MOD.LBL_EXPORT}',
-                        'onclick' => 'this.form.action.value=\'Export\';',
-                        'name' => 'Export to CSV',
-                    ),
-                ),
+                'customCode' => '<input type="button" class="button" id="download_csv_button_old" value="{$MOD.LBL_EXPORT}">',
             ),
             array (
-                'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'DownloadPDF\';" value="{$MOD.LBL_DOWNLOAD_PDF}">',
-                'sugar_html' =>
-                array (
-                    'type' => 'submit',
-                    'value' => '{$MOD.LBL_DOWNLOAD_PDF}',
-                    'htmlOptions' =>
-                    array (
-                        'class' => 'button',
-                        'id' => 'download_pdf_button',
-                        'title' => '{$MOD.LBL_DOWNLOAD_PDF}',
-                        'onclick' => 'this.form.action.value=\'DownloadPDF\';',
-                        'name' => 'Download PDF Report',
-                    ),
-                ),
+                'customCode' => '<input type="button" class="button" id="download_pdf_button_old" value="{$MOD.LBL_DOWNLOAD_PDF}">',
             ),
             array (
                 'customCode' => '<input type="button" class="button" onClick="openProspectPopup();" value="{$MOD.LBL_ADD_TO_PROSPECT_LIST}">',

@@ -181,7 +181,7 @@ class OAuthPluginBase extends ExternalAPIBase implements ExternalOAuthAPIPlugin 
 
             $GLOBALS['log']->debug("OAuth request token: {$oauthReq} callback: $callback_url");
 
-            $request_token_info = $oauth->getRequestToken($oauthReq, $callback_url);
+            $request_token_info = $oauth->getRequestTokenByUrl($oauthReq, $callback_url);
 
             $GLOBALS['log']->debug("OAuth token: ".var_export($request_token_info, true));
 

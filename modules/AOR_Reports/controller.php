@@ -152,6 +152,7 @@ class AOR_ReportsController extends SugarController {
 
     protected function action_export()
     {
+        $this->bean->user_parameters = requestToUserParameters();
         $this->bean->build_report_csv();
         die;
     }
@@ -185,6 +186,7 @@ class AOR_ReportsController extends SugarController {
                 </tbody>
                 </table><br />';
 
+        $this->bean->user_parameters = requestToUserParameters();
 
         $printable = $this->bean->build_group_report(-1,false);
         $stylesheet = file_get_contents('themes/Suite7/css/style.css');
@@ -337,7 +339,7 @@ class AOR_ReportsController extends SugarController {
                 $valid_opp = array('Value','Field', 'Date', 'Period');
                 break;
             case 'enum':
-            case 'dynamicenum': 
+            case 'dynamicenum':
             case 'multienum':
                 $valid_opp = array('Value','Field', 'Multi');
                 break;
