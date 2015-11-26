@@ -177,6 +177,7 @@ $dictionary['Project'] = array(
             'importable' => 'required',
             'required' => true,
             'enable_range_search' => true,
+		    'options' => 'date_range_search_dom',
         ),
         'estimated_end_date' =>
         array(
@@ -187,6 +188,7 @@ $dictionary['Project'] = array(
             'importable' => 'required',
             'required' => true,
             'enable_range_search' => true,
+		    'options' => 'date_range_search_dom',
         ),
         'status' =>
         array(
