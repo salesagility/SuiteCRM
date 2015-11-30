@@ -304,7 +304,7 @@ class PackageManagerDisplay{
      * @param String div_id - this div in which to display the tree
      * @return Tree - the tree that is built
      */
-    function buildTreeView($div_id, $isAlive = true){
+    static function buildTreeView($div_id, $isAlive = true){
         $tree = new Tree($div_id);
         $nodes = array();
         if($isAlive)
