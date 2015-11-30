@@ -242,7 +242,7 @@ class SubPanel
 		return $modules;
 	}
 
-  static function getModuleSubpanels($module){
+  function getModuleSubpanels($module){
   	require_once('include/SubPanel/SubPanelDefinitions.php');
   		global $beanList, $beanFiles;
   		if(!isset($beanList[$module])){
