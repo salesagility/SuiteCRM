@@ -49,6 +49,14 @@ $viewdefs['AOR_Reports']['DetailView'] = array(
     'includes'=> array(
         array('file'=>'modules/AOR_Reports/AOR_Report.js'),
     ),
+    'tabDefs' =>
+        array (
+            'DEFAULT' =>
+                array (
+                    'newTab' => false,
+                    'panelDefault' => 'collapsed',
+                ),
+        ),
 ),
 
 'panels' =>array (
