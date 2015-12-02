@@ -29,6 +29,8 @@ var report_module = '';
 
 function loadConditionLine(condition, overrideView){
 
+    showConditionLines();
+
     var prefix = 'aor_conditions_';
     var ln = 0;
 
@@ -52,6 +54,10 @@ function loadConditionLine(condition, overrideView){
     }
 
     showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView);
+}
+
+function showConditionLines() {
+    $('#detailpanel_parameters').removeClass('hidden');
 }
 
 function showConditionCurrentModuleFields(ln, value){
