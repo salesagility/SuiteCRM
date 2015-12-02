@@ -61,6 +61,7 @@ $mod_strings = array (
   'LBL_EXPORT' => 'Export',
   'LBL_DOWNLOAD_PDF' => 'Download PDF',
   'LBL_ADD_TO_PROSPECT_LIST' => 'Add To Target List',
+  'LBL_AOR_MODULETREE_SUBPANEL_TITLE' => 'Module tree',
   'LBL_AOR_FIELDS_SUBPANEL_TITLE' => 'Fields',
   'LBL_AOR_CONDITIONS_SUBPANEL_TITLE' => 'Conditions',
   'LBL_TOTAL' => 'Total',
