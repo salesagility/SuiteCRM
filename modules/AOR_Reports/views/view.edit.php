@@ -35,7 +35,7 @@ class AOR_ReportsViewEdit extends ViewEdit {
     public function preDisplay() {
         global $app_list_strings;
         echo "<style type='text/css'>";
-        readfile('modules/AOR_Reports/css/edit.css');
+        //readfile('modules/AOR_Reports/css/edit.css');
         readfile('modules/AOR_Reports/js/jqtree/jqtree.css');
         echo "</style>";
         if (!is_file('cache/jsLanguage/AOR_Fields/' . $GLOBALS['current_language'] . '.js')) {
