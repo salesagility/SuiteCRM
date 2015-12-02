@@ -52,19 +52,21 @@ class AOR_Chart extends Basic {
 	}
 
     function save_lines(array $post,AOR_Report $bean,$postKey){
-        foreach($post[$postKey.'id'] as $key => $id){
-            if($id){
-                $aorChart = BeanFactory::getBean('AOR_Charts',$id);
-            }else{
-                $aorChart = BeanFactory::newBean('AOR_Charts');
+        if(isset($post[$postKey.'id'])) {
+            foreach ($post[$postKey . 'id'] as $key => $id) {
+                if ($id) {
+                    $aorChart = BeanFactory::getBean('AOR_Charts', $id);
+                } else {
+                    $aorChart = BeanFactory::newBean('AOR_Charts');
+                }
+                $aorChart->name = $post[$postKey . 'title'][$key];
+                $aorChart->type = $post[$postKey . 'type'][$key];
+                $aorChart->x_field = $post[$postKey . 'x_field'][$key];
+                $aorChart->y_field = $post[$postKey . 'y_field'][$key];
+                $aorChart->aor_report_id = $bean->id;
+                $aorChart->save();
+                $seenIds[] = $aorChart->id;
             }
-            $aorChart->name = $post[$postKey.'title'][$key];
-            $aorChart->type = $post[$postKey.'type'][$key];
-            $aorChart->x_field = $post[$postKey.'x_field'][$key];
-            $aorChart->y_field = $post[$postKey.'y_field'][$key];
-            $aorChart->aor_report_id = $bean->id;
-            $aorChart->save();
-            $seenIds[] = $aorChart->id;
         }
         //Any beans that exist but aren't in $seenIds must have been removed.
         foreach($bean->get_linked_beans('aor_charts','AOR_Charts') as $chart){
