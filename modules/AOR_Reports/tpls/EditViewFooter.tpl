@@ -174,31 +174,70 @@
     <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
     <div id="fieldTree"></div>
 </div>
-<div class="edit view edit508" id="detailpanel_fields" style="width: 80%; float: right;">
-    <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
-            <div id="fieldLines" style="min-height: 50px;">
-            </div>
-</div>
-<div class="edit view edit508" id="detailpanel_conditions" style="width: 80%; float: right;">
-    <h4>{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
-    <div id="conditionLines"  style="min-height: 50px;">
+
+{literal}
+<style type="text/css">
+    .tab-toggler {display: block; float: left;}
+    .tab-toggler.active .button {background-color: #286090;}
+</style>
+{/literal}
+<div class="tab-togglers">
+    <div class="tab-toggler toggle-detailpanel_fields active">
+        <h4 class="button">{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
+    </div>
+    <div class="tab-toggler toggle-detailpanel_conditions">
+        <h4 class="button">{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
+    </div>
+    <div class="tab-toggler toggle-detailpanel_charts">
+        <h4 class="button">{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
     </div>
 </div>
-<div class="edit view edit508" id="detailpanel_charts" style="width: 80%; float: right;">
-    <h4>{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
-    <div id="chartLines">
-        <table>
-            <thead id="chartHead" style="display: none;">
-                <tr>
-                    <td></td>
-                    <td>{$MOD.LBL_CHART_TITLE}</td>
-                    <td>{$MOD.LBL_CHART_TYPE}</td>
-                    <td>{$MOD.LBL_CHART_X_FIELD}</td>
-                    <td>{$MOD.LBL_CHART_Y_FIELD}</td>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+<div class="tab-panels">
+    <div class="edit view edit508" id="detailpanel_fields" style="width: 80%; float: right;">
+        <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
+                <div id="fieldLines" style="min-height: 50px;">
+                </div>
     </div>
-    <button id="addChartButton" type="button">{$MOD.LBL_ADD_CHART}</button>
+    <div class="edit view edit508 hidden" id="detailpanel_conditions" style="width: 80%; float: right;">
+        <h4>{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
+        <div id="conditionLines"  style="min-height: 50px;">
+        </div>
+    </div>
+    <div class="edit view edit508 hidden" id="detailpanel_charts" style="width: 80%; float: right;">
+        <h4>{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
+        <div id="chartLines">
+            <table>
+                <thead id="chartHead" style="display: none;">
+                    <tr>
+                        <td></td>
+                        <td>{$MOD.LBL_CHART_TITLE}</td>
+                        <td>{$MOD.LBL_CHART_TYPE}</td>
+                        <td>{$MOD.LBL_CHART_X_FIELD}</td>
+                        <td>{$MOD.LBL_CHART_Y_FIELD}</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <button id="addChartButton" type="button">{$MOD.LBL_ADD_CHART}</button>
+    </div>
 </div>
+{literal}
+<script type="text/javascript">
+    $(function(){
+        $('.tab-toggler').click(function(){
+            var marker = 'toggle-';
+            var classes = $(this).attr('class').split(' ');
+            $('.tab-togglers .tab-toggler').removeClass('active');
+            $(this).addClass('active');
+            $('.tab-panels .edit.view').addClass('hidden');
+            $.each(classes, function(i, cls){
+                if(cls.substring(0, marker.length) == marker) {
+                    var panelId = cls.substring(marker.length);
+                    $('#'+panelId).removeClass('hidden');
+                }
+            });
+        });
+    });
+</script>
+{/literal}
