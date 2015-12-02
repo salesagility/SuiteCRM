@@ -1,3 +1,6 @@
+<br>
+<br>
+
 {literal}
     <script src="modules/AOR_Reports/js/jqtree/tree.jquery.js"></script>
     <script src="modules/AOR_Fields/fieldLines.js"></script>
@@ -7,27 +10,27 @@
 <script>
     $(document).ready(function(){
         SUGAR.util.doWhen("typeof $('#fieldTree').tree != 'undefined'", function(){
-        $('#fieldTree').tree({
-            data: {},
-            dragAndDrop: true,
-            selectable: true,
-            onDragStop: function(node, e,thing){
-                var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
-                if(node.type != 'field'){
-                    return;
-                }
-                if(target.closest('#fieldLines').length > 0){
-                    addNodeToFields(node);
-                    updateChartDimensionSelects();
-                }else if(target.closest('#conditionLines').length > 0){
-                    addNodeToConditions(node);
-                }
+            var $moduleTree = $('#fieldTree').tree({
+                data: {},
+                dragAndDrop: false,
+                //selectable: true,
+                onDragStop: function(node, e,thing){
+//                    var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
+//                    if(node.type != 'field'){
+//                        return;
+//                    }
+//                    if(target.closest('#fieldLines').length > 0){
+//                        addNodeToFields(node);
+//                        updateChartDimensionSelects();
+//                    }else if(target.closest('#conditionLines').length > 0){
+//                        addNodeToConditions(node);
+//                    }
 
-            },
-            onCanMoveTo: function(){
-                return false;
-            }
-        });
+                },
+                onCanMoveTo: function(){
+                    return false;
+                }
+            });
 
         function loadTreeData(module, node){
             $.getJSON('index.php',
@@ -43,37 +46,90 @@
             );
         }
 
-        function loadTreeLeafData(node){
-            $.getJSON('index.php',
-                    {
-                        'module' : 'AOR_Reports',
-                        'action' : 'getModuleFields',
-                        'aor_module' : node.module,
-                        'view' : 'JSON'
-                    },
-                    function(fieldData){
-                        var treeData = [];
+            var treeDataLeafs = [];
 
-                        for(var field in fieldData){
-                            if(field) {
-                                treeData.push(
-                                        {
-                                            id: field,
-                                            label: fieldData[field],
-                                            'load_on_demand' : false,
-                                            type: 'field',
-                                            module: node.module,
-                                            module_path : node.module_path,
-                                            module_path_display: node.module_path_display
-                                        });
+            var dropFieldLine = function(node) {
+                addNodeToFields(node);
+                updateChartDimensionSelects();
+            };
+
+            var dropConditionLine = function(node) {
+                addNodeToConditions(node);
+            };
+
+            var showTreeDataLeafs = function(treeDataLeafs, module) {
+                $('#module-name').html('(' + module + ')');
+                $('#fieldTreeLeafs').remove();
+                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox"></div>');
+                $('#fieldTreeLeafs').tree({
+                    data: treeDataLeafs,
+                    dragAndDrop: true,
+                    selectable: true,
+                    onDragStop: function(node, e,thing){
+                        var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
+                        if(node.type != 'field'){
+                            return;
+                        }
+                        if(target.closest('#fieldLines').length > 0){
+                            dropFieldLine(node);
+                        }else if(target.closest('#conditionLines').length > 0){
+                            dropConditionLine(node);
+                        }
+                        else if(target.closest('.tab-toggler').length > 0) {
+                            target.closest('.tab-toggler').click();
+                            if(target.closest('.tab-toggler').hasClass('toggle-detailpanel_fields')) {
+                                dropFieldLine(node);
+                            }
+                            else if (target.closest('.tab-toggler').hasClass('toggle-detailpanel_conditions')) {
+                                dropConditionLine(node);
                             }
                         }
-                        $('#fieldTree').tree('loadData',treeData,node);
-                        node.loaded = true;
-                        $('#fieldTree').tree('openNode', node);
 
+                    },
+                    onCanMoveTo: function(){
+                        return false;
                     }
-            );
+                });
+            };
+
+        function loadTreeLeafData(node){
+            var module = node.module;
+            if(!treeDataLeafs[module]) {
+                $.getJSON('index.php',
+                        {
+                            'module': 'AOR_Reports',
+                            'action': 'getModuleFields',
+                            'aor_module': node.module,
+                            'view': 'JSON'
+                        },
+                        function (fieldData) {
+                            var treeData = [];
+
+                            for (var field in fieldData) {
+                                if (field) {
+                                    treeData.push(
+                                            {
+                                                id: field,
+                                                label: fieldData[field],
+                                                'load_on_demand': false,
+                                                type: 'field',
+                                                module: node.module,
+                                                module_path: node.module_path,
+                                                module_path_display: node.module_path_display
+                                            });
+                                }
+                            }
+                            //$('#fieldTree').tree('loadData',treeData,node);
+                            //node.loaded = true;
+                            //$('#fieldTree').tree('openNode', node);
+                            treeDataLeafs[module] = treeData;
+                            showTreeDataLeafs(treeDataLeafs[module], module);
+                        }
+                );
+            }
+            else {
+                showTreeDataLeafs(treeDataLeafs[module], module);
+            }
         }
 
         function processTreeData(relData, node){
@@ -169,18 +225,28 @@
         });
     });
 </script>
-{/literal}
-<div class="edit view edit508" id="detailpanel_fields_select" style="float: left; width: 15%; height: 500px; overflow-y: auto;">
-    <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
-    <div id="fieldTree"></div>
-</div>
 
-{literal}
 <style type="text/css">
+    #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto;}
+    .dragbox {height: 250px; overflow: scroll;}
     .tab-toggler {display: block; float: left;}
     .tab-toggler.active .button {background-color: #286090;}
+    .tab-panels .edit.view {width: 80%; float: right;}
 </style>
+
 {/literal}
+
+<div class="edit view edit508" id="detailpanel_fields_select">
+    <h4>{$MOD.LBL_AOR_MODULETREE_SUBPANEL_TITLE}</h4>
+    <div id="fieldTree" class="dragbox"></div>
+
+    <br>
+
+    <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} <span id="module-name"></span></h4>
+    <div id="fieldTreeLeafs" class="dragbox"></div>
+
+</div>
+
 <div class="tab-togglers">
     <div class="tab-toggler toggle-detailpanel_fields active">
         <h4 class="button">{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
@@ -192,18 +258,23 @@
         <h4 class="button">{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
     </div>
 </div>
+
 <div class="tab-panels">
-    <div class="edit view edit508" id="detailpanel_fields" style="width: 80%; float: right;">
+
+    <br>
+    <br>
+
+    <div class="edit view edit508" id="detailpanel_fields">
         <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
                 <div id="fieldLines" style="min-height: 50px;">
                 </div>
     </div>
-    <div class="edit view edit508 hidden" id="detailpanel_conditions" style="width: 80%; float: right;">
+    <div class="edit view edit508 hidden" id="detailpanel_conditions">
         <h4>{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
         <div id="conditionLines"  style="min-height: 50px;">
         </div>
     </div>
-    <div class="edit view edit508 hidden" id="detailpanel_charts" style="width: 80%; float: right;">
+    <div class="edit view edit508 hidden" id="detailpanel_charts">
         <h4>{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
         <div id="chartLines">
             <table>
@@ -225,11 +296,12 @@
 {literal}
 <script type="text/javascript">
     $(function(){
-        $('.tab-toggler').click(function(){
+
+        var reportToggler = function(elem) {
             var marker = 'toggle-';
-            var classes = $(this).attr('class').split(' ');
+            var classes = $(elem).attr('class').split(' ');
             $('.tab-togglers .tab-toggler').removeClass('active');
-            $(this).addClass('active');
+            $(elem).addClass('active');
             $('.tab-panels .edit.view').addClass('hidden');
             $.each(classes, function(i, cls){
                 if(cls.substring(0, marker.length) == marker) {
@@ -237,6 +309,10 @@
                     $('#'+panelId).removeClass('hidden');
                 }
             });
+        };
+
+        $('.tab-toggler').click(function(){
+            reportToggler(this);
         });
     });
 </script>
