@@ -720,10 +720,10 @@ $mod_strings = array(
 
 'LBL_ILLEGAL_FIELD_VALUE' =>"Drop down key cannot contain quotes.",
 'LBL_CONFIRM_SAVE_DROPDOWN' =>"You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-'LBL_POPHELP_VALIDATE_US_PHONE'=>"Select to validate this field for the entry of a 10-digit<br>" .
-					             "phone number, with allowance for the country code 1, and<br>" .
-                                 "to apply a U.S. format to the phone number when the record<br>" .
-                                 "is saved. The following format will be applied: (xxx) xxx-xxxx.",
+'LBL_POPHELP_VALIDATE_US_PHONE'=>'"Select to validate this field for the entry of a 10-digit<br>"
+				"phone number, with allowance for the country code 1, and<br>"
+                                "to apply a U.S. format to the phone number when the record<br>"
+                                "is saved. The following format will be applied: (xxx) xxx-xxxx."',
 'LBL_ALL_MODULES'=>'All Modules',
 'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );
