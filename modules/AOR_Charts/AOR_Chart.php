@@ -52,6 +52,7 @@ class AOR_Chart extends Basic {
 	}
 
     function save_lines(array $post,AOR_Report $bean,$postKey){
+        $seenIds = array();
         if(isset($post[$postKey.'id'])) {
             foreach ($post[$postKey . 'id'] as $key => $id) {
                 if ($id) {
