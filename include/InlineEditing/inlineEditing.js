@@ -250,7 +250,7 @@ function getInputValue(field,type){
                 break;
             case 'enum':
                 if($('#'+ field + ' :selected').text().length > 0){
-                    return $('#'+ field + ' :selected').text();
+                    return $('#'+ field + ' :selected').val();
                 }
                 break;
             case 'datetime':

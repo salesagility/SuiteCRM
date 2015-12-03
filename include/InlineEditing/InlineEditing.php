@@ -425,7 +425,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save", $view)
     }
 
     //if field is of type radio.
-    if ($vardef['type'] == "radioenum") {
+    if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum") {
         $value = $app_list_strings[$vardef['options']][$value];
     }
 
