@@ -307,3 +307,8 @@
 {/literal}
 
 </div>
+
+<div style="clear: both;"></div>
+<div style="display: block; float: none;">
+    {{include file="include/EditView/footer.tpl"}}
+</div>
