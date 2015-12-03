@@ -1,5 +1,5 @@
-<br>
-<br>
+<div id="report-editview-footer">
+
 
 {literal}
     <script src="modules/AOR_Reports/js/jqtree/tree.jquery.js"></script>
@@ -227,25 +227,16 @@
 </script>
 
 <style type="text/css">
-    #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto;}
+    #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
     .dragbox {height: 250px; overflow: scroll;}
+    .tab-togglers {width: 80%;}
     .tab-toggler {display: block; float: left;}
     .tab-toggler.active .button {background-color: #286090;}
-    .tab-panels .edit.view {width: 80%; float: right;}
+    .tab-panels .edit.view {/*width: 80%; float: right;*/}
 </style>
 
 {/literal}
 
-<div class="edit view edit508" id="detailpanel_fields_select">
-    <h4>{$MOD.LBL_AOR_MODULETREE_SUBPANEL_TITLE}</h4>
-    <div id="fieldTree" class="dragbox"></div>
-
-    <br>
-
-    <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} <span id="module-name"></span></h4>
-    <div id="fieldTreeLeafs" class="dragbox"></div>
-
-</div>
 
 <div class="tab-togglers">
     <div class="tab-toggler toggle-detailpanel_fields active">
@@ -261,21 +252,18 @@
 
 <div class="tab-panels">
 
-    <br>
-    <br>
-
     <div class="edit view edit508" id="detailpanel_fields">
-        <h4>{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
+        <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
                 <div id="fieldLines" style="min-height: 50px;">
                 </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
-        <h4>{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
+        <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div id="conditionLines"  style="min-height: 50px;">
         </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_charts">
-        <h4>{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
+        <h4><!-- {$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div id="chartLines">
             <table>
                 <thead id="chartHead" style="display: none;">
@@ -317,3 +305,5 @@
     });
 </script>
 {/literal}
+
+</div>

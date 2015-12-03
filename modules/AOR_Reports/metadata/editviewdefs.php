@@ -44,7 +44,8 @@ array (
       ),
       'useTabs' => false,
         'form' => array(
-            'footerTpl' => 'modules/AOR_Reports/tpls/EditViewFooter.tpl'
+            'headerTpl' => 'modules/AOR_Reports/tpls/EditViewHeader.tpl',
+            'footerTpl' => 'modules/AOR_Reports/tpls/EditViewFooter.tpl',
         ),
     ),
     'panels' => 
