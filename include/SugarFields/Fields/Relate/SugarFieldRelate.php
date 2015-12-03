@@ -161,6 +161,7 @@ class SugarFieldRelate extends SugarFieldBase {
     }
 
     function getPopupViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex){
+        $displayParams['formName'] = 'popup_query_form'; // Bug Fix #722
     	return $this->getSearchViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
 
