@@ -101,11 +101,12 @@ function getModuleTreeData($module){
     global $beanList, $app_list_strings;
 
     $sort_fields = array();
+    $module_label = isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module;
     $fields = array(
-        $module =>  array('label' => $app_list_strings['moduleList'][$module],
+        $module =>  array('label' => $module_label,
                         'type' => 'module',
                         'module' => $module,
-                        'module_label'=> $app_list_strings['moduleList'][$module])
+                        'module_label'=> $module_label)
     );
 
     if ($module != '') {
@@ -120,7 +121,8 @@ function getModuleTreeData($module){
                 }
 
                 if(isset($arr['vname']) && $arr['vname'] != '') {
-                    $label = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
+                    $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
+                    $label = $rel_module_label .' : '.translate($arr['vname'],$mod->module_dir);
                     $module_label = trim(translate($arr['vname'],$mod->module_dir),':');
                 }else {
                     $label = $app_list_strings['moduleList'][$rel_module].' : '. $name;
