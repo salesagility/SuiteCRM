@@ -26,10 +26,14 @@
  
 class templateParser{
 		function parse_template_bean($string, $key, &$focus) {
-		global $app_strings;
+		global $app_strings, $current_user;
 			$repl_arr = array();
 			
 			foreach($focus->field_defs as $field_def) {
+				if(empty($field_def) || empty($field_def['type']) || empty($field_def['name'])) {
+					continue; // Ignore empty values
+				}
+
                 if($field_def['type'] == 'currency'){
                     $repl_arr[$key."_".$field_def['name']] = currency_format_number($focus->$field_def['name'],$params = array('currency_symbol' => false));
                 }
@@ -43,6 +47,28 @@ class templateParser{
                 else if($field_def['type'] == 'int') {
                     $repl_arr[$key."_".$field_def['name']] = strval($focus->$field_def['name']);
                 }
+				else if($field_def['type'] == 'date' || $field_def['dbType']== 'date') {
+					if(!empty($focus->$field_def['name'])) {
+						$userDateTimePreferences = $current_user->getUserDateTimePreferences();
+						$user_date = DateTime::createFromFormat($userDateTimePreferences['date'], $focus->$field_def['name']);
+						if(!empty($user_date)) {
+							$focus->$field_def['name'] = $user_date->format($userDateTimePreferences['date']);
+						}
+					}
+					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
+				}
+				else if($field_def['type'] == 'datetime' || $field_def['dbType']== 'datetime') {
+					if(!empty($focus->$field_def['name'])) {
+						$userDateTimePreferences = $current_user->getUserDateTimePreferences();
+						$datetime_format = str_replace('Y', 'y', 'h:ia '.$userDateTimePreferences['date']);
+
+						$user_date = DateTime::createFromFormat($userDateTimePreferences['date'].' '.$userDateTimePreferences['time'], $focus->$field_def['name']);
+						if(!empty($user_date)) {
+							$focus->$field_def['name'] = $user_date->format($datetime_format);
+						}
+					}
+					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
+				}
                 else {
 					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
 				}
@@ -80,12 +106,6 @@ class templateParser{
 				if ($name === 'aos_products_quotes_vat'||strpos($name,'pct')>0 || strpos($name,'percent')>0 || strpos($name,'percentage')>0){
 					$sep = get_number_seperators();
 					$value=rtrim(rtrim(format_number($value), '0'),$sep[1]).$app_strings['LBL_PERCENTAGE_SYMBOL'];
-				}
-				if (strpos($name,'date')>0 || strpos($name,'expiration')>0){
-					if($value != ''){
-					$dt = explode(' ',$value);
-					$value = $dt[0];
-					}
 				}
 				if($value != '' && is_string($value)) {
 					$string = str_replace("\$$name", $value, $string);
