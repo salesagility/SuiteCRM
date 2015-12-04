@@ -67,10 +67,10 @@ array (
           ),
           1 => '',
         ),
-        2 => 
-        array (
-          0 => 'description',
-        ),
+//        2 =>
+//        array (
+//          0 => 'description',
+//        ),
       ),
     ),
   ),
