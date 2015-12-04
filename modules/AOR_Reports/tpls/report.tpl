@@ -14,8 +14,10 @@
             document.getElementById('detailpanel_parameters').className += ' expanded';
         </script>
     </h4>
+	<form id="reportParametersForm" name="reportParametersForm">
     <div id="conditionLines"  style="min-height: 50px;">
     </div>
+	</form>
     <button id='updateParametersButton' type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
     <script>
         {literal}

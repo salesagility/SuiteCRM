@@ -80,7 +80,17 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $params = $this->getReportParameters();
         echo "<script>var reportParameters = ".json_encode($params).";</script>";
     }
-
+	public function display(){
+		parent::display();
+		//overridden set_return function to populate relate fields
+		echo '<script type="text/javascript">
+		function set_return(collection, field_id){
+			$.each(collection["name_to_value_array"], function( index, value ){
+				document.getElementById(index).value = value;
+			});
+		}
+		</script>';
+	}
 
 
 }

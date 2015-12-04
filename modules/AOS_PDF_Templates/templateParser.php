@@ -43,6 +43,9 @@ class templateParser{
                 else if($field_def['type'] == 'int') {
                     $repl_arr[$key."_".$field_def['name']] = strval($focus->$field_def['name']);
                 }
+                else if($field_def['type'] == 'wysiwyg') {
+                    $repl_arr[$key."_".$field_def['name']] = html_entity_decode($focus->$field_def['name'], ENT_COMPAT, 'UTF-8');
+                }
                 else {
 					$repl_arr[$key."_".$field_def['name']] = $focus->$field_def['name'];
 				}
