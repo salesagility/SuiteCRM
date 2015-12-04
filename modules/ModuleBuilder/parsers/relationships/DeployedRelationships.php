@@ -54,7 +54,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         $this->load () ;
     }
 
-    static function findRelatableModules ()
+    static function findRelatableModules ($includeActivitiesSubmodules = true)
     {
         return parent::findRelatableModules ( true ) ;
     }
