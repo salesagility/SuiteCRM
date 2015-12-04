@@ -2105,7 +2105,7 @@ private function dir_file_count($path){
 	 *
 	 * @return an array of errors
 	 */
-	function getErrors(){
+	static function getErrors(){
 		if(!empty($_SESSION['MODULEINSTALLER_ERRORS'])){
 			$errors = $_SESSION['MODULEINSTALLER_ERRORS'];
 			unset($_SESSION['MODULEINSTALLER_ERRORS']);
