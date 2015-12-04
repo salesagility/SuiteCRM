@@ -519,7 +519,7 @@ class PackageManagerDisplay{
         return $str;
     }
 
-    function getHeader(){
+    static function getHeader(){
     	global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");
