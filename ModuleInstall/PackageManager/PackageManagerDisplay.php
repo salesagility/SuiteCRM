@@ -377,7 +377,7 @@ class PackageManagerDisplay{
      *
      * @return String - the javascript required for the page
      */
-    function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true){
+    static function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true){
         global $sugar_version, $sugar_config;
         global $current_language;
 
