@@ -476,7 +476,7 @@ class PackageManagerDisplay{
         return $output;
     }
 
-    function createJavascriptModuleArray($modules, $variable_name = 'mti_data'){
+    static function createJavascriptModuleArray($modules, $variable_name = 'mti_data'){
         $output = "var ".$variable_name." = [";
         $count = count($modules);
         $index = 1;
