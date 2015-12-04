@@ -141,7 +141,7 @@ class DocumentRevision extends SugarBean {
 		return "$this->filename";
 	}
 
-	function retrieve($id, $encode=false, $deleted=true){
+	function retrieve($id = -1, $encode=false, $deleted=true){
 		$ret = parent::retrieve($id, $encode,$deleted);	
 		
 		return $ret;
@@ -259,7 +259,7 @@ class DocumentRevision extends SugarBean {
 		}	
 	}
 	
-	function list_view_parse_additional_sections(&$list_form, $xTemplateSection){
+	function list_view_parse_additional_sections(&$list_form/*, $xTemplateSection*/){
 		return $list_form;
 	}
 	

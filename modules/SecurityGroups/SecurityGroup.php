@@ -132,7 +132,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     /**
      * @returns true if group is assigned to the record
      */
-    function groupHasAccess($module,$id, $action = '')
+    static function groupHasAccess($module,$id, $action = '')
     {
         if(!isset($id) || $id == '[SELECT_ID_LIST]')
         {
@@ -168,7 +168,7 @@ class SecurityGroup extends SecurityGroup_sugar {
         return false;
     }
 
-    function inherit(&$focus,$isUpdate)
+    static function inherit(&$focus,$isUpdate)
     {
         global $sugar_config;
         SecurityGroup::assign_default_groups($focus,$isUpdate); //this must be first because it does not check for dups
@@ -201,7 +201,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function assign_default_groups(&$focus,$isUpdate)
+    static function assign_default_groups(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -238,7 +238,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_creator(&$focus,$isUpdate)
+    static function inherit_creator(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -275,7 +275,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_assigned(&$focus,$isUpdate)
+    static function inherit_assigned(&$focus,$isUpdate)
     {
         global $sugar_config;
         global $current_user;
@@ -311,7 +311,7 @@ class SecurityGroup extends SecurityGroup_sugar {
 
     }
 
-    function inherit_parent(&$focus,$isUpdate)
+    static function inherit_parent(&$focus,$isUpdate)
     {
         global $sugar_config;
         //new record or if update from soap api for cases or bugs
@@ -382,7 +382,7 @@ class SecurityGroup extends SecurityGroup_sugar {
                             $relate_parent_id = $_REQUEST[$def['id_name']];
                             $relate_parent_type = $def['module'];
 
-                            SecurityGroup::inherit_parentQuery($focus, $relate_parent_type, $relate_parent_id, $focus_id, $focus_module_dir);
+                            SecurityGroup::inherit_parentQuery($focus,$relate_parent_type, $relate_parent_id, $focus_id, $focus_module_dir);
                         } else if(isset($_SESSION['portal_id']) && isset($_SESSION[$def['id_name']])) { //catch soap account
                             $relate_parent_id = $_SESSION[$def['id_name']];
                             $relate_parent_type = $def['module'];
@@ -415,9 +415,9 @@ class SecurityGroup extends SecurityGroup_sugar {
         $query .= ",r.securitygroup_id,'$focus_id','$focus_module_dir',".db_convert('','today').",0 "
                 ."from securitygroups_records r "
                 ."inner join securitygroups g on r.securitygroup_id = g.id and g.deleted = 0 and (g.noninheritable is null or g.noninheritable <> 1) "
-                ."left join securitygroups_records d on d.securitygroup_id = r.securitygroup_id and d.record_id = '$focus_id' and d.module = '$focus_module_dir' and d.deleted = 0 "
-                ."where d.id is null and r.module = '$parent_type' "
-                ."and r.record_id = '$parent_id' "
+                ."left join securitygroups_records d on d.securitygroup_id = r.securitygroup_id and d.record_id = '" .$focus->db->quote($focus_id) . "' and d.module = '" .$focus->db->quote($focus_module_dir) . "' and d.deleted = 0 "
+                ."where d.id is null and r.module = '" .$focus->db->quote($parent_type) . "' "
+                ."and r.record_id = '" .$focus->db->quote($parent_id) ."' "
                 ."and r.deleted = 0 ";
                 //using left join instead
                 //and not exists (select top 1 s.id from securitygroups_records s where s.deleted = 0 and s.record_id = '$focus_id' and s.securitygroup_id = r.securitygroup_id and s.module = '$focus_module_dir') ";
@@ -485,6 +485,7 @@ class SecurityGroup extends SecurityGroup_sugar {
     }
 
     function retrieveDefaultGroups() {
+        global $db;
 
         $default_groups = array();
         $query = "select securitygroups_default.id, securitygroups.name, securitygroups_default.module, securitygroups_default.securitygroup_id "
@@ -492,8 +493,8 @@ class SecurityGroup extends SecurityGroup_sugar {
                 ."inner join securitygroups on securitygroups_default.securitygroup_id = securitygroups.id "
                 ."where securitygroups_default.deleted = 0 and securitygroups.deleted = 0";
         $GLOBALS['log']->debug("SecuritySuite: Retrieve Default Groups: $query");
-        $result = $this->db->query($query);
-        while(($row=$this->db->fetchByAssoc($result)) != null) {
+        $result = $db->query($query);
+        while(($row=$db->fetchByAssoc($result)) != null) {
             $default_groups[$row['id']] = array('group'=>$row['name'],'module'=>$row['module'],'securitygroup_id'=>$row['securitygroup_id']);
         }
 
@@ -508,13 +509,13 @@ class SecurityGroup extends SecurityGroup_sugar {
                 } else if($this->db->dbType == 'mssql') {
                     $query .= " lower(newid()) ";
                 }
-        $query .= ",'$group_id', '$module',".db_convert('','today').",0 )";
+        $query .= ",'" . htmlspecialchars($group_id , ENT_QUOTES) ."', '" . htmlspecialchars($group_id , ENT_QUOTES) . "',".db_convert('','today').",0 )";
         $GLOBALS['log']->debug("SecuritySuite: Save Default Group: $query");
         $this->db->query($query);
     }
 
     function removeDefaultGroup($default_id) {
-        $query = "delete from securitygroups_default where id = '$default_id' ";
+        $query = "delete from securitygroups_default where id = '" . htmlspecialchars($default_id) ."' ";
         $this->db->query($query);
     }
 

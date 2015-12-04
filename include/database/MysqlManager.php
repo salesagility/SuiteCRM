@@ -281,7 +281,7 @@ class MysqlManager extends DBManager
 	/**
 	 * @see DBManager::checkQuery()
 	 */
-	protected function checkQuery($sql)
+	protected function checkQuery($sql, $object_name = false)
 	{
 		$result   = $this->query('EXPLAIN ' . $sql);
 		$badQuery = array();
@@ -497,7 +497,7 @@ class MysqlManager extends DBManager
 					if(isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
 						sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
 					} else {
-						sugar_die("Could not connect to the database. Please refer to sugarcrm.log for details.");
+						sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
 					}
 				} else {
 					return false;

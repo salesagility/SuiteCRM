@@ -50,11 +50,10 @@ $mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. '. 
 'Keep in mind that the standard Google Maps usage limit is 2500 requests per day. '.
 'This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';
-$mod_strings['LBL_CRON_URL'] = 'CRON URL';
 $mod_strings['LBL_CRON_INSTRUCTIONS'] = 'To process the geocoding requests it is recommended to setup a nightly Cron-Job. '.
 'A custom entry point has been created for this purpose and can be accessed without authentication. '.
 'The URL shown below is meant to be used with an Administrative Scheduled Task. '.
-'Please see the SugarCRM documentation for more information.';
+'Please see the documentation for more information.';
 $mod_strings['LBL_EXPORT_ADDRESS_URL'] = 'Export URLs';
 $mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use the links below to export full addresses in need of geocodeing information. '.
 'Then use an online or offline batch geocoding tool to geocode the addresses. '.
@@ -129,7 +128,7 @@ $mod_strings['LBL_CONFIG_ADDRESS_CACHE_SAVE_ENABLED_DESC'] = "'address_cache_sav
 
 $mod_strings['LBL_CONFIG_LOGIC_HOOKS_SETTINGS_TITLE'] = 'Logic Hooks Setting:';
 $mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_TITLE'] = 'Enable All Logic Hooks: ';
-$mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_DESC'] = "'logic_hooks_enabled' allows logic hooks for automatic updating based on related objects. It is recommended to disable when upgrading your SugarCRM.";
+$mod_strings['LBL_CONFIG_LOGIC_HOOKS_ENABLED_DESC'] = "'logic_hooks_enabled' allows logic hooks for automatic updating based on related objects. It is recommended to disable when upgrading your SuiteCRM.";
 
 $mod_strings['LBL_CONFIG_MARKER_MAPPING_SETTINGS_TITLE'] = 'Marker/Mapping Settings:';
 $mod_strings['LBL_CONFIG_MAP_MARKERS_LIMIT_TITLE'] = "Map Markers Limit:";

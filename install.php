@@ -37,6 +37,20 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+ 
+@session_start();
+if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
+	session_start();
+	session_destroy();
+	header('Location: install.php');
+	echo 'session clean, page refresh...';
+	exit;
+}
+ 
+//  recover smtp settings
+if(isset($_POST['smtp_tab_selected'])) {
+    $_POST = array_merge($_POST, $_POST[$_POST['smtp_tab_selected']]);
+}
 
 //session_destroy();
 if (version_compare(phpversion(),'5.2.0') < 0) {
@@ -144,6 +158,8 @@ if($current_language != 'en_us') {
 	include('install/language/en_us.lang.php');
 	$mod_strings = sugarLangArrayMerge($mod_strings, $my_mod_strings);
 }
+
+$app_list_strings = return_app_list_strings_language($current_language);
 ////	END INSTALLER LANGUAGE
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -158,21 +174,127 @@ if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint')
 }
 
 if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
-//if this is a system check, then just run the check and return,
-//this is an ajax call and there is no need for further processing
-if(isset($_REQUEST['checkInstallSystem']) && ($_REQUEST['checkInstallSystem'])){
-    require_once('install/installSystemCheck.php');
-    echo runCheck($install_script, $mod_strings);
-    return;
-}
+    //if this is a system check, then just run the check and return,
+    //this is an ajax call and there is no need for further processing
 
-//if this is a DB Settings check, then just run the check and return,
-//this is an ajax call and there is no need for further processing
-if(isset($_REQUEST['checkDBSettings']) && ($_REQUEST['checkDBSettings'])){
-    require_once('install/checkDBSettings.php');
-    echo checkDBSettings();
-    return;
-}
+    if(isset($_REQUEST['uploadLogoFrame']) && ($_REQUEST['uploadLogoFrame'])){
+        echo 'I\'m an uploader iframe!';
+        return;
+    }
+
+        // upload company logo
+    if(isset($_REQUEST['uploadLogo']) && ($_REQUEST['uploadLogo'])){
+        $filepath = '';
+        $errors = array();
+
+        switch($_FILES['company_logo']['error']) {
+
+            case UPLOAD_ERR_OK:
+                $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG/*, IMAGETYPE_GIF */);
+                $detectedType = exif_imagetype($_FILES['company_logo']['tmp_name']);
+                if(!in_array($detectedType, $allowedTypes)) {
+                    $errors[] = $mod_strings['ERR_UPLOAD_FILETYPE'];
+                }
+                else {
+                    // uploaded image stored in the /custom path instead of put into the original theme directory..
+
+                    mkdir_recursive('custom/' . SugarThemeRegistry::current()->getDefaultImagePath(), true);
+                    $tmpvar = explode('?', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+                    $destFile = 'custom/' . $tmpvar[0];
+                    if (!move_uploaded_file($_FILES['company_logo']['tmp_name'], $destFile)) {
+                        $errors[] = $mod_strings['ERR_LANG_UPLOAD_1'];
+                    }
+                    else {
+                        $filepath = $destFile;
+                    }
+                }
+                break;
+
+            case UPLOAD_ERR_INI_SIZE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_INI_SIZE'];
+                break;
+
+            case UPLOAD_ERR_FORM_SIZE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_FORM_SIZE'];
+                break;
+
+            case UPLOAD_ERR_PARTIAL:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_PARTIAL'];
+                break;
+
+            case UPLOAD_ERR_NO_FILE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_FILE'];
+                break;
+
+            case UPLOAD_ERR_NO_TMP_DIR:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_NO_TMP_DIR'];
+                break;
+
+            case UPLOAD_ERR_CANT_WRITE:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_CANT_WRITE'];
+                break;
+
+            case UPLOAD_ERR_EXTENSION:
+                $errors[] = $mod_strings['ERR_UPLOAD_FILE_UPLOAD_ERR_EXTENSION'];
+                break;
+            default:
+                $errors[] = $mod_strings['ERR_LANG_UPLOAD_UNKNOWN'];
+                break;
+        }
+
+
+        $result['filepath'] = $filepath;
+        $result['errors'] = $errors ? $errors : false;
+
+        // TODO--low: validate file size & image width/height and save, show status result to client js
+
+        echo "<script>window.top.window.{$_REQUEST['callback']}(" . json_encode($result) . ");</script>";
+        return;
+    }
+
+    if(isset($_REQUEST['storeConfig']) && ($_REQUEST['storeConfig'])){
+        // store configuration by form to session
+        if(!isset($_SESSION)) session_start();
+        $_SESSION = array_merge($_SESSION, $_POST);
+
+        // TODO--low: don't forget the custom type install settings! validate here..
+//        if(count($validation_errors = validate_dbConfig('a')) > 0) {
+//            $si_errors = true;
+//        }
+//        else if(count($validation_errors = validate_siteConfig('a')) > 0) {
+//            $si_errors = true;
+//        }
+//        else if(count($validation_errors = validate_siteConfig('b')) > 0) {
+//            $si_errors = true;
+//        }
+        $errors = '';
+        if( isset($validation_errors) && is_array($validation_errors)){
+            if( count($validation_errors) > 0 ){
+               // $errors  = '<div id="errorMsgs">';
+                $errors .= '<p>'.$mod_strings['LBL_SITECFG_FIX_ERRORS'].'</p><ul>';
+                foreach( $validation_errors as $error ){
+                    $errors .= '<li class="error">' . $error . '</li>';
+                }
+                $errors .= '</ul>'; //</div>';
+            }
+        }
+        echo $errors;
+        return;
+    }
+
+    if(isset($_REQUEST['checkInstallSystem']) && ($_REQUEST['checkInstallSystem'])){
+        require_once('install/installSystemCheck.php');
+        echo runCheck($install_script, $mod_strings);
+        return;
+    }
+
+    //if this is a DB Settings check, then just run the check and return,
+    //this is an ajax call and there is no need for further processing
+    if(isset($_REQUEST['checkDBSettings']) && ($_REQUEST['checkDBSettings'])){
+        require_once('install/checkDBSettings.php');
+        echo checkDBSettings();
+        return;
+    }
 }
 
 //maintaining the install_type if earlier set to custom
@@ -196,11 +318,14 @@ $next_step = 0;
 // use a simple array to map out the steps of the installer page flow
 $workflow = array(  'welcome.php',
                     'ready.php',
-                    'license.php',
-                    'installType.php',
+
+                    // TODO-g: remove these files..
+                    //'license.php',
+                    //'installType.php',
 );
-$workflow[] =  'systemOptions.php';
-$workflow[] = 'dbConfig_a.php';
+$workflow[] = 'installConfig.php';
+//$workflow[] =  'systemOptions.php';
+//$workflow[] = 'dbConfig_a.php';
 //$workflow[] = 'dbConfig_b.php';
 
 //define web root, which will be used as default for site_url
@@ -213,7 +338,7 @@ $web_root = str_replace("/install.php", "", $web_root);
 $web_root = "http://$web_root";
 
 if (!isset($_SESSION['oc_install']) || $_SESSION['oc_install'] == false) {
-    $workflow[] = 'siteConfig_a.php';
+    //$workflow[] = 'siteConfig_a.php';
     if (isset($_SESSION['install_type']) && !empty($_SESSION['install_type']) &&
          $_SESSION['install_type'] == 'custom') {
             $workflow[] = 'siteConfig_b.php';
@@ -253,8 +378,8 @@ if (!isset($_SESSION['cache_dir']) || empty($_SESSION['cache_dir'])) {
     $_SESSION['cache_dir'] = isset($sugar_config['cache_dir']) ? $sugar_config['cache_dir'] : 'cache/';
 }
 
-  $workflow[] = 'confirmSettings.php';
-  $workflow[] = 'performSetup.php';
+  //$workflow[] = 'confirmSettings.php';
+$workflow[] = 'performSetup.php';
 
   if(!isset($_SESSION['oc_install']) ||  $_SESSION['oc_install'] == false){
     if(isset($_SESSION['install_type'])  && !empty($_SESSION['install_type'])  && $_SESSION['install_type']=='custom'){
@@ -276,6 +401,7 @@ if(!empty($_REQUEST['goto'])) {
         case $mod_strings['LBL_BACK']:
             $next_step = $_REQUEST['current_step'] - 1;
             break;
+        case 'resend':
         case $mod_strings['LBL_NEXT']:
         case $mod_strings['LBL_START']:
             $next_step = $_REQUEST['current_step'] + 1;
@@ -360,8 +486,8 @@ if($next_clicked) {
         case 'welcome.php':
         	$_SESSION['language'] = $_REQUEST['language'];
    			$_SESSION['setup_site_admin_user_name'] = 'admin';
-        break;
-      case 'license.php':
+//        break;
+//      case 'license.php':
                 $_SESSION['setup_license_accept']   = get_boolean_from_request('setup_license_accept');
                 $_SESSION['license_submitted']      = true;
 
@@ -379,6 +505,7 @@ if($next_clicked) {
             }
 
             break;
+        //TODO--low: add this functionality to installConfig.php
         case 'installType.php':
             $_SESSION['install_type']   = $_REQUEST['install_type'];
             if(isset($_REQUEST['setup_license_key']) && !empty($_REQUEST['setup_license_key'])){
@@ -390,7 +517,9 @@ if($next_clicked) {
 
             break;
 
-        case 'systemOptions.php':
+        case 'installConfig.php':
+
+        //case 'systemOptions.php':
             if(isset($_REQUEST['setup_db_type'])) {
               $_SESSION['setup_db_type'] = $_REQUEST['setup_db_type'];
             }
@@ -398,9 +527,9 @@ if($next_clicked) {
             if(count($validation_errors) > 0) {
                 $next_step--;
             }
-            break;
+            //break;
 
-        case 'dbConfig_a.php':
+        //case 'dbConfig_a.php':
             //validation is now done through ajax call to checkDBSettings.php
             if(isset($_REQUEST['setup_db_drop_tables'])){
                 $_SESSION['setup_db_drop_tables'] = $_REQUEST['setup_db_drop_tables'];
@@ -408,9 +537,9 @@ if($next_clicked) {
                     $_SESSION['setup_db_create_database'] = false;
                 }
             }
-            break;
+            //break;
 
-        case 'siteConfig_a.php':
+        //case 'siteConfig_a.php':
             if(isset($_REQUEST['setup_site_url'])){$_SESSION['setup_site_url']          = $_REQUEST['setup_site_url'];}
             if(isset($_REQUEST['setup_system_name'])){$_SESSION['setup_system_name']    = $_REQUEST['setup_system_name'];}
             if(isset($_REQUEST['setup_db_collation'])) {
@@ -423,11 +552,12 @@ if($next_clicked) {
 
             $validation_errors = array();
             $validation_errors = validate_siteConfig('a');
-            if(count($validation_errors) > 0) {
+            if(count($validation_errors) > 0 || $_REQUEST['goto'] == 'resend') {
                 $next_step--;
             }
-            break;
-        case 'siteConfig_b.php':
+            //break;
+            // add old custom install settings to new install form
+        //case 'siteConfig_b.php':
             $_SESSION['setup_site_sugarbeet_automatic_checks'] = get_boolean_from_request('setup_site_sugarbeet_automatic_checks');
 
             $_SESSION['setup_site_custom_session_path']     = get_boolean_from_request('setup_site_custom_session_path');
@@ -616,6 +746,7 @@ $the_file = clean_string($the_file, 'FILE');
 installerHook('pre_installFileRequire', array('the_file' => $the_file));
 
 // change to require to get a good file load error message if the file is not available.
+
 require('install/' . $the_file);
 
 installerHook('post_installFileRequire', array('the_file' => $the_file));

@@ -131,7 +131,7 @@ class Meeting extends SugarBean {
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner = 'not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
 		// don't check if meeting is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -145,7 +145,7 @@ class Meeting extends SugarBean {
 					}
 			}
 		}
-		return parent::ACLAccess($view,$is_owner);
+		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
 
 	/**
@@ -264,6 +264,7 @@ class Meeting extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
 		}
 
+		Reminder::saveRemindersDataJson('Meetings', $return_id, html_entity_decode($_REQUEST['reminders_data']));
 
 
 		return $return_id;
@@ -288,7 +289,7 @@ class Meeting extends SugarBean {
 		return "$this->name";
 	}
 
-    function create_export_query(&$order_by, &$where, $relate_link_join='')
+    function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -744,30 +745,66 @@ class Meeting extends SugarBean {
 	function listviewACLHelper() {
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->parent_name)) {
 
 			if(!empty($this->parent_name_owner)) {
 				global $current_user;
 				$is_owner = $current_user->id == $this->parent_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//parent_name_owner not being set for whatever reason so we need to figure this out
+			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+        	/* END - SECURITY GROUPS */
 		}
 
+		/* BEGIN - SECURITY GROUPS */
+		/**
 		if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)) {
+		*/
+		if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner, 'module', $in_group)){
+        /* END - SECURITY GROUPS */
 			$array_assign['PARENT'] = 'a';
 		} else {
 			$array_assign['PARENT'] = 'span';
 		}
 
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 
 		if(!empty($this->contact_name)) {
 			if(!empty($this->contact_name_owner)) {
 				global $current_user;
 				$is_owner = $current_user->id == $this->contact_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//contact_name_owner not being set for whatever reason so we need to figure this out
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+        	/* END - SECURITY GROUPS */
 		}
 
+		/* BEGIN - SECURITY GROUPS */
+		/**
 		if(ACLController::checkAccess('Contacts', 'view', $is_owner)) {
+		*/
+		if(ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
+        /* END - SECURITY GROUPS */
 			$array_assign['CONTACT'] = 'a';
 		} else {
 			$array_assign['CONTACT'] = 'span';
@@ -776,8 +813,7 @@ class Meeting extends SugarBean {
 	}
 
 
-	function save_relationship_changes($is_update) {
-		$exclude = array();
+	function save_relationship_changes($is_update, $exclude = array()) {
 	    if(empty($this->in_workflow)) {
            if(empty($this->in_import)){//if a meeting is being imported then contact_id  should not be excluded
            //if the global soap_server_object variable is not empty (as in from a soap/OPI call), then process the assigned_user_id relationship, otherwise

@@ -286,7 +286,7 @@ class MysqliManager extends MysqlManager
 					if(isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
 						sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
 					} else {
-						sugar_die("Could not connect to the database. Please refer to sugarcrm.log for details.");
+						sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
 					}
 				} else {
 					return false;
@@ -300,7 +300,7 @@ class MysqliManager extends MysqlManager
 					if(isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
 						sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
 					} else {
-						sugar_die("Could not connect to the database. Please refer to sugarcrm.log for details.");
+						sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
 					}
 			} else {
 				return false;

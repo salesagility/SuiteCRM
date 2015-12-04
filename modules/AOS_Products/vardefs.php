@@ -28,6 +28,15 @@ $dictionary['AOS_Products'] = array(
 	'table'=>'aos_products',
 	'audited'=>true,
 	'fields'=>array (
+		'aos_products_purchases' => array(
+			'name' => 'aos_products_purchases',
+			'type' => 'link',
+			'relationship' => 'aos_products_purchases',
+			'source' => 'non-db',
+			'module' => 'AOS_Quotes',
+			'bean_name' => 'AOS_Quotes',
+			'vname' => 'LBL_AOS_PRODUCTS_PURCHASES_FROM_AOS_QUOTES_TITLE',
+		),
   'maincode' => 
   array (
     'required' => '0',

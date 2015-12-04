@@ -278,7 +278,7 @@ class Account extends Company {
 }
 
 
-        function create_export_query(&$order_by, &$where, $relate_link_join='')
+        function create_export_query($order_by, $where, $relate_link_join='')
         {
             $custom_join = $this->getCustomJoin(true, true, $where);
             $custom_join['join'] .= $relate_link_join;
@@ -332,6 +332,23 @@ class Account extends Company {
 	function get_unlinked_email_query($type=array()) {
 
 		return get_unlinked_email_query($type, $this);
+	}
+
+	/**
+	 * Create a query string for select Products/Services Purchased list from database.
+	 * @return string final query
+	 */
+	public function getProductsServicesPurchasedQuery() {
+		$query = "
+			SELECT
+				aos_products_quotes.*
+			FROM
+				aos_products_quotes
+			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0
+			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '{$this->id}'
+
+			";
+		return $query;
 	}
 
 }

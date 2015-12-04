@@ -39,6 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('include/phpmailer/class.phpmailer.php');
+require_once('include/phpmailer/class.smtp.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
 /**
@@ -392,7 +393,7 @@ eoq;
 		parent::SetError($msg);
 	}
 
-	function SmtpConnect() {
+	function SmtpConnect($options = array()) {
 		$connection = parent::SmtpConnect();
 		if (!$connection) {
 			global $app_strings;
@@ -408,7 +409,7 @@ eoq;
     /*
      * overloads PHPMailer::PreSend() to allow for empty messages to go out.
      */
-    protected function PreSend() {
+    public function PreSend() {
         //check to see if message body is empty
         if(empty($this->Body)){
             //PHPMailer will throw an error if the body is empty, so insert a blank space if body is empty

@@ -1,0 +1,168 @@
+/* common */
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #333333;
+}
+
+body {
+    background-color: #f7f7f7;;
+}
+
+
+h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+b, strong {
+    font-weight: bold;
+}
+
+a:link, a:visited {
+    font-size: 12px; color: #333333;
+    text-decoration: none;
+    font-family:  Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #EA1313;
+    text-decoration: none;
+    text-decoration: underline;
+}
+.clear {
+    clear: both;
+}
+
+/* buttons */
+#install_container .button,
+#install_container .acceptButton {
+    background-color:#B41C4F;
+    text-indent:0;
+    display:inline-block;
+    color:#ffffff;
+    font-size:14px;
+    font-style:normal;
+    height:30px;
+    line-height:15px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #810e05;
+    cursor:pointer;
+    padding: 0 10px 0 10px;
+    transition: all 0.5s ease;
+}
+
+#install_container .button:hover,
+#install_container .acceptButton:hover {
+    background:#565656;
+    transition: all 0.5s ease;
+}
+
+/* Sys env. msg */
+
+#syscred p {
+    margin: 0;
+    padding: 2px;
+    border: none;
+    width: 49%;
+    min-width: 330px;
+    float: left;
+}
+#syscred p b {
+    float: left;
+    margin-right: 10px;
+}
+#syscred p span.stop * {
+    color: red;
+    display: block;
+    float: left;
+}
+/* ----------------------------------------------- */
+
+/*
+#install_container * {
+    background-color: white;
+}
+*/
+
+/* header (logo & steps) */
+#install_header {
+    margin:10px auto;
+    border-bottom:1px solid #cccccc;
+    height:50px;
+}
+
+#install_header img {
+    float:left;
+    padding:0;
+    max-height:40px;
+}
+
+/* steps */
+#steps {
+    font-size:24px;
+    verticle-align:top;
+    float:right;
+    margin: 0 5px 0 0;
+    text-align: right;
+}
+
+#steps p {
+    font-size:14px;
+    margin:0 0 2px 5px;
+}
+
+#steps i {
+    font-size: 24px;
+}
+#complete {
+    color: green;
+}
+
+
+/* logo image */
+.install_img {
+    max-width:200px;
+}
+
+.install_img:hover {
+    transition: all 0.5s ease;
+    opacity:0.8;
+}
+
+
+#install_box {
+    line-height: 1.4em;
+    background:#ffffff;
+    border:1px solid #cccccc;
+    vertical-align:middle;
+    padding: 10px 20px;
+    margin: 20px;
+
+}
+
+/* install controlls*/
+#installcontrols {
+    /*float:right;*/
+    text-align: right;
+    padding:10px;
+}
+
+/* footer & footer links */
+
+#install_footer {
+    margin:10px auto;
+    height:50px;
+}
+
+#footer_links a{
+    text-decoration:none;
+}
+
+p#footer_links {
+    text-align:center;
+    margin-top:10px;
+}
+

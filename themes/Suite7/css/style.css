@@ -5445,14 +5445,142 @@ div.password {
     background: none repeat scroll 0% 0% #EEE;
     padding:2px !important;
     margin: 2px 3px;
-    overflow: hidden;
 }
 
 #toolbox{
-    height:100% !important;
+    overflow:auto;
 }
 
-#panels{
-    height:auto !important;
-    overflow:auto;
+
+/* suggestion-box */
+
+#suggestion_box table {
+    padding-left: 10px;
+    padding-top: 10px;
+    width: 100%;
+    max-width: 400px;
+    color: #3C8DBC;
+    border-spacing: 0px;
+    border: 1px solid #cccccc;
+}
+#suggestion_box table tr {
+}
+#suggestion_box table tr:hover {
+    background-color: #dfeffe;
+    cursor: pointer;
+}
+#suggestion_box table tr th {
+    padding: 4px!important;
+    text-align:left;
+    background-color: #f0f0ee;
+    color: #333333;
+}
+#suggestion_box table tr td {
+    padding: 4px!important;
+    margin: 0px;
+}
+#tool-tip-separator {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tool-tip-title {
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+#use_resolution {
+    margin-top: 4px;
+}
+#additional_info_p {
+    margin-bottom: 4px;
+}
+.transfer {
+    border: 2px dotted gray;
+}
+
+.qtip-content {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.qtip {
+    font-family: Arial, Verdana, Helvetica, sans-serif;
+    font-size: 12px;
+    background: #ffffff;
+    border: 1px solid #cccccc;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
+.qtip-tipped .qtip-titlebar {
+    background-color: #333333;
+    padding: 10px 40px 10px 10px;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#333333),to(#222222));
+    background-image: -webkit-linear-gradient(top,#333333,#222222);
+}
+
+/* reminders on meeting and calls */
+#reminders .clear {clear:both;}
+#reminders .remove-reminder-btn {float: right;}
+#reminders #reminder_view {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+#reminders #reminder_view .reminder_item {
+    list-style-type: none;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid lightgray;
+}
+#reminders #reminder_view .reminder_item .invitees_list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    display: block;
+}
+#reminders #reminder_view .reminder_item .invitees_list .invitees_item {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    float: left;
+}
+#reminders #reminder_view .reminder_item .invitees_list .invitees_item .invitee_btn {
+    margin: 4px;
+}
+#reminders .add-btn {
+    background-image: url(../../../../themes/default/images/id-ff-add.png);
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    padding-left: 25px;
+}
+#reminders .remove-btn {
+    background-image: url(../../../../themes/default/images/id-ff-clear.png);
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    padding-right: 25px;
+}
+#reminders .invitee_btn {
+    background-image: url(../../../../themes/default/images/id-ff-clear.png);
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    padding: 4px 25px 4px 10px;
+    border: 1px solid lightgrey;
+}
+#reminders input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* invalid reminders */
+#reminders #reminder_view .reminder_item.reminder-error {
+    border: 1px solid red;
+    background-color: #fff8f8;
+}
+#reminders #reminder_view .reminder_item .error-msg {
+    font-weight: bold;
+    color: red;
 }

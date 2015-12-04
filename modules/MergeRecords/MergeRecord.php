@@ -81,11 +81,11 @@ class MergeRecord extends SugarBean {
             $this->load_merge_bean($merge_module, $merge_id);
     }
 
-    function retrieve($id) {
+    function retrieve($id = -1, $encode=true,$deleted=true) {
         if (isset ($_REQUEST['action']) && $_REQUEST['action'] == 'Step2')
             $this->load_merge_bean($this->merge_bean, false, $id);
         else
-            parent :: retrieve($id);
+            parent :: retrieve($id, $encode, $deleted);
     }
 
     function load_merge_bean($merge_module, $load_module_strings = false, $merge_id = '') {
@@ -176,7 +176,7 @@ class MergeRecord extends SugarBean {
         return false;
     }
     
-    function ACLAccess($view,$is_owner='not_set'){
+    function ACLAccess($view,$is_owner='not_set', $in_group = 'not_set'){
         global $current_user;
 
         //if the module doesn't implement ACLS or is empty  

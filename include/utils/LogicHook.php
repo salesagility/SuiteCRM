@@ -75,7 +75,7 @@ class LogicHook{
 	 *
 	 * @return unknown
 	 */
-	function initialize(){
+	static function initialize(){
 		if(empty($GLOBALS['logic_hook']))
 			$GLOBALS['logic_hook'] = new LogicHook();
 		return $GLOBALS['logic_hook'];

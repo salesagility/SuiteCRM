@@ -147,6 +147,16 @@ $themedef = array(
             'type' => 'colour',
             'default' => '#ffffff'
         ),
+        'suggestion_popup_from' => array(
+            'vname' => 'LBL_SUGGESTION_POPUP_FROM',
+            'type' => 'colour',
+            'default' => '#3c8dbc'
+        ),
+        'suggestion_popup_to' => array(
+            'vname' => 'LBL_SUGGESTION_POPUP_TO',
+            'type' => 'colour',
+            'default' => '#4286AD'
+        ),
 
     )
 );

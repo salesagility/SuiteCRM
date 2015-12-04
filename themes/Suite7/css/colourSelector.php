@@ -2,7 +2,7 @@
 
 // config|_override.php
 if(is_file('../../../config.php')) {
-    require_once('../../../config.php'); // provides $sugar_config
+    require_once('../../../config.php');
 }
 
 // load up the config_override.php file.  This is used to provide default user settings
@@ -92,4 +92,25 @@ background:#<?php echo $sugar_config['theme_settings']['Suite7']['cssmenu']; ?>;
 
 #moduleList ul li ul.cssmenu li a {
 color:#<?php echo $sugar_config['theme_settings']['Suite7']['cssmenulink']; ?>;
+}
+
+
+
+/* popup colors */
+
+.yui-module .hd, .yui-panel .hd {
+background-color: #<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_from']; ?>;
+background: #<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_from']; ?> none repeat scroll 0 0;
+}
+
+/* suggestion box and popup */
+
+
+#suggestion_box table {
+color: #<?php echo $sugar_config['theme_settings']['Suite7']['page_link']; ?>;
+}
+.qtip-tipped .qtip-titlebar {
+    background-color: #<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_from']; ?>;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_from']; ?>),to(#<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_to']; ?>));
+    background-image: -webkit-linear-gradient(top,#<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_from']; ?>,#<?php echo $sugar_config['theme_settings']['Suite7']['suggestion_popup_to']; ?>);
 }

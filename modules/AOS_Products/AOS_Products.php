@@ -64,6 +64,33 @@ class AOS_Products extends AOS_Products_sugar {
 
 	    parent::save($check_notify);
     }
+
+	public function getCustomersPurchasedProductsQuery() {
+		$query = "
+ 			SELECT * FROM (
+ 				SELECT
+					aos_quotes.*,
+					accounts.id AS account_id,
+					accounts.name AS billing_account,
+					
+					opportunity_id AS opportunity,
+					billing_contact_id AS billing_contact,
+					'' AS created_by_name,
+					'' AS modified_by_name,
+					'' AS assigned_user_name
+				FROM
+					aos_products
+
+				JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '{$this->id}' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0
+				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
+				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
+
+				GROUP BY accounts.id
+			) AS aos_quotes
+
+		";
+		return $query;
+	}	
 	
 }
 ?>
