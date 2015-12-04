@@ -57,7 +57,7 @@ class PackageManagerDisplay{
      * @param String active_form - the form to display first
      * @return String - a string of html which will be used to display the forms
      */
-    function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false){
+    static function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false){
 		global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");
