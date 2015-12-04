@@ -898,7 +898,7 @@ EOQ;
         $defaultDateFormatSelect = self::getSelect('default_date_format', $sugarConfigDefaults['date_formats'], empty($_SESSION['default_date_format']) ? $sugarConfigDefaults['datef'] : $_SESSION['default_date_format']);
         $defaultTimeFormatSelect = self::getSelect('default_time_format', $sugarConfigDefaults['time_formats'], empty($_SESSION['default_time_format']) ? 'h:ia' : $_SESSION['default_time_format'] /* $sugarConfigDefaults['timef'] */);
 
-        $timezoneSelect = self::getSelect('timezone', array_merge([TimeDate::guessTimezone() => TimeDate::guessTimezone()], TimeDate::getTimezoneList()), TimeDate::guessTimezone());
+        $timezoneSelect = self::getSelect('timezone', array_merge(array(TimeDate::guessTimezone() => TimeDate::guessTimezone()), TimeDate::getTimezoneList()), TimeDate::guessTimezone());
 
         //$defaultLanguageSelect = get_select_options_with_id($supportedLanguages, $current_language);
         $defaultLanguageSelect = self::getSelect('default_language', $supportedLanguages, $current_language);
