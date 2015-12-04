@@ -267,7 +267,7 @@ class PackageManagerDisplay{
      *  @param Array mod_strings - the local mod strings to display
      *  @return String - a string of html
      */
-	function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true){
+	static function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true){
 		 $output = "<div id='catview'>";
 		$loginViewStyle = ($display ? 'none' : 'block');
 		$selectViewStyle = ($display ? 'block' : 'none');
