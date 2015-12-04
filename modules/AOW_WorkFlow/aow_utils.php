@@ -168,10 +168,11 @@ function getModuleRelationships($module, $view='EditView',$value = '')
                     $rel_module = $mod->$name->getRelatedModuleName();
                 }
                 if(!in_array($rel_module,$invalid_modules)){
+                    $relModuleName = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
                     if(isset($arr['vname']) && $arr['vname'] != ''){
-                        $sort_fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '.translate($arr['vname'],$mod->module_dir);
+                        $sort_fields[$name] = $relModuleName.' : '.translate($arr['vname'],$mod->module_dir);
                     } else {
-                        $sort_fields[$name] = $app_list_strings['moduleList'][$rel_module].' : '. $name;
+                        $sort_fields[$name] = $relModuleName.' : '. $name;
                     }
                     if($arr['type'] == 'relate' && isset($arr['id_name']) && $arr['id_name'] != ''){
                         if(isset($fields[$arr['id_name']])) unset( $fields[$arr['id_name']]);
