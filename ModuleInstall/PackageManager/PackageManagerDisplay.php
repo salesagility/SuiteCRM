@@ -227,7 +227,7 @@ class PackageManagerDisplay{
         return $str;
     }
 
-    function buildInstalledGrid($mod_strings, $types = array('modules')){
+    static function buildInstalledGrid($mod_strings, $types = array('modules')){
     	  $descItemsInstalled = $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'];
     	  $output = '<table width="100%" border="0" cellspacing="0" cellpadding="0" ><tr><td align="left">'.$descItemsInstalled.'</td>';
           $output .= '</td></tr></table>';
