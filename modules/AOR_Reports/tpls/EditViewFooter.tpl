@@ -7,6 +7,10 @@
     <script src="modules/AOR_Conditions/conditionLines.js"></script>
     <script src="modules/AOR_Charts/chartLines.js"></script>
 
+    <!-- todo: add js and css file directly! -->
+    <link rel="stylesheet" href="include/javascript/jquery/themes/base/jquery-ui.min.css">
+    <script src="include/javascript/jquery/jquery-ui.min.js"></script>
+
 <script>
     $(document).ready(function(){
         SUGAR.util.doWhen("typeof $('#fieldTree').tree != 'undefined'", function(){
@@ -233,16 +237,17 @@
     .tab-toggler {display: block; float: left;}
     .tab-toggler.active .button {background-color: #286090;}
     .tab-panels .edit.view {/*width: 80%; float: right;*/}
+    #aor_conditions_body tr {cursor: move;}
 </style>
 
 {/literal}
 
 
 <div class="tab-togglers">
-    <div class="tab-toggler toggle-detailpanel_fields active">
+    <div class="tab-toggler toggle-detailpanel_fields ">
         <h4 class="button">{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
     </div>
-    <div class="tab-toggler toggle-detailpanel_conditions">
+    <div class="tab-toggler toggle-detailpanel_conditions active">
         <h4 class="button">{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
     </div>
     <div class="tab-toggler toggle-detailpanel_charts">
@@ -252,12 +257,12 @@
 
 <div class="tab-panels">
 
-    <div class="edit view edit508" id="detailpanel_fields">
+    <div class="edit view edit508 hidden" id="detailpanel_fields">
         <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
                 <div id="fieldLines" style="min-height: 50px;">
                 </div>
     </div>
-    <div class="edit view edit508 hidden" id="detailpanel_conditions">
+    <div class="edit view edit508 " id="detailpanel_conditions">
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div id="conditionLines"  style="min-height: 50px;">
         </div>
@@ -301,6 +306,16 @@
 
         $('.tab-toggler').click(function(){
             reportToggler(this);
+        });
+
+        $(function() {
+            setModuleFieldsPendingFinishedCallback(function(){
+                $( "#aor_conditions_body" ).sortable({
+                    placeholder: "ui-state-highlight",
+                    items: "tr:not(.parenthesis-line)"
+                });
+                $( "#aor_conditions_body" ).disableSelection();
+            });
         });
     });
 </script>

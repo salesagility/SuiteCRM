@@ -95,6 +95,21 @@ function showConditionCurrentModuleFields(ln, value){
 
 }
 
+var moduleFieldsPendingFinished = 0;
+var moduleFieldsPendingFinishedCallback = null;
+
+var setModuleFieldsPendingFinishedCallback = function(callback) {
+    moduleFieldsPendingFinishedCallback = callback;
+}
+
+var testModuleFieldsPandingFinihed = function() {
+    moduleFieldsPendingFinished--;
+    if(moduleFieldsPendingFinished==0) {
+        moduleFieldsPendingFinished = true;
+        moduleFieldsPendingFinishedCallback();
+    }
+}
+
 function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView){
     if(overrideView === undefined){
         overrideView = action_sugar_grp1;
@@ -111,9 +126,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
             success: function(result) {
                 document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
+                testModuleFieldsPandingFinihed();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = '';
+                testModuleFieldsPandingFinihed();
             }
         }
         var callback2 = {
@@ -121,9 +138,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).onchange = function(){showConditionModuleFieldType(ln, undefined, overrideView);};
+                testModuleFieldsPandingFinihed();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
+                testModuleFieldsPandingFinihed();
             }
         }
         var callback3 = {
@@ -131,9 +150,11 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = result.responseText;
                 SUGAR.util.evalScript(result.responseText);
                 enableQS(false);
+                testModuleFieldsPandingFinihed();
             },
             failure: function(result) {
                 document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
+                testModuleFieldsPandingFinihed();
             }
         }
 
@@ -141,9 +162,9 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
         var aor_field_type_name = "aor_conditions_value_type["+ln+"]";
         var aor_field_name = "aor_conditions_value["+ln+"]";
 
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleOperatorField&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_operator_name+"&aor_value="+operator_value+"&rel_field="+rel_field,callback);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getFieldTypeOptions&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_type_name+"&aor_value="+type_value+"&rel_field="+rel_field,callback2);
-        YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+field_value+"&aor_type="+type_value+"&rel_field="+rel_field,callback3);
+        moduleFieldsPendingFinished++; YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleOperatorField&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_operator_name+"&aor_value="+operator_value+"&rel_field="+rel_field,callback);
+        moduleFieldsPendingFinished++; YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getFieldTypeOptions&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_type_name+"&aor_value="+type_value+"&rel_field="+rel_field,callback2);
+        moduleFieldsPendingFinished++; YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+field_value+"&aor_type="+type_value+"&rel_field="+rel_field,callback3);
 
     } else {
         document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = ''
@@ -230,11 +251,12 @@ function insertConditionLine(){
         document.getElementById('conditionLines_head').style.display = '';
     }
 
-
-    tablebody = document.createElement("tbody");
-    tablebody.id = "aor_conditions_body" + condln;
-    document.getElementById('conditionLines').appendChild(tablebody);
-
+    var tablebody = document.getElementById('aor_conditions_body');
+    if(tablebody == null) {
+        tablebody = document.createElement("tbody");
+        tablebody.id = "aor_conditions_body";
+        document.getElementById('conditionLines').appendChild(tablebody);
+    }
 
     var x = tablebody.insertRow(-1);
     x.id = 'product_line' + condln;
