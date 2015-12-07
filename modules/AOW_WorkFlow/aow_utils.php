@@ -120,12 +120,12 @@ function getModuleTreeData($module){
                     $rel_module = $mod->$name->getRelatedModuleName();
                 }
 
+                $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
                 if(isset($arr['vname']) && $arr['vname'] != '') {
-                    $rel_module_label = isset($app_list_strings['moduleList'][$rel_module]) ? $app_list_strings['moduleList'][$rel_module] : $rel_module;
-                    $label = $rel_module_label .' : '.translate($arr['vname'],$mod->module_dir);
+                    $label = $rel_module_label . ' : ' . translate($arr['vname'], $mod->module_dir);
                     $module_label = trim(translate($arr['vname'],$mod->module_dir),':');
                 }else {
-                    $label = $app_list_strings['moduleList'][$rel_module].' : '. $name;
+                    $label = $rel_module_label . ' : '. $name;
                     $module_label = $name;
                 }
                 $sort_fields[$name] = array('label'=>$label,'type'=>'relationship','module' => $rel_module,'module_label'=>$module_label);
