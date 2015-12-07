@@ -467,12 +467,14 @@ class AOR_ReportsController extends SugarController {
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
+                $this->updateCondition();
                 break;
             case 'Date':
                 echo getDateField($module, $aor_field, $view, $value, false);
                 break;
             case 'Multi':
                 echo getModuleField($rel_module,$fieldname, $aor_field, $view, $value,'multienum');
+                $this->updateCondition();
                 break;
             case 'Period':
                 if($view == 'EditView'){
@@ -487,10 +489,24 @@ class AOR_ReportsController extends SugarController {
             case 'Value':
             default:
                 echo getModuleField($rel_module,$fieldname, $aor_field, $view, $value );
+                $this->updateCondition();
                 break;
         }
         die;
 
+    }
+
+    protected function updateCondition() {
+        if(isset($_REQUEST['condition_id']) && isset($_REQUEST['aor_type']) && isset($_REQUEST['aor_value'])) {
+            $condition = BeanFactory::getBean('AOR_Conditions');
+            $condition->retrieve_by_string_fields(array("id" => $_REQUEST['condition_id']));
+
+            $condition->value_type = $_REQUEST['aor_type'];
+            $condition->value = $_REQUEST['aor_value'];
+            if (!$condition->in_save) {
+                $condition->save();
+            }
+        }
     }
 
     protected function action_getModuleFieldTypeSet()

@@ -167,9 +167,9 @@ function showConditionModuleFieldType(ln, value, overrideView){
     var aor_field = document.getElementById('aor_conditions_field'+ln).value;
     var type_value = document.getElementById("aor_conditions_value_type["+ln+"]").value;
     var aor_field_name = "aor_conditions_value["+ln+"]";
+    var conditionId = document.getElementById("aor_conditions_id"+ln).value;
 
-    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+value+"&aor_type="+type_value+"&rel_field="+rel_field,callback);
-
+    YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+value+"&aor_type="+type_value+"&condition_id="+conditionId+"&rel_field="+rel_field,callback);
 }
 
 

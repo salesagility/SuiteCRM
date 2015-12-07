@@ -950,14 +950,20 @@ class AOR_Report extends Basic {
                             break;
 
                         case 'Multi':
-                            $sep = ' AND ';
-                            if ($condition->operator == 'Equal_To') $sep = ' OR ';
-                            $multi_values = unencodeMultienum($condition->value);
+                            if ($condition->operator == 'Equal_To') {
+                                $sep = ' OR ';
+                                $string_Comparison_Function = 'LIKE';
+                            } else if($condition->operator == 'Not_Equal_To') {
+                                $sep = ' AND ';
+                                $string_Comparison_Function = 'NOT LIKE';
+                            }
+
+                            $multi_values = explode(",", $condParam['value']);
                             if (!empty($multi_values)) {
                                 $value = '(';
                                 foreach ($multi_values as $multi_value) {
                                     if ($value != '(') $value .= $sep;
-                                    $value .= $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . " '" . $multi_value . "'";
+                                    $value .= $field . ' ' . $string_Comparison_Function . " '%" . $multi_value . "%'";
                                 }
                                 $value .= ')';
                             }
@@ -978,8 +984,17 @@ class AOR_Report extends Basic {
                             break;
                         case 'Value':
                         default:
-                            $value = "'" . $this->db->quote($condition->value) . "'";
-                            break;
+                            if($data['type'] == 'multienum') {
+                                $new_array = explode(",", $condParam['value']);
+                                $condition->value = encodeMultienumValue($new_array);
+                                $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . "'" . $condition->value . "'";
+
+                                $where_set = true;
+                                break;
+                            } else {
+                                $value = "'" . $this->db->quote($condition->value) . "'";
+                                break;
+                            }
                     }
 
                     //handle like conditions
