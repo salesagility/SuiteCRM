@@ -143,69 +143,61 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
 
         $jsonData = json_encode($chartReadyData['data']);
         $jsonLabels = json_encode($chartReadyData['labels']);
+        $total = $chartReadyData['total'];
 
-        $chart =    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js" ></script>';
-        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js" ></script>';
-        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.dynamic.js"></script>';
-        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js"></script>';
-        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js"></script>';
-        $chart.=    '<canvas id="rgraphFunnel" width="450" height="600">[No canvas support]</canvas>';
-        $chart.=    '<script>';
-        $chart.=    'window.onload = function ()';
-        $chart.=    '{';
-        $chart.=    'var funnel = new RGraph.Funnel({';
-        $chart.=    'id: "rgraphFunnel",';
-        $chart.=    "data:".$jsonData.",";
-        $chart.=    'options: {';
-        //$chart.=    'labels: ["All potential Customers","Pre-sale enquiry","Sale finalised","Follow up telephone call"],';
-        $chart.=    "labels:".$jsonLabels.",";
-        $chart.=    'labelsSticks: true,';
-        $chart.=    'labelsX: 10,';
+        $chart = <<<EOD
+        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js' ></script>
+        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js' ></script>
+        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.dynamic.js'></script>
+        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js'></script>
+        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js'></script>
+        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.drawing.text.js'></script>
+        <canvas id='rgraphFunnel' width='450' height='600'>[No canvas support]</canvas>
+        <script>
+        window.onload = function ()
+        {
+            var funnel = new RGraph.Funnel({
+                id:'rgraphFunnel',
+                data:$jsonData,
+                options: {
+                    labels:$jsonLabels,
+                    labelsSticks: true,
+                    labelsX: 10,
+                    key:$jsonLabels,
+                    keyInteractive: true,
+                    //keyPositionX: 465,
+                    gutterRight: 0,
+                    gutterTop: 100,
+                    gutterLeft: 180,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    textBoxed: false,
+                    shadow: true,
+                    shadowOffsetx: 0,
+                    shadowOffsety: 0,
+                    shadowBlur: 15,
+                    shadowColor: 'gray'
+                }
+            }).draw();
 
-        $chart.=    "key:".$jsonLabels.",";
-        $chart.=    'keyInteractive: true,';
-        $chart.=    'keyPositionX: 265,';
-        $chart.=    'gutterRight: 125,';
-        $chart.=    'gutterTop: 100,';
-
-        $chart.=    'gutterLeft: 180,';
-        $chart.=    'strokestyle: "rgba(0,0,0,0)",';
-        $chart.=    'textBoxed: false,';
-        $chart.=    'shadow: true,';
-        $chart.=    'shadowOffsetx: 0,';
-        $chart.=    'shadowOffsety: 0,';
-        $chart.=    'shadowBlur: 15,';
-        $chart.=    'shadowColor: "gray"';
-        $chart.=    '}';
-        $chart.=    '}).draw();';
-
-
-        //Draw the title
-
-        $chart.=    'var text = new RGraph.Drawing.Text({';
-        $chart.=        'id: "rgraphFunnel",';
-        $chart.=        'x: 300,';
-        $chart.=        'y: 22,';
-        $chart.=        'text: "A custom title using the drawing API text object",';
+            var text = new RGraph.Drawing.Text({
+            id: 'rgraphFunnel',
+            x: 10,
+            y: 22,
+            text: 'Pipeline Total is $total',
             options: {
-        font: 'Arial',
+                font: 'Arial',
                 bold: true,
-                halign: 'center',
-                valign: 'bottom',
+                //halign: 'left',
+                //valign: 'bottom',
                 colors: ['gray'],
-                size: 16
+                size: 12
             }
         }).draw();
+        }
+        </script>
+EOD;
 
 
-
-
-
-
-
-
-        $chart.=    '};';
-        $chart.=    '</script>';
         return $chart;
     }
 
@@ -301,13 +293,16 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         //return $data;
         $chart['labels']=array();
         $chart['data']=array();
+        $total = 0;
         foreach($data as $i)
         {
             $chart['labels'][]=$i['key'];
             $chart['data'][]=(int)$i['total'];
+            $total+=(int)$i['total'];
         }
         //The funnel needs n+1 elements (to bind the shape to as per http://www.rgraph.net/demos/funnel-interactive-key.html)
         $chart['data'][]=1;
+        $chart['total']=$total;
         return $chart;
     }
 
