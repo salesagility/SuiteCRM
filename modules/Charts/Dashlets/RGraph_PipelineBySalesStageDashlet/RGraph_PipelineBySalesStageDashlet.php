@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class PipelineBySalesStageDashlet extends DashletGenericChart
+class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
 {
     public $pbss_date_start;
     public $pbss_date_end;
@@ -72,7 +72,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
             $options['pbss_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
 
         if(empty($options['title']))
-        	$options['title'] = translate('LBL_PIPELINE_FORM_TITLE', 'Home');
+        	$options['title'] = translate('LBL_RGraph_PIPELINE_FORM_TITLE', 'Home');
 
         parent::__construct($id,$options);
     }
@@ -102,7 +102,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     public function display()
     {
         global $current_user, $sugar_config;
-
+/*
         require_once('include/SugarCharts/SugarChartFactory.php');
         $sugarChart = SugarChartFactory::getInstance();
         $sugarChart->base_url = array(
@@ -136,6 +136,77 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
 
         return $this->getTitle('') . '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
+*/
+
+        $data = $this->getChartData($this->constructSuiteQuery());
+        $chartReadyData = $this->prepareChartData($data);
+
+        $jsonData = json_encode($chartReadyData['data']);
+        $jsonLabels = json_encode($chartReadyData['labels']);
+
+        $chart =    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js" ></script>';
+        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js" ></script>';
+        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.dynamic.js"></script>';
+        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js"></script>';
+        $chart.=    '<script type="text/javascript" src="../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js"></script>';
+        $chart.=    '<canvas id="rgraphFunnel" width="450" height="600">[No canvas support]</canvas>';
+        $chart.=    '<script>';
+        $chart.=    'window.onload = function ()';
+        $chart.=    '{';
+        $chart.=    'var funnel = new RGraph.Funnel({';
+        $chart.=    'id: "rgraphFunnel",';
+        $chart.=    "data:".$jsonData.",";
+        $chart.=    'options: {';
+        //$chart.=    'labels: ["All potential Customers","Pre-sale enquiry","Sale finalised","Follow up telephone call"],';
+        $chart.=    "labels:".$jsonLabels.",";
+        $chart.=    'labelsSticks: true,';
+        $chart.=    'labelsX: 10,';
+
+        $chart.=    "key:".$jsonLabels.",";
+        $chart.=    'keyInteractive: true,';
+        $chart.=    'keyPositionX: 265,';
+        $chart.=    'gutterRight: 125,';
+        $chart.=    'gutterTop: 100,';
+
+        $chart.=    'gutterLeft: 180,';
+        $chart.=    'strokestyle: "rgba(0,0,0,0)",';
+        $chart.=    'textBoxed: false,';
+        $chart.=    'shadow: true,';
+        $chart.=    'shadowOffsetx: 0,';
+        $chart.=    'shadowOffsety: 0,';
+        $chart.=    'shadowBlur: 15,';
+        $chart.=    'shadowColor: "gray"';
+        $chart.=    '}';
+        $chart.=    '}).draw();';
+
+
+        //Draw the title
+
+        $chart.=    'var text = new RGraph.Drawing.Text({';
+        $chart.=        'id: "rgraphFunnel",';
+        $chart.=        'x: 300,';
+        $chart.=        'y: 22,';
+        $chart.=        'text: "A custom title using the drawing API text object",';
+            options: {
+        font: 'Arial',
+                bold: true,
+                halign: 'center',
+                valign: 'bottom',
+                colors: ['gray'],
+                size: 16
+            }
+        }).draw();
+
+
+
+
+
+
+
+
+        $chart.=    '};';
+        $chart.=    '</script>';
+        return $chart;
     }
 
 	/**
@@ -192,6 +263,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     /**
      * @see DashletGenericChart::constructQuery()
      */
+
     protected function constructQuery()
     {
         $query = "  SELECT opportunities.sales_stage,
@@ -208,6 +280,35 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         $query .= " GROUP BY opportunities.sales_stage ,users.user_name,opportunities.assigned_user_id";
 
         return $query;
+    }
+
+    protected function constructSuiteQuery()
+    {
+        $query = "  SELECT opportunities.sales_stage,
+                        count(*) AS opp_count,
+                        sum(amount_usdollar/1000) AS total
+                    FROM users,opportunities  ";
+        $query .= " WHERE opportunities.date_closed >= ". db_convert("'".$this->pbss_date_start."'",'date').
+            " AND opportunities.date_closed <= ".db_convert("'".$this->pbss_date_end."'",'date') .
+            " AND opportunities.assigned_user_id = users.id  AND opportunities.deleted=0 ";
+        $query .= " GROUP BY opportunities.sales_stage";
+
+        return $query;
+    }
+
+    protected function prepareChartData($data)
+    {
+        //return $data;
+        $chart['labels']=array();
+        $chart['data']=array();
+        foreach($data as $i)
+        {
+            $chart['labels'][]=$i['key'];
+            $chart['data'][]=(int)$i['total'];
+        }
+        //The funnel needs n+1 elements (to bind the shape to as per http://www.rgraph.net/demos/funnel-interactive-key.html)
+        $chart['data'][]=1;
+        return $chart;
     }
 
     /**
