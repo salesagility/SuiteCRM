@@ -294,6 +294,37 @@
 </div>
 {literal}
 <script type="text/javascript">
+
+    setModuleFieldsPendingFinishedCallback(function(){
+        var parenthesisBtnHtml;
+        $( "#aor_conditions_body, #aor_condition_parenthesis_btn" ).sortable({
+            handle: '.condition-sortable-handle',
+            placeholder: "ui-state-highlight",
+            cancel: ".parenthesis-line",
+            connectWith: ".connectedSortableConditions",
+            start: function(event, ui) {
+                console.log('drag...');
+                parenthesisBtnHtml = $('#aor_condition_parenthesis_btn').html();
+            },
+            stop: function(event, ui) {
+                console.log('drop..');
+                if(event.target.id == 'aor_condition_parenthesis_btn') {
+                    $('#aor_condition_parenthesis_btn').html('<tr class="parentheses-btn">' + ui.item.html() + '</tr>');
+                    ParenthesisHandler.replaceParenthesisBtns();
+                }
+                else {
+                    if($(this).attr('id') == 'aor_conditions_body' && parenthesisBtnHtml != $('#aor_condition_parenthesis_btn').html()) {
+                        $(this).sortable("cancel");
+                    }
+                }
+                LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+                ConditionOrderHandler.setConditionOrders();
+            }
+        });//.disableSelection();
+        LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+        ConditionOrderHandler.setConditionOrders();
+    });
+
     $(function(){
 
         var reportToggler = function(elem) {
@@ -314,85 +345,7 @@
             reportToggler(this);
         });
 
-        $(function() {
 
-
-            window.hideUnnecessaryLogicSelects = function() {
-                var isPrevParenthesis = true;
-                $('#aor_conditions_body tr').each(function(i,e){
-                    if($(this).css('display') != 'none') {
-                        if (isPrevParenthesis) {
-                            $(this).find('.logic-select').prop('disabled', 'disabled').hide();
-                        }
-                        else {
-                            $(this).find('.logic-select').prop('disabled', false).show();
-                        }
-                        isPrevParenthesis = $(this).hasClass('parenthesis-line');
-                    }
-                });
-            };
-
-            window.deleteParenthesisPair = function(elem, counter) {
-                $('.parenthesis-line[parenthesis-counter=' + counter + ']').remove();
-                hideUnnecessaryLogicSelects();
-            };
-
-            var parenthesisCounter = 0;
-
-            var replaceParenthesisBtns = function() {
-                $(
-                        '<tr class="parenthesis-line" parenthesis-counter="' + parenthesisCounter + '">' +
-                        '   <td>' +
-                        '       <button type="button" class="button" value="" onclick="deleteParenthesisPair(this, ' + parenthesisCounter + ');">' +
-                        '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
-                        '       </button>' +
-                        '   </td>' +
-                        '   <td>' + getLogicalOperatorSelectHTML('AND') + '</td>' +
-                        '   <td>' +
-                        '       (START) ' +
-                        '   </td>' +
-                        '</tr>' +
-
-                        '<tr class="parenthesis-line" parenthesis-counter="' + parenthesisCounter + '">' +
-                        '   <td>&nbsp;</td>' +
-                        '   <td></td>' +
-                        '   <td>' +
-                        '       (END) ' +
-                        '   </td>' +
-                        '</tr>'
-
-                ).replaceAll('#aor_conditions_body .parentheses-btn');
-                parenthesisCounter++;
-            };
-
-            setModuleFieldsPendingFinishedCallback(function(){
-                var parenthesisBtnHtml;
-                $( "#aor_conditions_body, #aor_condition_parenthesis_btn" ).sortable({
-                    handle: '.condition-sortable-handle',
-                    placeholder: "ui-state-highlight",
-                    cancel: ".parenthesis-line",
-                    connectWith: ".connectedSortableConditions",
-                    start: function(event, ui) {
-                        console.log('drag...');
-                        parenthesisBtnHtml = $('#aor_condition_parenthesis_btn').html();
-                    },
-                    stop: function(event, ui) {
-                        console.log('drop..');
-                        if(event.target.id == 'aor_condition_parenthesis_btn') {
-                            $('#aor_condition_parenthesis_btn').html('<tr class="parentheses-btn">' + ui.item.html() + '</tr>');
-                            replaceParenthesisBtns();
-                        }
-                        else {
-                            if($(this).attr('id') == 'aor_conditions_body' && parenthesisBtnHtml != $('#aor_condition_parenthesis_btn').html()) {
-                                $(this).sortable("cancel");
-                            }
-                        }
-                        hideUnnecessaryLogicSelects();
-                    }
-                });//.disableSelection();
-                hideUnnecessaryLogicSelects();
-            });
-        });
     });
 </script>
 {/literal}

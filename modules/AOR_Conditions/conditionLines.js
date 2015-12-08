@@ -27,6 +27,121 @@ var condln_count = 0;
 var report_fields =  new Array();
 var report_module = '';
 
+var LogicalOperatorHandler = {
+    //logicSelectCounter: 0.
+
+    getLogicalOperatorSelectHTML: function(value) {
+
+        if (typeof value === 'undefined' || !value) { value = null; }
+
+        var selecteds = {};
+        selecteds.none = value == null ? ' selected="selected"' : '';
+        selecteds.AND = value == 'AND' ? ' selected="selected"' : '';
+        selecteds.OR = value == 'OR' ? ' selected="selected"' : '';
+        selectHTML =
+            '<select class="logic-select" name="aor_conditions_logic_op[' + condln + ']" onchange="LogicalOperatorHandler.onLogicSelectChange(this, ' + condln + ');" style="display:none;">' +
+            //'   <option value=""' + selecteds.none + '></option>' +
+            '   <option value="AND"' + selecteds.AND + '>AND</option>' +
+            '   <option value="OR"' + selecteds.OR + '>OR</option>' +
+            '</select>';
+
+        //logicSelectCounter++;
+
+        return selectHTML;
+    },
+
+    hideUnnecessaryLogicSelects: function() {
+        var isPrevParenthesisOpen = true;
+        $('#aor_conditions_body tr').each(function (i, e) {
+            if ($(this).css('display') != 'none') {
+                if (isPrevParenthesisOpen) {
+                    $(this).find('.logic-select').prop('disabled', 'disabled').hide();
+                }
+                else {
+                    $(this).find('.logic-select').prop('disabled', false).show();
+                }
+                isPrevParenthesisOpen = $(this).hasClass('parenthesis-line') && $(this).hasClass('parenthesis-open');
+            }
+        });
+    },
+
+    onLogicSelectChange: function(elem, counter) {
+        console.log('logic select changed... ', elem, counter);
+    }
+
+};
+
+var ConditionOrderHandler = {
+
+    //conditionOrderInputCounter: 0,
+
+    getConditionOrderHiddenInput: function(value) {
+
+        if (typeof value === 'undefined' || !value) { value = '0'; }
+
+        //conditionOrderInputCounter++
+
+        inputHTML = '<input type="hidden" class="aor_condition_order_input" name="aor_conditions_order[' + condln + ']" value="' + value + '">';
+
+        return inputHTML;
+    },
+
+    setConditionOrders: function() {
+        console.log('orderset...');
+        var ord = 0;
+        $('#aor_conditions_body tr').each(function (i, e) {
+            if ($(this).css('display') != 'none') {
+                $(this).find('.aor_condition_order_input').val(ord++);
+            }
+            else {
+                $(this).find('.aor_condition_order_input').val(-1);
+            }
+        });
+    }
+
+};
+
+var ParenthesisHandler = {
+
+    //parenthesisCounter: 0,
+
+    replaceParenthesisBtns: function() {
+
+        $(
+            '<tr class="parenthesis-line parenthesis-open" parenthesis-counter="' + (condln+1) + '">' +
+            '   <td>' +
+            '       <button type="button" class="button" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + (condln+1) + ');">' +
+            '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
+            '       </button>' +
+            '   </td>' +
+            '   <td>' + LogicalOperatorHandler.getLogicalOperatorSelectHTML() + ConditionOrderHandler.getConditionOrderHiddenInput() + '</td>' +
+            '   <td>' +
+            '       (START) ' +
+            '   </td>' +
+            '</tr>' +
+
+            '<tr class="parenthesis-line parenthesis-close" parenthesis-counter="' + (condln+2) + '">' +
+            '   <td>&nbsp;</td>' +
+            '   <td>' + ConditionOrderHandler.getConditionOrderHiddenInput() + '</td>' +
+            '   <td>' +
+            '       (END) ' +
+            '   </td>' +
+            '</tr>'
+        ).replaceAll('#aor_conditions_body .parentheses-btn');
+
+        condln+=2;
+        condln_count+=2;
+
+        //parenthesisCounter++;
+    },
+
+    deleteParenthesisPair: function(elem, counter) {
+        $('.parenthesis-line[parenthesis-counter=' + counter + ']').remove();
+        LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+    }
+
+};
+
 function loadConditionLine(condition, overrideView){
 
     showConditionLines();
@@ -52,8 +167,8 @@ function loadConditionLine(condition, overrideView){
     if (condition['value'] instanceof Array) {
         condition['value'] = JSON.stringify(condition['value'])
     }
-console.log(condition);
-    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op']);
+
+    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op'], condition['condition_order'], condition['parenthesis']);
 }
 
 function showConditionLines() {
@@ -112,37 +227,16 @@ var testModuleFieldsPandingFinihed = function() {
     }
 };
 
-var logicSelectCounter = 0;
-
-function getLogicalOperatorSelectHTML(value, name) {
-    if (typeof name === 'undefined' || !name) { name = 'aor_logic_select[' + logicSelectCounter + ']'; }
-    if (value !== null) {
-        if (typeof value === 'undefined' || !value) { value = 'AND'; }
-    }
 
 
-    var selecteds = {};
-    selecteds.none = value == null ? ' selected="selected"' : '';
-    selecteds.AND = value == 'AND' ? ' selected="selected"' : '';
-    selecteds.OR = value == 'OR' ? ' selected="selected"' : '';
-    selectHTML =
-        '<select class="logic-select" name="' + name + '" onchange="onLogicSelectChange(this, ' + logicSelectCounter + ');">' +
-        '   <option value=""' + selecteds.none + '></option>' +
-        '   <option value="AND"' + selecteds.AND + '>AND</option>' +
-        '   <option value="OR"' + selecteds.OR + '>OR</option>' +
-        '</select>';
-    logicSelectCounter++;
-    return selectHTML;
-}
 
-function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView, logic_value){
+
+
+function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView, logic_value, condition_order, parenthesis){
     if(overrideView === undefined){
         overrideView = action_sugar_grp1;
     }
 
-    if(action_sugar_grp1 == 'EditView') {
-        document.getElementById('aor_conditions_logicInput' + ln).innerHTML = getLogicalOperatorSelectHTML(logic_value);
-    }
 
     if (typeof operator_value === 'undefined') { operator_value = ''; }
     if (typeof type_value === 'undefined') { type_value = ''; }
@@ -313,6 +407,7 @@ function insertConditionLine(){
     if(view == 'EditView') {
         var cellLogic = x.insertCell(nxtCell++);
         cellLogic.id = 'aor_conditions_logicInput' + condln;
+        cellLogic.innerHTML = LogicalOperatorHandler.getLogicalOperatorSelectHTML() + ConditionOrderHandler.getConditionOrderHiddenInput();
     }
 
     var b = x.insertCell(nxtCell++);
@@ -370,7 +465,8 @@ function markConditionLineDeleted(ln)
     if(condln_count == 0){
         document.getElementById('conditionLines_head').style.display = "none";
     }
-    hideUnnecessaryLogicSelects();
+    LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+    ConditionOrderHandler.setConditionOrders();
 }
 
 function clearConditionLines(){
