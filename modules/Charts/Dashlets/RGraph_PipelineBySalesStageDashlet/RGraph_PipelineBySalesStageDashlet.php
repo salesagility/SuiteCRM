@@ -196,35 +196,20 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         $chartWidth     = 650;
         $chartHeight    = 600;
 
-        /*
-         *
-         *
-         */
+
 
         $chart = <<<EOD
 
         <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        <input type='hidden' class='startDate' value='$startDate' />
+        <input type='hidden' class='endDate' value='$endDate' />
+        <input type='hidden' class='module' value='$module' />
+        <input type='hidden' class='action' value='$action' />
+        <input type='hidden' class='query' value='$query' />
+        <input type='hidden' class='searchFormTab' value='$searchFormTab' />
         <script>
-        function myFunnelClick(e,bar)
-        {
-            var labels = $jsonLabels;
-            var clicked = encodeURI(labels[bar[2]]);
-            window.open('http://localhost/SuiteCRM/index.php?module=$module&action=$action&query=$query&searchFormTab=$searchFormTab&start_range_date_closed=$startDate&end_range_date_closed=$endDate&sales_stage='+clicked,'_blank');
 
-        }
-
-        function myFunnelMousemove(e,shape)
-        {
-            e.target.style.cursor = 'pointer';
-        }
-
-        window.onload = function ()
-        {
-            drawFunnelGraph();
-        }
-
-        function drawFunnelGraph(){
-            var funnel = new RGraph.Funnel({
+new RGraph.Funnel({
                 id:'$canvasId',
                 data:$jsonData,
                 options: {
@@ -279,8 +264,8 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
             }
         }).draw();
 
-        }
-         //drawFunnelGraph();
+
+
         </script>
 EOD;
 
