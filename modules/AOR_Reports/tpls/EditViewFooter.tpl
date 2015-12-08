@@ -7,9 +7,8 @@
     <script src="modules/AOR_Conditions/conditionLines.js"></script>
     <script src="modules/AOR_Charts/chartLines.js"></script>
 
-    <!-- todo: add js and css file directly! -->
     <link rel="stylesheet" href="include/javascript/jquery/themes/base/jquery-ui.min.css">
-    <script src="include/javascript/jquery/jquery-ui.min.js"></script>
+    <script src="include/javascript/jquery/jquery-ui-min.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -237,7 +236,8 @@
     .tab-toggler {display: block; float: left;}
     .tab-toggler.active .button {background-color: #286090;}
     .tab-panels .edit.view {/*width: 80%; float: right;*/}
-    #aor_conditions_body tr {cursor: move;}
+    .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
+    .condition-sortable-handle {cursor: move;}
 </style>
 
 {/literal}
@@ -266,6 +266,12 @@
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div id="conditionLines"  style="min-height: 50px;">
         </div>
+        <hr>
+        <table>
+            <tbody id="aor_condition_parenthesis_btn" class="connectedSortableConditions">
+                <tr class="parentheses-btn"><td class="condition-sortable-handle">{$MOD.LBL_ADD_PARENTHESIS}</td></tr>
+            </tbody>
+        </table>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_charts">
         <h4><!-- {$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE} -->&nbsp;</h4>
@@ -309,12 +315,82 @@
         });
 
         $(function() {
-            setModuleFieldsPendingFinishedCallback(function(){
-                $( "#aor_conditions_body" ).sortable({
-                    placeholder: "ui-state-highlight",
-                    items: "tr:not(.parenthesis-line)"
+
+
+            window.hideUnnecessaryLogicSelects = function() {
+                var isPrevParenthesis = true;
+                $('#aor_conditions_body tr').each(function(i,e){
+                    if($(this).css('display') != 'none') {
+                        if (isPrevParenthesis) {
+                            $(this).find('.logic-select').prop('disabled', 'disabled').hide();
+                        }
+                        else {
+                            $(this).find('.logic-select').prop('disabled', false).show();
+                        }
+                        isPrevParenthesis = $(this).hasClass('parenthesis-line');
+                    }
                 });
-                $( "#aor_conditions_body" ).disableSelection();
+            };
+
+            window.deleteParenthesisPair = function(elem, counter) {
+                $('.parenthesis-line[parenthesis-counter=' + counter + ']').remove();
+                hideUnnecessaryLogicSelects();
+            };
+
+            var parenthesisCounter = 0;
+
+            var replaceParenthesisBtns = function() {
+                $(
+                        '<tr class="parenthesis-line" parenthesis-counter="' + parenthesisCounter + '">' +
+                        '   <td>' +
+                        '       <button type="button" class="button" value="" onclick="deleteParenthesisPair(this, ' + parenthesisCounter + ');">' +
+                        '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
+                        '       </button>' +
+                        '   </td>' +
+                        '   <td>' + getLogicalOperatorSelectHTML('AND') + '</td>' +
+                        '   <td>' +
+                        '       (START) ' +
+                        '   </td>' +
+                        '</tr>' +
+
+                        '<tr class="parenthesis-line" parenthesis-counter="' + parenthesisCounter + '">' +
+                        '   <td>&nbsp;</td>' +
+                        '   <td></td>' +
+                        '   <td>' +
+                        '       (END) ' +
+                        '   </td>' +
+                        '</tr>'
+
+                ).replaceAll('#aor_conditions_body .parentheses-btn');
+                parenthesisCounter++;
+            };
+
+            setModuleFieldsPendingFinishedCallback(function(){
+                var parenthesisBtnHtml;
+                $( "#aor_conditions_body, #aor_condition_parenthesis_btn" ).sortable({
+                    handle: '.condition-sortable-handle',
+                    placeholder: "ui-state-highlight",
+                    cancel: ".parenthesis-line",
+                    connectWith: ".connectedSortableConditions",
+                    start: function(event, ui) {
+                        console.log('drag...');
+                        parenthesisBtnHtml = $('#aor_condition_parenthesis_btn').html();
+                    },
+                    stop: function(event, ui) {
+                        console.log('drop..');
+                        if(event.target.id == 'aor_condition_parenthesis_btn') {
+                            $('#aor_condition_parenthesis_btn').html('<tr class="parentheses-btn">' + ui.item.html() + '</tr>');
+                            replaceParenthesisBtns();
+                        }
+                        else {
+                            if($(this).attr('id') == 'aor_conditions_body' && parenthesisBtnHtml != $('#aor_condition_parenthesis_btn').html()) {
+                                $(this).sortable("cancel");
+                            }
+                        }
+                        hideUnnecessaryLogicSelects();
+                    }
+                });//.disableSelection();
+                hideUnnecessaryLogicSelects();
             });
         });
     });

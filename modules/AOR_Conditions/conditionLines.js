@@ -52,8 +52,8 @@ function loadConditionLine(condition, overrideView){
     if (condition['value'] instanceof Array) {
         condition['value'] = JSON.stringify(condition['value'])
     }
-
-    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView);
+console.log(condition);
+    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op']);
 }
 
 function showConditionLines() {
@@ -100,20 +100,50 @@ var moduleFieldsPendingFinishedCallback = null;
 
 var setModuleFieldsPendingFinishedCallback = function(callback) {
     moduleFieldsPendingFinishedCallback = callback;
-}
+};
 
 var testModuleFieldsPandingFinihed = function() {
     moduleFieldsPendingFinished--;
     if(moduleFieldsPendingFinished==0) {
         moduleFieldsPendingFinished = true;
-        moduleFieldsPendingFinishedCallback();
+        if(moduleFieldsPendingFinishedCallback) {
+            moduleFieldsPendingFinishedCallback();
+        }
     }
+};
+
+var logicSelectCounter = 0;
+
+function getLogicalOperatorSelectHTML(value, name) {
+    if (typeof name === 'undefined' || !name) { name = 'aor_logic_select[' + logicSelectCounter + ']'; }
+    if (value !== null) {
+        if (typeof value === 'undefined' || !value) { value = 'AND'; }
+    }
+
+
+    var selecteds = {};
+    selecteds.none = value == null ? ' selected="selected"' : '';
+    selecteds.AND = value == 'AND' ? ' selected="selected"' : '';
+    selecteds.OR = value == 'OR' ? ' selected="selected"' : '';
+    selectHTML =
+        '<select class="logic-select" name="' + name + '" onchange="onLogicSelectChange(this, ' + logicSelectCounter + ');">' +
+        '   <option value=""' + selecteds.none + '></option>' +
+        '   <option value="AND"' + selecteds.AND + '>AND</option>' +
+        '   <option value="OR"' + selecteds.OR + '>OR</option>' +
+        '</select>';
+    logicSelectCounter++;
+    return selectHTML;
 }
 
-function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView){
+function showConditionModuleField(ln, operator_value, type_value, field_value, overrideView, logic_value){
     if(overrideView === undefined){
         overrideView = action_sugar_grp1;
     }
+
+    if(action_sugar_grp1 == 'EditView') {
+        document.getElementById('aor_conditions_logicInput' + ln).innerHTML = getLogicalOperatorSelectHTML(logic_value);
+    }
+
     if (typeof operator_value === 'undefined') { operator_value = ''; }
     if (typeof type_value === 'undefined') { type_value = ''; }
     if (typeof field_value === 'undefined') { field_value = ''; }
@@ -167,6 +197,7 @@ function showConditionModuleField(ln, operator_value, type_value, field_value, o
         moduleFieldsPendingFinished++; YAHOO.util.Connect.asyncRequest ("GET", "index.php?module=AOR_Reports&action=getModuleFieldType&view="+overrideView+"&aor_module="+report_module+"&aor_fieldname="+aor_field+"&aor_newfieldname="+aor_field_name+"&aor_value="+field_value+"&aor_type="+type_value+"&rel_field="+rel_field,callback3);
 
     } else {
+        document.getElementById('aor_conditions_logicInput'+ln).innerHTML = ''
         document.getElementById('aor_conditions_operatorInput'+ln).innerHTML = ''
         document.getElementById('aor_conditions_fieldTypeInput'+ln).innerHTML = '';
         document.getElementById('aor_conditions_fieldInput'+ln).innerHTML = '';
@@ -205,6 +236,7 @@ function showConditionModuleFieldType(ln, value, overrideView){
  */
 
 function insertConditionHeader(){
+    var nxtCell = 0;
     var view = action_sugar_grp1;
     tablehead = document.createElement("thead");
     tablehead.id = "conditionLines_head";
@@ -213,26 +245,31 @@ function insertConditionHeader(){
     var x=tablehead.insertRow(-1);
     x.id='conditionLines_head';
 
-    var a=x.insertCell(0);
+    var a=x.insertCell(nxtCell++);
     //a.style.color="rgb(68,68,68)";
 
-    var b=x.insertCell(1);
+    if(view === 'EditView') {
+        var cellLogic = x.insertCell(nxtCell++);
+        cellLogic.innerHTML = SUGAR.language.get('AOR_Conditions', 'LBL_LOGIC_OP');
+    }
+
+    var b=x.insertCell(nxtCell++);
     b.style.color="rgb(0,0,0)";
     b.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_MODULE_PATH');
 
-    var c=x.insertCell(2);
+    var c=x.insertCell(nxtCell++);
     c.style.color="rgb(0,0,0)";
     c.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_FIELD');
 
-    var d=x.insertCell(3);
+    var d=x.insertCell(nxtCell++);
     d.style.color="rgb(0,0,0)";
     d.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_OPERATOR');
 
-    var e=x.insertCell(4);
+    var e=x.insertCell(nxtCell++);
     e.style.color="rgb(0,0,0)";
     e.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE_TYPE');
 
-    var f=x.insertCell(5);
+    var f=x.insertCell(nxtCell++);
     f.style.color="rgb(0,0,0)";
     f.innerHTML=SUGAR.language.get('AOR_Conditions', 'LBL_VALUE');
 
@@ -244,6 +281,7 @@ function insertConditionHeader(){
 }
 
 function insertConditionLine(){
+    var nxtCell = 0;
     var view = action_sugar_grp1;
     if (document.getElementById('conditionLines_head') == null) {
         insertConditionHeader();
@@ -255,13 +293,14 @@ function insertConditionLine(){
     if(tablebody == null) {
         tablebody = document.createElement("tbody");
         tablebody.id = "aor_conditions_body";
+        tablebody.className = "connectedSortableConditions";
         document.getElementById('conditionLines').appendChild(tablebody);
     }
 
     var x = tablebody.insertRow(-1);
     x.id = 'product_line' + condln;
 
-    var a = x.insertCell(0);
+    var a = x.insertCell(nxtCell++);
     if(action_sugar_grp1 == 'EditView'){
         a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
         a.innerHTML += "<input type='hidden' name='aor_conditions_deleted[" + condln + "]' id='aor_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
@@ -271,8 +310,14 @@ function insertConditionLine(){
     a.style.width = '5%';
 
 
-    var b = x.insertCell(1);
+    if(view == 'EditView') {
+        var cellLogic = x.insertCell(nxtCell++);
+        cellLogic.id = 'aor_conditions_logicInput' + condln;
+    }
+
+    var b = x.insertCell(nxtCell++);
     b.style.width = '15%';
+    b.className = 'condition-sortable-handle';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     b.innerHTML = "<input type='hidden' name='aor_conditions_module_path["+ condln +"]' id='aor_conditions_module_path" + condln + "' value=''>";
@@ -280,8 +325,9 @@ function insertConditionLine(){
     b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
 
 
-    var c = x.insertCell(2);
+    var c = x.insertCell(nxtCell++);
     c.style.width = '15%';
+    c.className = 'condition-sortable-handle';
     var viewStyle = 'display:none';
     if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
     c.innerHTML = "<input type='hidden' name='aor_conditions_field["+ condln +"]' id='aor_conditions_field" + condln + "' value=''>";
@@ -289,15 +335,15 @@ function insertConditionLine(){
     c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
 
 
-    var d = x.insertCell(3);
+    var d = x.insertCell(nxtCell++);
     d.id='aor_conditions_operatorInput'+condln;
     d.style.width = '15%';
 
-    var e = x.insertCell(4);
+    var e = x.insertCell(nxtCell++);
     e.id='aor_conditions_fieldTypeInput'+condln;
     e.style.width = '15%';
 
-    var f = x.insertCell(5);
+    var f = x.insertCell(nxtCell++);
     f.id='aor_conditions_fieldInput'+condln;
     f.style.width = '30%';
 
@@ -316,7 +362,7 @@ function insertConditionLine(){
 function markConditionLineDeleted(ln)
 {
     // collapse line; update deleted value
-    document.getElementById('aor_conditions_body' + ln).style.display = 'none';
+    document.getElementById('product_line' + ln).style.display = 'none';
     document.getElementById('aor_conditions_deleted' + ln).value = '1';
     document.getElementById('aor_conditions_delete_line' + ln).onclick = '';
 
@@ -324,6 +370,7 @@ function markConditionLineDeleted(ln)
     if(condln_count == 0){
         document.getElementById('conditionLines_head').style.display = "none";
     }
+    hideUnnecessaryLogicSelects();
 }
 
 function clearConditionLines(){

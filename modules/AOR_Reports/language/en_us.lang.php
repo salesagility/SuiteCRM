@@ -67,6 +67,7 @@ $mod_strings = array (
   'LBL_TOTAL' => 'Total',
   'LBL_AOR_CHARTS_SUBPANEL_TITLE' => 'Charts',
   'LBL_ADD_CHART' => 'Add chart',
+    'LBL_ADD_PARENTHESIS' => 'Drop parenthesis',
   'LBL_CHART_TITLE' => 'Title',
   'LBL_CHART_TYPE' => 'Type',
   'LBL_CHART_X_FIELD' => 'X Axis',
