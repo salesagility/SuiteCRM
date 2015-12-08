@@ -50,6 +50,27 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
     public $pbss_date_end;
     public $pbss_sales_stages = array();
 
+    //Overwrite the default version in DashletGenericChart.php
+    public function setRefreshIcon()
+    {
+        $additionalTitle = '';
+        if($this->isRefreshable)
+
+            $additionalTitle .= '<a href="#" onclick="SUGAR.mySugar.retrieveDashlet(\''
+                . $this->id
+                . '\',\'predefined_chart\'); return false;"><!--not_in_theme!-->'
+                . SugarThemeRegistry::current()->getImage(
+                    'dashlet-header-refresh',
+                    'border="0" align="absmiddle" title="'. translate('LBL_DASHLET_REFRESH', 'Home') . '"',
+                    null,
+                    null,
+                    '.gif',
+                    translate('LBL_DASHLET_REFRESH', 'Home')
+                )
+                . '</a>';
+        return $additionalTitle;
+    }
+
     /**
      * @see DashletGenericChart::$_seedName
      */
@@ -102,6 +123,7 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
     public function display()
     {
         global $current_user, $sugar_config;
+
 /*
         require_once('include/SugarCharts/SugarChartFactory.php');
         $sugarChart = SugarChartFactory::getInstance();
@@ -138,37 +160,85 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         return $this->getTitle('') . '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
 */
 
-        $data = $this->getChartData($this->constructSuiteQuery());
-        $chartReadyData = $this->prepareChartData($data);
+        $is_currency = true;
+        $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
+
+        $currency_symbol = $sugar_config['default_currency_symbol'];
+        if ($current_user->getPreference('currency')){
+
+            $currency = new Currency();
+            $currency->retrieve($current_user->getPreference('currency'));
+            $currency_symbol = $currency->symbol;
+        }
+
+
+        $data = $this->getChartData($this->constructQuery());
+        $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
 
         $jsonData = json_encode($chartReadyData['data']);
         $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
+
         $total = $chartReadyData['total'];
 
+        $startDate = $this->pbss_date_start;
+        $endDate = $this->pbss_date_end;
+
+        //TODO find a better way of doing this
+        $canvasId = 'rGraphFunnel'.uniqid();
+
+        //These are taken in the same fashion as the hard-coded array above
+        $module = 'Opportunities';
+        $action = 'index';
+        $query  ='true';
+        $searchFormTab ='advanced_search';
+
+        $chartWidth     = 650;
+        $chartHeight    = 600;
+
+        /*
+         *
+         *
+         */
+
         $chart = <<<EOD
-        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.core.js' ></script>
-        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js' ></script>
-        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.dynamic.js'></script>
-        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js'></script>
-        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js'></script>
-        <script type='text/javascript' src='../SuiteCRM/include/SuiteGraphs/rgraph/libraries/RGraph.drawing.text.js'></script>
-        <canvas id='rgraphFunnel' width='450' height='600'>[No canvas support]</canvas>
+
+        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
         <script>
+        function myFunnelClick(e,bar)
+        {
+            var labels = $jsonLabels;
+            var clicked = encodeURI(labels[bar[2]]);
+            window.open('http://localhost/SuiteCRM/index.php?module=$module&action=$action&query=$query&searchFormTab=$searchFormTab&start_range_date_closed=$startDate&end_range_date_closed=$endDate&sales_stage='+clicked,'_blank');
+
+        }
+
+        function myFunnelMousemove(e,shape)
+        {
+            e.target.style.cursor = 'pointer';
+        }
+
         window.onload = function ()
         {
+            drawFunnelGraph();
+        }
+
+        function drawFunnelGraph(){
             var funnel = new RGraph.Funnel({
-                id:'rgraphFunnel',
+                id:'$canvasId',
                 data:$jsonData,
                 options: {
-                    labels:$jsonLabels,
+                    labels:$jsonLabelsAndValues,
                     labelsSticks: true,
                     labelsX: 10,
                     key:$jsonLabels,
-                    keyInteractive: true,
+                    //keyInteractive: true,
                     //keyPositionX: 465,
+                    eventsMousemove:myFunnelMousemove,
+                    eventsClick:myFunnelClick,
                     gutterRight: 0,
-                    gutterTop: 100,
-                    gutterLeft: 180,
+                    gutterTop: 50,
+                    gutterLeft: 320,
                     strokestyle: 'rgba(0,0,0,0)',
                     textBoxed: false,
                     shadow: true,
@@ -180,20 +250,37 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
             }).draw();
 
             var text = new RGraph.Drawing.Text({
-            id: 'rgraphFunnel',
+            id: '$canvasId',
             x: 10,
             y: 22,
-            text: 'Pipeline Total is $total',
+            text: 'Pipeline Total is $currency_symbol$total',
             options: {
                 font: 'Arial',
                 bold: true,
                 //halign: 'left',
                 //valign: 'bottom',
-                colors: ['gray'],
+                colors: ['black'],
                 size: 12
             }
         }).draw();
+
+        var sizeIncrement = new RGraph.Drawing.Text({
+            id: '$canvasId',
+            x: 10,
+            y: 550,
+            text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
+            options: {
+                font: 'Arial',
+                bold: true,
+                //halign: 'left',
+                //valign: 'bottom',
+                colors: ['black'],
+                size: 10
+            }
+        }).draw();
+
         }
+         //drawFunnelGraph();
         </script>
 EOD;
 
@@ -255,7 +342,7 @@ EOD;
     /**
      * @see DashletGenericChart::constructQuery()
      */
-
+/*
     protected function constructQuery()
     {
         $query = "  SELECT opportunities.sales_stage,
@@ -273,8 +360,8 @@ EOD;
 
         return $query;
     }
-
-    protected function constructSuiteQuery()
+*/
+    protected function constructQuery()
     {
         $query = "  SELECT opportunities.sales_stage,
                         count(*) AS opp_count,
@@ -288,7 +375,7 @@ EOD;
         return $query;
     }
 
-    protected function prepareChartData($data)
+    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
     {
         //return $data;
         $chart['labels']=array();
@@ -296,6 +383,8 @@ EOD;
         $total = 0;
         foreach($data as $i)
         {
+            //$chart['labelsAndValues'][]=$i['key'].' ('.$currency.(int)$i['total'].')';
+            $chart['labelsAndValues'][]=$i['key'].' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
             $chart['labels'][]=$i['key'];
             $chart['data'][]=(int)$i['total'];
             $total+=(int)$i['total'];
@@ -309,6 +398,7 @@ EOD;
     /**
      * @see DashletGenericChart::constructGroupBy()
      */
+    /*
     protected function constructGroupBy()
     {
        return array(
@@ -316,4 +406,5 @@ EOD;
            'user_name',
            );
     }
+    */
 }
