@@ -47,6 +47,8 @@ class AOR_Condition extends Basic {
 	var $aor_report_id;
 	var $condition_order;
 	var $field;
+    var $logic_op;
+    var $parenthesis;
 	var $operator;
 	var $value;
 	
@@ -96,7 +98,12 @@ class AOR_Condition extends Basic {
 //                    $condition->value = $_POST['aor_conditions_value'][$i];
                 }
                 if(trim($condition->field) != ''){
-                    $condition->condition_order = ++$j;
+                    if(isset($_POST['aor_conditions_order'][$i])) {
+                        $condition->condition_order = (int) $_POST['aor_conditions_order'][$i];
+                    }
+                    else {
+                        $condition->condition_order = ++$j;
+                    }
                     $condition->aor_report_id = $parent->id;
                     $condition->save();
                 }
