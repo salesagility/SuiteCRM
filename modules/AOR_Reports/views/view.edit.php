@@ -78,15 +78,25 @@ class AOR_ReportsViewEdit extends ViewEdit {
         while ($row = $this->bean->db->fetchByAssoc($result)) {
             $condition_name = new AOR_Condition();
             $condition_name->retrieve($row['id']);
-            $condition_name->module_path = implode(":",unserialize(base64_decode($condition_name->module_path)));
+            if(!$condition_name->parenthesis) {
+                $condition_name->module_path = implode(":", unserialize(base64_decode($condition_name->module_path)));
+            }
             if($condition_name->value_type == 'Date'){
                 $condition_name->value = unserialize(base64_decode($condition_name->value));
             }
             $condition_item = $condition_name->toArray();
-            $display = getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->report_module);
-            $condition_item['module_path_display'] = $display['module'];
-            $condition_item['field_label'] = $display['field'];
-            $conditions[] = $condition_item;
+
+            if(!$condition_name->parenthesis) {
+                $display = getDisplayForField($condition_name->module_path, $condition_name->field, $this->bean->report_module);
+                $condition_item['module_path_display'] = $display['module'];
+                $condition_item['field_label'] = $display['field'];
+            }
+            else {
+                $condition_item['module_path_display'] = "({$condition_name->parenthesis}) - parenthesis";
+            }
+            $condition_item['logic_op'] = $condition_name->logic_op;
+            $condition_item['parenthesis'] = $condition_name->parenthesis;
+            $conditions[$condition_item['condition_order']] = $condition_item;
         }
         return $conditions;
     }

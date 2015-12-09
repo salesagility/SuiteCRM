@@ -58,6 +58,7 @@
 
             var dropConditionLine = function(node) {
                 addNodeToConditions(node);
+                LogicalOperatorHandler.hideUnnecessaryLogicSelects();
             };
 
             var showTreeDataLeafs = function(treeDataLeafs, module) {
@@ -238,6 +239,7 @@
     .tab-panels .edit.view {/*width: 80%; float: right;*/}
     .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
     .condition-sortable-handle {cursor: move;}
+    .parenthesis-line strong {font-size: 18px}
 </style>
 
 {/literal}
@@ -303,11 +305,9 @@
             cancel: ".parenthesis-line",
             connectWith: ".connectedSortableConditions",
             start: function(event, ui) {
-                console.log('drag...');
                 parenthesisBtnHtml = $('#aor_condition_parenthesis_btn').html();
             },
             stop: function(event, ui) {
-                console.log('drop..');
                 if(event.target.id == 'aor_condition_parenthesis_btn') {
                     $('#aor_condition_parenthesis_btn').html('<tr class="parentheses-btn">' + ui.item.html() + '</tr>');
                     ParenthesisHandler.replaceParenthesisBtns();

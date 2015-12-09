@@ -85,7 +85,15 @@ class AOR_Condition extends Basic {
                         }else if($field_def['name'] == 'module_path'){
                             $post_data[$key.$field_def['name']][$i] = base64_encode(serialize(explode(":",$post_data[$key.$field_def['name']][$i])));
                         }
-                        $condition->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
+                        if($field_def['name'] == 'parenthesis' && $post_data[$key.$field_def['name']][$i] == 'END') {
+                            if(!isset($lastParenthesisStartConditionId)) {
+                                throw new Exception('a closure parenthesis has no starter pair');
+                            }
+                            $condition->parenthesis = $lastParenthesisStartConditionId;
+                        }
+                        else {
+                            $condition->$field_def['name'] = $post_data[$key . $field_def['name']][$i];
+                        }
                     }else if($field_def['name'] == 'parameter'){
                         $condition->$field_def['name'] = 0;
                     }
@@ -93,11 +101,11 @@ class AOR_Condition extends Basic {
                 }
                 // Period must be saved as a string instead of a base64 encoded datetime.
                 // Overwriting value
-                if($condition->value_type == 'Period') {
+                if((!isset($condition->parenthesis) || !$condition->parenthesis) && isset($condition->value_type) && $condition->value_type == 'Period') {
                     $condition->value = base64_encode($_POST['aor_conditions_value'][$i]);
 //                    $condition->value = $_POST['aor_conditions_value'][$i];
                 }
-                if(trim($condition->field) != ''){
+                if(trim($condition->field) != '' || $condition->parenthesis){
                     if(isset($_POST['aor_conditions_order'][$i])) {
                         $condition->condition_order = (int) $_POST['aor_conditions_order'][$i];
                     }
@@ -105,7 +113,10 @@ class AOR_Condition extends Basic {
                         $condition->condition_order = ++$j;
                     }
                     $condition->aor_report_id = $parent->id;
-                    $condition->save();
+                    $conditionId = $condition->save();
+                    if($condition->parenthesis=='START') {
+                        $lastParenthesisStartConditionId = $conditionId;
+                    }
                 }
             }
         }
