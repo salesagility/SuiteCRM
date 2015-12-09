@@ -75,7 +75,7 @@ var LogicalOperatorHandler = {
     },
 
     onLogicSelectChange: function(elem, counter) {
-        console.log('logic select changed... ', elem, counter);
+        // console.log('logic select changed... ', elem, counter);
     }
 
 };
@@ -195,6 +195,28 @@ var ParenthesisHandler = {
             $('.parenthesis-line[data-parenthasis-start-condln=' + counter + ']').remove();
         }
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+        ConditionOrderHandler.setConditionOrders();
+        ParenthesisHandler.addParenthesisLineIdent();
+    },
+
+    addParenthesisLineIdent: function() {
+        var identDeep = 0;
+        $('.condition-ident').remove();
+        $('#aor_conditions_body tr').each(function (i, e) {
+            if($(this).css('display') != 'none') {
+                if ($(this).hasClass('parenthesis-close')) {
+                    identDeep--;
+                }
+                if ($(this).css('display') != 'none') {
+                    for (var i = 0; i < identDeep; i++) {
+                        $(this).find('td:nth-child(3)').prepend('<span class="condition-ident">&nbsp;</span>');
+                    }
+                }
+                if ($(this).hasClass('parenthesis-open')) {
+                    identDeep++;
+                }
+            }
+        });
     }
 
 };
@@ -552,6 +574,7 @@ function markConditionLineDeleted(ln)
     }
     LogicalOperatorHandler.hideUnnecessaryLogicSelects();
     ConditionOrderHandler.setConditionOrders();
+    ParenthesisHandler.addParenthesisLineIdent();
 }
 
 function clearConditionLines(){

@@ -59,6 +59,8 @@
             var dropConditionLine = function(node) {
                 addNodeToConditions(node);
                 LogicalOperatorHandler.hideUnnecessaryLogicSelects();
+                ConditionOrderHandler.setConditionOrders();
+                ParenthesisHandler.addParenthesisLineIdent();
             };
 
             var showTreeDataLeafs = function(treeDataLeafs, module) {
@@ -240,6 +242,7 @@
     .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
     .condition-sortable-handle {cursor: move;}
     .parenthesis-line strong {font-size: 18px}
+    .condition-ident {width: 25px; display: block; float: left;}
 </style>
 
 {/literal}
@@ -319,10 +322,12 @@
                 }
                 LogicalOperatorHandler.hideUnnecessaryLogicSelects();
                 ConditionOrderHandler.setConditionOrders();
+                ParenthesisHandler.addParenthesisLineIdent();
             }
         });//.disableSelection();
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
         ConditionOrderHandler.setConditionOrders();
+        ParenthesisHandler.addParenthesisLineIdent();
     });
 
     $(function(){
