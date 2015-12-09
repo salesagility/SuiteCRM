@@ -607,7 +607,7 @@ class AOR_Report extends Basic {
         if(isset($query_array['where'])){
             $query_where = '';
             foreach ($query_array['where'] as $where){
-                $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
+                $query_where .=  ($query_where == '' ? 'WHERE ' : ' ').$where;
             }
             $query .= ' '.$query_where;
         }
@@ -813,6 +813,8 @@ class AOR_Report extends Basic {
             $sql = "SELECT id FROM aor_conditions WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY condition_order ASC";
             $result = $this->db->query($sql);
 
+            $tiltLogicOp = true;
+
             while ($row = $this->db->fetchByAssoc($result)) {
                 $condition = new AOR_Condition();
                 $condition->retrieve($row['id']);
@@ -996,11 +998,30 @@ class AOR_Report extends Basic {
                     }
 
 
-                    if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                    if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
 
+                    $tiltLogicOp = false;
                 }
+                else if($condition->parenthesis) {
+                    if($condition->parenthesis == 'START') {
+                        $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) .  '(';
+                        $tiltLogicOp = true;
+                    }
+                    else {
+                        $query['where'][] = ')';
+                        $tiltLogicOp = false;
+                    }
+                }
+                else {
+                    throw new Exception('illegal condition');
+                }
+
             }
 
+            if(isset($query['where']) && $query['where']) {
+                array_unshift($query['where'], '(');
+                $query['where'][] = ') AND ';
+            }
             $query['where'][] = $module->table_name.".deleted = 0 ".$this->build_report_access_query($module, $module->table_name);
 
         }

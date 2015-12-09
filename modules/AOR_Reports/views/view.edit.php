@@ -91,12 +91,12 @@ class AOR_ReportsViewEdit extends ViewEdit {
                 $condition_item['module_path_display'] = $display['module'];
                 $condition_item['field_label'] = $display['field'];
             }
-            else {
-                $condition_item['module_path_display'] = "({$condition_name->parenthesis}) - parenthesis";
+            if(isset($conditions[$condition_item['condition_order']])) {
+                $conditions[] = $condition_item;
             }
-            $condition_item['logic_op'] = $condition_name->logic_op;
-            $condition_item['parenthesis'] = $condition_name->parenthesis;
-            $conditions[$condition_item['condition_order']] = $condition_item;
+            else {
+                $conditions[$condition_item['condition_order']] = $condition_item;
+            }
         }
         return $conditions;
     }
