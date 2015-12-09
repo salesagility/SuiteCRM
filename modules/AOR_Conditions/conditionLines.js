@@ -30,17 +30,26 @@ var report_module = '';
 var LogicalOperatorHandler = {
     //logicSelectCounter: 0.
 
-    getLogicalOperatorSelectHTML: function(value) {
+    getLogicalOperatorSelectHTML: function(value, _condln, forcedValue) {
 
-        if (typeof value === 'undefined' || !value) { value = null; }
+        // default set to 'AND'!!
+        if(typeof forcedValue == 'undefined' || forcedValue === true) forcedValue = 'AND';
+        if(!forcedValue) forcedValue = null;
+
+        if(_condln===0)_condln = '0';
+
+        if (typeof value === 'undefined' || !value) {
+            value = forcedValue ? forcedValue : null;
+        }
 
         var selecteds = {};
         selecteds.none = value == null ? ' selected="selected"' : '';
         selecteds.AND = value == 'AND' ? ' selected="selected"' : '';
         selecteds.OR = value == 'OR' ? ' selected="selected"' : '';
         selectHTML =
-            '<select class="logic-select" name="aor_conditions_logic_op[' + condln + ']" onchange="LogicalOperatorHandler.onLogicSelectChange(this, ' + condln + ');" style="display:none;">' +
-            //'   <option value=""' + selecteds.none + '></option>' +
+            '<select class="logic-select" name="aor_conditions_logic_op[' + (_condln ? _condln : condln) + ']" onchange="LogicalOperatorHandler.onLogicSelectChange(this, ' + (_condln ? _condln : condln) + ');" style="display:none;">' +
+
+            (!value && !forcedValue ? ('   <option value=""' + selecteds.none + '></option>') : '')  +
             '   <option value="AND"' + selecteds.AND + '>AND</option>' +
             '   <option value="OR"' + selecteds.OR + '>OR</option>' +
             '</select>';
@@ -75,19 +84,20 @@ var ConditionOrderHandler = {
 
     //conditionOrderInputCounter: 0,
 
-    getConditionOrderHiddenInput: function(value) {
+    getConditionOrderHiddenInput: function(value, _condln) {
+
+        if(_condln===0)_condln = '0';
 
         if (typeof value === 'undefined' || !value) { value = '0'; }
 
         //conditionOrderInputCounter++
 
-        inputHTML = '<input type="hidden" class="aor_condition_order_input" name="aor_conditions_order[' + condln + ']" value="' + value + '">';
+        inputHTML = '<input type="hidden" class="aor_condition_order_input" name="aor_conditions_order[' + (_condln ? _condln : condln) + ']" value="' + value + '">';
 
         return inputHTML;
     },
 
     setConditionOrders: function() {
-        console.log('orderset...');
         var ord = 0;
         $('#aor_conditions_body tr').each(function (i, e) {
             if ($(this).css('display') != 'none') {
@@ -105,29 +115,62 @@ var ParenthesisHandler = {
 
     //parenthesisCounter: 0,
 
-    replaceParenthesisBtns: function() {
+    getParenthesisStartHtml: function(condition_id, logic_op, condition_order, _condln) {
 
-        $(
-            '<tr class="parenthesis-line parenthesis-open" parenthesis-counter="' + (condln+1) + '">' +
+        if(!condition_id) condition_id = '';
+        if(!logic_op) logic_op = '';
+        if(!condition_order) condition_order = '';
+        if(_condln===0)_condln = '0';
+
+        var html =
+            '<tr class="parenthesis-line parenthesis-open" parenthesis-counter="' + (_condln ? _condln : condln) + '" data-condition-id="' + condition_id + '">' +
             '   <td>' +
-            '       <button type="button" class="button" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + (condln+1) + ');">' +
+            '       <input type="hidden" name="aor_conditions_parenthesis[' + ((_condln ? _condln : condln)) + ']" value="START">' +
+            '       <button type="button" class="button" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + ((_condln ? _condln : condln)) + ');">' +
             '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
             '       </button>' +
+            '       <input type="hidden" name="aor_conditions_deleted[' + (_condln ? _condln : condln) + ']" id="aor_conditions_deleted' + (_condln ? _condln : condln) + '" value="0" data-delete-id="' + condition_id + '">' +
+            '       <input type="hidden" name="aor_conditions_id[' + (_condln ? _condln : condln) + ']" id="aor_conditions_id' + (_condln ? _condln : condln) + '" value="' + condition_id + '">' +
+            '       <input type="hidden" name="aor_conditions_field[' + ((_condln ? _condln : condln)) + ']" value="">' +
             '   </td>' +
-            '   <td>' + LogicalOperatorHandler.getLogicalOperatorSelectHTML() + ConditionOrderHandler.getConditionOrderHiddenInput() + '</td>' +
+            '   <td>' + LogicalOperatorHandler.getLogicalOperatorSelectHTML(logic_op, ((_condln ? _condln : condln))) + ConditionOrderHandler.getConditionOrderHiddenInput(condition_order, ((_condln ? _condln : condln))) + '</td>' +
             '   <td>' +
-            '       (START) ' +
+            '       <strong>(</strong> ' +
             '   </td>' +
-            '</tr>' +
+            '</tr>';
 
-            '<tr class="parenthesis-line parenthesis-close" parenthesis-counter="' + (condln+2) + '">' +
-            '   <td>&nbsp;</td>' +
-            '   <td>' + ConditionOrderHandler.getConditionOrderHiddenInput() + '</td>' +
+        return html;
+    },
+
+    getParenthesisEndHtml: function(condition_id, condition_order, condition_parenthesis_start, _condln, _start_condln) {
+
+        if(!condition_id) condition_id = '';
+        if(!condition_order) condition_order = '';
+        if(!condition_parenthesis_start || condition_parenthesis_start == 'END') condition_parenthesis_start = '';
+        if(_condln===0)_condln = '0';
+        if(_start_condln===0)_start_condln = '0';
+
+        var html =
+            '<tr class="parenthesis-line parenthesis-close" parenthesis-counter="' + ((_condln ? _condln : condln+1)) + '" data-condition-id="' + condition_id + '" data-parenthesis-start="' + (condition_parenthesis_start) + '" data-parenthasis-start-condln="' + (_start_condln ? _start_condln : condln) + '">' +
             '   <td>' +
-            '       (END) ' +
+            '       <input type="hidden" name="aor_conditions_parenthesis[' + ((_condln ? _condln : condln+1)) + ']" value="' + (condition_parenthesis_start ? condition_parenthesis_start : 'END') + '">' +
+            '       <input type="hidden" class="parenthesis-close-deleted-input" name="aor_conditions_deleted[' + (_condln ? _condln : condln+1) + ']" id="aor_conditions_deleted' + (_condln ? _condln : condln+1) + '" value="0" data-delete-id="' + condition_id + '">' +
+            '       <input type="hidden" name="aor_conditions_id[' + (_condln ? _condln : condln+1) + ']" id="aor_conditions_id' + (_condln ? _condln : condln+1) + '" value="' + condition_id + '">' +
+            '       <input type="hidden" name="aor_conditions_field[' + ((_condln ? _condln : condln+1)) + ']" value="">' +
+            '       &nbsp;' +
             '   </td>' +
-            '</tr>'
-        ).replaceAll('#aor_conditions_body .parentheses-btn');
+            '   <td>' + ConditionOrderHandler.getConditionOrderHiddenInput(condition_order, ((_condln ? _condln : condln+1))) + '</td>' +
+            '   <td>' +
+            '       <strong>)</strong> ' +
+            '   </td>' +
+            '</tr>';
+
+        return html;
+    },
+
+    replaceParenthesisBtns: function() {
+
+        $( ParenthesisHandler.getParenthesisStartHtml() + ParenthesisHandler.getParenthesisEndHtml() ).replaceAll('#aor_conditions_body .parentheses-btn');
 
         condln+=2;
         condln_count+=2;
@@ -136,7 +179,21 @@ var ParenthesisHandler = {
     },
 
     deleteParenthesisPair: function(elem, counter) {
-        $('.parenthesis-line[parenthesis-counter=' + counter + ']').remove();
+        condition_id = $('#aor_conditions_id'+counter).val();
+        if(condition_id) {
+            $('input[data-delete-id="' + condition_id + '"]').val(1);
+            $('tr[data-condition-id="' + condition_id + '"]').hide();
+            $('tr.parenthesis-line.parenthesis-close').each(function(i,e){
+                if($(this).attr('data-parenthesis-start') && $(this).attr('data-parenthesis-start') == condition_id) {
+                    $(this).find('input.parenthesis-close-deleted-input').val(1);
+                    $(this).hide();
+                }
+            });
+        }
+        else {
+            $('.parenthesis-line[parenthesis-counter=' + counter + ']').remove();
+            $('.parenthesis-line[data-parenthasis-start-condln=' + counter + ']').remove();
+        }
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
     }
 
@@ -149,7 +206,7 @@ function loadConditionLine(condition, overrideView){
     var prefix = 'aor_conditions_';
     var ln = 0;
 
-    ln = insertConditionLine();
+    ln = insertConditionLine(condition);
 
     for(var a in condition){
         var elem = document.getElementById(prefix + a + ln);
@@ -168,7 +225,9 @@ function loadConditionLine(condition, overrideView){
         condition['value'] = JSON.stringify(condition['value'])
     }
 
-    showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op'], condition['condition_order'], condition['parenthesis']);
+    if(!condition['parenthesis']) {
+        showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op'], condition['condition_order'], condition['parenthesis']);
+    }
 }
 
 function showConditionLines() {
@@ -374,7 +433,8 @@ function insertConditionHeader(){
     }
 }
 
-function insertConditionLine(){
+function insertConditionLine(condition){
+
     var nxtCell = 0;
     var view = action_sugar_grp1;
     if (document.getElementById('conditionLines_head') == null) {
@@ -391,63 +451,88 @@ function insertConditionLine(){
         document.getElementById('conditionLines').appendChild(tablebody);
     }
 
-    var x = tablebody.insertRow(-1);
-    x.id = 'product_line' + condln;
-
-    var a = x.insertCell(nxtCell++);
-    if(action_sugar_grp1 == 'EditView'){
-        a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
-        a.innerHTML += "<input type='hidden' name='aor_conditions_deleted[" + condln + "]' id='aor_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
-    } else{
-        a.innerHTML = condln +1 + "<input class='aor_conditions_id' type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
+    if(view == 'EditView' && condition.parenthesis) {
+        if(condition.parenthesis == 'START') {
+            $(tablebody).append(ParenthesisHandler.getParenthesisStartHtml(condition.id, condition.logic_op, condition.condition_order, condln));
+        }
+        else {
+            $(tablebody).append(ParenthesisHandler.getParenthesisEndHtml(condition.id, condition.condition_order, condition.parenthesis, condln));
+        }
     }
-    a.style.width = '5%';
+    else {
+
+        var x = tablebody.insertRow(-1);
+        x.id = 'product_line' + condln;
+
+        var a = x.insertCell(nxtCell++);
+        if(action_sugar_grp1 == 'EditView'){
+            a.innerHTML = "<button type='button' id='aor_conditions_delete_line" + condln + "' class='button' value='' tabindex='116' onclick='markConditionLineDeleted(" + condln + ")'><img src='themes/default/images/id-ff-remove-nobg.png' alt=''></button><br>";
+            a.innerHTML += "<input type='hidden' name='aor_conditions_deleted[" + condln + "]' id='aor_conditions_deleted" + condln + "' value='0'><input type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
+        } else{
+            a.innerHTML = condln +1 + "<input class='aor_conditions_id' type='hidden' name='aor_conditions_id[" + condln + "]' id='aor_conditions_id" + condln + "' value=''>";
+        }
+        a.style.width = '5%';
 
 
-    if(view == 'EditView') {
-        var cellLogic = x.insertCell(nxtCell++);
-        cellLogic.id = 'aor_conditions_logicInput' + condln;
-        cellLogic.innerHTML = LogicalOperatorHandler.getLogicalOperatorSelectHTML() + ConditionOrderHandler.getConditionOrderHiddenInput();
+        if(view == 'EditView') {
+            var cellLogic = x.insertCell(nxtCell++);
+            cellLogic.id = 'aor_conditions_logicInput' + condln;
+            cellLogic.innerHTML = LogicalOperatorHandler.getLogicalOperatorSelectHTML(condition.logic_op ? condition.logic_op : null, condln) + ConditionOrderHandler.getConditionOrderHiddenInput(condition.condition_order ? condition.condition_order : null, condln);
+        }
+
+        var b = x.insertCell(nxtCell++);
+        b.style.width = '15%';
+        b.className = 'condition-sortable-handle';
+        var viewStyle = 'display:none';
+        if (action_sugar_grp1 == 'EditView') {
+            viewStyle = '';
+        }
+        b.innerHTML = "<input type='hidden' name='aor_conditions_module_path[" + condln + "]' id='aor_conditions_module_path" + condln + "' value=''>";
+        if (action_sugar_grp1 == 'EditView') {
+            viewStyle = 'display:none';
+        } else {
+            viewStyle = '';
+        }
+        b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
+
+
+        var c = x.insertCell(nxtCell++);
+        c.style.width = '15%';
+        c.className = 'condition-sortable-handle';
+        var viewStyle = 'display:none';
+        if (action_sugar_grp1 == 'EditView') {
+            viewStyle = '';
+        }
+        c.innerHTML = "<input type='hidden' name='aor_conditions_field[" + condln + "]' id='aor_conditions_field" + condln + "' value=''>";
+        if (action_sugar_grp1 == 'EditView') {
+            viewStyle = 'display:none';
+        } else {
+            viewStyle = '';
+        }
+        c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
+
+
+        var d = x.insertCell(nxtCell++);
+        d.id = 'aor_conditions_operatorInput' + condln;
+        d.style.width = '15%';
+
+        var e = x.insertCell(nxtCell++);
+        e.id = 'aor_conditions_fieldTypeInput' + condln;
+        e.style.width = '15%';
+
+        var f = x.insertCell(nxtCell++);
+        f.id = 'aor_conditions_fieldInput' + condln;
+        f.style.width = '30%';
+
+
+        if (view === 'EditView') {
+            var h = x.insertCell(-1);
+            h.innerHTML += "<input id='aor_conditions_parameter" + condln + "' name='aor_conditions_parameter[" + condln + "]' value='1' type='checkbox'>";
+            h.style.width = '10%';
+        }
+
     }
 
-    var b = x.insertCell(nxtCell++);
-    b.style.width = '15%';
-    b.className = 'condition-sortable-handle';
-    var viewStyle = 'display:none';
-    if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    b.innerHTML = "<input type='hidden' name='aor_conditions_module_path["+ condln +"]' id='aor_conditions_module_path" + condln + "' value=''>";
-    if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
-    b.innerHTML += "<span style='width:178px;' id='aor_conditions_module_path_display" + condln + "' ></span>";
-
-
-    var c = x.insertCell(nxtCell++);
-    c.style.width = '15%';
-    c.className = 'condition-sortable-handle';
-    var viewStyle = 'display:none';
-    if(action_sugar_grp1 == 'EditView'){viewStyle = '';}
-    c.innerHTML = "<input type='hidden' name='aor_conditions_field["+ condln +"]' id='aor_conditions_field" + condln + "' value=''>";
-    if(action_sugar_grp1 == 'EditView'){viewStyle = 'display:none';}else{viewStyle = '';}
-    c.innerHTML += "<span style='width:178px;' id='aor_conditions_field_label" + condln + "' ></span>";
-
-
-    var d = x.insertCell(nxtCell++);
-    d.id='aor_conditions_operatorInput'+condln;
-    d.style.width = '15%';
-
-    var e = x.insertCell(nxtCell++);
-    e.id='aor_conditions_fieldTypeInput'+condln;
-    e.style.width = '15%';
-
-    var f = x.insertCell(nxtCell++);
-    f.id='aor_conditions_fieldInput'+condln;
-    f.style.width = '30%';
-
-
-    if(view === 'EditView') {
-        var h = x.insertCell(-1);
-        h.innerHTML += "<input id='aor_conditions_parameter" + condln + "' name='aor_conditions_parameter[" + condln + "]' value='1' type='checkbox'>";
-        h.style.width = '10%';
-    }
     condln++;
     condln_count++;
 
