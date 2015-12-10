@@ -248,25 +248,25 @@
 
 
 <div class="tab-togglers">
-    <div class="tab-toggler toggle-detailpanel_fields ">
+    <div class="tab-toggler toggle-detailpanel_fields active">
         <h4 class="button">{$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE}</h4>
     </div>
-    <div class="tab-toggler toggle-detailpanel_conditions active">
+    <div class="tab-toggler toggle-detailpanel_conditions ">
         <h4 class="button">{$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE}</h4>
     </div>
-    <div class="tab-toggler toggle-detailpanel_charts">
+    <div class="tab-toggler toggle-detailpanel_charts ">
         <h4 class="button">{$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE}</h4>
     </div>
 </div>
 
 <div class="tab-panels">
 
-    <div class="edit view edit508 hidden" id="detailpanel_fields">
+    <div class="edit view edit508 " id="detailpanel_fields">
         <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
                 <div id="fieldLines" style="min-height: 50px;">
                 </div>
     </div>
-    <div class="edit view edit508 " id="detailpanel_conditions">
+    <div class="edit view edit508 hidden" id="detailpanel_conditions">
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
         <div id="conditionLines"  style="min-height: 50px;">
         </div>
