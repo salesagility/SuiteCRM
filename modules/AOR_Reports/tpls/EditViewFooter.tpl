@@ -66,7 +66,7 @@
             var showTreeDataLeafs = function(treeDataLeafs, module) {
                 $('#module-name').html('(' + module + ')');
                 $('#fieldTreeLeafs').remove();
-                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox"></div>');
+                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>');
                 $('#fieldTreeLeafs').tree({
                     data: treeDataLeafs,
                     dragAndDrop: true,
@@ -231,18 +231,6 @@
         });
     });
 </script>
-
-<style type="text/css">
-    #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
-    .dragbox {height: 250px; overflow: scroll;}
-    .tab-togglers {width: 80%;}
-    .tab-toggler {display: block; float: left;}
-    .tab-toggler.active .button {background-color: #286090;}
-    .tab-panels .edit.view {/*width: 80%; float: right;*/}
-    .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
-    .condition-sortable-handle {cursor: move;}
-    .parenthesis-line strong {font-size: 18px}
-</style>
 
 {/literal}
 
