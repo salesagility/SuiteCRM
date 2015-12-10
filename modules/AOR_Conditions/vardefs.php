@@ -70,15 +70,13 @@ $dictionary['AOR_Condition'] = array(
         'logic_op' => array(
             'name' => 'logic_op',
             'vname' => 'LBL_LOGIC_OP',
-            'type' => 'enum',
-            'ext1' => 'logic_op_dom',
+            'type' => 'varchar',
             'default_value' => 'AND',
         ),
         'parenthesis' => array(
             'name' => 'parenthesis',
             'vname' => 'LBL_PARENTHESIS',
-            'type' => 'enum',
-            'ext1' => 'parenthesis_dom',
+            'type' => 'varchar',
         ),
   'module_path' =>
   array (
