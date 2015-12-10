@@ -5584,3 +5584,16 @@ div.password {
     font-weight: bold;
     color: red;
 }
+
+/* report layout */
+#EditView_tabs {float: left;}
+#report-editview-footer {width: 70%; float: left;}
+
+#detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
+.aor_dragbox {height: 250px; overflow: scroll;}
+#report-editview-footer .tab-togglers {width: 80%;}
+#report-editview-footer .tab-toggler {display: block; float: left;}
+#report-editview-footer .tab-toggler.active .button {background-color: #286090;}
+#report-editview-footer .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
+#report-editview-footer .condition-sortable-handle {cursor: move;}
+#report-editview-footer .parenthesis-line strong {font-size: 18px}
