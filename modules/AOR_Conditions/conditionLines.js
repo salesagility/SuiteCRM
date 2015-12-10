@@ -209,7 +209,7 @@ var ParenthesisHandler = {
                 }
                 if ($(this).css('display') != 'none') {
                     for (var i = 0; i < identDeep; i++) {
-                        $(this).find('td:nth-child(3)').prepend('<span class="condition-ident">&nbsp;</span>');
+                        $(this).find('td:nth-child(3)').prepend('<span class="condition-ident">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
                     }
                 }
                 if ($(this).hasClass('parenthesis-open')) {
@@ -217,6 +217,7 @@ var ParenthesisHandler = {
                 }
             }
         });
+        $('.condition-ident').closest('td').css('white-space', 'nowrap');
     }
 
 };
