@@ -109,7 +109,7 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $query  ='true';
         $searchFormTab ='advanced_search';
 
-
+        $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#8080ff','#c03f80']";
 
         $chart = <<<EOD
         <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
@@ -137,6 +137,8 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
                 keyPosition:'graph',
                 keyPositionX:0,
                 keyBackground:'rgba(255,255,255,0.7)',
+                colors:$colours,
+                keyColors:$colours
                 //keyInteractive: true
                 }
             }).draw();
@@ -177,7 +179,7 @@ EOD;
 
     }
 
-    protected function getChartData($query)
+    function getChartData($query)
     {
         global $app_list_strings, $db;
         $dataSet = array();

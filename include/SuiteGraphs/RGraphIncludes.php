@@ -19,6 +19,49 @@ $chart = <<<EOD
                 e.target.style.cursor = 'pointer';
             }
 
+            function myPipelineBySalesStageClick(e,bar)
+            {
+                                if( bar !== undefined
+                &&  bar[5] !== undefined
+                &&  bar['object'] !== undefined
+                &&  bar['object']['properties'] !== undefined
+                &&  bar['object']['properties']['chart.tooltips']!== undefined
+                &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
+                {
+                    var stage = encodeURI(bar['object']['properties']['chart.labels'][bar[5]]);
+                    var graphId = bar[0]['id'];
+                    var divHolder = $("#"+graphId).parent();
+                    var module = $(divHolder).find(".module").val();
+                    var action = $(divHolder).find(".action").val();
+                    var query = $(divHolder).find(".query").val();
+                    var searchFormTab = $(divHolder).find(".searchFormTab").val();
+                    var userId = $(divHolder).find(".userId").val();
+                    var startDate = encodeURI($(divHolder).find(".startDate").val());
+                    var endDate = encodeURI($(divHolder).find(".endDate").val());
+                    window.open('http://localhost/SuiteCRM/index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_blank');
+                }
+            }
+
+            function outcomeByMonthClick(e,bar)
+            {
+                 if( bar !== undefined
+                &&  bar[5] !== undefined
+                &&  bar['object'] !== undefined
+                &&  bar['object']['properties'] !== undefined
+                &&  bar['object']['properties']['chart.tooltips']!== undefined
+                &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
+                {
+                    var info = bar['object']['properties']['chart.tooltips'][bar[5]];
+                    var stage = $(info).find('.stage').val();
+                    var date = $(info).find('.date').val();
+
+                    stage = encodeURI($.trim(stage));
+                    date = encodeURI($.trim(date));
+                    //console.log(stage + ' ' + date);
+                    window.open('http://localhost/SuiteCRM/index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&date_closed_advanced='+date+'&sales_stage='+stage,'_blank');
+                }
+            }
+
             function allOpportunititesByLeadSourceByOutcomeClick(e,bar)
             {
                 if( bar !== undefined
@@ -27,13 +70,15 @@ $chart = <<<EOD
                 &&  bar['object']['properties'] !== undefined
                 &&  bar['object']['properties']['chart.tooltips']!== undefined
                 &&  bar['object']['properties']['chart.tooltips'][bar[5]] !== undefined)
-                var info = bar['object']['properties']['chart.tooltips'][bar[5]];
-                var stage = $(info).find('.stage').val();
-                var category = $(info).find('.category').val();
+                {
+                    var info = bar['object']['properties']['chart.tooltips'][bar[5]];
+                    var stage = $(info).find('.stage').val();
+                    var category = $(info).find('.category').val();
 
-                stage = encodeURI($.trim(stage));
-                category = encodeURI($.trim(category));
-                window.open('http://localhost/SuiteCRM/index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_blank');
+                    stage = encodeURI($.trim(stage));
+                    category = encodeURI($.trim(category));
+                    window.open('http://localhost/SuiteCRM/index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_blank');
+                }
             }
 
             function opportunitiesByLeadSourceDashletClick(e,bar)

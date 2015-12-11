@@ -42,7 +42,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$dashletStrings['RGraph_OutcomeByMonthDashlet'] = array('LBL_TITLE'       => 'Resultado por Mes',
-                                                 'LBL_DESCRIPTION' => 'Gráfico del Resultado Mensual',
-                                                 'LBL_REFRESH'     => 'Actualizar Gráfico');
+
+global $app_strings, $current_language;
+
+$dashletMeta['RGraph_CampaignROIChartDashlet'] = array('title'       => 'LBL_TITLE',
+                                                    'description' => 'LBL_TITLE',
+                                                    'icon'		  => 'icon_Charts_GroupBy_32.gif', 
+                                                    'category'    => 'Charts',
+                                                    'module'	  => 'Campaigns',);
 ?>

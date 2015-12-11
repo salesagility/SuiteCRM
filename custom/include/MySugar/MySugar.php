@@ -368,7 +368,6 @@ EOJS;
 
 	function configureDashlet(){
 		global $current_user, $app_strings, $mod_strings;
-
 		if(!empty($_REQUEST['id'])) {
 		    $id = $_REQUEST['id'];
 		    $dashletDefs = $current_user->getPreference('dashlets', $this->type); // load user's dashlets config

@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$dashletData['PipelineBySalesStageDashlet']['searchFields'] = array(
+$dashletData['RGraph_PipelineBySalesStageDashlet']['searchFields'] = array(
         'pbss_date_start' => array(
                 'name'  => 'pbss_date_start',
                 'vname' => 'LBL_CLOSE_DATE_START',

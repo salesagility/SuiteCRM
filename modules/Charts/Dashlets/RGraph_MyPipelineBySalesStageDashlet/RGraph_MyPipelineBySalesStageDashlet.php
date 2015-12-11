@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class MyPipelineBySalesStageDashlet extends DashletGenericChart
+class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
 {
     public $mypbss_date_start;
     public $mypbss_date_end;
@@ -97,6 +97,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
      */
     public function display()
     {
+        /*
         global $sugar_config, $current_user, $timedate;
 
         require_once('include/SugarCharts/SugarChartFactory.php');
@@ -152,6 +153,190 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         return $this->getTitle('') .
             '<div align="center">' .$sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div><br />'. $this->processAutoRefresh();
+        */
+
+        global $sugar_config, $current_user, $timedate;
+
+        $module = 'Opportunities';
+        $action = 'index';
+        $queryable = 'true';
+        $searchFormTab = 'advanced_search';
+        $userId = $current_user->id;
+
+        $url_params = array( 'assigned_user_id' => $current_user->id );
+        $group_by = $this->constructGroupBy();
+
+        $currency_symbol = $sugar_config['default_currency_symbol'];
+        if ($current_user->getPreference('currency')){
+
+            $currency = new Currency();
+            $currency->retrieve($current_user->getPreference('currency'));
+            $currency_symbol = $currency->symbol;
+        }
+
+        $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
+
+        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
+
+        $query = $this->constructQuery();
+        $data = $this->constructCEChartData($this->getChartData($query));
+
+        $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
+
+        $canvasId = 'rGraphOppByLeadSourceByOutcome'.uniqid();
+        $chartWidth     = 900;
+        $chartHeight    = 480;
+        $autoRefresh = $this->processAutoRefresh();
+
+        //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
+        $jsonData = json_encode($chartReadyData['data']);
+        $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
+        $jsonTooltips = json_encode($chartReadyData['tooltips']);
+
+        $total = $chartReadyData['total'];
+
+
+        $jsonKey = json_encode($chartReadyData['key']);
+        $jsonTooltips = json_encode($chartReadyData['tooltips']);
+
+        $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
+
+        $startDate = $timedate->to_display_date($this->mypbss_date_start, false);
+        $endDate = $timedate->to_display_date($this->mypbss_date_end, false);
+
+        $chart = <<<EOD
+        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        <input type='hidden' class='module' value='$module' />
+        <input type='hidden' class='action' value='$action' />
+        <input type='hidden' class='query' value='$queryable' />
+        <input type='hidden' class='searchFormTab' value='$searchFormTab' />
+        <input type='hidden' class='userId' value='$userId' />
+        <input type='hidden' class='startDate' value='$startDate' />
+        <input type='hidden' class='endDate' value='$endDate' />
+             $autoRefresh
+         <script>
+           var hbar = new RGraph.HBar({
+            id: '$canvasId',
+            data:$jsonData,
+            options: {
+                //grouping: 'stacked',
+                colorsSequential:true,
+                tooltipsEvent:'mousemove',
+                tooltips:$jsonTooltips,
+                labels: $jsonLabels,
+                xlabels:true,
+                labelsAbove: true,
+                labelsAbovedecimals: 2,
+                linewidth: 2,
+                eventsClick:myPipelineBySalesStageClick,
+                //textSize:8,
+                strokestyle: 'white',
+                //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
+                //shadowOffsetx: 1,
+                //shadowOffsety: 1,
+                //shadowBlur: 10,
+                //hmargin: 25,
+                gutterTop:50,
+                gutterLeft: 150,
+                gutterRight:50,
+                //gutterBottom: 155,
+                //textAngle: 45,
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                tooltips:$jsonTooltips,
+                tooltipsEvent:'mousemove',
+                colors:$colours,
+                key: $jsonKey,
+                keyColors: $colours,
+                //keyPosition: 'gutter',
+                keyPositionX: $canvasId.width - 190,
+                //keyPositionY: 18,
+                keyPositionGutterBoxed: true,
+                axisColor: '#ccc',
+                unitsPre:'$currency_symbol',
+                unitsPost:'$thousands_symbol',
+                noyaxis: true
+            }
+        }).on('draw', function (obj)
+        {
+            for (var i=0; i<obj.coords.length; ++i) {
+                obj.context.fillStyle = 'black';
+                if(obj.data_arr[i] > 0)
+                {
+                RGraph.Text2(obj.context, {
+                    font:'Verdana',
+                    'size':9,
+                    'x':obj.coords[i][0] + (obj.coords[i][2] / 2),
+                    'y':obj.coords[i][1] + (obj.coords[i][3] / 2),
+                    'text':obj.data_arr[i].toString(),
+                    'valign':'center',
+                    'halign':'center'
+                });
+                }
+            }
+        }).draw();
+
+        hbar.canvas.onmouseout = function (e)
+        {
+            // Hide the tooltip
+            RGraph.hideTooltip();
+
+            // Redraw the canvas so that any highlighting is gone
+            RGraph.redraw();
+        }
+
+        new RGraph.Drawing.Text({
+            id: '$canvasId',
+            x: 30,
+            y: 30,
+            text: 'Pipeline total is ${currency_symbol}$total$thousands_symbol',
+            options: {
+                font: 'Arial',
+                //bold: true,
+                //halign: 'left',
+                //valign: 'bottom',
+                colors: ['black'],
+                size: 14
+            }
+        }).draw();
+
+</script>
+EOD;
+
+        return $chart;
+
+
+        /*
+        $sugarChart->setData($dataset);
+        $total = format_number($this->getHorizBarTotal($dataset), 0, 0, array('convert'=>true));
+        $pipeline_total_string = translate('LBL_TOTAL_PIPELINE', 'Charts') . $sugarChart->currency_symbol . $total . $sugarChart->thousands_symbol;
+        $sugarChart->setProperties($pipeline_total_string, $subtitle, 'horizontal bar chart');
+
+        // Bug #53753 We have to add values for filter based on "Expected Close Date" field
+        if (!empty($this->mypbss_date_start) && !empty($this->mypbss_date_end))
+        {
+            $sugarChart->url_params['date_closed_advanced_range_choice'] = 'between';
+            $sugarChart->url_params['start_range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_start, false);
+            $sugarChart->url_params['end_range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_end, false);
+        }
+        elseif (!empty($this->mypbss_date_start))
+        {
+            $sugarChart->url_params['date_closed_advanced_range_choice'] = 'greater_than';
+            $sugarChart->url_params['range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_start, false);
+        }
+        elseif (!empty($this->mypbss_date_end))
+        {
+            $sugarChart->url_params['date_closed_advanced_range_choice'] = 'less_than';
+            $sugarChart->url_params['range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_end, false);
+        }
+
+        $xmlFile = $sugarChart->getXMLFileName($this->id);
+        $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
+
+        return $this->getTitle('') .
+        '<div align="center">' .$sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div><br />'. $this->processAutoRefresh();
+        */
     }
 
 	/**
@@ -272,6 +457,28 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
     		array_push($groupBy, 'user_name');
     	return $groupBy;
     }
+
+    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
+    {
+        //Use the  lead_source to categorise the data for the charts
+        $chart['labels'] = array();
+        $chart['data'] = array();
+        //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be)
+        $chart['key'] = array();
+        $chart['tooltips']= array();
+        $chart['total'] = 0;
+
+        foreach($data as $key=>$value)
+        {
+            $formattedFloat = (float)number_format((float)$value, 2, '.', '');
+            $chart['labels'][] = $key;
+            $chart['data'][] = $formattedFloat;
+            $chart['total']+=$formattedFloat;
+            $chart['tooltips'][] = "'$key' amounts to $currency_symbol$formattedFloat$thousands_symbol (click bar to drill-through)";
+        }
+        return $chart;
+    }
+
 }
 
 ?>

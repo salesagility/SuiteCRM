@@ -44,81 +44,41 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
-class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
+class RGraph_CampaignROIChartDashlet extends DashletGenericChart
 {
-    public $obm_ids = array();
-    public $obm_date_start;
-    public $obm_date_end;
+    public $campaign_id;
     
     /**
      * @see DashletGenericChart::$_seedName
      */
-    protected $_seedName = 'Opportunities';
-
-    /**
-     * @see DashletGenericChart::__construct()
-     */
-    public function __construct(
-        $id,
-        array $options = null
-        )
-    {
-        global $timedate;
-
-		if(empty($options['obm_date_start']))
-            $options['obm_date_start'] = $timedate->nowDbDate();
-
-        if(empty($options['obm_date_end']))
-            $options['obm_date_end'] = $timedate->asDbDate($timedate->getNow()->modify("+6 months"));
-
-        parent::__construct($id,$options);
-    }
-
+    protected $_seedName = 'Campaigns';
+    
     /**
      * @see DashletGenericChart::displayOptions()
      */
-    public function displayOptions()
+    public function displayOptions() 
     {
-        if (!isset($this->obm_ids) || count($this->obm_ids) == 0)
-			$this->_searchFields['obm_ids']['input_name0'] = array_keys(get_user_array(false));
+        $this->getSeedBean()->disable_row_level_security = false;
 
+        $campaigns = $this->getSeedBean()->get_full_list("","");
+    	if ( $campaigns != null )
+            foreach ($campaigns as $c)
+                $this->_searchFields['campaign_id']['options'][$c->id] = $c->name;
+    	else 
+            $this->_searchFields['campaign_id']['options'] = array();
+            
         return parent::displayOptions();
-    }
-
+    }   
+    
     /**
      * @see DashletGenericChart::display()
      */
     public function display()
     {
-        /*
-        $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
-        if ($GLOBALS['current_user']->getPreference('currency')){
-
-            $currency = new Currency();
-            $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
-            $currency_symbol = $currency->symbol;
-        }
-
-        require("modules/Charts/chartdefs.php");
-        $chartDef = $chartDefs['outcome_by_month'];
-
-        require_once('include/SugarCharts/SugarChartFactory.php');
-        $sugarChart = SugarChartFactory::getInstance();
-        $sugarChart->setProperties('',
-            translate('LBL_OPP_SIZE', 'Charts') . ' ' . $currency_symbol . '1' .translate('LBL_OPP_THOUSANDS', 'Charts'),
-            $chartDef['chartType']);
-        $sugarChart->base_url = $chartDef['base_url'];
-        $sugarChart->group_by = $chartDef['groupBy'];
-        $sugarChart->url_params = array();
-        $sugarChart->getData($this->constructQuery());
-        $sugarChart->is_currency = true;
-        $sugarChart->data_set = $sugarChart->sortData($sugarChart->data_set, 'm', false, 'sales_stage', true, true);
-        $xmlFile = $sugarChart->getXMLFileName($this->id);
-        $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
-	
-        return $this->getTitle('<div align="center"></div>') . 
-            '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
-        */
+        $rawData = $this->constructQuery(
+            $GLOBALS['app_list_strings']['roi_type_dom'],
+            $GLOBALS['app_list_strings']['roi_type_dom'],
+            $this->campaign_id[0],null,true,true,true,$this->id);
 
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')){
@@ -128,23 +88,13 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
             $currency_symbol = $currency->symbol;
         }
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
-        $module = 'Opportunities';
-        $action = 'index';
-        $query = 'true';
-        $searchFormTab = 'advanced_search';
-		$groupBy = array( 'm', 'sales_stage', );
 
-
-        $data = $this->getChartData($this->constructQuery());
-
-        //I have taken out the sort as this will throw off the labels we have calculated
-       $data = $this->sortData($data,'m', false, 'sales_stage', true, true);
-
-        $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
-        $canvasId = 'rGraphOutcomeByMonth'.uniqid();
+        $canvasId = 'rGraphCampaignROI'.uniqid();
         $chartWidth     = 900;
         $chartHeight    = 480;
         $autoRefresh = $this->processAutoRefresh();
+
+        $chartReadyData = $this->prepareChartData($rawData,$currency_symbol,$thousands_symbol);
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
         $jsonData = json_encode($chartReadyData['data']);
@@ -155,8 +105,8 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
         $jsonKey = json_encode($chartReadyData['key']);
         $jsonTooltips = json_encode($chartReadyData['tooltips']);
 
+        //$colours = "['red','blue','green','orange','yellow','pink']";
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
-
 
         $chart = <<<EOD
         <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
@@ -166,13 +116,14 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
             id: '$canvasId',
             data:$jsonData,
             options: {
-                grouping: 'stacked',
+                //grouping: 'stacked',
+                colorsSequential:true,
                 labels: $jsonLabels,
                 xlabels:true,
                 labelsAbove: true,
                 labelsAbovedecimals: 2,
                 linewidth: 2,
-                eventsClick:outcomeByMonthClick,
+                //eventsClick:outcomeByMonthClick,
                 //textSize:8,
                 strokestyle: 'white',
                 //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
@@ -180,23 +131,22 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 //shadowOffsety: 1,
                 //shadowBlur: 10,
                 //hmargin: 25,
-               // colors:$colours,
-                gutterLeft: 60,
+                colors:$colours,
+                gutterLeft: 100,
                 gutterTop:50,
-                gutterRight:160,
+                //gutterRight:160,
                 //gutterBottom: 155,
                 //textAngle: 45,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                tooltips:$jsonTooltips,
+                //tooltips:$jsonTooltips,
                 tooltipsEvent:'mousemove',
-                colors:$colours,
-                key: $jsonKey,
-                keyColors: $colours,
+                //key: $jsonKey,
+                //keyColors: $colours,
                 //keyPosition: 'gutter',
-                keyPositionX: $canvasId.width - 150,
+                //keyPositionX: $canvasId.width - 150,
                 //keyPositionY: 18,
-                keyPositionGutterBoxed: true,
+                //keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
                 unitsPre:'$currency_symbol',
                 unitsPost:'$thousands_symbol',
@@ -234,7 +184,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
             id: '$canvasId',
             x: 10,
             y: 20,
-            text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
+            text: 'Amount in ${currency_symbol}',
             options: {
                 font: 'Arial',
                 bold: true,
@@ -247,28 +197,101 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
 
 </script>
 EOD;
-    return $chart;
+        return $chart;
 
-	}
 
-    /**
-     * @see DashletGenericChart::constructQuery()
-     */
-    protected function constructQuery()
-    {
-        $query = "SELECT sales_stage,".
-            db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'"))." as m, ".
-            "sum(amount_usdollar/1000) as total, count(*) as opp_count FROM opportunities ";
-        $query .= " WHERE opportunities.date_closed >= ".db_convert("'".$this->obm_date_start."'",'date') .
-                        " AND opportunities.date_closed <= ".db_convert("'".$this->obm_date_end."'",'date') .
-                        " AND opportunities.deleted=0";
-        if (count($this->obm_ids) > 0)
-            $query .= " AND opportunities.assigned_user_id IN ('" . implode("','",$this->obm_ids) . "')";
-        $query .= " GROUP BY sales_stage,".
-                        db_convert('opportunities.date_closed','date_format',array("'%Y-%m'"),array("'YYYY-MM'")) .
-                    " ORDER BY m";
+		
+     //   return $this->getTitle('<div align="center"></div>') . '<div align="center">' . $returnStr . '</div>'. $this->processAutoRefresh();
+    }
 
-        return $query;
+    protected function constructQuery($datay= array(),$targets=array(),$campaign_id, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
+        //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
+        global $mod_strings;
+        $not_empty = false;
+
+            $chartData = array();
+
+            $focus = new Campaign();
+            $focus->retrieve($campaign_id);
+            $opp_count=0;
+            $opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar","IFNULL",array(0)).")  total_value";
+            $opp_query .= " from opportunities";
+            $opp_query .= " where campaign_id='$campaign_id'";
+            $opp_query .= " and sales_stage='Prospecting'";
+            $opp_query .= " and deleted=0";
+
+            $opp_result=$focus->db->query($opp_query);
+            $opp_data=$focus->db->fetchByAssoc($opp_result);
+            if (empty($opp_data['total_value'])) $opp_data['total_value']=0;
+
+            $chartData['Total Value']= $opp_data['total_value'];
+
+            //report query
+            $opp_query1  = "select SUM(opp.amount) as revenue";
+            $opp_query1 .= " from opportunities opp";
+            $opp_query1 .= " right join campaigns camp on camp.id = opp.campaign_id";
+            $opp_query1 .= " where opp.sales_stage = 'Closed Won'and camp.id='$campaign_id' and opp.deleted=0";
+            $opp_query1 .= " group by camp.name";
+
+            $opp_result1=$focus->db->query($opp_query1);
+            $opp_data1=$focus->db->fetchByAssoc($opp_result1);
+
+            //if (empty($opp_data1[]))
+            if (empty($opp_data1['revenue'])){
+                $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']] = 0;
+                unset($opp_data1['revenue']);
+            }else{
+                $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']] = $opp_data1['revenue'];
+                unset($opp_data1['revenue']);
+                $not_empty = true;
+            }
+
+            $chartData['Revenue']= $opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']];
+
+            $camp_query1  = "select camp.name, SUM(camp.actual_cost) as investment,SUM(camp.budget) as budget,SUM(camp.expected_revenue) as expected_revenue";
+            $camp_query1 .= " from campaigns camp";
+            $camp_query1 .= " where camp.id='$campaign_id'";
+            $camp_query1 .= " group by camp.name";
+
+            $camp_result1=$focus->db->query($camp_query1);
+            $camp_data1=$focus->db->fetchByAssoc($camp_result1);
+
+
+            if (empty($camp_data1['investment']))
+                $camp_data1['investment'] = 0;
+            else
+                $not_empty = true;
+            if (empty($camp_data1['budget']))
+                $camp_data1['budget'] = 0;
+            else
+                $not_empty = true;
+            if (empty($camp_data1['expected_revenue']))
+                $camp_data1['expected_revenue'] = 0;
+            else
+                $not_empty = true;
+
+            $chartData['Investment']= $camp_data1['investment'];
+            $chartData['Budget']= $camp_data1['budget'];
+            $chartData['Expected Revenue']= $camp_data1['expected_revenue'];
+
+        /*
+            $opp_data1[$mod_strings['LBL_ROI_CHART_INVESTMENT']]=$camp_data1['investment'];
+            $opp_data1[$mod_strings['LBL_ROI_CHART_BUDGET']]=$camp_data1['budget'];
+            $opp_data1[$mod_strings['LBL_ROI_CHART_EXPECTED_REVENUE']]=$camp_data1['expected_revenue'];
+
+
+            $query = "SELECT activity_type,target_type, count(*) hits ";
+            $query.= " FROM campaign_log ";
+            $query.= " WHERE campaign_id = '$campaign_id' AND archived=0 AND deleted=0";
+            //if $marketing id is specified, then lets filter the chart by the value
+            if (!empty($marketing_id)){
+                $query.= " AND marketing_id ='$marketing_id'";
+            }
+            $query.= " GROUP BY  activity_type, target_type";
+            $query.= " ORDER BY  activity_type, target_type";
+            $result = $focus->db->query($query);
+*/
+            return $chartData;
     }
 
     protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
@@ -280,8 +303,12 @@ EOD;
         $chart['key'] = array();
         $chart['tooltips']= array();
 
-        foreach($data as $i)
+        foreach($data as $key=>$value)
         {
+            $formattedFloat = (float)number_format((float)$value, 2, '.', '');
+            $chart['labels'][] = $key;
+            $chart['data'][] = $formattedFloat;
+            /*
             $key = $i["m"];
             $stage = $i["sales_stage"];
             if(!in_array($key,$chart['labels']))
@@ -295,6 +322,7 @@ EOD;
             $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
             $chart['data'][count($chart['data'])-1][] = $formattedFloat;
             $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
+            */
         }
         return $chart;
     }

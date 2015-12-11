@@ -51,6 +51,7 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
     public $pbss_sales_stages = array();
 
     //Overwrite the default version in DashletGenericChart.php
+    /*
     public function setRefreshIcon()
     {
         $additionalTitle = '';
@@ -69,7 +70,7 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
                 )
                 . '</a>';
         return $additionalTitle;
-    }
+    }*/
 
     /**
      * @see DashletGenericChart::$_seedName
@@ -196,8 +197,9 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         $chartWidth     = 650;
         $chartHeight    = 600;
 
+        $autoRefresh = $this->processAutoRefresh();
 
-
+        $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
         $chart = <<<EOD
 
         <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
@@ -207,6 +209,7 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         <input type='hidden' class='action' value='$action' />
         <input type='hidden' class='query' value='$query' />
         <input type='hidden' class='searchFormTab' value='$searchFormTab' />
+        $autoRefresh
         <script>
 
 new RGraph.Funnel({
@@ -219,7 +222,7 @@ new RGraph.Funnel({
                     key:$jsonLabels,
                     //keyInteractive: true,
                     //keyPositionX: 465,
-                    eventsMousemove:myFunnelMousemove,
+                    eventsMousemove:rgraphMouseMove,
                     eventsClick:myFunnelClick,
                     gutterRight: 0,
                     gutterTop: 50,
@@ -230,6 +233,8 @@ new RGraph.Funnel({
                     shadowOffsetx: 0,
                     shadowOffsety: 0,
                     shadowBlur: 15,
+                    colors:$colours,
+                    keyColors:$colours,
                     shadowColor: 'gray'
                 }
             }).draw();
@@ -280,7 +285,7 @@ EOD;
      * @param  $query string
      * @return array
      */
-    private function getChartData(
+    function getChartData(
         $query
         )
     {

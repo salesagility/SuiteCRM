@@ -53,11 +53,12 @@
 <input type='hidden' name='to_pdf' value='true'>
 <input type='hidden' name='configure' value='true'>
 <input type='hidden' id='dashletType' name='dashletType' value='{$dashletType}' />
+
 <table width="400" cellpadding="0" cellspacing="0" border="0" class="edit view" align="center">
 <tr>
     <td valign='top' class='dataLabel' nowrap>{$LBL_TITLE} <br /></td>
     <td valign='top' class='dataField'>
-    	<input type="text" value="{$dashlet_title}" size="30" name="pbss_dashlet_title"/>
+    	<input type="text" value="{$dashlet_title}" size="60" name="pbss_dashlet_title"/>
     </td>
 </tr>
 <tr>

@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$dashletData['OutcomeByMonthDashlet']['searchFields'] = array(
+$dashletData['RGraph_OutcomeByMonthDashlet']['searchFields'] = array(
         'obm_date_start' => array(
                 'name'  => 'obm_date_start',
                 'vname' => 'LBL_DATE_START',

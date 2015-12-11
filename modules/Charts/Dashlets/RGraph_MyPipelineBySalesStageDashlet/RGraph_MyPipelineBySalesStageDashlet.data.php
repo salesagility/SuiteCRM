@@ -41,8 +41,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-
-$dashletStrings['RGraph_OutcomeByMonthDashlet'] = array('LBL_TITLE'       => 'Resultado por Mes',
-                                                 'LBL_DESCRIPTION' => 'Gráfico del Resultado Mensual',
-                                                 'LBL_REFRESH'     => 'Actualizar Gráfico');
+$dashletData['RGraph_MyPipelineBySalesStageDashlet']['searchFields'] = array(
+        'mypbss_date_start' => array(
+                'name'  => 'mypbss_date_start',
+                'vname' => 'LBL_CLOSE_DATE_START',
+                'type'  => 'datepicker',
+            ),
+        'mypbss_date_end' => array(
+                'name'  => 'mypbss_date_end',
+                'vname' => 'LBL_CLOSE_DATE_END',
+                'type'  => 'datepicker',
+            ),
+        'mypbss_sales_stages' => array(
+                'name'  => 'mypbss_sales_stages',
+                'vname' => 'LBL_SALES_STAGES',
+                'type'  => 'enum',
+            ),
+        
+        );
 ?>

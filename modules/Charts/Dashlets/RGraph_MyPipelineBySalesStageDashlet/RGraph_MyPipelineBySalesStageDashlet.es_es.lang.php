@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$dashletStrings['RGraph_OutcomeByMonthDashlet'] = array('LBL_TITLE'       => 'Resultado por Mes',
-                                                 'LBL_DESCRIPTION' => 'Gráfico del Resultado Mensual',
-                                                 'LBL_REFRESH'     => 'Actualizar Gráfico');
+$dashletStrings['RGraph_MyPipelineBySalesStageDashlet'] = array('LBL_TITLE'       => 'Mi Pipeline por Etapa de Ventas',
+                                                         'LBL_DESCRIPTION' => 'Gráfico de Barras Verticales de Mi Pipeline por Etapa de Ventas',
+                                                         'LBL_REFRESH'     => 'Actualizar Gráfico');
 ?>

@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-$dashletStrings['RGraph_OutcomeByMonthDashlet'] = array('LBL_TITLE'       => 'Resultado por Mes',
-                                                 'LBL_DESCRIPTION' => 'Gráfico del Resultado Mensual',
+$dashletStrings['RGraph_OpportunitiesByLeadSourceByOutcomeDashlet'] = array('LBL_TITLE'       => 'Todas las Oportunidades por Origen y Resultado',
+                                                 'LBL_DESCRIPTION' => 'Gráfico de barras horizontales de Oportunidades por Origen y Resultado',
                                                  'LBL_REFRESH'     => 'Actualizar Gráfico');
 ?>

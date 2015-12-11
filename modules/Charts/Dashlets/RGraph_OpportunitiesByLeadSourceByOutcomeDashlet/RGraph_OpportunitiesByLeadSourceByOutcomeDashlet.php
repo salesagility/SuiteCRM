@@ -154,10 +154,12 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
 
         $jsonKey = json_encode($chartReadyData['key']);
         $jsonTooltips = json_encode($chartReadyData['tooltips']);
-        //$autoRefresh;
+
+        $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
         $chart = <<<EOD
         <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+             $autoRefresh
          <script>
            var hbar = new RGraph.HBar({
             id: '$canvasId',
@@ -185,8 +187,9 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 backgroundGridBorder: false,
                 tooltips:$jsonTooltips,
                 tooltipsEvent:'mousemove',
+                colors:$colours,
                 key: $jsonKey,
-                //keyColors: ['blue','#c00','#0c0'],
+                keyColors: $colours,
                 //keyPosition: 'gutter',
                 keyPositionX: $canvasId.width - 190,
                 //keyPositionY: 18,
