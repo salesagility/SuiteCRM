@@ -1,0 +1,170 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.drawing.rect.js" ></script>
+    
+    <title>A heat-map like chart using the drawing API rect object</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An example of the drawing API rect object" />
+     
+</head>
+<body>
+        
+    <h1>A heat map like chart using the drawing API rect object</h1>
+    
+    <p>
+        This chart was inspired by Facebooks "heat map"-esque visualisation for determining what computers (though it doesn't have to be
+        computers) are either malfunctioning or sending alerts. In a large datacenter each column could be a particular rack and each
+        individual square a specific computer.
+    </p>
+    
+    <p>
+        Each individual square is a drawing API Rect object - so each can be assigned its own tooltip, colors and click/mousemove events.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        /**
+        * The "data" that determines the colour of the blocks
+        */
+        alerts = [];
+        alerts['34,7'] = {'color':'red','message':'Computer #37 is broken and needs shutting down and repairing'}
+        alerts['52,7'] = {'color':'red','message':'Computer #68 is broken and needs shutting down and repairing'}
+        alerts['53,7'] = {'color':'red','message':'Computer #69 is broken and needs shutting down and repairing'}
+        alerts['54,7'] = {'color':'red','message':'Computer #70 is broken and needs shutting down and repairing'}
+        alerts['14,19'] = {'color':'red','message':'Computer #135 is running hot','color':'yellow'}
+        alerts['14,20'] = {'color':'red','message':'Computer #139 is loose','color':'yellow'}
+        alerts['14,21'] = {'color':'red','message':'Computer #139 is old','color':'orange'}
+        alerts['45,21'] = {'color':'red','message':'Computer #139 is old','color':'orange'}
+        alerts['2,2'] = {'color':'red','message':'Computer #139 needs replacing','color':'orange'}
+        alerts['18,5'] = {'color':'red','message':'Computer #139 needs repairing','color':'red'}
+
+        window.onload = function ()
+        {
+            // 25 "clusters of computers" (sticking to the datacenter analogy)
+            for (var y=0; y<25; ++y) {
+            
+                // 60 "Computers per cluster" (sticking to the datacenter analogy)
+                for (var x=0; x<60; ++x) {
+                    var rect = new RGraph.Drawing.Rect({
+                        id: 'cvs',
+                        x: x*10,
+                        y: y*10,
+                        width: 10,
+                        height: 10,
+                        options: {
+                            strokestyle: 'rgba(0,0,0,0.05)'
+                        }
+                    })
+
+                    if (alerts[x+','+y]) {
+                        rect.set({
+                            fillstyle: alerts[x+','+y].color,
+                            tooltips: [alerts[x+','+y].message]
+                        })
+                    } else {
+                        rect.set('fillstyle', 'rgba(100,255,100,0.2)');
+                    }
+
+                    rect.draw();
+                }
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.rect.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    <span>/**
+    * The "data" that determines the colour of the blocks
+    */</span>
+    alerts = [];
+    alerts['34,7'] = {'color':'red','message':'Computer #37 is broken and needs shutting down and repairing'}
+    alerts['52,7'] = {'color':'red','message':'Computer #68 is broken and needs shutting down and repairing'}
+    alerts['53,7'] = {'color':'red','message':'Computer #69 is broken and needs shutting down and repairing'}
+    alerts['54,7'] = {'color':'red','message':'Computer #70 is broken and needs shutting down and repairing'}
+    alerts['14,19'] = {'color':'red','message':'Computer #135 is running hot','color':'yellow'}
+    alerts['14,20'] = {'color':'red','message':'Computer #139 is loose','color':'yellow'}
+    alerts['14,21'] = {'color':'red','message':'Computer #139 is old','color':'orange'}
+    alerts['45,21'] = {'color':'red','message':'Computer #139 is old','color':'orange'}
+    alerts['2,2'] = {'color':'red','message':'Computer #139 needs replacing','color':'orange'}
+    alerts['18,5'] = {'color':'red','message':'Computer #139 needs repairing','color':'red'}
+
+    window.onload = function ()
+    {
+        <span>// 25 "clusters of computers" (sticking to the datacenter analogy)</span>
+        for (var y=0; y&lt;25; ++y) {
+        
+            <span>// 60 "Computers per cluster" (sticking to the datacenter analogy)</span>
+            for (var x=0; x&lt;60; ++x) {
+                var rect = new RGraph.Drawing.Rect({
+                    id: 'cvs',
+                    x: x*10,
+                    y: y*10,
+                    width: 10,
+                    height: 10,
+                    options: {
+                        strokestyle: 'rgba(0,0,0,0.05)'
+                    }
+                })
+
+                if (alerts[x+','+y]) {
+                    rect.set({
+                        fillstyle: alerts[x+','+y].color,
+                        tooltips: [alerts[x+','+y].message]
+                    })
+                } else {
+                    rect.set('fillstyle', 'rgba(100,255,100,0.2)');
+                }
+
+                rect.draw();
+            }
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A Line chart with a custom line</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Line chart with a custom line" />
+     
+</head>
+<body>
+
+    <h1>A Line chart with a custom line</h1>
+
+    <canvas id="cvs" width="800" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var color = '#E9B34E';
+            
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [7000,26000,11000,16000,28000,13000,23000,28500,null,null,null,null],
+                    [null,null,null,null,null,null,null,28500,11000,14000,9000,10000],
+                ],
+
+                options: {
+                    colors: ['black',color],
+                    shadow: false,
+                    noaxes: true,
+                    backgroundGridVlines: false,
+                    backgroundGridAutofitNumhlines: 3,
+                    backgroundGridBorder: false,
+                    numyticks: 3,
+                    ylabelsCount: 3,
+                    ymax: 30000,
+                    gutterTop: 50,
+                    gutterLeft: 100,
+                    unitsPre: '£',
+                    linewidth: 3,
+                    labels: ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'],
+                    tickmarks: 'dot',
+                    tickmarksDotStroke: 'white',
+                    tickmarksDotLinewidth: 0,
+                    tickmarksDotStroke: 'white',
+                    ticksize: 0,
+                    textSize: 14,
+                    textFont: 'Segoe UI',
+                    scaleZerostart: true,
+                    shadow: true,
+                    shadowOffsetx: 0,
+                    shadowOffsety: 0,
+                    shadowBlur: 0
+                }
+            }).on('draw', function (obj)
+            {
+                // Draw the vertical line
+                var x = obj.coords2[1][7][0];
+                var y = obj.coords2[1][7][1];
+
+                // Draw thevertical line above/below the 8th point
+                RGraph.path(obj, ['b','m',x,25,'l',x,y - 10,'s',color]);
+                RGraph.path(obj, ['b','m',x,y + 10,'l',x,230,'s',color]);
+                
+                obj.context.fillStyle = color;
+                
+                // Draw the text above the line
+                RGraph.text2(obj, {
+                    'x': x,
+                    'y': 25,
+                    'text': 'TODAY',
+                    'size': 8,
+                    'halign': 'center',
+                    'bold': true
+                });
+                
+                // Draw the text above the line
+                RGraph.text2(obj, {
+                    color: 'black',
+                    'x': 65,
+                    'y': 30,
+                    'text': 'REVENUE',
+                    'size': 14,
+                    'halign': 'center',
+                    'bold': true
+                });
+
+                
+            }).trace2({frames: 50}, function (obj)
+            {
+                obj.animate({
+                    frames: 15,
+                    ticksize: 7,
+                    tickmarksDotLinewidth: 3,
+                    shadowOffsetx: 1,
+                    shadowOffsety: 1,
+                    shadowBlur: 2
+                });
+            });
+        };
+    </script>
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="800" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var color = '#E9B34E';
+        
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [7000,26000,11000,16000,28000,13000,23000,28500,null,null,null,null],
+                [null,null,null,null,null,null,null,28500,11000,14000,9000,10000],
+            ],
+
+            options: {
+                colors: ['black',color],
+                shadow: false,
+                noaxes: true,
+                backgroundGridVlines: false,
+                backgroundGridAutofitNumhlines: 3,
+                backgroundGridBorder: false,
+                numyticks: 3,
+                ylabelsCount: 3,
+                ymax: 30000,
+                gutterTop: 50,
+                gutterLeft: 100,
+                unitsPre: '£',
+                linewidth: 3,
+                labels: ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'],
+                tickmarks: 'dot',
+                tickmarksDotStroke: 'white',
+                tickmarksDotLinewidth: 0,
+                tickmarksDotStroke: 'white',
+                ticksize: 0,
+                textSize: 14,
+                textFont: 'Segoe UI',
+                scaleZerostart: true,
+                shadow: true,
+                shadowOffsetx: 0,
+                shadowOffsety: 0,
+                shadowBlur: 0
+            }
+        }).on('draw', function (obj)
+        {
+            <span>// Draw the vertical line</span>
+            var x = obj.coords2[1][7][0];
+            var y = obj.coords2[1][7][1];
+
+            <span>// Draw thevertical line above/below the 8th point</span>
+            RGraph.path(obj, ['b','m',x,25,'l',x,y - 10,'s',color]);
+            RGraph.path(obj, ['b','m',x,y + 10,'l',x,230,'s',color]);
+            
+            obj.context.fillStyle = color;
+            
+            <span>// Draw the text above the line</span>
+            RGraph.text2(obj, {
+                'x': x,
+                'y': 25,
+                'text': 'TODAY',
+                'size': 8,
+                'halign': 'center',
+                'bold': true
+            });
+            
+            <span>// Draw the text above the line</span>
+            RGraph.text2(obj, {
+                color: 'black',
+                'x': 65,
+                'y': 30,
+                'text': 'REVENUE',
+                'size': 14,
+                'halign': 'center',
+                'bold': true
+            });
+
+            
+        }).trace2({frames: 50}, function (obj)
+        {
+            obj.animate({
+                frames: 15,
+                ticksize: 7,
+                tickmarksDotLinewidth: 3,
+                shadowOffsetx: 1,
+                shadowOffsety: 1,
+                shadowBlur: 2
+            });
+        });
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

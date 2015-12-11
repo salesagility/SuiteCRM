@@ -1,0 +1,120 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.hbar.js" ></script>
+    
+    <title>A demo of the Chrome-only dotted or dashed background grid</title>
+    
+
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An example of the HBar that shows hows you can use the (currently) Chrome-only dotted/dashed background grid option" />
+     
+</head>
+<body>
+
+    <h1>A demo of the Chrome-only dotted or dashed background grid</h1>
+    
+    <p>
+        This uses the newer addition to canvas from the canvas v5 specification - native dotted and dashed lines.
+        As browsers add support you will be able to use the option in those too but initially it's only supported in Chrome.
+    </p>
+    
+    <pre class="code">
+obj.Set('background.grid.dashed', true);
+obj.Set('background.grid.dotted', true);
+</pre>
+
+    <canvas id="cvs1" width="600" height="250">[No canvas support]</canvas>
+    <canvas id="cvs2" width="600" height="250">[No canvas support]</canvas>
+    <script>
+        window.onload = function ()
+        {
+            var hbar = new RGraph.HBar({
+                id: 'cvs1',
+                data: [4,5,3,8,4,9,6,5,3],
+                options: {
+                    labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                    title: 'A dashed background grid',
+                    backgroundGridDashed: true,
+                    backgroundGridAutofitNumhlines: 9,
+                    gutterTop: 35
+                }
+            }).draw()
+
+            var hbar2 = new RGraph.HBar({
+                id: 'cvs2',
+                data: [4,5,3,8,4,9,6,5,3],
+                options: {
+                    labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                    title: 'A dotted background grid',
+                    backgroundGridDotted: true,
+                    backgroundGridAutofitNumhlines: 9,
+                    gutterTop: 35
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.hbar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs1" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+&lt;canvas id="cvs2" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var hbar = new RGraph.HBar({
+            id: 'cvs1',
+            data: [4,5,3,8,4,9,6,5,3],
+            options: {
+                labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                title: 'A dashed background grid',
+                backgroundGridDashed: true,
+                backgroundGridAutofitNumhlines: 9,
+                gutterTop: 35
+            }
+        }).draw()
+
+        var hbar2 = new RGraph.HBar({
+            id: 'cvs2',
+            data: [4,5,3,8,4,9,6,5,3],
+            options: {
+                labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                title: 'A dotted background grid',
+                backgroundGridDotted: true,
+                backgroundGridAutofitNumhlines: 9,
+                gutterTop: 35
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

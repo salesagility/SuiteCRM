@@ -1,0 +1,126 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.common.csv.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>A Scatter chart using the CSV reader</title>
+
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart using the CSV reader" />
+     
+</head>
+<body>
+
+    <h1>A Scatter chart using the CSV reader</h1>
+
+    <div style="background-color: #ffc; border: 2px solid #cc0; border-radius: 5px; padding: 5px;">
+        <b>Note:</b>
+        For browser security reasons the AJAX demos don't work offline. You can view the demos on the RGraph website here:
+        <a href="http://www.rgraph.net/demos/" target="_blank" rel="nofollow">http://www.rgraph.net/demos</a>
+    </div>
+    <canvas id="cvs" width="500" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            RGraph.CSV('/sample.csv', function (csv)
+            {
+                // Just fetch the two rows of the CSV file, starting at the second column
+                var row1 = csv.getRow(0, 1); // First row
+                var row2 = csv.getRow(1, 1); // Second row
+                var data = [];
+                
+                
+                
+                /**
+                * Now make up some sample points using the data
+                */
+                for (var i=0; i<row1.length; ++i) {
+                    data.push([row1[i], row2[i]]);
+                }
+
+
+                var scatter = new RGraph.Scatter({
+                    id: 'cvs',
+                    data: data,
+                    options: {
+                        xmax: 10,
+                        xscale: true
+                    }
+                }).draw();
+            });
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.csv.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="500" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        RGraph.CSV('/sample.csv', function (csv)
+        {
+            <span>// Just fetch the two rows of the CSV file, starting at the second column</span>
+            var row1 = csv.getRow(0, 1); <span>// First row</span>
+            var row2 = csv.getRow(1, 1); <span>// Second row</span>
+            var data = [];
+            
+            
+            
+            <span>/**
+            * Now make up some sample points using the data
+            */</span>
+            for (var i=0; i&lt;row1.length; ++i) {
+                data.push([row1[i], row2[i]]);
+            }
+
+
+            var scatter = new RGraph.Scatter({
+                id: 'cvs',
+                data: data,
+                options: {
+                    xmax: 10,
+                    xscale: true
+                }
+            }).draw();
+        });
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

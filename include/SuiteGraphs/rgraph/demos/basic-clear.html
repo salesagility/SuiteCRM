@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic example of clearing your canvas</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content=" A basic example/explanation of how to clear or reset your canvas" />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+
+</head>
+
+<body>
+
+    <h1>A basic example of clearing your canvas</h1>
+    
+    <p>
+        This is a demonstration of how the RGraph.Reset(canvas) function may be preferable to the RGraph.Clear() function. It is
+        particularly apt if you're using the same canvas to show multiple charts. Because RGraph tracks objects so that it can redraw
+        them you may find old charts being redrawn. In this case you can use the <b>RGraph.Reset(canvas)</b> function instead of the
+        <i>RGraph.Clear(canvas)</i> function to eliminate traces of prior charts.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas><br />
+    <button onclick="DrawBar()">Draw the Bar chart</button>
+    <button onclick="DrawLine()">Draw the Line chart</button>
+    <button onclick="RGraph.Clear(document.getElementById('cvs'))">Clear the canvas</button>
+    <button onclick="RGraph.Reset(document.getElementById('cvs'))">Reset the canvas</button>
+    <button onclick="RGraph.Redraw()">Redraw the canvas</button>
+
+
+    <script>
+        window.onload = function ()
+        {
+            DrawBar();
+        };
+        
+        function DrawBar ()
+        {
+            var labels = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [4,8,1,3,5,2,6],
+                options: {
+                    labels: labels,
+                    tooltips: labels
+                }
+            }).draw()
+        }
+        
+        function DrawLine ()
+        {
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [3,2,2,2,5,4,1],
+                options: {
+                    labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                    tooltips: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+                }
+            }).draw()
+        }
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+
+&lt;button onclick="DrawBar()"&gt;Draw the Bar chart&lt;/button&gt;
+&lt;button onclick="DrawLine()"&gt;Draw the Line chart&lt;/button&gt;
+&lt;button onclick="RGraph.Clear(document.getElementById('cvs'))"&gt;Clear the canvas&lt;/button&gt;
+&lt;button onclick="RGraph.Reset(document.getElementById('cvs'))"&gt;Reset the canvas&lt;/button&gt;
+&lt;button onclick="RGraph.Redraw()"&gt;Redraw the canvas&lt;/button&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        DrawBar();
+    };
+    
+    function DrawBar ()
+    {
+        var labels = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: [4,8,1,3,5,2,6],
+            options: {
+                labels: labels,
+                tooltips: labels
+            }
+        }).draw()
+    }
+    
+    function DrawLine ()
+    {
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [3,2,2,2,5,4,1],
+            options: {
+                labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                tooltips: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+            }
+        }).draw()
+    }
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

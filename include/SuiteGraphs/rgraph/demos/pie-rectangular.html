@@ -1,0 +1,116 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+
+    <title>A "rectangular" Pie chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A rectangular Pie chart" />
+     
+</head>
+<body>
+
+    <h1>A "rectangular" Pie chart</h1>
+    
+    <p>
+        By using a large chart.radius setting the Pie will be too large for the canvas and you'll get a rectangular Pie chart effect.
+    </p>
+
+    <canvas id="cvs" width="350" height="250" style="border: 1px solid #aaa">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [4,8,4,6,5,3,2,5],
+                options: {
+                    radius: 350,
+                    key: ['Alvin','Pete','Hoolio','Jack','Kev','Luis','Lou','Jesse'],
+                    strokestyle: 'white',
+                    linewidth: 3,
+                    textSize: 14
+                }
+            }).draw()
+
+
+            if (RGraph.ISIE9UP || RGraph.ISCHROME) {
+                pie.roundRobin();
+                pie.implode();
+            } else if (RGraph.ISOLD) {
+                pie.draw()
+            } else {
+                pie.grow();
+            }
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="350" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [4,8,4,6,5,3,2,5],
+            options: {
+                radius: 350,
+                key: ['Alvin','Pete','Hoolio','Jack','Kev','Luis','Lou','Jesse'],
+                strokestyle: 'white',
+                linewidth: 3,
+                textSize: 14
+            }
+        }).draw()
+
+
+        if (RGraph.ISIE9UP || RGraph.ISCHROME) {
+            pie.roundRobin();
+            pie.implode();
+        } else if (RGraph.ISOLD) {
+            pie.draw()
+        } else {
+            pie.grow();
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

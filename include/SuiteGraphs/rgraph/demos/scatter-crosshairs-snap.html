@@ -1,0 +1,129 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>A Scatter chart with the crosshairs snap option</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart which is using crosshairs and the snap option" />
+     
+</head>
+<body>
+
+    <h1>A Scatter chart demonstrating  the crosshairs snap option</h1>
+    
+    <p>
+        This Scatter chart demonstrates how you can extract the Scatter charts dataset and index from the variables set on the canvas tag
+        by RGraph.
+    </p>
+
+    <canvas id="cvs" width="600" height="400">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var scatter = new RGraph.Scatter({
+                id:'cvs',
+                data: [
+                    [[0,0,'red'],[5,5,'red'],[10,10,'red'],[15,15,'red'],[20,20,'red'],[25,25,'red'],[30,30,'red'],[35,35,'red'],[40,40,'red'],[45,45,'red'],[50,50,'red']],
+                    [[0,0,'green'],[5,1,'green'],[10,2,'green'],[15,3,'green'],[20,4,'green'],[25,5,'green'],[30,6,'green'],[35,7,'green'],[40,8,'green'],[45,9,'green'],[50,10,'green']]
+                ],
+                options: {
+                    xmax: 100,
+                    crosshairs: true,
+                    crosshairsSnap: true,
+                    gutterLeft: 50,
+                    line: true,
+                    lineColors: ['red','green'],
+                    labels: ['Q1','Q2','Q3','Q4']
+                }
+            }).draw()
+
+            
+            scatter.oncrosshairs = function (obj)
+            {
+                document.getElementById("dataset").value =  obj.canvas.__crosshairs_snap_dataset__;
+                document.getElementById("point").value =  obj.canvas.__crosshairs_snap_point__;
+            }
+        };
+    </script>
+    
+    <p />
+    
+    Dataset:<br />
+    <input id="dataset" type="text" /><br /><br />
+
+    Point:<br />
+    <input id="point" type="text" />
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="400"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var scatter = new RGraph.Scatter({
+            id:'cvs',
+            data: [
+                [[0,0,'red'],[5,5,'red'],[10,10,'red'],[15,15,'red'],[20,20,'red'],[25,25,'red'],[30,30,'red'],[35,35,'red'],[40,40,'red'],[45,45,'red'],[50,50,'red']],
+                [[0,0,'green'],[5,1,'green'],[10,2,'green'],[15,3,'green'],[20,4,'green'],[25,5,'green'],[30,6,'green'],[35,7,'green'],[40,8,'green'],[45,9,'green'],[50,10,'green']]
+            ],
+            options: {
+                xmax: 100,
+                crosshairs: true,
+                crosshairsSnap: true,
+                gutterLeft: 50,
+                line: true,
+                lineColors: ['red','green'],
+                labels: ['Q1','Q2','Q3','Q4']
+            }
+        }).draw();
+
+        
+        scatter.oncrosshairs = function (obj)
+        {
+            document.getElementById("dataset").value =  obj.canvas.__crosshairs_snap_dataset__;
+            document.getElementById("point").value =  obj.canvas.__crosshairs_snap_point__;
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.gantt.js" ></script>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <title>A basic Gantt chart</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A basic Gantt chart" />
+     
+</head>
+<body>
+
+    <h1>A basic Gantt chart</h1>
+    
+    <canvas id="cvs" width="800" height="350">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var data = [
+                [31, 28, 67, 'Richard'], [0, 28, 50, 'Rachel'], [12, 28, 45, 'Fred'],
+                [59, 14, 0, 'Barney'],   [59, 21, 5, 'Gloria'], [46, 31, 92, 'Paul'],
+                [80, 21, 46, 'Harry'],   [94, 17, 84, 'Shane'], [34, 14, 32, 'Kyle'],
+                [64, 14, 28, 'Cynthia'], [13, 61, 74, 'Mabel'], [84, 31, 16, 'Paul'],
+                [80, 22, 45, 'Kiffen'], [0, 115, 50, 'John']
+            ];
+
+            var gantt = new RGraph.Gantt({
+                id: 'cvs',
+                data: data,
+                options: {
+                    labels: ['January', 'February', 'March', 'April'],
+                    xmax: 122,
+                    labelsPercent: true,
+                    backgroundGridAutofitNumvlines: 4
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.gantt.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="800" height="350"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [
+            [31, 28, 67, 'Richard'], [0, 28, 50, 'Rachel'], [12, 28, 45, 'Fred'],
+            [59, 14, 0, 'Barney'],   [59, 21, 5, 'Gloria'], [46, 31, 92, 'Paul'],
+            [80, 21, 46, 'Harry'],   [94, 17, 84, 'Shane'], [34, 14, 32, 'Kyle'],
+            [64, 14, 28, 'Cynthia'], [13, 61, 74, 'Mabel'], [84, 31, 16, 'Paul'],
+            [80, 22, 45, 'Kiffen'], [0, 115, 50, 'John']
+        ];
+
+        var gantt = new RGraph.Gantt({
+            id: 'cvs',
+            data: data,
+            options: {
+                labels: ['January', 'February', 'March', 'April'],
+                xmax: 122,
+                labelsPercent: true
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.drawing.image.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>The front page line chart (grayscale version)</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="The front page line chart" />
+     
+</head>
+<body>
+
+    <h1>The line chart from the front page(grayscale version)</h1>
+
+    <canvas id="cvs" width="400" height="200">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data1 = [4,6,12,16,8,4,2,8,18,16,14,16];
+            var data2 = [2,4,8,4,2,6,6,12,8,10,6,8];
+
+            var myLine = new RGraph.Line({
+                id: 'cvs',
+                data: [data1, data2],
+                options: {
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    tickmarks: null,
+                    gutterLeft: 40,
+                    gutterRight: 15,
+                    gutterBottom: 30,
+                    colors: ['#ff0', 'pink'],
+                    unitsPost: '%',
+                    linewidth: 5,
+                    hmargin: 15,
+                    textColor: '#333',
+                    textFont: 'Arial',
+                    shadow: false,
+                    backgroundGridAutofitNumvlines: 11,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: true,
+                    noxaxis: true,
+                    title: 'An example Line chart',
+                    axisColor: '#666',
+                    textColor: '#666',
+                    spline: true
+                }
+            }).on('draw', function (obj)
+            {
+                var pixels = obj.context.getImageData(0,0,obj.canvas.width,obj.canvas.height);
+
+                for (var i=0,len=pixels.data.length; i<len; i+=4) {
+                    
+                    var avg = (pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3;
+
+                    pixels.data[i] = avg;
+                    pixels.data[i + 1] = avg;
+                    pixels.data[i + 2] = avg;
+                }
+
+                obj.context.putImageData(pixels, 0, 0);
+            }).draw();
+
+            /**
+            * Use the Trace animation to show the chart
+            */
+            if (RGraph.ISOLD) {
+                // IE7/8 don't support shadow blur, so set custom shadow properties
+                myLine.set({
+                    shadow: {
+                        offsetx: 3,
+                        offsety: 3,
+                        color: '#aaa'
+                    }
+                })
+            } else {
+                myLine.set({
+                    tooltips: [
+                        '<b>January</b><br />Started off the year quite averagely',
+                        '<b>February</b><br />Better than January, rising quite nicely',
+                        '<b>March</b><br />March was quite a spike',
+                        '<b>April</b><br />Rising very impressively',
+                        '<b>May</b><br />Dropping after the last two month spike',
+                        '<b>June</b><br />Still dropping',
+                        '<b>July</b><br />The fall is beginning to subside, but still dropping',
+                        '<b>August</b><br />A good rise after the fall',
+                        '<b>September</b><br />A very good peak',
+                        '<b>October</b><br />The peak is now subsiding',
+                        '<b>November</b><br />Still subsiding',
+                        '<b>December</b><br />Rising again after the last fall',
+                        
+                        
+                        '<b>January</b><br />Started off the year quite averagely as with Robert',
+                        '<b>February</b><br />Rising as with Robert',
+                        '<b>March</b><br />Not as good as Robert, but OK',
+                        '<b>April</b><br />Dropping after the peak',
+                        '<b>May</b><br />The low point as with last year',
+                        '<b>June</b><br />Rising higher than Robert',
+                        '<b>July</b><br />Consistent with last month',
+                        '<b>August</b><br />A nice high point',
+                        '<b>September</b><br />A low point',
+                        '<b>October</b><br />A nice rise',
+                        '<b>November</b><br />Falling for fall...',
+                        '<b>December</b><br />Rising again for Christmas'
+                    ]
+                })
+                .trace2();
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="400" height="200"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data1 = [4,6,12,16,8,4,2,8,18,16,14,16];
+        var data2 = [2,4,8,4,2,6,6,12,8,10,6,8];
+
+        var myLine = new RGraph.Line({
+            id: 'cvs',
+            data: [data1, data2],
+            options: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                tickmarks: null,
+                gutterLeft: 40,
+                gutterRight: 15,
+                gutterBottom: 30,
+                colors: ['#ff0', 'pink'],
+                unitsPost: '%',
+                linewidth: 5,
+                hmargin: 15,
+                textColor: '#333',
+                textFont: 'Arial',
+                shadow: false,
+                backgroundGridAutofitNumvlines: 11,
+                backgroundGridVlines: false,
+                backgroundGridBorder: true,
+                noxaxis: true,
+                title: 'An example Line chart',
+                axisColor: '#666',
+                textColor: '#666',
+                spline: true
+            }
+        }).on('draw', function (obj)
+        {
+            var pixels = obj.context.getImageData(0,0,obj.canvas.width,obj.canvas.height);
+
+            for (var i=0,len=pixels.data.length; i&lt;len; i+=4) {
+                
+                var avg = (pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3;
+
+                pixels.data[i] = avg;
+                pixels.data[i + 1] = avg;
+                pixels.data[i + 2] = avg;
+            }
+
+            obj.context.putImageData(pixels, 0, 0);
+        }).draw();
+
+        /**
+        * Use the Trace animation to show the chart
+        */
+        if (RGraph.ISOLD) {
+            // IE7/8 don't support shadow blur, so set custom shadow properties
+            myLine.set({
+                shadow: {
+                    offsetx: 3,
+                    offsety: 3,
+                    color: '#aaa'
+                }
+            })
+        } else {
+            myLine.set({
+                tooltips: [
+                    '&lt;b&gt;January&lt;/b&gt;&lt;br /&gt;Started off the year quite averagely',
+                    '&lt;b&gt;February&lt;/b&gt;&lt;br /&gt;Better than January, rising quite nicely',
+                    '&lt;b&gt;March&lt;/b&gt;&lt;br /&gt;March was quite a spike',
+                    '&lt;b&gt;April&lt;/b&gt;&lt;br /&gt;Rising very impressively',
+                    '&lt;b&gt;May&lt;/b&gt;&lt;br /&gt;Dropping after the last two month spike',
+                    '&lt;b&gt;June&lt;/b&gt;&lt;br /&gt;Still dropping',
+                    '&lt;b&gt;July&lt;/b&gt;&lt;br /&gt;The fall is beginning to subside, but still dropping',
+                    '&lt;b&gt;August&lt;/b&gt;&lt;br /&gt;A good rise after the fall',
+                    '&lt;b&gt;September&lt;/b&gt;&lt;br /&gt;A very good peak',
+                    '&lt;b&gt;October&lt;/b&gt;&lt;br /&gt;The peak is now subsiding',
+                    '&lt;b&gt;November&lt;/b&gt;&lt;br /&gt;Still subsiding',
+                    '&lt;b&gt;December&lt;/b&gt;&lt;br /&gt;Rising again after the last fall',
+                    
+                    
+                    '&lt;b&gt;January&lt;/b&gt;&lt;br /&gt;Started off the year quite averagely as with Robert',
+                    '&lt;b&gt;February&lt;/b&gt;&lt;br /&gt;Rising as with Robert',
+                    '&lt;b&gt;March&lt;/b&gt;&lt;br /&gt;Not as good as Robert, but OK',
+                    '&lt;b&gt;April&lt;/b&gt;&lt;br /&gt;Dropping after the peak',
+                    '&lt;b&gt;May&lt;/b&gt;&lt;br /&gt;The low point as with last year',
+                    '&lt;b&gt;June&lt;/b&gt;&lt;br /&gt;Rising higher than Robert',
+                    '&lt;b&gt;July&lt;/b&gt;&lt;br /&gt;Consistent with last month',
+                    '&lt;b&gt;August&lt;/b&gt;&lt;br /&gt;A nice high point',
+                    '&lt;b&gt;September&lt;/b&gt;&lt;br /&gt;A low point',
+                    '&lt;b&gt;October&lt;/b&gt;&lt;br /&gt;A nice rise',
+                    '&lt;b&gt;November&lt;/b&gt;&lt;br /&gt;Falling for fall...',
+                    '&lt;b&gt;December&lt;/b&gt;&lt;br /&gt;Rising again for Christmas'
+                ]
+            })
+            .trace2();
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

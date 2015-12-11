@@ -1,0 +1,354 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.bar.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.line.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <title>Bar and Line charts with switch effect</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="Bar and Line charts with switch effect" />
+
+    <style>
+        div#container {
+            position: relative;
+            width: 600px;
+            height: 250px;
+        }
+        
+        div#container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 600px;
+            height: 250px;
+            background-color: white;
+            transition: all 1s;
+            opacity: 1;
+        }
+        
+        div#container canvas#cvs1 {
+            top: 125px;
+            left: 300px;
+            width: 0;
+            height: 0;
+            opacity: 0;
+            transform: rotate(90deg);
+        }
+    </style>
+
+</head>
+<body>
+
+    <h1>Bar and Line charts with switch effect</h1>
+
+    <span style="font-weight: bold; color: red;">Requires jQuery</span>
+
+    <div id="container">
+        <canvas id="cvs1" width="600" height="250">[No canvas support]</canvas>
+        <canvas id="cvs2" width="600" height="250">[No canvas support]</canvas>
+    </div>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+
+&lt;style&gt;
+    div#container {
+        position: relative;
+        width: 600px;
+        height: 250px;
+    }
+    
+    div#container canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 600px;
+        height: 250px;
+        background-color: white;
+        transition: all 1s;
+        opacity: 1;
+    }
+    
+    div#container canvas#cvs1 {
+        top: 125px;
+        left: 300px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+        transform: rotate(90deg);
+    }
+&lt;/style&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;div&gt;
+    &lt;canvas id="cvs1" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+    &lt;canvas id="cvs2" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+&lt;/div&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>//
+        // First create the Bar chart but don't call the .draw() method. Only configure th gutter
+        // settings and add some labels.
+        //</span>
+        var bar = new RGraph.Bar({
+            id: 'cvs1',
+            data: [4,8,12],
+            options: {
+                colors: ['#5690C9'],
+                hmargin: 25,
+                strokestyle: 'transparent',
+                axisLinewidth: 15,
+                textSize: 16,
+                textColor: '#999',
+                titleSize: 12,
+                numyticks: 0,
+                numxticks: 0,
+                noxaxis: true,
+                noyaxis: true,
+                shadow: false,
+                title: 'A Bar chart (click to switch to the Line chart)',
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                labels: ['John','Fred','Lucy']
+            }
+
+        }).draw();
+
+        <span>//
+        // Create the line chart with no axes or labels
+        //</span>
+        var line = new RGraph.Line({
+            id: 'cvs2',
+            data: [
+                [1,6,4],
+                [5,3,8]
+            ],
+            options: {
+                colors: ['#B71A1A','#54A4CF'],
+                tickmarks: function myTick (obj, data, value, index, x, y, color, prevX, prevY)
+                {
+                    <span>// An RGraph function</span>
+                    RGraph.path(obj.context, ['b', 'a',x, y, 15, 0, 2 * Math.PI, false, 'f', color]);
+                },
+                linewidth: 10,
+                shadow: false,
+                labels: ['John','Fred','Lucy'],
+                title: 'A Line chart (click to switch to the Bar chart)',
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                noxaxis: true,
+                hmargin: 25,
+                textSize: 16,
+                textColor: '#999',
+                titleSize: 12,
+                axisColor: '#999',
+                textAccessible: false
+            }
+        }).draw();
+    };
+
+    <span>//
+    // The click event handler that swaps the canvas tag width/height properties
+    //</span>
+    $('canvas').click(function (e)
+    {
+        var id = e.target.id;
+
+        if (id === 'cvs1') {
+            $('#cvs1').css({
+                width: 0,
+                height: 0,
+                top: '125px',
+                left: '300px',
+                opacity: 0,
+                transform: 'rotate(90deg)'
+            });
+
+            $('#cvs2').css({
+                width: '600px',
+                height: '250px',
+                top: 0,
+                left: 0,
+                opacity: 1,
+                transform: 'rotate(0)'
+            });
+
+        } else {
+
+            $('#cvs2').css({
+                width: 0,
+                height: 0,
+                top: '125px',
+                left: '300px',
+                opacity: 0,
+                transform: 'rotate(90deg)'
+            });
+
+            $('#cvs1').css({
+                width: '600px',
+                height: '250px',
+                top: 0,
+                left: 0,
+                opacity: 1,
+                transform: 'rotate(0)'
+            });
+        }
+    });
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+
+    <script>
+        window.onload = function ()
+        {
+            //
+            // First create the Bar chart but don't call the .draw() method. Only configure th gutter
+            // settings and add some labels.
+            //
+            var bar = new RGraph.Bar({
+                id: 'cvs1',
+                data: [4,8,12],
+                options: {
+                    colors: ['#5690C9'],
+                    hmargin: 25,
+                    strokestyle: 'transparent',
+                    axisLinewidth: 15,
+                    textSize: 16,
+                    textColor: '#999',
+                    titleSize: 12,
+                    numyticks: 0,
+                    numxticks: 0,
+                    noxaxis: true,
+                    noyaxis: true,
+                    shadow: false,
+                    title: 'A Bar chart (click to switch to the Line chart)',
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    labels: ['John','Fred','Lucy']
+                }
+
+            }).draw();
+
+            //
+            // Create the line chart with no axes or labels
+            //
+            var line = new RGraph.Line({
+                id: 'cvs2',
+                data: [
+                    [1,6,4],
+                    [5,3,8]
+                ],
+                options: {
+                    colors: ['#B71A1A','#54A4CF'],
+                    tickmarks: function myTick (obj, data, value, index, x, y, color, prevX, prevY)
+                    {
+                        // An RGraph function
+                        RGraph.path(obj.context, ['b', 'a',x, y, 15, 0, 2 * Math.PI, false, 'f', color]);
+                    },
+                    linewidth: 10,
+                    shadow: false,
+                    labels: ['John','Fred','Lucy'],
+                    title: 'A Line chart (click to switch to the Bar chart)',
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    noxaxis: true,
+                    hmargin: 25,
+                    textSize: 16,
+                    textColor: '#999',
+                    titleSize: 12,
+                    axisColor: '#999',
+                    textAccessible: false
+                }
+            }).draw();
+        };
+
+        //
+        // The click event handler that swaps the canvas tag width/height properties
+        //
+        $('canvas').click(function (e)
+        {
+            var id = e.target.id;
+
+            if (id === 'cvs1') {
+                $('#cvs1').css({
+                    width: 0,
+                    height: 0,
+                    top: '125px',
+                    left: '300px',
+                    opacity: 0,
+                    transform: 'rotate(90deg)'
+                });
+
+                $('#cvs2').css({
+                    width: '600px',
+                    height: '250px',
+                    top: 0,
+                    left: 0,
+                    opacity: 1,
+                    transform: 'rotate(0)'
+                });
+
+            } else {
+
+                $('#cvs2').css({
+                    width: 0,
+                    height: 0,
+                    top: '125px',
+                    left: '300px',
+                    opacity: 0,
+                    transform: 'rotate(90deg)'
+                });
+
+                $('#cvs1').css({
+                    width: '600px',
+                    height: '250px',
+                    top: 0,
+                    left: 0,
+                    opacity: 1,
+                    transform: 'rotate(0)'
+                });
+            }
+        });
+    </script>
+
+
+
+
+</body>
+</html> 

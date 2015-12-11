@@ -1,0 +1,197 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.drawing.poly.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <title>A dual color range chart Line chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A range Line chart which is adjustable - so you can drag the data points up and down" />
+     
+</head>
+<body>
+
+    <h1>A line chart with two colors</h1>
+    
+    <p>
+        A range Line chart with dual colors. This range chart is combined with the drawing API Poly object so that the range can
+        be given a tooltip.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var d1  = [];
+            var d2  = [];
+            var val = 47;
+            
+            // Create the data
+            for (var i=0; i<100; i+=1) d1[i] = RGraph.random(45,55);
+            for (var i=0; i<100; i+=1) d2[i] = RGraph.random(25,35);
+
+        
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [d1, d2],
+                options: {
+                colors: ['gray','gray'],
+                    backgroundGridAutofitNumhlines: 10,
+                    hmargin: 10,
+                    filled: true,
+                    filledRange: true,
+                    filledRangeThreshold: 0,
+                    filledRangeThresholdColors: ['rgba(255,0,0,0.5)', 'rgba(0,0,255,0.5)'],
+                    labels: [
+                        '', 'Q1', '',
+                        '', 'Q2', '',
+                        '', 'Q3', '',
+                        '', 'Q4', ''
+                    ],
+                    numxticks: 8,
+                    linewidth: 1,
+                    ymax: 60,
+                    tickmarks: null
+                }
+            }).trace();
+                
+                
+                
+            
+            var coords = []
+            for (var i=0; i<(line.coords.length/2); i+=1) {
+                coords.push(line.coords[i])
+            }
+            for (var i=(line.coords.length - 1); i>=(line.coords.length/2); i-=1) {
+                coords.push(line.coords[i])
+            }
+
+            var poly = new RGraph.Drawing.Poly({
+                id: 'cvs',
+                coords: coords,
+                options: {
+                    fillstyle: 'rgba(0,0,0,0)',
+                    strokestyle: 'rgba(0,0,0,0)',
+                    tooltips: ['The range chart'],
+                    highlightFill: 'rgba(255,255,255,0.3)'
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.dynamic.poly.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+        window.onload = function ()
+        {
+            var d1  = [];
+            var d2  = [];
+            var val = 47;
+            
+            // Create the data
+            for (var i=0; i&lt;100; i+=1) d1[i] = RGraph.random(45,55);
+            for (var i=0; i&lt;100; i+=1) d2[i] = RGraph.random(25,35);
+
+        
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [d1, d2],
+                options: {
+                colors: ['gray','gray'],
+                    backgroundGridAutofitNumhlines: 10,
+                    hmargin: 10,
+                    filled: true,
+                    filledRange: true,
+                    filledRangeThreshold: 0,
+                    filledRangeThresholdColors: ['rgba(255,0,0,0.5)', 'rgba(0,0,255,0.5)'],
+                    labels: [
+                        '', 'Q1', '',
+                        '', 'Q2', '',
+                        '', 'Q3', '',
+                        '', 'Q4', ''
+                    ],
+                    numxticks: 8,
+                    linewidth: 1,
+                    ymax: 60,
+                    tickmarks: null
+                }
+            }).trace();
+                
+                
+                
+            
+            var coords = []
+            for (var i=0; i&lt;(line.coords.length/2); i+=1) {
+                coords.push(line.coords[i])
+            }
+            for (var i=(line.coords.length - 1); i&gt;=(line.coords.length/2); i-=1) {
+                coords.push(line.coords[i])
+            }
+
+            var poly = new RGraph.Drawing.Poly({
+                id: 'cvs',
+                coords: coords,
+                options: {
+                    fillstyle: 'rgba(0,0,0,0)',
+                    strokestyle: 'rgba(0,0,0,0)',
+                    tooltips: ['The range chart'],
+                    highlightFill: 'rgba(255,255,255,0.3)'
+                }
+            }).draw();
+        };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

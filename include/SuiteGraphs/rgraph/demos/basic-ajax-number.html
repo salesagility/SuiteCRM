@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic example of AJAX (getting a number)</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content=" A basic example of a chart created using AJAX to fetch a number." />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.vprogress.js" ></script>
+
+</head>
+
+<body>
+
+    <h1>A basic example of AJAX (getting a number)</h1>
+    
+    <p>
+        This is a basic example of using AJAX to request the data from the server to fetch a number. The window.onload function
+        initiates the AJAX request and then the callback function - drawGraph() - takes the response and creates the chart.
+    </p>
+
+    <canvas id="cvs" width="100" height="300">[No canvas support]</canvas><br />
+    
+    <button onclick="window.onload()">Rfresh data</button>
+
+    <script>
+        /**
+        * Ths window.onload function initiates the AJAX request. The AJAX page is: http://www.rgraph.net/getdata.html
+        * If you view this in your browser you'll see that all it does is output a sequence of numbers.
+        */
+        window.onload = function ()
+        {
+            RGraph.AJAX.getNumber('/getdata.html', function (num)
+            {
+                drawGraph(num);
+            });
+        };
+
+
+
+        /**
+        * This is the AJAX callback function. It splits up the response, converts it to numbers and then creates the chart.
+        */
+        function drawGraph (num)
+        {
+            // The num variable is the output of the AJAX request
+            var data = num;
+
+            // Draw the progress bar
+            // A global on purpose
+            if (typeof progress === 'undefined') {
+                progress = new RGraph.VProgress({
+                    id: 'cvs',
+                    min: 0,
+                    max: 100,
+                    value: num,
+                    options: {
+                        margin: 10,
+                        gutterRight: 35
+                    }
+                })
+                
+            } else {
+            
+                progress.value = num;
+            }
+
+            progress.grow();
+        }
+    </script>
+
+    <p>
+        <b>Note:</b>
+        In October 2013 a new CSV reader was added to RGraph. It makes reading CSV files much easier. You can read about
+        <a href="/docs/csv-file-reader.html">the new CSV reader</a> here.
+    </p>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.vprogress.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+&lt;button onclick="window.onload()"&gt;Refresh data&lt;/button&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    <span>/**
+    * Ths window.onload function initiates the AJAX request. The AJAX page is: http://www.rgraph.net/getdata.html
+    * If you view this in your browser you'll see that all it does is output a sequence of numbers.
+    */</span>
+    window.onload = function ()
+    {
+        RGraph.AJAX.getNumber('/getdata.html', function (num)
+        {
+            drawGraph(num);
+        });
+    };
+
+
+
+    <span>/**
+    * This is the AJAX callback function. It splits up the response, converts it to numbers and then creates the chart.
+    */</span>
+    function drawGraph (num)
+    {
+        <span>// The num variable is the output of the AJAX request</span>
+        var data = num;
+
+        <span>// Draw the progress bar
+        // A global on purpose</span>
+        if (typeof progress === 'undefined') {
+            progress = new RGraph.VProgress({
+                id: 'cvs',
+                min: 0,
+                max: 100,
+                value: num,
+                options: {
+                    margin: 10,
+                    gutterRight: 35
+                }
+            })
+            
+        } else {
+        
+            progress.value = num;
+        }
+
+        progress.grow();
+    }
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic example of JSON/AJAX</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content=" A basic example of a chart created using JSON/AJAX. It shows a simple example and there is little happening on the page so the source is easy to navigate." />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+
+</head>
+
+<body>
+
+    <h1>A basic example of AJAX and JSON data</h1>
+    
+    <p>
+        This is a basic example of using JSON and AJAX. AJAX is used to request the data and it is returned in JSON format. The JSON
+        data is then evaluated and a chart created using it.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        /**
+        * Ths window.onload function initiates the AJAX request. The AJAX page is: http://www.rgraph.net/getdata.html?json
+        * If you view this in your browser you'll see that all it does is output a JSON object (a JavaScript object).
+        */
+        window.onload = function ()
+        {
+            RGraph.AJAX.getJSON('/getdata.html?json', drawGraph);
+        };
+
+
+
+        /**
+        * This is the AJAX callback function. It splits up the response, converts it to numbers and then creates the chart.
+        */
+        function drawGraph (json)
+        {
+            // Set the JSON on the window object so that the button below can show it to the user.
+            window.__json__ = json;
+
+
+
+            // Now draw the chart
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: json.data,
+                options: {
+                    hmargin: 10,
+                    linewidth: 2,
+                    ymax: 100,
+                    labels: json.labels,
+                    gutterLeft: 35
+                }
+            }).draw();
+        }
+    </script>
+
+    <br />
+
+    <button onclick="$p(window.__json__)">Show the JSON output</button>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    <span>/**
+    * Ths window.onload function initiates the AJAX request. The AJAX page is: http://www.rgraph.net/getdata.html?json
+    * If you view this in your browser you'll see that all it does is output a JSON object (a JavaScript object).
+    */</span>
+    window.onload = function ()
+    {
+        RGraph.AJAX.getJSON('/getdata.html?json', drawGraph);
+    };
+
+
+
+    <span>/**
+    * This is the AJAX callback function. It splits up the response, converts it to numbers and then creates the chart.
+    */</span>
+    function drawGraph (json)
+    {
+        <span>// Set the JSON on the window object so that the button below can show it to the user.</span>
+        window.__json__ = json;
+
+
+
+        <span>// Now draw the chart</span>
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: json.data,
+            options: {
+                hmargin: 10,
+                linewidth: 2,
+                ymax: 100,
+                labels: json.labels,
+                gutterLeft: 35
+            }
+        }).draw();
+    }
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

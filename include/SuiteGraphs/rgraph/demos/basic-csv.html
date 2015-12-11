@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic Bar chart using CSV data</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A basic example of an RGraph Bar chart that uses AJAX to fetch a CSV file and then parses it with Javascript" />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- 1/3. Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+
+</head>
+<body>
+
+    <h1>A basic Bar chart using CSV data</h1>
+
+    <!-- 2/3. This is the canvas that the graph is drawn on -->
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <!--
+        3/3. This creates and displays the graph. As it is here, you can call this from the window.onload event,
+             allowing you to put it in your pages header.
+    -->
+    <script>
+        window.onload = function ()
+        {
+            /**
+            * This is the callback for the AJAX request
+            */
+            var callback = function ()
+            {
+                // Parse the AJAX result text
+                var data   = this.responseText.split(/\r?\n/);
+                var labels = [];
+                
+                // Handle the response
+                for (var i=0; i<data.length; ++i) {
+                    var row = data[i].split(/,/);
+                    labels.push(row[0]);
+
+                    var newrow = [];
+
+                    for (var j=1; j<row.length; ++j) {
+                        newrow.push(Number(row[j]));
+                    }
+
+                    data[i] = newrow;
+                }
+
+                var bar = new RGraph.Bar({
+                    id: 'cvs',
+                    data: data,
+                    options: {
+                        grouping: 'stacked',
+                        labels: labels,
+                        colors: ['red','blue','yellow','pink','black','gray','green']
+                    }
+                }).draw();
+            }
+
+
+            /**
+            * Make the AJAX call that fetches the CSV data
+            */
+            RGraph.AJAX('/sample.csv', callback);
+        };
+    </script>
+    
+    <p>
+        This basic example uses AJAX to request a CSV file from the server and then parses it with Javascript to convert it into usable
+        data. You can see the CSV file <a href="http://www.rgraph.net/sample.csv">here</a>.
+    </p>
+
+    <p>
+        <b>Note:</b>
+        In October 2013 a new CSV reader was added to RGraph. It makes reading CSV files much easier. You can read about
+        <a href="http://www.rgraph.net/docs/csv-file-reader.html">the new CSV reader</a> here.
+    </p>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>/**
+        * This is the callback for the AJAX request
+        */</span>
+        var callback = function ()
+        {
+            <span>// Parse the AJAX result text</span>
+            var data   = this.responseText.split(/\r?\n/);
+            var labels = [];
+            
+            <span>// Handle the response</span>
+            for (var i=0; i&lt;data.length; ++i) {
+                var row = data[i].split(/,/);
+                labels.push(row[0]);
+
+                var newrow = [];
+
+                for (var j=1; j&lt;row.length; ++j) {
+                    newrow.push(Number(row[j]));
+                }
+
+                data[i] = newrow;
+            }
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: data,
+                options: {
+                    grouping: 'stacked',
+                    labels: labels,
+                    colors: ['red','blue','yellow','pink','black','gray','green']
+                }
+            }).draw();
+        }
+
+
+        <span>/**
+        * Make the AJAX call that fetches the CSV data
+        */</span>
+        RGraph.AJAX('/sample.csv', callback);
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

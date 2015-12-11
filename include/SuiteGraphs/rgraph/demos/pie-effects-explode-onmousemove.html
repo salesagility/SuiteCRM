@@ -1,0 +1,149 @@
+ <!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+    
+    <title>Pie chart Explode</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Pie chart that uses the custom events to explode the Pie chart using the mousemove event" />
+     
+</head>
+<body>
+
+    <h1>Pie chart explode (onmousemove)</h1>
+
+    <p>
+        This Pie chart is similar to an old Pie chart demo.</a> But instead of using the onclick event
+        this uses the onmousemove event.
+    </p>
+
+    <canvas id="cvs" width="450" height="300">[No canvas support]</canvas>
+    
+<script>
+    window.onload = function ()
+    {
+        // Create the Pie chart
+        pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [4,6,3,5,2,5,8],
+            options: {
+                labels: ['Monday', 'Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                textColor: '#ccc',
+                exploded: 5,
+                radius: 100,
+                linewidth: 1,
+                shadowBlur: 10,
+                shadowColor: '#ccc'
+            }
+        }).on('mousemove', function (e, shape)
+        {
+            var idx = shape['index'];
+
+            if (typeof(pie.Get('exploded')) == 'number' || pie.Get('exploded')[idx] <= 5) {
+                pie.set('exploded', 5)
+                pie.explodeSegment(idx, 25);
+            }
+            
+            e.target.style.cursor = 'pointer';
+            
+            e.stopPropagation();
+        }).draw()
+
+
+
+
+        // Add the window click listener that resets the Pie chart
+        window.onclick = function (e)
+        {
+            pie.set('exploded', 5);
+            RGraph.redraw();
+        }
+    };
+</script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="450" height="300"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>// Create the Pie chart</span>
+        pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [4,6,3,5,2,5,8],
+            options: {
+                labels: ['Monday', 'Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                textColor: '#ccc',
+                exploded: 5,
+                radius: 100,
+                linewidth: 1,
+                shadowBlur: 10,
+                shadowColor: '#ccc'
+            }
+        }).on('mousemove', function (e, shape)
+        {
+            var idx = shape['index'];
+
+            if (typeof(pie.Get('exploded')) == 'number' || pie.Get('exploded')[idx] &lt;= 5) {
+                pie.set('exploded', 5)
+                pie.explodeSegment(idx, 25);
+            }
+            
+            e.target.style.cursor = 'pointer';
+            
+            e.stopPropagation();
+        }).draw()
+
+
+
+
+        <span>// Add the window click listener that resets the Pie chart</span>
+        window.onclick = function (e)
+        {
+            pie.set('exploded', 5);
+            RGraph.redraw();
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

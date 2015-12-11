@@ -1,0 +1,107 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.bipolar.js" ></script>
+    <script src="../libraries/RGraph.gauge.js" ></script>
+    
+    <title>A bipolar chart with a Gauge on the same page</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A page with two canvas tags that show a Bipolar chart and a Gauge chart" />
+     
+</head>
+<body>
+
+    <h1>A bipolar chart with a Gauge on the same page</h1>
+    
+    <p>
+        This an example of two different charts (on two different canvases) on one page.
+    </p>
+
+    <canvas id="cvs1" width="600" height="250">[No canvas support]</canvas>
+    <canvas id="cvs2" width="250" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var bipolar = new RGraph.Bipolar({
+                id: 'cvs1',
+                left: [4,8,6,4,3],
+                right: [18,4,6,3,3],
+                options: {
+                    labels: ['Luis','Peter','Joe','Hoolio','Gina']
+                }
+            }).draw();
+
+            var gauge = new RGraph.Gauge({
+                id: 'cvs2',
+                min: 0,
+                max: 100,
+                value: 87,
+                options: {
+                    adjustable: true
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bipolar.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.gauge.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs1" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+&lt;canvas id="cvs2" width="250" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var bipolar = new RGraph.Bipolar({
+            id: 'cvs1',
+            left: [4,8,6,4,3],
+            right: [18,4,6,3,3],
+            options: {
+                labels: ['Luis','Peter','Joe','Hoolio','Gina']
+            }
+        }).draw();
+
+        var gauge = new RGraph.Gauge({
+            id: 'cvs2',
+            min: 0,
+            max: 100,
+            value: 87,
+            options: {
+                adjustable: true
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

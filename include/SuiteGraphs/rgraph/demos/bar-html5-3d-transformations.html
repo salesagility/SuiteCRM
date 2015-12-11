@@ -1,0 +1,187 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A bar chart with horizontal gradients</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An example of a rotating bar chart made by usin CSS3 3D transformations" />
+    
+</head>
+<body>
+    
+    <h1>A rotating video/Bar chart using CSS3 3D transformations</h1>
+
+    <p>
+        Use Google Chrome to see the video (a WebM video). <a href="http://www.rgraph.net/javascript-charts" rel="nofollow">There's also an
+        example of 3D transforms on this page</a>.
+    </p>
+
+    <script>
+        /**
+        * If the browser is Chrome the element that spins is a WebM video. If not then it's an RGraph Bar chart.
+        */
+        if (RGraph.ISCHROME) {
+            document.write('<video id="myElement" src="../video/video.webm" controls autoplay loop ></video>');
+        } else {
+            document.write('<canvas id="myElement" width="600" height="250">[No canvas support]</canvas>');
+            
+            var bar = new RGraph.Bar({
+                id: 'myElement',
+                data: [4,8,6,8,7],
+                options: {
+                    labels: ['John','Fred','George','Paul','Ringo']
+                }
+            }).draw();
+        }
+
+
+
+
+        /**
+        * Initially the x/y/z angles are all zero
+        */
+        x = 0;
+        y = 0;
+        z = 0;
+
+
+
+
+        /**
+        * This is the spin function that gets called repeatedly and sets the appropriate CSS3 values.
+        * It calls itself again at the end after a small delay.
+        */
+        mySpinFunc = function ()
+        {
+            /**
+            * Set the appropriate CSS3 properties for WebKit browsers
+            */
+            document.getElementById("myElement").style.WebkitTransform = 'rotate3d(1,0,0, ' + x + 'deg) rotate3d(0,1,0, ' + y + 'deg) rotate3d(0,0,1, ' + z + 'deg)';
+            
+            /**
+            * Set the unprefixed CSS3 properties (for Firefox, MSIE 10 etc)
+            */
+            document.getElementById("myElement").style.transform = 'rotate3d(1,0,0, ' + x + 'deg) rotate3d(0,1,0, ' + y + 'deg) rotate3d(0,0,1, ' + z + 'deg)';
+    
+            /**
+            * Increment the X/Y/Z angles
+            */
+            x += 3;
+            y += 3;
+            z += 3;
+    
+            /**
+            * Call ourselves again after a small delay
+            */
+            setTimeout(mySpinFunc, 50);
+        }
+        
+        mySpinFunc();
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    <span>/**
+    * If the browser is Chrome the element that spins is a WebM video. If not then it's an RGraph Bar chart.
+    */</span>
+    if (RGraph.ISCHROME) {
+        document.write('&lt;video id="myElement" src="../video/video.webm" controls autoplay loop &gt;&lt;/video&gt;');
+    } else {
+        document.write('&lt;canvas id="myElement" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;');
+        
+        var bar = new RGraph.Bar({
+            id: 'myElement',
+            data: [4,8,6,8,7],
+            options: {
+                labels: ['John','Fred','George','Paul','Ringo']
+            }
+        }).draw();
+    }
+
+
+
+
+    <span>/**
+    * Initially the x/y/z angles are all zero
+    */</span>
+    x = 0;
+    y = 0;
+    z = 0;
+
+
+
+
+    <span>/**
+    * This is the spin function that gets called repeatedly and sets the appropriate CSS3 values.
+    * It calls itself again at the end after a small delay.
+    */</span>
+    mySpinFunc = function ()
+    {
+        <span>/**
+        * Set the appropriate CSS3 properties for WebKit browsers
+        */</span>
+        document.getElementById("myElement").style.WebkitTransform = 'rotate3d(1,0,0, ' + x + 'deg) rotate3d(0,1,0, ' + y + 'deg) rotate3d(0,0,1, ' + z + 'deg)';
+        
+        <span>/**
+        * Set the unprefixed CSS3 properties (for Firefox, MSIE 10 etc)
+        */</span>
+        document.getElementById("myElement").style.transform = 'rotate3d(1,0,0, ' + x + 'deg) rotate3d(0,1,0, ' + y + 'deg) rotate3d(0,0,1, ' + z + 'deg)';
+
+        <span>/**
+        * Increment the X/Y/Z angles
+        */</span>
+        x += 3;
+        y += 3;
+        z += 3;
+
+        <span>/**
+        * Call ourselves again after a small delay
+        */</span>
+        setTimeout(mySpinFunc, 50);
+    }
+    
+    mySpinFunc();
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

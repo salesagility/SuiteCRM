@@ -1,0 +1,167 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>A Scatter chart as a Bubble chart variant using post-processing</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart which is configured to use Bubbles and hides the tooltips when you move the mouse away from a Bubble" />
+     
+</head>
+<body>
+
+    <h1>A Scatter chart as a Bubble chart variant using the new Bubble chart class</h1>
+    
+    <p>
+        The Scatter chart now has a dedicated Bubble chart class as part of the file.
+    </p>
+
+    <canvas id="cvs" width="600" height="200">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            // Create and configure the Scatter chart
+            var scatter = new RGraph.Scatter({
+                id: 'cvs',
+                data: [
+                    [30,15, 'red', 'Red bubble tooltip'],
+                    [60,5, 'blue', 'Blue bubble tooltip'],
+                    [90,8, 'pink', 'Pink bubble tooltip'],
+                    [120,19, 'green', 'Green bubble tooltip'],
+                    [150,14, 'gray', 'Gray bubble tooltip'],
+                    [50,12, 'red', 'Red bubble tooltip'],
+                    [180,24, 'gray', 'Gray bubble tooltip'],
+                    [250,21, 'black', 'Black bubble tooltip']
+                ],
+                options: {
+                    xmax: 365,
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    'text.size':14,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    xaxis:false,
+                    tooltipsHotspot: 10
+                }
+            }).draw()
+
+            var bubble = new RGraph.Scatter.Bubble(
+                scatter,
+                    0,   // Minimum
+                    100, // Maximum
+                    25,  // Max width
+                    [50,60,70,80,90,84,86,87] // Bubble data
+                ).draw();
+            
+            /**
+            * This custom onmousemove event listener hides the tooltip if the mouse
+            * is not over a mark.
+            */
+            scatter.canvas.onmousemove = function (e)
+            {
+                var obj   = e.target.__object__;
+                var shape = obj.getShape(e);
+
+                if (!shape) {
+                    RGraph.hideTooltip();
+                    RGraph.redraw();
+                }
+            }
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="200"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>// Create and configure the Scatter chart</span>
+        var scatter = new RGraph.Scatter({
+            id: 'cvs',
+            data: [
+                [30,15, 'red', 'Red bubble tooltip'],
+                [60,5, 'blue', 'Blue bubble tooltip'],
+                [90,8, 'pink', 'Pink bubble tooltip'],
+                [120,19, 'green', 'Green bubble tooltip'],
+                [150,14, 'gray', 'Gray bubble tooltip'],
+                [50,12, 'red', 'Red bubble tooltip'],
+                [180,24, 'gray', 'Gray bubble tooltip'],
+                [250,21, 'black', 'Black bubble tooltip']
+            ],
+            options: {
+                xmax: 365,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                'text.size':14,
+                backgroundGridVlines:false,
+                backgroundGridBorder:false,
+                xaxis:false,
+                tooltipsHotspot: 10
+            }
+        }).draw()
+
+        var bubble = new RGraph.Scatter.Bubble(
+            scatter,
+                0,   <span>// Minimum</span>
+                100, <span>// Maximum</span>
+                25,  <span>// Max width</span>
+                [50,60,70,80,90,84,86,87] <span>// Bubble data</span>
+            ).draw();
+        
+        <span>/**
+        * This custom onmousemove event listener hides the tooltip if the mouse
+        * is not over a mark.
+        */</span>
+        scatter.canvas.onmousemove = function (e)
+        {
+            var obj   = e.target.__object__;
+            var shape = obj.getShape(e);
+
+            if (!shape) {
+                RGraph.hideTooltip();
+                RGraph.redraw();
+            }
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

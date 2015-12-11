@@ -1,0 +1,310 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A dynamically updating Line chart showing values for the last 10 minutes (1 per second)</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A dynamically updating Line chart. The data here is simply generated randomly but could just as easily be retrieved from a server via AJAX (for example). It is updated once per second. and shows the last 10 minutes worth of data." />
+     
+</head>
+<body>
+
+    <h1>A dynamically updating Line chart showing values for the last 10 minutes (1 per second)</h1>
+    
+    <p>
+        <b>Note</b>
+        Because Chrome slows down timers when it's in the background - this chart can occassionally miss out X values when
+        the browser is in the background or is minimised. So for that reason - if you're running this, or another timer based
+        updating chart, then you're advised to use a browser <i>other than Chrome</i> (or if in Chrome keep it in the foregound).
+    </p>
+
+    <canvas id="cvs" width="800" height="250">[No canvas support]</canvas><br />
+    
+    Current seconds: <div id="numvalues" style="display: inline">0</div>
+    
+    <script>
+        function format (value)
+        {
+            value = String(value);
+
+            if (value.length === 1) {
+                value = '0' + value;
+            }
+            
+            return value;
+        }
+
+        var lastnumber  = 50;
+        var chart       = null;
+        var data        = [];
+        var labels      = [];
+
+        /**
+        * Make the array of empty values
+        */
+        for (var i=0; i<600; i+=1) {
+            data[i] = [];
+            labels[i] = '';
+        }
+
+
+
+
+
+
+
+
+
+
+            // Make and draw the chart
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [],
+                options: {
+                    ymax: 100,
+                    backgroundGridAutofitNumvlines: 10,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    numxticks: 10,
+                    tickmarks: null,
+                    labels: labels,
+                    noaxes: true,
+                    textSize: 16,
+                    gutterLeft: 50,
+                    textColor: '#aaa',
+                    scaleZerostart: true
+                }
+            }).draw();
+
+
+
+
+
+        /**
+        * The draw() function gets called repeatedly every second
+        */
+        function draw()
+        {
+            var d = new Date();
+            var seconds = d.getSeconds();
+
+
+            // Reset the canvas
+            RGraph.reset(document.getElementById('cvs'));
+
+
+        
+            /**
+            * Add the label
+            */
+            if (parseInt(seconds) === 0) {
+                labels.unshift(format(d.getHours()  ) + ':' + format(d.getMinutes()));
+                labels.pop();
+            } else {
+                labels.unshift('');
+                labels.pop();
+            }
+
+
+
+
+
+        
+            // Add a new value to the chart data
+            var random  = RGraph.random(-5,5);
+        
+            /**
+            *  Create the random value
+            */
+            lastnumber = lastnumber + random;
+            lastnumber = Math.max(0, lastnumber);
+            lastnumber = Math.min(100, lastnumber);
+            data[0] = lastnumber
+            data.unshift(null);
+            data.pop();
+            line.original_data[0] = data;
+            
+            line.draw();
+
+
+
+            // Update the counter
+            document.getElementById('numvalues').innerHTML = d.getSeconds();
+        
+            // Call this function again in one seconds time
+            // 
+            // TODO Could change things so that the function runs 4 times a second (though only updates the chrt once persecond)
+            //      Might be a little more accurate. It would be a significant change though
+            setTimeout(draw, 1000);
+        }
+        
+        draw();
+    </script>
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="800" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    function format (value)
+    {
+        value = String(value);
+
+        if (value.length === 1) {
+            value = '0' + value;
+        }
+        
+        return value;
+    }
+
+    var lastnumber  = 50;
+    var chart       = null;
+    var data        = [];
+    var labels      = [];
+
+    /**
+    * Make the array of empty values
+    */
+    for (var i=0; i&lt;600; i+=1) {
+        data[i] = [];
+        labels[i] = '';
+    }
+
+
+
+
+
+
+
+
+
+
+        // Make and draw the chart
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [],
+            options: {
+                ymax: 100,
+                backgroundGridAutofitNumvlines: 10,
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                numxticks: 10,
+                tickmarks: null,
+                labels: labels,
+                noaxes: true,
+                textSize: 16,
+                gutterLeft: 50,
+                textColor: '#aaa',
+                scaleZerostart: true
+            }
+        }).draw();
+
+
+
+
+
+    /**
+    * The draw() function gets called repeatedly every second
+    */
+    function draw()
+    {
+        var d = new Date();
+        var seconds = d.getSeconds();
+
+
+        // Reset the canvas
+        RGraph.reset(document.getElementById('cvs'));
+
+
+    
+        /**
+        * Add the label
+        */
+        if (parseInt(seconds) === 0) {
+            labels.unshift(format(d.getHours()  ) + ':' + format(d.getMinutes()));
+            labels.pop();
+        } else {
+            labels.unshift('');
+            labels.pop();
+        }
+
+
+
+
+
+    
+        // Add a new value to the chart data
+        var random  = RGraph.random(-5,5);
+    
+        /**
+        *  Create the random value
+        */
+        lastnumber = lastnumber + random;
+        lastnumber = Math.max(0, lastnumber);
+        lastnumber = Math.min(100, lastnumber);
+        data[0] = lastnumber
+        data.unshift(null);
+        data.pop();
+        line.original_data[0] = data;
+        
+        line.draw();
+
+
+
+        // Update the counter
+        document.getElementById('numvalues').innerHTML = d.getSeconds();
+    
+        // Call this function again in one seconds time
+        // 
+        // TODO Could change things so that the function runs 4 times a second (though only updates the chrt once persecond)
+        //      Might be a little more accurate. It would be a significant change though
+        setTimeout(draw, 1000);
+    }
+    
+    draw();
+&lt;/script&gt;
+</pre>
+
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

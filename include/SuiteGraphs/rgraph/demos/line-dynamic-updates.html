@@ -1,0 +1,267 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A dynamically updating Line chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A dynamically updating Line chart. The data here is simply generated randomly but could just as easily be retrieved from a server via AJAX (for example)." />
+     
+</head>
+<body>
+
+    <h1>A dynamically updating Line chart</h1>
+    
+    <p>
+        This chart updates itself 20 times a second.New values are appended to the data that's displayed and old values are removed
+        from the data. Careful use is made of local variables - so that the updates are done smoothly.
+    </p>
+    
+    <p>
+        Setting the ymax to 250 means the scale stays the same - but you can also have a dynamic scale that
+        changes to accommodate the values on the chart.
+    </p>
+
+    
+    <div style="text-align:center; font-weight: bold; font-size: 14pt; width: 600px">
+        Bandwidth used  (Mb/s)<br />
+        <canvas id="cvs" width="600" height="250">[No canvas support]</canvas><br />
+        <span style="font-size: 12pt; font-weight: normal">
+            Last 60 seconds
+        </span>
+    </div>
+    
+    <button id="toggleButton">Toggle ymax to 250</button>
+    
+    <script>
+        window.onload = function ()
+        {
+            var RG        = RGraph;
+            var ma        = Math;
+            var canvas    = document.getElementById("cvs");
+            var obj       = null;
+            var data      = [];
+            var l         = 0; // The letter 'L' - NOT a one
+            var numvalues = 1200;
+            var updates   = 0;
+
+            // Pre-pad the arrays with null values
+            for (var i=0; i<numvalues; ++i) {
+                data.push(null);
+            }
+        
+            function drawGraph ()
+            {
+                RG.Clear(canvas);
+                
+
+                if (!obj) {
+                    obj = new RG.Line({
+                        id: 'cvs',
+                        data: [],
+                        options: {
+                            colors: ['black'],
+                            linewidth: 0.75,
+                            yaxispos: 'right',
+                            shadow: false,
+                            tickmarks: null,
+                            gutterTop: 10,
+                            gutterBottom: 15,
+                            gutterRight: 40,
+                            backgroundGridVlines: false,
+                            numyticks: 5,
+                            numxticks: 0,
+                            ylabelsCount: 5
+                        }
+                    })
+                }
+
+                // Add some data to the data arrays
+                var len          = data.length;
+                var lastvalue    = RG.isNull(data[len - 1]) ? 26 : data[len - 1];
+                var random_value = RG.random(lastvalue  - 2,lastvalue  + 2);
+               
+               random_value = ma.max(random_value, 0);
+               random_value = ma.min(random_value, 250);
+
+                data.push(random_value);
+                
+                if (data.length > numvalues) {
+                    data = RG.arrayShift(data);
+                }
+    
+                if (RG.ISIE8) {
+                    alert('[MSIE] Sorry, Internet Explorer 8 is not fast enough to support dynamic charts');
+                } else {
+                    obj.original_data[0] = data;
+                    obj.draw();
+                    setTimeout(drawGraph, 16.666);
+                }
+
+                updates++;
+                if (updates % 100 === 0) {
+                    console.log(updates);
+                }
+            }
+        
+            drawGraph();
+
+
+
+
+
+            /**
+            * Add the toggle buttons onclick function
+            */
+            document.getElementById("toggleButton").onclick = function (e)
+            {
+                if (obj.get('ymax')) {
+                    obj.set('ymax', null)
+                } else {
+                    obj.set('ymax', 250)
+                }
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;div style="text-align:center; font-weight: bold; font-size: 14pt; width: 600px"&gt;
+    Bandwidth used  (Mb/s)&lt;br /&gt;
+    &lt;canvas id="cvs" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;&lt;br /&gt;
+    &lt;span style="font-size: 12pt; font-weight: normal"&gt;
+        Last 60 seconds
+    &lt;/span&gt;
+&lt;/div&gt;
+
+&lt;button id="toggleButton"&gt;Toggle ymax to 250&lt;/button&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var RG        = RGraph;
+        var ma        = Math;
+        var canvas    = document.getElementById("cvs");
+        var obj       = null;
+        var data      = [];
+        var l         = 0; // The letter 'L' - NOT a one
+        var numvalues = 1200;
+        var updates   = 0;
+
+        // Pre-pad the arrays with null values
+        for (var i=0; i&lt;numvalues; ++i) {
+            data.push(null);
+        }
+    
+        function drawGraph ()
+        {
+            RG.Clear(canvas);
+            
+
+            if (!obj) {
+                obj = new RG.Line({
+                    id: 'cvs',
+                    data: [],
+                    options: {
+                        colors: ['black'],
+                        linewidth: 0.75,
+                        yaxispos: 'right',
+                        shadow: false,
+                        tickmarks: null,
+                        gutterTop: 10,
+                        gutterBottom: 15,
+                        gutterRight: 40,
+                        backgroundGridVlines: false,
+                        numyticks: 5,
+                        numxticks: 0,
+                        ylabelsCount: 5
+                    }
+                })
+            }
+
+            // Add some data to the data arrays
+            var len          = data.length;
+            var lastvalue    = RG.isNull(data[len - 1]) ? 26 : data[len - 1];
+            var random_value = RG.random(lastvalue  - 2,lastvalue  + 2);
+           
+           random_value = ma.max(random_value, 0);
+           random_value = ma.min(random_value, 250);
+
+            data.push(random_value);
+            
+            if (data.length > numvalues) {
+                data = RG.arrayShift(data);
+            }
+
+            if (RG.ISIE8) {
+                alert('[MSIE] Sorry, Internet Explorer 8 is not fast enough to support dynamic charts');
+            } else {
+                obj.original_data[0] = data;
+                obj.draw();
+                setTimeout(drawGraph, 16.666);
+            }
+
+            updates++;
+            if (updates % 100 === 0) {
+                console.log(updates);
+            }
+        }
+    
+        drawGraph();
+
+
+
+
+
+        /**
+        * Add the toggle buttons onclick function
+        */
+        document.getElementById("toggleButton").onclick = function (e)
+        {
+            if (obj.get('ymax')) {
+                obj.set('ymax', null)
+            } else {
+                obj.set('ymax', 250)
+            }
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

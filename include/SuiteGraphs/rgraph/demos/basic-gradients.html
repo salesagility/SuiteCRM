@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic example of the new simple gradient syntax</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content=" A basic example of a chart where the colors use the new simple gradient syntax" />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.rose.js" ></script>
+
+</head>
+
+<body>
+
+    <h1>A basic example of the new simple gradient syntax</h1>
+    
+    <p>
+        Here is a simple Rose chart that uses the new easy gradient syntax for colors: <i>Gradient(white:red)</i>
+    </p>
+
+    <canvas id="cvs" width="500" height="500">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var rose = new RGraph.Rose({
+                id: 'cvs',
+                data: [8,8,9,6,8,7,7],
+                options: {
+                    colors: [
+                        'Gradient(white:red)',
+                        'Gradient(white:green)',
+                        'Gradient(white:blue)',
+                        'Gradient(white:pink)',
+                        'Gradient(white:#ddd)',
+                        'Gradient(white:cyan)',
+                        'Gradient(white:orange)'
+                    ],
+                    colorsSequential: true,
+                    labelsAxes: 'n',
+                    margin: 3
+                }
+            }).draw()
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.rose.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="500" height="500"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var rose = new RGraph.Rose({
+            id: 'cvs',
+            data: [8,8,9,6,8,7,7],
+            options: {
+                colors: [
+                    'Gradient(white:red)',
+                    'Gradient(white:green)',
+                    'Gradient(white:blue)',
+                    'Gradient(white:pink)',
+                    'Gradient(white:#ddd)',
+                    'Gradient(white:cyan)',
+                    'Gradient(white:orange)'
+                ],
+                colorsSequential: true,
+                labelsAxes: 'n',
+                margin: 3
+            }
+        }).draw()
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

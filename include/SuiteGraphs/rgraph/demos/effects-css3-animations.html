@@ -1,0 +1,185 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/animations.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+
+    <title>A demo of CSS3 animations and effects</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A demo of CSS3 animations and effects" />
+
+</head>
+<body>
+
+    <h1>A demo of CSS3 animations and effects</h1>
+
+
+    <select id="animation_selector" onchange="selectAnimation(this.value)">
+        <option selected></option>
+        <option>flash</option>
+        <option>bounce</option>
+        <option>shake</option>
+        <option>tada</option>
+        <option>swing</option>
+        <option>wobble</option>
+        <option>wiggle</option>
+        <option>pulse</option>
+        <option>flip</option>
+        <option>flipInX</option>
+        <option>flipOutX</option>
+        <option>flipInY</option>
+        <option>flipOutY</option>
+        
+        <option></option>
+
+        <option>fadeIn</option>
+        <option>fadeInUp</option>
+        <option>fadeInDown</option>
+        <option>fadeInLeft</option>
+        <option>fadeInRight</option>
+        <option>fadeInUpBig</option>
+        <option>fadeInDownBig</option>
+        <option>fadeInLeftBig</option>
+        <option>fadeInRightBig</option>
+        
+        <option></option>
+
+        <option>fadeOut</option>
+        <option>fadeOutUp</option>
+        <option>fadeOutDown</option>
+        <option>fadeOutLeft</option>
+        <option>fadeOutRight</option>
+        <option>fadeOutUpBig</option>
+        <option>fadeOutDownBig</option>
+        <option>fadeOutLeftBig</option>
+        <option>fadeOutRightBig</option>
+        
+        <option></option>
+
+        <option>bounceIn</option>
+        <option>bounceInDown</option>
+        <option>bounceInUp</option>
+        <option>bounceInLeft</option>
+        <option>bounceInRight</option>
+
+        <option></option>
+    
+        <option>bounceOut</option>
+        <option>bounceOutDown</option>
+        <option>bounceOutUp</option>
+        <option>bounceOutLeft</option>
+        <option>bounceOutRight</option>
+
+        <option></option>
+    
+        <option>rotateIn</option>
+        <option>rotateInDownLeft</option>
+        <option>rotateInDownRight</option>
+        <option>rotateInUpLeft</option>
+        <option>rotateInUpRight</option>
+
+        <option></option>
+
+        <option>rotateOut</option>
+        <option>rotateOutDownLeft</option>
+        <option>rotateOutDownRight</option>
+        <option>rotateOutUpLeft</option>
+        <option>rotateOutUpRight</option>
+
+        <option></option>
+
+        <option>lightSpeedIn</option>
+        <option>lightSpeedOut</option>
+
+        <option></option>
+
+        <option>hinge</option>
+        <option>rollIn</option>
+        <option>rollOut</option>
+        <option>expand</option>
+        <option>contract</option>
+    </select>
+
+    <br />
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+        
+    <script>
+        window.onload = function ()
+        {
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [[5,8],[6,8],[7,4],[5,5],[8,5],[7,4],[5,2]],
+                options: {
+                    colors: ['Gradient(white:red)', 'Gradient(rgb(255,255,255):#cdc:#cdc:#cdc)'],
+                    labels: ['John','Luis','Pete','Jim','Kevin','Olga','Bert']
+                }
+            }).draw();
+        };
+        
+        function selectAnimation(effect)
+        {
+            var select = document.getElementById('cvs');
+
+            select.className = '';
+            select.className = 'animated ' + effect;
+        }
+    </script>
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="../css/animations.css" type="text/css" media="screen" /&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: [[5,8],[6,8],[7,4],[5,5],[8,5],[7,4],[5,2]],
+            options: {
+                colors: ['Gradient(white:red)', 'Gradient(rgb(255,255,255):#cdc:#cdc:#cdc)'],
+                labels: ['John','Luis','Pete','Jim','Kevin','Olga','Bert']
+            ]
+        }).draw();
+    };
+    
+    function selectAnimation(effect)
+    {
+        var select = document.getElementById('cvs');
+
+        select.className = '';
+        select.className = 'animated ' + effect;
+    }
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>    
+    

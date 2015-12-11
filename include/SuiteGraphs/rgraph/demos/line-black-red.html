@@ -1,0 +1,135 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A dual color Line chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A dual color Line chart" />
+     
+</head>
+<body>
+
+    <h1>A dual color Line chart</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [5,4,1,6,null,null,null],
+                options: {
+                    labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                    colors: ['black'],
+                    title: 'A dual color line chart',
+                    tickmarks: 'filledcircle',
+                    ticksize: 5,
+                    shadow: false,
+                    gutterTop: 35,
+                    gutterRight: 30,
+                    gutterLeft: 30
+                }
+            }).draw();
+
+
+            var line2 = new RGraph.Line({
+                id: 'cvs',
+                data: [null,null,null,6,5,4,3],
+                options: {
+                    colors: ['red'],
+                    tickmarks: 'filledcircle',
+                    ticksize: 5,
+                    shadow: false,
+                    backgroundGrid: false,
+                    noaxes: true,
+                    gutterTop: 35,
+                    gutterRight: 30,
+                    gutterLeft: 30
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [5,4,1,6,null,null,null],
+            options: {
+                labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                colors: ['black'],
+                title: 'A dual color line chart',
+                tickmarks: 'filledcircle',
+                ticksize: 5,
+                shadow: false,
+                gutterTop: 35,
+                gutterRight: 30,
+                gutterLeft: 30
+            }
+        }).draw();
+
+        var line2 = new RGraph.Line({
+            id: 'cvs',
+            data: [null,null,null,6,5,4,3],
+            options: {
+                colors: ['red'],
+                tickmarks: 'filledcircle',
+                ticksize: 5,
+                shadow: false,
+                backgroundGrid: false,
+                noaxes: true,
+                gutterTop: 35,
+                gutterRight: 30,
+                gutterLeft: 30
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+
+    <title>A pink Pie chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A pink Pie chart" />
+     
+</head>
+<body>
+
+    <h1>A pink Pie chart</h1>
+
+    <canvas id="cvs" width="550" height="450">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [3,7.9,2,10.3,11.1,1,63.9],
+                options: {
+                    radius: 150,
+                    colors: [
+                        'rgb(51,102,204)',
+                        'rgb(220,57,18)',
+                        'rgb(255,153,0)',
+                        'rgb(16,150,24)',
+                        'rgb(153,0,153)',
+                        'rgb(0,153,198)',
+                        'rgb(221,68,119)'
+                    ],
+                    linewidth: 2,
+                    shadow: false,
+                    labels: ['3%','7.9%','2%','10.3%','11.1%','1%','62.9%'],
+                    labelsSticks: true,
+                    labelsSticksLength: 35,
+                    textFont: 'Arial',
+                    textSize: 16
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="550" height="450"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [3,7.9,2,10.3,11.1,1,63.9],
+            options: {
+                radius: 150,
+                colors: [
+                    'rgb(51,102,204)',
+                    'rgb(220,57,18)',
+                    'rgb(255,153,0)',
+                    'rgb(16,150,24)',
+                    'rgb(153,0,153)',
+                    'rgb(0,153,198)',
+                    'rgb(221,68,119)'
+                ],
+                linewidth: 2,
+                shadow: false,
+                labels: ['3%','7.9%','2%','10.3%','11.1%','1%','62.9%'],
+                labelsSticks: true,
+                labelsSticksLength: 35,
+                textFont: 'Arial',
+                textSize: 16
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+
+    <title>A 3D Pie chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A dark themed  Pie chart" />
+     
+</head>
+<body>
+
+    <h1>A dark themed  Pie chart</h1>
+
+    <canvas id="cvs" width="650" height="350" style="border-radius: 5px; background-color: black">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [34,28,17,8,5,3],
+                options: {
+                    shadow: false,
+                    strokestyle: 'transparent',
+                    exploded: 15,
+                    title: 'Geographical distribution of DNS root server sites',
+                    titleColor: 'white',
+                    gutterTop: 50,
+                    colors: [
+                        'Gradient(white:#2A8AB2:#2A8AB2)',
+                        'Gradient(white:#52A323:#52A323)',
+                        'Gradient(white:#BAB034:#BAB034)',
+                        'Gradient(white:#B31C15:#B31C15)',
+                        'Gradient(white:#BC941A:#BC941A)',
+                        'Gradient(white:#1152B8:#1152B8)',
+                        'Gradient(white:#B16498:#B16498)'
+                    ],
+                    key: [
+                        'Europe: 34%',
+                        'North America: 28%',
+                        'Asia: 17%',
+                        'South America: 8%',
+                        'Oceania: 5%',
+                        'Africa: 3%'
+                    ],
+                    keyColorShape: 'circle',
+                    keyPositionGraphBoxed: false,
+                    keyTextColor: 'white',
+                    keyPositionY: 125,
+                    keyPositionX: 450,
+                    centerx: 235
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="650" height="350"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [4,8,4,6,5,3,2,5],
+            options: {
+                shadow: false,
+                strokestyle: 'transparent',
+                exploded: 15,
+                title: 'Geographical distribution of DNS root server sites',
+                titleColor: 'white',
+                gutterTop: 50,
+                colors: ['#2A8AB2', '#52A323','#BAB034','#B31C15','#BC941A','#1152B8','#B16498'],
+                key: [
+                    'Europe: 34%',
+                    'North America: 28%',
+                    'Asia: 17%',
+                    'South America: 8%',
+                    'Oceania: 5%',
+                    'Africa: 3%'
+                ],
+                keyColorShape: 'circle',
+                keyPositionGraphBoxed: false,
+                keyTextColor: 'white',
+                keyPositionY: 125,
+                keyPositionX: 450,
+                centerx: 235
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

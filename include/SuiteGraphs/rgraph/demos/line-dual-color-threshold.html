@@ -1,0 +1,142 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A Line chart with different colors above a certain point</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Line chart with different colors above a certain point. It uses a filled range chart to achieve this effect." />
+     
+</head>
+<body>
+
+    <h1>A Line chart with different colors above a certain point</h1>
+    
+    <p>
+        A Line chart with different colors above a certain point. It uses a filled range chart to achieve this effect.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <p>
+        <b>Update</b><br />
+        There's information <a href="http://www.rgraph.net/docs/howto-dynamic-line-chart.html">on this HOWTO page</a> about creating dual color line
+        charts using
+        gradients. It's <b>very</b> simple and can be done using either the
+        RGraph Gradient() shortcut or more directly with the canvas  linear gradient functionality.
+    </p>
+
+    <script>
+        window.onload = function ()
+        {
+            var d1  = [1,4,8,5,2,3,6,5,15,16,12,13,18,19,15,16];
+            var d2  = [];
+            
+            // Create the data
+            for (var i=0; i<d1.length; i+=1) {
+                 d1[i] = d1[i] - 0.2; // The +/- 0.2 determines the width of the line
+                 d2[i] = d1[i] + 0.2;
+            }
+
+        
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [d1, d2],
+                options: {
+                    backgroundGridAutofitNumhlines: 5,
+                    backgroundGridAutofitNumvlines: 15,
+                    filled: true,
+                    filledRange: true,
+                    filledRangeThreshold: 10,
+                    filledRangeThresholdColors: ['red', 'blue'],
+                    labels: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'],
+                    colors: ['transparent', 'transparent'],
+                    numxticks: 15,
+                    tickmarks: null
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var d1  = [1,4,8,5,2,3,6,5,15,16,12,13,18,19,15,16];
+        var d2  = [];
+        
+        <span>// Create the data</span>
+        for (var i=0; i&lt;d1.length; i+=1) {
+             d1[i] = d1[i] - 0.2; // The +/- 0.2 determines the width of the line
+             d2[i] = d1[i] + 0.2;
+        }
+
+    
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [d1, d2],
+            options: {
+                backgroundGridAutofitNumhlines: 5,
+                backgroundGridAutofitNumvlines: 15,
+                filled: true,
+                filledRange: true,
+                filledRangeThreshold: 10,
+                filledRangeThresholdColors: ['red', 'blue'],
+                labels: ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'],
+                colors: ['transparent', 'transparent'],
+                numxticks: 15,
+                tickmarks: null
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

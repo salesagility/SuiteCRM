@@ -1,0 +1,165 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.drawing.xaxis.js" ></script>
+    <script src="../libraries/RGraph.hbar.js" ></script>
+    
+    <title>A Horizontal Bar chart example showing the XAxis drawing API object</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Horizontal Bar chart where the X axis is drawn using the drawing API" />
+     
+</head>
+<body>
+
+    <h1>A Horizontal Bar chart example showing the XAxis drawing API object</h1>
+
+
+   <canvas id="cvs" width="600" height="400">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var hbar = new RGraph.HBar({
+                id: 'cvs',
+                data: [[80,64],[1,2],[11,12],[3,12],[5,7]],
+                options: {
+                    gutterLeft: 165,
+                    gutterRight: 20,
+                    gutterTop: 35,
+                    labels: ['Improved','Worsened', 'No change - \r\n peoples perceptions\r\nare generally positive','No change - \r\n peoples perceptions\r\nare generally negative',"Don't know"],
+                    colors: ['#F68B23','#164366'],
+                    xmax: 100,
+                    backgroundGrid: false,
+                    noxaxis: true,
+                    noyaxis: true,
+                    xlabels: false,
+                    key: ['Non-disabled','Disabled'],
+                    keyPosition: 'gutter',
+                    keyPositionGutterBoxed: false,
+                    keyPositionY: 0,
+                    tooltips: ['A','B','C','D','E','F','G','H','I','J']
+                }
+            })
+            .on('beforedraw', function (obj)
+            {
+                obj.context.fillStyle = '#eee';
+                obj.context.fillRect(obj.gutterLeft, obj.gutterTop, obj.canvas.width - obj.gutterLeft - obj.gutterRight, obj.canvas.height - obj.gutterTop - obj.gutterBottom);
+            })
+            .on('draw', function (obj)
+            {
+                obj.context.strokeRect(obj.gutterLeft, obj.gutterTop, obj.canvas.width - obj.gutterLeft - obj.gutterRight, obj.canvas.height - obj.gutterTop - obj.gutterBottom);
+            }).grow()
+
+
+
+
+            var xaxis = new RGraph.Drawing.XAxis({
+                id: 'cvs',
+                y: 35,
+                options: {
+                    gutterLeft: hbar.get('gutterLeft'),
+                    gutterRight: hbar.get('gutterRight'),
+                    max: 100,
+                    align: 'top',
+                    clearto: 'white'
+                }
+                }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.drawing.xaxis.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.hbar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="400"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var hbar = new RGraph.HBar({
+            id: 'cvs',
+            data: [[80,64],[1,2],[11,12],[3,12],[5,7]],
+            options: {
+                gutterLeft: 135,
+                gutterTop: 35,
+                labels: ['Improved','Worsened', 'No change - \r\n peoples perceptions\r\nare generally positive','No change - \r\n peoples perceptions\r\nare generally negative',"Don't know"],
+                colors: ['#F68B23','#164366'],
+                xmax: 100,
+                backgroundGrid: false,
+                noxaxis: true,
+                noyaxis: true,
+                xlabels: false,
+                key: ['Non-disabled','Disabled'],
+                keyPosition: 'gutter',
+                keyPositionGutterBoxed: false,
+                keyPositionY: 0,
+                tooltips: ['A','B','C','D','E','F','G','H','I','J']
+            }
+        })
+        .on('beforedraw', function (obj)
+        {
+            obj.context.fillStyle = '#eee';
+            obj.context.fillRect(obj.gutterLeft, obj.gutterTop, obj.canvas.width - obj.gutterLeft - obj.gutterRight, obj.canvas.height - obj.gutterTop - obj.gutterBottom);
+        })
+        .on('draw', function (obj)
+        {
+            obj.context.strokeRect(obj.gutterLeft, obj.gutterTop, obj.canvas.width - obj.gutterLeft - obj.gutterRight, obj.canvas.height - obj.gutterTop - obj.gutterBottom);
+        }).grow()
+
+
+
+
+        var xaxis = new RGraph.Drawing.XAxis({
+            id: 'cvs',
+            y: 35,
+            options: {
+                gutterLeft: hbar.get('gutterLeft'),
+                max: 100,
+                align: 'top',
+                clearto: 'white'
+            }
+            }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+
+    <title>A Pie chart with gradients</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Pie chart with gradients" />
+     
+</head>
+<body>
+
+    <h1>A Pie chart with gradients</h1>
+    This Pie chart shows you how you can use gradients, shadows and segment separation in-conjunction with each other to good effect.
+    
+    <p />
+
+    <canvas id="cvs" width="800" height="600">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [17,15,16,15,13,13,15,15,11,15,12,15,15],
+                options: {
+                    radius: 175,
+                    linewidth: 3,
+                    textSize: 18,
+                    strokestyle: 'white',
+                    shadow: false,
+                    shadowColor: '#ddd',
+                    labels: ['Alvin','Pete','Hoolio','Jack','Kevin','Luis','Louise','Jesse','Rachel','Christian','Lola','Kevin','Barry','Peter','Luis'],
+                    labelsSticks: true,
+                    labelsSticksLength: 35,
+                    exploded: 5,
+                    colors: [
+                        'Gradient(white:#ff0:#aa0:#660)', 'Gradient(white:#f00:#a00:#600)',
+                        'Gradient(white:#0ff:#0aa:#066)', 'Gradient(white:#0f0:#0a0:#060)',
+                        'Gradient(white:#fff:#aaa:#666)', 'Gradient(white:#f0f:#a0a:#606)',
+                        'Gradient(white:#ff0:#aa0:#660)','Gradient(white:#f00:#a00:#600)',
+                        'Gradient(white:#0ff:#0aa:#066)','Gradient(white:#0f0:#0a0:#060)',
+                        'Gradient(white:#fff:#aaa:#666)', 'Gradient(white:#f0f:#a0a:#606)',
+                        'Gradient(white:#fff:#aaa:#666)'
+                    ]
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="800" height="600"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [17,15,16,15,13,13,15,15,11,15,12,15,15],
+            options: {
+                radius: 175,
+                linewidth: 3,
+                textSize: 18,
+                strokestyle: 'white',
+                shadow: false,
+                shadowColor: '#ddd',
+                labels: ['Alvin','Pete','Hoolio','Jack','Kevin','Luis','Louise','Jesse','Rachel','Christian','Lola','Kevin','Barry','Peter','Luis'],
+                labelsSticks: true,
+                labelsSticksLength: 35,
+                exploded: 5,
+                colors: [
+                    'Gradient(white:#ff0:#aa0:#660)', 'Gradient(white:#f00:#a00:#600)',
+                    'Gradient(white:#0ff:#0aa:#066)', 'Gradient(white:#0f0:#0a0:#060)',
+                    'Gradient(white:#fff:#aaa:#666)', 'Gradient(white:#f0f:#a0a:#606)',
+                    'Gradient(white:#ff0:#aa0:#660)','Gradient(white:#f00:#a00:#600)',
+                    'Gradient(white:#0ff:#0aa:#066)','Gradient(white:#0f0:#0a0:#060)',
+                    'Gradient(white:#fff:#aaa:#666)', 'Gradient(white:#f0f:#a0a:#606)',
+                    'Gradient(white:#fff:#aaa:#666)'
+                ]
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

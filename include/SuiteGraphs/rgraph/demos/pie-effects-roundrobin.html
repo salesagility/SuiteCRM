@@ -1,0 +1,98 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+    
+    <title>A Pie chart with RoundRobin effect</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An exploded Pie chart using the RoundRobin effect" />
+     
+</head>
+<body>
+
+    <h1>A Pie chart with RoundRobin effect</h1>
+
+    <canvas id="cvs" width="400" height="300">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [4,3,2,6,8],
+                options: {
+                    labels: ['Robert','Louise','Peter','Kevin','Jack'],
+                    labelsSticks: true,
+                    labelsSticksLength: 15,
+                    tooltips: ['Robert','Louise','Peter','Kevin','Jack'],
+                    radius: 100,
+                    strokestyle: 'transparent',
+                    exploded: [15]
+                }
+            }).roundRobin();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="400" height="300"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [4,3,2,6,8],
+            options: {
+                labels: ['Robert','Louise','Peter','Kevin','Jack'],
+                labelsSticks: true,
+                labelsSticksLength: 15,
+                tooltips: ['Robert','Louise','Peter','Kevin','Jack'],
+                radius: 100,
+                strokestyle: 'transparent',
+                exploded: [15]
+            }
+        }).roundRobin();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

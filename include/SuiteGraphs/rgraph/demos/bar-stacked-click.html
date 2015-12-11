@@ -1,0 +1,172 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.drawing.rect.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A stacked bar chart with clickable "whole bars"</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="By using the drawing API rect object you can make the whole bar of a stacked Bar chart clickable - allowing yout 'group' tooltips etc" />
+     
+</head>
+<body>
+        
+    <h1>A stacked bar chart with clickable "whole bars"</h1>
+    
+    <p>
+        By using the drawing API rect object you can make the whole bar of a stacked Bar chart clickable - allowing you to 'group' tooltips etc
+    </p>
+
+    <canvas id="cvs" width="700" height="350">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var tooltips = ['John results','James results','Freds results','Luke results','Luis results'];
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [[5.33,2.33,3.32],[3.42,2.23,4.23],[4.23,3.23,4.99], [7.99,2.98,2.35], [2.75,1.02,5.24]],
+                options: {
+                    labels: ['John','James','Fred','Luke','Luis'],
+                    labelsAbove: true,
+                    labelsAboveDecimals: 2,
+                    linewidth: 2,
+                    strokestyle: 'white',
+                    colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
+                    shadowOffsetx: 1,
+                    shadowOffsety: 1,
+                    shadowBlur: 5,
+                    hmargin: 25,
+                    gutterLeft: 45,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    axisColor: '#ccc',
+                    noyaxis: true,
+                    grouping: 'stacked'
+                }
+            }).draw()
+        
+            for (var i=0; i<bar.coords2.length; ++i) {
+
+                var x = bar.coords2[i][0][0];
+                var y = bar.coords2[i][0][1];
+                var w = bar.coords2[i][0][2];
+                var h = bar.coords2[i][0][3] + bar.coords2[i][1][3] + bar.coords2[i][2][3]; // Sum up the heights of the bar segments
+
+                var rect = new RGraph.Drawing.Rect({
+                    id: 'cvs',
+                    x: x,
+                    y: y,
+                    width: w,
+                    height: h,
+                    options: {
+                        strokestyle: 'rgba(0,0,0,0)',
+                        fillstyle: 'rgba(0,0,0,0)',
+                        tooltips: [tooltips[i]],
+                        highlightStroke: 'rgba(0,0,0,0)'
+                    }
+                }).draw()
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.rect.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var tooltips = ['John results','James results','Freds results','Luke results','Luis results'];
+
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: [[5.33,2.33,3.32],[3.42,2.23,4.23],[4.23,3.23,4.99], [7.99,2.98,2.35], [2.75,1.02,5.24]],
+            options: {
+                labels: ['John','James','Fred','Luke','Luis'],
+                labelsAbove: true,
+                labelsAboveDecimals: 2,
+                linewidth: 2,
+                strokestyle: 'white',
+                colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
+                shadowOffsetx: 1,
+                shadowOffsety: 1,
+                shadowBlur: 5,
+                hmargin: 25,
+                gutterLeft: 45,
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                axisColor: '#ccc',
+                noyaxis: true,
+                grouping: 'stacked'
+            }
+        }).draw()
+    
+        for (var i=0; i&lt;bar.coords2.length; ++i) {
+
+            var x = bar.coords2[i][0][0];
+            var y = bar.coords2[i][0][1];
+            var w = bar.coords2[i][0][2];
+            var h = bar.coords2[i][0][3] + bar.coords2[i][1][3] + bar.coords2[i][2][3]; // Sum up the heights of the bar segments
+
+            var rect = new RGraph.Drawing.Rect({
+                id: 'cvs',
+                x: x,
+                y: y,
+                width: w,
+                height: h,
+                options: {
+                    strokestyle: 'rgba(0,0,0,0)',
+                    fillstyle: 'rgba(0,0,0,0)',
+                    tooltips: [tooltips[i]],
+                    highlightStroke: 'rgba(0,0,0,0)'
+                }
+            }).draw()
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

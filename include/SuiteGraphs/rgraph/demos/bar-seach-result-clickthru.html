@@ -1,0 +1,112 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A Bar chart showing search result clickthru rates</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Bar chart showing search result clickthru rates" />
+    
+</head>
+<body>
+
+    <h1>A Bar chart showing search result clickthru rates</h1>
+
+    <canvas id="cvs" width="700" height="350">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data = [36.4,12.5,9.5,7.9,6.1,4.1,3.8,3.5,3.0,2.2];
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: data,
+                options: {
+                    backgroundGridAutofitNumvlines: 10,
+                    gutterBottom: 40,
+                    gutterLeft: 60,
+                    unitsPost: '%',
+                    titleXaxis: 'Google position',
+                    titleXaxisY: 340,
+                    titleYaxis: 'Clickthru rate',
+                    titleYaxisX: 20,
+                    labels: [ 'One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'],
+                    labelsAbove: true,
+                    labelsAboveDecimals: 1,
+                    labelsAboveSize: 12,
+                    noxaxis: true
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [36.4,12.5,9.5,7.9,6.1,4.1,3.8,3.5,3.0,2.2];
+
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: data,
+            options: {
+                backgroundGridAutofitNumvlines: 10,
+                gutterBottom: 40,
+                gutterLeft: 60,
+                unitsPost: '%',
+                titleXaxis: 'Google position',
+                titleXaxisY: 340,
+                titleYaxis: 'Clickthru rate',
+                titleYaxisX: 20,
+                labels: [ 'One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'],
+                labelsAbove: true,
+                labelsAboveDecimals: 1,
+                labelsAboveSize: 12,
+                noxaxis: true
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

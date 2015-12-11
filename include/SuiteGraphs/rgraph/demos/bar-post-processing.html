@@ -1,0 +1,136 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A Bar chart with post processing</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Bar chart the shows you that by using the ondraw event along with the coordinates you can do post-processing on your charts" />
+     
+</head>
+<body>
+        
+    <h1>A Bar chart with post processing</h1>
+    
+    <p>
+        This Bar chart uses the custom RGraph ondraw event to add highlight to each bar.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var bar7 = new RGraph.Bar({
+                id: 'cvs',
+                data: [[47,75],[32,74],[71,85],[25,19],[23,71],[81,59],[43,130],[23,20]],
+                options: {
+                    textSize: 14,
+                    gutterLeft: 45,
+                    colors: ['#494949','#35A0DA'],
+                    labels: ['Alf','Bert','Craig','Dan','Edgar','Fred','Gary','Harry'],
+                    ylabelsCount: 3,
+                    numyticks: 6,
+                    backgroundGridAutofitNumhlines: 3,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    hmargin: 5,
+                    strokestyle: 'rgba(0,0,0,0)'
+                }
+            }).on('draw', function (obj)
+            {
+                var len = obj.coords.length;
+
+                for (var i=0; i<len; ++i) {
+
+                    var x = obj.coords[i][0];
+                    var y = obj.coords[i][1];
+                    var w = obj.coords[i][2] / 2;
+                    var h = obj.coords[i][3];
+
+                    obj.context.fillStyle = 'rgba(255,255,255,0.15)';
+                    obj.context.fillRect(x,y,w,h)
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var bar7 = new RGraph.Bar({
+            id: 'cvs',
+            data: [[47,75],[32,74],[71,85],[25,19],[23,71],[81,59],[43,130],[23,20]],
+            options: {                    textSize: 14,
+                gutterLeft: 45,
+                colors: ['#494949','#35A0DA'],
+                labels: ['Alf','Bert','Craig','Dan','Edgar','Fred','Gary','Harry'],
+                ylabelsCount: 3,
+                numyticks: 6,
+                backgroundGridAutofitNumhlines: 3,
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                hmargin: 5,
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).on('draw', function (obj)
+        {
+            var len = obj.coords.length;
+
+            for (var i=0; i&lt;len; ++i) {
+
+                var x = obj.coords[i][0];
+                var y = obj.coords[i][1];
+                var w = obj.coords[i][2] / 2;
+                var h = obj.coords[i][3];
+
+                obj.context.fillStyle = 'rgba(255,255,255,0.15)';
+                obj.context.fillRect(x,y,w,h)
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.drawing.poly.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A dual color clickable filled range Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A range Line chart which shows two colors - the threshold of which is settable" />
+     
+</head>
+<body>
+
+    <h1>A dual color clickable filled range Line chart</h1>
+    
+    <p>
+        By using the Poly drawing API object with a filled range chart you can make the filled range clickable.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+
+    <script>
+        window.onload = function ()
+        {
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                       [3,4,6,5,2,4,5,5,6,8,7,4,8,9,8,6,5,2,5,4],
+                       [12,13,15,16,12,13,15,14,21,22,20,13,15,16,18,19,16,15,13,18]
+                      ],
+                options: {
+                    filled: true,
+                    filledRange: true,
+                    fillstyle: 'red',
+                    colors: ['black'],
+                    linewidth: 1,
+                    numxticks: 19,
+                    ymax: 50,
+                    tickmarks: null,
+                    backgroundGridAutofitNumvlines: 19
+                }
+            }).trace(null, drawPoly);
+
+
+            function drawPoly ()
+            {
+                /**
+                * Extract the coords from the Line chart coords
+                */
+                var coords = [];
+                for (var i=0; i<(line.coords.length / 2); i+=1) {
+                    coords.push(line.coords[i]);
+                }
+
+                for (var i=(line.coords.length - 1); i>=(line.coords.length / 2);i-=1) {
+                    coords.push(line.coords[i]);
+                }
+
+                var poly = new RGraph.Drawing.Poly({
+                    id: 'cvs',
+                    coords: coords,
+                    options: {
+                        strokestyle: 'rgba(0,0,0,0)',
+                        fillstyle: 'rgba(0,0,0,0)',
+                        tooltips: ['The tooltip!'],
+                        highlightFill: 'rgba(255,255,255,0.5)'
+                    }
+                }).draw();
+                
+                line.canvas.__object__ = line;
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.poly.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [3,4,6,5,2,4,5,5,6,8,7,4,8,9,8,6,5,2,5,4],
+                [12,13,15,16,12,13,15,14,21,22,20,13,15,16,18,19,16,15,13,18]
+            ],
+            options: {
+                filled: true,
+                filledRange: true,
+                fillstyle: 'red',
+                colors: ['black'],
+                linewidth: 1,
+                numxticks: 19,
+                ymax: 50,
+                tickmarks: null,
+                backgroundGridAutofitNumvlines: 19
+            }
+        }).trace(null, drawPoly);
+
+
+        function drawPoly ()
+        {
+            /**
+            * Extract the coords from the Line chart coords
+            */
+            var coords = [];
+            for (var i=0; i&lt;(line.coords.length / 2); i+=1) {
+                coords.push(line.coords[i]);
+            }
+
+            for (var i=(line.coords.length - 1); i>=(line.coords.length / 2);i-=1) {
+                coords.push(line.coords[i]);
+            }
+
+            var poly = new RGraph.Drawing.Poly({
+                id: 'cvs',
+                coords: coords,
+                options: {
+                    strokestyle: 'rgba(0,0,0,0)',
+                    fillstyle: 'rgba(0,0,0,0)',
+                    tooltips: ['The tooltip!'],
+                    highlightFill: 'rgba(255,255,255,0.5)'
+                }
+            }).draw();
+            
+            line.canvas.__object__ = line;
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

@@ -1,0 +1,297 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A "Fan" Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A customisation of the filled range Line chart to produce a currency Fan chart" />
+     
+</head>
+<body>
+
+    <h1>A "Fan" Line chart</h1>
+    
+    <p>
+        This is an example of the filled range chart being used to create a "Fan" chart. Fan charts are used, for example, to illustrate
+        growing uncertainty of future values. You can read about fan charts here: <a href="http://en.goldenmap.com/Fan_chart_(time_series)" rel="nofollow">http://en.goldenmap.com/Fan_chart_(time_series)</a>
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            /**
+            * Starting with the February 2013 release you'll be able to chain Set() calls
+            */
+            var central_line_data = [10,13,15,15,24,19,18,16,17,18,12,11];
+            
+            var variance1 = [0,0,1,1,2,3,4,4,4,5,5,5];
+            var variance2 = [0,0,1,1,3,4,5,5,5,6,6,6];
+            var variance3 = [0,0,1,1,3,4,6,6,6,7,7,7];
+            
+            var d1 = [];
+            var d2 = [];
+            var d3 = [];
+            var d4 = [];
+            var d5 = [];
+            var d6 = [];
+            
+            for (var i=0; i<central_line_data.length; ++i) {
+                d1.push(central_line_data[i] + variance1[i]);
+                d2.push(central_line_data[i] - variance1[i]);
+                
+                d3.push(central_line_data[i] + variance2[i]);
+                d4.push(central_line_data[i] - variance2[i]);
+                
+                d5.push(central_line_data[i] + variance3[i]);
+                d6.push(central_line_data[i] - variance3[i]);
+            }
+
+            var line1 = new RGraph.Line({
+                id: 'cvs',
+                data: [d5, d6],
+                options: {
+                    noxaxis: true,
+                    'text.size': 14,
+                    filled: true,
+                    filledRange: true,
+                    fillstyle: 'rgba(255,0,0,0.1)',
+                    colors: ['rgba(0,0,0,0)'],
+                    linewidth: 0,
+                    ymax: 30,
+                    ylabels: false,
+                    noaxes: true,
+                    backgroundGridAutofitNumvlines: 11,
+                    hmargin: 5,
+                    tickmarks: null
+                }
+            }).draw()
+
+            var line2 = new RGraph.Line({
+                id: 'cvs',
+                data: [d3, d4],
+                options: {
+                    noxaxis: true,
+                    textSize: 14,
+                    filled: true,
+                    filledRange: true,
+                    fillstyle: 'rgba(255,0,0,0.2)',
+                    colors: ['rgba(0,0,0,0)'],
+                    linewidth: 0,
+                    ymax: 30,
+                    ylabels: false,
+                    noaxes: true,
+                    backgroundGridAutofitNumvlines: 11,
+                    hmargin: 5,
+                    tickmarks: null
+                }
+            }).draw()
+
+
+            var line3 = new RGraph.Line({
+                id: 'cvs',
+                data: [d1, d2],
+                options: {
+                    noxaxis: true,
+                    textSize: 14,
+                    filled: true,
+                    filledRange: true,
+                    fillstyle: 'rgba(255,0,0,0.4)',
+                    colors: ['rgba(0,0,0,0)'],
+                    linewidth: 3,
+                    ymax: 30,
+                    ylabels: false,
+                    noaxes: true,
+                    backgroundGrid: false,
+                    hmargin: 5,
+                    tickmarks: null
+                }
+            }).draw()
+
+            var line4 = new RGraph.Line({
+                id: 'cvs',
+                data: central_line_data,
+                options: {
+                    noxaxis: true,
+                    textSize: 14,
+                    backgroundGrid: false,
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    colors: ['black'],
+                    linewidth: 3,
+                    ymax: 30,
+                    numxticks: 11,
+                    tickmarks: null,
+                    hmargin: 5,
+                    shadow: false
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        /**
+        * Starting with the February 2013 release you'll be able to chain Set() calls
+        */
+        var central_line_data = [10,13,15,15,24,19,18,16,17,18,12,11];
+        
+        var variance1 = [0,0,1,1,2,3,4,4,4,5,5,5];
+        var variance2 = [0,0,1,1,3,4,5,5,5,6,6,6];
+        var variance3 = [0,0,1,1,3,4,6,6,6,7,7,7];
+        
+        var d1 = [];
+        var d2 = [];
+        var d3 = [];
+        var d4 = [];
+        var d5 = [];
+        var d6 = [];
+        
+        for (var i=0; i&lt;central_line_data.length; ++i) {
+            d1.push(central_line_data[i] + variance1[i]);
+            d2.push(central_line_data[i] - variance1[i]);
+            
+            d3.push(central_line_data[i] + variance2[i]);
+            d4.push(central_line_data[i] - variance2[i]);
+            
+            d5.push(central_line_data[i] + variance3[i]);
+            d6.push(central_line_data[i] - variance3[i]);
+        }
+
+        var line1 = new RGraph.Line({
+            id: 'cvs',
+            data: [d5, d6],
+            options: {
+                noxaxis: true,
+                textSize: 14,
+                filled: true,
+                filledRange: true,
+                fillstyle: 'rgba(255,0,0,0.1)',
+                colors: ['rgba(0,0,0,0)'],
+                linewidth: 0,
+                ymax: 30,
+                ylabels: false,
+                noaxes: true,
+                backgroundGridAutofitNumvlines: 11,
+                hmargin: 5,
+                tickmarks: null
+            }
+        }).draw()
+
+        var line2 = new RGraph.Line({
+            id: 'cvs',
+            data: [d3, d4],
+            options: {
+                noxaxis: true,
+                textSize: 14,
+                filled: true,
+                filledRange: true,
+                fillstyle: 'rgba(255,0,0,0.2)',
+                colors: ['rgba(0,0,0,0)'],
+                linewidth: 0,
+                ymax: 30,
+                ylabels: false,
+                noaxes: true,
+                backgroundGridAutofitNumvlines: 11,
+                hmargin: 5,
+                tickmarks: null
+            }
+        }).draw()
+
+
+        var line3 = new RGraph.Line({
+            id: 'cvs',
+            data: [d1, d2],
+            options: {
+                noxaxis: true,
+                textSize: 14,
+                filled: true,
+                filledRange: true,
+                fillstyle: 'rgba(255,0,0,0.4)',
+                colors: ['rgba(0,0,0,0)'],
+                linewidth: 3,
+                ymax: 30,
+                ylabels: false,
+                noaxes: true,
+                backgroundGrid: false,
+                hmargin: 5,
+                tickmarks: null
+            }
+        }).draw()
+
+        var line4 = new RGraph.Line({
+            id: 'cvs',
+            data: central_line_data,
+            options: {
+                noxaxis: true,
+                textSize: 14,
+                backgroundGrid: false,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                colors: ['black'],
+                linewidth: 3,
+                ymax: 30,
+                numxticks: 11,
+                tickmarks: null,
+                hmargin: 5,
+                shadow: false
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>
+

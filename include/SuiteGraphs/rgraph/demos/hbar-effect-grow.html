@@ -1,0 +1,105 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.hbar.js" ></script>
+    
+    <title>A Horizontal Bar chart example that is animated</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Horizontal Bar chart that is animated using the Grow animation" />
+     
+</head>
+<body>
+
+    <h1>A Horizontal Bar chart example</h1>
+
+
+   <canvas id="cvs" width="600" height="400">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var hbar = new RGraph.HBar({
+                id: 'cvs',
+                data: [0.1,0.2,0.3,3.2,0.2,0.5,0.5,0.2,0.4,0.8,0,0.1],
+                options: {
+                    backgroundGrid: false,
+                    xmax: 3.5,
+                    scaleDecimals: 1,
+                    colors: ['#164366','#164366','#164366','#FDB515','#164366'],
+                    colorsSequential: true,
+                    labels: ['Norway','Australia','Netherlands','United States','New Zealand','Canada','Ireland','Germany','Sweden','Switzerland','Japan','England and Wales'],
+                    labelsAbove: true,
+                    labelsAboveDecimals: 1,
+                    noxaxis: true,
+                    gutterLeft: 125,
+                    xlabels: false
+                }
+            }).grow()
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.hbar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="400"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var hbar = new RGraph.HBar({
+            id: 'cvs',
+            data: [0.1,0.2,0.3,3.2,0.2,0.5,0.5,0.2,0.4,0.8,0,0.1],
+            options: {
+                backgroundGrid: false,
+                xmax: 3.5,
+                scaleDecimals: 1,
+                colors: ['#164366','#164366','#164366','#FDB515','#164366'],
+                colorsSequential: true,
+                labels: ['Norway','Australia','Netherlands','United States','New Zealand','Canada','Ireland','Germany','Sweden','Switzerland','Japan','England and Wales'],
+                labelsAbove: true,
+                labelsAboveDecimals: 1,
+                noxaxis: true,
+                gutterLeft: 125,
+                xlabels: false
+            }
+        }).grow();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+</body>
+</html>

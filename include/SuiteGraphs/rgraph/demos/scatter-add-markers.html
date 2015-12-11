@@ -1,0 +1,172 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.drawing.circle.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>A Scatter chart with the ability to add markers</title>
+    
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart with the ability to add markers" />
+     
+</head>
+<body>
+
+    <h1>A Scatter chart with the ability to add markers</h1>
+    
+    <p>
+        You can click on the Scatter chart to add a red circle. When the circles are then clicked on nothing happens.
+    </p>
+
+    <canvas id="cvs" width="600" height="200">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var over_circle = false;
+
+            var scatter = new RGraph.Scatter({
+                id: 'cvs',
+                data: [[15,91]],
+                options: {
+                    gutterLeft: 25,
+                    xmax: 365,
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+                }
+            }).draw();
+        
+            scatter.canvas.onmousemove = function (e)
+            {
+                var obj = RGraph.ObjectRegistry.getObjectByXY(e);
+                
+                if (obj && obj.type == 'drawing.circle') {
+                    over_circle = obj;
+                    e.target.style.cursor = 'pointer';
+                } else {
+                    over_circle = false;
+                    e.target.style.cursor = 'default';
+                }
+            }
+
+            scatter.canvas.onclick = function (e)
+            {
+                if (over_circle == false) {
+
+                    var obj = scatter;
+                    var xValue = obj.getXValue(e);
+                    var yValue = obj.getYValue(e);
+                    var xCoord = obj.getXCoord(xValue);
+                    var yCoord = obj.getYCoord(yValue);
+
+                    var circle = new RGraph.Drawing.Circle({id: 'cvs', x: xCoord, y: yCoord, radius: 15})
+                    
+                    circle.set({
+                        fillstyle: 'Gradient(white:rgba(255,128,128,0.75):rgba(255,0,0,0.5))',
+                        tooltips: ['A tooltip from the circle with UID: ' + circle.uid],
+                        shadow: true,
+                        shadowBlur:1,
+                        shadowOffsetx:2,
+                        shadowOffsety:2
+                    }).draw();
+                }
+            }
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.circle.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.circle.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="200"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var over_circle = false;
+
+        var scatter = new RGraph.Scatter({
+            id: 'cvs',
+            data: [[15,91]],
+            options: {
+                gutterLeft: 25,
+                xmax: 365,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+            }
+        }).draw();
+    
+        scatter.canvas.onmousemove = function (e)
+        {
+            var obj = RGraph.ObjectRegistry.getObjectByXY(e);
+            
+            if (obj && obj.type == 'drawing.circle') {
+                over_circle = obj;
+                e.target.style.cursor = 'pointer';
+            } else {
+                over_circle = false;
+                e.target.style.cursor = 'default';
+            }
+        }
+
+        scatter.canvas.onclick = function (e)
+        {
+            if (over_circle == false) {
+
+                var obj = scatter;
+                var xValue = obj.getXValue(e);
+                var yValue = obj.getYValue(e);
+                var xCoord = obj.getXCoord(xValue);
+                var yCoord = obj.getYCoord(yValue);
+
+                var circle = new RGraph.Drawing.Circle({id: 'cvs', x: xCoord, y: yCoord, radius: 15})
+                
+                circle.set({
+                    fillstyle: 'Gradient(white:rgba(255,128,128,0.75):rgba(255,0,0,0.5))',
+                    tooltips: ['A tooltip from the circle with UID: ' + circle.uid],
+                    shadow: true,
+                    shadowBlur:1,
+                    shadowOffsetx:2,
+                    shadowOffsety:2
+                }).draw();
+            }
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

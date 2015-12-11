@@ -1,0 +1,238 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.drawing.poly.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A 'stacked' range Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A range chart with the data such that the datasets appear to be stacked range sections." />
+     
+</head>
+<body>
+
+    <h1>A 'stacked' range Line chart</h1>
+    
+    <p>
+        This is an example of how you can manipulate the data that you give to a range chart so that you get a stacking
+        effect. There are actually three line charts here - one on top of the other.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+
+    <script>
+        window.onload = function ()
+        {
+            var data = [[3,5,6,7,4,8,5,9,13,14,16,15,17,18,19,21,24,25,25,26,28,28,27,26,25,25]];
+            
+            for (var j=1; j<6; j+=2) {
+                data[j]   = [];
+                data[j+1] = [];
+                for (var i=0,len=data[0].length; i<len; i+=1) {
+                    data[j][i] = data[0][i] + (2 * j);
+                    data[j+1][i] = data[0][i] + (2 * j);
+                }
+            }
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [data[0], data[1]],
+                options: {
+                    fillstyle: 'red',
+                    filled: true,
+                    filledRange: true,
+                    colors: ['rgba(0,0,0,0)'],
+                    linewidth: 1,
+                    ymax: 50,
+                    numxticks: 25,
+                    gutterBottom: 50,
+                    tickmarks: null
+                }
+            }).draw()
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [data[2], data[3]],
+                options: {
+                    fillstyle: '#0c0',
+                    filled: true,
+                    filledRange: true,
+                    colors: ['rgba(0,0,0,0)'],
+                    linewidth: 1,
+                    ymax: 50,
+                    numxticks: 25,
+                    backgroundGrid: false,
+                    gutterBottom: 50,
+                    tickmarks: null
+                }
+            }).draw()
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [data[4], data[5]],
+                options: {
+                    fillstyle: '#66f',
+                    filled: true,
+                    filledRange: true,
+                    colors: ['rgba(0,0,0,0)'],
+                    linewidth: 1,
+                    ymax: 50,
+                    numxticks: 25,
+                    backgroundGrid: false,
+                    gutterBottom: 50,
+                    tickmarks: null
+                }
+            }).draw()
+
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [4,7,8,5,4,6,8,9,12,18,19,17,19,21,22,25,24,26,27,29,28,27,29,33,35,37],
+                options: {
+                labels: ['12th','\r\n13th','14th','\r\n15th','16th','\r\n17th','18th','\r\n19th','20th','\r\n21st','22nd','\r\n23rd','24th','\r\n25th','26th','\r\n27th','28th','\r\n29th','30th','\r\n31st','1st','\r\n2nd','3rd','\r\n4th','5th','\r\n6th'],
+                    colors: ['black'],
+                    linewidth: 3,
+                    ymax: 50,
+                    numxticks: 0,
+                    backgroundGrid: false,
+                    gutterBottom: 50,
+                    tickmarks: null
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.poly.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [[3,5,6,7,4,8,5,9,13,14,16,15,17,18,19,21,24,25,25,26,28,28,27,26,25,25]];
+        
+        for (var j=1; j&lt;6; j+=2) {
+            data[j]   = [];
+            data[j+1] = [];
+            for (var i=0,len=data[0].length; i&lt;len; i+=1) {
+                data[j][i] = data[0][i] + (2 * j);
+                data[j+1][i] = data[0][i] + (2 * j);
+            }
+        }
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [data[0], data[1]],
+            options: {
+                fillstyle: 'red',
+                filled: true,
+                filledRange: true,
+                colors: ['rgba(0,0,0,0)'],
+                linewidth: 1,
+                ymax: 50,
+                numxticks: 25,
+                gutterBottom: 50,
+                tickmarks: null
+            }
+        }).draw()
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [data[2], data[3]],
+            options: {
+                fillstyle: '#0c0',
+                filled: true,
+                filledRange: true,
+                colors: ['rgba(0,0,0,0)'],
+                linewidth: 1,
+                ymax: 50,
+                numxticks: 25,
+                backgroundGrid: false,
+                gutterBottom: 50,
+                tickmarks: null
+            }
+        }).draw()
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [data[4], data[5]],
+            options: {
+                fillstyle: '#66f',
+                filled: true,
+                filledRange: true,
+                colors: ['rgba(0,0,0,0)'],
+                linewidth: 1,
+                ymax: 50,
+                numxticks: 25,
+                backgroundGrid: false,
+                gutterBottom: 50,
+                tickmarks: null
+            }
+        }).draw()
+
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [4,7,8,5,4,6,8,9,12,18,19,17,19,21,22,25,24,26,27,29,28,27,29,33,35,37],
+            options: {
+            labels: ['12th','\r\n13th','14th','\r\n15th','16th','\r\n17th','18th','\r\n19th','20th','\r\n21st','22nd','\r\n23rd','24th','\r\n25th','26th','\r\n27th','28th','\r\n29th','30th','\r\n31st','1st','\r\n2nd','3rd','\r\n4th','5th','\r\n6th'],
+                colors: ['black'],
+                linewidth: 3,
+                ymax: 50,
+                numxticks: 0,
+                backgroundGrid: false,
+                gutterBottom: 50,
+                tickmarks: null
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

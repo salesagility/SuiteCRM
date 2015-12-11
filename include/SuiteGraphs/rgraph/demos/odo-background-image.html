@@ -1,0 +1,125 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.drawing.image.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.odo.js" ></script>
+    
+    <title>A Odo chart using a background image</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Odo chart using a background image" />
+     
+</head>
+<body>
+
+    <h1>An Odometer chart using a background image</h1>
+
+
+    <canvas id="cvs" width="300" height="300">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var img = new RGraph.Drawing.Image({
+                id: 'cvs',
+                x: -4,
+                y: 0,
+                src: '../images/odometer-background.png'
+            }).draw()
+            
+            var odo = new RGraph.Odometer({
+                id: 'cvs',
+                min: 0,
+                max: 360,
+                value: 56,
+                options: {
+                    greenColor: 'rgba(0,0,0,0)',
+                    yellowColor: 'rgba(0,0,0,0)',
+                    redColor: 'rgba(0,0,0,0)',
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    backgroundBorder: 'rgba(0,0,0,0)',
+                    backgroundLinesColor: 'rgba(0,0,0,0)',
+                    tickmarks: false,
+                    tickmarksBigColor: 'rgba(0,0,0,0)',
+                    textColor: 'rgba(0,0,0,0)',
+                    needleColor: '#ddd',
+                    needleTail: false,
+                    needleHead: false,
+                    needleThickness: 5   
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.image.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="300" height="300"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var img = new RGraph.Drawing.Image({
+            id: 'cvs',
+            x: -4,
+            y: 0,
+            src: '../images/odometer-background.png'
+        }).draw()
+        
+        var odo = new RGraph.Odometer({
+            id: 'cvs',
+            min: 0,
+            max: 360,
+            value: 56,
+            options: {
+                greenColor: 'rgba(0,0,0,0)',
+                yellowColor: 'rgba(0,0,0,0)',
+                redColor: 'rgba(0,0,0,0)',
+                backgroundColor: 'rgba(0,0,0,0)',
+                backgroundBorder: 'rgba(0,0,0,0)',
+                backgroundLinesColor: 'rgba(0,0,0,0)',
+                tickmarks: false,
+                tickmarksBigColor: 'rgba(0,0,0,0)',
+                textColor: 'rgba(0,0,0,0)',
+                needleColor: '#ddd',
+                needleTail: false,
+                needleHead: false,
+                needleThickness: 5
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>Bar chart Wave effect</title>
+    <meta name="robots" content="noindex,nofollow" />
+    
+</head>
+<body>
+
+    <h1>Bar chart Wave effect</h1>
+
+    <canvas id="cvs" width="650" height="350">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data = [4,8,6,3,5,2,6,8,4,5,7,8];
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: data,
+                options: {
+                    backgroundGridAutofitNumvlines: 0,
+                    linewidth: 0,
+                    shadow: false,
+                    hmargin: 13,
+                    colors: ['Gradient(pink:red:#f33)', 'Gradient(green:#0f0)'],
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    clearto: 'white',
+                    variant: '3d',
+                    gutterBottom: 90
+                }
+            }).wave({frames: 60});
+        };
+    </script>
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="800" height="350"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [4,8,6,3,5,2,6,8,4,5,7,8];
+
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: data,
+            options: {
+                backgroundGridAutofitNumvlines: 0,
+                linewidth: 0,
+                shadow: false,
+                hmargin: 10,
+                colors: ['Gradient(pink:red:#f33)', 'Gradient(green:#0f0)'],
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                clearto: 'white',
+                variant: '3d',
+                gutterBottom: 90
+            }
+        }).wave({frames: 60});
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
