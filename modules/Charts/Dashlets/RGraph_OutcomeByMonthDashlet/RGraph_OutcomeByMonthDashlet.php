@@ -90,7 +90,6 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
      */
     public function display()
     {
-        /*
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')){
 
@@ -118,136 +117,6 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
 	
         return $this->getTitle('<div align="center"></div>') . 
             '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
-        */
-
-        $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
-        if ($GLOBALS['current_user']->getPreference('currency')){
-
-            $currency = new Currency();
-            $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
-            $currency_symbol = $currency->symbol;
-        }
-        $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
-        $module = 'Opportunities';
-        $action = 'index';
-        $query = 'true';
-        $searchFormTab = 'advanced_search';
-		$groupBy = array( 'm', 'sales_stage', );
-
-
-        $data = $this->getChartData($this->constructQuery());
-
-       $data = $this->sortData($data,'m', false, 'sales_stage', true, true);
-
-        $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
-        $canvasId = 'rGraphOutcomeByMonth'.uniqid();
-        $chartWidth     = 900;
-        $chartHeight    = 480;
-        $autoRefresh = $this->processAutoRefresh();
-
-        //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
-        $jsonData = json_encode($chartReadyData['data']);
-        $jsonLabels = json_encode($chartReadyData['labels']);
-        $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
-
-
-        $jsonKey = json_encode($chartReadyData['key']);
-        $jsonTooltips = json_encode($chartReadyData['tooltips']);
-
-        //$colours = "['red','blue','green','orange','yellow','pink','cyan','magenta']";
-        //I used the export of colurs from http://colorbrewer2.org/
-        $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
-
-        $chart = <<<EOD
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
-             $autoRefresh
-         <script>
-           var bar = new RGraph.Bar({
-            id: '$canvasId',
-            data:$jsonData,
-            options: {
-                grouping: 'stacked',
-                labels: $jsonLabels,
-                xlabels:true,
-                labelsAbove: true,
-                labelsAbovedecimals: 2,
-                linewidth: 2,
-                eventsClick:outcomeByMonthClick,
-                //textSize:8,
-                strokestyle: 'white',
-                //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
-                //shadowOffsetx: 1,
-                //shadowOffsety: 1,
-                //shadowBlur: 10,
-                //hmargin: 25,
-               colors:$colours,
-                gutterLeft: 60,
-                gutterTop:50,
-                gutterRight:160,
-                //gutterBottom: 155,
-                //textAngle: 45,
-                backgroundGridVlines: false,
-                backgroundGridBorder: false,
-                tooltips:$jsonTooltips,
-                tooltipsEvent:'mousemove',
-                key: $jsonKey,
-               // keyColors: $colours,
-                //keyPosition: 'gutter',
-                keyPositionX: $canvasId.width - 150,
-                //keyPositionY: 18,
-                keyPositionGutterBoxed: true,
-                axisColor: '#ccc',
-                unitsPre:'$currency_symbol',
-                unitsPost:'$thousands_symbol',
-                noyaxis: true
-            }
-        }).on('draw', function (obj)
-        {
-            for (var i=0; i<obj.coords.length; ++i) {
-                obj.context.fillStyle = 'black';
-                if(obj.data_arr[i] > 0)
-                {
-                RGraph.Text2(obj.context, {
-                    font:'Verdana',
-                    'size':9,
-                    'x':obj.coords[i][0] + (obj.coords[i][2] / 2),
-                    'y':obj.coords[i][1] + (obj.coords[i][3] / 2),
-                    'text':obj.data_arr[i].toString(),
-                    'valign':'center',
-                    'halign':'center'
-                });
-                }
-            }
-        }).draw();
-
-        bar.canvas.onmouseout = function (e)
-        {
-            // Hide the tooltip
-            RGraph.hideTooltip();
-
-            // Redraw the canvas so that any highlighting is gone
-            RGraph.redraw();
-        }
-
-         var sizeIncrement = new RGraph.Drawing.Text({
-            id: '$canvasId',
-            x: 10,
-            y: 25,
-            text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
-            options: {
-                font: 'Arial',
-                bold: true,
-                //halign: 'left',
-                //valign: 'bottom',
-                colors: ['black'],
-                size: 10
-            }
-        }).draw();
-
-</script>
-EOD;
-    return $chart;
-
 	}
 
     /**
@@ -268,33 +137,5 @@ EOD;
                     " ORDER BY m";
 
         return $query;
-    }
-
-    protected function prepareChartData($data,$currency_symbol, $thousands_symbol)
-    {
-        //Use the  lead_source to categorise the data for the charts
-        $chart['labels'] = array();
-        $chart['data'] = array();
-        //Need to add all elements into the key, as they are stacked (even though the category is not present, the value could be)
-        $chart['key'] = array();
-        $chart['tooltips']= array();
-
-        foreach($data as $i)
-        {
-            $key = $i["m"];
-            $stage = $i["sales_stage"];
-            if(!in_array($key,$chart['labels']))
-            {
-                $chart['labels'][] = $key;
-                $chart['data'][] = array();
-            }
-            if(!in_array($stage,$chart['key']))
-                $chart['key'][] = $stage;
-
-            $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
-            $chart['data'][count($chart['data'])-1][] = $formattedFloat;
-            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
-        }
-        return $chart;
     }
 }
