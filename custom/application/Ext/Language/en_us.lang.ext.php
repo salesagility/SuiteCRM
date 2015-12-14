@@ -879,6 +879,7 @@ $app_list_strings['aor_chart_types']['line'] = 'Line chart';
 $app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
 $app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
 $app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
+$app_list_strings['aor_chart_types']['test'] = 'Test chart';
 $app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
 $app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'Weekly';
 $app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'Daily';

@@ -214,8 +214,95 @@ class AOR_Chart extends Basic {
                 return $this->buildChartHTMLPChart($reportData,$fields,$index);
             case AOR_Report::CHART_TYPE_CHARTJS:
                 return $this->buildChartHTMLChartJS($reportData,$fields);
+            case AOR_Report::CHART_TYPE_RGRAPH:
+                return $this->buildChartHTMLRGraph($reportData,$fields);
         }
         return '';
+    }
+
+
+    private function buildChartHTMLRGraph(array $reportData, array $fields){
+        $html = '';
+        if(!in_array($this->type, $this->getValidChartTypes())){
+            return $html;
+        }
+        $x = $fields[$this->x_field];
+        $y = $fields[$this->y_field];
+        if(!$x || !$y){
+            //Malformed chart object - missing an axis field
+            return '';
+        }
+        $xName = str_replace(' ','_',$x->label) . $this->x_field;
+        $yName = str_replace(' ','_',$y->label) . $this->y_field;
+
+        switch($this->type){
+            case 'polar':
+                $chartFunction = 'PolarArea';
+                $data = $this->getPolarChartData($reportData, $xName,$yName);
+                $config = $this->getPolarChartConfig();
+                break;
+            case 'radar':
+                $chartFunction = 'Radar';
+                $data = $this->getRadarChartData($reportData, $xName,$yName);
+                $config = $this->getRadarChartConfig();
+                break;
+            case 'pie':
+                $chartFunction = 'Pie';
+                $data = $this->getPieChartData($reportData, $xName,$yName);
+                $config = $this->getPieChartConfig();
+                break;
+            case 'line':
+                $chartFunction = 'Line';
+                $data = $this->getLineChartData($reportData, $xName,$yName);
+                $config = $this->getLineChartConfig();
+                break;
+            case 'bar':
+            default:
+                $chartFunction = 'Bar';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getBarChartConfig();
+                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id);
+                break;
+        }
+
+        return $chart;
+        //$data = json_encode($data);
+        //$config = json_encode($config);
+
+
+
+        //include_once('modules/Charts/Dashlets/RGraph_PipelineBySalesStageDashlet/RGraph_PipelineBySalesStageDashlet.php');
+       // $test  = new RGraph_PipelineBySalesStageDashlet();
+        //$t = $test->display();
+
+        //$chartId = 'chart'.$this->id;
+
+    }
+
+    private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= 'Bar chart', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||$dataArray.count() < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Bar({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                gutterBottom: 150,
+                title: '$chartName',
+                labels: $chartLabelValues,
+                textAngle: 45,
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
     }
 
     private function buildChartHTMLChartJS(array $reportData, array $fields){
@@ -296,6 +383,17 @@ SUGAR.util.doWhen("typeof addImage != 'undefined'", function(){
 </script>
 EOF;
         return $html;
+    }
+
+    private function getRGraphBarChartData($reportData, $xName,$yName){
+        $chart['labels']=array();
+        $chart['data']=array();
+        foreach($reportData as $row){
+            $chart['labels'][] = $row[$yName] . $this->getChartDataNameLabel($row[$yName]);
+            $chart['data'][] = (float)$row[$xName];
+
+        }
+        return $chart;
     }
 
 
