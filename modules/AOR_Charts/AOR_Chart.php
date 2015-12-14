@@ -75,7 +75,7 @@ class AOR_Chart extends Basic {
     }
 
     private function getValidChartTypes(){
-        return array('bar','line','pie','radar');
+        return array('bar','line','pie','radar','rose');
     }
 
 
@@ -236,11 +236,14 @@ class AOR_Chart extends Basic {
         $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
         switch($this->type){
+            /*
+             //Polar was not implemented for the previous library (it is not in the getValidChartTypes method)
             case 'polar':
                 $chartFunction = 'PolarArea';
                 $data = $this->getPolarChartData($reportData, $xName,$yName);
                 $config = $this->getPolarChartConfig();
                 break;
+            */
             case 'radar':
                 $chartFunction = 'Radar';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
@@ -258,7 +261,12 @@ class AOR_Chart extends Basic {
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getLineChartConfig();
                 $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
-
+                break;
+            case 'rose':
+                $chartFunction = 'Rose';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getRoseChartConfig();
+                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
                 break;
             case 'bar':
             default:
@@ -281,6 +289,29 @@ class AOR_Chart extends Basic {
 
         //$chartId = 'chart'.$this->id;
 
+    }
+
+    private function getRGraphRoseChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Rose({
+            id: '$chartId',
+            options:{
+                title: '$chartName'
+            },
+            data: $chartDataValues
+        }).draw();
+        </script>
+EOF;
+        return $html;
     }
 
     private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
@@ -467,12 +498,11 @@ EOF;
     }
 
     private function getRGraphBarChartData($reportData, $xName,$yName){
-        //Keeping the x and y for consistency, but they are the wrong way round for a bar chart (labels are y but should
         $chart['labels']=array();
         $chart['data']=array();
         foreach($reportData as $row){
-            $chart['labels'][] = $row[$yName] . $this->getChartDataNameLabel($row[$yName]);
-            $chart['data'][] = (float)$row[$xName];
+            $chart['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $chart['data'][] = (float)$row[$yName];
 
         }
         return $chart;
@@ -520,6 +550,9 @@ EOF;
         return array();
     }
     private function getLineChartConfig(){
+        return $this->getBarChartConfig();
+    }
+    private function getRoseChartConfig(){
         return $this->getBarChartConfig();
     }
 

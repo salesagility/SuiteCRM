@@ -14,6 +14,7 @@ $chart = <<<EOD
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.line.js'></script>
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.radar.js'></script>
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.hbar.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.rose.js'></script>
 
         <script>
             function rgraphMouseMove(e,shape)
@@ -40,7 +41,7 @@ $chart = <<<EOD
                     var userId = $(divHolder).find(".userId").val();
                     var startDate = encodeURI($(divHolder).find(".startDate").val());
                     var endDate = encodeURI($(divHolder).find(".endDate").val());
-                    window.open('http://localhost/SuiteCRM/index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_blank');
+                    window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_blank');
                 }
             }
 
@@ -60,7 +61,7 @@ $chart = <<<EOD
                     stage = encodeURI($.trim(stage));
                     date = encodeURI($.trim(date));
                     //console.log(stage + ' ' + date);
-                    window.open('http://localhost/SuiteCRM/index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&date_closed_advanced='+date+'&sales_stage='+stage,'_blank');
+                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&date_closed_advanced='+date+'&sales_stage='+stage,'_blank');
                 }
             }
 
@@ -79,7 +80,7 @@ $chart = <<<EOD
 
                     stage = encodeURI($.trim(stage));
                     category = encodeURI($.trim(category));
-                    window.open('http://localhost/SuiteCRM/index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_blank');
+                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_blank');
                 }
             }
 
@@ -97,7 +98,7 @@ $chart = <<<EOD
                 var labels = bar["object"]["properties"]["chart.labels"];
                 var clicked = encodeURI(labels[bar[5]]);
 
-                window.open('http://localhost/SuiteCRM/index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_blank');
+                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_blank');
             }
                 else
                 alert("Sorry, there has been an error with the click-through event");
@@ -119,7 +120,7 @@ $chart = <<<EOD
                 var labels = bar["object"]["properties"]["chart.key"];
                 var clicked = encodeURI(labels[bar[2]]);
 
-                window.open('http://localhost/SuiteCRM/index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&start_range_date_closed='+startDate+'&end_range_date_closed='+endDate+'&sales_stage='+clicked,'_blank');
+                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&start_range_date_closed='+startDate+'&end_range_date_closed='+endDate+'&sales_stage='+clicked,'_blank');
             }
                 else
                 alert("Sorry, there has been an error with the click-through event");
