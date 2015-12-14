@@ -243,25 +243,29 @@ class AOR_Chart extends Basic {
                 break;
             case 'radar':
                 $chartFunction = 'Radar';
-                $data = $this->getRadarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRadarChartConfig();
+                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
-                $data = $this->getPieChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getPieChartConfig();
+                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
                 break;
             case 'line':
                 $chartFunction = 'Line';
-                $data = $this->getLineChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getLineChartConfig();
+                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getBarChartConfig();
-                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id);
+                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
                 break;
         }
 
@@ -279,10 +283,10 @@ class AOR_Chart extends Basic {
 
     }
 
-    private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= 'Bar chart', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
-        if(!is_array($dataArray)||$dataArray.count() < 1)
+        if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>There are no data points for this query</h3>";
         }
@@ -294,10 +298,87 @@ class AOR_Chart extends Basic {
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                gutterBottom: 150,
+                gutterBottom: 200,
+                gutterTop:50,
                 title: '$chartName',
                 labels: $chartLabelValues,
-                textAngle: 45,
+                textAngle: 90,
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+    private function getRGraphRadarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Radar({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                title: '$chartName',
+                labels: $chartLabelValues,
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+    private function getRGraphPieChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Pie({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                title: '$chartName',
+                labels: $chartLabelValues
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+    private function getRGraphLineChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Line({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                gutterBottom: 200,
+                gutterTop:50,
+                tickmarks:'encircle',
+                title: '$chartName',
+                labels: $chartLabelValues,
+                textAngle: 90,
             }
         }).draw();
         </script>
@@ -386,6 +467,7 @@ EOF;
     }
 
     private function getRGraphBarChartData($reportData, $xName,$yName){
+        //Keeping the x and y for consistency, but they are the wrong way round for a bar chart (labels are y but should
         $chart['labels']=array();
         $chart['data']=array();
         foreach($reportData as $row){
