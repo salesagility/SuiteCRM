@@ -63,8 +63,14 @@
                 ParenthesisHandler.addParenthesisLineIdent();
             };
 
-            var showTreeDataLeafs = function(treeDataLeafs, module) {
-                $('#module-name').html('(' + module + ')');
+            var showTreeDataLeafs = function(treeDataLeafs, module, module_name, module_path_display) {
+                if (typeof module_name == 'undefined' || !module_name) {
+                    module_name = module;
+                }
+                if (typeof module_path_display == 'undefined' || !module_path_display) {
+                    module_path_display = module_name;
+                }
+                $('#module-name').html('(<span title="' + module_path_display + '">' + module_name + '</span>)');
                 $('#fieldTreeLeafs').remove();
                 $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>');
                 $('#fieldTreeLeafs').tree({
@@ -100,6 +106,9 @@
 
         function loadTreeLeafData(node){
             var module = node.module;
+            var module_name = node.name;
+            var module_path_display = node.module_path_display;
+
             if(!treeDataLeafs[module]) {
                 $.getJSON('index.php',
                         {
@@ -129,12 +138,12 @@
                             //node.loaded = true;
                             //$('#fieldTree').tree('openNode', node);
                             treeDataLeafs[module] = treeData;
-                            showTreeDataLeafs(treeDataLeafs[module], module);
+                            showTreeDataLeafs(treeDataLeafs[module], module, module_name, module_path_display);
                         }
                 );
             }
             else {
-                showTreeDataLeafs(treeDataLeafs[module], module);
+                showTreeDataLeafs(treeDataLeafs[module], module, module_name, module_path_display);
             }
         }
 
