@@ -65,7 +65,7 @@ class TemplateHandler {
      * Helper function to remove all .tpl files in the cache directory
      *
      */
-    function clearAll() {
+    static function clearAll() {
     	global $beanList;
 		foreach($beanList as $module_dir =>$object_name){
                 TemplateHandler::clearCache($module_dir);
