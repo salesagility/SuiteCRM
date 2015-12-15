@@ -1,0 +1,149 @@
+<!DOCTYPE html >
+<html>
+<head>
+
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.meter.js" ></script>
+    
+    <title>An image based Meter chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An image based Meter chart using a background image as well as a needle image" />
+</head>
+<body>
+    
+    <h1>An image based Meter chart with background and needle images</h1>
+
+
+    <p>
+        This Meter uses CSS width/height units on the canvas tag to scale the whole Meter down (the image is 640x640 but the
+        canvas is sized by CSS to 400x400).
+    </p>
+    <canvas id="cvs" width="640" height="640" style="width: 400px; height: 400px">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var meter = new RGraph.Meter({
+                id: 'cvs',
+                min: 0,
+                max: 9,
+                value: 8.5,
+                options: {
+                    centerx: 321,
+                    centery: 298,
+                    backgroundColor: 'rgba(0,0,0,0)',
+                    backgroundImageUrl: '/images/meter-image-sd.png',
+                    backgroundImageStretch: true,
+                    backgroundImageOffsetx: 0,
+                    backgroundImageOffsety: 0,
+                    scaleDecimals: 1,
+                    needleColor: 'rgba(0,0,0,0)',
+                    needleImageUrl: '/images/meter-image-sd-needle.png',
+                    needleImageOffsetx: -94,
+                    needleImageOffsety: -40,
+                    colorsRanges: [],
+                    tickmarksBigNum: 0,
+                    tickmarksSmallNum: 0,
+                    border: false,
+                    labels: false,
+                    textSize: 36,
+                    centerpinStroke: 'rgba(0,0,0,0)',
+                    centerpinFill: 'rgba(0,0,0,0)',
+                    anglesStart: 2.69,
+                    anglesEnd: 7.38
+                }
+            }).draw()
+            
+            //meter.canvas.onclick = function (e)
+            //{
+            //    var value = meter.getValue(e);
+            //
+            //    if (typeof value === 'number') {
+            //        meter.value = value;
+            //        meter.grow();
+            //    }
+            //}
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.meter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="640" height="640" style="width: 400px; height: 400px"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var meter = new RGraph.Meter({
+            id: 'cvs',
+            min: 0,
+            max: 9,
+            value: 8.5,
+            options: {
+                centerx: 321,
+                centery: 298,
+                backgroundColor: 'rgba(0,0,0,0)',
+                backgroundImageUrl: '/images/meter-image-sd.png',
+                backgroundImageStretch: true,
+                backgroundImageOffsetx: 0,
+                backgroundImageOffsety: 0,
+                scaleDecimals: 1,
+                needleColor: 'rgba(0,0,0,0)',
+                needleImageUrl: '/images/meter-image-sd-needle.png',
+                needleImageOffsetx: -94,
+                needleImageOffsety: -40,
+                colorsRanges: [],
+                tickmarksBigNum: 0,
+                tickmarksSmallNum: 0,
+                border: false,
+                labels: false,
+                textSize: 36,
+                centerpinStroke: 'rgba(0,0,0,0)',
+                centerpinFill: 'rgba(0,0,0,0)',
+                anglesStart: 2.69,
+                anglesEnd: 7.38
+            }
+        }).draw()
+        
+        <span>//meter.canvas.onclick = function (e)
+        //{
+        //    var value = meter.getValue(e);
+        //
+        //    if (typeof value === 'number') {
+        //        meter.value = value;
+        //        meter.grow();
+        //    }
+        //}</span>
+    };
+&lt;/script&gt;
+</pre>
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

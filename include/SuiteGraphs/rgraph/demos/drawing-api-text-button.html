@@ -1,0 +1,317 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    <script src="../libraries/RGraph.drawing.text.js" ></script>
+    
+    <title>A basic example of the drawing API text object being used as a button to switch between charts</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A basic example of the drawing API text object being used as a button to switch between charts" />
+     
+</head>
+<body>
+        
+    <h1>A basic example of the drawing API text object being used as a button to switch between charts</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var canvas = document.getElementById('cvs');
+            
+            /**
+            * Draw the Line chart when the page loads
+            */
+            drawLine();
+
+
+            /**
+            * Draw the line chart
+            */
+            function drawLine ()
+            {
+                RGraph.Reset(canvas);
+    
+                var line = new RGraph.Line({
+                    id: 'cvs',
+                    data: [4,8,6,3,5,2,6],
+                    options: {
+                        labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                        hmargin: 5,
+                        linewidth: 5
+                    }
+                }).draw()
+                
+                
+                drawButtons();
+            }
+
+
+
+
+            
+            
+            /**
+            * Draw the Bar chart
+            */
+            function drawBar ()
+            {
+                RGraph.reset(canvas);
+    
+                var bar = new RGraph.Bar({
+                    id: 'cvs',
+                    data: [4,8,6,3,5,2,6],
+                    options: {
+                        labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                        colors: ['Gradient(white:blue)']
+                    }
+                }).draw()
+                    
+                drawButtons();
+            }
+
+
+
+
+            /**
+            * Draw the buttons (using the drawing API text object).
+            */
+            function drawButtons ()
+            {
+                var text1 = new RGraph.Drawing.Text({
+                    id: 'cvs',
+                    x: 600 - 25 - 5,
+                    y: 25 + 5,
+                    text: 'Line chart',
+                    options: {
+                        font: 'Arial',
+                        size: 14,
+                        bounding: true,
+                        boundingFill: 'white',
+                        boundingShadow: true,
+                        boundingShadowColor: '#666',
+                        boundingShadowOffsetx: 1,
+                        boundingShadowOffsety: 1,
+                        halign: 'right',
+                        valign: 'top',
+                        colors: ['blue']
+                    }
+                }).on('click', function (e, shape)
+                {
+                    drawLine();
+                }).draw()
+
+
+
+
+                var text2 = new RGraph.Drawing.Text({
+                    id: 'cvs',
+                    x: 600 - 25 - 5 - 5 - text1.coords[0][2],
+                    y: 25 + 5,
+                    text: 'Bar chart',
+                    options: {
+                        font: 'Arial',
+                        size: 14,
+                        bounding: true,
+                        boundingFill: 'white',
+                        boundingShadow: true,
+                        boundingShadowColor: '#666',
+                        boundingShadowOffsetx: 1,
+                        boundingShadowOffsety: 1,
+                        halign: 'right',
+                        valign: 'top',
+                        colors: ['blue']
+                    }
+                }).on('click', function (e, shape)
+                {
+                    drawBar();
+                }).draw()
+
+
+
+
+                
+                text1.onmousemove =
+                text2.onmousemove = function (e, shape)
+                {
+                    e.target.style.cursor = 'pointer';
+                }
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.text.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var canvas = document.getElementById('cvs');
+        
+        <span>/**
+        * Draw the Line chart when the page loads
+        */</span>
+        drawLine();
+
+
+        <span>/**
+        * Draw the line chart
+        */</span>
+        function drawLine ()
+        {
+            RGraph.Reset(canvas);
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [4,8,6,3,5,2,6],
+                options: {
+                    labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                    hmargin: 5,
+                    linewidth: 5
+                }
+            }).draw()
+            
+            
+            drawButtons();
+        }
+
+
+
+
+        
+        
+        <span>/**
+        * Draw the Bar chart
+        */</span>
+        function drawBar ()
+        {
+            RGraph.reset(canvas);
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [4,8,6,3,5,2,6],
+                options: {
+                    labels: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
+                    colors: ['Gradient(white:blue)']
+                }
+            }).draw()
+                
+            drawButtons();
+        }
+
+
+
+
+        <span>/**
+        * Draw the buttons (using the drawing API text object).
+        */</span>
+        function drawButtons ()
+        {
+            var text1 = new RGraph.Drawing.Text({
+                id: 'cvs',
+                x: 600 - 25 - 5,
+                y: 25 + 5,
+                text: 'Line chart',
+                options: {
+                    font: 'Arial',
+                    size: 14,
+                    bounding: true,
+                    boundingFill: 'white',
+                    boundingShadow: true,
+                    boundingShadowColor: '#666',
+                    boundingShadowOffsetx: 1,
+                    boundingShadowOffsety: 1,
+                    halign: 'right',
+                    valign: 'top',
+                    colors: ['blue']
+                }
+            }).on('click', function (e, shape)
+            {
+                drawLine();
+            }).draw()
+
+
+
+
+            var text2 = new RGraph.Drawing.Text({
+                id: 'cvs',
+                x: 600 - 25 - 5 - 5 - text1.coords[0][2],
+                y: 25 + 5,
+                text: 'Bar chart',
+                options: {
+                    font: 'Arial',
+                    size: 14,
+                    bounding: true,
+                    boundingFill: 'white',
+                    boundingShadow: true,
+                    boundingShadowColor: '#666',
+                    boundingShadowOffsetx: 1,
+                    boundingShadowOffsety: 1,
+                    halign: 'right',
+                    valign: 'top',
+                    colors: ['blue']
+                }
+            }).on('click', function (e, shape)
+            {
+                drawBar();
+            }).draw()
+
+
+
+
+            
+            text1.onmousemove =
+            text2.onmousemove = function (e, shape)
+            {
+                e.target.style.cursor = 'pointer';
+            }
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

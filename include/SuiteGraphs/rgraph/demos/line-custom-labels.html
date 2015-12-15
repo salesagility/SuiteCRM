@@ -1,0 +1,162 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    <script src="../libraries/RGraph.drawing.yaxis.js" ></script>
+    
+    <title>A Line chart with customised axes</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Line chart with customised axes" />
+     
+</head>
+<body>
+
+    <h1>A Line chart with customised axes</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var labels = [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday'
+            ];
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [7,5,6,9,5,4,7],
+                options: {
+                    spline: true,
+                    labels: labels,
+                    tooltips: labels,
+                    gutterBottom: 35,
+                    hmargin: 35,
+                    tickmarks: 'endcircle',
+                    linewidth: 3,
+                    noaxes: true,
+                    ylabels: false,
+                    backgroundGridBorder: false,
+                    backgroundGridVlines: false,
+                    unitsPost: 'Kg',
+                    textColor: '#666'
+                }
+            }).trace2()
+            
+            var yaxis = new RGraph.Drawing.YAxis({
+                id: 'cvs',
+                x: 20,
+                options: {
+                    gutterTop: 15,
+                    gutterBottom: 45,
+                    max: 10,
+                    align: 'right',
+                    textColor: '#666',
+                    unitsPost: 'Kg',
+                    colors: ['rgba(0,0,0,0)']
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="../libraries/rgraph.common.core.js" &gt;&lt;/script&gt;
+&lt;script src="../libraries/rgraph.common.dynamic.js" &gt;&lt;/script&gt;
+&lt;script src="../libraries/rgraph.line.js" &gt;&lt;/script&gt;
+&lt;script src="../libraries/rgraph.drawing.yaxis.js" &gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var labels = [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
+        ];
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [7,5,6,9,5,4,7],
+            options: {
+                spline: true,
+                labels: labels,
+                tooltips: labels,
+                gutterBottom: 35,
+                hmargin: 35,
+                tickmarks: 'endcircle',
+                linewidth: 3,
+                noaxes: true,
+                ylabels: false,
+                backgroundGridBorder: false,
+                backgroundGridVlines: false,
+                unitsPost: 'Kg',
+                textColor: '#666'
+            }
+        }).trace2()
+        
+        var yaxis = new RGraph.Drawing.YAxis({
+            id: 'cvs',
+            x: 20,
+            options: {
+                gutterTop: 15,
+                gutterBottom: 45,
+                max: 10,
+                align: 'right',
+                textColor: '#666',
+                unitsPost: 'Kg',
+                colors: ['rgba(0,0,0,0)']
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

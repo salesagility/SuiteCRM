@@ -1,0 +1,193 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A dual color filled range Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A range Line chart which shows two colors - the threshold of which is settable" />
+     
+</head>
+<body>
+
+    <h1>A dual-color filled range Line chart</h1>
+    
+    <p>
+        An dual-color filled range Line chart - so below the threshold it can be one color - and above it can be another.
+        The threshold is controllable by you. The chart below uses randomised data so if you refresh the page it will be
+        slightly different. It uses the Trace() effect as the Trace2() effect uses the clip() function also and so conflicts
+        with the range clipping
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas><br />
+    Threshold: <input type="text" onkeyup="update(event)" value="40" id="val" />
+
+    <p>
+        <b>Update</b><br />
+        There's information <a href="http://www.rgraph.net/docs/howto-dynamic-line-chart.html">on this HOWTO page</a> about creating dual color line
+        charts using
+        gradients. It's <b>very</b> simple and can be done using either the
+        RGraph Gradient() shortcut or more directly with the canvas  linear gradient functionality.
+    </p>
+
+    <script>
+        function update ()
+        {
+            var obj = document.getElementById('cvs').__object__;
+
+            obj.set({
+                filledRangeThreshold: Number(document.getElementById('val').value)
+            });
+
+            RGraph.clear(obj.canvas);
+            obj.draw();
+        }
+
+
+        window.onload = function ()
+        {
+            var d1  = [], d2  = [], val = 47, numvlines = null;
+
+            for (var i=0; i<90; ++i) {
+                d1.push(RGraph.random(45,50) *  Math.sin(i / 57.29));
+                d2.push(RGraph.random(35,45) * Math.sin(i / 57.29));
+            }
+
+            for (var i=0; i<90; ++i) {
+                val = RGraph.random(-2,2) + val
+                val = Math.min(val, 50);
+
+                d1.push(val + 3);
+                d2.push(val - 3);
+            }
+
+
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [d1, d2],
+                options: {
+                    filled: true,
+                    filledRange: true,
+                    filledRangeThreshold: 40,
+                    filledRangeThresholdColors: ['rgba(255,0,0,0.5)', 'rgba(0,0,255,0.5)'],
+                    fillstyle: 'red',
+                    colors: ['rgba(0,0,0,1)'],
+                    backgroundGridAutofitNumvlines: numvlines = 7,
+                    numxticks: numvlines,
+                    linewidth: 0.0001,
+                    tickmarks: null,
+                    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun','Spare']
+                }
+            }).trace({frames: 30});
+            
+            //
+            // Set the value of the input
+            //
+            document.getElementById('val').value = line.get('filledRangeThreshold');
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+Threshold: &lt;input type="text" onkeyup="update(event)" value="40" id="val" /&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    function update ()
+    {
+        var obj = document.getElementById('cvs').__object__;
+
+        obj.set({
+            filledRangeThreshold: Number(document.getElementById('val').value)
+        });
+
+        RGraph.clear(obj.canvas);
+        obj.draw();
+    }
+
+
+    window.onload = function ()
+    {
+        var d1  = [], d2  = [], val = 47, numvlines = null;
+
+        for (var i=0; i&lt;90; ++i) {
+            d1.push(RGraph.random(45,50) *  Math.sin(i / 57.29));
+            d2.push(RGraph.random(35,45) * Math.sin(i / 57.29));
+        }
+
+        for (var i=0; i&lt;90; ++i) {
+            val = RGraph.random(-2,2) + val
+            val = Math.min(val, 50);
+
+            d1.push(val + 3);
+            d2.push(val - 3);
+        }
+
+
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [d1, d2],
+            options: {
+                filled: true,
+                filledRange: true,
+                filledRangeThreshold: 40,
+                filledRangeThresholdColors: ['rgba(255,0,0,0.5)', 'rgba(0,0,255,0.5)'],
+                fillstyle: 'red',
+                colors: ['rgba(0,0,0,1)'],
+                backgroundGridAutofitNumvlines: numvlines = 7,
+                numxticks: numvlines,
+                linewidth: 0.0001,
+                tickmarks: null,
+                labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun','Spare']
+            }
+        }).trace({frames: 30});
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

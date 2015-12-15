@@ -1,0 +1,140 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A stacked Bar chart showing income/expenditure</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A stacked Bar chart showing income/expenditure" />
+    
+
+</head>
+<body>
+
+    <h1>A stacked Bar chart showing income/expenditure</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var data1 = [[2,5,9],[4,2,6],[6,5,8]];
+            var data2 = [-4,-5,-20];
+            
+            // Top bar chart
+            var bar1 = new RGraph.Bar({
+                id: 'cvs',
+                data: data1,
+                options: {
+                    shadow: false,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    noaxes: true,
+                    ylabels: false,
+                    colors: ['blue','pink','aqua'],
+                    hmargin: 25,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    backgroundGrid: false,
+                    gutterBottom: 125,
+                    grouping: 'stacked',
+                    ymax: 20
+                }
+            }).wave()
+
+            // Bottom bar chart
+            var bar2 = new RGraph.Bar({
+                id: 'cvs',
+                data: data2,
+                options: {
+                    shadow: false,
+                    colors: ['red'],
+                    hmargin: 25,
+                    xaxispos: 'center',
+                    backgroundGrid: false,
+                    ymax: 20
+                }
+            }).wave()
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data1 = [[2,5,9],[4,2,6],[6,5,8]];
+        var data2 = [-4,-5,-20];
+        
+        <span>// Top bar chart</span>
+        var bar1 = new RGraph.Bar({
+            id: 'cvs',
+            data: data1,
+            options: {
+                shadow: false,
+                strokestyle: 'rgba(0,0,0,0)',
+                noaxes: true,
+                ylabels: false,
+                colors: ['blue','pink','aqua'],
+                hmargin: 25,
+                strokestyle: 'rgba(0,0,0,0)',
+                backgroundGrid: false,
+                gutterBottom: 125,
+                grouping: 'stacked',
+                ymax: 20
+            }
+        }).wave()
+
+        <span>// Bottom bar chart</span>
+        var bar2 = new RGraph.Bar({
+            id: 'cvs',
+            data: data2,
+            options: {
+                shadow: false,
+                colors: ['red'],
+                hmargin: 25,
+                xaxispos: 'center',
+                backgroundGrid: false,
+                ymax: 20
+            }
+        }).wave()
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

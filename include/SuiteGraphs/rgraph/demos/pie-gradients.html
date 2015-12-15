@@ -1,0 +1,148 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+    
+    <title>A Pie chart using gradients as colors</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Pie chart that uses Gradients as colours" />
+     
+</head>
+<body>
+
+    <h1>A Pie chart using gradients as colors</h1>
+
+    <p>
+        Using gradients to achieve a bevel effect
+    </p>
+
+    <canvas id="cvs" width="400" height="300">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            function createGradient (obj, color)
+            {
+                return RGraph.radialGradient(
+                    obj,
+                    200, 150, 95, 200, 150, 125,
+                    color, 'black'
+                )
+            }
+
+            /**
+            * Because the pie object is going to be used in one of the options it must
+            * be first created - and then we must use the set call to set the properties
+            */
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [4,3,2,6,8],
+            })
+            
+            pie.set({
+                colors: [
+                    createGradient(pie, '#ABD874'),
+                    createGradient(pie, '#E18D87'),
+                    createGradient(pie, '#599FD9'),
+                    createGradient(pie, '#F4AD7C'),
+                    createGradient(pie, '#D5BBE5')
+                ],
+                shadowOffsetx: 5,
+                shadowOffsety: 5,
+                shadowBlur: 15,
+                shadowColor: '#bbb',
+                tooltips: ['Robert','Louise','Peter','Kevin','Jack'],
+                labels: ['Robert','Louise','Peter','Kevin','Jack'],
+                labelsSticks: true,
+                labelsSticksLength: 15,
+                radius: 100,
+                strokestyle: 'rgba(0,0,0,0)'
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="400" height="300"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        function createGradient (obj, color)
+        {
+            return RGraph.radialGradient(
+                obj,
+                200, 150, 95, 200, 150, 125,
+                color, 'black'
+            )
+        }
+
+        <span>/**
+        * Because the pie object is going to be used in one of the options it must
+        * be first created - and then we must use the set call to set the properties
+        */</span>
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [4,3,2,6,8],
+        })
+        
+        pie.set({
+            colors: [
+                createGradient(pie, '#ABD874'),
+                createGradient(pie, '#E18D87'),
+                createGradient(pie, '#599FD9'),
+                createGradient(pie, '#F4AD7C'),
+                createGradient(pie, '#D5BBE5')
+            ],
+            shadowOffsetx: 5,
+            shadowOffsety: 5,
+            shadowBlur: 15,
+            shadowColor: '#bbb',
+            tooltips: ['Robert','Louise','Peter','Kevin','Jack'],
+            labels: ['Robert','Louise','Peter','Kevin','Jack'],
+            labelsSticks: true,
+            labelsSticksLength: 15,
+            radius: 100,
+            strokestyle: 'rgba(0,0,0,0)'
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

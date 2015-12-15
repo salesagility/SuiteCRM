@@ -1,0 +1,193 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A range chart with a median value</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A range chart with a median value" />
+     
+</head>
+<body>
+
+    <h1>A range chart with a median value</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+
+    <script>
+        window.onload = function ()
+        {
+            var data = [10],
+                range_upper = [],
+                range_lower = [];
+
+            //
+            // Create some data
+            //
+            for (var i=1,last=10; i<240; i+=1) {
+                
+                var num = Number(last) + RGraph.random(-2,2);
+                num = Math.max(num, 0);
+                num = Math.min(num, 20);
+
+                last = num;
+                data.push(num);
+
+                range_lower[i] = data[i] - 5;
+                range_lower[i] = Math.max(range_lower[i], 0);
+                range_upper[i] = data[i] + 5;
+            }
+
+
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    range_upper,
+                    range_lower
+                ],
+                options: {
+                    filled: true,
+                    filledRange: true,
+                    fillstyle: 'rgba(0,132,0,0.25)',
+                    colors: ['rgba(0,0,0,0)'],
+                    backgroundGridAutofitNumvlines: 11,
+                    tickmarks: null,
+                    gutterBottom: 50,
+                    numxticks: 11,
+                    noxaxis: true
+                }
+            }).draw();
+
+
+
+            var line2 = new RGraph.Line({
+                id: 'cvs',
+                data: data,
+                options: {
+                    colors: ['#00830B'],
+                    backgroundGrid: false,
+                    noaxes: true,
+                    ylabels: false,
+                    gutterBottom: 50,
+                    tickmarks: null,
+                    ymax: line.max,
+                    shadow: false,
+                    linewidth: 2,
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [10],
+            range_upper = [],
+            range_lower = [];
+
+        <span>//
+        // Create some data
+        //</span>
+        for (var i=1,last=10; i&lt;240; i+=1) {
+            
+            var num = Number(last) + RGraph.random(-2,2);
+            num = Math.max(num, 0);
+            num = Math.min(num, 20);
+
+            last = num;
+            data.push(num);
+
+            range_lower[i] = data[i] - 5;
+            range_lower[i] = Math.max(range_lower[i], 0);
+            range_upper[i] = data[i] + 5;
+        }
+
+
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                range_upper,
+                range_lower
+            ],
+            options: {
+                filled: true,
+                filledRange: true,
+                fillstyle: 'rgba(0,132,0,0.25)',
+                colors: ['rgba(0,0,0,0)'],
+                backgroundGridAutofitNumvlines: 11,
+                tickmarks: null,
+                gutterBottom: 50,
+                numxticks: 11,
+                noxaxis: true
+            }
+        }).draw();
+
+
+
+        var line2 = new RGraph.Line({
+            id: 'cvs',
+            data: data,
+            options: {
+                colors: ['#00830B'],
+                backgroundGrid: false,
+                noaxes: true,
+                ylabels: false,
+                gutterBottom: 50,
+                tickmarks: null,
+                ymax: line.max,
+                shadow: false,
+                linewidth: 2,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

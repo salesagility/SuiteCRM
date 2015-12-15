@@ -317,5 +317,148 @@ class campaign_charts {
 
 		return $return;
 	}
+
+	//THis is a copy of the campaign_response_roi for rgraph so that the data is separate from the chart / presentation
+	//this will need refactored later rather than a cut n paste job like this
+	//perhaps add another boolean to the parameter list to return just the data or the chart
+	function campaign_response_roi_data($datay= array(),$targets=array(),$campaign_id, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
+		global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
+
+		$not_empty = false;
+
+		if ($is_dashlet){
+			$mod_strings = return_module_language($current_language, 'Campaigns');
+		}
+
+		if (!file_exists($cache_file_name) || $refresh == true) {
+			$GLOBALS['log']->debug("datay is:");
+			$GLOBALS['log']->debug($datay);
+			$GLOBALS['log']->debug("user_id is: ");
+			$GLOBALS['log']->debug("cache_file_name is: $cache_file_name");
+
+			$focus = new Campaign();
+			$focus->retrieve($campaign_id);
+			$opp_count=0;
+			$opp_query  = "select count(*) opp_count,sum(" . db_convert("amount_usdollar","IFNULL",array(0)).")  total_value";
+			$opp_query .= " from opportunities";
+			$opp_query .= " where campaign_id='$campaign_id'";
+			$opp_query .= " and sales_stage='Prospecting'";
+			$opp_query .= " and deleted=0";
+
+			$opp_result=$focus->db->query($opp_query);
+			$opp_data=$focus->db->fetchByAssoc($opp_result);
+//            if (empty($opp_data['opp_count'])) $opp_data['opp_count']=0;
+			if (empty($opp_data['total_value'])) $opp_data['total_value']=0;
+
+			//report query
+			$opp_query1  = "select SUM(opp.amount) as revenue";
+			$opp_query1 .= " from opportunities opp";
+			$opp_query1 .= " right join campaigns camp on camp.id = opp.campaign_id";
+			$opp_query1 .= " where opp.sales_stage = 'Closed Won'and camp.id='$campaign_id' and opp.deleted=0";
+			$opp_query1 .= " group by camp.name";
+
+			$opp_result1=$focus->db->query($opp_query1);
+			$opp_data1=$focus->db->fetchByAssoc($opp_result1);
+
+			//if (empty($opp_data1[]))
+			if (empty($opp_data1['revenue'])){
+				$opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']] = 0;
+				unset($opp_data1['revenue']);
+			}else{
+				$opp_data1[$mod_strings['LBL_ROI_CHART_REVENUE']] = $opp_data1['revenue'];
+				unset($opp_data1['revenue']);
+				$not_empty = true;
+			}
+
+			$camp_query1  = "select camp.name, SUM(camp.actual_cost) as investment,SUM(camp.budget) as budget,SUM(camp.expected_revenue) as expected_revenue";
+			$camp_query1 .= " from campaigns camp";
+			$camp_query1 .= " where camp.id='$campaign_id'";
+			$camp_query1 .= " group by camp.name";
+
+			$camp_result1=$focus->db->query($camp_query1);
+			$camp_data1=$focus->db->fetchByAssoc($camp_result1);
+			//query needs to be lowercase, but array keys need to be propercased, as these are used in
+			//chart to display legend
+
+			if (empty($camp_data1['investment']))
+				$camp_data1['investment'] = 0;
+			else
+				$not_empty = true;
+			if (empty($camp_data1['budget']))
+				$camp_data1['budget'] = 0;
+			else
+				$not_empty = true;
+			if (empty($camp_data1['expected_revenue']))
+				$camp_data1['expected_revenue'] = 0;
+			else
+				$not_empty = true;
+
+			$opp_data1[$mod_strings['LBL_ROI_CHART_INVESTMENT']]=$camp_data1['investment'];
+			$opp_data1[$mod_strings['LBL_ROI_CHART_BUDGET']]=$camp_data1['budget'];
+			$opp_data1[$mod_strings['LBL_ROI_CHART_EXPECTED_REVENUE']]=$camp_data1['expected_revenue'];
+
+
+			$query = "SELECT activity_type,target_type, count(*) hits ";
+			$query.= " FROM campaign_log ";
+			$query.= " WHERE campaign_id = '$campaign_id' AND archived=0 AND deleted=0";
+			//if $marketing id is specified, then lets filter the chart by the value
+			if (!empty($marketing_id)){
+				$query.= " AND marketing_id ='$marketing_id'";
+			}
+			$query.= " GROUP BY  activity_type, target_type";
+			$query.= " ORDER BY  activity_type, target_type";
+			$result = $focus->db->query($query);
+
+			$leadSourceArr = array();
+			$total=0;
+			$total_targeted=0;
+
+		}
+
+		global $current_user;
+		$user_id = $current_user->id;
+
+
+		$width = '100%';
+
+		$return = '';
+		if (!$is_dashlet){
+			$return .= '<br />';
+		}
+
+
+		$currency_id = $focus->currency_id;
+		$currency_symbol = $sugar_config['default_currency_symbol'];
+		if(!empty($currency_id)){
+
+			$cur = new Currency();
+			$cur->retrieve($currency_id);
+			$currency_symbol = $cur->symbol;
+		}
+
+
+		$sugarChart = SugarChartFactory::getInstance();
+		$sugarChart->is_currency = true;
+		$sugarChart->currency_symbol = $currency_symbol;
+
+		if ($not_empty)
+			$sugarChart->setData($opp_data1);
+		else
+			$sugarChart->setData(array());
+		$sugarChart->setProperties($mod_strings['LBL_CAMPAIGN_RETURN_ON_INVESTMENT'], $mod_strings['LBL_AMOUNT_IN'].$currency_symbol, 'bar chart');
+
+		if (!$is_dashlet){
+			$xmlFile = $sugarChart->getXMLFileName('roi_details_chart');
+			$sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
+			$return .= $sugarChart->display('roi_details_chart', $xmlFile, $width, '480');
+		}
+		else{
+			$xmlFile = $sugarChart->getXMLFileName($dashlet_id);
+			$sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
+			$return .= $sugarChart->display($dashlet_id, $xmlFile, $width, '480');
+		}
+
+		return $return;
+	}
 }// end charts class
 ?>

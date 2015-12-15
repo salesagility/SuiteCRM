@@ -1,0 +1,199 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+    <link rel="stylesheet" href="../css/animate.css" type="text/css" media="screen" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <title>A combined Bar and Pie chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A combined Bar and Pie chart that uses gradients. " />
+    
+</head>
+<body>
+
+    <h1>A combined Bar and Pie chart</h1>
+    
+    <p>
+        This is the chart that was used on the front page (as of 13th December 2013)    
+    </p>
+
+
+    <canvas id="cvs" width="450" height="200">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [[50,60,52],[65,30,50],[40,80,70],[115,100,92]],
+                options: {
+                    gutterTop: 15,
+                    gutterLeft: 35,
+                    gutterRight: 15,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    colors: ['Gradient(white:#f11:#f11)', 'Gradient(white:#1cc:#1cc)', 'Gradient(white:#00f:#00f)'],
+                    tooltips: [
+                       'Bob on Monday: 50 sales', 'Bob on Tuesday: 60 sales', 'Bob on Wednesday: 112 sales',
+                       'Jamie on Monday: 65 sales', 'Jamie on Tuesday: 30 sales', 'Jamie on Wednesday: 50 sales',
+                       'Cynthia on Monday: 40 sales', 'Cynthia on Tuesday: 80 sales', 'Cynthia on Wednesday: 70 sales',
+                       'Peter on Monday: 115 sales', 'Peter on Tuesday: 100 sales', 'Peter on Wednesday: 92 sales'
+                    ],
+                    highlightStroke: 'rgba(0,0,0,0.1)',
+                    strokestyle: 'rgba(0,0,0,0)',
+                    shadowOffsetx: -2,
+                    shadowOffsety: -2,
+                    shadowBlur: 15,
+                    ymax: 150,
+                    noyaxis: true,
+                    ylabels: false,
+                    labels: ['Bob', 'Jamie', 'Cynthia', 'Peter'],
+                    labelsAbove: true,
+                    linewidth: 2,
+                    hmargin: 15
+                }
+            }).draw()
+
+
+
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: [270,270,164],
+                options: {
+                    exploded: [7,2,],
+                    labels: ['Mondays sales'],
+                    labelsSticks: [true],
+                    labelsSticksColor: 'black',
+                    centerx: 60,
+                    centery: 45,
+                    radius: 30,
+                    shadowBlur: 5,
+                    shadowOffsetx: 2,
+                    shadowOffsety: 2,
+                    shadowColor: '#aaa',
+                    colors: ['Gradient(white:#c11:#c11:#c11)', 'Gradient(white:#1cc:#1cc:#1cc)', 'Gradient(white:#11c:#11c:#11c)'],
+                    tooltips: ['Total Monday sales: 270', 'Total Tuesday sales: 270', 'Total Wednesday sales: 264'],
+                    tooltipsEvent: 'mousemove',
+                    strokestyle: 'rgba(0,0,0,0)'
+                }
+            }).draw()
+
+
+
+            $('#cvs').addClass('animated expand');
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+
+&lt;link rel="stylesheet" href="../css/animate.css" type="text/css" media="screen" /&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: [[50,60,52],[65,30,50],[40,80,70],[115,100,92]],
+            options: {
+                gutterTop: 15,
+                gutterLeft: 35,
+                gutterRight: 15,
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                colors: ['Gradient(white:#f11:#f11)', 'Gradient(white:#1cc:#1cc)', 'Gradient(white:#00f:#00f)'],
+                tooltips: [
+                   'Bob on Monday: 50 sales', 'Bob on Tuesday: 60 sales', 'Bob on Wednesday: 112 sales',
+                   'Jamie on Monday: 65 sales', 'Jamie on Tuesday: 30 sales', 'Jamie on Wednesday: 50 sales',
+                   'Cynthia on Monday: 40 sales', 'Cynthia on Tuesday: 80 sales', 'Cynthia on Wednesday: 70 sales',
+                   'Peter on Monday: 115 sales', 'Peter on Tuesday: 100 sales', 'Peter on Wednesday: 92 sales'
+                ],
+                highlightStroke: 'rgba(0,0,0,0.1)',
+                strokestyle: 'rgba(0,0,0,0)',
+                shadowOffsetx: -2,
+                shadowOffsety: -2,
+                shadowBlur: 15,
+                ymax: 150,
+                noyaxis: true,
+                ylabels: false,
+                labels: ['Bob', 'Jamie', 'Cynthia', 'Peter'],
+                labelsAbove: true,
+                linewidth: 2,
+                hmargin: 15
+            }
+        }).draw();
+
+
+
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: [270,270,164],
+            options: {
+                exploded: [7,2,],
+                labels: ['Mondays sales'],
+                labelsSticks: [true],
+                labelsSticksColor: 'black',
+                centerx: 60,
+                centery: 45,
+                radius: 30,
+                shadowBlur: 5,
+                shadowOffsetx: 2,
+                shadowOffsety: 2,
+                shadowColor: '#aaa',
+                colors: ['Gradient(white:#c11:#c11:#c11)', 'Gradient(white:#1cc:#1cc:#1cc)', 'Gradient(white:#11c:#11c:#11c)'],
+                tooltips: ['Total Monday sales: 270', 'Total Tuesday sales: 270', 'Total Wednesday sales: 264'],
+                tooltipsEvent: 'mousemove',
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw()
+
+
+
+        $('#cvs').addClass('animated expand');
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

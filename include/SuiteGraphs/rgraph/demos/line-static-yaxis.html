@@ -1,0 +1,139 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.drawing.yaxis.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A Line chart with a static Y axis</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Line chart with a Y axis that doesn't move" />
+     
+</head>
+<body>
+
+    <h1>A Line chart with a static Y axis</h1>
+    
+    <p>
+        A chart where the left Y axis is static and doesn't move when you scroll from left to right. Firefox doesn't support the
+        required property on the event object so the tooltips are out of place in this browser. The scrolling effect works however.
+    </p>
+    
+    <script>
+        window.onload = function ()
+        {
+            // This is the code that produces the chart
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [4,6,8,5,9,6,4,8,4,6,15,2],
+                options: {
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    tooltipsCoordsPage: true,
+                    noxaxis: true,
+                    noyaxis: true,
+                    ylabels: false,
+                    hmargin: 25,
+                    tickmarks: 'endcircle',
+                    gutterLeft: 0
+                }
+            }).draw();
+
+            var yaxis = new RGraph.Drawing.YAxis({
+                id: 'axes',
+                x: 40,
+                options: {
+                    max: line.max,
+                    colors: ['black'],
+                    title: 'A static Y axis'
+                }
+            }).draw();
+        };
+    </script>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+
+    <div style="position: relative; width: 600px; height: 220px">
+        <canvas id="axes" width="41" height="200" style="position: absolute; top: 5px; left: 0; z-index: 3"></canvas>
+        <div style="width: 600px; overflow: auto; position: absolute; left: 41px">
+            <canvas id="cvs" width="1000" height="200"></canvas>
+        </div>
+    </div>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.yaxis.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;div style="position: relative; width: 600px; height: 220px"&gt;
+    &lt;canvas id="axes" width="41" height="200" style="position: absolute; top: 5px; left: 0; z-index: 3"&gt;&lt;/canvas&gt;
+    &lt;div style="width: 600px; overflow: auto; position: absolute; left: 41px"&gt;
+        &lt;canvas id="cvs" width="1000" height="200"&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>// This is the code that produces the chart</span>
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [4,6,8,5,9,6,4,8,4,6,15,2],
+            options: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                tooltipsCoordsPage: true,
+                noxaxis: true,
+                noyaxis: true,
+                ylabels: false,
+                hmargin: 25,
+                tickmarks: 'endcircle',
+                gutterLeft: 0
+            }
+        }).draw();
+
+        var yaxis = new RGraph.Drawing.YAxis({
+            id: 'axes',
+            x: 40,
+            options: {
+                max: line.max,
+                colors: ['black'],
+                title: 'A static Y axis'
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

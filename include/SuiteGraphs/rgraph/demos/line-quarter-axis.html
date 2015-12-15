@@ -1,0 +1,233 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.drawing.yaxis.js" ></script>
+    <script src="../libraries/RGraph.drawing.xaxis.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A quarter axis Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A demonstration of how you can combine the Line chart and drawing axis objects to produce a chart with an offset X axis" />
+     
+</head>
+<body>
+
+    <h1>A quarter axis Line chart</h1>
+    
+    <p>
+        A Line chart (or Bar or Scatter) which has the X aaxis part way up the scale (instead of the center) is not supported by
+        default. But by using the X/Y axis drawing API objects you can achieve the same effect. The method is quite involved however
+        and not straightforward. It involves two Y axis objects - the upper and the lower axes, an X axis object and a Line chart
+        with chart.outofbounds set to true (and the background grid and axes disabled). The background grid here is manually drawn
+    </p>
+    
+    <p>
+        You may also be interested in <a href="line-quarter-axis-dual-color.html">the dual color variation</a> of this style of chart.
+    </p>
+
+    <canvas id="cvs" width="600" height="350">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var data = [19,13,5,-4,-6,-1,3];
+            var context = document.getElementById("cvs").getContext('2d');
+            
+            // Draw the background grid manually
+            context.strokeStyle = '#eee';
+            for (var i=25; i<=575; i+=25) context.strokeRect(i + 0.5, 25, 0, 300);
+            for (var i=25; i<=325; i+=25) context.strokeRect(25, i + 0.5, 550, 0);
+
+
+
+            // Draw the top Y axis
+            var top_yaxis = new RGraph.Drawing.YAxis({
+                id: 'cvs',
+                x: 25,
+                options: {
+                    max: 20,
+                    numticks: 4,
+                    numlabels: 4,
+                    gutterTop: 25,
+                    gutterBottom: 125,
+                    scaleZerostart: true
+                }
+            }).draw()
+
+            // Draw the bottom Y axis
+            var bottom_yaxis = new RGraph.Drawing.YAxis({
+                id: 'cvs',
+                x: 25,
+                options: {
+                    max: 10,
+                    gutterTop: 225,
+                    gutterBottom: 25,
+                    numlabels: 2,
+                    numticks: 2,
+                    noendtickTop: true,
+                    scaleZerostart: false,
+                    scaleInvert: true,
+                    unitsPre: '-'
+                }
+            }).draw()
+            
+            // Draw the X axis
+            var xaxis = new RGraph.Drawing.XAxis({
+                id: 'cvs',
+                y: 225,
+                options: {
+                    xaxispos: 'center',
+                    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                    labelsPosition: 'edge',
+                    numticks: 0,
+                    hmargin: 25,
+                    textColor: '#666'
+                }
+            }).draw()
+
+
+            
+            // Draw the line chart
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: data,
+                options: {
+                    hmargin: 25,
+                    gutterBottom: 125,
+                    outofbounds: true,
+                    linewidth: 2,
+                    ylabels: false,
+                    noaxes: true,
+                    backgroundGrid: false,
+                    colors: ['gray'],
+                    ymax: 20
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.xaxis.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.yaxis.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [19,13,5,-4,-6,-1,3];
+        var context = document.getElementById("cvs").getContext('2d');
+        
+        // Draw the background grid manually
+        context.strokeStyle = '#eee';
+        for (var i=25; i&lt;=575; i+=25) context.strokeRect(i + 0.5, 25, 0, 300);
+        for (var i=25; i&lt;=325; i+=25) context.strokeRect(25, i + 0.5, 550, 0);
+
+
+
+        // Draw the top Y axis
+        var top_yaxis = new RGraph.Drawing.YAxis({
+            id: 'cvs',
+            x: 25,
+            options: {
+                max: 20,
+                numticks: 4,
+                numlabels: 4,
+                gutterTop: 25,
+                gutterBottom: 125,
+                scaleZerostart: true
+            }
+        }).draw()
+
+        // Draw the bottom Y axis
+        var bottom_yaxis = new RGraph.Drawing.YAxis({
+            id: 'cvs',
+            x: 25,
+            options: {
+                max: 10,
+                gutterTop: 225,
+                gutterBottom: 25,
+                numlabels: 2,
+                numticks: 2,
+                noendtickTop: true,
+                scaleZerostart: false,
+                scaleInvert: true,
+                unitsPre: '-'
+            }
+        }).draw()
+        
+        // Draw the X axis
+        var xaxis = new RGraph.Drawing.XAxis({
+            id: 'cvs',
+            y: 225,
+            options: {
+                xaxispos: 'center',
+                labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                labelsPosition: 'edge',
+                numticks: 0,
+                hmargin: 25,
+                textColor: '#666'
+            }
+        }).draw()
+
+
+        
+        // Draw the line chart
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: data,
+            options: {
+                hmargin: 25,
+                gutterBottom: 125,
+                outofbounds: true,
+                linewidth: 2,
+                ylabels: false,
+                noaxes: true,
+                backgroundGrid: false,
+                colors: ['gray'],
+                ymax: 20
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

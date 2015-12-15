@@ -1,0 +1,125 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>The green and red Line chart from the front page (at one time)</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="The front page line chart (at one time)" />
+     
+</head>
+<body>
+
+    <h1>The green and red Line chart from the front page (at one time)</h1>
+
+    <canvas id="cvs" width="600" height="250" style="background-color: black">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [213, 212, 208, 209, 207, 205, 204, 206, 205, 202, 203, 202, 201, 204, 205, 203, 142, 156, 152, 164, 165, 135, 198, 185, 201, 195, 197, 194, 135, 132, 153, 156, 167, 174, 193, 195, 192, 191, 190, 185, 188, 189, 187, 187, 180, 184, 186, 185, 215, 218, 220, 171, 178, 182, 181, 175, 181, 179, 178, 179, 178, 179, 175, 178, 177, 176, 174, 173, 175, 177, 174, 173, 175, 174, 172, 171, 170, 169, 168, 169, 167, 165, 164, 162, 160, 158, 155, 156, 157, 155, 159, 187, 184, 185, 186, 183, 182, 184, 185, 187],
+                    [120, 123, 121, 120, 125, 122, 121, 120, 118, 116, 113, 114, 111, 108, 106, 118, 124, 123, 120, 134, 135, 115, 116, 125, 132, 153, 148, 151, 165, 164, 166, 171, 178, 175, 176, 179, 181, 183, 183, 185, 188, 189, 210, 213, 220, 184, 186, 145, 156, 149, 132, 135, 132, 133, 128, 129, 126, 123, 122, 115, 101, 213, 256, 255, 248, 245, 240, 238, 233, 212, 245, 255, 251, 233, 251, 212, 156, 157, 184, 189, 194, 194, 192, 201, 200, 203, 214, 228, 264, 233, 264, 254, 258, 251, 235, 239, 233, 212, 244, 241]
+                ],
+                options: {
+                    tickmarks: '',
+                    shadow: false,
+                    filled: true,
+                    fillstyle: ['Gradient(rgba(255,0,0,0.3):rgba(255,0,0,0.8))', 'Gradient(rgba(0,0,0,0.75):rgba(0,230,0,0.8))'],
+                    noaxes: true,
+                    backgroundColor: 'black',
+                    backgroundGridColor: '#333',
+                    textColor: 'white',
+                    labels: [
+                        '', 'Q1', '',
+                        '', 'Q2', '',
+                        '', 'Q3', '',
+                        '', 'Q4', ''
+                    ],
+                    gutterLeft: 35,
+                    gutterRight: 15,
+                    gutterTop: 15
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250" style="background-color: black"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [213, 212, 208, 209, 207, 205, 204, 206, 205, 202, 203, 202, 201, 204, 205, 203, 142, 156, 152, 164, 165, 135, 198, 185, 201, 195, 197, 194, 135, 132, 153, 156, 167, 174, 193, 195, 192, 191, 190, 185, 188, 189, 187, 187, 180, 184, 186, 185, 215, 218, 220, 171, 178, 182, 181, 175, 181, 179, 178, 179, 178, 179, 175, 178, 177, 176, 174, 173, 175, 177, 174, 173, 175, 174, 172, 171, 170, 169, 168, 169, 167, 165, 164, 162, 160, 158, 155, 156, 157, 155, 159, 187, 184, 185, 186, 183, 182, 184, 185, 187],
+                [120, 123, 121, 120, 125, 122, 121, 120, 118, 116, 113, 114, 111, 108, 106, 118, 124, 123, 120, 134, 135, 115, 116, 125, 132, 153, 148, 151, 165, 164, 166, 171, 178, 175, 176, 179, 181, 183, 183, 185, 188, 189, 210, 213, 220, 184, 186, 145, 156, 149, 132, 135, 132, 133, 128, 129, 126, 123, 122, 115, 101, 213, 256, 255, 248, 245, 240, 238, 233, 212, 245, 255, 251, 233, 251, 212, 156, 157, 184, 189, 194, 194, 192, 201, 200, 203, 214, 228, 264, 233, 264, 254, 258, 251, 235, 239, 233, 212, 244, 241]
+            ],
+            options: {
+                tickmarks: '',
+                shadow: false,
+                filled: true,
+                fillstyle: ['Gradient(rgba(255,0,0,0.3):rgba(255,0,0,0.8))', 'Gradient(rgba(0,0,0,0.75):rgba(0,230,0,0.8))'],
+                noaxes: true,
+                backgroundColor: 'black',
+                backgroundGridColor: '#333',
+                textColor: 'white',
+                labels: [
+                    '', 'Q1', '',
+                    '', 'Q2', '',
+                    '', 'Q3', '',
+                    '', 'Q4', ''
+                ],
+                gutterLeft: 35,
+                gutterRight: 15,
+                gutterTop: 15
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

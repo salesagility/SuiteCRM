@@ -1,0 +1,371 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A dual-color scrolling Line</title>
+
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A scrolling dual color Line chart" />
+</head>
+<body>
+
+    <h1>A dual-color scrolling Line</h1>
+    
+    <p>
+        This demo has been adapted from the updating line chart in the docs.
+    </p>
+
+   <canvas id="cvs" width="600" height="250">[No canvas support]</canvas><br />
+
+    <p>
+        <b>Update</b><br />
+        There's information <a href="http://www.rgraph.net/docs/howto-dynamic-line-chart.html">on this HOWTO page</a> about creating dual color line
+        charts using
+        gradients. It's <b>very</b> simple and can be done using either the
+        RGraph Gradient() shortcut or more directly with the canvas  linear gradient functionality.
+    </p>
+
+    <script>
+        window.onload = function ()
+        {
+            d1  = [];
+            l   = 0; // The letter 'L' - NOT a one
+        
+            // Pre-pad the arrays with null values
+            for (var i=0; i<600; ++i) {
+                d1.push(null);
+            }
+            
+            var obj = null;
+
+
+
+
+            function getGraph(id, d1)
+            {
+                // After creating the chart, store it in a global variable
+                if (!obj) {
+
+                    obj = new RGraph.Line({
+                        id: id,
+                        data: d1,
+                        options: {
+                            xticks: 100,
+                            backgroundGrid: false,
+                            backgroundBarcolor1: 'white',
+                            backgroundBarcolor2: 'white',
+                            title: 'Bandwidth used',
+                            titleXaxis: 'Time >>>',
+                            titleXaxisPos: 0.5,
+                            titleYaxis: 'Bandwidth (MB/s)',
+                            titleYaxisPos: 0.5,
+                            titleVpos: 0.5,
+                            colors: ['black'],
+                            linewidth: 0.75,
+                            yaxispos: 'right',
+                            ymax: 50,
+                            xticks: 25,
+                            filled: true,
+                            gutterTop: 25,
+                            gutterBottom: 25,
+                            tickmarks: [null,null],
+                            shadow: false,
+                            colors: ['rgba(0,0,0,0.2)']
+                        }
+                    })
+
+
+
+                    var grad = obj.context.createLinearGradient(0,0,0,250);
+                    grad.addColorStop(0, '#efefef');
+                    grad.addColorStop(0.9, 'rgba(0,0,0,0)');
+
+                    obj.set('fillstyle', [grad]);
+                }
+
+                return obj;
+            }
+
+
+
+            /**
+            * This gets called repeatedly to update the chart
+            */
+            function drawGraph ()
+            {
+                // "cache" this in a local variable
+                var RG = RGraph;
+
+
+                RG.clear(document.getElementById("cvs"));
+                
+                var graph = getGraph('cvs', d1);
+                graph.Draw();
+
+
+
+
+
+                // The color boundary
+                var boundary = (200 * ((graph.scale2.max - 20) / graph.scale2.max)) + 25;
+
+
+                /**
+                * Clip the canvas and draw the upper half
+                */
+                graph.context.save();
+                    graph.context.beginPath();                
+                    graph.context.rect(0,0,600, boundary);
+                    graph.context.clip();
+                    
+                    // Set the color
+                    graph.Set('fillstyle', 'rgba(255,0,0,0.5)');
+                    graph.draw();
+                graph.context.restore();
+
+
+
+
+
+
+                /**
+                * Clip the canvas and draw the lower half
+                */
+                graph.context.save();
+                    graph.context.beginPath();                
+                    graph.context.rect(0,boundary,600,250 - boundary);
+                    graph.context.clip();
+                    
+                    // Set the color
+                    graph.Set('fillstyle', 'rgba(0,255,0,0.5)');
+                    graph.draw();
+                graph.context.restore();
+
+
+
+
+
+
+                // Add some data to the data arrays
+                var r1 = RGraph.random(
+                    RG.isNull(d1[d1.length - 1]) ? 26 : d1[d1.length - 1] - 2,
+                    RG.isNull(d1[d1.length - 1]) ? 24 : d1[d1.length - 1] + 2
+                );
+
+               r1 = Math.max(r1, 0);
+               r1 = Math.min(r1, 50);
+
+                d1.push(r1);
+                
+                if (d1.length > 600) {
+                    d1 = RG.arrayShift(d1);
+                }
+    
+                if (RGraph.ISIE8) {
+                    alert('[MSIE] Sorry, Internet Explorer 8 is not fast enough to support animated charts');
+                } else {
+                    obj.original_data[0] = d1;
+                    setTimeout(drawGraph, 50);
+                }
+            }
+        
+            drawGraph();
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        d1  = [];
+        l   = 0; <span>// The letter 'L' - NOT a one</span>
+    
+        <span>// Pre-pad the arrays with null values</span>
+        for (var i=0; i&lt;600; ++i) {
+            d1.push(null);
+        }
+        
+        var obj = null;
+
+
+
+
+        function getGraph(id, d1)
+        {
+            <span>// After creating the chart, store it in a global variable</span>
+            if (!obj) {
+
+                obj = new RGraph.Line({
+                    id: id,
+                    data: d1,
+                    options: {
+                        xticks: 100,
+                        backgroundGrid: false,
+                        backgroundBarcolor1: 'white',
+                        backgroundBarcolor2: 'white',
+                        title: 'Bandwidth used',
+                        titleXaxis: 'Time >>>',
+                        titleXaxisPos: 0.5,
+                        titleYaxis: 'Bandwidth (MB/s)',
+                        titleYaxisPos: 0.5,
+                        titleVpos: 0.5,
+                        colors: ['black'],
+                        linewidth: 0.75,
+                        yaxispos: 'right',
+                        ymax: 50,
+                        xticks: 25,
+                        filled: true,
+                        gutterTop: 25,
+                        gutterBottom: 25,
+                        tickmarks: [null,null],
+                        shadow: false,
+                        colors: ['rgba(0,0,0,0.2)']
+                    }
+                })
+
+
+
+                var grad = obj.context.createLinearGradient(0,0,0,250);
+                grad.addColorStop(0, '#efefef');
+                grad.addColorStop(0.9, 'rgba(0,0,0,0)');
+
+                obj.set('fillstyle', [grad]);
+            }
+
+            return obj;
+        }
+
+
+
+        <span>/**
+        * This gets called repeatedly to update the chart
+        */</span>
+        function drawGraph ()
+        {
+            <span>// "cache" this in a local variable</span>
+            var RG = RGraph;
+
+
+            RG.clear(document.getElementById("cvs"));
+            
+            var graph = getGraph('cvs', d1);
+            graph.Draw();
+
+
+
+
+
+            <span>// The color boundary</span>
+            var boundary = (200 * ((graph.scale2.max - 20) / graph.scale2.max)) + 25;
+
+
+            <span>/**
+            * Clip the canvas and draw the upper half
+            */</span>
+            graph.context.save();
+                graph.context.beginPath();                
+                graph.context.rect(0,0,600, boundary);
+                graph.context.clip();
+                
+                // Set the color
+                graph.Set('fillstyle', 'rgba(255,0,0,0.5)');
+                graph.draw();
+            graph.context.restore();
+
+
+
+
+
+
+            <span>/**
+            * Clip the canvas and draw the lower half
+            */</span>
+            graph.context.save();
+                graph.context.beginPath();                
+                graph.context.rect(0,boundary,600,250 - boundary);
+                graph.context.clip();
+                
+                // Set the color
+                graph.Set('fillstyle', 'rgba(0,255,0,0.5)');
+                graph.draw();
+            graph.context.restore();
+
+
+
+
+
+
+            <span>// Add some data to the data arrays</span>
+            var r1 = RGraph.random(
+                RG.isNull(d1[d1.length - 1]) ? 26 : d1[d1.length - 1] - 2,
+                RG.isNull(d1[d1.length - 1]) ? 24 : d1[d1.length - 1] + 2
+            );
+
+           r1 = Math.max(r1, 0);
+           r1 = Math.min(r1, 50);
+
+            d1.push(r1);
+            
+            if (d1.length > 600) {
+                d1 = RG.arrayShift(d1);
+            }
+
+            if (RGraph.ISIE8) {
+                alert('[MSIE] Sorry, Internet Explorer 8 is not fast enough to support animated charts');
+            } else {
+                obj.original_data[0] = d1;
+                setTimeout(drawGraph, 50);
+            }
+        }
+    
+        drawGraph();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

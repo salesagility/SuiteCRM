@@ -1,0 +1,220 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A Line chart showing two range charts</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A chart with four Line chart objects - each of which is showing a range chart" />
+     
+</head>
+<body>
+
+    <h1>Two range charts</h1>
+    
+    <p>
+        This chart is using four Line chart objects - two of which are generating the ranges and two of which are
+        generating the black median lines.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <p>
+        <b>Update</b><br />
+        There's information <a href="http://www.rgraph.net/docs/howto-dynamic-line-chart.html">on this HOWTO page</a> about creating dual color line
+        charts using
+        gradients. It's <b>very</b> simple and can be done using either the
+        RGraph Gradient() shortcut or more directly with the canvas  linear gradient functionality.
+    </p>
+
+    <script>
+        window.onload = function ()
+        {
+            var line1 = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [4,3,3,3,5,2,4],
+                    [8,5,6,8,9,7,8]
+                ],
+                options: {
+                    filled: true,
+                    filledRange: true,
+                    linewidth: 3,
+                    colors: ['red'],
+                    fillstyle: 'rgba(255,0,0,0.2)',
+                    ymax: 10,
+                    tickmarks: null,
+                    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+                }
+            }).draw()
+            
+            var line2 = new RGraph.Line({
+                id: 'cvs',
+                data: [6,4,4.5,5.5,7,4.5,6],
+                options: {
+                    backgroundGrid: false,
+                    ylabels: false,
+                    noaxes: true,
+                    colors: ['black'],
+                    linewidth: 3,
+                    ymax: 10
+                }
+            }).draw()
+
+            var line3 = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [1,2,4,2,2,4,3],
+                    [0,1,2,0,0,1,0]
+                ],
+                options: {
+                    backgroundGrid: false,
+                    ylabels: false,
+                    noaxes: true,
+                    filled: true,
+                    filledRange: true,
+                    linewidth: 3,
+                    colors: ['blue'],
+                    fillstyle: 'rgba(0,0,255,0.2)',
+                    ymax: 10,
+                    tickmarks: null
+                }
+            }).draw()
+            
+            var line4 = new RGraph.Line({
+                id: 'cvs',
+                data: [0.5,1.5,3,0.5,1,2.5,1.5],
+                options: {
+                    backgroundGrid: false,
+                    ylabels: false,
+                    noaxes: true,
+                    colors: ['black'],
+                    linewidth: 3,
+                    ymax: 10
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var line1 = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [4,3,3,3,5,2,4],
+                [8,5,6,8,9,7,8]
+            ],
+            options: {
+                filled: true,
+                filledRange: true,
+                linewidth: 3,
+                colors: ['red'],
+                fillstyle: 'rgba(255,0,0,0.2)',
+                ymax: 10,
+                tickmarks: null,
+                labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+            }
+        }).draw()
+        
+        var line2 = new RGraph.Line({
+            id: 'cvs',
+            data: [6,4,4.5,5.5,7,4.5,6],
+            options: {
+                backgroundGrid: false,
+                ylabels: false,
+                noaxes: true,
+                colors: ['black'],
+                linewidth: 3,
+                ymax: 10
+            }
+        }).draw()
+
+        var line3 = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [1,2,4,2,2,4,3],
+                [0,1,2,0,0,1,0]
+            ],
+            options: {
+                backgroundGrid: false,
+                ylabels: false,
+                noaxes: true,
+                filled: true,
+                filledRange: true,
+                linewidth: 3,
+                colors: ['blue'],
+                fillstyle: 'rgba(0,0,255,0.2)',
+                ymax: 10,
+                tickmarks: null
+            }
+        }).draw()
+        
+        var line4 = new RGraph.Line({
+            id: 'cvs',
+            data: [0.5,1.5,3,0.5,1,2.5,1.5],
+            options: {
+                backgroundGrid: false,
+                ylabels: false,
+                noaxes: true,
+                colors: ['black'],
+                linewidth: 3,
+                ymax: 10
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

@@ -1,0 +1,197 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.rose.js" ></script>
+
+    <title>A Rose chart explode/implode transition</title>
+
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Rose chart explode/implode transition effect" />
+     
+</head>
+<body>
+
+    <h1>A Rose chart explode/implode transition effect</h1>
+
+    <button onclick="transition();">Switch!</button>
+    
+    <canvas id="cvs" width="450" height="400">[No canvas support]</canvas>
+
+    <script>
+        function transition ()
+        {
+            var cvs = document.getElementById('cvs');
+
+            cvs.__object__.explode(null, function ()
+            {
+                visible === 1 ? drawRose2() : drawRose1();
+            });
+        }
+
+
+
+
+        /**
+        * Draws the first Rose chart
+        */
+        function drawRose1 ()
+        {
+            var cvs = document.getElementById("cvs");
+            RGraph.reset(cvs);
+            var rose = new RGraph.Rose({
+                id: 'cvs',
+                data: [4,8,6,5,3,2,9,4,2,8],
+                options: {
+                    backgroundGrid: false,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    margin: 3,
+                    clearto: 'white'
+                }
+            }).implode();
+            
+            
+            // A global
+            visible = 1;
+        }
+
+
+
+
+        /**
+        * Draws the second Rose chart
+        */
+        function drawRose2 ()
+        {
+            var cvs = document.getElementById("cvs");
+            RGraph.reset(cvs);
+            var rose = new RGraph.Rose({
+                id: 'cvs',
+                data: [1,8,8,8,4,6,3,2,5,6],
+                options: {
+                    colorsSequential: true,
+                    backgroundGrid: false,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    margin: 3,
+                    clearto: 'white'
+                }
+            }).implode();
+            
+            // A global
+            visible = 2;
+        }
+
+        window.onload = function ()
+        {
+            drawRose1();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.effects.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.rose.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="450" height="400"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    function transition ()
+    {
+        var cvs = document.getElementById('cvs');
+
+        cvs.__object__.explode(null, function ()
+        {
+            visible === 1 ? drawRose2() : drawRose1();
+        });
+    }
+
+
+
+
+    <span>/**
+    * Draws the first Rose chart
+    */</span>
+    function drawRose1 ()
+    {
+        var cvs = document.getElementById("cvs");
+        RGraph.reset(cvs);
+        var rose = new RGraph.Rose({
+            id: 'cvs',
+            data: [4,8,6,5,3,2,9,4,2,8],
+            options: {
+                backgroundGrid: false,
+                strokestyle: 'rgba(0,0,0,0)',
+                margin: 3,
+                clearto: 'white'
+            }
+        }).implode();
+        
+        
+        <span>// A global</span>
+        visible = 1;
+    }
+
+
+
+
+    <span>/**
+    * Draws the second Rose chart
+    */</span>
+    function drawRose2 ()
+    {
+        var cvs = document.getElementById("cvs");
+        RGraph.reset(cvs);
+        var rose = new RGraph.Rose({
+            id: 'cvs',
+            data: [1,8,8,8,4,6,3,2,5,6],
+            options: {
+                colorsSequential: true,
+                backgroundGrid: false,
+                strokestyle: 'rgba(0,0,0,0)',
+                margin: 3,
+                clearto: 'white'
+            }
+        }).implode();
+        
+        // A global
+        visible = 2;
+    }
+
+    window.onload = function ()
+    {
+        drawRose1();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

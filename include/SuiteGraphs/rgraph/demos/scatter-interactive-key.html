@@ -1,0 +1,108 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.drawing.rect.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>An example of a Scatter chart with an interactive key</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An example of a Scatter chart with an interactive key" />
+     
+</head>
+<body>
+
+    <h1>An example of a Scatter chart with an interactive key</h1>
+    
+    <p>
+        The interactive key has been re-implemented as of June 2013 and added to more chart types.
+    </p>
+
+    <canvas id="cvs" width="450" height="300">[No canvas support]</canvas>
+    <script>
+        window.onload = function ()
+        {
+            var data1 = [[45,51,'green'],[45,46,'green'],[45,35,'green']];
+            var data2 = [[225,32,'red'],[225,25,'red'],[225,12,'red']];
+            var data3 = [[315,13,'pink'],[315,26,'pink'],[315,36,'pink']];
+    
+            var scatter = new RGraph.Scatter({
+                id: 'cvs',
+                data: [data1, data2, data3],
+                options: {
+                    xmax: 360,
+                    labels: ['Q1','Q2','Q3','Q4'],
+                    key: ['Richard','Dave','Charles'],
+                    keyPosition: 'gutter',
+                    keyInteractive: true,
+                    keyColors: ['green','red','pink']
+                }
+            }).draw();
+        };
+    </script>
+    
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.rect.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="450" height="350"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data1 = [[45,51,'green'],[45,46,'green'],[45,35,'green']];
+        var data2 = [[225,32,'red'],[225,25,'red'],[225,12,'red']];
+        var data3 = [[315,13,'pink'],[315,26,'pink'],[315,36,'pink']];
+
+        var scatter = new RGraph.Scatter({
+            id: 'cvs',
+            data: [data1, data2, data3],
+            options: {
+                xmax: 360,
+                labels: ['Q1','Q2','Q3','Q4'],
+                key: ['Richard','Dave','Charles'],
+                keyPosition: 'gutter',
+                keyInteractive: true,
+                keyColors: ['green','red','pink']
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    
+    <a href="">&lt;Back</a><br />
+
+</body>
+</html>

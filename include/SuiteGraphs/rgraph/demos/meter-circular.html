@@ -1,0 +1,142 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.meter.js" ></script>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Meter chart that has been customised to appear circular. It use Meter chart customisations as well as CSS effects" />
+    
+    <script>
+        window.onload = function ()
+        {
+            var meter = new RGraph.Meter({
+                id: 'cvs',
+                min: 0,
+                max: 100,
+                value: 56,
+                options: {
+                    border: false,
+                    tickmarksSmallNum: 0,
+                    tickmarksBigNum: 0,
+                    anglesStart: RGraph.HALFPI + (RGraph.HALFPI / 1.5),
+                    anglesEnd: RGraph.TWOPI + RGraph.HALFPI - (RGraph.HALFPI / 1.5),
+                    segmentRadiusStart: 140,
+                    textSize: 16,
+                    colorsRanges: [
+                        [0,40,'Gradient(#0c0:#cfc:#0c0)'],
+                        [40,80,'Gradient(yellow:#ffc:yellow)'],
+                        [80,100,'Gradient(red:#fcc:red)']
+                    ],
+                    needlesRadius: 110,
+                    gutterBottom: 135
+                }
+            }).draw()
+            
+            meter.canvas.onclick = function (e)
+            {
+                var obj   = e.target.__object__;
+                var value = obj.getValue(e);
+
+                if (typeof value === 'number') {
+                    obj.value = value;
+                    obj.grow();
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+
+    <h1>A circular Meter chart</h1>
+    
+    <p>
+        This is a customised Meter chart. The canvas is still the usual rectangle but it has ben placed inside a DIV which has a large
+        border-radius CSS property giving the circular appearance.
+    </p>
+
+    <div style="width: 450px; height: 450px; background-color: white; border-radius: 250px; text-align: center; font-family: Arial; box-shadow: 0px 0px 25px gray; border: 10   px solid #ddd">
+        <canvas id="cvs" width="450" height="350">[No canvas support]</canvas>
+        <b>
+            Temperature (�C)
+        </b>
+    </div>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.meter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="450" height="350"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var meter = new RGraph.Meter({
+            id: 'cvs',
+            min: 0,
+            max: 100,
+            value: 56,
+            options: {
+                border: false,
+                tickmarksSmallNum: 0,
+                tickmarksBigNum: 0,
+                anglesStart: RGraph.HALFPI + (RGraph.HALFPI / 1.5),
+                anglesEnd: RGraph.TWOPI + RGraph.HALFPI - (RGraph.HALFPI / 1.5),
+                segmentRadiusStart: 140,
+                textSize: 16,
+                colorsRanges: [
+                    [0,40,'Gradient(#0c0:#cfc:#0c0)'],
+                    [40,80,'Gradient(yellow:#ffc:yellow)'],
+                    [80,100,'Gradient(red:#fcc:red)']
+                ],
+                needlesRadius: 110,
+                gutterBottom: 135
+            }
+        }).draw()
+        
+        meter.canvas.onclick = function (e)
+        {
+            var obj   = e.target.__object__;
+            var value = obj.getValue(e);
+
+            if (typeof value === 'number') {
+                obj.value = value;
+                obj.grow();
+            }
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A combined bar/line chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A combined Bar and Line chart" />
+    
+</head>
+<body>
+        
+    <h1>A combined bar/line chart</h1>
+    
+    <p>
+        
+    </p>
+
+    <canvas id="cvs" width="1000" height="350">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            /**
+            * Create the data and colors
+            */
+            var barData = [];
+            var lineData = [];
+            var colors = [];
+            for (var i=0; i<60; ++i) {
+                if (i < 30) {
+                    barData[i] = RGraph.random(-100, 0);
+                    colors[i] = '#318CBD';
+                } else {
+                    barData[i] = RGraph.random(0, 100);
+                    colors[i] = '#BD3929';
+                }
+                
+                lineData[i] = (((i/60) * 200) - 100) * RGraph.random(0, 10);
+            }
+
+
+
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: barData,
+                options: {
+                    shadowBlur: 1,
+                    shadowOffsetx: 1,
+                    shadowOffsety: 1,
+                    hmargin: 1,
+                    gutterLeft: 35,
+                    colors: colors,
+                    colorsSequential: true,
+                    xaxispos: 'center',
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    noyaxis: true,
+                    ymax: 100,
+                    gutterBottom: 50,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    textAngle: 30,
+                    xlabelsOffset: 8,
+                    labels: [
+                        '1987', '1988','1989','1990','1991',
+                        '1992', '1993','1994','1995','1996',
+                        '1997', '1998','1999','2000','2001',
+                        '2002','2003','2004','2005','2006',
+                        '2007','2008','2009','2010','2011',
+                        '2012','2013','2014','2015','2016'
+                    ]
+                }
+            })
+
+
+
+
+            /**
+            * Now add the line chart
+            */
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: lineData,
+                options: {
+                    colors: ['#FFD600'],
+                    xaxispos: 'center',
+                    linewidth: 2,
+                    shadowOffsetx: 0,
+                    shadowOffsety: 0,
+                    shadowBlur: 5,
+                    tickmarks: false,
+                    gutterLeft: 35
+                }
+            })
+            
+            /**
+            * Create the combined class
+            */
+            combo = new RGraph.CombinedChart([bar, line]);
+            combo.draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>/**
+        * Create the data and colors
+        */</span>
+        var barData = [];
+        var lineData = [];
+        var colors = [];
+        for (var i=0; i&lt;60; ++i) {
+            if (i &lt; 30) {
+                barData[i] = RGraph.random(-100, 0);
+                colors[i] = '#318CBD';
+            } else {
+                barData[i] = RGraph.random(0, 100);
+                colors[i] = '#BD3929';
+            }
+            
+            lineData[i] = (((i/60) * 200) - 100) * RGraph.random(0, 10);
+        }
+
+
+
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: barData,
+            options: {
+                shadowBlur: 1,
+                shadowOffsetx: 1,
+                shadowOffsety: 1,
+                hmargin: 1,
+                gutterLeft: 35,
+                colors: colors,
+                colorsSequential: true,
+                xaxispos: 'center',
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                noyaxis: true,
+                ymax: 100,
+                gutterBottom: 50,
+                strokestyle: 'rgba(0,0,0,0)',
+                textAngle: 30,
+                xlabelsOffset: 8,
+                labels: [
+                    '1987', '1988','1989','1990','1991',
+                    '1992', '1993','1994','1995','1996',
+                    '1997', '1998','1999','2000','2001',
+                    '2002','2003','2004','2005','2006',
+                    '2007','2008','2009','2010','2011',
+                    '2012','2013','2014','2015','2016'
+                ]
+            }
+        })
+
+
+
+
+        <span>/**
+        * Now add the line chart
+        */</span>
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: lineData,
+            options: {
+                colors: ['#FFD600'],
+                xaxispos: 'center',
+                linewidth: 2,
+                shadowOffsetx: 0,
+                shadowOffsety: 0,
+                shadowBlur: 5,
+                tickmarks: false,
+                gutterLeft: 35
+            }
+        })
+        
+        <span>/**
+        * Create the combined class
+        */</span>
+        combo = new RGraph.CombinedChart([bar, line]);
+        combo.draw();
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

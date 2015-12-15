@@ -1,0 +1,294 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.effects.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.drawing.yaxis.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>Combining more then two Line objects</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="Multiple Line charts each with their own Y axis using the drawing API Y axis object" />
+     
+</head>
+<body>
+
+    <h1>Combining more than two Line objects with multiple Y axes</h1>
+    
+    <p>
+        This demonstration shows how you can use the YAxis drawing API object to draw multiple axes on your chart.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var gutterLeft = 150;
+            var gutterRight = 40;
+            var gutterTop   = 25;
+
+    
+    
+    
+            /**
+            * This draws the extra axes. It's run whenever the line3 object is drawn
+            */
+            yaxis1 = new RGraph.Drawing.YAxis({
+                id: 'cvs',
+                x: 150,
+                options: {
+                    colors: 'red',
+                    textColor: 'red',
+                    max: 10,
+                    title: 'Density'
+                }
+            }).draw()
+
+            yaxis2 = new RGraph.Drawing.YAxis({
+                id: 'cvs',
+                x: 100,
+                options: {
+                    colors: 'green',
+                    textColor: 'green',
+                    max: 100,
+                    title: 'Speed'
+                }
+            }).draw()
+
+            yaxis3 = new RGraph.Drawing.YAxis({
+                id: 'cvs',
+                x: 50,
+                options: {
+                    colors: 'blue',
+                    textColor: 'blue',
+                    max: 30,
+                    title: 'Pressure'
+                }
+            }).draw();
+
+
+
+
+            var line1 = new RGraph.Line({
+                id: 'cvs',
+                data: [1,3,5,2,5,6,8,4,4,5,3,6],
+                options: {
+                    ymax: 10,
+                    hmargin: 5,
+                    gutterRight: gutterRight,
+                    gutterLeft: gutterLeft,
+                    gutterTop: gutterTop,
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    colors: ['red', 'green', 'blue'],
+                    key: ['Density', 'Speed', 'Pressure'],
+                    keyPosition: 'gutter',
+                    keyPositionGutterBoxed: false,
+                    keyPositionX: 275,
+                    noaxes: true,
+                    ylabels: false,
+                    shadow: false
+                }
+            }).draw()
+
+    
+            var line2 = new RGraph.Line({
+                id: 'cvs',
+                data: [54,53,56,58,57,53,49,52,53,56,61,58],
+                options: {
+                    ymax: 100,
+                    backgroundGrid: false,
+                    colors: ['green'],
+                    hmargin: 5,
+                    gutterRight: gutterRight,
+                    gutterLeft: gutterLeft,
+                    gutterTop: gutterTop,
+                    tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    noaxes: true,
+                    ylabels: false,
+                    shadow: false
+                }
+            }).draw()
+    
+            var line3 = new RGraph.Line({
+                id: 'cvs',
+                data: [31,35,32,36,34,32,33,35,28,17,18,18],
+                options: {
+                    ymax: 50,
+                    backgroundGrid: false,
+                    ylabels: false,
+                    colors: ['blue'],
+                    hmargin: 5,
+                    gutterRight: gutterRight,
+                    gutterLeft: gutterLeft,
+                    gutterTop: gutterTop,
+                    tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    noaxes: true,
+                    shadow: false
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.yaxis.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var gutterLeft = 150;
+        var gutterRight = 40;
+        var gutterTop   = 25;
+
+
+
+
+        /**
+        * This draws the extra axes. It's run whenever the line3 object is drawn
+        */
+        yaxis1 = new RGraph.Drawing.YAxis({
+            id: 'cvs',
+            x: 150,
+            options: {
+                colors: 'red',
+                textColor: 'red',
+                max: 10,
+                title: 'Density'
+            }
+        }).draw()
+
+        yaxis2 = new RGraph.Drawing.YAxis({
+            id: 'cvs',
+            x: 100,
+            options: {
+                colors: 'green',
+                textColor: 'green',
+                max: 100,
+                title: 'Speed'
+            }
+        }).draw()
+
+        yaxis3 = new RGraph.Drawing.YAxis({
+            id: 'cvs',
+            x: 50,
+            options: {
+                colors: 'blue',
+                textColor: 'blue',
+                max: 30,
+                title: 'Pressure'
+            }
+        }).draw();
+
+
+
+
+        var line1 = new RGraph.Line({
+            id: 'cvs',
+            data: [1,3,5,2,5,6,8,4,4,5,3,6],
+            options: {
+                ymax: 10,
+                hmargin: 5,
+                gutterRight: gutterRight,
+                gutterLeft: gutterLeft,
+                gutterTop: gutterTop,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                colors: ['red', 'green', 'blue'],
+                key: ['Density', 'Speed', 'Pressure'],
+                keyPosition: 'gutter',
+                keyPositionGutterBoxed: false,
+                keyPositionX: 275,
+                noaxes: true,
+                ylabels: false,
+                shadow: false
+            }
+        }).draw()
+
+
+        var line2 = new RGraph.Line({
+            id: 'cvs',
+            data: [54,53,56,58,57,53,49,52,53,56,61,58],
+            options: {
+                ymax: 100,
+                backgroundGrid: false,
+                colors: ['green'],
+                hmargin: 5,
+                gutterRight: gutterRight,
+                gutterLeft: gutterLeft,
+                gutterTop: gutterTop,
+                tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                noaxes: true,
+                ylabels: false,
+                shadow: false
+            }
+        }).draw()
+
+        var line3 = new RGraph.Line({
+            id: 'cvs',
+            data: [31,35,32,36,34,32,33,35,28,17,18,18],
+            options: {
+                ymax: 50,
+                backgroundGrid: false,
+                ylabels: false,
+                colors: ['blue'],
+                hmargin: 5,
+                gutterRight: gutterRight,
+                gutterLeft: gutterLeft,
+                gutterTop: gutterTop,
+                tooltips: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                noaxes: true,
+                shadow: false
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

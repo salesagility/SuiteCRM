@@ -1,0 +1,175 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A Bar charts with a reflection effect</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="" />
+     
+</head>
+<body>
+        
+    <h1>A Bar charts with a reflection effect</h1>
+    
+    <p>
+        This demo uses two canvas tags - one for the chart and one for the reflection.
+    </p>
+
+    <canvas id="cvs1" width="600" height="250">[No canvas support]</canvas><br />
+    <canvas id="cvs2" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            function Draw(id)
+            {
+                var bar = new RGraph.Bar({
+                    id: id,
+                    data: [[45,60],[65,30],[40,80],[62,48]],
+                    options: {
+                        labels: ['Luis', 'Kevin', 'John', 'Gregory'],
+                        ymax: 100,
+                        strokestyle: 'white',
+                        linewidth: 2,
+                        shadowOffsetx: 0,
+                        shadowOffsety: 0,
+                        shadowBlur: 10,
+                        hmarginGrouped: 2,
+                        unitsPre: '�',
+                        gutterBottom: 20,
+                        gutterLeft: 40,
+                        gutterRight: 15,
+                        colors: ['Gradient(white:rgba(255, 176, 176, 0.5))','Gradient(white:rgba(153, 208, 249,0.5))'],
+                        backgroundGridAutofitNumhlines: 5,
+                        backgroundGridAutofitNumvlines: 4
+                    }
+                }).draw()
+                
+                return bar;
+            }
+            
+            Draw('cvs1');
+            
+            /**
+            * Draw the reflection (after inverting the canvas)
+            */
+            var co = document.getElementById("cvs2").getContext('2d');
+            co.setTransform(1,0,0,-1,0,250);
+            
+            Draw('cvs2');
+            
+            /**
+            * Reset the transformation
+            */
+            co.setTransform(1,0,0,1,0,0);
+
+            /**
+            * Now draw a graduated white rect over the reflection
+            */
+            var grad = co.createLinearGradient(0,0,0,250)
+            grad.addColorStop(0, 'rgba(255,255,255,0.5)');
+            grad.addColorStop(0.75, 'rgba(255,255,255,1)');
+
+            co.fillStyle = grad;
+            co.fillRect(0,0,600,250)
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs1" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;<br />
+&lt;canvas id="cvs2" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        function Draw(id)
+        {
+            var bar = new RGraph.Bar({
+                id: id,
+                data: [[45,60],[65,30],[40,80],[62,48]],
+                options: {
+                    labels: ['Luis', 'Kevin', 'John', 'Gregory'],
+                    ymax: 100,
+                    strokestyle: 'white',
+                    linewidth: 2,
+                    shadowOffsetx: 0,
+                    shadowOffsety: 0,
+                    shadowBlur: 10,
+                    hmarginGrouped: 2,
+                    unitsPre: '�',
+                    gutterBottom: 20,
+                    gutterLeft: 40,
+                    gutterRight: 15,
+                    colors: ['Gradient(white:rgba(255, 176, 176, 0.5))','Gradient(white:rgba(153, 208, 249,0.5))'],
+                    backgroundGridAutofitNumhlines: 5,
+                    backgroundGridAutofitNumvlines: 4
+                }
+            }).draw()
+            
+            return bar;
+        }
+        
+        Draw('cvs1');
+        
+        <span>/**
+        * Draw the reflection (after inverting the canvas)
+        */</span>
+        var co = document.getElementById("cvs2").getContext('2d');
+        co.setTransform(1,0,0,-1,0,250);
+        
+        Draw('cvs2');
+        
+        <span>/**
+        * Reset the transformation
+        */</span>
+        co.setTransform(1,0,0,1,0,0);
+
+        <span>/**
+        * Now draw a graduated white rect over the reflection
+        */</span>
+        var grad = co.createLinearGradient(0,0,0,250)
+        grad.addColorStop(0, 'rgba(255,255,255,0.5)');
+        grad.addColorStop(0.75, 'rgba(255,255,255,1)');
+
+        co.fillStyle = grad;
+        co.fillRect(0,0,600,250)
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

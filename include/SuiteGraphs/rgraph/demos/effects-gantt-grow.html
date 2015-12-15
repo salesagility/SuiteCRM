@@ -1,0 +1,102 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script type="text/javascript" src="../libraries/RGraph.common.core.js" ></script>
+    <script type="text/javascript" src="../libraries/RGraph.gantt.js" ></script>
+    
+    <title>A Gantt chart Grow effect</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Gantt chart Grow" />
+    
+</head>
+<body>
+
+    <h1>A Gantt chart Grow effect</h1>
+
+    <canvas id="cvs" width="500" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data = [
+                [0,5,null,'Fred','Gradient(aqua:white)'],
+                [7,10,null,'Barney','Gradient(red:#fdd)'],
+                [15,5,null,'Jerry','Gradient(blue:#ddf)'],
+                [15,10,null,'Ben','Gradient(green:#dfd)'],
+                [23,5,null,'Rachel','Gradient(black:#ddd)'],
+                [27,5,null,'Paul','Gradient(gray:white)']
+            ];
+
+            var gantt = new RGraph.Gantt({
+                id: 'cvs',
+                data: data,
+                options: {
+                    borders: false,
+                    xmax: 30,
+                    backgroundGridAutofitNumhlines: 6,
+                    backgroundGridAutofitNumvlines: 30
+                }
+            }).grow();
+        };
+    </script>
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraphgantt.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [
+            [0,5,null,'Fred','Gradient(aqua:white)'],
+            [7,10,null,'Barney','Gradient(red:#fdd)'],
+            [15,5,null,'Jerry','Gradient(blue:#ddf)'],
+            [15,10,null,'Ben','Gradient(green:#dfd)'],
+            [23,5,null,'Rachel','Gradient(black:#ddd)'],
+            [27,5,null,'Paul','Gradient(gray:white)']
+        ];
+
+        var gantt = new RGraph.Gantt({
+            id: 'cvs',
+            data: data,
+            options: {
+                borders: false,
+                xmax: 30,
+                backgroundGridAutofitNumhlines: 6,
+                backgroundGridAutofitNumvlines: 30
+            }
+        }).grow();
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

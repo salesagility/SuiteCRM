@@ -1,0 +1,152 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.drawing.xaxis.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>Trigonometry curves (sin, cos and tan)</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart that shows trigonometry curves (sin, cos and tan)" />
+     
+</head>
+<body>
+
+    <h1>Trigonometry curves (sin, cos and tan)</h1>
+
+    <canvas id="cvs" width="1000" height="200">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data_sin = [];
+            var data_cos = [];
+            var data_tan = [];
+
+            for (var i=-360; i<360; i+=1) {
+                data_sin.push([i, Math.sin(i / (180 / Math.PI))]);
+                data_cos.push([i, Math.cos(i / (180 / Math.PI))]);
+                
+                var tan_value = Math.tan(i / (180 / Math.PI));
+                data_tan.push([i, (tan_value < 1 && tan_value > -1) ? tan_value : null]);
+            }
+
+            var xaxis = new RGraph.Drawing.XAxis({
+                id: 'cvs',
+                y:100,
+                options: {
+                    scaleZerostart: false,
+                    yaxispos: 'center',
+                    numlabels: 4,
+                    numticks: 16,
+                    max: 360
+                }
+            }).draw()
+
+            var scatter = new RGraph.Scatter({
+                id: 'cvs',
+                data: [data_sin, data_cos, data_tan],
+                options: {
+                    ymax: 1,
+                    xmax: 360,
+                    scaleDecimals: 1,
+                    gutterLeft: 500,
+                    line: true,
+                    lineLinewidth: 3,
+                    tickmarks: null,
+                    xaxispos: 'center',
+                    xaxis: false,
+                    backgroundGrid: false,
+                    outofbounds: false
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.drawing.xaxis.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scteter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="1000" height="200"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data_sin = [];
+        var data_cos = [];
+        var data_tan = [];
+
+        for (var i=-360; i&lt;360; i+=1) {
+            data_sin.push([i, Math.sin(i / (180 / Math.PI))]);
+            data_cos.push([i, Math.cos(i / (180 / Math.PI))]);
+            
+            var tan_value = Math.tan(i / (180 / Math.PI));
+            data_tan.push([i, (tan_value &lt; 1 && tan_value > -1) ? tan_value : null]);
+        }
+
+        var xaxis = new RGraph.Drawing.XAxis({
+            id: 'cvs',
+            y:100,
+            options: {
+                scaleZerostart: false,
+                yaxispos: 'center',
+                numlabels: 4,
+                numticks: 16,
+                max: 360
+            }
+        }).draw()
+
+        var scatter = new RGraph.Scatter({
+            id: 'cvs',
+            data: [data_sin, data_cos, data_tan],
+            options: {
+                ymax: 1,
+                xmax: 360,
+                scaleDecimals: 1,
+                gutterLeft: 500,
+                line: true,
+                lineLinewidth: 3,
+                tickmarks: null,
+                xaxispos: 'center',
+                xaxis: false,
+                backgroundGrid: false,
+                outofbounds: false
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

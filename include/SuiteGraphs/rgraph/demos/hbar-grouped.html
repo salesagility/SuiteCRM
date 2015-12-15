@@ -1,0 +1,131 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.hbar.js" ></script>
+    
+    <title>A grouped horizontal bar chart</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="This is a Horizontal Bar chart that shows grouped data" />
+     
+</head>
+<body>
+
+    <h1>A grouped horizontal bar chart</h1>
+    
+    <p>
+        This horizontal Bar chart demonstrates the new vmargin and vmargin.grouped settings. The vmargin is either 
+        side of the group of bars whilst vmargin.grouped is between the bars in that group.
+    </p>
+
+   <canvas id="cvs" width="600" height="600">[No canvas support]</canvas>
+
+   <script>
+       window.onload = function ()
+       {
+            var hbar = new RGraph.HBar({
+                id: 'cvs',
+                data: [[8,6,4,3], [4,8,3,5],[4,9,9,7],[6,5,3,4],[3,7,8,8]],
+                options: {
+                    grouping: 'grouped',
+                    hmargin: 20,
+                    labels: ['Charlie','Jake','Luis','Jack','Bernie'],
+                    key: ['Monday','Tuesday','Wednesday','Thursday'],
+                    keyPosition: 'gutter',
+                    keyPositionGutterBoxed: false,
+                    keyColors: ['#3366CC','#DC3912','#FF9900','#109618'],
+                    colors: [
+                        'Gradient(white:#3366CC:#3366CC)',
+                        'Gradient(white:#DC3912:#DC3912)',
+                        'Gradient(white:#FF9900:#FF9900)',
+                        'Gradient(white:#109618:#109618)'
+                    ],
+                    tooltips: [
+                        'Monday','Tuesday','Wednesday','Thursday',
+                        'Monday','Tuesday','Wednesday','Thursday',
+                        'Monday','Tuesday','Wednesday','Thursday',
+                        'Monday','Tuesday','Wednesday','Thursday',
+                        'Monday','Tuesday','Wednesday','Thursday'
+                    ]
+                }
+            }).draw();
+       };
+   </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.hbar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="600"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+   window.onload = function ()
+   {
+        var hbar = new RGraph.HBar({
+            id: 'cvs',
+            data: [[8,6,4,3], [4,8,3,5],[4,9,9,7],[6,5,3,4],[3,7,8,8]],
+            options: {
+                grouping: 'grouped',
+                hmargin: 20,
+                labels: ['Charlie','Jake','Luis','Jack','Bernie'],
+                key: ['Monday','Tuesday','Wednesday','Thursday'],
+                keyPosition: 'gutter',
+                keyPositionGutterBoxed: false,
+                keyColors: ['#3366CC','#DC3912','#FF9900','#109618'],
+                colors: [
+                    'Gradient(white:#3366CC:#3366CC)',
+                    'Gradient(white:#DC3912:#DC3912)',
+                    'Gradient(white:#FF9900:#FF9900)',
+                    'Gradient(white:#109618:#109618)'
+                ],
+                tooltips: [
+                    'Monday','Tuesday','Wednesday','Thursday',
+                    'Monday','Tuesday','Wednesday','Thursday',
+                    'Monday','Tuesday','Wednesday','Thursday',
+                    'Monday','Tuesday','Wednesday','Thursday',
+                    'Monday','Tuesday','Wednesday','Thursday'
+                ]
+            }
+        }).draw();
+   };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A Bar chart with the X axis in the middle</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A bar chart that is showing the various axis options that are available to you" />
+    
+</head>
+<body>
+
+    <h1>A Bar chart demonstrating  the axis options</h1>
+
+    <button onclick="obj = getObject(); obj.Set('xaxispos', obj.Get('xaxispos') == 'bottom' ? 'center' : 'bottom'); RGraph.Redraw();">Toggle the X axis position</button>
+    <button onclick="obj = getObject(); obj.Set('yaxispos', obj.Get('yaxispos') == 'left' ? 'right' : 'left'); RGraph.Redraw();">Toggle the Y axis position</button>
+    <button onclick="obj = getObject(); obj.Set('ylabels', obj.Get('ylabels') ? false : true); RGraph.Redraw();">Toggle the Y axis labels</button>
+    <button onclick="obj = getObject(); obj.Set('ylabels.specific', obj.Get('ylabels.specific') ? false : ['High','Medium','Low']); RGraph.Redraw();">Toggle specific Y axis labels</button>
+    <button onclick="obj = getObject(); obj.Set('ymin', obj.Get('ymin') ? 0 : 50); RGraph.Redraw();">Toggle ymin (50) setting</button>
+    <button onclick="obj = getObject(); obj.Set('labels', obj.Get('labels') ? null : ['Q1','Q2','Q3','Q4']); RGraph.Redraw();">Toggle labels</button>
+    <button onclick="obj = getObject(); obj.Set('noxaxis', obj.Get('noxaxis') ? false : true); RGraph.Redraw();">Toggle X axis</button>
+    
+    <br />
+
+    <canvas id="cvs" width="600" height="400">[No canvas support]</canvas>
+    
+    <script>
+        function getObject ()
+        {
+            return RGraph.ObjectRegistry.getFirstObjectByType('bar');
+        }
+
+        window.onload = function ()
+        {
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [64,65,70,74],
+                options: {
+                    ymax: 120,
+                    xmax: 365,
+                    labels: ['Jan','Feb','Mar','Apr'],
+                    xaxispos: 'center',
+                    gutterBottom: 45,
+                    gutterLeft: 35,
+                    strokestyle: 'rgba(0,0,0,0)'
+                }
+            }).draw();
+        };
+    </script>
+    
+    
+    
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;button onclick="obj = getObject(); obj.Set('xaxispos', obj.Get('xaxispos') == 'bottom' ? 'center' : 'bottom'); RGraph.Redraw();"&gt;Toggle the X axis position&lt;/button&gt;
+&lt;button onclick="obj = getObject(); obj.Set('yaxispos', obj.Get('yaxispos') == 'left' ? 'right' : 'left'); RGraph.Redraw();"&gt;Toggle the Y axis position&lt;/button&gt;
+&lt;button onclick="obj = getObject(); obj.Set('ylabels', obj.Get('ylabels') ? false : true); RGraph.Redraw();"&gt;Toggle the Y axis labels&lt;/button&gt;
+&lt;button onclick="obj = getObject(); obj.Set('ylabels.specific', obj.Get('ylabels.specific') ? false : ['High','Medium','Low']); RGraph.Redraw();"&gt;Toggle specific Y axis labels&lt;/button&gt;
+&lt;button onclick="obj = getObject(); obj.Set('ymin', obj.Get('ymin') ? 0 : 50); RGraph.Redraw();"&gt;Toggle ymin (50) setting&lt;/button&gt;
+&lt;button onclick="obj = getObject(); obj.Set('labels', obj.Get('labels') ? null : ['Q1','Q2','Q3','Q4']); RGraph.Redraw();"&gt;Toggle labels&lt;/button&gt;
+&lt;button onclick="obj = getObject(); obj.Set('noxaxis', obj.Get('noxaxis') ? false : true); RGraph.Redraw();"&gt;Toggle X axis&lt;/button&gt;
+
+&lt;canvas id="cvs" width="600" height="400"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    function getObject ()
+    {
+        return RGraph.ObjectRegistry.getFirstObjectByType('bar');
+    }
+
+    window.onload = function ()
+    {
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: [64,65,70,74],
+            options: {
+                ymax: 120,
+                xmax: 365,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                xaxispos: 'center',
+                gutterBottom: 45,
+                gutterLeft: 35,
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

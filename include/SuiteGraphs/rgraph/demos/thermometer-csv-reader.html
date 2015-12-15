@@ -1,0 +1,110 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.csv.js" ></script>
+    <script src="../libraries/RGraph.thermometer.js" ></script>
+    
+    <title>A Thermometer chart using the CSV reader</title>
+
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Thermometer chart using the CSV reader" />
+     
+</head>
+<body>
+
+    <h1>A Thermometer chart using the CSV reader</h1>
+
+    <div style="background-color: #ffc; border: 2px solid #cc0; border-radius: 5px; padding: 5px;">
+        <b>Note:</b>
+        For browser security reasons the AJAX demos don't work offline. You can view the demos on the RGraph website here:
+        <a href="http://www.rgraph.net/demos/" target="_blank" rel="nofollow">http://www.rgraph.net/demos</a>
+    </div>
+    <canvas id="cvs" width="110" height="400">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            RGraph.CSV('/sample.csv', function (csv)
+            {
+                // Just fetch the first row of the CSV file
+                var row = csv.getRow(0);
+
+                var thermometer = new RGraph.Thermometer({
+                    id: 'cvs',
+                    min: 0,
+                    max: 50,
+                    value: row[1],
+                    options: {
+                        valueLabelDecimals: 1,
+                        unitsPost: '%',
+                        scaleVisible: true,
+                        gutterRight: 35
+                    }
+                }).draw();
+            });
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.csv.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.thermometer.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="100" height="400"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        RGraph.CSV('/sample.csv', function (csv)
+        {
+            <span>// Just fetch the first row of the CSV file</span>
+            var row = csv.getRow(0);
+
+            var thermometer = new RGraph.Thermometer({
+                id: 'cvs',
+                min: 0,
+                max: 50,
+                value: row[1],
+                options: {
+                    valueLabelDecimals: 1,
+                    unitsPost: '%',
+                    scaleVisible: true,
+                    gutterRight: 35
+                }
+            }).draw();
+        });
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic example of AJAX</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content=" A basic example of a chart created using AJAX. It shows a simple example and there is little happening on the page so the source is easy to navigate." />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+
+</head>
+
+<body>
+
+    <h1>A basic example of AJAX</h1>
+    
+    <p>
+        This is a basic example of using AJAX to request the data from the server. The window.onload function initiates the AJAX request
+        and then the callback function - DrawGraph() - takes the response and creates the chart.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas><br />
+    
+    <button onclick="RGraph.AJAX('/getdata.html', DrawGraph)">Rfresh data</button>
+
+    <script>
+        /**
+        * Ths window.onload function initiates the AJAX request. The AJAX page is: http://www.rgraph.net/getdata.html
+        * If you view this in your browser you'll see that all it does is output a sequence of numbers.
+        */
+        window.onload = function ()
+        {
+            RGraph.AJAX('/getdata.html', DrawGraph);
+        };
+
+
+
+        /**
+        * This is the AJAX callback function. It splits up the response, converts it to numbers and then creates the chart.
+        */
+        function DrawGraph (response)
+        {
+            // The responseText is the output of the AJAX request
+            var data = response;
+
+            // Split the data up into an array
+            data = data.split(',');
+
+            // Convert the array of strings into an array of numbers
+            for (var i=0; i<data.length; ++i) {
+                data[i] = Number(data[i]);
+            }
+            
+            // Reset the canvas
+            RGraph.Reset(document.getElementById("cvs"));
+
+            // Now draw the chart
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: data,
+                options: {
+                    hmargin: 10,
+                    linewidth: 2,
+                    ymax: 100,
+                    gutterLeft: 35,
+                    labels: ['Gary','Olga','Lewis','Rachel','Nathan','Matt','Kevin','Indigo','Lou','Pete']
+                }
+            }).draw()
+        }
+    </script>
+
+    <p>
+        <b>Note:</b>
+        In October 2013 a new CSV reader was added to RGraph. It makes reading CSV files much easier. You can read about
+        <a href="/docs/csv-file-reader.html">the new CSV reader</a> here.
+    </p>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    /**
+    * Ths window.onload function initiates the AJAX request. The AJAX page is: http://www.rgraph.net/getdata.html
+    * If you view this in your browser you'll see that all it does is output a sequence of numbers.
+    */
+    window.onload = function ()
+    {
+        RGraph.AJAX('/getdata.html', DrawGraph);
+    };
+
+
+
+    <span>/**
+    * This is the AJAX callback function. It splits up the response, converts it to numbers and then creates the chart.
+    */</span>
+    function DrawGraph (response)
+    {
+        <span>// The responseText is the output of the AJAX request</span>
+        var data = response;
+
+        <span>// Split the data up into an array</span>
+        data = data.split(',');
+
+        <span>// Convert the array of strings into an array of numbers</span>
+        for (var i=0; i&lt;data.length; ++i) {
+            data[i] = Number(data[i]);
+        }
+        
+        <span>// Reset the canvas</span>
+        RGraph.Reset(document.getElementById("cvs"));
+
+        <span>// Now draw the chart</span>
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: data,
+            options: {
+                hmargin: 10,
+                linewidth: 2,
+                ymax: 100,
+                labels: ['Gary','Olga','Lewis','Rachel','Nathan','Matt','Kevin','Indigo','Lou','Pete']
+            }
+        }).draw()
+    }
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

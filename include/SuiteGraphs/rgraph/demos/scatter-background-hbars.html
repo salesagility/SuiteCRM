@@ -1,0 +1,100 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>A Scatter chart with background horizontal bars</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart with background horizontal bars" />
+     
+</head>
+<body>
+
+    <h1>A Scatter chart with background horizontal bars</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var line = new RGraph.Scatter({
+                id: 'cvs',
+                data: [[45,36],[156,32],[142,23],[256,59],[123,48]],
+                options: {
+                    xmax: 365,
+                    ymax: 60,
+                    labels: ['Q1','Q2','Q3','Q4'],
+                    ylabelsCount: 6,
+                    numyticks: 12,
+                    backgroundHbars: [
+                        [0,45,'rgba(0,255,0,0.2)'],
+                        [45,10,'rgba(255,255,0,0.2)'],
+                        [55,5,'rgba(255,0,0,0.2)']
+                    ]
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var line = new RGraph.Scatter({
+            id: 'cvs',
+            data: [[45,36],[156,32],[142,23],[256,59],[123,48]],
+            options: {
+                xmax: 365,
+                ymax: 60,
+                labels: ['Q1','Q2','Q3','Q4'],
+                ylabelsCount: 6,
+                numyticks: 12,
+                backgroundHbars: [
+                    [0,45,'rgba(0,255,0,0.2)'],
+                    [45,10,'rgba(255,255,0,0.2)'],
+                    [55,5,'rgba(255,0,0,0.2)']
+                ]
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+</body>
+</html>

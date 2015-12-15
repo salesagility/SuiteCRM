@@ -1,0 +1,162 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A spline range Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A spline range chart (ie a range chart that's curvy)" />
+</head>
+<body>
+
+    <h1>A spline range Line chart</h1>
+    
+    <p>
+        This range chart is a little different from the others as the datasets are organised a little differently. The first dataset
+        that you give to the Line chart becomes the bottom dataset and is an absolute set of values - in the example here the first
+        number is 4.
+    </p>
+    
+    <p>
+        The second dataset, which is the top line, is additive/accumulative. In this case the first point of the second dataset is 1. So
+        added to the first point of the first dataset (which was 4) you get a total of 5 - which is the figure that is shown on the
+        chart.
+    </p>
+    
+    <p>
+        The reason for this is because the spline range chart is really a stacked spline chart - but with the bottom dataset using
+        transparent as its color - so you can't see it.
+    </p>
+    
+    <p>
+        This is shown below by gradually changing the color of the "bottom" dataset from blue to transparent.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+
+    <script>
+        window.onload = function ()
+        {
+            var opacity = 1;
+           
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [4,6,16,15,13,14,18,15,18,16],
+                    [1,1,1,2,3,5,9,9,6,3]
+                ],
+                options: {
+                    spline: true,
+                    filled: true,
+                    colors: ['red'],
+                    shadow: false,
+                    fillstyle: ['rgba(0,0,255,1)','#fdd'],
+                    labels: ['a','b','c','d','e','f','g','h','i','j'],
+                    numxticks: 9,
+                    tickmarks: null,
+                    gutterBottom: 35,
+                    textSize:14,
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    noxaxis: true
+                }
+            }).draw();
+
+
+            for (var i=100; i>=0; i-=1) {
+                (function (idx)
+                {
+                    var opacity = i * 0.01;
+                    setTimeout(function () {line.set('fillstyle', ['rgba(0,0,255,' + opacity + ')','#fdd']); RGraph.redraw();}, (10 - idx) * 20);
+                })(i);
+            }
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var opacity = 1;
+       
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [4,6,16,15,13,14,18,15,18,16],
+                [1,1,1,2,3,5,9,9,6,3]
+            ],
+            options: {
+                spline: true,
+                filled: true,
+                colors: ['red'],
+                shadow: false,
+                fillstyle: ['rgba(0,0,255,1)','#fdd'],
+                labels: ['a','b','c','d','e','f','g','h','i','j'],
+                numxticks: 9,
+                tickmarks: null,
+                gutterBottom: 35,
+                textSize:14,
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                noxaxis: true
+            }
+        }).draw();
+
+
+        for (var i=100; i>=0; i-=1) {
+            (function (idx)
+            {
+                var opacity = i * 0.01;
+                setTimeout(function () {line.set('fillstyle', ['rgba(0,0,255,' + opacity + ')','#fdd']); RGraph.redraw();}, (10 - idx) * 20);
+            })(i);
+        }
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

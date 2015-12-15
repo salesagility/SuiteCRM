@@ -1,0 +1,207 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    
+    <link rel="stylesheet" href="../css/animations.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A demonstration of how you can add CSS3 animations to your charts" />
+    
+</head>
+<body>
+
+    <h1>CSS3 animations</h1>
+    
+    <p>
+        New CSS3 animations can be used to great effect with your canvas tags. <b>Updated:</b> This demo was updated on the 20th June
+        2013 so that now instead of just one switch between charts it repeatedly switches back and forth between charts.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    
+    <br />
+    
+    <script>
+        chart = 1;
+
+        /**
+        * Draws the blue bar chart
+        */
+        function drawBar1 ()
+        {
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: [4,5,3,8,4,9,6,5,3],
+                options: {
+                    colors: ['blue'],
+                    labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                    strokestyle: 'rgba(0,0,0,0)',
+                    backgroundGridAutofitNumvlines: 9
+                }
+            }).draw();
+        }
+
+
+
+
+        /**
+        * Draws the red bar chart
+        */
+        function drawBar2 ()
+        {
+            var bar2 = new RGraph.Bar({
+                id: 'cvs',
+                data: [4,8,5,4,8,6,3,5,2],
+                options: {
+                    colors: ['red'],
+                    labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                    strokestyle: 'rgba(0,0,0,0)',
+                    backgroundGridAutofitNumvlines: 9
+                }
+            }).draw();
+        }
+
+
+
+
+        /**
+        * The swap function
+        */
+        function swap ()
+        {
+            $('#cvs').addClass('animated bounceOutLeft');
+            setTimeout(function ()
+            {
+                RGraph.Reset(document.getElementById("cvs"));
+
+                if (chart == 2) {
+                    drawBar1();
+                    chart = 1;
+                } else {
+                    drawBar2();
+                    chart = 2;
+                }
+
+                $('#cvs').removeClass('bounceOutLeft');
+                $('#cvs').addClass('bounceInLeft');
+            }, 750)
+        }
+        
+        /**
+        * Start with the first bar chart
+        */
+        drawBar1();
+        chart = 1;
+    </script>
+    
+    <button onclick="swap()">Click me</button>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    chart = 1;
+
+    <span>/**
+    * Draws the blue bar chart
+    */</span>
+    function drawBar1 ()
+    {
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: [4,5,3,8,4,9,6,5,3],
+            options: {
+                colors: ['blue'],
+                labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw();
+    }
+
+
+
+
+    <span>/**
+    * Draws the red bar chart
+    */</span>
+    function drawBar2 ()
+    {
+        var bar2 = new RGraph.Bar({
+            id: 'cvs',
+            data: [4,8,5,4,8,6,3,5,2],
+            options: {
+                colors: ['red'],
+                labels: ['Mal', 'Barry', 'Gary', 'Neil', 'Kim', 'Pete', 'Lou', 'Fred', 'Jobe'],
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw();
+    }
+
+
+
+
+    <span>/**
+    * The swap function
+    */</span>
+    function swap ()
+    {
+        $('#cvs').addClass('animated bounceOutLeft');
+        setTimeout(function ()
+        {
+            RGraph.Reset(document.getElementById("cvs"));
+
+            if (chart == 2) {
+                drawBar1();
+                chart = 1;
+            } else {
+                drawBar2();
+                chart = 2;
+            }
+
+            $('#cvs').removeClass('bounceOutLeft');
+            $('#cvs').addClass('bounceInLeft');
+        }, 750)
+    }
+    
+    <span>/**
+    * Start with the first bar chart
+    */</span>
+    drawBar1();
+    chart = 1;
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

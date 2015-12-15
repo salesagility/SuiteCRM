@@ -1,0 +1,154 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.drawing.rect.js" ></script>
+    <script src="../libraries/RGraph.hprogress.js" ></script>
+    
+    <title>A HProgress based bullet chart</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Horizontal Progress Bar being used to show a bullet chart" />
+     
+</head>
+<body>
+
+    <h1>A HProgress based bullet chart</h1>
+
+    <canvas id="cvs" width="600" height="100">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var hprogress = new RGraph.HProgress({
+                id: 'cvs',
+                min: 0,
+                max: 100,
+                value: 85,
+                options: {
+                    margin: 12
+                }
+            }).grow();
+            
+            var coords = hprogress.coords[0];
+            var x = hprogress.getXCoord(55);
+
+            // Create the rect object that covers the lower part
+            var rect = new RGraph.Drawing.Rect({
+                id: 'cvs',
+                x: hprogress.gutterLeft,
+                y: hprogress.gutterTop + 5,
+                width: x - hprogress.gutterLeft,
+                height: hprogress.canvas.height - hprogress.gutterTop - hprogress.gutterBottom - 10,
+                options: {
+                    fillstyle: 'rgba(255,0,0,0.5)'
+                }
+            }).draw()
+            
+            x = hprogress.getXCoord(95);
+
+            // Create the rect object that indicates the target
+            var rect = new RGraph.Drawing.Rect({
+                id: 'cvs',
+                x: x - 3,
+                y: hprogress.gutterTop + 5,
+                width: 6,
+                height: hprogress.canvas.height - hprogress.gutterTop - hprogress.gutterBottom - 10,
+                options: {
+                    fillstyle: 'black',
+                    highlightStroke: 'rgba(0,0,0,0)',
+                    tooltips: ['The target was 95% of eveything, everywhere']
+                }
+            }).draw()
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.dynamic.rect.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.hprogress.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="100"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var hprogress = new RGraph.HProgress({
+            id: 'cvs',
+            min: 0,
+            max: 100,
+            value: 85,
+            options: {
+                margin: 12
+            }
+        }).grow();
+        
+        var coords = hprogress.coords[0];
+        var x = hprogress.getXCoord(55);
+
+        <span>// Create the rect object that covers the lower part</span>
+        var rect = new RGraph.Drawing.Rect({
+            id: 'cvs',
+            x: hprogress.gutterLeft,
+            y: hprogress.gutterTop + 5,
+            width: x - hprogress.gutterLeft,
+            height: hprogress.canvas.height - hprogress.gutterTop - hprogress.gutterBottom - 10,
+            options: {
+                fillstyle: 'rgba(255,0,0,0.5)'
+            }
+        }).draw();
+        
+        x = hprogress.getXCoord(95);
+
+        <span>// Create the rect object that indicates the target</span>
+        var rect = new RGraph.Drawing.Rect({
+            id: 'cvs',
+            x: x - 3,
+            y: hprogress.gutterTop + 5,
+            width: 6,
+            height: hprogress.canvas.height - hprogress.gutterTop - hprogress.gutterBottom - 10,
+            options: {
+                fillstyle: 'black',
+                highlightStroke: 'rgba(0,0,0,0)',
+                tooltips: ['The target was 95% of eveything, everywhere']
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>A basic example of combined Bar and Line charts</title>
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content=" A basic example of a combined Bar and Line chart. It shows a simple example and there is little happening on the page so the source is easy to navigate." />
+    <meta name="googlebot" content="NOODP">
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <!-- Include the RGraph libraries -->
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+
+</head>
+
+<body>
+
+    <h1>A basic example of a combined Bar/Line chart</h1>
+
+    <!-- The canvas on to which the chart is drawn -->
+    <canvas id="cvs" width="1000" height="250">[No canvas support]</canvas>
+
+    <!-- The Javascript code that creates the chart -->
+    <script>
+        window.onload = function ()
+        {
+            /**
+            * The order in which you create the charts is important - the Line chart must be last. If you create the Bar object
+            * second, it will be drawn "on top" of the Line.
+            */
+            var bar  = new RGraph.Bar({
+                id: 'cvs',
+                data: [143,140,141,135,136,132,129,125,126,127,127,129]
+            })
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: [14,35,15,36,37,26,28,18,38,17,9,14],
+                options: {
+                    backgroundGrid: false,
+                    noaxes: true,
+                    linewidth: 3,
+                    tickmarks: 'endcircle',
+                    yaxispos: 'right',
+                    ymax: 50,
+                    title: 'A combined Bar and Line chart',
+                    tooltips: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    tooltipsEvent: 'mousemove'
+                }
+            })
+
+
+            /**
+            * Some Bar chart configuration
+            */
+            bar.set({
+                ymax: 250,
+                gutterLeft: 50,
+                gutterRight: 5,
+                colors: ['yellow'],
+                strokestyle: '#ddd',
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                shadow: false,
+                tooltips: !RGraph.ISOLD ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] : null
+            })
+
+
+
+
+            /**
+            * These gutters determine the correct placement of the Line chart
+            */
+            line.set('gutter.left', bar.get('gutter.left') + ((line.canvas.width - bar.get('gutter.left') - bar.get('gutter.right')) / 24))
+            line.set('gutter.right', ((line.canvas.width - bar.Get('gutter.left') - bar.get('gutter.right')) / 24) + bar.get('gutter.right'));
+            
+            /**
+            * Don't show Y labels on the Line chart
+            */
+            line.set('ylabels', false);
+            
+            /**
+            * Now draw both of the charts. Bar chart first, then the Line chart is drawn on top of it
+            */
+            RGraph.redraw()
+        };
+    </script>
+    
+    <p>
+        This is an example of a Bar chart combined with a Line chart. The source code is documented to make it easier
+        for you to copy and paste it if you wish.
+    </p>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        <span>/**
+        * The order in which you create the charts is important - the Line chart must be last. If you create the Bar object
+        * second, it will be drawn "on top" of the Line.
+        */</span>
+        var bar  = new RGraph.Bar({
+            id: 'cvs',
+            data: [143,140,141,135,136,132,129,125,126,127,127,129]
+        })
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: [14,35,15,36,37,26,28,18,38,17,9,14],
+            options: {
+                backgroundGrid: false,
+                noaxes: true,
+                linewidth: 3,
+                tickmarks: 'endcircle',
+                yaxispos: 'right',
+                ymax: 50,
+                title: 'A combined Bar and Line chart',
+                tooltips: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                tooltipsEvent: 'mousemove'
+            }
+        })
+
+
+        <span>/**
+        * Some Bar chart configuration
+        */</span>
+        bar.set({
+            ymax: 250,
+            gutterLeft: 50,
+            gutterRight: 5,
+            colors: ['yellow'],
+            strokestyle: '#ddd',
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            shadow: false,
+            tooltips: !RGraph.ISOLD ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] : null
+        })
+
+
+
+
+        <span>/**
+        * These gutters determine the correct placement of the Line chart
+        */</span>
+        line.set({
+            gutterLeft: bar.get('gutterLeft') + ((line.canvas.width - bar.get('gutterLeft') - bar.get('gutter.right')) / 24)
+        });
+        line.set({
+            gutterRight: ((line.canvas.width - bar.get('gutterLeft') - bar.get('gutterRight')) / 24) + bar.get('gutterRight')
+        });
+        
+        <span>/**
+        * Don't show Y labels on the Line chart
+        */</span>
+        line.set({
+            ylabels: false
+        });
+        
+        <span>/**
+        * Now draw both of the charts. Bar chart first, then the Line chart is drawn on top of it
+        */</span>
+        RGraph.redraw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

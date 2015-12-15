@@ -1,0 +1,149 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A Line chart with gradients</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A basic Line chart" />
+     
+</head>
+<body>
+
+    <h1>A stacked, spline line chart</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var mline = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [4,6,12,16,8,4,2,8,18,16,14,16],
+                    [2,4,8,4,2,6,6,12,8,10,6,8],
+                    [1,3.5,5,3,4,5,6,11,8,9,5,7]
+                ],
+                options: {
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    gutterLeft: 40,
+                    gutterTop: 35,
+                    gutterRight: 15,
+                    gutterBottom: 35,
+                    colors: ['black', 'black', 'black'],
+                    filled: true,
+                    filledAccumulative: true,
+                    fillstyle: ['Gradient(white:red)', 'Gradient(white:blue)', 'Gradient(white:green)'],
+                    unitsPost: '%',
+                    linewidth: 0.25,
+                    spline: !RGraph.ISOLD,
+                    title: 'Robert, Daniel and Janices stats',
+                    titleVpos: 0.5,
+                    textColor: '#333',
+                    textFont: 'Arial',
+                    key: ['Robert', 'Daniel', 'Janice'],
+                    keyColors: ['red', 'blue', 'green'],
+                    keyBackground: 'white',
+                    keyPositionX: 50,
+                    shadowOffsety: 2,
+                    shadowBlur: 5,
+                    tickmarks: null,
+                    backgroundGridAutofitNumvlines: 11,
+                    numxticks: 11
+                }
+            }).on('beforedraw', function (obj)
+            {
+                RGraph.clear(obj.canvas, 'white');
+            })
+            .draw()
+            .trace2({frames: 60});
+        };
+    </script>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var mline = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [4,6,12,16,8,4,2,8,18,16,14,16],
+                [2,4,8,4,2,6,6,12,8,10,6,8],
+                [1,3.5,5,3,4,5,6,11,8,9,5,7]
+            ],
+            options: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                gutterLeft: 40,
+                gutterTop: 35,
+                gutterRight: 15,
+                gutterBottom: 35,
+                colors: ['black', 'black', 'black'],
+                filled: true,
+                filledAccumulative: true,
+                fillstyle: ['Gradient(white:red)', 'Gradient(white:blue)', 'Gradient(white:green)'],
+                unitsPost: '%',
+                linewidth: 0.25,
+                spline: !RGraph.ISOLD,
+                title: 'Robert, Daniel and Janices stats',
+                titleVpos: 0.5,
+                textColor: '#333',
+                textFont: 'Arial',
+                key: ['Robert', 'Daniel', 'Janice'],
+                keyColors: ['red', 'blue', 'green'],
+                keyBackground: 'white',
+                keyPositionX: 50,
+                shadowOffsety: 2,
+                shadowBlur: 5,
+                tickmarks: null,
+                backgroundGridAutofitNumvlines: 11,
+                numxticks: 11
+            }
+        }).on('beforedraw', function (obj)
+        {
+            RGraph.clear(obj.canvas, 'white');
+        })
+        .draw()
+        .trace2({frames: 60});
+    };
+&lt;/script&gt;
+</pre>
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

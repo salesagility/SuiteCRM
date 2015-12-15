@@ -1,0 +1,106 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bipolar.js" ></script>
+    
+    <title>A basic Bipolar chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A demonstration of a Bipolar chart that uses data that is contained in hidden DIV tags in the page as a comma separated list of values." />
+     
+</head>
+<body>
+
+    <h1>A Bipolar chart using CSV data</h1>
+    
+    <p>
+        The CSV data is hidden in the page using a hidden DIV. It's then retrieved using document.getElementById()
+        and split up using the Javascript .split() function. The resulting array is an array of STRINGS so it's converted
+        to numbers using the Number() function.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var left  = document.getElementById("csv-data-left").innerHTML.split(/,/);
+            var right = document.getElementById("csv-data-right").innerHTML.split(/,/);
+            
+            // Since they're strings, convert them to numbers
+            for (var i=0; i<left.length; ++i) {left[i] = Number(left[i]);}
+            for (var i=0; i<right.length; ++i) {right[i] = Number(right[i]);}
+
+            var bipolar = new RGraph.Bipolar({
+                id: 'cvs',
+                left: left,
+                right: right,
+                options: {
+                    labels: ['John','Luke','Pete','Jane','Fred','Jolene','Luis']
+                }
+            }).draw();
+        };
+    </script>
+    
+    <p>
+        <b>Note:</b>
+        In October 2013 a new CSV reader was added to RGraph. It makes reading CSV files much easier. You can read about
+        <a href="/docs/csv-file-reader.html">the new CSV reader</a> here.
+    </p>
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bipolar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var left  = document.getElementById("csv-data-left").innerHTML.split(/,/);
+        var right = document.getElementById("csv-data-right").innerHTML.split(/,/);
+        
+        <span>// Since they're strings, convert them to numbers</span>
+        for (var i=0; i&lt;left.length; ++i) {left[i] = Number(left[i]);}
+        for (var i=0; i&lt;right.length; ++i) {right[i] = Number(right[i]);}
+
+        var bipolar = new RGraph.Bipolar({
+            id: 'cvs',
+            left: left,
+            right: right,
+            options: {
+                labels: ['John','Luke','Pete','Jane','Fred','Jolene','Luis']
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+    
+    <div id="csv-data-left" style="display: none">6,8,6,3,5,2,4</div>
+    <div id="csv-data-right" style="display: none">4,8,6,3,5,2,4</div>
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+</body>
+</html>

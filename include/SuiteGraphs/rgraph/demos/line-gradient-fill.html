@@ -1,0 +1,157 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A Line chart with a gradient fill</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Line chart with a gradient fill" />
+     
+</head>
+<body>
+
+    <h1>A Line chart with a gradient fill</h1>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var points = 365 * 2,
+                data   = [],
+                last   = 16,
+                max    = 50;
+
+            // Create the data
+            for (var i=0; i<points; i+=1) {
+                
+                last = (RGraph.random(-1,1) + last);
+                last = Math.min(last, max);
+                last = Math.max(last, 0);
+                
+                data.push(last);
+            }
+
+            var l1 = new RGraph.Line({
+                id: 'cvs',
+                data: data,
+                options: {
+                    shadow: null,
+                    filled: true,
+                    fillstyle: 'Gradient(rgba(255,255,255,0.5):rgba(0,200,200,0.25))',
+                    numxticks: 8,
+                    labels: [
+                        '','Q1 `10','',
+                        '','\r\nQ2 `10','',
+                        '','Q3 `10','',
+                        '','\r\nQ4 `10','',
+                        '','Q1 `11','',
+                        '','\r\nQ2 `11','',
+                        '','Q3 `11','',
+                        '','\r\nQ4 `11',''
+                    ],
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    colors: ['rgb(33,200,200)'],
+                    gutterBottom: 50,
+                    noxaxis: true,
+                    noyaxis: true,
+                    tickmarks: null
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var points = 365 *2,
+            data   = [],
+            last   = 16,
+            max    = 50;
+
+        // Create the data
+        for (var i=0; i&lt;points; i+=1) {
+            
+            last = (RGraph.random(-1,1) + last);
+            last = Math.min(last, max);
+            last = Math.max(last, 0);
+            
+            data.push(last);
+        }
+
+        var l1 = new RGraph.Line({
+            id: 'cvs',
+            data: data,
+            options: {
+                shadow: null,
+                filled: true,
+                fillstyle: 'Gradient(rgba(255,255,255,0.5):rgba(0,200,200,0.25))',
+                numxticks: 8,
+                labels: [
+                    '','Q1 `10','',
+                    '','\r\nQ2 `10','',
+                    '','Q3 `10','',
+                    '','\r\nQ4 `10','',
+                    '','Q1 `11','',
+                    '','\r\nQ2 `11','',
+                    '','Q3 `11','',
+                    '','\r\nQ4 `11',''
+                ],
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                colors: ['rgb(33,200,200)'],
+                gutterBottom: 50,
+                noxaxis: true,
+                noyaxis: true,
+                tickmarks: null
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

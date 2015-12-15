@@ -1,0 +1,149 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>A bar chart with a HTML key</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An example of a Bar chart that's using a HTML key" />
+
+    <script>
+        window.onload = function ()
+        {
+            var year1 = [4,5,8,6,7,8,4,6,5,3,2,1];
+            var year2 = [1,2,6,8,4,9,5,6,3,5,4,4];
+            var data  = [];
+            
+            // Combine the data
+            for (var i=0; i<12; i+=1) {
+                data.push([year1[i], year2[i]]);
+            }
+            
+            // Draw the key first
+            RGraph.HTML.Key('container', {
+                labels: ['First year','Second year'],
+                colors: ['red','#0c0'],
+                tableCss: {
+                    top: '25px',
+                    left: '600px',
+                    position: 'absolute'
+                }
+            });
+    
+            // Now draw the chart (AFTER the key)
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: data,
+                options: {
+                    colors: ['red','#0c0'],
+                    grouping: 'stacked',
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    strokestyle: 'rgba(0,0,0,0)'
+                }
+            }).draw();
+        };
+    </script>
+</head>
+<body>
+    
+    <h1>An example of a Bar chart that's using a HTML key</h1>
+    
+    <p>
+        Instead of using a key that's drawn onto the canvas this shows you an example of using the HTML
+        based key that was added to RGraph in December 2013. To use it effectively it will help if you first understand
+        CSS positioning - both relative and absolute.
+    </p>
+
+    
+    
+    
+    
+    <!-- This is the HTML needed for the HTML key - the key is appended to the DIV, after the canvas -->
+    <div id="container" style="position: relative">
+        <canvas id="cvs" width="600" height="200"></canvas>
+    </div>
+
+    
+    
+    
+    
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;div id="container" style="position: relative"&gt;
+    &lt;canvas id="cvs" width="600" height="250"&gt;[No canvas support]&lt;/canvas&gt;
+&lt;/div&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var year1 = [4,5,8,6,7,8,4,6,5,3,2,1];
+        var year2 = [1,2,6,8,4,9,5,6,3,5,4,4];
+        var data  = [];
+        
+        <span>// Combine the data</span>
+        for (var i=0; i&lt;12; i+=1) {
+            data.push([year1[i], year2[i]]);
+        }
+        
+        <span>// Draw the key first</span>
+        RGraph.HTML.Key('container', {
+            labels: ['First year','Second year'],
+            colors: ['red','#0c0'],
+            tableCss: {
+                top: '25px',
+                left: '600px',
+                position: 'absolute'
+            }
+        });
+
+        <span>// Now draw the chart (AFTER the key)</span>
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: data,
+            options: {
+                colors: ['red','#0c0'],
+                grouping: 'stacked',
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+    
+    
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

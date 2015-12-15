@@ -1,0 +1,191 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>A demo of a clipped Line/Bar chart</title>
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Line chart is drawn, then the canvas is clipped to the area under a line - then the bar chart is drawn." />
+     
+</head>
+<body>
+
+    <h1>A demo of a clipped Line/Bar chart</h1>
+    
+    <p>
+        This is a demo of first drawing a (curvy) Line chart and then using the coordinates to specify a clipping area to
+        then draw the Bar chart. The Bar charts background grid and axes are turned off so as not to appear over the Line
+        chart. The clipping areas height is slightly smaller than the coordinates (by half the linewidth) so the Bar chart
+        does not not appear over the parts of the Line where the bars are.
+    </p>
+
+    <canvas id="cvs" width="600" height="300">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var linewidth = 5;
+            var linedata  = [1,5,6,8,9,8,6,4,3,1];
+            var bardata   = [8,7,9,10,8,7,6,5,4];
+
+            var line = new RGraph.Line({
+                id: 'cvs',
+                data: linedata,
+                options: {
+                    backgroundGridVlines: false,
+                    backgroundGridBorder: false,
+                    spline: true,
+                    tickmarks: 'endcircle',
+                    linewidth: linewidth,
+                    shadow: false,
+                    textSize: 14
+                }
+            }).draw();
+            
+            var ca = line.canvas;
+            var co = line.context;
+                
+                
+                
+                
+                
+                
+            // Draw a area under the chart and clip to it
+            co.beginPath();
+                co.moveTo(line.gutterLeft, ca.height)
+                for (var i=0,len=line.coordsSpline[0].length; i<len; ++i) {
+                    co.lineTo(line.coordsSpline[0][i][0], line.coordsSpline[0][i][1] + (linewidth / 2) - 0.5);
+                }
+                co.lineTo(ca.width, ca.height)
+                co.clip();
+                
+                
+                
+                
+                
+
+            // Now draw the bar chart
+            var bar = new RGraph.Bar({
+                id: 'cvs',
+                data: bardata,
+                options: {
+                    labels: ['Rob','Lucy','Lynsey','Paul','Olga','Jerry','Kev','Luis','Hoolio'],
+                    backgroundGrid: false,
+                    noxaxis: true,
+                    noyaxis: true,
+                    colors: ['gradient(#eef:#01B4FF)'],
+                    shadow: false,
+                    strokestyle: 'rgba(0,0,0,0)',
+                    textSize: 14
+                }
+            }).wave();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="300"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var linewidth = 5;
+        var linedata  = [1,5,6,8,9,8,6,4,3,1];
+        var bardata   = [8,7,9,10,8,7,6,5,4];
+
+        var line = new RGraph.Line({
+            id: 'cvs',
+            data: linedata,
+            options: {
+                backgroundGridVlines: false,
+                backgroundGridBorder: false,
+                spline: true,
+                tickmarks: 'endcircle',
+                linewidth: linewidth,
+                shadow: false,
+                textSize: 14
+            }
+        }).draw();
+        
+        var ca = line.canvas;
+        var co = line.context;
+            
+            
+            
+            
+            
+            
+        // Draw a area under the chart and clip to it
+        co.beginPath();
+            co.moveTo(line.gutterLeft, ca.height)
+            for (var i=0,len=line.coordsSpline[0].length; i&lt;len; ++i) {
+                co.lineTo(line.coordsSpline[0][i][0], line.coordsSpline[0][i][1] + (linewidth / 2) - 0.5);
+            }
+            co.lineTo(ca.width, ca.height)
+            co.clip();
+            
+            
+            
+            
+            
+
+        // Now draw the bar chart
+        var bar = new RGraph.Bar({
+            id: 'cvs',
+            data: bardata,
+            options: {
+                labels: ['Rob','Lucy','Lynsey','Paul','Olga','Jerry','Kev','Luis','Hoolio'],
+                backgroundGrid: false,
+                noxaxis: true,
+                noyaxis: true,
+                colors: ['gradient(#eef:#01B4FF)'],
+                shadow: false,
+                strokestyle: 'rgba(0,0,0,0)',
+                textSize: 14
+            }
+        }).wave();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

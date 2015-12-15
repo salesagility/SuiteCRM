@@ -1,0 +1,125 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.key.js" ></script>
+    <script src="../libraries/RGraph.pie.js" ></script>
+
+    <title>A Pie chart that shows movie genre popularity</title>
+    <meta name="robots" content="noindex,nofollow" />
+</head>
+<body>
+
+    <h1>A Pie chart that shows movie genre popularity</h1>
+
+    <canvas id="cvs" width="550" height="325">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data = [365555,363959,354964,341772,531421,475698,465630,458739,438358,437585,435162,427067,422607,421752,372254];
+            
+            // The labels
+            var labels = [
+                'Childrens',    'Classics',
+                'Travel',       'Music',
+                'Sports ',      'Sci-Fi',
+                'Animation',    'Drama',
+                'Comedy',       'Action',
+                'New',          'Games',
+                'Foreign',      'Family',
+                'Documentary',  'Horror'
+            ];
+
+            // Create the Pie chart object
+            var pie = new RGraph.Pie({
+                id: 'cvs',
+                data: data
+            })
+
+            // Append the number to the labels
+            for (var i=0; i<data.length; ++i) {
+                labels[i] = labels[i] + ' ' + RGraph.numberFormat(pie, data[i]);
+            }
+
+            pie.set({
+                labels: labels,
+                strokestyle: 'white',
+                linewidth: 1
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.key.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.pie.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="350" height="325"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = [365555,363959,354964,341772,531421,475698,465630,458739,438358,437585,435162,427067,422607,421752,372254];
+        
+        <span>// The labels</span>
+        var labels = [
+            'Childrens',    'Classics',
+            'Travel',       'Music',
+            'Sports ',      'Sci-Fi',
+            'Animation',    'Drama',
+            'Comedy',       'Action',
+            'New',          'Games',
+            'Foreign',      'Family',
+            'Documentary',  'Horror'
+        ];
+
+        <span>// Create the Pie chart object</span>
+        var pie = new RGraph.Pie({
+            id: 'cvs',
+            data: data
+        })
+
+        <span>// Append the number to the labels</span>
+        for (var i=0; i&lt;data.length; ++i) {
+            labels[i] = labels[i] + ' ' + RGraph.numberFormat(pie, data[i]);
+        }
+
+        pie.set({
+            labels: labels,
+            strokestyle: 'white',
+            linewidth: 1
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

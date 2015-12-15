@@ -1,0 +1,123 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.line.js" ></script>
+    
+    <title>An adjustablerange Line chart</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A range Line chart which is adjustable - so you can drag the data points up and down" />
+     
+</head>
+<body>
+
+    <h1>An adjustable range Line chart</h1>
+    
+    <p>
+        An adjustable range chart.
+    </p>
+
+    <canvas id="cvs" width="600" height="250">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var l1 = new RGraph.Line({
+                id: 'cvs',
+                data: [
+                    [8,8,6,6,8,9,13,15,16,15,15,12,11,11,13,10,12,11,10,13,12,9,8,11,12,10,16,15,12,11],
+                    [4,5,3,2,5,6,8,9,5,6,4,5,3,2,5,6,8,9,5,6,4,5,3,2,5,6,8,9,5,6]
+                ],
+                options: {
+                    gutterTop: 50,
+                    labels: ['13th','14th','15th','16th','15th','16th','17th','18th','19th'],
+                    title: 'Range of fuel consumption',
+                    filled: true,
+                    filledRange: true,
+                    fillstyle: 'rgba(128,255,128,0.5)',
+                    linewidth: 2,
+                    colors: ['green'],
+                    numxticks: 8,
+                    adjustable: true,
+                    tickmarks: null,
+                    ymax: 25,
+                    textSize: 14
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.line.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var l1 = new RGraph.Line({
+            id: 'cvs',
+            data: [
+                [8,8,6,6,8,9,13,15,16,15,15,12,11,11,13,10,12,11,10,13,12,9,8,11,12,10,16,15,12,11],
+                [4,5,3,2,5,6,8,9,5,6,4,5,3,2,5,6,8,9,5,6,4,5,3,2,5,6,8,9,5,6]
+            ],
+            options: {
+                gutterTop: 50,
+                labels: ['13th','14th','15th','16th','15th','16th','17th','18th','19th'],
+                title: 'Range of fuel consumption',
+                filled: true,
+                filledRange: true,
+                fillstyle: 'rgba(128,255,128,0.5)',
+                linewidth: 2,
+                colors: ['green'],
+                numxticks: 8,
+                adjustable: true,
+                tickmarks: null,
+                ymax: 25,
+                textSize: 14
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+
+
+    <p>
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>
+

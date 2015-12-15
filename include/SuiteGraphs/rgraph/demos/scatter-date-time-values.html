@@ -1,0 +1,116 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.scatter.js" ></script>
+    
+    <title>A Scatter chart using Date/Time values</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Scatter chart which uses Dates as X values" />
+     
+</head>
+<body>
+
+    <h1>A Scatter chart using Date/Time values</h1>
+    
+    <p>
+        This shows how you can use Date/Time values as X values with the Scatter chart. Although it's a Scatter chart it can also
+        show a line, as you can see. The chart has two lines, one of which is stepped.
+    </p>
+
+    <canvas id="cvs" width="600" height="200">[No canvas support]</canvas>
+    
+    <script>
+        window.onload = function ()
+        {
+            var data1 = [['2012-02-12 15:51:55', 5],['2012-03-01 21:45',10],[],[],['August 15 2012',7],['15 Nov 2012', 16]];
+            var data2 = [['2012/01/05 12:45:45', 6], ['2012/03/05 09:45:45',17],['2012/05/05 12:48:45',13],['2012/09/09 15:45:45',19],['2012/12/31 23:59:59',2]];
+
+            var scatter = new RGraph.Scatter({
+                id: 'cvs',
+                data: [data1, data2],
+                options: {
+                    xmin: '2012-01-01',          // Start of year
+                    xmax: '2012-12-31 23:59:59', // End of year
+                    labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    line: true,
+                    lineLinewidth: 1,
+                    lineStepped: [false, true],
+                    lineColors: ['red'],
+                    lineShadowColor: '#999',
+                    lineShadowBlur: 15,
+                    lineShadowOffsetx: 0,
+                    lineShadowOffsety: 0,
+                    noxaxis: true,
+                    backgroundGridAutofitNumvlines: 12
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.scatter.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="200"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data1 = [['2012-02-12 15:51:55', 5],['2012-03-01 21:45',10],[],[],['August 15 2012',7],['15 Nov 2012', 16]];
+        var data2 = [['2012/01/05 12:45:45', 6], ['2012/03/05 09:45:45',17],['2012/05/05 12:48:45',13],['2012/09/09 15:45:45',19],['2012/12/31 23:59:59',2]];
+
+        var scatter = new RGraph.Scatter({
+            id: 'cvs',
+            data: [data1, data2],
+            options: {
+                xmin: '2012-01-01',          <span>// Start of year</span>
+                xmax: '2012-12-31 23:59:59', <span>// End of year</span>
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                line: true,
+                lineLinewidth: 1,
+                lineStepped: [false, true],
+                lineColors: ['red'],
+                lineShadowColor: '#999',
+                lineShadowBlur: 15,
+                lineShadowOffsetx: 0,
+                lineShadowOffsety: 0,
+                noxaxis: true,
+                backgroundGridAutofitNumvlines: 12
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+    <p>        
+        <a href="">&laquo; Back</a>
+    </p>
+
+</body>
+</html>

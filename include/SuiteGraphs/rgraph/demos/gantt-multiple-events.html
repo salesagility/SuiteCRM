@@ -1,0 +1,179 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.common.dynamic.js" ></script>
+    <script src="../libraries/RGraph.common.tooltips.js" ></script>
+    <script src="../libraries/RGraph.common.resizing.js" ></script>
+    <script src="../libraries/RGraph.gantt.js" ></script>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <title>A Gantt chart showing multiple events per row</title>
+    
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="A Gantt chart showing multiple events per row" />
+     
+</head>
+<body>
+
+    <h1>A Gantt chart showing multiple events per row</h1>
+    
+    <p>
+        By using nested arrays you can show multiple events per row (with tooltips).
+    </p>
+    
+    <canvas id="cvs" width="800" height="350">[No canvas support]</canvas>
+
+    <script>
+        window.onload = function ()
+        {
+            var data = [
+                // First row
+                [
+                    [5, 10, null, 'Maths', 'Gradient(#fdd:red)'],
+                    [16, 8, null, 'Maths', 'Gradient(#fdd:red)']
+                ],
+                            
+                // Second row
+                [
+                    [0, 10, null, 'French', 'Gradient(#dfd:green)'],
+                    [14, 10, null, 'French', 'Gradient(#dfd:green)']
+                ],
+                            
+                // Third row
+                [
+                    [0, 5, null, 'German', 'Gradient(pink:#ff69b4)'],
+                    [6, 5,null, 'German', 'Gradient(pink:#ff69b4)'],
+                    [12, 5,null, 'German', 'Gradient(pink:#ff69b4)'],
+                    [18, 5,null, 'German', 'Gradient(pink:#ff69b4)']
+                ],
+                            
+                // Fourth row - only one event on this row
+                [5, 15,null, 'Polish', 'Gradient(#ffffbb:orange)'],
+                            
+                // Fifth row
+                [
+                    [5, 5,null, 'Dutch', 'Gradient(#faa:pink)'],
+                    [11, 5,null, 'Dutch', 'Gradient(#faa:pink)']
+                ]
+            ];
+
+            var gantt = new RGraph.Gantt({
+                id: 'cvs',
+                data: data,
+                options: {
+                    tooltips: ['A','B','C','D','E','F','G','H','I','J','K','L','M'],
+                    hmargin: 10,
+                    xmax: 24,
+                    resizable: true,
+                    labelsInbar: [
+                        'Maths', 'Maths',
+                        'French', 'French',
+                        'German','German','German','German',
+                        'Polish',
+                        'Dutch','Dutch'
+                    ],
+                    labelsInbarAlign: 'center',
+                    labelsInbarFont: 'Arial',
+                    labelsInbarSize:22,
+                    labelsInbarColor: '#333',
+                    vmargin: 10
+                }
+            }).draw();
+        };
+    </script>
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.dynamic.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.tooltips.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.common.resizing.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.gantt.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="800" height="350"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+            var data = [
+                <span>// First row</span>
+                [
+                    [5, 10, null, 'Maths', 'Gradient(#fdd:red)'],
+                    [16, 8, null, 'Maths', 'Gradient(#fdd:red)']
+                ],
+                            
+                <span>// Second row</span>
+                [
+                    [0, 10, null, 'French', 'Gradient(#dfd:green)'],
+                    [14, 10, null, 'French', 'Gradient(#dfd:green)']
+                ],
+                            
+                <span>// Third row</span>
+                [
+                    [0, 5, null, 'German', 'Gradient(pink:#ff69b4)'],
+                    [6, 5,null, 'German', 'Gradient(pink:#ff69b4)'],
+                    [12, 5,null, 'German', 'Gradient(pink:#ff69b4)'],
+                    [18, 5,null, 'German', 'Gradient(pink:#ff69b4)']
+                ],
+                            
+                <span>// Fourth row - only one event on this row</span>
+                [5, 15,null, 'Polish', 'Gradient(#ffffbb:orange)'],
+                            
+                <span>// Fifth row</span>
+                [
+                    [5, 5,null, 'Dutch', 'Gradient(#faa:pink)'],
+                    [11, 5,null, 'Dutch', 'Gradient(#faa:pink)']
+                ]
+            ];
+
+        var gantt = new RGraph.Gantt({
+            id: 'cvs',
+            data: data,
+            options: {
+                tooltips: ['A','B','C','D','E','F','G','H','I','J','K','L','M'],
+                hmargin: 10,
+                xmax: 24,
+                resizable: true,
+                labelsInbar: [
+                    'Maths', 'Maths',
+                    'French', 'French',
+                    'German','German','German','German',
+                    'Polish',
+                    'Dutch','Dutch'
+                ],
+                labelsInbarAlign: 'center',
+                labelsInbarFont: 'Arial',
+                labelsInbarSize:22,
+                labelsInbarColor: '#333',
+                vmargin: 10
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+         
+    </p>
+
+</body>
+</html>

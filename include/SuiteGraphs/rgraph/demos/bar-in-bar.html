@@ -1,0 +1,142 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <script src="../libraries/RGraph.common.core.js" ></script>
+    <script src="../libraries/RGraph.bar.js" ></script>
+    
+    <title>An example of a Bar chart with bars-in-bars</title>
+    
+    <link rel="stylesheet" href="demos.css" type="text/css" media="screen" />
+    
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="description" content="An example of a Bar chart with bars-in-bars" />
+</head>
+<body>
+
+    <h1>An example of a Bar chart with bars-in-bars</h1>
+    
+    <p>
+        By using two bar chart objects you can achieve a bar-in-bar effect. Here it shows the total amount of cars produced versus
+        those sold. It's similar to a stacked or grouped Bar chart.
+    </p>
+
+    <canvas id="cvs" width="900" height="200">[No canvas support]</canvas>
+    <script>
+        window.onload = function ()
+        {
+            var data = {}
+                data.shipped = [88000,88000,105000,105000,116000,116000,126000];
+                data.sold    = [30000,54000,54000,62000,63000,68000,68000];
+    
+            var bar1 = new RGraph.Bar({
+                id: 'cvs',
+                data: data.shipped,
+                options: {
+                    gutterTop: 40,
+                    gutterLeft: 70,
+                    colors: ['rgba(0,0,255,0.2)'],
+                    labels: ['Fred','Barney','Wilma','Betty','Dino','Bam-bam','Pebble'],
+                    labelsAbove: data.shipped,
+                    title: 'Total cars produced vs sold',
+                    strokestyle: 'rgba(0,0,0,0)'
+                }
+            }).draw();
+    
+            var bar2 = new RGraph.Bar({
+                id: 'cvs',
+                data: data.sold,
+                options: {
+                    ymax: bar1.scale2.max,
+                    gutterTop: 40,
+                    gutterLeft: bar1.Get('gutterLeft'),
+                    colors: ['pink'],
+                    noaxes: true,
+                    labelsAbove: true,
+                    hmargin: 20,
+                    ylabels: false,
+                    backgroundGrid: false,
+                    strokestyle: 'rgba(0,0,0,0)'
+                }
+            }).draw();
+        };
+    </script>
+    
+
+
+
+
+
+
+
+    <p></p>
+
+    This goes in the documents header:
+    <pre class="code">
+&lt;script src="RGraph.common.core.js"&gt;&lt;/script&gt;
+&lt;script src="RGraph.bar.js"&gt;&lt;/script&gt;
+</pre>
+    
+    Put this where you want the chart to show up:
+    <pre class="code">
+&lt;canvas id="cvs" width="600" height="250"&gt;
+    [No canvas support]
+&lt;/canvas&gt;
+</pre>
+
+    This is the code that generates the chart:
+    <pre class="code">
+&lt;script&gt;
+    window.onload = function ()
+    {
+        var data = {}
+            data.shipped = [88000,88000,105000,105000,116000,116000,126000];
+            data.sold    = [30000,54000,54000,62000,63000,68000,68000];
+
+        var bar1 = new RGraph.Bar({
+            id: 'cvs',
+            data: data.shipped,
+            options: {
+                gutterTop: 40,
+                gutterLeft: 70,
+                colors: ['rgba(0,0,255,0.2)'],
+                labels: ['Fred','Barney','Wilma','Betty','Dino','Bam-bam','Pebble'],
+                labelsAbove: data.shipped,
+                title: 'Total cars produced vs sold',
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw();
+
+        var bar2 = new RGraph.Bar({
+            id: 'cvs',
+            data: data.sold,
+            options: {
+                ymax: bar1.scale2.max,
+                gutterTop: 40,
+                gutterLeft: bar1.Get('gutterLeft'),
+                colors: ['pink'],
+                noaxes: true,
+                labelsAbove: true,
+                hmargin: 20,
+                ylabels: false,
+                backgroundGrid: false,
+                strokestyle: 'rgba(0,0,0,0)'
+            }
+        }).draw();
+    };
+&lt;/script&gt;
+</pre>
+
+
+
+
+
+    <p>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net" target="_blank" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.rgraph.net', null, 'top=50,left=50,width=600,height=368'); return false"><img src="../images/facebook-large.png" width="200" height="43" alt="Share on Facebook" border="0" title="Visit the RGraph Facebook page" /></a>
+        <a href="https://twitter.com/_rgraph" target="_blank" onclick="window.open('https://twitter.com/_rgraph', null, 'top=50,left=50,width=700,height=400'); return false"><img src="../images/twitter-large.png" width="200" height="43" alt="Share on Twitter" border="0" title="Mention RGraph on Twitter" /></a>
+        
+    </p>
+
+    <a href="">&lt;Back</a><br />
+
+</body>
+</html>
