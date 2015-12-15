@@ -80,7 +80,7 @@ class TemplateHandler {
      * @param String $module The module directory to clear
      * @param String $view Optional view value (DetailView, EditView, etc.)
      */
-    function clearCache($module, $view=''){
+    static function clearCache($module, $view=''){
         $cacheDir = create_cache_directory('modules/'. $module . '/');
         $d = dir($cacheDir);
         while($e = $d->read()){
