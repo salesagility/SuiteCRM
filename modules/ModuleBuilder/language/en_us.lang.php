@@ -661,8 +661,8 @@ $mod_strings = array(
 'LBL_JS_VALIDATE_REL_LABEL'=>'Label - please add a label that will be displayed above the subpanel',
 
 //CONFIRM
-'LBL_CONFIRM_FIELD_DELETE'=>"Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts."
-		. "\\n\\nDo you wish to continue?",
+'LBL_CONFIRM_FIELD_DELETE'=>'Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts. \\n\\nDo you wish to continue?',
+
 'LBL_CONFIRM_RELATIONSHIP_DELETE'=>'Are you sure you wish to delete this relationship?',
 'LBL_CONFIRM_RELATIONSHIP_DEPLOY'=>'This will make this relationship permanent. Are you sure you wish to deploy this relationship?',
 'LBL_CONFIRM_DONT_SAVE' => 'Changes have been made since you last saved, would you like to save?',
@@ -720,10 +720,7 @@ $mod_strings = array(
 
 'LBL_ILLEGAL_FIELD_VALUE' =>"Drop down key cannot contain quotes.",
 'LBL_CONFIRM_SAVE_DROPDOWN' =>"You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-'LBL_POPHELP_VALIDATE_US_PHONE'=>'"Select to validate this field for the entry of a 10-digit<br>"
-				"phone number, with allowance for the country code 1, and<br>"
-                                "to apply a U.S. format to the phone number when the record<br>"
-                                "is saved. The following format will be applied: (xxx) xxx-xxxx."',
+'LBL_POPHELP_VALIDATE_US_PHONE'=>'Select to validate this field for the entry of a 10-digit<br>phone number, with allowance for the country code 1, and<br> to apply a U.S. format to the phone number when the record<br> is saved. The following format will be applied: (xxx) xxx-xxxx.',
 'LBL_ALL_MODULES'=>'All Modules',
 'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );
