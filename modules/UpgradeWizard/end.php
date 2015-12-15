@@ -50,7 +50,7 @@ global $path;
 global $sugar_config;
 
 if($unzip_dir == null ) {
-	$unzip_dir = $_SESSION['unzip_dir'];
+	$unzip_dir = isset($_SESSION['unzip_dir']) ? $_SESSION['unzip_dir'] : null;
 }
 /*
 // creating full text search logic hooks
