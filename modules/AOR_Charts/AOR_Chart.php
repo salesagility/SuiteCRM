@@ -23,6 +23,7 @@
  */
 
 class AOR_Chart extends Basic {
+    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 	var $new_schema = true;
 	var $module_dir = 'AOR_Charts';
 	var $object_name = 'AOR_Chart';
@@ -75,7 +76,7 @@ class AOR_Chart extends Basic {
     }
 
     private function getValidChartTypes(){
-        return array('bar','line','pie','radar','rose');
+        return array('bar','line','pie','radar','rose', 'grouped_bar', 'stacked_bar');
     }
 
 
@@ -268,6 +269,18 @@ class AOR_Chart extends Basic {
                 $config = $this->getRoseChartConfig();
                 $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
                 break;
+            case 'grouped_bar':
+                $chartFunction = 'Grouped bar';
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
+                $config = $this->getGroupedBarChartConfig();
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+            case 'stacked_bar':
+                $chartFunction = 'Stacked bar';
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
+                $config = $this->getStackedBarChartConfig();
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800, false);
+                break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
@@ -305,7 +318,8 @@ class AOR_Chart extends Basic {
             new RGraph.Rose({
             id: '$chartId',
             options:{
-                title: '$chartName'
+                title: '$chartName',
+                colors: $this->colours
             },
             data: $chartDataValues
         }).draw();
@@ -313,6 +327,46 @@ class AOR_Chart extends Basic {
 EOF;
         return $html;
     }
+
+
+
+    //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
+    //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
+    //or stacked (false)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = true)
+    {
+        $dataArray = json_decode($chartDataValues);
+        $grouping = 'grouped';
+        if(!$grouped)
+            $grouping='stacked';
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Bar({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                grouping:'$grouping',
+                gutterBottom: 200,
+                gutterTop:40,
+                gutterLeft:30,
+                title: '$chartName',
+                labels: $chartLabelValues,
+                textAngle: 90,
+                colors: $this->colours
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+
 
     private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
@@ -334,6 +388,8 @@ EOF;
                 title: '$chartName',
                 labels: $chartLabelValues,
                 textAngle: 90,
+                colors: $this->colours
+
             }
         }).draw();
         </script>
@@ -358,6 +414,7 @@ EOF;
             options: {
                 title: '$chartName',
                 labels: $chartLabelValues,
+                colors: $this->colours
             }
         }).draw();
         </script>
@@ -381,7 +438,8 @@ EOF;
             data: $chartDataValues,
             options: {
                 title: '$chartName',
-                labels: $chartLabelValues
+                labels: $chartLabelValues,
+                colors: $this->colours
             }
         }).draw();
         </script>
@@ -410,6 +468,7 @@ EOF;
                 title: '$chartName',
                 labels: $chartLabelValues,
                 textAngle: 90,
+                colors: $this->colours
             }
         }).draw();
         </script>
@@ -497,6 +556,30 @@ EOF;
         return $html;
     }
 
+
+
+    private function getRGraphGroupedBarChartData($reportData, $xName,$yName){
+        $chart['labels']=array();
+        $chart['data']=array();
+        foreach($reportData as $row){
+            $chart['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+
+
+
+            $data = array();
+            $data[] = (float)$row[$yName];
+
+            //TODO need to make this more robust (should the other columns be stored in the database?)
+            foreach($row as $key=>$value)
+            {
+                if(strpos(strtolower($key),'grouped')!== false)
+                    $data[] = (float)$row[$key];
+            }
+            $chart['data'][] = $data;
+        }
+        return $chart;
+    }
+
     private function getRGraphBarChartData($reportData, $xName,$yName){
         $chart['labels']=array();
         $chart['data']=array();
@@ -552,6 +635,17 @@ EOF;
     private function getLineChartConfig(){
         return $this->getBarChartConfig();
     }
+
+    private function getGroupedBarChartConfig()
+    {
+        return $this->getBarChartConfig();
+    }
+
+    private function getStackedBarChartConfig()
+    {
+        return $this->getBarChartConfig();
+    }
+
     private function getRoseChartConfig(){
         return $this->getBarChartConfig();
     }

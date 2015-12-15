@@ -131,9 +131,9 @@ class AOR_Report extends Basic {
                 $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
                 break;
             case self::CHART_TYPE_RGRAPH:
-                if($_REQUEST['module']!= 'Home')
+                if($_REQUEST['module']!= 'Home')//Need the require_once for the rgraphincludes as they are only loaded when the home page is hit
                     require_once('include/SuiteGraphs/RGraphIncludes.php');
-                //$html = '<script src="include/SuiteGraphs/RGraphIncludes.php"></script>';
+
                 break;
         }
         $x = 0;
