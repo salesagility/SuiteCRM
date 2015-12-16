@@ -229,7 +229,7 @@ function getValidFieldsTypes($module, $field){
 }
 
 
-function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = ''){
+function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value = '', $alt_type = '', $currency_id = '', $params= array()){
     global $current_language, $app_strings, $app_list_strings, $current_user, $beanFiles, $beanList;
 
     // use the mod_strings for this module
@@ -447,9 +447,15 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         $fieldlist[$fieldname]['id_name'] = $aow_field;
         $fieldlist[$fieldlist[$fieldname]['id_name']]['name'] = $aow_field;
         $fieldlist[$fieldname]['name'] = $aow_field.'_display';
-    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime')){
+    } else if(isset( $fieldlist[$fieldname]['type'] ) && $view == 'DetailView' && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);
-        $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+        if(!empty($params['date_format']) && isset($params['date_format'])){
+            $convert_format = "Y-m-d H:i:s";
+            if($fieldlist[$fieldname]['type'] == 'date') $convert_format = "Y-m-d";
+            $fieldlist[$fieldname]['value'] = $timedate->to_display($value, $convert_format, $params['date_format']);
+        }else{
+            $fieldlist[$fieldname]['value'] = $timedate->to_display_date_time($value, true, true);
+        }
         $fieldlist[$fieldname]['name'] = $aow_field;
     } else if(isset( $fieldlist[$fieldname]['type'] ) && ($fieldlist[$fieldname]['type'] == 'datetimecombo' || $fieldlist[$fieldname]['type'] == 'datetime' || $fieldlist[$fieldname]['type'] == 'date')){
         $value = $focus->convertField($value, $fieldlist[$fieldname]);

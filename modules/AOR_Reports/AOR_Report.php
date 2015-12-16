@@ -390,6 +390,9 @@ class AOR_Report extends Basic {
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
+            if($field->format){
+                $fields[$label]['params'] = array("date_format" => $field->format);
+            }
 
 
             if($fields[$label]['display']){
@@ -433,7 +436,8 @@ class AOR_Report extends Basic {
                             $html .= $row[$name];
                             break;
                         default:
-                            $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id);
+
+                            $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id, $att['params']);
                             break;
                     }
                     if($att['total']){
