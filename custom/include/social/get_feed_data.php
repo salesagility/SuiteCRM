@@ -149,8 +149,10 @@ if ($facebook_enabled) {
     $html .= $log;
     $html .= '</span>';
 
-    foreach ($user_home['data'] as $single) {
-        data_insert($single, "facebook");
+    if (isset($user_home['data'])) { // Check to prevent Undefined index error
+        foreach ($user_home['data'] as $single) {
+            data_insert($single, "facebook");
+        }
     }
 
 }
@@ -237,8 +239,11 @@ if ($facebook_enabled) {
 
     function generate_stream($stream)
     {
-
-
+        // Fix to prevent undefined index notice
+        if (!isset($stream['type'])) {
+            $stream['type'] = "";
+        }
+        
         //if simple post
         switch ($stream['type']) {
             case "":
