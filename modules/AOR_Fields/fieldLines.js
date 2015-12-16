@@ -61,10 +61,15 @@ function loadFieldLine(field){
             }
         }
     }
-
+    showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
 }
 
+function showFieldOptions(field, ln){
+    if(field.field_type == "datetime" || field.field_type == "date"){
+        showElem("aor_fields_format" + ln);
+    }
+}
 function showFieldCurrentModuleFields(ln, value){
 
     if (typeof value === 'undefined') { value = ''; }
@@ -209,7 +214,11 @@ function insertFieldHeader(){
     h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_GROUP');
 
-    var h=x.insertCell(9);
+    var i=x.insertCell(9);
+    i.style.color="rgb(0,0,0)";
+    i.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FORMAT');
+
+    var h=x.insertCell(10);
     h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_TOTAL');
 }
@@ -284,7 +293,11 @@ function insertFieldLine(){
     h.innerHTML += "<input id='aor_fields_group_by" + fieldln + "' name='aor_fields_group_by["+ fieldln +"]' value='1' type='checkbox'>";
     h.style.width = '10%';
 
-    var h=x.insertCell(9);
+    var i=x.insertCell(9);
+    i.innerHTML = "<select type='text' name='aor_fields_format["+ fieldln +"]' id='aor_fields_format" + fieldln + "' style='display:none;'>" + format_values + "</select>";
+    i.style.width = '10%';
+
+    var h=x.insertCell(10);
     h.innerHTML = "<select type='text' name='aor_fields_total["+ fieldln +"]' id='aor_fields_total" + fieldln + "'>"+total_values+"</select>";
     h.style.width = '10%';
 
@@ -375,12 +388,39 @@ function date_field_change(field){
 }
 
 function addNodeToFields(node){
-    loadFieldLine(
-        {
-            'label' : node.name,
-            'module_path' : node.module_path,
-            'module_path_display' : node.module_path_display,
-            'field' : node.id,
-            'field_label' : node.name});
+    if(node.type == "field"){
+        //do ajax on moudule & name
+        $.getJSON('index.php',
+            {
+                'module' : 'AOR_Reports',
+                'action' : 'getVarDefs',
+                'aor_module' : node.module,
+                'aor_request' : node.id,
+                'view' : 'JSON'
+            },
+            function(relData){
+                //var result = JSON.parse(relData);
+                loadFieldLine(
+                    {
+                        'label' : node.name,
+                        'module' : node.module,
+                        'module_path' : node.module_path,
+                        'module_path_display' : node.module_path_display,
+                        'field' : node.id,
+                        'field_label' : node.name,
+                        'field_type' : relData.type
+                    });
+            }
+        );
+    }else{
+        loadFieldLine(
+            {
+                'label' : node.name,
+                'module' : node.module,
+                'module_path' : node.module_path,
+                'module_path_display' : node.module_path_display,
+                'field' : node.id,
+                'field_label' : node.name});
+    }
 }
 
