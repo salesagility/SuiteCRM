@@ -390,9 +390,8 @@ class AOR_Report extends Basic {
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
-            if($field->format){
-                $fields[$label]['params'] = array("date_format" => $field->format);
-            }
+
+            $fields[$label]['params'] = array("date_format" => $field->format);
 
 
             if($fields[$label]['display']){
