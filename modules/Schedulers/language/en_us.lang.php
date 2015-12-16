@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-global $sugar_config;
+
 
 $mod_strings = array (
 // OOTB Scheduler Job Names:
@@ -170,4 +170,6 @@ $mod_strings = array (
 'LBL_CLEANJOBQUEUE' => 'Cleanup Job Queue',
 'LBL_REMOVEDOCUMENTSFROMFS' => 'Removal of documents from filesystem',
 );
+
+global $sugar_config;
 ?>
