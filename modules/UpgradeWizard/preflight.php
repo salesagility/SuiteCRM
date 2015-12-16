@@ -142,7 +142,7 @@ if (version_compare(phpversion(),'5.2.0') >=0) {
 	$diffs = '';
 	$schema = '';
 	$anyScriptChanges = '';
-	$db =& DBManagerFactory::getInstance();
+	$db = DBManagerFactory::getInstance();
 
 	//Quickcreatedefs on the basis of editviewdefs
     updateQuickCreateDefs();
