@@ -213,11 +213,16 @@
         );
 
 
+            var clearTreeDataFields = function() {
+                $('#module-name').html('');
+                $('#fieldTreeLeafs').html('');
+            }
 
 
         $('#report_module').change(function(){
             report_module = $(this).val();
             loadTreeData($(this).val());
+            clearTreeDataFields();
             clearFieldLines();
             clearConditionLines();
             clearChartLines();
