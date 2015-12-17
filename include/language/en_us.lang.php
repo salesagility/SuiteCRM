@@ -2289,7 +2289,7 @@ $app_strings = array (
   'MSG_SHOULD_BE' => 'should be',
   'MSG_OR_GREATER' => 'or greater',
 
-    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal 5.1.0',
+    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal',
     'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
     'LBL_CREATE_BUG' => 'Create Bug',
