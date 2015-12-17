@@ -188,6 +188,7 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 tooltips:$jsonTooltips,
                 tooltipsEvent:'mousemove',
                 colors:$colours,
+                textSize:10,
                 key: $jsonKey,
                 keyColors: $colours,
                 unitsPre:'$currency_symbol',

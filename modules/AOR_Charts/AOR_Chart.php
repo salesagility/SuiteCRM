@@ -319,6 +319,8 @@ class AOR_Chart extends Basic {
             id: '$chartId',
             options:{
                 title: '$chartName',
+                //labels: $chartLabelValues,
+                //textSize:8,
                 colors: $this->colours
             },
             data: $chartDataValues

@@ -229,6 +229,7 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
                 labelsAbove: true,
                 labelsAbovedecimals: 2,
                 linewidth: 2,
+                textSize:10,
                 eventsClick:myPipelineBySalesStageClick,
                 //textSize:8,
                 strokestyle: 'white',
@@ -258,15 +259,17 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
                 unitsPost:'$thousands_symbol',
                 noyaxis: true
             }
-        }).on('draw', function (obj)
+        }).draw();
+        /*
+        .on('draw', function (obj)
         {
             for (var i=0; i<obj.coords.length; ++i) {
                 obj.context.fillStyle = 'black';
                 if(obj.data_arr[i] > 0)
                 {
                 RGraph.Text2(obj.context, {
-                    font:'Verdana',
-                    'size':9,
+                    font:'Arial',
+                    'size':10,
                     'x':obj.coords[i][0] + (obj.coords[i][2] / 2),
                     'y':obj.coords[i][1] + (obj.coords[i][3] / 2),
                     'text':obj.data_arr[i].toString(),
@@ -276,7 +279,7 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
                 }
             }
         }).draw();
-
+        */
         hbar.canvas.onmouseout = function (e)
         {
             // Hide the tooltip
@@ -288,16 +291,16 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         new RGraph.Drawing.Text({
             id: '$canvasId',
-            x: 30,
+            x: 10,
             y: 30,
             text: 'Pipeline total is ${currency_symbol}$total$thousands_symbol',
             options: {
                 font: 'Arial',
-                //bold: true,
+                bold: true,
                 //halign: 'left',
                 //valign: 'bottom',
                 colors: ['black'],
-                size: 14
+                size: 10
             }
         }).draw();
 

@@ -169,13 +169,15 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 grouping: 'stacked',
                 labels: $jsonLabels,
                 xlabels:true,
+                textSize:10,
                 labelsAbove: true,
+                labelsAboveSize:10,
                 labelsAboveUnitsPre:'$currency_symbol',
                 labelsAboveUnitsPost:'$thousands_symbol',
                 labelsAbovedecimals: 2,
                 linewidth: 2,
                 eventsClick:outcomeByMonthClick,
-                //textSize:8,
+                //textSize:10,
                 strokestyle: 'white',
                 //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
                 //shadowOffsetx: 1,
@@ -212,8 +214,8 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 if(obj.data_arr[i] > 0)
                 {
                 RGraph.Text2(obj.context, {
-                    font:'Verdana',
-                    'size':9,
+                    font:'Arial',
+                    'size':10,
                     'x':obj.coords[i][0] + (obj.coords[i][2] / 2),
                     'y':obj.coords[i][1] + (obj.coords[i][3] / 2),
                     'text':obj.data_arr[i].toString(),

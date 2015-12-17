@@ -124,7 +124,8 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 labelsAbovedecimals: 2,
                 linewidth: 2,
                 //eventsClick:outcomeByMonthClick,
-                //textSize:8,
+                textSize:10,
+                labelsAboveSize:10,
                 strokestyle: 'white',
                 //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
                 //shadowOffsetx: 1,
@@ -149,10 +150,13 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 //keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
                 unitsPre:'$currency_symbol',
-                unitsPost:'$thousands_symbol',
+                labelsAboveUnitsPre:'$currency_symbol',
+                //unitsPost:'$thousands_symbol',
                 noyaxis: true
             }
-        }).on('draw', function (obj)
+        }).draw();
+        /*
+        .on('draw', function (obj)
         {
             for (var i=0; i<obj.coords.length; ++i) {
                 obj.context.fillStyle = 'black';
@@ -170,7 +174,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 }
             }
         }).draw();
-
+        */
         bar.canvas.onmouseout = function (e)
         {
             // Hide the tooltip

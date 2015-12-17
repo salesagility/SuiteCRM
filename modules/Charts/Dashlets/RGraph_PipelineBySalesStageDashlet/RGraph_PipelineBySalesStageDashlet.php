@@ -235,6 +235,7 @@ new RGraph.Funnel({
                     shadowBlur: 15,
                     colors:$colours,
                     keyColors:$colours,
+                    textSize:10,
                     shadowColor: 'gray'
                 }
             }).draw();
@@ -250,7 +251,7 @@ new RGraph.Funnel({
                 //halign: 'left',
                 //valign: 'bottom',
                 colors: ['black'],
-                size: 12
+                size: 10
             }
         }).draw();
 

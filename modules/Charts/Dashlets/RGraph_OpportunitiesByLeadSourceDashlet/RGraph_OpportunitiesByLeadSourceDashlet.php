@@ -138,6 +138,7 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
                 keyPositionX:0,
                 keyBackground:'rgba(255,255,255,0.7)',
                 colors:$colours,
+                textSize:10,
                 keyColors:$colours
                 //keyInteractive: true
                 }
