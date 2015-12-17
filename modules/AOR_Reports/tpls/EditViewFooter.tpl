@@ -63,10 +63,11 @@
             };
 
             var dropConditionLine = function(node) {
-                addNodeToConditions(node);
+                var newConditionLine = addNodeToConditions(node);
                 LogicalOperatorHandler.hideUnnecessaryLogicSelects();
                 ConditionOrderHandler.setConditionOrders();
                 ParenthesisHandler.addParenthesisLineIdent();
+                return newConditionLine;
             };
 
             var showTreeDataLeafs = function(treeDataLeafs, module, module_name, module_path_display) {
@@ -91,7 +92,12 @@
                         if(target.closest('#fieldLines').length > 0){
                             dropFieldLine(node);
                         }else if(target.closest('#conditionLines').length > 0){
-                            dropConditionLine(node);
+                            var conditionLineTarget = ConditionOrderHandler.getConditionLineByPageEvent(e);
+                            var conditionLineNew = dropConditionLine(node);
+                            if(conditionLineTarget) {
+                                ConditionOrderHandler.putPositionedConditionLines(conditionLineTarget, conditionLineNew);
+                            }
+                            ParenthesisHandler.addParenthesisLineIdent();
                         }
                         else if(target.closest('.tab-toggler').length > 0) {
                             target.closest('.tab-toggler').click();

@@ -107,6 +107,18 @@ var ConditionOrderHandler = {
                 $(this).find('.aor_condition_order_input').val(-1);
             }
         });
+    },
+
+    getConditionLineByPageEvent: function(event) {
+        var closest = $(document.elementFromPoint(event.pageX - window.pageXOffset, event.pageY - window.pageYOffset)).closest('tr');
+        if((closest.attr('id') && closest.attr('id').search('product_line') === 0) || (closest.attr('class') && closest.attr('class').search('parenthesis-line') !== -1)) {
+            return closest;
+        }
+        return false;
+    },
+
+    putPositionedConditionLines: function(elemTarget, elemNew) {
+        elemTarget.before(elemNew);
     }
 
 };
@@ -251,6 +263,8 @@ function loadConditionLine(condition, overrideView){
     if(!condition['parenthesis']) {
         showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op'], condition['condition_order'], condition['parenthesis']);
     }
+
+    return $('#product_line'+ln);
 }
 
 function showConditionLines() {
@@ -617,7 +631,7 @@ function date_field_change(field){
 }
 
 function addNodeToConditions(node){
-    loadConditionLine(
+    return loadConditionLine(
         {
             'label' : node.name,
             'module_path' : node.module_path,
