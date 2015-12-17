@@ -321,6 +321,8 @@ class AOR_Chart extends Basic {
                 title: '$chartName',
                 //labels: $chartLabelValues,
                 //textSize:8,
+                textSize:10,
+                titleSize:10,
                 colors: $this->colours
             },
             data: $chartDataValues
@@ -358,7 +360,9 @@ EOF;
                 gutterTop:40,
                 gutterLeft:30,
                 title: '$chartName',
+                titleSize:10,
                 labels: $chartLabelValues,
+                textSize:10,
                 textAngle: 90,
                 colors: $this->colours
             }
@@ -390,6 +394,8 @@ EOF;
                 title: '$chartName',
                 labels: $chartLabelValues,
                 textAngle: 90,
+                textSize:10,
+                titleSize:10,
                 colors: $this->colours
 
             }
@@ -416,6 +422,8 @@ EOF;
             options: {
                 title: '$chartName',
                 labels: $chartLabelValues,
+                textSize:10,
+                titleSize:10,
                 colors: $this->colours
             }
         }).draw();
@@ -440,6 +448,8 @@ EOF;
             data: $chartDataValues,
             options: {
                 title: '$chartName',
+                textSize:10,
+                titleSize:10,
                 labels: $chartLabelValues,
                 colors: $this->colours
             }
@@ -467,9 +477,11 @@ EOF;
                 gutterBottom: 200,
                 gutterTop:50,
                 tickmarks:'encircle',
+                textSize:10,
                 title: '$chartName',
                 labels: $chartLabelValues,
                 textAngle: 90,
+                titleSize:10,
                 colors: $this->colours
             }
         }).draw();
