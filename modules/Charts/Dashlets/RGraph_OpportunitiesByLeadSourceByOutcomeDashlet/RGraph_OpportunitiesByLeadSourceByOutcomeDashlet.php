@@ -190,6 +190,8 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 colors:$colours,
                 key: $jsonKey,
                 keyColors: $colours,
+                unitsPre:'$currency_symbol',
+                unitsPost:'$thousands_symbol',
                 //keyPosition: 'gutter',
                 keyPositionX: $canvasId.width - 190,
                 //keyPositionY: 18,
@@ -197,7 +199,8 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 axisColor: '#ccc',
                 noyaxis: true
             }
-        }).on('draw', function (obj)
+        }).draw();
+        /*.on('draw', function (obj)
         {
             for (var i=0; i<obj.coords.length; ++i) {
                 obj.context.fillStyle = 'black';
@@ -215,6 +218,7 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 }
             }
         }).draw();
+        */
 
         hbar.canvas.onmouseout = function (e)
         {

@@ -170,6 +170,8 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 labels: $jsonLabels,
                 xlabels:true,
                 labelsAbove: true,
+                labelsAboveUnitsPre:'$currency_symbol',
+                labelsAboveUnitsPost:'$thousands_symbol',
                 labelsAbovedecimals: 2,
                 linewidth: 2,
                 eventsClick:outcomeByMonthClick,
@@ -202,7 +204,8 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 unitsPost:'$thousands_symbol',
                 noyaxis: true
             }
-        }).on('draw', function (obj)
+        }).draw();
+        /*.on('draw', function (obj)
         {
             for (var i=0; i<obj.coords.length; ++i) {
                 obj.context.fillStyle = 'black';
@@ -220,6 +223,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 }
             }
         }).draw();
+        */
 
         bar.canvas.onmouseout = function (e)
         {
