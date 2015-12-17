@@ -1,3 +1,9 @@
+{literal}
+<style type="text/css">
+    #EditView_tabs {float: left;}
+</style>
+{/literal}
+
 <div id="report-editview-footer">
 
 
