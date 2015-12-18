@@ -21,61 +21,40 @@ $chart = <<<EOD
             {
                 e.target.style.cursor = 'pointer';
             }
-
-            $(function(){
-            /*
-                    canvas.width  = $(window).width() * 0.9;
-                    canvas.height = $(window).width() * 0.9;
-                    text_size = Math.min(10, ($(window).width() / 1000) * 10 );
-                    */
-            });
-
             $(window).resize(function ()
             {
-            /*
-                    //            canvas.width  = $(window).width() * 0.9;
-                    //canvas.height = $(window).width() * 0.9;
-                    //text_size = Math.min(10, ($(window).width() / 1000) * 10 );
-                    console.log("HERE");
-
-                        var allResizableCanvases = document.getElementsByClassName("resizableCanvas");
-                        //console.log(allResizableCanvases);
-                        //var id = $(canvas).attr('id');
-                        $.each(allResizableCanvases, function(){
-                            RGraph.Reset($(this).attr("id"));
-                            console.log($(this).attr("id"));
-                        });
-
-
-
-                    //canvas.width  = $(window).width() * 0.6;
-                    //canvas.height = $(window).width() * 0.25;
-                    //text_size = Math.min(10, ($(window).width() / 1000) * 10 );
-                    //var linewidth = $(window).width() > 500 ? 2 : 1;
-                    //    linewidth = $(window).width() > 750 ? 3 : linewidth;
+                var maxWidth = 900;
+                var maxHeight = 600;
+                var maxTextSize = 10;
+                //Get the data from the chart to avoid having to return to the server
+                var canvas = document.getElementById("test123");
+                //var old = canvas;
+                //RGraph.Reset(canvas);
+                //console.log(old);
+                //console.log(canvas);
+                if($(window).width() * 0.6 > maxWidth)
+                    canvas.width  = maxWidth;
+                else
+                    canvas.width = $(window).width() * 0.6;
+                if($(window).width() * 0.5 > maxHeight)
+                    canvas.height = maxHeight;
+                else
+                    canvas.height = $(window).width() * 0.5;
 
 
-        // Reset the translation fix so that it gets applied again
-        canvas.__rgraph_aa_translated__ = false;
 
-        $(".dashletToolSet a:nth-of-type(2)").click()
+                var text_size = Math.min(12, ($(window).width() / 1000) * 10 );
+                if(text_size > maxTextSize) text_size = maxTextSize;
 
-                                var line = new RGraph.Line({
-            id: id,
-            data: [4,8,6,6,3,3,5,1,4,8,6,5,9],
-            options: {
-                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-                textSize: text_size,
-                gutterBottom: 35,
-                linewidth: linewidth,
-                tickmarks: 'endcircle',
-                shadow: true,
-                hmargin: 5
-            }
-        }).draw();
+                //var linewidth = $(window).width() > 500 ? 2 : 1;
+                //linewidth = $(window).width() > 750 ? 3 : linewidth;
 
-        */
+                canvas.__object__["properties"]["chart.text.size"] = text_size;
+
+                RGraph.redrawCanvas(canvas);
+
             });
+
 
             function myPipelineBySalesStageClick(e,bar)
             {

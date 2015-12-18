@@ -194,15 +194,17 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         $query  ='true';
         $searchFormTab ='advanced_search';
 
-        $chartWidth     = 650;
+        $chartWidth     = 900;
         $chartHeight    = 600;
 
         $autoRefresh = $this->processAutoRefresh();
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
-        $chart = <<<EOD
+        //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        //<canvas id='test123'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
 
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        $chart = <<<EOD
+        <canvas id='test123'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
         <input type='hidden' class='startDate' value='$startDate' />
         <input type='hidden' class='endDate' value='$endDate' />
         <input type='hidden' class='module' value='$module' />
@@ -213,35 +215,40 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         <script>
 
 new RGraph.Funnel({
-                id:'$canvasId',
+                id:'test123',
                 data:$jsonData,
                 options: {
                     labels:$jsonLabelsAndValues,
-                    labelsSticks: true,
-                    labelsX: 10,
-                    //key:$jsonLabels,
+                    //labelsSticks: true,
+                    //labelsX: 100,
+                    key:$jsonLabels,
+                    keyBackground:'rgba(255,255,255,0.7)',
+                    //keyPositionX:500,
                     //keyInteractive: true,
                     //keyPositionX: 465,
                     eventsMousemove:rgraphMouseMove,
                     eventsClick:myFunnelClick,
-                    gutterRight: 0,
-                    gutterTop: 50,
-                    gutterLeft: 320,
+                    //gutterRight: 100,
+                    //gutterTop: 50,
+                    //gutterLeft: 80,
                     strokestyle: 'rgba(0,0,0,0)',
-                    textBoxed: false,
-                    shadow: true,
-                    shadowOffsetx: 0,
-                    shadowOffsety: 0,
-                    shadowBlur: 15,
+                    textBoxed: true,
+                    //shadow: true,
+                    //shadowOffsetx: 0,
+                    //shadowOffsety: 0,
+                    //shadowBlur: 15,
                     colors:$colours,
                     //keyColors:$colours,
                     textSize:10,
-                    shadowColor: 'gray'
+                    //textHalign:'center',
+                    //shadowColor: 'gray',
+                    keyHalign:'right'
                 }
             }).draw();
 
+/*
             var text = new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: 'test123',
             x: 10,
             y: 22,
             text: 'Pipeline Total is $currency_symbol$total',
@@ -256,7 +263,7 @@ new RGraph.Funnel({
         }).draw();
 
         var sizeIncrement = new RGraph.Drawing.Text({
-            id: '$canvasId',
+            id: 'test123',
             x: 10,
             y: 550,
             text: 'Opportunity size in ${currency_symbol}1$thousands_symbol',
@@ -269,7 +276,7 @@ new RGraph.Funnel({
                 size: 10
             }
         }).draw();
-
+*/
 
 
         </script>
