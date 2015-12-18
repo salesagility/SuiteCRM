@@ -97,6 +97,7 @@
                             var conditionLineNew = dropConditionLine(node);
                             if(conditionLineTarget) {
                                 ConditionOrderHandler.putPositionedConditionLines(conditionLineTarget, conditionLineNew);
+                                ConditionOrderHandler.setConditionOrders();
                             }
                             ParenthesisHandler.addParenthesisLineIdent();
                         }
