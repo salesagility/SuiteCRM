@@ -4833,7 +4833,6 @@ object{
 }
 
 /* report layout */
-#EditView_tabs {float: left;}
 #report-editview-footer {width: 70%; float: left;}
 
 #detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
