@@ -374,7 +374,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     $focus = new $beanList[$module];
     // create the dropdowns for the parent type fields
     $vardefFields = $focus->getFieldDefinitions();
-    if ( $vardefFields[$fieldname]['type'] == 'parent_type' ) {
+    if (isset($vardefFields[$fieldname]['type']) && $vardefFields[$fieldname]['type'] == 'parent_type' ) {
         $focus->field_defs[$fieldname]['options'] = $focus->field_defs[$vardefFields[$fieldname]['group']]['options'];
     }
     foreach ( $vardefFields as $name => $properties ) {
