@@ -102,6 +102,7 @@ class AOR_ReportsViewEdit extends ViewEdit {
     }
 
     private function getFieldLines(){
+        global $app_list_strings;
         if(!$this->bean->id){
             return array();
         }
@@ -115,7 +116,10 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
             $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
-            $arr['module_path_display'] = $display['module'];
+            $module_label = $app_list_strings['moduleList'][$display['module']] ? $app_list_strings['moduleList'][$display['module']] : (
+                $app_list_strings['aor_moduleList'][$display['module']] ? $app_list_strings['aor_moduleList'][$display['module']] : $display['module']
+            );
+            $arr['module_path_display'] = $module_label;
             $arr['field_label'] = $display['field'];
             $fields[] = $arr;
         }
