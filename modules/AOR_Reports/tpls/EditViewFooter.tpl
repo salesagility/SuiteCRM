@@ -22,7 +22,7 @@
             var $moduleTree = $('#fieldTree').tree({
                 data: {},
                 dragAndDrop: false,
-                //selectable: true,
+                selectable: false,
                 onDragStop: function(node, e,thing){
 //                    var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
 //                    if(node.type != 'field'){
@@ -42,6 +42,7 @@
             });
 
         function loadTreeData(module, node){
+            var _node = node;
             $.getJSON('index.php',
                     {
                         'module' : 'AOR_Reports',
@@ -50,7 +51,7 @@
                         'view' : 'JSON'
                     },
                     function(relData){
-                        processTreeData(relData, node);
+                        processTreeData(relData, _node);
                     }
             );
         }
@@ -83,7 +84,7 @@
                 $('#fieldTreeLeafs').tree({
                     data: treeDataLeafs,
                     dragAndDrop: true,
-                    selectable: true,
+                    selectable: false,
                     onDragStop: function(node, e,thing){
                         var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
                         if(node.type != 'field'){
@@ -203,8 +204,13 @@
 
         $('#fieldTree').on(
                 'click',
-                '.jqtree-toggler',
-                function() {
+                '.jqtree-toggler, .jqtree-title', //
+                function(event) {
+                    if($(this).hasClass('jqtree-title')) {
+                        $(this).prev().click();
+                        return;
+                    }
+                    //console.log(event);
                     var node = $(this).closest('li.jqtree_common').data('node');
                     if(node.loaded) {
 
@@ -214,6 +220,10 @@
                         loadTreeLeafData(node);
                         $('#fieldTree').tree('openNode', node);
                     }
+
+                    $('.jqtree-selected').removeClass('jqtree-selected');
+                    $(this).closest('li').addClass('jqtree-selected');
+
                     return true;
                 }
         );
