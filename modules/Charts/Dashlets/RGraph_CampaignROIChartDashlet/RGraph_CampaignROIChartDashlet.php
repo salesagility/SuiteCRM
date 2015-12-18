@@ -108,8 +108,10 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
         //$colours = "['red','blue','green','orange','yellow','pink']";
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
+        //<canvas id='$canvasId'  width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
+
         $chart = <<<EOD
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
              $autoRefresh
          <script>
            var bar = new RGraph.Bar({
@@ -124,7 +126,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 labelsAbovedecimals: 2,
                 linewidth: 2,
                 //eventsClick:outcomeByMonthClick,
-                textSize:10,
+                textSize:text_size,
                 labelsAboveSize:10,
                 strokestyle: 'white',
                 //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
@@ -164,7 +166,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 {
                 RGraph.Text2(obj.context, {
                     font:'Verdana',
-                    'size':9,
+                    'size':text_size,
                     'x':obj.coords[i][0] + (obj.coords[i][2] / 2),
                     'y':obj.coords[i][1] + (obj.coords[i][3] / 2),
                     'text':obj.data_arr[i].toString(),
@@ -195,7 +197,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 //halign: 'left',
                 //valign: 'bottom',
                 colors: ['black'],
-                size: 10
+                size: text_size
             }
         }).draw();
 

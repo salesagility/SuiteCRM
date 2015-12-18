@@ -360,6 +360,7 @@ EOF;
                 gutterTop:40,
                 gutterLeft:30,
                 title: '$chartName',
+
                 titleSize:10,
                 labels: $chartLabelValues,
                 textSize:10,
@@ -393,11 +394,12 @@ EOF;
                 gutterTop:50,
                 title: '$chartName',
                 labels: $chartLabelValues,
+                colorsSequential:true,
+                resizable:true,
                 textAngle: 90,
                 textSize:10,
                 titleSize:10,
                 colors: $this->colours
-
             }
         }).draw();
         </script>

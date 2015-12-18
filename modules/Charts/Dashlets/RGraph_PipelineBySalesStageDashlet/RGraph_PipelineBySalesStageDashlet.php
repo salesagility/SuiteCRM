@@ -219,7 +219,7 @@ new RGraph.Funnel({
                     labels:$jsonLabelsAndValues,
                     labelsSticks: true,
                     labelsX: 10,
-                    key:$jsonLabels,
+                    //key:$jsonLabels,
                     //keyInteractive: true,
                     //keyPositionX: 465,
                     eventsMousemove:rgraphMouseMove,
@@ -234,7 +234,7 @@ new RGraph.Funnel({
                     shadowOffsety: 0,
                     shadowBlur: 15,
                     colors:$colours,
-                    keyColors:$colours,
+                    //keyColors:$colours,
                     textSize:10,
                     shadowColor: 'gray'
                 }
