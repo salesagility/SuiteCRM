@@ -31,6 +31,7 @@
  */
 function getDisplayForField($modulePath, $field, $reportModule)
 {
+    global $app_list_strings;
     $modulePathDisplay = array();
     $currentBean = BeanFactory::getBean($reportModule);
     $modulePathDisplay[] = $currentBean->module_name;
@@ -61,7 +62,12 @@ function getDisplayForField($modulePath, $field, $reportModule)
     $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
     $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay, ':');
-    return array('field' => $fieldDisplay, 'module' => implode(' : ', $modulePathDisplay));
+    foreach($modulePathDisplay as &$module) {
+        $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
+            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+        );
+    }
+    return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
 function requestToUserParameters()
