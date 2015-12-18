@@ -466,7 +466,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
 
     }
 
-    if($fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
+    if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'currency' && $view != 'EditView'){
         static $sfh;
 
         if(!isset($sfh)) {
