@@ -406,7 +406,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
         }
     }
 
-    if($fieldlist[$fieldname]['type'] == 'link'){
+    if(isset($fieldlist[$fieldname]['type']) && $fieldlist[$fieldname]['type'] == 'link'){
         $fieldlist[$fieldname]['id_name'] = $fieldlist[$fieldname]['name'].'_id';
 
         if((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
