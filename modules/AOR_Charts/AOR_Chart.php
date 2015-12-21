@@ -312,7 +312,7 @@ class AOR_Chart extends Basic {
             return "<h3>There are no data points for this query</h3>";
         }
         $html = '';
-        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
         <script>
             new RGraph.Rose({
@@ -348,7 +348,7 @@ EOF;
             return "<h3>There are no data points for this query</h3>";
         }
         $html = '';
-        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
         <script>
             new RGraph.Bar({
@@ -383,7 +383,7 @@ EOF;
             return "<h3>There are no data points for this query</h3>";
         }
         $html = '';
-        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
         <script>
             new RGraph.Bar({
@@ -415,7 +415,7 @@ EOF;
             return "<h3>There are no data points for this query</h3>";
         }
         $html = '';
-        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
         <script>
             new RGraph.Radar({
@@ -442,7 +442,7 @@ EOF;
             return "<h3>There are no data points for this query</h3>";
         }
         $html = '';
-        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
         <script>
             new RGraph.Pie({
@@ -469,7 +469,7 @@ EOF;
             return "<h3>There are no data points for this query</h3>";
         }
         $html = '';
-        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight'></canvas>";
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
         <script>
             new RGraph.Line({
