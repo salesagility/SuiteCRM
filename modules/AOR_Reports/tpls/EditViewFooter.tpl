@@ -1,3 +1,9 @@
+{literal}
+<style type="text/css">
+    #EditView_tabs {float: left;}
+</style>
+{/literal}
+
 <div id="report-editview-footer">
 
 
@@ -16,7 +22,7 @@
             var $moduleTree = $('#fieldTree').tree({
                 data: {},
                 dragAndDrop: false,
-                //selectable: true,
+                selectable: false,
                 onDragStop: function(node, e,thing){
 //                    var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
 //                    if(node.type != 'field'){
@@ -36,6 +42,7 @@
             });
 
         function loadTreeData(module, node){
+            var _node = node;
             $.getJSON('index.php',
                     {
                         'module' : 'AOR_Reports',
@@ -44,7 +51,7 @@
                         'view' : 'JSON'
                     },
                     function(relData){
-                        processTreeData(relData, node);
+                        processTreeData(relData, _node);
                     }
             );
         }
@@ -57,10 +64,11 @@
             };
 
             var dropConditionLine = function(node) {
-                addNodeToConditions(node);
+                var newConditionLine = addNodeToConditions(node);
                 LogicalOperatorHandler.hideUnnecessaryLogicSelects();
                 ConditionOrderHandler.setConditionOrders();
                 ParenthesisHandler.addParenthesisLineIdent();
+                return newConditionLine;
             };
 
             var showTreeDataLeafs = function(treeDataLeafs, module, module_name, module_path_display) {
@@ -76,7 +84,7 @@
                 $('#fieldTreeLeafs').tree({
                     data: treeDataLeafs,
                     dragAndDrop: true,
-                    selectable: true,
+                    selectable: false,
                     onDragStop: function(node, e,thing){
                         var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
                         if(node.type != 'field'){
@@ -85,7 +93,13 @@
                         if(target.closest('#fieldLines').length > 0){
                             dropFieldLine(node);
                         }else if(target.closest('#conditionLines').length > 0){
-                            dropConditionLine(node);
+                            var conditionLineTarget = ConditionOrderHandler.getConditionLineByPageEvent(e);
+                            var conditionLineNew = dropConditionLine(node);
+                            if(conditionLineTarget) {
+                                ConditionOrderHandler.putPositionedConditionLines(conditionLineTarget, conditionLineNew);
+                                ConditionOrderHandler.setConditionOrders();
+                            }
+                            ParenthesisHandler.addParenthesisLineIdent();
                         }
                         else if(target.closest('.tab-toggler').length > 0) {
                             target.closest('.tab-toggler').click();
@@ -191,8 +205,13 @@
 
         $('#fieldTree').on(
                 'click',
-                '.jqtree-toggler',
-                function() {
+                '.jqtree-toggler, .jqtree-title', //
+                function(event) {
+                    if($(this).hasClass('jqtree-title')) {
+                        $(this).prev().click();
+                        return;
+                    }
+                    //console.log(event);
                     var node = $(this).closest('li.jqtree_common').data('node');
                     if(node.loaded) {
 
@@ -202,16 +221,25 @@
                         loadTreeLeafData(node);
                         $('#fieldTree').tree('openNode', node);
                     }
+
+                    $('.jqtree-selected').removeClass('jqtree-selected');
+                    $(this).closest('li').addClass('jqtree-selected');
+
                     return true;
                 }
         );
 
 
+            var clearTreeDataFields = function() {
+                $('#module-name').html('');
+                $('#fieldTreeLeafs').html('');
+            }
 
 
         $('#report_module').change(function(){
             report_module = $(this).val();
             loadTreeData($(this).val());
+            clearTreeDataFields();
             clearFieldLines();
             clearConditionLines();
             clearChartLines();
