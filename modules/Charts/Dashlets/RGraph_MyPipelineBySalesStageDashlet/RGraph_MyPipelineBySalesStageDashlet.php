@@ -206,7 +206,7 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
         $endDate = $timedate->to_display_date($this->mypbss_date_end, false);
 
         $chart = <<<EOD
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        <canvas id='$canvasId'   class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
         <input type='hidden' class='module' value='$module' />
         <input type='hidden' class='action' value='$action' />
         <input type='hidden' class='query' value='$queryable' />
@@ -238,9 +238,9 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
                 //shadowOffsety: 1,
                 //shadowBlur: 10,
                 //hmargin: 25,
-                gutterTop:50,
+                //gutterTop:50,
                 gutterLeft: 150,
-                gutterRight:50,
+                //gutterRight:50,
                 //gutterBottom: 155,
                 //textAngle: 45,
                 backgroundGridVlines: false,
@@ -288,7 +288,7 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
             // Redraw the canvas so that any highlighting is gone
             RGraph.redraw();
         }
-
+/*
         new RGraph.Drawing.Text({
             id: '$canvasId',
             x: 10,
@@ -303,7 +303,7 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
                 size: 10
             }
         }).draw();
-
+*/
 </script>
 EOD;
 

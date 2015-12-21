@@ -115,7 +115,7 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         //<canvas id='$canvasId' width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
         $chart = <<<EOD
 
-<canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
+<canvas id='$canvasId' width='$chartWidth' height='$chartHeight'  class='resizableCanvas' >[No canvas support]</canvas>
 
         <input type='hidden' class='module' value='$module' />
         <input type='hidden' class='action' value='$action' />

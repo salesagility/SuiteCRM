@@ -159,7 +159,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
 
 
         $chart = <<<EOD
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        <canvas id='$canvasId' class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
              $autoRefresh
          <script>
            var bar = new RGraph.Bar({
@@ -171,11 +171,11 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 xlabels:true,
                 textSize:10,
                 labelsAbove: true,
-                labelsAboveSize:10,
+                //labelsAboveSize:10,
                 labelsAboveUnitsPre:'$currency_symbol',
                 labelsAboveUnitsPost:'$thousands_symbol',
                 labelsAbovedecimals: 2,
-                linewidth: 2,
+                //linewidth: 2,
                 eventsClick:outcomeByMonthClick,
                 //textSize:10,
                 strokestyle: 'white',
@@ -187,7 +187,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                // colors:$colours,
                 gutterLeft: 60,
                 gutterTop:50,
-                gutterRight:160,
+                //gutterRight:160,
                 //gutterBottom: 155,
                 //textAngle: 45,
                 backgroundGridVlines: false,
@@ -197,13 +197,15 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 colors:$colours,
                 key: $jsonKey,
                 keyColors: $colours,
+                keyBackground:'rgba(255,255,255,0.7)',
                 //keyPosition: 'gutter',
-                keyPositionX: $canvasId.width - 150,
+                //keyPositionX: $canvasId.width - 150,
                 //keyPositionY: 18,
-                keyPositionGutterBoxed: true,
+                //keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
                 unitsPre:'$currency_symbol',
                 unitsPost:'$thousands_symbol',
+                keyHalign:'right',
                 noyaxis: true
             }
         }).draw();
@@ -235,7 +237,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
             // Redraw the canvas so that any highlighting is gone
             RGraph.redraw();
         }
-
+/*
          var sizeIncrement = new RGraph.Drawing.Text({
             id: '$canvasId',
             x: 10,
@@ -250,7 +252,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
                 size: 10
             }
         }).draw();
-
+*/
 </script>
 EOD;
     return $chart;

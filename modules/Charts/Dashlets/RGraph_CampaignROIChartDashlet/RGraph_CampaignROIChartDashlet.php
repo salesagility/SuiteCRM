@@ -111,7 +111,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
         //<canvas id='$canvasId'  width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
 
         $chart = <<<EOD
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
+        <canvas id='$canvasId' class='resizableCanvas' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
              $autoRefresh
          <script>
            var bar = new RGraph.Bar({
@@ -126,8 +126,8 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 labelsAbovedecimals: 2,
                 linewidth: 2,
                 //eventsClick:outcomeByMonthClick,
-                textSize:text_size,
-                labelsAboveSize:10,
+                textSize:10,
+                //labelsAboveSize:10,
                 strokestyle: 'white',
                 //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
                 //shadowOffsetx: 1,
@@ -135,14 +135,14 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 //shadowBlur: 10,
                 //hmargin: 25,
                 colors:$colours,
-                gutterLeft: 100,
-                gutterTop:50,
+                gutterLeft: 80,
+                //gutterTop:50,
                 //gutterRight:160,
                 //gutterBottom: 155,
                 //textAngle: 45,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                //tooltips:$jsonTooltips,
+                tooltips:$jsonTooltips,
                 tooltipsEvent:'mousemove',
                 //key: $jsonKey,
                 //keyColors: $colours,
@@ -176,7 +176,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 }
             }
         }).draw();
-        */
+
         bar.canvas.onmouseout = function (e)
         {
             // Hide the tooltip
@@ -185,7 +185,8 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
             // Redraw the canvas so that any highlighting is gone
             RGraph.redraw();
         }
-
+        */
+/*
          var sizeIncrement = new RGraph.Drawing.Text({
             id: '$canvasId',
             x: 10,
@@ -200,7 +201,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 size: text_size
             }
         }).draw();
-
+*/
 </script>
 EOD;
         return $chart;

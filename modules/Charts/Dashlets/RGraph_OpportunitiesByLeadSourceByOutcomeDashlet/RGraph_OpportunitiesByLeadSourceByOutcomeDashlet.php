@@ -143,7 +143,7 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
 
         $canvasId = 'rGraphOppByLeadSourceByOutcome'.uniqid();
         $chartWidth     = 900;
-        $chartHeight    = 940;
+        $chartHeight    = 900;
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
@@ -158,7 +158,7 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
         $chart = <<<EOD
-        <canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+        <canvas id='$canvasId'   class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
              $autoRefresh
          <script>
            var hbar = new RGraph.HBar({
@@ -172,17 +172,10 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 labelsAbovedecimals: 2,
                 linewidth: 2,
                 eventsClick:allOpportunititesByLeadSourceByOutcomeClick,
-                //textSize:8,
+                //eventsMousemove:rgraphMouseMove,
                 strokestyle: 'white',
-                //colors: ['Gradient(#4572A7:#66f)','Gradient(#AA4643:white)','Gradient(#89A54E:white)'],
-                //shadowOffsetx: 1,
-                //shadowOffsety: 1,
-                //shadowBlur: 10,
-                //hmargin: 25,
                 gutterLeft: 150,
-                gutterRight:200,
-                //gutterBottom: 155,
-                //textAngle: 45,
+                //gutterRight:200,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
                 tooltips:$jsonTooltips,
@@ -193,9 +186,7 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
                 keyColors: $colours,
                 unitsPre:'$currency_symbol',
                 unitsPost:'$thousands_symbol',
-                //keyPosition: 'gutter',
-                keyPositionX: $canvasId.width - 190,
-                //keyPositionY: 18,
+                //keyPositionX: $canvasId.width - 190,
                 keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
                 noyaxis: true
