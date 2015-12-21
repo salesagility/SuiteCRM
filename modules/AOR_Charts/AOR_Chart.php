@@ -318,11 +318,11 @@ class AOR_Chart extends Basic {
             new RGraph.Rose({
             id: '$chartId',
             options:{
-                title: '$chartName',
+                //title: '$chartName',
                 //labels: $chartLabelValues,
                 //textSize:8,
                 textSize:10,
-                titleSize:10,
+                //titleSize:10,
                 colors: $this->colours
             },
             data: $chartDataValues
@@ -356,11 +356,13 @@ EOF;
             data: $chartDataValues,
             options: {
                 grouping:'$grouping',
-                gutterBottom: 200,
-                gutterTop:40,
-                gutterLeft:30,
-                title: '$chartName',
-
+                backgroundGrid:false,
+                backgroundGrid:false,
+                gutterBottom: 100,
+                //gutterTop:40,
+                //gutterLeft:30,
+                //title: '$chartName',
+                shadow:false,
                 titleSize:10,
                 labels: $chartLabelValues,
                 textSize:10,
@@ -390,15 +392,15 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                gutterBottom: 200,
-                gutterTop:50,
-                title: '$chartName',
+                gutterBottom: 150,
+                //gutterTop:50,
+                //title: '$chartName',
                 labels: $chartLabelValues,
                 colorsSequential:true,
-                resizable:true,
                 textAngle: 90,
                 textSize:10,
                 titleSize:10,
+                backgroundGrid:false,
                 colors: $this->colours
             }
         }).draw();
@@ -422,10 +424,10 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                title: '$chartName',
+                //title: '$chartName',
                 labels: $chartLabelValues,
                 textSize:10,
-                titleSize:10,
+                //titleSize:10,
                 colors: $this->colours
             }
         }).draw();
@@ -449,9 +451,9 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                title: '$chartName',
+                //title: '$chartName',
                 textSize:10,
-                titleSize:10,
+                //titleSize:10,
                 labels: $chartLabelValues,
                 colors: $this->colours
             }
@@ -476,14 +478,15 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                gutterBottom: 200,
-                gutterTop:50,
+                gutterBottom: 150,
+                //gutterTop:50,
                 tickmarks:'encircle',
                 textSize:10,
-                title: '$chartName',
+                //title: '$chartName',
                 labels: $chartLabelValues,
                 textAngle: 90,
-                titleSize:10,
+                //titleSize:10,
+                backgroundGrid:false,
                 colors: $this->colours
             }
         }).draw();
