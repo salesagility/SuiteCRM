@@ -42,6 +42,13 @@ class AOR_ReportsController extends SugarController {
         die;
 
     }
+    function action_getVarDefs(){
+        if($_REQUEST['aor_module']){
+            $bean = BeanFactory::getBean($_REQUEST['aor_module']);
+            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
+            die();
+        }
+    }
 
     protected function action_getModuleTreeData()
     {
