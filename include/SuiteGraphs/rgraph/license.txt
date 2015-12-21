@@ -1,0 +1,19 @@
+
+The RGraph license
+==================
+RGraph is dual licensed under the Open Source GPL (General Public License) v2.0. If you want to use it under the
+terms of the GPL then you are free to do so. If you don't wish to be bound by the terms of the GPL then there is
+a commercial licensing scheme available which you can read about here:
+
+            http://www.rgraph.net/license
+
+For commercial license there is a one-time fee of £99 that covers most use cases. The only exception is for OEM
+use - the OEM license is described on the website and costs £499. You can read the details about RGraph
+licensing here:
+
+            http://www.rgraph.net/license
+
+
+Support
+=======
+Support is available using the support forum: http://www.rgraph.net/forum

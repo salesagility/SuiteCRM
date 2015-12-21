@@ -23,6 +23,7 @@
  */
 
 class AOR_Chart extends Basic {
+    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 	var $new_schema = true;
 	var $module_dir = 'AOR_Charts';
 	var $object_name = 'AOR_Chart';
@@ -75,7 +76,7 @@ class AOR_Chart extends Basic {
     }
 
     private function getValidChartTypes(){
-        return array('bar','line','pie','radar');
+        return array('bar','line','pie','radar','rose', 'grouped_bar', 'stacked_bar');
     }
 
 
@@ -214,8 +215,284 @@ class AOR_Chart extends Basic {
                 return $this->buildChartHTMLPChart($reportData,$fields,$index);
             case AOR_Report::CHART_TYPE_CHARTJS:
                 return $this->buildChartHTMLChartJS($reportData,$fields);
+            case AOR_Report::CHART_TYPE_RGRAPH:
+                return $this->buildChartHTMLRGraph($reportData,$fields);
         }
         return '';
+    }
+
+
+    private function buildChartHTMLRGraph(array $reportData, array $fields){
+        $html = '';
+        if(!in_array($this->type, $this->getValidChartTypes())){
+            return $html;
+        }
+        $x = $fields[$this->x_field];
+        $y = $fields[$this->y_field];
+        if(!$x || !$y){
+            //Malformed chart object - missing an axis field
+            return '';
+        }
+        $xName = str_replace(' ','_',$x->label) . $this->x_field;
+        $yName = str_replace(' ','_',$y->label) . $this->y_field;
+
+        switch($this->type){
+            /*
+             //Polar was not implemented for the previous library (it is not in the getValidChartTypes method)
+            case 'polar':
+                $chartFunction = 'PolarArea';
+                $data = $this->getPolarChartData($reportData, $xName,$yName);
+                $config = $this->getPolarChartConfig();
+                break;
+            */
+            case 'radar':
+                $chartFunction = 'Radar';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getRadarChartConfig();
+                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+            case 'pie':
+                $chartFunction = 'Pie';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getPieChartConfig();
+                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+            case 'line':
+                $chartFunction = 'Line';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getLineChartConfig();
+                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+            case 'rose':
+                $chartFunction = 'Rose';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getRoseChartConfig();
+                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+            case 'grouped_bar':
+                $chartFunction = 'Grouped bar';
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
+                $config = $this->getGroupedBarChartConfig();
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+            case 'stacked_bar':
+                $chartFunction = 'Stacked bar';
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
+                $config = $this->getStackedBarChartConfig();
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800, false);
+                break;
+            case 'bar':
+            default:
+                $chartFunction = 'Bar';
+                $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
+                $config = $this->getBarChartConfig();
+                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                break;
+        }
+
+        return $chart;
+        //$data = json_encode($data);
+        //$config = json_encode($config);
+
+
+
+        //include_once('modules/Charts/Dashlets/RGraph_PipelineBySalesStageDashlet/RGraph_PipelineBySalesStageDashlet.php');
+       // $test  = new RGraph_PipelineBySalesStageDashlet();
+        //$t = $test->display();
+
+        //$chartId = 'chart'.$this->id;
+
+    }
+
+    private function getRGraphRoseChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Rose({
+            id: '$chartId',
+            options:{
+                //title: '$chartName',
+                //labels: $chartLabelValues,
+                //textSize:8,
+                textSize:10,
+                //titleSize:10,
+                colors: $this->colours
+            },
+            data: $chartDataValues
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+
+
+    //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
+    //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
+    //or stacked (false)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = true)
+    {
+        $dataArray = json_decode($chartDataValues);
+        $grouping = 'grouped';
+        if(!$grouped)
+            $grouping='stacked';
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Bar({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                grouping:'$grouping',
+                backgroundGrid:false,
+                backgroundGrid:false,
+                gutterBottom: 100,
+                //gutterTop:40,
+                //gutterLeft:30,
+                //title: '$chartName',
+                shadow:false,
+                titleSize:10,
+                labels: $chartLabelValues,
+                textSize:10,
+                textAngle: 90,
+                colors: $this->colours
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+
+
+    private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Bar({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                gutterBottom: 150,
+                //gutterTop:50,
+                //title: '$chartName',
+                labels: $chartLabelValues,
+                colorsSequential:true,
+                textAngle: 90,
+                textSize:10,
+                titleSize:10,
+                backgroundGrid:false,
+                colors: $this->colours
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+    private function getRGraphRadarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Radar({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                //title: '$chartName',
+                labels: $chartLabelValues,
+                textSize:10,
+                //titleSize:10,
+                colors: $this->colours
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+    private function getRGraphPieChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Pie({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                //title: '$chartName',
+                textSize:10,
+                //titleSize:10,
+                labels: $chartLabelValues,
+                colors: $this->colours
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
+    }
+
+    private function getRGraphLineChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    {
+        $dataArray = json_decode($chartDataValues);
+        if(!is_array($dataArray)||count($dataArray) < 1)
+        {
+            return "<h3>There are no data points for this query</h3>";
+        }
+        $html = '';
+        $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
+        $html .= <<<EOF
+        <script>
+            new RGraph.Line({
+            id: '$chartId',
+            data: $chartDataValues,
+            options: {
+                gutterBottom: 150,
+                //gutterTop:50,
+                tickmarks:'encircle',
+                textSize:10,
+                //title: '$chartName',
+                labels: $chartLabelValues,
+                textAngle: 90,
+                //titleSize:10,
+                backgroundGrid:false,
+                colors: $this->colours
+            }
+        }).draw();
+        </script>
+EOF;
+        return $html;
     }
 
     private function buildChartHTMLChartJS(array $reportData, array $fields){
@@ -299,6 +576,41 @@ EOF;
     }
 
 
+
+    private function getRGraphGroupedBarChartData($reportData, $xName,$yName){
+        $chart['labels']=array();
+        $chart['data']=array();
+        foreach($reportData as $row){
+            $chart['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+
+
+
+            $data = array();
+            $data[] = (float)$row[$yName];
+
+            //TODO need to make this more robust (should the other columns be stored in the database?)
+            foreach($row as $key=>$value)
+            {
+                if(strpos(strtolower($key),'grouped')!== false)
+                    $data[] = (float)$row[$key];
+            }
+            $chart['data'][] = $data;
+        }
+        return $chart;
+    }
+
+    private function getRGraphBarChartData($reportData, $xName,$yName){
+        $chart['labels']=array();
+        $chart['data']=array();
+        foreach($reportData as $row){
+            $chart['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $chart['data'][] = (float)$row[$yName];
+
+        }
+        return $chart;
+    }
+
+
     private function getBarChartData($reportData, $xName,$yName){
         $data = array();
         $data['labels'] = array();
@@ -340,6 +652,20 @@ EOF;
         return array();
     }
     private function getLineChartConfig(){
+        return $this->getBarChartConfig();
+    }
+
+    private function getGroupedBarChartConfig()
+    {
+        return $this->getBarChartConfig();
+    }
+
+    private function getStackedBarChartConfig()
+    {
+        return $this->getBarChartConfig();
+    }
+
+    private function getRoseChartConfig(){
         return $this->getBarChartConfig();
     }
 

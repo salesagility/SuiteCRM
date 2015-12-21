@@ -219,6 +219,8 @@ foreach($pages[$activePage]['columns'] as $colNum => $column) {
 
             if($myDashlet->checkDashletDisplay()) {
                 require_once($dashlets[$id]['fileLocation']);
+
+
                 $dashlet = new $dashlets[$id]['className']($id, (isset($dashlets[$id]['options']) ? $dashlets[$id]['options'] : array()));
                 // Need to add support to dynamically display/hide dashlets
                 // If it has a method 'shouldDisplay' we will call it to see if we should display it or not
@@ -297,7 +299,11 @@ $sugar_smarty->assign('lblLnkHelp', $GLOBALS['app_strings']['LNK_HELP']);
 $sugar_smarty->assign('mod', return_module_language($GLOBALS['current_language'], 'Home'));
 $sugar_smarty->assign('app', $GLOBALS['app_strings']);
 $sugar_smarty->assign('module', 'Home');
+
 //custom chart code
+//Get the RGraph libraries (add this more elegantly later to check exactly what is needed, not just all).
+require_once('include/SuiteGraphs/RGraphIncludes.php');
+
 require_once('include/SugarCharts/SugarChartFactory.php');
 $sugarChart = SugarChartFactory::getInstance();
 $resources = $sugarChart->getChartResources();
@@ -309,6 +315,7 @@ if (file_exists("themes/" . $theme ."/tpls/MySugar.tpl")) {
 } else {
     echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
 }
+
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
 echo"<script>if(typeof(qe_init) != 'undefined'){qe_init();}</script>";
