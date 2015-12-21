@@ -115,6 +115,7 @@ class AOR_Report extends Basic {
 
     const CHART_TYPE_PCHART = 'pchart';
     const CHART_TYPE_CHARTJS = 'chartjs';
+    const CHART_TYPE_RGRAPH = 'rgraph';
 
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
 
@@ -132,6 +133,11 @@ class AOR_Report extends Basic {
                 break;
             case self::CHART_TYPE_CHARTJS:
                 $html = '<script src="modules/AOR_Reports/js/Chart.js"></script>';
+                break;
+            case self::CHART_TYPE_RGRAPH:
+                if($_REQUEST['module']!= 'Home')//Need the require_once for the rgraphincludes as they are only loaded when the home page is hit
+                    require_once('include/SuiteGraphs/RGraphIncludes.php');
+
                 break;
         }
         $x = 0;

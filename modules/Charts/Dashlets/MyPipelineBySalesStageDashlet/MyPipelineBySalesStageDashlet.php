@@ -161,7 +161,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
      * @param  $query string
      * @return array
      */
-    private function getChartData(
+    function getChartData(
         $query
         )
     {
