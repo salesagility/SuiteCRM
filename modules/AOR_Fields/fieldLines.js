@@ -68,6 +68,7 @@ function loadFieldLine(field){
 function showFieldOptions(field, ln){
     if(field.field_type == "datetime" || field.field_type == "date"){
         showElem("aor_fields_format" + ln);
+        $('#'+"aor_fields_format" + ln).html($('#'+"aor_fields_format" + ln).html());
     }
 }
 function showFieldCurrentModuleFields(ln, value){
