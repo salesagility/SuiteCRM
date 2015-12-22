@@ -42,6 +42,7 @@ $app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
 $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
 $app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
+$app_list_strings['aor_format_options']['Y'] = 'Y';
 
 $app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
 $app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
