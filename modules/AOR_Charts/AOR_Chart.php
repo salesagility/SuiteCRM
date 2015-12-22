@@ -47,7 +47,8 @@ class AOR_Chart extends Basic {
     var $type;
     var $x_field;
     var $y_field;
-	
+
+
 	function AOR_Chart(){
 		parent::Basic();
 	}
@@ -249,44 +250,44 @@ class AOR_Chart extends Basic {
                 $chartFunction = 'Radar';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRadarChartConfig();
-                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getPieChartConfig();
-                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
                 break;
             case 'line':
                 $chartFunction = 'Line';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getLineChartConfig();
-                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
                 break;
             case 'rose':
                 $chartFunction = 'Rose';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRoseChartConfig();
-                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
                 break;
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
                 $config = $this->getGroupedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, 400,800);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
                 $config = $this->getStackedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800, false);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, 400,800, false);
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getBarChartConfig();
-                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, 400,800);
                 break;
         }
 
@@ -304,7 +305,7 @@ class AOR_Chart extends Basic {
 
     }
 
-    private function getRGraphRoseChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphRoseChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -323,7 +324,10 @@ class AOR_Chart extends Basic {
                 //textSize:8,
                 textSize:10,
                 //titleSize:10,
-                colors: $this->colours
+                 tooltips:$chartTooltips,
+                tooltipsEvent:'onmousemove',
+                colors: $this->colours,
+                colorsSequential:true
             },
             data: $chartDataValues
         }).draw();
@@ -337,7 +341,7 @@ EOF;
     //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
     //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
     //or stacked (false)
-    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = true)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = true)
     {
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped';
@@ -358,10 +362,14 @@ EOF;
                 grouping:'$grouping',
                 backgroundGrid:false,
                 backgroundGrid:false,
-                gutterBottom: 100,
+                gutterBottom: 150,
                 //gutterTop:40,
                 //gutterLeft:30,
                 //title: '$chartName',
+
+                tooltips:$chartTooltips,
+                tooltipsEvent:'onmousemove',
+
                 shadow:false,
                 titleSize:10,
                 labels: $chartLabelValues,
@@ -377,7 +385,7 @@ EOF;
 
 
 
-    private function getRGraphBarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -401,6 +409,10 @@ EOF;
                 textSize:10,
                 titleSize:10,
                 backgroundGrid:false,
+
+                tooltips:$chartTooltips,
+                tooltipsEvent:'onmousemove',
+
                 colors: $this->colours
             }
         }).draw();
@@ -409,7 +421,7 @@ EOF;
         return $html;
     }
 
-    private function getRGraphRadarChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphRadarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -428,7 +440,11 @@ EOF;
                 labels: $chartLabelValues,
                 textSize:10,
                 //titleSize:10,
-                colors: $this->colours
+
+                 tooltips:$chartTooltips,
+                tooltipsEvent:'onmousemove',
+
+                colors: $this->colours,
             }
         }).draw();
         </script>
@@ -436,7 +452,7 @@ EOF;
         return $html;
     }
 
-    private function getRGraphPieChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphPieChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -454,6 +470,9 @@ EOF;
                 //title: '$chartName',
                 textSize:10,
                 //titleSize:10,
+                 tooltips:$chartTooltips,
+                tooltipsEvent:'onmousemove',
+
                 labels: $chartLabelValues,
                 colors: $this->colours
             }
@@ -463,7 +482,7 @@ EOF;
         return $html;
     }
 
-    private function getRGraphLineChart($chartDataValues, $chartLabelValues, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphLineChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -484,6 +503,12 @@ EOF;
                 textSize:10,
                 //title: '$chartName',
                 labels: $chartLabelValues,
+
+                 tooltips:$chartTooltips,
+                tooltipsEvent:'onmousemove',
+
+                tickmarks:'circle',
+
                 textAngle: 90,
                 //titleSize:10,
                 backgroundGrid:false,
@@ -575,24 +600,40 @@ EOF;
         return $html;
     }
 
+    private function getShortenedLabel($label, $maxLabelSize = 20)
+    {
+        if(strlen($label) > $maxLabelSize)
+        {
+            return substr($label,0,$maxLabelSize).'...';
+        }
+        else
+            return $label;
+    }
 
 
     private function getRGraphGroupedBarChartData($reportData, $xName,$yName){
         $chart['labels']=array();
         $chart['data']=array();
+        $chart['tooltips']=array();
         foreach($reportData as $row){
-            $chart['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
-
-
 
             $data = array();
             $data[] = (float)$row[$yName];
-
+            $chart['labels'][] = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
+            $chart['tooltips'][] = $row[$xName];
             //TODO need to make this more robust (should the other columns be stored in the database?)
             foreach($row as $key=>$value)
             {
+                //Need the label repeated x times per bar of the stacked / grouped value
+//                $chart['tooltips'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+
+
                 if(strpos(strtolower($key),'grouped')!== false)
+                {
+                    $chart['tooltips'][] = $row[$xName];
                     $data[] = (float)$row[$key];
+                }
+
             }
             $chart['data'][] = $data;
         }
@@ -602,8 +643,10 @@ EOF;
     private function getRGraphBarChartData($reportData, $xName,$yName){
         $chart['labels']=array();
         $chart['data']=array();
+        $chart['tooltips']=array();
         foreach($reportData as $row){
-            $chart['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $chart['labels'][] = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
+            $chart['tooltips'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
             $chart['data'][] = (float)$row[$yName];
 
         }
