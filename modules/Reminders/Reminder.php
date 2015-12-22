@@ -420,6 +420,9 @@ class Reminder extends Basic {
 
 	private function getEventPersonQuery(SugarBean $event, SugarBean $person) {
 		$eventIdField = array_search($event->table_name, $event->relationship_fields);
+		if(!$eventIdField) {
+			$eventIdField = strtolower($event->object_name . '_id');
+		}
 		$personIdField = strtolower($person->object_name) . '_id';
 		$query = "
 			SELECT * FROM {$event->table_name}_{$person->table_name}
