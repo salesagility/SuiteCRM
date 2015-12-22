@@ -225,7 +225,8 @@ class Reminder extends Basic {
 	}	
 
     private static function getUnsentEmailReminders() {
-        global $db;		
+        global $db;
+		$reminders = array();
 		$reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.email = 1 AND reminders.email_sent = 0");
 		foreach($reminderBeans as $reminderBean) {
 			$eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
