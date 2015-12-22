@@ -54,7 +54,7 @@ class AOR_ReportsViewEdit extends ViewEdit {
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
         echo "total_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_total_options'], '')))."\";";
-        echo "format_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id(array_merge(['0' => ''], $app_list_strings['aor_format_options']), '')))."\";";
+        echo "format_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_format_options'], '')))."\";";
         echo "</script>";
 
         $fields = $this->getFieldLines();
