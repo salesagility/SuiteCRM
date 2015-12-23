@@ -193,11 +193,6 @@ class AOPInboundEmail extends InboundEmail {
                 $caseBean->contacts->add($contactBean);
             }
 
-            // relate contact to case
-            if(!empty($contactBean)) {
-                $caseBean->contacts->add($contactIds);
-            }
-
             // Relate the email with the case
             if($caseBean->load_relationship('emails')) {
                 $caseBean->emails->add($email->id);
