@@ -622,6 +622,21 @@ class AOR_Report extends Basic {
             foreach ($query_array['where'] as $where){
                 $query_where .=  ($query_where == '' ? 'WHERE ' : ' ').$where;
             }
+
+            // remove empty parenthesis
+
+            $safe = 0;
+            $query_where_clean = '';
+            while($query_where_clean != $query_where) {
+                $query_where_clean = $query_where;
+                $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|\(\s*\)/i', '', $query_where_clean);
+                $safe++;
+                if($safe>100){
+                    $GLOBALS['log']->fatal('Invalid report query conditions');
+                    break;
+                }
+            }
+
             $query .= ' '.$query_where;
         }
 
