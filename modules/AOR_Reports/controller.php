@@ -166,24 +166,24 @@ class AOR_ReportsController extends SugarController {
         $graphs = $_POST["graphsForPDF"];
         $graphHtml = "<div class='reportGraphs' style='width:100%; text-align:center;'>";
 
-        //TODO get the number of chartsPerRow from the post request
-        $chartsPerRow = 2;
+        $chartsPerRow = $this->bean->graphs_per_row;
         $countOfCharts = count($graphs);
         if($countOfCharts > 0)
         {
-            $width = (int)100/$chartsPerRow;
+            $width = ((int)100/$chartsPerRow);
 
             $modulusRemainder = $countOfCharts % $chartsPerRow;
+
             if($modulusRemainder > 0)
             {
-                $modulusWidth = (int)100/$modulusRemainder;
+                $modulusWidth = ((int)100/$modulusRemainder);
                 $itemsWithModulus = $countOfCharts - $modulusRemainder;
             }
 
 
             for($x =0; $x < $countOfCharts; $x++)
             {
-                if($x < $itemsWithModulus)
+                if(is_null($itemsWithModulus) ||  $x < $itemsWithModulus)
                     $graphHtml.="<img src='.$graphs[$x].' style='width:$width%;' />";
                 else
                     $graphHtml.="<img src='.$graphs[$x].' style='width:$modulusWidth%;' />";

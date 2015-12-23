@@ -54,6 +54,7 @@ $mod_strings = array (
   'LBL_AOR_REPORTS_SUBPANEL_TITLE' => 'Reports',
   'LBL_NEW_FORM_TITLE' => 'New Reports',
   'LBL_REPORT_MODULE' => 'Report Module',
+    'LBL_GRAPHS_PER_ROW' => 'Graphs per row',
   'LBL_FIELD_LINES' => 'Display Fields',
   'LBL_ADD_FIELD' => 'Add Field',
   'LBL_CONDITION_LINES' => 'Conditions',
