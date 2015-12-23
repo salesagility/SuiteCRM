@@ -54,100 +54,171 @@ class AOPInboundEmail extends InboundEmail {
 
 
     function handleCreateCase($email, $userId) {
-        global $current_user, $mod_strings, $current_language;
+        $GLOBALS['log']->debug('AOPInboundEmail::handleCreateCase($email, $userId)');
+        echo "Start of handle create case\n";
+
+        global $current_user, $mod_strings, $current_language, $sugar_config;
         $mod_strings = return_module_language($current_language, "Emails");
-        $GLOBALS['log']->debug('In handleCreateCase in AOPInboundEmail');
-        $c = new aCase();
-        $this->getCaseIdFromCaseNumber($email->name, $c);
 
         if (!$this->handleCaseAssignment($email) && $this->isMailBoxTypeCreateCase()) {
-            // create a case
-            $GLOBALS['log']->debug('retrieveing email');
+            // Get Email
+            $GLOBALS['log']->debug('retrieving email');
             $email->retrieve($email->id);
-            $c = new aCase();
 
-            $notes = $email->get_linked_beans('notes','Notes');
-            $noteIds = array();
-            foreach($notes as $note){
-                $noteIds[] = $note->id;
-            }
-            if($email->description_html) {
-                $c->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html),$noteIds);
-            }else{
-                $c->description = $email->description;
-            }
-            $c->assigned_user_id = $userId;
-            $c->name = $email->name;
-            $c->status = 'New';
-            $c->priority = 'P1';
+            // Create Case
+            $GLOBALS['log']->debug('Create Case');
+            $caseBean = BeanFactory::newBean('Cases');
+            $caseBean->assigned_user_id = $userId;
+            $caseBean->name = $email->name;
+            $caseBean->status = 'New';
+            $caseBean->priority = 'P1';
 
-            if(!empty($email->reply_to_email)) {
-                $contactAddr = $email->reply_to_email;
-            } else {
-                $contactAddr = $email->from_addr;
-            }
+            // Generate Case Number
+            $GLOBALS['log']->debug('Generate Case Number');
+            $this->getCaseIdFromCaseNumber($email->name, $caseBean);
 
-            $GLOBALS['log']->debug('finding related accounts with address ' . $contactAddr);
-            if($accountIds = $this->getRelatedId($contactAddr, 'accounts')) {
-                if (sizeof($accountIds) == 1) {
-                    $c->account_id = $accountIds[0];
+            // Get Email Attachments (using notes module)
+            $GLOBALS['log']->debug('Get Attachments (using notes)');
+            $notesBean = $email->get_linked_beans('notes','Notes');
+            $emailAttachmentIDs = array();
+            foreach($notesBean as $note) {
+                // Set up array of email attachment IDs
+                $emailAttachmentIDs[] = $note->id;
 
-                    $acct = new Account();
-                    $acct->retrieve($c->account_id);
-                    $c->account_name = $acct->name;
-                } // if
-            } // if
-            $contactIds = $this->getRelatedId($contactAddr, 'contacts');
-            if(!empty($contactIds)) {
-                $c->contact_created_by_id = $contactIds[0];
-            }
-
-            $c->save(true);
-            $caseId = $c->id;
-            $c = new aCase();
-            $c->retrieve($caseId);
-            if($c->load_relationship('emails')) {
-                $c->emails->add($email->id);
-            } // if
-                if(!empty($contactIds) && $c->load_relationship('contacts')) {
-                    if (!$accountIds && count($contactIds) == 1) {
-                        $contact = BeanFactory::getBean('Contacts', $contactIds[0]);
-                        if ($contact->load_relationship('accounts')) {
-                            $acct = $contact->accounts->get();
-                            if ($c->load_relationship('accounts') && !empty($acct[0])) {
-                                $c->accounts->add($acct[0]);
-                            }
-                        }
-                    }
-                    $c->contacts->add($contactIds);
-                } // if
-            foreach($notes as $note){
-                //Link notes to case also
+                // Link notes to case also
                 $newNote = BeanFactory::newBean('Notes');
                 $newNote->name = $note->name;
                 $newNote->file_mime_type = $note->file_mime_type;
                 $newNote->filename = $note->filename;
                 $newNote->parent_type = 'Cases';
-                $newNote->parent_id = $c->id;
+                $newNote->parent_id = $caseBean->id;
                 $newNote->save();
                 $srcFile = "upload://{$note->id}";
                 $destFile = "upload://{$newNote->id}";
-                copy($srcFile,$destFile);
-
+                copy($srcFile, $destFile);
             }
 
-            $c->email_id = $email->id;
+            // Process case description
+            if($email->description_html) {
+                // Process case description with attachments
+                $GLOBALS['log']->debug('Process case description with attachments'.print_r($emailAttachmentIDs, 1));
+                $caseBean->description = $this->processImageLinks(SugarCleaner::cleanHtml($email->description_html), $emailAttachmentIDs);
+            } else {
+                // Process case description without attachments
+                $GLOBALS['log']->debug('Process case description without attachments');
+                $caseBean->description = $email->description;
+            }
+
+            if(!empty($email->reply_to_email)) {
+                $contactEmailAddress = $email->reply_to_email;
+            } else {
+                $contactEmailAddress = $email->from_addr;
+            }
+
+            // Get related contact using email address
+            $GLOBALS['log']->debug('Finding related contacts with address ' . $contactEmailAddress);
+            $contactIds = $this->getRelatedId($contactEmailAddress, 'contacts');
+            if(empty($contactIds)) {
+                $GLOBALS['log']->debug('No contacts creating contact address ' . $contactEmailAddress);
+                // create contact
+                $contactBean = BeanFactory::newBean('Contacts');
+                $contactBean->email1 = $email->from_addr;
+                $contactBean->last_name = $email->from_addr_name;
+                $contactBean->save(false);
+
+                $caseBean->contact_created_by_id = $contactBean->id;
+                $contactIds = array();
+                $contactIds[] = $contactBean->id;
+
+                // Load cases contact relationship
+                $caseBean->load_relationship('contacts');
+            }
+
+
+            $GLOBALS['log']->debug('Finding related accounts with address ' . $contactEmailAddress);
+            if($accountIds = $this->getRelatedId($contactEmailAddress, 'accounts')) {
+                $GLOBALS['log']->debug('Found related accounts with address ' . $contactEmailAddress);
+
+                if (sizeof($accountIds) == 1) {
+                    $accountBean = BeanFactory::newBean('Accounts');
+                    $accountBean->retrieve($caseBean->account_id);
+                    $caseBean->account_id = $accountIds[0];
+                    $caseBean->account_name = $accountBean->name;
+                }
+            } else {
+                // Set default account ID
+                if(!empty($sugar_config['inbound_email_default_account_id'])) {
+                    $accountBean = BeanFactory::newBean('Accounts');
+                    $accountBean->retrieve($sugar_config['inbound_email_default_account_id']);
+                    $caseBean->account_name = $accountBean->name;
+                    $caseBean->account_id = $accountBean->id;
+                    // Load cases accounts relationship
+                    $caseBean->load_relationship('accounts');
+
+                    $accountIds = array();
+                    $accountIds[] = $accountBean->id;
+                }
+            }
+
+            // Get contacts related to accounts
+            if(!empty($accountBean)) {
+                $GLOBALS['log']->debug('Finding contacts related  to accounts ' . $accountBean->name);
+                if ($accountBean->load_relationship('contacts')) {
+                    $accountBean->contacts->get();
+                    if(empty($contactBean)) {
+                        $contactBean = BeanFactory::getBean('Contacts', $contactIds[0]);
+                    }
+                    $accountBean->contacts->add($contactBean);
+                }
+            }
+
+            // Save and notify users
+            $caseBean->save(true);
+
+            // if case doesn't have a related account but it does have a related contact
+            // then relate the account of the contact to case instead
+            // and relate the contact to the case
+            if(empty($accountBean) && !empty($contactBean)) {
+                // load the relationship contacts accounts
+                if ($contactBean->load_relationship('accounts')) {
+                    $accountsList = $contactBean->accounts->get();
+                    if ($caseBean->load_relationship('accounts') && !empty($accountsList[0])) {
+                        $caseBean->accounts->add($accountsList[0]);
+                    }
+                }
+
+                $caseBean->contacts->add($contactIds);
+            } else if(!empty($contactBean)) {
+                // Relate Contact To Case
+                $caseBean->contacts->add($contactBean);
+            }
+
+            // relate contact to case
+            if(!empty($contactBean)) {
+                $caseBean->contacts->add($contactIds);
+            }
+
+            // Relate the email with the case
+            if($caseBean->load_relationship('emails')) {
+                $caseBean->emails->add($email->id);
+            }
+
+            // Create email
+            $caseBean->email_id = $email->id;
             $email->parent_type = "Cases";
-            $email->parent_id = $caseId;
-            // assign the email to the case owner
-            $email->assigned_user_id = $c->assigned_user_id;
-            $email->name = str_replace('%1', $c->case_number, $c->getEmailSubjectMacro()) . " ". $email->name;
+            $email->parent_id = $caseBean->id;
+
+            // Assign the email to the case owner
+            $email->assigned_user_id = $caseBean->assigned_user_id;
+            $email->name = str_replace('%1', $caseBean->case_number, $caseBean->getEmailSubjectMacro()) . " ". $email->name;
             $email->save();
-            $GLOBALS['log']->debug('InboundEmail created one case with number: '.$c->case_number);
+
+            $GLOBALS['log']->debug('InboundEmail get stored options: '.$caseBean->case_number);
             $createCaseTemplateId = $this->get_stored_options('create_case_email_template', "");
             if(!empty($this->stored_options)) {
                 $storedOptions = unserialize(base64_decode($this->stored_options));
             }
+
             if(!empty($createCaseTemplateId)) {
                 $fromName = "";
                 $fromAddress = "";
@@ -160,7 +231,7 @@ class AOPInboundEmail extends InboundEmail {
                 $defaults = $current_user->getPreferredEmail();
                 $fromAddress = (!empty($fromAddress)) ? $fromAddress : $defaults['email'];
                 $fromName = (!empty($fromName)) ? $fromName : $defaults['name'];
-                $to[0]['email'] = $contactAddr;
+                $to[0]['email'] = $contactEmailAddress;
 
                 // handle to name: address, prefer reply-to
                 if(!empty($email->reply_to_name)) {
@@ -175,10 +246,15 @@ class AOPInboundEmail extends InboundEmail {
                 if(empty($et->body))		{ $et->body = ''; }
                 if(empty($et->body_html))	{ $et->body_html = ''; }
 
-                $et->subject = "Re:" . " " . str_replace('%1', $c->case_number, $c->getEmailSubjectMacro() . " ". $c->name);
+                $et->subject = "Re:" . " " . str_replace('%1', $caseBean->case_number, $caseBean->getEmailSubjectMacro() . " ". $caseBean->name);
 
                 $html = trim($email->description_html);
                 $plain = trim($email->description);
+
+                // Parse email template
+                $casesBeanArray = array('Cases' => $caseBean->id);
+                $et->body = EmailTemplate::parse_template($et->body, $casesBeanArray);
+                $et->body_html = EmailTemplate::parse_template($et->body_html, $casesBeanArray);
 
                 $email->email2init();
                 $email->from_addr = $email->from_addr_name;
@@ -206,21 +282,24 @@ class AOPInboundEmail extends InboundEmail {
                 if (!$et->text_only) {
                     $reply->description_html	= $et->body_html .  "<div><hr /></div>" . $email->description;
                 }
+
+                // Send Email
                 $GLOBALS['log']->debug('saving and sending auto-reply email');
                 //$reply->save(); // don't save the actual email.
                 $reply->send();
-            } // if
+            }
 
         } else {
+            $GLOBALS['log']->debug('"First if not matching');
             echo "First if not matching\n";
             if(!empty($email->reply_to_email)) {
-                $contactAddr = $email->reply_to_email;
+                $contactEmailAddress = $email->reply_to_email;
             } else {
-                $contactAddr = $email->from_addr;
+                $contactEmailAddress = $email->from_addr;
             }
-            $this->handleAutoresponse($email, $contactAddr);
+            $this->handleAutoresponse($email, $contactEmailAddress);
         }
         echo "End of handle create case\n";
 
-    } // fn
+    }
 }
