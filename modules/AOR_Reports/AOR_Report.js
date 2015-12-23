@@ -40,7 +40,24 @@ $(document).ready(function() {
             var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
             _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
         });
+
+        //Get the data url of each of the rgraph canvases for PDF generation on the server
+        var encodedGraphs = [];
+        var rgraphs = document.getElementsByClassName('resizableCanvas');
+        for(var i = 0; i < rgraphs.length; i++)
+        {
+            //encodedGraphs.push(rgraphs[i].toDataURL());
+
+            _form.append('<input type="hidden" id="graphsForPDF" name="graphsForPDF[]" value='+rgraphs[i].toDataURL()+'>');
+        }
+
+        //$('#formDetailView :input[name="encodedGraphs"]').val(JSON.stringify(encodedGraphs));
+        //var graphString = JSON.stringify(encodedGraphs);
+
         _form.submit();
+
+        //$('#graphsForPDF').remove();
+        $("#formDetailView #graphsForPDF").remove();
     });
 
     $('#download_csv_button_old').click(function() {
