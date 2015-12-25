@@ -33,9 +33,11 @@ color: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;
 /* Dashlet CSS */
 
 .dashletPanel .h3Row{
-
 background: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet']; ?>;
+}
 
+.dashletPanel .h3Row .dashletToolSet .icon{
+fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;	
 }
 
 /* Top navigation bar CSS */
