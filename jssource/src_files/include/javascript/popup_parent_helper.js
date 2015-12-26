@@ -59,34 +59,34 @@ function open_popup(module_name, width, height, initial_filter, close_popup, hid
 	// set the variables that the popup will pull from
 	window.document.popup_request_data = popup_request_data;
 	window.document.close_popup = close_popup;
-	//globally changing width and height of standard pop up window from 600 x 400 to 800 x 800 
+	//globally changing width and height of standard pop up window from 600 x 400 to 800 x 800
 	width = (width == 600) ? 800 : width;
 	height = (height == 400) ? 800 : height;
-	
+
 	// launch the popup
 	URL = 'index.php?'
 		+ 'module=' + module_name
 		+ '&action=Popup';
-	
+
 	if(initial_filter != '')
 	{
 		URL += '&query=true' + initial_filter;
 	}
-	
+
 	if(hide_clear_button)
 	{
 		URL += '&hide_clear_button=true';
 	}
-	
+
 	windowName = module_name + '_popup_window' + popupCount;
 	popupCount++;
-	
+
 	windowFeatures = 'width=' + width
 		+ ',height=' + height
 		+ ',resizable=1,scrollbars=1';
 
 	if (popup_mode == '' && popup_mode == 'undefined') {
-		popup_mode='single';		
+		popup_mode='single';
 	}
 	URL+='&mode='+popup_mode;
 	if (create == '' && create == 'undefined') {
@@ -95,9 +95,9 @@ function open_popup(module_name, width, height, initial_filter, close_popup, hid
 	URL+='&create='+create;
 
 	if (metadata != '' && metadata != 'undefined') {
-		URL+='&metadata='+metadata;	
+		URL+='&metadata='+metadata;
 	}
-	
+
     // Bug #46842 : The relate field field_to_name_array fails to copy over custom fields
     // post fields that should be populated from popup form
 	if(popup_request_data.jsonObject) {
@@ -106,7 +106,7 @@ function open_popup(module_name, width, height, initial_filter, close_popup, hid
 		var request_data = popup_request_data;
 	}
     var field_to_name_array_url = '';
-    if (request_data && request_data.field_to_name_array != 'undefined') {        
+    if (request_data && request_data.field_to_name_array != 'undefined') {
         for(var key in request_data.field_to_name_array) {
             if ( key.toLowerCase() != 'id' ) {
                 field_to_name_array_url += '&field_to_name[]='+encodeURIComponent(key.toLowerCase());
@@ -116,7 +116,7 @@ function open_popup(module_name, width, height, initial_filter, close_popup, hid
     if ( field_to_name_array_url ) {
         URL+=field_to_name_array_url;
     }
-    
+
 	win = window.open(URL, windowName, windowFeatures);
 
 	if(window.focus)
@@ -124,7 +124,7 @@ function open_popup(module_name, width, height, initial_filter, close_popup, hid
 		// put the focus on the popup if the browser supports the focus() method
 		win.focus();
 	}
-	
+
 	win.popupCount = popupCount;
 
 	return win;
@@ -141,7 +141,7 @@ function set_return(popup_reply_data)
 	from_popup_return = true;
 	var form_name = popup_reply_data.form_name;
 	var name_to_value_array = popup_reply_data.name_to_value_array;
-	
+
 	for (var the_key in name_to_value_array)
 	{
 		if(the_key == 'toJSON')
@@ -164,7 +164,7 @@ function set_return_and_save(popup_reply_data)
 {
 	var form_name = popup_reply_data.form_name;
 	var name_to_value_array = popup_reply_data.name_to_value_array;
-	
+
 	for (var the_key in name_to_value_array)
 	{
 		if(the_key == 'toJSON')
@@ -177,7 +177,7 @@ function set_return_and_save(popup_reply_data)
             SUGAR.util.callOnChangeListers(window.document.forms[form_name].elements[the_key]);
 		}
 	}
-	
+
 	window.document.forms[form_name].return_module.value = window.document.forms[form_name].module.value;
 	window.document.forms[form_name].return_action.value = 'DetailView';
 	window.document.forms[form_name].return_id.value = window.document.forms[form_name].record.value;
@@ -218,6 +218,16 @@ function set_return_and_save_targetlist(popup_reply_data)
             SUGAR.util.callOnChangeListers(window.document.forms[form_index].elements[get_element_index(form_index,the_key)]);
 		}
 	}
+
+
+    if(popup_reply_data.passthru_data.do_contacts)
+    {
+        var form = window.document.forms[form_index];
+
+
+        var do_contacts = $('<input type="hidden" name="do_contacts" value="1"/>');
+        $(form).append(do_contacts);
+    }
 	window.document.forms[form_index].elements[get_element_index(form_index,"return_module")].value = window.document.forms[form_index].elements[get_element_index(form_index,"module")].value;
 	window.document.forms[form_index].elements[get_element_index(form_index,"return_action")].value = 'ListView';
 	window.document.forms[form_index].elements[get_element_index(form_index,"uids")].value = uids;

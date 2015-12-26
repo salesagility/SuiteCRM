@@ -70,7 +70,8 @@ else
 {window.document.forms[form_name].elements[the_key].value=name_to_value_array[the_key];SUGAR.util.callOnChangeListers(window.document.forms[form_name].elements[the_key]);}}
 window.document.forms[form_name].return_module.value=window.document.forms[form_name].module.value;window.document.forms[form_name].return_action.value='DetailView';window.document.forms[form_name].return_id.value=window.document.forms[form_name].record.value;window.document.forms[form_name].action.value='Save';window.document.forms[form_name].submit();}
 function set_return_and_save_targetlist(popup_reply_data)
-{var form_name=popup_reply_data.form_name;var name_to_value_array=popup_reply_data.name_to_value_array;var form_index=document.forms.length-1;sugarListView.get_checks();var uids=document.MassUpdate.uid.value;if(uids==''){return false;}
+{
+    var form_name=popup_reply_data.form_name;var name_to_value_array=popup_reply_data.name_to_value_array;var form_index=document.forms.length-1;sugarListView.get_checks();var uids=document.MassUpdate.uid.value;if(uids==''){return false;}
 for(var the_key in name_to_value_array)
 {if(the_key=='toJSON')
 {}
@@ -79,6 +80,15 @@ else
 {if(form_name==window.document.forms[form_index])
 {form_index=i;break;}}
 window.document.forms[form_index].elements[get_element_index(form_index,the_key)].value=name_to_value_array[the_key];SUGAR.util.callOnChangeListers(window.document.forms[form_index].elements[get_element_index(form_index,the_key)]);}}
+
+    if(popup_reply_data.passthru_data.do_contacts)
+    {
+        window.document.forms[form_index]
+        var do_contacts = document.createElement("do_contacts");
+        do_contacts.setAttribute("type","hidden");
+        do_contacts.setAttribute("value", "true");
+
+    }
 window.document.forms[form_index].elements[get_element_index(form_index,"return_module")].value=window.document.forms[form_index].elements[get_element_index(form_index,"module")].value;window.document.forms[form_index].elements[get_element_index(form_index,"return_action")].value='ListView';window.document.forms[form_index].elements[get_element_index(form_index,"uids")].value=uids;window.document.forms[form_index].submit();}
 function get_element_index(form_index,element_name){var j=0;while(j<window.document.forms[form_index].elements.length){if(window.document.forms[form_index].elements[j].name==element_name){index=j;break;}
 j++;}
