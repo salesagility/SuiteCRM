@@ -65,6 +65,15 @@ background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_hover']
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_link_hover']; ?> !important;
 }
 
+#desktop_notifications .btn {
+background: #<?php echo $sugar_config['theme_settings']['SuiteR']['navbar']; ?>;	
+}
+
+#searchform .btn
+{
+background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?>;
+}
+
 /* Drop down menu CSS */
 
 .dropdown-menu {
