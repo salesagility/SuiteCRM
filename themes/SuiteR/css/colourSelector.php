@@ -72,6 +72,7 @@ background: #<?php echo $sugar_config['theme_settings']['SuiteR']['navbar']; ?>;
 #searchform .btn
 {
 background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?>;
+color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; ?>;
 }
 
 /* Drop down menu CSS */
