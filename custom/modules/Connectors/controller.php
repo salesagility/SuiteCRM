@@ -39,8 +39,9 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/connectors/sources/SourceFactory.php');
 require_once('include/connectors/ConnectorFactory.php');
 require_once('include/MVC/Controller/SugarController.php');
+require_once('modules/Connectors/controller.php');
 
-class ConnectorsController extends SugarController
+class CustomConnectorsController extends ConnectorsController
 {
 
     var $admin_actions = array('ConnectorSettings', 'DisplayProperties', 'MappingProperties', 'ModifyMapping', 'ModifyDisplay', 'ModifyProperties',
