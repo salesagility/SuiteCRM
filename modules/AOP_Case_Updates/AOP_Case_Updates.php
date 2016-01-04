@@ -59,9 +59,9 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
                 $signature = $current_user->getDefaultSignature();
             }
             if($email_template) {
+                $emails = array();
                 foreach ($this->getContacts() as $contact) {
                     $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
-                    $emails = array();
                     $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
                     $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter, $contact->id);
                 }
