@@ -152,6 +152,9 @@ class AOR_Report extends Basic {
     }
 
 
+
+
+
     function build_group_report($offset = -1, $links = true){
         global $beanList;
 

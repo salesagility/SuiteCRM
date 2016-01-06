@@ -292,17 +292,6 @@ class AOR_Chart extends Basic {
         }
 
         return $chart;
-        //$data = json_encode($data);
-        //$config = json_encode($config);
-
-
-
-        //include_once('modules/Charts/Dashlets/RGraph_PipelineBySalesStageDashlet/RGraph_PipelineBySalesStageDashlet.php');
-       // $test  = new RGraph_PipelineBySalesStageDashlet();
-        //$t = $test->display();
-
-        //$chartId = 'chart'.$this->id;
-
     }
 
     private function getRGraphRoseChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
