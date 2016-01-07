@@ -30,9 +30,12 @@ var report_module = '';
 
 var FieldLineHandler = {
 
-    makeGroupMainSelectOptions: function() {
+    makeGroupMainSelectOptions: function(selectedField) {
         var found = false;
         var value = $('#group_main').val();
+        if(selectedField) {
+            value = this.getFieldNth(selectedField);
+        }
         var foundValues = [];
         $('#group_main').html('<option value="-1">-- none --</option>'); // todo: lang file
         $('#fieldLines input[type="text"]').each(function(i,e){
@@ -57,6 +60,18 @@ var FieldLineHandler = {
             $('#group_main_table').hide();
             $('#group_main').val(-1);
         }
+    },
+
+    getFieldNth: function(field) {
+        var ret = false;
+        $('input[value="' + field.id + '"]').each(function(i,e){
+            var id = $(this).attr('id');
+            if(id.substr(0, 'aor_fields_id'.length)=='aor_fields_id') {
+                ret = id.substr('aor_fields_id'.length);
+                return ;
+            }
+        });
+        return ret;
     }
 
 };
@@ -96,7 +111,7 @@ function loadFieldLine(field){
     }
     showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
-    FieldLineHandler.makeGroupMainSelectOptions();
+    FieldLineHandler.makeGroupMainSelectOptions(parseInt(field.group_main) != 0 ? field : null);
 }
 
 function showFieldOptions(field, ln){
