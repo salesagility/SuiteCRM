@@ -28,6 +28,39 @@ var report_rel_modules =  new Array();
 var report_fields =  new Array();
 var report_module = '';
 
+var FieldLineHandler = {
+
+    makeGroupMainSelectOptions: function() {
+        var found = false;
+        var value = $('#group_main').val();
+        var foundValues = [];
+        $('#group_main').html('<option value="-1">-- none --</option>'); // todo: lang file
+        $('#fieldLines input[type="text"]').each(function(i,e){
+            var _value = $(this).attr('id').substr('aor_fields_label'.length);
+            if($(this).attr('id').substr(0, 'aor_fields_label'.length)=='aor_fields_label' && $('#aor_fields_deleted' + _value).val() != 1) {
+                $('#group_main').append('<option value="' + _value + '">' + $(this).val() + '</option>');
+                found = true;
+                foundValues.push(_value);
+            }
+        });
+
+        if(found) {
+            $('#group_main_table').show();
+            if($.inArray(value, foundValues) != -1) {
+                $('#group_main').val(value);
+            }
+            else {
+                $('#group_main').val(-1);
+            }
+        }
+        else {
+            $('#group_main_table').hide();
+            $('#group_main').val(-1);
+        }
+    }
+
+};
+
 YUI().use('sortable', function(Y) {
     var sortable = new Y.Sortable({
         container: '#fieldLines',
@@ -63,6 +96,7 @@ function loadFieldLine(field){
     }
     showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
+    FieldLineHandler.makeGroupMainSelectOptions();
 }
 
 function showFieldOptions(field, ln){
@@ -318,6 +352,7 @@ function markFieldLineDeleted(ln)
     if(fieldln_count == 0){
         document.getElementById('fieldLines_head').style.display = "none";
     }
+    FieldLineHandler.makeGroupMainSelectOptions();
 }
 
 function clearFieldLines(){
@@ -361,6 +396,7 @@ function fieldSort(){
             }
         });
         updateChartDimensionSelects();
+        FieldLineHandler.makeGroupMainSelectOptions();
     }
 }
 
