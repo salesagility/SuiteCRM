@@ -292,6 +292,14 @@
 
     <div class="edit view edit508 " id="detailpanel_fields">
         <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
+        <table id="group_main_table" style="display: none;">
+            <tbody>
+                <tr>
+                    <td>Main Group:</td><!-- todo: lang file -->
+                    <td><select id="group_main" name="group_main"></select></td>
+                </tr>
+            </tbody>
+        </table>
                 <div class="drop-area" id="fieldLines" style="min-height: 450px;">
                 </div>
     </div>
@@ -356,6 +364,7 @@
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
+        FieldLineHandler.makeGroupMainSelectOptions();
     });
 
     $(function(){
