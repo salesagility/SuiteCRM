@@ -75,5 +75,7 @@ $entry_point_registry = array(
     'UploadFileCheck' => array('file' => 'modules/Configurator/UploadFileCheck.php', 'auth' => true),
     'SAML'=>  array('file' => 'modules/Users/authentication/SAMLAuthenticate/index.php', 'auth' => false),
     'jslang'=> array('file' => 'include/language/getJSLanguage.php', 'auth' => true),
+	'deleteAttachment' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),
+	'responseEntryPoint' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),
 );
 ?>
