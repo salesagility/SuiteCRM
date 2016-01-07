@@ -292,11 +292,11 @@
 
     <div class="edit view edit508 " id="detailpanel_fields">
         <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
-        <table id="group_main_table" style="display: none;">
+        <table id="group_display_table" style="display: none;">
             <tbody>
                 <tr>
                     <td>Main Group:</td><!-- todo: lang file -->
-                    <td><select id="group_main" name="aor_fields_group_main"></select></td>
+                    <td><select id="group_display" name="aor_fields_group_display"></select></td>
                 </tr>
             </tbody>
         </table>
@@ -364,7 +364,7 @@
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
-        FieldLineHandler.makeGroupMainSelectOptions();
+        FieldLineHandler.makeGroupDisplaySelectOptions();
     });
 
     $(function(){

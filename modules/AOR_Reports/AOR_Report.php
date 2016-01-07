@@ -175,10 +175,10 @@ class AOR_Report extends Basic {
 
             $field_module = $module;
             $table_alias = $field_module->table_name;
-            if($path[0] != $module->module_dir){
+            if($path[0] && $path[0] != $module->module_dir){
                 foreach($path as $rel){
                     $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$rel)];
-                    $query_array = $this->build_report_query_join($rel, $table_alias,$field_module, 'relationship', $query_array, $new_field_module);
+                    $query_array = $this->build_report_query_join($rel, $table_alias, null, $field_module, 'relationship', $query_array, $new_field_module);
                     $field_module = $new_field_module;
                     $table_alias = $rel;
                 }
@@ -218,7 +218,7 @@ class AOR_Report extends Basic {
             }
 
             $query_array['select'][] = $select_field ." AS '".$field_label."'";
-            $query_array['where'][] = $select_field ." IS NOT NULL ";
+            $query_array['where'][] = $select_field ." IS NOT NULL AND ";
 
             $query_array = $this->build_report_query_where($query_array);
 
@@ -236,7 +236,7 @@ class AOR_Report extends Basic {
             if(isset($query_array['where'])){
                 $query_where = '';
                 foreach ($query_array['where'] as $where){
-                    $query_where .=  ($query_where == '' ? 'WHERE ' : ' AND ').$where;
+                    $query_where .=  ($query_where == '' ? 'WHERE ' : ' ').$where;
                 }
                 $query .= ' '.$query_where;
             }
@@ -256,6 +256,8 @@ class AOR_Report extends Basic {
                 }
                 $query .= ' '.$query_sort_by;
             }
+
+            $query .= ' group by ' . $field_label;
 
             $result = $this->db->query($query);
 
@@ -742,7 +744,7 @@ class AOR_Report extends Basic {
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
-                if($field->group_display) $query['where'][] = $select_field." = '".$group_value."'";
+                if($field->group_display) $query['where'][] = $select_field." = '".$group_value."' AND ";
                     ++$i;
             }
         }
@@ -1041,7 +1043,7 @@ class AOR_Report extends Basic {
                     }
                 }
                 else {
-                    throw new Exception('illegal condition');
+                    $GLOBALS['log']->debug('illegal condition');
                 }
 
             }
