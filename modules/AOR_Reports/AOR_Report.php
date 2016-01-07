@@ -118,11 +118,67 @@ class AOR_Report extends Basic {
     const CHART_TYPE_RGRAPH = 'rgraph';
 
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
+        global $beanList;
+
+
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->db->query($sql);
+
+        $fields = array();
+        $i = 0;
+        while ($row = $this->db->fetchByAssoc($result)) {
+
+            $field = new AOR_Field();
+            $field->retrieve($row['id']);
+
+            $path = unserialize(base64_decode($field->module_path));
+
+            $field_bean = new $beanList[$this->report_module]();
+
+            $field_module = $this->report_module;
+            $field_alias = $field_bean->table_name;
+            if($path[0] != $this->report_module){
+                foreach($path as $rel){
+                    if(empty($rel)){
+                        continue;
+                    }
+                    $field_module = getRelatedModule($field_module,$rel);
+                    $field_alias = $field_alias . ':'.$rel;
+                }
+            }
+            $label = str_replace(' ','_',$field->label).$i;
+            $fields[$label]['field'] = $field->field;
+            $fields[$label]['label'] = $field->label;
+            $fields[$label]['display'] = $field->display && !$field->group_display;
+            $fields[$label]['function'] = $field->field_function;
+            $fields[$label]['module'] = $field_module;
+            $fields[$label]['alias'] = $field_alias;
+            $fields[$label]['link'] = $field->link;
+            $fields[$label]['total'] = $field->total;
+
+            ++$i;
+        }
+
+
 
         $result = $this->db->query($this->build_report_query());
         $data = array();
         while($row = $this->db->fetchByAssoc($result, false))
         {
+            foreach($fields as $name => $att){
+
+                $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
+
+                switch ($att['function']){
+                    case 'COUNT':
+                        break;
+                    default:
+                        $row[$name] = strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id));
+                        break;
+                }
+            }
+
+
             $data[] = $row;
         }
         $fields = $this->getReportFields();
