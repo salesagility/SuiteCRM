@@ -67,6 +67,15 @@ array (
           ),
           1 => '',
         ),
+          2 =>
+              array (
+                  0 =>
+                      array (
+                          'name' => 'graphs_per_row',
+                          'label' => 'LBL_GRAPHS_PER_ROW',
+                      ),
+                  1 => '',
+              ),
 //        2 =>
 //        array (
 //          0 => 'description',
