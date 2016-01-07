@@ -102,6 +102,28 @@ include("metadata/cron_remove_documentsMetaData.php");
 //konwledge base
 include('metadata/aok_knowledgebase_categoriesMetaData.php');
 
+include('custom/metadata/am_projecttemplates_project_1MetaData.php');
+include('custom/metadata/am_tasktemplates_am_projecttemplatesMetaData.php');
+include('custom/metadata/aos_contracts_documentsMetaData.php');
+include('custom/metadata/aos_quotes_aos_contractsMetaData.php');
+include('custom/metadata/aos_quotes_aos_invoicesMetaData.php');
+include('custom/metadata/aos_quotes_projectMetaData.php');
+include('custom/metadata/aow_processed_aow_actionsMetaData.php');
+include('custom/metadata/fp_event_locations_fp_events_1MetaData.php');
+include('custom/metadata/fp_events_contactsMetaData.php');
+include('custom/metadata/fp_events_fp_event_delegates_1MetaData.php');
+include('custom/metadata/fp_events_fp_event_locations_1MetaData.php');
+include('custom/metadata/fp_events_leads_1MetaData.php');
+include('custom/metadata/fp_events_prospects_1MetaData.php');
+include('custom/metadata/jjwg_maps_jjwg_areasMetaData.php');
+include('custom/metadata/jjwg_maps_jjwg_markersMetaData.php');
+include('custom/metadata/project_contacts_1MetaData.php');
+include('custom/metadata/project_users_1MetaData.php');
+include('custom/metadata/securitygroups_acl_rolesMetaData.php');
+include('custom/metadata/securitygroups_defaultsMetaData.php');
+include('custom/metadata/securitygroups_recordsMetaData.php');
+include('custom/metadata/securitygroups_usersMetaData.php');
+
 if(file_exists('custom/application/Ext/TableDictionary/tabledictionary.ext.php')){
 	include('custom/application/Ext/TableDictionary/tabledictionary.ext.php');
 }
