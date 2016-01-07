@@ -1,4 +1,5 @@
-<!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +38,20 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
+require_once('include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php');
 
-<!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr id="{SUBPANEL_ID}_search" class="pagination" style="{DISPLAY_SPS}">
-    <td align="right" colspan="20">
-            {SUBPANEL_SEARCH}
-    </td>
-</tr>
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
-<!-- END: dyn_list_view -->
+class SugarWidgetSubPanelDelegatesSelectButton extends SugarWidgetSubPanelTopButton
+{
+    
+    function display($defines, $additionalFormFields = null)
+    {
+        global $mod_strings;
+        $button = "<script src='include/javascript/checkbox.js' type='text/javascript'></script>";
+        $button  .= "<form id='CustSelectForm' name='CustSelectForm' method='post' action=''>";
+
+       // $button .= "<input id='custom_hidden_5' type='hidden' name='custom_hidden_5' value=''/>";
+        $button .= "<input id='Custom_Select' class='button' type='button' name='Custom_Select' onclick='select_targets()' value='".$mod_strings['LBL_SELECT_DELEGATES']."'/>\n</form>";	
+
+        return $button;
+    }
+}

@@ -1,4 +1,5 @@
-<!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +38,29 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
+include_once('include/generic/SugarWidgets/SugarWidgetField.php');
 
-<!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr id="{SUBPANEL_ID}_search" class="pagination" style="{DISPLAY_SPS}">
-    <td align="right" colspan="20">
-            {SUBPANEL_SEARCH}
-    </td>
-</tr>
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
-<!-- END: dyn_list_view -->
+
+class SugarWidgetSubPanelCheck extends SugarWidgetField
+{
+    function displayListPlain($layout_def) {
+
+        $value= $this->_get_list_value($layout_def);
+
+        if (isset($layout_def['widget_type']) && $layout_def['widget_type'] =='checkbox') {
+
+            if ($value != '' &&  ($value == 'on' || intval($value) == 1 || $value == 'yes'))
+            {
+                return "&nbsp;<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true' checked>";
+            }
+            //Modification to allow checkboxes to be displayed correctly in subpanel
+            if ($layout_def['checkbox_value']=='true'){
+                return "&nbsp;<input name='".$layout_def['module']."checkbox_display[]' class='checkbox' type='checkbox' id='".$layout_def['module']."checkbox_display_id[]' value=\"".$layout_def['fields']['ID']."\" onclick=''>";
+            }
+
+            return "&nbsp;<input name='checkbox_display' class='checkbox' type='checkbox' disabled='true'>";
+        }
+        return $value;
+    }
+
+}

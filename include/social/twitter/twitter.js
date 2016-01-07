@@ -1,4 +1,3 @@
-<!--
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +36,30 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
+$(function () {
 
-<!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr id="{SUBPANEL_ID}_search" class="pagination" style="{DISPLAY_SPS}">
-    <td align="right" colspan="20">
-            {SUBPANEL_SEARCH}
-    </td>
-</tr>
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
-<!-- END: dyn_list_view -->
+    //Grab the twitter user name field.
+
+    var twitter_user = $("#twitter_user_c").text();
+
+    // If twitter user in not blank run the Ajax Call to the entry point to start processing.
+    if (twitter_user != '') {
+
+        if (twitter_user) {
+
+            $.ajax({
+                type: "POST",
+                url: "index.php?entryPoint=social",
+                data: { twitter_user: twitter_user, social: "twitter"}
+            })
+                .done(function (msg) {
+                    $("#feed").html(' ');
+                    $("#feed").html(msg + $("#feed").html());
+                });
+
+        } else {
+            return false;
+        }
+
+    }
+});

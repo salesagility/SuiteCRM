@@ -542,7 +542,7 @@ enableQS(false);
 		$ss->assign('more_img', $moreimg);
 		$ss->assign('less_img', $lessimg);
 
-        include_once("custom/include/social/get_feed_data.php");
+        include_once("include/social/get_feed_data.php");
         $ss->assign('facebook', $html );
 
         if($current_user->getPreference('use_real_names') == 'on'){

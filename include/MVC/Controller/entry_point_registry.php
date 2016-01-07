@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,13 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
 $entry_point_registry = array(
 	'emailImage' => array('file' => 'modules/EmailMan/EmailImage.php', 'auth' => false),
 	'download' => array('file' => 'download.php', 'auth' => true),
@@ -77,5 +70,16 @@ $entry_point_registry = array(
     'jslang'=> array('file' => 'include/language/getJSLanguage.php', 'auth' => true),
 	'deleteAttachment' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),
 	'responseEntryPoint' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),
+	'formLetter' => array('file' => 'modules/AOS_PDF_Templates/formLetterPdf.php' , 'auth' => true),
+	'generatePdf' => array('file' => 'modules/AOS_PDF_Templates/generatePdf.php' , 'auth' => true),
+	'Reschedule' => array('file' => 'modules/Calls_Reschedule/Reschedule_popup.php' , 'auth' => true),
+	'Reschedule2' => array('file' => 'custom/modules/Calls/Reschedule.php' , 'auth' => true),
+	'social' => array('file' => 'include/social/get_data.php' , 'auth' => true),
+	'social_reader' => array('file' => 'include/social/get_feed_data.php' , 'auth' => true),
+	'add_dash_page' => array('file' => 'custom/modules/Home/AddDashboardPages.php' , 'auth' => true),
+	'retrieve_dash_page' => array('file' => 'include/MySugar/retrieve_dash_page.php' , 'auth' => true),
+	'remove_dash_page' => array('file' => 'custom/modules/Home/RemoveDashboardPages.php' , 'auth' => true),
+	'rename_dash_page' => array('file' => 'custom/modules/Home/RenameDashboardPages.php' , 'auth' => true)
 );
+
 ?>
