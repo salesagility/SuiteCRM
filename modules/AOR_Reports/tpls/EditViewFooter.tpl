@@ -296,7 +296,7 @@
             <tbody>
                 <tr>
                     <td>Main Group:</td><!-- todo: lang file -->
-                    <td><select id="group_main" name="group_main"></select></td>
+                    <td><select id="group_main" name="aor_fields_group_main"></select></td>
                 </tr>
             </tbody>
         </table>
