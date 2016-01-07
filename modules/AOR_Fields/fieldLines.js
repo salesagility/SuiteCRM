@@ -30,35 +30,35 @@ var report_module = '';
 
 var FieldLineHandler = {
 
-    makeGroupMainSelectOptions: function(selectedField) {
+    makeGroupDisplaySelectOptions: function(selectedField) {
         var found = false;
-        var value = $('#group_main').val();
+        var value = $('#group_display').val();
         if(selectedField) {
             value = this.getFieldNth(selectedField);
         }
         var foundValues = [];
-        $('#group_main').html('<option value="-1">-- none --</option>'); // todo: lang file
+        $('#group_display').html('<option value="-1">' + SUGAR.language.get('app_strings', 'LBL_NONE') + '</option>');
         $('#fieldLines input[type="text"]').each(function(i,e){
             var _value = $(this).attr('id').substr('aor_fields_label'.length);
             if($(this).attr('id').substr(0, 'aor_fields_label'.length)=='aor_fields_label' && $('#aor_fields_deleted' + _value).val() != 1) {
-                $('#group_main').append('<option value="' + _value + '">' + $(this).val() + '</option>');
+                $('#group_display').append('<option value="' + _value + '">' + $(this).val() + '</option>');
                 found = true;
                 foundValues.push(_value);
             }
         });
 
         if(found) {
-            $('#group_main_table').show();
+            $('#group_display_table').show();
             if($.inArray(value, foundValues) != -1) {
-                $('#group_main').val(value);
+                $('#group_display').val(value);
             }
             else {
-                $('#group_main').val(-1);
+                $('#group_display').val(-1);
             }
         }
         else {
-            $('#group_main_table').hide();
-            $('#group_main').val(-1);
+            $('#group_display_table').hide();
+            $('#group_display').val(-1);
         }
     },
 
@@ -111,7 +111,7 @@ function loadFieldLine(field){
     }
     showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
-    FieldLineHandler.makeGroupMainSelectOptions(parseInt(field.group_main) != 0 ? field : null);
+    FieldLineHandler.makeGroupDisplaySelectOptions(parseInt(field.group_display) != 0 ? field : null);
 }
 
 function showFieldOptions(field, ln){
@@ -367,7 +367,7 @@ function markFieldLineDeleted(ln)
     if(fieldln_count == 0){
         document.getElementById('fieldLines_head').style.display = "none";
     }
-    FieldLineHandler.makeGroupMainSelectOptions();
+    FieldLineHandler.makeGroupDisplaySelectOptions();
 }
 
 function clearFieldLines(){
@@ -411,7 +411,7 @@ function fieldSort(){
             }
         });
         updateChartDimensionSelects();
-        FieldLineHandler.makeGroupMainSelectOptions();
+        FieldLineHandler.makeGroupDisplaySelectOptions();
     }
 }
 

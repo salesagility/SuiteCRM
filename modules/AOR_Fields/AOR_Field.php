@@ -69,7 +69,7 @@ class AOR_Field extends Basic {
                 $this->mark_deleted($post_data[$key.'id'][$i]);
             } else {
                 $field = new AOR_Field();
-                $field->group_main = false;
+                $field->group_display = false;
                 foreach($this->field_defs as $field_def) {
                     if(is_array($post_data[$key.$field_def['name']])) {
                         if (isset($post_data[$key . $field_def['name']][$i])) {
@@ -86,7 +86,7 @@ class AOR_Field extends Basic {
                         }
                     }
                     else if(is_numeric($post_data[$key.$field_def['name']])) {
-                        if ($field_def['name'] == 'group_main' && $post_data[$key . $field_def['name']] == $i) {
+                        if ($field_def['name'] == 'group_display' && $post_data[$key . $field_def['name']] == $i) {
                             $field->$field_def['name'] = true;
                         }
                     }

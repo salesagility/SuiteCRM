@@ -279,11 +279,6 @@ $dictionary['AOR_Field'] = array(
             'merge_filter' => 'disabled',
             'studio' => 'visible',
         ),
-        'group_main' => array(
-            'name' => 'group_main',
-            'vname' => 'LBL_GROUP_MAIN',
-            'type' => 'bool',
-        ),
         'group_order' =>
         array (
             'required' => false,
