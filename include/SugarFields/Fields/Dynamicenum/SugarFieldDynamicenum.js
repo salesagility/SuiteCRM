@@ -1,4 +1,3 @@
-<!--
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +36,39 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
 
-<!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr id="{SUBPANEL_ID}_search" class="pagination" style="{DISPLAY_SPS}">
-    <td align="right" colspan="20">
-            {SUBPANEL_SEARCH}
-    </td>
-</tr>
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
-<!-- END: dyn_list_view -->
+function updateDynamicEnum(field, subfield){
+
+    if(document.getElementById(subfield) != null){
+        var selector = document.getElementById(subfield);
+        var de_key = document.getElementById(field).value;
+
+        var current = [];
+        for (var i = 0; i < selector.length; i++) {
+            if (selector.options[i].selected) current.push(selector.options[i].value);
+        }
+
+
+        if(de_entries[subfield]  == null){
+           de_entries[subfield] =  new Array;
+           for (var i=0; i<selector.options.length; i++){
+                de_entries[subfield][selector.options[i].value] = selector.options[i].text;
+           }
+        }
+
+        document.getElementById(subfield).innerHTML = '';
+
+        for (var key in de_entries[subfield]) {
+            if(key.indexOf(de_key+'_') == 0){
+                selector.options[selector.options.length] = new Option(de_entries[subfield][key], key);
+            }
+        }
+
+        for (var key in current) {
+            for (var i = 0; i < selector.length; i++) {
+                if(selector.options[i].value == current[key])
+                selector[i].selected = true;
+            }
+        }
+    }
+}

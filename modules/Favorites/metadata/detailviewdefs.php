@@ -26,7 +26,7 @@ array (
       array (
         0 => 
         array (
-          'file' => 'custom/include/javascript/checkbox.js',
+          'file' => 'include/javascript/checkbox.js',
         ),
         1 => 
         array (

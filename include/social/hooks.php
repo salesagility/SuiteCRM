@@ -1,4 +1,4 @@
-<!--
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +37,28 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
 
-<!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr id="{SUBPANEL_ID}_search" class="pagination" style="{DISPLAY_SPS}">
-    <td align="right" colspan="20">
-            {SUBPANEL_SEARCH}
-    </td>
-</tr>
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
-<!-- END: dyn_list_view -->
+class hooks{
+
+    function load_js($event, $arguments){
+        $mapping = '';
+
+        if($_REQUEST['action'] == 'DetailView'){
+            include("custom/modules/Connectors/connectors/sources/ext/rest/facebook/mapping.php");
+            if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
+                echo '<script src="include/social/facebook/facebook_subpanel.js"></script>';
+                echo '<script src="include/social/facebook/facebook.js"></script>';
+                $facebook = true;
+            }
+
+            $mapping = '';
+            include('custom/modules/Connectors/connectors/sources/ext/rest/twitter/mapping.php');
+            if(array_key_exists($_REQUEST['module'], $mapping['beans'])){
+               echo '<script src="include/social/twitter/twitter_feed.js"></script>';
+               echo '<script src="include/social/twitter/twitter.js"></script>';
+            }
+        }
+    }
+
+}
+

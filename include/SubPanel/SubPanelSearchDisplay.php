@@ -1,4 +1,5 @@
-<!--
+<?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,38 +38,39 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
--->
+ini_set('display_errors',1);
 
-<!-- BEGIN: dyn_list_view -->
-<table cellpadding="0" cellspacing="0" width="100%" border="0" class="list view">
-<tbody>
-<!-- BEGIN: list_nav_row -->
-{PAGINATION}
-<!-- END: list_nav_row -->
-<tr id="{SUBPANEL_ID}_search" class="pagination" style="{DISPLAY_SPS}">
-    <td align="right" colspan="20">
-            {SUBPANEL_SEARCH}
-    </td>
-</tr>
-<tr height="20">
-<!-- BEGIN: header_cell -->
-<th scope="col" width="{CELL_WIDTH}"><span sugar='slot{CELL_COUNT}' style="white-space:normal;">{HEADER_CELL}</span sugar='slot'></th>
-<!-- END: header_cell -->
-</tr>
-<!-- BEGIN: row -->
-<tr height="20" class="{ROW_COLOR}S1" >
-<!-- BEGIN: cell -->
-<td scope="row" valign="top" class="{CLASS}"><span sugar='slot{CELL_COUNT}b'>{CELL}</span sugar='slot'></td>
-<!-- END: cell -->
-</tr>
-<!-- END: row -->
-<!-- BEGIN: nodata -->
-<tr height='20' class='{ROW_COLOR}S1'>
-    <td colspan='{COL_COUNT}'>
-        <em>{APP.LBL_NO_DATA}</em>
-    </td>
-</tr>	
-<!-- END: nodata -->
-</tbody>
-</table>
-<!-- END: dyn_list_view -->
+global $beanList;
+global $beanFiles;
+
+
+if(empty($_REQUEST['module']))
+{
+	die("'module' was not defined");
+}
+
+if(!isset($beanList[$_REQUEST['module']]))
+{
+	die("'".$_REQUEST['module']."' is not defined in \$beanList");
+}
+
+if (!isset($_REQUEST['subpanel'])) {
+    sugar_die('Subpanel was not defined');
+}
+
+$subpanel = $_REQUEST['subpanel'];
+$record = '';
+$module = $_REQUEST['module'];
+
+$collection = array();
+
+include('include/SubPanel/SubPanel.php');
+$layout_def_key = '';
+if(!empty($_REQUEST['layout_def_key'])){
+	$layout_def_key = $_REQUEST['layout_def_key'];
+}
+
+$subpanel_object = new CustomSubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
+
+echo $subpanel_object->getSearchForm();
+

@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -112,10 +112,15 @@ class MySugar{
 										 'options' => $options,
 			                             'fileLocation' => $dashletsFiles[$_REQUEST['id']]['file']);
 
-		    // add to beginning of the array
-		    array_unshift($pages[$_REQUEST['activeTab']]['columns'][0]['dashlets'], $guid);
+
+		    if(!array_key_exists('current_tab',$_SESSION)){
+			$_SESSION["current_tab"] = '0';
+		    }
+
+		    array_unshift($pages[$_SESSION['current_tab']]['columns'][0]['dashlets'], $guid);
 
 		    $current_user->setPreference('dashlets', $dashlets, 0, $this->type);
+
 
 		    echo $guid;
 		}
