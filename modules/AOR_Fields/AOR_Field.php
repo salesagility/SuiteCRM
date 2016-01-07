@@ -69,17 +69,32 @@ class AOR_Field extends Basic {
                 $this->mark_deleted($post_data[$key.'id'][$i]);
             } else {
                 $field = new AOR_Field();
+                $field->group_main = false;
                 foreach($this->field_defs as $field_def) {
-                    if(isset($post_data[$key.$field_def['name']][$i])){
-                        if(is_array($post_data[$key.$field_def['name']][$i])){
-                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
-                        } else if($field_def['name'] == 'value') {
-                            $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key.$field_def['name']][$i]);
+                    if(is_array($post_data[$key.$field_def['name']])) {
+                        if (isset($post_data[$key . $field_def['name']][$i])) {
+                            if (is_array($post_data[$key . $field_def['name']][$i])) {
+                                $post_data[$key . $field_def['name']][$i] = base64_encode(serialize($post_data[$key . $field_def['name']][$i]));
+                            } else if ($field_def['name'] == 'value') {
+                                $post_data[$key . $field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key . $field_def['name']][$i]);
+                            }
+                            if ($field_def['name'] == 'module_path') {
+                                $post_data[$key . $field_def['name']][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_def['name']][$i])));
+                            }
+
+                            $field->$field_def['name'] = $post_data[$key . $field_def['name']][$i];
                         }
-                        if($field_def['name'] == 'module_path'){
-                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize(explode(":",$post_data[$key.$field_def['name']][$i])));
+                    }
+                    else if(is_numeric($post_data[$key.$field_def['name']])) {
+                        if ($field_def['name'] == 'group_main' && $post_data[$key . $field_def['name']] == $i) {
+                            $field->$field_def['name'] = true;
                         }
-                        $field->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
+                    }
+                    else if(is_null($post_data[$key.$field_def['name']])) {
+                        // do nothing
+                    }
+                    else {
+                        throw new Exception('illegal type in post data at key ' . $key.$field_def['name'] . ' ' . gettype($post_data[$key.$field_def['name']]));
                     }
 
                 }
