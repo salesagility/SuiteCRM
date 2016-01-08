@@ -73,13 +73,13 @@ $entry_point_registry = array(
 	'formLetter' => array('file' => 'modules/AOS_PDF_Templates/formLetterPdf.php' , 'auth' => true),
 	'generatePdf' => array('file' => 'modules/AOS_PDF_Templates/generatePdf.php' , 'auth' => true),
 	'Reschedule' => array('file' => 'modules/Calls_Reschedule/Reschedule_popup.php' , 'auth' => true),
-	'Reschedule2' => array('file' => 'custom/modules/Calls/Reschedule.php' , 'auth' => true),
+	'Reschedule2' => array('file' => 'modules/Calls/Reschedule.php' , 'auth' => true),
 	'social' => array('file' => 'include/social/get_data.php' , 'auth' => true),
 	'social_reader' => array('file' => 'include/social/get_feed_data.php' , 'auth' => true),
-	'add_dash_page' => array('file' => 'custom/modules/Home/AddDashboardPages.php' , 'auth' => true),
+	'add_dash_page' => array('file' => 'modules/Home/AddDashboardPages.php' , 'auth' => true),
 	'retrieve_dash_page' => array('file' => 'include/MySugar/retrieve_dash_page.php' , 'auth' => true),
-	'remove_dash_page' => array('file' => 'custom/modules/Home/RemoveDashboardPages.php' , 'auth' => true),
-	'rename_dash_page' => array('file' => 'custom/modules/Home/RenameDashboardPages.php' , 'auth' => true)
+	'remove_dash_page' => array('file' => 'modules/Home/RemoveDashboardPages.php' , 'auth' => true),
+	'rename_dash_page' => array('file' => 'modules/Home/RenameDashboardPages.php' , 'auth' => true)
 );
 
 ?>

@@ -1,11 +1,10 @@
-{*
-
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,38 +36,35 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+require_once('include/MVC/View/views/view.edit.php');
+require_once('include/SugarTinyMCE.php');
 
+class CasesViewEdit extends ViewEdit {
 
+    function CasesViewEdit(){
+        parent::ViewEdit();
+    }
 
+    function display(){
+        parent::display();
+        global $sugar_config;
+        $new = empty($this->bean->id);
+        if($new){
+            ?>
+            <script>
+                $(document).ready(function(){
+                    $('#update_text').closest('td').html('');
+                    $('#update_text_label').closest('td').html('');
+                    $('#internal').closest('td').html('');
+                    $('#internal_label').closest('td').html('');
+                    $('#addFileButton').closest('td').html('');
+                    $('#case_update_form_label').closest('td').html('');
+                });
+            </script>
+        <?php
+        }
+        $tiny = new SugarTinyMCE();
+        echo $tiny->getInstance('update_text,description', 'email_compose_light');
+    }
 
-*}
-
- {include file="modules/DynamicFields/templates/Fields/Forms/coreTop.tpl"}
-
-<tr>
-	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="LBL_DROP_DOWN_LIST"}:</td>
-	<td>
-	{if $hideLevel < 5 && empty($vardef.function)}
-		{html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}<br><input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button' onclick="ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value);">&nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}' class='button' onclick="ModuleBuilder.moduleDropDown('', this.form.name.value);">{/if}
-	{else}
-		<input type='hidden' name='options' value='{$selected_dropdown}'>{$selected_dropdown}
-	{/if}
-	</td>
-</tr>
-<tr>
-    <td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_PARENT_ENUM"}:</td>
-    <td>
-           <input type="text" id="parentenum"  name="parentenum" value="{$vardef.parentenum}" />
-    </td>
-</tr>
-<tr>
-	<td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
-	<td>
-	{if $hideLevel < 5}
-		<input type="checkbox" id="massupdate"  name="massupdate" value="1" {if !empty($vardef.massupdate)}checked{/if}/>
-	{else}
-		<input type="checkbox" id="massupdate"  name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
-	{/if}
-	</td>
-</tr>
-{include file="modules/DynamicFields/templates/Fields/Forms/coreBottom.tpl"}
+}

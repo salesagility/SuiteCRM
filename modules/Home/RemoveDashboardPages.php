@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,19 +38,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
- 
-global $app_strings;
+global $current_user;
+$type = 'Home';
+$pages = $current_user->getPreference('pages', $type);
 
-$dashletMeta['SugarFeedDashlet'] = array('module'		=> 'SugarFeed',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'SugarFeed'), 
-                                          'description' => 'A customizable view into Sugar_Feed',
-                                          'icon'        => 'themes/default/images/icon_SugarFeed_32.gif',
-                                          'dynamic_hide' => true,
-                                          'category'    => 'Tools');
+
+if (count($pages) > 1) {
+
+    if (!isset($_POST['status'])) {
+        $html = "<form method='post' name='removepageform' action='index.php?module=Home&action=RemoveDashboardPages'/>";
+        $html .= "<p>".$GLOBALS['app_strings']['LBL_DELETE_DASHBOARD1']." ".$pages[$_POST['page_id']]['pageTitle'] . " ".$GLOBALS['app_strings']['LBL_DELETE_DASHBOARD2']."</p>";
+        $html .= "<input type='hidden' name='page_id' value='" . $_POST['page_id']. "' />";
+        $html .= "<input type='hidden' name='status' value='yes' />";
+        $html .= "</form>";
+
+        echo $html;
+
+    } else {
+
+        unset($pages[$_POST['page_id']]);
+
+        $pages = array_values($pages);
+
+        $current_user->setPreference('pages', $pages, 0, $type);
+
+        $queryParams = array(
+            'module' => 'Home',
+            'action' => 'index',
+        );
+
+        $sa = new SugarApplication();
+        $sa->redirect('index.php?' . http_build_query($queryParams));
+
+    }
+
+}

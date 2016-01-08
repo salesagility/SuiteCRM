@@ -25,7 +25,7 @@ $dictionary['Call']['fields']['reschedule_history'] = array(
     array (
         'name' => 'reschedule_history',
         'returns' => 'html',
-        'include' => 'custom/modules/Calls/reschedule_history.php'
+        'include' => 'modules/Calls/reschedule_history.php'
     ),
 );
 
@@ -47,7 +47,7 @@ $dictionary['Call']['fields']['reschedule_count'] = array(
     array (
         'name' => 'reschedule_count',
         'returns' => 'html',
-        'include' => 'custom/modules/Calls/reschedule_history.php'
+        'include' => 'modules/Calls/reschedule_history.php'
     ),
 );
 
