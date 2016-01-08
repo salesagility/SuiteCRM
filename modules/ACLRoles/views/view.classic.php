@@ -15,7 +15,6 @@ class ACLRolesViewClassic extends ViewDetail {
 
  	function display(){
 		$this->dv->process();
-		echo '<style type="text/css">@import url("custom/modules/ACLRoles/styles/securitygroups.css"); </style>';
 
 		$file = SugarController::getActionFilename($this->action);
 		$this->includeClassicFile('modules/'. $this->module . '/'. $file . '.php');

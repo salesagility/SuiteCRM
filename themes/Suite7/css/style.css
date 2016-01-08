@@ -1887,6 +1887,10 @@ table.reportlistView th, .reportlistView .reportlistViewMatrixRightEmptyData, .r
     color: #008000;
     font-weight: bold;
 }
+.aclGroup {
+    color: #0000A0;
+    font-weight: bold;
+}
 
 /* for lists where we don't want to have bullet points */
 ul.noBullet {

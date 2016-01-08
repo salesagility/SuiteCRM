@@ -1,11 +1,10 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,50 +37,43 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
-class TemplateDynamicenum extends TemplateEnum{
-    var $type='dynamicenum';
-    var $parentenum ='';
+require_once('modules/Calls_Reschedule/Calls_Reschedule.php');
 
-    function TemplateDynamicenum(){
-        parent::__construct();
-        $this->vardef_map['parentenum']='ext2';
-    }
+function reschedule_history($focus, $field, $value, $view){
 
-    function get_field_def(){
-        $def = parent::get_field_def();
-        $def['dbType'] = 'enum';
-        $def['parentenum'] = isset($this->ext2) && $this->ext2 != '' ? $this->ext2 : $this->parentenum;
-        return $def;
-    }
+    global $app_list_strings;
 
-    function get_xtpl_edit(){
-        $name = $this->name;
-        $value = '';
-        if(isset($this->bean->$name)){
-            $value = $this->bean->$name;
-        }else{
-            if(empty($this->bean->id)){
-                $value= $this->default_value;
-            }
-        }
-        if(!empty($this->help)){
-            $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
+    if($view == 'DetailView'){
+
+        $html = '';
+        $html .= '<ul id="history_list">';
+
+        $query = "SELECT calls_reschedule.id FROM calls_reschedule JOIN users ON calls_reschedule.modified_user_id = users.id WHERE call_id='".$focus->id."' ORDER BY calls_reschedule.date_entered DESC";
+        
+        $result = $focus->db->query($query);
+        
+        $reschedule = new Calls_Reschedule();
+
+        while ($row = $focus->db->fetchByAssoc($result)) {
+        
+        	$reschedule->retrieve($row['id']);
+                       
+            $html .= '<li>'.$app_list_strings["call_reschedule_dom"][$reschedule->reason].' - '.$reschedule->date_entered.' by '.$reschedule->created_by_name.'</li>';
+
         }
 
-        global $app_list_strings;
-        $returnXTPL = array();
-        $returnXTPL[strtoupper($this->name)] = $value;
-        if(empty($this->ext1)){
-            $this->ext1 = $this->options;
-        }
-        $returnXTPL[strtoupper('options_'.$this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], $value);
+        $html .= '</ul>';
 
-        return $returnXTPL;
-
-
+        return $html;
     }
+
 }
 
+function reschedule_count($focus, $field, $value, $view){
 
-?>
+        $query = "SELECT COUNT(*) FROM calls_reschedule WHERE call_id='".$focus->id."'";
+        $result = $focus->db->getOne($query);
+
+        $focus->reschedule_count = $result;
+
+    }

@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,19 +39,40 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+global $current_user;
+$type = 'Home';
+$pages = $current_user->getPreference('pages', $type);
 
 
-require_once('include/MySugar/MySugar.php');
+if (count($pages) > 1) {
 
-$mySugar = new MySugar($_REQUEST['module']);
-if (!isset($_REQUEST['DynamicAction'])) {
-	$_REQUEST['DynamicAction'] = 'displayDashlet';
+    if (!isset($_POST['dashName'])) {
+        $html = "<form method='post' name='removepageform'/>";
+        $html .= "<table>";
+        $html .= "<tr>";
+        $html .= "<td><label for='dashName'>".$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME']." </label></td>";
+        $html .= "<td><input name='dashName' id='dashName' value='" .$pages[$_POST['page_id']]['pageTitle'] ."'/></td>";
+        $html .= "<input type='hidden' id='page_id' name='page_id' value='" . $_POST['page_id']. "' />";
+        $html .= "</tr>";
+        $html .= "</table>";
+        $html .="</form>";
+
+        echo $html;
+
+    } else {
+
+        $pages[$_POST['page_id']]['pageTitle'] = $_POST['dashName'];
+
+        $current_user->setPreference('pages', $pages, 0, $type);
+
+        $return_params = array(
+            'dashName' => $pages[$_POST['page_id']]['pageTitle'],
+            'page_id' => $_POST['page_id'],
+        );
+
+       $return_params = json_encode($return_params,true);
+
+       echo $return_params;
+    }
+
 }
-// commit session before returning output so we can serialize AJAX requests
-// and not get session into a wrong state
-$dynamicAction = $_REQUEST['DynamicAction'];
-$res = $mySugar->$dynamicAction();
-if(isset($_REQUEST['commit_session'])) {
-    session_commit();
-}
-echo $res;

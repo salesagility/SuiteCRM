@@ -1,11 +1,11 @@
-{*
-
+<?php
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,44 +38,55 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+require_once('modules/DynamicFields/templates/Fields/TemplateEnum.php');
 
-*}
+class TemplateDynamicenum extends TemplateEnum
+{
+    var $type = 'dynamicenum';
+    var $parentenum = '';
 
-<form name='form_{$id}' id='form_{$id}'>
-<div class="dashletNonTable" style='white-space:nowrap;'>
-  <table border=0 cellspacing=0 cellpadding=2>
-    <tr>
-      <td nowrap="nowrap"><span id='more_img_{$id}'>{$more_img}</span><span id='less_img_{$id}' style="display:none;">{$less_img}</span> <b>{$user_name}</b>&nbsp;</td>
-      <td style="padding-right: 5px;"><input id="text" name="text" type="text" size='25' maxlength='100' value="" title="{sugar_translate label='LBL_POST_TITLE' module='SugarFeed'} {$user_name} "/></td>
-      <td nowrap="nowrap">
-      <input type="submit" value="{$LBL_POST}" class="button" style="vertical-align:top" onclick="SugarFeed.pushUserFeed('{$id}'); return false;"></td>
-        <td>{$facebook}</td>
-    </tr>
-</table>
-<div id='more_{$id}' style='display:none;padding-top:5px'>
-<table>
-<tr>
-    <td>{html_options name='link_type' options=$link_types}</td>
-    <td><input type='text' name='link_url' title="{sugar_translate label='LBL_URL_LINK_TITLE' module='SugarFeed'}"  size='30'/></td>
+    function TemplateDynamicenum()
+    {
+        parent::__construct();
+        $this->vardef_map['parentenum'] = 'ext2';
+    }
 
-</tr>
-</table>
-</div>
-</div>
+    function get_field_def()
+    {
+        $def = parent::get_field_def();
+        $def['dbType'] = 'enum';
+        $def['parentenum'] = isset($this->ext2) && $this->ext2 != '' ? $this->ext2 : $this->parentenum;
+        return $def;
+    }
 
-</form>
+    function get_xtpl_edit()
+    {
+        $name = $this->name;
+        $value = '';
+        if (isset($this->bean->$name)) {
+            $value = $this->bean->$name;
+        } else {
+            if (empty($this->bean->id)) {
+                $value = $this->default_value;
+            }
+        }
+        if (!empty($this->help)) {
+            $returnXTPL[strtoupper($this->name . '_help')] = translate($this->help, $this->bean->module_dir);
+        }
 
-<form name='SugarFeedReplyForm_{$id}' id='SugarFeedReplyForm_{$id}'>
-<input type='hidden' name='parentFeed' value=''>
-<div style='white-space:nowrap; display: none;'>
- <table border=0 cellspacing=0 cellpadding=2>
-    <tr>
-      <td nowrap="nowrap"><b>{$user_name}</b>&nbsp;</td>
-      <td style="padding-right: 5px;"><input id="text" name="text" type="text" size='25' maxlength='100' value="" /></td>
-      <td nowrap="nowrap">
-      <input type="submit" value="{$LBL_POST}" class="button" style="vertical-align:top" onclick="SugarFeed.replyToFeed('{$id}'); return false;"></td>
-    </tr>
-</table>
-</div>
-</form>
+        global $app_list_strings;
+        $returnXTPL = array();
+        $returnXTPL[strtoupper($this->name)] = $value;
+        if (empty($this->ext1)) {
+            $this->ext1 = $this->options;
+        }
+        $returnXTPL[strtoupper('options_' . $this->name)] = get_select_options_with_id($app_list_strings[$this->ext1], $value);
 
+        return $returnXTPL;
+
+
+    }
+}
+
+
+?>
