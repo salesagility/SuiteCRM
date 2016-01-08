@@ -213,7 +213,7 @@ $dictionary['AOR_Field'] = array(
                 'merge_filter' => 'disabled',
                 'len' => 100,
                 'size' => '20',
-                'options' => 'aor_sort_dom',
+                'options' => 'aor_format_options',
                 'studio' => 'visible',
                 'dependency' => false,
             ),

@@ -28,6 +28,54 @@ var report_rel_modules =  new Array();
 var report_fields =  new Array();
 var report_module = '';
 
+var FieldLineHandler = {
+
+    makeGroupDisplaySelectOptions: function(selectedField) {
+        var found = false;
+        var value = $('#group_display').val();
+        if(selectedField) {
+            value = this.getFieldNth(selectedField);
+        }
+        var foundValues = [];
+        $('#group_display').html('<option value="-1">' + SUGAR.language.get('app_strings', 'LBL_NONE') + '</option>');
+        $('#fieldLines input[type="text"]').each(function(i,e){
+            var _value = $(this).attr('id').substr('aor_fields_label'.length);
+            if($(this).attr('id').substr(0, 'aor_fields_label'.length)=='aor_fields_label' && $('#aor_fields_deleted' + _value).val() != 1) {
+                $('#group_display').append('<option value="' + _value + '">' + $(this).val() + '</option>');
+                found = true;
+                foundValues.push(_value);
+            }
+        });
+
+        if(found) {
+            $('#group_display_table').show();
+            if($.inArray(value, foundValues) != -1) {
+                $('#group_display').val(value);
+            }
+            else {
+                $('#group_display').val(-1);
+            }
+        }
+        else {
+            $('#group_display_table').hide();
+            $('#group_display').val(-1);
+        }
+    },
+
+    getFieldNth: function(field) {
+        var ret = false;
+        $('input[value="' + field.id + '"]').each(function(i,e){
+            var id = $(this).attr('id');
+            if(id.substr(0, 'aor_fields_id'.length)=='aor_fields_id') {
+                ret = id.substr('aor_fields_id'.length);
+                return ;
+            }
+        });
+        return ret;
+    }
+
+};
+
 YUI().use('sortable', function(Y) {
     var sortable = new Y.Sortable({
         container: '#fieldLines',
@@ -63,6 +111,7 @@ function loadFieldLine(field){
     }
     showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
+    FieldLineHandler.makeGroupDisplaySelectOptions(parseInt(field.group_display) != 0 ? field : null);
 }
 
 function showFieldOptions(field, ln){
@@ -318,6 +367,7 @@ function markFieldLineDeleted(ln)
     if(fieldln_count == 0){
         document.getElementById('fieldLines_head').style.display = "none";
     }
+    FieldLineHandler.makeGroupDisplaySelectOptions();
 }
 
 function clearFieldLines(){
@@ -361,6 +411,7 @@ function fieldSort(){
             }
         });
         updateChartDimensionSelects();
+        FieldLineHandler.makeGroupDisplaySelectOptions();
     }
 }
 

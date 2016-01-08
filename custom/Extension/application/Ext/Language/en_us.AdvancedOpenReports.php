@@ -38,10 +38,12 @@ $app_list_strings['aor_operator_list']['Contains'] = 'Contains';
 $app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
 $app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
 
+$app_list_strings['aor_format_options'][''] = '';
 $app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
 $app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
 $app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
 $app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
+$app_list_strings['aor_format_options']['Y'] = 'Y';
 
 $app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
 $app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
@@ -90,6 +92,8 @@ $app_list_strings['aor_chart_types']['line'] = 'Line chart';
 $app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
 $app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
 $app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
+$app_list_strings['aor_chart_types']['stacked_bar'] = 'Stacked bar';
+$app_list_strings['aor_chart_types']['grouped_bar'] = 'Grouped bar';
 $app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
 $app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'Weekly';
 $app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'Daily';
