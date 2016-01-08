@@ -119,7 +119,8 @@ class AOR_Report extends Basic {
 
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
 
-        $result = $this->db->query($this->build_report_query());
+        $query = $this->build_report_query();
+        $result = $this->db->query($query);
         $data = array();
         while($row = $this->db->fetchByAssoc($result, false))
         {
@@ -775,7 +776,7 @@ class AOR_Report extends Basic {
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
-                if($field->group_display) $query['where'][] = $select_field." = '".$group_value."' AND ";
+                if($field->group_display && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
                     ++$i;
             }
         }
