@@ -174,7 +174,9 @@ class AOR_Report extends Basic {
                     case 'COUNT':
                         break;
                     default:
-                        $row[$name] = strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id));
+                        if(!is_numeric($row[$name])) {
+                            $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id)));
+                        }
                         break;
                 }
             }
