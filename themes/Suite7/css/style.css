@@ -5596,3 +5596,4 @@ div.password {
 #report-editview-footer .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
 #report-editview-footer .condition-sortable-handle {cursor: move;}
 #report-editview-footer .parenthesis-line strong {font-size: 18px}
+#report-editview-footer .drop-area.highlighted {background-color: #f7f7f7;}

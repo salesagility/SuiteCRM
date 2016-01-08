@@ -51,6 +51,18 @@ $dictionary['AOR_Report'] = array(
 		'studio' => 'visible',
 		'dependency' => false,
 	  ),
+
+	'graphs_per_row' =>
+	array (
+		'required' => true,
+		'name' => 'graphs_per_row',
+		'vname' => 'LBL_GRAPHS_PER_ROW',
+		'type' => 'int',
+		'massupdate' => 0,
+		'default' => 2,
+		'no_default' => false,
+	),
+
     'field_lines' =>
     array (
         'required' => false,
