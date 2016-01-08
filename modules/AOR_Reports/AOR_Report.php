@@ -868,6 +868,11 @@ class AOR_Report extends Basic {
     function build_report_query_where($query = array()){
         global $beanList, $app_list_strings, $sugar_config;
 
+        $closure = false;
+        if(!empty($query['where'])) {
+            $query['where'][] = '(';
+            $closure = true;
+        }
 
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
@@ -1087,6 +1092,11 @@ class AOR_Report extends Basic {
             $query['where'][] = $module->table_name.".deleted = 0 ".$this->build_report_access_query($module, $module->table_name);
 
         }
+
+        if($closure) {
+            $query['where'][] = ')';
+        }
+
         return $query;
     }
 
