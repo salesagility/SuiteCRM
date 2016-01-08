@@ -311,12 +311,43 @@ class AOR_Report extends Basic {
             }
 
             $html .= "<thead><tr class='pagination'>";
+            
 
+            $moduleFieldByGroupValues = [];
 
+            $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC LIMIT 1;";
+            $result = $this->db->query($sql);
+            while ($row = $this->db->fetchByAssoc($result)) {
+
+                $field = new AOR_Field();
+                $field->retrieve($row['id']);
+
+                $path = unserialize(base64_decode($field->module_path));
+
+                $field_bean = new $beanList[$this->report_module]();
+
+                $field_module = $this->report_module;
+                $field_alias = $field_bean->table_name;
+                if($path[0] != $this->report_module){
+                    foreach($path as $rel){
+                        if(empty($rel)){
+                            continue;
+                        }
+                        $field_module = getRelatedModule($field_module,$rel);
+                        $field_alias = $field_alias . ':'.$rel;
+                    }
+                }
+
+                $currency_id = isset($row[$field_alias.'_currency_id']) ? $row[$field_alias.'_currency_id'] : '';
+                $moduleFieldByGroupValues[] = getModuleField($this->report_module, $field->field, $field->field, 'DetailView', $group_value, '', $currency_id, array("date_format" => $field->format));
+
+            }
+
+            $moduleFieldByGroupValue = implode(', ', $moduleFieldByGroupValues);
 
             $html .="<td colspan='18'>
                        <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
-                        <td style='text-align:left' ><H3>$group_value</H3></td>
+                        <td style='text-align:left' ><H3>$moduleFieldByGroupValue</H3></td>
                         <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
 
             if($offset == 0){
