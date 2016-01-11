@@ -153,7 +153,7 @@ foreach ($admin_group_header as $key=>$values) {
   }
 }
 
-$sugar_smarty->assign('MY_FRAME',"<iframe class='teamNoticeBox' title='http://www.suitecrm.com/' src='http://www.suitecrm.com' width='100%' height='315px'></iframe>");
+$sugar_smarty->assign('MY_FRAME',"<iframe class='teamNoticeBox' title='https://www.suitecrm.com/' src='https://www.suitecrm.com' width='100%' height='315px'></iframe>");
 $sugar_smarty->assign("VALUES_3_TAB", $values_3_tab);
 $sugar_smarty->assign("ADMIN_GROUP_HEADER", $admin_group_header_tab);
 $sugar_smarty->assign("GROUP_HEADER", $group);
