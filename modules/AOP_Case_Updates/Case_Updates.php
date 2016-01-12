@@ -278,6 +278,10 @@ function display_case_attachments($case){
  * @return string - the html to be displayed and javascript
  */
 function quick_edit_case_updates(){
+    global $action;
+
+    //on DetailView only
+    if($action != 'DetailView') return;
 
     //current record id
     $record = $_GET['record'];
