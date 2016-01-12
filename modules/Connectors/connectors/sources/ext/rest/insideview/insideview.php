@@ -52,7 +52,7 @@ class ext_rest_insideview extends ext_rest {
     protected $orgId;
     protected $orgName;
     protected $userId;
-    public static $allowedModuleList;
+    public $allowedModuleList;
     
     public function __construct() {
         

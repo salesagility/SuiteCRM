@@ -54,7 +54,7 @@ class ListViewPackages extends ListViewSmarty{
      * @param data  the data to display on the page
      * @param file  the template file to parse
      */
-    function setup($data, $file){
+    function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id'){
         $this->data = $data;
         $this->tpl = $file;       
     }
@@ -62,7 +62,7 @@ class ListViewPackages extends ListViewSmarty{
     /**
      * Override the display method
      */
-    function display(){
+    function display($end = true){
         global $odd_bg, $even_bg, $app_strings;
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
         $this->ss->assign('bgColor', array($odd_bg, $even_bg));

@@ -54,7 +54,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
         $this->load () ;
     }
 
-    static function findRelatableModules ()
+    static function findRelatableModules ($includeActivitiesSubmodules = true)
     {
         return parent::findRelatableModules ( true ) ;
     }
@@ -279,7 +279,7 @@ class DeployedRelationships extends AbstractRelationships implements Relationshi
      * We use the Extension mechanism to do this for DeployedRelationships
      * All metadata is placed in the modules Ext directory, and then Rebuild is called to activate them
      */
-    function build ()
+    function build ($basepath, $installDefPrefix, $relationships)
     {
         $basepath = "custom/Extension/modules" ;
         
