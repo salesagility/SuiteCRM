@@ -461,7 +461,7 @@ class SugarFieldBase {
      * @param SugarBean bean - the bean performing the save
      * @param array params - an array of paramester relevant to the save, most likely will be $_REQUEST
      */
-    public function save($bean, $params, $field, $properties, $prefix = '') {
+    public function save(&$bean, $params, $field, $properties, $prefix = '') {
          if ( isset($params[$prefix.$field]) ) {
              if(isset($properties['len']) && isset($properties['type']) && $this->isTrimmable($properties['type'])){
                  $bean->$field = trim($this->unformatField($params[$prefix.$field], $properties));

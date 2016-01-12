@@ -225,7 +225,8 @@ class Reminder extends Basic {
 	}	
 
     private static function getUnsentEmailReminders() {
-        global $db;		
+        global $db;
+		$reminders = array();
 		$reminderBeans = BeanFactory::getBean('Reminders')->get_full_list('', "reminders.email = 1 AND reminders.email_sent = 0");
 		foreach($reminderBeans as $reminderBean) {
 			$eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
@@ -419,6 +420,9 @@ class Reminder extends Basic {
 
 	private function getEventPersonQuery(SugarBean $event, SugarBean $person) {
 		$eventIdField = array_search($event->table_name, $event->relationship_fields);
+		if(!$eventIdField) {
+			$eventIdField = strtolower($event->object_name . '_id');
+		}
 		$personIdField = strtolower($person->object_name) . '_id';
 		$query = "
 			SELECT * FROM {$event->table_name}_{$person->table_name}
