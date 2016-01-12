@@ -313,7 +313,7 @@
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
-        <div class="drop-area" id="conditionLines"  style="min-height: 50px;">
+        <div class="drop-area" id="conditionLines"  style="min-height: 450px;">
         </div>
         <hr>
         <table>
