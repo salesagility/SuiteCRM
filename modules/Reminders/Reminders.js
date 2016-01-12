@@ -189,6 +189,7 @@ var Reminders = {
         var reminders = [];
         $('#reminder_view .reminder_item').each(function (i, e) {
             reminders.push({
+                idx: i,
                 id: $(e).attr('data-reminder-id'),
                 popup: $(e).find('.popup_chkbox').prop('checked'),
                 email: $(e).find('.email_chkbox').prop('checked'),
@@ -297,10 +298,10 @@ var Reminders = {
             var remindersData = JSON.parse(document.getElementById(nameIndex).value);
             $.each(remindersData, function(i,e){
                 if(!e.popup && !e.email) {
-                    Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL'));
+                    Reminders.addError(e, SUGAR.language.get('app_strings', 'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL'));
                 }
                 if(e.invitees.length == 0) {
-                    Reminders.addError(e.id, SUGAR.language.get('app_strings', 'ERR_NO_INVITEES_FOR_REMINDER'));
+                    Reminders.addError(e, SUGAR.language.get('app_strings', 'ERR_NO_INVITEES_FOR_REMINDER'));
                 }
             });
         }
@@ -317,8 +318,8 @@ var Reminders = {
         Reminders.errors = [];
     },
 
-    addError: function(id, msg) {
-        Reminders.errors.push({'id':id, 'msg':msg});
+    addError: function(elem, msg) {
+        Reminders.errors.push({'elem':elem, 'msg':msg});
     },
 
     getErrors: function() {
@@ -331,7 +332,7 @@ var Reminders = {
         $.each(Reminders.getErrors(), function(i,err){
             var _err = err;
             $('.reminder_item').each(function(i,elem){
-                if($(elem).attr('data-reminder-id')==_err.id) {
+                if( (_err.elem.id && $(elem).attr('data-reminder-id')==_err.elem.id) || (_err.elem.idx==i) ) {
                     $(elem).find('.error-msg').html(_err.msg);
                     $(elem).addClass('reminder-error');
                 }
