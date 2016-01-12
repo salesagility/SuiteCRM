@@ -221,14 +221,14 @@ class vCal extends SugarBean {
 
 	// static function:
         // cache vcals
-        function cache_sugar_vcal(&$user_focus)
+        static function cache_sugar_vcal(&$user_focus)
         {
             self::cache_sugar_vcal_freebusy($user_focus);
         }
 
 	// static function:
         // caches vcal for Activities in Sugar database
-        function cache_sugar_vcal_freebusy(&$user_focus)
+        static function cache_sugar_vcal_freebusy(&$user_focus)
         {
             $focus = new vCal();
             // set freebusy members and save
