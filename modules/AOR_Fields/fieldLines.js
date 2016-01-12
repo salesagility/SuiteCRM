@@ -368,6 +368,18 @@ function markFieldLineDeleted(ln)
         document.getElementById('fieldLines_head').style.display = "none";
     }
     FieldLineHandler.makeGroupDisplaySelectOptions();
+
+
+    // remove fields header if doesn't exists any more field in area
+    var found = false;
+    $('#fieldLines tbody').each(function(i,e){
+        if($(e).css('display') != 'none') {
+            found = true;
+        }
+    });
+    if(!found) {
+        $('#fieldLines_head').remove();
+    }
 }
 
 function clearFieldLines(){
