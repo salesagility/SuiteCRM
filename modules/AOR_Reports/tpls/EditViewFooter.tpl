@@ -84,7 +84,15 @@
                 $('#fieldTreeLeafs').tree({
                     data: treeDataLeafs,
                     dragAndDrop: true,
-                    selectable: false,
+                    selectable: true,
+                    onCanSelectNode: function(node) {
+                        if($('#report-editview-footer .toggle-detailpanel_fields').hasClass('active')) {
+                            dropFieldLine(node);
+                        }
+                        else if($('#report-editview-footer .toggle-detailpanel_conditions').hasClass('active')) {
+                            dropConditionLine(node);
+                        }
+                    },
                     onDragMove: function() {
                         $('.drop-area').addClass('highlighted');
                     },
