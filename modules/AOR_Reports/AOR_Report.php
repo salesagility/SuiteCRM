@@ -149,7 +149,7 @@ class AOR_Report extends Basic {
             $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['label'] = $field->label;
-            $fields[$label]['display'] = $field->display && !$field->group_display;
+            $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
@@ -461,7 +461,7 @@ class AOR_Report extends Basic {
             $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['label'] = $field->label;
-            $fields[$label]['display'] = $field->display && !$field->group_display;
+            $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
