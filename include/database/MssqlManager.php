@@ -996,7 +996,7 @@ class MssqlManager extends DBManager
     /**
      * @see DBManager::getAffectedRowCount()
      */
-	public function getAffectedRowCount()
+	public function getAffectedRowCount($result)
     {
         return $this->getOne("SELECT @@ROWCOUNT");
     }

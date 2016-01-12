@@ -153,7 +153,7 @@ class Reminder extends Basic {
 	 * @throws Exception
 	 */
 	public static function loadRemindersData($eventModule, $eventModuleId) {
-		if(!isset(self::$remindersData[$eventModule][$eventModuleId])) {
+		if(!$eventModuleId || !isset(self::$remindersData[$eventModule][$eventModuleId])) {
 			$ret = array();
 			$reminders = BeanFactory::getBean('Reminders')->get_full_list("reminders.date_entered", "reminders.related_event_module = '$eventModule' AND reminders.related_event_module_id = '$eventModuleId'");
 			if ($reminders) {
@@ -294,7 +294,7 @@ class Reminder extends Basic {
 		if($popupReminders) {
 			foreach($popupReminders as $popupReminder) {
 				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
-				if(
+				if( $relatedEvent && 
 					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
 					(!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax))) ) &&
 					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
@@ -418,7 +418,7 @@ class Reminder extends Basic {
 		return $query;
 	}
 
-	private function getEventPersonQuery(SugarBean $event, SugarBean $person) {
+	private static function getEventPersonQuery(SugarBean $event, SugarBean $person) {
 		$eventIdField = array_search($event->table_name, $event->relationship_fields);
 		if(!$eventIdField) {
 			$eventIdField = strtolower($event->object_name . '_id');
@@ -543,6 +543,8 @@ class Reminder extends Basic {
 					$oldReminderEmailTimer = $event->email_reminder_time;
 				}
 
+				$oldReminderEmailSent = $event->email_reminder_sent;
+
 				if( ($oldInvitees = self::getOldEventInvitees($event)) && ($event->reminder_time != -1 || ($event->email_reminder_time != -1 && $event->email_reminder_sent != 1)) ) {
 
 					self::migrateReminder(
@@ -552,6 +554,7 @@ class Reminder extends Basic {
 							$oldReminderPopupTimer,
 							$oldReminderEmailChecked,
 							$oldReminderEmailTimer,
+							$oldReminderEmailSent,
 							$oldInvitees
 					);
 
@@ -585,11 +588,12 @@ class Reminder extends Basic {
 	 * @param int		$oldReminderEmailTimer
 	 * @param array		$oldInvitees
 	 */
-	private static function migrateReminder($eventModule, $eventModuleId, $oldReminderPopupChecked, $oldReminderPopupTimer, $oldReminderEmailChecked, $oldReminderEmailTimer, $oldInvitees) {
+	private static function migrateReminder($eventModule, $eventModuleId, $oldReminderPopupChecked, $oldReminderPopupTimer, $oldReminderEmailChecked, $oldReminderEmailTimer, $oldReminderEmailSent, $oldInvitees) {
 
 		$reminder = BeanFactory::getBean('Reminders');
 		$reminder->popup = $oldReminderPopupChecked;
 		$reminder->email = $oldReminderEmailChecked;
+		$reminder->email_sent = $oldReminderEmailSent;
 		$reminder->timer_popup = $oldReminderPopupTimer;
 		$reminder->timer_email = $oldReminderEmailTimer;
 		$reminder->related_event_module = $eventModule;
