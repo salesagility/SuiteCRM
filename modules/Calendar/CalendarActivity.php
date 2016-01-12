@@ -110,7 +110,7 @@ class CalendarActivity {
 	 * @param string $view view; not used for now, left for compatibility
 	 * @return string
 	 */
-    function get_occurs_within_where_clause($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name = 'date_start', $view)
+    static function get_occurs_within_where_clause($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name = 'date_start', $view)
     {
         return self::getOccursWhereClauseGeneral($table_name, $rel_table, $start_ts_obj, $end_ts_obj, $field_name, array('self', 'within'));
 	}
@@ -158,7 +158,7 @@ class CalendarActivity {
 	 * @param boolean $show_completed use to allow filtering completed events 
 	 * @return array
 	 */
- 	function get_activities($user_id, $show_tasks, $view_start_time, $view_end_time, $view, $show_calls = true, $show_completed = true)
+ 	static function get_activities($user_id, $show_tasks, $view_start_time, $view_end_time, $view, $show_calls = true, $show_completed = true)
  	{
 		global $current_user;
 		$act_list = array();

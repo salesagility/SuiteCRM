@@ -193,7 +193,9 @@ class MysqliManager extends MysqlManager
 	 */
 	public function disconnect()
 	{
-		$GLOBALS['log']->debug('Calling MySQLi::disconnect()');
+		if(isset($GLOBALS['log']) && !is_null($GLOBALS['log'])) {
+			$GLOBALS['log']->debug('Calling MySQLi::disconnect()');
+		}
 		if(!empty($this->database)){
 			$this->freeResult();
 			mysqli_close($this->database);
@@ -271,7 +273,7 @@ class MysqliManager extends MysqlManager
 
 			//mysqli connector has a separate parameter for port.. We need to separate it out from the host name
 			$dbhost=$configOptions['db_host_name'];
-            $dbport=$configOptions['db_port'] == '' ? null : $configOptions['db_port'];
+            $dbport=isset($configOptions['db_port']) ? ($configOptions['db_port'] == '' ? null : $configOptions['db_port']) : null;
 			
 			$pos=strpos($configOptions['db_host_name'],':');
 			if ($pos !== false) {
@@ -279,7 +281,7 @@ class MysqliManager extends MysqlManager
 				$dbport=substr($configOptions['db_host_name'],$pos+1);
 			}
 
-			$this->database = mysqli_connect($dbhost,$configOptions['db_user_name'],$configOptions['db_password'],isset($configOptions['db_name'])?$configOptions['db_name']:'',$dbport);
+			$this->database = @mysqli_connect($dbhost,$configOptions['db_user_name'],$configOptions['db_password'],isset($configOptions['db_name'])?$configOptions['db_name']:'',$dbport);
 			if(empty($this->database)) {
 				$GLOBALS['log']->fatal("Could not connect to DB server ".$dbhost." as ".$configOptions['db_user_name'].". port " .$dbport . ": " . mysqli_connect_error());
 				if($dieOnError) {
