@@ -591,6 +591,18 @@ function markConditionLineDeleted(ln)
     if(condln_count == 0){
         document.getElementById('conditionLines_head').style.display = "none";
     }
+
+    // remove condition header if doesn't exists any more condition in area
+    var found = false;
+    $('#aor_conditions_body tr').each(function(i,e){
+        if($(e).css('display') != 'none') {
+            found = true;
+        }
+    });
+    if(!found) {
+        $('#conditionLines_head').remove();
+    }
+
     LogicalOperatorHandler.hideUnnecessaryLogicSelects();
     ConditionOrderHandler.setConditionOrders();
     ParenthesisHandler.addParenthesisLineIdent();
