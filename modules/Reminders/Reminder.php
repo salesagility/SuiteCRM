@@ -293,7 +293,7 @@ class Reminder extends Basic {
 		if($popupReminders) {
 			foreach($popupReminders as $popupReminder) {
 				$relatedEvent = BeanFactory::getBean($popupReminder->related_event_module, $popupReminder->related_event_module_id);
-				if(
+				if( $relatedEvent && 
 					(!isset($relatedEvent->status) || $relatedEvent->status == 'Planned') &&
 					(!isset($relatedEvent->date_start) || (strtotime($relatedEvent->date_start) >= strtotime(self::unQuoteTime($dateTimeNow)) && strtotime($relatedEvent->date_start) <= strtotime(self::unQuoteTime($dateTimeMax))) ) &&
 					(!$checkDecline || ($checkDecline && !self::isDecline($relatedEvent, BeanFactory::getBean('Users', $current_user->id))))
@@ -417,7 +417,7 @@ class Reminder extends Basic {
 		return $query;
 	}
 
-	private function getEventPersonQuery(SugarBean $event, SugarBean $person) {
+	private static function getEventPersonQuery(SugarBean $event, SugarBean $person) {
 		$eventIdField = array_search($event->table_name, $event->relationship_fields);
 		$personIdField = strtolower($person->object_name) . '_id';
 		$query = "
