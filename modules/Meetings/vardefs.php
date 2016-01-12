@@ -250,6 +250,7 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'source' => 'non-db',
     'comment' => 'checkbox indicating whether or not the reminder value is set (Meta-data only)',
     'massupdate' => false,
+		  'studio' => false,
    ),
   'reminder_time' =>
   array (
@@ -271,6 +272,7 @@ $dictionary['Meeting'] = array('table' => 'meetings',
     'source' => 'non-db',
     'comment' => 'checkbox indicating whether or not the email reminder value is set (Meta-data only)',
     'massupdate' => false,
+		  'studio' => false,
    ),
   'email_reminder_time' =>
   array (

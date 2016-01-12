@@ -61,6 +61,10 @@ a:hover {
     transition: all 0.5s ease;
 }
 
+#install_container select[name="timezone"] {
+    max-width: 230px;
+}
+
 /* Sys env. msg */
 
 #syscred p {

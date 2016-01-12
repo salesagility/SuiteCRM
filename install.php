@@ -40,7 +40,6 @@
  
 @session_start();
 if(isset($_REQUEST['clear_session']) || !empty($_SESSION['loginAttempts'])) {
-	session_start();
 	session_destroy();
 	header('Location: install.php');
 	echo 'session clean, page refresh...';

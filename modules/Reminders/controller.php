@@ -38,40 +38,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*********************************************************************************
 
- * Description:  TODO: To be written.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
+class RemindersController extends SugarController {
 
-
-
-
-require_once('modules/Emails/Email.php');
-
-global $mod_strings;
-global $app_list_strings;
-global $app_strings;
-global $current_user;
-
-$json = getJSONobj();
-$pass = '';
-if(!empty($_REQUEST['mail_smtppass'])) {
-    $pass = $_REQUEST['mail_smtppass'];
-} elseif(isset($_REQUEST['mail_type'])) {
-    $oe = new OutboundEmail();
-    $oe = $oe->getMailerByName($current_user, $_REQUEST['mail_type']);
-    if(!empty($oe)) {
-        $pass = $oe->mail_smtppass;
+    public function action_getInviteesPersonName() {
+        $personModules = array('Users', 'Contacts', 'Leads');
+        $ret = array();
+        $invitees = $_REQUEST['invitees'];
+        foreach($invitees as $invitee) {
+            if(!isset($invitee['personName']) || !$invitee['personName']) {
+                $person = BeanFactory::getBean($invitee['personModule'], $invitee['personModuleId']);
+                $invitee['personName'] = $person->name;
+            }
+            if(isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personModuleId']) && $invitee['personModuleId'] && isset($invitee['personName']) && $invitee['personName']) {
+                $ret[] = $invitee;
+            }
+        }
+//        $personModules = array('Users', 'Contacts', 'Leads');
+//        $retInvitees = array();
+//        foreach($invitees as $invitee) {
+//            if(isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personId']) && $invitee['personId'] && isset($invitee['personName']) && $invitee['personName']) {
+//                $retInvitees[] = $invitee;
+//            }
+//        }
+        $inviteeJson = json_encode($ret);
+        echo $inviteeJson;
+        die();
     }
-}
-$email = new Email();
-$out = $email->sendEmailTest($_REQUEST['mail_smtpserver'], $_REQUEST['mail_smtpport'], $_REQUEST['mail_smtpssl'],
-        							($_REQUEST['mail_smtpauth_req'] == 'true' ? 1 : 0), $_REQUEST['mail_smtpuser'],
-        							$pass, $_REQUEST['outboundtest_from_address'], $_REQUEST['outboundtest_to_address'], $_REQUEST['mail_sendtype'], $_REQUEST['mail_from_name']);
 
-$out = $json->encode($out);
-echo $out;
+    public function action_getUserPreferencesForReminders() {
+        echo Reminder::loadRemindersDefaultValuesDataJson();
+        die();
+    }
+
+}
+
 ?>
