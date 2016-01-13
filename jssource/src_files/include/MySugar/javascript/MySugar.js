@@ -249,6 +249,8 @@ SUGAR.mySugar = function() {
 					var chartScriptObj = YAHOO.util.Connect.asyncRequest('GET', scriptUrl,
 													  {success: processChartScript, failure: processChartScript}, null);
 				}
+
+				$(window).resize();
 			}
 			
 			SUGAR.mySugar.currentDashlet = document.getElementById('dashlet_entire_' + id);
