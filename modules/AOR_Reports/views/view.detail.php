@@ -121,7 +121,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
                     graphs[i].height = graphWidth * 0.9;
 
 
-
+                /*
                 var text_size = Math.min(12, (graphWidth / 1000) * 12 );
                 if(text_size < 6)text_size=6;
                 if(text_size > maxTextSize) text_size = maxTextSize;
@@ -138,7 +138,8 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
 
 
-                //RGraph.redrawCanvas(graphs[i]);
+                RGraph.redrawCanvas(graphs[i]);
+                */
                 }
         }
         </script>
