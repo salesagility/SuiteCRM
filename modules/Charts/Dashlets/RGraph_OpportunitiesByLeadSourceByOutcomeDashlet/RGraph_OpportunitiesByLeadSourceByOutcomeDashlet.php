@@ -171,12 +171,6 @@ class RGraph_OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericCha
             data:$jsonData,
             options: {
                 grouping: 'stacked',
-
-                annotatable: true,
-                annotateLinewidth: 2,
-                strokestyle: 'rgba(0,0,0,0)',
-                contextmenu: [['Clear', function () {RGraph.Clear(hbar.canvas); RGraph.ClearAnnotations(hbar.canvas); hbar.Draw();}]],
-
                 labels: $jsonLabels,
                 xlabels:true,
                 labelsAbove: true,
