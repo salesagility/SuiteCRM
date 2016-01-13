@@ -382,7 +382,7 @@ class AOR_Report extends Basic {
 
             $html .="<td colspan='18'>
                        <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
-                        <td style='text-align:left' ><H3>$moduleFieldByGroupValue</H3></td>
+                        <td style='text-align:left' ><H3><a href=\"javascript:void(0)\" class=\"collapseLink\" onclick=\"groupedReportToggler.toggleList(this);\"><img border=\"0\" id=\"detailpanel_1_img_hide\" src=\"themes/SuiteR/images/basic_search.gif\"></a>$moduleFieldByGroupValue</H3></td>
                         <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
 
             if($offset == 0){
@@ -532,6 +532,26 @@ class AOR_Report extends Basic {
         $html .= $this->getTotalHtml($fields,$totals);
 
         $html .= "</table>";
+
+        $html .= "    <script type=\"text/javascript\">
+                            groupedReportToggler = {
+
+                                toggleList: function(elem) {
+                                    $(elem).closest('table.list').find('thead, tbody').each(function(i, e){
+                                        if(i>1) {
+                                            $(e).toggle();
+                                        }
+                                    });
+                                    if($(elem).find('img').first().attr('src') == 'themes/SuiteR/images/basic_search.gif') {
+                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/advanced_search.gif');
+                                    }
+                                    else {
+                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/basic_search.gif');
+                                    }
+                                }
+
+                            };
+                        </script>";
 
         return $html;
     }
