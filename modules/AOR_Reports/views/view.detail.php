@@ -76,16 +76,8 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $charts = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 
         $chartsPerRow = $this->bean->graphs_per_row;
-        $countOfCharts = substr_count($charts,"class='resizableCanvas'");
-        if($countOfCharts > 0) {
-            $width = ((int)(100 / $chartsPerRow)-1);
-
-            //$charts = str_replace("class='resizableCanvas'>","class='resizableCanvas' style='width:$width%;'>",$charts);
-        }
-
-
-            $this->ss->assign('report_content',$reportHTML.$charts);
-        //$this->ss->assign('charts_content',$chartsHTML);
+        $this->ss->assign('report_content',$reportHTML.$charts);
+        
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
             require_once ('include/language/jsLanguage.php');
