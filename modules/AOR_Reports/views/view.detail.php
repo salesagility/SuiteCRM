@@ -104,8 +104,8 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 var maxWidth = 900;
                 var maxHeight = 500;
                 var maxTextSize = 10;
-                //var divWidth = $('#FIELDS').width();
                 var divWidth = $("#detailpanel_report").width();
+
                 var graphWidth = Math.floor(divWidth / $chartsPerRow);
 
                 var graphs = document.getElementsByClassName('resizableCanvas');
@@ -125,13 +125,21 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 var text_size = Math.min(12, (graphWidth / 1000) * 12 );
                 if(text_size < 6)text_size=6;
                 if(text_size > maxTextSize) text_size = maxTextSize;
-                graphs[i].__object__["properties"]["chart.text.size"] = text_size;
-                graphs[i].__object__["properties"]["chart.key.text.size"] = text_size;
 
-                RGraph.redrawCanvas(graphs[i]);
+                if(     graphs[i] !== undefined
+                    &&  graphs[i].__object__ !== undefined
+                    &&  graphs[i].__object__["properties"] !== undefined
+                    &&  graphs[i].__object__["properties"]["chart.text.size"] !== undefined
+                    &&  graphs[i].__object__["properties"]["chart.key.text.size"] !== undefined)
+                 {
+                    graphs[i].__object__["properties"]["chart.text.size"] = text_size;
+                    graphs[i].__object__["properties"]["chart.key.text.size"] = text_size;
+                 }
+
+
+
+                //RGraph.redrawCanvas(graphs[i]);
                 }
-
-
         }
         </script>
 
