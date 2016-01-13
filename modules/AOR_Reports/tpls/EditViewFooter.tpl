@@ -303,7 +303,7 @@
         <table id="group_display_table" style="display: none;">
             <tbody>
                 <tr>
-                    <td>Main Group:</td><!-- todo: lang file -->
+                    <td>{$MOD.LBL_MAIN_GROUPS}</td>
                     <td><select id="group_display" name="aor_fields_group_display"></select></td>
                 </tr>
             </tbody>
