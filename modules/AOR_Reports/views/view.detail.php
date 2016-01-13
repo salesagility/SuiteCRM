@@ -77,7 +77,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $charts = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 
         $chartsPerRow = $this->bean->graphs_per_row;
-        $this->ss->assign('report_content',$reportHTML.$charts);
+        $this->ss->assign('report_content',$charts.$reportHTML);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {

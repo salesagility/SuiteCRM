@@ -117,10 +117,6 @@ class AOR_Report extends Basic {
     const CHART_TYPE_CHARTJS = 'chartjs';
     const CHART_TYPE_RGRAPH = 'rgraph';
 
-    function build_report_data_table()
-    {
-
-    }
 
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
         global $beanList;

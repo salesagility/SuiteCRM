@@ -436,8 +436,7 @@ EOF;
                  tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours,
-                eventsClick:reportClickThroughForData
+                colors: $this->colours
             }
         }).draw();
         </script>
@@ -473,7 +472,6 @@ EOF;
                 tooltipsEvent:'onmousemove',
 
                 labels: $chartLabelValues,
-                eventsClick:reportClickThroughForData,
                 colors: $this->colours
             }
         }).draw();
