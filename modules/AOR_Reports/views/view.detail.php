@@ -69,6 +69,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $this->ss->assign('report_module',$this->bean->report_module);
 
 
+
         $this->bean->user_parameters = requestToUserParameters();
 
         $reportHTML = $this->bean->build_group_report(0,true).'<br />';
@@ -77,7 +78,7 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
         $chartsPerRow = $this->bean->graphs_per_row;
         $this->ss->assign('report_content',$reportHTML.$charts);
-        
+
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
             require_once ('include/language/jsLanguage.php');

@@ -19,9 +19,9 @@
             document.getElementById('detailpanel_parameters').className += ' expanded';
         </script>
     </h4>
-    <div id="conditionLines"  style="min-height: 50px;">
+    <div id="conditionLines" class="panelContainer" style="min-height: 50px;">
     </div>
-    <button id='updateParametersButton' type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
+    <button id='updateParametersButton' class="panelContainer" type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
     <script>
         {literal}
         $.each(reportParameters,function(key,val){

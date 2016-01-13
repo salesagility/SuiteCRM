@@ -42,6 +42,13 @@ class AOR_ReportsController extends SugarController {
         die;
 
     }
+    function action_getVarDefs(){
+        if($_REQUEST['aor_module']){
+            $bean = BeanFactory::getBean($_REQUEST['aor_module']);
+            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
+            die();
+        }
+    }
 
     protected function action_getModuleTreeData()
     {
@@ -68,7 +75,8 @@ class AOR_ReportsController extends SugarController {
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         if(!empty($this->bean->id)){
             $this->bean->user_parameters = requestToUserParameters();
-            echo $this->bean->build_report_html($offset, true,$group,$tableId);
+            //echo $this->bean->build_report_html($offset, true,$group,$tableId);
+            echo $this->bean->build_group_report($offset, true);
         }
 
         die();

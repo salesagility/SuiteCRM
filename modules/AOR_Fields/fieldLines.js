@@ -28,6 +28,54 @@ var report_rel_modules =  new Array();
 var report_fields =  new Array();
 var report_module = '';
 
+var FieldLineHandler = {
+
+    makeGroupDisplaySelectOptions: function(selectedField) {
+        var found = false;
+        var value = $('#group_display').val();
+        if(selectedField) {
+            value = this.getFieldNth(selectedField);
+        }
+        var foundValues = [];
+        $('#group_display').html('<option value="-1">' + SUGAR.language.get('app_strings', 'LBL_NONE') + '</option>');
+        $('#fieldLines input[type="text"]').each(function(i,e){
+            var _value = $(this).attr('id').substr('aor_fields_label'.length);
+            if($(this).attr('id').substr(0, 'aor_fields_label'.length)=='aor_fields_label' && $('#aor_fields_deleted' + _value).val() != 1) {
+                $('#group_display').append('<option value="' + _value + '">' + $(this).val() + '</option>');
+                found = true;
+                foundValues.push(_value);
+            }
+        });
+
+        if(found) {
+            $('#group_display_table').show();
+            if($.inArray(value, foundValues) != -1) {
+                $('#group_display').val(value);
+            }
+            else {
+                $('#group_display').val(-1);
+            }
+        }
+        else {
+            $('#group_display_table').hide();
+            $('#group_display').val(-1);
+        }
+    },
+
+    getFieldNth: function(field) {
+        var ret = false;
+        $('input[value="' + field.id + '"]').each(function(i,e){
+            var id = $(this).attr('id');
+            if(id.substr(0, 'aor_fields_id'.length)=='aor_fields_id') {
+                ret = id.substr('aor_fields_id'.length);
+                return ;
+            }
+        });
+        return ret;
+    }
+
+};
+
 YUI().use('sortable', function(Y) {
     var sortable = new Y.Sortable({
         container: '#fieldLines',
@@ -61,10 +109,16 @@ function loadFieldLine(field){
             }
         }
     }
-
+    showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
+    FieldLineHandler.makeGroupDisplaySelectOptions(parseInt(field.group_display) != 0 ? field : null);
 }
 
+function showFieldOptions(field, ln){
+    if(field.field_type == "datetime" || field.field_type == "date"){
+        showElem("aor_fields_format" + ln);
+    }
+}
 function showFieldCurrentModuleFields(ln, value){
 
     if (typeof value === 'undefined') { value = ''; }
@@ -209,7 +263,11 @@ function insertFieldHeader(){
     h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_GROUP');
 
-    var h=x.insertCell(9);
+    var i=x.insertCell(9);
+    i.style.color="rgb(0,0,0)";
+    i.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_FORMAT');
+
+    var h=x.insertCell(10);
     h.style.color="rgb(0,0,0)";
     h.innerHTML=SUGAR.language.get('AOR_Fields', 'LBL_TOTAL');
 }
@@ -284,7 +342,11 @@ function insertFieldLine(){
     h.innerHTML += "<input id='aor_fields_group_by" + fieldln + "' name='aor_fields_group_by["+ fieldln +"]' value='1' type='checkbox'>";
     h.style.width = '10%';
 
-    var h=x.insertCell(9);
+    var i=x.insertCell(9);
+    i.innerHTML = "<select type='text' name='aor_fields_format["+ fieldln +"]' id='aor_fields_format" + fieldln + "' style='display:none;'>" + format_values + "</select>";
+    i.style.width = '10%';
+
+    var h=x.insertCell(10);
     h.innerHTML = "<select type='text' name='aor_fields_total["+ fieldln +"]' id='aor_fields_total" + fieldln + "'>"+total_values+"</select>";
     h.style.width = '10%';
 
@@ -304,6 +366,19 @@ function markFieldLineDeleted(ln)
     fieldln_count--;
     if(fieldln_count == 0){
         document.getElementById('fieldLines_head').style.display = "none";
+    }
+    FieldLineHandler.makeGroupDisplaySelectOptions();
+
+
+    // remove fields header if doesn't exists any more field in area
+    var found = false;
+    $('#fieldLines tbody').each(function(i,e){
+        if($(e).css('display') != 'none') {
+            found = true;
+        }
+    });
+    if(!found) {
+        $('#fieldLines_head').remove();
     }
 }
 
@@ -348,6 +423,7 @@ function fieldSort(){
             }
         });
         updateChartDimensionSelects();
+        FieldLineHandler.makeGroupDisplaySelectOptions();
     }
 }
 
@@ -375,12 +451,39 @@ function date_field_change(field){
 }
 
 function addNodeToFields(node){
-    loadFieldLine(
-        {
-            'label' : node.name,
-            'module_path' : node.module_path,
-            'module_path_display' : node.module_path_display,
-            'field' : node.id,
-            'field_label' : node.name});
+    if(node.type == "field"){
+        //do ajax on moudule & name
+        $.getJSON('index.php',
+            {
+                'module' : 'AOR_Reports',
+                'action' : 'getVarDefs',
+                'aor_module' : node.module,
+                'aor_request' : node.id,
+                'view' : 'JSON'
+            },
+            function(relData){
+                //var result = JSON.parse(relData);
+                loadFieldLine(
+                    {
+                        'label' : node.name,
+                        'module' : node.module,
+                        'module_path' : node.module_path,
+                        'module_path_display' : node.module_path_display,
+                        'field' : node.id,
+                        'field_label' : node.name,
+                        'field_type' : relData.type
+                    });
+            }
+        );
+    }else{
+        loadFieldLine(
+            {
+                'label' : node.name,
+                'module' : node.module,
+                'module_path' : node.module_path,
+                'module_path_display' : node.module_path_display,
+                'field' : node.id,
+                'field_label' : node.name});
+    }
 }
 

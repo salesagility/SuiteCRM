@@ -83,4 +83,6 @@ $mod_strings = array (
   'LBL_AOR_SCHEDULED_REPORTS_AOR_REPORTS_FROM_AOR_SCHEDULED_REPORTS_TITLE' => 'Scheduled Reports',
   'LBL_UPDATE_PARAMETERS' => 'Update',
   'LBL_PARAMETERS' => 'Parameters',
+    'LBL_TOOLTIP_DRAG_DROP_ELEMS' => 'Drag and drop elements into field or condition area',
+    'LBL_MAIN_GROUPS' => 'Main Group:',
 );

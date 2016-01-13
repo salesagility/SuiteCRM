@@ -107,6 +107,18 @@ var ConditionOrderHandler = {
                 $(this).find('.aor_condition_order_input').val(-1);
             }
         });
+    },
+
+    getConditionLineByPageEvent: function(event) {
+        var closest = $(document.elementFromPoint(event.pageX - window.pageXOffset, event.pageY - window.pageYOffset)).closest('tr');
+        if((closest.attr('id') && closest.attr('id').search('product_line') === 0) || (closest.attr('class') && closest.attr('class').search('parenthesis-line') !== -1)) {
+            return closest;
+        }
+        return false;
+    },
+
+    putPositionedConditionLines: function(elemTarget, elemNew) {
+        elemTarget.before(elemNew);
     }
 
 };
@@ -126,7 +138,7 @@ var ParenthesisHandler = {
             '<tr class="parenthesis-line parenthesis-open" parenthesis-counter="' + (_condln ? _condln : condln) + '" data-condition-id="' + condition_id + '">' +
             '   <td>' +
             '       <input type="hidden" name="aor_conditions_parenthesis[' + ((_condln ? _condln : condln)) + ']" value="START">' +
-            '       <button type="button" class="button" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + ((_condln ? _condln : condln)) + ');">' +
+            '       <button type="button" class="button parenthesis-remove-btn" value="" onclick="ParenthesisHandler.deleteParenthesisPair(this, ' + ((_condln ? _condln : condln)) + ');">' +
             '           <img src="themes/default/images/id-ff-remove-nobg.png" alt="">' +
             '       </button>' +
             '       <input type="hidden" name="aor_conditions_deleted[' + (_condln ? _condln : condln) + ']" id="aor_conditions_deleted' + (_condln ? _condln : condln) + '" value="0" data-delete-id="' + condition_id + '">' +
@@ -199,6 +211,10 @@ var ParenthesisHandler = {
         ParenthesisHandler.addParenthesisLineIdent();
     },
 
+    deleteParenthesisPairs: function() {
+        $('.parenthesis-remove-btn').click();
+    },
+
     addParenthesisLineIdent: function() {
         var identDeep = 0;
         $('.condition-ident').remove();
@@ -251,6 +267,8 @@ function loadConditionLine(condition, overrideView){
     if(!condition['parenthesis']) {
         showConditionModuleField(ln, condition['operator'], condition['value_type'], condition['value'],overrideView, condition['logic_op'], condition['condition_order'], condition['parenthesis']);
     }
+
+    return $('#product_line'+ln);
 }
 
 function showConditionLines() {
@@ -573,6 +591,18 @@ function markConditionLineDeleted(ln)
     if(condln_count == 0){
         document.getElementById('conditionLines_head').style.display = "none";
     }
+
+    // remove condition header if doesn't exists any more condition in area
+    var found = false;
+    $('#aor_conditions_body tr').each(function(i,e){
+        if($(e).css('display') != 'none') {
+            found = true;
+        }
+    });
+    if(!found) {
+        $('#conditionLines_head').remove();
+    }
+
     LogicalOperatorHandler.hideUnnecessaryLogicSelects();
     ConditionOrderHandler.setConditionOrders();
     ParenthesisHandler.addParenthesisLineIdent();
@@ -590,6 +620,7 @@ function clearConditionLines(){
             }
         }
     }
+    ParenthesisHandler.deleteParenthesisPairs();
 }
 
 
@@ -617,7 +648,7 @@ function date_field_change(field){
 }
 
 function addNodeToConditions(node){
-    loadConditionLine(
+    return loadConditionLine(
         {
             'label' : node.name,
             'module_path' : node.module_path,

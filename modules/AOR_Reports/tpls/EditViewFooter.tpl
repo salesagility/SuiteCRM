@@ -1,3 +1,9 @@
+{literal}
+<style type="text/css">
+    #EditView_tabs {float: left;}
+</style>
+{/literal}
+
 <div id="report-editview-footer">
 
 
@@ -16,7 +22,7 @@
             var $moduleTree = $('#fieldTree').tree({
                 data: {},
                 dragAndDrop: false,
-                //selectable: true,
+                selectable: false,
                 onDragStop: function(node, e,thing){
 //                    var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
 //                    if(node.type != 'field'){
@@ -36,6 +42,7 @@
             });
 
         function loadTreeData(module, node){
+            var _node = node;
             $.getJSON('index.php',
                     {
                         'module' : 'AOR_Reports',
@@ -44,7 +51,7 @@
                         'view' : 'JSON'
                     },
                     function(relData){
-                        processTreeData(relData, node);
+                        processTreeData(relData, _node);
                     }
             );
         }
@@ -57,10 +64,11 @@
             };
 
             var dropConditionLine = function(node) {
-                addNodeToConditions(node);
+                var newConditionLine = addNodeToConditions(node);
                 LogicalOperatorHandler.hideUnnecessaryLogicSelects();
                 ConditionOrderHandler.setConditionOrders();
                 ParenthesisHandler.addParenthesisLineIdent();
+                return newConditionLine;
             };
 
             var showTreeDataLeafs = function(treeDataLeafs, module, module_name, module_path_display) {
@@ -72,12 +80,24 @@
                 }
                 $('#module-name').html('(<span title="' + module_path_display + '">' + module_name + '</span>)');
                 $('#fieldTreeLeafs').remove();
-                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>');
+                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox" title="{/literal}{$MOD.LBL_TOOLTIP_DRAG_DROP_ELEMS}{literal}"></div>');
                 $('#fieldTreeLeafs').tree({
                     data: treeDataLeafs,
                     dragAndDrop: true,
                     selectable: true,
+                    onCanSelectNode: function(node) {
+                        if($('#report-editview-footer .toggle-detailpanel_fields').hasClass('active')) {
+                            dropFieldLine(node);
+                        }
+                        else if($('#report-editview-footer .toggle-detailpanel_conditions').hasClass('active')) {
+                            dropConditionLine(node);
+                        }
+                    },
+                    onDragMove: function() {
+                        $('.drop-area').addClass('highlighted');
+                    },
                     onDragStop: function(node, e,thing){
+                        $('.drop-area').removeClass('highlighted');
                         var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
                         if(node.type != 'field'){
                             return;
@@ -85,7 +105,13 @@
                         if(target.closest('#fieldLines').length > 0){
                             dropFieldLine(node);
                         }else if(target.closest('#conditionLines').length > 0){
-                            dropConditionLine(node);
+                            var conditionLineTarget = ConditionOrderHandler.getConditionLineByPageEvent(e);
+                            var conditionLineNew = dropConditionLine(node);
+                            if(conditionLineTarget) {
+                                ConditionOrderHandler.putPositionedConditionLines(conditionLineTarget, conditionLineNew);
+                                ConditionOrderHandler.setConditionOrders();
+                            }
+                            ParenthesisHandler.addParenthesisLineIdent();
                         }
                         else if(target.closest('.tab-toggler').length > 0) {
                             target.closest('.tab-toggler').click();
@@ -191,8 +217,13 @@
 
         $('#fieldTree').on(
                 'click',
-                '.jqtree-toggler',
-                function() {
+                '.jqtree-toggler, .jqtree-title', //
+                function(event) {
+                    if($(this).hasClass('jqtree-title')) {
+                        $(this).prev().click();
+                        return;
+                    }
+                    //console.log(event);
                     var node = $(this).closest('li.jqtree_common').data('node');
                     if(node.loaded) {
 
@@ -202,16 +233,25 @@
                         loadTreeLeafData(node);
                         $('#fieldTree').tree('openNode', node);
                     }
+
+                    $('.jqtree-selected').removeClass('jqtree-selected');
+                    $(this).closest('li').addClass('jqtree-selected');
+
                     return true;
                 }
         );
 
 
+            var clearTreeDataFields = function() {
+                $('#module-name').html('');
+                $('#fieldTreeLeafs').html('');
+            }
 
 
         $('#report_module').change(function(){
             report_module = $(this).val();
             loadTreeData($(this).val());
+            clearTreeDataFields();
             clearFieldLines();
             clearConditionLines();
             clearChartLines();
@@ -260,12 +300,20 @@
 
     <div class="edit view edit508 " id="detailpanel_fields">
         <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
-                <div id="fieldLines" style="min-height: 50px;">
+        <table id="group_display_table" style="display: none;">
+            <tbody>
+                <tr>
+                    <td>{$MOD.LBL_MAIN_GROUPS}</td>
+                    <td><select id="group_display" name="aor_fields_group_display"></select></td>
+                </tr>
+            </tbody>
+        </table>
+                <div class="drop-area" id="fieldLines" style="min-height: 450px;">
                 </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
-        <div id="conditionLines"  style="min-height: 50px;">
+        <div class="drop-area" id="conditionLines"  style="min-height: 450px;">
         </div>
         <hr>
         <table>
@@ -324,6 +372,7 @@
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
+        FieldLineHandler.makeGroupDisplaySelectOptions();
     });
 
     $(function(){

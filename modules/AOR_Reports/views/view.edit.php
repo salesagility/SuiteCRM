@@ -54,6 +54,7 @@ class AOR_ReportsViewEdit extends ViewEdit {
         echo "<script>";
         echo "sort_by_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_sort_operator'], '')))."\";";
         echo "total_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_total_options'], '')))."\";";
+        echo "format_values = \"".trim(preg_replace('/\s+/', ' ', get_select_options_with_id($app_list_strings['aor_format_options'], '')))."\";";
         echo "</script>";
 
         $fields = $this->getFieldLines();
@@ -114,7 +115,11 @@ class AOR_ReportsViewEdit extends ViewEdit {
             $field_name->retrieve($row['id']);
             $field_name->module_path = implode(":",unserialize(base64_decode($field_name->module_path)));
             $arr = $field_name->toArray();
+
+            $arr['field_type'] = $this->getDisplayForField($field_name->module_path, $field_name->field  , $this->bean->report_module);
+
             $display = getDisplayForField($field_name->module_path, $field_name->field, $this->bean->report_module);
+
             $arr['module_path_display'] = $display['module'];
             $arr['field_label'] = $display['field'];
             $fields[] = $arr;
@@ -133,5 +138,36 @@ class AOR_ReportsViewEdit extends ViewEdit {
         return $charts;
     }
 
+    public function getDisplayForField($modulePath, $field, $reportModule){
+        $modulePathDisplay = array();
+        $currentBean = BeanFactory::getBean($reportModule);
+        $modulePathDisplay[] = $currentBean->module_name;
+        if(is_array($modulePath)) {
+            $split = $modulePath;
+        }else{
+            $split = explode(':', $modulePath);
+        }
+        if ($split && $split[0] == $currentBean->module_dir) {
+            array_shift($split);
+        }
+        foreach($split as $relName){
+            if(empty($relName)){
+                continue;
+            }
+            if(!empty($currentBean->field_name_map[$relName]['vname'])){
+                $moduleLabel = trim(translate($currentBean->field_name_map[$relName]['vname'],$currentBean->module_dir),':');
+            }
+            $thisModule = getRelatedModule($currentBean->module_dir, $relName);
+            $currentBean = BeanFactory::getBean($thisModule);
+
+            if(!empty($moduleLabel)){
+                $modulePathDisplay[] = $moduleLabel;
+            }else {
+                $modulePathDisplay[] = $currentBean->module_name;
+            }
+        }
+        $fieldDisplay = $currentBean->field_name_map[$field]['type'];
+        return $fieldDisplay;
+    }
 
 }

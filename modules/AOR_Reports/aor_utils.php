@@ -31,6 +31,7 @@
  */
 function getDisplayForField($modulePath, $field, $reportModule)
 {
+    global $app_list_strings;
     $modulePathDisplay = array();
     $currentBean = BeanFactory::getBean($reportModule);
     $modulePathDisplay[] = $currentBean->module_name;
@@ -61,21 +62,28 @@ function getDisplayForField($modulePath, $field, $reportModule)
     $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
     $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay, ':');
-    return array('field' => $fieldDisplay, 'module' => implode(' : ', $modulePathDisplay));
+    foreach($modulePathDisplay as &$module) {
+        $module = isset($app_list_strings['aor_moduleList'][$module]) ? $app_list_strings['aor_moduleList'][$module] : (
+            isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
+        );
+    }
+    return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
 function requestToUserParameters()
 {
     $params = array();
-    foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
-        if ($_REQUEST['parameter_type'][$key] === 'Multi') {
-            $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));
+    if($_REQUEST['parameter_id']) {
+        foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
+            if ($_REQUEST['parameter_type'][$key] === 'Multi') {
+                $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));
+            }
+            $params[$parameterId] = array('id' => $parameterId,
+                'operator' => $_REQUEST['parameter_operator'][$key],
+                'type' => $_REQUEST['parameter_type'][$key],
+                'value' => $_REQUEST['parameter_value'][$key],
+            );
         }
-        $params[$parameterId] = array('id' => $parameterId,
-            'operator' => $_REQUEST['parameter_operator'][$key],
-            'type' => $_REQUEST['parameter_type'][$key],
-            'value' => $_REQUEST['parameter_value'][$key],
-        );
     }
     return $params;
 }
