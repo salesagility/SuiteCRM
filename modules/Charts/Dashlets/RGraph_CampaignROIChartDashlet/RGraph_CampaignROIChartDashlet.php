@@ -91,7 +91,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
 
         $canvasId = 'rGraphCampaignROI'.uniqid();
         $chartWidth     = 900;
-        $chartHeight    = 480;
+        $chartHeight    = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         $chartReadyData = $this->prepareChartData($rawData,$currency_symbol,$thousands_symbol);
@@ -107,6 +107,11 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
 
         //$colours = "['red','blue','green','orange','yellow','pink']";
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
+
+        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
+        {
+            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+        }
 
         //<canvas id='$canvasId'  width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
 
@@ -142,7 +147,7 @@ class RGraph_CampaignROIChartDashlet extends DashletGenericChart
                 //textAngle: 45,
                 backgroundGridVlines: false,
                 backgroundGridBorder: false,
-                tooltips:$jsonTooltips,
+                tooltips:$jsonLabels,
                 tooltipsEvent:'mousemove',
                 //key: $jsonKey,
                 //keyColors: $colours,

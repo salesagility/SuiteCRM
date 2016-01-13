@@ -95,8 +95,8 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         $data = $this->getChartData($this->constructQuery());
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
         $canvasId = 'rGraphLeadSource'.uniqid();
-        $chartWidth     = 812;
-        $chartHeight    = 480;
+        $chartWidth     = 900;
+        $chartHeight    = 500;
 
         $jsonData = json_encode($chartReadyData['data']);
         $jsonLabels = json_encode($chartReadyData['labels']);
@@ -111,6 +111,11 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#8080ff','#c03f80']";
 
+        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
+        {
+            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+        }
+
         //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
         //<canvas id='$canvasId' width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
         $chart = <<<EOD
@@ -123,7 +128,7 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
         <input type='hidden' class='searchFormTab' value='$searchFormTab' />
         $autoRefresh
         <script>
-            new RGraph.Pie({
+           var pie = new RGraph.Pie({
                 id: '$canvasId',
                 data: $jsonData,
                 options: {
@@ -132,6 +137,8 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
                 eventsMousemove:rgraphMouseMove,
                 eventsClick:opportunitiesByLeadSourceDashletClick,
                 shadowBlur: 5,
+                tooltips:$jsonLabels,
+                tooltipsEvent:'mousemove',
                 shadowOffsetx: 5,
                 shadowOffsety: 5,
                 shadowColor: '#aaa',
@@ -147,6 +154,14 @@ class RGraph_OpportunitiesByLeadSourceDashlet extends DashletGenericChart
                 //keyInteractive: true
                 }
             }).draw();
+
+            pie.set({
+    contextmenu: [
+        ['Get PNG', RGraph.showPNG],
+        null,
+        ['Cancel', function () {}]
+    ]
+});
         </script>
 EOD;
 

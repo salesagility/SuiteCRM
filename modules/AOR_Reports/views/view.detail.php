@@ -71,63 +71,16 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
         $this->bean->user_parameters = requestToUserParameters();
 
-
-
-        //$reportHTML = $this->bean->build_group_report(0,true);
-        //$chartsHTML = '<br />' . $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_CHARTJS);
         $reportHTML = $this->bean->build_group_report(0,true).'<br />';
-        //$reportHTML .= $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_CHARTJS);
-
-
 
         $charts = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
-
-        //$reportHtml = str_replace(" class='resizableCanvas'"," style='width:10%;'",$reportHTML);
-        //$GRAPHS = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 
         $chartsPerRow = $this->bean->graphs_per_row;
         $countOfCharts = substr_count($charts,"class='resizableCanvas'");
         if($countOfCharts > 0) {
             $width = ((int)(100 / $chartsPerRow)-1);
 
-            $modulusRemainder = $countOfCharts % $chartsPerRow;
-            $itemsWithModulus = 999;
-            if ($modulusRemainder > 0) {
-                $modulusWidth = ((int)(100 / $modulusRemainder)-1);
-                $itemsWithModulus = $countOfCharts - $modulusRemainder;
-            }
-
-            $charts = str_replace("class='resizableCanvas'>","class='resizableCanvas' style='width:$width%;'>",$charts);
-            $needle = "class='resizableCanvas'>";
-
-            /*
-            for ($x = 0; $x < $countOfCharts; $x++) {
-                      if(is_null($itemsWithModulus) ||  $x < $itemsWithModulus)
-                      {
-                         // $test = "test";
-                          //$charts = preg_replace("class='resizableCanvas'>","class='resizableCanvas' style='width:$width%;'>",$charts,1);
-                         // $pos = strpos($charts,$needle);
-                          //if($pos !== false)
-                            //  $charts = substr_replace($charts,"class='resizableCanvas' style='width:$width%;'>",$pos,strlen($needle));
-                      }
-
-                    else
-                    {
-                        //$test = "test2";
-                        //$pos = strpos($charts,$needle);
-                        //if($pos !== false)
-                          //  $charts = substr_replace($charts,"class='resizableCanvas' style='width:$modulusWidth%;'>",$pos,strlen($needle));
-                        //$charts = preg_replace("class='resizableCanvas'>","class='resizableCanvas' style='width:$modulusWidth%;'>",$charts,1);
-                    }
-
-            //              $charts.= str_replace("class='resizableCanvas'","class='resizableCanvas' style='width:33%;'",$charts,$countOfGraphsToUpdate);
-            //            else
-                         //   $charts.= str_replace("class='resizableCanvas'","class='resizableCanvas' style='width:99%;'",$charts,$countOfGraphsToUpdate);
-                //          $graphHtml.="<img src='.$graphs[$x].' style='width:$width%;' />";
-                //      else
-                //          $graphHtml.="<img src='.$graphs[$x].'k />";
-            }
-            */
+            //$charts = str_replace("class='resizableCanvas'>","class='resizableCanvas' style='width:$width%;'>",$charts);
         }
 
 
@@ -143,23 +96,52 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $params = $this->getReportParameters();
         echo "<script>var reportParameters = ".json_encode($params).";</script>";
 
-        $chartResize = <<<EOD
-        <script>
-            window.onload = function(){
-                var graphs = document.getElementsByClassName("resizableCanvas");
+        $resizeGraphsPerRow = <<<EOD
+
+       <script>
+        function resizeGraphsPerRow()
+        {
+                var maxWidth = 900;
+                var maxHeight = 500;
+                var maxTextSize = 10;
+                //var divWidth = $('#FIELDS').width();
+                var divWidth = $("#detailpanel_report").width();
+                var graphWidth = Math.floor(divWidth / $chartsPerRow);
+
+                var graphs = document.getElementsByClassName('resizableCanvas');
                 for(var i = 0; i < graphs.length; i++)
                 {
-                    if(i < $itemsWithModulus)
-                        graphs[i].style["width"] = "$width%";
-                    else
-                        graphs[i].style["width"] = "$modulusWidth%";
+                    if(graphWidth * 0.9 > maxWidth)
+                    graphs[i].width  = maxWidth;
+                else
+                    graphs[i].width = graphWidth * 0.9;
+                if(graphWidth * 0.9 > maxHeight)
+                    graphs[i].height = maxHeight;
+                else
+                    graphs[i].height = graphWidth * 0.9;
+
+
+
+                var text_size = Math.min(12, (graphWidth / 1000) * 12 );
+                if(text_size < 6)text_size=6;
+                if(text_size > maxTextSize) text_size = maxTextSize;
+                graphs[i].__object__["properties"]["chart.text.size"] = text_size;
+                graphs[i].__object__["properties"]["chart.key.text.size"] = text_size;
+
+                RGraph.redrawCanvas(graphs[i]);
                 }
-            }
+
+
+        }
         </script>
+
 EOD;
 
 
-        echo $chartResize;
+
+        echo $resizeGraphsPerRow;
+        echo "<script> $(document).ready(function(){resizeGraphsPerRow();}); </script>";
+
     }
 
 
