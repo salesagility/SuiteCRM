@@ -73,7 +73,8 @@ class AOR_ReportsViewDetail extends ViewDetail {
         $this->bean->user_parameters = requestToUserParameters();
 
 
-        $reportHTML = $this->bean->build_group_report(0,true);
+        //$reportHTML = $this->bean->build_group_report(0,true);
+        $reportHTML = $this->bean->buildMultiGroupReport(0,true);
 
         // use AOR_Report::CHART_TYPE_CHARTJS constant for old charts
         $chartsHTML = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
