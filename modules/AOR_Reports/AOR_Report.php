@@ -875,7 +875,7 @@ class AOR_Report extends Basic {
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
-                if($field->group_display && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
+                if($field->group_display == 1 && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
                     ++$i;
             }
         }

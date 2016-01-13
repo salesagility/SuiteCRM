@@ -70,9 +70,19 @@ class AOR_Field extends Basic {
             } else {
                 $field = new AOR_Field();
                 $field->group_display = false;
+
+                if($key == 'aor_fields_') {
+                    foreach($post_data['aor_fields_group_display'] as $gdKey => $gdValue) {
+                        if($gdValue == $i) {
+                            $field->group_display = $gdKey+1;
+                            break;
+                        }
+                    }
+                }
+
                 foreach($this->field_defs as $field_def) {
                     if(is_array($post_data[$key.$field_def['name']])) {
-                        if (isset($post_data[$key . $field_def['name']][$i])) {
+                        if ($field_def['name'] != 'group_display' && isset($post_data[$key . $field_def['name']][$i])) {
                             if (is_array($post_data[$key . $field_def['name']][$i])) {
                                 $post_data[$key . $field_def['name']][$i] = base64_encode(serialize($post_data[$key . $field_def['name']][$i]));
                             } else if ($field_def['name'] == 'value') {
@@ -83,11 +93,6 @@ class AOR_Field extends Basic {
                             }
 
                             $field->$field_def['name'] = $post_data[$key . $field_def['name']][$i];
-                        }
-                    }
-                    else if(is_numeric($post_data[$key.$field_def['name']])) {
-                        if ($field_def['name'] == 'group_display' && $post_data[$key . $field_def['name']] == $i) {
-                            $field->$field_def['name'] = true;
                         }
                     }
                     else if(is_null($post_data[$key.$field_def['name']])) {
