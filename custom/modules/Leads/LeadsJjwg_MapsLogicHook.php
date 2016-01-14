@@ -7,19 +7,22 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 class LeadsJjwg_MapsLogicHook {
 
+    var $jjwg_Maps;
+    function LeadsJjwg_MapsLogicHook() {
+        $this->jjwg_Maps = get_module_info('jjwg_Maps');
+    }
+
     function updateGeocodeInfo(&$bean, $event, $arguments) {
         // before_save
-        $jjwg_Maps = get_module_info('jjwg_Maps');
-        if ($jjwg_Maps->settings['logic_hooks_enabled']) {
-            $jjwg_Maps->updateGeocodeInfo($bean);
+        if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
+            $this->jjwg_Maps->updateGeocodeInfo($bean);
         }
     }
 
     function updateRelatedMeetingsGeocodeInfo(&$bean, $event, $arguments) {
         // after_save
-        $jjwg_Maps = get_module_info('jjwg_Maps');
-        if ($jjwg_Maps->settings['logic_hooks_enabled']) {
-            $jjwg_Maps->updateRelatedMeetingsGeocodeInfo($bean);
+        if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
+            $this->jjwg_Maps->updateRelatedMeetingsGeocodeInfo($bean);
         }
     }
 
