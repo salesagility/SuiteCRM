@@ -152,9 +152,9 @@ EOD;
             $(document).ready(function(){
                 resizeGraphsPerRow();
             });
-            $(window).resize(function(){
-                resizeGraphsPerRow();
-            });
+            //$(window).resize(function(){
+             //   resizeGraphsPerRow();
+            //});
         </script>";
 
     }
