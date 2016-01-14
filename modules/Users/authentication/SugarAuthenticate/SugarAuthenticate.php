@@ -318,6 +318,7 @@ class SugarAuthenticate{
 	 *
 	 */
 	function logout(){
+			session_start();
 			session_destroy();
 			ob_clean();
 			header('Location: index.php?module=Users&action=Login');
@@ -376,6 +377,6 @@ class SugarAuthenticate{
     public function redirectToLogin(SugarApplication $app)
     {
         $loginVars = $app->createLoginVars();
-        $app->redirect('index.php?action=Login&module=Users' . $loginVars);
+		SugarApplication::redirect('index.php?action=Login&module=Users' . $loginVars);
     }
 }
