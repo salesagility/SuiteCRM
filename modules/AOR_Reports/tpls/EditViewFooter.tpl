@@ -321,7 +321,12 @@
                                         }
                                         $('#group_display_1 option').show();
                                         $('#group_display_1 option[value="' + $('#group_display').val() + '"]').hide();
-                                        $('#group_display_1').css('display', 'block');
+
+                                        // todo: temporary remove the secondary select for multi-group report
+                                        $('#group_display_1').css('display', 'none');
+                                        $('#group_display_1').val(-1);
+
+                                        //$('#group_display_1').css('display', 'block');
                                     }
 
                                 }, 100);
