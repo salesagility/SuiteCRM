@@ -85,7 +85,11 @@
                     data: treeDataLeafs,
                     dragAndDrop: true,
                     selectable: false,
+                    onDragMove: function() {
+                        $('.drop-area').addClass('highlighted');
+                    },
                     onDragStop: function(node, e,thing){
+                        $('.drop-area').removeClass('highlighted');
                         var target = $(document.elementFromPoint(e.pageX - window.pageXOffset, e.pageY - window.pageYOffset));
                         if(node.type != 'field'){
                             return;
@@ -288,12 +292,20 @@
 
     <div class="edit view edit508 " id="detailpanel_fields">
         <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4>
-                <div id="fieldLines" style="min-height: 50px;">
+        <table id="group_display_table" style="display: none;">
+            <tbody>
+                <tr>
+                    <td>Main Group:</td><!-- todo: lang file -->
+                    <td><select id="group_display" name="aor_fields_group_display"></select></td>
+                </tr>
+            </tbody>
+        </table>
+                <div class="drop-area" id="fieldLines" style="min-height: 450px;">
                 </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
-        <div id="conditionLines"  style="min-height: 50px;">
+        <div class="drop-area" id="conditionLines"  style="min-height: 50px;">
         </div>
         <hr>
         <table>
@@ -352,6 +364,7 @@
         LogicalOperatorHandler.hideUnnecessaryLogicSelects();
         ConditionOrderHandler.setConditionOrders();
         ParenthesisHandler.addParenthesisLineIdent();
+        FieldLineHandler.makeGroupDisplaySelectOptions();
     });
 
     $(function(){

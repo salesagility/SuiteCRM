@@ -126,7 +126,7 @@ class UserDemoData {
 		$u->savePreferencesToDB();
 
 
-		$u->picture = $this->_copy_user_image($id);
+		$u->picture = self::_copy_user_image($id);
 
 		$u->save();
 	}
@@ -174,7 +174,7 @@ class UserDemoData {
 		}
 	}
 
-	function _copy_user_image($id) {
+	static function _copy_user_image($id) {
 		global $sugar_config;
 		$picture_file = create_guid();
 		$file = "include/images/".$id.".gif";

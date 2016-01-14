@@ -1,6 +1,5 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -40,49 +39,38 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-require_once('include/json_config.php');
+class RemindersController extends SugarController {
 
-class MeetingsViewEdit extends ViewEdit
-{
- 	/**
- 	 * @see SugarView::preDisplay()
- 	 *
- 	 * Override preDisplay to check for presence of 'status' in $_REQUEST
- 	 * This is to support the "Close And Create New" operation.
- 	 */
- 	public function preDisplay()
- 	{
- 		if(!empty($_REQUEST['status']) && ($_REQUEST['status'] == 'Held')) {
-	       $this->bean->status = 'Held';
- 		}
+    public function action_getInviteesPersonName() {
+        $personModules = array('Users', 'Contacts', 'Leads');
+        $ret = array();
+        $invitees = $_REQUEST['invitees'];
+        foreach($invitees as $invitee) {
+            if(!isset($invitee['personName']) || !$invitee['personName']) {
+                $person = BeanFactory::getBean($invitee['personModule'], $invitee['personModuleId']);
+                $invitee['personName'] = $person->name;
+            }
+            if(isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personModuleId']) && $invitee['personModuleId'] && isset($invitee['personName']) && $invitee['personName']) {
+                $ret[] = $invitee;
+            }
+        }
+//        $personModules = array('Users', 'Contacts', 'Leads');
+//        $retInvitees = array();
+//        foreach($invitees as $invitee) {
+//            if(isset($invitee['personModule']) && $invitee['personModule'] && in_array($invitee['personModule'], $personModules) && isset($invitee['personId']) && $invitee['personId'] && isset($invitee['personName']) && $invitee['personName']) {
+//                $retInvitees[] = $invitee;
+//            }
+//        }
+        $inviteeJson = json_encode($ret);
+        echo $inviteeJson;
+        die();
+    }
 
- 		parent::preDisplay();
- 	}
+    public function action_getUserPreferencesForReminders() {
+        echo Reminder::loadRemindersDefaultValuesDataJson();
+        die();
+    }
 
- 	/**
- 	 * @see SugarView::display()
- 	 */
- 	public function display()
- 	{
- 		global $json;
-        $json = getJSONobj();
-        $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
-
-		$this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id, $this->ev->isDuplicate));
-		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id, $this->ev->isDuplicate));
-		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
-		$this->ss->assign('remindersDisabled', json_encode(false));
-
- 		parent::display();
- 	}
 }
+
+?>
