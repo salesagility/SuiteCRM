@@ -72,15 +72,13 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
         $this->bean->user_parameters = requestToUserParameters();
 
-
         //$reportHTML = $this->bean->build_group_report(0,true);
         $reportHTML = $this->bean->buildMultiGroupReport(0,true);
 
-        // use AOR_Report::CHART_TYPE_CHARTJS constant for old charts
-        $chartsHTML = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
+        $charts = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 
-        $this->ss->assign('report_content',$reportHTML);
-        $this->ss->assign('charts_content',$chartsHTML);
+        $chartsPerRow = $this->bean->graphs_per_row;
+        $this->ss->assign('report_content',$charts.$reportHTML);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
@@ -91,6 +89,62 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
         $params = $this->getReportParameters();
         echo "<script>var reportParameters = ".json_encode($params).";</script>";
+
+        $resizeGraphsPerRow = <<<EOD
+
+       <script>
+        function resizeGraphsPerRow()
+        {
+                var maxWidth = 900;
+                var maxHeight = 500;
+                var maxTextSize = 10;
+                var divWidth = $("#detailpanel_report").width();
+
+                var graphWidth = Math.floor(divWidth / $chartsPerRow);
+
+                var graphs = document.getElementsByClassName('resizableCanvas');
+                for(var i = 0; i < graphs.length; i++)
+                {
+                    if(graphWidth * 0.9 > maxWidth)
+                    graphs[i].width  = maxWidth;
+                else
+                    graphs[i].width = graphWidth * 0.9;
+                if(graphWidth * 0.9 > maxHeight)
+                    graphs[i].height = maxHeight;
+                else
+                    graphs[i].height = graphWidth * 0.9;
+
+
+                /*
+                var text_size = Math.min(12, (graphWidth / 1000) * 12 );
+                if(text_size < 6)text_size=6;
+                if(text_size > maxTextSize) text_size = maxTextSize;
+
+                if(     graphs[i] !== undefined
+                    &&  graphs[i].__object__ !== undefined
+                    &&  graphs[i].__object__["properties"] !== undefined
+                    &&  graphs[i].__object__["properties"]["chart.text.size"] !== undefined
+                    &&  graphs[i].__object__["properties"]["chart.key.text.size"] !== undefined)
+                 {
+                    graphs[i].__object__["properties"]["chart.text.size"] = text_size;
+                    graphs[i].__object__["properties"]["chart.key.text.size"] = text_size;
+                 }
+
+
+
+                RGraph.redrawCanvas(graphs[i]);
+                */
+                }
+        }
+        </script>
+
+EOD;
+
+
+
+        echo $resizeGraphsPerRow;
+        echo "<script> $(document).ready(function(){resizeGraphsPerRow();}); </script>";
+
     }
 
 

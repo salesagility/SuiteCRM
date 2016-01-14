@@ -4845,5 +4845,13 @@ object{
 #report-editview-footer .parenthesis-line strong {font-size: 18px}
 #report-editview-footer .drop-area.highlighted {background-color: #f7f7f7;}
 
+
+/*Rgraph charts*/
+.noGraphDataPoints
+{
+    padding:10px;
+}
+/*End of Rgraph charts*/
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

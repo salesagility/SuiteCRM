@@ -143,7 +143,7 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
         $chartReadyData = $this->prepareChartData($data, $currency_symbol, $thousands_symbol);
         $canvasId = 'rGraphOutcomeByMonth'.uniqid();
         $chartWidth     = 900;
-        $chartHeight    = 480;
+        $chartHeight    = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
@@ -157,6 +157,11 @@ class RGraph_OutcomeByMonthDashlet extends DashletGenericChart
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 
+
+        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
+        {
+            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+        }
 
         $chart = <<<EOD
         <canvas id='$canvasId' class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>

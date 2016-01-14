@@ -195,13 +195,19 @@ class RGraph_PipelineBySalesStageDashlet extends DashletGenericChart
         $searchFormTab ='advanced_search';
 
         $chartWidth     = 900;
-        $chartHeight    = 600;
+        $chartHeight    = 500;
 
         $autoRefresh = $this->processAutoRefresh();//$autoRefresh
 
         $colours = "['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
         //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
         //<canvas id='test123'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
+
+        //There is always an ending anchor value, hence this check is that the data array is less than 2
+        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 2)
+        {
+            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+        }
 
         $chart = <<<EOD
         <canvas id='$canvasId'  class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>
@@ -242,7 +248,8 @@ new RGraph.Funnel({
                     textSize:10,
                     //textHalign:'center',
                     shadowColor: 'gray',
-                    //keyInteractive:true,
+                    tooltips:$jsonLabels,
+                    tooltipsEvent:'mousemove',
                     keyHalign:'right'
                 }
             }).draw();

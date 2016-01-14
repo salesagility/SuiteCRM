@@ -185,7 +185,7 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         $canvasId = 'rGraphOppByLeadSourceByOutcome'.uniqid();
         $chartWidth     = 900;
-        $chartHeight    = 480;
+        $chartHeight    = 500;
         $autoRefresh = $this->processAutoRefresh();
 
         //$chartReadyData['data'] = [[1.1,2.2],[3.3,4.4]];
@@ -204,6 +204,11 @@ class RGraph_MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         $startDate = $timedate->to_display_date($this->mypbss_date_start, false);
         $endDate = $timedate->to_display_date($this->mypbss_date_end, false);
+
+        if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
+        {
+            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+        }
 
         $chart = <<<EOD
         <canvas id='$canvasId'   class='resizableCanvas'  width='$chartWidth' height='$chartHeight'>[No canvas support]</canvas>

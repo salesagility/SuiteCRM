@@ -237,6 +237,9 @@ class AOR_Chart extends Basic {
         $xName = str_replace(' ','_',$x->label) . $this->x_field;
         $yName = str_replace(' ','_',$y->label) . $this->y_field;
 
+        $defaultHeight = 500;
+        $defaultWidth = 900;
+
         switch($this->type){
             /*
              //Polar was not implemented for the previous library (it is not in the getValidChartTypes method)
@@ -250,44 +253,44 @@ class AOR_Chart extends Basic {
                 $chartFunction = 'Radar';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRadarChartConfig();
-                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphRadarChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, $defaultHeight,$defaultWidth);
                 break;
             case 'pie':
                 $chartFunction = 'Pie';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getPieChartConfig();
-                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphPieChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'line':
                 $chartFunction = 'Line';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getLineChartConfig();
-                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphLineChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'rose':
                 $chartFunction = 'Rose';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getRoseChartConfig();
-                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphRoseChart(json_encode($data['data']), json_encode($data['labels']),json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
                 $config = $this->getGroupedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
                 $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
                 $config = $this->getStackedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, 400,800, false);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth, false);
                 break;
             case 'bar':
             default:
                 $chartFunction = 'Bar';
                 $data = $this->getRGraphBarChartData($reportData, $xName,$yName);
                 $config = $this->getBarChartConfig();
-                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id, 400,800);
+                $chart = $this->getRGraphBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
                 break;
         }
 
@@ -433,7 +436,7 @@ EOF;
                  tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours,
+                colors: $this->colours
             }
         }).draw();
         </script>
@@ -448,6 +451,12 @@ EOF;
         {
             return "<h3>There are no data points for this query</h3>";
         }
+/*
+        if($chartHeight > 400)
+            $chartHeight = 400;
+        if($chartWidth > 600)
+            $chartWidth = 400;
+*/
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
