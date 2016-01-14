@@ -24,6 +24,7 @@ $mod_strings['LBL_MAP_GROUP'] = 'Group';
 $mod_strings['LBL_MAP_TYPE'] = 'Type';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'Assigned to:';
 $mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
+$mod_strings['LBL_MAP_GOOGLE_MAPS_VIEW'] = 'Google Maps View';
 
 $mod_strings['LNK_NEW_MAP'] = 'Add New Map';
 $mod_strings['LNK_NEW_RECORD'] = 'Add New Map';
@@ -50,6 +51,7 @@ $mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
 $mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. '. 
 'Keep in mind that the standard Google Maps usage limit is 2500 requests per day. '.
 'This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';
+$mod_strings['LBL_CRON_URL'] = 'CRON URL';
 $mod_strings['LBL_CRON_INSTRUCTIONS'] = 'To process the geocoding requests it is recommended to setup a nightly Cron-Job. '.
 'A custom entry point has been created for this purpose and can be accessed without authentication. '.
 'The URL shown below is meant to be used with an Administrative Scheduled Task. '.
@@ -148,5 +150,3 @@ $mod_strings['LBL_CONFIG_MAP_CLUSTER_GRID_SIZE_DESC'] = "'map_clusterer_grid_siz
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_TITLE'] = "Map Markers Clusterer Max Zoom:";
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = "'map_clusterer_max_zoom' is used to set the maximum zoom level at which clustering will not be applied.";
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = "Important Note: All saved settings can be found in the 'config' table under category 'jjwg'. Note, a custom controller.php file should no longer be used to override settings.";
-$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE'] = 'Map AdSense Removal Key:';
-$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC'] = 'Donate to this project! Then contact JJWDesign.com for an AdSense removal key.';

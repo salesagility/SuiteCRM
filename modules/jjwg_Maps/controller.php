@@ -51,7 +51,8 @@ class jjwg_MapsController extends SugarController {
      * jjwg_Maps - Maps module's object
      * @var object
      */
-    var $jjwg_Maps;
+    var $bean;
+    var $jjwg_Maps; // Deprecated reference
 
     /**
      * jjwg_Address_Cache - Address cache module's object
@@ -86,6 +87,7 @@ class jjwg_MapsController extends SugarController {
     function configuration() {
 
         $this->bean = new jjwg_Maps();
+        $this->jjwg_Maps = &$this->bean; // Set deprecated reference
         $this->settings = $GLOBALS['jjwg_config'];
     }
     
@@ -183,8 +185,15 @@ class jjwg_MapsController extends SugarController {
             // Find the Items to Geocode - Get Geocode Addresses Result
             $display_result = $this->bean->getGeocodeAddressesResult($this->display_object->table_name);
 
-            // Iterate through the display rows
+            /* 
+             * Iterate through the display rows
+             * We build up an array here to prevent locking issues on some DBs (looking at you MSSQL)
+             */
+            $tmpDisplayResults = array();
             while ($display = $this->bean->db->fetchByAssoc($display_result)) {
+                $tmpDisplayResults[] = $display;
+            }
+            foreach($tmpDisplayResults as $display){
 
                 $GLOBALS['log']->debug(__METHOD__.' $display[\'id\': '.$display['id']);
                 $geocoding_inc++;
@@ -586,6 +595,7 @@ class jjwg_MapsController extends SugarController {
     function action_map_display() {
 
         $this->view = 'map_display';
+        if (!isset($_REQUEST['current_post'])) $_REQUEST['current_post'] = '';
         
         // Bug: 'current_post' too large for iFrame URL used in Google Library calls
         $_SESSION['jjwg_Maps']['current_post'] = $_REQUEST['current_post'];
@@ -621,6 +631,7 @@ class jjwg_MapsController extends SugarController {
         $this->sugarSmarty = new Sugar_Smarty();
         $this->sugarSmarty->assign("mod_strings", $GLOBALS['mod_strings']);
         $this->sugarSmarty->assign("app_strings", $GLOBALS['app_strings']);
+        $this->sugarSmarty->assign('app_list_strings', $GLOBALS['app_list_strings']);
         $this->sugarSmarty->assign('moduleListSingular', $GLOBALS['app_list_strings']['moduleListSingular']);
         $this->sugarSmarty->assign('moduleList', $GLOBALS['app_list_strings']['moduleList']);
         //echo '<pre>';

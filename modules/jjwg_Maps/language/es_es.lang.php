@@ -23,7 +23,8 @@ $mod_strings['LBL_MAP_USER_GROUPS'] = 'Grupos de Usuarios:';
 $mod_strings['LBL_MAP_GROUP'] = 'Grupo';
 $mod_strings['LBL_MAP_TYPE'] = 'Tipo';
 $mod_strings['LBL_MAP_ASSIGNED_TO'] = 'Asignado a:';
-$mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Get Directions';
+$mod_strings['LBL_MAP_GET_DIRECTIONS'] = 'Cómo llegar';
+$mod_strings['LBL_MAP_GOOGLE_MAPS_VIEW'] = 'Google Maps Ver';
 
 $mod_strings['LNK_NEW_MAP'] = 'Añadir Nuevo Mapa';
 $mod_strings['LNK_NEW_RECORD'] = 'Añadir Nuevo Mapa';
@@ -148,5 +149,3 @@ $mod_strings['LBL_CONFIG_MAP_CLUSTER_GRID_SIZE_DESC'] = "'map_clusterer_grid_siz
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_TITLE'] = "Zoom máximo de Markers Clusters:";
 $mod_strings['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC'] = "'map_clusterer_max_zoom' es usado para establecer el nivel máximo de zoom  al cual el clusterizado no se aplica.";
 $mod_strings['LBL_CONFIG_CUSTOM_CONTROLLER_DESC'] = "Nota Importante: Todas las configuraciones guardadas pueden ser encontradas en la tabla 'config' bao la categoría 'jjwg'. Nota: la utilización del archivo 'controller.php' personalizado para ignorar las configuraciones, queda obsoleto a partir de ahora.";
-$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE'] = 'Clave Removal Mapa AdSense:';
-$mod_strings['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC'] = 'Donar a este proyecto! Entonces póngase en contacto JJWDesign.com para una clave de eliminación de AdSense.';

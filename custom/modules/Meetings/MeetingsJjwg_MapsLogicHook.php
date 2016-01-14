@@ -7,11 +7,15 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 class MeetingsJjwg_MapsLogicHook {
 
+    var $jjwg_Maps;
+    function MeetingsJjwg_MapsLogicHook() {
+        $this->jjwg_Maps = get_module_info('jjwg_Maps');
+    }
+
     function updateMeetingGeocodeInfo(&$bean, $event, $arguments) {
         // after_save
-        $jjwg_Maps = get_module_info('jjwg_Maps');
-        if ($jjwg_Maps->settings['logic_hooks_enabled']) {
-            $jjwg_Maps->updateMeetingGeocodeInfo($bean);
+        if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
+            $this->jjwg_Maps->updateMeetingGeocodeInfo($bean);
         }
     }
 

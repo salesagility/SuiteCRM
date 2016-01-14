@@ -124,19 +124,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
          */
         'map_clusterer_max_zoom' => 14,
         /**
-         * 'map_adsense_removal_key' is used to remove Adsense Ads from the Maps
-         * @var string
-         */
-        'map_adsense_removal_key' => 'Donate and Contact JJWDesign for Key',
-        /**
-         * 'map_adsense_pub_id' is the Adsense Publisher ID
-         */
-        'map_adsense_pub_id' => 'pub-1684392434841062',
-        /**
-         *'map_adsense_channel_number' is the AdSense Channel Number
-         */
-        'map_adsense_channel_number' => '4243785793',
-        /**
          * 'map_default_center_latitude' sets the default center latitude position for maps.
          * @var float
          */
@@ -350,18 +337,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
                 $this->settings['geocoding_api_secret'] = $rev['geocoding_api_secret'];
             }
             
-            // Set Adsense Removal Key
-            if (isset($rev['map_adsense_removal_key'])) {
-                $this->settings['map_adsense_removal_key'] = $rev['map_adsense_removal_key'];
-            }
-            // Set Adsense Pub ID and Channel Number
-            if (isset($rev['map_adsense_pub_id'])) {
-                $this->settings['map_adsense_pub_id'] = $rev['map_adsense_pub_id'];
-            }
-            if (isset($rev['map_adsense_channel_number'])) {
-                $this->settings['map_adsense_channel_number'] = $rev['map_adsense_channel_number'];
-            }
-        
         }
 
         // Set for Global Use
@@ -463,15 +438,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             if (isset($data['geocoding_api_secret'])) {
                 $admin->saveSetting($category, 'geocoding_api_secret', trim($data['geocoding_api_secret']));
             }
-            
-            // Set Adsense Removal Key
-            if (empty($data['map_adsense_removal_key'])) $data['map_adsense_removal_key'] = '';
-            if (isset($data['map_adsense_removal_key'])) {
-                $admin->saveSetting($category, 'map_adsense_removal_key', trim($data['map_adsense_removal_key']));
-            }
-            // Set Adsense Pub ID and Channel Number
-            $admin->saveSetting($category, 'map_adsense_pub_id', $this->settings['map_adsense_pub_id']);
-            $admin->saveSetting($category, 'map_adsense_channel_number', $this->settings['map_adsense_channel_number']);
             
             return true;
         }
