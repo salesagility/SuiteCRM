@@ -638,6 +638,9 @@ $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
 
 // set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
+if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
+    $current_user->setPreference('timezone', $_REQUEST['timezone']);
+}
 
 //$_POST[''] = $_REQUEST['default_locale_name_format'];
 $_POST['dateformat'] = $_REQUEST['default_date_format'];

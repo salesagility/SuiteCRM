@@ -153,7 +153,7 @@ class Relationship extends SugarBean {
 	//end function retrieve_by_sides
 	}
 
-	function retrieve_by_modules($lhs_module, $rhs_module, &$db, $type =''){
+	static function retrieve_by_modules($lhs_module, $rhs_module, &$db, $type =''){
 	//give it the relationship_name and base module
 	//it will return the module name on the other side of the relationship
 

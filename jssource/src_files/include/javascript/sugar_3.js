@@ -2044,7 +2044,7 @@ sugarListView.prototype.use_external_mail_client_callback = function(o)
 }
 
 sugarListView.prototype.send_form_for_emails = function(select, currentModule, action, no_record_txt,action_module,totalCount, totalCountError) {
-	if ( typeof(SUGAR.config.email_sugarclient_listviewmaxselect) != 'undefined' ) {
+	if ( typeof(SUGAR.config.email_sugarclient_listviewmaxselect) === 'undefined' ) {
 	    maxCount = 10;
 	}
 	else {
