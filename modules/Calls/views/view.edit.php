@@ -76,8 +76,8 @@ class CallsViewEdit extends ViewEdit
 		}
  		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
 
-		$this->ss->assign('remindersData', Reminder::loadRemindersData('Calls', $this->bean->id));
-		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Calls', $this->bean->id));
+		$this->ss->assign('remindersData', Reminder::loadRemindersData('Calls', $this->bean->id, $this->ev->isDuplicate));
+		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Calls', $this->bean->id, $this->ev->isDuplicate));
 		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
 		$this->ss->assign('remindersDisabled', json_encode(false));
 

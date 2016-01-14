@@ -367,7 +367,7 @@ YAHOO.util.Connect.asyncRequest("POST","index.php?",{success:this.use_external_m
 sugarListView.prototype.use_external_mail_client_callback=function(o)
 {if(o.responseText)
 location.href='mailto:'+o.responseText;}
-sugarListView.prototype.send_form_for_emails=function(select,currentModule,action,no_record_txt,action_module,totalCount,totalCountError){if(typeof(SUGAR.config.email_sugarclient_listviewmaxselect)!='undefined'){maxCount=10;}
+sugarListView.prototype.send_form_for_emails===function(select,currentModule,action,no_record_txt,action_module,totalCount,totalCountError){if(typeof(SUGAR.config.email_sugarclient_listviewmaxselect)!='undefined'){maxCount=10;}
 else{maxCount=SUGAR.config.email_sugarclient_listviewmaxselect;}
 if(document.MassUpdate.select_entire_list.value==1){if(totalCount>maxCount){alert(totalCountError);return;}
 select=false;}

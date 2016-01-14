@@ -385,7 +385,7 @@ class AOR_ReportsController extends SugarController {
                 break;
             default:
                 // Added to compare fields like assinged to with the current user
-                if($vardef['module'] == "Users" || $vardef['name'] = 'id') {
+                if( (isset($vardef['module']) && $vardef['module'] == "Users") || $vardef['name'] = 'id') {
                     $valid_opp = array('Value','Field', 'CurrentUserID');
                 } else {
                     $valid_opp = array('Value','Field');

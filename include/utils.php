@@ -138,7 +138,7 @@ function make_sugar_config(&$sugar_config)
 	'default_password' => empty($default_password) ? '' : $default_password,
 	'default_permissions' => array (
 		'dir_mode' => 02770,
-		'file_mode' => 0660,
+		'file_mode' => 0755,
 		'chown' => '',
 		'chgrp' => '',
 	),
@@ -279,7 +279,7 @@ function get_sugar_config_defaults() {
 	'default_password' => '',
 	'default_permissions' => array (
 		'dir_mode' => 02770,
-		'file_mode' => 0660,
+		'file_mode' => 0755,
 		'user' => '',
 		'group' => '',
 	),
@@ -858,7 +858,7 @@ function return_app_list_strings_language($language)
 		return $cache_entry;
 	}
 
-	$default_language = $sugar_config['default_language'];
+	$default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : 'en_us';
 	$temp_app_list_strings = $app_list_strings;
 
 	$langs = array();

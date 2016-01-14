@@ -73,7 +73,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
 function requestToUserParameters()
 {
     $params = array();
-    if($_REQUEST['parameter_id']) {
+    if(isset($_REQUEST['parameter_id']) && $_REQUEST['parameter_id']) {
         foreach ($_REQUEST['parameter_id'] as $key => $parameterId) {
             if ($_REQUEST['parameter_type'][$key] === 'Multi') {
                 $_REQUEST['parameter_value'][$key] = encodeMultienumValue(explode(',', $_REQUEST['parameter_value'][$key]));

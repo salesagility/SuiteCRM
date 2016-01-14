@@ -104,14 +104,14 @@ class Reminder_Invitee extends Basic {
 	 * @param string $reminderId Related Reminder GUID
 	 * @return array Invitees data
 	 */
-	public static function loadRemindersInviteesData($reminderId) {
+	public static function loadRemindersInviteesData($reminderId, $isDuplicate = false) {
 		$ret = array();
 		$reminderInviteeBeen = new Reminder_Invitee();
 		$reminderInvitees = $reminderInviteeBeen->get_full_list("reminders_invitees.date_entered", "reminders_invitees.reminder_id = '$reminderId'");
         if($reminderInvitees) {
             foreach ($reminderInvitees as $reminderInvitee) {
                 $ret[] = array(
-                    'id' => $reminderInvitee->id,
+                    'id' => $isDuplicate ? null : $reminderInvitee->id,
                     'module' => $reminderInvitee->related_invitee_module,
                     'module_id' => $reminderInvitee->related_invitee_module_id,
                     'value' => self::getInviteeName($reminderInvitee->related_invitee_module, $reminderInvitee->related_invitee_module_id),
