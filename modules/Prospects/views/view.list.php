@@ -1,11 +1,8 @@
-<?php
+<?php 
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -33,19 +30,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
  ********************************************************************************/
 
 
 require_once('include/MVC/View/views/view.list.php');
+require_once('modules/Prospects/ProspectsListViewSmarty.php');
 
-class ProspectsViewList extends ViewList
-{
- 	public function preDisplay()
- 	{
- 		parent::preDisplay();
- 		$this->lv->targetList = true;
- 	}
+class ProspectsViewList extends ViewList {
+	
+	function LeadsViewList(){
+		parent::ViewList();
+	}
+	
+	function preDisplay(){
+		$this->lv = new ProspectsListViewSmarty();
+		$this->lv->targetList = true;
+	}
 }

@@ -62,7 +62,7 @@ $mod_strings = array (
 	'LBL_DATE_DUE' => 'Due Date:',
 	'LBL_TIME_DUE' => 'Due Time:',
     'LBL_RESOURCE' => 'Resource:',
-    'LBL_PREDECESSORS' => 'Predecessors:',
+    'LBL_PREDECESSORS' => 'Predecessor',
 	'LBL_DATE_START' => 'Start Date:',
     'LBL_DATE_FINISH' => 'Finish Date:',    
 	'LBL_TIME_START' => 'Start Time:',
@@ -72,9 +72,9 @@ $mod_strings = array (
     'LBL_ACTUAL_DURATION' => 'Actual Duration:',
 	'LBL_PARENT_ID' => 'Project:',
     'LBL_PARENT_TASK_ID' => 'Parent Task Id:',    
-    'LBL_PERCENT_COMPLETE' => '% Complete:',
+    'LBL_PERCENT_COMPLETE' => '% Cpl',
 	'LBL_PRIORITY' => 'Priority:',
-	'LBL_DESCRIPTION' => 'Description:',
+	'LBL_DESCRIPTION' => 'Notes:',
 	'LBL_ORDER_NUMBER' => 'Order:',
 	'LBL_TASK_NUMBER' => 'Task Number:',
     'LBL_TASK_ID' => 'Task ID:',
@@ -121,5 +121,12 @@ $mod_strings = array (
     'LBL_LIST_PROJECT_NAME' => 'Projects',
 	'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_PANEL_TIMELINE' => 'Timeline',
+	
+	'LBL_SUBTASK' => 'Sub-Task',
+	'LBL_LAG' => 'Lag',
+	'LBL_DAYS' => 'Days',
+	'LBL_HOURS' => 'Hours',
+	'LBL_RELATIONSHIP_TYPE' => 'Relationship Type',
 );
+
 ?>
