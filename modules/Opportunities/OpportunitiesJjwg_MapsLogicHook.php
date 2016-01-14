@@ -1,7 +1,5 @@
 <?php
 
-// custom/modules/Opportunities/OpportunitiesJjwg_MapsLogicHook.php
-
 if (!defined('sugarEntry') || !sugarEntry)
     die('Not A Valid Entry Point');
 

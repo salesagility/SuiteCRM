@@ -1,9 +1,7 @@
-<?php 
-
-// custom/modules/Cases/views/view.list.php
+<?php
 
 require_once('include/MVC/View/views/view.list.php');
-require_once('custom/modules/Cases/CasesListViewSmarty.php');
+require_once('modules/Cases/CasesListViewSmarty.php');
 
 class CasesViewList extends ViewList {
 	
