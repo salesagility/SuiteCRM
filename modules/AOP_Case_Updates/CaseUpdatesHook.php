@@ -369,7 +369,11 @@ class CaseUpdatesHook {
         if(!$bean->fetched_row){
             return;
         }
-        $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
+        if(!empty($arguments['related_bean'])){
+            $contact = $arguments['related_bean'];
+        }else{
+            $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
+        }
         $this->sendCreationEmail($bean, $contact);
     }
 
