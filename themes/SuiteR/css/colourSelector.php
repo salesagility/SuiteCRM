@@ -33,9 +33,11 @@ color: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;
 /* Dashlet CSS */
 
 .dashletPanel .h3Row{
-
 background: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet']; ?>;
+}
 
+.dashletPanel .h3Row .dashletToolSet .icon{
+fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;	
 }
 
 /* Top navigation bar CSS */
@@ -61,6 +63,16 @@ background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_hover']
 
 .headerlinks a:hover, .navbar-inverse .navbar-brand:hover {
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_link_hover']; ?> !important;
+}
+
+#desktop_notifications .btn {
+background: #<?php echo $sugar_config['theme_settings']['SuiteR']['navbar']; ?>;	
+}
+
+#searchform .btn
+{
+background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?>;
+color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; ?>;
 }
 
 /* Drop down menu CSS */

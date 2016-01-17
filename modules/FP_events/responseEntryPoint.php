@@ -35,7 +35,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 }   
     		}
     		else {
-    			echo 'You have a ready responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
+    			echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
     		}	
     	}
     	else if($response == 'decline'){
@@ -58,7 +58,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 }
     		}
     		else {
-    			echo 'You have a ready responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
+    			echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
     		}
     	}
     }
@@ -85,7 +85,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 }   
             }
             else {
-                echo 'You have a ready responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
+                echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }   
     	}
     	else if($response == 'decline'){
@@ -107,7 +107,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
                 }
             }
             else {
-                echo 'You have a ready responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
+                echo 'You have already responded to the invitation or there was a problem with the link. Please contact the sender of the invite for help.';
             }
     	}
     }
