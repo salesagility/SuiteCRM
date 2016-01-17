@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,160 +39,157 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-
-
 global $modules_exempt_from_availability_check;
-$modules_exempt_from_availability_check = array('Holidays'=>'Holidays',
-												'Tasks'=>'Tasks',
-												'Calls'=>'Calls',
-												'Meetings'=>'Meetings',
-												'History'=>'History',
-												'Notes'=>'Notes',
-												'Emails'=>'Emails',
-												'ProjectTask'=>'ProjectTask',
-												'Users'=>'Users',
-											   );
+$modules_exempt_from_availability_check = array('Holidays' => 'Holidays',
+    'Tasks' => 'Tasks',
+    'Calls' => 'Calls',
+    'Meetings' => 'Meetings',
+    'History' => 'History',
+    'Notes' => 'Notes',
+    'Emails' => 'Emails',
+    'ProjectTask' => 'ProjectTask',
+    'Users' => 'Users',
+);
 
 $layout_defs['Project'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
+    // list of what Subpanels to show in the DetailView
+    'subpanel_setup' => array(
 
-       'projecttask' => array(
-			'order' => 20,
-			'sort_order' => 'asc',
-			'sort_by' => 'project_task_id',
-			'module' => 'ProjectTask',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopCreateButton', ),
-			),
-			'subpanel_name' => 'default',
-			'title_key' => 'LBL_PROJECT_TASKS_SUBPANEL_TITLE',
-			'get_subpanel_data' => 'projecttask',
-		),
+        'projecttask' => array(
+            'order' => 20,
+            'sort_order' => 'asc',
+            'sort_by' => 'project_task_id',
+            'module' => 'ProjectTask',
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopCreateButton',),
+            ),
+            'subpanel_name' => 'default',
+            'title_key' => 'LBL_PROJECT_TASKS_SUBPANEL_TITLE',
+            'get_subpanel_data' => 'projecttask',
+        ),
 
-		'activities' => array(
-			'order' => 40,
-			'sort_order' => 'desc',
-			'sort_by' => 'date_start',
-			'title_key' => 'LBL_ACTIVITIES_SUBPANEL_TITLE',
-			'type' => 'collection',
-			'subpanel_name' => 'activities',   //this values is not associated with a physical file.
-			'module'=>'Activities',
+        'activities' => array(
+            'order' => 40,
+            'sort_order' => 'desc',
+            'sort_by' => 'date_start',
+            'title_key' => 'LBL_ACTIVITIES_SUBPANEL_TITLE',
+            'type' => 'collection',
+            'subpanel_name' => 'activities',   //this values is not associated with a physical file.
+            'module' => 'Activities',
 
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopCreateTaskButton'),
-				array('widget_class' => 'SubPanelTopScheduleMeetingButton'),
-				array('widget_class' => 'SubPanelTopScheduleCallButton'),
-				array('widget_class' => 'SubPanelTopComposeEmailButton'),
-			),
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopCreateTaskButton'),
+                array('widget_class' => 'SubPanelTopScheduleMeetingButton'),
+                array('widget_class' => 'SubPanelTopScheduleCallButton'),
+                array('widget_class' => 'SubPanelTopComposeEmailButton'),
+            ),
 
-			'collection_list' => array(
-				'meetings' => array(
-					'module' => 'Meetings',
-					'subpanel_name' => 'ForActivities',
-					'get_subpanel_data' => 'meetings',
-				),
-				'tasks' => array(
-					'module' => 'Tasks',
-					'subpanel_name' => 'ForActivities',
-					'get_subpanel_data' => 'tasks',
-				),
-				'calls' => array(
-					'module' => 'Calls',
-					'subpanel_name' => 'ForActivities',
-					'get_subpanel_data' => 'calls',
-				),
-			),
-		),
+            'collection_list' => array(
+                'meetings' => array(
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => 'meetings',
+                ),
+                'tasks' => array(
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => 'tasks',
+                ),
+                'calls' => array(
+                    'module' => 'Calls',
+                    'subpanel_name' => 'ForActivities',
+                    'get_subpanel_data' => 'calls',
+                ),
+            ),
+        ),
 
-		'history' => array(
-			'order' => 50,
-			'sort_order' => 'desc',
-			'sort_by' => 'date_entered',
-			'title_key' => 'LBL_HISTORY_SUBPANEL_TITLE',
-			'type' => 'collection',
-			'subpanel_name' => 'history',   //this values is not associated with a physical file.
-			'module'=>'History',
+        'history' => array(
+            'order' => 50,
+            'sort_order' => 'desc',
+            'sort_by' => 'date_entered',
+            'title_key' => 'LBL_HISTORY_SUBPANEL_TITLE',
+            'type' => 'collection',
+            'subpanel_name' => 'history',   //this values is not associated with a physical file.
+            'module' => 'History',
 
-			'top_buttons' => array(
-			array('widget_class' => 'SubPanelTopCreateNoteButton'),
-			array('widget_class' => 'SubPanelTopArchiveEmailButton'),
-            array('widget_class' => 'SubPanelTopSummaryButton'),
-			),
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopCreateNoteButton'),
+                array('widget_class' => 'SubPanelTopArchiveEmailButton'),
+                array('widget_class' => 'SubPanelTopSummaryButton'),
+            ),
 
-			'collection_list' => array(
-				'meetings' => array(
-					'module' => 'Meetings',
-					'subpanel_name' => 'ForHistory',
-					'get_subpanel_data' => 'meetings',
-				),
-				'calls' => array(
-					'module' => 'Calls',
-					'subpanel_name' => 'ForHistory',
-					'get_subpanel_data' => 'calls',
-				),
-				'tasks' => array(
-					'module' => 'Tasks',
-					'subpanel_name' => 'ForHistory',
-					'get_subpanel_data' => 'tasks',
-				),
-				'notes' => array(
-					'module' => 'Notes',
-					'subpanel_name' => 'ForHistory',
-					'get_subpanel_data' => 'notes',
-				),
-				'emails' => array(
-					'module' => 'Emails',
-					'subpanel_name' => 'ForHistory',
-					'get_subpanel_data' => 'emails',
-				),
-			)
-		),
+            'collection_list' => array(
+                'meetings' => array(
+                    'module' => 'Meetings',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'meetings',
+                ),
+                'calls' => array(
+                    'module' => 'Calls',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'calls',
+                ),
+                'tasks' => array(
+                    'module' => 'Tasks',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'tasks',
+                ),
+                'notes' => array(
+                    'module' => 'Notes',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'notes',
+                ),
+                'emails' => array(
+                    'module' => 'Emails',
+                    'subpanel_name' => 'ForHistory',
+                    'get_subpanel_data' => 'emails',
+                ),
+            )
+        ),
         'contacts' => array(
             'top_buttons' => array(
-			    array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
-	         ),
-			'order' => 60,
-			'module' => 'Contacts',
-			'sort_order' => 'asc',
-			'sort_by' => 'last_name, first_name',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'contacts',
-			'add_subpanel_data' => 'contact_id',
-			'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
-		),
+                array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Contacts'),
+            ),
+            'order' => 60,
+            'module' => 'Contacts',
+            'sort_order' => 'asc',
+            'sort_by' => 'last_name, first_name',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'contacts',
+            'add_subpanel_data' => 'contact_id',
+            'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
+        ),
 
-      'accounts' => array(
+        'accounts' => array(
             'top_buttons' => array(
-			    array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'),
-	         ),
-			'order' => 70,
-			'module' => 'Accounts',
-			'sort_order' => 'asc',
-			'sort_by' => 'name',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'accounts',
-			'add_subpanel_data' => 'account_id',
-			'title_key' => 'LBL_ACCOUNTS_SUBPANEL_TITLE',
-		),
-		'opportunities' => array(
+                array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Accounts'),
+            ),
+            'order' => 70,
+            'module' => 'Accounts',
+            'sort_order' => 'asc',
+            'sort_by' => 'name',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'accounts',
+            'add_subpanel_data' => 'account_id',
+            'title_key' => 'LBL_ACCOUNTS_SUBPANEL_TITLE',
+        ),
+        'opportunities' => array(
             'top_buttons' => array(
-			    array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Opportunities'),
-	         ),
-			'order' => 80,
-			'module' => 'Opportunities',
-			'sort_order' => 'desc',
-			'sort_by' => 'date_closed',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'opportunities',
-			'add_subpanel_data' => 'opportunity_id',
-			'title_key' => 'LBL_OPPORTUNITIES_SUBPANEL_TITLE',
-		),
+                array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Opportunities'),
+            ),
+            'order' => 80,
+            'module' => 'Opportunities',
+            'sort_order' => 'desc',
+            'sort_by' => 'date_closed',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'opportunities',
+            'add_subpanel_data' => 'opportunity_id',
+            'title_key' => 'LBL_OPPORTUNITIES_SUBPANEL_TITLE',
+        ),
         'cases' => array(
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Cases'),
-             ),
+            ),
             'order' => 110,
             'module' => 'Cases',
             'sort_order' => 'desc',
@@ -205,7 +202,7 @@ $layout_defs['Project'] = array(
         'bugs' => array(
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'Bugs'),
-             ),
+            ),
             'order' => 120,
             'module' => 'Bugs',
             'sort_order' => 'desc',
@@ -215,25 +212,37 @@ $layout_defs['Project'] = array(
             'add_subpanel_data' => 'bug_id',
             'title_key' => 'LBL_BUGS_SUBPANEL_TITLE',
         ),
-   ),
+        'securitygroups' => array(
+            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'order' => 900,
+            'sort_by' => 'name',
+            'sort_order' => 'asc',
+            'module' => 'SecurityGroups',
+            'refresh_page' => 1,
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'SecurityGroups',
+            'add_subpanel_data' => 'securitygroup_id',
+            'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
+        ),
+    ),
 );
 $layout_defs['ProjectTemplates'] = array(
-	// list of what Subpanels to show in the DetailView
-	'subpanel_setup' => array(
-       'projecttask' => array(
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelEditProjectTasksButton', ),
-			),
-			'order' => 10,
-			'sort_order' => 'desc',
-			'sort_by' => 'id',
-			'module' => 'ProjectTask',
-			'subpanel_name' => 'default',
-			'title_key' => 'LBL_PROJECT_TASKS_SUBPANEL_TITLE',
-			'get_subpanel_data' => 'projecttask',
-		),
+    // list of what Subpanels to show in the DetailView
+    'subpanel_setup' => array(
+        'projecttask' => array(
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelEditProjectTasksButton',),
+            ),
+            'order' => 10,
+            'sort_order' => 'desc',
+            'sort_by' => 'id',
+            'module' => 'ProjectTask',
+            'subpanel_name' => 'default',
+            'title_key' => 'LBL_PROJECT_TASKS_SUBPANEL_TITLE',
+            'get_subpanel_data' => 'projecttask',
+        ),
 
-	),
+    ),
 );
 
 

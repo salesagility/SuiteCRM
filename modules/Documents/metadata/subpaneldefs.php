@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,22 +38,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- 
-
 
 $layout_defs['Documents'] = array(
-	// list of what Subpanels to show in the DetailView 
-	'subpanel_setup' => array(
-		'therevisions' => array(
-			'order' => 10,
-			'sort_order' => 'desc',
-			'sort_by' => 'revision',			
-			'module' => 'DocumentRevisions',
-			'subpanel_name' => 'default',
-			'title_key' => 'LBL_DOC_REV_HEADER',
-			'get_subpanel_data' => 'revisions',
-			'fill_in_additional_fields'=>true,
-		),
+    // list of what Subpanels to show in the DetailView
+    'subpanel_setup' => array(
+        'therevisions' => array(
+            'order' => 10,
+            'sort_order' => 'desc',
+            'sort_by' => 'revision',
+            'module' => 'DocumentRevisions',
+            'subpanel_name' => 'default',
+            'title_key' => 'LBL_DOC_REV_HEADER',
+            'get_subpanel_data' => 'revisions',
+            'fill_in_additional_fields' => true,
+        ),
         'accounts' => array(
             'order' => 30,
             'module' => 'Accounts',
@@ -62,17 +60,17 @@ $layout_defs['Documents'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_ACCOUNTS_SUBPANEL_TITLE',
             'get_subpanel_data' => 'accounts',
-            'top_buttons' => 
-            array (
-                0 => 
-                array (
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                    ),
-                1 => 
-                array (
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                    ),
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
                 ),
         ),
         'contacts' => array(
@@ -83,17 +81,17 @@ $layout_defs['Documents'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
             'get_subpanel_data' => 'contacts',
-            'top_buttons' => 
-            array (
-                0 => 
-                array (
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                    ),
-                1 => 
-                array (
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                    ),
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
                 ),
         ),
         'opportunities' => array(
@@ -104,17 +102,17 @@ $layout_defs['Documents'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_OPPORTUNITIES_SUBPANEL_TITLE',
             'get_subpanel_data' => 'opportunities',
-            'top_buttons' => 
-            array (
-                0 => 
-                array (
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                    ),
-                1 => 
-                array (
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                    ),
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
                 ),
         ),
         'cases' => array(
@@ -125,17 +123,17 @@ $layout_defs['Documents'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_CASES_SUBPANEL_TITLE',
             'get_subpanel_data' => 'cases',
-            'top_buttons' => 
-            array (
-                0 => 
-                array (
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                    ),
-                1 => 
-                array (
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                    ),
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
                 ),
         ),
         'bugs' => array(
@@ -146,19 +144,31 @@ $layout_defs['Documents'] = array(
             'sort_by' => 'id',
             'title_key' => 'LBL_BUGS_SUBPANEL_TITLE',
             'get_subpanel_data' => 'bugs',
-            'top_buttons' => 
-            array (
-                0 => 
-                array (
-                    'widget_class' => 'SubPanelTopButtonQuickCreate',
-                    ),
-                1 => 
-                array (
-                    'widget_class' => 'SubPanelTopSelectButton',
-                    'mode' => 'MultiSelect',
-                    ),
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
                 ),
         ),
-	),
+        'securitygroups' => array(
+            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'order' => 900,
+            'sort_by' => 'name',
+            'sort_order' => 'asc',
+            'module' => 'SecurityGroups',
+            'refresh_page' => 1,
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'SecurityGroups',
+            'add_subpanel_data' => 'securitygroup_id',
+            'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
+        ),
+    ),
 );
 ?>
