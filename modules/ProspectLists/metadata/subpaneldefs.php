@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,77 +38,87 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- 
 
-	
 $layout_defs['ProspectLists'] = array(
-	// list of what Subpanels to show in the DetailView 
-	'subpanel_setup' => array(
+    // list of what Subpanels to show in the DetailView
+    'subpanel_setup' => array(
         'prospects' => array(
-			'order' => 10,
-			'sort_by' => 'last_name',
-			'sort_order' => 'asc',
-			'module' => 'Prospects',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'prospects',
-			'title_key' => 'LBL_PROSPECTS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-			    array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class'=>'SubPanelTopSelectButton','mode'=>'MultiSelect'),
-			),
-		),
-        'contacts' => array(
-			'order' => 20,
-			'module' => 'Contacts',
-			'sort_by' => 'last_name, first_name',
-			'sort_order' => 'asc',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'contacts',
-			'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class'=>'SubPanelTopSelectButton','mode'=>'MultiSelect'),
-			),
-		),
-        'leads' => array(
-			'order' => 30,
-			'module' => 'Leads',
-			'sort_by' => 'last_name, first_name',
-			'sort_order' => 'asc',
-			'subpanel_name' => 'default',
-			'get_subpanel_data' => 'leads',
-			'title_key' => 'LBL_LEADS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-			    array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class'=>'SubPanelTopSelectButton','mode'=>'MultiSelect'),
-			),
-		),        
-		'users' => array(
-			'order' => 40,
-			'module' => 'Users',
-			'sort_by' => 'name',
-			'sort_order' => 'asc',
-			'subpanel_name' => 'ForProspectLists',
-			'get_subpanel_data' => 'users',
-			'title_key' => 'LBL_USERS_SUBPANEL_TITLE',
-			'top_buttons' => array(
-				array('widget_class'=>'SubPanelTopSelectButton','mode'=>'MultiSelect'),
-			),
-		),		
-        'accounts' => array(
-			'order' => 40,
-			'module' => 'Accounts',
-			'sort_order' => 'asc',
-			'sort_by' => 'name',
-			'subpanel_name' => 'ForProspectLists',
-			'get_subpanel_data' => 'accounts',
-			'add_subpanel_data' => 'account_id',
-			'title_key' => 'LBL_ACCOUNTS_SUBPANEL_TITLE',
+            'order' => 10,
+            'sort_by' => 'last_name',
+            'sort_order' => 'asc',
+            'module' => 'Prospects',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'prospects',
+            'title_key' => 'LBL_PROSPECTS_SUBPANEL_TITLE',
             'top_buttons' => array(
                 array('widget_class' => 'SubPanelTopButtonQuickCreate'),
-				array('widget_class'=>'SubPanelTopSelectButton','mode'=>'MultiSelect'),
+                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
             ),
-		),
-	),
+        ),
+        'contacts' => array(
+            'order' => 20,
+            'module' => 'Contacts',
+            'sort_by' => 'last_name, first_name',
+            'sort_order' => 'asc',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'contacts',
+            'title_key' => 'LBL_CONTACTS_SUBPANEL_TITLE',
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
+            ),
+        ),
+        'leads' => array(
+            'order' => 30,
+            'module' => 'Leads',
+            'sort_by' => 'last_name, first_name',
+            'sort_order' => 'asc',
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'leads',
+            'title_key' => 'LBL_LEADS_SUBPANEL_TITLE',
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
+            ),
+        ),
+        'users' => array(
+            'order' => 40,
+            'module' => 'Users',
+            'sort_by' => 'name',
+            'sort_order' => 'asc',
+            'subpanel_name' => 'ForProspectLists',
+            'get_subpanel_data' => 'users',
+            'title_key' => 'LBL_USERS_SUBPANEL_TITLE',
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
+            ),
+        ),
+        'accounts' => array(
+            'order' => 40,
+            'module' => 'Accounts',
+            'sort_order' => 'asc',
+            'sort_by' => 'name',
+            'subpanel_name' => 'ForProspectLists',
+            'get_subpanel_data' => 'accounts',
+            'add_subpanel_data' => 'account_id',
+            'title_key' => 'LBL_ACCOUNTS_SUBPANEL_TITLE',
+            'top_buttons' => array(
+                array('widget_class' => 'SubPanelTopButtonQuickCreate'),
+                array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
+            ),
+        ),
+        'securitygroups' => array(
+            'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
+            'order' => 900,
+            'sort_by' => 'name',
+            'sort_order' => 'asc',
+            'module' => 'SecurityGroups',
+            'refresh_page' => 1,
+            'subpanel_name' => 'default',
+            'get_subpanel_data' => 'SecurityGroups',
+            'add_subpanel_data' => 'securitygroup_id',
+            'title_key' => 'LBL_SECURITYGROUPS_SUBPANEL_TITLE',
+        ),
+    ),
 );
 ?>

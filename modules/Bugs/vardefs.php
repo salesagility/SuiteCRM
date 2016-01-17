@@ -304,7 +304,7 @@ $dictionary['Bug'] = array('table' => 'bugs',    'audited'=>true, 'comment' => '
 	'optimistic_locking'=>true,
                             );
 
-VardefManager::createVardef('Bugs','Bug', array('default', 'assignable',
+VardefManager::createVardef('Bugs','Bug', array('default', 'assignable', 'security_groups',
 'issue',
 ));
 

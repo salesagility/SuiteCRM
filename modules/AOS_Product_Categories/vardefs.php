@@ -2,9 +2,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,12 +38,12 @@
  ********************************************************************************/
 
 $dictionary['AOS_Product_Categories'] = array(
-	'table'=>'aos_product_categories',
-	'audited'=>true,
-		'duplicate_merge'=>true,
-		'fields'=>array (
-            'is_parent' =>
-            array (
+    'table' => 'aos_product_categories',
+    'audited' => true,
+    'duplicate_merge' => true,
+    'fields' => array(
+        'is_parent' =>
+            array(
                 'required' => false,
                 'name' => 'is_parent',
                 'vname' => 'LBL_IS_PARENT',
@@ -62,80 +62,80 @@ $dictionary['AOS_Product_Categories'] = array(
                 'merge_filter' => 'disabled',
                 'id' => 'AOS_Product_Categoriesis_parent',
             ),
-            "aos_products" => array (
-                'name' => 'aos_products',
-                'type' => 'link',
-                'source' => 'non-db',
-                'relationship' => 'product_categories',
-                'side' => 'right',
-                'vname' => 'LBL_AOS_PRODUCT_CATEGORIES_AOS_PRODUCTS_FROM_AOS_PRODUCTS_TITLE',
-            ),
+        "aos_products" => array(
+            'name' => 'aos_products',
+            'type' => 'link',
+            'source' => 'non-db',
+            'relationship' => 'product_categories',
+            'side' => 'right',
+            'vname' => 'LBL_AOS_PRODUCT_CATEGORIES_AOS_PRODUCTS_FROM_AOS_PRODUCTS_TITLE',
+        ),
 
-            "sub_categories" => array (
-                'name' => 'sub_categories',
-                'type' => 'link',
-                'source' => 'non-db',
-                'relationship' => 'sub_product_categories',
-                'vname' => 'LBL_SUB_CATEGORIES',
-                'id_name' => 'parent_category_id',
-            ),
-            'parent_category' =>
-            array (
+        "sub_categories" => array(
+            'name' => 'sub_categories',
+            'type' => 'link',
+            'source' => 'non-db',
+            'relationship' => 'sub_product_categories',
+            'vname' => 'LBL_SUB_CATEGORIES',
+            'id_name' => 'parent_category_id',
+        ),
+        'parent_category' =>
+            array(
                 'name' => 'parent_category',
                 'type' => 'link',
                 'relationship' => 'sub_product_categories',
-                'module'=>'AOS_Product_Categories',
-                'bean_name'=>'AOS_Product_Categories',
-                'link_type'=>'one',
-                'source'=>'non-db',
-                'vname'=>'LBL_PARENT_CATEGORY',
-                'side'=>'right',
-            ),
-            "parent_category_name" => array (
-                'name' => 'parent_category_name',
-                'type' => 'relate',
-                'source' => 'non-db',
-                'vname' => 'LBL_PRODUCT_CATEGORYS_NAME',
-                'save' => true,
-                'id_name' => 'parent_category_id',
-                'link' => 'sub_categories',
-                'table' => 'aos_product_categories',
                 'module' => 'AOS_Product_Categories',
-                'rname' => 'name',
+                'bean_name' => 'AOS_Product_Categories',
+                'link_type' => 'one',
+                'source' => 'non-db',
+                'vname' => 'LBL_PARENT_CATEGORY',
+                'side' => 'right',
             ),
-            "parent_category_id" => array (
-                'name' => 'parent_category_id',
-                'type' => 'id',
-                'reportable' => false,
-                'vname' => 'LBL_PARENT_CATEGORY_ID',
-            ),
+        "parent_category_name" => array(
+            'name' => 'parent_category_name',
+            'type' => 'relate',
+            'source' => 'non-db',
+            'vname' => 'LBL_PRODUCT_CATEGORYS_NAME',
+            'save' => true,
+            'id_name' => 'parent_category_id',
+            'link' => 'sub_categories',
+            'table' => 'aos_product_categories',
+            'module' => 'AOS_Product_Categories',
+            'rname' => 'name',
+        ),
+        "parent_category_id" => array(
+            'name' => 'parent_category_id',
+            'type' => 'id',
+            'reportable' => false,
+            'vname' => 'LBL_PARENT_CATEGORY_ID',
+        ),
 
     ),
-	'relationships'=>array (
-        "sub_product_categories" => array (
-            'lhs_module'=> 'AOS_Product_Categories',
-            'lhs_table'=> 'aos_product_categories',
+    'relationships' => array(
+        "sub_product_categories" => array(
+            'lhs_module' => 'AOS_Product_Categories',
+            'lhs_table' => 'aos_product_categories',
             'lhs_key' => 'id',
-            'rhs_module'=> 'AOS_Product_Categories',
-            'rhs_table'=> 'aos_product_categories',
+            'rhs_module' => 'AOS_Product_Categories',
+            'rhs_table' => 'aos_product_categories',
             'rhs_key' => 'parent_category_id',
-            'relationship_type'=>'one-to-many',
+            'relationship_type' => 'one-to-many',
         ),
-        "products" => array (
-            'lhs_module'=> 'AOS_Product_Categories',
-            'lhs_table'=> 'aos_product_categories',
+        "products" => array(
+            'lhs_module' => 'AOS_Product_Categories',
+            'lhs_table' => 'aos_product_categories',
             'lhs_key' => 'id',
-            'rhs_module'=> 'AOS_Product',
-            'rhs_table'=> 'aos_product',
+            'rhs_module' => 'AOS_Product',
+            'rhs_table' => 'aos_product',
             'rhs_key' => 'aos_product_category_id',
-            'relationship_type'=>'one-to-many',
+            'relationship_type' => 'one-to-many',
         ),
 
-),
-	'optimistic_locking'=>true,
-		'unified_search'=>true,
-	);
-if (!class_exists('VardefManager')){
-        require_once('include/SugarObjects/VardefManager.php');
+    ),
+    'optimistic_locking' => true,
+    'unified_search' => true,
+);
+if (!class_exists('VardefManager')) {
+    require_once('include/SugarObjects/VardefManager.php');
 }
-VardefManager::createVardef('AOS_Product_Categories','AOS_Product_Categories', array('basic','assignable'));
+VardefManager::createVardef('AOS_Product_Categories', 'AOS_Product_Categories', array('basic', 'assignable', 'security_groups'));
