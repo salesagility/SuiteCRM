@@ -117,7 +117,6 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 else
                     graphs[i].height = graphWidth * 0.9;
 
-                RGraph.redrawCanvas(graphs[i]); // document.getElementsByClassName('resizableCanvas')[i]
 
                 /*
                 var text_size = Math.min(12, (graphWidth / 1000) * 12 );
@@ -133,13 +132,12 @@ class AOR_ReportsViewDetail extends ViewDetail {
                     graphs[i].__object__["properties"]["chart.text.size"] = text_size;
                     graphs[i].__object__["properties"]["chart.key.text.size"] = text_size;
                  }
-
-
-
+                //http://www.rgraph.net/docs/issues.html
+                //As per Google Chrome not initially drawing charts
                 RGraph.redrawCanvas(graphs[i]);
                 */
                 }
-
+                RGraph.redraw();
         }
         </script>
 
@@ -148,14 +146,8 @@ EOD;
 
 
         echo $resizeGraphsPerRow;
-        echo "<script>
-            $(document).ready(function(){
-                resizeGraphsPerRow();
-            });
-            $(window).resize(function(){
-                resizeGraphsPerRow();
-            });
-        </script>";
+        echo "<script> $(document).ready(function(){resizeGraphsPerRow();}); </script>";
+        echo "<script> $(window).resize(function(){resizeGraphsPerRow();}); </script>";
 
     }
 
