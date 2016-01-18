@@ -41,3 +41,4 @@ $mod_strings['LBL_AREA_EDIT_DESC_2'] = 'Click on the first marker point to close
 $mod_strings['LBL_AREA_EDIT_RESET'] = 'Reset';
 $mod_strings['LBL_AREA_EDIT_USE_AREA_COORDINATES'] = 'Use Area Coordinates';
 $mod_strings['LBL_AREA_EDIT_COORDINATE_RESULTS'] = 'Coordinate Results (lng,lat,elv):';
+$mod_strings['LBL_JJWG_MAPS_JJWG_AREAS_FROM_JJWG_MAPS_TITLE'] = 'Maps';

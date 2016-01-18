@@ -470,6 +470,57 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
                 'reportable' => false,
                 'studio' => false,
             ),
+        'reschedule_history' =>
+            array(
+                'required' => false,
+                'name' => 'reschedule_history',
+                'vname' => 'LBL_RESCHEDULE_HISTORY',
+                'type' => 'varchar',
+                'source' => 'non-db',
+                'studio' => 'visible',
+                'massupdate' => 0,
+                'importable' => 'false',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => 0,
+                'audited' => false,
+                'reportable' => false,
+                'function' =>
+                    array(
+                        'name' => 'reschedule_history',
+                        'returns' => 'html',
+                        'include' => 'modules/Calls/reschedule_history.php',
+                    ),
+            ),
+        'reschedule_count' =>
+            array(
+                'required' => false,
+                'name' => 'reschedule_count',
+                'vname' => 'LBL_RESCHEDULE_COUNT',
+                'type' => 'varchar',
+                'source' => 'non-db',
+                'studio' => 'visible',
+                'massupdate' => 0,
+                'importable' => 'false',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => 0,
+                'audited' => false,
+                'reportable' => false,
+                'function' =>
+                    array(
+                        'name' => 'reschedule_count',
+                        'returns' => 'html',
+                        'include' => 'modules/Calls/reschedule_history.php',
+                    ),
+            ),
+        'calls_reschedule' =>
+            array(
+                'name' => 'calls_reschedule',
+                'type' => 'link',
+                'relationship' => 'calls_reschedule',
+                'module' => 'Calls_Reschedule',
+                'bean_name' => 'Calls_Reschedule',
+                'source' => 'non-db',
+            ),
     ),
     'indices' => array(
         array(
@@ -535,6 +586,15 @@ $dictionary['Call'] = array('table' => 'calls', 'comment' => 'A Call is an activ
             'relationship_type' => 'one-to-many',
             'relationship_role_column' => 'parent_type',
             'relationship_role_column_value' => 'Calls',
+        ),
+        'calls_reschedule' => array(
+            'lhs_module' => 'Calls',
+            'lhs_table' => 'calls',
+            'lhs_key' => 'id',
+            'rhs_module' => 'Calls_Reschedule',
+            'rhs_table' => 'calls_reschedule',
+            'rhs_key' => 'call_id',
+            'relationship_type' => 'one-to-many',
         ),
     ),
 //This enables optimistic locking for Saves From EditView

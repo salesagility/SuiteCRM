@@ -374,6 +374,67 @@ $dictionary['Project'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_PRODUCTS',
             ),
+        'project_users_1' =>
+            array(
+                'name' => 'project_users_1',
+                'type' => 'link',
+                'relationship' => 'project_users_1',
+                'source' => 'non-db',
+                'module' => 'Users',
+                'bean_name' => 'User',
+                'vname' => 'LBL_PROJECT_USERS_1_FROM_USERS_TITLE',
+            ),
+        'am_projecttemplates_project_1' =>
+            array(
+                'name' => 'am_projecttemplates_project_1',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_project_1',
+                'source' => 'non-db',
+                'module' => 'AM_ProjectTemplates',
+                'bean_name' => 'AM_ProjectTemplates',
+                'vname' => 'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_AM_PROJECTTEMPLATES_TITLE',
+                'id_name' => 'am_projecttemplates_project_1am_projecttemplates_ida',
+            ),
+        'am_projecttemplates_project_1_name' =>
+            array(
+                'name' => 'am_projecttemplates_project_1_name',
+                'type' => 'relate',
+                'source' => 'non-db',
+                'vname' => 'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_AM_PROJECTTEMPLATES_TITLE',
+                'save' => true,
+                'id_name' => 'am_projecttemplates_project_1am_projecttemplates_ida',
+                'link' => 'am_projecttemplates_project_1',
+                'table' => 'am_projecttemplates',
+                'module' => 'AM_ProjectTemplates',
+                'rname' => 'name',
+            ),
+        'am_projecttemplates_project_1am_projecttemplates_ida' =>
+            array(
+                'name' => 'am_projecttemplates_project_1am_projecttemplates_ida',
+                'type' => 'link',
+                'relationship' => 'am_projecttemplates_project_1',
+                'source' => 'non-db',
+                'reportable' => false,
+                'side' => 'right',
+                'vname' => 'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_PROJECT_TITLE',
+            ),
+        'project_contacts_1' =>
+            array(
+                'name' => 'project_contacts_1',
+                'type' => 'link',
+                'relationship' => 'project_contacts_1',
+                'source' => 'non-db',
+                'module' => 'Contacts',
+                'bean_name' => 'Contact',
+                'vname' => 'LBL_PROJECT_CONTACTS_1_FROM_CONTACTS_TITLE',
+            ),
+        'aos_quotes_project' =>
+            array(
+                'name' => 'aos_quotes_project',
+                'type' => 'link',
+                'relationship' => 'aos_quotes_project',
+                'source' => 'non-db',
+            ),
     ),
     'indices' => array(
         array('name' => 'projects_primary_key_index',

@@ -417,6 +417,13 @@ $dictionary['Document'] = array('table' => 'documents',
                 'source' => 'non-db'
             ),
 //END fields used for contract documents subpanel.
+        'aos_contracts' => array(
+            'name' => 'aos_contracts',
+            'type' => 'link',
+            'relationship' => 'aos_contracts_documents',
+            'source' => 'non-db',
+            'module' => 'AOS_Contracts',
+        ),
 
     ),
     'indices' => array(

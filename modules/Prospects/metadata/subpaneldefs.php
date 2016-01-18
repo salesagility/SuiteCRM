@@ -89,6 +89,7 @@ $layout_defs['Prospects'] = array(
                 array('widget_class' => 'SubPanelTopCreateNoteButton'),
                 array('widget_class' => 'SubPanelTopArchiveEmailButton'),
                 array('widget_class' => 'SubPanelTopSummaryButton'),
+                array('widget_class' => 'SubPanelTopFilterButton'),
             ),
 
             'collection_list' => array(
@@ -124,7 +125,38 @@ $layout_defs['Prospects'] = array(
                     'generate_select' => true,
                     'function_parameters' => array('return_as_array' => 'true'),
                 ),
-            )
+            ),
+            'searchdefs' => array(
+                'collection' =>
+                    array(
+                        'name' => 'collection',
+                        'label' => 'LBL_COLLECTION_TYPE',
+                        'type' => 'enum',
+                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'name' =>
+                    array(
+                        'name' => 'name',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'current_user_only' =>
+                    array(
+                        'name' => 'current_user_only',
+                        'label' => 'LBL_CURRENT_USER_FILTER',
+                        'type' => 'bool',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'date_modified' =>
+                    array(
+                        'name' => 'date_modified',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+            ),
         ),
         'campaigns' => array(
             'order' => 30,
@@ -135,6 +167,27 @@ $layout_defs['Prospects'] = array(
             'subpanel_name' => 'ForTargets',
             'title_key' => 'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE',
             'top_buttons' => array(),
+        ),
+        'fp_events_prospects_1' => array(
+            'order' => 101,
+            'module' => 'FP_events',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_FP_EVENTS_PROSPECTS_1_FROM_FP_EVENTS_TITLE',
+            'get_subpanel_data' => 'fp_events_prospects_1',
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
+                ),
         ),
         'securitygroups' => array(
             'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),

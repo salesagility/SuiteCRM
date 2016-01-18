@@ -116,6 +116,7 @@ $layout_defs['Project'] = array(
                 array('widget_class' => 'SubPanelTopCreateNoteButton'),
                 array('widget_class' => 'SubPanelTopArchiveEmailButton'),
                 array('widget_class' => 'SubPanelTopSummaryButton'),
+                array('widget_class' => 'SubPanelTopFilterButton'),
             ),
 
             'collection_list' => array(
@@ -144,7 +145,38 @@ $layout_defs['Project'] = array(
                     'subpanel_name' => 'ForHistory',
                     'get_subpanel_data' => 'emails',
                 ),
-            )
+            ),
+            'searchdefs' => array(
+                'collection' =>
+                    array(
+                        'name' => 'collection',
+                        'label' => 'LBL_COLLECTION_TYPE',
+                        'type' => 'enum',
+                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'name' =>
+                    array(
+                        'name' => 'name',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'current_user_only' =>
+                    array(
+                        'name' => 'current_user_only',
+                        'label' => 'LBL_CURRENT_USER_FILTER',
+                        'type' => 'bool',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'date_modified' =>
+                    array(
+                        'name' => 'date_modified',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+            ),
         ),
         'contacts' => array(
             'top_buttons' => array(
@@ -211,6 +243,60 @@ $layout_defs['Project'] = array(
             'get_subpanel_data' => 'bugs',
             'add_subpanel_data' => 'bug_id',
             'title_key' => 'LBL_BUGS_SUBPANEL_TITLE',
+        ),
+        'aos_quotes_project' => array(
+            'order' => 100,
+            'module' => 'AOS_Quotes',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Quotes',
+            'get_subpanel_data' => 'aos_quotes_project',
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopCreateButton',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'popup_module' => 'AOS_Quotes',
+                            'mode' => 'MultiSelect',
+                        ),
+                ),
+        ),
+        'project_resources' => array(
+            'order' => 101,
+            'module' => 'Project',
+            'subpanel_name' => 'Project',
+            'type' => 'collection',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_PROJECT_USERS_1_FROM_USERS_TITLE',
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectUsersButton', 'mode' => 'MultiSelect',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectContactsButton', 'mode' => 'MultiSelect',
+                        ),
+                ),
+            'collection_list' => array(
+                'users' => array(
+                    'module' => 'Users',
+                    'subpanel_name' => 'ForProject',
+                    'get_subpanel_data' => 'project_users_1',
+                ),
+                'contacts' => array(
+                    'module' => 'Contacts',
+                    'subpanel_name' => 'ForProject',
+                    'get_subpanel_data' => 'project_contacts_1',
+                ),
+            )
         ),
         'securitygroups' => array(
             'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),

@@ -90,6 +90,7 @@ $layout_defs['Opportunities'] = array(
                 array('widget_class' => 'SubPanelTopCreateNoteButton'),
                 array('widget_class' => 'SubPanelTopArchiveEmailButton'),
                 array('widget_class' => 'SubPanelTopSummaryButton'),
+                array('widget_class' => 'SubPanelTopFilterButton'),
             ),
 
             'collection_list' => array(
@@ -120,7 +121,38 @@ $layout_defs['Opportunities'] = array(
                     'function_parameters' => array('import_function_file' => 'include/utils.php', 'link' => 'contacts'),
                     'generate_select' => true,
                 ),
-            )
+            ),
+            'searchdefs' => array(
+                'collection' =>
+                    array(
+                        'name' => 'collection',
+                        'label' => 'LBL_COLLECTION_TYPE',
+                        'type' => 'enum',
+                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'name' =>
+                    array(
+                        'name' => 'name',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'current_user_only' =>
+                    array(
+                        'name' => 'current_user_only',
+                        'label' => 'LBL_CURRENT_USER_FILTER',
+                        'type' => 'bool',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'date_modified' =>
+                    array(
+                        'name' => 'date_modified',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+            ),
         ),
         'documents' => array(
             'order' => 25,
@@ -191,6 +223,24 @@ $layout_defs['Opportunities'] = array(
                 array('widget_class' => 'SubPanelTopButtonQuickCreate'),
                 array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
             ),
+        ),
+        'opportunity_aos_quotes' => array(
+            'order' => 101,
+            'module' => 'AOS_Quotes',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Quotes',
+            'get_subpanel_data' => 'aos_quotes',
+        ),
+        'opportunities_aos_contracts' => array(
+            'order' => 102,
+            'module' => 'AOS_Contracts',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Contracts',
+            'get_subpanel_data' => 'aos_contracts',
         ),
         'securitygroups' => array(
             'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),
