@@ -72,16 +72,12 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
         $this->bean->user_parameters = requestToUserParameters();
 
-        //$reportHTML = $this->bean->build_group_report(0,true);
-        $reportHTML = $this->bean->buildMultiGroupReport(0,true);
+        $reportHTML = $this->bean->build_group_report(0,true).'<br />';
 
-        $chartsHTML = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
+        $charts = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 
         $chartsPerRow = $this->bean->graphs_per_row;
-
-        $this->ss->assign('charts_content', $chartsHTML);
-
-        $this->ss->assign('report_content', $reportHTML);
+        $this->ss->assign('report_content',$charts.$reportHTML);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
@@ -117,7 +113,6 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 else
                     graphs[i].height = graphWidth * 0.9;
 
-                RGraph.redrawCanvas(graphs[i]); // document.getElementsByClassName('resizableCanvas')[i]
 
                 /*
                 var text_size = Math.min(12, (graphWidth / 1000) * 12 );
@@ -133,13 +128,12 @@ class AOR_ReportsViewDetail extends ViewDetail {
                     graphs[i].__object__["properties"]["chart.text.size"] = text_size;
                     graphs[i].__object__["properties"]["chart.key.text.size"] = text_size;
                  }
-
-
-
+                //http://www.rgraph.net/docs/issues.html
+                //As per Google Chrome not initially drawing charts
                 RGraph.redrawCanvas(graphs[i]);
                 */
                 }
-
+                RGraph.redraw();
         }
         </script>
 
@@ -148,14 +142,8 @@ EOD;
 
 
         echo $resizeGraphsPerRow;
-        echo "<script>
-            $(document).ready(function(){
-                resizeGraphsPerRow();
-            });
-            //$(window).resize(function(){
-             //   resizeGraphsPerRow();
-            //});
-        </script>";
+        echo "<script> $(document).ready(function(){resizeGraphsPerRow();}); </script>";
+        echo "<script> $(window).resize(function(){resizeGraphsPerRow();}); </script>";
 
     }
 
