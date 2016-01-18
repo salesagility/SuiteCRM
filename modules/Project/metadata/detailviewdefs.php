@@ -68,7 +68,7 @@ array (
         ),
         1 => 
         array (
-          'file' => 'custom/modules/Project/js/custom_project.js',
+          'file' => 'modules/Project/js/custom_project.js',
         ),
       ),
       'form' => 

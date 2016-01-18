@@ -6,5 +6,5 @@ $hook_array = Array();
 // position, file, function
 
 $hook_array['before_delete'] = Array();
-$hook_array['before_delete'][] = Array(1, 'Delete Project Tasks', 'custom/modules/Project/delete_project_tasks.php','delete_project_tasks', 'delete_tasks');
+$hook_array['before_delete'][] = Array(1, 'Delete Project Tasks', 'modules/Project/delete_project_tasks.php','delete_project_tasks', 'delete_tasks');
 ?>

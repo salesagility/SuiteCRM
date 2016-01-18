@@ -91,6 +91,7 @@ $layout_defs['ProjectTask'] = array(
                 array('widget_class' => 'SubPanelTopCreateNoteButton'),
                 array('widget_class' => 'SubPanelTopArchiveEmailButton'),
                 array('widget_class' => 'SubPanelTopSummaryButton'),
+                array('widget_class' => 'SubPanelTopFilterButton'),
             ),
 
             'collection_list' => array(
@@ -119,7 +120,38 @@ $layout_defs['ProjectTask'] = array(
                     'subpanel_name' => 'ForHistory',
                     'get_subpanel_data' => 'emails',
                 ),
-            )
+            ),
+            'searchdefs' => array(
+                'collection' =>
+                    array(
+                        'name' => 'collection',
+                        'label' => 'LBL_COLLECTION_TYPE',
+                        'type' => 'enum',
+                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'name' =>
+                    array(
+                        'name' => 'name',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'current_user_only' =>
+                    array(
+                        'name' => 'current_user_only',
+                        'label' => 'LBL_CURRENT_USER_FILTER',
+                        'type' => 'bool',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'date_modified' =>
+                    array(
+                        'name' => 'date_modified',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+            ),
         ),
         'securitygroups' => array(
             'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),

@@ -95,6 +95,7 @@ $layout_defs['Contacts'] = array(
                 array('widget_class' => 'SubPanelTopCreateNoteButton'),
                 array('widget_class' => 'SubPanelTopArchiveEmailButton'),
                 array('widget_class' => 'SubPanelTopSummaryButton'),
+                array('widget_class' => 'SubPanelTopFilterButton'),
             ),
 
             'collection_list' => array(
@@ -135,7 +136,38 @@ $layout_defs['Contacts'] = array(
                     'generate_select' => true,
                     'function_parameters' => array('return_as_array' => 'true'),
                 ),
-            )
+            ),
+            'searchdefs' => array(
+                'collection' =>
+                    array(
+                        'name' => 'collection',
+                        'label' => 'LBL_COLLECTION_TYPE',
+                        'type' => 'enum',
+                        'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'name' =>
+                    array(
+                        'name' => 'name',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'current_user_only' =>
+                    array(
+                        'name' => 'current_user_only',
+                        'label' => 'LBL_CURRENT_USER_FILTER',
+                        'type' => 'bool',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+                'date_modified' =>
+                    array(
+                        'name' => 'date_modified',
+                        'default' => true,
+                        'width' => '10%',
+                    ),
+            ),
         ),
         'documents' => array(
             'order' => 25,
@@ -252,6 +284,57 @@ $layout_defs['Contacts'] = array(
             'get_subpanel_data' => 'campaigns',
             'subpanel_name' => 'ForTargets',
             'title_key' => 'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE',
+        ),
+        'contact_aos_quotes"' => array(
+            'order' => 101,
+            'module' => 'AOS_Quotes',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Quotes',
+            'get_subpanel_data' => 'aos_quotes',
+        ),
+
+        'contact_aos_invoices"' => array(
+            'order' => 102,
+            'module' => 'AOS_Invoices',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Invoices',
+            'get_subpanel_data' => 'aos_invoices',
+        ),
+
+        'contact_aos_contracts"' => array(
+            'order' => 103,
+            'module' => 'AOS_Contracts',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'AOS_Contracts',
+            'get_subpanel_data' => 'aos_contracts',
+        ),
+
+        'fp_events_contacts' => array(
+            'order' => 104,
+            'module' => 'FP_events',
+            'subpanel_name' => 'default',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_FP_EVENTS_CONTACTS_FROM_FP_EVENTS_TITLE',
+            'get_subpanel_data' => 'fp_events_contacts',
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopButtonQuickCreate',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectButton',
+                            'mode' => 'MultiSelect',
+                        ),
+                ),
         ),
         'securitygroups' => array(
             'top_buttons' => array(array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => 'SecurityGroups', 'mode' => 'MultiSelect'),),

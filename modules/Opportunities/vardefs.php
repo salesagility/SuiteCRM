@@ -379,6 +379,24 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
                 'source' => 'non-db',
                 'vname' => 'LBL_CURRENCIES',
             ),
+        'aos_quotes' =>
+            array(
+                'name' => 'aos_quotes',
+                'type' => 'link',
+                'relationship' => 'opportunity_aos_quotes',
+                'module' => 'AOS_Quotes',
+                'bean_name' => 'AOS_Quotes',
+                'source' => 'non-db',
+            ),
+        'aos_contracts' =>
+            array(
+                'name' => 'aos_contracts',
+                'type' => 'link',
+                'relationship' => 'opportunity_aos_contracts',
+                'module' => 'AOS_Contracts',
+                'bean_name' => 'AOS_Contracts',
+                'source' => 'non-db',
+            ),
     ),
     'indices' => array(
         array(
@@ -443,6 +461,26 @@ $dictionary['Opportunity'] = array('table' => 'opportunities', 'audited' => true
             array('lhs_module' => 'Campaigns', 'lhs_table' => 'campaigns', 'lhs_key' => 'id',
                 'rhs_module' => 'Opportunities', 'rhs_table' => 'opportunities', 'rhs_key' => 'campaign_id',
                 'relationship_type' => 'one-to-many'),
+        'opportunity_aos_quotes' =>
+            array(
+                'lhs_module' => 'Opportunities',
+                'lhs_table' => 'opportunities',
+                'lhs_key' => 'id',
+                'rhs_module' => 'AOS_Quotes',
+                'rhs_table' => 'aos_quotes',
+                'rhs_key' => 'opportunity_id',
+                'relationship_type' => 'one-to-many',
+            ),
+        'opportunity_aos_contracts' =>
+            array(
+                'lhs_module' => 'Opportunities',
+                'lhs_table' => 'opportunities',
+                'lhs_key' => 'id',
+                'rhs_module' => 'AOS_Contracts',
+                'rhs_table' => 'aos_contracts',
+                'rhs_key' => 'opportunity_id',
+                'relationship_type' => 'one-to-many',
+            ),
     )
 //This enables optimistic locking for Saves From EditView
 , 'optimistic_locking' => true,

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,79 +39,78 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$mod_strings = array (
-	'ERR_DELETE_RECORD'					=> 'You must specify a record number to delete the account.',
+$mod_strings = array(
+    'ERR_DELETE_RECORD' => 'You must specify a record number to delete the account.',
     'LBL_TOOL_TIP_BOX_TITLE' => 'KnowledgeBase Suggestions',
     'LBL_TOOL_TIP_TITLE' => 'Title: ',
-    'LBL_TOOL_TIP_BODY'  => 'Body: ',
-    'LBL_TOOL_TIP_INFO'  => 'Additional Info: ',
-    'LBL_TOOL_TIP_USE'   => 'Use as: ',
+    'LBL_TOOL_TIP_BODY' => 'Body: ',
+    'LBL_TOOL_TIP_INFO' => 'Additional Info: ',
+    'LBL_TOOL_TIP_USE' => 'Use as: ',
     'LBL_SUGGESTION_BOX' => 'Suggestions',
     'LBL_NO_SUGGESTIONS' => 'No Suggestions',
-    'LBL_RESOLUTION_BUTTON'  => 'Resolution',
+    'LBL_RESOLUTION_BUTTON' => 'Resolution',
     'LBL_SUGGESTION_BOX_STATUS' => 'Status',
     'LBL_SUGGESTION_BOX_TITLE' => 'Title',
     'LBL_SUGGESTION_BOX_REL' => 'Relevance',
 
-	'LBL_ACCOUNT_ID'					=> 'Account ID',
-	'LBL_ACCOUNT_NAME'					=> 'Account Name:',
-	'LBL_ACCOUNTS_SUBPANEL_TITLE'		=> 'Accounts',
-	'LBL_ACTIVITIES_SUBPANEL_TITLE'		=> 'Activities',
-	'LBL_ATTACH_NOTE' 					=> 'Attach Note',
-	'LBL_BUGS_SUBPANEL_TITLE'			=> 'Bugs',
-	'LBL_CASE_NUMBER'					=> 'Case Number:',
-	'LBL_CASE_SUBJECT'					=> 'Case Subject:',
-	'LBL_CASE'							=> 'Case:',
-	'LBL_CONTACT_CASE_TITLE'			=> 'Contact-Case:',
-	'LBL_CONTACT_NAME'					=> 'Contact Name:',
-	'LBL_CONTACT_ROLE'					=> 'Role:',
-	'LBL_CONTACTS_SUBPANEL_TITLE'		=> 'Contacts',
-	'LBL_DEFAULT_SUBPANEL_TITLE'		=> 'Cases',
-	'LBL_DESCRIPTION'					=> 'Description:',
-    'LBL_FILENANE_ATTACHMENT' 			=> 'File Attachment',
-	'LBL_HISTORY_SUBPANEL_TITLE'		=> 'History',
-	'LBL_INVITEE'						=> 'Contacts',
-	'LBL_MEMBER_OF'						=> 'Account',
-	'LBL_MODULE_NAME'					=> 'Cases',
-	'LBL_MODULE_TITLE'					=> 'Cases: Home',
-	'LBL_NEW_FORM_TITLE'				=> 'New Case',
-	'LBL_NUMBER'						=> 'Number:',
-	'LBL_PRIORITY'						=> 'Priority:',
-	'LBL_PROJECTS_SUBPANEL_TITLE' 		=> 'Projects',
-	'LBL_DOCUMENTS_SUBPANEL_TITLE' 		=> 'Documents',
-	'LBL_RESOLUTION'					=> 'Resolution:',
-	'LBL_SEARCH_FORM_TITLE'				=> 'Case Search',
-	'LBL_STATUS'						=> 'Status:',
-	'LBL_SUBJECT'						=> 'Subject:',
-	'LBL_SYSTEM_ID'						=> 'System ID',
-	'LBL_LIST_ASSIGNED_TO_NAME' 		=> 'Assigned User',
-	'LBL_LIST_ACCOUNT_NAME'				=> 'Account Name',
-	'LBL_LIST_ASSIGNED'					=> 'Assigned To',
-	'LBL_LIST_CLOSE'					=> 'Close',
-	'LBL_LIST_FORM_TITLE'				=> 'Case List',
-	'LBL_LIST_LAST_MODIFIED'			=> 'Last Modified',
-	'LBL_LIST_MY_CASES'					=> 'My Open Cases',
-	'LBL_LIST_NUMBER'					=> 'Num.',
-	'LBL_LIST_PRIORITY'					=> 'Priority',
-	'LBL_LIST_STATUS'					=> 'Status',
-	'LBL_LIST_SUBJECT'					=> 'Subject',
+    'LBL_ACCOUNT_ID' => 'Account ID',
+    'LBL_ACCOUNT_NAME' => 'Account Name:',
+    'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
+    'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
+    'LBL_ATTACH_NOTE' => 'Attach Note',
+    'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
+    'LBL_CASE_NUMBER' => 'Case Number:',
+    'LBL_CASE_SUBJECT' => 'Case Subject:',
+    'LBL_CASE' => 'Case:',
+    'LBL_CONTACT_CASE_TITLE' => 'Contact-Case:',
+    'LBL_CONTACT_NAME' => 'Contact Name:',
+    'LBL_CONTACT_ROLE' => 'Role:',
+    'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
+    'LBL_DEFAULT_SUBPANEL_TITLE' => 'Cases',
+    'LBL_DESCRIPTION' => 'Description:',
+    'LBL_FILENANE_ATTACHMENT' => 'File Attachment',
+    'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
+    'LBL_INVITEE' => 'Contacts',
+    'LBL_MEMBER_OF' => 'Account',
+    'LBL_MODULE_NAME' => 'Cases',
+    'LBL_MODULE_TITLE' => 'Cases: Home',
+    'LBL_NEW_FORM_TITLE' => 'New Case',
+    'LBL_NUMBER' => 'Number:',
+    'LBL_PRIORITY' => 'Priority:',
+    'LBL_PROJECTS_SUBPANEL_TITLE' => 'Projects',
+    'LBL_DOCUMENTS_SUBPANEL_TITLE' => 'Documents',
+    'LBL_RESOLUTION' => 'Resolution:',
+    'LBL_SEARCH_FORM_TITLE' => 'Case Search',
+    'LBL_STATUS' => 'Status:',
+    'LBL_SUBJECT' => 'Subject:',
+    'LBL_SYSTEM_ID' => 'System ID',
+    'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
+    'LBL_LIST_ACCOUNT_NAME' => 'Account Name',
+    'LBL_LIST_ASSIGNED' => 'Assigned To',
+    'LBL_LIST_CLOSE' => 'Close',
+    'LBL_LIST_FORM_TITLE' => 'Case List',
+    'LBL_LIST_LAST_MODIFIED' => 'Last Modified',
+    'LBL_LIST_MY_CASES' => 'My Open Cases',
+    'LBL_LIST_NUMBER' => 'Num.',
+    'LBL_LIST_PRIORITY' => 'Priority',
+    'LBL_LIST_STATUS' => 'Status',
+    'LBL_LIST_SUBJECT' => 'Subject',
 
-	'LNK_CASE_LIST'						=> 'View Cases',
-	'LNK_NEW_CASE'						=> 'Create Case',
-	'NTC_REMOVE_FROM_BUG_CONFIRMATION'	=> 'Are you sure you want to remove this case from the bug?',
-	'NTC_REMOVE_INVITEE'				=> 'Are you sure you want to remove this contact from the case?',
-	'LBL_LIST_DATE_CREATED'			=> 'Date Created',
-	'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-	'LBL_TYPE'=>'Type',
-	'LBL_WORK_LOG'=>'Work Log',
-	'LNK_IMPORT_CASES' => 'Import Cases',
+    'LNK_CASE_LIST' => 'View Cases',
+    'LNK_NEW_CASE' => 'Create Case',
+    'NTC_REMOVE_FROM_BUG_CONFIRMATION' => 'Are you sure you want to remove this case from the bug?',
+    'NTC_REMOVE_INVITEE' => 'Are you sure you want to remove this contact from the case?',
+    'LBL_LIST_DATE_CREATED' => 'Date Created',
+    'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
+    'LBL_TYPE' => 'Type',
+    'LBL_WORK_LOG' => 'Work Log',
+    'LNK_IMPORT_CASES' => 'Import Cases',
 
     'LBL_CREATED_USER' => 'Created User',
     'LBL_MODIFIED_USER' => 'Modified User',
@@ -143,7 +142,27 @@ $mod_strings = array (
     'LBL_EXPORT_TEAM_COUNT' => 'Team Count',
 
     // SNIP
-	'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
+    'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
+
+    'LBL_UPDATE_TEXT' => 'Update Text',
+    'LBL_INTERNAL' => 'Internal Update',
+    'LBL_AOP_CASE_UPDATES' => 'Case Updates',
+    'LBL_AOP_CASE_UPDATES_THREADED' => 'Case Updates Threaded',
+    'LBL_CASE_UPDATES_COLLAPSE_ALL' => 'Collapse All',
+    'LBL_CASE_UPDATES_EXPAND_ALL' => 'Expand All',
+    'LBL_NO_CASE_UPDATES' => "There have been no updates to this case",
+    'LBL_AOP_CASE_ATTACHMENTS' => 'Attachments: ',
+
+    'LBL_AOP_CASE_EVENTS' => 'Case Events',
+    'LBL_CASE_ATTACHMENTS_DISPLAY' => 'Case Attachments:',
+    'LBL_ADD_CASE_FILE' => 'Add file',
+    'LBL_REMOVE_CASE_FILE' => 'Remove file',
+    'LBL_SELECT_CASE_DOCUMENT' => 'Select document',
+    'LBL_CLEAR_CASE_DOCUMENT' => 'Clear document',
+    'LBL_SELECT_INTERNAL_CASE_DOCUMENT' => 'Internal CRM document',
+    'LBL_SELECT_EXTERNAL_CASE_DOCUMENT' => 'External file',
+    'LBL_CONTACT_CREATED_BY_NAME' => 'Created by contact',
+    'LBL_CASE_UPDATE_FORM' => 'Update attachment form',
 );
 
 ?>

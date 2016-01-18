@@ -159,26 +159,6 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
             'vname' => 'LBL_CONTACTS',
             'reportable' => false
         ),
-        /*'acc_name_from_accounts' =>
-        array (
-          'name' => 'acc_name_from_accounts',
-          'rname' => 'name',
-          'id_name' => 'account_id',
-          'vname' => 'LBL_ACCOUNT_NAME_1',
-          'type' => 'relate',
-          'link' => 'accounts',
-          'table' => 'accounts',
-          'join_name'=>'accounts',
-          'isnull' => 'true',
-          'module' => 'Accounts',
-          'dbType' => 'varchar',
-          'len' => '255',
-          'source' => 'non-db',
-          'unified_search' => false,
-          'massupdate' => false,
-          'studio' => 'false',
-        ),
-        */
         'account_name' =>
             array(
                 'name' => 'account_name',
@@ -409,9 +389,7 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'len' => '255',
                 'group' => 'portal',
                 'comment' => 'Portal user name when lead created via lead portal',
-                //BEGIN SUGARCRM flav!=ent
                 'studio' => 'false',
-                //END SUGARCRM
             ),
         'portal_app' =>
             array(
@@ -421,7 +399,6 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'group' => 'portal',
                 'len' => '255',
                 'comment' => 'Portal application that resulted in created of lead',
-                //BEGIN SUGARCRM flav!=ent
                 'studio' => 'false',
             ),
         'website' =>
@@ -529,6 +506,96 @@ $dictionary['Lead'] = array('table' => 'leads', 'audited' => true, 'unified_sear
                 'module' => 'ProspectLists',
                 'source' => 'non-db',
                 'vname' => 'LBL_PROSPECT_LIST',
+            ),
+        'fp_events_leads_1' =>
+            array(
+                'name' => 'fp_events_leads_1',
+                'type' => 'link',
+                'relationship' => 'fp_events_leads_1',
+                'source' => 'non-db',
+                'vname' => 'LBL_FP_EVENTS_LEADS_1_FROM_FP_EVENTS_TITLE',
+            ),
+        'e_invite_status_fields' =>
+            array(
+                'name' => 'e_invite_status_fields',
+                'rname' => 'id',
+                'relationship_fields' =>
+                    array(
+                        'id' => 'event_invite_id',
+                        'invite_status' => 'event_status_name',
+                    ),
+                'vname' => 'LBL_CONT_INVITE_STATUS',
+                'type' => 'relate',
+                'link' => 'fp_events_leads_1',
+                'link_type' => 'relationship_info',
+                'join_link_name' => 'fp_events_leads_1',
+                'source' => 'non-db',
+                'importable' => 'false',
+                'duplicate_merge' => 'disabled',
+                'studio' => false,
+            ),
+        'event_status_name' =>
+            array(
+                'massupdate' => false,
+                'name' => 'event_status_name',
+                'type' => 'enum',
+                'studio' => 'false',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_INVITE_STATUS_EVENT',
+                'options' => 'fp_event_invite_status_dom',
+                'importable' => 'false',
+            ),
+        'event_invite_id' =>
+            array(
+                'name' => 'event_invite_id',
+                'type' => 'varchar',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_INVITE_STATUS',
+                'studio' =>
+                    array(
+                        'listview' => false,
+                    ),
+            ),
+        'e_accept_status_fields' =>
+            array(
+                'name' => 'e_accept_status_fields',
+                'rname' => 'id',
+                'relationship_fields' =>
+                    array(
+                        'id' => 'event_status_id',
+                        'accept_status' => 'event_accept_status',
+                    ),
+                'vname' => 'LBL_CONT_ACCEPT_STATUS',
+                'type' => 'relate',
+                'link' => 'fp_events_leads_1',
+                'link_type' => 'relationship_info',
+                'join_link_name' => 'fp_events_leads_1',
+                'source' => 'non-db',
+                'importable' => 'false',
+                'duplicate_merge' => 'disabled',
+                'studio' => false,
+            ),
+        'event_accept_status' =>
+            array(
+                'massupdate' => false,
+                'name' => 'event_accept_status',
+                'type' => 'enum',
+                'studio' => 'false',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_ACCEPT_STATUS_EVENT',
+                'options' => 'fp_event_status_dom',
+                'importable' => 'false',
+            ),
+        'event_status_id' =>
+            array(
+                'name' => 'event_status_id',
+                'type' => 'varchar',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_ACCEPT_STATUS',
+                'studio' =>
+                    array(
+                        'listview' => false,
+                    ),
             ),
 
     )

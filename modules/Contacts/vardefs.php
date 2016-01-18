@@ -492,6 +492,178 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
                     'comment' => 'Synch to outlook?  (Meta-Data only)',
                     'studio' => 'true',
                 ),
+            'fp_events_contacts' =>
+                array(
+                    'name' => 'fp_events_contacts',
+                    'type' => 'link',
+                    'relationship' => 'fp_events_contacts',
+                    'source' => 'non-db',
+                    'vname' => 'LBL_FP_EVENTS_CONTACTS_FROM_FP_EVENTS_TITLE',
+                ),
+            'aos_quotes' =>
+                array(
+                    'name' => 'aos_quotes',
+                    'type' => 'link',
+                    'relationship' => 'contact_aos_quotes',
+                    'module' => 'AOS_Quotes',
+                    'bean_name' => 'AOS_Quotes',
+                    'source' => 'non-db',
+                ),
+            'aos_invoices' =>
+                array(
+                    'name' => 'aos_invoices',
+                    'type' => 'link',
+                    'relationship' => 'contact_aos_invoices',
+                    'module' => 'AOS_Invoices',
+                    'bean_name' => 'AOS_Invoices',
+                    'source' => 'non-db',
+                ),
+            'aos_contracts' =>
+                array(
+                    'name' => 'aos_contracts',
+                    'type' => 'link',
+                    'relationship' => 'contact_aos_contracts',
+                    'module' => 'AOS_Contracts',
+                    'bean_name' => 'AOS_Contracts',
+                    'source' => 'non-db',
+                ),
+            'e_invite_status_fields' =>
+                array(
+                    'name' => 'e_invite_status_fields',
+                    'rname' => 'id',
+                    'relationship_fields' =>
+                        array(
+                            'id' => 'event_invite_id',
+                            'invite_status' => 'event_status_name',
+                        ),
+                    'vname' => 'LBL_CONT_INVITE_STATUS',
+                    'type' => 'relate',
+                    'link' => 'fp_events_contacts',
+                    'link_type' => 'relationship_info',
+                    'join_link_name' => 'fp_events_contacts',
+                    'source' => 'non-db',
+                    'importable' => 'false',
+                    'duplicate_merge' => 'disabled',
+                    'studio' => false,
+                ),
+            'event_status_name' =>
+                array(
+                    'massupdate' => false,
+                    'name' => 'event_status_name',
+                    'type' => 'enum',
+                    'studio' => 'false',
+                    'source' => 'non-db',
+                    'vname' => 'LBL_LIST_INVITE_STATUS_EVENT',
+                    'options' => 'fp_event_invite_status_dom',
+                    'importable' => 'false',
+                ),
+            'event_invite_id' =>
+                array(
+                    'name' => 'event_invite_id',
+                    'type' => 'varchar',
+                    'source' => 'non-db',
+                    'vname' => 'LBL_LIST_INVITE_STATUS',
+                    'studio' =>
+                        array(
+                            'listview' => false,
+                        ),
+                ),
+            'e_accept_status_fields' =>
+                array(
+                    'name' => 'e_accept_status_fields',
+                    'rname' => 'id',
+                    'relationship_fields' =>
+                        array(
+                            'id' => 'event_status_id',
+                            'accept_status' => 'event_accept_status',
+                        ),
+                    'vname' => 'LBL_CONT_ACCEPT_STATUS',
+                    'type' => 'relate',
+                    'link' => 'fp_events_contacts',
+                    'link_type' => 'relationship_info',
+                    'join_link_name' => 'fp_events_contacts',
+                    'source' => 'non-db',
+                    'importable' => 'false',
+                    'duplicate_merge' => 'disabled',
+                    'studio' => false,
+                ),
+            'event_accept_status' =>
+                array(
+                    'massupdate' => false,
+                    'name' => 'event_accept_status',
+                    'type' => 'enum',
+                    'studio' => 'false',
+                    'source' => 'non-db',
+                    'vname' => 'LBL_LIST_ACCEPT_STATUS_EVENT',
+                    'options' => 'fp_event_status_dom',
+                    'importable' => 'false',
+                ),
+            'event_status_id' =>
+                array(
+                    'name' => 'event_status_id',
+                    'type' => 'varchar',
+                    'source' => 'non-db',
+                    'vname' => 'LBL_LIST_ACCEPT_STATUS',
+                    'studio' =>
+                        array(
+                            'listview' => false,
+                        ),
+                ),
+            'project_contacts_1' =>
+                array(
+                    'name' => 'project_contacts_1',
+                    'type' => 'link',
+                    'relationship' => 'project_contacts_1',
+                    'source' => 'non-db',
+                    'module' => 'Project',
+                    'bean_name' => 'Project',
+                    'vname' => 'LBL_PROJECT_CONTACTS_1_FROM_PROJECT_TITLE',
+                ),
+            'aop_case_updates' =>
+                array(
+                    'name' => 'aop_case_updates',
+                    'type' => 'link',
+                    'relationship' => 'contacts_aop_case_updates',
+                    'source' => 'non-db',
+                    'id_name' => 'contact_id',
+                    'vname' => 'LBL_AOP_CASE_UPDATES',
+                ),
+            'joomla_account_id' =>
+                array(
+                    'name' => 'joomla_account_id',
+                    'vname' => 'LBL_JOOMLA_ACCOUNT_ID',
+                    'type' => 'varchar',
+                    'len' => '255',
+                    'importable' => 'false',
+                    'studio' => 'true',
+                ),
+            'portal_account_disabled' =>
+                array(
+                    'name' => 'portal_account_disabled',
+                    'vname' => 'LBL_PORTAL_ACCOUNT_DISABLED',
+                    'type' => 'bool',
+                    'importable' => 'false',
+                    'studio' => 'false',
+                ),
+            'joomla_account_access' =>
+                array(
+                    'name' => 'joomla_account_access',
+                    'vname' => 'LBL_JOOMLA_ACCOUNT_ACCESS',
+                    'type' => 'varchar',
+                    'source' => 'non-db',
+                    'len' => '255',
+                    'importable' => 'false',
+                    'studio' => 'false',
+                ),
+            'portal_user_type' =>
+                array(
+                    'name' => 'portal_user_type',
+                    'vname' => 'LBL_PORTAL_USER_TYPE',
+                    'type' => 'enum',
+                    'options' => 'contact_portal_user_type_dom',
+                    'len' => '100',
+                    'default' => 'Single',
+                ),
         ),
     'indices' => array(
         array(
@@ -524,16 +696,6 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
             'type' => 'index',
             'fields' => array('assigned_user_id')
         ),
-//	array(
-//		'name' => 'idx_cont_email1',
-//		'type' => 'index',
-//		'fields' => array('email1')
-//	),
-//	array(
-//		'name' => 'idx_cont_email2',
-//		'type' => 'index',
-//		'fields' => array('email2')
-//	),
     ),
     'relationships' => array(
         'contact_direct_reports' => array('lhs_module' => 'Contacts',
@@ -616,6 +778,46 @@ $dictionary['Contact'] = array('table' => 'contacts', 'audited' => true,
             'relationship_role_column' => 'target_type',
             'relationship_role_column_value' => 'Contacts'
         ),
+        'contact_aos_quotes' =>
+            array(
+                'lhs_module' => 'Contacts',
+                'lhs_table' => 'contacts',
+                'lhs_key' => 'id',
+                'rhs_module' => 'AOS_Quotes',
+                'rhs_table' => 'aos_quotes',
+                'rhs_key' => 'billing_contact_id',
+                'relationship_type' => 'one-to-many',
+            ),
+        'contact_aos_invoices' =>
+            array(
+                'lhs_module' => 'Contacts',
+                'lhs_table' => 'contacts',
+                'lhs_key' => 'id',
+                'rhs_module' => 'AOS_Invoices',
+                'rhs_table' => 'aos_invoices',
+                'rhs_key' => 'billing_contact_id',
+                'relationship_type' => 'one-to-many',
+            ),
+        'contact_aos_contracts' =>
+            array(
+                'lhs_module' => 'Contacts',
+                'lhs_table' => 'contacts',
+                'lhs_key' => 'id',
+                'rhs_module' => 'AOS_Contracts',
+                'rhs_table' => 'aos_contracts',
+                'rhs_key' => 'contact_id',
+                'relationship_type' => 'one-to-many',
+            ),
+        'contacts_aop_case_updates' =>
+            array(
+                'lhs_module' => 'Contacts',
+                'lhs_table' => 'contacts',
+                'lhs_key' => 'id',
+                'rhs_module' => 'AOP_Case_Updates',
+                'rhs_table' => 'aop_case_updates',
+                'rhs_key' => 'contact_id',
+                'relationship_type' => 'one-to-many',
+            ),
     ),
 
 //This enables optimistic locking for Saves From EditView
