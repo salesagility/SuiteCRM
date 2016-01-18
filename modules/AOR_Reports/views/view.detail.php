@@ -72,12 +72,16 @@ class AOR_ReportsViewDetail extends ViewDetail {
 
         $this->bean->user_parameters = requestToUserParameters();
 
-        $reportHTML = $this->bean->build_group_report(0,true).'<br />';
+        //$reportHTML = $this->bean->build_group_report(0,true);
+        $reportHTML = $this->bean->buildMultiGroupReport(0,true);
 
-        $charts = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
+        $chartsHTML = $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_RGRAPH);
 
         $chartsPerRow = $this->bean->graphs_per_row;
-        $this->ss->assign('report_content',$charts.$reportHTML);
+
+        $this->ss->assign('charts_content', $chartsHTML);
+
+        $this->ss->assign('report_content', $reportHTML);
 
         echo "<input type='hidden' name='report_module' id='report_module' value='{$this->bean->report_module}'>";
         if (!is_file('cache/jsLanguage/AOR_Conditions/' . $GLOBALS['current_language'] . '.js')) {
