@@ -4855,6 +4855,9 @@ object{
 {
     padding:10px;
 }
+.rgraph_chart_tooltips_css {
+    font-family:Arial ! important;
+}
 /*End of Rgraph charts*/
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */

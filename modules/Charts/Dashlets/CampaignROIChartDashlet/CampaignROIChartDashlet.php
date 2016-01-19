@@ -47,7 +47,6 @@ require_once('include/Dashlets/DashletGenericChart.php');
 class CampaignROIChartDashlet extends DashletGenericChart 
 {
     public $campaign_id;
-
     /**
      * @see DashletGenericChart::$_seedName
      */
@@ -110,7 +109,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
 
         if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
         {
-            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
         //<canvas id='$canvasId'  width=canvas.width height=canvas.width class='resizableCanvas'>[No canvas support]</canvas>
@@ -159,6 +158,7 @@ class CampaignROIChartDashlet extends DashletGenericChart
                 unitsPre:'$currency_symbol',
                 labelsAboveUnitsPre:'$currency_symbol',
                 //unitsPost:'$thousands_symbol',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
             }
         }).draw();

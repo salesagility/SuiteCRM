@@ -44,6 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGenericChart.php');
 
+
 class OutcomeByMonthDashlet extends DashletGenericChart
 {
     public $obm_ids = array();
@@ -90,36 +91,6 @@ class OutcomeByMonthDashlet extends DashletGenericChart
      */
     public function display()
     {
-        /*
-        $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
-        if ($GLOBALS['current_user']->getPreference('currency')){
-
-            $currency = new Currency();
-            $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
-            $currency_symbol = $currency->symbol;
-        }
-
-        require("modules/Charts/chartdefs.php");
-        $chartDef = $chartDefs['outcome_by_month'];
-
-        require_once('include/SugarCharts/SugarChartFactory.php');
-        $sugarChart = SugarChartFactory::getInstance();
-        $sugarChart->setProperties('',
-            translate('LBL_OPP_SIZE', 'Charts') . ' ' . $currency_symbol . '1' .translate('LBL_OPP_THOUSANDS', 'Charts'),
-            $chartDef['chartType']);
-        $sugarChart->base_url = $chartDef['base_url'];
-        $sugarChart->group_by = $chartDef['groupBy'];
-        $sugarChart->url_params = array();
-        $sugarChart->getData($this->constructQuery());
-        $sugarChart->is_currency = true;
-        $sugarChart->data_set = $sugarChart->sortData($sugarChart->data_set, 'm', false, 'sales_stage', true, true);
-        $xmlFile = $sugarChart->getXMLFileName($this->id);
-        $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
-
-        return $this->getTitle('<div align="center"></div>') .
-            '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
-        */
-
         $currency_symbol = $GLOBALS['sugar_config']['default_currency_symbol'];
         if ($GLOBALS['current_user']->getPreference('currency')){
 
@@ -160,7 +131,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
 
         if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
         {
-            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
         $chart = <<<EOD
@@ -211,6 +182,7 @@ class OutcomeByMonthDashlet extends DashletGenericChart
                 unitsPre:'$currency_symbol',
                 unitsPost:'$thousands_symbol',
                 keyHalign:'right',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
             }
         }).draw();
