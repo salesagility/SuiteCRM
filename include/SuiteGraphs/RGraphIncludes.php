@@ -162,7 +162,7 @@ $chart = <<<EOD
                 var endDate = $(divHolder).find(".endDate").val();
 
                 var labels = bar["object"]["properties"]["chart.key"];
-                var clicked = encodeURI(labels[bar[2]]);
+                var clicked = encodeURI(labels[bar[5]]);
 
                 window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&start_range_date_closed='+startDate+'&end_range_date_closed='+endDate+'&sales_stage='+clicked,'_self');
             }

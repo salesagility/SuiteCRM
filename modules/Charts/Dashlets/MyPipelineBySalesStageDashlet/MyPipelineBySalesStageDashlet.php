@@ -97,64 +97,6 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
      */
     public function display()
     {
-        /*
-        global $sugar_config, $current_user, $timedate;
-
-        require_once('include/SugarCharts/SugarChartFactory.php');
-		$sugarChart = SugarChartFactory::getInstance();
-		$sugarChart->base_url = array( 	'module' => 'Opportunities',
-								'action' => 'index',
-								'query' => 'true',
-								'searchFormTab' => 'advanced_search',
-							 );
-        $sugarChart->url_params = array( 'assigned_user_id' => $current_user->id );
-        $sugarChart->group_by = $this->constructGroupBy();
-
-        $currency_symbol = $sugar_config['default_currency_symbol'];
-		if ($current_user->getPreference('currency')){
-
-            $currency = new Currency();
-            $currency->retrieve($current_user->getPreference('currency'));
-            $currency_symbol = $currency->symbol;
-        }
-
-        $sugarChart->is_currency = true;
-        $sugarChart->thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
-
-        $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
-
-        $query = $this->constructQuery();
-			$dataset = $this->constructCEChartData($this->getChartData($query));
-			$sugarChart->setData($dataset);
-			$total = format_number($this->getHorizBarTotal($dataset), 0, 0, array('convert'=>true));
-			$pipeline_total_string = translate('LBL_TOTAL_PIPELINE', 'Charts') . $sugarChart->currency_symbol . $total . $sugarChart->thousands_symbol;
-			$sugarChart->setProperties($pipeline_total_string, $subtitle, 'horizontal bar chart');
-
-        // Bug #53753 We have to add values for filter based on "Expected Close Date" field
-        if (!empty($this->mypbss_date_start) && !empty($this->mypbss_date_end))
-        {
-            $sugarChart->url_params['date_closed_advanced_range_choice'] = 'between';
-            $sugarChart->url_params['start_range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_start, false);
-            $sugarChart->url_params['end_range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_end, false);
-        }
-        elseif (!empty($this->mypbss_date_start))
-        {
-            $sugarChart->url_params['date_closed_advanced_range_choice'] = 'greater_than';
-            $sugarChart->url_params['range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_start, false);
-        }
-        elseif (!empty($this->mypbss_date_end))
-        {
-            $sugarChart->url_params['date_closed_advanced_range_choice'] = 'less_than';
-            $sugarChart->url_params['range_date_closed_advanced'] = $timedate->to_display_date($this->mypbss_date_end, false);
-        }
-
-        $xmlFile = $sugarChart->getXMLFileName($this->id);
-        $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
-
-        return $this->getTitle('') .
-            '<div align="center">' .$sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div><br />'. $this->processAutoRefresh();
-        */
-
         global $sugar_config, $current_user, $timedate;
 
         $module = 'Opportunities';
@@ -207,7 +149,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
 
         if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
         {
-            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
         $chart = <<<EOD
@@ -262,6 +204,7 @@ class MyPipelineBySalesStageDashlet extends DashletGenericChart
                 axisColor: '#ccc',
                 unitsPre:'$currency_symbol',
                 unitsPost:'$thousands_symbol',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
             }
         }).draw();

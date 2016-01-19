@@ -113,7 +113,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
 
         if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
         {
-            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
         //<canvas id='$canvasId' width='$chartWidth' height='$chartHeight' class='resizableCanvas' style='width: 100%;'>[No canvas support]</canvas>
@@ -150,6 +150,7 @@ class OpportunitiesByLeadSourceDashlet extends DashletGenericChart
                 keyBackground:'rgba(255,255,255,0.7)',
                 colors:$colours,
                 textSize:10,
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 keyColors:$colours
                 //keyInteractive: true
                 }

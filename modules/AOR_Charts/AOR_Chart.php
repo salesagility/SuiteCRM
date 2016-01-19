@@ -23,6 +23,7 @@
  */
 
 class AOR_Chart extends Basic {
+
     var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
 	var $new_schema = true;
 	var $module_dir = 'AOR_Charts';
@@ -47,6 +48,8 @@ class AOR_Chart extends Basic {
     var $type;
     var $x_field;
     var $y_field;
+    var $noDataMessage = "No Results";
+
 
 
 	function AOR_Chart(){
@@ -302,7 +305,7 @@ class AOR_Chart extends Basic {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
-            return "<h3>There are no data points for this query</h3>";
+            return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
@@ -318,6 +321,7 @@ class AOR_Chart extends Basic {
                 //titleSize:10,
                  tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 colors: $this->colours,
                 colorsSequential:true
             },
@@ -341,7 +345,7 @@ EOF;
             $grouping='stacked';
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
-            return "<h3>There are no data points for this query</h3>";
+            return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
@@ -357,11 +361,13 @@ EOF;
                 gutterBottom: 150,
                 //gutterTop:40,
                 //gutterLeft:30,
-                //title: '$chartName',
+                title: '$chartName',
 
                 tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
+                gutterLeft:50,
                 shadow:false,
                 titleSize:10,
                 labels: $chartLabelValues,
@@ -382,7 +388,7 @@ EOF;
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
-            return "<h3>There are no data points for this query</h3>";
+            return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
@@ -392,7 +398,9 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
+            title: '$chartName',
                 gutterBottom: 150,
+                gutterLeft:50,
                 //gutterTop:50,
                 //title: '$chartName',
                 labels: $chartLabelValues,
@@ -403,6 +411,7 @@ EOF;
                 backgroundGrid:false,
 
                 tooltips:$chartTooltips,
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
                 colors: $this->colours
@@ -418,7 +427,7 @@ EOF;
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
-            return "<h3>There are no data points for this query</h3>";
+            return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
@@ -428,13 +437,14 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                //title: '$chartName',
+                title: '$chartName',
                 labels: $chartLabelValues,
                 textSize:10,
-                //titleSize:10,
 
-                 tooltips:$chartTooltips,
+
+                tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
                 colors: $this->colours
             }
@@ -449,7 +459,7 @@ EOF;
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
-            return "<h3>There are no data points for this query</h3>";
+            return "<h3>$this->noDataMessage</h3>";
         }
 /*
         if($chartHeight > 400)
@@ -465,12 +475,12 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
-                //title: '$chartName',
+                title: '$chartName',
                 textSize:10,
-                //titleSize:10,
+                titleSize:10,
                  tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
-
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 labels: $chartLabelValues,
                 colors: $this->colours
             }
@@ -485,7 +495,7 @@ EOF;
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
-            return "<h3>There are no data points for this query</h3>";
+            return "<h3>$this->noDataMessage</h3>";
         }
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
@@ -495,15 +505,18 @@ EOF;
             id: '$chartId',
             data: $chartDataValues,
             options: {
+                title: '$chartName',
                 gutterBottom: 150,
                 //gutterTop:50,
                 tickmarks:'encircle',
                 textSize:10,
+                titleSize:10,
                 //title: '$chartName',
                 labels: $chartLabelValues,
 
                  tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
                 tickmarks:'circle',
 

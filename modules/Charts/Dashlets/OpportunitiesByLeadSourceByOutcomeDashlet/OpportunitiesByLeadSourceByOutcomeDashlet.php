@@ -159,7 +159,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
 
         if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 1)
         {
-            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
         $chart = <<<EOD
@@ -195,6 +195,7 @@ class OpportunitiesByLeadSourceByOutcomeDashlet extends DashletGenericChart
                 //keyPositionX: $canvasId.width - 190,
                 keyPositionGutterBoxed: true,
                 axisColor: '#ccc',
+                tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 noyaxis: true
             }
         }).draw();
