@@ -80,11 +80,19 @@
                 }
                 $('#module-name').html('(<span title="' + module_path_display + '">' + module_name + '</span>)');
                 $('#fieldTreeLeafs').remove();
-                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox"></div>');
+                $('#detailpanel_fields_select').append('<div id="fieldTreeLeafs" class="dragbox aor_dragbox" title="{/literal}{$MOD.LBL_TOOLTIP_DRAG_DROP_ELEMS}{literal}"></div>');
                 $('#fieldTreeLeafs').tree({
                     data: treeDataLeafs,
                     dragAndDrop: true,
-                    selectable: false,
+                    selectable: true,
+                    onCanSelectNode: function(node) {
+                        if($('#report-editview-footer .toggle-detailpanel_fields').hasClass('active')) {
+                            dropFieldLine(node);
+                        }
+                        else if($('#report-editview-footer .toggle-detailpanel_conditions').hasClass('active')) {
+                            dropConditionLine(node);
+                        }
+                    },
                     onDragMove: function() {
                         $('.drop-area').addClass('highlighted');
                     },
@@ -295,8 +303,37 @@
         <table id="group_display_table" style="display: none;">
             <tbody>
                 <tr>
-                    <td>Main Group:</td><!-- todo: lang file -->
-                    <td><select id="group_display" name="aor_fields_group_display"></select></td>
+                    <td>{$MOD.LBL_MAIN_GROUPS}</td>
+                    <td>
+                        <select id="group_display" name="aor_fields_group_display[0]"></select>
+                        <select id="group_display_1" name="aor_fields_group_display[1]" style="display: none;"></select>
+                        {literal}
+                        <script type="text/javascript">
+                            $(function(){
+                                setInterval(function(){
+                                    if($('#group_display').val() == -1) {
+                                        $('#group_display_1').val(-1);
+                                        $('#group_display_1').css('display', 'none');
+                                    }
+                                    else {
+                                        if($('#group_display_1').val() == $('#group_display').val()) {
+                                            $('#group_display_1').val(-1);
+                                        }
+                                        $('#group_display_1 option').show();
+                                        $('#group_display_1 option[value="' + $('#group_display').val() + '"]').hide();
+
+                                        // todo: temporary remove the secondary select for multi-group report
+                                        $('#group_display_1').css('display', 'none');
+                                        $('#group_display_1').val(-1);
+
+                                        //$('#group_display_1').css('display', 'block');
+                                    }
+
+                                }, 100);
+                            });
+                        </script>
+                        {/literal}
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -305,7 +342,7 @@
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
         <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4>
-        <div class="drop-area" id="conditionLines"  style="min-height: 50px;">
+        <div class="drop-area" id="conditionLines"  style="min-height: 450px;">
         </div>
         <hr>
         <table>

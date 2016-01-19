@@ -7,7 +7,7 @@
     * |                                                                                |
     * | RGraph is dual licensed under the Open Source GPL (General Public License)     |
     * | v2.0 license and a commercial license which means that you're not bound by     |
-    * | the terms of the GPL. The commercial license is just £99 (GBP) and you can     |
+    * | the terms of the GPL. The commercial license is just ï¿½99 (GBP) and you can     |
     * | read about it here:                                                            |
     * |                      http://www.rgraph.net/license                             |
     * o--------------------------------------------------------------------------------o
@@ -926,7 +926,7 @@
                         * Check for a negative bar width
                         */
                         if (barWidth < 0) {
-                            alert('[RGRAPH] Warning: you have a negative bar width. This may be caused by the chart.hmargin being too high or the width of the canvas not being sufficient.');
+                            console.log('[RGRAPH] Warning: you have a negative bar width. This may be caused by the chart.hmargin being too high or the width of the canvas not being sufficient.');
                         }
     
                         // Set the fill color
@@ -1170,7 +1170,7 @@
                         * Check for a negative bar width
                         */
                         if (barWidth < 0) {
-                            alert('[RGRAPH] Warning: you have a negative bar width. This may be caused by the chart.hmargin being too high or the width of the canvas not being sufficient.');
+                            console.log('[RGRAPH] Warning: you have a negative bar width. This may be caused by the chart.hmargin being too high or the width of the canvas not being sufficient.');
                         }
     
                         for (j=0; j<dataset.length; ++j) {
@@ -1365,8 +1365,8 @@
                             /**
                             * Check for a negative bar width
                             */
-                            if (individualBarWidth < 0) {
-                                alert('[RGRAPH] Warning: you have a negative bar width. This may be caused by the chart.hmargin being too high or the width of the canvas not being sufficient.');
+                            if (individualBarWidth < 0) {       
+                                console.log('[RGRAPH] Warning: you have a negative bar width. This may be caused by the chart.hmargin being too high or the width of the canvas not being sufficient.');
                             }
     
                             // If the X axis pos is in the center, we need to half the  height

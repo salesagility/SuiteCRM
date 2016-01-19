@@ -117,6 +117,7 @@ class AOR_Report extends Basic {
     const CHART_TYPE_CHARTJS = 'chartjs';
     const CHART_TYPE_RGRAPH = 'rgraph';
 
+
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
         global $beanList;
 
@@ -149,7 +150,7 @@ class AOR_Report extends Basic {
             $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['label'] = $field->label;
-            $fields[$label]['display'] = $field->display && !$field->group_display;
+            $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
@@ -211,10 +212,87 @@ class AOR_Report extends Basic {
     }
 
 
+    public function buildMultiGroupReport($offset = -1, $links = true, $level = 2, $path = []) {
+        global $beanList;
+
+        $_id = $this->db->quote($this->id);
+        $_level = (int) $level;
+
+        $query = "SELECT id, field, module_path FROM aor_fields WHERE aor_report_id = '$_id' AND group_display = $_level AND deleted = 0;";
+        $rows = $this->dbSelect($query);
+
+        if(count($rows) > 1) {
+            $GLOBALS['log']->fatal('ambiguous group display for report ' . $this->id);
+        }
+        else if(count($rows) == 1){
+            $rows[0]['module_path'] = unserialize(base64_decode($rows[0]['module_path']));
+            if(!$rows[0]['module_path'][0]) {
+                $module = new $beanList[$this->report_module]();
+                $rows[0]['field_id_name'] = $module->field_defs[$rows[0]['field']]['id_name'] ? $module->field_defs[$rows[0]['field']]['id_name'] : $module->field_defs[$rows[0]['field']]['name'];
+                $rows[0]['module_path'][0] = $module->table_name;
+            }
+            else {
+                $rows[0]['field_id_name'] = $rows[0]['field'];
+            }
+            $path[] = $rows[0];
+            return $this->buildMultiGroupReport($offset, $links, $level+1, $path);
+        }
+        else if(!$rows) {
+            if($path) {
+                $html = '';
+                foreach ($path as $pth) {
+                    $_fieldIdName = $this->db->quoteIdentifier($pth['field_id_name']);
+                    $query = "SELECT $_fieldIdName FROM " . $this->db->quoteIdentifier($pth['module_path'][0]) . " GROUP BY $_fieldIdName;";
+                    $values = $this->dbSelect($query);
+
+                    foreach($values as $value) {
+
+                        //$where = [ $this->db->quote($pth['module_path'][0]) . '.' . $_fieldIdName . ' = \'' . $this->db->quote($value[$pth['field_id_name']]) . '\'' ];
+
+                        $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $value[$pth['field_id_name']]);
+                        $moduleFieldByGroupValue = $this->addDataIdValueToInnertext($moduleFieldByGroupValue);
+                        $html .= $this->getMultiGroupFrameHTML($moduleFieldByGroupValue, $this->build_group_report($offset, $links/*, ['where' => $where]*/));
+                    }
+                }
+                return $html;
+            }
+            else {
+                return $this->build_group_report($offset, $links);
+            }
+        }
+        else {
+            throw new Exception('incorrect results');
+        }
+        throw new Exception('incorrect state');
+    }
+
+    private function dbSelect($query) {
+        $results = $this->db->query($query);
+
+        $rows = [];
+        while($row = $this->db->fetchByAssoc($results)) {
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    private function getMultiGroupFrameHTML($header, $body) {
+        $html = '<div class="multi-group-list" style="border: 1px solid black; padding: 10px;">
+                    <h3>' . $header . '</h3>
+                    <div class="multi-group-list-inner">' . $body . '</div>
+                </div>';
+        return $html;
+    }
+
+    private function addDataIdValueToInnertext($html) {
+        preg_match('/\sdata-id-value\s*=\s*"([^"]*)"/', $html, $match);
+        $html = preg_replace('/(>)([^<]*)(<\/\w+>$)/', '$1$2' . $match[1] . '$3', $html);
+        return $html;
+    }
 
 
-
-    function build_group_report($offset = -1, $links = true){
+    function build_group_report($offset = -1, $links = true, $extra = []){
         global $beanList;
 
         $html = '';
@@ -225,7 +303,9 @@ class AOR_Report extends Basic {
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
         $field_id = $this->db->getOne($sql);
 
-        $query_array['select'][] = $module->table_name.".id AS '".$module->table_name."_id'";
+        if(!$field_id) {
+            $query_array['select'][] = $module->table_name . ".id AS '" . $module->table_name . "_id'";
+        }
 
         if($field_id != ''){
             $field = new AOR_Field();
@@ -237,12 +317,17 @@ class AOR_Report extends Basic {
 
             $field_module = $module;
             $table_alias = $field_module->table_name;
-            if($path[0] && $path[0] != $module->module_dir){
+            if(!empty($path[0]) && $path[0] != $module->module_dir){
                 foreach($path as $rel){
                     $new_field_module = new $beanList[getRelatedModule($field_module->module_dir,$rel)];
-                    $query_array = $this->build_report_query_join($rel, $table_alias, null, $field_module, 'relationship', $query_array, $new_field_module);
+                    $oldAlias = $table_alias;
+                    $table_alias = $table_alias.":".$rel;
+
+                    $query_array = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module, 'relationship', $query_array, $new_field_module);
                     $field_module = $new_field_module;
-                    $table_alias = $rel;
+
+                    // ?
+                    //$table_alias = $rel;
                 }
             }
 
@@ -261,10 +346,11 @@ class AOR_Report extends Basic {
             }
 
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
-                $select_field = $table_alias.'_cstm.'.$field->field;
+                $select_field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$field->field;
+                // ? $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm',$table_alias, $field_module, 'custom', $query);
                 $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm', $field_module, 'custom', $query);
             } else {
-                $select_field= $table_alias.'.'.$field->field;
+                $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
             }
 
             if($field->sort_by != ''){
@@ -280,7 +366,20 @@ class AOR_Report extends Basic {
             }
 
             $query_array['select'][] = $select_field ." AS '".$field_label."'";
+            if($extra['select']) {
+                foreach($extra['select'] as $selectField => $selectAlias) {
+                    if($selectAlias) {
+                        $query_array['select'][] = $selectField . " AS " . $selectAlias;
+                    }
+                    else {
+                        $query_array['select'][] = $selectField;
+                    }
+                }
+            }
             $query_array['where'][] = $select_field ." IS NOT NULL AND ";
+            if($extra['where']) {
+                $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
+            }
 
             $query_array = $this->build_report_query_where($query_array);
 
@@ -329,7 +428,7 @@ class AOR_Report extends Basic {
             while ($row = $this->db->fetchByAssoc($result)) {
                 if($html != '') $html .= '<br />';
 
-               $html .= $this->build_report_html($offset, $links, $row[$field_label]);
+               $html .= $this->build_report_html($offset, $links, $row[$field_label], '', $extra);
 
             }
         }
@@ -340,11 +439,11 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = ''){
+    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = []){
 
         global $beanList, $sugar_config;
 
-        $report_sql = $this->build_report_query($group_value);
+        $report_sql = $this->build_report_query($group_value, $extra);
         $max_rows = 20;
         $total_rows = 0;
         $count_sql = explode('ORDER BY', $report_sql);
@@ -382,7 +481,7 @@ class AOR_Report extends Basic {
 
             $html .="<td colspan='18'>
                        <table class='paginationTable' border='0' cellpadding='0' cellspacing='0' width='100%'>
-                        <td style='text-align:left' ><H3>$moduleFieldByGroupValue</H3></td>
+                        <td style='text-align:left' ><H3><a href=\"javascript:void(0)\" class=\"collapseLink\" onclick=\"groupedReportToggler.toggleList(this);\"><img border=\"0\" id=\"detailpanel_1_img_hide\" src=\"themes/SuiteR/images/basic_search.gif\"></a>$moduleFieldByGroupValue</H3></td>
                         <td class='paginationChangeButtons' align='right' nowrap='nowrap' width='1%'>";
 
             if($offset == 0){
@@ -461,7 +560,7 @@ class AOR_Report extends Basic {
             $label = str_replace(' ','_',$field->label).$i;
             $fields[$label]['field'] = $field->field;
             $fields[$label]['label'] = $field->label;
-            $fields[$label]['display'] = $field->display && !$field->group_display;
+            $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
             $fields[$label]['alias'] = $field_alias;
@@ -532,6 +631,26 @@ class AOR_Report extends Basic {
         $html .= $this->getTotalHtml($fields,$totals);
 
         $html .= "</table>";
+
+        $html .= "    <script type=\"text/javascript\">
+                            groupedReportToggler = {
+
+                                toggleList: function(elem) {
+                                    $(elem).closest('table.list').find('thead, tbody').each(function(i, e){
+                                        if(i>1) {
+                                            $(e).toggle();
+                                        }
+                                    });
+                                    if($(elem).find('img').first().attr('src') == 'themes/SuiteR/images/basic_search.gif') {
+                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/advanced_search.gif');
+                                    }
+                                    else {
+                                        $(elem).find('img').first().attr('src', 'themes/SuiteR/images/basic_search.gif');
+                                    }
+                                }
+
+                            };
+                        </script>";
 
         return $html;
     }
@@ -701,7 +820,7 @@ class AOR_Report extends Basic {
 
 
 
-    function build_report_query($group_value =''){
+    function build_report_query($group_value ='', $extra = []){
         global $beanList;
 
         $module = new $beanList[$this->report_module]();
@@ -710,6 +829,9 @@ class AOR_Report extends Basic {
         $query_array = array();
 
         $query_array = $this->build_report_query_select($query_array, $group_value);
+        if($extra['where']) {
+            $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
+        }
         $query_array = $this->build_report_query_where($query_array);
 
         foreach ($query_array['select'] as $select){
@@ -855,7 +977,7 @@ class AOR_Report extends Basic {
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
-                if($field->group_display && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
+                if($field->group_display == 1 && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
                     ++$i;
             }
         }
@@ -895,7 +1017,9 @@ class AOR_Report extends Basic {
                         $params['join_table_link_alias'] = $this->db->quoteIdentifier($linkAlias);
                         $join = $module->$name->getJoin($params, true);
                         $query['join'][$alias] = $join['join'];
-                        if($rel_module != null) $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
+                        if($rel_module != null) {
+                            $query['join'][$alias] .= $this->build_report_access_query($rel_module, $name);
+                        }
                         $query['select'][] = $join['select']." AS '".$alias."_id'";
                     }
                     break;

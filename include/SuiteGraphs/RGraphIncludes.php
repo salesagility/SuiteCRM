@@ -5,6 +5,8 @@ $chart = <<<EOD
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.key.js'></script>
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.effects.js'></script>
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.tooltips.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.context.js'></script>
+        <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.common.annotate.js'></script>
 
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.funnel.js' ></script>
         <script type='text/javascript' src='include/SuiteGraphs/rgraph/libraries/RGraph.drawing.rect.js'></script>
@@ -25,7 +27,7 @@ $chart = <<<EOD
             function resizeGraph(graph)
             {
                 var maxWidth = 900;
-                var maxHeight = 600;
+                var maxHeight = 500;
                 var maxTextSize = 10;
 
                 if($(window).width() * 0.8 > maxWidth)
@@ -83,7 +85,7 @@ $chart = <<<EOD
                     var userId = $(divHolder).find(".userId").val();
                     var startDate = encodeURI($(divHolder).find(".startDate").val());
                     var endDate = encodeURI($(divHolder).find(".endDate").val());
-                    window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_blank');
+                    window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&assigned_user_id[]='+userId+'&date_closed_advanced_range_choice=between&start_range_date_closed_advanced='+startDate+'&end_range_date_closed_advanced='+endDate+'&sales_stage_advanced[]='+stage,'_self');
                 }
             }
 
@@ -103,7 +105,7 @@ $chart = <<<EOD
                     stage = encodeURI($.trim(stage));
                     date = encodeURI($.trim(date));
                     //console.log(stage + ' ' + date);
-                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&date_closed_advanced='+date+'&sales_stage='+stage,'_blank');
+                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&date_closed_advanced='+date+'&sales_stage='+stage,'_self');
                 }
             }
 
@@ -122,7 +124,7 @@ $chart = <<<EOD
 
                     stage = encodeURI($.trim(stage));
                     category = encodeURI($.trim(category));
-                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_blank');
+                    window.open('index.php?module=Opportunities&action=index&query=true&searchFormTab=advanced_search&lead_source='+category+'&sales_stage='+stage,'_self');
                 }
             }
 
@@ -140,7 +142,7 @@ $chart = <<<EOD
                 var labels = bar["object"]["properties"]["chart.labels"];
                 var clicked = encodeURI(labels[bar[5]]);
 
-                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_blank');
+                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&lead_source='+clicked,'_self');
             }
                 else
                 alert("Sorry, there has been an error with the click-through event");
@@ -162,7 +164,7 @@ $chart = <<<EOD
                 var labels = bar["object"]["properties"]["chart.key"];
                 var clicked = encodeURI(labels[bar[2]]);
 
-                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&start_range_date_closed='+startDate+'&end_range_date_closed='+endDate+'&sales_stage='+clicked,'_blank');
+                window.open('index.php?module='+module+'&action='+action+'&query='+query+'&searchFormTab='+searchFormTab+'&start_range_date_closed='+startDate+'&end_range_date_closed='+endDate+'&sales_stage='+clicked,'_self');
             }
                 else
                 alert("Sorry, there has been an error with the click-through event");

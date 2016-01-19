@@ -30,7 +30,7 @@ var report_module = '';
 
 var FieldLineHandler = {
 
-    makeGroupDisplaySelectOptions: function(selectedField) {
+    makeGroupDisplaySelectOptions: function(selectedField, selectedField2) {
         var found = false;
         var value = $('#group_display').val();
         if(selectedField) {
@@ -59,6 +59,19 @@ var FieldLineHandler = {
         else {
             $('#group_display_table').hide();
             $('#group_display').val(-1);
+        }
+
+
+        var value2 = $('#group_display_1').val();
+        $('#group_display_1').html($('#group_display').html());
+        $('#group_display_1').val(value2);
+
+        if(selectedField2) {
+            $('#group_display_1').val(this.getFieldNth(selectedField2));
+        }
+
+        if($('#group_display_1').val() == null || $('#group_display_1 option[value="' + $('#group_display_1').val() + '"]').css('display')=='none') {
+            $('#group_display_1').val(-1);
         }
     },
 
@@ -111,7 +124,7 @@ function loadFieldLine(field){
     }
     showFieldOptions(field, ln);
     showFieldModuleField(ln, field['field_function'], field['label']);
-    FieldLineHandler.makeGroupDisplaySelectOptions(parseInt(field.group_display) != 0 ? field : null);
+    FieldLineHandler.makeGroupDisplaySelectOptions(parseInt(field.group_display) == 1 ? field : null, parseInt(field.group_display) == 2 ? field : null);
 }
 
 function showFieldOptions(field, ln){
@@ -368,6 +381,18 @@ function markFieldLineDeleted(ln)
         document.getElementById('fieldLines_head').style.display = "none";
     }
     FieldLineHandler.makeGroupDisplaySelectOptions();
+
+
+    // remove fields header if doesn't exists any more field in area
+    var found = false;
+    $('#fieldLines tbody').each(function(i,e){
+        if($(e).css('display') != 'none') {
+            found = true;
+        }
+    });
+    if(!found) {
+        $('#fieldLines_head').remove();
+    }
 }
 
 function clearFieldLines(){
