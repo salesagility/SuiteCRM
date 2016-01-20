@@ -78,7 +78,7 @@ class AOR_Condition extends Basic {
                                     default:
                                         $post_data[$key.$field_def['name']][$i] = encodeMultienumValue($post_data[$key.$field_def['name']][$i]);
                                 }
-                        } else if($field_def['name'] == 'value') {
+                        } else if($field_def['name'] == 'value' && $post_data[$key.'value_type'][$i] === 'Value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key.$field_def['name']][$i]);
                         }else if($field_def['name'] == 'parameter'){
                             $post_data[$key.$field_def['name']][$i] = isset($post_data[$key.$field_def['name']][$i]);
