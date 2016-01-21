@@ -4636,6 +4636,32 @@ td.inlineEditActive{
     }
 }
 
+/*
+    Fix for github issue: "SuiteR Responsive Theme navigation bar #569"
+*/
+@media (max-width:340px) {
+    #mobilegloballinks a {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0;
+        padding: 8px;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    #userlinks_head {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0;
+        padding: 8px;
+        position: fixed;
+        right: 40px;
+        top: 0;
+    }
+}
+
+
 /* Fix to address bug with popups overflowing in the emails module*/
 
 #editAccountDialogue_c{
