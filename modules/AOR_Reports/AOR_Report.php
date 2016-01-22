@@ -212,7 +212,7 @@ class AOR_Report extends Basic {
     }
 
 
-    public function buildMultiGroupReport($offset = -1, $links = true, $level = 2, $path = []) {
+    public function buildMultiGroupReport($offset = -1, $links = true, $level = 2, $path = array()) {
         global $beanList;
 
         $_id = $this->db->quote($this->id);
@@ -269,7 +269,7 @@ class AOR_Report extends Basic {
     private function dbSelect($query) {
         $results = $this->db->query($query);
 
-        $rows = [];
+        $rows = array();
         while($row = $this->db->fetchByAssoc($results)) {
             $rows[] = $row;
         }
@@ -292,7 +292,7 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_group_report($offset = -1, $links = true, $extra = []){
+    function build_group_report($offset = -1, $links = true, $extra = array()){
         global $beanList;
 
         $html = '';
@@ -439,7 +439,7 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = []){
+    function build_report_html($offset = -1, $links = true, $group_value = '', $tableIdentifier = '', $extra = array()){
 
         global $beanList, $sugar_config;
 
@@ -656,7 +656,7 @@ class AOR_Report extends Basic {
     }
 
     private function getModuleFieldByGroupValue($beanList, $group_value) {
-        $moduleFieldByGroupValues = [];
+        $moduleFieldByGroupValues = array();
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC LIMIT 1;";
         $result = $this->db->query($sql);
@@ -820,7 +820,7 @@ class AOR_Report extends Basic {
 
 
 
-    function build_report_query($group_value ='', $extra = []){
+    function build_report_query($group_value ='', $extra = array()){
         global $beanList;
 
         $module = new $beanList[$this->report_module]();
@@ -968,7 +968,7 @@ class AOR_Report extends Basic {
                 }
 
                 if($field->group_by == 1){
-                    $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(['/\s+/', '/Y/', '/m/', '/d/'], [', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'], trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
+                    $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
                 }
 
                 if($field->field_function != null){
