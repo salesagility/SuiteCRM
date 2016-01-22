@@ -213,20 +213,20 @@ class AOR_Chart extends Basic {
         }
     }
 
-    public function buildChartHTML(array $reportData, array $fields,$index = 0, $chartType = AOR_Report::CHART_TYPE_PCHART){
+    public function buildChartHTML(array $reportData, array $fields,$index = 0, $chartType = AOR_Report::CHART_TYPE_PCHART, AOR_Field $mainGroupField = null){
         switch($chartType){
             case AOR_Report::CHART_TYPE_PCHART:
                 return $this->buildChartHTMLPChart($reportData,$fields,$index);
             case AOR_Report::CHART_TYPE_CHARTJS:
                 return $this->buildChartHTMLChartJS($reportData,$fields);
             case AOR_Report::CHART_TYPE_RGRAPH:
-                return $this->buildChartHTMLRGraph($reportData,$fields);
+                return $this->buildChartHTMLRGraph($reportData,$fields, $mainGroupField);
         }
         return '';
     }
 
 
-    private function buildChartHTMLRGraph(array $reportData, array $fields){
+    private function buildChartHTMLRGraph(array $reportData, array $fields, AOR_Field $mainGroupField = null){
         $html = '';
         if(!in_array($this->type, $this->getValidChartTypes())){
             return $html;
@@ -278,13 +278,13 @@ class AOR_Chart extends Basic {
                 break;
             case 'grouped_bar':
                 $chartFunction = 'Grouped bar';
-                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName, $mainGroupField);
                 $config = $this->getGroupedBarChartConfig();
-                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth);
+                $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth, true);
                 break;
             case 'stacked_bar':
                 $chartFunction = 'Stacked bar';
-                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName);
+                $data = $this->getRGraphGroupedBarChartData($reportData, $xName,$yName, $mainGroupField);
                 $config = $this->getStackedBarChartConfig();
                 $chart = $this->getRGraphGroupedBarChart(json_encode($data['data']), json_encode($data['labels']), json_encode($data['tooltips']), $this->name, $this->id,  $defaultHeight,$defaultWidth, false);
                 break;
@@ -336,10 +336,22 @@ EOF;
     //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
     //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
     //or stacked (false)
-    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = true)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
+        //$keys = array_keys($chartTooltips);
+
+
+        $i=0;
+        foreach($chartDataValues as $rowKey => $row) {
+            foreach($row as $key => $value) {
+                $_tooltips[$rowKey][$key] = $chartTooltips[$i];
+                $i++;
+            }
+        }
+
+
         $dataArray = json_decode($chartDataValues);
-        $grouping = 'grouped';
+        $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
         if(!$grouped)
             $grouping='stacked';
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -612,32 +624,42 @@ EOF;
     }
 
 
-    private function getRGraphGroupedBarChartData($reportData, $xName,$yName){
+    private function getRGraphGroupedBarChartData($reportData, $xName,$yName, AOR_Field $mainGroupField){
         $chart['labels']=array();
         $chart['data']=array();
         $chart['tooltips']=array();
-        foreach($reportData as $row){
-
-            $data = array();
-            $data[] = (float)$row[$yName];
-            $chart['labels'][] = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
-            $chart['tooltips'][] = $row[$xName];
-            //TODO need to make this more robust (should the other columns be stored in the database?)
-            foreach($row as $key=>$value)
-            {
-                //Need the label repeated x times per bar of the stacked / grouped value
-//                $chart['tooltips'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
 
 
-                if(strpos(strtolower($key),'grouped')!== false)
-                {
-                    $chart['tooltips'][] = $row[$xName];
-                    $data[] = (float)$row[$key];
+        foreach($reportData as $i => $row) {
+            $label = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
+            $chart['labels'][] = $label;
+            foreach($row as $key => $value) {
+                if (preg_match('/^' . str_replace(' ', '_', $mainGroupField->label) . '[0-9]+/', $key)) {
+                    $chart['tooltips'][] = $value;
+
                 }
-
             }
-            $chart['data'][] = $data;
+            $data[$row[$xName]][] = (float) $row[$yName];
         }
+
+        // repair data for chart
+
+        $keys = array_keys($data);
+        $_data = array();
+        foreach($keys as $key) {
+            $_data[] = $data[$key];
+        }
+        $chart['data'] = $_data;
+
+        // repair unique grouped labels for chart
+
+        $chart['labels'] = array_unique($chart['labels']);
+        $_labels = array();
+        foreach($chart['labels'] as $label) {
+            $_labels[] = $label;
+        }
+        $chart['labels'] = $_labels;
+
         return $chart;
     }
 
