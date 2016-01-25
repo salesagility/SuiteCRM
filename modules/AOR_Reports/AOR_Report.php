@@ -127,6 +127,9 @@ class AOR_Report extends Basic {
 
         $fields = array();
         $i = 0;
+
+        $mainGroupField = null;
+
         while ($row = $this->db->fetchByAssoc($result)) {
 
             $field = new AOR_Field();
@@ -156,6 +159,19 @@ class AOR_Report extends Basic {
             $fields[$label]['alias'] = $field_alias;
             $fields[$label]['link'] = $field->link;
             $fields[$label]['total'] = $field->total;
+
+
+            // get the main group
+
+            if($field->group_display) {
+
+                // if we have a main group already thats wrong cause only one main grouping field possible
+                if(!is_null($mainGroupField)) {
+                    $GLOBALS['log']->fatal('main group already found');
+                }
+
+                $mainGroupField = $field;
+            }
 
             ++$i;
         }
@@ -205,7 +221,7 @@ class AOR_Report extends Basic {
             if($chartIds !== null && !in_array($chart->id,$chartIds)){
                 continue;
             }
-            $html .= $chart->buildChartHTML($data,$fields,$x, $chartType);
+            $html .= $chart->buildChartHTML($data,$fields,$x, $chartType, $mainGroupField);
             $x++;
         }
         return $html;
@@ -215,11 +231,7 @@ class AOR_Report extends Basic {
     public function buildMultiGroupReport($offset = -1, $links = true, $level = 2, $path = array()) {
         global $beanList;
 
-        $_id = $this->db->quote($this->id);
-        $_level = (int) $level;
-
-        $query = "SELECT id, field, module_path FROM aor_fields WHERE aor_report_id = '$_id' AND group_display = $_level AND deleted = 0;";
-        $rows = $this->dbSelect($query);
+        $rows = $this->getGroupDisplayFieldByReportId($this->id, $level);
 
         if(count($rows) > 1) {
             $GLOBALS['log']->fatal('ambiguous group display for report ' . $this->id);
@@ -235,6 +247,13 @@ class AOR_Report extends Basic {
                 $rows[0]['field_id_name'] = $rows[0]['field'];
             }
             $path[] = $rows[0];
+
+            if($level>10) {
+                $msg = 'Too many nested groups';
+                $GLOBALS['log']->fatal($msg);
+                return null;
+            }
+
             return $this->buildMultiGroupReport($offset, $links, $level+1, $path);
         }
         else if(!$rows) {
@@ -265,6 +284,32 @@ class AOR_Report extends Basic {
         }
         throw new Exception('incorrect state');
     }
+
+    private function getGroupDisplayFieldByReportId($reportId = null, $level = 1) {
+
+        // set the default values
+
+        if (is_null($reportId)) {
+            $reportId = $this->id;
+        }
+
+        if (!$level) {
+            $level = 1;
+        }
+
+        // escape values for query
+
+        $_id = $this->db->quote($reportId);
+        $_level = (int) $level;
+
+        // get results array
+
+        $query = "SELECT id, field, module_path FROM aor_fields WHERE aor_report_id = '$_id' AND group_display = $_level AND deleted = 0;";
+        $rows = $this->dbSelect($query);
+
+        return $rows;
+    }
+
 
     private function dbSelect($query) {
         $results = $this->db->query($query);
@@ -366,7 +411,7 @@ class AOR_Report extends Basic {
             }
 
             $query_array['select'][] = $select_field ." AS '".$field_label."'";
-            if($extra['select']) {
+            if(isset($extra['select']) && $extra['select']) {
                 foreach($extra['select'] as $selectField => $selectAlias) {
                     if($selectAlias) {
                         $query_array['select'][] = $selectField . " AS " . $selectAlias;
@@ -377,7 +422,7 @@ class AOR_Report extends Basic {
                 }
             }
             $query_array['where'][] = $select_field ." IS NOT NULL AND ";
-            if($extra['where']) {
+            if(isset($extra['where']) && $extra['where']) {
                 $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
             }
 
@@ -829,7 +874,7 @@ class AOR_Report extends Basic {
         $query_array = array();
 
         $query_array = $this->build_report_query_select($query_array, $group_value);
-        if($extra['where']) {
+        if(isset($extra['where']) && $extra['where']) {
             $query_array['where'][] = implode(' AND ', $extra['where']) . ' AND ';
         }
         $query_array = $this->build_report_query_where($query_array);

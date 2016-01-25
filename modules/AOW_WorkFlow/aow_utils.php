@@ -241,6 +241,8 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
     // set the filename for this control
     $file = create_cache_directory('modules/AOW_WorkFlow/') . $module . $view . $alt_type . $fieldname . '.tpl';
 
+    $displayParams = array();
+
     if ( !is_file($file)
         || inDeveloperMode()
         || !empty($_SESSION['developerMode']) ) {
@@ -259,7 +261,7 @@ function getModuleField($module, $fieldname, $aow_field, $view='EditView',$value
             $vardef = $focus->getFieldDefinition($fieldname);
         }
 
-        $displayParams = array();
+
         //$displayParams['formName'] = 'EditView';
 
         // if this is the id relation field, then don't have a pop-up selector.
