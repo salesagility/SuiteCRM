@@ -1582,10 +1582,6 @@ a:link, a:visited, a:hover {
 }
 
 /* Listview styles */
-.list {
-    border: 1px solid;
-}
-
 .list tr.pagination td table td {
     background:#FAFAFA none repeat scroll 0 0;
     color:#666666;
@@ -4635,6 +4631,32 @@ td.inlineEditActive{
         font-size:1.5em;
     }
 }
+
+/*
+    Fix for github issue: "SuiteR Responsive Theme navigation bar #569"
+*/
+@media (max-width:340px) {
+    #mobilegloballinks a {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0;
+        padding: 8px;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    #userlinks_head {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0;
+        padding: 8px;
+        position: fixed;
+        right: 40px;
+        top: 0;
+    }
+}
+
 
 /* Fix to address bug with popups overflowing in the emails module*/
 
