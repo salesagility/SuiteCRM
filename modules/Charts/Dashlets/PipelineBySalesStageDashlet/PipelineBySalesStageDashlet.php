@@ -50,28 +50,6 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     public $pbss_date_end;
     public $pbss_sales_stages = array();
 
-    //Overwrite the default version in DashletGenericChart.php
-    /*
-    public function setRefreshIcon()
-    {
-        $additionalTitle = '';
-        if($this->isRefreshable)
-
-            $additionalTitle .= '<a href="#" onclick="SUGAR.mySugar.retrieveDashlet(\''
-                . $this->id
-                . '\',\'predefined_chart\'); return false;"><!--not_in_theme!-->'
-                . SugarThemeRegistry::current()->getImage(
-                    'dashlet-header-refresh',
-                    'border="0" align="absmiddle" title="'. translate('LBL_DASHLET_REFRESH', 'Home') . '"',
-                    null,
-                    null,
-                    '.gif',
-                    translate('LBL_DASHLET_REFRESH', 'Home')
-                )
-                . '</a>';
-        return $additionalTitle;
-    }*/
-
     /**
      * @see DashletGenericChart::$_seedName
      */
@@ -125,42 +103,6 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     {
         global $current_user, $sugar_config;
 
-        /*
-                require_once('include/SugarCharts/SugarChartFactory.php');
-                $sugarChart = SugarChartFactory::getInstance();
-                $sugarChart->base_url = array(
-                    'module' => 'Opportunities',
-                    'action' => 'index',
-                    'query' => 'true',
-                    'searchFormTab' => 'advanced_search',
-                    );
-                //fixing bug #27097: The opportunity list is not correct after drill-down
-                //should send to url additional params: start range value and end range value
-                $sugarChart->url_params = array('start_range_date_closed' => $this->pbss_date_start,
-                                                'end_range_date_closed' => $this->pbss_date_end);
-                $sugarChart->group_by = $this->constructGroupBy();
-                $sugarChart->setData($this->getChartData($this->constructQuery()));
-                $sugarChart->is_currency = true;
-                $sugarChart->thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
-
-                $currency_symbol = $sugar_config['default_currency_symbol'];
-                if ($current_user->getPreference('currency')){
-
-                    $currency = new Currency();
-                    $currency->retrieve($current_user->getPreference('currency'));
-                    $currency_symbol = $currency->symbol;
-                }
-                $subtitle = translate('LBL_OPP_SIZE', 'Charts') . " " . $currency_symbol . "1" . translate('LBL_OPP_THOUSANDS', 'Charts');
-
-                $pipeline_total_string = translate('LBL_TOTAL_PIPELINE', 'Charts') . $sugarChart->currency_symbol . format_number($sugarChart->getTotal(), 0, 0, array('convert'=>true)) . $sugarChart->thousands_symbol;
-                    $sugarChart->setProperties($pipeline_total_string, $subtitle, 'funnel chart 3D');
-
-                $xmlFile = $sugarChart->getXMLFileName($this->id);
-                $sugarChart->saveXMLFile($xmlFile, $sugarChart->generateXML());
-
-                return $this->getTitle('') . '<div align="center">' . $sugarChart->display($this->id, $xmlFile, '100%', '480', false) . '</div>'. $this->processAutoRefresh();
-        */
-
         $is_currency = true;
         $thousands_symbol = translate('LBL_OPP_THOUSANDS', 'Charts');
 
@@ -206,7 +148,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         //There is always an ending anchor value, hence this check is that the data array is less than 2
         if(!is_array($chartReadyData['data'])||count($chartReadyData['data']) < 2)
         {
-            return "<h3 class='noGraphDataPoints'>There are no data points for this query</h3>";
+            return "<h3 class='noGraphDataPoints'>$this->noDataMessage</h3>";
         }
 
         $chart = <<<EOD
@@ -217,9 +159,8 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         <input type='hidden' class='action' value='$action' />
         <input type='hidden' class='query' value='$query' />
         <input type='hidden' class='searchFormTab' value='$searchFormTab' />
-
         <script>
-new RGraph.Funnel({
+new RGraph.HBar({
                 id:'$canvasId',
                 data:$jsonData,
 
@@ -237,7 +178,7 @@ new RGraph.Funnel({
                     eventsClick:myFunnelClick,
                     //gutterRight: 100,
                     //gutterTop: 50,
-                    //gutterLeft: 150,
+                    gutterLeft: 180,
                     strokestyle: 'rgba(0,0,0,0)',
                     shadow: true,
                     shadowOffsetx: 0,
@@ -250,7 +191,9 @@ new RGraph.Funnel({
                     shadowColor: 'gray',
                     tooltips:$jsonLabels,
                     tooltipsEvent:'mousemove',
-                    keyHalign:'right'
+                    tooltipsCssClass: 'rgraph_chart_tooltips_css',
+                    keyHalign:'right',
+                    colorsSequential:true
                 }
             }).draw();
 
@@ -396,7 +339,7 @@ EOD;
             $total+=(int)$i['total'];
         }
         //The funnel needs n+1 elements (to bind the shape to as per http://www.rgraph.net/demos/funnel-interactive-key.html)
-        $chart['data'][]=1;
+        //$chart['data'][]=1;
         $chart['total']=$total;
         return $chart;
     }
