@@ -638,42 +638,72 @@ EOF;
 
 
     private function getRGraphGroupedBarChartData($reportData, $xName,$yName, AOR_Field $mainGroupField){
-        $chart['labels']=array();
-        $chart['data']=array();
-        $chart['tooltips']=array();
 
 
-        foreach($reportData as $i => $row) {
-            $label = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
-            $chart['labels'][] = $label;
-            foreach($row as $key => $value) {
-                if (preg_match('/^' . str_replace(' ', '_', $mainGroupField->label) . '[0-9]+/', $key)) {
-                    $chart['tooltips'][] = $value;
+        // get z-axis name
 
+        $zName = null;
+        foreach($reportData[0] as $key => $value) {
+            $field = str_replace(' ', '_', $mainGroupField->label);
+            if (preg_match('/^' . $field . '[0-9]+/', $key)) {
+                $zName = $key;
+                break;
+            }
+        }
+
+
+
+        // get grouped values
+
+        $data = array();
+        $tooltips = array();
+
+        $usedKeys = array();
+        foreach($reportData as $key => $row) {
+            $filter = $row[$xName];
+            foreach($reportData as $key2 => $row2) {
+                if($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
+                    $data      [ $row[$xName]  ]   [] = (float) $row[$yName];
+                    $tooltips  [ $row[$xName]  ]   [] = $row[$zName];
+                    $usedKeys[] = $key;
                 }
             }
-            $data[$row[$xName]][] = (float) $row[$yName];
         }
 
-        // repair data for chart
-
-        $keys = array_keys($data);
         $_data = array();
-        foreach($keys as $key) {
-            $_data[] = $data[$key];
+        foreach($data as $label => $values) {
+            foreach($values as $key => $value) {
+                $_data[$label][$tooltips[$label][$key]] = $value;
+            }
         }
-        $chart['data'] = $_data;
+        $data = $_data;
 
-        // repair unique grouped labels for chart
 
-        $chart['labels'] = array_unique($chart['labels']);
+        // make data format for charts
+
+        $_data = array();
         $_labels = array();
-        foreach($chart['labels'] as $label) {
-            $_labels[] = $label;
+        $_tooltips = array();
+        foreach($data as $label => $values) {
+            $_labels[] = $this->getShortenedLabel($label) . $this->getChartDataNameLabel($label);
+            $_values = array();
+            foreach($values as $tooltip => $value) {
+                $_tooltips[] = $tooltip . " ($value)";
+                $_values[] = $value;
+            }
+            $_data[] = $_values;
         }
-        $chart['labels'] = $_labels;
+
+
+        $chart = array(
+            'data' => $_data,
+            'labels' => $_labels,
+            'tooltips' => $_tooltips,
+        );
 
         return $chart;
+
+
     }
 
     private function getRGraphBarChartData($reportData, $xName,$yName){
