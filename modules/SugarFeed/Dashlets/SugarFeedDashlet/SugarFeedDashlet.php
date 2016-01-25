@@ -560,7 +560,7 @@ enableQS(false);
             $linkTypes[$key] = translate('LBL_LINK_TYPE_'.$value,'SugarFeed');
         }
 		$ss->assign('link_types', $linkTypes);
-		return $ss->fetch('custom/modules/SugarFeed/Dashlets/SugarFeedDashlet/UserPostForm.tpl');
+		return $ss->fetch('modules/SugarFeed/Dashlets/SugarFeedDashlet/UserPostForm.tpl');
 
 	}
 
