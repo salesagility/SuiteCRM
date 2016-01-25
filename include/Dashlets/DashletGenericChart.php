@@ -49,6 +49,8 @@ abstract class DashletGenericChart extends Dashlet
      */
     public $title;
 
+    public $noDataMessage = "No Results";
+
     /**
      * @see Dashlet::$isConfigurable
      */
