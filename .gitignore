@@ -65,3 +65,6 @@ Desktop.ini
 lang_cmp.php
 .kdev4/
 SuiteCRM.kdev4
+include/vendor/*
+composer.lock
+custom/application/Ext/*
