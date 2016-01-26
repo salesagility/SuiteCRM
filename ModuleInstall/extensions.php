@@ -60,9 +60,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     	"vardefs" =>         array("section" => "vardefs",	      "extdir" => "Vardefs",    	"file" => 'vardefs.ext.php'),
 		"jsgroupings" =>     array("section" => "jsgroups",	      "extdir" => "JSGroupings",    "file" => 'jsgroups.ext.php'),
 		"aow" =>     		 array("section" => "aow_actions",	  "extdir" => "Actions",		"file" => 'actions.ext.php', "module" => "AOW_Actions"),
-        "api" =>     array("section" => "api",	  "extdir" => "api",	"file" => 'api.ext.php', "module" => "application"),
-
-);
+        "api" =>             array("section" => "api",	  "extdir" => "Api",	"file" => 'custom_routes.ext.php', "module" => "application"),
+    );
 if(file_exists("custom/application/Ext/Extensions/extensions.ext.php")) {
     include("custom/application/Ext/Extensions/extensions.ext.php");
 }
