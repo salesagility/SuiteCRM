@@ -1312,6 +1312,9 @@ class AOR_Report extends Basic {
                             break;
                     }
 
+                    if($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
+                        $value = "{$value} OR {$field} IS NULL";
+                    }
 
                     if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
 
