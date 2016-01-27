@@ -3977,7 +3977,7 @@ class SugarBean
             }
             if(!empty($rows_found) && (empty($limit) || $limit == -1))
             {
-                $limit = $sugar_config['list_max_entries_per_subpanel'];
+                $limit = $max_per_page;
             }
             if( $toEnd)
             {
