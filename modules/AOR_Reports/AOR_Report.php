@@ -1220,7 +1220,7 @@ class AOR_Report extends Basic {
                                 $value = $condition_module->table_name . '_cstm.' . $condition->value;
                                 $query = $this->build_report_query_join($condition_module->table_name . '_cstm', $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
                             } else {
-                                $value = $condition_module->table_name . '.' . $condition->value;
+                                $value = ($table_alias ? "`$table_alias`" : $condition_module->table_name) . '.' . $condition->value;
                             }
                             break;
 
