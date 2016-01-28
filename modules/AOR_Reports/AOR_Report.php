@@ -1220,7 +1220,7 @@ class AOR_Report extends Basic {
                                 $value = $condition_module->table_name . '_cstm.' . $condition->value;
                                 $query = $this->build_report_query_join($condition_module->table_name . '_cstm', $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
                             } else {
-                                $value = $condition_module->table_name . '.' . $condition->value;
+                                $value = ($table_alias ? "`$table_alias`" : $condition_module->table_name) . '.' . $condition->value;
                             }
                             break;
 
@@ -1312,6 +1312,9 @@ class AOR_Report extends Basic {
                             break;
                     }
 
+                    if($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
+                        $value = "{$value} OR {$field} IS NULL";
+                    }
 
                     if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
 

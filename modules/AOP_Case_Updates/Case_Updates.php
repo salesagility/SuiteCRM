@@ -129,7 +129,7 @@ A;
 
     $updates = $focus->get_linked_beans('aop_case_updates',"AOP_Case_Updates");
     if(!$updates || is_null($focus->id)){
-        $html .= quick_edit_case_updates();
+        $html .= quick_edit_case_updates($focus);
         return $html;
         //return $mod_strings['LBL_NO_CASE_UPDATES'];
     }
@@ -169,7 +169,7 @@ EOD;
         $html .= display_single_update($update, $hideImage);
     }
     $html .= "</div>";
-    $html .= quick_edit_case_updates();
+    $html .= quick_edit_case_updates($focus);
     return $html;
 }
 
@@ -277,7 +277,7 @@ function display_case_attachments($case){
  *
  * @return string - the html to be displayed and javascript
  */
-function quick_edit_case_updates(){
+function quick_edit_case_updates($case){
     global $action;
 
     //on DetailView only
@@ -298,14 +298,17 @@ function quick_edit_case_updates(){
 
         return;
     }
-
+    $internalChecked = '';
+    if($case->internal){
+        $internalChecked = "checked='checked'";
+    }
     $html = <<< EOD
     <form id='case_updates' enctype="multipart/form-data">
 
 
     <textarea id="update_text" name="update_text" cols="80" rows="4"></textarea>
 
-    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1'> Internal</input>
+    <input id='internal' type='checkbox' name='internal' tabindex=0 title='' value='1' $internalChecked > Internal</input>
     </br>
     <input type='button' value='Save' onclick="caseUpdates('$record')" title="Save" name="button"> </input>
 

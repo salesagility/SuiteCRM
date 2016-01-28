@@ -2408,7 +2408,7 @@ class SugarBean
                     $this->$owner = $row[$owner];
                 }
             }
-            else
+            elseif(empty($field_value['source']) || $field_value['source'] !== 'non-db')
             {
                 $this->$field = $nullvalue;
             }
