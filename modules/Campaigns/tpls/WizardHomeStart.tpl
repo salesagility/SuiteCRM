@@ -53,43 +53,114 @@
 	
 <table class='other view' cellspacing="1">
 <tr>
-<td rowspan='2' width="10%" scope="row" style="vertical-align: top;">
-<p>
-<div id='nav'>
-<table border="0" cellspacing="0" cellpadding="0" width="100%" >
-<tr><td scope='row' ><div id='nav_step1'>{$MOD.LBL_CHOOSE_CAMPAIGN_TYPE}</div></td></tr>
-</table>
-</div>
-</p>
-</td>
+	<td rowspan='2' width="10%" scope="row" style="vertical-align: top;">
+		<p>
+			<div id='nav'>
+				<table border="0" cellspacing="0" cellpadding="0" width="100%" >
+					<!-- <tr><td scope='row' ><div id='nav_step1'>{$MOD.LBL_CHOOSE_CAMPAIGN_TYPE}</div></td></tr> -->
+				</table>
+			</div>
+		</p>
+	</td>
 
-<td  rowspan='2' width='100%' class='edit view'>
-<div id="wiz_message"></div>
-<div id=wizard>
+	<td  rowspan='2' width='100%' class='edit view'>
+		<div id="wiz_message"></div>
+
+		{literal}
+			<style>
+				.icon-btn-lst {
+					margin: 0;
+					padding: 0;
+					list-style-type: none;
+				}
+				.icon-btn-lst .icon-btn {
+					margin: 10px;
+					list-style-type: none;
+					background-color: #3C8DBC;
+					display: block;
+					float: left;
+					width: 150px;
+					min-height: 150px;
+					text-align: center;
+					border: none;
+				}
+				.icon-btn-lst .icon-btn:hover {
+					background-color: #286090;
+				}
+				.icon-btn-lst .icon-btn img {
+					margin-top: 10px;
+					margin-bottom: 20px;
+				}
+				.icon-btn-lst .icon-btn a {
+					color: #fff;
+					display: block;
+					width: 100%;
+					height: 100%;
+					padding: 10px;
+				}
+			</style>
+		{/literal}
 
 
-	<div id='step1' >
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-			<tr><th scope='col' colspan='2' align="left" ><h4>{$MOD.LBL_CHOOSE_CAMPAIGN_TYPE}</h4></th></tr>
-			<tr><td colspan='2' >
-				<fieldset><legend>{$MOD.LBL_HOME_START_MESSAGE}</legend>
-                     <p>
-                        <input type="radio"  id="wizardtype_nl" name="wizardtype" value='1'checked ><label for='wizardtype_nl'>{$MOD.LBL_NEWSLETTER}</label><br>
-                        <input type="radio"  id="wizardtype_em" name="wizardtype" value='2'><label for='wizardtype_em'>{$MOD.LBL_EMAIL}</label><br>
-                        <input type="radio"  id="wizardtype_ot" name='wizardtype' value='3'><label for='wizardtype_ot'>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</label><br>
-                    </p>
-                </fieldset>
-			</td></tr>
-			</table>	
-	</div>
-	</p>
+		<div id=wizard>
 
-	
+
+			<div id='step1' >
+				<table border="0" cellpadding="0" cellspacing="0" width="100%">
+					<!-- <tr><th scope='col' colspan='2' align="left" ><h4>{$MOD.LBL_CHOOSE_CAMPAIGN_TYPE}</h4></th></tr> -->
+					<tr>
+						<td colspan='2' >
+							<fieldset>
+								<legend>{$MOD.LBL_HOME_START_MESSAGE}</legend>
+								<p style="display: none;">
+									<input type="radio"  id="wizardtype_nl" name="wizardtype" value='1'checked ><label for='wizardtype_nl'>{$MOD.LBL_NEWSLETTER}</label><br>
+									<input type="radio"  id="wizardtype_em" name="wizardtype" value='2'><label for='wizardtype_em'>{$MOD.LBL_EMAIL}</label><br>
+									<input type="radio"  id="wizardtype_ot" name='wizardtype' value='3'><label for='wizardtype_ot'>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</label><br>
+								</p>
+
+
+
+								<ul class="icon-btn-lst">
+									<li class="icon-btn">
+										<a href="javascript:" onclick="$('#wizardtype_nl').click(); $(this).closest('form').submit();">
+											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-newsletter.png"}" />
+											<br />
+											<span>{$MOD.LBL_NEWSLETTER}</span>
+										</a>
+									</li>
+
+									<li class="icon-btn">
+										<a href="javascript:" onclick="$('#wizardtype_em').click(); $(this).closest('form').submit();">
+											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-email.png"}" />
+											<br />
+											<span>{$MOD.LBL_EMAIL}</span>
+										</a>
+									</li>
+
+									<li class="icon-btn">
+										<a href="javascript:" onclick="$('#wizardtype_ot').click(); $(this).closest('form').submit();">
+											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-nonemail.png"}" />
+											<br />
+											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
+										</a>
+									</li>
+								</ul>
+
+							</fieldset>
+						</td>
+					</tr>
+				</table>
+			</div>
+
+		</div>
+
+
 	
 	</td>
 </tr>
 </table>
 
+<!--
 <div id ='buttons' >
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 	<tr>
@@ -102,6 +173,7 @@
 	</tr>
 	</table>
 </div>
+-->
 
 </form>
 <script>
