@@ -177,7 +177,7 @@
 
 </form>
 <script>
-document.getElementById('startbutton').focus=true;
+//document.getElementById('startbutton').focus=true;
 </script>
 
 
