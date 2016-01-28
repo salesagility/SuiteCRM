@@ -151,6 +151,11 @@ class ViewModulefield extends SugarView
 
             VardefManager::loadVardef($moduleName, $objectName,true);
             global $dictionary;
+            if(is_null($module->mbvardefs)) 
+            {
+		$module->mbvardefs = new stdClass();
+            }
+            
             $module->mbvardefs->vardefs =  $dictionary[$objectName];
 			
             $module->name = $moduleName;
