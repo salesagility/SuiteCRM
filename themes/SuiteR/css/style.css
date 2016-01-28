@@ -4258,7 +4258,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     padding:0;
 }
 
-.paginationWrapper span, .paginationWrapper span,{
+.paginationWrapper span, .paginationWrapper span {
     padding: 0;
     margin: 0;
 }
@@ -4348,7 +4348,7 @@ h3 span{
         clear: left;
     }
 
-    table.mceLayout, textarea.richEditor, {
+    table.mceLayout, textarea.richEditor {
         width: 90% !important;
         overflow:scroll;
     }
