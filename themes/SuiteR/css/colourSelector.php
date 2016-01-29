@@ -37,7 +37,7 @@ background: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet']; ?>
 }
 
 .dashletPanel .h3Row .dashletToolSet .icon{
-fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;	
+fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?> !important;
 }
 
 /* Top navigation bar CSS */
@@ -66,13 +66,13 @@ color:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_link_hover']
 }
 
 #desktop_notifications .btn {
-background: #<?php echo $sugar_config['theme_settings']['SuiteR']['navbar']; ?>;	
+background: #<?php echo $sugar_config['theme_settings']['SuiteR']['navbar']; ?> !important;
 }
 
 #searchform .btn
 {
-background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?>;
-color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; ?>;
+background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?> !important;
+color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; !important?>;
 }
 
 /* Drop down menu CSS */
