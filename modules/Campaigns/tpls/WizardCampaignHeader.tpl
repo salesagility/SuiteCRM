@@ -82,14 +82,6 @@
 		<td scope="col"><span sugar='slot8'>{$FREQUENCY_LABEL} </span sugar='slot'></td>
 		<td><span sugar='slot8b'><{$HIDE_FREQUENCY_IF_NEWSLETTER}  id='frequency' name='wiz_step1_frequency' title='{$MOD.LBL_CAMPAIGN_FREQUENCY}'>{$FREQ_OPTIONS}</select></span sugar='slot'></td>
 		</tr>
-
-		<tr>
-			<td></td>
-			<td></td>
-			<td>Conditions:</td>
-			<td><input type="checkbox" name="wiz_step1_conditions" checked="checked"></td>
-		</tr>
-
 		<tr>
 		<td width="15%"><span sugar='slot9'>&nbsp;</span></span sugar='slot'></td>
 		<td width="35%" ><span sugeeear='slot9b'>&nbsp;</span sugar='slot'></td>
@@ -168,51 +160,4 @@
 
 	</script>
 	{/literal}
-
-	<div id="condition-editor">
-		<h3>Add condition to fine tune your recipient list</h3>
-		<table class="condition-lst">
-			<thead>
-				<tr>
-					<td>&nbsp;</td>
-					<td>Module</td>
-					<td>Field</td>
-					<td>Operator</td>
-					<td>Type</td>
-					<td>Value</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style="width: 5%;"><button type="button" class="button"><img src="{sugar_getimagepath file="id-ff-remove-nobg.png"}" alt=""></button></td>
-					<td>
-						<select>
-							<option>ComboBox</option>
-						</select>
-					</td>
-					<td>
-						<select>
-							<option>ComboBox</option>
-						</select>
-					</td>
-					<td>
-						<select>
-							<option>ComboBox</option>
-						</select>
-					</td>
-					<td>
-						<select>
-							<option>ComboBox</option>
-						</select>
-					</td>
-					<td>
-						<select>
-							<option>ComboBox</option>
-						</select>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<input type="button" value="Add More Condition">
-	</div>
 
