@@ -55,6 +55,8 @@
 	<input type="hidden" id="wiz_current_step" name="currentstep" value='1'>
 	<input type="hidden" id="direction" name="wiz_direction" value='exit'>
 
+	{$NAV_ITEMS}
+
 <p>
 	<div id ='buttons'>
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" >
@@ -79,10 +81,7 @@
 <table class='other view' cellspacing="1">
 <tr>
 <td scope='row' rowspan='2' width="10%" style="vertical-align: top;">
-<div id='nav' >
-{$NAV_ITEMS}
 
-</div>
 
 </td>
 <td class='edit view' rowspan='2' width='100%'>

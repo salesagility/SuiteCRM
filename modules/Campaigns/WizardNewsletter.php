@@ -531,7 +531,7 @@ if($campaign_type == 'general'){
 
 }elseif($campaign_type == 'email'){
     $steps = create_email_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'email',$mrkt_string,$summ_url));
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'email',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','submit');
 }else{
     $steps = create_newsletter_steps();  
@@ -589,27 +589,39 @@ function create_wiz_step_divs($steps,$ss){
     }
     return $step_html;
 }
- 
-function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url){
+
+function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null){
+
     global $mod_strings;
-    $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
-    if(isset($steps)  && !empty($steps)){
-        $i=1;
-        foreach($steps as $name=>$step){
-            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step$i'>$name</div></td></tr>";
-            $i=$i+1;
+
+
+    if($view == 'dotlist') {
+
+        include_once 'modules/Campaigns/DotListWizardMenu.php';
+
+        $nav_html = new DotListWizardMenu($mod_strings, $steps,$type,$mrkt_string,$summ_url);
+
+    }
+    else {
+        $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
+        if(isset($steps)  && !empty($steps)){
+            $i=1;
+            foreach($steps as $name=>$step){
+                $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step$i'>$name</div></td></tr>";
+                $i=$i+1;
+            }
         }
+        if($type == 'newsletter'  ||  $type == 'email'){
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
+        }else{
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";
+        }
+
+        $nav_html .= '</table>';
     }
-    if($type == 'newsletter'  ||  $type == 'email'){
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
-    }else{
-     $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";   
-    }
-       
-    $nav_html .= '</table>';
-  
+
     return $nav_html;
 }
     
