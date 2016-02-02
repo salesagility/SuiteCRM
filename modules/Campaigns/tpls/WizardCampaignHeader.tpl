@@ -148,7 +148,7 @@
         addToValidate('wizform', 'status', 'alphanumeric', true,  document.getElementById('status').title);
         addToValidate('wizform', 'end_date', 'date', true,  document.getElementById('end_date').title);
         //addToValidate('wizform', 'start_date', 'date', false,  document.getElementById('start_date').title);
-        addToValidate('wizform', 'currency_id', 'alphanumeric', false,  document.getElementById('currency_id').title);
+        //addToValidate('wizform', 'currency_id', 'alphanumeric', false,  document.getElementById('currency_id').title);
 
 
         return check_form('wizform');

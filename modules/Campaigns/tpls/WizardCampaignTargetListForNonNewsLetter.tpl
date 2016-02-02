@@ -54,9 +54,11 @@
 	<tr>
 	<th colspan="5" align="left" ><h4>{$MOD.LBL_TARGET_LISTS}</h4></th>
 	</tr>
-	<tr>
-	<td colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE1}<br></td>
-	</tr>
+		<!--
+		<tr>
+			<td colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE1}<br></td>
+		</tr>
+		-->
 	<tr><td colspan=5>&nbsp;</td></tr>
 	<tr>
 	<td scope="row" colspan="4">{$MOD.LBL_SELECT_TARGET}&nbsp;
@@ -69,45 +71,94 @@
 	</td>
 	<td>&nbsp;</td>
 	</tr>
-	<tr><td colspan=5>&nbsp;</td></tr>
-	<tr>
-	<td scope="row" colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br></td>
-	</tr>
-	<tr>
-	<td width='10%' scope="col">{$MOD.LBL_TARGET_NAME}</td>
-	<td width='20%'>
-		<input id="target_list_name" name="target_list_name" type='text' size='40'>
-	</td>
-	<td width='10%' scope="col">
-		<span sugar='slot28'>{$MOD.LBL_TARGET_TYPE}</span sugar='slot'>
-	</td>
-	<td  width='20%' >
-		<span sugar='slot28b'>
-		<select id="target_list_type" name="target_list_type">{$TARGET_OPTIONS}</select>
-		<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
-		</span sugar='slot'>
-	</td>
-	<td width='30%'><input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');"></td>
-	</tr>
-	<tr><td colspan=5>&nbsp;</td></tr>
+		<!--
+		<tr><td colspan=5>&nbsp;</td></tr>
+		<tr>
+		<td scope="row" colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br></td>
+		</tr>
+		<tr>
+		<td width='10%' scope="col">{$MOD.LBL_TARGET_NAME}</td>
+		<td width='20%'>
+			<input id="target_list_name" name="target_list_name" type='text' size='40'>
+		</td>
+		<td width='10%' scope="col">
+			<span sugar='slot28'>{$MOD.LBL_TARGET_TYPE}</span sugar='slot'>
+		</td>
+		<td  width='20%' >
+			<span sugar='slot28b'>
+			<select id="target_list_type" name="target_list_type">{$TARGET_OPTIONS}</select>
+			<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
+			</span sugar='slot'>
+		</td>
+		<td width='30%'><input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');"></td>
+		</tr>
+		<tr><td colspan=5>&nbsp;</td></tr>
+		-->
 	</table>
-	<table width = '100%' class='detail view'>
-		<tr><td>{$MOD.LBL_TRACKERS_ADDED}</td></tr>
-		<tr><td>
-
-			<table border=1 width='100%'><tr class='detail view'>
-				<th scope='col' width='25%'><b>{$MOD.LBL_TARGET_NAME}</b></th>
-			    <th scope='col' width='25%'><b>{$MOD.LBL_TARGET_TYPE}</b></th><td>&nbsp;</td>
-			    <td width='25%'><b>&nbsp;</b></td>
-		    </tr>
-			</table>
-			<div id='added_targets'>
-				{$EXISTING_TARGETS}
-			</div>
 
 
-		</td></tr>
-	</table>
+	<div style="float: left; max-width: 250px;">
+
+		{literal}
+		<script type="text/javascript">
+			var targetListDataJSON = {/literal}{$targetListDataJSON}{literal};
+			var addTargetListData = function(id) {
+				var result_data = {
+					"form_name": 'wizform',
+					"name_to_value_array": {
+						popup_target_list_id: id,
+						popup_target_list_name: targetListDataJSON[id].name,
+						popup_target_list_type: targetListDataJSON[id].type
+					},
+					"passthru_data": Object(),
+					"popupConfirm": 0
+				};
+				set_return_prospect_list(result_data);
+			};
+		</script>
+		{/literal}
+		<ul>
+			{foreach from=$targetListData item=targetList}
+				<li data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
+			{/foreach}
+		</ul>
+
+		<div>
+
+			{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br>
+			<input id="target_list_name" name="target_list_name" type='text' size='40' placeholder="{$MOD.LBL_TARGET_NAME}"><br>
+
+			{$MOD.LBL_TARGET_TYPE}<br>
+			<select id="target_list_type" name="target_list_type">{$TARGET_OPTIONS}</select>
+			<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
+			<br>
+
+			<input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');">
+
+		</div>
+	</div>
+
+	<div style="float: left; max-width: 600px;">
+
+		<table width = '100%' class='detail view'>
+			<tr><td>{$MOD.LBL_TRACKERS_ADDED}</td></tr>
+			<tr><td>
+
+				<table border=1 width='100%'><tr class='detail view'>
+					<th scope='col' width='25%'><b>{$MOD.LBL_TARGET_NAME}</b></th>
+					<th scope='col' width='25%'><b>{$MOD.LBL_TARGET_TYPE}</b></th><td>&nbsp;</td>
+					<td width='25%'><b>&nbsp;</b></td>
+				</tr>
+				</table>
+				<div id='added_targets'>
+					{$EXISTING_TARGETS}
+				</div>
+
+
+			</td></tr>
+		</table>
+
+	</div>
 
 	<p>
 

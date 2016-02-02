@@ -383,6 +383,32 @@ $json = getJSONobj();
 $encoded_newsletter_popup_request_data = $json->encode($popup_request_data);
 $ss->assign('encoded_target_list_popup_request_data', $encoded_newsletter_popup_request_data);
 
+
+// ----- show target lists...
+
+$targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
+
+$targetListData = array();
+foreach($targetList as $prospectLst) {
+    $nxt = array(
+        'id' => $prospectLst->id,
+        'name' => $prospectLst->name,
+        //'type' => $prospectLst->type,
+        'description' => $prospectLst->description,
+    );
+    $targetListDataArray[] = $nxt;
+    $targetListDataAssoc[$prospectLst->id] = $nxt;
+}
+
+
+$ss->assign('targetListData', $targetListDataArray);
+
+$targetListDataJSON = json_encode($targetListDataAssoc);
+$ss->assign('targetListDataJSON', $targetListDataJSON);
+
+// -----
+
+
 $ss->assign('TARGET_OPTIONS', get_select_options_with_id($app_list_strings['prospect_list_type_dom'], 'default'));
 
 //retrieve the subscriptions
@@ -569,8 +595,8 @@ function create_campaign_steps(){
 function create_email_steps(){
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
     $steps[$mod_strings['LBL_TARGET_LISTS']]                   = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl';
     return  $steps;
 }
