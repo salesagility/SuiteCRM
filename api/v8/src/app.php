@@ -7,6 +7,8 @@ chdir('../../../');
 require_once('include/vendor/autoload.php');
 require_once('include/entryPoint.php');
 
+$_SERVER["REQUEST_URI"] = $_SERVER["PHP_SELF"];
+
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
 /**
