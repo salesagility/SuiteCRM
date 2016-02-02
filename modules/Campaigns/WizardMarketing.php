@@ -329,5 +329,7 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 
+$ss->assign('BODY_HTML', 'Hello world!');
+
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

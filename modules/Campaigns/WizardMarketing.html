@@ -108,11 +108,36 @@
 	<div id='step1' >
 		[STEP 0 - email template]<br>
 		<slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
-		<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+		<select  id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+		{literal}
+		<script type="text/javascript">
+			var onEmailTemplateChange = function(elem) {
+				var emailTemplateId = $(elem).val();
+				console.log('load template here...: ' + emailTemplateId);
+				$.post('index.php?entryPoint=emailTemplateData', {
+					'emailTemplateId': emailTemplateId
+				}, function(resp){
+					console.log('email template response: ', resp);
+					results = JSON.parse(resp);
+					$('#email_template_view_html').html(results.data.body_html);
+					$('#email_template_view').html(results.data.body);
+				});
+
+				show_edit_template_link(elem);
+			};
+		</script>
+		{/literal}
 		&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
 		<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
 		&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
 		</span>
+
+
+		<div>
+			<textarea disabled="disabled" id="email_template_view_html" style="width:100%; min-height: 100px;">[EMAIL TEMPLATE VIEW AREA]</textarea>
+			<pre id="email_template_view">[EMAIL TEMPLATE VIEW AREA]</pre>
+		</div>
+
 	</div>
 	<div id="step2" style="display: none;">
 			<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
