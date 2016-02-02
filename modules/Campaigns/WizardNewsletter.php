@@ -633,7 +633,17 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
 
         include_once 'modules/Campaigns/DotListWizardMenu.php';
 
-        $nav_html = new DotListWizardMenu($mod_strings, $steps,$type,$mrkt_string,$summ_url);
+
+
+        if ($type == 'newsletter' || $type == 'email') {
+            $steps[$mrkt_string] = '#';
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']] = '#';
+            $steps[$summ_url] = '#';
+        } else {
+            $steps[$summ_url] = '#';
+        }
+
+        $nav_html = new DotListWizardMenu($mod_strings, $steps);
 
     }
     else {

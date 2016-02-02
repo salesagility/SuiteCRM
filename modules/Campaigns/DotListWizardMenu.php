@@ -5,23 +5,14 @@ class DotListWizardMenu
 
     private $html;
 
-    public function __construct($mod_strings, $steps,$type,$mrkt_string,$summ_url) {
+    public function __construct($mod_strings, $steps) {
         $nav_html = '';
 
         $i = 0;
         if (isset($steps) && !empty($steps)) {
             foreach ($steps as $name => $step) {
-                $i++;
-                $nav_html .= $this->getWizardMenuItemHTML($i, $name);
+                $nav_html .= $this->getWizardMenuItemHTML(++$i, $name);
             }
-        }
-
-        if ($type == 'newsletter' || $type == 'email') {
-            $nav_html .= $this->getWizardMenuItemHTML($i + 1, $mrkt_string);
-            $nav_html .= $this->getWizardMenuItemHTML($i + 2, $mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']);
-            $nav_html .= $this->getWizardMenuItemHTML($i + 3, $summ_url);
-        } else {
-            $nav_html .= $this->getWizardMenuItemHTML($i + 1, $summ_url);
         }
 
         $nav_html = $this->getWizardMenuHTML($nav_html);
@@ -34,7 +25,7 @@ class DotListWizardMenu
     {
         $html = <<<HTML
 <li class="step" id="nav_step$i">
-    <span class="label">$name</span>
+    <span class="label"$dataLink>$name</span>
 </li>
 HTML;
         return $html;
@@ -46,6 +37,7 @@ HTML;
 
         $html = <<<HTML
 <style>
+.wizmenu {margin-left: 200px;}
 .wizmenu * {margin: 0; padding: 0; border: none;}
 .wizmenu ul {display: block; float: none; list-style-type: none; margin: 0; padding: 0;}
 .wizmenu ul li {background-image: url({$imgdir}center-empty.png); background-repeat: no-repeat; display: block; float: left; width: 90px; height: 35px; list-style-type: none; margin: 0; padding: 40px 0 0 0; text-align: center;}
