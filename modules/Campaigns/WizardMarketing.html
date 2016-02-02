@@ -53,7 +53,7 @@
 	<input type="hidden" id="return_id" name="return_id" value="{$RETURN_ID}">
 	<input type="hidden" id="return_action" name="return_action" value="{$RETURN_ACTION}">
 	<input type="hidden" id="direct_step" name="direct_step" value='4'>
-	<input type="hidden" id="wiz_total_steps" name="totalsteps" value="2">
+	<input type="hidden" id="wiz_total_steps" name="totalsteps" value="3">
 	<input type="hidden" id="wiz_current_step" name="currentstep" value='0'>
 	<input type="hidden" id="wiz_back" name="wiz_back" value='none'>
 	<input type="hidden" id="wiz_next" name="wiz_next" value='2'>
@@ -71,7 +71,7 @@
 						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
 						<td><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
 						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$CAMPAIGN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
-						<td style="display: none;"><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns';" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
+						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns';" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
 						</td>
 						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:navigate('next');" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
 					</tr>
@@ -357,7 +357,7 @@
 	</div>
 
 
-	<div id='step3' style="display: none;">
+	<div id='step3'>
 			<table>
 			<td ><h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3></td>
 			<tr><td class="datalabel">{$MOD.LBL_WIZARD_SENDMAIL_MESSAGE}<br></td></tr>
