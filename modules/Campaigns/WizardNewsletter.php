@@ -508,9 +508,17 @@ if(!empty($focus->id)){
 
 $script_to_call ='';
     if (!empty($focus->id)){
-        $script_to_call = "link_navs(1,4);";
+        $maxStep = 2;
+        $script_to_call = "link_navs(1, {$maxStep});";
         if(isset($_REQUEST['direct_step']) and !empty($_REQUEST['direct_step'])){
-            $script_to_call .='   direct('.$_REQUEST['direct_step'].');';
+            $directStep = (int) $_REQUEST['direct_step'];
+            if($directStep < 1) {
+                $directStep = 1;
+            }
+            if($directStep > $maxStep) {
+                $directStep = $maxStep;
+            }
+            $script_to_call .='   direct(' . $directStep . ');';
         }
     } 
     $ss->assign("HILITE_ALL", $script_to_call);
@@ -530,7 +538,7 @@ $script_to_call ='';
             if(!validate_step1()){return false;}
             break;
             case 'step2':
-            if(!validate_step2()){return false;} 
+            //if(!validate_step2()){return false;}
             break;                  
             default://no additional validation needed      
         }
