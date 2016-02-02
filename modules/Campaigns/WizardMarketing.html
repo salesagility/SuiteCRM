@@ -71,7 +71,7 @@
 						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
 						<td><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
 						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$CAMPAIGN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
-						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns';" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
+						<td style="display: none;"><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns';" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
 						</td>
 						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:navigate('next');" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
 					</tr>
@@ -106,6 +106,15 @@
 <div id=wizard>
 
 	<div id='step1' >
+		[STEP 0 - email template]<br>
+		<slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
+		<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+		&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
+		<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
+		&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
+		</span>
+	</div>
+	<div id="step2" style="display: none;">
 			<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
 		<tr>
 			<th colspan="4" align="left" ><h4 scope="row" NOWRAP valign="top">{$MOD.LBL_WIZ_MARKETING_TITLE} {$MRKT_NAME}</h4></td>
@@ -144,6 +153,7 @@
 		<tr>
 			<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MESSAGE_FOR} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 			<td class="datafield"><slot><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {$ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists' title="{$MOD.LBL_MESSAGE_FOR}">{$MOD.LBL_ALL_PROSPECT_LISTS}</slot></td>
+			<!--
 			<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 			<td class="datafield" nowrap>
 					<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
@@ -153,6 +163,7 @@
 					</span>
 				</slot>
 			</td>
+			-->
 		</tr>
 		<tr>
 			<td  NOWRAP valign="top"><slot>&nbsp;</slot></td>
@@ -321,7 +332,7 @@
 	</div>
 
 
-	<div id='step2' >
+	<div id='step3' style="display: none;">
 			<table>
 			<td ><h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3></td>
 			<tr><td class="datalabel">{$MOD.LBL_WIZARD_SENDMAIL_MESSAGE}<br></td></tr>
@@ -361,7 +372,13 @@ function determine_back(){
 		document.getElementById('wizform').submit();
 {literal}
 	}else{
-		navigate('back');
+		if (current_step == 2) {
+			document.getElementById('wiz_current_step').value = 1;
+			navigate('direct');
+		}
+		else {
+			navigate('back');
+		}
 	}
 
 

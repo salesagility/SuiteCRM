@@ -296,12 +296,24 @@ $ss->assign("SUMM_URL", $summ_url);
     function validate_wiz_form(step){
         switch (step){
             case 'step1':
+                if (!validate_step1()) {
+                    check_form('wizform')
+                    return false;
+                }
+                clear_all_errors();
+                break;
+            case 'step2':
             return check_form('wizform');
             break;
             default://no additional validation needed
         }
         return true;
 
+    }
+
+    function validate_step1() {
+        if(!$('#template_id').val()) return false;
+        return true;
     }
 
     showfirst('marketing')
