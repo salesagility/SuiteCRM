@@ -1,0 +1,935 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "SUITE CRM REST API"
+  },
+  "paths": {
+    "/server_info": {
+      "get": {
+        "description": "Gets the current Suite CRM server version and the underlying Sugar CRM server version.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema":{
+              "title": "data",
+              "type":"object",
+              "properties":{
+                "suite_version":{
+                  "type":"string"
+                },
+                "sugar_version":{
+                  "type":"string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/language_definition": {
+      "get": {
+        "description": "Gets a language defintion object for each module passed in.\nThe query parameter array of **modules** determines modules to list.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modules",
+            "in": "query",
+            "description": "Modules to list language definitions for",
+            "required": false,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          },
+          {
+            "name": "hash",
+            "in": "query",
+            "description": "If true, hash code for language returned",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title": "data",
+              "type": "object",
+              "items": {
+                "title": "Matched module name",
+                "type": "object",
+                "properties": {
+                  "Language item of matched module": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/available_modules": {
+      "get": {
+        "description": "Gets an array of available modules.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Defines how to filter the returned modules.  Has two matching paths (default and all).  If not set, it defaults to all",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title":"data",
+              "type":"array",
+              "items":{
+                "properties":{
+                  "module_key":{
+                    "type":"string"
+                  },
+                  "module_label":{
+                    "type":"string"
+                  },
+                  "acls":{
+                    "type":"array",
+                    "items":{
+                      "properties":{
+                        "action":{
+                          "type":"string",
+                          "description":"The type of action (e.g. edit, delete, view,...)"
+                        },
+                        "access":{
+                          "type":"boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/last_viewed": {
+      "get": {
+        "description": "Gets the last viewed module for the modules specified by the ***modules*** array",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modules",
+            "in": "query",
+            "description": "Modules to list language definitions for",
+            "required": false,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "title":"data",
+              "type":"object",
+              "items":{
+                "properties":{
+                  "module_key":{
+                    "type":"array",
+                    "description":"The module_key will be the name of the matched module, e.g. Accounts or Email",
+                    "items":{
+                      "properties":{
+                        "module_information_item":{
+                          "type":"string",
+                          "description":"The module_information_item will change for each module.  For example, the Accounts module has item_id, id, etc."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/module_fields/{module_name}": {
+      "get": {
+        "description": "Gets the module fields for the module specified in ***module_name***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module_name",
+            "in": "path",
+            "description": "The module to list the fields for",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "The specific fields of the module to return",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+
+              "properties": {
+                "module_name": {
+                  "type": "string",
+                  "description": "The matching module name of the module specified in the path"
+                },
+                "table_name": {
+                  "type": "string",
+                  "description": "The database table name of the module specified in the path"
+                },
+                "module_fields": {
+                  "type": "object",
+                  "properties": {
+                    "field_key": {
+                      "type": "object",
+                      "description": "The field_key will be the name of the module field, e.g. id or date_entered.  If fields parameter(s) are used, only field_key for those item(s) will be shown.",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "group": {
+                          "type": "string"
+                        },
+                        "id_name": {
+                          "type": "string"
+                        },
+                        "required": {
+                          "type": "integer"
+                        },
+                        "options": {
+                          "type": "array",
+                          "items":{
+                            "type":"string"
+                          }
+                        },
+                        "related_module": {
+                          "type": "string"
+                        },
+                        "calculated": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "link_fields": {
+                  "type": "object",
+                  "properties": {
+                    "field_key": {
+                      "type": "object",
+                      "description": "The field_key will be the name of the module link, e.g. SecurityGroups or created_by_link.",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "group": {
+                          "type": "string"
+                        },
+                        "id_name": {
+                          "type": "string"
+                        },
+                        "relationship": {
+                          "type": "integer"
+                        },
+                        "module": {
+                          "type": "string"
+                        },
+                        "bean_name": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/module_links/{module}": {
+      "get": {
+        "description": "Gets the module links for the module specified in ***module_name***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module to list the fields for",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+
+              "properties": {
+                "field_key": {
+                  "type": "object",
+                  "description": "The field_key will be the name of the module links, e.g. SecurityGroup or created_by_link.",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "relationship": {
+                      "type": "string"
+                    },
+                    "module": {
+                      "type": "string"
+                    },
+                    "bean_name": {
+                      "type": "integer"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "vname": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/module_layout": {
+      "get": {
+        "description": "Gets the module links for the module(s) specified in ***modules*** array.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "modules",
+            "in": "query",
+            "description": "The module(s) to show the layout for",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          },
+          {
+            "name": "types",
+            "in": "query",
+            "description": "The type(s) to show the layout for",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          },
+          {
+            "name": "views",
+            "in": "query",
+            "description": "The view(s) to show the layout for",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+
+              "properties": {
+                "module_key": {
+                  "type": "object",
+                  "description": "The module_key(s) will be the name of the modules parameter(s) passed in as a query string",
+                  "properties": {
+                    "type_key": {
+                      "type": "string",
+                      "description": "The type_key(s) will be the name of the type parameter(s) passed in as a query string",
+                      "properties":{
+                        "view_key":{
+                          "type":"object",
+                          "description": "The view_key(s) will be the name of the view parameter(s) passed in as a query string",
+                          "properties":{
+                            "templateMeta":{
+                              "type":"object",
+                              "properties":{
+                                "form":{
+                                  "description":"This holds the buttons and custom codes defined for the matching module"
+                                },
+                                "maxColumns":{
+                                  "type":"string",
+                                  "description":"This holds a string representation of the maximum number of columns"
+                                },
+
+                                "widths":{
+                                  "type":"array",
+                                  "items":{
+                                    "properties":{
+                                      "label":{
+                                        "type":"string"
+                                      },
+                                      "field":{
+                                        "type":"string"
+                                      }
+                                    }
+                                  }
+                                } ,
+                                "includes":{
+                                  "type":"array",
+                                  "items":{
+                                    "properties":{
+                                      "file":{
+                                        "type":"string"
+                                      }
+                                    }
+
+                                  }
+                                },
+
+
+                                "useTabs":{
+                                  "type":"boolean"
+                                },
+                                "tabDefs":{
+                                  "type":"object",
+                                  "properties":
+                                  {
+                                    "LBL_MODULE_INFORMATION":{
+                                      "description":"The MODULE part of this key will be replaced with the matching module.",
+                                      "properties":{
+                                        "newTab":{
+                                          "type":"boolean"
+                                        },
+                                        "panelDefault":{
+                                          "type":"string"
+                                        }
+                                      }
+
+
+                                    },
+                                    "LBL_PANEL_ADVANCED":{
+                                      "properties":{
+                                        "newTab":{
+                                          "type":"boolean"
+                                        },
+                                        "panelDefault":{
+                                          "type":"string"
+                                        }
+                                      }
+
+
+                                    },
+                                    "LBL_PANEL_ASSIGNMENT":{
+                                      "description":"The MODULE part of this key will be replaced with the matching module.",
+                                      "properties":{
+                                        "newTab":{
+                                          "type":"boolean"
+                                        },
+                                        "panelDefault":{
+                                          "type":"string"
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "panels":{
+                              "type":"object",
+                              "description":"The return values for this parameter will be different based on the specific system set up"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Missing parameter(s)",
+            "schema": {
+              "$ref":"#/definitions/incorrectParameters"
+            }
+          }
+        }
+      }
+    },
+    "/{module}/{module_id}": {
+      "get": {
+        "description": "Gets the module of type ***module_name*** identified by ***module_id***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module to list the fields for",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "module_id",
+            "in": "path",
+            "description": "The id of the module to list the fields for",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "links",
+            "in": "query",
+            "description": "This array will show all the link fields associated with the specified module",
+            "required": false,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "module":{
+                  "type":"object",
+                  "description":"This will be the fields associated with the module / id of the parameters"
+                },
+                "links":{
+                  "type":"object",
+                  "description":"This will contain an array for each of the link fields specified in the links array parameter"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/{module}": {
+      "get": {
+        "description": "Gets all modules of type ***module***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module to list the fields for",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "where_query",
+            "in": "query",
+            "description": "Where clause to restrict the return module set",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "show_deleted",
+            "in": "query",
+            "description": "Boolean to determine if deleted items should be shown",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "order_by",
+            "in": "query",
+            "description": "Specify the order of the returned module set",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "description": "If true, the module set will be ordered in a descending fashion",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "links",
+            "in": "query",
+            "description": "This array will show all the link fields associated with the specified module",
+            "required": false,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "module":{
+                  "type":"object",
+                  "description":"The name of the module key will be that of the module passed in the path"
+                },
+                "links":{
+                  "type":"array",
+                  "description":"The links array will have an array for each module type containing linked items from the link query parameter",
+                  "items":{
+                    "description":"This will be a matching link module"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/{module}/{module_id}": {
+      "delete": {
+        "description": "Deletes the module of type ***module_name*** identified by ***module_id***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module type to mark as deleted",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "module_id",
+            "in": "path",
+            "description": "The id of the module to mark as deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "module":{
+                  "type":"string",
+                  "description":"This details the type of module that was marked for deletion"
+                },
+                "id":{
+                  "type":"string",
+                  "description":"This details the id of the module that was marked for deletion"
+                },
+                "deleted":{
+                  "type":"boolean",
+                  "description":"Shows if the deletion was successful.  Will always be true on the 200 response code"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/{module}/{module_id}": {
+      "put": {
+        "description": "Updates the module of type ***module_name*** identified by ***module_id***.",
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module type to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "module_id",
+            "in": "path",
+            "description": "The id of the module to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "update",
+            "in": "formData",
+            "description":"This will be a 2d array of the update(s) e.g. 2 input fields name='update[0][name]' value='fieldToUpdate and input name='update[0][value]' value='newValue'",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/{module}": {
+      "post": {
+        "description": "Creates a module of type ***module_name***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module type to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "create",
+            "in": "formData",
+            "description":"This will be a 2d array of the detail(s) e.g. 2 input fields name='create[0][name]' value='fieldToUpdate and input name='create[0][value]' value='newValue'",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "api_custom":{
+                  "type":"boolean",
+                  "description":"This is used to route a 201 response"
+                },
+                "code":{
+                  "type":"string",
+                  "description":"This is the http status code (will be 201 on successful insert)"
+                },
+                "id":
+                {
+                  "type":"string",
+                  "description":"This will be the id of the newly created item"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    },
+    "/action/{module}/{action}": {
+      "post": {
+        "description": "Creates a module of type ***module_name***.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "module",
+            "in": "path",
+            "description": "The module type to run the action against",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "description": "The action to run",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "PARAMETERS",
+            "in": "query",
+            "description":"All query parameters are added to the $_REQUEST array for the action methods to use in an un-modified fashion.",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          },
+          {
+            "name": "PARAMETERS",
+            "in": "formData",
+            "description":"All query parameters are added to the $_REQUEST array for the action methods to use in an un-modified fashion.",
+            "required": true,
+            "type": "array",
+            "items":{
+              "type":"string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object",
+              "properties":{
+                "completed":{
+                  "type":"string",
+                  "description":"This will be 1 if the module action was executed"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The parameters contain a non-matched item",
+            "schema": {
+              "$ref":"#/definitions/unmatchedItem"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions":{
+
+    "unmatchedItem":{
+      "type":"object",
+      "properties":{
+        "api_error":{
+          "type":"boolean"
+        },
+        "error":{
+          "type":"object",
+          "properties":{
+            "message":{
+              "type":"string"
+            },
+            "code":{
+              "type":"string",
+              "description":"The HTTP code 404"
+            }
+          }
+        },
+        "non_matched_item":{
+          "type":"string",
+          "description":"The un-matched item name to cause the error"
+        }
+      }
+    },
+    "incorrectParameters":{
+      "type":"object",
+      "properties":{
+        "api_error":{
+          "type":"boolean"
+        },
+        "error":{
+          "type":"object",
+          "properties":{
+            "message":{
+              "type":"string"
+            },
+            "code":{
+              "type":"string",
+              "description":"The HTTP code 400"
+            }
+          }
+        },
+        "non_matched_module":{
+          "type":"string",
+          "description":"The un-matched module name to cause the error"
+        }
+      }
+    }
+  }
+}
