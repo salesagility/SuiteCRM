@@ -53,15 +53,17 @@
 	
 <table class='other view' cellspacing="1">
 <tr>
+	<!--
 	<td rowspan='2' width="10%" scope="row" style="vertical-align: top;">
 		<p>
 			<div id='nav'>
 				<table border="0" cellspacing="0" cellpadding="0" width="100%" >
-					<!-- <tr><td scope='row' ><div id='nav_step1'>{$MOD.LBL_CHOOSE_CAMPAIGN_TYPE}</div></td></tr> -->
+					<tr><td scope='row' ><div id='nav_step1'>{$MOD.LBL_CHOOSE_CAMPAIGN_TYPE}</div></td></tr>
 				</table>
 			</div>
 		</p>
 	</td>
+	-->
 
 	<td  rowspan='2' width='100%' class='edit view'>
 		<div id="wiz_message"></div>
