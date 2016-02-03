@@ -51,26 +51,27 @@
 
 
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-	<tr>
-	<th colspan="5" align="left" ><h4>{$MOD.LBL_TARGET_LISTS}</h4></th>
-	</tr>
+		<tr>
+			<th colspan="5" align="left" ><h4>{$MOD.LBL_TARGET_LISTS}</h4></th>
+		</tr>
 		<!--
 		<tr>
 			<td colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE1}<br></td>
 		</tr>
+
+		<tr><td colspan=5>&nbsp;</td></tr>
 		-->
-	<tr><td colspan=5>&nbsp;</td></tr>
-	<tr>
-	<td scope="row" colspan="4">{$MOD.LBL_SELECT_TARGET}&nbsp;
-	<input id="popup_target_list_type" name="popup_target_list_type" type='hidden'>
-	<input id="popup_target_list_name" name="popup_target_list_name" type="hidden" value="">
-	<input id='popup_target_list_id' name='popup_target_list_id' title='List ID' type="hidden" value=''>
-	<input title="{$APP.LBL_SELECT_BUTTON_TITLE}" type="button"  class="button" value='{$APP.LBL_SELECT_BUTTON_LABEL}' name=btn3 id='target_list_button'
- 	onclick='open_popup("ProspectLists", 600, 400, "", true, false,  {$encoded_target_list_popup_request_data}, "single", true);'>
-	</span sugar='slot'>
-	</td>
-	<td>&nbsp;</td>
-	</tr>
+		<tr>
+			<td scope="row" colspan="4">{$MOD.LBL_SELECT_TARGET}&nbsp;
+				<input id="popup_target_list_type" name="popup_target_list_type" type='hidden'>
+				<input id="popup_target_list_name" name="popup_target_list_name" type="hidden" value="">
+				<input id='popup_target_list_id' name='popup_target_list_id' title='List ID' type="hidden" value=''>
+				<input title="{$APP.LBL_SELECT_BUTTON_TITLE}" type="button"  class="button" value='{$APP.LBL_SELECT_BUTTON_LABEL}' name=btn3 id='target_list_button'
+				onclick='open_popup("ProspectLists", 600, 400, "", true, false,  {$encoded_target_list_popup_request_data}, "single", true);'>
+				</span sugar='slot'>
+			</td>
+			<td>&nbsp;</td>
+		</tr>
 		<!--
 		<tr><td colspan=5>&nbsp;</td></tr>
 		<tr>
@@ -116,21 +117,51 @@
 				set_return_prospect_list(result_data);
 			};
 		</script>
+		<style type="text/css">
+			ul.target-list {
+				list-style-type: none;
+				padding: 10px;
+				margin: 0;
+				display: block;
+				max-height: 300px;
+				overflow: scroll;
+				border: 1px solid lightgray;
+			}
+			ul.target-list li {
+				margin: 5px 0;
+				padding: 0;
+			}
+			div.target-list-create {
+				border: 1px solid lightgray;
+				padding: 10px;
+				margin: 10px 0 0 0;
+			}
+			div.target-list-table {
+				padding: 10px;
+				margin: 0 0 0 10px;
+				border: 1px solid lightgray;
+				min-height: 490px;
+			}
+		</style>
 		{/literal}
-		<ul>
+		<ul class="target-list">
 			{foreach from=$targetListData item=targetList}
 				<li data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
 			{/foreach}
 		</ul>
 
-		<div>
+		<div class="target-list-create">
 
 			{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br>
-			<input id="target_list_name" name="target_list_name" type='text' size='40' placeholder="{$MOD.LBL_TARGET_NAME}"><br>
+			<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}"><br>
+
+			<br>
 
 			{$MOD.LBL_TARGET_TYPE}<br>
 			<select id="target_list_type" name="target_list_type">{$TARGET_OPTIONS}</select>
 			<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
+			<br>
+
 			<br>
 
 			<input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');">
@@ -138,7 +169,7 @@
 		</div>
 	</div>
 
-	<div style="float: left; max-width: 600px;">
+	<div class="target-list-table" style="float: left; max-width: 600px;">
 
 		<table width = '100%' class='detail view'>
 			<tr><td>{$MOD.LBL_TRACKERS_ADDED}</td></tr>
