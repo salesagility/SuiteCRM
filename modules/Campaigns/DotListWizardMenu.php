@@ -25,7 +25,7 @@ class DotListWizardMenu
     {
         $html = <<<HTML
 <li class="step" id="nav_step$i">
-    <span class="label"$dataLink>$name</span>
+    <span class="label">$name</span>
 </li>
 HTML;
         return $html;
@@ -37,7 +37,7 @@ HTML;
 
         $html = <<<HTML
 <style>
-.wizmenu {margin-left: 200px;}
+.wizmenu {float: left; height: 80px;}
 .wizmenu * {margin: 0; padding: 0; border: none;}
 .wizmenu ul {display: block; float: none; list-style-type: none; margin: 0; padding: 0;}
 .wizmenu ul li {background-image: url({$imgdir}center-empty.png); background-repeat: no-repeat; display: block; float: left; width: 90px; height: 35px; list-style-type: none; margin: 0; padding: 40px 0 0 0; text-align: center;}
@@ -51,6 +51,27 @@ HTML;
     <ul>$innerHTML</ul>
     <div class="clear"></div>
 </div>
+<script type="text/javascript">
+
+var wizardMenuCenter = function() {
+    $('.wizmenu').css('margin-left', ($('.wizmenu').parent().outerWidth() - $('.wizmenu').outerWidth()) / 2);
+};
+
+$(function(){
+    // set navbar to center of page..
+
+
+    wizardMenuCenter();
+
+    setInterval(function(){
+        wizardMenuCenter();
+    }, 300)
+
+    $(window).resize(function(){
+        wizardMenuCenter();
+    });
+});
+</script>
 HTML;
         return $html;
     }
