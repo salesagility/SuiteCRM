@@ -116,11 +116,9 @@
 		<script type="text/javascript">
 			var onEmailTemplateChange = function(elem) {
 				var emailTemplateId = $(elem).val();
-				console.log('load template here...: ' + emailTemplateId);
 				$.post('index.php?entryPoint=emailTemplateData', {
 					'emailTemplateId': emailTemplateId
 				}, function(resp){
-					console.log('email template response: ', resp);
 					results = JSON.parse(resp);
 					$('#email_template_view_html').html(results.data.body_html);
 					$('#email_template_view').html(results.data.body);

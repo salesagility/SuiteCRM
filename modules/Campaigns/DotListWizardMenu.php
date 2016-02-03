@@ -93,13 +93,10 @@ var wizardMenuResetWidth = function() {
         sum += $(e).outerWidth(true);
     });
     if(sum >= $('.wizmenu').parent().outerWidth(true)) {
-        console.log('osszenyom!');
         $('.wizmenu').addClass('tiny');
     }
     else {
         if(sum + $('.wizmenu ul li').length*33 < $('.wizmenu').parent().outerWidth(true)) {
-            console.log($('.wizmenu ul li').length*33, parseInt(sum), $('.wizmenu ul li').length*33, parseInt($('.wizmenu').parent().outerWidth(true)));
-            console.log('szethuz!');
             $('.wizmenu').removeClass('tiny');
         }
     }
