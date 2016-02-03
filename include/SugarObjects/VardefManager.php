@@ -162,9 +162,13 @@ class VardefManager{
 
         if (empty($GLOBALS['dictionary'][$object]))
             $object = BeanFactory::getObjectName($module);
+
+        //Sometimes bad definitions can get in from left over extensions or file system lag(caching). We need to clean those.
+        $data = self::cleanVardefs($GLOBALS['dictionary'][$object]);
+
         $file = create_cache_directory('modules/' . $module . '/' . $object . 'vardefs.php');
 
-        $out="<?php \n \$GLOBALS[\"dictionary\"][\"". $object . "\"]=" . var_export($GLOBALS['dictionary'][$object], true) .";";
+        $out="<?php \n \$GLOBALS[\"dictionary\"][\"". $object . "\"]=" . var_export($data, true) .";";
         sugar_file_put_contents_atomic($file, $out);
         if ( sugar_is_file($file) && is_readable($file)) {
             include($file);
@@ -172,8 +176,6 @@ class VardefManager{
 
         // put the item in the sugar cache.
         $key = "VardefManager.$module.$object";
-        //Sometimes bad definitions can get in from left over extensions or file system lag(caching). We need to clean those.
-        $data = self::cleanVardefs($GLOBALS['dictionary'][$object]);
         sugar_cache_put($key,$data);
     }
 
