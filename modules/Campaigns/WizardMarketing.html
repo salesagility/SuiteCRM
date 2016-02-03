@@ -60,6 +60,8 @@
 	<input type="hidden" id="direction" name="wiz_direction" value='exit'>
 
 
+	{$WIZMENU}
+
 <p>
 <div id ='buttons' >
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
@@ -86,27 +88,28 @@
 
 <table class='other view' cellspacing="1">
 <tr>
-<td rowspan='2' width='10%' scope="row" style="vertical-align: top;">
-<div id='nav' >
+	<!--
+	<td rowspan='2' width='10%' scope="row" style="vertical-align: top;">
+		<div id='nav' >
 
-<table border="0" cellspacing="0" cellpadding="0" width="100%" >
-<tr><td scope='col'><div id='nav_step3'><a  href='{$CAMP_WIZ_URL}1'>{$MOD.LBL_NAVIGATION_MENU_GEN1}</a></div></td></tr>
-<tr><td scope='col'><div id='nav_step4'><a  href='{$CAMP_WIZ_URL}2'>{$MOD.LBL_NAVIGATION_MENU_GEN2}</a></div></td></tr>
-<tr><td scope='col'><div id='nav_step5'><a  href='{$CAMP_WIZ_URL}3'>{$MOD.LBL_NAVIGATION_MENU_TRACKERS}</a></div></td></tr>
-<tr><td scope='col'><div id='nav_step6'><a  href='{$CAMP_WIZ_URL}4'>{$MOD.LBL_NAVIGATION_MENU_SUBSCRIPTIONS}</a></div></td></tr>
-<tr><td scope='col'><div id='nav_step1'>{$MOD.LBL_NAVIGATION_MENU_MARKETING}</div></td></tr>
-<tr><td scope='col'><div  id='nav_step2'>{$MOD.LBL_NAVIGATION_MENU_SEND_EMAIL}</div></td></tr>
-<tr><td scope='col'><div id='nav_step7'>{$MOD.LBL_NAVIGATION_MENU_SUMMARY}</div></td></tr>
-</table>
-</div>
-</td>
+			<table border="0" cellspacing="0" cellpadding="0" width="100%" >
+				<tr><td scope='col'><div id='nav_step3'><a  href='{$CAMP_WIZ_URL}1'>{$MOD.LBL_NAVIGATION_MENU_GEN1}</a></div></td></tr>
+				<tr><td scope='col'><div id='nav_step4'><a  href='{$CAMP_WIZ_URL}2'>{$MOD.LBL_NAVIGATION_MENU_GEN2}</a></div></td></tr>
+				<tr><td scope='col'><div id='nav_step5'><a  href='{$CAMP_WIZ_URL}3'>{$MOD.LBL_NAVIGATION_MENU_TRACKERS}</a></div></td></tr>
+				<tr><td scope='col'><div id='nav_step6'><a  href='{$CAMP_WIZ_URL}4'>{$MOD.LBL_NAVIGATION_MENU_SUBSCRIPTIONS}</a></div></td></tr>
+				<tr><td scope='col'><div id='nav_step1'>{$MOD.LBL_NAVIGATION_MENU_MARKETING}</div></td></tr>
+				<tr><td scope='col'><div  id='nav_step2'>{$MOD.LBL_NAVIGATION_MENU_SEND_EMAIL}</div></td></tr>
+				<tr><td scope='col'><div id='nav_step7'>{$MOD.LBL_NAVIGATION_MENU_SUMMARY}</div></td></tr>
+			</table>
+		</div>
+	</td>
+	-->
 
 <td  rowspan='2' width='100%' style="padding: 0;">
 <div id="wiz_message"></div>
 <div id=wizard>
 
 	<div id='step1' >
-		[STEP 0 - email template]<br>
 		<slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
 		<select  id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 		{literal}
