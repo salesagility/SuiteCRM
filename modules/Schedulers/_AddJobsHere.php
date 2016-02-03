@@ -666,8 +666,13 @@ function pollMonitoredInboxesAOP()
 function aodIndexUnindexed()
 {
     $total = 1;
+    $sanityCount = 0;
     while ($total > 0) {
         $total = performLuceneIndexing();
+        $sanityCount++;
+        if($sanityCount > 100){
+            return true;
+        }
     }
     return true;
 }
@@ -695,13 +700,15 @@ function performLuceneIndexing()
         if (!$bean || !method_exists($bean, "getTableName") || !$bean->getTableName()) {
             continue;
         }
-        $query = "SELECT b.id FROM " . $bean->getTableName() . " b LEFT JOIN aod_indexevent ie ON (ie.record_id = b.id AND ie.record_module = '" . $beanModule . "') WHERE b.deleted = 0 AND (ie.id IS NULL OR ie.date_modified < b.date_modified)";
+        $query = "SELECT b.id FROM ".$bean->getTableName()." b LEFT JOIN aod_indexevent ie ON (ie.record_id = b.id AND ie.record_module = '".$beanModule."') WHERE b.deleted = 0 AND (ie.id IS NULL OR ie.date_modified < b.date_modified) ORDER BY b.date_modified ASC";
         $res = $db->limitQuery($query, 0, 500);
         $c = 0;
         while ($row = $db->fetchByAssoc($res)) {
-            $c++;
-            $total++;
-            $index->index($beanModule, $row['id']);
+            $suc = $index->index($beanModule, $row['id']);
+            if($suc){
+                $c++;
+                $total++;
+            }
         }
         if ($c) {
             $index->commit();
