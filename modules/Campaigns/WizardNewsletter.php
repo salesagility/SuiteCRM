@@ -560,7 +560,7 @@ $sshtml = ' ';
 
 if($campaign_type == 'general'){
     $steps = create_campaign_steps();    
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'campaign',$mrkt_string,$summ_url));
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
 }elseif($campaign_type == 'email'){
@@ -569,7 +569,7 @@ if($campaign_type == 'general'){
     $ss->assign('HIDE_CONTINUE','submit');
 }else{
     $steps = create_newsletter_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'newsletter',$mrkt_string,$summ_url));
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'newsletter',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','submit');
 }
 
