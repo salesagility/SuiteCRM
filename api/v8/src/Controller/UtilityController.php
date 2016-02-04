@@ -22,7 +22,7 @@ class UtilityController extends Api{
         } else {
             $sugar_version = '1.0';
         }
-        $ret['data'] = array('suite_version' => $suitecrm_version, 'sugar_version'=> $sugar_version);
+        $ret['server_info'] = array('suite_version' => $suitecrm_version, 'sugar_version'=> $sugar_version);
         return $this->generateResponse($res,200,$ret,'Success');
     }
 

@@ -19,7 +19,6 @@ class ModuleController extends Api{
                 }
             }
 
-
         }else{
             return $this->generateResponse($res, 400,NULL,'Module Not Found');
 
