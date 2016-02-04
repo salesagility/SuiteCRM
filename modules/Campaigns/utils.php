@@ -91,6 +91,7 @@ function get_campaign_mailboxes(&$emails, $get_name=true) {
     if (!class_exists('InboundEmail')) {
         require('modules/InboundEmail/InboundEmail.php');
     }
+    $inboundEmail = new InboundEmail();
     $query =  "select id,name,stored_options from inbound_email where mailbox_type='bounce' and status='Active' and deleted='0'";
     $db = DBManagerFactory::getInstance();
     $result=$db->query($query);
@@ -98,9 +99,9 @@ function get_campaign_mailboxes(&$emails, $get_name=true) {
     	if($get_name) {
     		$return_array[$row['id']] = $row['name'];
     	} else {
-        	$return_array[$row['id']]= InboundEmail::get_stored_options('from_name',$row['name'],$row['stored_options']);
+        	$return_array[$row['id']] = $inboundEmail->get_stored_options('from_name',$row['name'],$row['stored_options']);
     	}
-        $emails[$row['id']]=InboundEmail::get_stored_options('from_addr','nobody@example.com',$row['stored_options']);
+        $emails[$row['id']] = $inboundEmail->get_stored_options('from_addr','nobody@example.com',$row['stored_options']);
     }
 
     if (empty($return_array)) $return_array=array(''=>'');
