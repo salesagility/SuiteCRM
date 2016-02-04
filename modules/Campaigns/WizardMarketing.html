@@ -75,7 +75,7 @@
 						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$CAMPAIGN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
 						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns';" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
 						</td>
-						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:navigate('next');" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
+						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:navigate('next'); if(document.getElementById('wiz_current_step').value == document.getElementById('wiz_total_steps').value) wizardMenuFillAll();" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
 					</tr>
 				</table>
 			</td>
@@ -453,10 +453,155 @@
 
 
 	<div id='step3'>
-			<table>
+
+		{literal}
+		<style type="text/css">
+			.wizard-summary-left {
+				display: block;
+				margin: 0 20px 0 0; padding: 0; border: none;
+				width: 450px;
+				float: left;
+			}
+			.wizard-summary-left .box,
+			.wizard-summary-right .box {
+				display: block;
+				float: none;
+				border: 1px solid lightgrey;
+				margin: 0 0 20px 0;
+				padding: 20px 20px 20px 80px;
+				background-position-x: 10px;
+				background-position-y: center;
+				background-repeat: no-repeat;
+				background-color: #f3f3f3;
+			}
+			.wizard-summary-left .box.ok {
+				background-image: url(themes/default/images/green_camp.gif);
+			}
+			.wizard-summary-left .box.fail {
+				background-image: url(themes/default/images/red_camp.gif);
+			}
+			.wizard-summary-left .box.small {
+				width: 210px;
+				float: none;
+				height: 80px;
+
+				display: table-cell;
+				vertical-align: middle;
+				padding-left: 55px;
+				padding-right: 5px;
+			}
+			.wizard-summary-left .space {
+				width: 28px;
+				float: none;
+				height: 80px;
+
+				display: table-cell;
+
+			}
+			.wizard-summary-right {
+				display: block;
+				margin: 0;
+				padding: 20px;
+				width: 280px;
+				float: left;
+				border: 1px solid lightgrey;
+			}
+			.wizard-summary-right .box {
+				height: 180px;
+				margin-left: 20px;
+				padding: 0;
+				float: none;
+				display: table-cell;
+				vertical-align: middle;
+				width: 260px;
+				text-align: center;
+				background-position: top 10px right 10px;
+			}
+			.wizard-summary-right .send {
+				background-image: url(themes/default/images/cmpwzrd/email167.png);
+			}
+			.wizard-summary-right .schedule {
+				background-image: url(themes/default/images/cmpwzrd/wallclock.png);
+			}
+
+			.wizard-summary-right .test {
+				height: 100px;
+				background-image: url(themes/default/images/cmpwzrd/email167.png);
+				background-position-y: -7px;
+			}
+			.wizard-summary-right .space {
+				height: 20px;
+			}
+		</style>
+		{/literal}
+
+		<h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3>
+
+		<div class="wizard-summary-left">
+
+			<div class="box ok">
+				<h2>Campaign Details and Conditions</h2>
+			</div>
+
+			<div class="box ok">
+				<h2>Choose Targets</h2>
+			</div>
+
+			<div class="box ok">
+				<h2>Choose Templates</h2>
+			</div>
+
+			<div class="box ok">
+				<h2>Sender Details</h2>
+			</div>
+
+			<div class="box fail">
+				<h2>Campaign Details and Conditions</h2>
+			</div>
+
+
+			<div class="box small ok">
+				Sender Details
+			</div>
+
+			<div class="space"></div>
+
+			<div class="box small right fail">
+				Campaign Details and Conditions
+			</div>
+
+		</div>
+
+		<div class="wizard-summary-right">
+			<!--
+			<div class="box send">
+				Send now
+			</div>
+			-->
+			<div class="space"></div>
+
+			<div class="box schedule">
+				Schedule for a later date and time
+			</div>
+
+			<div class="space"></div>
+
+			<div class="box test">
+				Send to test lists
+			</div>
+
+		</div>
+
+
+
+		<table>
+			<!--
 			<td ><h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3></td>
+			-->
+			<!--
 			<tr><td class="datalabel">{$MOD.LBL_WIZARD_SENDMAIL_MESSAGE}<br></td></tr>
 			<tr><td class="datalabel">&nbsp;</td></tr>
+			-->
 			<tr><td>
 				<input type="radio"  id="next_step" title="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" name="wiz_home_next_step" value='1'checked >{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}
 			</td></tr>

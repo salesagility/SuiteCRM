@@ -102,6 +102,14 @@ var wizardMenuResetWidth = function() {
     }
 };
 
+var wizardMenuFillAll = function() {
+    $('.wizmenu ul li').each(function(i,e){
+        if(!$(e).find('a').length) {
+            $(e).prepend('<a href="#">&nbsp;</a>');
+        }
+    });
+};
+
 var wizardMenu = function() {
     wizardMenuCleanup();
     wizardMenuCenter();
