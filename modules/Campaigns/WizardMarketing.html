@@ -525,9 +525,11 @@
 			}
 
 			.wizard-summary-right .test {
-				height: 100px;
 				background-image: url(themes/default/images/cmpwzrd/email167.png);
 				background-position-y: -7px;
+			}
+			.wizard-summary-right .disabled {
+				color: gray;
 			}
 			.wizard-summary-right .space {
 				height: 20px;
@@ -535,7 +537,20 @@
 		</style>
 		{/literal}
 
+		<br>
+
 		<h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3>
+		<br>
+
+		{if $WARNING_MESSAGE}
+		<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
+		<br>
+		{/if}
+
+		{if $diagnose}
+		{$diagnose}
+		<br>
+		{/if}
 
 		<div class="wizard-summary-left">
 
@@ -543,8 +558,20 @@
 				<h2>Campaign Details and Conditions</h2>
 			</div>
 
-			<div class="box ok">
-				<h2>Choose Targets</h2>
+			<div class="box {if $error_on_target_list}fail{else}ok{/if}">
+				<h2>
+
+					{if $error_on_target_list}
+					<a href="{$link_to_target_list}" title="{$error_on_target_list}">
+					{/if}
+
+						Choose Targets
+
+					{if $error_on_target_list}
+					</a>
+					{/if}
+
+				</h2>
 			</div>
 
 			<div class="box ok">
@@ -555,19 +582,34 @@
 				<h2>Sender Details</h2>
 			</div>
 
-			<div class="box fail">
-				<h2>Campaign Details and Conditions</h2>
-			</div>
 
+			<div class="box small {if $error_on_scheduler2}fail{else}ok{/if}">
 
-			<div class="box small ok">
-				Sender Details
+				{if $error_on_scheduler2}
+				<a href="{$link_to_scheduler}">
+					{/if}
+
+					Process campaign emails
+
+					{if $error_on_scheduler2}
+				</a>
+				{/if}
+
 			</div>
 
 			<div class="space"></div>
 
-			<div class="box small right fail">
-				Campaign Details and Conditions
+			<div class="box small right {if $error_on_scheduler1}fail{else}ok{/if}">
+
+				{if $error_on_scheduler1}
+				<a href="{$link_to_scheduler}">
+					{/if}
+
+					Process bounced emails
+
+					{if $error_on_scheduler2}
+				</a>
+				{/if}
 			</div>
 
 		</div>
@@ -580,28 +622,64 @@
 			-->
 			<div class="space"></div>
 
-			<div class="box schedule">
-				Schedule for a later date and time
+			<input type="hidden" name="wiz_home_next_step" value="1" />
+
+			<div class="box schedule {$PL_DISABLED}">
+
+				{if !$PL_DISABLED}
+				<a href="javascript:;" onclick="onScheduleClick(this);">
+					{/if}
+
+					{$MOD.LBL_SEND_EMAIL}
+
+					{if !$PL_DISABLED}
+				</a>
+				{/if}
+
+				{literal}
+				<script type="text/javascript">
+					var onScheduleClick = function(e) {
+						$('#wiz_home_next_step').val(3);
+						$('#wiz_submit_button').click();
+					};
+				</script>
+				{/literal}
+
 			</div>
 
 			<div class="space"></div>
 
-			<div class="box test">
-				Send to test lists
+			<div class="box test {$PL_DISABLED}">
+
+				{if !$PL_DISABLED}
+				<a href="javascript:;" onclick="onSendAsTestClick(this);">
+					{/if}
+
+					{$MOD.LBL_SEND_AS_TEST}
+
+					{if !$PL_DISABLED}
+				</a>
+				{/if}
+
+				{literal}
+				<script type="text/javascript">
+					var onSendAsTestClick = function(e) {
+						$('#wiz_home_next_step').val(2);
+						$('#wiz_submit_button').click();
+					};
+				</script>
+				{/literal}
+
 			</div>
 
 		</div>
 
 
-
+		<!--
 		<table>
-			<!--
 			<td ><h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3></td>
-			-->
-			<!--
 			<tr><td class="datalabel">{$MOD.LBL_WIZARD_SENDMAIL_MESSAGE}<br></td></tr>
 			<tr><td class="datalabel">&nbsp;</td></tr>
-			-->
 			<tr><td>
 				<input type="radio"  id="next_step" title="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" name="wiz_home_next_step" value='1'checked >{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}
 			</td></tr>
@@ -612,6 +690,7 @@
 			<tr><td>
 				&nbsp;<div id='send_email2' {$SHOW_DIVS}><input type="radio"  id="next_step" name='wiz_home_next_step' value='3' title='{$MOD.LBL_SEND_EMAIL}' {$PL_DISABLED}>{$MOD.LBL_SEND_EMAIL}</div>
 			</td></tr></table>
+			-->
 	</div>
 
 

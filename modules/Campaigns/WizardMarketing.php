@@ -267,6 +267,7 @@ echo $javascript->getScript();
             //print no entries warning
             if($campaign_focus->campaign_type='NewsLetter'){
                 $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
             }else{
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
             }
@@ -352,6 +353,25 @@ $dotListWizardMenu = new DotListWizardMenu($mod_strings, array(
 ), true);
 
 $ss->assign('WIZMENU', $dotListWizardMenu);
+
+$diagnose = diagnose($errors, $links);
+
+$ss->assign('diagnose', $diagnose);
+
+foreach($errors as $error => $msg) {
+    if($msg) {
+        $ss->assign('error_on_' . $error, $msg);
+    }
+}
+
+
+foreach($links as $link => $url) {
+    if($url) {
+        $ss->assign('link_to_' . $link, $url);
+    }
+}
+
+$ss->assign('link_to_target_list', $camp_url.'2');
 
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
