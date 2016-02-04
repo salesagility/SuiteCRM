@@ -174,9 +174,20 @@ foreach ($mailboxes as $id=>$name) {
 }
 $ss->assign("FROM_EMAILS",$from_emails);
 $ss->assign("DEFAULT_FROM_EMAIL",$default_email_address);
-$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'],$mrkt_focus->status));
+$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'],$mrkt_focus->status ? $mrkt_focus->status : 'active'));
 if (empty($mrkt_focus->inbound_email_id)) {
-    $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, ''));
+    $defaultMailboxId = '';
+    $mailboxIds = array();
+    foreach($mailboxes as $mailboxId => $mailboxName) {
+        if($mailboxId) {
+            $mailboxIds[] = $mailboxId;
+        }
+    }
+    if(count($mailboxIds) == 1) {
+        $defaultMailboxId = $mailboxIds[0];
+    }
+    $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $defaultMailboxId));
+    $ss->assign("MAILBOXES_DEAULT", $defaultMailboxId);
 } else {
     $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $mrkt_focus->inbound_email_id));
 }

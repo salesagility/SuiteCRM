@@ -212,7 +212,7 @@ $mod_strings = array (
   'LBL_TEST_TYPE_NAME'=>'Test',
   'LBL_UNSUBSCRIPTION_LIST'=>'Unsubscription List',
   'LBL_SUBSCRIPTION_LIST'=>'Subscription List',
-   'LBL_MRKT_NAME' => 'Name',
+   'LBL_MRKT_NAME' => 'Marketing Email Name',
   'LBL_TEST_LIST'=>'Test List',
   'LBL_WIZARD_HEADER_MESSAGE' => 'Fill out the required fields to help identify the campaign.',
   'LBL_WIZARD_BUDGET_MESSAGE' => 'Enter the budget to calculate the ROI.',
@@ -440,6 +440,10 @@ $mod_strings = array (
     'ERR_NO_OPTS_SAVED'		=> 'No optimums were saved with your Inbound Email account.',
     'ERR_REVIEW_EMAIL_SETTINGS' => 'Please review Inbound Email settings.',
     'LBL_LEADS_DELETED_SINCE_CREATED' => '{0} leads that were created through this campaign have been deleted since creation.',
+	'LBL_FROM_NAME_HELP' => 'This will be the name that your recipient will see',
+	'LBL_FROM_ADDR_HELP' => 'This email address will the mail address that tells your recipient where the campaign came from',
+	'LBL_REPLY_TO_NAME_HELP' => 'This will be the name that your recipient will reply to',
+	'LBL_REPLY_TO_ADDR_HELP' => 'This will be the email that your recipients will reply to',
 );
 
 
