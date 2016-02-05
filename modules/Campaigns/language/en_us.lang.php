@@ -176,6 +176,7 @@ $mod_strings = array (
   'LBL_MORE_DETAILS' => 'More Details',
   'LBL_CREATE_NEWSLETTER'=>'Create Newsletter',
   'LBL_LIST_NAME' => 'Name',
+	'LBL_INBOUND_EMAIL_SETTINGS' => 'Inbound Email Settings',
   'LBL_STATUS_TEXT' =>  'Status:' ,
   'LBL_FROM_MAILBOX_NAME'=>'Use Mail Account:',
   'LBL_FROM_NAME' => 'From Name: ',
