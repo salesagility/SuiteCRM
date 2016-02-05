@@ -600,15 +600,15 @@
 			</div>
 
 
-			<div class="box small {if $error_on_scheduler2}fail{else}ok{/if}">
+			<div class="box small {if $error_on_scheduler2 || $error_on_mailbox2}fail{else}ok{/if}">
 
-				{if $error_on_scheduler2}
-				<a href="{$link_to_scheduler}">
+				{if $error_on_scheduler2 || $error_on_mailbox2}
+				<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
 					{/if}
 
 					Process campaign emails
 
-					{if $error_on_scheduler2}
+					{if $error_on_scheduler2 || $error_on_mailbox2}
 				</a>
 				{/if}
 
@@ -616,15 +616,15 @@
 
 			<div class="space"></div>
 
-			<div class="box small right {if $error_on_scheduler1}fail{else}ok{/if}">
+			<div class="box small right {if $error_on_scheduler1 || $error_on_mailbox1}fail{else}ok{/if}">
 
-				{if $error_on_scheduler1}
-				<a href="{$link_to_scheduler}">
+				{if $error_on_scheduler1 || $error_on_mailbox1}
+				<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
 					{/if}
 
 					Process bounced emails
 
-					{if $error_on_scheduler2}
+					{if $error_on_scheduler2 || $error_on_mailbox1}
 				</a>
 				{/if}
 			</div>

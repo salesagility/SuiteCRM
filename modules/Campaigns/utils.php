@@ -731,6 +731,7 @@ function process_subscriptions($subscription_string_to_parse) {
 
         $links = array(
             'scheduler' => false,
+            'email' => false,
         );
 
         $msg = " <table class='detail view small' width='100%'><tr><td> ".$mod_strings['LNK_CAMPAIGN_DIGNOSTIC_LINK']."</td></tr>";
@@ -772,13 +773,16 @@ function process_subscriptions($subscription_string_to_parse) {
         //if health counter is above 1, then show admin link
         if($email_health>0){
             if (is_admin($current_user)){
-                $msg.="<tr><td ><a href='index.php?module=Campaigns&action=WizardEmailSetup";
+                $lnk = 'index.php?module=Campaigns&action=WizardEmailSetup';
+                $msg.="<tr><td ><a href='";
                 if(isset($_REQUEST['return_module'])){
-                    $msg.="&return_module=".$_REQUEST['return_module'];
+                    $lnk .="&return_module=".$_REQUEST['return_module'];
                 }
                 if(isset($_REQUEST['return_action'])){
-                    $msg.="&return_action=".$_REQUEST['return_action'];
+                    $lnk .="&return_action=".$_REQUEST['return_action'];
                 }
+                $msg .= $lnk;
+                $links['email'] = $lnk;
                 $msg.="'>".$mod_strings['LBL_EMAIL_SETUP_WIZ']."</a></td></tr>";
             }else{
                 $msg.="<tr><td >".$mod_strings['LBL_NON_ADMIN_ERROR_MSG']."</td></tr>";
