@@ -219,6 +219,10 @@ else {
     if (!empty($mrkt_focus->id)) {
         $mrkt_focus->load_relationship('prospectlists');
         $prospectlists=$mrkt_focus->prospectlists->get();
+    }
+    else {
+        $ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
+        $ss->assign("MESSAGE_FOR_DISABLED","disabled");
     };
 }
 if (empty($prospectlists)) $prospectlists=array();

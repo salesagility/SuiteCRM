@@ -280,7 +280,7 @@
 
 			</tr>
 			-->
-			<tr>
+			<tr style="display: none;">
 				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MESSAGE_FOR} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 				<td class="datafield"><slot><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {$ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists' title="{$MOD.LBL_MESSAGE_FOR}">{$MOD.LBL_ALL_PROSPECT_LISTS}</slot></td>
 				<!--
@@ -295,7 +295,7 @@
 				</td>
 				-->
 			</tr>
-			<tr>
+			<tr style="display: none;">
 				<td  NOWRAP valign="top"><slot>&nbsp;</slot></td>
 				<td width="35%" class="datafield"><slot><select {$MESSAGE_FOR_DISABLED}  tabindex='1' multiple size="5" id="message_for" name='message_for[]' title="{$MOD.LBL_MESSAGE_FOR}">{$SCOPE_OPTIONS}</select></slot></td>
 				<td  NOWRAP valign="top"><slot>&nbsp;</slot></td>
