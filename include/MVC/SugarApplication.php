@@ -631,7 +631,7 @@ class SugarApplication
 	 * @access	public
 	 * @param	string	$url	The URL to redirect to
 	 */
- 	function redirect(
+ 	static function redirect(
  	    $url
  	    )
 	{

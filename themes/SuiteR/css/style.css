@@ -1118,6 +1118,10 @@ div#responseTime {
     color: #008000;
     font-weight: bold;
 }
+.aclGroup {
+    color: #0000A0;
+    font-weight: bold;
+}
 
 /* for lists where we don't want to have bullet points */
 ul.noBullet {
@@ -1578,10 +1582,6 @@ a:link, a:visited, a:hover {
 }
 
 /* Listview styles */
-.list {
-    border: 1px solid;
-}
-
 .list tr.pagination td table td {
     background:#FAFAFA none repeat scroll 0 0;
     color:#666666;
@@ -4632,6 +4632,32 @@ td.inlineEditActive{
     }
 }
 
+/*
+    Fix for github issue: "SuiteR Responsive Theme navigation bar #569"
+*/
+@media (max-width:340px) {
+    #mobilegloballinks a {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0;
+        padding: 8px;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    #userlinks_head {
+        color: #ffffff !important;
+        float: right;
+        margin: 8px 0 0;
+        padding: 8px;
+        position: fixed;
+        right: 40px;
+        top: 0;
+    }
+}
+
+
 /* Fix to address bug with popups overflowing in the emails module*/
 
 #editAccountDialogue_c{
@@ -4831,6 +4857,30 @@ object{
     font-weight: bold;
     color: red;
 }
+
+/* report layout */
+#report-editview-footer {width: 70%; float: left;}
+
+#detailpanel_fields_select {float: left; width: 20%; height: 640px; overflow-y: auto; margin-right: 20px;}
+.aor_dragbox {height: 250px; overflow: scroll;}
+#report-editview-footer .tab-togglers {width: 80%;}
+#report-editview-footer .tab-toggler {display: block; float: left;}
+#report-editview-footer .tab-toggler.active .button {background-color: #286090;}
+#report-editview-footer .parentheses-btn {display: block; width: 100%; min-height: 30px; border: 1px solid lightgray;}
+#report-editview-footer .condition-sortable-handle {cursor: move;}
+#report-editview-footer .parenthesis-line strong {font-size: 18px}
+#report-editview-footer .drop-area.highlighted {background-color: #f7f7f7;}
+
+
+/*Rgraph charts*/
+.noGraphDataPoints
+{
+    padding:10px;
+}
+.rgraph_chart_tooltips_css {
+    font-family:Arial ! important;
+}
+/*End of Rgraph charts*/
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

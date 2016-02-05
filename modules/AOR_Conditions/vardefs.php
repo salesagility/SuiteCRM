@@ -67,6 +67,17 @@ $dictionary['AOR_Condition'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
+        'logic_op' => array(
+            'name' => 'logic_op',
+            'vname' => 'LBL_LOGIC_OP',
+            'type' => 'varchar',
+            'default_value' => 'AND',
+        ),
+        'parenthesis' => array(
+            'name' => 'parenthesis',
+            'vname' => 'LBL_PARENTHESIS',
+            'type' => 'varchar',
+        ),
   'module_path' =>
   array (
     'name' => 'module_path',

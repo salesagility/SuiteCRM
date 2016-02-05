@@ -1,12 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,9 +38,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+require_once('include/MVC/View/views/view.list.php');
+require_once('modules/Meetings/MeetingsListViewSmarty.php');
 
 class MeetingsViewList extends ViewList
 {
+
+    function MeetingsViewList()
+    {
+        parent::ViewList();
+    }
+
+    function preDisplay()
+    {
+        $this->lv = new MeetingsListViewSmarty();
+    }
+
     public function listViewProcess()
     {
         $this->processSearchForm();
@@ -51,7 +63,7 @@ class MeetingsViewList extends ViewList
             return;
         }
         if (empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false) {
-            $this->lv->ss->assign("SEARCH",true);
+            $this->lv->ss->assign("SEARCH", true);
             // add recurring_source field to filter to be able acl check to use it on row level
             $this->lv->mergeDisplayColumns = true;
             $filterFields = array('recurring_source' => 1);

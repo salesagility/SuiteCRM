@@ -233,7 +233,7 @@ class PackageManager{
          }
     }
 
-    function getCredentials(){
+    static function getCredentials(){
 
         $admin = new Administration();
         $admin->retrieveSettings(CREDENTIAL_CATEGORY, true);

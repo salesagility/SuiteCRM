@@ -160,8 +160,9 @@ class ViewRelationships extends SugarView
      * @param string $template the file to fetch
      * @return string contents from calling the fetch method on the Sugar_Smarty instance
      */
-    protected function fetchTemplate($smarty, $template)
+    protected function fetchTemplate($smarty/*, $template*/)
     {
+        $template = func_get_arg(1);
         return $smarty->fetch($this->getCustomFilePathIfExists($template));
     }
 }

@@ -37,6 +37,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+require_once 'modules/AOP_Case_Updates/util.php';
+if(!isAOPEnabled()){
+    //Use the default
+    require 'modules/InboundEmail/EditView.php';
+    exit();
+}
+
 
 $_REQUEST['edit']='true';
 
@@ -151,6 +158,11 @@ if(!empty($focus->stored_options)) {
 	$trashFolder = (isset($storedOptions['trashFolder'])) ? $storedOptions['trashFolder'] : "";
 	$sentFolder = (isset($storedOptions['sentFolder'])) ? $storedOptions['sentFolder'] : "";
 	$distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
+    $distribution_user_id = (isset($storedOptions['distribution_user_id'])) ? $storedOptions['distribution_user_id'] : "";
+    $distribution_user_name = (isset($storedOptions['distribution_user_name'])) ? $storedOptions['distribution_user_name'] : "";
+    $distributionAssignOptions = (isset($storedOptions['distribution_options'])) ? $storedOptions['distribution_options'] : "";
+
+
 	$create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
 	$email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
 
@@ -179,8 +191,11 @@ if(!empty($focus->stored_options)) {
 	$trashFolder = '';
 	$sentFolder = '';
 	$distrib_method ='';
+    $distribution_user_id = '';
+    $distribution_user_name = '';
 	$create_case_email_template='';
 	$leaveMessagesOnMailServer = 1;
+    $distributionAssignOptions = array();
 	$email_num_autoreplies_24_hours = $focus->defaultEmailNumAutoreplies24Hours;
 } // else
 
@@ -341,11 +356,19 @@ if($focus->is_personal) {
 
 }
 
+
 $xtpl->assign('hasGrpFld',$focus->groupfolder_id == null ? '' : 'checked="1"');
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', get_select_options_with_id($app_list_strings['dom_int_bool'], $leaveMessagesOnMailServer));
+
 $distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
+$xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options',$distributionAssignOptions));
+$xtpl->assign('distribution_user_name', $distribution_user_name);
+$xtpl->assign('distribution_user_id', $distribution_user_id);
+
+
+
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE_OPTIONS', get_select_options_with_id($email_templates_arr, $create_case_email_template));
 if(!empty($create_case_email_template)) {
@@ -409,4 +432,76 @@ else if( $focus->is_personal == '1')
 
 $xtpl->parse("main");
 $xtpl->out("main");
+
 ?>
+<script>
+
+    function hideElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "none";
+        }
+    }
+
+    function showElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "";
+        }
+    }
+
+    function assign_field_change(field){
+        hideElem(field + '[1]');
+        hideElem(field + '[2]');
+
+        if(document.getElementById(field + '[0]').value == 'role'){
+            showElem(field + '[2]');
+        }
+        else if(document.getElementById(field + '[0]').value == 'security_group'){
+            showElem(field + '[1]');
+            showElem(field + '[2]');
+        }
+    }
+    function displayDistributionOptions(display){
+        if(display) {
+            $('#distribution_options\\[0\\]').show();
+            $('#distribution_options\\[1\\]').show();
+            $('#distribution_options\\[2\\]').show();
+            assign_field_change('distribution_options');
+        }else{
+            $('#distribution_options\\[0\\]').hide();
+            $('#distribution_options\\[1\\]').hide();
+            $('#distribution_options\\[2\\]').hide();
+        }
+    }
+
+    function displayDistributionUser(display){
+        if(display) {
+            $('#distribution_user').show();
+        }else{
+            $('#distribution_user').hide();
+        }
+    }
+    $(document).ready(function(){
+        displayDistributionOptions(false);
+        $('#distrib_method').change(function(){
+            var val = $('#distrib_method').val();
+            switch(val){
+                case 'roundRobin':
+                case 'leastBusy':
+                case 'random':
+                    displayDistributionOptions(true);
+                    displayDistributionUser(false);
+                    break;
+                case 'singleUser':
+                    displayDistributionOptions(false);
+                    displayDistributionUser(true);
+                    break;
+                case 'AOPDefault':
+                default:
+                    displayDistributionOptions(false);
+                    displayDistributionUser(false);
+                    break;
+            }
+        });
+        $('#distrib_method').change();
+    });
+</script>

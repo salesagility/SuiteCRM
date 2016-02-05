@@ -134,13 +134,16 @@ class jjwg_Areas extends jjwg_Areas_sugar {
         if (empty($a)) return $this->centroid;
         $cx = 0.0;
         $cy = 0.0;
+        // Set $p as Polygon and Add Closing Point
+        $p = $this->polygon;
+        $p[] = $p[0];
 
         for ($i = 0; $i < $n; $i++) {
-            $cx += ($this->polygon[$i]['lng'] + $this->polygon[$i+1]['lng']) * ( ($this->polygon[$i]['lng'] * $this->polygon[$i+1]['lat']) - ($this->polygon[$i+1]['lng'] * $this->polygon[$i]['lat']) );
-            $cy += ($this->polygon[$i]['lat'] + $this->polygon[$i+1]['lat']) * ( ($this->polygon[$i]['lng'] * $this->polygon[$i+1]['lat']) - ($this->polygon[$i+1]['lng'] * $this->polygon[$i]['lat']) );
+            $cx += ($p[$i]['lng'] + $p[$i+1]['lng']) * ( ($p[$i]['lng'] * $p[$i+1]['lat']) - ($p[$i+1]['lng'] * $p[$i]['lat']) );
+            $cy += ($p[$i]['lat'] + $p[$i+1]['lat']) * ( ($p[$i]['lng'] * $p[$i+1]['lat']) - ($p[$i+1]['lng'] * $p[$i]['lat']) );
         }
-        $centroid_lng = (1/(6*$a))*$cx;
-        $centroid_lat = (1/(6*$a))*$cy;
+        $centroid_lng = -(1/(6*$a))*$cx;
+        $centroid_lat = -(1/(6*$a))*$cy;
         
         if ($centroid_lng != 0 && $centroid_lat != 0) {
             $this->centroid = array(
@@ -166,10 +169,14 @@ class jjwg_Areas extends jjwg_Areas_sugar {
         // Based on: http://forums.devnetwork.net/viewtopic.php?f=1&t=44074
         $n = count($this->polygon);
         $area = 0.0;
+        // Set $p as Polygon and Add Closing Point
+        $p = $this->polygon;
+        $p[] = $p[0];
+        
         for ($i = 0; $i < $n; $i++) {
             $j = ($i + 1);
-            $area += $this->polygon[$i]['lng'] * $this->polygon[$j]['lat'];
-            $area -= $this->polygon[$i]['lat'] * $this->polygon[$j]['lng'];
+            $area += $p[$i]['lng'] * $p[$j]['lat'];
+            $area -= $p[$i]['lat'] * $p[$j]['lng'];
         }
         $area /= 2;
         $this->area = abs($area);

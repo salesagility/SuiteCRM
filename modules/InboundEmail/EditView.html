@@ -45,11 +45,13 @@
  * Contributor(s): Chris Nojima
  ********************************************************************************/
 -->
+
 <div id="testSettingsDiv"></div>
 <div id="selectFoldersDiv"></div>
 <!-- BEGIN: main -->
 {MODULE_TITLE}
 {ERROR_STRING}
+<script type='text/javascript' src='cache/include/javascript/sugar_grp_overlib.js?v={VERSION_MARK}'></script>
 
 <form action="index.php" method="post" name="EditView" id="EditView">
 	<input type="hidden" name="module" value="{MODULE}">
@@ -220,7 +222,49 @@
 			<td valign="top" scope="row">
 				<slot>{MOD.LBL_DISTRIBUTION_METHOD}:&nbsp;</slot></td>
 			<td valign="top"  width="35%"><slot>
-				<select name='distrib_method' tabindex='241'>{DISTRIBUTION_METHOD}</select></slot></td>
+				<select id='distrib_method' name='distrib_method' tabindex='241'>{DISTRIBUTION_METHOD}</select>&nbsp;&nbsp;
+
+                <span id="distribution_user">
+                <input type="text" name="distribution_user_name" class="sqsEnabled" tabindex="0" id="distribution_user_name" size="" value="{distribution_user_name}" title='' autocomplete="off"  	 >
+                <input type="hidden" name="distribution_user_id" id="distribution_user_id" value="{distribution_user_id}">
+<span class="id-ff multiple">
+<button type="button" name="btn_distribution_user_name" id="btn_distribution_user_name" tabindex="0" title="Select User" class="button firstChild" value="Select User"
+        onclick='open_popup(
+                "Users",
+                600,
+                400,
+                "",
+                true,
+                false,
+        {"call_back_function":"set_return","form_name":"EditView","field_to_name_array":{"id":"distribution_user_id","last_name":"distribution_user_name"}},
+                "single",
+                true
+                );' >
+    <img src="themes/default/images/id-ff-select.png"></button><button type="button" name="btn_clr_distribution_user_name" id="btn_clr_distribution_user_name" tabindex="0" title="Clear User"  class="button lastChild"
+                                                                       onclick="SUGAR.clearRelateField(this.form, 'distribution_user_name', 'distribution_user_id');"  value="Clear User" ><img src="themes/default/images/id-ff-clear.png"></button>
+</span>
+                <script type="text/javascript">
+                    if(typeof sqs_objects == 'undefined'){
+                        var sqs_objects = new Array;
+                    }
+                    sqs_objects['EditView_distribution_user_name']={
+                        "form":"EditView",
+                        "method":"get_user_array",
+                        "field_list":["user_name","id"],
+                        "populate_list":["distribution_user_name","distribution_user_id"],
+                        "required_list":["distribution_user_id"],
+                        "conditions":[{"name":"user_name","op":"like_custom","end":"%","value":""}],
+                        "limit":"30",
+                        "no_match_text":"No Match"};
+                    SUGAR.util.doWhen(
+                            "typeof(sqs_objects) != 'undefined' && typeof(sqs_objects['EditView_distribution_user_name']) != 'undefined'",
+                            enableQS
+                    );
+                </script>
+                </span>
+                &nbsp;&nbsp;
+
+                {DISTRIBUTION_OPTIONS}</slot></td>
 			<td valign="top" scope="row">
 				<slot>&nbsp;</slot></td>
 			<td valign="top"  width="35%"><slot>

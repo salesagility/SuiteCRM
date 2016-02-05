@@ -368,8 +368,9 @@ class ViewModulefield extends SugarView
      * @param string $template the file to fetch
      * @return string contents from calling the fetch method on the FieldViewer Sugar_Smarty instance
      */
-    protected function fetchTemplate($fv, $template)
+    protected function fetchTemplate($fv/*, $template*/)
     {
+        $template = func_get_arg(1);
         return $fv->ss->fetch($this->getCustomFilePathIfExists($template));
     }
 }
