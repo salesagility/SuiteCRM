@@ -175,7 +175,8 @@ class ProspectList extends SugarBean {
 
 		// query all custom fields in the fields_meta_data table for the modules which are being exported 
 		$db = DBManagerFactory::getInstance();
-		$result = $db->query("select name, custom_module from fields_meta_data where custom_module in ('" . 
+		$result = $db->query("select (case when (type = 'relate') then ext3 else name end) as name,
+					custom_module from fields_meta_data where custom_module in ('" .
 					implode("', '", array_keys($members)) . "')",
 					true,
 					"ProspectList::create_export_members_query() : error querying custom fields");
