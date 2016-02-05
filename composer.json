@@ -9,7 +9,7 @@
   },
   "autoload": {
     "psr-4": {
-      "SuiteCRM\\": "api/src/versions"
+      "SuiteCRM\\Api\\": "Api"
     }
   }
 }
