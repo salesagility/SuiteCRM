@@ -351,8 +351,8 @@ $dotListWizardMenu = new DotListWizardMenu($mod_strings, array(
     //$mod_strings['LBL_NAVIGATION_MENU_GEN2'] => $camp_url.'2',
     //$mod_strings['LBL_NAVIGATION_MENU_TRACKERS'] => $camp_url.'3',
     $mod_strings['LBL_NAVIGATION_MENU_MARKETING'] => '#', //$camp_url.'3',
-    $mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL'] => false,
-    $mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] => false,
+    $mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY'] => false,
+    //$mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] => false,
 ), true);
 
 $ss->assign('WIZMENU', $dotListWizardMenu);
