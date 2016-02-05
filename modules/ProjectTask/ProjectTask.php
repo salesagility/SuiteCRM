@@ -616,7 +616,7 @@ class ProjectTask extends SugarBean {
 
         $db = DBManagerFactory::getInstance();
         $this->disable_row_level_security = true;
-        $query = $this->create_new_list_query('', "project_id = {$db->quoted($this->project_id)}");
+        $query = $this->create_new_list_query('', "$this->table_name.project_id = {$db->quoted($this->project_id)}");
         $this->disable_row_level_security = false;
         $res = $db->query($query);
         while($row = $db->fetchByAssoc($res))
