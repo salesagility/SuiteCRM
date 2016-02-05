@@ -263,6 +263,7 @@ echo $javascript->getScript();
         if ($pl_lists==0){
             //print no target list warning
             $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
+            $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
         }else{
             //print no entries warning
             if($campaign_focus->campaign_type='NewsLetter'){
@@ -270,6 +271,7 @@ echo $javascript->getScript();
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
             }else{
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
             }
         }
         //disable the send email options
