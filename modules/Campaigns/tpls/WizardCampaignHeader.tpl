@@ -43,7 +43,7 @@
 *}
 
 	<!-- Begin Campaign Diagnostic Link -->	
-	{$CAMPAIGN_DIAGNOSTIC_LINK}
+	<!-- {$CAMPAIGN_DIAGNOSTIC_LINK} -->
 	<!-- End Campaign Diagnostic Link -->
 	
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
