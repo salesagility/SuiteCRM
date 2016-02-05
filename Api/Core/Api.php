@@ -1,5 +1,6 @@
 <?php
-namespace SuiteCRM\Controller;
+
+namespace SuiteCRM\Api\Core;
 
 class Api{
 
@@ -7,9 +8,9 @@ class Api{
 
 
         $response = array(
-          'status' => $status,
-          'data' => $data,
-          'message' => $message,
+            'status' => $status,
+            'data' => $data,
+            'message' => $message,
         );
 
         return $response_object
