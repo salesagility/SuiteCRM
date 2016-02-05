@@ -310,13 +310,13 @@ class MysqliManager extends MysqlManager
 	    }
 
 		// cn: using direct calls to prevent this from spamming the Logs
-	    mysqli_query($this->database,"SET CHARACTER SET utf8");
-	    $names = "SET NAMES 'utf8'";
+	    
 	    $collation = $this->getOption('collation');
 	    if(!empty($collation)) {
-	        $names .= " COLLATE '$collation'";
+	    	$names = "SET NAMES 'utf8' COLLATE '$collation'";
+	    	mysqli_query($this->database,$names);
 		}
-	    mysqli_query($this->database,$names);
+	    mysqli_set_charset ($this->database , "utf8" );
 
 		if($this->checkError('Could Not Connect', $dieOnError))
 			$GLOBALS['log']->info("connected to db");
