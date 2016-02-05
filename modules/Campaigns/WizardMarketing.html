@@ -128,6 +128,18 @@
 			};
 		</script>
 		{/literal}
+
+		{if $email_template_already_selected}
+		{literal}
+		<script type="text/javascript">
+			$(function(){
+				onEmailTemplateChange(document.getElementById('template_id'));
+			});
+		</script>
+		{/literal}
+		{/if}
+
+
 		&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
 		<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
 		&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
@@ -135,8 +147,9 @@
 
 
 		<div>
-			<textarea disabled="disabled" id="email_template_view_html" style="width:100%; min-height: 100px;">[EMAIL TEMPLATE VIEW AREA]</textarea>
-			<pre id="email_template_view">[EMAIL TEMPLATE VIEW AREA]</pre>
+			<!-- [EMAIL TEMPLATE VIEW AREA] -->
+			<!-- <textarea disabled="disabled" id="email_template_view_html" style="width:100%; min-height: 100px;"></textarea> -->
+			<pre id="email_template_view"></pre>
 		</div>
 
 	</div>

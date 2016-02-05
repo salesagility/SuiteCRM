@@ -200,6 +200,7 @@ if($mrkt_focus->template_id) {
     $ss->assign("TEMPLATE_ID", $mrkt_focus->template_id);
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $mrkt_focus->template_id));
     $ss->assign("EDIT_TEMPLATE","visibility:inline");
+    $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
 }
 else {
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, ""));
