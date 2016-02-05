@@ -11,5 +11,8 @@
     "psr-4": {
       "SuiteCRM\\Api\\": "Api"
     }
+  },
+  "require": {
+    "psecio/jwt": "1.*"
   }
 }
