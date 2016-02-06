@@ -231,7 +231,6 @@ class Campaign extends SugarBean {
 
 			}
 
-		$this->unformat_all_fields();
 
 		// Bug53301
 		if($this->campaign_type != 'NewsLetter') {

@@ -115,7 +115,7 @@ static function getInstance(){
 /**
  * getMonitor
  * This method returns a Monitor instance based on the monitor name.
- * @param $name The String value of the monitor's name to retrieve
+ * @param string $name value of the monitor's name to retrieve
  * @return Monitor instance corresponding to name or a BlankMonitor instance if one could not be found
  */
 public function getMonitor($name) {
