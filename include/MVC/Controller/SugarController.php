@@ -541,7 +541,6 @@ class SugarController{
 			ACLController::displayNoAccess(true);
 			sugar_cleanup(true);
 		}
-		$this->bean->unformat_all_fields();
 	}
 
 	/**
