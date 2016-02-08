@@ -292,3 +292,48 @@
         return true;        
     }
 
+var onEmailTemplateChange = function(elem) {
+    var emailTemplateId = $(elem).val();
+
+    $('#email_template_view_html').html('');
+    $('#email_template_view').html('');
+
+    $.post('index.php?entryPoint=emailTemplateData', {
+        'emailTemplateId': emailTemplateId
+    }, function(resp){
+        var results = JSON.parse(resp);
+        $('#email_template_view_html').html(results.data.body_html);
+        $('#email_template_view').html(results.data.body);
+
+        document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
+        document.getElementById("html_frame").contentWindow.document.close();
+    });
+
+    show_edit_template_link(elem);
+};
+
+var onScheduleClick = function(e) {
+    $('#wiz_home_next_step').val(3);
+    $('#wiz_submit_button').click();
+};
+
+
+var onSendAsTestClick = function(e) {
+    $('#wiz_home_next_step').val(2);
+    $('#wiz_submit_button').click();
+};
+
+
+var addTargetListData = function(id) {
+    var result_data = {
+        "form_name": 'wizform',
+        "name_to_value_array": {
+            popup_target_list_id: id,
+            popup_target_list_name: targetListDataJSON[id].name,
+            popup_target_list_type: targetListDataJSON[id].type
+        },
+        "passthru_data": Object(),
+        "popupConfirm": 0
+    };
+    set_return_prospect_list(result_data);
+};
