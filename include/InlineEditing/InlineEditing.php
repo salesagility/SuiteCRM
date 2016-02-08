@@ -144,7 +144,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
             $contents = str_replace('"' . $vardef['name'] . '"', '{/literal}"{$fields.' . $vardef['name'] . '.name}"{literal}', $contents);
             // regex below fixes button javascript for flexi relationship
             if($vardef['type'] == 'parent') {
-               $contents = str_replace("onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"{\$fields.parent_name.id_name}", "onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"parent_id", $contents);
+                $contents = str_replace("onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"{\$fields.parent_name.id_name}", "onclick='open_popup(document.{\$form_name}.parent_type.value, 600, 400, \"\", true, false, {literal}{\"call_back_function\":\"set_return\",\"form_name\":\"EditView\",\"field_to_name_array\":{\"id\":{/literal}\"parent_id", $contents);
             }
         }
 
@@ -446,11 +446,17 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
 
+        //To fix github bug 880 (the rname was null and was causing a 500 error in the getFieldValueFromModule call to $fieldname
+        $fieldName = 'name';//$vardef['name'];
+        if(!is_null($vardef['rname']))
+            $fieldName = $vardef['rname'];
+
         if($vardef['ext2']){
-            $value .= getFieldValueFromModule($vardef['rname'],$vardef['ext2'],$record) . "</a>";
+
+            $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record) . "</a>";
 
         }else if(!empty($vardef['rname'])){
-            $value .= getFieldValueFromModule($vardef['rname'],$vardef['module'],$record) . "</a>";
+            $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record) . "</a>";
 
         } else {
             $value .= $name . "</a>";
@@ -463,6 +469,9 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
 function getFieldValueFromModule($fieldname, $module, $id)
 {
+    //Github bug 880, if the fieldname is null, do no call from bean
+    if(is_null($fieldname))
+        return '';
 
     $bean = BeanFactory::getBean($module, $id);
     if (is_object($bean) && $bean->id != "") {
