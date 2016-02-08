@@ -3656,7 +3656,9 @@ class SugarBean
 		foreach ($this->field_defs as $field_def => $value)
 		{
 			if (isset($value['relationship_fields']) && 
-				in_array($field, $value['relationship_fields']) )
+				in_array($field, $value['relationship_fields']) &&
+                (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
+            )
 				return $field_def;
 		}
 
