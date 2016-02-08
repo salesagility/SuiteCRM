@@ -16,5 +16,9 @@ class UtilityController extends Api{
         return $this->generateResponse($res,200,$server_info,'Success');
     }
 
+    function login(Request $req, Response $res, $args)
+    {
+        return true;
+    }
 
 }
