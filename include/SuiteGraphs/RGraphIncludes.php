@@ -24,6 +24,18 @@ $chart = <<<EOD
                 e.target.style.cursor = 'pointer';
             }
 
+            	var maxYForSmallNumbers = 5;    //The Y axis for bars needs to have at least a max of 5 of it shows (0,0,0,1,1) as per bug 876
+                function calculateMaxYForSmallNumbers(dataPoints)
+                {
+                    var largest = null;
+                    if(dataPoints !== undefined && dataPoints.length > 0)
+                        largest = Math.max.apply(Math,dataPoints);//http://stackoverflow.com/a/14693622/3894683
+
+                    if(largest === null || largest < maxYForSmallNumbers)
+                        largest = maxYForSmallNumbers;
+                    return(largest);
+                }
+
             function resizeGraph(graph)
             {
                 var maxWidth = 900;
