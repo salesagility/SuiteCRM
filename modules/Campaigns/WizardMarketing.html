@@ -126,6 +126,9 @@
 					var results = JSON.parse(resp);
 					$('#email_template_view_html').html(results.data.body_html);
 					$('#email_template_view').html(results.data.body);
+
+					document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
+					document.getElementById("html_frame").contentWindow.document.close();
 				});
 
 				show_edit_template_link(elem);
@@ -153,6 +156,7 @@
 		<div>
 			<!-- [EMAIL TEMPLATE VIEW AREA] -->
 			<!-- <textarea disabled="disabled" id="email_template_view_html" style="width:100%; min-height: 100px;"></textarea> -->
+			<iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
 			<pre id="email_template_view"></pre>
 		</div>
 

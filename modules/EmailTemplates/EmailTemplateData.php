@@ -18,6 +18,8 @@ if(preg_match('/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}/', 
         }
     }
 
+    $data['body_from_html'] = from_html($bean->body_html);
+
 }
 else {
     $error = 'Illegal GUID format.';
