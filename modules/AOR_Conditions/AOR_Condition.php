@@ -51,7 +51,8 @@ class AOR_Condition extends Basic {
     var $parenthesis;
 	var $operator;
 	var $value;
-	
+    var $value_type;
+
 	function AOR_Condition(){
 		parent::Basic();
 	}

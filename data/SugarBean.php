@@ -5,7 +5,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -3362,15 +3362,16 @@ class SugarBean
         return $ret_array['select'] . $ret_array['from'] . $ret_array['where'] . $ret_array['order_by'];
     }
 
-    public function get_relationship_field($field)
-    {
-        foreach ($this->field_defs as $field_def => $value) {
-            if (isset($value['relationship_fields']) &&
-                in_array($field, $value['relationship_fields'])
+	public function get_relationship_field($field)
+	{
+		foreach ($this->field_defs as $field_def => $value) {
+			if (isset($value['relationship_fields']) && 
+				in_array($field, $value['relationship_fields']) &&
+                (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
             ) {
                 return $field_def;
             }
-        }
+		}
 
         return false;
     }

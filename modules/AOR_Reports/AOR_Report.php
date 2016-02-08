@@ -1278,7 +1278,7 @@ class AOR_Report extends Basic {
                                 }
                                 $value .= ')';
                             }
-                            $query['where'][] = $value;
+                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $value;
                             $where_set = true;
                             break;
                         case "Period":
