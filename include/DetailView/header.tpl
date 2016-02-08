@@ -96,7 +96,9 @@ SUGAR.util.doWhen(function(){
 {{/foreach}}
 {{/if}}
 </form>
+{{if count($form.buttons) > 0}}
 {{sugar_action_menu id="detail_header_action_menu" buttons=$detail_header_buttons class="fancymenu" }}
+{{/if}}
 
 </div>
 
