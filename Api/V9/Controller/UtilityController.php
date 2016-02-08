@@ -14,4 +14,9 @@ class UtilityController extends parentController{
         $server_info = $lib->getServerInfo();
         return $this->generateResponse($res,200,$server_info,'Success');
     }
+
+    function login(Request $req, Response $res, $args)
+    {
+        return $this->generateResponse($res,200,'loginV9','Success');
+    }
 }
