@@ -9,15 +9,7 @@ require_once('include/entryPoint.php');
 
 $_SERVER["REQUEST_URI"] = $_SERVER["PHP_SELF"];
 
-
-///SuiteCRM/Api/Public/index.php/V8/server_info
-//echo($_SERVER["REQUEST_URI"]);
-
-//preg_match("#/V#", $_SERVER["REQUEST_URI"], $matches);
-
-
 preg_match("#index.php\/([v,V]\d*)#", $_SERVER["PHP_SELF"], $matches);
-
 
 $version = $matches[1];
 
@@ -32,6 +24,11 @@ foreach ($routeFiles as $routeFile) {
     require $routeFile;
 }
 
+$container = $app->getContainer();
+$container["jwt"] = function ($container) {
+    return new StdClass;
+};
+
 $app->add(new \Slim\Middleware\JwtAuthentication([
     "secure"=>false,
     "secret" => "supersecretkeyyoushouldnotcommittogithub",
@@ -39,10 +36,18 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
     "rules" => [
         new Slim\Middleware\JwtAuthentication\RequestPathRule([
             "path" => "/" . $version,
-            "passthrough" => ["/" . $version ."/login"]
+            "passthrough" => ["/" . $version ."/login", "/" . $version ."/token" ]
         ]),
-
-    ]
+    ],
+    "callback" => function ($request, $response, $arguments) use ($container) {
+        $container["jwt"] = $arguments["decoded"];
+    },
+    "error" => function ($request, $response, $arguments) use ($app) {
+        return $response->write("Error");
+    }
 ]));
+
+
+
 
 $app->run();

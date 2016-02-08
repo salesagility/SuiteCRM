@@ -1,6 +1,7 @@
 <?php
 namespace SuiteCRM\Api\V8\Library;
 
+
 class UtilityLib{
 
     function getServerInfo()
@@ -22,6 +23,18 @@ class UtilityLib{
         $ret['server_info'] = array('suite_version' => $suitecrm_version, 'sugar_version'=> $sugar_version);
         return $ret;
     }
+
+    function login()
+    {
+        //Get the parameters
+        require_once('modules/Users/authentication/AuthenticationController.php');
+        $authController = new \AuthenticationController();
+        $username = $_REQUEST["username"];
+        $password = $_REQUEST["password"];
+        return $authController->login($username,$password);
+
+    }
+
 
 
 }
