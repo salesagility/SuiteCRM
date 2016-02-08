@@ -405,7 +405,7 @@ var $selectedCategories = array();
 			$ss->assign('autoRefreshSelect', $this->autoRefresh);
 		}
 
-        return  $ss->fetch('custom/modules/SugarFeed/Dashlets/SugarFeedDashlet/Options.tpl');
+        return  $ss->fetch('modules/SugarFeed/Dashlets/SugarFeedDashlet/Options.tpl');
     }
 
 	/**
