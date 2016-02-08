@@ -117,33 +117,8 @@
 				set_return_prospect_list(result_data);
 			};
 		</script>
-		<style type="text/css">
-			ul.target-list {
-				list-style-type: none;
-				padding: 10px;
-				margin: 0;
-				display: block;
-				max-height: 300px;
-				overflow: scroll;
-				border: 1px solid lightgray;
-			}
-			ul.target-list li {
-				margin: 5px 0;
-				padding: 0;
-			}
-			div.target-list-create {
-				border: 1px solid lightgray;
-				padding: 10px;
-				margin: 10px 0 0 0;
-			}
-			div.target-list-table {
-				padding: 10px;
-				margin: 0 0 0 10px;
-				border: 1px solid lightgray;
-				min-height: 490px;
-			}
-		</style>
 		{/literal}
+
 		<ul class="target-list">
 			{foreach from=$targetListData item=targetList}
 				<li data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
