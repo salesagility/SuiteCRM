@@ -181,7 +181,12 @@
 					<slot>
 						<select  title='{$MOD.LBL_FROM_MAILBOX_NAME}' id='inbound_email_id' name='wiz_step3_inbound_email_id' onchange='set_from_reply_info(this);'>{$MAILBOXES}</select>
 					</slot>
-					<a href="index.php?module=InboundEmail&action=index">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
+					<br>
+					<a href="index.php?module=InboundEmail&action=index" title="{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
+					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
+					<br>
+					<a href="index.php?module=InboundEmail&action=EditView&mailbox_type=bounce" title="{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}">{$MOD.LBL_INBOUND_EMAIL_CREATE}</a>
+					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
 				</td>
 
 				<td style="display: none;" scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_STATUS_TEXT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
