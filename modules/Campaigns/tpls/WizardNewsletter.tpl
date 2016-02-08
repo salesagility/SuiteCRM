@@ -80,12 +80,7 @@
 </p>
 <table class='other view' cellspacing="1">
 	<tr>
-		<!--
-		<td scope='row' rowspan='2' width="10%" style="vertical-align: top;">
 
-
-		</td>
-		-->
 		<td class='edit view' rowspan='2' width='100%'>
 			<div id="wiz_message"></div>
 			<div id=wizard>

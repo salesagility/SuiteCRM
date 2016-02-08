@@ -5022,6 +5022,37 @@ div.target-list-table {
     min-height: 490px;
 }
 
+.icon-btn-lst {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.icon-btn-lst .icon-btn {
+    margin: 10px;
+    list-style-type: none;
+    background-color: #3C8DBC;
+    display: block;
+    float: left;
+    width: 150px;
+    min-height: 150px;
+    text-align: center;
+    border: none;
+}
+.icon-btn-lst .icon-btn:hover {
+    background-color: #286090;
+}
+.icon-btn-lst .icon-btn img {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.icon-btn-lst .icon-btn a {
+    color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */

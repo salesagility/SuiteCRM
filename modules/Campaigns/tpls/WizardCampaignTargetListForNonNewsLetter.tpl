@@ -58,8 +58,6 @@
 		<tr>
 			<td colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE1}<br></td>
 		</tr>
-
-		<tr><td colspan=5>&nbsp;</td></tr>
 		-->
 		<tr>
 			<td scope="row" colspan="4">{$MOD.LBL_SELECT_TARGET}&nbsp;

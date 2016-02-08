@@ -88,22 +88,7 @@
 
 <table class='other view' cellspacing="1">
 <tr>
-	<!--
-	<td rowspan='2' width='10%' scope="row" style="vertical-align: top;">
-		<div id='nav' >
 
-			<table border="0" cellspacing="0" cellpadding="0" width="100%" >
-				<tr><td scope='col'><div id='nav_step3'><a  href='{$CAMP_WIZ_URL}1'>{$MOD.LBL_NAVIGATION_MENU_GEN1}</a></div></td></tr>
-				<tr><td scope='col'><div id='nav_step4'><a  href='{$CAMP_WIZ_URL}2'>{$MOD.LBL_NAVIGATION_MENU_GEN2}</a></div></td></tr>
-				<tr><td scope='col'><div id='nav_step5'><a  href='{$CAMP_WIZ_URL}3'>{$MOD.LBL_NAVIGATION_MENU_TRACKERS}</a></div></td></tr>
-				<tr><td scope='col'><div id='nav_step6'><a  href='{$CAMP_WIZ_URL}4'>{$MOD.LBL_NAVIGATION_MENU_SUBSCRIPTIONS}</a></div></td></tr>
-				<tr><td scope='col'><div id='nav_step1'>{$MOD.LBL_NAVIGATION_MENU_MARKETING}</div></td></tr>
-				<tr><td scope='col'><div  id='nav_step2'>{$MOD.LBL_NAVIGATION_MENU_SEND_EMAIL}</div></td></tr>
-				<tr><td scope='col'><div id='nav_step7'>{$MOD.LBL_NAVIGATION_MENU_SUMMARY}</div></td></tr>
-			</table>
-		</div>
-	</td>
-	-->
 
 <td  rowspan='2' width='100%' style="padding: 0;">
 <div id="wiz_message"></div>
@@ -131,8 +116,6 @@
 
 
 		<div>
-			<!-- [EMAIL TEMPLATE VIEW AREA] -->
-			<!-- <textarea disabled="disabled" id="email_template_view_html" style="width:100%; min-height: 100px;"></textarea> -->
 			<iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
 			<pre id="email_template_view"></pre>
 		</div>
@@ -140,15 +123,7 @@
 	</div>
 	<div id="step2" style="display: none;">
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
-			<!--
-			<tr>
-				<th colspan="4" align="left" ><h4 scope="row" NOWRAP valign="top">{$MOD.LBL_WIZ_MARKETING_TITLE} {$MRKT_NAME}</h4></td>
-			</tr>
-			-->
-			<!--
-			<tr><td scope="row" colspan="3">{$MOD.LBL_WIZARD_MARKETING_MESSAGE}<br></td><td>&nbsp;</td></tr>
-			<tr><td colspan="4">&nbsp;</td></tr>
-			-->
+
 			<tr>
 
 				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
@@ -216,40 +191,11 @@
 
 
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
-			<!--
-			<tr>
 
-				<td style="border: 1px solid lightgray;" scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_FROM_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td class="datafield"><slot><input name='wiz_step3_from_name' id='from_name' title='{$MOD.LBL_FROM_NAME}' tabindex='2' size='25' maxlength='{$MRKT_FROM_NAME_LEN}' type="text" value="{$MRKT_FROM_NAME}"></slot></td>
-
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_FROM_ADDR} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td class="datafield"><slot><input name='wiz_step3_from_addr' id='from_addr' title='{$MOD.LBL_FROM_ADDR}' tabindex='2' size='25' maxlength='{$MRKT_FROM_NAME_LEN}' type="text" value="{$MRKT_FROM_ADDR}"></slot></td>
-
-			</tr>
-			<tr>
-
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_REPLY_NAME}</slot></td>
-				<td class="datafield"><slot><input name='wiz_step3_reply_to_name' id='reply_name' title='{$MOD.LBL_REPLY_NAME}' tabindex='2' size='25' maxlength='{$MRKT_REPLY_NAME_LEN}' type="text" value="{$MRKT_REPLY_NAME}"></slot></td>
-
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_REPLY_ADDR}</slot></td>
-				<td class="datafield"><slot><input name='wiz_step3_reply_to_addr' id='reply_addr' title='{$MOD.LBL_REPLY_ADDR}' tabindex='2' size='25' maxlength='{$MRKT_REPLY_ADDR_LEN}' type="text" value="{$MRKT_REPLY_ADDR}"></slot></td>
-
-			</tr>
-			-->
 			<tr style="display: none;">
 				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MESSAGE_FOR} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 				<td class="datafield"><slot><input type="checkbox"  tabindex='1' onclick="toggle_message_for(this);" id="all_prospect_lists" {$ALL_PROSPECT_LISTS_CHECKED} name='all_prospect_lists' title="{$MOD.LBL_MESSAGE_FOR}">{$MOD.LBL_ALL_PROSPECT_LISTS}</slot></td>
-				<!--
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td class="datafield" nowrap>
-						<select  id="template_id" name='template_id' tabindex='2' onchange="show_edit_template_link(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
-						&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
-						<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
-						&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
-						</span>
-					</slot>
-				</td>
-				-->
+
 			</tr>
 			<tr style="display: none;">
 				<td  NOWRAP valign="top"><slot>&nbsp;</slot></td>
@@ -505,11 +451,7 @@
 		</div>
 
 		<div class="wizard-summary-right">
-			<!--
-			<div class="box send">
-				Send now
-			</div>
-			-->
+
 			<div class="space"></div>
 
 			<input type="hidden" name="wiz_home_next_step" value="1" />
@@ -548,22 +490,7 @@
 		</div>
 
 
-		<!--
-		<table>
-			<td ><h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3></td>
-			<tr><td class="datalabel">{$MOD.LBL_WIZARD_SENDMAIL_MESSAGE}<br></td></tr>
-			<tr><td class="datalabel">&nbsp;</td></tr>
-			<tr><td>
-				<input type="radio"  id="next_step" title="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" name="wiz_home_next_step" value='1'checked >{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}
-			</td></tr>
-			<tr><td>
-				&nbsp;<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
-				&nbsp;<div id='send_email1' ><input type="radio"  id="next_step" name="wiz_home_next_step" title="{$MOD.LBL_SEND_AS_TEST}" value='2' {$PL_DISABLED}>{$MOD.LBL_SEND_AS_TEST}</div>
-			</td></tr>
-			<tr><td>
-				&nbsp;<div id='send_email2' {$SHOW_DIVS}><input type="radio"  id="next_step" name='wiz_home_next_step' value='3' title='{$MOD.LBL_SEND_EMAIL}' {$PL_DISABLED}>{$MOD.LBL_SEND_EMAIL}</div>
-			</td></tr></table>
-			-->
+
 	</div>
 
 
