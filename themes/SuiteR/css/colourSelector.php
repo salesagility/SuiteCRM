@@ -26,18 +26,22 @@ color: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_header']; ?>;
 
 /* Pagelink CSS */
 
-a, a:link, a:visited, .dashletPanel .h3Row h3, #dashletbuttons, .detail tr td a:link, .detail tr td a:visited, .detail tr td a:hover{
+a, a:link, a:visited, #dashletbuttons, .detail tr td a:link, .detail tr td a:visited, .detail tr td a:hover{
 color: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;
 }
 
 /* Dashlet CSS */
 
 .dashletPanel .h3Row{
-background: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet']; ?>;
+background: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet'];?>;
+}
+
+.dashletPanel .h3Row h3{
+color: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet_headertext'];?> !important;
 }
 
 .dashletPanel .h3Row .dashletToolSet .icon{
-fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?> !important;
+fill: #<?php echo $sugar_config['theme_settings']['SuiteR']['dashlet_headertext'];?> !important;
 }
 
 /* Top navigation bar CSS */

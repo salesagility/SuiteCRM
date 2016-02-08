@@ -1185,6 +1185,7 @@ $mod_strings = array(
     'LBL_COLOUR_ADMIN_BTNLNK' => 'Button link colour: ',
     'LBL_COLOUR_ADMIN_BTNLNKHOVER' => 'Button link hover colour: ',
     'LBL_COLOUR_ADMIN_DASHHEAD' => 'Dashlet header colour: ',
+    'LBL_COLOUR_ADMIN_DASHHEADTEXT' => 'Dashlet header text colour: ',
     'LBL_COLOUR_ADMIN_ICON' => 'Icon colour: ',
     'LBL_COLOUR_ADMIN_TABS' => 'Menu contents config',
     'LBL_SUGGESTION_POPUP_FROM' => 'Suggestion & Pop-up gradient (from):',

@@ -142,6 +142,11 @@ $themedef = array(
             'type' => 'colour',
             'default' => '#ffffff'
         ),
+        'dashlet_headertext' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DASHHEADTEXT',
+            'type' => 'colour',
+            'default' => '#3C8DBC'
+        ),        
         'icon' => array(
             'vname' => 'LBL_COLOUR_ADMIN_ICON',
             'type' => 'colour',
