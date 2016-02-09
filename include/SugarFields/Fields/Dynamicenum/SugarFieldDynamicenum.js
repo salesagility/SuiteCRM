@@ -1,7 +1,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -37,9 +37,47 @@
  ********************************************************************************/
 
 
-function updateDynamicEnum(field, subfield){
+function addLoadEvent(func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != 'function') {
+        window.onload = func;
+    } else {
+        window.onload = function () {
+            if (oldonload) {
+                oldonload();
+            }
+            func();
+        }
+    }
+}
 
-    if(document.getElementById(subfield) != null){
+function loadDynamicEnum(field, subfield) {
+
+    if (field != '') {
+        var el = document.getElementById(field);
+
+        if (el) {
+            if (el.addEventListener) {
+                el.addEventListener("change", function () {
+                    updateDynamicEnum(field, subfield)
+                }, false);
+                updateDynamicEnum(field, subfield)
+            } else if (el.attachEvent) {
+                el.attachEvent("onchange", function () {
+                    updateDynamicEnum(field, subfield)
+                });
+                updateDynamicEnum(field, subfield)
+            }
+
+        }
+    }
+
+}
+
+
+function updateDynamicEnum(field, subfield) {
+
+    if (document.getElementById(subfield) != null) {
         var selector = document.getElementById(subfield);
         var de_key = document.getElementById(field).value;
 
@@ -49,26 +87,34 @@ function updateDynamicEnum(field, subfield){
         }
 
 
-        if(de_entries[subfield]  == null){
-           de_entries[subfield] =  new Array;
-           for (var i=0; i<selector.options.length; i++){
-                de_entries[subfield][selector.options[i].value] = selector.options[i].text;
-           }
+        if (de_entries[subfield] == null) {
+            de_entries[subfield] = [];
+            for (var j = 0; j < selector.options.length; j++) {
+                de_entries[subfield][selector.options[j].value] = selector.options[j].text;
+            }
         }
 
         document.getElementById(subfield).innerHTML = '';
 
         for (var key in de_entries[subfield]) {
-            if(key.indexOf(de_key+'_') == 0){
+            if (key.indexOf(de_key + '_') == 0 || key == '') {
                 selector.options[selector.options.length] = new Option(de_entries[subfield][key], key);
             }
         }
 
-        for (var key in current) {
-            for (var i = 0; i < selector.length; i++) {
-                if(selector.options[i].value == current[key])
-                selector[i].selected = true;
+        for (var item in current) {
+            for (var k = 0; k < selector.length; k++) {
+                if (selector.options[k].value == current[item])
+                    selector[k].selected = true;
             }
         }
     }
+    if ("createEvent" in document) {
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent("change", false, true);
+        selector.dispatchEvent(evt);
+    }
+    else
+        selector.fireEvent("onchange");
+
 }
