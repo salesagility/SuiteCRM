@@ -48,19 +48,11 @@ $mod_strings['LBL_CRON_URL'] = 'Cron URL:';
 $mod_strings['LBL_MODULE_HEADING'] = 'Module';
 $mod_strings['LBL_MODULE_TOTAL_HEADING'] = 'Total';
 $mod_strings['LBL_MODULE_RESET_HEADING'] = 'Reset';
-$mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. '. 
-'Keep in mind that the standard Google Maps usage limit is 2500 requests per day. '.
-'This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';
-$mod_strings['LBL_CRON_URL'] = 'CRON URL';
-$mod_strings['LBL_CRON_INSTRUCTIONS'] = 'To process the geocoding requests it is recommended to setup a nightly Cron-Job. '.
-'A custom entry point has been created for this purpose and can be accessed without authentication. '.
-'The URL shown below is meant to be used with an Administrative Scheduled Task. '.
-'Please see the documentation for more information.';
+$mod_strings['LBL_GEOCODED_COUNTS_DESCRIPTION'] = 'The table shown belown shows the number of module objects geocoded, grouped by geocoding response. Keep in mind that the standard Google Maps usage limit is 2500 requests per day . This module will cache the addresses geocoding information during processing to reduce the overall number of requests needed.';
+
+$mod_strings['LBL_CRON_INSTRUCTIONS'] = 'To process the geocoding requests it is recommended to setup a nightly Cron-Job. A custom entry point has been created for this purpose and can be accessed without authentication. The URL shown below is meant to be used with an Administrative Scheduled Task. Please see the documentation for more information.';
 $mod_strings['LBL_EXPORT_ADDRESS_URL'] = 'Export URLs';
-$mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use the links below to export full addresses in need of geocodeing information. '.
-'Then use an online or offline batch geocoding tool to geocode the addresses. '.
-'When you are finished geocoding, import the addresses into the Address Cache module to be used with your maps.'.
-'Note, the Address Cache module is optional. All geocoding information is stored in the representative module.';
+$mod_strings['LBL_EXPORT_INSTRUCTIONS'] = 'Use the links below to export full addresses in need of geocodeing information. Then use an online or offline batch geocoding tool to geocode the addresses. When you are finished geocoding, import the addresses into the Address Cache module to be used with your maps. Note, the Address Cache module is optional. All geocoding information is stored in the representative module.';
 $mod_strings['LBL_ADDRESS_CACHE'] = 'Address Cache';
 $mod_strings['LBL_ADD_TO_TARGET_LIST'] = 'Add to Target List';
 $mod_strings['LBL_ADD_TO_TARGET_LIST_CONFIRM'] = 'Are you sure you want to add the Selected Items to the Target List?';

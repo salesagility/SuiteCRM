@@ -250,7 +250,7 @@ function getInputValue(field,type){
                 break;
             case 'enum':
                 if($('#'+ field + ' :selected').text().length > 0){
-                    return $('#'+ field + ' :selected').text();
+                    return $('#'+ field + ' :selected').val();
                 }
                 break;
             case 'datetime':
@@ -281,6 +281,11 @@ function getInputValue(field,type){
                    return "on";
                 }else{
                     return "off";
+                }
+                break;
+            case 'radioenum':
+                if($('input[name='+field+']:checked').val()){
+                    return $('input[name='+field+']:checked').val();
                 }
                 break;
             default:

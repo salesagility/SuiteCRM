@@ -2,9 +2,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -137,16 +137,16 @@ class VardefManager{
     /**
      * Remove invalid field definitions
      * @static
-     * @param Array $fieldDefs
-     * @return  Array
+     * @param array $fieldDefs
+     * @return  array
      */
     static function cleanVardefs($fieldDefs)
     {
-        foreach($fieldDefs as $field => $defs)
-        {
-            if (empty($def['name']) || empty($def['type']))
-            {
-                unset($fieldDefs[$field]);
+        if(isset($fieldDefs['fields'])) {
+            foreach ($fieldDefs['fields'] as $field => $defs) {
+                if (empty($defs['name']) || empty($defs['type'])) {
+                    unset($fieldDefs['fields'][$field]);
+                }
             }
         }
 
@@ -162,9 +162,13 @@ class VardefManager{
 
         if (empty($GLOBALS['dictionary'][$object]))
             $object = BeanFactory::getObjectName($module);
+
+        //Sometimes bad definitions can get in from left over extensions or file system lag(caching). We need to clean those.
+        $data = self::cleanVardefs($GLOBALS['dictionary'][$object]);
+
         $file = create_cache_directory('modules/' . $module . '/' . $object . 'vardefs.php');
 
-        $out="<?php \n \$GLOBALS[\"dictionary\"][\"". $object . "\"]=" . var_export($GLOBALS['dictionary'][$object], true) .";";
+        $out="<?php \n \$GLOBALS[\"dictionary\"][\"". $object . "\"]=" . var_export($data, true) .";";
         sugar_file_put_contents_atomic($file, $out);
         if ( sugar_is_file($file) && is_readable($file)) {
             include($file);
@@ -172,8 +176,6 @@ class VardefManager{
 
         // put the item in the sugar cache.
         $key = "VardefManager.$module.$object";
-        //Sometimes bad definitions can get in from left over extensions or file system lag(caching). We need to clean those.
-        $data = self::cleanVardefs($GLOBALS['dictionary'][$object]);
         sugar_cache_put($key,$data);
     }
 

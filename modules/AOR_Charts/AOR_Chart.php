@@ -388,7 +388,8 @@ EOF;
                 labels: $chartLabelValues,
                 textSize:10,
                 textAngle: 90,
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -429,7 +430,8 @@ EOF;
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -461,7 +463,8 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -538,7 +541,8 @@ EOF;
                 textAngle: 90,
                 //titleSize:10,
                 backgroundGrid:false,
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues),
             }
         }).draw();
         </script>
