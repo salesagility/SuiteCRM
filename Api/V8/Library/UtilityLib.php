@@ -31,7 +31,17 @@ class UtilityLib{
         $authController = new \AuthenticationController();
         $username = $_REQUEST["username"];
         $password = $_REQUEST["password"];
-        return $authController->login($username,$password);
+
+
+        if($authController->login($username,$password))
+        {
+            $usr= new \user();
+            return array("loginApproved"=>true,"userId"=>$usr->retrieve_user_id($username));
+        }
+        else
+        {
+            return array("loginApproved"=>false,"userId"=>null);
+        }
 
     }
 

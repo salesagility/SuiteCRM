@@ -24,13 +24,10 @@ class UtilityController extends Api{
         $lib = new UtilityLib();
         $login = $lib->login();
 
-        if($login)
+        if($login["loginApproved"])
         {
-            global $app;
-
             $token = array(
-                "username"=>$_REQUEST["username"],
-                "password"=>$_REQUEST["password"],
+                "userId"=>$login["userId"],
                 "exp" => time() + $jwtExpiry
             );
 
