@@ -8,13 +8,11 @@ require_once('include/vendor/autoload.php');
 require_once('include/entryPoint.php');
 
 $_SERVER["REQUEST_URI"] = $_SERVER["PHP_SELF"];
-
 preg_match("#index.php\/([v,V]\d*)#", $_SERVER["PHP_SELF"], $matches);
-
 $version = $matches[1];
 
-//TODO REMOVE THIS ONCE AUTHENTICATION IS DECIDED
-//$userId =1;
+//To get the jwt key
+global $sugar_config;
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
@@ -31,7 +29,7 @@ $container["jwt"] = function ($container) {
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
     "secure"=>false,
-    "secret" => "supersecretkeyyoushouldnotcommittogithub",
+    "secret" => $sugar_config["JWT_SECRET"],
     "environment" => "REDIRECT_HTTP_AUTHORIZATION",
     "rules" => [
         new Slim\Middleware\JwtAuthentication\RequestPathRule([
