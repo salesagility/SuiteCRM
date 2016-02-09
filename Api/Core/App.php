@@ -14,7 +14,7 @@ preg_match("#index.php\/([v,V]\d*)#", $_SERVER["PHP_SELF"], $matches);
 $version = $matches[1];
 
 //TODO REMOVE THIS ONCE AUTHENTICATION IS DECIDED
-$userId =1;
+//$userId =1;
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
