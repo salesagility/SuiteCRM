@@ -164,6 +164,45 @@ class ModuleLib{
         return $list;
     }
 
+    function getLanguageDefinition($modules,$hash)
+    {
+        global $current_language;
+
+        $results = array();
+        if (!empty($modules)) {
+            foreach ($modules as $mod) {
+                if (strtolower($mod) == 'app_strings') {
+                    $values = return_application_language($current_language);
+                    $key = 'app_strings';
+                } else if (strtolower($mod) == 'app_list_strings') {
+                    $values = return_app_list_strings_language($current_language);
+                    $key = 'app_list_strings';
+                } else {
+                    $values = return_module_language($current_language, $mod);
+                    $key = $mod;
+                }
+
+                if (strtolower($hash) === "true")
+                    $values = md5(serialize($values));
+
+                $results[$key] = $values;
+            }
+        }
+        return $results;
+    }
+
+    function getLastViewed($userId,$module)
+    {
+
+        $tracker = new \Tracker();
+        $entryList = $tracker->get_recently_viewed($userId, $module);
+        $module_results = array();
+        foreach ($entryList as $entry) {
+            $module_results[] = $entry;
+        }
+        return $module_results;
+    }
+
     function get_subpanel_defs($module, $type)
     {
         global $beanList, $beanFiles, $layout_defs, $app_list_strings;

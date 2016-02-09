@@ -32,7 +32,7 @@ class ModuleController extends Api{
     }
 
     public function getAvailableModules(Request $req, Response $res, $args){
-        global $errorList, $container;
+        global $container;
 
         $lib = new ModuleLib();
 
@@ -128,6 +128,58 @@ class ModuleController extends Api{
             return $this->generateResponse($res,404,'Non-matched item','Failure');
         }
     }
+
+    //SuiteCRM/service/api/v8/restapi.php/get_language_definition?modules[]=Accounts&modules[]=Emails
+    public function getLanguageDefinition(Request $req, Response $res, $args){
+
+        $lib = new ModuleLib();
+
+        $modules = '';
+        if(!empty($_REQUEST['modules']))
+            $modules =$_REQUEST['modules'];
+
+        $hash = 'false';
+
+        if (isset($_REQUEST['hash']))
+            $hash = $_REQUEST['hash'];
+
+        return $this->generateResponse($res,200,$lib->getLanguageDefinition($modules,$hash),'Success');
+
+    }
+
+    //SuiteCRM/service/api/v8/restapi.php/get_last_viewed?modules[]=Accounts&modules[]=Emails
+    function getLastViewed(Request $req, Response $res, $args)
+    {
+            global $container, $moduleList;
+            $lib = new ModuleLib();
+
+            $modules = '';
+            if (!empty($_REQUEST['modules']))
+                $modules = $_REQUEST['modules'];
+
+            if ($container["jwt"] !== null && $container["jwt"]->userId !== null) {
+                if ($modules !== null && is_array($modules)) {
+                    $results = array();
+                    foreach ($modules as $module) {
+
+                        if (in_array($module, $moduleList)) {
+                            $results[$module] = $lib->getLastViewed($container["jwt"]->userId, $module);
+                        } else {
+                            $GLOBALS['log']->warn(__FILE__ . ': ' . __FUNCTION__ . ' called but module not matched');
+                            return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
+                        }
+                    }
+                    return $this->generateResponse($res, 200, json_encode($results), 'Success');
+                } else {
+                    $GLOBALS['log']->warn(__FILE__ . ': ' . __FUNCTION__ . ' called but modules are null');
+                    return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
+                }
+            } else {//The userid was not retrieved from the system
+                $GLOBALS['log']->warn(__FILE__ . ': ' . __FUNCTION__ . ' called but user not found');
+                return $this->generateResponse($res, 401, 'No user id', 'Failure');
+            }
+        }
+
 
 
 
