@@ -76,7 +76,7 @@ background: #<?php echo $sugar_config['theme_settings']['SuiteR']['navbar']; ?> 
 #searchform .btn
 {
 background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?> !important;
-color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon']; !important?>;
+color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon'];?> !important;
 }
 
 /* Drop down menu CSS */
@@ -137,7 +137,7 @@ color:#<?php echo $sugar_config['theme_settings']['SuiteR']['button_link_hover']
 
 
 #suggestion_box table {
-    color: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?>;
+    color: #<?php echo $sugar_config['theme_settings']['SuiteR']['page_link']; ?> !important;
 }
 
 .qtip-tipped .qtip-titlebar {
