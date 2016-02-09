@@ -56,4 +56,79 @@ class ModuleController extends Api{
         }
     }
 
+    //get_module_layout?modules[]=Accounts&views[]=Detail&types[]=default
+    public function getModuleLayout(Request $req, Response $res, $args){
+        $lib = new ModuleLib();
+
+        $modules = '';
+        if(!empty($_REQUEST['modules']))
+            $modules = $_REQUEST['modules'];
+
+        $views = '';
+        if(!empty($_REQUEST['views']))
+            $views = $_REQUEST['views'];
+
+        $types = '';
+        if(!empty($_REQUEST['types']))
+            $types = $_REQUEST['types'];
+
+        $hash = 'false';
+
+        if (!empty($_REQUEST['hash']))
+            $hash = $_REQUEST['hash'];
+
+        if (empty($modules) || empty($views) || empty($types) || !is_array($modules)|| !is_array($views) || !is_array($types)) {//http://stackoverflow.com/a/10323055
+            return $this->generateResponse($res,400,'Incorrect parameters','Failure');
+        } else {
+            return $this->generateResponse($res,200,$lib->getModuleLayout($modules,$views,$types,$hash),'Success');
+        }
+    }
+
+    //Emails?fields[]=name&fields[]=id
+    public function getModuleFields(Request $req, Response $res, $args)
+    {
+        {
+            global $moduleList;
+            $lib = new ModuleLib();
+            $output = $args;
+            $fields = array();
+            if (!empty($_REQUEST['fields'])) {
+                //If the user has entered the parameter as fields[] = xxx
+                if (is_array($_REQUEST['fields']))
+                    $fields = $_REQUEST['fields'];
+                else //If the user has entered the parameter as fields = xxx
+                    $fields[] = $_REQUEST['fields'];
+            }
+
+            $module = $args['module'];
+            if (in_array($module, $moduleList)) {
+                return $this->generateResponse($res, 200, $lib->getModuleFields($module,$fields), 'Success');
+
+            } else {
+                $GLOBALS['log']->info(__FILE__ . ': ' . __FUNCTION__ . ' called but module not matched (' . $module . ')');
+                return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
+            }
+        }
+    }
+
+    public function getModuleLinks(Request $req, Response $res, $args){
+        global $moduleList;
+        $lib = new ModuleLib();
+        $module = $_REQUEST['module'];
+        if (in_array($module, $moduleList)) {
+            $bean = \BeanFactory::getBean($module);
+            if (!empty($bean)) {
+                return $this->generateResponse($res,200,$lib->getModuleLinks($bean),'Success');
+            } else {
+                $GLOBALS['log']->info(__FILE__.': ' . __FUNCTION__ . ' called but module not matched (' . $module . ')');
+                return $this->generateResponse($res,404,'Non-matched item','Failure');
+            }
+        } else {
+            $GLOBALS['log']->info(__FILE__.': ' . __FUNCTION__ . ' called but module not matched (' . $module . ')');
+            return $this->generateResponse($res,404,'Non-matched item','Failure');
+        }
+    }
+
+
+
 }
