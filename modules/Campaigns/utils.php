@@ -98,9 +98,9 @@ function get_campaign_mailboxes(&$emails, $get_name=true) {
     	if($get_name) {
     		$return_array[$row['id']] = $row['name'];
     	} else {
-        	$return_array[$row['id']]= InboundEmail::get_stored_options('from_name',$row['name'],$row['stored_options']);
+        	$return_array[$row['id']]= InboundEmail::get_stored_options_static('from_name',$row['name'],$row['stored_options']);
     	}
-        $emails[$row['id']]=InboundEmail::get_stored_options('from_addr','nobody@example.com',$row['stored_options']);
+        $emails[$row['id']]=InboundEmail::get_stored_options_static('from_addr','nobody@example.com',$row['stored_options']);
     }
 
     if (empty($return_array)) $return_array=array(''=>'');
