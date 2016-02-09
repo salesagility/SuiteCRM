@@ -52,6 +52,42 @@ class ModuleLib{
 
     }
 
+    function updateModuleItem($matchingBean)
+    {
+        if (!empty($_REQUEST['update'])) {
+            foreach ($_REQUEST['update'] as $item) {
+                //TODO make sure that the data is safe before it is inserted!
+                if(!empty($item['name']) && !empty($item['value']))
+                {
+                    $itemToUpdate = $item['name'];
+                    $updateValue = $item['value'];
+                    $matchingBean->$itemToUpdate = $updateValue;
+                }
+            }
+            $matchingBean->save();
+        }
+    }
+
+    function createModuleItem($moduleType)
+    {
+        $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $moduleType);
+        $matchingBean = \BeanFactory::getBean($moduleType);
+        if (!empty($_REQUEST['create'])) {
+            foreach ($_REQUEST['create'] as $item) {
+                //TODO make sure that the data is safe before it is inserted!
+                if(!empty($item['name']) && !empty($item['value']))
+                {
+                    $itemToUpdate = $item['name'];
+                    $updateValue = $item['value'];
+                    $matchingBean->$itemToUpdate = $updateValue;
+                }
+            }
+        }
+        $matchingBean->save();
+        return $matchingBean->id;
+    }
+
+
     function getModuleLayout($modules,$views,$types,$hash)
     {
         global $beanList, $beanFiles;
@@ -99,6 +135,11 @@ class ModuleLib{
             }
         }
         return $enabled_modules;
+    }
+
+    function deleteModuleItem($beanType,$id)
+    {
+        $beanType->mark_deleted($id);
     }
 
     function checkModuleRoleAccess($module)
