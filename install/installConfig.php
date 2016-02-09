@@ -499,7 +499,7 @@ EOQ;
 
 
         $out.=<<<EOQ
-</div><!-- dbg2 -->
+</div>
 EOQ;
 
         $out .= <<<EOQ
@@ -1078,7 +1078,7 @@ EOQ;
 </td>
 </tr>
 </table>
-</div><!-- dbg1 -->
+</div>
 EOQ;
 
 $out.= "</div>";

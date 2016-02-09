@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 function hide(divname){var elem1=document.getElementById(divname);elem1.style.display='none';}
 function show(div){var elem1=document.getElementById(div);elem1.style.display='';}
@@ -54,3 +57,4 @@ if(direction=='next'){if(step==total){var msg=SUGAR.language.get('mod_strings','
 if(direction=='direct'){}
 if((direction!='direct')&&(window.validate_wiz_form)&&(!validate_wiz_form('step'+step))){return false;}
 return true;}
+var onEmailTemplateChange=function(elem){var emailTemplateId=$(elem).val();$('#email_template_view_html').html('');$('#email_template_view').html('');$.post('index.php?entryPoint=emailTemplateData',{'emailTemplateId':emailTemplateId},function(resp){var results=JSON.parse(resp);$('#email_template_view_html').html(results.data.body_html);$('#email_template_view').html(results.data.body);document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);document.getElementById("html_frame").contentWindow.document.close();});show_edit_template_link(elem);};var onScheduleClick=function(e){$('#wiz_home_next_step').val(3);$('#wiz_submit_button').click();};var onSendAsTestClick=function(e){$('#wiz_home_next_step').val(2);$('#wiz_submit_button').click();};var addTargetListData=function(id){var result_data={"form_name":'wizform',"name_to_value_array":{popup_target_list_id:id,popup_target_list_name:targetListDataJSON[id].name,popup_target_list_type:targetListDataJSON[id].type},"passthru_data":Object(),"popupConfirm":0};set_return_prospect_list(result_data);};

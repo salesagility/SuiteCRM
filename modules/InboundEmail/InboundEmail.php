@@ -4524,7 +4524,7 @@ eoq;
     }
 
 	function get_stored_options($option_name,$default_value=null,$stored_options=null) {
-		if (empty($stored_options) && isset($this)) {
+		if (empty($stored_options)) {
 			$stored_options=$this->stored_options;
 		}
 		return self::get_stored_options_static($option_name, $default_value, $stored_options);

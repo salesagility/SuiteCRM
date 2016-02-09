@@ -174,9 +174,20 @@ foreach ($mailboxes as $id=>$name) {
 }
 $ss->assign("FROM_EMAILS",$from_emails);
 $ss->assign("DEFAULT_FROM_EMAIL",$default_email_address);
-$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'],$mrkt_focus->status));
+$ss->assign("STATUS_OPTIONS", get_select_options_with_id($app_list_strings['email_marketing_status_dom'],$mrkt_focus->status ? $mrkt_focus->status : 'active'));
 if (empty($mrkt_focus->inbound_email_id)) {
-    $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, ''));
+    $defaultMailboxId = '';
+    $mailboxIds = array();
+    foreach($mailboxes as $mailboxId => $mailboxName) {
+        if($mailboxId) {
+            $mailboxIds[] = $mailboxId;
+        }
+    }
+    if(count($mailboxIds) == 1) {
+        $defaultMailboxId = $mailboxIds[0];
+    }
+    $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $defaultMailboxId));
+    $ss->assign("MAILBOXES_DEAULT", $defaultMailboxId);
 } else {
     $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $mrkt_focus->inbound_email_id));
 }
@@ -189,6 +200,7 @@ if($mrkt_focus->template_id) {
     $ss->assign("TEMPLATE_ID", $mrkt_focus->template_id);
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $mrkt_focus->template_id));
     $ss->assign("EDIT_TEMPLATE","visibility:inline");
+    $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
 }
 else {
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, ""));
@@ -207,6 +219,10 @@ else {
     if (!empty($mrkt_focus->id)) {
         $mrkt_focus->load_relationship('prospectlists');
         $prospectlists=$mrkt_focus->prospectlists->get();
+    }
+    else {
+        $ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
+        $ss->assign("MESSAGE_FOR_DISABLED","disabled");
     };
 }
 if (empty($prospectlists)) $prospectlists=array();
@@ -252,12 +268,15 @@ echo $javascript->getScript();
         if ($pl_lists==0){
             //print no target list warning
             $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
+            $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
         }else{
             //print no entries warning
             if($campaign_focus->campaign_type='NewsLetter'){
                 $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
             }else{
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
             }
         }
         //disable the send email options
@@ -296,12 +315,24 @@ $ss->assign("SUMM_URL", $summ_url);
     function validate_wiz_form(step){
         switch (step){
             case 'step1':
+                if (!validate_step1()) {
+                    check_form('wizform')
+                    return false;
+                }
+                clear_all_errors();
+                break;
+            case 'step2':
             return check_form('wizform');
             break;
             default://no additional validation needed
         }
         return true;
 
+    }
+
+    function validate_step1() {
+        if(!$('#template_id').val()) return false;
+        return true;
     }
 
     showfirst('marketing')
@@ -316,6 +347,38 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
+
+include_once('DotListWizardMenu.php');
+$dotListWizardMenu = new DotListWizardMenu($mod_strings, array(
+    $mod_strings['LBL_NAVIGATION_MENU_GEN1'] => $camp_url.'1',
+    $mod_strings['LBL_TARGET_LIST'] => $camp_url.'2',
+    //$mod_strings['LBL_NAVIGATION_MENU_GEN2'] => $camp_url.'2',
+    //$mod_strings['LBL_NAVIGATION_MENU_TRACKERS'] => $camp_url.'3',
+    $mod_strings['LBL_NAVIGATION_MENU_MARKETING'] => '#', //$camp_url.'3',
+    $mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY'] => false,
+    //$mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] => false,
+), true);
+
+$ss->assign('WIZMENU', $dotListWizardMenu);
+
+$diagnose = diagnose($errors, $links);
+
+$ss->assign('diagnose', $diagnose);
+
+foreach($errors as $error => $msg) {
+    if($msg) {
+        $ss->assign('error_on_' . $error, $msg);
+    }
+}
+
+
+foreach($links as $link => $url) {
+    if($url) {
+        $ss->assign('link_to_' . $link, $url);
+    }
+}
+
+$ss->assign('link_to_target_list', $camp_url.'2');
 
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

@@ -121,6 +121,7 @@ class AOR_Report extends Basic {
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
         global $beanList;
 
+        $html = '';
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);

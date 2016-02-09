@@ -52,10 +52,10 @@ class AORReportsDashlet extends Dashlet {
         $dashletSmarty->assign('chartHTML',$this->getChartHTML());
         $dashletSmarty->assign('onlyCharts', $this->onlyCharts);
         $dashletSmarty->assign('parameters',json_encode(array(
-                                            'ids' => $this->def['parameter_id'],
-                                            'operators' => $this->def['parameter_operator'],
-                                            'types' => $this->def['parameter_type'],
-                                            'values' => $this->def['parameter_value'])));
+                                            'ids' => isset($this->def['parameter_id']) ? $this->def['parameter_id'] : null,
+                                            'operators' => isset($this->def['parameter_operator']) ? $this->def['parameter_operator'] : null,
+                                            'types' => isset($this->def['parameter_type']) ? $this->def['parameter_type'] : null,
+                                            'values' => isset($this->def['parameter_value']) ? $this->def['parameter_value'] : null)));
         return $dashletSmarty->fetch($dashletTemplate);
     }
 

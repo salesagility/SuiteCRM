@@ -383,6 +383,33 @@ $json = getJSONobj();
 $encoded_newsletter_popup_request_data = $json->encode($popup_request_data);
 $ss->assign('encoded_target_list_popup_request_data', $encoded_newsletter_popup_request_data);
 
+
+// ----- show target lists...
+
+$targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
+
+$targetListData = array();
+foreach($targetList as $prospectLst) {
+    $nxt = array(
+        'id' => $prospectLst->id,
+        'name' => $prospectLst->name,
+        //'type' => $prospectLst->type,
+        'description' => $prospectLst->description,
+        'type' => $prospectLst->list_type,
+    );
+    $targetListDataArray[] = $nxt;
+    $targetListDataAssoc[$prospectLst->id] = $nxt;
+}
+
+
+$ss->assign('targetListData', $targetListDataArray);
+
+$targetListDataJSON = json_encode($targetListDataAssoc);
+$ss->assign('targetListDataJSON', $targetListDataJSON);
+
+// -----
+
+
 $ss->assign('TARGET_OPTIONS', get_select_options_with_id($app_list_strings['prospect_list_type_dom'], 'default'));
 
 //retrieve the subscriptions
@@ -482,9 +509,17 @@ if(!empty($focus->id)){
 
 $script_to_call ='';
     if (!empty($focus->id)){
-        $script_to_call = "link_navs(1,4);";
+        $maxStep = 2;
+        $script_to_call = "link_navs(1, {$maxStep});";
         if(isset($_REQUEST['direct_step']) and !empty($_REQUEST['direct_step'])){
-            $script_to_call .='   direct('.$_REQUEST['direct_step'].');';
+            $directStep = (int) $_REQUEST['direct_step'];
+            if($directStep < 1) {
+                $directStep = 1;
+            }
+            if($directStep > $maxStep) {
+                $directStep = $maxStep;
+            }
+            $script_to_call .='   direct(' . $directStep . ');';
         }
     } 
     $ss->assign("HILITE_ALL", $script_to_call);
@@ -504,7 +539,7 @@ $script_to_call ='';
             if(!validate_step1()){return false;}
             break;
             case 'step2':
-            if(!validate_step2()){return false;} 
+            //if(!validate_step2()){return false;}
             break;                  
             default://no additional validation needed      
         }
@@ -526,16 +561,16 @@ $sshtml = ' ';
 
 if($campaign_type == 'general'){
     $steps = create_campaign_steps();    
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'campaign',$mrkt_string,$summ_url));
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
 }elseif($campaign_type == 'email'){
     $steps = create_email_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'email',$mrkt_string,$summ_url));
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'email',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','submit');
 }else{
     $steps = create_newsletter_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'newsletter',$mrkt_string,$summ_url));
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'newsletter',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','submit');
 }
 
@@ -552,8 +587,8 @@ $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ?
 function create_newsletter_steps(){
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SUBSCRIPTIONS']] = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetList.tpl';
     return  $steps;
 }
@@ -569,8 +604,8 @@ function create_campaign_steps(){
 function create_email_steps(){
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
     $steps[$mod_strings['LBL_TARGET_LISTS']]                   = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl';
     return  $steps;
 }
@@ -589,27 +624,49 @@ function create_wiz_step_divs($steps,$ss){
     }
     return $step_html;
 }
- 
-function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url){
+
+function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null){
+
     global $mod_strings;
-    $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
-    if(isset($steps)  && !empty($steps)){
-        $i=1;
-        foreach($steps as $name=>$step){
-            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step$i'>$name</div></td></tr>";
-            $i=$i+1;
+
+
+    if($view == 'dotlist') {
+
+        include_once 'modules/Campaigns/DotListWizardMenu.php';
+
+
+
+        if ($type == 'newsletter' || $type == 'email') {
+            $steps[$mrkt_string] = '#';
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = '#';
+            //$steps[$summ_url] = '#';
+        } else {
+            $steps[$summ_url] = '#';
         }
+
+        $nav_html = new DotListWizardMenu($mod_strings, $steps);
+
     }
-    if($type == 'newsletter'  ||  $type == 'email'){
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
-    }else{
-     $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";   
+    else {
+        $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
+        if(isset($steps)  && !empty($steps)){
+            $i=1;
+            foreach($steps as $name=>$step){
+                $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step$i'>$name</div></td></tr>";
+                $i=$i+1;
+            }
+        }
+        if($type == 'newsletter'  ||  $type == 'email'){
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
+        }else{
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";
+        }
+
+        $nav_html .= '</table>';
     }
-       
-    $nav_html .= '</table>';
-  
+
     return $nav_html;
 }
     
