@@ -238,6 +238,31 @@ do {
 			}
 		}
 
+		// if user want to use an other outbound email account to sending...
+
+		$outboundEmailAccount = new OutboundEmailAccounts();
+		$relationships = $outboundEmailAccount->retrieve_relationships('outboundemailaccount_campaigns_c', array('outboundemailaccount_campaignscampaigns_idb' => $current_campaign_id), 'outboundemailaccount_campaignsoutboundemailaccounts_ida');
+		if(isset($relationships[0]['outboundemailaccount_campaignsoutboundemailaccounts_ida'])) {
+			$outboundEmailAccount->retrieve($relationships[0]['outboundemailaccount_campaignsoutboundemailaccounts_ida']);
+			$mail->Username = $outboundEmailAccount->username;
+			$mail->Password = $outboundEmailAccount->password;
+			$mail->Host = $outboundEmailAccount->smtp_servername;
+			$mail->Port = $outboundEmailAccount->smtp_port;
+			//$mail->oe->mail_sendtype = 'SMTP';
+			$mail->oe->mail_smtpauth_req = $outboundEmailAccount->smtp_auth;
+			//$mail->oe->mail_smtpdisplay = 'Gmail';
+			$mail->oe->mail_smtpuser = $outboundEmailAccount->username;
+			$mail->oe->mail_smtppass = $outboundEmailAccount->password;
+			$mail->oe->mail_smtpport = $outboundEmailAccount->smtp_port;
+			$mail->oe->mail_smtpserver = $outboundEmailAccount->smtp_servername;
+			$mail->oe->mail_smtpssl = $outboundEmailAccount->smtp_protocol;
+			//$mail->oe->mail_smtptype = 'gmail';
+		}
+		else {
+			$outboundEmailAccount = false;
+		}
+
+
 		if(!$emailman->sendEmail($mail,$massemailer_email_copy,$test)){
 			$GLOBALS['log']->fatal("Email delivery FAILURE:" . print_r($row,true));
 		} else {
