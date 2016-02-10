@@ -35,13 +35,18 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-buildEditField();
-
 //Global Variables.
 
 var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
-var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
+var $inlineEditIcon = $("#inline_edit_icon");
+if($inlineEditIcon){
+    var $el = $inlineEditIcon.get(0);
+    if($el){
+        buildEditField();
+        var inlineEditIcon = $el.outerHTML;
+    }
+}
+
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
 
@@ -51,10 +56,15 @@ timer = null;
 
 function buildEditField(){
     $(".inlineEdit a").click(function (e) {
+
+        if(e.which !== undefined && e.which === 2){
+            return;
+        }
+
         if(this.id != "inlineEditSaveButton") {
             var linkUrl = $(this).attr("href");
-			var linkTarget = $(this).attr("target");
-			
+            var linkTarget = $(this).attr("target");
+
             if (typeof clicks == 'undefined') {
                 clicks = 0;
             }
@@ -71,10 +81,10 @@ function buildEditField(){
 
                 timer = setTimeout(function () {
                     // if reaches end of timeout without another click follow link
-					if (linkTarget)
-						window.open(linkUrl, linkTarget);
-					else
-						window.location.href = linkUrl;
+                    if (linkTarget)
+                        window.open(linkUrl, linkTarget);
+                    else
+                        window.location.href = linkUrl;
                     clicks = 0;             //after action performed, reset counter
 
                 }, 500);
@@ -250,20 +260,14 @@ function getInputValue(field,type){
                 break;
             case 'datetime':
             case 'datetimecombo':
-
-                if($('#'+ field + '_date').val().length > 0){
-                    var date = $('#'+ field + '_date').val();
-
-                }
-                if($('#'+ field + '_hours :selected').text().length > 0){
-                    var hours = $('#'+ field + '_hours :selected').text();
-                }
-                if($('#'+ field + '_minutes :selected').text().length > 0){
-                    var minutes = $('#'+ field + '_minutes :selected').text();
-                }
-                if($('#'+ field + '_meridiem :selected').text().length > 0){
-                    var meridiem = $('#'+ field + '_meridiem :selected').text();
-                }
+                if($('#'+ field + '_date').val().length > 0){var date = $('#'+ field + '_date').val();}
+                else var date = 00;
+                if($('#'+ field + '_hours :selected').text().length > 0){var hours = $('#'+ field + '_hours :selected').text();}
+                else var hours = 00;
+                if($('#'+ field + '_minutes :selected').text().length > 0){var minutes = $('#'+ field + '_minutes :selected').text();}
+                else var minutes = 00;
+                if($('#'+ field + '_meridiem :selected').text().length > 0){var meridiem = $('#'+ field + '_meridiem :selected').text();}
+                else var meridiem = "";
                 return date + " " + hours +":"+ minutes + meridiem;
                 break;
             case 'date':
@@ -279,7 +283,7 @@ function getInputValue(field,type){
                 break;
             case 'bool':
                 if($('#'+ field).is(':checked')){
-                   return "on";
+                    return "on";
                 }else{
                     return "off";
                 }
@@ -316,7 +320,7 @@ function handleSave(field,id,module,type){
     }
 
     if(type == "parent") {
-            parent_type = $('#parent_type').val();
+        parent_type = $('#parent_type').val();
     }
 
 
@@ -397,16 +401,16 @@ function loadFieldHTML(field,module,id) {
         }
     );
     $.ajaxSetup({"async": true});
-     if(result.responseText){
-         try {
-             return (JSON.parse(result.responseText));
-         } catch(e) {
-             return false;
-         }
+    if(result.responseText){
+        try {
+            return (JSON.parse(result.responseText));
+        } catch(e) {
+            return false;
+        }
 
-     }else{
-         return false;
-     }
+    }else{
+        return false;
+    }
 
 
 }
