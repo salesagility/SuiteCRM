@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 $dictionary['OutboundEmailAccounts'] = array(
-	'table'=>'outboundemailaccounts',
+	'table'=>'outbound_email_accounts',
 	'audited'=>true,
     'inline_edit'=>true,
 		'duplicate_merge'=>true,

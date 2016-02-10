@@ -48,7 +48,7 @@ class OutboundEmailAccounts_sugar extends Basic {
 	var $new_schema = true;
 	var $module_dir = 'OutboundEmailAccounts';
 	var $object_name = 'OutboundEmailAccounts';
-	var $table_name = 'outboundemailaccounts';
+	var $table_name = 'outbound_email_accounts';
 	var $importable = false;
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
 
