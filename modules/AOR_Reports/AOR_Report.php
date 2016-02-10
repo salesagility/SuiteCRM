@@ -161,6 +161,8 @@ class AOR_Report extends Basic {
             $fields[$label]['total'] = $field->total;
 
 
+            $fields[$label]['params'] = array("date_format" => $field->format);
+
             // get the main group
 
             if($field->group_display) {
@@ -192,13 +194,12 @@ class AOR_Report extends Basic {
                         break;
                     default:
                         if(!is_numeric($row[$name])) {
-                            $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id)));
+                            $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id,$att['params'])));
+
                         }
                         break;
                 }
             }
-
-
             $data[] = $row;
         }
         $fields = $this->getReportFields();
