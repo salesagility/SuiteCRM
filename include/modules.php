@@ -469,6 +469,12 @@ $beanList['SecurityGroups'] = 'SecurityGroup';
 $beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
 $moduleList[] = 'SecurityGroups';
 
+$beanList['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
+$beanFiles['OutboundEmailAccounts'] = 'modules/OutboundEmailAccounts/OutboundEmailAccounts.php';
+$modules_exempt_from_availability_check['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
+$report_include_modules['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
+$modInvisList[] = 'OutboundEmailAccounts';
+
 if (file_exists('include/modules_override.php'))
 {
     include('include/modules_override.php');

@@ -3959,6 +3959,8 @@ $app_strings['LBL_LOGIN_AS'] = "Login as ";
 $app_strings['LBL_LOGOUT_AS'] = "Logout as ";
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
+$app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
+
 //social
 $app_strings['FACEBOOK_USER_C'] = 'Facebook';
 $app_strings['TWITTER_USER_C'] = 'Twitter';
@@ -3990,5 +3992,7 @@ $app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
 $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
 $app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
+
+
 
 ?>
