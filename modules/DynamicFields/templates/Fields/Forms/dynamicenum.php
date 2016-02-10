@@ -112,6 +112,6 @@ function get_body(&$ss, $vardef){
     require_once('include/JSON.php');
     $json = new JSON(JSON_LOOSE_TYPE);
     $ss->assign('app_list_strings', "''");
-    return $ss->fetch('custom/modules/DynamicFields/templates/Fields/Forms/dynamicenum.tpl');
+    return $ss->fetch('modules/DynamicFields/templates/Fields/Forms/dynamicenum.tpl');
 }
 ?>
