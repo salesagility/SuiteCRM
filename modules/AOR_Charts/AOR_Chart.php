@@ -388,7 +388,8 @@ EOF;
                 labels: $chartLabelValues,
                 textSize:10,
                 textAngle: 90,
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -429,7 +430,8 @@ EOF;
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -461,7 +463,8 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -538,7 +541,8 @@ EOF;
                 textAngle: 90,
                 //titleSize:10,
                 backgroundGrid:false,
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues),
             }
         }).draw();
         </script>
@@ -637,14 +641,14 @@ EOF;
     }
 
 
-    private function getRGraphGroupedBarChartData($reportData, $xName,$yName, AOR_Field $mainGroupField){
+    private function getRGraphGroupedBarChartData($reportData, $xName,$yName, AOR_Field $mainGroupField = null){
 
 
         // get z-axis name
 
         $zName = null;
         foreach($reportData[0] as $key => $value) {
-            $field = str_replace(' ', '_', $mainGroupField->label);
+            $field = str_replace(' ', '_', is_null($mainGroupField) ? 'no data' : $mainGroupField->label);
             if (preg_match('/^' . $field . '[0-9]+/', $key)) {
                 $zName = $key;
                 break;
