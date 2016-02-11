@@ -46,6 +46,18 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 	function __construct(){
 		parent::__construct();
 	}
+
+	public function save($check_notify = false) {
+		$this->password = blowfishEncode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password);
+		$results = parent::save($check_notify);
+		return $results;
+	}
+
+	public function retrieve($id = -1, $encode = true, $deleted = true) {
+		$results = parent::retrieve($id, $encode, $deleted);
+		$this->password = blowfishDecode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password);
+		return $results;
+	}
 	
 }
 ?>

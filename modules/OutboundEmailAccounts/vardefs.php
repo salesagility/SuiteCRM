@@ -270,7 +270,7 @@
 					 'required' => true,
 					 'name' => 'password',
 					 'vname' => 'LBL_PASSWORD',
-					 'type' => 'varchar',
+					 'type' => 'password',
 					 'massupdate' => 0,
 					 'no_default' => false,
 					 'comments' => '',

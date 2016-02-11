@@ -69,11 +69,6 @@ array (
             'name' => 'username',
             'label' => 'LBL_USERNAME',
           ),
-          1 => 
-          array (
-            'name' => 'password',
-            'label' => 'LBL_PASSWORD',
-          ),
         ),
         1 => 
         array (
