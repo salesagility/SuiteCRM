@@ -120,6 +120,7 @@ class AOR_Report extends Basic {
 
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
         global $beanList;
+        $linkedCharts = $this->get_linked_beans('aor_charts','AOR_Charts');
 	if(!$linkedCharts){
             //No charts to display
             return '';
