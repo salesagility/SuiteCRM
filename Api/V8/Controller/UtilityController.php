@@ -9,6 +9,10 @@ use SuiteCRM\Api\V8\Library\UtilityLib;
 
 class UtilityController extends Api{
 
+    //This is the millisecond time that the token is valid for
+    //TODO decide appropriate timeout value
+    public $jwtValidTime = 60 * 60 * 24;
+
     function getServerInfo(Request $req, Response $res, $args)
     {
         global $container;
@@ -20,7 +24,8 @@ class UtilityController extends Api{
 
     function login(Request $req, Response $res, $args)
     {
-        $jwtExpiry = (60 * 60 * 24);
+        global $sugar_config;
+        $jwtExpiry = $this->jwtValidTime;
         $lib = new UtilityLib();
         $login = $lib->login();
 
@@ -32,7 +37,7 @@ class UtilityController extends Api{
             );
 
             //Create the token
-            $jwt = \Firebase\JWT\JWT::encode($token,"supersecretkeyyoushouldnotcommittogithub");
+            $jwt = \Firebase\JWT\JWT::encode($token,$sugar_config["JWT_SECRET"]);
             setcookie("SUITECRM_REST_API_TOKEN",json_encode($jwt));
             return $this->generateResponse($res,200,json_encode($jwt),'Success');
         }

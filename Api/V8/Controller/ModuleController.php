@@ -127,6 +127,70 @@ class ModuleController extends Api
         }
     }
 
+    public function getNoteAttachment(Request $req, Response $res, $args)
+    {
+        require_once('modules/Notes/Note.php');
+        $id = $args["id"];
+
+        $note = new \Note();
+        $note->retrieve($id);
+
+        if(!$note->ACLAccess('DetailView')) {
+            return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
+        }
+
+        $lib = new ModuleLib();
+
+
+        return $this->generateResponse($res, 200, $lib->getNoteAttachment($note,$id), 'Success');
+
+    }
+
+
+    public function getModuleRelationships(Request $req, Response $res, $args)
+    {//TODO need to check the http return codes for the errors
+        global  $beanList, $beanFiles;
+        $lib = new ModuleLib();
+
+        $module_name = $args["module"];
+        $module_id = $args["id"];
+        $related_module = $args["related_module"];
+
+        $related_module_query = $_REQUEST["related_module_query"];
+
+
+        if(empty($beanList[$module_name]) || empty($beanList[$related_module])){
+            return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
+        }
+        $class_name = $beanList[$module_name];
+        require_once($beanFiles[$class_name]);
+        $mod = new $class_name();
+        $mod->retrieve($module_id);
+        if(!$mod->ACLAccess('DetailView')){
+            return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
+        }
+
+        require_once 'include/SugarSQLValidate.php';
+        $valid = new \SugarSQLValidate();
+        if(!$valid->validateQueryClauses($related_module_query)) {
+            return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
+        }
+
+        $id_list = $lib->get_linked_records($related_module, $module_name, $module_id);
+
+        if ($id_list === FALSE) {
+            return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
+        }
+        elseif (count($id_list) == 0) {
+            return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
+        }
+
+        return $this->generateResponse($res, 200, json_encode($lib->getModuleRelationships($related_module,$id_list)), 'Success');
+    }
+
+
+
+
     public function getModuleLinks(Request $req, Response $res, $args)
     {
         global $moduleList;
@@ -219,6 +283,46 @@ class ModuleController extends Api
             $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but module not matched.  Module = '.$module.' Id= '.$id);
             return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
         }
+    }
+
+    function createRelationship(Request $req, Response $res, $args)
+    {
+        $lib = new ModuleLib();
+        $moduleName = $_REQUEST["module_name"];
+        $moduleId = $_REQUEST["module_id"];
+        $linkFieldName = $_REQUEST["link_field_name"];
+        $relatedIds = $_REQUEST["related_ids"];
+        $nameValues = $_REQUEST["name_value_list"];
+
+
+        if (empty($moduleName) || empty($moduleId) || empty($linkFieldName) || !is_array($relatedIds) || !is_array($nameValues) || empty($relatedIds) || empty($nameValues) ) {
+            return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
+        }
+        else
+        {
+            return $this->generateResponse($res, 200, $lib->createRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues), 'Success');
+        }
+
+    }
+
+    function deleteRelationship(Request $req, Response $res, $args)
+    {
+        $lib = new ModuleLib();
+        $moduleName = $_REQUEST["module_name"];
+        $moduleId = $_REQUEST["module_id"];
+        $linkFieldName = $_REQUEST["link_field_name"];
+        $relatedIds = $_REQUEST["related_ids"];
+        $nameValues = $_REQUEST["name_value_list"];
+
+
+        if (empty($moduleName) || empty($moduleId) || empty($linkFieldName) || !is_array($relatedIds) || !is_array($nameValues) || empty($relatedIds) || empty($nameValues) ) {
+            return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
+        }
+        else
+        {
+            return $this->generateResponse($res, 200, $lib->deleteRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues), 'Success');
+        }
+
     }
 
     function updateModuleItem(Request $req, Response $res, $args)

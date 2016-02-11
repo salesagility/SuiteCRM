@@ -410,4 +410,204 @@ class ModuleLib{
     }
 
 
+    public function getNoteAttachment($note,$id)
+    {
+        require_once('modules/Notes/NoteSoap.php');
+        $ns = new \NoteSoap();
+        if(!isset($note->filename)){
+            $note->filename = '';
+        }
+        $file= $ns->retrieveFile($id,$note->filename);
+        if($file == -1){
+            $file = '';
+        }
+
+        return array('note_attachment'=>array('id'=>$id, 'filename'=>$note->filename, 'file'=>$file, 'related_module_id' => $note->parent_id, 'related_module_name' => $note->parent_type));
+    }
+
+
+    public function getModuleRelationships($related_module,$id_list)
+    {
+        global $beanList,$beanFiles;
+
+        $list = array();
+
+        $in = "'".implode("', '", $id_list)."'";
+
+        $related_class_name = $beanList[$related_module];
+        require_once($beanFiles[$related_class_name]);
+        $related_mod = new $related_class_name();
+
+        $sql = "SELECT {$related_mod->table_name}.id FROM {$related_mod->table_name} ";
+
+
+        if (isset($related_mod->custom_fields)) {
+            $customJoin = $related_mod->custom_fields->getJOIN();
+            $sql .= $customJoin ? $customJoin['join'] : '';
+        }
+
+        $sql .= " WHERE {$related_mod->table_name}.id IN ({$in}) ";
+
+        if (!empty($related_module_query)) {
+            $sql .= " AND ( {$related_module_query} )";
+        }
+
+        $result = $related_mod->db->query($sql);
+        while ($row = $related_mod->db->fetchByAssoc($result)) {
+            $list[] = $row['id'];
+        }
+
+        $return_list = array();
+
+        foreach($list as $id) {
+            $related_class_name = $beanList[$related_module];
+            $related_mod = new $related_class_name();
+            $related_mod->retrieve($id);
+
+            $return_list[] = array(
+                'id' => $id,
+                'date_modified' => $related_mod->date_modified,
+                'deleted' => $related_mod->deleted
+            );
+        }
+        return $return_list;
+    }
+
+    function createRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues)
+    {
+
+        $count = 0;
+        $failed = 0;
+
+        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds,$nameValues,false)) {
+                $count++;
+        } else {
+            $failed++;
+        } // else
+
+        return array('created'=>$count , 'failed'=>$failed);
+    }
+
+    function deleteRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues)
+    {
+
+        $deleted = 0;
+        $failed = 0;
+
+        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds,$nameValues,true)) {
+            $deleted++;
+        } else {
+            $failed++;
+        } // else
+
+        return array('deleted'=>$deleted , 'failed'=>$failed);
+    }
+
+
+
+    function get_linked_records($get_module, $from_module, $get_id) {
+        global $beanList, $beanFiles;
+
+        // instantiate and retrieve $from_module
+        $from_class = $beanList[$from_module];
+        require_once($beanFiles[$from_class]);
+        $from_mod = new $from_class();
+        $from_mod->retrieve($get_id);
+
+        $field = $this->get_module_link_field($from_module, $get_module);
+        if ($field === FALSE) {
+            return FALSE;
+        }
+
+        $from_mod->load_relationship($field);
+        $id_arr = $from_mod->$field->get();
+
+        //bug: 38065
+        if ($get_module == 'EmailAddresses') {
+            $emails = $from_mod->emailAddress->addresses;
+            $email_arr = array();
+            foreach ($emails as $email) {
+                $email_arr[] = $email['email_address_id'];
+            }
+            return $email_arr;
+        }
+
+        return $id_arr;
+    }
+
+
+
+
+    // Returns name of 'link' field between two given modules
+    function get_module_link_field($module_1, $module_2) {
+        global $beanList, $beanFiles;
+
+        // check to make sure both modules exist
+        if (empty($beanList[$module_1]) || empty($beanList[$module_2])) {
+            return FALSE;
+        }
+
+        $class_1 = $beanList[$module_1];
+        require_once($beanFiles[$class_1]);
+
+        $obj_1 = new $class_1();
+
+        // loop through link fields of $module_1, checking for a link to $module_2
+        foreach ($obj_1->get_linked_fields() as $linked_field) {
+            $obj_1->load_relationship($linked_field['name']);
+            $field = $linked_field['name'];
+
+            if (empty($obj_1->$field)) {
+                continue;
+            }
+
+            if ($obj_1->$field->getRelatedModuleName() == $module_2) {
+                return $field;
+            }
+        }
+
+        return false;
+    }
+
+    function new_handle_set_relationship($module_name, $module_id, $link_field_name, $related_ids, $name_value_list,$delete) {
+        global  $beanList, $beanFiles;
+
+        if(empty($beanList[$module_name])) {
+            return false;
+        }
+        $class_name = $beanList[$module_name];
+        require_once($beanFiles[$class_name]);
+        $mod = new $class_name();
+        $mod->retrieve($module_id);
+        if(!$mod->ACLAccess('DetailView')){
+            return false;
+        }
+
+        if ($mod->load_relationship($link_field_name)) {
+            if (!$delete) {
+                $name_value_pair = array();
+                if (!empty($name_value_list)) {
+                    $relFields = $mod->$link_field_name->getRelatedFields();
+                    if(!empty($relFields)){
+                        $relFieldsKeys = array_keys($relFields);
+                        foreach($name_value_list as $key => $value) {
+                            if (in_array($value['name'], $relFieldsKeys)) {
+                                $name_value_pair[$value['name']] = $value['value'];
+                            } // if
+                        } // foreach
+                    } // if
+                }
+                $mod->$link_field_name->add($related_ids, $name_value_pair);
+            } else {
+                foreach($related_ids as $id) {
+                    $mod->$link_field_name->delete($module_id, $id);
+                } // foreach
+            } // else
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }
