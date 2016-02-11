@@ -19,7 +19,6 @@ class UtilityLib
         $username = $_REQUEST["username"];
         $password = $_REQUEST["password"];
 
-
         if ($authController->login($username, $password)) {
             $usr = new \user();
             return array("loginApproved" => true, "userId" => $usr->retrieve_user_id($username));

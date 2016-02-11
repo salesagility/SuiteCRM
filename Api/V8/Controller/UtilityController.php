@@ -12,12 +12,10 @@ class UtilityController extends Api
 
     //This is the millisecond time that the token is valid for
     //TODO decide appropriate timeout value
-    public $jwtValidTime = 60 * 60 * 24;
+    public $jwtValidTime = 86400;
 
     function getServerInfo(Request $req, Response $res, $args)
     {
-        global $container;
-
         $lib = new UtilityLib();
         $server_info = $lib->getServerInfo();
         return $this->generateResponse($res, 200, $server_info, 'Success');

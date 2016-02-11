@@ -181,7 +181,6 @@ class ModuleLib
                             $results = $viewdefs[$module_name][$fullView];
                         }
                     }
-
                 }
         }
 
@@ -539,10 +538,9 @@ class ModuleLib
         $count = 0;
         $failed = 0;
         $counter = 0;
-        $deleted = 0;
         foreach ($moduleNames as $moduleName) {
             if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
-                $relatedIds[$counter], $nameValues[$counter], $deleted)
+                $relatedIds[$counter], $nameValues[$counter], 0)
             ) {
                 $count++;
             } else {
@@ -552,6 +550,25 @@ class ModuleLib
         }
 
         return array('created' => $count, 'failed' => $failed);
+    }
+
+    function deleteRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues)
+    {
+        $failed = 0;
+        $counter = 0;
+        $deleted = 0;
+        foreach ($moduleNames as $moduleName) {
+            if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
+                $relatedIds[$counter], $nameValues[$counter], 1)
+            ) {
+                $deleted++;
+            } else {
+                $failed++;
+            }
+            $counter++;
+        }
+
+        return array('deleted' => $deleted, 'failed' => $failed);
     }
 
 

@@ -16,13 +16,14 @@ $app->group('/V8', function () use ($app) {
     $app->delete('/module/{module}/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteModuleItem');
     $app->put('/module/{module}/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:updateModuleItem');
     $app->post('/module/{module}', 'SuiteCRM\Api\V8\Controller\ModuleController:createModuleItem');
+    $app->post('/convert_lead/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:convertLead');
 
     //Create relationship
-    $app->post('/createRelationship', 'SuiteCRM\Api\V8\Controller\ModuleController:createRelationship');
+    $app->post('/relationship', 'SuiteCRM\Api\V8\Controller\ModuleController:createRelationship');
     //Delete relationship
-    $app->delete('/createRelationship', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteRelationship');
+    $app->delete('/relationship', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteRelationship');
     //Create relationships
-    $app->post('/createRelationships', 'SuiteCRM\Api\V8\Controller\ModuleController:createRelationships');
+    $app->post('/relationships', 'SuiteCRM\Api\V8\Controller\ModuleController:createRelationships');
     //Delete relationships
-    $app->delete('/createRelationships', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteRelationships');
+    $app->delete('/relationships', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteRelationships');
 });

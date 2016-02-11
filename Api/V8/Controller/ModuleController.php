@@ -12,8 +12,6 @@ class ModuleController extends Api
 
     public function getModuleRecords(Request $req, Response $res, $args)
     {
-
-
         $module = \BeanFactory::getBean($args['module_name']);
         if (is_object($module)) {
             $records = $module->get_full_list();
@@ -165,7 +163,6 @@ class ModuleController extends Api
         $related_module = $args["related_module"];
 
         $related_module_query = $_REQUEST["related_module_query"];
-
 
         if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
             return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
@@ -335,16 +332,16 @@ class ModuleController extends Api
     function createRelationships(Request $req, Response $res, $args)
     {
         $lib = new ModuleLib();
-        $moduleNames = $_REQUEST["module_name"];
-        $moduleIds = $_REQUEST["module_id"];
-        $linkFieldNames = $_REQUEST["link_field_name"];
+        $moduleNames = $_REQUEST["module_names"];
+        $moduleIds = $_REQUEST["module_ids"];
+        $linkFieldNames = $_REQUEST["link_field_names"];
         $relatedIds = $_REQUEST["related_ids"];
         $nameValues = $_REQUEST["name_value_list"];
 
 
         if (!is_array($moduleNames) || !is_array($moduleIds) || !is_array($linkFieldNames) || !is_array($relatedIds) || !is_array($nameValues)
             || empty($moduleNames) || empty($moduleIds) || empty($linkFieldNames) || empty($relatedIds) || empty($nameValues)
-            || (sizeof($moduleNames) != (sizeof($moduleIds) || sizeof($linkFieldNames) || sizeof($relatedIds)))
+            || sizeof($moduleNames) != sizeof($moduleIds) || sizeof($moduleNames) != sizeof($linkFieldNames) || sizeof($moduleNames) != sizeof($relatedIds)
         ) {
             return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
         } else {
@@ -352,6 +349,34 @@ class ModuleController extends Api
                 $lib->createRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues),
                 'Success');
         }
+
+    }
+
+    function deleteRelationships(Request $req, Response $res, $args)
+    {
+        $lib = new ModuleLib();
+        $moduleNames = $_REQUEST["module_names"];
+        $moduleIds = $_REQUEST["module_ids"];
+        $linkFieldNames = $_REQUEST["link_field_names"];
+        $relatedIds = $_REQUEST["related_ids"];
+        $nameValues = $_REQUEST["name_value_list"];
+
+
+        if (!is_array($moduleNames) || !is_array($moduleIds) || !is_array($linkFieldNames) || !is_array($relatedIds) || !is_array($nameValues)
+            || empty($moduleNames) || empty($moduleIds) || empty($linkFieldNames) || empty($relatedIds) || empty($nameValues)
+            || sizeof($moduleNames) != sizeof($moduleIds) || sizeof($moduleNames) != sizeof($linkFieldNames) || sizeof($moduleNames) != sizeof($relatedIds)
+        ) {
+            return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
+        } else {
+            return $this->generateResponse($res, 200,
+                $lib->deleteRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues),
+                'Success');
+        }
+
+    }
+
+    function convertLead(Request $req, Response $res, $args)
+    {
 
     }
 
