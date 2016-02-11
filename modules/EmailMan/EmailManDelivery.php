@@ -239,11 +239,8 @@ do {
 		}
 
 		// if user want to use an other outbound email account to sending...
-
-		$outboundEmailAccount = new OutboundEmailAccounts();
-		$relationships = $outboundEmailAccount->retrieve_relationships('outboundemailaccount_campaigns_c', array('outboundemailaccount_campaignscampaigns_idb' => $current_campaign_id), 'outboundemailaccount_campaignsoutboundemailaccounts_ida');
-		if(isset($relationships[0]['outboundemailaccount_campaignsoutboundemailaccounts_ida'])) {
-			$outboundEmailAccount->retrieve($relationships[0]['outboundemailaccount_campaignsoutboundemailaccounts_ida']);
+		if($current_emailmarketing->outbound_email_account_id) {
+			$outboundEmailAccount = BeanFactory::getBean('OutboundEmailAccounts', $current_emailmarketing->outbound_email_account_id);
 			$mail->Username = $outboundEmailAccount->username;
 			$mail->Password = $outboundEmailAccount->password;
 			$mail->Host = $outboundEmailAccount->smtp_servername;
@@ -256,10 +253,6 @@ do {
 			$mail->oe->mail_smtpport = $outboundEmailAccount->smtp_port;
 			$mail->oe->mail_smtpserver = $outboundEmailAccount->smtp_servername;
 			$mail->oe->mail_smtpssl = $outboundEmailAccount->smtp_protocol;
-			//$mail->oe->mail_smtptype = 'gmail';
-		}
-		else {
-			$outboundEmailAccount = false;
 		}
 
 
