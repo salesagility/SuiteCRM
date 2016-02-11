@@ -136,7 +136,7 @@ class CampaignLog extends SugarBean {
 
 
     //this function is called statically by the campaign_log subpanel.
-    function get_related_name($related_id, $related_type) {
+    static function get_related_name($related_id, $related_type) {
         global $locale;
         $db= DBManagerFactory::getInstance();
         if ($related_type == 'Emails') {
