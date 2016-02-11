@@ -2,11 +2,14 @@
 namespace SuiteCRM\Api\V8\Library;
 
 
-class ModuleLib{
+class ModuleLib
+{
 
     function getAvailableModules($filter, $user)
     {
-        if (empty($filter)) $filter = "all";
+        if (empty($filter)) {
+            $filter = "all";
+        }
         $modules = array();
         $availModules = $this->get_user_module_list($user);
         switch ($filter) {
@@ -18,7 +21,7 @@ class ModuleLib{
                 $modules = $this->getModulesFromList(array_flip($availModules), $availModules);
         }
         $ret = array();
-        $ret['data'] =$modules;
+        $ret['data'] = $modules;
         return $ret;
     }
 
@@ -35,7 +38,6 @@ class ModuleLib{
             $modules[$invis] = 'read_only';
         }
 
-        $actions = \ACLAction::getUserActions($user->id, true);
         //Remove all modules that don't have a beanFiles entry associated with it
         foreach ($modules as $module_name => $module) {
             if (isset($beanList[$module_name])) {
@@ -57,8 +59,7 @@ class ModuleLib{
         if (!empty($_REQUEST['update'])) {
             foreach ($_REQUEST['update'] as $item) {
                 //TODO make sure that the data is safe before it is inserted!
-                if(!empty($item['name']) && !empty($item['value']))
-                {
+                if (!empty($item['name']) && !empty($item['value'])) {
                     $itemToUpdate = $item['name'];
                     $updateValue = $item['value'];
                     $matchingBean->$itemToUpdate = $updateValue;
@@ -75,8 +76,7 @@ class ModuleLib{
         if (!empty($_REQUEST['create'])) {
             foreach ($_REQUEST['create'] as $item) {
                 //TODO make sure that the data is safe before it is inserted!
-                if(!empty($item['name']) && !empty($item['value']))
-                {
+                if (!empty($item['name']) && !empty($item['value'])) {
                     $itemToUpdate = $item['name'];
                     $updateValue = $item['value'];
                     $matchingBean->$itemToUpdate = $updateValue;
@@ -88,7 +88,7 @@ class ModuleLib{
     }
 
 
-    function getModuleLayout($modules,$views,$types,$hash)
+    function getModuleLayout($modules, $views, $types, $hash)
     {
         global $beanList, $beanFiles;
         $results = array();
@@ -98,13 +98,13 @@ class ModuleLib{
             $seed = new $class_name();
 
             foreach ($views as $view) {
-                $aclViewCheck = (strtolower($view) == 'subpanel') ? 'DetailView' : ucfirst(strtolower($view)) . 'View';
                 foreach ($types as $type) {
                     $a_vardefs = $this->get_module_view_defs($module_name, $type, $view);
-                    if (strtolower($hash === "true"))
+                    if (strtolower($hash === "true")) {
                         $results[$module_name][$type][$view] = md5(serialize($a_vardefs));
-                    else
+                    } else {
                         $results[$module_name][$type][$view] = $a_vardefs;
+                    }
                 }
             }
         }
@@ -118,7 +118,7 @@ class ModuleLib{
         require_once("modules/MySettings/TabController.php");
         $controller = new \TabController();
         $tabs = $controller->get_tabs_system();
-        return getModulesFromList($tabs[0], $availModules);
+        return $this->getModulesFromList($tabs[0], $availModules);
 
     }
 
@@ -137,7 +137,7 @@ class ModuleLib{
         return $enabled_modules;
     }
 
-    function deleteModuleItem($beanType,$id)
+    function deleteModuleItem($beanType, $id)
     {
         $beanType->mark_deleted($id);
     }
@@ -164,22 +164,22 @@ class ModuleLib{
         switch (strtolower($type)) {
             case 'default':
             default:
-                if ($view == 'subpanel')
+                if ($view == 'subpanel') {
                     $results = $this->get_subpanel_defs($module_name, $type);
-                else {
+                } else {
                     $v = new \SugarView(null, array());
                     $v->module = $module_name;
                     $v->type = $view;
                     $fullView = ucfirst($view) . 'View';
                     $metadataFile = $v->getMetaDataFile();
 
-                    if($metadataFile !== null)
-                    {
+                    if ($metadataFile !== null) {
                         require_once($metadataFile);
-                        if ($view == 'list')
+                        if ($view == 'list') {
                             $results = $listViewDefs[$module_name];
-                        else
+                        } else {
                             $results = $viewdefs[$module_name][$fullView];
+                        }
                     }
 
                 }
@@ -193,11 +193,10 @@ class ModuleLib{
         return $bean->get_linked_fields();
     }
 
-    function getModuleFields($module,$fields)
+    function getModuleFields($module, $fields)
     {
         global $beanList, $beanFiles;
 
-        $module_fields = array();
         $class_name = $beanList[$module];
         require_once($beanFiles[$class_name]);
         $seed = new $class_name();
@@ -205,7 +204,7 @@ class ModuleLib{
         return $list;
     }
 
-    function getLanguageDefinition($modules,$hash)
+    function getLanguageDefinition($modules, $hash)
     {
         global $current_language;
 
@@ -215,16 +214,19 @@ class ModuleLib{
                 if (strtolower($mod) == 'app_strings') {
                     $values = return_application_language($current_language);
                     $key = 'app_strings';
-                } else if (strtolower($mod) == 'app_list_strings') {
-                    $values = return_app_list_strings_language($current_language);
-                    $key = 'app_list_strings';
                 } else {
-                    $values = return_module_language($current_language, $mod);
-                    $key = $mod;
+                    if (strtolower($mod) == 'app_list_strings') {
+                        $values = return_app_list_strings_language($current_language);
+                        $key = 'app_list_strings';
+                    } else {
+                        $values = return_module_language($current_language, $mod);
+                        $key = $mod;
+                    }
                 }
 
-                if (strtolower($hash) === "true")
+                if (strtolower($hash) === "true") {
                     $values = md5(serialize($values));
+                }
 
                 $results[$key] = $values;
             }
@@ -232,7 +234,7 @@ class ModuleLib{
         return $results;
     }
 
-    function getLastViewed($userId,$module)
+    function getLastViewed($userId, $module)
     {
 
         $tracker = new \Tracker();
@@ -246,26 +248,30 @@ class ModuleLib{
 
     function get_subpanel_defs($module, $type)
     {
-        global $beanList, $beanFiles, $layout_defs, $app_list_strings;
+        global $beanList, $layout_defs;
         $results = array();
         switch ($type) {
             case 'default':
             default:
-                if (file_exists('modules/' . $module . '/metadata/subpaneldefs.php'))
+                if (file_exists('modules/' . $module . '/metadata/subpaneldefs.php')) {
                     require('modules/' . $module . '/metadata/subpaneldefs.php');
-                if (file_exists('custom/modules/' . $module . '/Ext/Layoutdefs/layoutdefs.ext.php'))
+                }
+                if (file_exists('custom/modules/' . $module . '/Ext/Layoutdefs/layoutdefs.ext.php')) {
                     require('custom/modules/' . $module . '/Ext/Layoutdefs/layoutdefs.ext.php');
+                }
         }
 
         //Filter results for permissions
         foreach ($layout_defs[$module]['subpanel_setup'] as $subpanel => $subpaneldefs) {
             $moduleToCheck = $subpaneldefs['module'];
-            if (!isset($beanList[$moduleToCheck]))
+            if (!isset($beanList[$moduleToCheck])) {
                 continue;
+            }
             $class_name = $beanList[$moduleToCheck];
             $bean = new $class_name();
-            if ($bean->ACLAccess('list'))
+            if ($bean->ACLAccess('list')) {
                 $results[$subpanel] = $subpaneldefs;
+            }
         }
 
         return $results;
@@ -279,7 +285,9 @@ class ModuleLib{
         $result = $this->get_field_list($value, $fields, $translate);
         $tableName = $value->getTableName();
 
-        return Array('module_name' => $module, 'table_name' => $tableName,
+        return Array(
+            'module_name' => $module,
+            'table_name' => $tableName,
             'module_fields' => $result['module_fields'],
             'link_fields' => $result['link_fields'],
         );
@@ -292,8 +300,12 @@ class ModuleLib{
         if (!empty($value->field_defs)) {
 
             foreach ($value->field_defs as $var) {
-                if (!empty($fields) && !in_array($var['name'], $fields)) continue;
-                if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) continue;
+                if (!empty($fields) && !in_array($var['name'], $fields)) {
+                    continue;
+                }
+                if (isset($var['source']) && ($var['source'] != 'db' && $var['source'] != 'non-db' && $var['source'] != 'custom_fields') && $var['name'] != 'email1' && $var['name'] != 'email2' && (!isset($var['type']) || $var['type'] != 'relate')) {
+                    continue;
+                }
                 if ((isset($var['source']) && $var['source'] == 'non_db') && (isset($var['type']) && $var['type'] != 'link')) {
                     continue;
                 }
@@ -306,14 +318,18 @@ class ModuleLib{
                     $required = 1;
                 }
 
-                if ($var['type'] == 'bool')
+                if ($var['type'] == 'bool') {
                     $var['options'] = 'checkbox_dom';
+                }
 
                 if (isset($var['options'])) {
                     $options_dom = translate($var['options'], $value->module_dir);
-                    if (!is_array($options_dom)) $options_dom = array();
-                    foreach ($options_dom as $key => $oneOption)
+                    if (!is_array($options_dom)) {
+                        $options_dom = array();
+                    }
+                    foreach ($options_dom as $key => $oneOption) {
                         $options_ret[$key] = get_name_value($key, $oneOption);
+                    }
                 }
 
                 if (!empty($var['dbType']) && $var['type'] == 'bool') {
@@ -333,7 +349,8 @@ class ModuleLib{
                     $link_fields[$var['name']] = $entry;
                 } else {
                     if ($translate) {
-                        $entry['label'] = isset($var['vname']) ? translate($var['vname'], $value->module_dir) : $var['name'];
+                        $entry['label'] = isset($var['vname']) ? translate($var['vname'],
+                            $value->module_dir) : $var['name'];
                     } else {
                         $entry['label'] = isset($var['vname']) ? $var['vname'] : $var['name'];
                     }
@@ -344,8 +361,9 @@ class ModuleLib{
                     if (isset($var['default'])) {
                         $entry['default_value'] = $var['default'];
                     }
-                    if ($var['type'] == 'parent' && isset($var['type_name']))
+                    if ($var['type'] == 'parent' && isset($var['type_name'])) {
                         $entry['type_name'] = $var['type_name'];
+                    }
 
                     $module_fields[$var['name']] = $entry;
                 } // else
@@ -356,8 +374,9 @@ class ModuleLib{
             if (isset($module_fields['duration_minutes']) && isset($GLOBALS['app_list_strings']['duration_intervals'])) {
                 $options_dom = $GLOBALS['app_list_strings']['duration_intervals'];
                 $options_ret = array();
-                foreach ($options_dom as $key => $oneOption)
+                foreach ($options_dom as $key => $oneOption) {
                     $options_ret[$key] = get_name_value($key, $oneOption);
+                }
 
                 $module_fields['duration_minutes']['options'] = $options_ret;
             }
@@ -365,8 +384,8 @@ class ModuleLib{
 
         if ($value->module_dir == 'Bugs') {
             require_once('modules/Releases/Release.php');
-            $seedRelease = new Release();
-            $options = $seedRelease->get_releases(TRUE, "Active");
+            $seedRelease = new \Release();
+            $options = $seedRelease->get_releases(true, "Active");
             $options_ret = array();
             foreach ($options as $name => $value) {
                 $options_ret[] = array('name' => $name, 'value' => $value);
@@ -410,29 +429,37 @@ class ModuleLib{
     }
 
 
-    public function getNoteAttachment($note,$id)
+    public function getNoteAttachment($note, $id)
     {
         require_once('modules/Notes/NoteSoap.php');
         $ns = new \NoteSoap();
-        if(!isset($note->filename)){
+        if (!isset($note->filename)) {
             $note->filename = '';
         }
-        $file= $ns->retrieveFile($id,$note->filename);
-        if($file == -1){
+        $file = $ns->retrieveFile($id, $note->filename);
+        if ($file == -1) {
             $file = '';
         }
 
-        return array('note_attachment'=>array('id'=>$id, 'filename'=>$note->filename, 'file'=>$file, 'related_module_id' => $note->parent_id, 'related_module_name' => $note->parent_type));
+        return array(
+            'note_attachment' => array(
+                'id' => $id,
+                'filename' => $note->filename,
+                'file' => $file,
+                'related_module_id' => $note->parent_id,
+                'related_module_name' => $note->parent_type
+            )
+        );
     }
 
 
-    public function getModuleRelationships($related_module,$id_list)
+    public function getModuleRelationships($related_module, $id_list)
     {
-        global $beanList,$beanFiles;
+        global $beanList, $beanFiles;
 
         $list = array();
 
-        $in = "'".implode("', '", $id_list)."'";
+        $in = "'" . implode("', '", $id_list) . "'";
 
         $related_class_name = $beanList[$related_module];
         require_once($beanFiles[$related_class_name]);
@@ -459,7 +486,7 @@ class ModuleLib{
 
         $return_list = array();
 
-        foreach($list as $id) {
+        foreach ($list as $id) {
             $related_class_name = $beanList[$related_module];
             $related_mod = new $related_class_name();
             $related_mod->retrieve($id);
@@ -473,39 +500,63 @@ class ModuleLib{
         return $return_list;
     }
 
-    function createRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues)
+    function createRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues)
     {
 
         $count = 0;
         $failed = 0;
 
-        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds,$nameValues,false)) {
-                $count++;
+        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues,
+            false)
+        ) {
+            $count++;
         } else {
             $failed++;
         } // else
 
-        return array('created'=>$count , 'failed'=>$failed);
+        return array('created' => $count, 'failed' => $failed);
     }
 
-    function deleteRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues)
+    function deleteRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues)
     {
-
         $deleted = 0;
         $failed = 0;
 
-        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds,$nameValues,true)) {
+        if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues,
+            true)
+        ) {
             $deleted++;
         } else {
             $failed++;
         } // else
 
-        return array('deleted'=>$deleted , 'failed'=>$failed);
+        return array('deleted' => $deleted, 'failed' => $failed);
     }
 
 
+    function createRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues)
+    {
+        $count = 0;
+        $failed = 0;
+        $counter = 0;
+        $deleted = 0;
+        foreach ($moduleNames as $moduleName) {
+            if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
+                $relatedIds[$counter], $nameValues[$counter], $deleted)
+            ) {
+                $count++;
+            } else {
+                $failed++;
+            }
+            $counter++;
+        }
 
-    function get_linked_records($get_module, $from_module, $get_id) {
+        return array('created' => $count, 'failed' => $failed);
+    }
+
+
+    function get_linked_records($get_module, $from_module, $get_id)
+    {
         global $beanList, $beanFiles;
 
         // instantiate and retrieve $from_module
@@ -515,8 +566,8 @@ class ModuleLib{
         $from_mod->retrieve($get_id);
 
         $field = $this->get_module_link_field($from_module, $get_module);
-        if ($field === FALSE) {
-            return FALSE;
+        if ($field === false) {
+            return false;
         }
 
         $from_mod->load_relationship($field);
@@ -536,15 +587,14 @@ class ModuleLib{
     }
 
 
-
-
     // Returns name of 'link' field between two given modules
-    function get_module_link_field($module_1, $module_2) {
+    function get_module_link_field($module_1, $module_2)
+    {
         global $beanList, $beanFiles;
 
         // check to make sure both modules exist
         if (empty($beanList[$module_1]) || empty($beanList[$module_2])) {
-            return FALSE;
+            return false;
         }
 
         $class_1 = $beanList[$module_1];
@@ -569,17 +619,24 @@ class ModuleLib{
         return false;
     }
 
-    function new_handle_set_relationship($module_name, $module_id, $link_field_name, $related_ids, $name_value_list,$delete) {
-        global  $beanList, $beanFiles;
+    function new_handle_set_relationship(
+        $module_name,
+        $module_id,
+        $link_field_name,
+        $related_ids,
+        $name_value_list,
+        $delete
+    ) {
+        global $beanList, $beanFiles;
 
-        if(empty($beanList[$module_name])) {
+        if (empty($beanList[$module_name])) {
             return false;
         }
         $class_name = $beanList[$module_name];
         require_once($beanFiles[$class_name]);
         $mod = new $class_name();
         $mod->retrieve($module_id);
-        if(!$mod->ACLAccess('DetailView')){
+        if (!$mod->ACLAccess('DetailView')) {
             return false;
         }
 
@@ -588,9 +645,9 @@ class ModuleLib{
                 $name_value_pair = array();
                 if (!empty($name_value_list)) {
                     $relFields = $mod->$link_field_name->getRelatedFields();
-                    if(!empty($relFields)){
+                    if (!empty($relFields)) {
                         $relFieldsKeys = array_keys($relFields);
-                        foreach($name_value_list as $key => $value) {
+                        foreach ($name_value_list as $key => $value) {
                             if (in_array($value['name'], $relFieldsKeys)) {
                                 $name_value_pair[$value['name']] = $value['value'];
                             } // if
@@ -599,7 +656,7 @@ class ModuleLib{
                 }
                 $mod->$link_field_name->add($related_ids, $name_value_pair);
             } else {
-                foreach($related_ids as $id) {
+                foreach ($related_ids as $id) {
                     $mod->$link_field_name->delete($module_id, $id);
                 } // foreach
             } // else

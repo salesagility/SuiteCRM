@@ -2,9 +2,11 @@
 
 namespace SuiteCRM\Api\Core;
 
-class Api{
+class Api
+{
 
-    public function generateResponse($response_object, $status, $data, $message){
+    public function generateResponse($response_object, $status, $data, $message)
+    {
 
 
         $response = array(

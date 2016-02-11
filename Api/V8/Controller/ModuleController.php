@@ -25,7 +25,7 @@ class ModuleController extends Api
             }
 
         } else {
-            return $this->generateResponse($res, 400, NULL, 'Module Not Found');
+            return $this->generateResponse($res, 400, null, 'Module Not Found');
 
         }
 
@@ -37,10 +37,10 @@ class ModuleController extends Api
     {
         $id = $args["id"];
         $module = $args['module_name'];
-        $module = \BeanFactory::getBean($module,$id);
+        $module = \BeanFactory::getBean($module, $id);
 
         if (!is_object($module)) {
-            return $this->generateResponse($res, 400, NULL, 'Module Not Found');
+            return $this->generateResponse($res, 400, null, 'Module Not Found');
         }
 
         return $this->generateResponse($res, 200, json_encode($module->toArray()), 'Success');
@@ -54,8 +54,9 @@ class ModuleController extends Api
         $lib = new ModuleLib();
 
         $filter = 'all';
-        if (!empty($args['filter']))
+        if (!empty($args['filter'])) {
             $filter = $args['filter'];
+        }
 
         if ($container["jwt"] !== null && $container["jwt"]->userId !== null) {
             $user = \BeanFactory::getBean('Users', $container["jwt"]->userId);
@@ -77,26 +78,31 @@ class ModuleController extends Api
         $lib = new ModuleLib();
 
         $modules = '';
-        if (!empty($_REQUEST['modules']))
+        if (!empty($_REQUEST['modules'])) {
             $modules = $_REQUEST['modules'];
+        }
 
         $views = '';
-        if (!empty($_REQUEST['views']))
+        if (!empty($_REQUEST['views'])) {
             $views = $_REQUEST['views'];
+        }
 
         $types = '';
-        if (!empty($_REQUEST['types']))
+        if (!empty($_REQUEST['types'])) {
             $types = $_REQUEST['types'];
+        }
 
         $hash = 'false';
 
-        if (!empty($_REQUEST['hash']))
+        if (!empty($_REQUEST['hash'])) {
             $hash = $_REQUEST['hash'];
+        }
 
         if (empty($modules) || empty($views) || empty($types) || !is_array($modules) || !is_array($views) || !is_array($types)) {//http://stackoverflow.com/a/10323055
             return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
         } else {
-            return $this->generateResponse($res, 200, $lib->getModuleLayout($modules, $views, $types, $hash), 'Success');
+            return $this->generateResponse($res, 200, $lib->getModuleLayout($modules, $views, $types, $hash),
+                'Success');
         }
     }
 
@@ -110,10 +116,12 @@ class ModuleController extends Api
             $fields = array();
             if (!empty($_REQUEST['fields'])) {
                 //If the user has entered the parameter as fields[] = xxx
-                if (is_array($_REQUEST['fields']))
+                if (is_array($_REQUEST['fields'])) {
                     $fields = $_REQUEST['fields'];
-                else //If the user has entered the parameter as fields = xxx
+                } else //If the user has entered the parameter as fields = xxx
+                {
                     $fields[] = $_REQUEST['fields'];
+                }
             }
 
             $module = $args['module'];
@@ -135,21 +143,21 @@ class ModuleController extends Api
         $note = new \Note();
         $note->retrieve($id);
 
-        if(!$note->ACLAccess('DetailView')) {
+        if (!$note->ACLAccess('DetailView')) {
             return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
         }
 
         $lib = new ModuleLib();
 
 
-        return $this->generateResponse($res, 200, $lib->getNoteAttachment($note,$id), 'Success');
+        return $this->generateResponse($res, 200, $lib->getNoteAttachment($note, $id), 'Success');
 
     }
 
 
     public function getModuleRelationships(Request $req, Response $res, $args)
     {//TODO need to check the http return codes for the errors
-        global  $beanList, $beanFiles;
+        global $beanList, $beanFiles;
         $lib = new ModuleLib();
 
         $module_name = $args["module"];
@@ -159,36 +167,34 @@ class ModuleController extends Api
         $related_module_query = $_REQUEST["related_module_query"];
 
 
-        if(empty($beanList[$module_name]) || empty($beanList[$related_module])){
+        if (empty($beanList[$module_name]) || empty($beanList[$related_module])) {
             return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
         }
         $class_name = $beanList[$module_name];
         require_once($beanFiles[$class_name]);
         $mod = new $class_name();
         $mod->retrieve($module_id);
-        if(!$mod->ACLAccess('DetailView')){
+        if (!$mod->ACLAccess('DetailView')) {
             return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
         }
 
         require_once 'include/SugarSQLValidate.php';
         $valid = new \SugarSQLValidate();
-        if(!$valid->validateQueryClauses($related_module_query)) {
+        if (!$valid->validateQueryClauses($related_module_query)) {
             return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
         }
 
         $id_list = $lib->get_linked_records($related_module, $module_name, $module_id);
 
-        if ($id_list === FALSE) {
+        if ($id_list === false) {
             return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
-        }
-        elseif (count($id_list) == 0) {
+        } elseif (count($id_list) == 0) {
             return $this->generateResponse($res, 401, 'Unauthorised', 'Failure');
         }
 
-        return $this->generateResponse($res, 200, json_encode($lib->getModuleRelationships($related_module,$id_list)), 'Success');
+        return $this->generateResponse($res, 200, json_encode($lib->getModuleRelationships($related_module, $id_list)),
+            'Success');
     }
-
-
 
 
     public function getModuleLinks(Request $req, Response $res, $args)
@@ -217,13 +223,15 @@ class ModuleController extends Api
         $lib = new ModuleLib();
 
         $modules = '';
-        if (!empty($_REQUEST['modules']))
+        if (!empty($_REQUEST['modules'])) {
             $modules = $_REQUEST['modules'];
+        }
 
         $hash = 'false';
 
-        if (isset($_REQUEST['hash']))
+        if (isset($_REQUEST['hash'])) {
             $hash = $_REQUEST['hash'];
+        }
 
         return $this->generateResponse($res, 200, $lib->getLanguageDefinition($modules, $hash), 'Success');
 
@@ -236,8 +244,9 @@ class ModuleController extends Api
         $lib = new ModuleLib();
 
         $modules = '';
-        if (!empty($_REQUEST['modules']))
+        if (!empty($_REQUEST['modules'])) {
             $modules = $_REQUEST['modules'];
+        }
 
         if ($container["jwt"] !== null && $container["jwt"]->userId !== null) {
             if ($modules !== null && is_array($modules)) {
@@ -273,14 +282,14 @@ class ModuleController extends Api
         if (in_array($module, $moduleList)) {
             $matchingBean = \BeanFactory::getBean($module, $id);
             if (!empty($matchingBean)) {
-                $lib->deleteModuleItem($matchingBean,$id);
-                return $this->generateResponse($res, 200, NULL, 'Success');
+                $lib->deleteModuleItem($matchingBean, $id);
+                return $this->generateResponse($res, 200, null, 'Success');
             } else {
-                $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but id not matched.  Module = '.$module.' Id= '.$id);
+                $GLOBALS['log']->info(__FILE__ . ': ' . __FUNCTION__ . ' called but id not matched.  Module = ' . $module . ' Id= ' . $id);
                 return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
             }
         } else {
-            $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but module not matched.  Module = '.$module.' Id= '.$id);
+            $GLOBALS['log']->info(__FILE__ . ': ' . __FUNCTION__ . ' called but module not matched.  Module = ' . $module . ' Id= ' . $id);
             return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
         }
     }
@@ -295,12 +304,11 @@ class ModuleController extends Api
         $nameValues = $_REQUEST["name_value_list"];
 
 
-        if (empty($moduleName) || empty($moduleId) || empty($linkFieldName) || !is_array($relatedIds) || !is_array($nameValues) || empty($relatedIds) || empty($nameValues) ) {
+        if (empty($moduleName) || empty($moduleId) || empty($linkFieldName) || !is_array($relatedIds) || !is_array($nameValues) || empty($relatedIds) || empty($nameValues)) {
             return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
-        }
-        else
-        {
-            return $this->generateResponse($res, 200, $lib->createRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues), 'Success');
+        } else {
+            return $this->generateResponse($res, 200,
+                $lib->createRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues), 'Success');
         }
 
     }
@@ -315,12 +323,34 @@ class ModuleController extends Api
         $nameValues = $_REQUEST["name_value_list"];
 
 
-        if (empty($moduleName) || empty($moduleId) || empty($linkFieldName) || !is_array($relatedIds) || !is_array($nameValues) || empty($relatedIds) || empty($nameValues) ) {
+        if (empty($moduleName) || empty($moduleId) || empty($linkFieldName) || !is_array($relatedIds) || !is_array($nameValues) || empty($relatedIds) || empty($nameValues)) {
             return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
+        } else {
+            return $this->generateResponse($res, 200,
+                $lib->deleteRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues), 'Success');
         }
-        else
-        {
-            return $this->generateResponse($res, 200, $lib->deleteRelationship($moduleName,$moduleId,$linkFieldName,$relatedIds,$nameValues), 'Success');
+
+    }
+
+    function createRelationships(Request $req, Response $res, $args)
+    {
+        $lib = new ModuleLib();
+        $moduleNames = $_REQUEST["module_name"];
+        $moduleIds = $_REQUEST["module_id"];
+        $linkFieldNames = $_REQUEST["link_field_name"];
+        $relatedIds = $_REQUEST["related_ids"];
+        $nameValues = $_REQUEST["name_value_list"];
+
+
+        if (!is_array($moduleNames) || !is_array($moduleIds) || !is_array($linkFieldNames) || !is_array($relatedIds) || !is_array($nameValues)
+            || empty($moduleNames) || empty($moduleIds) || empty($linkFieldNames) || empty($relatedIds) || empty($nameValues)
+            || (sizeof($moduleNames) != (sizeof($moduleIds) || sizeof($linkFieldNames) || sizeof($relatedIds)))
+        ) {
+            return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
+        } else {
+            return $this->generateResponse($res, 200,
+                $lib->createRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues),
+                'Success');
         }
 
     }
@@ -337,14 +367,14 @@ class ModuleController extends Api
             $matchingBean = \BeanFactory::getBean($module, $id);
             if (!empty($matchingBean)) {
                 $lib->updateModuleItem($matchingBean);
-                return $this->generateResponse($res, 200, NULL, 'Success');
+                return $this->generateResponse($res, 200, null, 'Success');
 
             } else {
-                $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but id not matched.  Module = '.$module.' Id= '.$id);
+                $GLOBALS['log']->info(__FILE__ . ': ' . __FUNCTION__ . ' called but id not matched.  Module = ' . $module . ' Id= ' . $id);
                 return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
             }
         } else {
-            $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but module not matched.  Module = '.$module.' Id= '.$id);
+            $GLOBALS['log']->info(__FILE__ . ': ' . __FUNCTION__ . ' called but module not matched.  Module = ' . $module . ' Id= ' . $id);
             return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
         }
 
@@ -352,7 +382,7 @@ class ModuleController extends Api
 
     function createModuleItem(Request $req, Response $res, $args)
     {
-        global  $moduleList;
+        global $moduleList;
         $module = $args['module'];
         $lib = new ModuleLib();
 
@@ -360,15 +390,12 @@ class ModuleController extends Api
 
             return $this->generateResponse($res, 200, $lib->createModuleItem($module), 'Success');
         } else {
-            $GLOBALS['log']->info(__FILE__.': '.__FUNCTION__.' called but module not matched.  Module = '.$module);
+            $GLOBALS['log']->info(__FILE__ . ': ' . __FUNCTION__ . ' called but module not matched.  Module = ' . $module);
             return $this->generateResponse($res, 404, 'Non-matched item', 'Failure');
         }
 
 
     }
-
-
-
 
 
 }

@@ -2,8 +2,8 @@
 namespace SuiteCRM\Api\V8\Library;
 
 
-class ActionLib{
-
+class ActionLib
+{
 
 
 }

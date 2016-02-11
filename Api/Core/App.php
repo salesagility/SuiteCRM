@@ -1,5 +1,5 @@
 <?php
-ini_set('display_errors',1);
+ini_set('display_errors', 1);
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
@@ -16,7 +16,7 @@ global $sugar_config;
 
 $app = new \Slim\App(['settings' => ['displayErrorDetails' => true]]);
 
-$routeFiles = (array)glob('Api/' . $version .'/Route/*.php');
+$routeFiles = (array)glob('Api/' . $version . '/Route/*.php');
 
 foreach ($routeFiles as $routeFile) {
     require $routeFile;
@@ -28,13 +28,13 @@ $container["jwt"] = function ($container) {
 };
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
-    "secure"=>false,
+    "secure" => false,
     "secret" => $sugar_config["JWT_SECRET"],
     "environment" => "REDIRECT_HTTP_AUTHORIZATION",
     "rules" => [
         new Slim\Middleware\JwtAuthentication\RequestPathRule([
             "path" => "/" . $version,
-            "passthrough" => ["/" . $version ."/login", "/" . $version ."/token" ]
+            "passthrough" => ["/" . $version . "/login", "/" . $version . "/token"]
         ]),
     ],
     "callback" => function ($request, $response, $arguments) use ($container) {
@@ -44,8 +44,6 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
         return $response->write("Error");
     }
 ]));
-
-
 
 
 $app->run();
