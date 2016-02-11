@@ -6,7 +6,7 @@ if (!defined('sugarEntry')) {
 chdir('../../');
 require_once('include/vendor/autoload.php');
 require_once('include/entryPoint.php');
-
+$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
 $_SERVER["REQUEST_URI"] = $_SERVER["PHP_SELF"];
 preg_match("#index.php\/([v,V]\d*)#", $_SERVER["PHP_SELF"], $matches);
 $version = $matches[1];
