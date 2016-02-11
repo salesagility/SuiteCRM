@@ -78,8 +78,8 @@ class MeetingsViewEdit extends ViewEdit
 	        $this->bean->status = $this->bean->getDefaultStatus();
  		} //if
 
-		$this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id));
-		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id));
+		$this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id, $this->ev->isDuplicate));
+		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id, $this->ev->isDuplicate));
 		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
 		$this->ss->assign('remindersDisabled', json_encode(false));
 

@@ -138,6 +138,19 @@ if ( $focus->isMailBoxTypeCreateCase() || ($focus->mailbox_type == 'createcase' 
 {
 	$stored_options['distrib_method'] = (isset($_REQUEST['distrib_method'])) ? $_REQUEST['distrib_method'] : "";
 	$stored_options['create_case_email_template'] = (isset($_REQUEST['create_case_template_id'])) ? $_REQUEST['create_case_template_id'] : "";
+    switch($stored_options['distrib_method']){
+        case 'singleUser':
+            $stored_options['distribution_user_name'] = !empty($_REQUEST['distribution_user_name']) ? $_REQUEST['distribution_user_name'] : '';
+            $stored_options['distribution_user_id'] = !empty($_REQUEST['distribution_user_id']) ? $_REQUEST['distribution_user_id'] : '';
+            break;
+        case 'roundRobin':
+        case 'leastBusy':
+        case 'random':
+            $stored_options['distribution_options'] = !empty($_REQUEST['distribution_options']) ? $_REQUEST['distribution_options'] : '';
+            break;
+        default:
+            break;
+    }
 } // if
 $storedOptions['folderDelimiter'] = $delimiter;
 

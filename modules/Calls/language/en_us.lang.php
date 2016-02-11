@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,15 +39,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:  Defines the English language pack for the base application.
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 
-$mod_strings = array (
-	'LBL_BLANK'	=> ' ',
+$mod_strings = array(
+    'LBL_BLANK' => ' ',
     'LBL_MODULE_NAME' => 'Calls',
     'LBL_MODULE_TITLE' => 'Calls: Home',
     'LBL_SEARCH_FORM_TITLE' => 'Call Search',
@@ -89,7 +88,7 @@ $mod_strings = array (
     'LBL_INVITEE' => 'Invitees',
     'LBL_RELATED_TO' => 'Related To:',
     'LNK_NEW_APPOINTMENT' => 'Create Appointment',
-	'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
+    'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
     'LBL_ADD_INVITEE' => 'Add Invitees',
     'LBL_NAME' => 'Name',
     'LBL_FIRST_NAME' => 'First Name',
@@ -101,21 +100,21 @@ $mod_strings = array (
     'LBL_REMINDER_EMAIL_ALL_INVITEES' => 'Email all invitees',
     'LBL_EMAIL_REMINDER' => 'Email Reminder',
     'LBL_EMAIL_REMINDER_TIME' => 'Email Reminder Time',
-    'LBL_SEND_BUTTON_TITLE'=>'Save & Send Invites [Alt+I]',
-    'LBL_SEND_BUTTON_KEY'=>'I',
-    'LBL_SEND_BUTTON_LABEL'=>'Save & Send Invites',
-	'LBL_DATE_END'=>'End Date',
-	'LBL_TIME_END'=>'Time End',
-	'LBL_REMINDER_TIME'=>'Reminder Time',
+    'LBL_SEND_BUTTON_TITLE' => 'Save & Send Invites [Alt+I]',
+    'LBL_SEND_BUTTON_KEY' => 'I',
+    'LBL_SEND_BUTTON_LABEL' => 'Save & Send Invites',
+    'LBL_DATE_END' => 'End Date',
+    'LBL_TIME_END' => 'Time End',
+    'LBL_REMINDER_TIME' => 'Reminder Time',
     'LBL_EMAIL_REMINDER_SENT' => 'Email reminder sent',
-    'LBL_SEARCH_BUTTON'=> 'Search',
+    'LBL_SEARCH_BUTTON' => 'Search',
     'LBL_ACTIVITIES_REPORTS' => 'Activities Report',
-    'LBL_ADD_BUTTON'=> 'Add',
-	'LBL_DEFAULT_SUBPANEL_TITLE' => 'Calls',
-    'LBL_LOG_CALL'=> 'Log Call',
-    'LNK_SELECT_ACCOUNT'=> 'Select Account',
-    'LNK_NEW_ACCOUNT'=> 'New Account',
-    'LNK_NEW_OPPORTUNITY'=> 'New Opportunity',
+    'LBL_ADD_BUTTON' => 'Add',
+    'LBL_DEFAULT_SUBPANEL_TITLE' => 'Calls',
+    'LBL_LOG_CALL' => 'Log Call',
+    'LNK_SELECT_ACCOUNT' => 'Select Account',
+    'LNK_NEW_ACCOUNT' => 'New Account',
+    'LNK_NEW_OPPORTUNITY' => 'New Opportunity',
     'LBL_DEL' => 'Del',
     'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
@@ -126,8 +125,8 @@ $mod_strings = array (
     'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_LIST_MY_CALLS' => 'My Calls',
     'LBL_SELECT_FROM_DROPDOWN' => 'Please make a selection from the Related To dropdown list first.',
-	'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-	'LBL_ASSIGNED_TO_ID' => 'Assigned User',
+    'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
+    'LBL_ASSIGNED_TO_ID' => 'Assigned User',
     'NOTICE_DURATION_TIME' => 'Duration time must be greater than 0',
     'LBL_CALL_INFORMATION' => 'Overview',
     'LBL_REMOVE' => 'rem',
@@ -140,7 +139,7 @@ $mod_strings = array (
     'LBL_EXPORT_ASSIGNED_USER_ID' => 'Assigned User ID',
     'LBL_EXPORT_DATE_START' => 'Start Date and Time',
     'LBL_EXPORT_PARENT_TYPE' => 'Related To Module',
-    'LBL_EXPORT_REMINDER_TIME' =>'Reminder Time (in minutes)',
+    'LBL_EXPORT_REMINDER_TIME' => 'Reminder Time (in minutes)',
 
     // create invitee functionallity
     'LBL_CREATE_INVITEE' => 'Create an invitee',
@@ -150,7 +149,7 @@ $mod_strings = array (
     'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
     'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
     'LBL_NO_ACCESS' => 'You have no access to create $module',
-    
+
     'LBL_REPEAT_TYPE' => 'Repeat Type',
     'LBL_REPEAT_INTERVAL' => 'Repeat Interval',
     'LBL_REPEAT_DOW' => 'Repeat Dow',
@@ -158,7 +157,7 @@ $mod_strings = array (
     'LBL_REPEAT_COUNT' => 'Repeat Count',
     'LBL_REPEAT_PARENT_ID' => 'Repeat Parent ID',
     'LBL_RECURRING_SOURCE' => 'Recurring Source',
-    
+
     'LBL_SYNCED_RECURRING_MSG' => 'This call originated in another system and was synced to SuiteCRM. To make changes, go to the original call within the other system. Changes made in the other system can be synced to this record.',
 
     // for reminders
@@ -170,6 +169,15 @@ $mod_strings = array (
     'LBL_REMINDERS_REMOVE_REMINDER' => 'Remove reminder',
     'LBL_REMINDERS_ADD_ALL_INVITEES' => 'Add All Invitees',
     'LBL_REMINDERS_ADD_REMINDER' => 'Add reminder',
+
+    'LBL_RESCHEDULE' => 'Reschedule',
+    'LBL_RESCHEDULE_COUNT' => 'Call Attempts',
+    'LBL_RESCHEDULE_DATE' => 'Date',
+    'LBL_RESCHEDULE_REASON' => 'Reason',
+    'LBL_RESCHEDULE_ERROR1' => 'Please select a valid date',
+    'LBL_RESCHEDULE_ERROR2' => 'Please select a reason',
+    'LBL_RESCHEDULE_PANEL' => 'Reschedule',
+    'LBL_RESCHEDULE_HISTORY' => 'Call Attempt History'
 
 );
 

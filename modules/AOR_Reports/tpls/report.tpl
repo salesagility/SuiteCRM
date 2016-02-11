@@ -2,7 +2,12 @@
 <script>
     report_module = '{$report_module}';
 </script>
-<div id='detailpanel_parameters' class='detail view  detail508 expanded'>
+
+<div>
+    {$charts_content}
+</div>
+
+<div id='detailpanel_parameters' class='detail view  detail508 expanded hidden'>
     <form onsubmit="return false" id="EditView" name="EditView">
     <h4>
         <a href="javascript:void(0)" class="collapseLink" onclick="collapsePanel('parameters');">
@@ -14,9 +19,9 @@
             document.getElementById('detailpanel_parameters').className += ' expanded';
         </script>
     </h4>
-    <div id="conditionLines"  style="min-height: 50px;">
+    <div id="conditionLines" class="panelContainer" style="min-height: 50px;">
     </div>
-    <button id='updateParametersButton' type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
+    <button id='updateParametersButton' class="panelContainer" type="button">{sugar_translate label='LBL_UPDATE_PARAMETERS' module='AOR_Reports'}</button>
     <script>
         {literal}
         $.each(reportParameters,function(key,val){

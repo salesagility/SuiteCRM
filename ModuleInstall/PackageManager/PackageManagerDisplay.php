@@ -57,7 +57,7 @@ class PackageManagerDisplay{
      * @param String active_form - the form to display first
      * @return String - a string of html which will be used to display the forms
      */
-    function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false){
+    static function buildPackageDisplay($form1, $hidden_fields, $form_action, $types = array('module'), $active_form = 'form1', $install = false){
 		global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");
@@ -227,7 +227,7 @@ class PackageManagerDisplay{
         return $str;
     }
 
-    function buildInstalledGrid($mod_strings, $types = array('modules')){
+    static function buildInstalledGrid($mod_strings, $types = array('modules')){
     	  $descItemsInstalled = $mod_strings['LBL_UW_DESC_MODULES_INSTALLED'];
     	  $output = '<table width="100%" border="0" cellspacing="0" cellpadding="0" ><tr><td align="left">'.$descItemsInstalled.'</td>';
           $output .= '</td></tr></table>';
@@ -267,7 +267,7 @@ class PackageManagerDisplay{
      *  @param Array mod_strings - the local mod strings to display
      *  @return String - a string of html
      */
-	function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true){
+	static function buildGridOutput($tree, $mod_strings, $display = true, $show_login = true){
 		 $output = "<div id='catview'>";
 		$loginViewStyle = ($display ? 'none' : 'block');
 		$selectViewStyle = ($display ? 'block' : 'none');
@@ -304,7 +304,7 @@ class PackageManagerDisplay{
      * @param String div_id - this div in which to display the tree
      * @return Tree - the tree that is built
      */
-    function buildTreeView($div_id, $isAlive = true){
+    static function buildTreeView($div_id, $isAlive = true){
         $tree = new Tree($div_id);
         $nodes = array();
         if($isAlive)
@@ -377,7 +377,7 @@ class PackageManagerDisplay{
      *
      * @return String - the javascript required for the page
      */
-    function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true){
+    static function getDisplayScript($install = false, $type = 'module', $releases = null, $types = array(), $isAlive = true){
         global $sugar_version, $sugar_config;
         global $current_language;
 
@@ -476,7 +476,7 @@ class PackageManagerDisplay{
         return $output;
     }
 
-    function createJavascriptModuleArray($modules, $variable_name = 'mti_data'){
+    static function createJavascriptModuleArray($modules, $variable_name = 'mti_data'){
         $output = "var ".$variable_name." = [";
         $count = count($modules);
         $index = 1;
@@ -519,7 +519,7 @@ class PackageManagerDisplay{
         return $str;
     }
 
-    function getHeader(){
+    static function getHeader(){
     	global $current_language;
 
         $mod_strings = return_module_language($current_language, "Administration");

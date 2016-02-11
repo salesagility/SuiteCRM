@@ -93,6 +93,6 @@ $mod_strings = array (
   'LBL_FAILED_INDEX_DATE' => 'Date',
   'LBL_FAILED_INDEX_ERROR' => 'Error',
   'LBL_NEVER_OPTIMISED' => 'Never',
-  'LBL_USE_AOD_SEARCH' => 'Use Advanced OpenDiscovery Search',
-  'LBL_USE_VANILLA_SEARCH' => 'Use standard SuiteCRM search',
+  'LBL_USE_AOD_SEARCH' => 'Use Advanced Search',
+  'LBL_USE_VANILLA_SEARCH' => 'Use Basic Search',
 );

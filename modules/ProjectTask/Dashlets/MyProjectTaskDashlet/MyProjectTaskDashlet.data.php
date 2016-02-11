@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,54 +39,123 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
-
 global $current_user;
 
-$dashletData['MyProjectTaskDashlet']['searchFields'] =  array(
-                                                            'date_entered'     => array('default' => ''), 
-															'priority'	     => array('default' => ''),                              
-                                                            'date_start'        => array('default' => ''),
-                                                            'date_finish'         => array('default' => ''),
-															'assigned_user_id' => array('type'    => 'assigned_user_name',
-																						'label'   => 'LBL_ASSIGNED_TO', 
-                                                                                        'default' => $current_user->name),
+$dashletData['MyProjectTaskDashlet']['searchFields'] = array(
+    'date_entered' => array('default' => ''),
+    'priority' => array('default' => ''),
+    'date_start' => array('default' => ''),
+    'date_finish' => array('default' => ''),
+    'assigned_user_id' => array('type' => 'assigned_user_name',
+        'label' => 'LBL_ASSIGNED_TO',
+        'default' => $current_user->name),
 
-                                                            );
-$dashletData['MyProjectTaskDashlet']['columns'] = array('name' => array('width'   => '45', 
-                                                                       'label'   => 'LBL_NAME',
-                                                                       'link'    => true,
-                                                                       'default' => true), 
-                                                       'priority' => array('width'   => '15',
-                                                                           'label'   => 'LBL_PRIORITY',
-																		   'default' => true,
-                                                                          ),
-                                                       'date_start' => array('width' => '15',
-                                                                             'label' => 'LBL_DATE_START',
-                                                                             'default' => true),
-                                                       'time_start' => array('width' => '15',
-                                                                             'label' => 'LBL_TIME_START'),
-                                                       'date_finish' => array('width'   => '15',
-                                                                           'label'   => 'LBL_DATE_FINISH',
-                                                                           'default' => true),
-                                                       'time_finish' => array('width' => '15',
-                                                                           'label' => 'LBL_TIME_FINISH'),                   
-                                                       'percent_complete' => array('width' => '10',
-                                                                             'label' => 'LBL_PERCENT_COMPLETE',
-                                                                             'default' => true),
-                                                       'project_name' => array('width' => '30',
-                                                                              'label' => 'LBL_PROJECT_NAME',
-                                                                              'related_fields' => array('project_id')),
-                                                       'milestone_flag' => array('width' => '10',
-                                                                                 'label' => 'LBL_MILESTONE_FLAG'),
-                                                       'date_entered' => array('width' => '15', 
-                                                                               'label' => 'LBL_DATE_ENTERED'),
-                                                       'date_modified' => array('width' => '15', 
-                                                                                'label' => 'LBL_DATE_MODIFIED'),    
-                                                       'created_by' => array('width' => '8', 
-                                                                             'label' => 'LBL_CREATED'),
-                                                       'assigned_user_name' => array('width'   => '8', 
-                                                                                     'label'   => 'LBL_LIST_ASSIGNED_USER'),
-                                                                           );
+);
+$dashletData['ProjectTaskDashlet']['columns'] = array(
+    'name' =>
+        array(
+            'width' => '30%',
+            'label' => 'LBL_NAME',
+            'link' => true,
+            'default' => true,
+            'name' => 'name',
+        ),
+    'project_name' =>
+        array(
+            'width' => '30%',
+            'label' => 'LBL_PROJECT_NAME',
+            'related_fields' =>
+                array(
+                    0 => 'project_id',
+                ),
+            'name' => 'project_name',
+            'default' => true,
+        ),
+    'date_start' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_DATE_START',
+            'default' => true,
+            'name' => 'date_start',
+        ),
+    'status' =>
+        array(
+            'type' => 'enum',
+            'label' => 'LBL_STATUS',
+            'width' => '10%',
+            'default' => true,
+            'name' => 'status',
+        ),
+    'percent_complete' =>
+        array(
+            'width' => '10%',
+            'label' => 'LBL_PERCENT_COMPLETE',
+            'default' => true,
+            'name' => 'percent_complete',
+        ),
+    'date_finish' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_DATE_FINISH',
+            'default' => true,
+            'name' => 'date_finish',
+        ),
+    'time_start' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_TIME_START',
+            'name' => 'time_start',
+            'default' => false,
+        ),
+    'priority' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_PRIORITY',
+            'default' => false,
+            'name' => 'priority',
+        ),
+    'time_finish' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_TIME_FINISH',
+            'name' => 'time_finish',
+            'default' => false,
+        ),
+    'milestone_flag' =>
+        array(
+            'width' => '10%',
+            'label' => 'LBL_MILESTONE_FLAG',
+            'name' => 'milestone_flag',
+            'default' => false,
+        ),
+    'date_entered' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_DATE_ENTERED',
+            'name' => 'date_entered',
+            'default' => false,
+        ),
+    'date_modified' =>
+        array(
+            'width' => '15%',
+            'label' => 'LBL_DATE_MODIFIED',
+            'name' => 'date_modified',
+            'default' => false,
+        ),
+    'created_by' =>
+        array(
+            'width' => '8%',
+            'label' => 'LBL_CREATED',
+            'name' => 'created_by',
+            'default' => false,
+        ),
+    'assigned_user_name' =>
+        array(
+            'width' => '8%',
+            'label' => 'LBL_LIST_ASSIGNED_USER',
+            'name' => 'assigned_user_name',
+            'default' => false,
+        ),
+);
 
 ?>
