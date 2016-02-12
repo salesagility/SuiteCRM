@@ -78,4 +78,5 @@ $mod_strings = array (
   'LNK_IMPORT_OUTBOUNDEMAILACCOUNTS' => 'Import Outbound Email Accounts',
   'LBL_OUTBOUNDEMAILACCOUNTS_SUBPANEL_TITLE' => 'Outbound Email Accounts',
   'LBL_OUTBOUNDEMAILACCOUNT_CAMPA' => 'outboundemailaccount_campaigns_name',
+    'LBL_CHANGE_PASSWORD' => 'Change password'
 );

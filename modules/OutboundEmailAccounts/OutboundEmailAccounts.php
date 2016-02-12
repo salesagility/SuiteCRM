@@ -48,15 +48,40 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 	}
 
 	public function save($check_notify = false) {
-		$this->password = blowfishEncode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password);
+		if(!$this->password && $this->id) {
+			$bean = new OutboundEmailAccounts();
+			$bean->retrieve($this->id);
+			$this->password = $bean->password;
+		}
+		$this->password = $this->password ? blowfishEncode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password) : null;
 		$results = parent::save($check_notify);
 		return $results;
 	}
 
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$results = parent::retrieve($id, $encode, $deleted);
-		$this->password = blowfishDecode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password);
+		$this->password = $this->password ? blowfishDecode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password) : null;
 		return $results;
+	}
+
+	public static function getPasswordChange() {
+		global $mod_strings;
+		$html = <<<HTML
+<script type="text/javascript">
+var passwordToggle = function(sel) {
+	$(sel).toggle();
+	if($(sel).css('display') == 'none') {
+
+	}
+}
+</script>
+<div id="password_toggle" style="display:none;">
+	<input type="password" id="password" name="password" />
+</div>
+<a href="javascript:;" onclick="passwordToggle('#password_toggle');">{$mod_strings['LBL_CHANGE_PASSWORD']}</a>
+
+HTML;
+		return $html;
 	}
 	
 }

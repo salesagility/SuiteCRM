@@ -267,10 +267,10 @@
 				 ),
 			 'password' =>
 				 array (
-					 'required' => true,
+					 'required' => false,
 					 'name' => 'password',
 					 'vname' => 'LBL_PASSWORD',
-					 'type' => 'password',
+					 'type' => 'varchar',
 					 'massupdate' => 0,
 					 'no_default' => false,
 					 'comments' => '',
@@ -285,6 +285,33 @@
 					 'merge_filter' => 'disabled',
 					 'len' => '255',
 					 'size' => '20',
+				 ),
+			 'password_change' =>
+				 array (
+					 'required' => false,
+					 'name' => 'password_change',
+					 'vname' => 'LBL_PASSWORD',
+					 'type' => 'function',
+					 'source' => 'non-db',
+					 'massupdate' => 0,
+					 'no_default' => false,
+					 'comments' => '',
+					 'help' => '',
+					 'importable' => 'true',
+					 'duplicate_merge' => 'disabled',
+					 'duplicate_merge_dom_value' => '0',
+					 'audited' => false,
+					 'inline_edit' => true,
+					 'reportable' => true,
+					 'unified_search' => false,
+					 'merge_filter' => 'disabled',
+					 'len' => '255',
+					 'size' => '20',
+					 'function' => array(
+						 'name' => 'OutboundEmailAccounts::getPasswordChange',
+						 'returns' => 'html',
+						 'include' => 'modules/OutboundEmailAccounts/OutboundEmailAccounts.php'
+					 ),
 				 ),
 			 'smtp_servername' =>
 				 array (

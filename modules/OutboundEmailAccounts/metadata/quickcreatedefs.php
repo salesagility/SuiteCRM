@@ -65,7 +65,7 @@ array (
           ),
           1 => 
           array (
-            'name' => 'password',
+            'name' => 'password_change',
             'label' => 'LBL_PASSWORD',
           ),
         ),
