@@ -51,13 +51,13 @@ $dashletData['OutboundEmailAccountsDashlet']['columns'] = array (
     'name' => 'created_by',
     'default' => false,
   ),
-  'assigned_user_name' => 
-  array (
-    'width' => '8%',
-    'label' => 'LBL_LIST_ASSIGNED_USER',
-    'name' => 'assigned_user_name',
-    'default' => false,
-  ),
+//  'assigned_user_name' =>
+//  array (
+//    'width' => '8%',
+//    'label' => 'LBL_LIST_ASSIGNED_USER',
+//    'name' => 'assigned_user_name',
+//    'default' => false,
+//  ),
   'mail_smtpuser' =>
   array (
     'type' => 'varchar',
