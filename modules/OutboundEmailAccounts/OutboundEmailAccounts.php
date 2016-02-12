@@ -68,17 +68,15 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 		global $mod_strings;
 		$html = <<<HTML
 <script type="text/javascript">
-var passwordToggle = function(sel) {
-	$(sel).toggle();
-	if($(sel).css('display') == 'none') {
-
-	}
+var passwordToggle = function(elem, sel) {
+	$(sel).show();
+	$(elem).hide();
 }
 </script>
 <div id="password_toggle" style="display:none;">
 	<input type="password" id="mail_smtppass" name="mail_smtppass" />
 </div>
-<a href="javascript:;" onclick="passwordToggle('#password_toggle');">{$mod_strings['LBL_CHANGE_PASSWORD']}</a>
+<a href="javascript:;" onclick="passwordToggle(this, '#password_toggle');">{$mod_strings['LBL_CHANGE_PASSWORD']}</a>
 
 HTML;
 		return $html;
