@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  ********************************************************************************/
-global $timedate;
+
  
 $mod_strings = array (
     'LBL_GOOD_FILE' => 'Import File Read Successfully',
@@ -366,4 +366,6 @@ $mod_strings = array (
     'LBL_EXTERNAL_TEAM_TOOLTIP' => 'To assign the new records to teams other than your default team(s), use the Default Value column to select different teams.',
     'LBL_SIGN_IN_HELP' => 'To enable this service, please sign in under the External Accounts tab within your user settings page.'
 );
+
+global $timedate;
 ?>
