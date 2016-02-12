@@ -241,13 +241,13 @@ class ProspectList extends SugarBean {
 				c.do_not_call AS do_not_call, c.phone_fax AS phone_fax, c.phone_other AS phone_other, c.phone_home AS phone_home, c.phone_mobile AS phone_mobile, c.phone_work AS phone_work
 				".(count($members['Contacts']['fields']) ? ', ' : '') . implode(', ', $members['Contacts']['fields'])."
 FROM prospect_lists_prospects plp
-				INNER JOIN contacts c ON plp.related_id=c.id LEFT JOIN accounts_contacts ac ON ac.contact_id=c.id LEFT JOIN accounts a ON ac.account_id=a.id
+				INNER JOIN contacts c ON plp.related_id=c.id LEFT JOIN accounts_contacts ac ON ac.contact_id=c.id
+				LEFT JOIN accounts a ON ac.account_id=a.id AND ac.deleted=0
 				".($members['Contacts']['has_custom_fields'] ? 'LEFT join contacts_cstm ON c.id = contacts_cstm.id_c' : '')."
 				LEFT JOIN email_addr_bean_rel ear ON ear.bean_id=c.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0 
 				AND c.deleted=0
-				AND ac.deleted=0
                 AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
 		$prospects_query = "SELECT p.id AS id, 'Prospects' AS related_type, '' AS \"name\", p.first_name AS first_name, p.last_name AS last_name,p.title AS title, p.salutation AS salutation, 
