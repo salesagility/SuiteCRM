@@ -45,10 +45,10 @@ array (
           0 => 'name',
           1 => 'assigned_user_name',
         ),
-        1 => 
-        array (
-          0 => 'description',
-        ),
+//        1 =>
+//        array (
+//          0 => 'description',
+//        ),
       ),
       'lbl_editview_panel1' => 
       array (
@@ -56,7 +56,7 @@ array (
         array (
           0 => 
           array (
-            'name' => 'username',
+            'name' => 'mail_smtpuser',
             'label' => 'LBL_USERNAME',
           ),
           1 => 
@@ -69,12 +69,12 @@ array (
         array (
           0 => 
           array (
-            'name' => 'smtp_servername',
+            'name' => 'mail_smtpserver',
             'label' => 'LBL_smtp_servername',
           ),
           1 => 
           array (
-            'name' => 'smtp_port',
+            'name' => 'mail_smtpport',
             'label' => 'LBL_SMTP_PORT',
           ),
         ),
@@ -82,12 +82,12 @@ array (
         array (
           0 => 
           array (
-            'name' => 'smtp_auth',
+            'name' => 'mail_smtpauth_req',
             'label' => 'LBL_SMTP_AUTH',
           ),
           1 => 
           array (
-            'name' => 'smtp_protocol',
+            'name' => 'mail_smtpssl',
             'studio' => 'visible',
             'label' => 'LBL_SMTP_PROTOCOL',
           ),

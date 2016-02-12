@@ -48,19 +48,19 @@ class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
 	}
 
 	public function save($check_notify = false) {
-		if(!$this->password && $this->id) {
+		if(!$this->mail_smtppass && $this->id) {
 			$bean = new OutboundEmailAccounts();
 			$bean->retrieve($this->id);
-			$this->password = $bean->password;
+			$this->mail_smtppass = $bean->mail_smtppass;
 		}
-		$this->password = $this->password ? blowfishEncode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password) : null;
+		$this->mail_smtppass = $this->mail_smtppass ? blowfishEncode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
 		$results = parent::save($check_notify);
 		return $results;
 	}
 
 	public function retrieve($id = -1, $encode = true, $deleted = true) {
 		$results = parent::retrieve($id, $encode, $deleted);
-		$this->password = $this->password ? blowfishDecode(blowfishGetKey('OutboundEmailAccounts.password'), $this->password) : null;
+		$this->mail_smtppass = $this->mail_smtppass ? blowfishDecode(blowfishGetKey('OutBoundEmail'), $this->mail_smtppass) : null;
 		return $results;
 	}
 
@@ -76,7 +76,7 @@ var passwordToggle = function(sel) {
 }
 </script>
 <div id="password_toggle" style="display:none;">
-	<input type="password" id="password" name="password" />
+	<input type="password" id="mail_smtppass" name="mail_smtppass" />
 </div>
 <a href="javascript:;" onclick="passwordToggle('#password_toggle');">{$mod_strings['LBL_CHANGE_PASSWORD']}</a>
 

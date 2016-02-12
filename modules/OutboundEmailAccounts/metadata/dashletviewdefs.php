@@ -12,11 +12,11 @@ $dashletData['OutboundEmailAccountsDashlet']['searchFields'] = array (
   array (
     'default' => '',
   ),
-  'username' => 
+  'mail_smtpuser' =>
   array (
     'default' => '',
   ),
-  'smtp_servername' =>
+  'mail_smtpserver' =>
   array (
     'default' => '',
   ),
@@ -58,14 +58,14 @@ $dashletData['OutboundEmailAccountsDashlet']['columns'] = array (
     'name' => 'assigned_user_name',
     'default' => false,
   ),
-  'username' => 
+  'mail_smtpuser' =>
   array (
     'type' => 'varchar',
     'label' => 'LBL_USERNAME',
     'width' => '10%',
     'default' => false,
   ),
-  'smtp_servername' =>
+  'mail_smtpserver' =>
   array (
     'type' => 'varchar',
     'label' => 'LBL_smtp_servername',

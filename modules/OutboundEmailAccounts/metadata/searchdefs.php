@@ -12,21 +12,21 @@ array (
         'default' => true,
         'width' => '10%',
       ),
-      'username' => 
+      'mail_smtpuser' =>
       array (
         'type' => 'varchar',
         'label' => 'LBL_USERNAME',
         'width' => '10%',
         'default' => true,
-        'name' => 'username',
+        'name' => 'mail_smtpuser',
       ),
-      'smtp_servername' =>
+      'mail_smtpserver' =>
       array (
         'type' => 'varchar',
         'label' => 'LBL_smtp_servername',
         'width' => '10%',
         'default' => true,
-        'name' => 'smtp_servername',
+        'name' => 'mail_smtpserver',
       ),
       'current_user_only' => 
       array (
@@ -45,31 +45,31 @@ array (
         'default' => true,
         'width' => '10%',
       ),
-      'username' => 
+      'mail_smtpuser' =>
       array (
         'type' => 'varchar',
         'label' => 'LBL_USERNAME',
         'width' => '10%',
         'default' => true,
-        'name' => 'username',
+        'name' => 'mail_smtpuser',
       ),
-      'smtp_servername' =>
+      'mail_smtpserver' =>
       array (
         'type' => 'varchar',
         'label' => 'LBL_smtp_servername',
         'width' => '10%',
         'default' => true,
-        'name' => 'smtp_servername',
+        'name' => 'mail_smtpserver',
       ),
-      'description' => 
-      array (
-        'type' => 'text',
-        'label' => 'LBL_DESCRIPTION',
-        'sortable' => false,
-        'width' => '10%',
-        'default' => true,
-        'name' => 'description',
-      ),
+//      'description' =>
+//      array (
+//        'type' => 'text',
+//        'label' => 'LBL_DESCRIPTION',
+//        'sortable' => false,
+//        'width' => '10%',
+//        'default' => true,
+//        'name' => 'description',
+//      ),
       'assigned_user_id' => 
       array (
         'name' => 'assigned_user_id',

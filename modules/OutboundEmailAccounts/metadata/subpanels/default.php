@@ -23,14 +23,14 @@ $subpanel_layout = array (
       'width' => '45%',
       'default' => true,
     ),
-    'description' => 
-    array (
-      'type' => 'text',
-      'vname' => 'LBL_DESCRIPTION',
-      'sortable' => false,
-      'width' => '10%',
-      'default' => true,
-    ),
+//    'description' =>
+//    array (
+//      'type' => 'text',
+//      'vname' => 'LBL_DESCRIPTION',
+//      'sortable' => false,
+//      'width' => '10%',
+//      'default' => true,
+//    ),
     'date_modified' => 
     array (
       'vname' => 'LBL_DATE_MODIFIED',
@@ -53,14 +53,14 @@ $subpanel_layout = array (
       'width' => '5%',
       'default' => true,
     ),
-    'username' => 
+    'mail_smtpuser' =>
     array (
       'type' => 'varchar',
       'vname' => 'LBL_USERNAME',
       'width' => '10%',
       'default' => true,
     ),
-    'smtp_servername' =>
+    'mail_smtpserver' =>
     array (
       'type' => 'varchar',
       'vname' => 'LBL_smtp_servername',

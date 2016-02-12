@@ -449,6 +449,7 @@ $mod_strings = array (
 	'LBL_FROM_ADDR_HELP' => 'This email address will the mail address that tells your recipient where the campaign came from',
 	'LBL_REPLY_TO_NAME_HELP' => 'This will be the name that your recipient will reply to',
 	'LBL_REPLY_TO_ADDR_HELP' => 'This will be the email that your recipients will reply to',
+	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
 );
 
 

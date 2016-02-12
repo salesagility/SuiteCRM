@@ -161,6 +161,7 @@ $mod_strings = array (
 	'LBL_YAHOO_MAIL_LOGO' => 'Yahoo Mail' /*for 508 compliance fix*/,
 	'LBL_EXCHANGE_LOGO' => 'Exchange' /*for 508 compliance fix*/,
 	'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
+	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
 );
 
 ?>

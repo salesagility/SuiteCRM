@@ -175,8 +175,8 @@ $dictionary['EmailMarketing'] = array('table' => 'email_marketing'
 	    'required'=>false,
   	),
 
-		'outbound_email_account_id'=> array (
-			'name' => 'outbound_email_account_id',
+		'outbound_email_id'=> array (
+			'name' => 'outbound_email_id',
 			'vname' => 'LBL_OUTBOUND_EMAIL_ACOUNT_ID',
 			'type' => 'id',
 			'isnull' => true,

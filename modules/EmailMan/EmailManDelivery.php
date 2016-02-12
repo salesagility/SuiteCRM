@@ -239,20 +239,20 @@ do {
 		}
 
 		// if user want to use an other outbound email account to sending...
-		if($current_emailmarketing->outbound_email_account_id) {
-			$outboundEmailAccount = BeanFactory::getBean('OutboundEmailAccounts', $current_emailmarketing->outbound_email_account_id);
-			$mail->Username = $outboundEmailAccount->username;
-			$mail->Password = $outboundEmailAccount->password;
-			$mail->Host = $outboundEmailAccount->smtp_servername;
-			$mail->Port = $outboundEmailAccount->smtp_port;
+		if($current_emailmarketing->outbound_email_id) {
+			$outboundEmailAccount = BeanFactory::getBean('OutboundEmailAccounts', $current_emailmarketing->outbound_email_id);
+			$mail->Username = $outboundEmailAccount->mail_smtpuser;
+			$mail->Password = $outboundEmailAccount->mail_smtppass;
+			$mail->Host = $outboundEmailAccount->mail_smtpserver;
+			$mail->Port = $outboundEmailAccount->mail_smtpport;
 			//$mail->oe->mail_sendtype = 'SMTP';
-			$mail->oe->mail_smtpauth_req = $outboundEmailAccount->smtp_auth;
+			$mail->oe->mail_smtpauth_req = $outboundEmailAccount->mail_smtpauth_req;
 			//$mail->oe->mail_smtpdisplay = 'Gmail';
-			$mail->oe->mail_smtpuser = $outboundEmailAccount->username;
-			$mail->oe->mail_smtppass = $outboundEmailAccount->password;
-			$mail->oe->mail_smtpport = $outboundEmailAccount->smtp_port;
-			$mail->oe->mail_smtpserver = $outboundEmailAccount->smtp_servername;
-			$mail->oe->mail_smtpssl = $outboundEmailAccount->smtp_protocol;
+			$mail->oe->mail_smtpuser = $outboundEmailAccount->mail_smtpuser;
+			$mail->oe->mail_smtppass = $outboundEmailAccount->mail_smtppass;
+			$mail->oe->mail_smtpserver = $outboundEmailAccount->mail_smtpserver;
+			$mail->oe->mail_smtpport = $outboundEmailAccount->mail_smtpport;
+			$mail->oe->mail_smtpssl = $outboundEmailAccount->mail_smtpssl;
 		}
 
 

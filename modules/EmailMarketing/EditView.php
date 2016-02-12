@@ -220,9 +220,9 @@ $xtpl->assign("IEStoredOptions", $IEStoredOptionsJSON);
 
 function getOutboundEmailAccountOptions() {
 	global $mod_strings;
-	$ret = array(
-		0 => $mod_strings['LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT'],
-	);
+//	$ret = array(
+//		0 => $mod_strings['LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT'],
+//	);
 	$oeaList = BeanFactory::getBean('OutboundEmailAccounts')->get_full_list();
 	foreach($oeaList as $oea) {
 		$ret[$oea->id] = $oea->name;
@@ -232,8 +232,8 @@ function getOutboundEmailAccountOptions() {
 
 function getOutboundEmailAccountSelected(EmailMarketing $emailMarketing) {
 	$ret = 0;
-	if($emailMarketing->outbound_email_account_id) {
-		$ret = $emailMarketing->outbound_email_account_id;
+	if($emailMarketing->outbound_email_id) {
+		$ret = $emailMarketing->outbound_email_id;
 	}
 	return $ret;
 }
