@@ -1,0 +1,13 @@
+language: php
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - hhvm
+  - nightly
+before_script:
+  - curl -L https://gist.githubusercontent.com/JimMackin/c3db403bae59c2c9a27c/raw/f7dccb1fad965fb3d2b2fa0f7ba0e1d4ef52cddb/config_si.php > config_si.php
+  - curl -L http://localhost/install.php?goto=SilentInstall&cli=true
+services:
+  - mysql
