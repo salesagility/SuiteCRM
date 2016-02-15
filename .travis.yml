@@ -8,6 +8,6 @@ php:
   - nightly
 before_script:
   - curl -L https://gist.githubusercontent.com/JimMackin/c3db403bae59c2c9a27c/raw/f7dccb1fad965fb3d2b2fa0f7ba0e1d4ef52cddb/config_si.php > config_si.php
-  - php -B "\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);" -F install.php
+  - php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);require_once 'install.php';";
 services:
   - mysql
