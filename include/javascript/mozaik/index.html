@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mozaik</title>
+		
+		<style>
+		* {
+			border: none; padding: 0; margin: 0;
+			/* font-family: Arial, Helvetica, sans-serif; */
+		}
+
+		</style>
+		
+		<link rel="stylesheet" href="vendor/components/jqueryui/themes/ui-lightness/jquery-ui.min.css">
+		<script src='vendor/components/jquery/jquery.min.js'></script>
+		<script src="vendor/components/jqueryui/jquery-ui.min.js"></script>
+		<script src='vendor/tinymce/tinymce/tinymce.min.js'></script>
+		<script src="vendor/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
+		<script src="vendor/gymadarasz/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+
+
+		<link rel="stylesheet" href="jquery.mozaik.css">
+		<script src='jquery.mozaik.js'></script>
+		
+		<script>
+
+			$(function(){
+				$('.testarea').mozaik();
+			});
+
+		</script>
+		
+	</head>
+	<body>
+		<style>
+			.testarea {
+				height: 600px;
+				overflow: hidden;
+				_border: 1px solid black;
+				_background: white;
+			}
+		</style>
+		
+		<input type="button" value="save" id="btnSave" />
+		<script>
+			$('#btnSave').click(function(){
+				$.post('index.php?f=save', {
+					'tpl': $('.testarea').getMozaikValue({inlineStyles: false})
+				}, function(){
+					console.log('ok');
+				});
+			});
+		</script>
+		
+		<input type="email" name="email" placeholder="test@email-address.com">
+		<input type="button" value="send" id="btnSend">		
+		<script>
+			$('#btnSend').click(function(){
+				if(!$('input[name="email"]').val()) {
+					alert('Fill required email');
+				}
+				else {
+					$.post('index.php?f=send', {
+						'email': $('input[name="email"]').val(),
+						'body': $('.testarea').getMozaikValue({inlineStyles: true})
+					}, function(){
+						console.log('ok');
+					});
+				}
+			});
+		</script>
+		
+		<div id="testarea_namespace" class="testarea"><?php echo $html ? $html : 'Hello, edit this text area here..'; ?></div>
+		
+	</body>
+</html>
