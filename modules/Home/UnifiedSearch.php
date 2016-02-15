@@ -48,7 +48,7 @@ if(array_key_exists('showGSDiv',$_REQUEST) || !empty($_REQUEST['search_fallback'
 
 if(!$luceneSearch){
     if(!empty($sugar_config['aod']['enable_aod'])){
-        echo "<a href='index.php?action=UnifiedSearch&module=Home&query_string=".$queryString."'>".translate("LBL_USE_AOD_SEARCH","AOD_Index")."</a>";
+        echo "<a href='index.php?action=UnifiedSearch&module=Home&query_string=".urlencode($queryString)."'>".translate("LBL_USE_AOD_SEARCH","AOD_Index")."</a>";
     }
     require_once('modules/Home/UnifiedSearchAdvanced.php');
     global $mod_strings, $modListHeader, $app_strings, $beanList, $beanFiles;
@@ -57,7 +57,7 @@ if(!$luceneSearch){
     return;
 }
 require_once('include/utils.php');
-echo "<a href='index.php?action=UnifiedSearch&module=Home&search_fallback=1&query_string=".$queryString."'>".translate("LBL_USE_VANILLA_SEARCH","AOD_Index")."</a>";
+echo "<a href='index.php?action=UnifiedSearch&module=Home&search_fallback=1&query_string=".urlencode($queryString)."'>".translate("LBL_USE_VANILLA_SEARCH","AOD_Index")."</a>";
 
 $index = BeanFactory::getBean("AOD_Index")->getIndex();
 $hits = array();
