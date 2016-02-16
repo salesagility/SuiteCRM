@@ -137,7 +137,7 @@
 		<div class="target-list-create">
 
 			{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br>
-			<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}"><br>
+			<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}" style="width: 100%;"><br>
 
 			<br>
 
