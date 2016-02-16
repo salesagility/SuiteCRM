@@ -39,13 +39,15 @@ HTML;
         $html = <<<HTML
 <style>
 .wizmenu {float: left; height: 80px;}
-.wizmenu * {margin: 0; padding: 0; border: none;}
+.wizmenu * {margin: 0; padding: 0; border: none; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 9.9px; font-weight: bold; line-height: 9.9px;}
 .wizmenu ul {display: block; float: none; list-style-type: none; margin: 0; padding: 0;}
 .wizmenu ul li {background-image: url({$imgdir}center-empty.png); background-repeat: no-repeat; display: block; float: left; width: 90px; height: 35px; list-style-type: none; margin: 0; padding: 40px 0 0 0; text-align: center;}
 .wizmenu ul li:first-child {background-image: url({$imgdir}left-start.png);}
 .wizmenu ul li:last-child {background-image: url({$imgdir}right-empty.png);}
 .wizmenu.tiny ul li {margin-right: -33px}
 .wizmenu .label {color: gray;}
+.wizmenu a .label {color: #337ab7; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 9.9px; font-weight: bold; line-height: 9.9px;}
+.wizmenu a:hover .label {color: #136aa7;}
 .wizmenu .clear {clear: both;}
 
 </style>
