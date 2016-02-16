@@ -49,16 +49,20 @@
 	<input type="hidden" id="wiz_remove_target_list" name="wiz_remove_target_list" value="">
 
 
+<input id="popup_target_list_type" name="popup_target_list_type" type='hidden'>
+<input id="popup_target_list_name" name="popup_target_list_name" type="hidden" value="">
+<input id='popup_target_list_id' name='popup_target_list_id' title='List ID' type="hidden" value=''>
 
+<!--
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 			<th colspan="5" align="left" ><h4>{$MOD.LBL_TARGET_LISTS}</h4></th>
 		</tr>
-		<!--
+
 		<tr>
 			<td colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE1}<br></td>
 		</tr>
-		-->
+
 		<tr>
 			<td scope="row" colspan="4">{$MOD.LBL_SELECT_TARGET}&nbsp;
 				<input id="popup_target_list_type" name="popup_target_list_type" type='hidden'>
@@ -70,7 +74,7 @@
 			</td>
 			<td>&nbsp;</td>
 		</tr>
-		<!--
+
 		<tr><td colspan=5>&nbsp;</td></tr>
 		<tr>
 		<td scope="row" colspan="5">{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br></td>
@@ -92,9 +96,9 @@
 		<td width='30%'><input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');"></td>
 		</tr>
 		<tr><td colspan=5>&nbsp;</td></tr>
-		-->
-	</table>
 
+	</table>
+-->
 
 	<div style="float: left; max-width: 250px;">
 
@@ -104,11 +108,31 @@
 		</script>
 		{/literal}
 
+
 		<ul class="target-list">
+			<li><input type="text" name="targetListSearch" value="" placeholder="search target list" style="width: 100%;"></li>
 			{foreach from=$targetListData item=targetList}
-				<li data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
+				<li class="target-list-item" data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
 			{/foreach}
 		</ul>
+		{literal}
+		<script type="text/javascript">
+			$(function(){
+				$('input[name="targetListSearch"]').keyup(function(event){
+					var keywords = $(this).val();
+					$('li.target-list-item').each(function(i,e){
+						targetListName = $(e).find('a').html();
+						if(targetListName.toLowerCase().indexOf(keywords.toLowerCase()) > -1) {
+							$(e).show();
+						}
+						else {
+							$(e).hide();
+						}
+					});
+				});
+			});
+		</script>
+		{/literal}
 
 		<div class="target-list-create">
 
