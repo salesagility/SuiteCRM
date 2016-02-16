@@ -99,6 +99,15 @@ foreach($focus->get_linked_fields() as $field => $def) {
         if ( $focus->$field->getRelatedModuleName() == 'ProspectLists' ) {
             $relationship = $field;
             break;
+			$relationship ='';
+			foreach ($focus->get_linked_fields() as $field => $def) {
+				if ($focus->load_relationship($field)) {
+					if ($focus->$field->getRelatedModuleName() == 'ProspectLists') {
+						$relationship = $field;
+					}
+					break;
+				}
+			}
         }
     }
 }
@@ -110,6 +119,28 @@ if ( $relationship != '' ) {
         $focus->prospect_lists->add( $_REQUEST['prospect_list'] );
     }
 }
+
+
+if ( $relationship != '' ) {
+	foreach ( $uids as $id) {
+		$focus->retrieve($id);
+		if($_REQUEST['do_contacts']){
+			$contacts = $focus->get_linked_beans('contacts','Contacts3');
+			foreach($contacts as $contact) {
+				$contact->load_relationship('prospect_lists');
+				$contact->prospect_lists->add($_REQUEST['prospect_list']);
+			}
+			break;
+		}
+		else{
+			$focus->load_relationship($relationship);
+			$focus->prospect_lists->add($_REQUEST['prospect_list']);
+
+		}
+	}
+}
+
+
 handleRedirect();
 exit;
 ?>
