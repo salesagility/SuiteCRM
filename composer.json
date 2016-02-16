@@ -1,0 +1,11 @@
+{
+  "name": "SuiteCRM",
+  "type": "project",
+  "config": {
+    "vendor-dir": "include/vendor"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*.*",
+    "mikey179/vfsStream": "1.4.*"
+  }
+}
