@@ -31,10 +31,13 @@ HTML;
         return $html;
     }
 
-    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik') {
+    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial') {
+        if(is_numeric($width)) {
+            $width .= 'px';
+        }
         $refreshTextareaScript = '';
         if($textareaId) {
-            $refreshTextareaScript = $this->getRefreshTextareaScript($textareaId, $elementId);
+            $refreshTextareaScript = $this->getRefreshTextareaScript($textareaId, $elementId, $width);
         }
         $html = <<<HTML
 <div id="{$elementId}">{$contents}</div>
@@ -57,6 +60,7 @@ HTML;
             style: '{$this->mozaikPath}/tpls/default/styles/default.css',
             namespace: false,
             ace: false,
+            width: '{$width}'
         });
     });
     // refresh textarea
@@ -66,17 +70,23 @@ HTML;
         return $html;
     }
 
-    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik') {
+    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial') {
+        if(is_numeric($width)) {
+            $width .= 'px';
+        }
         $mozaikHTML = $this->getDependenciesHTML();
         $mozaikHTML .= $this->getIncludeHTML();
-        $mozaikHTML .= $this->getElementHTML($contents, $textareaId, $elementId);
+        $mozaikHTML .= $this->getElementHTML($contents, $textareaId, $elementId, $width);
         return $mozaikHTML;
     }
 
-    private function getRefreshTextareaScript($textareaId, $elementId) {
+    private function getRefreshTextareaScript($textareaId, $elementId, $width = 'initial') {
+        if(is_numeric($width)) {
+            $width .= 'px';
+        }
         $js = <<<SCRIPT
 setInterval(function(){
-    $('#{$textareaId}').val($('#{$elementId}').getMozaikValue());
+    $('#{$textareaId}').val($('#{$elementId}').getMozaikValue({width: '{$width}'}));
 }, 300);
 SCRIPT;
         return $js;

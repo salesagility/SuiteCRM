@@ -19,7 +19,7 @@ var mozaik = {
         return html;
     },
 
-    getEditorListElementHTML: function(name, innertext, ace) {
+    getEditorListElementHTML: function(name, innertext, ace, style) {
         var html =
             '<li class="mozaik-elem" data-name="' + name + '">' +
             '	<ul class="mozaik-tools">' +
@@ -28,7 +28,7 @@ var mozaik = {
             '		<li class="mozaik-tool-btn mozaik-tool-stick"><a href="javascript:;" title="Stick"></a></li>' +
             '		<li class="mozaik-tool-btn mozaik-tool-copy"><a href="javascript:;" title="Copy"></a></li>' +
             (ace ? '<li class="mozaik-tool-btn mozaik-tool-source"><a href="javascript:;" title="Source"></a></li>' : '') +
-            '	</ul>' + this.getMozaikInnerHTML(name, innertext) +
+            '	</ul>' + this.getMozaikInnerHTML(name, innertext, style) +
             '</li>';
         return html;
     },
@@ -135,7 +135,8 @@ var mozaik = {
                     "CC99FF", "Plum"
                 ]
             },
-            ace: true
+            ace: true,
+            width: '600px'
         }, options);
 
         // add ace editor
@@ -210,11 +211,11 @@ var mozaik = {
 
             // add template particular
             var addEditorListElement = function(name, html, scrollDown) {
-                var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace);
+                var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, 'max-width:' + settings.width);
                 $mozaik.append(listElemHTML);
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
-                    var sels = '.mozaik-inner, .mozaik-inner ' + e;
+                    var sels = '.mozaik-inner'; //, .mozaik-inner ' + e;
                     var config = settings.tinyMCE;
                     config.selector = sels;
                     config.inline = true;
@@ -273,10 +274,10 @@ var mozaik = {
                     length = -1;
                 }
                 if(length == 0) {
-                    html = mozaik.getMozaikInnerHTML(false, html);
+                    html = mozaik.getMozaikInnerHTML(false, html, 'max-width:' + settings.width);
                 }
                 else if(length == -1) {
-                    html = mozaik.getEditorListElementHTML(false, html, settings.ace);
+                    html = mozaik.getEditorListElementHTML(false, html, settings.ace, 'max-width:' + settings.width);
                 }
                 if(!$(html).find('.mozaik-inner').length) {
                     html = '<div>' + html + '</div>'
@@ -396,7 +397,8 @@ var mozaik = {
     $.fn.getMozaikValue = function(options) {
 
         var settings = $.extend({
-            inlineStyles: false
+            inlineStyles: false,
+            width: '600px'
         }, options);
 
         var ret = [];
@@ -422,7 +424,7 @@ var mozaik = {
                     $(e).attr('style', tmpStyle);
                 }
                 else {
-                    html += mozaik.getMozaikInnerHTML(false, $(e).html());
+                    html += mozaik.getMozaikInnerHTML(false, $(e).html(), $(e).attr('style'));
                 }
             });
             ret.push(html);
