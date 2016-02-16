@@ -110,7 +110,7 @@
 
 
 		<ul class="target-list">
-			<li><input type="text" name="targetListSearch" value="" placeholder="search target list" style="width: 100%;"></li>
+			<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" style="width: 100%;"></li>
 			{foreach from=$targetListData item=targetList}
 				<li class="target-list-item" data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
 			{/foreach}
