@@ -4908,7 +4908,7 @@ object{
     bottom: 15px;
 }
 #step2 table {
-    width: 350px;
+    /* width: 350px; */
     min-width: 300px;
 }
 #step2 table tr td,
