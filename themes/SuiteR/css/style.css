@@ -4913,7 +4913,12 @@ object{
 }
 #step2 table tr td,
 #step2 table th td {
-    min-width: 150px;
+    /* min-width: 150px; */
+    width: 60px;
+}
+
+#step2 .target-list-table {
+    min-width:  570px;
 }
 
 
