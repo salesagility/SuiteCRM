@@ -93,6 +93,20 @@ color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link'
 color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link_hover']; ?> !important;
 }
 
+/* Drop down menu CSS */
+
+#mobile_menu {
+    background:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu']; ?> !important;
+}
+
+#mobile_menu li a, #mobile_menu em a {
+    color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link']; ?> !important;
+}
+
+#mobile_menu li a:hover {
+    color:#<?php echo $sugar_config['theme_settings']['SuiteR']['dropdown_menu_link_hover']; ?> !important;
+}
+
 /* Action Menu CSS */
 
 ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub, ul.clickMenu li ul.subnav li a, ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a, ul.clickMenu li ul.subnav li a, ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a, ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub, ul.clickMenu li ul.subnav li a, ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a{
