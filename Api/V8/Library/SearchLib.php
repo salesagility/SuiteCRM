@@ -8,6 +8,13 @@ class SearchLib
     var $searchFormClass = 'SearchForm';
     var $displayColumns;
     var $searchColumns; // set by view.list.php
+    var $cache_search;
+    var $cache_display;
+    var $listviewName = null;
+    var $additionalDetails = true;
+    var $additionalDetailsAjax = true; // leave this true when using filter fields
+    var $additionalDetailsFieldToAdd = 'NAME';
+    var $returnData = array();
 
     function getSearchResults($userId)
     {
@@ -25,8 +32,23 @@ class SearchLib
         return $results;
     }
 
+    function getAdditionalDetailsAjax($id)
+    {
+        global $app_strings;
+
+        $jscalendarImage = \SugarThemeRegistry::current()->getImageURL('info_inline.gif');
+
+        $extra = "<span id='adspan_" . $id . "' "
+            . "onclick=\"lvg_dtails('$id')\" "
+            . " style='position: relative;'><!--not_in_theme!--><img vertical-align='middle' class='info' border='0' alt='".$app_strings['LBL_ADDITIONAL_DETAILS']."' src='$jscalendarImage'></span>";
+
+        return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
+    }
+
     function doSearchAdvanced($userId, $queryString)
     {
+        $this->cache_search = sugar_cached('modules/unified_search_modules.php');
+        $this->cache_display = sugar_cached('modules/unified_search_modules_display.php');
 
         $unified_search_modules = $this->getUnifiedSearchModules();
         $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
@@ -83,7 +105,11 @@ class SearchLib
         if (!empty($this->query_string)) {
             foreach ($modules_to_search as $moduleName => $beanName) {
                 require_once $beanFiles[$beanName];
+                require_once 'include/ListView/ListViewSmarty.php';
                 $seed = new $beanName();
+
+                $lv = new \ListViewSmarty();
+                $lv->lvd->additionalDetails = false;
 
                 $mod_strings = return_module_language($current_language, $seed->module_dir);
 
@@ -175,7 +201,7 @@ class SearchLib
                     }
                 }
 
-                $this->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 10);
+                $this->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 1000);
 
 
                 $displayColumns = array();
@@ -211,7 +237,9 @@ class SearchLib
             }
         }
         */
-        return $module_results;
+        //$module_results[$moduleName] .= $lv->display(false, false);
+        //return $module_results;
+        return $this->returnData;
 
     }
 
@@ -239,7 +267,7 @@ class SearchLib
     function setupFilterFields($filter_fields = array())
     {
         // create filter fields based off of display columns
-        if(empty($filter_fields) || $this->mergeDisplayColumns) {
+        if((empty($filter_fields) || $this->mergeDisplayColumns) && !is_null($this->displayColumns)) {
             foreach($this->displayColumns as $columnName => $def) {
 
                 $filter_fields[strtolower($columnName)] = true;
@@ -268,19 +296,87 @@ class SearchLib
                     }
                 }
             }
-            foreach ($this->searchColumns as $columnName => $def )
-            {
-                $filter_fields[strtolower($columnName)] = true;
-            }
+            //foreach ($this->searchColumns as $columnName => $def )
+            //{
+            //    $filter_fields[strtolower($columnName)] = true;
+            //}
         }
 
 
         return $filter_fields;
     }
 
+    function setVariableName($baseName, $where, $listviewName = null){
+        $module = (!empty($this->listviewName)) ? $this->listviewName: 'Home';
+        $this->var_name = $module .'2_'. strtoupper($baseName);
+
+        $this->var_order_by = $this->var_name .'_ORDER_BY';
+        $this->var_offset = $this->var_name . '_offset';
+        $timestamp = sugar_microtime();
+        $this->stamp = $timestamp;
+
+        $_SESSION[$module .'2_QUERY_QUERY'] = $where;
+
+        $_SESSION[strtoupper($baseName) . "_FROM_LIST_VIEW"] = $timestamp;
+        $_SESSION[strtoupper($baseName) . "_DETAIL_NAV_HISTORY"] = false;
+    }
+
+
+    function getOrderBy($orderBy = '', $direction = '') {
+        if (!empty($orderBy) || !empty($_REQUEST[$this->var_order_by])) {
+            if(!empty($_REQUEST[$this->var_order_by])) {
+                $direction = 'ASC';
+                $orderBy = $_REQUEST[$this->var_order_by];
+                if(!empty($_REQUEST['lvso']) && (empty($_SESSION['lvd']['last_ob']) || strcmp($orderBy, $_SESSION['lvd']['last_ob']) == 0) ){
+                    $direction = $_REQUEST['lvso'];
+                }
+            }
+            $_SESSION[$this->var_order_by] = array('orderBy'=>$orderBy, 'direction'=> $direction);
+            $_SESSION['lvd']['last_ob'] = $orderBy;
+        }
+        else {
+            $userPreferenceOrder = $GLOBALS['current_user']->getPreference('listviewOrder', $this->var_name);
+            if(!empty($_SESSION[$this->var_order_by])) {
+                $orderBy = $_SESSION[$this->var_order_by]['orderBy'];
+                $direction = $_SESSION[$this->var_order_by]['direction'];
+            } elseif (!empty($userPreferenceOrder)) {
+                $orderBy = $userPreferenceOrder['orderBy'];
+                $direction = $userPreferenceOrder['sortOrder'];
+            } else {
+                $orderBy = 'date_entered';
+                $direction = 'DESC';
+            }
+        }
+        if(!empty($direction)) {
+            if(strtolower($direction) == "desc") {
+                $direction = 'DESC';
+            } else {
+                $direction = 'ASC';
+            }
+        }
+        return array('orderBy' => $orderBy, 'sortOrder' => $direction);
+    }
+
+    function getOffset() {
+        return (!empty($_REQUEST[$this->var_offset])) ? $_REQUEST[$this->var_offset] : 0;
+    }
+
+    function getTotalCount($main_query){
+        if(!empty($this->count_query)){
+            $count_query = $this->count_query;
+        }else{
+            $count_query = $this->seed->create_list_count_query($main_query);
+        }
+        $result = $this->db->query($count_query);
+        if($row = $this->db->fetchByAssoc($result)){
+            return $row['c'];
+        }
+        return 0;
+    }
+
     function getListViewData($seed, $where, $offset=-1, $limit = -1, $filter_fields=array(),$params=array(),$id_field = 'id',$singleSelect=true) {
         global $current_user;
-        SugarVCR::erase($seed->module_dir);
+        // \SugarVCR::erase($seed->module_dir);
         $this->seed =& $seed;
         $totalCounted = empty($GLOBALS['sugar_config']['disable_count_query']);
         $_SESSION['MAILMERGE_MODULE_FROM_LISTVIEW'] = $seed->module_dir;
@@ -352,6 +448,8 @@ class SearchLib
         if(empty($_REQUEST['action']) || $_REQUEST['action'] != 'Popup') {
             $_SESSION['export_where'] = $ret_array['where'];
         }
+        $this->db = \DBManagerFactory::getInstance('listviews');
+
         if($limit < -1) {
             $result = $this->db->query($main_query);
         }
@@ -367,6 +465,7 @@ class SearchLib
                 $offset = (floor(($totalCount -1) / $limit)) * $limit;
             }
             if($this->seed->ACLAccess('ListView')) {
+                //$this->db = \DBManagerFactory::getInstance('listviews');
                 $result = $this->db->limitQuery($main_query, $offset, $limit + 1);
             }
             else {
@@ -400,7 +499,7 @@ class SearchLib
             $id_list = '('.substr($id_list, 1).')';
         }
 
-        SugarVCR::store($this->seed->module_dir,  $main_query);
+        \SugarVCR::store($this->seed->module_dir,  $main_query);
         if($count != 0) {
             //NOW HANDLE SECONDARY QUERIES
             if(!empty($ret_array['secondary_select'])) {
@@ -512,7 +611,7 @@ class SearchLib
         if( $count >= $limit && $totalCounted){
             $totalCount  = $this->getTotalCount($main_query);
         }
-        SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
+        \SugarVCR::recordIDs($this->seed->module_dir, array_keys($idIndex), $offset, $totalCount);
         $module_names = array(
             'Prospects' => 'Targets'
         );
@@ -566,6 +665,75 @@ class SearchLib
         return array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
     }
 
+    protected function generateURLS($queries)
+    {
+        foreach ($queries as $name => $value)
+        {
+            $queries[$name] = 'index.php?' . http_build_query($value);
+        }
+        $this->base_url = $queries['baseURL'];
+        return $queries;
+    }
+
+    protected function getBaseQuery()
+    {
+        global $beanList;
+
+        $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount',$this->var_order_by, $this->var_offset, 'lvso', 'sortOrder', 'orderBy', 'request_data', 'current_query_by_page');
+        foreach($beanList as $bean)
+        {
+            $blockVariables[] = 'Home2_'.strtoupper($bean).'_ORDER_BY';
+        }
+        $blockVariables[] = 'Home2_CASE_ORDER_BY';
+
+        // Added mostly for the unit test runners, which may not have these superglobals defined
+        $params = array_merge($_POST, $_GET);
+        $params = array_diff_key($params, array_flip($blockVariables));
+
+        return $params;
+    }
+
+    protected function generateQueries($sortOrder, $offset, $prevOffset, $nextOffset, $endOffset, $totalCounted)
+    {
+        $queries = array();
+        $queries['baseURL'] = $this->getBaseQuery();
+        $queries['baseURL']['lvso'] = $sortOrder;
+
+        $queries['orderBy'] = $queries['baseURL'];
+        $queries['orderBy'][$this->var_order_by] = '';
+
+        if($nextOffset > -1)
+        {
+            $queries['nextPage'] = $queries['baseURL'];
+            $queries['nextPage'][$this->var_offset] = $nextOffset;
+        }
+        if($offset > 0)
+        {
+            $queries['startPage'] = $queries['baseURL'];
+            $queries['startPage'][$this->var_offset] = 0;
+        }
+        if($prevOffset > -1)
+        {
+            $queries['prevPage'] = $queries['baseURL'];
+            $queries['prevPage'][$this->var_offset] = $prevOffset;
+        }
+        if($totalCounted)
+        {
+            $queries['endPage'] = $queries['baseURL'];
+            $queries['endPage'][$this->var_offset] = $endOffset;
+        }
+        else
+        {
+            $queries['endPage'] = $queries['baseURL'];
+            $queries['endPage'][$this->var_offset] = 'end';
+        }
+        return $queries;
+    }
+
+    function getReverseSortOrder($current_order){
+        return (strcmp(strtolower($current_order), 'asc') == 0)?'DESC':'ASC';
+    }
+
     function setup($seed, $file, $where, $params = array(), $offset = 0, $limit = -1,  $filter_fields = array(), $id_field = 'id') {
         $this->should_process = true;
         if(isset($seed->module_dir) && !$this->shouldProcess($seed->module_dir)){
@@ -576,17 +744,15 @@ class SearchLib
 
         $filter_fields = $this->setupFilterFields($filter_fields);
 
-        $data = $this->lvd->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field);
+        $data = $this->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field);
 
-        $this->fillDisplayColumnsWithVardefs();
+        //$this->fillDisplayColumnsWithVardefs();
 
-        $this->process($file, $data, $seed->object_name);
+        //$this->process($file, $data, $seed->object_name);
+
+
+        $this->returnData[$seed->object_name][] = $data["data"];
         return true;
-    }
-
-    function process($file, $data, $htmlVar) {
-        $this->rowCount = count($data['data']);
-        $this->moduleString = $data['pageData']['bean']['moduleDir'] . '2_' . strtoupper($htmlVar) . '_offset';
     }
 
     public function getUnifiedSearchModulesDisplay()
@@ -630,6 +796,108 @@ class SearchLib
 
         include $cachedFile;
         return $unified_search_modules;
+    }
+
+    function buildCache()
+    {
+
+        global $beanList, $beanFiles, $dictionary;
+
+        $supported_modules = array();
+
+        foreach($beanList as $moduleName=>$beanName)
+        {
+            if (!isset($beanFiles[$beanName]))
+                continue;
+
+            $beanName = \BeanFactory::getObjectName($moduleName);
+            $manager = new \VardefManager ( );
+            $manager->loadVardef( $moduleName , $beanName ) ;
+
+            // obtain the field definitions used by generateSearchWhere (duplicate code in view.list.php)
+            if(file_exists('custom/modules/'.$moduleName.'/metadata/metafiles.php')){
+                require('custom/modules/'.$moduleName.'/metadata/metafiles.php');
+            }elseif(file_exists('modules/'.$moduleName.'/metadata/metafiles.php')){
+                require('modules/'.$moduleName.'/metadata/metafiles.php');
+            }
+
+
+            if(!empty($metafiles[$moduleName]['searchfields']))
+            {
+                require $metafiles[$moduleName]['searchfields'] ;
+            } else if(file_exists("modules/{$moduleName}/metadata/SearchFields.php")) {
+                require "modules/{$moduleName}/metadata/SearchFields.php" ;
+            }
+
+            //Load custom SearchFields.php if it exists
+            if(file_exists("custom/modules/{$moduleName}/metadata/SearchFields.php"))
+            {
+                require "custom/modules/{$moduleName}/metadata/SearchFields.php" ;
+            }
+
+            //If there are $searchFields are empty, just continue, there are no search fields defined for the module
+            if(empty($searchFields[$moduleName]))
+            {
+                continue;
+            }
+
+            $isCustomModule = preg_match('/^([a-z0-9]{1,5})_([a-z0-9_]+)$/i' , $moduleName);
+
+            //If the bean supports unified search or if it's a custom module bean and unified search is not defined
+            if(!empty($dictionary[$beanName]['unified_search']) || $isCustomModule)
+            {
+                $fields = array();
+                foreach ( $dictionary [ $beanName ][ 'fields' ] as $field => $def )
+                {
+                    // We cannot enable or disable unified_search for email in the vardefs as we don't actually have a vardef entry for 'email'
+                    // the searchFields entry for 'email' doesn't correspond to any vardef entry. Instead it contains SQL to directly perform the search.
+                    // So as a proxy we allow any field in the vardefs that has a name starting with 'email...' to be tagged with the 'unified_search' parameter
+
+                    if (strpos($field,'email') !== false)
+                    {
+                        $field = 'email' ;
+                    }
+
+                    //bug: 38139 - allow phone to be searched through Global Search
+                    if (strpos($field,'phone') !== false)
+                    {
+                        $field = 'phone' ;
+                    }
+
+                    if ( !empty($def['unified_search']) && isset ( $searchFields [ $moduleName ] [ $field ]  ))
+                    {
+                        $fields [ $field ] = $searchFields [ $moduleName ] [ $field ] ;
+                    }
+                }
+
+                foreach ($searchFields[$moduleName] as $field => $def)
+                {
+                    if (
+                        isset($def['force_unifiedsearch'])
+                        and $def['force_unifiedsearch']
+                    )
+                    {
+                        $fields[$field] = $def;
+                    }
+                }
+
+                if(count($fields) > 0) {
+                    $supported_modules [$moduleName] ['fields'] = $fields;
+                    if (isset($dictionary[$beanName]['unified_search_default_enabled']) && $dictionary[$beanName]['unified_search_default_enabled'] === TRUE)
+                    {
+                        $supported_modules [$moduleName]['default'] = true;
+                    } else {
+                        $supported_modules [$moduleName]['default'] = false;
+                    }
+                }
+
+            }
+
+        }
+
+        ksort($supported_modules);
+
+        write_array_to_file('unified_search_modules', $supported_modules, $this->cache_search);
     }
 
     function doSearchSimple($userId, $queryString, $start = 0, $amount = 20)
