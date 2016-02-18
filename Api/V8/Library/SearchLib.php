@@ -8,6 +8,7 @@ class SearchLib
     var $searchFormClass = 'SearchForm';
     var $displayColumns;
     var $searchColumns; // set by view.list.php
+
     var $cache_search;
     var $cache_display;
     var $listviewName = null;
@@ -16,19 +17,16 @@ class SearchLib
     var $additionalDetailsFieldToAdd = 'NAME';
     var $returnData = array();
 
+    var $mergeDisplayColumns = false;
+
     function getSearchResults($userId)
     {
 
-        //$results = $this->doSearchSimple($userId,$_REQUEST['query_string'],0,50);
-        $results = $this->doSearchAdvanced($userId,$_REQUEST['query_string']);
+        if(isset($_REQUEST['search_type']) && $_REQUEST['search_type'] === "basic")
+            $results = $this->doSearchBasic($userId,$_REQUEST['query_string']);
+        else
+            $results = $this->doSearchAdvanced($userId,$_REQUEST['query_string'],0,50);
 
-        /*
-                require_once('include/utils/layout_utils.php');
-                require_once('modules/Home/UnifiedSearchAdvanced.php');
-                $usa = new \UnifiedSearchAdvanced();
-                $_REQUEST['module']='Home';
-                $results = $usa->search();
-        */
         return $results;
     }
 
@@ -45,10 +43,11 @@ class SearchLib
         return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
     }
 
-    function doSearchAdvanced($userId, $queryString)
+    function doSearchBasic($userId, $queryString)
     {
         $this->cache_search = sugar_cached('modules/unified_search_modules.php');
         $this->cache_display = sugar_cached('modules/unified_search_modules_display.php');
+        $this->searchColumns = array ();
 
         $unified_search_modules = $this->getUnifiedSearchModules();
         $unified_search_modules_display = $this->getUnifiedSearchModulesDisplay();
@@ -201,7 +200,7 @@ class SearchLib
                     }
                 }
 
-                $this->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 1000);
+
 
 
                 $displayColumns = array();
@@ -222,6 +221,7 @@ class SearchLib
                 }
 
                 $module_results[$moduleName] = $GLOBALS['app_list_strings']['moduleList'][$seed->module_dir];//'<br /><br />' . get_form_header($GLOBALS['app_list_strings']['moduleList'][$seed->module_dir] . ' (' . $lv->data['pageData']['offsets']['total'] . ')', '', false);
+                $this->setup($seed, 'include/ListView/ListViewNoMassUpdate.tpl', $where, $params, 0, 1000);
             }
         }
 
@@ -267,7 +267,7 @@ class SearchLib
     function setupFilterFields($filter_fields = array())
     {
         // create filter fields based off of display columns
-        if((empty($filter_fields) || $this->mergeDisplayColumns) && !is_null($this->displayColumns)) {
+        if(empty($filter_fields) || $this->mergeDisplayColumns) {
             foreach($this->displayColumns as $columnName => $def) {
 
                 $filter_fields[strtolower($columnName)] = true;
@@ -296,10 +296,10 @@ class SearchLib
                     }
                 }
             }
-            //foreach ($this->searchColumns as $columnName => $def )
-            //{
-            //    $filter_fields[strtolower($columnName)] = true;
-            //}
+            foreach ($this->searchColumns as $columnName => $def )
+            {
+                $filter_fields[strtolower($columnName)] = true;
+            }
         }
 
 
@@ -552,13 +552,26 @@ class SearchLib
             $pageData = array();
 
             reset($rows);
+
+
+
+
             while($row = current($rows)){
 
                 $temp = clone $seed;
-                $dataIndex = count($data);
 
                 $temp->setupCustomFields($temp->module_dir);
                 $temp->loadFromRow($row);
+
+                $record = array();
+                $record["id"] = $temp->id;
+                $record["moduleName"] = $temp->module_name;
+                $record["summary"] = $temp->get_summary_text();
+
+                $data[] = $record;
+
+/*
+
                 if (empty($this->seed->assigned_user_id) && !empty($temp->assigned_user_id)) {
                     $this->seed->assigned_user_id = $temp->assigned_user_id;
                 }
@@ -592,6 +605,11 @@ class SearchLib
                     $pageData['additionalDetails'][$dataIndex] = $ar['string'];
                     $pageData['additionalDetails']['fieldToAddTo'] = $ar['fieldToAddTo'];
                 }
+
+*/
+
+
+
                 next($rows);
             }
         }
@@ -662,7 +680,7 @@ class SearchLib
             }
         }
 
-        return array('data'=>$data , 'pageData'=>$pageData, 'query' => $queryString);
+        return array('data'=>$data , 'count'=> count($rows),'pageData'=>$pageData, 'query' => $queryString);
     }
 
     protected function generateURLS($queries)
@@ -746,13 +764,75 @@ class SearchLib
 
         $data = $this->getListViewData($seed, $where, $offset, $limit, $filter_fields, $params, $id_field);
 
-        //$this->fillDisplayColumnsWithVardefs();
+        $this->fillDisplayColumnsWithVardefs();
 
         //$this->process($file, $data, $seed->object_name);
 
+        if (count($data["data"]) > 0)
+        {
+            $this->returnData[$seed->object_name]["items"] = $data["data"];
+            $this->returnData[$seed->object_name]["count"] = $data["count"];
+        }
 
-        $this->returnData[$seed->object_name][] = $data["data"];
         return true;
+    }
+
+    protected function fillDisplayColumnsWithVardefs()
+    {
+        foreach ($this->displayColumns as $columnName => $def) {
+            $seedName =  strtolower($columnName);
+            if (!empty($this->lvd->seed->field_defs[$seedName])) {
+                $seedDef = $this->lvd->seed->field_defs[$seedName];
+            }
+
+            if (empty($this->displayColumns[$columnName]['type'])) {
+                if (!empty($seedDef['type'])) {
+                    $this->displayColumns[$columnName]['type'] = (!empty($seedDef['custom_type']))?$seedDef['custom_type']:$seedDef['type'];
+                } else {
+                    $this->displayColumns[$columnName]['type'] = '';
+                }
+            }//fi empty(...)
+
+            if (!empty($seedDef['options'])) {
+                $this->displayColumns[$columnName]['options'] = $seedDef['options'];
+            }
+
+            //C.L. Fix for 11177
+            if ($this->displayColumns[$columnName]['type'] == 'html') {
+                $cField = $this->seed->custom_fields;
+                if (isset($cField) && isset($cField->bean->$seedName)) {
+                    $seedName2 = strtoupper($columnName);
+                    $htmlDisplay = html_entity_decode($cField->bean->$seedName);
+                    $count = 0;
+                    while ($count < count($data['data'])) {
+                        $data['data'][$count][$seedName2] = &$htmlDisplay;
+                        $count++;
+                    }
+                }
+            }//fi == 'html'
+
+            //Bug 40511, make sure relate fields have the correct module defined
+            if ($this->displayColumns[$columnName]['type'] == "relate" && !empty($seedDef['link']) && empty( $this->displayColumns[$columnName]['module'])) {
+                $link = $seedDef['link'];
+                if (!empty($this->lvd->seed->field_defs[$link]) && !empty($this->lvd->seed->field_defs[$seedDef['link']]['module'])) {
+                    $this->displayColumns[$columnName]['module'] = $this->lvd->seed->field_defs[$seedDef['link']]['module'];
+                }
+            }
+
+            if (!empty($seedDef['sort_on'])) {
+                $this->displayColumns[$columnName]['orderBy'] = $seedDef['sort_on'];
+            }
+
+            if (isset($seedDef)) {
+                // Merge the two arrays together, making sure the seedDef doesn't override anything explicitly set in the displayColumns array.
+                $this->displayColumns[$columnName] = $this->displayColumns[$columnName] + $seedDef;
+            }
+
+            //C.L. Bug 38388 - ensure that ['id'] is set for related fields
+            if (!isset($this->displayColumns[$columnName]['id']) && isset($this->displayColumns[$columnName]['id_name'])) {
+                $this->displayColumns[$columnName]['id'] = strtoupper($this->displayColumns[$columnName]['id_name']);
+            }
+        }
     }
 
     public function getUnifiedSearchModulesDisplay()
@@ -900,7 +980,7 @@ class SearchLib
         write_array_to_file('unified_search_modules', $supported_modules, $this->cache_search);
     }
 
-    function doSearchSimple($userId, $queryString, $start = 0, $amount = 20)
+    function doSearchAdvanced($userId, $queryString, $start = 0, $amount = 20)
     {
 
         $currentUser = \BeanFactory::getBean("Users", $userId);
@@ -927,8 +1007,6 @@ class SearchLib
         }
         if ($queryString) {
             return $this->doSearch($queryString, $currentUser, $start, $amount);
-            //$total = $res['total'];
-            //$hits = $res['hits'];
         }
     }
 
