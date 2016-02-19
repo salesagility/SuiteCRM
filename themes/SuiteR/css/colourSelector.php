@@ -79,6 +79,10 @@ background:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar'];?> !i
 color: #<?php echo $sugar_config['theme_settings']['SuiteR']['icon'];?> !important;
 }
 
+#usermenu a{
+color:#<?php echo $sugar_config['theme_settings']['SuiteR']['navbar_font']; ?>; !important;
+}
+
 /* Drop down menu CSS */
 
 .dropdown-menu {
