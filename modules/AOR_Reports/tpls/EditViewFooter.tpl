@@ -212,6 +212,11 @@
                 node.loaded = true;
                 $('#fieldTree').tree('openNode', node);
             }
+            else
+            {
+                if($('#fieldTree a:first').length)
+                    $('#fieldTree a:first').click();
+            }
 
         }
 

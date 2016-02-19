@@ -76,16 +76,6 @@ $mod_strings = array(
 	'ERR_UW_UPLOAD_ERR'							=> 'There was an error uploading the file, please try again!<br>\n',
 	'ERR_UW_VERSION'							=> 'SuiteCRM System Version: ',
 	'ERR_UW_WRONG_TYPE'							=> 'This page is not for running ',
-	'ERR_UW_PHP_FILE_ERRORS'					=> array(
-													1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-													2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
-													3 => 'The uploaded file was only partially uploaded.',
-													4 => 'No file was uploaded.',
-													5 => 'Unknown error.',
-													6 => 'Missing a temporary folder.',
-													7 => 'Failed to write file to disk.',
-													8 => 'File upload stopped by extension.',
-),
 	'LBL_BUTTON_BACK'							=> '< Back',
 	'LBL_BUTTON_CANCEL'							=> 'Cancel',
 	'LBL_BUTTON_DELETE'							=> 'Delete Package',
@@ -311,4 +301,15 @@ $mod_strings = array(
 	'LBL_WORKFLOW' => 'Workflow' /*for 508 compliance fix*/,
 	'LBL_UPGRADE' => 'Upgrade' /*for 508 compliance fix*/,
 	'LBL_PROCESSING' => 'Processing' /*for 508 compliance fix*/,
+	
+	'ERR_UW_PHP_FILE_ERRORS'					=> array(
+													1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
+													2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+													3 => 'The uploaded file was only partially uploaded.',
+													4 => 'No file was uploaded.',
+													5 => 'Unknown error.',
+													6 => 'Missing a temporary folder.',
+													7 => 'Failed to write file to disk.',
+													8 => 'File upload stopped by extension.',
+),
 );

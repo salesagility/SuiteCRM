@@ -160,6 +160,11 @@ $mod_strings = array(
     'LBL_NO_ITEMS_MOBILE' => 'Your calendar is clear for the week.',
     'LBL_SECURITYGROUPS' => 'Filter user list by Security Group',
 
+    'LBL_ADD_ITEM' => 'Add Item',
+    'LBL_ADD_MEETING' => 'Add Meeting',
+    'LBL_ADD_TASK' => 'Add Task',
+    'LBL_ADD_CALL' => 'Add Call',
+
 );
 
 $mod_list_strings = array(
