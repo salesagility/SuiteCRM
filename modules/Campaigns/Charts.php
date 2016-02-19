@@ -321,8 +321,14 @@ class campaign_charts {
 	//THis is a copy of the campaign_response_roi for rgraph so that the data is separate from the chart / presentation
 	//this will need refactored later rather than a cut n paste job like this
 	//perhaps add another boolean to the parameter list to return just the data or the chart
-	function campaign_response_roi_data($datay= array(),$targets=array(),$campaign_id, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
+	function campaign_response_roi_data($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
 		global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
+
+		$campaign_id = (int) $campaign_id;
+		if(!$campaign_id) {
+			$GLOBALS['log']->debug('campaign response rio data hasn\'t got campaign id');
+			return false;
+		}
 
 		$not_empty = false;
 
