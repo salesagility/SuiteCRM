@@ -933,7 +933,7 @@ class AOR_Report extends Basic {
         $query_where_clean = '';
         while($query_where_clean != $query_where) {
             $query_where_clean = $query_where;
-            $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|\(\s*\)/i', '', $query_where_clean);
+            $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|[^\w+\s*]\(\s*\)/i', '', $query_where_clean);
             $safe++;
             if($safe>100){
                 $GLOBALS['log']->fatal('Invalid report query conditions');
