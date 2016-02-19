@@ -47,15 +47,15 @@ class MBModule
 {
     public $name = '' ;
     public $config = array (
-    'assignable' => 1 , 'acl' => 1 , 'has_tab' => 1 , 'studio' => 1 , 'audit' => 1 ) ;
+    'assignable' => 1 , 'security_groups' => 1, 'acl' => 1 , 'has_tab' => 1 , 'studio' => 1 , 'audit' => 1 ) ;
     public $mbpublicdefs ;
     public $errors = array ( ) ;
     public $path = '' ;
     public $implementable = array (
     'has_tab' => 'Navigation Tab' ) ;
-    public $always_implement = array ( 'assignable' => 'Assignable' , 'acl' => 'Access Controls' , 'studio' => 'Studio Support' , 'audit' => 'Audit Table' ) ;
+    public $always_implement = array ( 'assignable' => 'Assignable', 'security_groups' => 'Security Groups' , 'acl' => 'Access Controls' , 'studio' => 'Studio Support' , 'audit' => 'Audit Table' ) ;
     public $iTemplate = array (
-    'assignable' ) ;
+    'assignable', 'security_groups' ) ;
 
     public $config_md5 = null ;
 

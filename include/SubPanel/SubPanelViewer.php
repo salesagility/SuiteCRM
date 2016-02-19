@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -68,6 +68,13 @@ $subpanel = $_REQUEST['subpanel'];
 $record = $_REQUEST['record'];
 $module = $_REQUEST['module'];
 
+$collection = array();
+
+if(isset($_REQUEST['collection_basic']) && $_REQUEST['collection_basic'][0] != 'null'){
+    $_REQUEST['collection_basic'] = explode(',',$_REQUEST['collection_basic'][0]);
+    $collection = $_REQUEST['collection_basic'];
+}
+
 if(empty($_REQUEST['inline']))
 {
 	insert_popup_header($theme);
@@ -84,7 +91,7 @@ if(!empty($_REQUEST['layout_def_key'])){
 	$layout_def_key = $_REQUEST['layout_def_key'];
 }
 
-$subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key);
+$subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
 
 $subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
 echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  

@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,14 +39,13 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
+ * Description:  Defines the English language pack for the base application.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
 
-* Description:  Defines the English language pack for the base application.
-* Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
-* All Rights Reserved.
-* Contributor(s): ______________________________________..
-********************************************************************************/
-
-$mod_strings = array (
+$mod_strings = array(
     //DON'T CONVERT THESE THEY ARE MAPPINGS
     'db_last_name' => 'LBL_LIST_LAST_NAME',
     'db_first_name' => 'LBL_LIST_FIRST_NAME',
@@ -57,8 +56,8 @@ $mod_strings = array (
     'ERR_DELETE_RECORD' => 'Specify the record number to delete the contact.',
     'LBL_ACCOUNT_ID' => 'Account ID:',
     'LBL_ACCOUNT_NAME' => 'Account Name:',
-    'LBL_CAMPAIGN'     => 'Campaign:',
-    'LBL_ACTIVITIES_SUBPANEL_TITLE'=>'Activities',
+    'LBL_CAMPAIGN' => 'Campaign:',
+    'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_ADD_BUSINESSCARD' => 'Enter Business Card',
     'LBL_ADDMORE_BUSINESSCARD' => 'Add another business card',
     'LBL_ADDRESS_INFORMATION' => 'Address Information',
@@ -92,30 +91,30 @@ $mod_strings = array (
     'LBL_CREATED_CALL' => 'Created a new call',
     'LBL_CREATED_CONTACT' => 'Created a new contact',
     'LBL_CREATED_MEETING' => 'Created a new meeting',
-    'LBL_CREATED_OPPORTUNITY' =>'Created a new opportunity',
+    'LBL_CREATED_OPPORTUNITY' => 'Created a new opportunity',
     'LBL_DATE_MODIFIED' => 'Date Modified:',
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Contacts',
     'LBL_DEPARTMENT' => 'Department:',
     'LBL_DESCRIPTION_INFORMATION' => 'Description Information',
     'LBL_DESCRIPTION' => 'Description:',
-    'LBL_DIRECT_REPORTS_SUBPANEL_TITLE'=>'Direct Reports',
+    'LBL_DIRECT_REPORTS_SUBPANEL_TITLE' => 'Direct Reports',
     'LBL_DO_NOT_CALL' => 'Do Not Call:',
     'LBL_DUPLICATE' => 'Possible Duplicate Contacts',
     'LBL_EMAIL_ADDRESS' => 'Email Address:',
     'LBL_EMAIL_OPT_OUT' => 'Email Opt Out:',
     'LBL_EXISTING_ACCOUNT' => 'Used an existing account',
     'LBL_EXISTING_CONTACT' => 'Used an existing contact',
-    'LBL_EXISTING_OPPORTUNITY'=> 'Used an existing opportunity',
+    'LBL_EXISTING_OPPORTUNITY' => 'Used an existing opportunity',
     'LBL_FAX_PHONE' => 'Fax:',
     'LBL_FIRST_NAME' => 'First Name:',
     'LBL_FULL_NAME' => 'Full Name:',
-    'LBL_HISTORY_SUBPANEL_TITLE'=>'History',
+    'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_HOME_PHONE' => 'Home:',
     'LBL_ID' => 'ID:',
     'LBL_IMPORT_VCARD' => 'Import vCard',
     'LBL_VCARD' => 'vCard',
     'LBL_IMPORT_VCARDTEXT' => 'Automatically create a new contact by importing a vCard from your file system.',
-    'LBL_INVALID_EMAIL'=>'Invalid Email:',
+    'LBL_INVALID_EMAIL' => 'Invalid Email:',
     'LBL_INVITEE' => 'Direct Reports',
     'LBL_LAST_NAME' => 'Last Name:',
     'LBL_LEAD_SOURCE' => 'Lead Source:',
@@ -139,16 +138,16 @@ $mod_strings = array (
     'LBL_NAME' => 'Name:',
     'LBL_NEW_FORM_TITLE' => 'New Contact',
     'LBL_NEW_PORTAL_PASSWORD' => 'New Portal Password:',
-    'LBL_NOTE_SUBJECT' =>'Note Subject',
+    'LBL_NOTE_SUBJECT' => 'Note Subject',
     'LBL_OFFICE_PHONE' => 'Office Phone:',
     'LBL_OPP_NAME' => 'Opportunity Name:',
-    'LBL_OPPORTUNITY_ROLE_ID'=>'Opportunity Role ID:',
-    'LBL_OPPORTUNITY_ROLE'=>'Opportunity Role',
+    'LBL_OPPORTUNITY_ROLE_ID' => 'Opportunity Role ID:',
+    'LBL_OPPORTUNITY_ROLE' => 'Opportunity Role',
     'LBL_OTHER_EMAIL_ADDRESS' => 'Other Email:',
     'LBL_OTHER_PHONE' => 'Other Phone:',
     'LBL_PHONE' => 'Phone:',
     'LBL_PORTAL_ACTIVE' => 'Portal Active:',
-    'LBL_PORTAL_APP'=>'Portal Application:',
+    'LBL_PORTAL_APP' => 'Portal Application:',
     'LBL_PORTAL_INFORMATION' => 'Portal Information',
     'LBL_PORTAL_NAME' => 'Portal Name:',
     'LBL_PORTAL_PASSWORD_ISSET' => 'Portal Password is Set:',
@@ -162,9 +161,9 @@ $mod_strings = array (
     'LBL_PRIMARY_ADDRESS_STREET_3' => 'Primary Address Street 3:',
     'LBL_PRIMARY_ADDRESS_STREET' => 'Primary Address Street:',
     'LBL_PRIMARY_ADDRESS' => 'Primary Address:',
-    'LBL_PRODUCTS_TITLE'=>'Products',
-    'LBL_RELATED_CONTACTS_TITLE'=>'Related Contacts',
-    'LBL_REPORTS_TO_ID'=>'Reports to ID:',
+    'LBL_PRODUCTS_TITLE' => 'Products',
+    'LBL_RELATED_CONTACTS_TITLE' => 'Related Contacts',
+    'LBL_REPORTS_TO_ID' => 'Reports to ID:',
     'LBL_REPORTS_TO' => 'Reports To:',
     'LBL_RESOURCE_NAME' => 'Resource Name',
     'LBL_SALUTATION' => 'Salutation:',
@@ -189,8 +188,8 @@ $mod_strings = array (
     'LNK_NEW_OPPORTUNITY' => 'Create Opportunity',
     'LNK_NEW_TASK' => 'Create Task',
     'LNK_SELECT_ACCOUNT' => "Select Account",
-	'MSG_DUPLICATE' => 'The contact record you are about to create might be a duplicate of a contact record that already exists. Contact records containing similar names are listed below.<br>Click Create Contact to continue creating this new contact, or select an existing contact listed below.',
-	'MSG_SHOW_DUPLICATES' => 'The contact record you are about to create might be a duplicate of a contact record that already exists. Contact records containing similar names are listed below.<br>Click Save to continue creating this new contact, or click Cancel to return to the module without creating the contact.',
+    'MSG_DUPLICATE' => 'The contact record you are about to create might be a duplicate of a contact record that already exists. Contact records containing similar names are listed below.<br>Click Create Contact to continue creating this new contact, or select an existing contact listed below.',
+    'MSG_SHOW_DUPLICATES' => 'The contact record you are about to create might be a duplicate of a contact record that already exists. Contact records containing similar names are listed below.<br>Click Save to continue creating this new contact, or click Cancel to return to the module without creating the contact.',
     'NTC_COPY_ALTERNATE_ADDRESS' => 'Copy alternate address to primary address',
     'NTC_COPY_PRIMARY_ADDRESS' => 'Copy primary address to alternate address',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
@@ -198,27 +197,27 @@ $mod_strings = array (
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this contact from the case?',
     'NTC_REMOVE_DIRECT_REPORT_CONFIRMATION' => 'Are you sure you want to remove this record as a direct report?',
 
-	'LBL_USER_PASSWORD' => 'Password:',
+    'LBL_USER_PASSWORD' => 'Password:',
 
-	'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
-	'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
-	'LBL_DOCUMENTS_SUBPANEL_TITLE' => 'Documents',
-	'LBL_COPY_ADDRESS_CHECKED_PRIMARY' => 'Copy to Primary Address',
-	'LBL_COPY_ADDRESS_CHECKED_ALT' => 'Copy to Other Address',
+    'LBL_LEADS_SUBPANEL_TITLE' => 'Leads',
+    'LBL_OPPORTUNITIES_SUBPANEL_TITLE' => 'Opportunities',
+    'LBL_DOCUMENTS_SUBPANEL_TITLE' => 'Documents',
+    'LBL_COPY_ADDRESS_CHECKED_PRIMARY' => 'Copy to Primary Address',
+    'LBL_COPY_ADDRESS_CHECKED_ALT' => 'Copy to Other Address',
 
-	'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
-	'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
-	'LBL_PROJECTS_SUBPANEL_TITLE' => 'Projects',
+    'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
+    'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
+    'LBL_PROJECTS_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECTS_RESOURCES' => 'Projects Resources',
-	'LBL_TARGET_OF_CAMPAIGNS' => 'Campaigns (Target of) :',
-	'LBL_CAMPAIGNS'	=>	'Campaigns',
-	'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE'=>'Campaigns',
-	'LBL_LIST_CITY' => 'City',
-	'LBL_LIST_STATE' => 'State',
-	'LBL_HOMEPAGE_TITLE' => 'My Contacts',
+    'LBL_TARGET_OF_CAMPAIGNS' => 'Campaigns (Target of) :',
+    'LBL_CAMPAIGNS' => 'Campaigns',
+    'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE' => 'Campaigns',
+    'LBL_LIST_CITY' => 'City',
+    'LBL_LIST_STATE' => 'State',
+    'LBL_HOMEPAGE_TITLE' => 'My Contacts',
     'LBL_OPPORTUNITIES' => 'Opportunities',
 
-	'LBL_CHECKOUT_DATE'=>'Checkout Date',
+    'LBL_CHECKOUT_DATE' => 'Checkout Date',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_CAMPAIGNS_SUBPANEL_TITLE' => 'Campaigns',
@@ -239,6 +238,24 @@ $mod_strings = array (
     'LBL_EXPORT_PHONE_MOBILE' => 'Mobile Phone',
     // SNIP
     'LBL_CONTACT_HISTORY_SUBPANEL_TITLE' => 'Related Contacts\' Emails',
-    'LBL_USER_SYNC' => 'User Sync'
-)
+    'LBL_USER_SYNC' => 'User Sync',
+
+    'LBL_FP_EVENTS_CONTACTS_FROM_FP_EVENTS_TITLE' => 'Events',
+    'LBL_FP_EVENT_DELEGATES_CONTACTS_1_FROM_FP_EVENT_DELEGATES_TITLE' => 'Delegates',
+
+    'LBL_AOP_CASE_UPDATES' => 'Case Updates',
+    'LBL_CREATE_PORTAL_USER' => 'Create Portal User',
+    'LBL_ENABLE_PORTAL_USER' => 'Enable Portal User',
+    'LBL_DISABLE_PORTAL_USER' => 'Disable Portal User',
+    'LBL_CREATE_PORTAL_USER_FAILED' => 'Failed to create portal user',
+    'LBL_ENABLE_PORTAL_USER_FAILED' => 'Failed to enable portal user',
+    'LBL_DISABLE_PORTAL_USER_FAILED' => 'Failed to disable portal user',
+    'LBL_CREATE_PORTAL_USER_SUCCESS' => 'Created portal user',
+    'LBL_ENABLE_PORTAL_USER_SUCCESS' => 'Enabled portal user',
+    'LBL_DISABLE_PORTAL_USER_SUCCESS' => 'Disabled portal user',
+    'LBL_NO_JOOMLA_URL' => 'No portal URL specified',
+    'LBL_PORTAL_USER_TYPE' => 'Portal User Type',
+    'LBL_PORTAL_ACCOUNT_DISABLED' => 'Account Disabled',
+);
+
 ?>

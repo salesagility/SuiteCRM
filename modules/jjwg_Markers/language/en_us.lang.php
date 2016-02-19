@@ -41,3 +41,4 @@ $mod_strings['LBL_MARKER_MARKER_POSITION'] = 'Marker Position (Latitude, Longitu
 $mod_strings['LBL_MARKER_CLOSEST_MATCHING_ADDRESS'] = 'Closest Matching Address:';
 $mod_strings['LBL_MARKER_MARKER_STATUS'] = 'Marker Status';
 $mod_strings['LBL_MARKER_EDIT_DESCRIPTION'] = 'Click and drag the marker.';
+$mod_strings['LBL_JJWG_MAPS_JJWG_MARKERS_FROM_JJWG_MAPS_TITLE'] = 'Maps';

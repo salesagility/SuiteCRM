@@ -91,7 +91,7 @@ global $sugar_config, $mod_strings;
         <br>
         <h3><?php echo $mod_strings['LBL_PARTNERS']; ?></h3>
         <ul id="about_menu">
-            <li><?php echo $mod_strings['LBL_SUITE_PARTNERS']; ?> (<a href="http://suitecrm.com/index.php/suitecrm-partners">http://suitecrm.com</a>)</li>
+            <li><?php echo $mod_strings['LBL_SUITE_PARTNERS']; ?> (<a href="https://suitecrm.com/community/partners">http://suitecrm.com</a>)</li>
         </ul>
     </div>
 </tr>

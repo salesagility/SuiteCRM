@@ -75,20 +75,14 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
   </style>
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" />
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/css/TableTools.min.css" />
-  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing,adsense,geometry"></script>
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing,geometry"></script>
   <script type="text/javascript" src="modules/jjwg_Areas/javascript/jquery-1.8.0.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/jquery.iframe-auto-height.plugin.1.9.3.min.js"></script>
   <script type="text/javascript" src="modules/jjwg_Maps/javascript/markerclusterer_packed.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"></script>
-  <script type="text/javascript" src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
-  <script type="text/javascript" src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
   <script type="text/javascript">
 // Define SugarCRM App data for Javascript
-var pub_id = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_pub_id'])) ? $GLOBALS['jjwg_config']['map_adsense_pub_id'] : ''; ?>';
-var channel_number = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_channel_number'])) ? $GLOBALS['jjwg_config']['map_adsense_channel_number'] : ''; ?>';
-var config_au_remove_key = '<?php echo (!empty($GLOBALS['jjwg_config']['map_adsense_removal_key'])) ? $GLOBALS['jjwg_config']['map_adsense_removal_key'] : ''; ?>';
-var aU = false;
 var app_strings = <?php echo (!empty($GLOBALS['app_strings'])) ? json_encode($GLOBALS['app_strings']) : '[]'; ?>;
 var app_list_strings = <?php echo (!empty($GLOBALS['app_list_strings'])) ? json_encode($GLOBALS['app_list_strings']) : '[]'; ?>;
 var mod_strings = <?php echo (!empty($GLOBALS['mod_strings'])) ? json_encode($GLOBALS['mod_strings']) : '[]'; ?>;
@@ -166,7 +160,6 @@ var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? json_enc
 
 // Define map vars
 var map = null;
-var aU = null;
 var bounds = null;
 var loc = [];
 var myLatLng = [];
@@ -620,32 +613,6 @@ function setCustomAreas() {
 
 }
 
-function setAU() {
-
-    var pub_remove_hash = CryptoJS.SHA3(pub_id+config_au_remove_key, { outputLength: 512 });
-    var pub_remove_hash_text = pub_remove_hash.toString(CryptoJS.enc.Base64);
-    aU = (pub_remove_hash_text === '4YXTVFMJr4k2nUDFNt3+hBe/gBxMJiqCURpUhkJ3wANDrv5HqCK2z+leby4ScRnBuYtgaCUFQv6dPZRrIAi6GA==') ? true : false;
-    if (aU !== true) {
-        var aUDiv = document.createElement('div');
-        var aUOptions = {
-            format: google.maps.adsense.AdFormat.BANNER,
-            position: google.maps.ControlPosition.BOTTOM_CENTER,
-            backgroundColor: '#ffffff',
-            borderColor: '#333333',
-            titleColor: '#1155cc',
-            textColor: '#000000',
-            urlColor: '#009900',
-            publisherId: pub_id,
-            channelNumber: channel_number,
-            map: map,
-            visible: true
-        };
-        var adUnit = new google.maps.adsense.AdUnit(aUDiv, aUOptions);
-        aU = true;
-    }
-}
-
-
 function initialize() {
 
     map = new google.maps.Map(document.getElementById("map_canvas"), {
@@ -655,7 +622,6 @@ function initialize() {
         ),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-    setAU();
     
     bounds = new google.maps.LatLngBounds();
     
@@ -669,14 +635,10 @@ function initialize() {
     }
     shape = {coord: [1, 1, 1, 34, 20, 34, 20, 1],type: 'poly'};
     
-    var pub_hash = CryptoJS.SHA3(pub_id, { outputLength: 512 });
-    var pub_hash_text = pub_hash.toString(CryptoJS.enc.Base64);
-    if (aU && pub_id && pub_hash_text === '7/TgZvzQ1yOwfxmi5JhWTCklALU6FOhEZU8KN9NP6RiOr8GKtbCETGp9ENtJ4YQqQc1wG1jK91lCol7UEiAh4g==') {
-        setCenterMarker();
-        setMarkers();
-        setCustomMarkers();
-        setCustomAreas();
-    }
+    setCenterMarker();
+    setMarkers();
+    setCustomMarkers();
+    setCustomAreas();
     
     // Position Legend
     legend = document.getElementById('legend');

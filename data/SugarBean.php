@@ -2398,7 +2398,7 @@ class SugarBean
         $nullvalue='';
         foreach($this->field_defs as $field=>$field_value)
         {
-            if($field == 'user_preferences' && $this->module_dir == 'Users')
+            if(($field == 'user_preferences' && $this->module_dir == 'Users') || ($field == 'internal' && $this->module_dir == 'Cases') )
                 continue;
             if(isset($row[$field]))
             {

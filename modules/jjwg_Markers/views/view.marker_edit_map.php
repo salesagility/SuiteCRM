@@ -19,7 +19,7 @@ class Jjwg_MarkersViewMarker_Edit_Map extends SugarView {
     $user_num_grp_sep = $GLOBALS['current_user']->getPreference('num_grp_sep');
     $num_grp_sep = (empty($user_num_grp_sep) ? $GLOBALS['sugar_config']['default_number_grouping_seperator'] : $user_num_grp_sep);
 
-    $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
+    $custom_markers_dir = 'themes/default/images/jjwg_Markers/';
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
