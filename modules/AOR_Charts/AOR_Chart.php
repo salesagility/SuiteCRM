@@ -689,7 +689,7 @@ EOF;
         $_labels = array();
         $_tooltips = array();
         foreach($data as $label => $values) {
-            $_labels[] = $this->getShortenedLabel($label) . $this->getChartDataNameLabel($label);
+            $_labels[] = $this->getShortenedLabel($label);
             $_values = array();
             foreach($values as $tooltip => $value) {
                 $_tooltips[] = $tooltip . " ($value)";
@@ -715,8 +715,8 @@ EOF;
         $chart['data']=array();
         $chart['tooltips']=array();
         foreach($reportData as $row){
-            $chart['labels'][] = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
-            $chart['tooltips'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $chart['labels'][] = $this->getShortenedLabel($row[$xName]);
+            $chart['tooltips'][] = $row[$xName];
             $chart['data'][] = (float)$row[$yName];
 
         }
@@ -729,7 +729,7 @@ EOF;
         $data['labels'] = array();
         $datasetData = array();
         foreach($reportData as $row){
-            $data['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $data['labels'][] = $row[$xName];
             $datasetData[] = $row[$yName];
         }
 
@@ -743,18 +743,6 @@ EOF;
             'pointHighlightStroke' => "rgba(151,187,205,1)4",
             'data'=>$datasetData);
         return $data;
-    }
-
-    private function getChartDataNameLabel($name) {
-        if(isset($GLOBALS['app_list_strings'])) {
-            $keys = array_keys($GLOBALS['app_list_strings']);
-            foreach ($keys as $key) {
-                if (isset($GLOBALS['app_list_strings'][$key][$name])) {
-                    return " [{$GLOBALS['app_list_strings'][$key][$name]}]";
-                }
-            }
-        }
-        return '';
     }
 
     private function getLineChartData($reportData, $xName,$yName){
@@ -813,7 +801,7 @@ EOF;
             $colour = $this->getColour($row[$xName]);
             $data[] = array(
                 'value' => (int)$row[$yName],
-                'label' => $row[$xName] . $this->getChartDataNameLabel($row[$xName]),
+                'label' => $row[$xName],
                 'color' => $colour['main'],
                 'highlight' => $colour['highlight'],
             );
