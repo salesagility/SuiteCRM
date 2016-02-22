@@ -56,11 +56,18 @@ class ACLActionTest extends PHPUnit_Framework_TestCase{
 
 
     public function testgetDefaultActions(){
-    	
-    	$actual = ACLAction::getDefaultActions();
-    	$this->assertTrue(is_array($actual)); //verify that it returns an array
-    	$this->assertEquals(count($actual),392);  //verify that it returns array of expected size
-  
+        global $beanList;
+        $actual = ACLAction::getDefaultActions();
+        $this->assertTrue(is_array($actual)); //verify that it returns an array
+        foreach($actual as $acl){
+            $this->assertInstanceOf("ACLAction",$acl);
+        }
+        $actual = ACLAction::getDefaultActions("module","list");
+        $this->assertTrue(is_array($actual)); //verify that it returns an array
+        foreach($actual as $acl){
+            $this->assertInstanceOf("ACLAction",$acl);
+            $this->assertEquals("list",$acl->name);
+        }
     }
 
 
