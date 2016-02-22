@@ -31,3 +31,5 @@ global $sugar_config, $db;
 require_once 'include/utils.php';
 require_once 'include/modules.php';
 require_once 'include/entryPoint.php';
+//Oddly entry point loads app_strings but not app_list_strings, manually do this here.
+$GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
