@@ -132,12 +132,14 @@ class NoteTest extends PHPUnit_Framework_TestCase  {
 	public function testget_list_view_data()
 	{
 		$note = new Note();
-		
+		$id = "abcdef12345";
+        $note->id = $id;
 		$note->parent_type = "Account";
 		$note->filename = "test.txt";
 		$note->contact_name = "test contact";
 
 		$expected = array (
+                      'ID' => $id,
 					  'FILENAME' => 'test.txt',
 					  'PARENT_TYPE' => 'Account',
 					  'EMBED_FLAG' => '0',
@@ -174,5 +176,3 @@ class NoteTest extends PHPUnit_Framework_TestCase  {
 	}
 	
 }
-
-?>
