@@ -4898,6 +4898,7 @@ ul#quick-nav ul li:hover {
     z-index:55;
     padding:0;
     margin-bottom:2px;
+    margin-right:1px;
 }
 
 #alert-nav #alerts {
