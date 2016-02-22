@@ -105,12 +105,19 @@ class DocumentTest extends PHPUnit_Framework_TestCase {
 
 		$document = new Document();
 
-		
+		$document->id = "abcde-12345";
+
 		//execute the method with attributes preset and verify attributes are set accordingly
 		$document->fill_in_additional_detail_fields();
 
-		$this->assertEquals($document->file_url, "<a href='index.php?entryPoint=download&id=&type=Documents' target='_blank'><img src=\"themes/SuiteR/images/def_image_inline.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw\"    border=\"0\" alt=\"View\" /></a>");
-		$this->assertEquals($document->file_url_noimage,"index.php?entryPoint=download&type=Documents&id=");
+		$this->assertRegExp(
+            '~'
+            . preg_quote("<a href='index.php?entryPoint=download&id=&type=Documents' target='_blank'><img src=\"themes/SuiteR/images/def_image_inline.gif?v=")
+            . '[\w-]+'
+            .preg_quote("\"    border=\"0\" alt=\"View\" /></a>")
+            . '~',
+            $document->file_url);
+		$this->assertEquals("index.php?entryPoint=download&type=Documents&id=", $document->file_url_noimage);
 		
 	}
 
@@ -172,16 +179,25 @@ class DocumentTest extends PHPUnit_Framework_TestCase {
 				'REVISION' => '1',
 				'LAST_REV_CREATED_NAME' => 'test',
 				'IS_TEMPLATE' => '0',
-				'FILE_URL' => '<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/SuiteR/images/def_image_inline.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    border="0" alt="View" /></a>',
+				'FILE_URL' => '~'
+                                . preg_quote('<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/SuiteR/images/def_image_inline.gif?v=')
+                                . '[\w-]+'
+                                . preg_quote('"    border="0" alt="View" /></a>')
+                                . '~',
 				'FILE_URL_NOIMAGE' => 'index.php?entryPoint=download&type=Documents&id=',
 				'LAST_REV_CREATED_BY' => 'test',
 				'NAME' => 'test',
 				'DOCUMENT_NAME_JAVASCRIPT' => NULL,
 		);
-			
-		$actual = $document->get_list_view_data();
-		$this->assertSame($expected, $actual);
 
+		$actual = $document->get_list_view_data();
+        foreach($expected as $expectedKey => $expectedVal){
+            if($expectedKey == 'FILE_URL'){
+                $this->assertRegExp($expected[$expectedKey],$actual[$expectedKey]);
+            }else {
+                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
+            }
+        }
 	}
 
 	public function testmark_relationships_deleted()

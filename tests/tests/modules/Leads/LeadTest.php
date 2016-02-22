@@ -237,10 +237,12 @@ class LeadTest extends PHPUnit_Framework_TestCase {
 					  'fp_events_leads_1',
 					  'SecurityGroups',
 					);
-    	
     	$actual = $lead->get_linked_fields();
     	$this->assertTrue(is_array($actual));
-    	$this->assertSame($expected ,array_keys($actual));
+        sort($expected);
+        $actualKeys = array_keys($actual);
+        sort($actualKeys);
+    	$this->assertSame($expected ,$actualKeys);
     	
     }
 
