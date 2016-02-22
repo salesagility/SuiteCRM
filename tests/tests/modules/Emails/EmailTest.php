@@ -106,7 +106,7 @@ class EmailTest extends PHPUnit_Framework_TestCase {
 		
 		//test with a filename
 		$result = $email->email2GetMime('config.php');
-		$this->assertEquals("application/octet-stream", $result );
+		$this->assertEquals("text/x-php", $result);
 		
 	}
 
@@ -166,19 +166,20 @@ class EmailTest extends PHPUnit_Framework_TestCase {
 
 
     public function testsendEmailTest() {
-
+        $this->markTestIncomplete("Not testing sending email currently");
+        /*
     	$email = new Email();
     	
     	$result = $email->sendEmailTest('mail.someserver.com', 25, 425, false, '', '', 'admin@email.com', 'abc@email.com', 'smtp', 'admin');
     	
     	$expected = array( "status"=>false, "errorMessage"=> "Error:SMTP connect() failed. https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting");
     	$this->assertSame($expected, $result);
-    	
+    	*/
     }
     
     
     public function testemail2Send() {
-    
+        $this->markTestIncomplete("Not testing sending email currently");
     /*	$email = new Email();
     	
     	$_REQUEST['sendSubject'] = "test subject";
@@ -192,12 +193,11 @@ class EmailTest extends PHPUnit_Framework_TestCase {
     	
     	$this->assertEquals(false, $result);
     */
-        $this->markTestSkipped();
-    	
     }
     
     public function testsend() {
-    
+        $this->markTestIncomplete("Not testing sending email currently");
+        /*
     	$email = new Email();
     	
     	$email->to_addrs_arr = array('email' =>'abc@xyz.com', 'display' => 'abc');
@@ -210,7 +210,7 @@ class EmailTest extends PHPUnit_Framework_TestCase {
     	
     	$result = $email->send();
     	$this->assertEquals(false, $result);
-    	
+    	*/
     }
     
 	public function testsaveAndOthers() 
@@ -886,12 +886,12 @@ class EmailTest extends PHPUnit_Framework_TestCase {
 		$expected = array (
 				'ID' => 1,
 				'FROM_ADDR_NAME' => 'Admin',
-				'TYPE' => 'Archived',
+				'TYPE' => 'archived',
 				'INTENT' => 'support',
 				'FROM_ADDR' => NULL,
 				'QUICK_REPLY' => '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=1&inbound_email_id=1">Reply</a>',
 				'STATUS' => NULL,
-				'CREATE_RELATED' => '<a href="index.php?module=Cases&action=EditView&inbound_email_id=1" ><img src="themes/SuiteR/images/CreateCases.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw"    border="0" alt="Create Cases" />Create Case</a>',
+				'CREATE_RELATED' => "~".preg_quote('<a href="index.php?module=Cases&action=EditView&inbound_email_id=1" ><img src="themes/SuiteR/images/CreateCases.gif?v=').'[\w-]+'.preg_quote('"    border="0" alt="Create Cases" />Create Case</a>')."~",
 				'CONTACT_NAME' => '</a>abc@email.com<a>',
 				'CONTACT_ID' => '',
 				'ATTACHMENT_IMAGE' => NULL,
@@ -900,21 +900,26 @@ class EmailTest extends PHPUnit_Framework_TestCase {
 		);
 		
 		$actual = $email->get_list_view_data();
-		
-		$this->assertSame($expected,$actual);
-		
+		foreach($expected as $expectedKey => $expectedVal){
+            if($expectedKey == 'CREATE_RELATED'){
+                $this->assertRegExp($expected[$expectedKey],$actual[$expectedKey]);
+            }else {
+                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
+            }
+        }
 	}
 
     public function testquickCreateForm() {
 
     	$email = new Email();
 
-    	$expected= "Quick Create&nbsp;<a id='' onclick='return quick_create_overlib(\"\", \"SuiteR\", this);' href=\"#\" ><img src=\"themes/SuiteR/images/advanced_search.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw\"    border='0' align='absmiddle' alt=\"Quick Create\" /></a>";
+    	$expected = "~".preg_quote("Quick Create&nbsp;<a id='' onclick='return quick_create_overlib(\"\", \"SuiteR\", this);' href=\"#\" ><img src=\"themes/SuiteR/images/advanced_search.gif?v=")
+            . '[\w-]+'
+            .preg_quote("\"    border='0' align='absmiddle' alt=\"Quick Create\" /></a>")
+            ."~";
     	
     	$actual = $email->quickCreateForm();
-    	
-    	$this->assertSame($expected,$actual);
-    	
+    	$this->assertRegExp($expected,$actual);
     }
 
 
@@ -1000,7 +1005,7 @@ class EmailTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testdistributionForm() {
-
+        require_once('include/utils/layout_utils.php');
 		$email = new Email();
 		
 		//test with empty string
