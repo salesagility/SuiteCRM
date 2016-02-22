@@ -64,7 +64,7 @@ class SugarFeedTest extends PHPUnit_Framework_TestCase  {
     	
     	
     	//test with valid module
-    	$expected = array( "CaseFeed.php"=> "custom/modules/Cases/SugarFeeds/CaseFeed.php" 	);
+    	$expected = array( "CaseFeed.php"=> "modules/Cases/SugarFeeds/CaseFeed.php");
     	$result = SugarFeed::getModuleFeedFiles('Cases');
     	$this->assertEquals($expected, $result);
     	    	

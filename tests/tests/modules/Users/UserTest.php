@@ -88,7 +88,7 @@ class UserTest extends PHPUnit_Framework_TestCase {
 		
 		$user->retrieve(1);
 		
-		$expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>-none-</OPTION></select>";
+		$expected = "<select onChange='setSigEditButtonVisibility();' id='signature_id' name='signature_id'>\n<OPTION selected value=''>--None--</OPTION></select>";
 		$actual = $user->getSignatures();
 		$this->assertSame($expected, $actual);
 		

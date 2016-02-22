@@ -127,7 +127,11 @@ class aCaseTest extends PHPUnit_Framework_TestCase {
 				'STATUS' => '',
 				'ENCODED_NAME' => NULL,
 				'CASE_NUMBER' => NULL,
-				'SET_COMPLETE' => '<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/SuiteR/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"    title=Close border=\'0\' alt="Close" /></a>',
+				'SET_COMPLETE' => '~'
+                                .preg_quote('<a href=\'index.php?return_module=Home&return_action=index&action=EditView&module=Cases&record=&status=Closed\'><img src="themes/SuiteR/images/close_inline.png?v=')
+                                . '[\w-]+'
+                                . preg_quote('"    title=Close border=\'0\' alt="Close" /></a>')
+                                . '~',
 		);
 		
 		$actual = $aCase->get_list_view_data();
@@ -136,7 +140,7 @@ class aCaseTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected['UPDATE_TEXT'] ,$actual['UPDATE_TEXT']);
 		$this->assertEquals($expected['NAME'] ,$actual['NAME']);
 		$this->assertEquals($expected['PRIORITY'] ,$actual['PRIORITY']);
-		$this->assertEquals($expected['SET_COMPLETE'] ,$actual['SET_COMPLETE']);
+		$this->assertRegExp($expected['SET_COMPLETE'] ,$actual['SET_COMPLETE']);
 		
 		
 		
