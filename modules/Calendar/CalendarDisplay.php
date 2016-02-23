@@ -506,15 +506,15 @@ class CalendarDisplay {
 			echo "<div class='custom_module_title moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 			echo "<div style='float:right;' class='moduleTitle'>";
 
-            echo '<div class="btn-group">
-                    <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">Add Item <span class="caret"></span></button>
+			echo '<div class="btn-group">
+                    <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">'.$mod_strings["LBL_ADD_ITEM"].'<span class="caret"></span></button>
                        <ul class="dropdown-menu pull-left" style="right: 0; left: auto;">';
 
-                        foreach($buttons as $module){
-                            echo '<li><a href="index.php?return_module=Calendar&return_action=index&module=' . $module .'s&action=EditView">Add ' . $module .'</a></li>';
-                        }
+			foreach($buttons as $module){
+				echo '<li><a href="index.php?return_module=Calendar&return_action=index&module=' . $module .'s&action=EditView">'.$mod_strings["LBL_ADD_".strtoupper($module)].'</a></li>';
+			}
 
-            echo '</ul></div></div>';
+			echo '</ul></div></div>';
 
 		}else{
 			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";

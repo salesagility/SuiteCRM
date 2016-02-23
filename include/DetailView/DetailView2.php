@@ -75,7 +75,7 @@ class DetailView2 extends EditView
         $this->th->ss = $this->ss;
 
         //Check if inline editing is enabled for detail view.
-        if($sugar_config['enable_line_editing_detail']){
+        if(!isset($sugar_config['enable_line_editing_detail']) || $sugar_config['enable_line_editing_detail']){
             $this->ss->assign('inline_edit', true);
         }
         $this->focus = $focus;

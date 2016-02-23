@@ -32,7 +32,7 @@ $html .= "</table>";
 foreach($content['data'] as $story){
 
     if(!empty($results)){
-        $html . $results;
+        $html .= $results;
     }
 }
 
