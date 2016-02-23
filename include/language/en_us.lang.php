@@ -2056,6 +2056,7 @@ $app_strings = array (
 
 
     'LNK_ABOUT' => 'About',
+    'LNK_ANALYTICS' => 'Analytics',
     'LNK_ADVANCED_SEARCH' => 'Advanced Search',
     'LNK_BASIC_SEARCH' => 'Basic Search',
     'LNK_SEARCH_FTS_VIEW_ALL' => 'View all results',

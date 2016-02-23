@@ -88,6 +88,10 @@ $global_control_links['about'] = array('linkinfo' => array($app_strings['LNK_ABO
 'submenu' => ''
 );
 
+$global_control_links['analytics'] = array('linkinfo' => array($app_strings['LNK_ANALYTICS'] => 'index.php?module=Home&action=Analytics'),
+    'submenu' => ''
+);
+
 if (sugar_is_file('custom/include/globalControlLinks.php')) {
     include('custom/include/globalControlLinks.php');
 }
