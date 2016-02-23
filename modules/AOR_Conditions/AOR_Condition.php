@@ -28,6 +28,7 @@ class AOR_Condition extends Basic {
 	var $module_dir = 'AOR_Conditions';
 	var $object_name = 'AOR_Condition';
 	var $table_name = 'aor_conditions';
+    var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 	
@@ -46,6 +47,8 @@ class AOR_Condition extends Basic {
 	var $aor_report_id;
 	var $condition_order;
 	var $field;
+    var $logic_op;
+    var $parenthesis;
 	var $operator;
 	var $value;
 	
@@ -68,27 +71,52 @@ class AOR_Condition extends Basic {
                 foreach($this->field_defs as $field_def) {
                     if(isset($post_data[$key.$field_def['name']][$i])){
                         if(is_array($post_data[$key.$field_def['name']][$i])){
-                            if($field_def['name'] == 'module_path'){
-                                $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
-                            }else {
+
                                 switch($condition->value_type) {
                                     case 'Date':
                                         $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
                                     default:
                                         $post_data[$key.$field_def['name']][$i] = encodeMultienumValue($post_data[$key.$field_def['name']][$i]);
                                 }
-                            }
-                        } else if($field_def['name'] == 'value') {
+                        } else if($field_def['name'] == 'value' && $post_data[$key.'value_type'][$i] === 'Value') {
                             $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $condition->field, $post_data[$key.$field_def['name']][$i]);
+                        }else if($field_def['name'] == 'parameter'){
+                            $post_data[$key.$field_def['name']][$i] = isset($post_data[$key.$field_def['name']][$i]);
+                        }else if($field_def['name'] == 'module_path'){
+                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize(explode(":",$post_data[$key.$field_def['name']][$i])));
                         }
-                        $condition->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
+                        if($field_def['name'] == 'parenthesis' && $post_data[$key.$field_def['name']][$i] == 'END') {
+                            if(!isset($lastParenthesisStartConditionId)) {
+                                throw new Exception('a closure parenthesis has no starter pair');
+                            }
+                            $condition->parenthesis = $lastParenthesisStartConditionId;
+                        }
+                        else {
+                            $condition->$field_def['name'] = $post_data[$key . $field_def['name']][$i];
+                        }
+                    }else if($field_def['name'] == 'parameter'){
+                        $condition->$field_def['name'] = 0;
                     }
 
                 }
-                if(trim($condition->field) != ''){
-                    $condition->condition_order = ++$j;
+                // Period must be saved as a string instead of a base64 encoded datetime.
+                // Overwriting value
+                if((!isset($condition->parenthesis) || !$condition->parenthesis) && isset($condition->value_type) && $condition->value_type == 'Period') {
+                    $condition->value = base64_encode($_POST['aor_conditions_value'][$i]);
+//                    $condition->value = $_POST['aor_conditions_value'][$i];
+                }
+                if(trim($condition->field) != '' || $condition->parenthesis){
+                    if(isset($_POST['aor_conditions_order'][$i])) {
+                        $condition->condition_order = (int) $_POST['aor_conditions_order'][$i];
+                    }
+                    else {
+                        $condition->condition_order = ++$j;
+                    }
                     $condition->aor_report_id = $parent->id;
-                    $condition->save();
+                    $conditionId = $condition->save();
+                    if($condition->parenthesis=='START') {
+                        $lastParenthesisStartConditionId = $conditionId;
+                    }
                 }
             }
         }

@@ -16,9 +16,6 @@ require_once('modules/Administration/updater_utils.php');
 set_CheckUpdates_config_setting('manual');
 
 
-require_once('install/suite_install/AdvancedOpenWorkflow.php');
-install_aow();
-
 require_once('install/suite_install/AdvancedOpenSales.php');
 install_aos();
 
@@ -37,5 +34,7 @@ install_ss();
 require_once('install/suite_install/GoogleMaps.php');
 install_gmaps();
 
-require_once('install/suite_install/colourSelector.php');
-install_colourSelector();
+require_once('modules/Administration/QuickRepairAndRebuild.php');
+$actions = array('clearAll');
+$randc = new RepairAndClear();
+$randc->repairAndClearAll($actions, array(translate('LBL_ALL_MODULES')), true,false);

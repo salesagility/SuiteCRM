@@ -1,6 +1,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ 
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,9 +31,9 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 if(typeof(SUGAR)=="undefined"){SUGAR={namespace:function(ns){SUGAR[ns]=SUGAR[ns]||{};return((typeof SUGAR[ns]==="object")&&(SUGAR[ns]!==null))?SUGAR[ns]:false;},append:function(target,obj){for(var prop in obj){if(obj[prop]!==void 0)target[prop]=obj[prop];}
 return target;}};}
@@ -39,7 +42,7 @@ function checkMinSupported(c,s){var current=c.split(".");var supported=s.split("
 return true;}
 function checkMaxSupported(c,s){var current=c.split(".");var supported=s.split(".");for(var i in supported){if(current[i]&&parseInt(current[i])>parseInt(supported[i]))return false;else if(current[i]&&parseInt(current[i])<parseInt(supported[i]))return true;}
 return true;}
-SUGAR.isSupportedBrowser=function(){var supportedBrowsers={msie:{min:9,max:10},safari:{min:534},mozilla:{min:23.0},chrome:{min:29}};var current=String($.browser.version);var supported;if($.browser.msie){supported=supportedBrowsers['msie'];}
+SUGAR.isSupportedBrowser=function(){var supportedBrowsers={msie:{min:9,max:11},safari:{min:534},mozilla:{min:31.0},chrome:{min:37}};var current=String($.browser.version);var supported;if($.browser.msie||(!(window.ActiveXObject)&&"ActiveXObject"in window)){supported=supportedBrowsers['msie'];}
 else if($.browser.mozilla){supported=supportedBrowsers['mozilla'];}
 else{$.browser.chrome=/chrome/.test(navigator.userAgent.toLowerCase());if($.browser.chrome){current=navigator.userAgent.match(/Chrome\/(.*?) /)[1];supported=supportedBrowsers['chrome'];}
 else if($.browser.safari){supported=supportedBrowsers['safari'];}}
@@ -52,8 +55,8 @@ return mode;}
 SUGAR.isIE=isSupportedIE();var isSafari=(navigator.userAgent.toLowerCase().indexOf('safari')!=-1);RegExp.escape=function(text){if(!arguments.callee.sRE){var specials=['/','.','*','+','?','|','(',')','[',']','{','}','\\'];arguments.callee.sRE=new RegExp('(\\'+specials.join('|\\')+')','g');}
 return text.replace(arguments.callee.sRE,'\\$1');}
 function addAlert(type,name,subtitle,description,time,redirect){var addIndex=alertList.length;alertList[addIndex]=new Array();alertList[addIndex]['name']=name;alertList[addIndex]['type']=type;alertList[addIndex]['subtitle']=subtitle;alertList[addIndex]['description']=replaceHTMLChars(description.replace(/<br>/gi,"\n"));alertList[addIndex]['time']=time;alertList[addIndex]['done']=0;alertList[addIndex]['redirect']=redirect;}
-function checkAlerts(){secondsSinceLoad+=1;var mj=0;var alertmsg='';for(mj=0;mj<alertList.length;mj++){if(alertList[mj]['done']==0){if(alertList[mj]['time']<secondsSinceLoad&&alertList[mj]['time']>-1){alertmsg=alertList[mj]['type']+":"+alertList[mj]['name']+"\n"+alertList[mj]['subtitle']+"\n"+alertList[mj]['description']+"\n\n";alertList[mj]['done']=1;if(alertList[mj]['redirect']==''){alert(alertmsg);}
-else if(confirm(alertmsg)){window.location=alertList[mj]['redirect'];}}}}
+function checkAlerts(){secondsSinceLoad+=1;var mj=0;var alertmsg='';for(mj=0;mj<alertList.length;mj++){if(alertList[mj]['done']==0){if(alertList[mj]['time']<secondsSinceLoad&&alertList[mj]['time']>-1){alertList[mj]['done']=1;if(typeof Alerts!=="undefined"){Alerts.prototype.show({title:alertList[mj]['type']+": "+alertList[mj]['name'],options:{body:alertList[mj]['subtitle']+"\n"+alertList[mj]['description']+"\n\n",url_redirect:alertList[mj]['redirect'],target_module:alertList[mj]['type']}});}else{alertmsg=alertList[mj]['type']+":"+alertList[mj]['name']+"\n"+alertList[mj]['subtitle']+"\n"+alertList[mj]['description']+"\n\n";alertList[mj]['done']=1;alertmsg=alertList[mj]['type']+":"+alertList[mj]['name']+"\n"+alertList[mj]['subtitle']+"\n"+alertList[mj]['description']+"\n\n";alertList[mj]['done']=1;if(alertList[mj]['redirect']==''){alert(alertmsg);}
+else if(confirm(alertmsg)){window.location=alertList[mj]['redirect'];}}}}}
 alertsTimeoutId=setTimeout("checkAlerts()",1000);}
 function toggleDisplay(id){if(this.document.getElementById(id).style.display=='none'){this.document.getElementById(id).style.display='';if(this.document.getElementById(id+"link")!=undefined){this.document.getElementById(id+"link").style.display='none';}
 if(this.document.getElementById(id+"_anchor")!=undefined)
@@ -364,7 +367,7 @@ YAHOO.util.Connect.asyncRequest("POST","index.php?",{success:this.use_external_m
 sugarListView.prototype.use_external_mail_client_callback=function(o)
 {if(o.responseText)
 location.href='mailto:'+o.responseText;}
-sugarListView.prototype.send_form_for_emails=function(select,currentModule,action,no_record_txt,action_module,totalCount,totalCountError){if(typeof(SUGAR.config.email_sugarclient_listviewmaxselect)!='undefined'){maxCount=10;}
+sugarListView.prototype.send_form_for_emails===function(select,currentModule,action,no_record_txt,action_module,totalCount,totalCountError){if(typeof(SUGAR.config.email_sugarclient_listviewmaxselect)!='undefined'){maxCount=10;}
 else{maxCount=SUGAR.config.email_sugarclient_listviewmaxselect;}
 if(document.MassUpdate.select_entire_list.value==1){if(totalCount>maxCount){alert(totalCountError);return;}
 select=false;}
@@ -699,8 +702,11 @@ t+=c.nodeValue;else
 t+=SUGAR.util.innerText(c);}
 return t;},callOnChangeListers:function(field){var listeners=YAHOO.util.Event.getListeners(field,'change');if(listeners!=null){for(var i=0;i<listeners.length;i++){var l=listeners[i];l.fn.call(l.scope?l.scope:this,l.obj);}}},closeActivityPanel:{show:function(module,id,new_status,viewType,parentContainerId){if(SUGAR.util.closeActivityPanel.panel)
 SUGAR.util.closeActivityPanel.panel.destroy();var singleModule=SUGAR.language.get("app_list_strings","moduleListSingular")[module];singleModule=typeof(singleModule!='undefined')?singleModule.toLowerCase():'';var closeText=SUGAR.language.get("app_strings","LBL_CLOSE_ACTIVITY_CONFIRM").replace("#module#",singleModule);SUGAR.util.closeActivityPanel.panel=new YAHOO.widget.SimpleDialog("closeActivityDialog",{width:"300px",fixedcenter:true,visible:false,draggable:false,close:true,text:closeText,constraintoviewport:true,buttons:[{text:SUGAR.language.get("app_strings","LBL_EMAIL_OK"),handler:function(){if(SUGAR.util.closeActivityPanel.panel)
-SUGAR.util.closeActivityPanel.panel.hide();ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var args="action=save&id="+id+"&record="+id+"&status="+new_status+"&module="+module;var callback={success:function(o)
-{window.setTimeout(function(){if(document.getElementById('search_form'))document.getElementById('search_form').submit();else window.location.reload(true);},0);},argument:{'parentContainerId':parentContainerId}};YAHOO.util.Connect.asyncRequest('POST','index.php',callback,args);},isDefault:true},{text:SUGAR.language.get("app_strings","LBL_EMAIL_CANCEL"),handler:function(){SUGAR.util.closeActivityPanel.panel.hide();}}]});SUGAR.util.closeActivityPanel.panel.setHeader(SUGAR.language.get("app_strings","LBL_CLOSE_ACTIVITY_HEADER"));SUGAR.util.closeActivityPanel.panel.render(document.body);SUGAR.util.closeActivityPanel.panel.show();}},setEmailPasswordDisplay:function(id,exists,formName){link=document.getElementById(id+'_link');pwd=document.getElementById(id);if(!pwd||!link)return;if(exists){pwd.disabled=true;pwd.style.display='none';link.style.display='';if(typeof(formName)!='undefined')
+SUGAR.util.closeActivityPanel.panel.hide();ajaxStatus.showStatus(SUGAR.language.get('app_strings','LBL_SAVING'));var args="action=save&id="+id+"&record="+id+"&status="+new_status+"&module="+module;var callback={success:function(){var parent=$('div[id^="dashlet_entire_"]').has($("#"+id));if(parent.length===0)
+{window.location.reload(true)}
+else
+{SUGAR.mySugar.retrieveDashlet(parent.attr('id').replace("dashlet_entire_",""));}}}
+YAHOO.util.Connect.asyncRequest('POST','index.php',callback,args);},isDefault:true},{text:SUGAR.language.get("app_strings","LBL_EMAIL_CANCEL"),handler:function(){SUGAR.util.closeActivityPanel.panel.hide();}}]});SUGAR.util.closeActivityPanel.panel.setHeader(SUGAR.language.get("app_strings","LBL_CLOSE_ACTIVITY_HEADER"));SUGAR.util.closeActivityPanel.panel.render(document.body);SUGAR.util.closeActivityPanel.panel.show();}},setEmailPasswordDisplay:function(id,exists,formName){link=document.getElementById(id+'_link');pwd=document.getElementById(id);if(!pwd||!link)return;if(exists){pwd.disabled=true;pwd.style.display='none';link.style.display='';if(typeof(formName)!='undefined')
 removeFromValidate(formName,id);}else{pwd.disabled=false;pwd.style.display='';link.style.display='none';}},setEmailPasswordEdit:function(id){link=document.getElementById(id+'_link');pwd=document.getElementById(id);if(!pwd||!link)return;pwd.disabled=false;pwd.style.display='';link.style.display='none';},validateFileExt:function(fileName,allowedTypes){var ext=fileName.split('.').pop().toLowerCase();for(var i=allowedTypes.length;i>=0;i--){if(ext===allowedTypes[i]){return true;}}
 return false;},arrayIndexOf:function(arr,val,start){if(typeof arr.indexOf=="function")
 return arr.indexOf(val,start);for(var i=(start||0),j=arr.length;i<j;i++){if(arr[i]===val){return i;}}

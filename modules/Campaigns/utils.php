@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -50,15 +53,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strings=array()) {
 
-    //find prospect list attached to this campaign..
-    $query =  "SELECT prospect_list_id, prospect_lists.name ";
-    $query .= "FROM prospect_list_campaigns ";
-    $query .= "INNER join prospect_lists on prospect_lists.id = prospect_list_campaigns.prospect_list_id ";
-    $query .= "WHERE prospect_lists.deleted = 0 ";
-    $query .= "AND prospect_list_campaigns.deleted=0 ";
-    $query .= "AND campaign_id='".$campaign_id."'";
-    $query.=" and prospect_lists.list_type not like 'exempt%'";
-
     if (empty($db)) {
         $db = DBManagerFactory::getInstance();
     }
@@ -66,6 +60,15 @@ function get_message_scope_dom($campaign_id, $campaign_name,$db=null, $mod_strin
         global $current_language;
         $mod_strings = return_module_language($current_language, 'Campaigns');
     }
+
+    //find prospect list attached to this campaign..
+    $query =  "SELECT prospect_list_id, prospect_lists.name ";
+    $query .= "FROM prospect_list_campaigns ";
+    $query .= "INNER join prospect_lists on prospect_lists.id = prospect_list_campaigns.prospect_list_id ";
+    $query .= "WHERE prospect_lists.deleted = 0 ";
+    $query .= "AND prospect_list_campaigns.deleted=0 ";
+    $query .= "AND campaign_id='". $db->quote($campaign_id)."'";
+    $query.=" and prospect_lists.list_type not like 'exempt%'";
 
     //add campaign to the result array.
     //$return_array[$campaign_id]= $campaign_name . ' (' . $mod_strings['LBL_DEFAULT'] . ')';
@@ -314,6 +317,8 @@ function get_campaign_urls($campaign_id) {
     if (!empty($campaign_id)) {
 
         $db = DBManagerFactory::getInstance();
+
+        $campaign_id = $db->quote($campaign_id);
 
         $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
         $current=$db->query($query1);

@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -102,10 +105,9 @@ $mod_strings = array (
   'LBL_FAX' => 'Fax:',
   'LBL_EMAIL' => 'Email Address:',
   'LBL_EMAIL_LINK_TYPE'				=> 'Email Client',
-  'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>Sugar Mail Client:</b> Send emails using the email client in the Sugar application.<br><b>External Mail Client:</b> Send email using an email client outside of the Sugar application, such as Microsoft Outlook.',
+  'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
   'LBL_HOME_PHONE' => 'Home Phone:',
   'LBL_WORK_PHONE' => 'Work Phone:',
-  'LBL_ADDRESS_INFORMATION' => 'Address Information',
   'LBL_EMPLOYEE_STATUS' => 'Employee Status:',
   'LBL_PRIMARY_ADDRESS' => 'Primary Address:',
   'LBL_SAVED_SEARCH' => 'Layout Options',
@@ -124,7 +126,7 @@ $mod_strings = array (
   'ERR_DELETE_RECORD' => 'You must specify a record number to delete the account.',
   'LBL_LIST_EMPLOYEE_STATUS' => 'Employee Status',
 
-  'LBL_SUGAR_LOGIN' => 'Is Sugar User',  
+  'LBL_SUGAR_LOGIN' => 'Is User',
   'LBL_RECEIVE_NOTIFICATIONS' => 'Notify on Assignment',  
   'LBL_IS_ADMIN' => 'Is Administrator',  
   'LBL_GROUP' => 'Group User',
@@ -149,7 +151,6 @@ $mod_strings = array (
   'LBL_SYSTEM_GENERATED_PASSWORD' =>'System Generated Password',
   'LBL_DESCRIPTION'	=> 'Description',
   'LBL_FAX_PHONE'						=> 'Fax',
-  'LBL_FAX'							=> 'Fax',
   'LBL_STATUS'						=> 'Status',
   'LBL_ADDRESS_CITY'					=> 'Address City',
   'LBL_ADDRESS_COUNTRY'				=> 'Address Country',
@@ -157,7 +158,6 @@ $mod_strings = array (
   'LBL_ADDRESS_POSTALCODE'			=> 'Address Postal Code',
   'LBL_ADDRESS_STATE'					=> 'Address State',
   'LBL_ADDRESS_STREET'				=> 'Address Street',
-  'LBL_ADDRESS'						=> 'Address',
   
   'LBL_DATE_MODIFIED' => 'Date Modified',
   'LBL_DATE_ENTERED' => 'Date Entered',

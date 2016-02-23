@@ -2,36 +2,39 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -135,7 +138,7 @@ function make_sugar_config(&$sugar_config)
 	'default_password' => empty($default_password) ? '' : $default_password,
 	'default_permissions' => array (
 		'dir_mode' => 02770,
-		'file_mode' => 0660,
+		'file_mode' => 0755,
 		'chown' => '',
 		'chgrp' => '',
 	),
@@ -276,7 +279,7 @@ function get_sugar_config_defaults() {
 	'default_password' => '',
 	'default_permissions' => array (
 		'dir_mode' => 02770,
-		'file_mode' => 0660,
+		'file_mode' => 0755,
 		'user' => '',
 		'group' => '',
 	),
@@ -327,7 +330,7 @@ function get_sugar_config_defaults() {
 	return_session_value_or_default('translation_string_prefix', false),
 	'upload_badext' => array (
 	'php', 'php3', 'php4', 'php5', 'pl', 'cgi', 'py',
-	'asp', 'cfm', 'js', 'vbs', 'html', 'htm' ),
+	'asp', 'cfm', 'js', 'vbs', 'html', 'htm', 'phtml' ),
 	'upload_maxsize' => 30000000,
 	'import_max_execution_time' => 3600,
 //	'use_php_code_json' => returnPhpJsonStatus(),
@@ -855,7 +858,7 @@ function return_app_list_strings_language($language)
 		return $cache_entry;
 	}
 
-	$default_language = $sugar_config['default_language'];
+	$default_language = isset($sugar_config['default_language']) ? $sugar_config['default_language'] : 'en_us';
 	$temp_app_list_strings = $app_list_strings;
 
 	$langs = array();
@@ -2870,12 +2873,12 @@ function check_php_version($sys_php_version = '') {
 	// versions below $min_considered_php_version considered invalid by default,
 	// versions equal to or above this ver will be considered depending
 	// on the rules that follow
-	$min_considered_php_version = '5.2.2';
+	$min_considered_php_version = '5.3.0';
 
 	// only the supported versions,
 	// should be mutually exclusive with $invalid_php_versions
 	$supported_php_versions = array (
-    	'5.2.2', '5.2.3', '5.2.4', '5.2.5', '5.2.6', '5.2.8', '5.3.0'
+    	'5.3.0'
 	);
 
 	// invalid versions above the $min_considered_php_version,
@@ -5078,3 +5081,51 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
     }
 }
 
+define("DEFAULT_UTIL_SUITE_ENCODING","UTF-8");
+
+function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strlen'))
+		return mb_strlen($input,$encoding);
+	else
+		return strlen($input);
+}
+
+function suite_substr($input, $start, $length = null,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_substr'))
+		return mb_substr($input,$start,$length,$encoding);
+	else
+		return substr($input,$start,$length);
+}
+
+function suite_strtoupper($input,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strtoupper'))
+		return mb_strtoupper($input,$encoding);
+	else
+		return strtoupper($input);
+}
+function suite_strtolower($input,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strtolower'))
+		return mb_strtolower($input,$encoding);
+	else
+		return strtolower($input);
+}
+
+function suite_strpos($haystack,$needle,$offset=0,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strpos'))
+		return mb_strpos($haystack,$needle,$offset,$encoding);
+	else
+		return strpos($haystack,$needle,$offset);
+}
+
+function suite_strrpos($haystack,$needle,$offset=0,$encoding = DEFAULT_UTIL_SUITE_ENCODING)
+{
+	if(function_exists('mb_strrpos'))
+		return mb_strrpos($haystack,$needle,$offset,$encoding);
+	else
+		return strrpos($haystack,$needle,$offset);
+}

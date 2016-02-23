@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -193,6 +196,27 @@ class SugarTheme
      */
     public $group_tabs;
 
+    /**
+     * Support for classic themes
+     *
+     * @var bool
+     */
+    public $classic;
+
+    /**
+     * Is this theme configurable
+     *
+     * @var bool
+     */
+    public $configurable;
+
+    /**
+     * theme config options
+     *
+     * @var bool
+     */
+    public $config_options = array();
+
 
     /**
      * Cache built of all css files locations
@@ -248,6 +272,7 @@ class SugarTheme
     private $_clearCacheOnDestroy = false;
 
     private $imageExtensions = array(
+            'svg',
             'gif',
             'png',
             'jpg',
@@ -449,6 +474,9 @@ class SugarTheme
             'barChartColors',
             'pieChartColors',
             'group_tabs',
+            'classic',
+            'configurable',
+            'config_options',
             'ignoreParentFiles',
             );
     }
@@ -566,10 +594,14 @@ class SugarTheme
         )
     {
         // include style.css file
-        $html = '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
+        $html = '
+            <!-- qtip & suggestion box -->
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('deprecated.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
+
 
 		// sprites
 		if(!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
@@ -721,11 +753,20 @@ EOHTML;
 			$imageURL = $this->getImageURL($imageName,false);
 			if ( empty($imageURL) )
 				return false;
-	        $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
+            if(strpos($imageURL, '.svg', strlen($imageURL)-4)){
+                $cached_results[$imageName] = file_get_contents($imageURL);
+            } else {
+                $cached_results[$imageName] = '<img src="'.getJSPath($imageURL).'" ';
+            }
+
 		}
 
 		$attr_width = (is_null($width)) ? "" : "width=\"$width\"";
 		$attr_height = (is_null($height)) ? "" : "height=\"$height\"";
+
+        if(strpos($cached_results[$imageName], 'svg') !== false){
+            return $cached_results[$imageName];
+        }
 		return $cached_results[$imageName] . " $attr_width $attr_height $other_attributes alt=\"$alt\" />";
     }
 
@@ -1078,6 +1119,33 @@ EOHTML;
         return $imageArray;
     }
 
+    /**
+     * Returns an array of all of the config values for the current theme
+     *
+     * @return array
+     */
+    public function getConfig()
+    {
+        global $sugar_config;
+
+        $config = array();
+
+        foreach($this->config_options as $name => $def){
+            $config[$name] = $def;
+
+            $value = '';
+            if(isset($sugar_config['theme_settings'][$this->dirName][$name])){
+                $value = $sugar_config['theme_settings'][$this->dirName][$name];
+            } else if(isset($def['default'])){
+                $value = $def['default'];
+            }
+            $config[$name] = $value;
+
+        }
+
+        return $config;
+    }
+
 }
 
 /**
@@ -1201,8 +1269,8 @@ class SugarThemeRegistry
         if ( isset($GLOBALS['sugar_config']['default_theme']) && self::exists($GLOBALS['sugar_config']['default_theme']) ) {
             return self::get($GLOBALS['sugar_config']['default_theme']);
         }
-
-        return self::get(array_pop(array_keys(self::availableThemes())));
+        $array_keys = array_keys(self::availableThemes());
+        return self::get(array_pop($array_keys));
     }
 
     /**
@@ -1318,8 +1386,8 @@ class SugarThemeRegistry
                 return $key;
             }
         }
-
-        return array_pop(array_keys($availableThemes));
+        $array_keys = array_keys($availableThemes);
+        return array_pop($array_keys);
     }
 
 
@@ -1377,6 +1445,59 @@ class SugarThemeRegistry
             $themelist[$themeobject->dirName] = $themeobject->name;
 
         return $themelist;
+    }
+
+    /**
+     * Returns an array of all themes def found in the current installation
+     *
+     * @return array
+     */
+    public static function allThemesDefs()
+    {
+        $themelist = array();
+        $disabledThemes = array();
+        if (isset($GLOBALS['sugar_config']['disabled_themes']))
+            $disabledThemes = explode(',', $GLOBALS['sugar_config']['disabled_themes']);
+
+        foreach (self::$_themes as $themename => $themeobject) {
+            $themearray['name'] = $themeobject->name;
+            $themearray['configurable'] = $themeobject->configurable;
+            $themearray['enabled'] = !in_array($themename, $disabledThemes);
+            $themelist[$themeobject->dirName] = $themearray;
+        }
+
+        return $themelist;
+    }
+
+    /**
+     * get the configurable options for $themeName
+     *
+     * @param  $themeName string
+     */
+    public static function getThemeConfig($themeName)
+    {
+        global $sugar_config;
+
+        if ( !self::exists($themeName) )
+            return false;
+
+        $config = array();
+
+        foreach(self::$_themes[$themeName]->config_options as $name => $def){
+            $config[$name] = $def;
+
+            $value = '';
+            if(isset($sugar_config['theme_settings'][$themeName][$name])){
+                $value = $sugar_config['theme_settings'][$themeName][$name];
+            } else if(isset($def['default'])){
+                $value = $def['default'];
+            }
+            $config[$name]['value'] = $value;
+
+        }
+
+        return $config;
+
     }
 
     /**

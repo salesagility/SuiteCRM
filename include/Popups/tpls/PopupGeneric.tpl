@@ -2,36 +2,39 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -54,11 +57,11 @@
 					<tr>
 						<td align='left' >
 							&nbsp;</td>
-						<td  align='right' nowrap='nowrap'>						
+						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
 									{sugar_getimage name="start" ext=".png" other_attributes='align="absmiddle" border="0" ' alt="$alt_start"}
-								</button>						
+								</button>
 								<!--<a href='{$pageData.urls.startPage}' {if $prerow}onclick="return sListView.save_checks(0, '{$moduleString}')"{/if} >{sugar_getimage name="start" ext=".png" alt=$navStrings.start other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.start}</a>&nbsp;-->
 							{else}
 								<button type='button' id='popupViewStartButton' title='{$navStrings.start}' class='button' disabled>
@@ -105,7 +108,7 @@
 				</table>
 			</td>
 		</tr>
-	
+		<thead>
 		<tr height='20'>
 			{if $prerow}
 				<td nowrap="nowrap" width="43px" class="selectCol td_alt">
@@ -117,7 +120,8 @@
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
 			{foreach from=$displayColumns key=colHeader item=params}
-				<th scope='col' width='{$params.width}%' nowrap="nowrap">
+				{if $colCounter == '0'}<th scope='col' width='{$params.width}%' data-toggle="true">
+				{else}<th scope='col' width='{$params.width}%' data-hide="phone,tablet">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
                                 <a href="{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}" onclick='sListView.save_checks(0, "{$moduleString}");' class='listViewThLinkS1'>{sugar_translate label=$params.label module=$pageData.bean.moduleDir}&nbsp;&nbsp;
@@ -147,7 +151,7 @@
 			<td class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
 			{/if}
 		</tr>
-			
+		</thead>
 		{foreach name=rowIteration from=$data key=id item=rowData}
 			{if $smarty.foreach.rowIteration.iteration is odd}
 				{assign var='_rowColor' value=$rowColor[0]}
@@ -167,16 +171,16 @@
 				{foreach from=$displayColumns key=col item=params}
 					<td scope='row' align='{$params.align|default:'left'}' valign=top class='{$_rowColor}S1' bgcolor='{$_bgColor}'>
 						{if $params.link && !$params.customCode}
-							
+
 							<{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href='javascript:void(0)' onclick="send_back('{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}','{$rowData[$params.id]|default:$rowData.ID}');">{$rowData.$col}</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
-	
-						{elseif $params.customCode} 
+
+						{elseif $params.customCode}
 							{sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
-						{elseif $params.currency_format} 
-							{sugar_currency_format 
-	                            var=$rowData.$col 
-	                            round=$params.currency_format.round 
-	                            decimals=$params.currency_format.decimals 
+						{elseif $params.currency_format}
+							{sugar_currency_format
+	                            var=$rowData.$col
+	                            round=$params.currency_format.round
+	                            decimals=$params.currency_format.decimals
 	                            symbol=$params.currency_format.symbol
 	                            convert=$params.currency_format.convert
 	                            currency_symbol=$params.currency_format.currency_symbol
@@ -187,12 +191,12 @@
 									checked=checked
 								{/if}
 								/>
-                        {elseif $params.type == 'multienum' } 
+                        {elseif $params.type == 'multienum' }
 								{counter name="oCount" assign="oCount" start=0}
 								{multienum_to_array string=$rowData.$col assign="vals"}
 								{foreach from=$vals item=item}
 									{counter name="oCount"}
-									{sugar_translate label=$params.options select=$item}{if $oCount !=  count($vals)},{/if} 
+									{sugar_translate label=$params.options select=$item}{if $oCount !=  count($vals)},{/if}
 								{/foreach}
                         {else}
                             {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
@@ -200,7 +204,7 @@
 					</td>
 					{counter name="colCounter"}
 				{/foreach}
-		 	
+
 		{/foreach}
 		<tr class='pagination' role='presentation'>
 			<td colspan='{$colCount+1}' align='right'>
@@ -208,11 +212,11 @@
 					<tr>
 						<td align='left' >
 							&nbsp;</td>
-						<td  align='right' nowrap='nowrap'>						
+						<td  align='right' nowrap='nowrap'>
 							{if $pageData.urls.startPage}
 								<button type='button' title='{$navStrings.start}' class='button' {if $prerow}onclick='return sListView.save_checks(0, "{$moduleString}");'{else} onClick='location.href="{$pageData.urls.startPage}"' {/if}>
 									{sugar_getimage name="start" ext=".png" other_attributes='align="absmiddle" border="0" ' alt="$alt_start"}
-								</button>						
+								</button>
 								<!--<a href='{$pageData.urls.startPage}' {if $prerow}onclick="return sListView.save_checks(0, '{$moduleString}')"{/if} >{sugar_getimage name="start" ext=".png" alt=$navStrings.start other_attributes='align="absmiddle" border="0" '}&nbsp;{$navStrings.start}</a>&nbsp;-->
 							{else}
 								<button type='button' title='{$navStrings.start}' class='button' disabled>

@@ -671,19 +671,6 @@ class Jjwg_MapsViewConfig extends SugarView {
     <tr>
         <td colspan="2"><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_MAP_MARKERS_CLUSTERER_MAX_ZOOM_DESC']; ?></td>
     </tr>
-    <tr>
-        <td><strong><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_TITLE']; ?> </strong></td>
-        <td><input type="text" name="map_adsense_removal_key" id="map_adsense_removal_key" 
-            value="<?php echo (isset($GLOBALS['jjwg_config']['map_adsense_removal_key'])) ? 
-                htmlspecialchars($GLOBALS['jjwg_config']['map_adsense_removal_key']) : 
-                htmlspecialchars($GLOBALS['jjwg_config_defaults']['map_adsense_removal_key']); ?>" 
-            title='' tabindex='158' size="25" maxlength="250">
-            &nbsp; <?php echo $GLOBALS['mod_strings']['LBL_CONFIG_DEFAULT']; ?> <?php echo htmlspecialchars($GLOBALS['jjwg_config_defaults']['map_adsense_removal_key']) ?>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="2"><?php echo $GLOBALS['mod_strings']['LBL_CONFIG_MAP_ADSENSE_REMOVAL_KEY_DESC']; ?></td>
-    </tr>
 </table>
 
 <br />

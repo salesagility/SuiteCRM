@@ -29,6 +29,7 @@ class AOW_Action extends Basic {
 	var $module_dir = 'AOW_Actions';
 	var $object_name = 'AOW_Action';
 	var $table_name = 'aow_actions';
+	var $tracker_visibility = false;
 	var $importable = false;
 	var $disable_row_level_security = true ;
 	
@@ -70,6 +71,11 @@ class AOW_Action extends Basic {
                 }
                 $params = array();
                 foreach($post_data[$key.'param'][$i] as $param_name => $param_value){
+                    if($param_name == 'value'){
+                        foreach($param_value as $p_id => $p_value){
+                            if($post_data[$key.'param'][$i]['value_type'][$p_id] == 'Value' && is_array($p_value)) $param_value[$p_id] = encodeMultienumValue($p_value);
+                        }
+                    }
                     $params[$param_name] = $param_value;
                 }
                 $action->parameters = base64_encode(serialize($params));

@@ -22,6 +22,11 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
+    if(!(ACLController::checkAccess('AOS_Contracts', 'edit', true))){
+        ACLController::displayNoAccess();
+        die;
+    }
+
 	require_once('modules/AOS_Quotes/AOS_Quotes.php');
 	require_once('modules/AOS_Contracts/AOS_Contracts.php');
 	
@@ -35,6 +40,7 @@
 	$contract->assigned_user_id = $quote->assigned_user_id;
 	$contract->total_contract_value = format_number($quote->total_amount);
 	$contract->contract_account_id = $quote->billing_account_id;
+    $contract->contact_id = $quote->billing_contact_id;
 	$contract->opportunity_id = $quote->opportunity_id;
 
     $contract->total_amt = $quote->total_amt;

@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -55,10 +58,10 @@ $mod_strings = array (
 'LBL_MODULE_TITLE' => 'Studio',
 'LBL_TOOLBOX' => 'Toolbox',
 'LBL_STAGING_AREA' => 'Staging Area (drag and drop items here)',
-'LBL_SUGAR_FIELDS_STAGE' => 'Sugar Fields (click items to add to staging area)',
-'LBL_SUGAR_BIN_STAGE' => 'Sugar Bin (click items to add to staging area)',
-'LBL_VIEW_SUGAR_FIELDS' => 'View Sugar Fields',
-'LBL_VIEW_SUGAR_BIN' => 'View Sugar Bin',
+'LBL_SUGAR_FIELDS_STAGE' => 'SuiteCRM Fields (click items to add to staging area)',
+'LBL_SUGAR_BIN_STAGE' => 'SuiteCRM Bin (click items to add to staging area)',
+'LBL_VIEW_SUGAR_FIELDS' => 'View SuiteCRM Fields',
+'LBL_VIEW_SUGAR_BIN' => 'View SuiteCRM Bin',
 'LBL_FAILED_TO_SAVE' => 'Failed To Save',
 'LBL_CONFIRM_UNSAVE' => 'Any changes will go unsaved. Are you sure you would like to continue?',
 'LBL_PUBLISHING' => 'Publishing ...',
@@ -174,11 +177,11 @@ $mod_strings = array (
 'ERROR_INVALID_KEY_VALUE'=> "Error: Invalid Key Value: [']",
 
 //SUGAR PORTAL
-'LBL_SW_SUGARPORTAL'=>'Sugar Portal',
+'LBL_SW_SUGARPORTAL'=>'SuiteCRM Portal',
 'LBL_SMP_WELCOME'=>' Please select a module you would like to edit from the list below',
-'LBL_SP_WELCOME'=>'Welcome to Studio for Sugar Portal. You can either choose to edit modules here or sync to a portal instance.<br> Please choose from the list below.',
+'LBL_SP_WELCOME'=>'Welcome to Studio for SuiteCRM Portal. You can either choose to edit modules here or sync to a portal instance.<br> Please choose from the list below.',
 'LBL_SP_SYNC'=>'Portal Sync',
-'LBL_SYNCP_WELCOME'=>'Please enter the url to the portal instance you wish to update then press the Go button.<br> This will bring up a prompt for your user name and password.<br> Please enter your Sugar user name and password and press the Begin Sync button.',
+'LBL_SYNCP_WELCOME'=>'Please enter the url to the portal instance you wish to update then press the Go button.<br> This will bring up a prompt for your user name and password.<br> Please enter your SuiteCRM user name and password and press the Begin Sync button.',
 'LBL_LISTVIEWP_DESCRIPTION'=>'There are two columns below: Default which are the fields that will be displayed and Available which are the fields that are not displayed, but are available for displaying. Just drag the fields between the two columns. You can also reorder the items in a column by dragging and dropping them.',
 'LBL_SP_STYLESHEET'=>'Upload a Style Sheet',
 'LBL_SP_UPLOADSTYLE'=>'Click on the browse button and select a style sheet from your computer to upload.<br> The next time you sync down to portal it will bring down the style sheet along with it.',

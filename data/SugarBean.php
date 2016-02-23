@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -752,7 +755,7 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    function removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir)
+    static function removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir)
     {
         //load the module dictionary if not supplied.
         if ((!isset($dictionary) or empty($dictionary)) && !empty($module_dir))
@@ -789,7 +792,7 @@ class SugarBean
      * @deprecated 4.5.1 - Nov 14, 2006
      * @static
     */
-    function remove_relationship_meta($key,$db,$log,$tablename,$dictionary,$module_dir)
+    static function remove_relationship_meta($key,$db,$log,$tablename,$dictionary,$module_dir)
     {
         SugarBean::removeRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir);
     }
@@ -810,7 +813,7 @@ class SugarBean
      *
      *  Internal function, do not override.
      */
-    function createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir,$iscustom=false)
+    static function createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir,$iscustom=false)
     {
         //load the module dictionary if not supplied.
         if (empty($dictionary) && !empty($module_dir))
@@ -928,7 +931,7 @@ class SugarBean
      * @deprecated 4.5.1 - Nov 14, 2006
      * @static
     */
-    function create_relationship_meta($key,&$db,&$log,$tablename,$dictionary,$module_dir)
+    static function create_relationship_meta($key,&$db,&$log,$tablename,$dictionary,$module_dir)
     {
         SugarBean::createRelationshipMeta($key,$db,$tablename,$dictionary,$module_dir);
     }
@@ -1033,8 +1036,8 @@ class SugarBean
      * Method will load the relationship if not done so already.
      *
      * @param string $field_name relationship to be loaded.
-     * @param string $bean name  class name of the related bean.
-     * @param array $sort_array optional, unused
+     * @param string $bean name  class name of the related bean.legacy
+     * @param string $order_by, Optional, default empty.
      * @param int $begin_index Optional, default 0, unused.
      * @param int $end_index Optional, default -1
      * @param int $deleted Optional, Default 0, 0  adds deleted=0 filter, 1  adds deleted=1 filter.
@@ -1042,8 +1045,7 @@ class SugarBean
      *
      * Internal function, do not override.
      */
-    function get_linked_beans($field_name,$bean_name, $sort_array = array(), $begin_index = 0, $end_index = -1,
-                              $deleted=0, $optional_where="")
+    function get_linked_beans($field_name,$bean_name = '', $order_by = '', $begin_index = 0, $end_index = -1, $deleted=0, $optional_where="")
     {
         //if bean_name is Case then use aCase
         if($bean_name=="Case")
@@ -1052,14 +1054,15 @@ class SugarBean
         if($this->load_relationship($field_name)) {
             if ($this->$field_name instanceof Link) {
                 // some classes are still based on Link, e.g. TeamSetLink
-                return array_values($this->$field_name->getBeans(new $bean_name(), $sort_array, $begin_index, $end_index, $deleted, $optional_where));
+                return array_values($this->$field_name->getBeans(new $bean_name(), $order_by, $begin_index, $end_index, $deleted, $optional_where));
             } else {
                 // Link2 style
-                if ($end_index != -1 || !empty($deleted) || !empty($optional_where))
+                if ($end_index != -1 || !empty($deleted) || !empty($optional_where) || !empty($order_by))
                     return array_values($this->$field_name->getBeans(array(
                         'where' => $optional_where,
                         'deleted' => $deleted,
-                        'limit' => ($end_index - $begin_index)
+                        'limit' => ($end_index - $begin_index),
+                        'order_by' => $order_by
                     )));
                 else
                     return array_values($this->$field_name->getBeans());
@@ -2877,7 +2880,7 @@ class SugarBean
      *
      * Internal Function, do not overide.
      */
-    function get_union_related_list($parentbean, $order_by = "", $sort_order='', $where = "",
+    static function get_union_related_list($parentbean, $order_by = "", $sort_order='', $where = "",
     $row_offset = 0, $limit=-1, $max=-1, $show_deleted = 0, $subpanel_def)
     {
         $secondary_queries = array();
@@ -3243,6 +3246,25 @@ class SugarBean
 
         $used_join_key = array();
 
+	//walk through the fields and for every relationship field add their relationship_info field
+	//relationshipfield-aliases are resolved in SugarBean::create_new_list_query through their relationship_info field
+	$addrelate = array();
+	foreach($fields as $field=>$value)
+	{
+		if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) && 
+			$this->field_defs[$field]['source'] == 'non-db')
+		{
+			$addrelatefield = $this->get_relationship_field($field);
+			if ($addrelatefield)
+				$addrelate[$addrelatefield] = true;
+		}
+		if(!empty($this->field_defs[$field]['id_name'])){
+			$addrelate[$this->field_defs[$field]['id_name']] = true;
+		}
+	}
+
+	$fields = array_merge($addrelate, $fields);
+
         foreach($fields as $field=>$value)
         {
             //alias is used to alias field names
@@ -3272,20 +3294,20 @@ class SugarBean
             //ignore fields that are a part of the collection and a field has been removed as a result of
             //layout customization.. this happens in subpanel customizations, use case, from the contacts subpanel
             //in opportunities module remove the contact_role/opportunity_role field.
-            $process_field=true;
             if (isset($data['relationship_fields']) and !empty($data['relationship_fields']))
             {
+		$process_field = false;
                 foreach ($data['relationship_fields'] as $field_name)
                 {
-                    if (!isset($fields[$field_name]))
+                    if (isset($fields[$field_name]))
                     {
-                        $process_field=false;
+                        $process_field = true;
+                        break;
                     }
                 }
-            }
-            if (!$process_field)
-            {
-                continue;
+		
+            	if (!$process_field)
+                	continue;
             }
 
             if(  (!isset($data['source']) || $data['source'] == 'db') && (!empty($alias) || !empty($filter) ))
@@ -3544,9 +3566,22 @@ class SugarBean
                     	{
 	                       $db_field = $this->db->concat($params['join_table_alias'], $data['db_concat_fields']);
 	                       $where = preg_replace('/'.$data['name'].'/', $db_field, $where);
+
+				// For relationship fields replace their alias by the corresponsding link table and r_name
+				if(isset($data['relationship_fields']))
+					foreach($data['relationship_fields'] as $r_name=>$alias_name)
+					{
+						$db_field = $this->db->concat($params['join_table_link_alias'], $r_name);
+						$where = preg_replace('/' . $alias_name . '/', $db_field, $where);
+					}
                     	}
                     }else{
                         $where = preg_replace('/(^|[\s(])' . $data['name'] . '/', '${1}' . $params['join_table_alias'] . '.'.$data['rname'], $where);
+
+			// For relationship fields replace their alias by the corresponsding link table and r_name
+			if(isset($data['relationship_fields']))
+				foreach($data['relationship_fields'] as $r_name=>$alias_name)
+					$where = preg_replace('/(^|[\s(])' . $alias_name . '/', '${1}' . $params['join_table_link_alias'] . '.'.$r_name, $where);
                     }
                     if(!$table_joined)
                     {
@@ -3614,6 +3649,20 @@ class SugarBean
 
         return  $ret_array['select'] . $ret_array['from'] . $ret_array['where']. $ret_array['order_by'];
     }
+
+	// Check if field is defined through a relationship_info field, add this field when not present 
+	function get_relationship_field($field)
+	{
+		foreach ($this->field_defs as $field_def => $value)
+		{
+			if (isset($value['relationship_fields']) && 
+				in_array($field, $value['relationship_fields']) )
+				return $field_def;
+		}
+
+		return false;
+	}
+
     /**
      * Returns parent record data for objects that store relationship information
      *
@@ -4486,6 +4535,7 @@ class SugarBean
 	{
 		global $current_user;
 		$date_modified = $GLOBALS['timedate']->nowDb();
+        $id = $this->db->quote($id);
 		if(isset($_SESSION['show_deleted']))
 		{
 			$this->mark_undeleted($id);
@@ -4535,7 +4585,7 @@ class SugarBean
         $this->call_custom_logic("before_restore", $custom_logic_arguments);
 
 		$date_modified = $GLOBALS['timedate']->nowDb();
-		$query = "UPDATE $this->table_name set deleted=0 , date_modified = '$date_modified' where id='$id'";
+		$query = "UPDATE $this->table_name set deleted=0 , date_modified = '$date_modified' where id='" . $this->db->quote($id) ."'";
 		$this->db->query($query, true,"Error marking record undeleted: ");
 
         $this->restoreFiles();

@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -86,7 +89,7 @@ class Calendar {
 		
 		$this->view = $view;		
 
-		if(!in_array($this->view,array('day','week','month','year','shared')))
+		if(!in_array($this->view,array('day','week','month','year','shared','mobile')))
 			$this->view = 'week';
 		
 		$date_arr = array();
@@ -101,6 +104,8 @@ class Calendar {
 			$date_arr['month'] = $_REQUEST['month'];
 		if (!empty($_REQUEST['week']))
 			$date_arr['week'] = $_REQUEST['week'];
+		if (!empty($_REQUEST['mobile']))
+			$date_arr['mobile'] = $_REQUEST['mobile'];
 
 		if (!empty($_REQUEST['year'])){
 			if ($_REQUEST['year'] > 2037 || $_REQUEST['year'] < 1970){
@@ -119,14 +124,17 @@ class Calendar {
 			$_REQUEST['month'] = "";
 		if(empty($_REQUEST['year']))
 			$_REQUEST['year'] = "";
+		if(empty($_REQUEST['mobile']))
+			$_REQUEST['mobile'] = "";
 
 		// if date is not set in request use current date
-		if(empty($date_arr) || !isset($date_arr['year']) || !isset($date_arr['month']) || !isset($date_arr['day']) ){	
+		if(empty($date_arr) || !isset($date_arr['year']) || !isset($date_arr['month']) || !isset($date_arr['day'])){
 			$today = $timedate->getNow(true);
 			$date_arr = array(
 			      'year' => $today->year,
 			      'month' => $today->month,
 			      'day' => $today->day,
+			      'mobile' => $today->day,
 			);
 		}
 		
@@ -201,7 +209,8 @@ class Calendar {
 					$item['assigned_user_id'] = $act->sugar_bean->assigned_user_id;
 					$item['record'] = $act->sugar_bean->id;		
 					$item['name'] = $act->sugar_bean->name;
-					
+					$item['description'] = $act->sugar_bean->description;
+
 					if(isset($act->sugar_bean->duration_hours)){
 						$item['duration_hours'] = $act->sugar_bean->duration_hours;
 						$item['duration_minutes'] = $act->sugar_bean->duration_minutes;
@@ -310,7 +319,7 @@ class Calendar {
 	public function add_activities($user,$type='sugar'){
 		global $timedate;
 		$start_date_time = $this->date_time;
-		if($this->view == 'week' || $this->view == 'shared'){		
+		if($this->view == 'week' || $this->view == 'shared' || $this->view == 'mobile'){
 			$start_date_time = CalendarUtils::get_first_day_of_week($this->date_time);
 			$end_date_time = $start_date_time->get("+7 days");
 		}else if($this->view == 'month'){

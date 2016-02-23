@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -78,7 +81,7 @@ $mod_strings = array(
 	'LBL_EMAIL_OPTIONS'		=> 'Email Handling Options',
 	'LBL_EMAIL_BOUNCE_OPTIONS' => 'Bounce Handling Options',
 	'LBL_FILTER_DOMAIN_DESC'=> 'Specify a domain to which no auto-replies will be sent.',
-	'LBL_ASSIGN_TO_GROUP_FOLDER_DESC'=> 'Select to automatically create email records in Sugar for all incoming emails.',
+	'LBL_ASSIGN_TO_GROUP_FOLDER_DESC'=> 'Select to automatically create email records in SuiteCRM for all incoming emails.',
 	'LBL_POSSIBLE_ACTION_DESC'		=> 'For the Create Case option, a Group Folder must be selected',
 	'LBL_FILTER_DOMAIN'		=> 'No Auto-Reply to this Domain',
 	'LBL_FIND_OPTIMUM_KEY'	=> 'f',
@@ -124,7 +127,7 @@ $mod_strings = array(
 	'LBL_MAX_AUTO_REPLIES_DESC'	=> 'Set the maximum number of auto-responses to send to a unique email address during a period of 24 hours.',
 	'LBL_PERSONAL_MODULE_NAME' => 'Personal Mail Account',
 	'LBL_CREATE_CASE'      => 'Create Case from Email',
-	'LBL_CREATE_CASE_HELP'  => 'Select to automatically create case records in Sugar from incoming emails.',
+	'LBL_CREATE_CASE_HELP'  => 'Select to automatically create case records in SuiteCRM from incoming emails.',
 	'LBL_MODULE_NAME'		=> 'Group Mail Account',
 	'LBL_BOUNCE_MODULE_NAME' => 'Bounce Handling Mailbox',
 	'LBL_MODULE_TITLE'		=> 'Inbound Email',
@@ -184,7 +187,6 @@ $mod_strings = array(
 	'LNK_LIST_TEST_IMPORT'	=> 'Test Email Import',
 	'LNK_NEW_QUEUES'		=> 'Create New Queue',
 	'LNK_SEED_QUEUES'		=> 'Seed Queues From Teams',
-	'LBL_IS_PERSONAL'       => 'Personal Mail Account',
 	'LBL_GROUPFOLDER_ID'	=> 'Group Folder Id',
 	'LBL_ASSIGN_TO_GROUP_FOLDER' => 'Assign To Group Folder',
     'LBL_ALLOW_OUTBOUND_GROUP_USAGE' => 'Allow users to send emails using the "From" Name and Address as the reply to address',

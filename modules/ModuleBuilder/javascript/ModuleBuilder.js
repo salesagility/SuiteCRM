@@ -1,36 +1,39 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 function treeinit() {}
@@ -136,12 +139,6 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					minWidth: 200,
 					resize: true,
 					collapse: true
-				},{
-					header: SUGAR.util.getAndRemove("footerHTML").innerHTML,
-					position: 'bottom',
-					id: 'mbfooter',
-					height: 30,
-					border: false
 				}]
 			});
 			mp.render();
@@ -527,7 +524,7 @@ if (typeof(ModuleBuilder) == 'undefined') {
                 return false; 
 			
 			try {
-			var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
+				var ajaxResponse = YAHOO.lang.JSON.parse((o.responseText));
 			} catch (err) {
 				YAHOO.SUGAR.MessageBox.show({
                     title: SUGAR.language.get('ModuleBuilder', 'ERROR_GENERIC_TITLE'),
@@ -599,11 +596,12 @@ if (typeof(ModuleBuilder) == 'undefined') {
 						comp.set('content', "<div class='bodywrapper'><div>" + ajaxResponse[maj].crumb + "</div>" + ajaxResponse[maj].content + "</div>");
 						if (ajaxResponse[maj].title != "no_change")
 							comp.set('label', ajaxResponse[maj].title);
-						SUGAR.util.evalScript(ajaxResponse[maj].content);	
+						SUGAR.util.evalScript(ajaxResponse[maj].content);
 					}
 				}
 				ModuleBuilder.history.update();
 			}
+			return true;
 		},
 		checkForErrors: function(o){
 			if (SUGAR.util.isLoginPage(o.responseText))
@@ -621,9 +619,56 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			return false;
 		},
 		submitForm: function(formname, successCall){
+			var failureCall = ModuleBuilder.failed;
 			ajaxStatus.showStatus(SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING'));
 			if (typeof(successCall) == 'undefined') {
 				successCall = ModuleBuilder.updateContent;
+
+				// get bookmarked url state
+				var YUI_HistoryBookmarkedState = YAHOO.util.History.getBookmarkedState('mbContent');
+				var urlVars = {};
+				var splits = YUI_HistoryBookmarkedState.split('&');
+				for(key in splits) {
+					var urlVar = splits[key].split('=');
+					urlVars[urlVar[0]] = urlVar[1];
+				}
+
+				// check where we are and do it if we are in field editor in module builder
+				if(
+					formname != "dropdown_form" && formname != "popup_form" &&
+					// user came from studio/fields layout by ajax urls
+					((urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
+					// user refresh the page or came from direct url
+					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
+				) {
+					// switch on the preloader message
+					ModuleBuilder.preloader.on();
+
+					// set callback functions
+					successCall = function(o){
+						// switch off preloader
+						ModuleBuilder.preloader.off();
+						// call the original callback
+						if(ModuleBuilder.updateContent(o)) {
+							// show results
+							YAHOO.SUGAR.MessageBox.show({
+								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
+								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
+								width: 500
+							});
+						}
+						// refresh page content
+						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+					};
+					failureCall = function(o) {
+						// switch off preloader
+						ModuleBuilder.preloader.off();
+						// call the original callback
+						ModuleBuilder.failed(o);
+						// refresh page content
+						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+					};
+				}
 			}
 			else {
 				ModuleBuilder.callLock = true;
@@ -632,9 +677,47 @@ if (typeof(ModuleBuilder) == 'undefined') {
 			Connect.asyncRequest(
 			    Connect.method, 
 			    Connect.url, 
-			    {success: successCall, failure: ModuleBuilder.failed}
+			    {success: successCall, failure: failureCall}
 			);
 		},
+
+		/**
+		 * show/hide preload message for user
+		 */
+		preloader: {
+
+			/**
+			 * Show a preload message
+			 * @param title string title of message
+			 * @param message string
+			 */
+			on: function(title, message) {
+				// set default title and/or message
+				if(typeof title == 'undefined') {
+					title = SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING_TITLE'); // In Progress..
+				}
+				if(typeof message == 'undefined') {
+					message = SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_LOADING_MESSAGE'); // Please wait, loading..
+				}
+				// switch off preloader, maybe was another one
+				ModuleBuilder.preloader.off();
+				// show message
+				YAHOO.SUGAR.MessageBox.show({
+					title: title,
+					msg: message,
+					width: 500,
+					close: false
+				});
+			},
+
+			/**
+			 * Hide message
+			 */
+			off: function() {
+				YAHOO.SUGAR.MessageBox.hide();
+			}
+		},
+
 		setMode: function(reqMode){
 			ModuleBuilder.mode = reqMode;
 		},
@@ -995,8 +1078,8 @@ if (typeof(ModuleBuilder) == 'undefined') {
 		autoSetLayout: function(){
 			var mp = ModuleBuilder.mainPanel;
 			var c = Dom.get("mblayout");
-			mp.set("height", Dom.getViewportHeight() - Dom.getY(c) - 30);
-			mp.set("width", Dom.getViewportWidth() - 40);
+			mp.set("height", Dom.getViewportHeight() - Dom.getY(c) - 75);
+			//mp.set("width", Dom.getViewportWidth() - 40);
 			mp.resize(true);
 			var tabEl = ModuleBuilder.tabPanel.get("element");
 			Dom.setStyle(tabEl.firstChild.nextSibling, "overflow-y", "auto");

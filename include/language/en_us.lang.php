@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -101,9 +104,9 @@ $app_list_strings = array (
     'TrackerQueries' => 'Tracker Queries',
     'FAQ' => 'FAQ',
     'Newsletters' => 'Newsletters',
-    'SugarFeed'=>'Sugar Feed',
+    'SugarFeed'=>'SuiteCRM Feed',
     'KBDocuments' => 'Knowledge Base',
-  'SugarFavorites'=>'Favorites',
+  'SugarFavorites'=>'SuiteCRM Favorites',
 
     'OAuthKeys' => 'OAuth Consumer Keys',
     'OAuthTokens' => 'OAuth Tokens',
@@ -135,10 +138,10 @@ $app_list_strings = array (
     'Prospects' => 'Target',
     'Campaigns'=>'Campaign',
     'Documents'=>'Document',
-    'SugarFollowing'=>'SugarFollowing',
+    'SugarFollowing'=>'SuiteCRM Following',
     'Sync'=>'Sync',
     'Users' => 'User',
-  'SugarFavorites'=>'SugarFavorites'
+  'SugarFavorites'=>'SuiteCRM Favorites'
 
         ),
 
@@ -363,7 +366,7 @@ $app_list_strings = array (
   'meeting_type_dom' =>
    array (
       'Other' => 'Other',
-      'Sugar' => 'SugarCRM',
+      'Sugar' => 'SuiteCRM',
    ),
   'call_status_default' => 'Planned',
   'call_status_dom' =>
@@ -460,7 +463,9 @@ $app_list_strings = array (
     'project_status_dom' => array (
         'Draft' => 'Draft',
         'In Review' => 'In Review',
-        'Published' => 'Published',
+        'Underway' => 'Underway',
+        'On_Hold' => 'On Hold',
+        'Completed' => 'Completed',
     ),
     'project_status_default' => 'Draft',
 
@@ -485,7 +490,7 @@ $app_list_strings = array (
     'Opportunities' => 'Opportunity',
     'Cases' => 'Case',
     'Leads' => 'Lead',
-    'Contacts' => 'Contacts', // cn (11/22/2005) added to support Emails
+    'Contacts' => 'Contact', // cn (11/22/2005) added to support Emails
 
 
     'Bugs' => 'Bug',
@@ -805,7 +810,7 @@ $app_list_strings = array (
                                         'off' => 'No',
                                         '' => 'No', ),
 
-    'dom_email_link_type'   => array(   'sugar'     => 'Sugar Email Client',
+    'dom_email_link_type'   => array(   'sugar'     => 'SuiteCRM Email Client',
                                         'mailto'    => 'External Email Client'),
 
 
@@ -891,8 +896,8 @@ $app_list_strings = array (
     'duration_intervals' => array('0'=>'00',
                                     '15'=>'15',
                                     '30'=>'30',
-                                    '45'=>'45'),
-
+                                    '45'=>'45',
+  ),
     'repeat_type_dom' => array(
     	'' => 'None',
     	'Daily'	=> 'Daily',
@@ -1119,7 +1124,7 @@ $app_list_strings = array (
   array(
         'copy' => 'Copy',
         'move' => 'Move',
-        'donothing' => 'Do Nothing'
+        'donothing' => 'Do Nothing',
   ),
 );
 
@@ -1159,14 +1164,13 @@ $app_strings = array (
     'LBL_MODULE_FILTER' => 'Filter By',
     'LBL_CONNECTORS_POPUPS'=>'Connectors Popups',
     'LBL_CLOSEINLINE'=>'Close',
-    'LBL_MOREDETAIL'=>'More Detail',
     'LBL_EDITINLINE'=>'Edit',
     'LBL_VIEWINLINE'=>'View',
     'LBL_INFOINLINE'=>'Info',
-    'LBL_POWERED_BY_SUGARCRM' => "Powered by SugarCRM",
-    'LBL_PRINT' => "Print",
-    'LBL_HELP' => "Help",
-    'LBL_ID_FF_SELECT' => "Select",
+    'LBL_POWERED_BY_SUGARCRM' => 'Powered by SugarCRM',
+    'LBL_PRINT' => 'Print',
+    'LBL_HELP' => 'Help',
+    'LBL_ID_FF_SELECT' => 'Select',
     'DEFAULT'                              => 'Basic',
     'LBL_SORT'                              => 'Sort',
     'LBL_OUTBOUND_EMAIL_ADD_SERVER'         => 'Add Server...',
@@ -1181,7 +1185,7 @@ $app_strings = array (
     'LBL_ROUTING_BUTTON_SAVE'               => 'Save Rule',
 
     'LBL_ROUTING_ACTIONS_COPY_MAIL'         => 'Copy Mail',
-    'LBL_ROUTING_ACTIONS_DELETE_BEAN'       => 'Delete Sugar Object',
+    'LBL_ROUTING_ACTIONS_DELETE_BEAN'       => 'Delete SuiteCRM Object',
     'LBL_ROUTING_ACTIONS_DELETE_FILE'       => 'Delete File',
     'LBL_ROUTING_ACTIONS_DELETE_MAIL'       => 'Delete Email',
     'LBL_ROUTING_ACTIONS_FORWARD'           => 'Forward Email',
@@ -1192,9 +1196,9 @@ $app_strings = array (
     'LBL_ROUTING_ACTIONS_PEFORM'            => 'Perform the following actions',
     'LBL_ROUTING_ACTIONS_REPLY'             => 'Reply to Email',
 
-    'LBL_ROUTING_CHECK_RULE'                => "An error was detected:\n",
+    'LBL_ROUTING_CHECK_RULE'                => 'An error was detected:\n',
     'LBL_ROUTING_CHECK_RULE_DESC'           => 'Please verify all fields that are marked.',
-    'LBL_ROUTING_CONFIRM_DELETE'            => "Are you sure you want to delete this rule?\nThis cannot be undone.",
+    'LBL_ROUTING_CONFIRM_DELETE'            => 'Are you sure you want to delete this rule?\nThis cannot be undone.',
 
     'LBL_ROUTING_FLAGGED'                   => 'flag set',
     'LBL_ROUTING_FORM_DESC'                 => 'Saved Rules are immediately active.',
@@ -1274,12 +1278,12 @@ $app_strings = array (
     'LBL_EMAIL_ADDRESSES'                   => 'Email',
     'LBL_EMAIL_ADDRESS_PRIMARY'             => 'Email Address',
     'LBL_EMAIL_ADDRESSES_TITLE'             => 'Email Addresses',
-    'LBL_EMAIL_ARCHIVE_TO_SUGAR'            => 'Import to Sugar',
+    'LBL_EMAIL_ARCHIVE_TO_SUGAR'            => 'Import to SuiteCRM',
     'LBL_EMAIL_ASSIGNMENT'                  => 'Assignment',
     'LBL_EMAIL_ATTACH_FILE_TO_EMAIL'        => 'Attach',
     'LBL_EMAIL_ATTACHMENT'                  => 'Attach',
     'LBL_EMAIL_ATTACHMENTS'                 => 'From Local System',
-    'LBL_EMAIL_ATTACHMENTS2'                => 'From Sugar Documents',
+    'LBL_EMAIL_ATTACHMENTS2'                => 'From SuiteCRM Documents',
     'LBL_EMAIL_ATTACHMENTS3'                => 'Template Attachments',
     'LBL_EMAIL_ATTACHMENTS_FILE'            => 'File',
     'LBL_EMAIL_ATTACHMENTS_DOCUMENT'        => 'Document',
@@ -1315,7 +1319,7 @@ $app_strings = array (
     'LBL_EMAIL_MULT_GROUP_FOLDER_ACCOUNTS_EMPTY' => 'Empty',
     'LBL_EMAIL_DATE_SENT_BY_SENDER'         => 'Date Sent by Sender',
   'LBL_EMAIL_DATE_RECEIVED'               => 'Date Received',
-    'LBL_EMAIL_ASSIGNED_TO_USER'            =>'Assigned to User',
+    'LBL_EMAIL_ASSIGNED_TO_USER'            => 'Assigned to User',
     'LBL_EMAIL_DATE_TODAY'                  => 'Today',
     'LBL_EMAIL_DATE_YESTERDAY'              => 'Yesterday',
     'LBL_EMAIL_DD_TEXT'                     => 'email(s) selected.',
@@ -1338,14 +1342,14 @@ $app_strings = array (
     'LBL_EMAIL_EMPTY_MSG'                   => 'No emails to display.',
     'LBL_EMAIL_EMPTY_ADDR_MSG'              => 'No email addresses to display.',
 
-    'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER'      => 'Folder name be unique and not empty. Please try again.',
+    'LBL_EMAIL_ERROR_ADD_GROUP_FOLDER'      => 'Folder name must be unique and not empty. Please try again.',
     'LBL_EMAIL_ERROR_DELETE_GROUP_FOLDER'   => 'Cannot delete a folder. Either the folder or its children has emails or a mail box associated to it.',
     'LBL_EMAIL_ERROR_CANNOT_FIND_NODE'      => 'Cannot determine the intended folder from context.  Try again.',
     'LBL_EMAIL_ERROR_CHECK_IE_SETTINGS'     => 'Please check your settings.',
     'LBL_EMAIL_ERROR_CONTACT_NAME'          => 'Please make sure you enter a last name.',
     'LBL_EMAIL_ERROR_DESC'                  => 'Errors were detected: ',
     'LBL_EMAIL_DELETE_ERROR_DESC'           => 'You do not have access to this area. Contact your site administrator to obtain access.',
-    'LBL_EMAIL_ERROR_DUPE_FOLDER_NAME'      => 'Sugar Folder names must be unique.',
+    'LBL_EMAIL_ERROR_DUPE_FOLDER_NAME'      => 'SuiteCRM Folder names must be unique.',
     'LBL_EMAIL_ERROR_EMPTY'                 => 'Please enter some search criteria.',
     'LBL_EMAIL_ERROR_GENERAL_TITLE'         => 'An error has occurred',
     'LBL_EMAIL_ERROR_LIST_NAME'             => 'An email list with that name already exists',
@@ -1399,7 +1403,7 @@ $app_strings = array (
     'LBL_EMAIL_IE_DELETE_SUCCESSFUL'        => 'Deletion successful.',
     'LBL_EMAIL_IE_SAVE'                     => 'Saving Mail Account Information',
     'LBL_EMAIL_IMPORTING_EMAIL'             => 'Importing Email',
-    'LBL_EMAIL_IMPORT_EMAIL'                => 'Import to Sugar',
+    'LBL_EMAIL_IMPORT_EMAIL'                => 'Import to SuiteCRM',
     'LBL_EMAIL_IMPORT_SETTINGS'                => 'Import Settings',
     'LBL_EMAIL_INVALID'                     => 'Invalid',
     'LBL_EMAIL_LOADING'                     => 'Loading...',
@@ -1423,13 +1427,13 @@ $app_strings = array (
     'LBL_EMAIL_MENU_RENAMING_FOLDER'        => 'Renaming Folder',
     'LBL_EMAIL_MENU_MAKE_SELECTION'         => 'Please make a selection before trying this operation.',
 
-    'LBL_EMAIL_MENU_HELP_ADD_FOLDER'        => 'Create a Folder (remote or in Sugar)',
-    'LBL_EMAIL_MENU_HELP_ARCHIVE'           => 'Archive these email(s) to SugarCRM',
+    'LBL_EMAIL_MENU_HELP_ADD_FOLDER'        => 'Create a Folder (remote or in SuiteCRM)',
+    'LBL_EMAIL_MENU_HELP_ARCHIVE'           => 'Archive these email(s) to SuiteCRM',
     'LBL_EMAIL_MENU_HELP_COMPOSE_TO_LIST'   => 'Email selected Mailing Lists',
     'LBL_EMAIL_MENU_HELP_CONTACT_COMPOSE'   => 'Email this Contact',
     'LBL_EMAIL_MENU_HELP_CONTACT_REMOVE'    => 'Remove a Contact',
     'LBL_EMAIL_MENU_HELP_DELETE'            => 'Delete these email(s)',
-    'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'     => 'Delete a Folder (remote or in Sugar)',
+    'LBL_EMAIL_MENU_HELP_DELETE_FOLDER'     => 'Delete a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_EDIT_CONTACT'      => 'Edit a Contact',
     'LBL_EMAIL_MENU_HELP_EDIT_LIST'         => 'Edit a Mailing List',
     'LBL_EMAIL_MENU_HELP_EMPTY_TRASH'       => 'Empties all Trash folders for your mail accounts',
@@ -1438,7 +1442,7 @@ $app_strings = array (
     'LBL_EMAIL_MENU_HELP_MARK_UNFLAGGED'    => 'Mark these email(s) unflagged',
     'LBL_EMAIL_MENU_HELP_MARK_UNREAD'       => 'Mark these email(s) unread',
     'LBL_EMAIL_MENU_HELP_REMOVE_LIST'       => 'Removes Mailing Lists',
-    'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'     => 'Rename a Folder (remote or in Sugar)',
+    'LBL_EMAIL_MENU_HELP_RENAME_FOLDER'     => 'Rename a Folder (remote or in SuiteCRM)',
     'LBL_EMAIL_MENU_HELP_REPLY'             => 'Reply to these email(s)',
     'LBL_EMAIL_MENU_HELP_REPLY_ALL'         => 'Reply to all recipients for these email(s)',
 
@@ -1572,11 +1576,10 @@ $app_strings = array (
   'LBL_SMTPTYPE_EXCHANGE'                 => 'Microsoft Exchange',
     'LBL_SMTPTYPE_OTHER'                  => 'Other',
     'LBL_EMAIL_SPACER_MAIL_SERVER'          => '[ Remote Folders ]',
-    'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ Sugar Folders ]',
+    'LBL_EMAIL_SPACER_LOCAL_FOLDER'         => '[ SuiteCRM Folders ]',
     'LBL_EMAIL_SUBJECT'                     => 'Subject',
-    'LBL_EMAIL_TO'                        => 'To',
     'LBL_EMAIL_SUCCESS'                     => 'Success',
-    'LBL_EMAIL_SUGAR_FOLDER'                => 'SugarFolder',
+    'LBL_EMAIL_SUGAR_FOLDER'                => 'SuiteCRM Folder',
     'LBL_EMAIL_TEMPLATE_EDIT_PLAIN_TEXT'    => 'Email template body is empty',
     'LBL_EMAIL_TEMPLATES'                   => 'Templates',
     'LBL_EMAIL_TEXT_FIRST'                  => 'First Page',
@@ -1596,15 +1599,6 @@ $app_strings = array (
     'LBL_EMAIL_YES'                         => 'Yes',
     'LBL_EMAIL_TEST_OUTBOUND_SETTINGS'      => 'Send Test Email',
     'LBL_EMAIL_TEST_OUTBOUND_SETTINGS_SENT' => 'Test Email Sent',
-    'LBL_EMAIL_CHECK_INTERVAL_DOM'          => array(
-        '-1' => "Manually",
-        '5' => 'Every 5 minutes',
-        '15' => 'Every 15 minutes',
-        '30' => 'Every 30 minutes',
-        '60' => 'Every hour'
-    ),
-
-
     'LBL_EMAIL_MESSAGE_NO'                  => 'Message No',
     'LBL_EMAIL_IMPORT_SUCCESS'              => 'Import Passed',
     'LBL_EMAIL_IMPORT_FAIL'                 => 'Import Failed because either the message is already imported or deleted from server',
@@ -1651,7 +1645,7 @@ $app_strings = array (
     'ERR_NOTHING_SELECTED' =>'Please make a selection before proceeding.',
     'ERR_OPPORTUNITY_NAME_DUPE' => 'An opportunity with the name %s already exists.  Please enter another name below.',
     'ERR_OPPORTUNITY_NAME_MISSING' => 'An opportunity name was not entered.  Please enter an opportunity name below.',
-    'ERR_POTENTIAL_SEGFAULT' => 'A potential Apache segmentation fault was detected.  Please notify your system administrator to confirm this problem and have her/him report it to SugarCRM.',
+    'ERR_POTENTIAL_SEGFAULT' => 'A potential Apache segmentation fault was detected.  Please notify your system administrator to confirm this problem and have her/him report it to SuiteCRM.',
     'ERR_SELF_REPORTING' => 'User cannot report to him or herself.',
     'ERR_SINGLE_QUOTE'  => 'Using the single quote is not supported for this field.  Please change the value.',
     'ERR_SQS_NO_MATCH_FIELD' => 'No match for field: ',
@@ -1661,11 +1655,11 @@ $app_strings = array (
     'ERR_COMPATIBLE_PRECISION_VALUE' => 'Field value is not compatible with precision value',
     'ERR_EXTERNAL_API_SAVE_FAIL' => 'An error occurred when trying to save to the external account.',
     'ERR_EXTERNAL_API_UPLOAD_FAIL' => 'An error occurred while uploading.  Please ensure the file you are uploading is not empty.',
-    'ERR_NO_DB' => 'Could not connect to the database. Please refer to sugarcrm.log for details.',
-    'ERR_DB_FAIL' => 'Database failure. Please refer to sugarcrm.log for details.',
+    'ERR_NO_DB' => 'Could not connect to the database. Please refer to suitecrm.log for details.',
+    'ERR_DB_FAIL' => 'Database failure. Please refer to suitecrm.log for details.',
     'ERR_EXTERNAL_API_403' => 'Permission Denied. File type is not supported.',
     'ERR_EXTERNAL_API_NO_OAUTH_TOKEN' => 'OAuth Access Token is missing.',
-    'ERR_DB_VERSION' => 'Sugar CRM {0} Files May Only Be Used With A Sugar CRM {1} Database.',
+    'ERR_DB_VERSION' => 'SuiteCRM {0} Files May Only Be Used With A SuiteCRM {1} Database.',
 
 
     'LBL_ACCOUNT'=>'Account',
@@ -1696,7 +1690,7 @@ $app_strings = array (
     'LBL_BILL_TO_CONTACT'=>'Bill to Contact',
     'LBL_BILLING_ADDRESS'=>'Billing Address',
     'LBL_QUICK_CREATE_TITLE' => 'Quick Create',
-    'LBL_BROWSER_TITLE' => 'SugarCRM - Commercial Open Source CRM',
+    'LBL_BROWSER_TITLE' => 'SuiteCRM - Open Source CRM',
     'LBL_BUGS'=>'Bugs',
     'LBL_BY' => 'by',
     'LBL_CALLS'=>'Calls',
@@ -1762,9 +1756,9 @@ $app_strings = array (
     'LBL_FILTER_MENU_BY' => 'Filter Menu By',
     'LBL_VCARD' => 'vCard',
     'LBL_EMPTY_VCARD' => 'Please select a vCard file',
-    'LBL_EMPTY_REQUIRED_VCARD' => 'vCard does not have all the required fields for this module. Please refer to sugarcrm.log for details.',
+    'LBL_EMPTY_REQUIRED_VCARD' => 'vCard does not have all the required fields for this module. Please refer to suitecrm.log for details.',
     'LBL_VCARD_ERROR_FILESIZE' => 'The uploaded file exceeds the 30000 bytes size limit which was specified in the HTML form.',
-    'LBL_VCARD_ERROR_DEFAULT' => 'There was an error uploading the vCard file. Please refer to sugarcrm.log for details.',
+    'LBL_VCARD_ERROR_DEFAULT' => 'There was an error uploading the vCard file. Please refer to suitecrm.log for details.',
     'LBL_IMPORT_VCARD' => 'Import vCard:',
     'LBL_IMPORT_VCARD_BUTTON_KEY' => 'I',
     'LBL_IMPORT_VCARD_BUTTON_LABEL' => 'Import vCard',
@@ -1870,6 +1864,7 @@ $app_strings = array (
     'LBL_OPPORTUNITY'=>'Opportunity',
     'LBL_OR' => 'OR',
     'LBL_LOWER_OR' => 'or',
+    'LBL_PANEL_OVERVIEW' => 'Overview',
     'LBL_PANEL_ASSIGNMENT' => 'Other',
     'LBL_PANEL_ADVANCED' => 'More Information',
     'LBL_PARENT_TYPE' => 'Parent Type',
@@ -1890,10 +1885,8 @@ $app_strings = array (
 
     'LBL_PROSPECTS'=>'Prospects',
     'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
-    'LBL_PRODUCT_BUNDLES'=>'Product Bundles',
     'LBL_PRODUCTS'=>'Products',
     'LBL_PROJECT_TASKS'=>'Project Tasks',
-    'LBL_PROJECTS'=>'Projects',
     'LBL_PROJECTS'=>'Projects',
     'LBL_QUOTE_TO_OPPORTUNITY_KEY' => 'O',
     'LBL_QUOTE_TO_OPPORTUNITY_LABEL' => 'Create Opportunity from Quote',
@@ -2025,7 +2018,6 @@ $app_strings = array (
 
 
     'LBL_SYNC' => 'Sync',
-    'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
     'LBL_TABGROUP_ACTIVITIES' => 'Activities',
     'LBL_TABGROUP_COLLABORATION' => 'Collaboration',
@@ -2097,7 +2089,7 @@ $app_strings = array (
     'NTC_DATE_TIME_FORMAT' => '(yyyy-mm-dd 24:00)',
     'NTC_DELETE_CONFIRMATION_MULTIPLE' => 'Are you sure you want to delete selected record(s)?',
     'NTC_TEMPLATE_IS_USED' => 'The template is used in at least one email marketing record. Are you sure you want to delete it?',
-    'NTC_TEMPLATES_IS_USED' => "The following templates are used in email marketing records. Are you sure you want to delete them?\n",
+    'NTC_TEMPLATES_IS_USED' => 'The following templates are used in email marketing records. Are you sure you want to delete them?\n',
     'NTC_DELETE_CONFIRMATION' => 'Are you sure you want to delete this record?',
     'NTC_DELETE_CONFIRMATION_NUM' => 'Are you sure you want to delete the ',
     'NTC_UPDATE_CONFIRMATION_NUM' => 'Are you sure you want to update the ',
@@ -2106,21 +2098,15 @@ $app_strings = array (
     'NTC_NO_ITEMS_DISPLAY' => 'none',
     'NTC_REMOVE_CONFIRMATION' => 'Are you sure you want to remove this relationship? Only the relationship will be removed. The record will not be deleted.',
     'NTC_REQUIRED' => 'Indicates required field',
-    'NTC_SUPPORT_SUGARCRM' => 'Support the SugarCRM open source project with a donation through PayPal - it\'s fast, free and secure!',
     'NTC_TIME_FORMAT' => '(24:00)',
     'NTC_WELCOME' => 'Welcome',
     'NTC_YEAR_FORMAT' => '(yyyy)',
-    'LOGIN_LOGO_ERROR'=> 'Please replace the SugarCRM logos.',
-    'ERROR_LICENSE_FULLY_EXPIRED'=> "Your Company's Subscription to the SugarCRM Product has expired and needs to be renewed. Only admins may login when a Subscription has expired. If you have any questions, please contact your administrator.",
-    'ERROR_LICENSE_EXPIRED'=> "Your company's license for SugarCRM needs to be updated. Only admins may login",
-    'ERROR_LICENSE_VALIDATION'=> "Your company's license for SugarCRM needs to be validated. Only admins may login",
-    'WARN_BROWSER_VERSION_WARNING' => "<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 24.0<li>Safari 5.1<li>Chrome 29</ul>",
-    'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => "<b>Warning:</b> Your browser is in IE compatibility view which is not supported.",
-    'WARN_LICENSE_SEATS'=>  "Warning: The number of active users is already the maximum number of licenses allowed.",
-    'WARN_LICENSE_SEATS_MAXED'=>  "Warning: The number of active users exceeds the maximum number of licenses allowed.",
+    'LOGIN_LOGO_ERROR'=> 'Please replace the SuiteCRM logos.',
     'WARN_ONLY_ADMINS'=> "Only admins may log in.",
     'WARN_UNSAVED_CHANGES'=> "You are about to leave this record without saving any changes you may have made to the record. Are you sure you want to navigate away from this record?",
     'ERROR_NO_RECORD' => 'Error retrieving record.  This record may be deleted or you may not be authorized to view it.',
+    'WARN_BROWSER_VERSION_WARNING' => "<b>Warning:</b> Your browser version is no longer supported or you are using an unsupported browser.<p></p>The following browser versions are recommended:<p></p><ul><li>Internet Explorer 10 (compatibility view not supported)<li>Firefox 32.0<li>Safari 5.1<li>Chrome 37</ul>",
+    'WARN_BROWSER_IE_COMPATIBILITY_MODE_WARNING' => "<b>Warning:</b> Your browser is in IE compatibility view which is not supported.",
     'ERROR_TYPE_NOT_VALID' => 'Error. This type is not valid.',
     'ERROR_NO_BEAN' => 'Failed to get bean.', 
     'LBL_DUP_MERGE'=>'Find Duplicates',
@@ -2166,6 +2152,10 @@ $app_strings = array (
     'MSG_JS_ALERT_MTG_REMINDER_RELATED_TO' => 'Related To: ',
     'MSG_JS_ALERT_MTG_REMINDER_CALL_MSG' => "\nClick OK to view this call or click Cancel to dismiss this message.",
   	'MSG_JS_ALERT_MTG_REMINDER_MEETING_MSG' => "\nClick OK to view this meeting or click Cancel to dismiss this message.",
+	'MSG_JS_ALERT_MTG_REMINDER_NO_EVENT_NAME' => 'Event',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_DESCRIPTION' => '',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_LOCATION' => 'Location isn\'t set.',
+	'MSG_JS_ALERT_MTG_REMINDER_NO_START_DATE' => 'Start date isn\'t defined.',
  	'MSG_LIST_VIEW_NO_RESULTS_BASIC' => "No results found.",
 	'MSG_LIST_VIEW_NO_RESULTS' => "No results found for <item1>",
  	'MSG_LIST_VIEW_NO_RESULTS_SUBMSG' => "Create <item1> as a new <item2>",
@@ -2194,7 +2184,6 @@ $app_strings = array (
     'LBL_ADD_ALL_LEAD_FIELDS' => 'Add All Fields',
     'LBL_REMOVE_ALL_LEAD_FIELDS' => 'Remove All Fields',
     'LBL_ONLY_IMAGE_ATTACHMENT' => 'Only the following supported image type attachments can be embedded: JPG, PNG.',
-    'LBL_REMOVE' => 'Remove',
     'LBL_TRAINING' => 'Support',
     'ERR_DATABASE_CONN_DROPPED'=>'Error executing a query. Possibly, your database dropped the connection. Please refresh this page, you may need to restart you web server.',
     'ERR_MSSQL_DB_CONTEXT' =>'Changed database context to',
@@ -2217,16 +2206,16 @@ $app_strings = array (
 
     // MySugar status strings
     'LBL_CREATING_NEW_PAGE' => 'Creating New Page ...',
-    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Sugar Dashlets menu option.',
+    'LBL_NEW_PAGE_FEEDBACK' => 'You have created a new page. You may add new content with the Add Dashlets menu option.',
     'LBL_DELETE_PAGE_CONFIRM' => 'Are you sure you want to delete this page?',
     'LBL_SAVING_PAGE_TITLE' => 'Saving Page Title ...',
     'LBL_RETRIEVING_PAGE' => 'Retrieving Page ...',
-    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of Sugar Dashlets your adminstrator has set. Please remove a Sugar Dashlet to add more.',
-    'LBL_ADDING_DASHLET' => 'Adding Sugar Dashlet ...',
-    'LBL_ADDED_DASHLET' => 'Sugar Dashlet Added',
-    'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove the Sugar Dashlet?',
-    'LBL_REMOVING_DASHLET' => 'Removing Sugar Dashlet ...',
-    'LBL_REMOVED_DASHLET' => 'Sugar Dashlet Removed',
+    'LBL_MAX_DASHLETS_REACHED' => 'You have reached the maximum number of SuiteCRM Dashlets your adminstrator has set. Please remove a SuiteCRM Dashlet to add more.',
+    'LBL_ADDING_DASHLET' => 'Adding SuiteCRM Dashlet ...',
+    'LBL_ADDED_DASHLET' => 'SuiteCRM Dashlet Added',
+    'LBL_REMOVE_DASHLET_CONFIRM' => 'Are you sure you want to remove this SuiteCRM Dashlet?',
+    'LBL_REMOVING_DASHLET' => 'Removing SuiteCRM Dashlet ...',
+    'LBL_REMOVED_DASHLET' => 'SuiteCRM Dashlet Removed',
 
     // MySugar Menu Options
     'LBL_ADD_PAGE' => 'Add Page',
@@ -2236,7 +2225,7 @@ $app_strings = array (
 
     'LBL_LOADING_PAGE' => 'Loading page, please wait...',
 
-    'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this Sugar Dashlet.',
+    'LBL_RELOAD_PAGE' => 'Please <a href="javascript: window.location.reload()">reload the window</a> to use this SuiteCRM Dashlet.',
     'LBL_ADD_DASHLETS' => 'Add Dashlets',
     'LBL_CLOSE_DASHLETS' => 'Close',
     'LBL_OPTIONS' => 'Options',
@@ -2300,10 +2289,9 @@ $app_strings = array (
   'MSG_SHOULD_BE' => 'should be',
   'MSG_OR_GREATER' => 'or greater',
 
-    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to Sugar Portal 5.1.0',
-    'LBL_PORTAL_WELCOME_INFO' => 'Sugar Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to Sugar that can be deployed within any website.  Stay tuned for more customer self service features like Project Management and Forums in our future releases.',
+    'LBL_PORTAL_WELCOME_TITLE' => 'Welcome to SuiteCRM Portal',
+    'LBL_PORTAL_WELCOME_INFO' => 'SuiteCRM Portal is a framework which provides real-time view of cases, bugs & newsletters etc to customers. This is an external facing interface to SuiteCRM that can be deployed within any website.',
     'LBL_LIST' => 'List',
-    'LBL_CREATE_CASE' => 'Create Case',
     'LBL_CREATE_BUG' => 'Create Bug',
     'LBL_NO_RECORDS_FOUND' => '- 0 Records Found -',
 
@@ -2354,13 +2342,10 @@ $app_strings = array (
   'ERROR_MISSING_COLLECTION_SELECTION' => 'Empty required field',
     'LBL_COLLECTION_EXACT' => 'Exact',
 
-    // fastcgi checks
-    'LBL_FASTCGI_LOGGING'      => 'For optimal experience using IIS/FastCGI sapi, set fastcgi.logging to 0 in your php.ini file.',
     //MB -Fixed Bug #32812 -Max
     'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
     'LBL_DESCRIPTION' => 'Description',
 
-  'LBL_NONE' => '-none-',
   'LBL_YESTERDAY'=> 'yesterday',
   'LBL_TODAY'=>'today',
   'LBL_TOMORROW'=>'tomorrow',
@@ -2457,6 +2442,7 @@ $app_strings = array (
     'LBL_QUICKEDIT_NODEFS_NAVIGATION'=> 'Navigating... ',
 
     'LBL_PENDING_NOTIFICATIONS' => 'Notifications',
+    'LBL_NOTIFICATIONS_NONE' => 'No Current Notifications',
     'LBL_ALT_ADD_TEAM_ROW' => 'Add new team row',
     'LBL_ALT_REMOVE_TEAM_ROW' => 'Remove team',
     'LBL_ALT_SPOT_SEARCH' => 'Spot Search',
@@ -2513,8 +2499,22 @@ $app_strings = array (
     'LBL_KEYBOARD_SHORTCUTS_HELP' => '<p><strong>Form Functionality - Alt+</strong><br/> I = ed<b>I</b>t (detailview)<br/> U = d<b>U</b>plicate (detailview)<br/> D = <b>D</b>elete (detailview)<br/> A = s<b>A</b>ve (editview)<br/> L = cance<b>L</b> (editview) <br/><br/></p><p><strong>Search and Navigation  - Alt+</strong><br/> 7 = first input on Edit form<br/> 8 = Advanced Search link<br/> 9 = First Search Form input<br/> 0 = Unified search input<br></p>' ,
 
     'ERR_CONNECTOR_NOT_ARRAY' => 'connector array in {0} been defined incorrectly or is empty and could not be used.',
-    'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See sugarcrm.log for more information)',
+    'ERR_SUHOSIN' => 'Upload stream is blocked by Suhosin, please add &quot;upload&quot; to suhosin.executor.include.whitelist (See suitecrm.log for more information)',
     'ERR_BAD_RESPONSE_FROM_SERVER' => 'Bad response from the server',
+    'LBL_ACCOUNT_PRODUCT_QUOTE_LINK' => 'Quote',
+    'LBL_ACCOUNT_PRODUCT_SALE_PRICE' => 'Sale Price',
+    'LBL_EMAIL_CHECK_INTERVAL_DOM'          => array(
+        '-1' => 'Manually',
+        '5' => 'Every 5 minutes',
+        '15' => 'Every 15 minutes',
+        '30' => 'Every 30 minutes',
+        '60' => 'Every hour',
+    ),
+
+    'ERR_A_REMINDER_IS_EMPTY_OR_INCORRECT' => 'A reminder is empty or incorrect.',
+    'ERR_REMINDER_IS_NOT_SET_POPUP_OR_EMAIL' => 'Reminder is not set for either a popup or email.',
+    'ERR_NO_INVITEES_FOR_REMINDER' => 'No invitees for reminder.'
+
     );
 
 $app_list_strings['moduleList']['Library'] = 'Library';
@@ -2526,7 +2526,6 @@ $app_list_strings['project_priority_options'] = array (
     'Medium' => 'Medium',
     'Low' => 'Low',
 );
-
 
 $app_list_strings['kbdocument_status_dom'] = array (
     'Draft' => 'Draft',
@@ -2869,7 +2868,7 @@ $app_list_strings['kbdocument_status_dom'] = array (
 
   $app_list_strings['timezone_dom'] = array(
 
-      'Africa/Algiers' => 'Africa/Algiers',
+  'Africa/Algiers' => 'Africa/Algiers',
   'Africa/Luanda' => 'Africa/Luanda',
   'Africa/Porto-Novo' => 'Africa/Porto-Novo',
   'Africa/Gaborone' => 'Africa/Gaborone',
@@ -3248,7 +3247,7 @@ $app_list_strings['kbdocument_status_dom'] = array (
 
   $app_list_strings['moduleList']['Sugar_Favorites'] = 'Favorites';
   $app_list_strings['eapm_list']= array(
-    'Sugar'=>'Sugar',
+    'Sugar'=>'SuiteCRM',
     'WebEx'=>'WebEx',
     'GoToMeeting'=>'GoToMeeting',
     'IBMSmartCloud'=>'IBM SmartCloud',
@@ -3293,4 +3292,703 @@ $app_strings ['documentation'] = array (
 	'PRO' => '04_Sugar_Professional',
 	'COM' => '05_Sugar_Community_Edition'
 );
+
+
+// knowledge base
+$app_list_strings['moduleList']['AOK_KnowledgeBase'] = 'Knowledge Base';
+$app_list_strings['moduleList']['AOK_Knowledge_Base_Categories'] = 'KB Categories';
+$app_list_strings['aok_status_list']['Draft'] = 'Draft';
+$app_list_strings['aok_status_list']['Expired'] = 'Expired';
+$app_list_strings['aok_status_list']['In_Review'] = 'In Review';
+//$app_list_strings['aok_status_list']['Published'] = 'Published';
+$app_list_strings['aok_status_list']['published_private'] = 'Private';
+$app_list_strings['aok_status_list']['published_public'] = 'Public';
+
+
+$app_list_strings['moduleList']['Reminders'] = 'Reminders';
+$app_list_strings['moduleListSingular']['Reminders'] = 'Reminder';
+
+$app_list_strings['moduleList']['Reminders_Invitees'] = 'Reminders_Invitees';
+$app_list_strings['moduleListSingular']['Reminders_Invitees'] = 'Reminder_Invitee';
+
+$app_list_strings['moduleList']['FP_events'] = 'Events';
+$app_list_strings['moduleList']['FP_Event_Locations'] = 'Locations';
+$app_list_strings['invite_template_list'][''] = '';
+
+//events
+$app_list_strings['fp_event_invite_status_dom']['Invited'] = 'Invited';
+$app_list_strings['fp_event_invite_status_dom']['Not Invited'] = 'Not Invited';
+$app_list_strings['fp_event_invite_status_dom']['Attended'] = 'Attended';
+$app_list_strings['fp_event_invite_status_dom']['Not Attended'] = 'Not Attended';
+$app_list_strings['fp_event_status_dom']['Accepted'] = 'Accepted';
+$app_list_strings['fp_event_status_dom']['Declined'] = 'Declined';
+$app_list_strings['fp_event_status_dom']['No Response'] = 'No Response';
+
+$app_strings['LBL_STATUS_EVENT'] = 'Invite Status';
+$app_strings['LBL_ACCEPT_STATUS'] = 'Accept Status';
+$app_strings['LBL_LISTVIEW_OPTION_CURRENT'] = 'Select This Page';
+$app_strings['LBL_LISTVIEW_OPTION_ENTIRE'] = 'Select All';
+$app_strings['LBL_LISTVIEW_NONE'] = 'Deselect All';
+
+//aod
+$app_list_strings['moduleList']['AOD_IndexEvent'] = 'Index Event';
+$app_list_strings['moduleList']['AOD_Index'] = 'Index';
+
+$app_list_strings['moduleList']['AOP_AOP_Case_Events'] = 'Case Events';
+$app_list_strings['moduleList']['AOP_AOP_Case_Updates'] = 'Case Updates';
+$app_list_strings['moduleList']['AOP_Case_Events'] = 'Case Events';
+$app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
+$app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
+
+//aop
+$app_list_strings['case_state_dom'] =
+    array (
+        'Open' => 'Open',
+        'Closed' => 'Closed',
+    );
+$app_list_strings['case_state_default_key'] = 'Open';
+$app_list_strings['case_status_default_key'] = 'Open_New';
+$app_list_strings['case_status_dom'] =
+    array (
+        'Open_New' => 'New',
+        'Open_Assigned' => 'Assigned',
+        'Closed_Closed' => 'Closed',
+        'Open_Pending Input' => 'Pending Input',
+        'Closed_Rejected' => 'Rejected',
+        'Closed_Duplicate' => 'Duplicate',
+    );
+$app_list_strings['contact_portal_user_type_dom'] =
+    array (
+        'Single' => 'Single user',
+        'Account' => 'Account user',
+    );
+$app_list_strings['dom_email_distribution_for_auto_create']=array (
+    'AOPDefault' => 'Use AOP Default',
+    'singleUser' => 'Single User',
+    'roundRobin' => 'Round-Robin',
+    'leastBusy' => 'Least-Busy',
+    'random' => 'Random',
+);
+
+//aor
+$app_list_strings['moduleList']['AOR_Reports'] = 'Reports';
+$app_list_strings['moduleList']['AOR_Conditions'] = 'Report Conditions';
+$app_list_strings['moduleList']['AOR_Charts'] = 'Report Charts';
+$app_list_strings['moduleList']['AOR_Fields'] = 'Report Fields';
+$app_list_strings['moduleList']['AOR_Scheduled_Reports'] = 'Scheduled Reports';
+$app_list_strings['aor_operator_list']['Equal_To'] = 'Equal To';
+$app_list_strings['aor_operator_list']['Not_Equal_To'] = 'Not Equal To';
+$app_list_strings['aor_operator_list']['Greater_Than'] = 'Greater Than';
+$app_list_strings['aor_operator_list']['Less_Than'] = 'Less Than';
+$app_list_strings['aor_operator_list']['Greater_Than_or_Equal_To'] = 'Greater Than or Equal To';
+$app_list_strings['aor_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or Equal To';
+$app_list_strings['aor_operator_list']['Contains'] = 'Contains';
+$app_list_strings['aor_operator_list']['Starts_With'] = 'Starts With';
+$app_list_strings['aor_operator_list']['Ends_With'] = 'Ends With';
+$app_list_strings['aor_format_options'][''] = '';
+$app_list_strings['aor_format_options']['Y-m-d'] = 'Y-m-d';
+$app_list_strings['aor_format_options']['Ymd'] = 'Ymd';
+$app_list_strings['aor_format_options']['Y-m'] = 'Y-m';
+$app_list_strings['aor_format_options']['d/m/Y'] = 'd/m/Y';
+$app_list_strings['aor_format_options']['Y'] = 'Y';
+$app_list_strings['aor_sql_operator_list']['Equal_To'] = '=';
+$app_list_strings['aor_sql_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aor_sql_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aor_sql_operator_list']['Less_Than'] = '<';
+$app_list_strings['aor_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aor_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
+$app_list_strings['aor_sql_operator_list']['Contains'] = 'LIKE';
+$app_list_strings['aor_sql_operator_list']['Starts_With'] = 'LIKE';
+$app_list_strings['aor_sql_operator_list']['Ends_With'] = 'LIKE';
+$app_list_strings['aor_condition_operator_list']['And'] = 'And';
+$app_list_strings['aor_condition_operator_list']['OR'] = 'OR';
+$app_list_strings['aor_condition_type_list']['Value'] = 'Value';
+$app_list_strings['aor_condition_type_list']['Field'] = 'Field';
+$app_list_strings['aor_condition_type_list']['Date'] = 'Date';
+$app_list_strings['aor_condition_type_list']['Multi'] = 'Multiple';
+$app_list_strings['aor_condition_type_list']['Period'] = 'Period';
+$app_list_strings['aor_condition_type_list']['CurrentUserID'] = 'Current User';
+$app_list_strings['aor_date_type_list'][''] = '';
+$app_list_strings['aor_date_type_list']['minute'] = 'Minutes';
+$app_list_strings['aor_date_type_list']['hour'] = 'Hours';
+$app_list_strings['aor_date_type_list']['day'] = 'Days';
+$app_list_strings['aor_date_type_list']['week'] = 'Weeks';
+$app_list_strings['aor_date_type_list']['month'] = 'Months';
+$app_list_strings['aor_date_type_list']['business_hours'] = 'Business Hours';
+$app_list_strings['aor_date_options']['now'] = 'Now';
+$app_list_strings['aor_date_options']['field'] = 'This Field';
+$app_list_strings['aor_date_operator']['now'] = '';
+$app_list_strings['aor_date_operator']['plus'] = '+';
+$app_list_strings['aor_date_operator']['minus'] = '-';
+$app_list_strings['aor_sort_operator'][''] = '';
+$app_list_strings['aor_sort_operator']['ASC'] = 'Ascending';
+$app_list_strings['aor_sort_operator']['DESC'] = 'Descending';
+$app_list_strings['aor_function_list'][''] = '';
+$app_list_strings['aor_function_list']['COUNT'] = 'Count';
+$app_list_strings['aor_function_list']['MIN'] = 'Minimum';
+$app_list_strings['aor_function_list']['MAX'] = 'Maximum';
+$app_list_strings['aor_function_list']['SUM'] = 'Sum';
+$app_list_strings['aor_function_list']['AVG'] = 'Average';
+$app_list_strings['aor_total_options'][''] = '';
+$app_list_strings['aor_total_options']['COUNT'] = 'Count';
+$app_list_strings['aor_total_options']['SUM'] = 'Sum';
+$app_list_strings['aor_total_options']['AVG'] = 'Average';
+$app_list_strings['aor_chart_types']['bar'] = 'Bar chart';
+$app_list_strings['aor_chart_types']['line'] = 'Line chart';
+$app_list_strings['aor_chart_types']['pie'] = 'Pie chart';
+$app_list_strings['aor_chart_types']['radar'] = 'Radar chart';
+$app_list_strings['aor_chart_types']['polar'] = 'Polar chart';
+$app_list_strings['aor_chart_types']['stacked_bar'] = 'Stacked bar';
+$app_list_strings['aor_chart_types']['grouped_bar'] = 'Grouped bar';
+$app_list_strings['aor_scheduled_report_schedule_types']['monthly'] = 'Monthly';
+$app_list_strings['aor_scheduled_report_schedule_types']['weekly'] = 'Weekly';
+$app_list_strings['aor_scheduled_report_schedule_types']['daily'] = 'Daily';
+$app_list_strings['aor_scheduled_reports_status_dom']['active'] = 'Active';
+$app_list_strings['aor_scheduled_reports_status_dom']['inactive'] = 'Inactive';
+$app_list_strings['aor_email_type_list']['Email Address'] = 'Email';
+$app_list_strings['aor_email_type_list']['Specify User'] = 'User';
+$app_list_strings['aor_email_type_list']['Users'] = 'Users';
+$app_list_strings['aor_assign_options']['all'] = 'ALL Users';
+$app_list_strings['aor_assign_options']['role'] = 'ALL Users in Role';
+$app_list_strings['aor_assign_options']['security_group'] = 'ALL Users in Security Group';
+$app_list_strings['date_time_period_list']['today'] = 'Today';
+$app_list_strings['date_time_period_list']['yesterday'] = 'Yesterday';
+$app_list_strings['date_time_period_list']['this_week'] = 'This Week';
+$app_list_strings['date_time_period_list']['last_week'] = 'Last Week';
+$app_list_strings['date_time_period_list']['last_month'] = 'Last Month';
+$app_list_strings['date_time_period_list']['this_quarter'] = 'This Quarter';
+$app_list_strings['date_time_period_list']['last_quarter'] = 'Last Quarter';
+$app_list_strings['date_time_period_list']['this_year'] = 'This year';
+$app_list_strings['date_time_period_list']['last_year'] = 'Last year';
+$app_strings['LBL_CRON_ON_THE_MONTHDAY'] = 'on the';
+$app_strings['LBL_CRON_ON_THE_WEEKDAY'] = 'on';
+$app_strings['LBL_CRON_AT'] = 'at';
+$app_strings['LBL_CRON_RAW'] = 'Advanced';
+$app_strings['LBL_CRON_MIN'] = 'Min';
+$app_strings['LBL_CRON_HOUR'] = 'Hour';
+$app_strings['LBL_CRON_DAY'] = 'Day';
+$app_strings['LBL_CRON_MONTH'] = 'Month';
+$app_strings['LBL_CRON_DOW'] = 'DOW';
+$app_strings['LBL_CRON_DAILY'] = 'Daily';
+$app_strings['LBL_CRON_WEEKLY'] = 'Weekly';
+$app_strings['LBL_CRON_MONTHLY'] = 'Monthly';
+
+//aos
+$app_list_strings['moduleList']['AOS_Contracts'] = 'Contracts';
+$app_list_strings['moduleList']['AOS_Invoices'] = 'Invoices';
+$app_list_strings['moduleList']['AOS_PDF_Templates'] = 'PDF Templates';
+$app_list_strings['moduleList']['AOS_Product_Categories'] = 'Product Categories';
+$app_list_strings['moduleList']['AOS_Products'] = 'Products';
+$app_list_strings['moduleList']['AOS_Products_Quotes'] = 'Line Items';
+$app_list_strings['moduleList']['AOS_Line_Item_Groups'] = 'Line Item Groups';
+$app_list_strings['moduleList']['AOS_Quotes'] = 'Quotes';
+$app_list_strings['aos_quotes_type_dom'][''] = '';
+$app_list_strings['aos_quotes_type_dom']['Analyst'] = 'Analyst';
+$app_list_strings['aos_quotes_type_dom']['Competitor'] = 'Competitor';
+$app_list_strings['aos_quotes_type_dom']['Customer'] = 'Customer';
+$app_list_strings['aos_quotes_type_dom']['Integrator'] = 'Integrator';
+$app_list_strings['aos_quotes_type_dom']['Investor'] = 'Investor';
+$app_list_strings['aos_quotes_type_dom']['Partner'] = 'Partner';
+$app_list_strings['aos_quotes_type_dom']['Press'] = 'Press';
+$app_list_strings['aos_quotes_type_dom']['Prospect'] = 'Prospect';
+$app_list_strings['aos_quotes_type_dom']['Reseller'] = 'Reseller';
+$app_list_strings['aos_quotes_type_dom']['Other'] = 'Other';
+$app_list_strings['template_ddown_c_list'][''] = '';
+$app_list_strings['quote_stage_dom']['Draft'] = 'Draft';
+$app_list_strings['quote_stage_dom']['Negotiation'] = 'Negotiation';
+$app_list_strings['quote_stage_dom']['Delivered'] = 'Delivered';
+$app_list_strings['quote_stage_dom']['On Hold'] = 'On Hold';
+$app_list_strings['quote_stage_dom']['Confirmed'] = 'Confirmed';
+$app_list_strings['quote_stage_dom']['Closed Accepted'] = 'Closed Accepted';
+$app_list_strings['quote_stage_dom']['Closed Lost'] = 'Closed Lost';
+$app_list_strings['quote_stage_dom']['Closed Dead'] = 'Closed Dead';
+$app_list_strings['quote_term_dom']['Net 15'] = 'Nett 15';
+$app_list_strings['quote_term_dom']['Net 30'] = 'Nett 30';
+$app_list_strings['quote_term_dom'][''] = '';
+$app_list_strings['approval_status_dom']['Approved'] = 'Approved';
+$app_list_strings['approval_status_dom']['Not Approved'] = 'Not Approved';
+$app_list_strings['approval_status_dom'][''] = '';
+$app_list_strings['vat_list']['0.0'] = '0%';
+$app_list_strings['vat_list']['5.0'] = '5%';
+$app_list_strings['vat_list']['7.5'] = '7.5%';
+$app_list_strings['vat_list']['17.5'] = '17.5%';
+$app_list_strings['vat_list']['20.0'] = '20%';
+$app_list_strings['discount_list']['Percentage'] = 'Pct';
+$app_list_strings['discount_list']['Amount'] = 'Amt';
+$app_list_strings['aos_invoices_type_dom'][''] = '';
+$app_list_strings['aos_invoices_type_dom']['Analyst'] = 'Analyst';
+$app_list_strings['aos_invoices_type_dom']['Competitor'] = 'Competitor';
+$app_list_strings['aos_invoices_type_dom']['Customer'] = 'Customer';
+$app_list_strings['aos_invoices_type_dom']['Integrator'] = 'Integrator';
+$app_list_strings['aos_invoices_type_dom']['Investor'] = 'Investor';
+$app_list_strings['aos_invoices_type_dom']['Partner'] = 'Partner';
+$app_list_strings['aos_invoices_type_dom']['Press'] = 'Press';
+$app_list_strings['aos_invoices_type_dom']['Prospect'] = 'Prospect';
+$app_list_strings['aos_invoices_type_dom']['Reseller'] = 'Reseller';
+$app_list_strings['aos_invoices_type_dom']['Other'] = 'Other';
+$app_list_strings['invoice_status_dom']['Paid'] = 'Paid';
+$app_list_strings['invoice_status_dom']['Unpaid'] = 'Unpaid';
+$app_list_strings['invoice_status_dom']['Cancelled'] = 'Cancelled';
+$app_list_strings['invoice_status_dom'][''] = '';
+$app_list_strings['quote_invoice_status_dom']['Not Invoiced'] = 'Not Invoiced';
+$app_list_strings['quote_invoice_status_dom']['Invoiced'] = 'Invoiced';
+$app_list_strings['product_code_dom']['XXXX'] = 'XXXX';
+$app_list_strings['product_code_dom']['YYYY'] = 'YYYY';
+$app_list_strings['product_category_dom']['Laptops'] = 'Laptops';
+$app_list_strings['product_category_dom']['Desktops'] = 'Desktops';
+$app_list_strings['product_category_dom'][''] = '';
+$app_list_strings['product_type_dom']['Good'] = 'Good';
+$app_list_strings['product_type_dom']['Service'] = 'Service';
+$app_list_strings['product_quote_parent_type_dom']['AOS_Quotes'] = 'Quotes';
+$app_list_strings['product_quote_parent_type_dom']['AOS_Invoices'] = 'Invoices';
+$app_list_strings['product_quote_parent_type_dom']['AOS_Contracts'] = 'Contracts';
+$app_list_strings['pdf_template_type_dom']['AOS_Quotes'] = 'Quotes';
+$app_list_strings['pdf_template_type_dom']['AOS_Invoices'] = 'Invoices';
+$app_list_strings['pdf_template_type_dom']['AOS_Contracts'] = 'Contracts';
+$app_list_strings['pdf_template_type_dom']['Accounts'] = 'Accounts';
+$app_list_strings['pdf_template_type_dom']['Contacts'] = 'Contacts';
+$app_list_strings['pdf_template_type_dom']['Leads'] = 'Leads';
+$app_list_strings['pdf_template_sample_dom'][''] = '';
+$app_list_strings['contract_status_list']['Not Started'] = 'Not Started';
+$app_list_strings['contract_status_list']['In Progress'] = 'In Progress';
+$app_list_strings['contract_status_list']['Signed'] = 'Signed';
+$app_list_strings['contract_type_list']['Type'] = 'Type';
+$app_strings['LBL_GENERATE_LETTER'] = 'Generate Letter';
+$app_strings['LBL_SELECT_TEMPLATE'] = 'Please Select a Template';
+$app_strings['LBL_NO_TEMPLATE'] = 'ERROR\nNo templates found.\nPlease go to the PDF templates module and create one';
+
+//aow
+$app_list_strings['moduleList']['AOW_WorkFlow'] = 'WorkFlow';
+$app_list_strings['moduleList']['AOW_Conditions'] = 'WorkFlow Conditions';
+$app_list_strings['moduleList']['AOW_Processed'] = 'Process Audit';
+$app_list_strings['moduleList']['AOW_Actions'] = 'WorkFlow Actions';
+$app_list_strings['aow_status_list']['Active'] = 'Active';
+$app_list_strings['aow_status_list']['Inactive'] = 'Inactive';
+$app_list_strings['aow_operator_list']['Equal_To'] = 'Equal To';
+$app_list_strings['aow_operator_list']['Not_Equal_To'] = 'Not Equal To';
+$app_list_strings['aow_operator_list']['Greater_Than'] = 'Greater Than';
+$app_list_strings['aow_operator_list']['Less_Than'] = 'Less Than';
+$app_list_strings['aow_operator_list']['Greater_Than_or_Equal_To'] = 'Greater Than or Equal To';
+$app_list_strings['aow_operator_list']['Less_Than_or_Equal_To'] = 'Less Than or Equal To';
+$app_list_strings['aow_operator_list']['Contains'] = 'Contains';
+$app_list_strings['aow_operator_list']['Starts_With'] = 'Starts With';
+$app_list_strings['aow_operator_list']['Ends_With'] = 'Ends With';
+$app_list_strings['aow_operator_list']['is_null'] = 'Is Null';
+$app_list_strings['aow_sql_operator_list']['Equal_To'] = '=';
+$app_list_strings['aow_sql_operator_list']['Not_Equal_To'] = '!=';
+$app_list_strings['aow_sql_operator_list']['Greater_Than'] = '>';
+$app_list_strings['aow_sql_operator_list']['Less_Than'] = '<';
+$app_list_strings['aow_sql_operator_list']['Greater_Than_or_Equal_To'] = '>=';
+$app_list_strings['aow_sql_operator_list']['Less_Than_or_Equal_To'] = '<=';
+$app_list_strings['aow_sql_operator_list']['Contains'] = 'LIKE';
+$app_list_strings['aow_sql_operator_list']['Starts_With'] = 'LIKE';
+$app_list_strings['aow_sql_operator_list']['Ends_With'] = 'LIKE';
+$app_list_strings['aow_sql_operator_list']['is_null'] = 'IS NULL';
+$app_list_strings['aow_process_status_list']['Complete'] = 'Complete';
+$app_list_strings['aow_process_status_list']['Running'] = 'Running';
+$app_list_strings['aow_process_status_list']['Pending'] = 'Pending';
+$app_list_strings['aow_process_status_list']['Failed'] = 'Failed';
+$app_list_strings['aow_condition_operator_list']['And'] = 'And';
+$app_list_strings['aow_condition_operator_list']['OR'] = 'OR';
+$app_list_strings['aow_condition_type_list']['Value'] = 'Value';
+$app_list_strings['aow_condition_type_list']['Field'] = 'Field';
+$app_list_strings['aow_condition_type_list']['Any_Change'] = 'Any Change';
+$app_list_strings['aow_condition_type_list']['SecurityGroup'] = 'In SecurityGroup';
+$app_list_strings['aow_condition_type_list']['Date'] = 'Date';
+$app_list_strings['aow_condition_type_list']['Multi'] = 'One of';
+$app_list_strings['aow_action_type_list']['Value'] = 'Value';
+$app_list_strings['aow_action_type_list']['Field'] = 'Field';
+$app_list_strings['aow_action_type_list']['Date'] = 'Date';
+$app_list_strings['aow_action_type_list']['Round_Robin'] = 'Round Robin';
+$app_list_strings['aow_action_type_list']['Least_Busy'] = 'Least Busy';
+$app_list_strings['aow_action_type_list']['Random'] = 'Random';
+$app_list_strings['aow_rel_action_type_list']['Value'] = 'Value';
+$app_list_strings['aow_rel_action_type_list']['Field'] = 'Field';
+$app_list_strings['aow_date_type_list'][''] = '';
+$app_list_strings['aow_date_type_list']['minute'] = 'Minutes';
+$app_list_strings['aow_date_type_list']['hour'] = 'Hours';
+$app_list_strings['aow_date_type_list']['day'] = 'Days';
+$app_list_strings['aow_date_type_list']['week'] = 'Weeks';
+$app_list_strings['aow_date_type_list']['month'] = 'Months';
+$app_list_strings['aow_date_type_list']['business_hours'] = 'Business Hours';
+$app_list_strings['aow_date_options']['now'] = 'Now';
+$app_list_strings['aow_date_options']['today'] = 'Today';
+$app_list_strings['aow_date_options']['field'] = 'This Field';
+$app_list_strings['aow_date_operator']['now'] = '';
+$app_list_strings['aow_date_operator']['plus'] = '+';
+$app_list_strings['aow_date_operator']['minus'] = '-';
+$app_list_strings['aow_assign_options']['all'] = 'ALL Users';
+$app_list_strings['aow_assign_options']['role'] = 'ALL Users in Role';
+$app_list_strings['aow_assign_options']['security_group'] = 'ALL Users in Security Group';
+$app_list_strings['aow_email_type_list']['Email Address'] = 'Email';
+$app_list_strings['aow_email_type_list']['Record Email'] = 'Record Email';
+$app_list_strings['aow_email_type_list']['Related Field'] = 'Related Field';
+$app_list_strings['aow_email_type_list']['Specify User'] = 'User';
+$app_list_strings['aow_email_type_list']['Users'] = 'Users';
+$app_list_strings['aow_email_to_list']['to'] = 'To';
+$app_list_strings['aow_email_to_list']['cc'] = 'Cc';
+$app_list_strings['aow_email_to_list']['bcc'] = 'Bcc';
+$app_list_strings['aow_run_on_list']['All_Records'] = 'All Records';
+$app_list_strings['aow_run_on_list']['New_Records'] = 'New Records';
+$app_list_strings['aow_run_on_list']['Modified_Records'] = 'Modified Records';
+$app_list_strings['aow_run_when_list']['Always'] = 'Always';
+$app_list_strings['aow_run_when_list']['On_Save'] = 'Only On Save';
+$app_list_strings['aow_run_when_list']['In_Scheduler'] = 'Only In The Scheduler';
+
+//gant
+$app_list_strings['moduleList']['AM_ProjectTemplates'] = 'Project Templates';
+$app_list_strings['moduleList']['AM_TaskTemplates'] = 'Project Task Templates';
+$app_list_strings['relationship_type_list']['FS'] = 'Finish to Start';
+$app_list_strings['relationship_type_list']['SS'] = 'Start to Start';
+$app_list_strings['moduleList']['AM_ProjectHolidays'] = 'Project Holidays';
+$app_list_strings['holiday_resource_dom']['Contacts'] = 'Contacts';
+$app_list_strings['holiday_resource_dom']['Users'] = 'Users';
+$app_list_strings['duration_unit_dom']['Days'] = 'Days';
+$app_list_strings['duration_unit_dom']['Hours'] = 'Hours';
+$app_strings['LBL_GANTT_BUTTON_LABEL'] = 'View Gantt';
+$app_strings['LBL_GANTT_BUTTON_TITLE'] = 'View Gantt';
+$app_strings['LBL_CREATE_PROJECT'] = 'Create Project';
+
+//gmaps
+$app_strings['LBL_MAP'] = 'Map';
+$app_strings['LBL_MAPS'] = 'Maps';
+
+$app_strings['LBL_JJWG_MAPS_LNG'] = 'Longitude';
+$app_strings['LBL_JJWG_MAPS_LAT'] = 'Latitude';
+$app_strings['LBL_JJWG_MAPS_GEOCODE_STATUS'] = 'Geocode Status';
+$app_strings['LBL_JJWG_MAPS_ADDRESS'] = 'Address';
+$app_strings['LBL_BUG_FIX'] = 'Bug Fix';
+
+$app_list_strings['moduleList']['jjwg_Maps'] = 'Maps';
+$app_list_strings['moduleList']['jjwg_Markers'] = 'Map Markers';
+$app_list_strings['moduleList']['jjwg_Areas'] = 'Map Areas';
+$app_list_strings['moduleList']['jjwg_Address_Cache'] = 'Map Address Cache';
+
+$app_list_strings['map_unit_type_list']['mi'] = 'Miles';
+$app_list_strings['map_unit_type_list']['km'] = 'Kilometers';
+
+$app_list_strings['map_module_type_list']['Accounts'] = 'Accounts';
+$app_list_strings['map_module_type_list']['Contacts'] = 'Contacts';
+$app_list_strings['map_module_type_list']['Cases'] = 'Cases';
+$app_list_strings['map_module_type_list']['Leads'] = 'Leads';
+$app_list_strings['map_module_type_list']['Meetings'] = 'Meetings';
+$app_list_strings['map_module_type_list']['Opportunities'] = 'Opportunities';
+$app_list_strings['map_module_type_list']['Project'] = 'Projects';
+$app_list_strings['map_module_type_list']['Prospects'] = 'Targets';
+
+$app_list_strings['map_relate_type_list']['Accounts'] = 'Account';
+$app_list_strings['map_relate_type_list']['Contacts'] = 'Contact';
+$app_list_strings['map_relate_type_list']['Cases'] = 'Case';
+$app_list_strings['map_relate_type_list']['Leads'] = 'Lead';
+$app_list_strings['map_relate_type_list']['Meetings'] = 'Meeting';
+$app_list_strings['map_relate_type_list']['Opportunities'] = 'Opportunity';
+$app_list_strings['map_relate_type_list']['Project'] = 'Project';
+$app_list_strings['map_relate_type_list']['Prospects'] = 'Target';
+
+$app_list_strings['marker_image_list']['accident'] = 'Accident';
+$app_list_strings['marker_image_list']['administration'] = 'Administration';
+$app_list_strings['marker_image_list']['agriculture'] = 'Agriculture';
+$app_list_strings['marker_image_list']['aircraft_small'] = 'Aircraft Small';
+$app_list_strings['marker_image_list']['airplane_tourism'] = 'Airplane Tourism';
+$app_list_strings['marker_image_list']['airport'] = 'Airport';
+$app_list_strings['marker_image_list']['amphitheater'] = 'Amphitheater';
+$app_list_strings['marker_image_list']['apartment'] = 'Apartment';
+$app_list_strings['marker_image_list']['aquarium'] = 'Aquarium';
+$app_list_strings['marker_image_list']['arch'] = 'Arch';
+$app_list_strings['marker_image_list']['atm'] = 'Atm';
+$app_list_strings['marker_image_list']['audio'] = 'Audio';
+$app_list_strings['marker_image_list']['bank'] = 'Bank';
+$app_list_strings['marker_image_list']['bank_euro'] = 'Bank Euro';
+$app_list_strings['marker_image_list']['bank_pound'] = 'Bank Pound';
+$app_list_strings['marker_image_list']['bar'] = 'Bar';
+$app_list_strings['marker_image_list']['beach'] = 'Beach';
+$app_list_strings['marker_image_list']['beautiful'] = 'Beautiful';
+$app_list_strings['marker_image_list']['bicycle_parking'] = 'Bicycle Parking';
+$app_list_strings['marker_image_list']['big_city'] = 'Big City';
+$app_list_strings['marker_image_list']['bridge'] = 'Bridge';
+$app_list_strings['marker_image_list']['bridge_modern'] = 'Bridge Modern';
+$app_list_strings['marker_image_list']['bus'] = 'Bus';
+$app_list_strings['marker_image_list']['cable_car'] = 'Cable Car';
+$app_list_strings['marker_image_list']['car'] = 'Car';
+$app_list_strings['marker_image_list']['car_rental'] = 'Car Rental';
+$app_list_strings['marker_image_list']['carrepair'] = 'Carrepair';
+$app_list_strings['marker_image_list']['castle'] = 'Castle';
+$app_list_strings['marker_image_list']['cathedral'] = 'Cathedral';
+$app_list_strings['marker_image_list']['chapel'] = 'Chapel';
+$app_list_strings['marker_image_list']['church'] = 'Church';
+$app_list_strings['marker_image_list']['city_square'] = 'City Square';
+$app_list_strings['marker_image_list']['cluster'] = 'Cluster';
+$app_list_strings['marker_image_list']['cluster_2'] = 'Cluster 2';
+$app_list_strings['marker_image_list']['cluster_3'] = 'Cluster 3';
+$app_list_strings['marker_image_list']['cluster_4'] = 'Cluster 4';
+$app_list_strings['marker_image_list']['cluster_5'] = 'Cluster 5';
+$app_list_strings['marker_image_list']['coffee'] = 'Coffee';
+$app_list_strings['marker_image_list']['community_centre'] = 'Community Centre';
+$app_list_strings['marker_image_list']['company'] = 'Company';
+$app_list_strings['marker_image_list']['conference'] = 'Conference';
+$app_list_strings['marker_image_list']['construction'] = 'Construction';
+$app_list_strings['marker_image_list']['convenience'] = 'Convenience';
+$app_list_strings['marker_image_list']['court'] = 'Court';
+$app_list_strings['marker_image_list']['cruise'] = 'Cruise';
+$app_list_strings['marker_image_list']['currency_exchange'] = 'Currency Exchange';
+$app_list_strings['marker_image_list']['customs'] = 'Customs';
+$app_list_strings['marker_image_list']['cycling'] = 'Cycling';
+$app_list_strings['marker_image_list']['dam'] = 'Dam';
+$app_list_strings['marker_image_list']['days_dim'] = 'Days Dim';
+$app_list_strings['marker_image_list']['days_dom'] = 'Days Dom';
+$app_list_strings['marker_image_list']['days_jeu'] = 'Days Jeu';
+$app_list_strings['marker_image_list']['days_jue'] = 'Days Jue';
+$app_list_strings['marker_image_list']['days_lun'] = 'Days Lun';
+$app_list_strings['marker_image_list']['days_mar'] = 'Days Mar';
+$app_list_strings['marker_image_list']['days_mer'] = 'Days Mer';
+$app_list_strings['marker_image_list']['days_mie'] = 'Days Mie';
+$app_list_strings['marker_image_list']['days_qua'] = 'Days Qua';
+$app_list_strings['marker_image_list']['days_qui'] = 'Days Qui';
+$app_list_strings['marker_image_list']['days_sab'] = 'Days Sab';
+$app_list_strings['marker_image_list']['days_sam'] = 'Days Sam';
+$app_list_strings['marker_image_list']['days_seg'] = 'Days Seg';
+$app_list_strings['marker_image_list']['days_sex'] = 'Days Sex';
+$app_list_strings['marker_image_list']['days_ter'] = 'Days Ter';
+$app_list_strings['marker_image_list']['days_ven'] = 'Days Ven';
+$app_list_strings['marker_image_list']['days_vie'] = 'Days Vie';
+$app_list_strings['marker_image_list']['dentist'] = 'Dentist';
+$app_list_strings['marker_image_list']['deptartment_store'] = 'Deptartment Store';
+$app_list_strings['marker_image_list']['disability'] = 'Disability';
+$app_list_strings['marker_image_list']['disabled_parking'] = 'Disabled Parking';
+$app_list_strings['marker_image_list']['doctor'] = 'Doctor';
+$app_list_strings['marker_image_list']['dog_leash'] = 'Dog Leash';
+$app_list_strings['marker_image_list']['down'] = 'Down';
+$app_list_strings['marker_image_list']['down_left'] = 'Down Left';
+$app_list_strings['marker_image_list']['down_right'] = 'Down Right';
+$app_list_strings['marker_image_list']['down_then_left'] = 'Down Then Left';
+$app_list_strings['marker_image_list']['down_then_right'] = 'Down Then Right';
+$app_list_strings['marker_image_list']['drugs'] = 'Drugs';
+$app_list_strings['marker_image_list']['elevator'] = 'Elevator';
+$app_list_strings['marker_image_list']['embassy'] = 'Embassy';
+$app_list_strings['marker_image_list']['expert'] = 'Expert';
+$app_list_strings['marker_image_list']['factory'] = 'Factory';
+$app_list_strings['marker_image_list']['falling_rocks'] = 'Falling Rocks';
+$app_list_strings['marker_image_list']['fast_food'] = 'Fast Food';
+$app_list_strings['marker_image_list']['festival'] = 'Festival';
+$app_list_strings['marker_image_list']['fjord'] = 'Fjord';
+$app_list_strings['marker_image_list']['forest'] = 'Forest';
+$app_list_strings['marker_image_list']['fountain'] = 'Fountain';
+$app_list_strings['marker_image_list']['friday'] = 'Friday';
+$app_list_strings['marker_image_list']['garden'] = 'Garden';
+$app_list_strings['marker_image_list']['gas_station'] = 'Gas Station';
+$app_list_strings['marker_image_list']['geyser'] = 'Geyser';
+$app_list_strings['marker_image_list']['gifts'] = 'Gifts';
+$app_list_strings['marker_image_list']['gourmet'] = 'Gourmet';
+$app_list_strings['marker_image_list']['grocery'] = 'Grocery';
+$app_list_strings['marker_image_list']['hairsalon'] = 'Hairsalon';
+$app_list_strings['marker_image_list']['helicopter'] = 'Helicopter';
+$app_list_strings['marker_image_list']['highway'] = 'Highway';
+$app_list_strings['marker_image_list']['historical_quarter'] = 'Historical Quarter';
+$app_list_strings['marker_image_list']['home'] = 'Home';
+$app_list_strings['marker_image_list']['hospital'] = 'Hospital';
+$app_list_strings['marker_image_list']['hostel'] = 'Hostel';
+$app_list_strings['marker_image_list']['hotel'] = 'Hotel';
+$app_list_strings['marker_image_list']['hotel_1_star'] = 'Hotel 1 Star';
+$app_list_strings['marker_image_list']['hotel_2_stars'] = 'Hotel 2 Stars';
+$app_list_strings['marker_image_list']['hotel_3_stars'] = 'Hotel 3 Stars';
+$app_list_strings['marker_image_list']['hotel_4_stars'] = 'Hotel 4 Stars';
+$app_list_strings['marker_image_list']['hotel_5_stars'] = 'Hotel 5 Stars';
+$app_list_strings['marker_image_list']['info'] = 'Info';
+$app_list_strings['marker_image_list']['justice'] = 'Justice';
+$app_list_strings['marker_image_list']['lake'] = 'Lake';
+$app_list_strings['marker_image_list']['laundromat'] = 'Laundromat';
+$app_list_strings['marker_image_list']['left'] = 'Left';
+$app_list_strings['marker_image_list']['left_then_down'] = 'Left Then Down';
+$app_list_strings['marker_image_list']['left_then_up'] = 'Left Then Up';
+$app_list_strings['marker_image_list']['library'] = 'Library';
+$app_list_strings['marker_image_list']['lighthouse'] = 'Lighthouse';
+$app_list_strings['marker_image_list']['liquor'] = 'Liquor';
+$app_list_strings['marker_image_list']['lock'] = 'Lock';
+$app_list_strings['marker_image_list']['main_road'] = 'Main Road';
+$app_list_strings['marker_image_list']['massage'] = 'Massage';
+$app_list_strings['marker_image_list']['mobile_phone_tower'] = 'Mobile Phone Tower';
+$app_list_strings['marker_image_list']['modern_tower'] = 'Modern Tower';
+$app_list_strings['marker_image_list']['monastery'] = 'Monastery';
+$app_list_strings['marker_image_list']['monday'] = 'Monday';
+$app_list_strings['marker_image_list']['monument'] = 'Monument';
+$app_list_strings['marker_image_list']['mosque'] = 'Mosque';
+$app_list_strings['marker_image_list']['motorcycle'] = 'Motorcycle';
+$app_list_strings['marker_image_list']['museum'] = 'Museum';
+$app_list_strings['marker_image_list']['music_live'] = 'Music Live';
+$app_list_strings['marker_image_list']['oil_pump_jack'] = 'Oil Pump Jack';
+$app_list_strings['marker_image_list']['pagoda'] = 'Pagoda';
+$app_list_strings['marker_image_list']['palace'] = 'Palace';
+$app_list_strings['marker_image_list']['panoramic'] = 'Panoramic';
+$app_list_strings['marker_image_list']['park'] = 'Park';
+$app_list_strings['marker_image_list']['park_and_ride'] = 'Park And Ride';
+$app_list_strings['marker_image_list']['parking'] = 'Parking';
+$app_list_strings['marker_image_list']['photo'] = 'Photo';
+$app_list_strings['marker_image_list']['picnic'] = 'Picnic';
+$app_list_strings['marker_image_list']['places_unvisited'] = 'Places Unvisited';
+$app_list_strings['marker_image_list']['places_visited'] = 'Places Visited';
+$app_list_strings['marker_image_list']['playground'] = 'Playground';
+$app_list_strings['marker_image_list']['police'] = 'Police';
+$app_list_strings['marker_image_list']['port'] = 'Port';
+$app_list_strings['marker_image_list']['postal'] = 'Postal';
+$app_list_strings['marker_image_list']['power_line_pole'] = 'Power Line Pole';
+$app_list_strings['marker_image_list']['power_plant'] = 'Power Plant';
+$app_list_strings['marker_image_list']['power_substation'] = 'Power Substation';
+$app_list_strings['marker_image_list']['public_art'] = 'Public Art';
+$app_list_strings['marker_image_list']['rain'] = 'Rain';
+$app_list_strings['marker_image_list']['real_estate'] = 'Real Estate';
+$app_list_strings['marker_image_list']['regroup'] = 'Regroup';
+$app_list_strings['marker_image_list']['resort'] = 'Resort';
+$app_list_strings['marker_image_list']['restaurant'] = 'Restaurant';
+$app_list_strings['marker_image_list']['restaurant_african'] = 'Restaurant African';
+$app_list_strings['marker_image_list']['restaurant_barbecue'] = 'Restaurant Barbecue';
+$app_list_strings['marker_image_list']['restaurant_buffet'] = 'Restaurant Buffet';
+$app_list_strings['marker_image_list']['restaurant_chinese'] = 'Restaurant Chinese';
+$app_list_strings['marker_image_list']['restaurant_fish'] = 'Restaurant Fish';
+$app_list_strings['marker_image_list']['restaurant_fish_chips'] = 'Restaurant Fish Chips';
+$app_list_strings['marker_image_list']['restaurant_gourmet'] = 'Restaurant Gourmet';
+$app_list_strings['marker_image_list']['restaurant_greek'] = 'Restaurant Greek';
+$app_list_strings['marker_image_list']['restaurant_indian'] = 'Restaurant Indian';
+$app_list_strings['marker_image_list']['restaurant_italian'] = 'Restaurant Italian';
+$app_list_strings['marker_image_list']['restaurant_japanese'] = 'Restaurant Japanese';
+$app_list_strings['marker_image_list']['restaurant_kebab'] = 'Restaurant Kebab';
+$app_list_strings['marker_image_list']['restaurant_korean'] = 'Restaurant Korean';
+$app_list_strings['marker_image_list']['restaurant_mediterranean'] = 'Restaurant Mediterranean';
+$app_list_strings['marker_image_list']['restaurant_mexican'] = 'Restaurant Mexican';
+$app_list_strings['marker_image_list']['restaurant_romantic'] = 'Restaurant Romantic';
+$app_list_strings['marker_image_list']['restaurant_thai'] = 'Restaurant Thai';
+$app_list_strings['marker_image_list']['restaurant_turkish'] = 'Restaurant Turkish';
+$app_list_strings['marker_image_list']['right'] = 'Right';
+$app_list_strings['marker_image_list']['right_then_down'] = 'Right Then Down';
+$app_list_strings['marker_image_list']['right_then_up'] = 'Right Then Up';
+$app_list_strings['marker_image_list']['satursday'] = 'Satursday';
+$app_list_strings['marker_image_list']['school'] = 'School';
+$app_list_strings['marker_image_list']['shopping_mall'] = 'Shopping Mall';
+$app_list_strings['marker_image_list']['shore'] = 'Shore';
+$app_list_strings['marker_image_list']['sight'] = 'Sight';
+$app_list_strings['marker_image_list']['small_city'] = 'Small City';
+$app_list_strings['marker_image_list']['snow'] = 'Snow';
+$app_list_strings['marker_image_list']['spaceport'] = 'Spaceport';
+$app_list_strings['marker_image_list']['speed_100'] = 'Speed 100';
+$app_list_strings['marker_image_list']['speed_110'] = 'Speed 110';
+$app_list_strings['marker_image_list']['speed_120'] = 'Speed 120';
+$app_list_strings['marker_image_list']['speed_130'] = 'Speed 130';
+$app_list_strings['marker_image_list']['speed_20'] = 'Speed 20';
+$app_list_strings['marker_image_list']['speed_30'] = 'Speed 30';
+$app_list_strings['marker_image_list']['speed_40'] = 'Speed 40';
+$app_list_strings['marker_image_list']['speed_50'] = 'Speed 50';
+$app_list_strings['marker_image_list']['speed_60'] = 'Speed 60';
+$app_list_strings['marker_image_list']['speed_70'] = 'Speed 70';
+$app_list_strings['marker_image_list']['speed_80'] = 'Speed 80';
+$app_list_strings['marker_image_list']['speed_90'] = 'Speed 90';
+$app_list_strings['marker_image_list']['speed_hump'] = 'Speed Hump';
+$app_list_strings['marker_image_list']['stadium'] = 'Stadium';
+$app_list_strings['marker_image_list']['statue'] = 'Statue';
+$app_list_strings['marker_image_list']['steam_train'] = 'Steam Train';
+$app_list_strings['marker_image_list']['stop'] = 'Stop';
+$app_list_strings['marker_image_list']['stoplight'] = 'Stoplight';
+$app_list_strings['marker_image_list']['subway'] = 'Subway';
+$app_list_strings['marker_image_list']['sun'] = 'Sun';
+$app_list_strings['marker_image_list']['sunday'] = 'Sunday';
+$app_list_strings['marker_image_list']['supermarket'] = 'Supermarket';
+$app_list_strings['marker_image_list']['synagogue'] = 'Synagogue';
+$app_list_strings['marker_image_list']['tapas'] = 'Tapas';
+$app_list_strings['marker_image_list']['taxi'] = 'Taxi';
+$app_list_strings['marker_image_list']['taxiway'] = 'Taxiway';
+$app_list_strings['marker_image_list']['teahouse'] = 'Teahouse';
+$app_list_strings['marker_image_list']['telephone'] = 'Telephone';
+$app_list_strings['marker_image_list']['temple_hindu'] = 'Temple Hindu';
+$app_list_strings['marker_image_list']['terrace'] = 'Terrace';
+$app_list_strings['marker_image_list']['text'] = 'Text';
+$app_list_strings['marker_image_list']['theater'] = 'Theater';
+$app_list_strings['marker_image_list']['theme_park'] = 'Theme Park';
+$app_list_strings['marker_image_list']['thursday'] = 'Thursday';
+$app_list_strings['marker_image_list']['toilets'] = 'Toilets';
+$app_list_strings['marker_image_list']['toll_station'] = 'Toll Station';
+$app_list_strings['marker_image_list']['tower'] = 'Tower';
+$app_list_strings['marker_image_list']['traffic_enforcement_camera'] = 'Traffic Enforcement Camera';
+$app_list_strings['marker_image_list']['train'] = 'Train';
+$app_list_strings['marker_image_list']['tram'] = 'Tram';
+$app_list_strings['marker_image_list']['truck'] = 'Truck';
+$app_list_strings['marker_image_list']['tuesday'] = 'Tuesday';
+$app_list_strings['marker_image_list']['tunnel'] = 'Tunnel';
+$app_list_strings['marker_image_list']['turn_left'] = 'Turn Left';
+$app_list_strings['marker_image_list']['turn_right'] = 'Turn Right';
+$app_list_strings['marker_image_list']['university'] = 'University';
+$app_list_strings['marker_image_list']['up'] = 'Up';
+$app_list_strings['marker_image_list']['up_left'] = 'Up Left';
+$app_list_strings['marker_image_list']['up_right'] = 'Up Right';
+$app_list_strings['marker_image_list']['up_then_left'] = 'Up Then Left';
+$app_list_strings['marker_image_list']['up_then_right'] = 'Up Then Right';
+$app_list_strings['marker_image_list']['vespa'] = 'Vespa';
+$app_list_strings['marker_image_list']['video'] = 'Video';
+$app_list_strings['marker_image_list']['villa'] = 'Villa';
+$app_list_strings['marker_image_list']['water'] = 'Water';
+$app_list_strings['marker_image_list']['waterfall'] = 'Waterfall';
+$app_list_strings['marker_image_list']['watermill'] = 'Watermill';
+$app_list_strings['marker_image_list']['waterpark'] = 'Waterpark';
+$app_list_strings['marker_image_list']['watertower'] = 'Watertower';
+$app_list_strings['marker_image_list']['wednesday'] = 'Wednesday';
+$app_list_strings['marker_image_list']['wifi'] = 'Wifi';
+$app_list_strings['marker_image_list']['wind_turbine'] = 'Wind Turbine';
+$app_list_strings['marker_image_list']['windmill'] = 'Windmill';
+$app_list_strings['marker_image_list']['winery'] = 'Winery';
+$app_list_strings['marker_image_list']['work_office'] = 'Work Office';
+$app_list_strings['marker_image_list']['world_heritage_site'] = 'World Heritage Site';
+$app_list_strings['marker_image_list']['zoo'] = 'Zoo';
+
+
+//Reschedule
+$app_list_strings['call_reschedule_dom'][''] = '';
+$app_list_strings['call_reschedule_dom']['Out of Office'] = 'Out of Office';
+$app_list_strings['call_reschedule_dom']['In a Meeting'] = 'In a Meeting';
+
+$app_strings['LBL_RESCHEDULE_LABEL'] = 'Reschedule';
+$app_strings['LBL_RESCHEDULE_TITLE'] = 'Please enter the reschedule information';
+$app_strings['LBL_RESCHEDULE_DATE'] = 'Date:';
+$app_strings['LBL_RESCHEDULE_REASON'] = 'Reason:';
+$app_strings['LBL_RESCHEDULE_ERROR1'] = 'Please select a valid date';
+$app_strings['LBL_RESCHEDULE_ERROR2'] = 'Please select a reason';
+
+$app_strings['LBL_RESCHEDULE_PANEL'] = 'Reschedule';
+$app_strings['LBL_RESCHEDULE_HISTORY'] = 'Call attempt history';
+$app_strings['LBL_RESCHEDULE_COUNT'] = 'Call Attempts';
+
+//SecurityGroups
+$app_list_strings["moduleList"]["SecurityGroups"] = 'Security Groups Management';
+$app_strings['LBL_LOGIN_AS'] = "Login as ";
+$app_strings['LBL_LOGOUT_AS'] = "Logout as ";
+$app_strings['LBL_SECURITYGROUP'] = 'Security Group';
+
+//social
+$app_strings['FACEBOOK_USER_C'] = 'Facebook';
+$app_strings['TWITTER_USER_C'] = 'Twitter';
+$app_strings['LBL_FACEBOOK_USER_C'] = 'Facebook User';
+$app_strings['LBL_TWITTER_USER_C'] = 'Twitter User';
+$app_strings['LBL_PANEL_SOCIAL_FEED'] = 'Social Feed Details';
+
+$app_strings['LBL_SUBPANEL_FILTER_LABEL'] = 'Filter';
+
+$app_strings['LBL_QUICK_ACCOUNT'] = 'Create Account';
+$app_strings['LBL_QUICK_CONTACT'] = 'Create Contact';
+$app_strings['LBL_QUICK_OPPORTUNITY'] = 'Create Opportunity';
+$app_strings['LBL_QUICK_LEAD'] = 'Create Lead';
+$app_strings['LBL_QUICK_DOCUMENT'] = 'Create Document';
+$app_strings['LBL_QUICK_CALL'] = 'Log Call';
+$app_strings['LBL_QUICK_TASK'] = 'Create Task';
+$app_strings['LBL_COLLECTION_TYPE'] = 'Type';
+
+$app_strings['LBL_ADD_TAB'] = 'Add Tab';
+$app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM Dashboard';
+$app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
+$app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
+$app_strings['LBL_DELETE_DASHBOARD1'] = 'Are you sure you want to delete the';
+$app_strings['LBL_DELETE_DASHBOARD2'] = 'dashboard?';
+$app_strings['LBL_ADD_DASHBOARD_PAGE'] = 'Add a Dashboard Page';
+$app_strings['LBL_DELETE_DASHBOARD_PAGE'] = 'Remove Current Dashboard Page';
+$app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
+
+$app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
+
+$app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
+
 ?>

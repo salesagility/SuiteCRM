@@ -25,7 +25,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @author Salesagility Ltd <info@salesagility.com>
  */
 
-function perform_save($focus){
+function perform_aos_save($focus){
     //US DOLLAR
 
     foreach($focus->field_defs as $field){
@@ -38,7 +38,7 @@ function perform_save($focus){
             if(!number_empty($focus->field_defs[$field['name']])){
                 $currency = new Currency();
                 $currency->retrieve($focus->currency_id);
-                $focus->$fieldName = $currency->convertToDollar($focus->$field['name']);
+                $focus->$fieldName = $currency->convertToDollar(unformat_number($focus->$field['name']));
             }
 
         }

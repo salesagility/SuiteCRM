@@ -43,6 +43,10 @@ array (
         ),
       ),
       'useTabs' => false,
+        'form' => array(
+            'headerTpl' => 'modules/AOR_Reports/tpls/EditViewHeader.tpl',
+            'footerTpl' => 'modules/AOR_Reports/tpls/EditViewFooter.tpl',
+        ),
     ),
     'panels' => 
     array (
@@ -63,25 +67,20 @@ array (
           ),
           1 => '',
         ),
-        2 => 
-        array (
-          0 => 'description',
-        ),
+          2 =>
+              array (
+                  0 =>
+                      array (
+                          'name' => 'graphs_per_row',
+                          'label' => 'LBL_GRAPHS_PER_ROW',
+                      ),
+                  1 => '',
+              ),
+//        2 =>
+//        array (
+//          0 => 'description',
+//        ),
       ),
-    'Fields' =>
-    array (
-        0 =>
-        array (
-            0 => 'field_lines',
-        ),
-    ),
-    'Conditions' =>
-    array (
-        0 =>
-        array (
-            0 => 'condition_lines',
-        ),
-    ),
     ),
   ),
 );

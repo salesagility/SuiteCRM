@@ -67,6 +67,17 @@ $dictionary['AOR_Condition'] = array(
     'enable_range_search' => false,
     'disable_num_format' => '',
   ),
+        'logic_op' => array(
+            'name' => 'logic_op',
+            'vname' => 'LBL_LOGIC_OP',
+            'type' => 'varchar',
+            'default_value' => 'AND',
+        ),
+        'parenthesis' => array(
+            'name' => 'parenthesis',
+            'vname' => 'LBL_PARENTHESIS',
+            'type' => 'varchar',
+        ),
   'module_path' =>
   array (
     'name' => 'module_path',
@@ -157,6 +168,24 @@ $dictionary['AOR_Condition'] = array(
     'len' => '255',
     'size' => '20',
   ),
+        'parameter' =>
+            array (
+                'required' => false,
+                'name' => 'parameter',
+                'vname' => 'LBL_PARAMETER',
+                'type' => 'bool',
+                'massupdate' => 0,
+                'comments' => '',
+                'help' => '',
+                'importable' => 'true',
+                'duplicate_merge' => 'disabled',
+                'duplicate_merge_dom_value' => '0',
+                'audited' => false,
+                'reportable' => true,
+                'unified_search' => false,
+                'merge_filter' => 'disabled',
+                'studio' => 'visible',
+            ),
   'aor_reports' =>
   array (
     'name' => 'aor_reports',

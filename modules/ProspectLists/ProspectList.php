@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 /*********************************************************************************
@@ -163,13 +166,53 @@ class ProspectList extends SugarBean {
 
 	function create_export_members_query($record_id)
 	{
+		$members = array(	'Accounts' 	=> array('has_custom_fields' => false, 'fields' => array()), 
+					'Contacts' 	=> array('has_custom_fields' => false, 'fields' => array()),
+					'Users' 	=> array('has_custom_fields' => false, 'fields' => array()),
+					'Prospects' 	=> array('has_custom_fields' => false, 'fields' => array()),
+					'Leads' 	=> array('has_custom_fields' => false, 'fields' => array())
+				);
+
+		// query all custom fields in the fields_meta_data table for the modules which are being exported 
+		$db = DBManagerFactory::getInstance();
+		$result = $db->query("select name, custom_module from fields_meta_data where custom_module in ('" . 
+					implode("', '", array_keys($members)) . "')",
+					true,
+					"ProspectList::create_export_members_query() : error querying custom fields");
+
+		// cycle through the custom fields and put them in the members array according to 
+		// what module the field belongs
+		// take into account that the same custom field may exist in more modules
+		while($val = $db->fetchByAssoc($result, false)) 
+		{
+			$fieldname = $val['name'];
+
+			foreach($members as $membername => &$memberarr)	
+			{
+				// if the field belongs to this module, then query it in the cstm table
+				if ($membername == $val['custom_module'])
+				{
+					$memberarr['has_custom_fields'] = true;
+					$memberarr['fields'][$fieldname] = 
+						strtolower($membername) . '_cstm.'.$fieldname . ' AS ' . $fieldname;
+				}
+				// else, only if for this module no entry exists for this field, query an empty string
+				else if (!isset($memberarr['fields'][$val['name']]))
+				{
+					$memberarr['fields'][$fieldname] = "'' AS " . $fieldname;
+				}
+			}
+		}
+
 		$leads_query = "SELECT l.id AS id, 'Leads' AS related_type, '' AS \"name\", l.first_name AS first_name, l.last_name AS last_name, l.title AS title, l.salutation AS salutation, 
 				l.primary_address_street AS primary_address_street,l.primary_address_city AS primary_address_city, l.primary_address_state AS primary_address_state, l.primary_address_postalcode AS primary_address_postalcode, l.primary_address_country AS primary_address_country,
 				l.account_name AS account_name,
 				ea.email_address AS primary_email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				l.do_not_call AS do_not_call, l.phone_fax AS phone_fax, l.phone_other AS phone_other, l.phone_home AS phone_home, l.phone_mobile AS phone_mobile, l.phone_work AS phone_work
+				".(count($members['Leads']['fields']) ? ', ' : '') . implode(', ', $members['Leads']['fields'])."
 				FROM prospect_lists_prospects plp
 				INNER JOIN leads l ON plp.related_id=l.id
+				".($members['Leads']['has_custom_fields'] ? 'LEFT join leads_cstm ON l.id = leads_cstm.id_c' : '')."
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=l.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0 
@@ -181,8 +224,10 @@ class ProspectList extends SugarBean {
 				'' AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				0 AS do_not_call, u.phone_fax AS phone_fax, u.phone_other AS phone_other, u.phone_home AS phone_home, u.phone_mobile AS phone_mobile, u.phone_work AS phone_work
+				".(count($members['Users']['fields']) ? ', ' : '') . implode(', ', $members['Users']['fields'])."
 				FROM prospect_lists_prospects plp
 				INNER JOIN users u ON plp.related_id=u.id
+				".($members['Users']['has_custom_fields'] ? 'LEFT join users_cstm ON u.id = users_cstm.id_c' : '')."
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=u.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0 
@@ -194,12 +239,15 @@ class ProspectList extends SugarBean {
 				a.name AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				c.do_not_call AS do_not_call, c.phone_fax AS phone_fax, c.phone_other AS phone_other, c.phone_home AS phone_home, c.phone_mobile AS phone_mobile, c.phone_work AS phone_work
+				".(count($members['Contacts']['fields']) ? ', ' : '') . implode(', ', $members['Contacts']['fields'])."
 FROM prospect_lists_prospects plp
 				INNER JOIN contacts c ON plp.related_id=c.id LEFT JOIN accounts_contacts ac ON ac.contact_id=c.id LEFT JOIN accounts a ON ac.account_id=a.id
+				".($members['Contacts']['has_custom_fields'] ? 'LEFT join contacts_cstm ON c.id = contacts_cstm.id_c' : '')."
 				LEFT JOIN email_addr_bean_rel ear ON ear.bean_id=c.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id AND plp.deleted=0 
 				AND c.deleted=0
+				AND ac.deleted=0
                 AND (ear.deleted=0 OR ear.deleted IS NULL)";
 
 		$prospects_query = "SELECT p.id AS id, 'Prospects' AS related_type, '' AS \"name\", p.first_name AS first_name, p.last_name AS last_name,p.title AS title, p.salutation AS salutation, 
@@ -207,8 +255,10 @@ FROM prospect_lists_prospects plp
 				p.account_name AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				p.do_not_call AS do_not_call, p.phone_fax AS phone_fax, p.phone_other AS phone_other, p.phone_home AS phone_home, p.phone_mobile AS phone_mobile, p.phone_work AS phone_work
+				".(count($members['Prospects']['fields']) ? ', ' : '') . implode(', ', $members['Prospects']['fields'])."
 				FROM prospect_lists_prospects plp
 				INNER JOIN prospects p ON plp.related_id=p.id
+				".($members['Prospects']['has_custom_fields'] ? 'LEFT join prospects_cstm ON p.id = prospects_cstm.id_c' : '')."
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=p.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id  AND plp.deleted=0 
@@ -220,8 +270,10 @@ FROM prospect_lists_prospects plp
 				'' AS account_name,
 				ea.email_address AS email_address, ea.invalid_email AS invalid_email, ea.opt_out AS opt_out, ea.deleted AS ea_deleted, ear.deleted AS ear_deleted, ear.primary_address AS primary_address,
 				0 AS do_not_call, a.phone_fax as phone_fax, a.phone_alternate AS phone_other, '' AS phone_home, '' AS phone_mobile, a.phone_office AS phone_office
+				".(count($members['Accounts']['fields']) ? ', ' : '') . implode(', ', $members['Accounts']['fields'])."
 				FROM prospect_lists_prospects plp
 				INNER JOIN accounts a ON plp.related_id=a.id
+				".($members['Accounts']['has_custom_fields'] ? 'LEFT join accounts_cstm ON a.id = accounts_cstm.id_c' : '')."
 				LEFT JOIN email_addr_bean_rel ear ON  ear.bean_id=a.id AND ear.deleted=0
 				LEFT JOIN email_addresses ea ON ear.email_address_id=ea.id
 				WHERE plp.prospect_list_id = $record_id  AND plp.deleted=0 
@@ -232,9 +284,9 @@ FROM prospect_lists_prospects plp
 		return $query;
 	}
 	
-	function save_relationship_changes($is_update)
+	function save_relationship_changes($is_update, $exclude = array())
     {
-    	parent::save_relationship_changes($is_update);
+    	parent::save_relationship_changes($is_update, $exclude);
 		if($this->lead_id != "")
 	   		$this->set_prospect_relationship($this->id, $this->lead_id, "lead");
     	if($this->contact_id != "")

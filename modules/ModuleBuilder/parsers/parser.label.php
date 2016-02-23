@@ -4,42 +4,45 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
 require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
 
-class ParserLabel extends ModuleBuilderParser
+class ParserLabel //extends ModuleBuilderParser
 {
 
     function ParserLabel ($moduleName, $packageName = '' )
@@ -231,6 +234,114 @@ class ParserLabel extends ModuleBuilderParser
 	                }
 	            }
 	        }
+
+        // Fix for bug #51
+        // when the label is recreated it defaults back to the original value (In this case its "User").
+
+        // Solution:
+        // 1. Changes to the label names should go to custom/Extension/modules/{ModuleName}/Ext/Language
+        // This is done in case different users edit the same Relationship concurrently.
+        // The changes from custom/Extension/modules/{ModuleName}/Ext/Language
+        // will overwrite stuff in custom/modules/{ModuleName}/Ext/Language/en_us.lang.ext.php after
+        //  Quick Repair and Rebuild is applied.
+        if($forRelationshipLabel) {
+            if(!empty($_POST[view_module]) && !empty($_POST[relationship_name]) && !empty($_POST[rhs_label]) && !empty($_POST[lhs_module])) {
+                // 1. Overwrite custom/Extension/modules/{ModuleName}/Ext/Language
+                $extension_basepath = "custom/Extension/modules/" . $_POST[view_module] . "/Ext/Language";
+                mkdir_recursive($extension_basepath);
+
+                $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n";
+                $out = $headerString;
+
+                $extension_filename = "$extension_basepath/$language.custom" . $_POST[relationship_name] . ".php";
+
+                $mod_strings = array();
+                if (file_exists($extension_filename)) {
+                    // obtain $mod_strings
+                    include($extension_filename);
+                }
+
+                $changed_mod_strings = false;
+                foreach ($labels as $key => $value) {
+                    foreach ($mod_strings as $key_mod_string => $value_mod_string) {
+                        if (strpos($key_mod_string, strtoupper($_POST[relationship_name])) !== false) {
+                            $mod_strings[$key_mod_string] = to_html(strip_tags(from_html($_POST[rhs_label]))); // must match encoding used in view.labels.php
+                            $changed_mod_strings = true;
+                        }
+                    }
+                }
+
+                foreach ($mod_strings as $key => $val)
+                    $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+
+                $failed_to_write = false;
+                try {
+                    $file_contents = fopen($extension_filename, 'w');
+                    fputs($file_contents, $out, strlen($out));
+                    fclose($file_contents);
+                } catch (Exception $e) {
+                    $GLOBALS ['log']->fatal("Could not write $filename");
+                    $GLOBALS ['log']->fatal("Exception " . $e->getMessage());
+                    $failed_to_write = true;
+                }
+
+                //2. Overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
+                // Also need to overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
+                // because whenever new relationship is created this place is checked by the system to get
+                // all the label names
+                $relationships_basepath = "custom/Extension/modules/relationships/language";
+                mkdir_recursive($relationships_basepath);
+
+                $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n";
+                $out = $headerString;
+
+                $relationships_filename = "$relationships_basepath/" . $_POST[lhs_module] . ".php";
+
+
+                $mod_strings = array();
+                if (file_exists($relationships_filename)) {
+                    // obtain $mod_strings
+                    include($relationships_filename);
+                }
+
+                $changed_mod_strings = false;
+                foreach ($labels as $key => $value) {
+                    foreach ($mod_strings as $key_mod_string => $value_mod_string) {
+                        if (strpos($key_mod_string, strtoupper($_POST[relationship_name])) !== false) {
+                            $mod_strings[$key_mod_string] = to_html(strip_tags(from_html($_POST[rhs_label]))); // must match encoding used in view.labels.php
+                            $changed_mod_strings = true;
+                        }
+                    }
+                }
+
+                foreach ($mod_strings as $key => $val)
+                    $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+
+                $failed_to_write = false;
+                try {
+                    $file_contents = fopen($relationships_filename, 'w');
+                    fputs($file_contents, $out, strlen($out));
+                    fclose($file_contents);
+                } catch (Exception $e) {
+                    $GLOBALS ['log']->fatal("Could not write $filename");
+                    $GLOBALS ['log']->fatal("Exception " . $e->getMessage());
+                    $failed_to_write = true;
+                }
+
+                if ($changed_mod_strings) {
+                    if (!$failed_to_write) {
+                        // if we have a cache to worry about, then clear it now
+                        if ($deployedModule) {
+                            SugarCache::cleanOpcodes();
+                            $GLOBALS ['log']->debug("PaserLabel->addLabels: clearing language cache");
+                            $cache_key = "module_language." . $language . $moduleName;
+                            sugar_cache_clear($cache_key);
+                            LanguageManager::clearLanguageCache($moduleName, $language);
+                        }
+                    }
+                }
+            }
+        }
 
         return true ;
     }

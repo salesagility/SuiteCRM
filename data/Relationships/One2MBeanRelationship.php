@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -213,34 +216,38 @@ class One2MBeanRelationship extends One2MRelationship
     public function getQuery($link, $params = array())
     {
         //There was an old signature with $return_as_array as the second parameter. We should respect this if $params is true
-        if ($params === true){
+        if ($params === true) {
             $params = array("return_as_array" => true);
         }
 
         if ($link->getSide() == REL_RHS) {
             return false;
-        }
-        else
-        {
+        } else {
             $lhsKey = $this->def['lhs_key'];
             $rhsTable = $this->def['rhs_table'];
             $rhsTableKey = "{$rhsTable}.{$this->def['rhs_key']}";
+            $relatedSeed = BeanFactory::getBean($this->getRHSModule());
             $deleted = !empty($params['deleted']) ? 1 : 0;
             $where = "WHERE $rhsTableKey = '{$link->getFocus()->$lhsKey}' AND {$rhsTable}.deleted=$deleted";
+            $order_by = '';
 
             //Check for role column
-            if(!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"]))
-            {
+            if (!empty($this->def["relationship_role_column"]) && !empty($this->def["relationship_role_column_value"])) {
                 $roleField = $this->def["relationship_role_column"];
                 $roleValue = $this->def["relationship_role_column_value"];
                 $where .= " AND $rhsTable.$roleField = '$roleValue'";
             }
 
             //Add any optional where clause
-            if (!empty($params['where'])){
+            if (!empty($params['where'])) {
                 $add_where = is_string($params['where']) ? $params['where'] : "$rhsTable." . $this->getOptionalWhereClause($params['where']);
                 if (!empty($add_where))
                     $where .= " AND $add_where";
+            }
+
+            //Add any optional order clauses
+            if (!empty($params['order_by'])) {
+                $order_by = $relatedSeed->process_order_by($params['order_by']);
             }
 
             $from = $this->def['rhs_table'];
@@ -248,18 +255,18 @@ class One2MBeanRelationship extends One2MRelationship
             if (empty($params['return_as_array'])) {
                 //Limit is not compatible with return_as_array
                 $query = "SELECT id FROM $from $where";
+                if (!empty($order_by)) $query .= ' ORDER BY '.$order_by;
                 if (!empty($params['limit']) && $params['limit'] > 0) {
                     $offset = isset($params['offset']) ? $params['offset'] : 0;
                     $query = DBManagerFactory::getInstance()->limitQuery($query, $offset, $params['limit'], false, "", false);
                 }
                 return $query;
-            }
-            else
-            {
+            } else {
                 return array(
                     'select' => "SELECT {$this->def['rhs_table']}.id",
                     'from' => "FROM {$this->def['rhs_table']}",
                     'where' => $where,
+                    'order_by' => $order_by
                 );
             }
         }

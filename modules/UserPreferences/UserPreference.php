@@ -368,7 +368,7 @@ class UserPreference extends SugarBean
         }
         else {
         	if(!empty($_COOKIE['sugar_user_theme']) && !headers_sent()){
-                setcookie('sugar_user_theme', '', time() - 3600); // expire the sugar_user_theme cookie
+                setcookie('sugar_user_theme', '', time() - 3600,null,null,false,true); // expire the sugar_user_theme cookie
             }
             unset($_SESSION[$user->user_name."_PREFERENCES"]);
             if($user->id == $GLOBALS['current_user']->id) {

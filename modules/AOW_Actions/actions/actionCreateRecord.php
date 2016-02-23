@@ -128,16 +128,34 @@ class actionCreateRecord extends actionBase {
             foreach($params['field'] as $key => $field){
 
                 if($field == '') continue;
-
+                $value = '';
                 switch($params['value_type'][$key]) {
                     case 'Field':
                         if($params['value'][$key] == '') continue;
                         $data = $bean->field_defs[$params['value'][$key]];
 
-                        if($data['type'] == 'relate' && isset($data['id_name'])) {
-                            $params['value'][$key] = $data['id_name'];
+                        switch($data['type'] ) {
+                            case 'double':
+                            case 'decimal':
+                            case 'currency':
+                            case 'float':
+                            case 'uint':
+                            case 'ulong':
+                            case 'long':
+                            case 'short':
+                            case 'tinyint':
+                            case 'int':
+                                $value = format_number($bean->$params['value'][$key]);
+                                break;
+                            case 'relate':
+                                if(isset($data['id_name'])) {
+                                    $value = $bean->$data['id_name'];
+                                }
+                                break;
+                            default:
+                                $value = $bean->$params['value'][$key];
+                                break;
                         }
-                        $value = $bean->$params['value'][$key];
                         break;
                     case 'Date':
                         $dformat = 'Y-m-d H:i:s';
@@ -274,13 +292,21 @@ class actionCreateRecord extends actionBase {
             }
         }
 
-        $check_notify = false;
-        if($in_save) $record->processed = true;
+        $bean_processed = isset($record->processed) ? $record->processed : false;
+
+        if($in_save){
+            global $current_user;
+            $record->processed = true;
+            $check_notify = $record->assigned_user_id != $current_user->id && $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
+        }
         else $check_notify = $record->assigned_user_id != $record->fetched_row['assigned_user_id'];
 
         $record->process_save_dates =false;
+        $record->new_with_id = false;
 
         $record->save($check_notify);
+
+        $record->processed = $bean_processed;
     }
 
     function set_relationships(SugarBean $record, SugarBean $bean, $params = array()){
@@ -290,7 +316,7 @@ class actionCreateRecord extends actionBase {
         require_once('modules/Relationships/Relationship.php');
         if(isset($params['rel'])){
             foreach($params['rel'] as $key => $field){
-                if($field == '') continue;
+                if($field == '' || $params['rel_value'][$key] == '') continue;
 
                 switch($params['rel_value_type'][$key]) {
                     case 'Field':

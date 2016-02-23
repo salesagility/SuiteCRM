@@ -27,6 +27,7 @@ class AOR_Field extends Basic {
 	var $module_dir = 'AOR_Fields';
 	var $object_name = 'AOR_Field';
 	var $table_name = 'aor_fields';
+    var $tracker_visibility = false;
 	var $importable = true;
 	var $disable_row_level_security = true ;
 	
@@ -68,14 +69,37 @@ class AOR_Field extends Basic {
                 $this->mark_deleted($post_data[$key.'id'][$i]);
             } else {
                 $field = new AOR_Field();
-                foreach($this->field_defs as $field_def) {
-                    if(isset($post_data[$key.$field_def['name']][$i])){
-                        if(is_array($post_data[$key.$field_def['name']][$i])){
-                            $post_data[$key.$field_def['name']][$i] = base64_encode(serialize($post_data[$key.$field_def['name']][$i]));
-                        } else if($field_def['name'] == 'value') {
-                            $post_data[$key.$field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key.$field_def['name']][$i]);
+                $field->group_display = false;
+
+                if($key == 'aor_fields_') {
+                    foreach($post_data['aor_fields_group_display'] as $gdKey => $gdValue) {
+                        if($gdValue == $i) {
+                            $field->group_display = $gdKey+1;
+                            break;
                         }
-                        $field->$field_def['name'] = $post_data[$key.$field_def['name']][$i];
+                    }
+                }
+
+                foreach($this->field_defs as $field_def) {
+                    if(is_array($post_data[$key.$field_def['name']])) {
+                        if ($field_def['name'] != 'group_display' && isset($post_data[$key . $field_def['name']][$i])) {
+                            if (is_array($post_data[$key . $field_def['name']][$i])) {
+                                $post_data[$key . $field_def['name']][$i] = base64_encode(serialize($post_data[$key . $field_def['name']][$i]));
+                            } else if ($field_def['name'] == 'value') {
+                                $post_data[$key . $field_def['name']][$i] = fixUpFormatting($_REQUEST['report_module'], $field->field, $post_data[$key . $field_def['name']][$i]);
+                            }
+                            if ($field_def['name'] == 'module_path') {
+                                $post_data[$key . $field_def['name']][$i] = base64_encode(serialize(explode(":", $post_data[$key . $field_def['name']][$i])));
+                            }
+
+                            $field->$field_def['name'] = $post_data[$key . $field_def['name']][$i];
+                        }
+                    }
+                    else if(is_null($post_data[$key.$field_def['name']])) {
+                        // do nothing
+                    }
+                    else {
+                        throw new Exception('illegal type in post data at key ' . $key.$field_def['name'] . ' ' . gettype($post_data[$key.$field_def['name']]));
                     }
 
                 }

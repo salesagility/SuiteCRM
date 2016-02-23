@@ -24,6 +24,7 @@
 
 
 require_once("modules/AOW_WorkFlow/aow_utils.php");
+require_once("modules/AOR_Reports/aor_utils.php");
 
 class AOR_ReportsController extends SugarController {
 
@@ -35,10 +36,29 @@ class AOR_ReportsController extends SugarController {
             } else {
                 $module = $_REQUEST['aor_module'];
             }
-            echo getModuleFields($module,$_REQUEST['view'],$_REQUEST['aor_value']);
+            $val = !empty($_REQUEST['aor_value']) ? $_REQUEST['aor_value'] : '';
+            echo getModuleFields($module,$_REQUEST['view'],$val);
         }
         die;
 
+    }
+    function action_getVarDefs(){
+        if($_REQUEST['aor_module']){
+            $bean = BeanFactory::getBean($_REQUEST['aor_module']);
+            echo json_encode((array)$bean->field_defs[$_REQUEST['aor_request']]);
+            die();
+        }
+    }
+
+    protected function action_getModuleTreeData()
+    {
+        if (!empty($_REQUEST['aor_module']) && $_REQUEST['aor_module'] != '') {
+            ob_start();
+            $data = getModuleTreeData($_REQUEST['aor_module']);
+            ob_clean();
+            echo $data;
+        }
+        die;
     }
 
     protected function action_getModuleRelationships()
@@ -50,8 +70,51 @@ class AOR_ReportsController extends SugarController {
     }
 
     protected function action_changeReportPage(){
-        echo $this->bean->build_report_html($_REQUEST['offset'], true,$_REQUEST['group']);
+        $tableId = !empty($_REQUEST['table_id']) ? $_REQUEST['table_id'] : '';
+        $group = !empty($_REQUEST['group']) ? $_REQUEST['group'] : '';
+        $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
+        if(!empty($this->bean->id)){
+            $this->bean->user_parameters = requestToUserParameters();
+            //echo $this->bean->build_report_html($offset, true,$group,$tableId);
+            echo $this->bean->build_group_report($offset, true);
+        }
+
         die();
+    }
+
+    protected function action_getParametersForReport(){
+        if(empty($_REQUEST['record'])){
+            echo json_encode(array());
+            return;
+        }
+        $report = BeanFactory::getBean('AOR_Reports',$_REQUEST['record']);
+        if(!$report){
+            echo json_encode(array());
+            return;
+        }
+        if(empty($report->id)) {
+            echo json_encode(array());
+            return;
+        }
+        $conditions = getConditionsAsParameters($report);
+        echo json_encode($conditions);
+    }
+
+    protected function action_getChartsForReport(){
+        if(empty($_REQUEST['record'])){
+            echo json_encode(array());
+            return;
+        }
+        $report = BeanFactory::getBean('AOR_Reports',$_REQUEST['record']);
+        if(!$report){
+            echo json_encode(array());
+            return;
+        }
+        $charts = array();
+        foreach($report->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+            $charts[$chart->id] = $chart->name;
+        }
+        echo json_encode($charts);
     }
 
     protected function action_addToProspectList(){
@@ -90,13 +153,14 @@ class AOR_ReportsController extends SugarController {
 
     protected function action_chartReport()
     {
-        $this->bean->build_report_chart();
+        $this->bean->build_report_chart(null, AOR_Report::CHART_TYPE_CHARTJS);
 
         die;
     }
 
     protected function action_export()
     {
+        $this->bean->user_parameters = requestToUserParameters();
         $this->bean->build_report_csv();
         die;
     }
@@ -107,6 +171,39 @@ class AOR_ReportsController extends SugarController {
         require_once('modules/AOS_PDF_Templates/PDF_Lib/mpdf.php');
 
         $d_image = explode('?',SugarThemeRegistry::current()->getImageURL('company_logo.png'));
+        $graphs = $_POST["graphsForPDF"];
+        $graphHtml = "<div class='reportGraphs' style='width:100%; text-align:center;'>";
+
+        $chartsPerRow = $this->bean->graphs_per_row;
+        $countOfCharts = count($graphs);
+        if($countOfCharts > 0)
+        {
+            $width = ((int)100/$chartsPerRow);
+
+            $modulusRemainder = $countOfCharts % $chartsPerRow;
+
+            if($modulusRemainder > 0)
+            {
+                $modulusWidth = ((int)100/$modulusRemainder);
+                $itemsWithModulus = $countOfCharts - $modulusRemainder;
+            }
+
+
+            for($x =0; $x < $countOfCharts; $x++)
+            {
+                if(is_null($itemsWithModulus) ||  $x < $itemsWithModulus)
+                    $graphHtml.="<img src='.$graphs[$x].' style='width:$width%;' />";
+                else
+                    $graphHtml.="<img src='.$graphs[$x].' style='width:$modulusWidth%;' />";
+            }
+
+/*            foreach($graphs as $g)
+            {
+                $graphHtml.="<img src='.$g.' style='width:$width%;' />";
+            }*/
+            $graphHtml.="</div>";
+        }
+
         $head =  '<table style="width: 100%; font-family: Arial; text-align: center;" border="0" cellpadding="2" cellspacing="2">
                 <tbody style="text-align: left;">
                 <tr style="text-align: left;">
@@ -128,8 +225,9 @@ class AOR_ReportsController extends SugarController {
                 </td>
                 </tr>
                 </tbody>
-                </table><br />';
+                </table><br />'.$graphHtml;
 
+        $this->bean->user_parameters = requestToUserParameters();
 
         $printable = $this->bean->build_group_report(-1,false);
         $stylesheet = file_get_contents('themes/Suite7/css/style.css');
@@ -141,7 +239,7 @@ class AOR_ReportsController extends SugarController {
             $pdf->WriteHTML($stylesheet,1);
             $pdf->WriteHTML($head,2);
             $pdf->WriteHTML($printable,3);
-            $pdf->Output($this->bean->name, "D");
+            $pdf->Output($this->bean->name.'.pdf', "D");
 
         }catch(mPDF_exception $e){
             echo $e;
@@ -160,7 +258,7 @@ class AOR_ReportsController extends SugarController {
         $aor_field = $_REQUEST['aor_newfieldname'];
 
         if($view == 'EditView'){
-            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list'], $value) ."</select>";
+            echo "<select type='text' style='width:100px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_function_list'], $value) ."</select>";
         }else{
             echo $app_list_strings['aor_function_list'][$value];
         }
@@ -216,7 +314,7 @@ class AOR_ReportsController extends SugarController {
                 $valid_opp = array('Equal_To','Not_Equal_To');
                 break;
             default:
-                $valid_opp = array('Equal_To','Not_Equal_To');
+                $valid_opp = array('Equal_To','Not_Equal_To','Contains', 'Starts_With', 'Ends_With',);
                 break;
         }
 
@@ -230,7 +328,7 @@ class AOR_ReportsController extends SugarController {
 
         $app_list_strings['aor_operator_list'];
         if($view == 'EditView'){
-            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_operator_list'], $value) ."</select>";
+            echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". get_select_options_with_id($app_list_strings['aor_operator_list'], $value) ."</select>";
         }else{
             echo $app_list_strings['aor_operator_list'][$value];
         }
@@ -279,14 +377,21 @@ class AOR_ReportsController extends SugarController {
             case 'date':
             case 'datetime':
             case 'datetimecombo':
-                $valid_opp = array('Value','Field', 'Date');
+                $valid_opp = array('Value','Field', 'Date', 'Period');
                 break;
             case 'enum':
+            case 'dynamicenum':
             case 'multienum':
                 $valid_opp = array('Value','Field', 'Multi');
                 break;
             default:
-                $valid_opp = array('Value','Field');
+                // Added to compare fields like assinged to with the current user
+                if( (isset($vardef['module']) && $vardef['module'] == "Users") || $vardef['name'] = 'id') {
+                    $valid_opp = array('Value','Field', 'CurrentUserID');
+                } else {
+                    $valid_opp = array('Value','Field');
+                }
+
                 break;
         }
 
@@ -399,7 +504,7 @@ class AOR_ReportsController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
@@ -409,6 +514,16 @@ class AOR_ReportsController extends SugarController {
                 break;
             case 'Multi':
                 echo getModuleField($rel_module,$fieldname, $aor_field, $view, $value,'multienum');
+                break;
+            case 'Period':
+                if($view == 'EditView'){
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getDropdownList('date_time_period_list',$_REQUEST['aor_value']) ."</select>";
+                }else{
+                    echo getDropdownList('date_time_period_list',$_REQUEST['aor_value']);
+                }
+
+                break;
+            case 'CurrentUserID':
                 break;
             case 'Value':
             default:
@@ -435,7 +550,7 @@ class AOR_ReportsController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }
@@ -486,7 +601,7 @@ class AOR_ReportsController extends SugarController {
             case 'Field':
                 if(isset($_REQUEST['alt_module']) && $_REQUEST['alt_module'] != '') $module = $_REQUEST['alt_module'];
                 if($view == 'EditView'){
-                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field ' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
+                    echo "<select type='text' style='width:178px;' name='$aor_field' id='$aor_field' title='' tabindex='116'>". getModuleFields($module, $view, $value) ."</select>";
                 }else{
                     echo getModuleFields($module, $view, $value);
                 }

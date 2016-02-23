@@ -3,37 +3,47 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+require_once 'modules/AOP_Case_Updates/util.php';
+if(!isAOPEnabled()){
+    //Use the default
+    require 'modules/InboundEmail/EditView.php';
+    exit();
+}
+
 
 $_REQUEST['edit']='true';
 
@@ -148,6 +158,11 @@ if(!empty($focus->stored_options)) {
 	$trashFolder = (isset($storedOptions['trashFolder'])) ? $storedOptions['trashFolder'] : "";
 	$sentFolder = (isset($storedOptions['sentFolder'])) ? $storedOptions['sentFolder'] : "";
 	$distrib_method = (isset($storedOptions['distrib_method'])) ? $storedOptions['distrib_method'] : "";
+    $distribution_user_id = (isset($storedOptions['distribution_user_id'])) ? $storedOptions['distribution_user_id'] : "";
+    $distribution_user_name = (isset($storedOptions['distribution_user_name'])) ? $storedOptions['distribution_user_name'] : "";
+    $distributionAssignOptions = (isset($storedOptions['distribution_options'])) ? $storedOptions['distribution_options'] : "";
+
+
 	$create_case_email_template = (isset($storedOptions['create_case_email_template'])) ? $storedOptions['create_case_email_template'] : "";
 	$email_num_autoreplies_24_hours = (isset($storedOptions['email_num_autoreplies_24_hours'])) ? $storedOptions['email_num_autoreplies_24_hours'] : $focus->defaultEmailNumAutoreplies24Hours;
 
@@ -176,8 +191,11 @@ if(!empty($focus->stored_options)) {
 	$trashFolder = '';
 	$sentFolder = '';
 	$distrib_method ='';
+    $distribution_user_id = '';
+    $distribution_user_name = '';
 	$create_case_email_template='';
 	$leaveMessagesOnMailServer = 1;
+    $distributionAssignOptions = array();
 	$email_num_autoreplies_24_hours = $focus->defaultEmailNumAutoreplies24Hours;
 } // else
 
@@ -338,11 +356,19 @@ if($focus->is_personal) {
 
 }
 
+
 $xtpl->assign('hasGrpFld',$focus->groupfolder_id == null ? '' : 'checked="1"');
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER_STYLE', $leaveMessagesOnMailServerStyle);
 $xtpl->assign('LEAVEMESSAGESONMAILSERVER', get_select_options_with_id($app_list_strings['dom_int_bool'], $leaveMessagesOnMailServer));
+
 $distributionMethod = get_select_options_with_id($app_list_strings['dom_email_distribution_for_auto_create'], $distrib_method);
 $xtpl->assign('DISTRIBUTION_METHOD', $distributionMethod);
+$xtpl->assign('DISTRIBUTION_OPTIONS', getAOPAssignField('distribution_options',$distributionAssignOptions));
+$xtpl->assign('distribution_user_name', $distribution_user_name);
+$xtpl->assign('distribution_user_id', $distribution_user_id);
+
+
+
 $xtpl->assign('CREATE_CASE_ROW_STYLE', $createCaseRowStyle);
 $xtpl->assign('CREATE_CASE_EMAIL_TEMPLATE_OPTIONS', get_select_options_with_id($email_templates_arr, $create_case_email_template));
 if(!empty($create_case_email_template)) {
@@ -406,4 +432,76 @@ else if( $focus->is_personal == '1')
 
 $xtpl->parse("main");
 $xtpl->out("main");
+
 ?>
+<script>
+
+    function hideElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "none";
+        }
+    }
+
+    function showElem(id){
+        if(document.getElementById(id)){
+            document.getElementById(id).style.display = "";
+        }
+    }
+
+    function assign_field_change(field){
+        hideElem(field + '[1]');
+        hideElem(field + '[2]');
+
+        if(document.getElementById(field + '[0]').value == 'role'){
+            showElem(field + '[2]');
+        }
+        else if(document.getElementById(field + '[0]').value == 'security_group'){
+            showElem(field + '[1]');
+            showElem(field + '[2]');
+        }
+    }
+    function displayDistributionOptions(display){
+        if(display) {
+            $('#distribution_options\\[0\\]').show();
+            $('#distribution_options\\[1\\]').show();
+            $('#distribution_options\\[2\\]').show();
+            assign_field_change('distribution_options');
+        }else{
+            $('#distribution_options\\[0\\]').hide();
+            $('#distribution_options\\[1\\]').hide();
+            $('#distribution_options\\[2\\]').hide();
+        }
+    }
+
+    function displayDistributionUser(display){
+        if(display) {
+            $('#distribution_user').show();
+        }else{
+            $('#distribution_user').hide();
+        }
+    }
+    $(document).ready(function(){
+        displayDistributionOptions(false);
+        $('#distrib_method').change(function(){
+            var val = $('#distrib_method').val();
+            switch(val){
+                case 'roundRobin':
+                case 'leastBusy':
+                case 'random':
+                    displayDistributionOptions(true);
+                    displayDistributionUser(false);
+                    break;
+                case 'singleUser':
+                    displayDistributionOptions(false);
+                    displayDistributionUser(true);
+                    break;
+                case 'AOPDefault':
+                default:
+                    displayDistributionOptions(false);
+                    displayDistributionUser(false);
+                    break;
+            }
+        });
+        $('#distrib_method').change();
+    });
+</script>

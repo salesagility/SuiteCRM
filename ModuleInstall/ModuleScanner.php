@@ -3,7 +3,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
@@ -30,9 +33,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * 
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 class ModuleScanner{
@@ -208,6 +211,7 @@ class ModuleScanner{
 	'sugar_fopen',
 	'sugar_mkdir',
 	'sugar_file_put_contents',
+	'sugar_file_put_contents_atomic',
 	'sugar_chgrp',
 	'sugar_chmod',
 	'sugar_touch',
@@ -392,6 +396,8 @@ class ModuleScanner{
         'xml_set_processing_instruction_handler',
         'xml_set_start_namespace_decl_handler',
         'xml_set_unparsed_entity_decl_handler',
+	    'simplexml_load_file',
+	    'simplexml_load_string',
 
 	    // unzip
 	    'unzip',
@@ -644,29 +650,66 @@ class ModuleScanner{
 		return $issues;
 	}
 
+    /**
+     * checks files.md5 file to see if the file is from sugar
+     * ONLY WORKS ON FILES
+     *
+     * @param string $path
+     * @return bool
+     */
+    public function sugarFileExists($path)
+    {
+        static $md5 = array();
+        if (empty($md5) && file_exists('files.md5')) {
+            include ('files.md5');
+            $md5 = $md5_string;
+        }
+        if ($path[0] != '.' || $path[1] != '/') {
+            $path = './' . $path;
+        }
+        if (isset($md5[$path])) {
+            return true;
+        }
 
-	/*
-	 * checks files.md5 file to see if the file is from sugar
-	 * ONLY WORKS ON FILES
-	 */
-	public function sugarFileExists($path){
-		static $md5 = array();
-		if(empty($md5) && file_exists('files.md5'))
-		{
-			include('files.md5');
-			$md5 = $md5_string;
-		}
-		if(isset($md5['./' . $path]))return true;
+        return false;
+    }
 
+    /**
+     * Normalize a path to not contain dots & multiple slashes
+     *
+     * @param string $path
+     * @return string false
+     */
+    public function normalizePath($path)
+    {
+        if (DIRECTORY_SEPARATOR != '/') {
+            // convert to / for OSes that use other separators
+            $path = str_replace(DIRECTORY_SEPARATOR, '/', $path);
+        }
+        $res = array();
+        foreach (explode("/", $path) as $component) {
+            if (empty($component)) {
+                continue;
+            }
+            if ($component == '.') {
+                continue;
+            }
+            if ($component == '..') {
+                // this is not allowed, bail
+                return false;
+            }
+            $res[] = $component;
+        }
 
-	}
-
+        return join("/", $res);
+    }
 
 	/**
 	 *This function will scan the Manifest for disabled actions specified in $GLOBALS['sugar_config']['moduleInstaller']['disableActions']
 	 *if $GLOBALS['sugar_config']['moduleInstaller']['disableRestrictedCopy'] is set to false or not set it will call on scanCopy to ensure that it is not overriding files
 	 */
-	public function scanManifest($manifestPath){
+    public function scanManifest($manifestPath)
+    {
 		$issues = array();
 		if(!file_exists($manifestPath)){
 			$this->issues['manifest'][$manifestPath] = translate('ML_NO_MANIFEST');
@@ -693,70 +736,65 @@ class ModuleScanner{
 			}
 		}
 
-		//now lets scan for files that will override our files
-		if(empty($this->config['disableRestrictedCopy']) && isset($installdefs['copy'])){
-			foreach($installdefs['copy'] as $copy){
-				$from = str_replace('<basepath>', $this->pathToModule, $copy['from']);
-				$to = $copy['to'];
-				if(substr_count($from, '..')){
-					$this->issues['copy'][$from] = translate('ML_PATH_MAY_NOT_CONTAIN').' ".." -' . $from;
-				}
-				if(substr_count($to, '..')){
-					$this->issues['copy'][$to] = translate('ML_PATH_MAY_NOT_CONTAIN'). ' ".." -' . $to;
-				}
-				while(substr_count($from, '//')){
-					$from = str_replace('//', '/', $from);
-				}
-				while(substr_count($to, '//')){
-					$to = str_replace('//', '/', $to);
-				}
-				$this->scanCopy($from, $to);
-			}
-		}
-		if(!empty($issues)){
-			$this->issues['manifest'][$manifestPath] = $issues;
-		}
-
-
-
+        // now lets scan for files that will override our files
+        if (empty($this->config['disableRestrictedCopy']) && isset($installdefs['copy'])) {
+            foreach ($installdefs['copy'] as $copy) {
+                $from = $this->normalizePath($copy['from']);
+                if ($from === false) {
+                    $this->issues['copy'][$copy['from']] = translate('ML_PATH_MAY_NOT_CONTAIN') .' ".." -' . $copy['from'];
+                    continue;
+                }
+                $from = str_replace('<basepath>', $this->pathToModule, $from);
+                $to = $this->normalizePath($copy['to']);
+                if ($to === false) {
+                    $this->issues['copy'][$copy['to']] = translate('ML_PATH_MAY_NOT_CONTAIN') . ' ".." -' . $copy['to'];
+                    continue;
+                }
+                if ($to === '') {
+                    $to = ".";
+                }
+                $this->scanCopy($from, $to);
+            }
+        }
+        if (!empty($issues)) {
+            $this->issues['manifest'][$manifestPath] = $issues;
+        }
 	}
 
+    /**
+     * Takes in where the file will is specified to be copied from and to
+     * and ensures that there is no official sugar file there.
+     * If the file exists it will check
+     * against the MD5 file list to see if Sugar Created the file
+     * @param string $from source filename
+     * @param string $to destination filename
+     */
+    public function scanCopy($from, $to)
+    {
+        // if the file doesn't exist for the $to then it is not overriding anything
+        if (!file_exists($to)) {
+            return;
+        }
+        if (is_dir($from)) {
+            $d = dir($from);
+            while ($e = $d->read()) {
+                if ($e == '.' || $e == '..') {
+                    continue;
+                }
+                $this->scanCopy($from . '/' . $e, $to . '/' . $e);
+            }
+            return;
+        }
+        // if $to is a dir and $from is a file then make $to a full file path as well
+        if (is_dir($to) && is_file($from)) {
+            $to = rtrim($to, '/'). '/' . basename($from);
+        }
+        // if the $to is a file and it is found in sugarFileExists then don't allow overriding it
+        if (is_file($to) && $this->sugarFileExists($to)) {
+            $this->issues['copy'][$from] = translate('ML_OVERRIDE_CORE_FILES') . '(' . $to . ')';
+        }
 
-
-	/**
-	 * Takes in where the file will is specified to be copied from and to
-	 * and ensures that there is no official sugar file there. If the file exists it will check
-	 * against the MD5 file list to see if Sugar Created the file
-	 *
-	 */
-	function scanCopy($from, $to){
-				//if the file doesn't exist for the $to then it is not overriding anything
-				if(!file_exists($to))return;
-				//if $to is a dir and $from is a file then make $to a full file path as well
-				if(is_dir($to) && is_file($from)){
-					if(substr($to,-1) === '/'){
-						$to = substr($to, 0 , strlen($to) - 1);
-					}
-					$to .= '/'. basename($from);
-				}
-				//if the $to is a file and it is found in sugarFileExists then don't allow overriding it
-				if(is_file($to) && $this->sugarFileExists($to)){
-					$this->issues['copy'][$from] = translate('ML_OVERRIDE_CORE_FILES') . '(' . $to . ')';
-				}
-
-				if(is_dir($from)){
-					$d = dir($from);
-					while($e = $d->read()){
-						if($e == '.' || $e == '..')continue;
-						$this->scanCopy($from .'/'. $e, $to .'/' . $e);
-					}
-				}
-
-
-
-
-
-			}
+    }
 
 
 	/**

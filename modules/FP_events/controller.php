@@ -249,7 +249,7 @@ class FP_eventsController extends SugarController
 
         }
         //Target lists. Can incliude contacts, leads and targets as part of the target list
-        if($type = 'target_list'){
+        if($type == 'target_list'){
 
             foreach($ids as $list){
 
@@ -298,7 +298,7 @@ class FP_eventsController extends SugarController
             }   
         }
         //Targets
-        if($type = 'targets'){
+        elseif($type == 'targets'){
 
             foreach($ids as $target){
                 
@@ -315,7 +315,7 @@ class FP_eventsController extends SugarController
             }
         }
         //leads
-        if($type = 'leads'){
+        elseif($type == 'leads'){
             
             foreach($ids as $lead){
 
@@ -332,7 +332,7 @@ class FP_eventsController extends SugarController
             }
         }
         //contacts
-        if($type = 'contacts'){
+        elseif($type == 'contacts'){
 
             foreach($ids as $contact){
                 

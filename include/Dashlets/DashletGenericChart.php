@@ -3,36 +3,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 require_once('include/Dashlets/Dashlet.php');
@@ -45,6 +48,8 @@ abstract class DashletGenericChart extends Dashlet
      * @var string
      */
     public $title;
+
+    public $noDataMessage = "No Results";
 
     /**
      * @see Dashlet::$isConfigurable
@@ -356,5 +361,121 @@ abstract class DashletGenericChart extends Dashlet
         }
 
         return $autoRefreshSS->fetch($tpl);
+    }
+
+    //Added as the rgraph charts do not use SugarCharts and this is where this method was previously
+    function getChartData($query)
+    {
+        global $app_list_strings, $db;
+        $dataSet = array();
+        $result = $db->query($query);
+
+        $row = $db->fetchByAssoc($result);
+
+        while ($row != null){
+            $dataSet[] = $row;
+            $row = $db->fetchByAssoc($result);
+        }
+        return $dataSet;
+    }
+
+    /**
+      PG copied verbatim from SugarChart as there is no longer the dependency on this from RGraph charts
+
+    This function is used for localize all the characters in the Chart. And it can also sort all the dom_values by the sequence defined in the dom, but this may produce a lot of extra empty data in the xml file, when the chart is sorted by two key cols.
+    If the data quantity is large, it maybe a little slow.
+     * @param         array $data_set           The data get from database
+    string $keycolname1      We will sort by this key first
+    bool $translate1            Whether to trabslate the first column
+    string $keycolname1      We will sort by this key secondly, and  it can be null, then it will only sort by the first column.
+    bool $translate1            Whether to trabslate the second column
+    bool $ifsort2                 Whether to sort by the second column or just translate the second column.
+     * @return        The sorted and translated data.
+     */
+    function sortData($data_set, $keycolname1=null, $translate1=false, $keycolname2=null, $translate2=false, $ifsort2=false) {
+        //You can set whether the columns need to be translated or sorted. It the column needn't to be translated, the sorting must be done in SQL, this function will not do the sorting.
+        global $app_list_strings;
+        $sortby1[] = array();
+        foreach ($data_set as $row) {
+            $sortby1[]  = $row[$keycolname1];
+        }
+        $sortby1 = array_unique($sortby1);
+        //The data is from the database, the sorting should be done in the sql. So I will not do the sort here.
+        if($translate1) {
+            $temp_sortby1 = array();
+            foreach(array_keys($app_list_strings[$keycolname1.'_dom']) as $sortby1_value) {
+                if(in_array($sortby1_value, $sortby1)) {
+                    $temp_sortby1[] = $sortby1_value;
+                }
+            }
+            $sortby1 = $temp_sortby1;
+        }
+
+        //if(isset($sortby1[0]) && $sortby1[0]=='') unset($sortby1[0]);//the beginning of lead_source_dom is blank.
+        if(isset($sortby1[0]) && $sortby1[0]==array()) unset($sortby1[0]);//the beginning of month after search is blank.
+
+        if($ifsort2==false) $sortby2=array(0);
+
+        if($keycolname2!=null) {
+            $sortby2 = array();
+            foreach ($data_set as $row) {
+                $sortby2[]  = $row[$keycolname2];
+            }
+            //The data is from the database, the sorting should be done in the sql. So I will not do the sort here.
+            $sortby2 = array_unique($sortby2);
+            if($translate2) {
+                $temp_sortby2 = array();
+                foreach(array_keys($app_list_strings[$keycolname2.'_dom']) as $sortby2_value) {
+                    if(in_array($sortby2_value, $sortby2)) {
+                        $temp_sortby2[] = $sortby2_value;
+                    }
+                }
+                $sortby2 = $temp_sortby2;
+            }
+        }
+
+        $data=array();
+
+        foreach($sortby1 as $sort1) {
+            foreach($sortby2 as $sort2) {
+                if($ifsort2) $a=0;
+                foreach($data_set as $key => $value){
+                    if($value[$keycolname1] == $sort1 && (!$ifsort2 || $value[$keycolname2]== $sort2)) {
+                        if($translate1) {
+                            $value[$keycolname1.'_dom_option'] = $value[$keycolname1];
+                            $value[$keycolname1] = $app_list_strings[$keycolname1.'_dom'][$value[$keycolname1]];
+                        }
+                        if($translate2) {
+                            $value[$keycolname2.'_dom_option'] = $value[$keycolname2];
+                            $value[$keycolname2] = $app_list_strings[$keycolname2.'_dom'][$value[$keycolname2]];
+                        }
+                        array_push($data, $value);
+                        unset($data_set[$key]);
+                        $a=1;
+                    }
+                }
+                if($ifsort2 && $a==0) {//Add 0 for sorting by the second column, if the first row doesn't have a certain col, it will fill the column with 0.
+                    $val=array();
+                    $val['total'] = 0;
+                    $val['count'] = 0;
+                    if($translate1) {
+                        $val[$keycolname1] = $app_list_strings[$keycolname1.'_dom'][$sort1];
+                        $val[$keycolname1.'_dom_option'] = $sort1;
+                    }
+                    else {
+                        $val[$keycolname1] = $sort1;
+                    }
+                    if($translate2) {
+                        $val[$keycolname2] = $app_list_strings[$keycolname2.'_dom'][$sort2];
+                        $val[$keycolname2.'_dom_option'] = $sort2;
+                    }
+                    elseif($keycolname2!=null) {
+                        $val[$keycolname2] = $sort2;
+                    }
+                    array_push($data, $val);
+                }
+            }
+        }
+        return $data;
     }
 }

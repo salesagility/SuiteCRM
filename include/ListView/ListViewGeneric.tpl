@@ -3,36 +3,39 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -53,13 +56,13 @@
         $('.selectActionsDisabled').children().each(function(index) {
             $(this).attr('onclick','').unbind('click');
         });
-        
+
         var selectedTopValue = $("#selectCountTop").attr("value");
         if(typeof(selectedTopValue) != "undefined" && selectedTopValue != "0"){
         	sugarListView.prototype.toggleSelected();
         }
 	});
-{/literal}	
+{/literal}
 </script>
 {assign var="currentModule" value = $pageData.bean.moduleDir}
 {assign var="singularModule" value = $moduleListSingular.$currentModule}
@@ -69,16 +72,13 @@
 {if count($data) == 0}
 	{assign var="hideTable" value=true}
 	<div class="list view listViewEmpty">
-    {if $displayEmptyDataMesssages}
+		{if $displayEmptyDataMesssages}
         {if strlen($query) == 0}
                 {capture assign="createLink"}<a href="?module={$pageData.bean.moduleDir}&action=EditView&return_module={$pageData.bean.moduleDir}&return_action=DetailView">{$APP.LBL_CREATE_BUTTON_LABEL}</a>{/capture}
                 {capture assign="importLink"}<a href="?module=Import&action=Step1&import_module={$pageData.bean.moduleDir}&return_module={$pageData.bean.moduleDir}&return_action=index">{$APP.LBL_IMPORT}</a>{/capture}
                 {capture assign="helpLink"}<a target="_blank" href='?module=Administration&action=SupportPortal&view=documentation&version={$sugar_info.sugar_version}&edition={$sugar_info.sugar_flavor}&lang=&help_module={$currentModule}&help_action=&key='>{$APP.LBL_CLICK_HERE}</a>{/capture}
                 <p class="msg">
                     {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS|replace:"<item2>":$createLink|replace:"<item3>":$importLink}
-                </p>
-                <p class="submsg">
-                    {$APP.MSG_EMPTY_LIST_VIEW_NO_RESULTS_SUBMSG|replace:"<item1>":$moduleName|replace:"<item4>":$helpLink}
                 </p>
         {elseif $query == "-advanced_search"}
             <p class="msg">
@@ -104,10 +104,10 @@
 	</div>
 {/if}
 {$multiSelectData}
-
 {if $hideTable == false}
-	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view'>
-    {assign var="link_select_id" value="selectLinkTop"}
+	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
+	<thead>
+	{assign var="link_select_id" value="selectLinkTop"}
     {assign var="link_action_id" value="actionLinkTop"}
     {assign var="actionsLink" value=$actionsLinkTop}
     {assign var="selectLink" value=$selectLinkTop}
@@ -123,8 +123,12 @@
 			<td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
+            {assign var='datahide' value="phone"}
 			{foreach from=$displayColumns key=colHeader item=params}
-				<th scope='col' width='{$params.width}%'>
+                {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
+                {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
+                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
+				{else}<th scope='col' data-hide="{$datahide}">{/if}
 					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
 	                {if $params.sortable|default:true}
 	                    {if $params.url_sort}
@@ -155,7 +159,7 @@
 						{/if}
 	                    </a>
 					{else}
-	                    {if !isset($params.noHeader) || $params.noHeader == false} 
+	                    {if !isset($params.noHeader) || $params.noHeader == false}
 						  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
 	                    {/if}
 					{/if}
@@ -163,14 +167,14 @@
 				</th>
 				{counter name="colCounter"}
 			{/foreach}
-			<td class='td_alt' nowrap="nowrap" width='1%'>&nbsp;</td>
+
 		</tr>
-			
-		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}	
+	</thead>
+		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
 		    {counter name="offset" print=false}
 	        {assign var='scope_row' value=true}
-	
+
 			{if $smarty.foreach.rowIteration.iteration is odd}
 				{assign var='_rowColor' value=$rowColor[0]}
 			{else}
@@ -190,20 +194,21 @@
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td width='2%' nowrap>
-	                {if $pageData.rowAccess[$id].edit}
-	                <a title='{$editLinkString}' id="edit-{$rowData.ID}"
-	href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
-	                >
-	                    {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
-	                    {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
-	                {/if}
+                    {if $pageData.rowAccess[$id].edit}
+                        <a title='{$editLinkString}' id="edit-{$rowData.ID}"
+                           href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
+                                >
+                            {capture name='tmp1' assign='alt_edit'}{sugar_translate label="LNK_EDIT"}{/capture}
+                            {sugar_getimage name="edit_inline.gif" attr='border="0" ' alt="$alt_edit"}</a>
+                    {/if}
 	            </td>
-	
+
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
 				{foreach from=$displayColumns key=col item=params}
+                    {$displayColumns[type]}
 				    {strip}
-					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" class="{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
+					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" type="{$displayColumns.$col.type}" field="{$col|lower}" class="{if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}inlineEdit{/if}{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
 						{if $col == 'NAME' || $params.bold}<b>{/if}
 					    {if $params.link && !$params.customCode}
 	{capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}{/capture}
@@ -212,21 +217,23 @@
 	{capture assign=url}index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$record}{/capture}
 	                        <{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href="{sugar_ajax_url url=$url}">
 						{/if}
-						{if $params.customCode} 
+
+						{if $params.customCode}
 							{sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
-						{else}	
+						{else}
 	                       {sugar_field parentFieldArray=$rowData vardef=$params displayType=ListView field=$col}
-	                       
+
 						{/if}
 						{if empty($rowData.$col) && empty($params.customCode)}&nbsp;{/if}
 						{if $params.link && !$params.customCode}
 							</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
 	                    {/if}
-	                    {if $col == 'NAME' || $params.bold}</b>{/if}
+                        {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}<div class="inlineEditIcon">{sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{/if}
 					</td>
 					{/strip}
 	                {assign var='scope_row' value=false}
 					{counter name="colCounter"}
+
 				{/foreach}
 				<td align='right'>{$pageData.additionalDetails.$id}</td>
 		    	</tr>
@@ -235,7 +242,7 @@
 		    <td colspan="{$colCount}">
 		        <em>{$APP.LBL_NO_DATA}</em>
 		    </td>
-		</tr> 
+		</tr>
 		{/foreach}
     {assign var="link_select_id" value="selectLinkBottom"}
     {assign var="link_action_id" value="actionLinkBottom"}
@@ -272,4 +279,5 @@ function lvg_nav(m,id,act,offset,t){
     function lvg_dtails(id){{/literal}
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
+<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 {/if}

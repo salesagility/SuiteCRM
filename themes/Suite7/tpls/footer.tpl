@@ -40,13 +40,12 @@
     </div>
 
 
-</div>
+</main>
 
 <div id="bottomLinks">
 </div>
-<div class="clear_footer"></div>
 
-<div id="footer">
+<footer>
     <div id="responseTime">
         {$STATISTICS}
     </div>
@@ -59,7 +58,7 @@
     {/if}
 
     <div id="copyright_data">
-    <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
+    <div id="dialogSuite" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
         <p>{$MOD.LBL_SUITE_DESC1}</p>
         <br>
         <p>{$MOD.LBL_SUITE_DESC2}</p>
@@ -67,7 +66,7 @@
         <p>{$MOD.LBL_SUITE_DESC3}</p>
         <br>
     </div>
-    <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
+    <div id="dialogSugar" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
         <p>{$COPYRIGHT}</p>
     </div>
 
@@ -75,15 +74,12 @@
     <button id="powered_by">&copy; {$MOD.LBL_SUITE_POWERED_BY}</button>
     </div>
 
-</div>
+</footer>
 <script>
 {literal}
 function printpage()
 {
     window.print();
-}
-if(SUGAR.util.isTouchScreen()) {
-        setTimeout(resizeHeader,10000);
 }
 
 //qe_init function sets listeners to click event on elements of 'quickEdit' class
@@ -142,7 +138,7 @@ function qe_init(){
         });
 
         $(function() {
-            $( "#dialog, #dialog2" ).dialog({
+            $( "#dialogSugar, #dialogSuite" ).dialog({
                 autoOpen: false,
                 show: {
                     effect: "blind",
@@ -154,11 +150,11 @@ function qe_init(){
                 }
             });
             $( "#powered_by" ).click(function() {
-                $( "#dialog" ).dialog( "open" );
+                $( "#dialogSugar" ).dialog( "open" );
                 $("#overlay").show().css({"opacity": "0.5"});
             });
             $( "#admin_options" ).click(function() {
-                $( "#dialog2" ).dialog( "open" );
+                $( "#dialogSuite" ).dialog( "open" );
             });
         });
 
@@ -171,6 +167,18 @@ function qe_init(){
             event.preventDefault();
             $('html, body').animate({scrollTop:0}, 500); // Scroll speed to the top
         });
+    </script>
+    <script>
+        function toggleCodes(on) {
+            var obj = document.getElementById('icons');
+
+            if (on) {
+                obj.className += ' codesOn';
+            } else {
+                obj.className = obj.className.replace(' codesOn', '');
+            }
+        }
+
     </script>
 {/literal}
 </body>

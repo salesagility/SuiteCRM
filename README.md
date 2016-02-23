@@ -1,10 +1,22 @@
-##SuiteCRM 7.1.0
+##SuiteCRM 7.4
 
 ### What's in this repository ###
 
 This is the git repository for the SuiteCRM project, the fully open source & supercharged fork of SugarCRM Community Edition.
 
 This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the SuiteCRM ecosystem.
+
+### Contributing to the project ###
+
+#####Important: Please read before developing code intended for inclusion in the SuiteCRM project.#####
+
+Please read and sign the following [contributor agreement][cont_agrmt]
+
+[cont_agrmt]: https://www.clahub.com/agreements/salesagility/SuiteCRM
+
+The Contributor Agreement only needs to be signed once for all pull requests and contributions. 
+
+Once signed and confirmed, any pull requests will be considered for inclusion in the SuiteCRM project.
 
 ### Helpful links for the community###
 
@@ -17,36 +29,21 @@ The following links offer various ways to view, contribute and collaborate to th
 + [SuiteCRM Partners - Our partner section where partners of SuiteCRM can be viewed][suitecrm_partners]
 + [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
 
-[suitecrm_demo]: http://suitecrm.com/index.php/advanced-stuff
-[suitecrm_forums]: http://suitecrm.com/index.php/forum
-[suitecrm_docs]: http://suitecrm.com/index.php/suitecrm-the-sugarcrm-fork
-[suitecrm_partners]: http://suitecrm.com/index.php/suitecrm-partners
-[suitecrm_ext]: http://suitecrm.com/index.php/suitecrm-extensions
+[suitecrm_demo]: https://suitecrm.com/demo
+[suitecrm_forums]: https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list
+[suitecrm_docs]: https://suitecrm.com/wiki
+[suitecrm_partners]: https://suitecrm.com/index.php?option=com_content&view=article&id=170&Itemid=1172
+[suitecrm_ext]: https://suitecrm.com/index.php?option=com_mtree&view=listcats&cat_id=76&Itemid=1225
 
 ### Development Roadmap ###
 
-#### Advanced OpenWorkflow ####
-+ Approvals(Unassigned)*
+[ View the Roadmap here and get involved][suitecrm_roadmap]
 
-#### Advanced OpenReports ####
-+ Charts(SalesAgility) 
-+ Dashlet Integration(SalesAgility) 
-+ Related modules(Unassigned)*
-
-#### Advanced OpenPortal ####
-+ Quotes(Assigned) 
-+ Events(SalesAgility) 
-+ E-Commerce integration(Unassigned)*
-+ Integration with WordPress & Drupal(Unassigned)*
-
-#### Advanced OpenDiscovery ####
-+ Solr integration(Unassigned)*
-
-(*) Unassigned - Available for collaborators to be assigned to this requirement and develop it for future releases.
+[suitecrm_roadmap]: http://suitecrm.com/index.php?option=com_devroadmap&view=devroadmap&id=&Itemid=1389
 
 ### Support & Licensing ###
 
 SuiteCRM is an open source project. As such please do not contact us directly via email or phone for SuiteCRM support. Instead please use our support forum. By using the forum the knowledge is shared with everyone in the community. Our developers answer questions on the forum daily but it also gives the other members of the community the opportunity to contribute. If you would like customisations to specifically fit your SuiteCRM  needs then please use our contact form.
 
-SuiteCRM is published under the GNU Affero GPLv3 license.
+SuiteCRM is published under the AGPLv3 license.
 

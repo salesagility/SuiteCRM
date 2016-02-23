@@ -5,36 +5,39 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -560,6 +563,7 @@ class DynamicField {
         $fmd->importable = ( isset ( $field->importable ) ) ? $field->importable : null ;
         $fmd->duplicate_merge = $field->duplicate_merge;
         $fmd->audited =$field->audited;
+        $fmd->inline_edit = $field->inline_edit;
         $fmd->reportable = ($field->reportable ? 1 : 0);
         if(!$is_update){
             $fmd->new_with_id=true;
@@ -633,6 +637,7 @@ class DynamicField {
                 return ( $value === 'true' || $value === '1' || $value === true || $value === 1 ); break;
             case "required":
             case "audited":
+            case "inline_edit":
             case "massupdate":
                 return ( $value === 'false' || $value === '0' || $value === false || $value === 0); break;
             case "default_value":
@@ -706,6 +711,7 @@ class DynamicField {
      * @param unknown_type $ext2
      * @param unknown_type $ext3
      * @param unknown_type $audited
+     * @param unknown_type $inline_edit
      * @param unknown_type $mass_update
      * @param unknown_type $ext4
      * @param unknown_type $help
@@ -713,7 +719,7 @@ class DynamicField {
      * @param unknown_type $comment
      * @return boolean
      */
-    function addField($name,$label='', $type='Text',$max_size='255',$required_option='optional', $default_value='', $ext1='', $ext2='', $ext3='',$audited=0, $mass_update = 0 , $ext4='', $help='',$duplicate_merge=0, $comment=''){
+    function addField($name,$label='', $type='Text',$max_size='255',$required_option='optional', $default_value='', $ext1='', $ext2='', $ext3='',$audited=0, $inline_edit = 1, $mass_update = 0 , $ext4='', $help='',$duplicate_merge=0, $comment=''){
         require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
         $field = new TemplateField();
         $field->label = $label;
@@ -734,6 +740,7 @@ class DynamicField {
         $field->massupdate = $mass_update;
         $field->duplicate_merge = $duplicate_merge;
         $field->audited = $audited;
+        $field->inline_edit = $inline_edit;
         $field->reportable = 1;
         return $this->addFieldObject($field);
     }

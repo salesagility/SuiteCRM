@@ -4,36 +4,39 @@ if(!defined('sugarEntry') || !sugarEntry)
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- * 
+
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
+ * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
  * Free Software Foundation with the addition of the following permission added
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
 
@@ -84,7 +87,8 @@ class SugarWidgetField extends SugarWidget {
 
 	function & displayDetail($layout_def) {
 
-		return '';
+        $layout_def = '';
+		return $layout_def;
 	}
 	
 	function displayHeaderCellPlain($layout_def) 
@@ -113,7 +117,8 @@ class SugarWidgetField extends SugarWidget {
 		$subpanel_module = $layout_def['subpanel_module'];
 		$html_var = $subpanel_module . "_CELL";
 		if (empty ($this->base_URL)) {
-			$this->base_URL = ListView :: getBaseURL($html_var);
+			$objListView = new ListView();
+			$this->base_URL = $objListView -> getBaseURL($html_var);
 			$split_url = explode('&to_pdf=true&action=SubPanelViewer&subpanel=', $this->base_URL);
 			$this->base_URL = $split_url[0];
 			$this->base_URL .= '&inline=true&to_pdf=true&action=SubPanelViewer&subpanel=';
@@ -123,7 +128,8 @@ class SugarWidgetField extends SugarWidget {
 			$sort_by_name = $layout_def['sort_by'];
 		}
 
-		$sort_by = ListView :: getSessionVariableName($html_var, "ORDER_BY").'='.$sort_by_name;
+		$objListView = new ListView();
+		$sort_by = $objListView->getSessionVariableName($html_var, "ORDER_BY").'='.$sort_by_name;
 
 		$start = (empty ($layout_def['start_link_wrapper'])) ? '' : $layout_def['start_link_wrapper'];
 		$end = (empty ($layout_def['end_link_wrapper'])) ? '' : $layout_def['end_link_wrapper'];
@@ -136,9 +142,8 @@ class SugarWidgetField extends SugarWidget {
 		if (isset ($layout_def['sort'])) {
 			$imgArrow = $layout_def['sort'];
 		}
-
-		$arrow_start = ListView::getArrowUpDownStart($imgArrow);
-		$arrow_end = ListView::getArrowUpDownEnd($imgArrow);
+		$arrow_start = $objListView->getArrowUpDownStart($imgArrow);
+		$arrow_end = $objListView->getArrowUpDownEnd($imgArrow);
 		$header_cell .= " ".$arrow_start.$arrow_end."</a>";
 
 		return $header_cell;
