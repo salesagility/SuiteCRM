@@ -54,6 +54,9 @@ if(isset( $sugar_config['disc_client']) && $sugar_config['disc_client']){
 	require_once('modules/Sync/headermenu.php');
 }
 
+$global_control_links['user'] = array('linkinfo' => array($app_strings['LBL_PROFILE'] => "index.php?module=Users&action=EditView&record=$current_user->id"),
+'submenu' => ''
+ );
 
 $global_control_links['employees'] = array(
 'linkinfo' => array($app_strings['LBL_EMPLOYEES']=> 'index.php?module=Employees&action=index&query=true'),
