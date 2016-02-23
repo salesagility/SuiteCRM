@@ -4890,11 +4890,9 @@ ul#quick-nav ul li:hover {
 }
 
 #alert-nav {
-    position: absolute;
     top: 8px;
-    right: 320px;
     width:35px;
-    float:left;
+    float:right;
     z-index:55;
     padding:0;
     margin-bottom:2px;
