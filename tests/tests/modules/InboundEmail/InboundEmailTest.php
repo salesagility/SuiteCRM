@@ -269,7 +269,7 @@ class InboundEmailTest extends PHPUnit_Framework_TestCase {
 	
 	
 	public function saveMailBoxValueOfInboundEmail($id) {
-	
+        $this->markTestSkipped("saveMailBoxValueOfInboundEmail skipped - method looks suspect. Should likely be removed.");
 		$inboundEmail = new InboundEmail();
 		
 		$inboundEmail->email_user = "TEST";

@@ -255,7 +255,7 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase {
     	$mergeRecord->load_merge_bean("Meetings");
     	
     	$expected = array (
-						  'id' => array ( 'name' => 'id', 'vname' => 'LBL_ID', 'type' => 'id', 'required' => true, 'reportable' => true, 'comment' => 'Unique identifier', 'value' => '1', 'search_type' => 'Exact'),
+						  'id' => array ( 'name' => 'id', 'vname' => 'LBL_ID', 'type' => 'id', 'required' => true, 'reportable' => true, 'comment' => 'Unique identifier', 'inline_edit' => false, 'value' => '1', 'search_type' => 'Exact'),
 						  'name' => array ( 'name' => 'name','vname' => 'LBL_SUBJECT','required' => true, 'type' => 'name', 'dbType' => 'varchar', 'unified_search' => true, 'full_text_search' => array ('boost' => 3), 'len' => '50','comment' => 'Meeting name', 'importable' => 'required', 'value' => 'test', 'search_type' => 'Exact' )
 						);
     	

@@ -169,6 +169,8 @@ class AOR_ChartTest extends PHPUnit_Framework_TestCase {
 
     public function testbuildChartImage(){
 
+        $this->markTestSkipped("Skipping testing chart image");
+
     	global $current_user;
     	
     	$current_user->id = "1";
@@ -213,7 +215,7 @@ class AOR_ChartTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testbuildChartHTML(){
-
+        $this->markTestSkipped("Skipping testing chart HTML");
     	$aorChart = new AOR_Chart();
 
     	//preset the required objects and properties

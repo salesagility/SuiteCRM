@@ -164,7 +164,10 @@ class CallTest extends PHPUnit_Framework_TestCase {
 				'EMAIL_REMINDER_TIME' => '-1',
 				'EMAIL_REMINDER_SENT' => '0',
 				'REPEAT_INTERVAL' => '1',
-				'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><img src="themes/SuiteR/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
+				'SET_COMPLETE' => '~'
+                                  . preg_quote('<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><img src="themes/SuiteR/images/close_inline.png?v=')
+                                  .'[\w-]+'
+                                  .preg_quote('"     border=\'0\' alt="Close" /></a>').'~',
 				'DATE_START' => '<font class=\'overdueTask\'></font>',
 				'CONTACT_ID' => NULL,
 				'CONTACT_NAME' => NULL,
@@ -174,7 +177,13 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		);
 		
 		$actual = $call->get_list_view_data();
-		$this->assertSame($expected,$actual);
+        foreach($expected as $expectedKey => $expectedVal){
+            if($expectedKey == 'SET_COMPLETE'){
+                $this->assertRegExp($expected[$expectedKey],$actual[$expectedKey]);
+            }else {
+                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
+            }
+        }
 		
 		$this->assertEquals("Administrator", $call->assigned_user_name);
 		$this->assertEquals("Administrator", $call->created_by_name);

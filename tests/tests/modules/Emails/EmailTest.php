@@ -886,7 +886,7 @@ class EmailTest extends PHPUnit_Framework_TestCase {
 		$expected = array (
 				'ID' => 1,
 				'FROM_ADDR_NAME' => 'Admin',
-				'TYPE' => 'archived',
+				'TYPE' => 'Archived',
 				'INTENT' => 'support',
 				'FROM_ADDR' => NULL,
 				'QUICK_REPLY' => '<a  href="index.php?module=Emails&action=Compose&replyForward=true&reply=reply&record=1&inbound_email_id=1">Reply</a>',
