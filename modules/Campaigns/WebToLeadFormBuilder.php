@@ -4,7 +4,7 @@ class WebToLeadFormBuilder {
 
     // ---- html outputs ----
 
-    private static function getFormStartHTML($styleHref, $suiteGrp1Js, $webPostUrl, $webFormHeader, $webFormDescription) {
+    private static function getFormStartHTML($suiteGrp1Js, $webPostUrl, $webFormHeader, $webFormDescription) {
         $formSel = 'form#WebToLeadForm';
         $html = <<<HTML
 <style type="text/css">
@@ -30,10 +30,10 @@ $formSel div.center {text-align: center;}
 $formSel label {display: block; float: left; width: 100px;}
 $formSel span.required {color: #FF0000;}
 </style>
-<link rel="stylesheet" type="text/css" media="all" href="$styleHref">
-<script type=\"text/javascript\" src='$suiteGrp1Js'></script>
+<!-- TODO ??? -->
+<script type="text/javascript" src='$suiteGrp1Js'></script>
 <form action='$webPostUrl' name='WebToLeadForm' method='POST' id='WebToLeadForm'>
-    <h2>$webFormHeader</h2></b>
+    <h2>$webFormHeader</h2>
     <p>$webFormDescription</p>
 HTML;
         return $html;
@@ -99,7 +99,7 @@ HTML;
     }
 
     private static function getRowFinishHTML() {
-        return '    <div class="clear"></div>
+        return '    <div class="clear">&nbsp;</div>
                 </div>';
     }
 
@@ -206,7 +206,7 @@ HTML;
     private static function getFieldTextHTML($fieldName, $fieldLabel, $fieldRequired, $webRequiredSymbol) {
         $_required = $fieldRequired ? ' required' : '';
         $html  = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-        $html .= "<span id='ta_replace'><input id=\"$fieldName\" name=\"$fieldName\" type=\"text\"$_required></span>";
+        $html .= "<span class='ta_replace'><input id=\"$fieldName\" name=\"$fieldName\" type=\"text\"$_required></span>";
         return $html;
     }
 
@@ -313,11 +313,9 @@ HTML;
                                     $formCols = array('colsFirst', 'colsSecond')
                                     ) {
 
-        $calendarCss = getJSPath(SugarThemeRegistry::current()->getCSSURL('calendar-win2k-cold-1.css'));
         $sugarGrp1Js = getJSPath($siteURL.'/cache/include/javascript/sugar_grp1.js');
 
         $Web_To_Lead_Form_html = self::getFormStartHTML(
-            $calendarCss,
             $sugarGrp1Js,
             $webPostURL,
             $webFormHeader,
@@ -352,31 +350,35 @@ HTML;
                             $Web_To_Lead_Form_html .= self::getFieldEnumHTML($lead, $field_name, $appListStrings[$field_options], $field_required, $field_label, $webRequiredSymbol, $colsFields[$j]);
                         }
 
-                        if ($field_type == 'bool') {
+                        elseif ($field_type == 'bool') {
                             $Web_To_Lead_Form_html .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol, $field_required);
                             if (!in_array($lead->field_defs[$colsFields[$j]]['name'], $bool_fields)) {
                                 array_push($bool_fields, $lead->field_defs[$colsFields[$j]]['name']);
                             }
                         }
 
-                        if ($field_type == 'date') {
+                        elseif ($field_type == 'date') {
                             $Web_To_Lead_Form_html .= self::getFieldDateHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
                         }
 
-                        if ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'phone' || $field_type == 'currency' || $field_type == 'url' || $field_type == 'int') {
+                        elseif ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'phone' || $field_type == 'currency' || $field_type == 'url' || $field_type == 'int') {
                             $Web_To_Lead_Form_html .= self::getFieldCharsHTML($field_name, $field_label, $field_required, $webRequiredSymbol);
                         }
 
-                        if ($field_type == 'text') {
+                        elseif ($field_type == 'text') {
                             $Web_To_Lead_Form_html .= self::getFieldTextHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
                         }
 
-                        if ($field_type == 'relate' && $field_name == 'account_name') {
+                        elseif ($field_type == 'relate' && $field_name == 'account_name') {
                             $Web_To_Lead_Form_html .= self::getFieldRelateHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
                         }
 
-                        if ($field_type == 'email') {
+                        elseif ($field_type == 'email') {
                             $Web_To_Lead_Form_html .= self::getFieldEmailHTML();
+                        }
+
+                        else {
+                            $Web_To_Lead_Form_html .= self::getFieldEmptyHTML();
                         }
 
                     } else {
