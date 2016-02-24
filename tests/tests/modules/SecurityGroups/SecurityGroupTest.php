@@ -318,31 +318,45 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase {
 		$securityGroup = new SecurityGroup();
 			
 		$expected = array (
-				  'Users' => 'Users',
-				  'Campaigns' => 'Campaigns',
-				  'Cases' => 'Cases',
-				  'ACLRoles' => 'Roles',
-				  'Contacts' => 'Contacts',
-				  'Documents' => 'Documents',
-				  'Emails' => 'Emails',
-				  'EmailTemplates' => 'Email Templates',
-				  'Leads' => 'Leads',
-				  'Meetings' => 'Meetings',
-				  'Notes' => 'Notes',
-				  'Accounts' => 'Accounts',
-				  'Opportunities' => 'Opportunities',
-				  'Bugs' => 'Bugs',
-				  'Project' => 'Projects',
-				  'ProjectTask' => 'Project Tasks',
-				  'ProspectLists' => 'Target Lists',
-				  'Prospects' => 'Targets',
-				  'Tasks' => 'Tasks',
-				  'Calls' => 'Calls',
+            'Meetings',
+            'Cases',
+            'AOS_Products',
+            'Opportunities',
+            'FP_Event_Locations',
+            'Tasks',
+            'jjwg_Markers',
+            'EmailTemplates',
+            'Campaigns',
+            'jjwg_Areas',
+            'Contacts',
+            'AOS_Contracts',
+            'AOS_Quotes',
+            'Bugs',
+            'Users',
+            'Documents',
+            'AOS_Invoices',
+            'Notes',
+            'AOW_WorkFlow',
+            'ProspectLists',
+            'AOK_KnowledgeBase',
+            'AOS_PDF_Templates',
+            'Calls',
+            'Accounts',
+            'Leads',
+            'Emails',
+            'ProjectTask',
+            'Project',
+            'FP_events',
+            'AOR_Reports',
+            'Prospects',
+            'ACLRoles',
+            'jjwg_Maps',
+            'AOS_Product_Categories',
 				);
 		
 		
 		$actual = $securityGroup->getSecurityModules();
-		$this->assertSame($expected,$actual);
+		$this->assertSame($expected,array_keys($actual));
 		
 	}
 
@@ -357,7 +371,7 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase {
 		
 		$securityGroup = new SecurityGroup();
 		
-		$result = $securityGroup->getLinkName("SecurityGroups","Users");
+		$result = $securityGroup->getLinkName("SecurityGroups","Accounts");
 		$this->assertEquals("users",$result);
 		
 		
