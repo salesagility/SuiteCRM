@@ -4,7 +4,7 @@ class WebToLeadFormBuilder {
 
     // ---- html outputs ----
 
-    private static function getFormStartHTML($styleHref, $suiteGrp1Js, /*$calendarJs, */$webPostUrl, $webFormHeader, $webFormDescription) {
+    private static function getFormStartHTML($styleHref, $suiteGrp1Js, $webPostUrl, $webFormHeader, $webFormDescription) {
         $formSel = 'form#WebToLeadForm';
         $html = <<<HTML
 <style type="text/css">
@@ -32,7 +32,6 @@ $formSel span.required {color: #FF0000;}
 </style>
 <link rel="stylesheet" type="text/css" media="all" href="$styleHref">
 <script type=\"text/javascript\" src='$suiteGrp1Js'></script>
-<script type="text/javascript" src="$calendarJs"></script>
 <form action='$webPostUrl' name='WebToLeadForm' method='POST' id='WebToLeadForm'>
     <h2>$webFormHeader</h2></b>
     <p>$webFormDescription</p>
@@ -40,11 +39,10 @@ HTML;
         return $html;
     }
 
-    private static function getFormFooterHTML($webFormFooter, $webFormSubmitLabel, $webFormCampaign, $webRedirectURL, $webAssignedUser, $reqFields, $booleanFields) {
+    private static function getFormFooterHTML($webFormFooter, $webFormSubmitLabel, $webFormCampaign, $webRedirectURL, $webAssignedUser, $booleanFields) {
         $webFormCampaignInput = $webFormCampaign ? "<input type='hidden' id='campaign_id' name='campaign_id' value='$webFormCampaign'>" : '';
         $webRedirectURLInput = $webRedirectURL ? "<input type='hidden' id='redirect_url' name='redirect_url' value='$webRedirectURL'>" : '';
         $webAssignedUserInput = $webAssignedUser ? "<input type='hidden' id='assigned_user_id' name='assigned_user_id' value='$webAssignedUser'>" : '';
-        $reqFieldsInput = $reqFields ? "<input type='hidden' id='req_id' name='req_id' value='$reqFields'>" : '';
         $booleanFieldsInput = $booleanFields ? "<input type='hidden' id='bool_id' name='bool_id' value='$booleanFields'>" : '';
 
         $html = <<<HTML
@@ -57,7 +55,6 @@ $webFormFooter
 $webFormCampaignInput
 $webRedirectURLInput
 $webAssignedUserInput
-$reqFieldsInput
 $booleanFieldsInput
 HTML;
         return $html;
@@ -67,57 +64,31 @@ HTML;
         $html = <<<HTML
 </form>
 <script type='text/javascript'>
- function submit_form(){
- 	if(typeof(validateCaptchaAndSubmit)!='undefined'){
- 		validateCaptchaAndSubmit();
- 	}else{
- 		check_webtolead_fields();
- 	}
+ function submit_form() {
+     if (typeof(validateCaptchaAndSubmit) != 'undefined') {
+         validateCaptchaAndSubmit();
+     } else {
+         check_webtolead_fields();
+     }
  }
- function check_webtolead_fields(){
-     if(document.getElementById('bool_id') != null){
-        var reqs=document.getElementById('bool_id').value;
-        bools = reqs.substring(0,reqs.lastIndexOf(';'));
-        var bool_fields = new Array();
-        var bool_fields = bools.split(';');
-        nbr_fields = bool_fields.length;
-        for(var i=0;i<nbr_fields;i++){
-          if(document.getElementById(bool_fields[i]).value == 'on'){
-             document.getElementById(bool_fields[i]).value = 1;
-          }
-          else{
-             document.getElementById(bool_fields[i]).value = 0;
-          }
-        }
-      }
-    if(document.getElementById('req_id') != null){
-        var reqs=document.getElementById('req_id').value;
-        reqs = reqs.substring(0,reqs.lastIndexOf(';'));
-        var req_fields = new Array();
-        var req_fields = reqs.split(';');
-        nbr_fields = req_fields.length;
-        var req = true;
-        for(var i=0;i<nbr_fields;i++){
-          if(document.getElementById(req_fields[i]).value.length <=0 || document.getElementById(req_fields[i]).value==0){
-           req = false;
-           break;
-          }
-        }
-        if(req){
-            document.WebToLeadForm.submit();
-            return true;
-        }
-        else{
-        // TODO .. remove old js validation here...
-          alert('$webFormRequiredFieldsMsg');
-          return false;
+
+ function check_webtolead_fields() {
+     if (document.getElementById('bool_id') != null) {
+         var reqs = document.getElementById('bool_id').value;
+         bools = reqs.substring(0, reqs.lastIndexOf(';'));
+         var bool_fields = new Array();
+         var bool_fields = bools.split(';');
+         nbr_fields = bool_fields.length;
+         for (var i = 0; i < nbr_fields; i++) {
+             if (document.getElementById(bool_fields[i]).value == 'on') {
+                 document.getElementById(bool_fields[i]).value = 1;
+             } else {
+                 document.getElementById(bool_fields[i]).value = 0;
+             }
          }
-        return false
-   }
-   else{
-    document.WebToLeadForm.submit();
-   }
-}
+     }
+     document.WebToLeadForm.submit();
+ }
 </script>
 HTML;
         return $html;
@@ -218,43 +189,6 @@ HTML;
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
         $html .= "<input type=\"date\" id=\"{$fieldName}\" name=\"{$fieldName}\"$_required/>";
         return $html;
-//        $cal_dateformat = $timeDate->get_cal_date_format();
-//        //$LBL_ENTER_DATE = translate('LBL_ENTER_DATE', 'Charts');
-//        $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-//
-//        $html .= "
-//				<script type='text/javascript'>
-//					update{$fieldName}Value = function() {
-//						var format = '{$cal_dateformat}';
-//						var month = document.getElementById('{$fieldName}_month').value;
-//						var day = document.getElementById('{$fieldName}_day').value;
-//						var year = document.getElementById('{$fieldName}_year').value;
-//						var val = format.replace('%m', month).replace('%d', day).replace('%Y', year);
-//						if (!parseInt(month) > 0 || !parseInt(year) > 0 || !parseInt(year) > 0)
-//							val = '';
-//						document.getElementById('{$fieldName}').value = val;
-//					}
-//				</script>
-//				<input type='hidden' id='{$fieldName}' name='{$fieldName}'/>";
-//        $order = explode("%", $cal_dateformat);
-//        foreach($order as $part)
-//        {
-//            if (!isset($part[0]))
-//                continue;
-//            if (strToUpper($part[0]) == "M" )
-//                $html .= "<input class=\"text\"
-//					name=\"{$fieldName}_month\" size='2' maxlength='2' id='{$fieldName}_month' value=''
-//					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_MONTH") . "\">";
-//            else if (strToUpper($part[0]) == "D" )
-//                $html .=  "<input class=\"text\"
-//					name=\"{$fieldName}_day\" size='2' maxlength='2' id='{$fieldName}_day' value=''
-//					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_DAY") . "\">";
-//            else if (strToUpper($part[0]) == "Y" )
-//                $html .= "<input class=\"text\"
-//					name=\"{$fieldName}_year\" size='4' maxlength='4' id='{$fieldName}_year' value=''
-//					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_YEAR") . "\">";
-//        }
-//        return $html;
     }
 
     // char strings
@@ -314,16 +248,6 @@ HTML;
             $columns= count($colsSecond);
         }
         return $columns;
-    }
-
-    private static function getReqFields($requiredFields) {
-        $req_fields='';
-        if($requiredFields != null ){
-            foreach($requiredFields as $req){
-                $req_fields=$req_fields.$req.';';
-            }
-        }
-        return $req_fields;
     }
 
     private static function getBooleanFields($boolFields) {
@@ -391,12 +315,10 @@ HTML;
 
         $calendarCss = getJSPath(SugarThemeRegistry::current()->getCSSURL('calendar-win2k-cold-1.css'));
         $sugarGrp1Js = getJSPath($siteURL.'/cache/include/javascript/sugar_grp1.js');
-        //$calendarJs = getJSPath($siteURL.'/cache/include/javascript/calendar.js');
 
         $Web_To_Lead_Form_html = self::getFormStartHTML(
             $calendarCss,
             $sugarGrp1Js,
-            //$calendarJs,
             $webPostURL,
             $webFormHeader,
             $webFormDescription
@@ -469,7 +391,6 @@ HTML;
         }
 
 
-        $regFields = self::getReqFields(isset($required_fields) ? $required_fields : null);
         $booleanFields = self::getBooleanFields(isset($bool_fields) ? $bool_fields : null);
 
         $Web_To_Lead_Form_html .= self::getFormFooterHTML(
@@ -478,7 +399,6 @@ HTML;
             $webFormCampaign,
             $webRedirectURL,
             $webAssignedUser,
-            $regFields,
             $booleanFields
         );
 
