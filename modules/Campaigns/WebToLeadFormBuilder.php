@@ -19,19 +19,22 @@ $formSel h6 {font-size: 6px; font-weight: bold; padding: 10px 20px;}
 $formSel p {padding: 10px 20px;}
 $formSel input,
 $formSel select,
-$formSel textarea {border: 1px solid #ccc; display: block; float: left; width: auto; padding: 5px;}
+$formSel textarea {border: 1px solid #ccc; display: block; float: left; min-width: 170px; padding: 5px;}
 $formSel select {background-color: white;}
 $formSel input[type="button"],
-$formSel input[type="submit"] {display: inline; float: none; padding: 5px 10px;}
-$formSel div.row {padding: 10px 20px;}
-$formSel div.col {display: block; float: left; width: 300px;}
+$formSel input[type="submit"] {display: inline; float: none; padding: 5px 10px; width: auto; min-width: auto;}
+$formSel input[type="checkbox"],
+$formSel input[type="radio"] {width: 18px; min-width: auto;}
+$formSel div.col {display: block; float: left; width: 330px; padding: 10px 20px;}
 $formSel div.clear {display: block; float: none; clear: both; height: 0px; overflow: hidden;}
 $formSel div.center {text-align: center;}
-$formSel label {display: block; float: left; width: 100px;}
+$formSel div.buttons {padding: 10px 0; border-top: 1px solid #ccc; background-color: #f7f7f7}
+$formSel label {display: block; float: left; width: 160px; font-weight: bold;}
 $formSel span.required {color: #FF0000;}
 </style>
-<!-- TODO ??? -->
+<!-- TODO ???
 <script type="text/javascript" src='$suiteGrp1Js'></script>
+-->
 <form action='$webPostUrl' name='WebToLeadForm' method='POST' id='WebToLeadForm'>
     <h2>$webFormHeader</h2>
     <p>$webFormDescription</p>
@@ -47,10 +50,9 @@ HTML;
 
         $html = <<<HTML
 $webFormFooter
-<div class="row center">
-    <input type='button' onclick='submit_form();' class='button' name='Submit' value='$webFormSubmitLabel'/>
-    <br>
-    <br>
+<div class="row center buttons">
+    <input type="submit" onclick="submit_form();" class="button" name="Submit" value="$webFormSubmitLabel" />
+    <div class="clear">&nbsp;</div>
 </div>
 $webFormCampaignInput
 $webRedirectURLInput
@@ -64,31 +66,31 @@ HTML;
         $html = <<<HTML
 </form>
 <script type='text/javascript'>
- function submit_form() {
-     if (typeof(validateCaptchaAndSubmit) != 'undefined') {
-         validateCaptchaAndSubmit();
-     } else {
-         check_webtolead_fields();
-     }
- }
+    function submit_form() {
+        if (typeof(validateCaptchaAndSubmit) != 'undefined') {
+            validateCaptchaAndSubmit();
+        } else {
+            check_webtolead_fields();
+            //document.WebToLeadForm.submit();
+        }
+    }
 
- function check_webtolead_fields() {
-     if (document.getElementById('bool_id') != null) {
-         var reqs = document.getElementById('bool_id').value;
-         bools = reqs.substring(0, reqs.lastIndexOf(';'));
-         var bool_fields = new Array();
-         var bool_fields = bools.split(';');
-         nbr_fields = bool_fields.length;
-         for (var i = 0; i < nbr_fields; i++) {
-             if (document.getElementById(bool_fields[i]).value == 'on') {
-                 document.getElementById(bool_fields[i]).value = 1;
-             } else {
-                 document.getElementById(bool_fields[i]).value = 0;
-             }
-         }
-     }
-     document.WebToLeadForm.submit();
- }
+    function check_webtolead_fields() {
+        if (document.getElementById('bool_id') != null) {
+            var reqs = document.getElementById('bool_id').value;
+            bools = reqs.substring(0, reqs.lastIndexOf(';'));
+            var bool_fields = new Array();
+            var bool_fields = bools.split(';');
+            nbr_fields = bool_fields.length;
+            for (var i = 0; i < nbr_fields; i++) {
+                if (document.getElementById(bool_fields[i]).value == 'on') {
+                    document.getElementById(bool_fields[i]).value = 1;
+                } else {
+                    document.getElementById(bool_fields[i]).value = 0;
+                }
+            }
+        }
+    }
 </script>
 HTML;
         return $html;
@@ -194,8 +196,9 @@ HTML;
     // char strings
 
     private static function getFieldCharsHTML($fieldName, $fieldLabel, $fieldRequired, $webRequiredSymbol) {
-        $_required = $fieldRequired ? ' required' : '';
-        $html = self::getFieldLabelHTML($fieldLabel, $fieldName=='last_name' || $fieldRequired, $webRequiredSymbol);
+        $isRequired = $fieldName=='last_name' || $fieldRequired;
+        $_required = $isRequired ? ' required' : '';
+        $html = self::getFieldLabelHTML($fieldLabel, $isRequired, $webRequiredSymbol);
         $_type = $fieldName=='email1'||$fieldName=='email2' ? 'email' : 'text';
         $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"$_type\"$_required>";
         return $html;
@@ -336,59 +339,65 @@ HTML;
 
             if($colsFieldCount = count($formCols)) {
 
-                $Web_To_Lead_Form_html .= self::getRowStartHTML();
-
+                $colHtml = '';
+                $foundField = false;
                 for ($j = 0; $j < $colsFieldCount; $j++) {
 
-                    $Web_To_Lead_Form_html .= self::getColFieldStartHTML();
+                    $colHtml .= self::getColFieldStartHTML();
 
                     if (isset($lead->field_defs[$colsFields[$j]]) && $lead->field_defs[$colsFields[$j]] != null) {
 
                         list($field_name, $field_label, $field_type, $field_required, $field_options) = self::getArrayOfFieldInfo($lead, $colsFields[$j], $required_fields);
 
                         if ($field_type == 'multienum' || $field_type == 'enum' || $field_type == 'radioenum') {
-                            $Web_To_Lead_Form_html .= self::getFieldEnumHTML($lead, $field_name, $appListStrings[$field_options], $field_required, $field_label, $webRequiredSymbol, $colsFields[$j]);
+                            $colHtml .= self::getFieldEnumHTML($lead, $field_name, $appListStrings[$field_options], $field_required, $field_label, $webRequiredSymbol, $colsFields[$j]);
+                            $foundField = true;
                         }
-
                         elseif ($field_type == 'bool') {
-                            $Web_To_Lead_Form_html .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol, $field_required);
+                            $colHtml .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol, $field_required);
+                            $foundField = true;
                             if (!in_array($lead->field_defs[$colsFields[$j]]['name'], $bool_fields)) {
                                 array_push($bool_fields, $lead->field_defs[$colsFields[$j]]['name']);
                             }
                         }
-
                         elseif ($field_type == 'date') {
-                            $Web_To_Lead_Form_html .= self::getFieldDateHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
+                            $colHtml .= self::getFieldDateHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
+                            $foundField = true;
                         }
-
                         elseif ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'phone' || $field_type == 'currency' || $field_type == 'url' || $field_type == 'int') {
-                            $Web_To_Lead_Form_html .= self::getFieldCharsHTML($field_name, $field_label, $field_required, $webRequiredSymbol);
+                            $colHtml .= self::getFieldCharsHTML($field_name, $field_label, $field_required, $webRequiredSymbol);
+                            $foundField = true;
                         }
-
                         elseif ($field_type == 'text') {
-                            $Web_To_Lead_Form_html .= self::getFieldTextHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
+                            $colHtml .= self::getFieldTextHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
+                            $foundField = true;
                         }
-
                         elseif ($field_type == 'relate' && $field_name == 'account_name') {
-                            $Web_To_Lead_Form_html .= self::getFieldRelateHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
+                            $colHtml .= self::getFieldRelateHTML($field_name, $field_label, $field_required && false, $webRequiredSymbol);
+                            $foundField = true;
                         }
-
                         elseif ($field_type == 'email') {
-                            $Web_To_Lead_Form_html .= self::getFieldEmailHTML();
+                            $colHtml .= self::getFieldEmailHTML();
+                            $foundField = true;
                         }
-
                         else {
-                            $Web_To_Lead_Form_html .= self::getFieldEmptyHTML();
+                            $colHtml .= self::getFieldEmptyHTML();
                         }
 
                     } else {
-                        $Web_To_Lead_Form_html .= self::getFieldEmptyHTML();
+                        $colHtml .= self::getFieldEmptyHTML();
                     }
 
-                    $Web_To_Lead_Form_html .= self::getColFieldFinishHTML();
+                    $colHtml .= self::getColFieldFinishHTML();
 
                 }
-                $Web_To_Lead_Form_html .= self:: getRowFinishHTML();
+
+                if($foundField) {
+                    $Web_To_Lead_Form_html .= self::getRowStartHTML();
+                    $Web_To_Lead_Form_html .= $colHtml;
+                    $Web_To_Lead_Form_html .= self:: getRowFinishHTML();
+                }
+
             }
         }
 

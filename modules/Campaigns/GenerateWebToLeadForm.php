@@ -130,9 +130,10 @@ $xtpl->assign("BODY_HTML", $Web_To_Lead_Form_html ? $Web_To_Lead_Form_html : '')
 
 require_once('include/SugarTinyMCE.php');
 $tiny = new SugarTinyMCE();
-$tiny->defaultConfig['height']=400;
+$tiny->defaultConfig['height']=700;
 $tiny->defaultConfig['apply_source_formatting']=true;
 $tiny->defaultConfig['cleanup']=false;
+$tiny->defaultConfig['extended_valid_elements'] .= ',input[name|id|type|value|onclick|required|placeholder|title],select[name|id|multiple|tabindex|onchange|required|title],option[value|selected|title]';
 $ed = $tiny->getInstance('body_html');
 $xtpl->assign("tiny", $ed);
 
