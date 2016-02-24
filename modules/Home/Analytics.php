@@ -7,11 +7,11 @@ global $sugar_config, $mod_strings;
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="include/javascript/jpivot/pivot.css">
+<link rel="stylesheet" type="text/css" href="include/javascript/pivottable/pivot.css">
 <!--<script type="text/javascript" src="include/javascript/jquery/jquery-min.js"></script>-->
 <!--<script type="text/javascript" src="include/javascript/jquery/jquery-ui-min.js"></script>-->
-<script type="text/javascript" src="include/javascript/jpivot/pivot.js"></script>
-<script type="text/javascript" src="include/javascript/jpivot/c3_renderers.js"></script>
+<script type="text/javascript" src="include/javascript/pivottable/pivot.js"></script>
+<script type="text/javascript" src="include/javascript/pivottable/c3_renderers.js"></script>
 
 
 <!--<script type="text/javascript" src="include/javascript/cookie.js"></script>-->
