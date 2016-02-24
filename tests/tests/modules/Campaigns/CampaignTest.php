@@ -166,16 +166,21 @@ class CampaignTest extends PHPUnit_Framework_TestCase  {
 				'IMPRESSIONS' => '0',
 				'OPTIONAL_LINK' => 'display:none',
 				'TRACK_CAMPAIGN_TITLE' => 'View Status',
-				'TRACK_CAMPAIGN_IMAGE' => 'themes/SuiteR/images/view_status.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw',
+				'TRACK_CAMPAIGN_IMAGE' => '~'.preg_quote('themes/SuiteR/images/view_status.gif?v=').'[\w-]+~',
 				'LAUNCH_WIZARD_TITLE' => 'Launch Wizard',
-				'LAUNCH_WIZARD_IMAGE' => 'themes/SuiteR/images/edit_wizard.gif?v=fqXdFZ_r6FC1K7P_Fy3mVw',
+				'LAUNCH_WIZARD_IMAGE' => '~'.preg_quote('themes/SuiteR/images/edit_wizard.gif?v=').'[\w-]+~',
 				'TRACK_VIEW_ALT_TEXT' => 'View Status',
 				'LAUNCH_WIZ_ALT_TEXT' => 'Launch Wizard',
 		);
 		
 		$actual = $campaign->get_list_view_data();
-		$this->assertSame($expected,$actual);
-		
+        foreach($expected as $expectedKey => $expectedVal){
+            if($expectedKey == 'LAUNCH_WIZARD_IMAGE' || $expectedKey == 'TRACK_CAMPAIGN_IMAGE'){
+                $this->assertRegExp($expected[$expectedKey],$actual[$expectedKey]);
+            }else {
+                $this->assertSame($expected[$expectedKey], $actual[$expectedKey]);
+            }
+        }
 	}
 
 	
@@ -244,7 +249,7 @@ class CampaignTest extends PHPUnit_Framework_TestCase  {
     {
     	$campaign = new Campaign();
     	
-    	$expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type = 'lead' AND archived = 0 AND target_id IS NOT NULL";
+    	$expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type = 'lead' AND archived = 0 AND target_id IS NOT NULL ";
     	$actual = $campaign->track_log_leads();
 		$this->assertSame($expected,$actual);
 		
@@ -255,12 +260,12 @@ class CampaignTest extends PHPUnit_Framework_TestCase  {
 		$campaign = new Campaign();
 		
 		//test without parameters
-		$expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type='targeted' AND archived=0";
+		$expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type='targeted' AND archived=0 ";
 		$actual = $campaign->track_log_entries();
 		$this->assertSame($expected,$actual);
 
 		//test with parameters
-		$expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type='test1' AND archived=0";
+		$expected = "SELECT campaign_log.*  FROM campaign_log WHERE campaign_log.campaign_id = '' AND campaign_log.deleted=0 AND activity_type='test1' AND archived=0 ";
 		$actual = $campaign->track_log_entries(array('test1','test2'));
 		$this->assertSame($expected,$actual);
 		
