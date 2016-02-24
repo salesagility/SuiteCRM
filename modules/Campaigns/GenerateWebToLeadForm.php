@@ -108,7 +108,6 @@ if(!empty($_REQUEST['assigned_user_id'])){
  $xtpl->assign("APP", $app_strings);
 
 include_once 'WebToLeadFormBuilder.php';
-global $timedate;
 $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
     $_REQUEST,
     $lead,
@@ -123,10 +122,7 @@ $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
     $web_form_campaign,
     $web_redirect_url,
     $web_assigned_user,
-    $web_form_required_fields_msg,
-    $web_not_valid_email_address,
-    $regex,
-    $timedate
+    $web_form_required_fields_msg
 );
 $xtpl->assign("BODY", $Web_To_Lead_Form_html ? $Web_To_Lead_Form_html : '');
 $xtpl->assign("BODY_HTML", $Web_To_Lead_Form_html ? $Web_To_Lead_Form_html : '');

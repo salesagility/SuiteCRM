@@ -63,7 +63,7 @@ HTML;
         return $html;
     }
 
-    private static function getFormFinishHTML($webFormRequiredFieldsMsg, $webNotValidEmailAddress, $emailRegex) {
+    private static function getFormFinishHTML($webFormRequiredFieldsMsg) {
         $html = <<<HTML
 </form>
 <script type='text/javascript'>
@@ -108,6 +108,7 @@ HTML;
             return true;
         }
         else{
+        // TODO .. remove old js validation here...
           alert('$webFormRequiredFieldsMsg');
           return false;
          }
@@ -116,18 +117,6 @@ HTML;
    else{
     document.WebToLeadForm.submit();
    }
-}
-function validateEmailAdd(){
-	if(document.getElementById('email1') && document.getElementById('email1').value.length >0) {
-		if(document.getElementById('email1').value.match($emailRegex) == null){
-		  alert('$webNotValidEmailAddress');
-		}
-	}
-	if(document.getElementById('email2') && document.getElementById('email2').value.length >0) {
-		if(document.getElementById('email2').value.match($emailRegex) == null){
-		  alert('$webNotValidEmailAddress');
-		}
-	}
 }
 </script>
 HTML;
@@ -173,31 +162,33 @@ HTML;
         $html .= self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
 
         if(isset($lead->field_defs[$colsField]['isMultiSelect']) && $lead->field_defs[$colsField]['isMultiSelect'] ==1){
-            $html .= self::getFieldEnumMultiSelectHTML($fieldName, $leadOptions);
+            $html .= self::getFieldEnumMultiSelectHTML($fieldName, $leadOptions, $fieldRequired);
         }elseif(ifRadioButton($lead->field_defs[$colsField]['name'])){
-            $html .= self::getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField);
+            $html .= self::getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField, $fieldRequired);
         }else{
-            $html .= self::getFieldEnumSelectHTML($fieldName, $leadOptions);
+            $html .= self::getFieldEnumSelectHTML($fieldName, $leadOptions, $fieldRequired);
         }
         return $html;
     }
 
-    private static function getFieldEnumMultiSelectHTML($fieldName, $leadOptions) {
-        $html = "<select id='{$fieldName}' multiple='true' name='{$fieldName}[]' tabindex='1'>$leadOptions</select>";
+    private static function getFieldEnumMultiSelectHTML($fieldName, $leadOptions, $fieldRequired) {
+        $_required = $fieldRequired ? ' required' : '';
+        $html = "<select id=\"$fieldName\" multiple=\"true\" name=\"{$fieldName}[]\" tabindex=\"1\"$_required>$leadOptions</select>";
         return $html;
     }
 
-    private static function getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField) {
+    private static function getFieldEnumRadioGroupHTML($appListStringsFieldOptions, $lead, $fieldName, $colsField, $fieldRequired) {
+        $_required = $fieldRequired ? ' required' : '';
         $html = '';
         foreach($appListStringsFieldOptions as $field_option_key => $field_option){
             if($field_option != null){
                 if(!empty($lead->$fieldName) && in_array($field_option_key,unencodeMultienum($lead->$fieldName))) {
-                    $checked = ' checked';
+                    $_checked = ' checked';
                 }
                 else {
-                    $checked = '';
+                    $_checked = '';
                 }
-                $html .="<input id='$colsField"."_$field_option_key'$checked name='$colsField' value='$field_option_key' type='radio'>";
+                $html .="<input id=\"{$colsField}_$field_option_key\" name=\"$colsField\" value=\"$field_option_key\" type=\"radio\"$_checked$_required>";
                 // todo ??? -->
                 $html .="<span ='document.getElementById('".$lead->field_defs[$colsField]."_$field_option_key').checked =true style='cursor:default'; onmousedown='return false;'>$field_option</span><br>";
             }
@@ -205,25 +196,27 @@ HTML;
         return $html;
     }
 
-    private static function getFieldEnumSelectHTML($fieldName, $leadOptions) {
-        $html = "<select id=$fieldName name=$fieldName tabindex='1'>$leadOptions</select>";
+    private static function getFieldEnumSelectHTML($fieldName, $leadOptions, $fieldRequired) {
+        $_required = $fieldRequired ? ' required' : '';
+        $html = "<select id=\"$fieldName\" name=\"$fieldName\" tabindex=\"1\"$_required>$leadOptions</select>";
         return $html;
     }
 
     // bool
 
-    private static function getFieldBoolHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol) {
+    private static function getFieldBoolHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol, $fieldRequired) {
+        $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-        $html .= "<input type='checkbox' id=$fieldName name=$fieldName>";
-
+        $html .= "<input type=\"checkbox\" id=\"$fieldName\" name=\"$fieldName\"$_required>";
         return $html;
     }
 
     // date
 
-    private static function getFieldDateHTML(TimeDate $timeDate, $fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol) {
+    private static function getFieldDateHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol) {
+        $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-        $html .= '<input type="date" id="{$fieldName}" name="{$fieldName}"/>';
+        $html .= "<input type=\"date\" id=\"{$fieldName}\" name=\"{$fieldName}\"$_required/>";
         return $html;
 //        $cal_dateformat = $timeDate->get_cal_date_format();
 //        //$LBL_ENTER_DATE = translate('LBL_ENTER_DATE', 'Charts');
@@ -267,33 +260,37 @@ HTML;
     // char strings
 
     private static function getFieldCharsHTML($fieldName, $fieldLabel, $fieldRequired, $webRequiredSymbol) {
+        $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldName=='last_name' || $fieldRequired, $webRequiredSymbol);
-        $onChangeValidateEmailAdd = $fieldName=='email1'||$fieldName=='email2' ? " onchange='validateEmailAdd();'" : '';
-        $html .= "<input id=$fieldName name=$fieldName type='text'$onChangeValidateEmailAdd>";
+        $_type = $fieldName=='email1'||$fieldName=='email2' ? 'email' : 'text';
+        $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"$_type\"$_required>";
         return $html;
     }
 
     // text
 
     private static function getFieldTextHTML($fieldName, $fieldLabel, $fieldRequired, $webRequiredSymbol) {
+        $_required = $fieldRequired ? ' required' : '';
         $html  = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-        $html .= "<span id='ta_replace'><input id=$fieldName name=$fieldName type='text'></span>";
+        $html .= "<span id='ta_replace'><input id=\"$fieldName\" name=\"$fieldName\" type=\"text\"$_required></span>";
         return $html;
     }
 
     // relate
 
     private static function getFieldRelateHTML($fieldName, $fieldLabel, $fieldRequired, $webRequiredSymbol) {
+        $_required = $fieldRequired ? ' required' : '';
         $html  = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-        $html .= "<span><input id=$fieldName name=$fieldName type='text'></span>";
+        $html .= "<span><input id=\"$fieldName\" name=\"$fieldName\" type=\"text\"$_required></span>";
         return $html;
     }
 
     // email
 
     private static function getFieldEmailHTML($fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol) {
+        $_required = $fieldRequired ? ' required' : '';
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-        $html .= "<td width='35%' style='font-size: 12px; font-weight: normal;'><span sugar='slot'><input id=$fieldName name=$fieldName type='text' onchange='validateEmailAdd();'></span sugar='slot'></td>";
+        $html .= "<input id=\"$fieldName\" name=\"$fieldName\" type=\"email\"$_required>";
         return $html;
     }
 
@@ -389,9 +386,6 @@ HTML;
                                     $webRedirectURL,
                                     $webAssignedUser,
                                     $webFormRequiredFieldsMsg,
-                                    $webNotValidEmailAddress,
-                                    $regex,
-                                    $timedate,
                                     $formCols = array('colsFirst', 'colsSecond')
                                     ) {
 
@@ -437,14 +431,14 @@ HTML;
                         }
 
                         if ($field_type == 'bool') {
-                            $Web_To_Lead_Form_html .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
+                            $Web_To_Lead_Form_html .= self::getFieldBoolHTML($field_name, $field_required, $field_label, $webRequiredSymbol, $field_required);
                             if (!in_array($lead->field_defs[$colsFields[$j]]['name'], $bool_fields)) {
                                 array_push($bool_fields, $lead->field_defs[$colsFields[$j]]['name']);
                             }
                         }
 
                         if ($field_type == 'date') {
-                            $Web_To_Lead_Form_html .= self::getFieldDateHTML($timedate, $field_name, $field_required, $field_label, $webRequiredSymbol);
+                            $Web_To_Lead_Form_html .= self::getFieldDateHTML($field_name, $field_required, $field_label, $webRequiredSymbol);
                         }
 
                         if ($field_type == 'varchar' || $field_type == 'name' || $field_type == 'phone' || $field_type == 'currency' || $field_type == 'url' || $field_type == 'int') {
@@ -488,11 +482,7 @@ HTML;
             $booleanFields
         );
 
-        $Web_To_Lead_Form_html .= self::getFormFinishHTML(
-            $webFormRequiredFieldsMsg,
-            $webNotValidEmailAddress,
-            $regex
-        );
+        $Web_To_Lead_Form_html .= self::getFormFinishHTML($webFormRequiredFieldsMsg);
 
 		return $Web_To_Lead_Form_html;
 	}
