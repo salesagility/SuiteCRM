@@ -280,7 +280,7 @@ class AOD_Index extends AOD_Index_sugar {
                 return false;
             }
 
-            $bean->retrieve($beanId);
+            $bean = $bean->retrieve($beanId);
             if(!$bean){
                 return false;
             }
