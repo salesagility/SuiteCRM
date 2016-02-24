@@ -4,7 +4,7 @@ class WebToLeadFormBuilder {
 
     // ---- html outputs ----
 
-    private static function getFormStartHTML($styleHref, $suiteGrp1Js, $calendarJs, $webPostUrl, $webFormHeader, $webFormDescription) {
+    private static function getFormStartHTML($styleHref, $suiteGrp1Js, /*$calendarJs, */$webPostUrl, $webFormHeader, $webFormDescription) {
         $formSel = 'form#WebToLeadForm';
         $html = <<<HTML
 <style type="text/css">
@@ -222,43 +222,46 @@ HTML;
     // date
 
     private static function getFieldDateHTML(TimeDate $timeDate, $fieldName, $fieldRequired, $fieldLabel, $webRequiredSymbol) {
-        $cal_dateformat = $timeDate->get_cal_date_format();
-        //$LBL_ENTER_DATE = translate('LBL_ENTER_DATE', 'Charts');
         $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
-
-        $html .= "
-				<script type='text/javascript'>
-					update{$fieldName}Value = function() {
-						var format = '{$cal_dateformat}';
-						var month = document.getElementById('{$fieldName}_month').value;
-						var day = document.getElementById('{$fieldName}_day').value;
-						var year = document.getElementById('{$fieldName}_year').value;
-						var val = format.replace('%m', month).replace('%d', day).replace('%Y', year);
-						if (!parseInt(month) > 0 || !parseInt(year) > 0 || !parseInt(year) > 0)
-							val = '';
-						document.getElementById('{$fieldName}').value = val;
-					}
-				</script>
-				<input type='hidden' id='{$fieldName}' name='{$fieldName}'/>";
-        $order = explode("%", $cal_dateformat);
-        foreach($order as $part)
-        {
-            if (!isset($part[0]))
-                continue;
-            if (strToUpper($part[0]) == "M" )
-                $html .= "<input class=\"text\"
-					name=\"{$fieldName}_month\" size='2' maxlength='2' id='{$fieldName}_month' value=''
-					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_MONTH") . "\">";
-            else if (strToUpper($part[0]) == "D" )
-                $html .=  "<input class=\"text\"
-					name=\"{$fieldName}_day\" size='2' maxlength='2' id='{$fieldName}_day' value=''
-					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_DAY") . "\">";
-            else if (strToUpper($part[0]) == "Y" )
-                $html .= "<input class=\"text\"
-					name=\"{$fieldName}_year\" size='4' maxlength='4' id='{$fieldName}_year' value=''
-					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_YEAR") . "\">";
-        }
+        $html .= '<input type="date" id="{$fieldName}" name="{$fieldName}"/>';
         return $html;
+//        $cal_dateformat = $timeDate->get_cal_date_format();
+//        //$LBL_ENTER_DATE = translate('LBL_ENTER_DATE', 'Charts');
+//        $html = self::getFieldLabelHTML($fieldLabel, $fieldRequired, $webRequiredSymbol);
+//
+//        $html .= "
+//				<script type='text/javascript'>
+//					update{$fieldName}Value = function() {
+//						var format = '{$cal_dateformat}';
+//						var month = document.getElementById('{$fieldName}_month').value;
+//						var day = document.getElementById('{$fieldName}_day').value;
+//						var year = document.getElementById('{$fieldName}_year').value;
+//						var val = format.replace('%m', month).replace('%d', day).replace('%Y', year);
+//						if (!parseInt(month) > 0 || !parseInt(year) > 0 || !parseInt(year) > 0)
+//							val = '';
+//						document.getElementById('{$fieldName}').value = val;
+//					}
+//				</script>
+//				<input type='hidden' id='{$fieldName}' name='{$fieldName}'/>";
+//        $order = explode("%", $cal_dateformat);
+//        foreach($order as $part)
+//        {
+//            if (!isset($part[0]))
+//                continue;
+//            if (strToUpper($part[0]) == "M" )
+//                $html .= "<input class=\"text\"
+//					name=\"{$fieldName}_month\" size='2' maxlength='2' id='{$fieldName}_month' value=''
+//					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_MONTH") . "\">";
+//            else if (strToUpper($part[0]) == "D" )
+//                $html .=  "<input class=\"text\"
+//					name=\"{$fieldName}_day\" size='2' maxlength='2' id='{$fieldName}_day' value=''
+//					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_DAY") . "\">";
+//            else if (strToUpper($part[0]) == "Y" )
+//                $html .= "<input class=\"text\"
+//					name=\"{$fieldName}_year\" size='4' maxlength='4' id='{$fieldName}_year' value=''
+//					onblur=\"update{$fieldName}Value()\" placeholder=\"" . translate("LBL_YEAR") . "\">";
+//        }
+//        return $html;
     }
 
     // char strings
@@ -394,12 +397,12 @@ HTML;
 
         $calendarCss = getJSPath(SugarThemeRegistry::current()->getCSSURL('calendar-win2k-cold-1.css'));
         $sugarGrp1Js = getJSPath($siteURL.'/cache/include/javascript/sugar_grp1.js');
-        $calendarJs = getJSPath($siteURL.'/cache/include/javascript/calendar.js');
+        //$calendarJs = getJSPath($siteURL.'/cache/include/javascript/calendar.js');
 
         $Web_To_Lead_Form_html = self::getFormStartHTML(
             $calendarCss,
             $sugarGrp1Js,
-            $calendarJs,
+            //$calendarJs,
             $webPostURL,
             $webFormHeader,
             $webFormDescription
