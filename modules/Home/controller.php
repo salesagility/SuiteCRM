@@ -42,6 +42,37 @@ class HomeController extends SugarController
 {
 
 
+    public function action_savePivot()
+    {
+        $config = htmlspecialchars_decode($_REQUEST['config']);
+
+        $type = $_REQUEST['type'];
+        $name = $_REQUEST['name'];
+
+        $pivotBean = BeanFactory::getBean('a007_Pivot');
+        $pivotBean->name = $name;
+        $pivotBean->type = $type;
+        $pivotBean->config = $config;
+        $pivotBean->save();
+    }
+
+    public function action_getSavedPivotList()
+    {
+        $pivotBean = BeanFactory::getBean('a007_Pivot');
+        $beanList = $pivotBean->get_full_list('name');
+        $returnArray = [];
+        foreach ($beanList as $b) {
+            $bean = new stdClass();
+            $bean->type = $b->type;
+            $bean->config = htmlspecialchars_decode($b->config);
+            $bean->name = $b->name;
+            $bean->id = $b->id;
+            $returnArray[] = $bean;
+        }
+        echo json_encode($returnArray);
+    }
+
+
     public function action_getAccountsPivotData()
     {
         /*
