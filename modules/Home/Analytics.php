@@ -29,6 +29,8 @@ global $sugar_config, $mod_strings;
 
 <script type="text/javascript">
 
+
+
     var minNameLength = 5;
     var savedPivotList;
 
@@ -161,6 +163,19 @@ global $sugar_config, $mod_strings;
 
 
         var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+        var template = {
+            renderers: renderers,
+            onRefresh:function(config)
+            {
+                var config_copy = JSON.parse(JSON.stringify(config));
+                delete config_copy["aggregators"];
+                delete config_copy["renderers"];
+                delete config_copy["rendererOptions"];
+                delete config_copy["localeStrings"];
+                $("#txtChosenSave").val($("#analysisType").val());
+                $("#txtConfigSave").val(JSON.stringify(config_copy, undefined, 2));
+            }
+        }
 
         $("#btnLoadPivot").on("click",function(){
             $.getJSON("index.php",
@@ -186,6 +201,9 @@ global $sugar_config, $mod_strings;
         });
 
         $('#analysisType').change(function(){
+            $("#txtChosenSave").val($("#analysisType").val());
+           // $("#txtConfigSave").val("");
+            //PG refresh the config save
             getDataForPivot();
         });
 
@@ -201,32 +219,7 @@ global $sugar_config, $mod_strings;
                         'to_pdf':1
                     },
                     function (mps) {
-                        $("#output").pivotUI(mps, {
-                            renderers: renderers,
-
-                            onRefresh:function(config)
-                            {
-                                //This example is taken from http://nicolas.kruchten.com/pivottable/examples/onrefresh.html
-                                var config_copy = JSON.parse(JSON.stringify(config));
-                                //delete some values which are functions
-                                delete config_copy["aggregators"];
-                                delete config_copy["renderers"];
-                                //delete some bulky default values
-                                delete config_copy["rendererOptions"];
-                                delete config_copy["localeStrings"];
-                                //$("#config").text(JSON.stringify(config_copy, undefined, 2));
-                                //$("#config").text(JSON.stringify(config_copy));
-                                //console.log(JSON.stringify(config_copy, undefined, 2));
-
-
-                                $("#txtChosenSave").val($("#analysisType").val());
-
-                                $("#txtConfigSave").val(JSON.stringify(config_copy, undefined, 2));
-
-                            }
-
-                        }
-                        );
+                        $("#output").pivotUI(mps, template,true);
                     });
             }
 
@@ -244,7 +237,14 @@ global $sugar_config, $mod_strings;
                         'to_pdf':1
                     },
                     function (mps) {
-                        $("#output").pivotUI(mps,JSON.parse(config),true);
+                        $("#txtChosenSave").val($("#analysisType").val());
+                        $("#txtConfigSave").val(config);
+
+                        var configParsed =JSON.parse(config);
+                        var combined = $.extend(configParsed,template);
+                        //console.log(combined);
+
+                        $("#output").pivotUI(mps,combined,true);
                     });
             }
 
