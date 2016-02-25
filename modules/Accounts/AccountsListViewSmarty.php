@@ -101,6 +101,26 @@ EOF;
 			$this->ss->assign('exportLink', $this->buildExportLink());
 		}
 	}
+
+
+	/**
+	 * override
+	 */
+	protected function buildActionsLink($id = 'actions_link', $location = 'top') {
+		$ret = parent::buildActionsLink($id, $location);
+
+		$replaces = array(
+			6 => 7,
+		);
+
+		foreach($replaces as $i => $j) {
+			$tmp = $ret['buttons'][$j];
+			$ret['buttons'][$j] = $ret['buttons'][$i];
+			$ret['buttons'][$i] = $tmp;
+		}
+
+		return $ret;
+	}
 	
 	function buildExportLink($id = 'export_link'){
 		global $app_strings;
