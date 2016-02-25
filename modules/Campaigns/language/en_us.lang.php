@@ -182,6 +182,7 @@ $mod_strings = array (
 	'LBL_INBOUND_EMAIL_CREATE_TITLE' => 'Create Inbound Email (info)',
   'LBL_STATUS_TEXT' =>  'Status:' ,
   'LBL_FROM_MAILBOX_NAME'=>'Use Mail Account:',
+	'LBL_OUTBOUND_MAILBOX_NAME' => 'Outbound Email Account:',
   'LBL_FROM_NAME' => 'From Name: ',
   'LBL_START_DATE_TIME' => 'Start Date & Time: ',
   'LBL_DATE_START' => 'Start Date ',

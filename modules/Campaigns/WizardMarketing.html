@@ -150,6 +150,24 @@
 
 			</tr>
 
+			<tr>
+				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_OUTBOUND_MAILBOX_NAME}</slot></td>
+				<td>
+					<slot>
+						<select  title='{$MOD.LBL_OUTBOUND_MAILBOX_NAME}' id='outbound_email_id' name='wiz_step3_outbound_email_id' onchange='// set_from_reply_info(this);'>{$OUTBOUND_MAILBOXES}</select>
+					</slot>
+					<!--
+					<br>
+					<a href="index.php?module=InboundEmail&action=index" title="{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
+					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
+					<br>
+					<a href="index.php?module=InboundEmail&action=EditView&mailbox_type=bounce" title="{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}">{$MOD.LBL_INBOUND_EMAIL_CREATE}</a>
+					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
+					-->
+				</td>
+
+			</tr>
+
 
 			<tr>
 

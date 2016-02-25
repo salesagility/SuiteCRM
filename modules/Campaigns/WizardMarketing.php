@@ -192,6 +192,13 @@ if (empty($mrkt_focus->inbound_email_id)) {
     $ss->assign("MAILBOXES", get_select_options_with_id($mailboxes, $mrkt_focus->inbound_email_id));
 }
 
+$outboundEmailAccountLabels = array();
+foreach($outboundEmailAccounts = BeanFactory::getBean('OutboundEmailAccounts')->get_full_list() as $outboundEmailAccount) {
+    $outboundEmailLabels[$outboundEmailAccount->id] = $outboundEmailAccount->name;
+}
+
+$ss->assign('OUTBOUND_MAILBOXES', get_select_options_with_id($outboundEmailLabels, $mrkt_focus->outbound_email_id));
+
 $ss->assign("TIME_MERIDIEM", $timedate->AMPMMenu('', $mrkt_focus->time_start));
 $ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
 
