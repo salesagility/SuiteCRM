@@ -73,10 +73,7 @@ class templateParser{
 				if ($name === 'aos_products_product_image'){
 				$value = '<img src="'.$value.'"width="50" height="50"/>';
 				}
-				if ($name === 'aos_products_quotes_product_qty'){
-					$sep = get_number_seperators();
-					$value=rtrim(rtrim(format_number($value), '0'),$sep[1]);
-				}
+
 				if ($name === 'aos_products_quotes_vat'||strpos($name,'pct')>0 || strpos($name,'percent')>0 || strpos($name,'percentage')>0){
 					$sep = get_number_seperators();
 					$value=rtrim(rtrim(format_number($value), '0'),$sep[1]).$app_strings['LBL_PERCENTAGE_SYMBOL'];
