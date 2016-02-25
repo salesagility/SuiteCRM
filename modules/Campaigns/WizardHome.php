@@ -57,6 +57,11 @@ $focus = new Campaign();
 if(isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 
+    $marketingLink = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome";
+    $marketingLink .= "&return_id=".$focus->id."&campaign_id=".$focus->id."&jump=3";
+    SugarApplication::redirect($marketingLink);
+    return;
+
 global $mod_strings;
 global $app_list_strings;
 global $app_strings;

@@ -94,7 +94,7 @@
 <div id="wiz_message"></div>
 <div id=wizard>
 
-	<div id='step1' >
+	<div id='step1' style="display:none;">
 		<slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
 		<select  id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 
@@ -561,6 +561,34 @@ function determine_back(){
 addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
 addToValidate('wizform', 'date_start', 'alphanumeric', true,  document.getElementById('date_start').title);
 addToValidate('wizform', 'inbound_email_id', 'alphanumeric', true,  document.getElementById('inbound_email_id').title);
+
+{literal}
+function getParameterByName(name, url) {
+	if (!url) url = window.location.href;
+	name = name.replace(/[\[\]]/g, "\\$&");
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+			results = regex.exec(url);
+	if (!results) return null;
+	if (!results[2]) return '';
+	return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+$(function(){
+	var jump = getParameterByName('jump');
+	if(jump != null) {
+		while (jump != document.getElementById('wiz_current_step').value) {
+			if(document.getElementById('wiz_current_step').value > document.getElementById('wiz_total_step').value) {
+				break;
+			}
+			navigate('next');
+		}
+	}
+	else {
+		$('#step1').show();
+	}
+});
+{/literal}
+
 </script>
 
 
