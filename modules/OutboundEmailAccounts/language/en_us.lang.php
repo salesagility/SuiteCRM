@@ -70,7 +70,7 @@ $mod_strings = array (
   'LBL_NEW_FORM_TITLE' => 'New Outbound Email Accounts',
   'LBL_USERNAME' => 'Username',
   'LBL_PASSWORD' => 'Password',
-  'LBL_smtp_servername' => 'SMTP Server Name',
+  'LBL_SMTP_SERVERNAME' => 'SMTP Server Name',
   'LBL_SMTP_AUTH' => 'SMTP Auth',
   'LBL_SMTP_PORT' => 'SMTP Port',
   'LBL_SMTP_PROTOCOL' => 'SMTP Protocol',
@@ -78,5 +78,7 @@ $mod_strings = array (
   'LNK_IMPORT_OUTBOUNDEMAILACCOUNTS' => 'Import Outbound Email Accounts',
   'LBL_OUTBOUNDEMAILACCOUNTS_SUBPANEL_TITLE' => 'Outbound Email Accounts',
   'LBL_OUTBOUNDEMAILACCOUNT_CAMPA' => 'outboundemailaccount_campaigns_name',
-    'LBL_CHANGE_PASSWORD' => 'Change password'
+    'LBL_CHANGE_PASSWORD' => 'Change password',
+    'LBL_CHOOSE_EMAIL_PROVIDER' => 'Choose your Email provider',
+    'LBL_SEND_TEST_EMAIL' => 'Send Test Email',
 );

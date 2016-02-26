@@ -81,6 +81,47 @@ var passwordToggle = function(elem, sel) {
 HTML;
 		return $html;
 	}
+
+	public static function getEmailProviderChooser() {
+		return '<div id="smtpButtonGroup" class="yui-buttongroup">
+                    <span id="gmail" class="yui-button yui-radio-button yui-button-checked yui-radio-button-checked">
+                        <span class="first-child">
+                            <button type="button" tabindex="0" id="gmail-button">
+                                &nbsp;&nbsp;&nbsp;&nbsp;Gmail&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </span>
+                    </span>
+                    <span id="yahoomail" class="yui-button yui-radio-button">
+                        <span class="first-child">
+                            <button type="button" tabindex="0" id="yahoomail-button">
+                                &nbsp;&nbsp;&nbsp;&nbsp;Yahoo! Mail&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </span>
+                    </span>
+                    <span id="exchange" class="yui-button yui-radio-button">
+                        <span class="first-child">
+                            <button type="button" tabindex="0" id="exchange-button">
+                                &nbsp;&nbsp;&nbsp;&nbsp;Microsoft Exchange&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </span>
+                    </span>
+                    <span id="other" class="yui-button yui-radio-button">
+                        <span class="first-child">
+                            <button type="button" tabindex="0" id="other-button">
+                                &nbsp;&nbsp;&nbsp;&nbsp;Other&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </span>
+                    </span>
+                </div>
+                <script type="text/javascript">
+
+                </script>
+                ';
+	}
+
+	public static function getSendTestEmailBtn() {
+		return '<input type="button" class="button" value="Send Test Email" onclick="testOutboundSettings();">';
+	}
 	
 }
 ?>
