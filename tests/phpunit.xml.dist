@@ -6,7 +6,7 @@
         >
     <testsuites>
         <testsuite name="AllTests">
-            <directory>tests/modules/AOD_Index</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 </phpunit>
