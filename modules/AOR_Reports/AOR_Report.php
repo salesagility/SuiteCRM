@@ -840,10 +840,21 @@ class AOR_Report extends Basic {
             $csv .= "\r\n";
             foreach($fields as $name => $att){
                 if($att['display']){
-                    if($att['function'] != '' )
+                    if($att['function'] != '' ){
                         $csv .= $this->encloseForCSV($row[$name]);
-                    else
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
+                    }
+                    else{
+                        $field_temp = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]);
+                        if(strpos($field_temp, 'type="checkbox"') !== false){
+                            if(strpos($field_temp, 'CHECKED')){
+                                $field_temp = '1';
+                            }
+                            else {
+                                $field_temp = '0';
+                            }
+                        }
+                        $csv .= $this->encloseForCSV(trim(strip_tags($field_temp)));
+                    }
                     $csv .= $delimiter;
                 }
             }

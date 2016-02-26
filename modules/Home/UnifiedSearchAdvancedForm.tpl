@@ -58,8 +58,8 @@
 	<table width='600' border='0' cellspacing='1'>
 	<tr style='padding-bottom: 10px'>
 		<td class="submitButtons" colspan='8' nowrap>
-			<input id='searchFieldMain' class='searchField' type='text' size='80' name='query_string' value='{$query_string}'>
-		    <input type="submit" class="button primary" value="{$LBL_SEARCH_BUTTON_LABEL}">&nbsp;
+			<input id='searchFieldMain' title="{$LBL_SEARCH}" class='searchField' type='text' size='80' name='query_string' value='{$query_string}'>
+		    <input type="submit" title="{$LBL_SEARCH_BUTTON_TITLE}" class="button primary" value="{$LBL_SEARCH_BUTTON_LABEL}">&nbsp;
 			<a href="#" onclick="javascript:toggleInlineSearch();" style="font-size:12px; font-weight:bold; text-decoration:none; text-shadow:0 1px #FFFFFF;">{$MOD.LBL_SELECT_MODULES}&nbsp;
             {if $SHOWGSDIV == 'yes'}
             {capture assign="alt_hide_show"}{sugar_translate label='LBL_ALT_HIDE_OPTIONS'}{/capture}

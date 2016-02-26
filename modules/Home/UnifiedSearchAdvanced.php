@@ -116,6 +116,8 @@ class UnifiedSearchAdvanced {
 		$sugar_smarty->assign('APP', $app_strings);
 		$sugar_smarty->assign('USE_SEARCH_GIF', 0);
 		$sugar_smarty->assign('LBL_SEARCH_BUTTON_LABEL', $app_strings['LBL_SEARCH_BUTTON_LABEL']);
+		$sugar_smarty->assign('LBL_SEARCH_BUTTON_TITLE', $app_strings['LBL_SEARCH_BUTTON_TITLE']);
+		$sugar_smarty->assign('LBL_SEARCH', $app_strings['LBL_SEARCH']);
 
 		$json_enabled = array();
 		$json_disabled = array();
