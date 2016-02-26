@@ -371,8 +371,8 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase {
 		
 		$securityGroup = new SecurityGroup();
 		
-		$result = $securityGroup->getLinkName("SecurityGroups","Accounts");
-		$this->assertEquals("users",$result);
+		$result = $securityGroup->getLinkName("Accounts","Contacts");
+		$this->assertEquals("contacts",$result);
 		
 		
 		$result = $securityGroup->getLinkName("SecurityGroups","ACLRoles");
