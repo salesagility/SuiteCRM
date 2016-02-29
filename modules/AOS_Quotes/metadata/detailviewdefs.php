@@ -29,7 +29,7 @@ array (
           ),
           7 => 
           array (
-            'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'EditView\'; this.form.return_action.value=\'DetailView\'; this.form.return_module.value=\'AOS_Quotes\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.module.value=\'Opportunities\'; " value="{$MOD.LBL_CREATE_OPPORTUNITY}">',
+            'customCode' => '<input type="submit" class="button" onClick="this.form.action.value=\'createOpportunity\';" value="{$MOD.LBL_CREATE_OPPORTUNITY}">',
             'sugar_html' => 
             array (
               'type' => 'submit',
@@ -39,7 +39,7 @@ array (
                 'class' => 'button',
                 'id' => 'create_contract_button',
                 'title' => '{$MOD.LBL_CREATE_OPPORTUNITY}',
-                'onclick' => 'this.form.action.value=\'EditView\'; this.form.return_action.value=\'DetailView\'; this.form.return_module.value=\'AOS_Quotes\'; this.form.return_id.value=\'{$fields.id.value}\'; this.form.module.value=\'Opportunities\';',
+                'onclick' => 'this.form.action.value=\'createOpportunity\';',
                 'name' => 'Create Opportunity',
               ),
             ),
