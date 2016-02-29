@@ -633,44 +633,41 @@ if (typeof(ModuleBuilder) == 'undefined') {
 					urlVars[urlVar[0]] = urlVar[1];
 				}
 
-				//Fix for issue #707: check if action is not clone
-				if(!(document.popup_form.action.value == 'CloneField')) {
-					// check where we are and do it if we are in field editor in module builder
-					if (
-							formname != "dropdown_form" && formname != "popup_form" &&
-								// user came from studio/fields layout by ajax urls
-							((urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
-								// user refresh the page or came from direct url
-							(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
-					) {
-						// switch on the preloader message
-						ModuleBuilder.preloader.on();
+				// check where we are and do it if we are in field editor in module builder
+				if(
+					formname != "dropdown_form" && formname != "popup_form" &&
+					// user came from studio/fields layout by ajax urls
+					((urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefields' && urlVars.view_package == 'studio') ||
+					// user refresh the page or came from direct url
+					(urlVars.module == 'ModuleBuilder' && urlVars.action == 'modulefield' && urlVars.view_package == ''))
+				) {
+					// switch on the preloader message
+					ModuleBuilder.preloader.on();
 
-						// set callback functions
-						successCall = function (o) {
-							// switch off preloader
-							ModuleBuilder.preloader.off();
-							// call the original callback
-							if (ModuleBuilder.updateContent(o)) {
-								// show results
-								YAHOO.SUGAR.MessageBox.show({
-									title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
-									msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
-									width: 500
-								});
-							}
-							// refresh page content
-							ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
-						};
-						failureCall = function (o) {
-							// switch off preloader
-							ModuleBuilder.preloader.off();
-							// call the original callback
-							ModuleBuilder.failed(o);
-							// refresh page content
-							ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
-						};
-					}
+					// set callback functions
+					successCall = function(o){
+						// switch off preloader
+						ModuleBuilder.preloader.off();
+						// call the original callback
+						if(ModuleBuilder.updateContent(o)) {
+							// show results
+							YAHOO.SUGAR.MessageBox.show({
+								title: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_TITLE'), // Result
+								msg: SUGAR.language.get('ModuleBuilder', 'LBL_AJAX_RESPONSE_MESSAGE'), // This operation is completed successfully
+								width: 500
+							});
+						}
+						// refresh page content
+						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+					};
+					failureCall = function(o) {
+						// switch off preloader
+						ModuleBuilder.preloader.off();
+						// call the original callback
+						ModuleBuilder.failed(o);
+						// refresh page content
+						ModuleBuilder.asyncRequest(YUI_HistoryBookmarkedState, ModuleBuilder.updateContent);
+					};
 				}
 			}
 			else {
