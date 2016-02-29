@@ -346,6 +346,8 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
 		);
 		$actual = Array();
 		getFiles($actual, 'include/MVC/Controller');
+        sort($actual);
+        sort($expected);
 		$this->assertSame($expected,$actual);
 		
 		
