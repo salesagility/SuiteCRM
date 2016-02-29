@@ -356,7 +356,10 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase {
 		
 		
 		$actual = $securityGroup->getSecurityModules();
-		$this->assertSame($expected,array_keys($actual));
+        $actualKeys = array_keys($actual);
+        sort($expected);
+        sort($actualKeys);
+		$this->assertSame($expected,$actualKeys);
 		
 	}
 
