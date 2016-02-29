@@ -16,8 +16,3 @@ script:
   - cat ../suitecrm.log
 services:
   - mysql
-branches:
-  only:
-    - master
-    - hotfix
-    - develop
