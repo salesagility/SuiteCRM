@@ -33,6 +33,17 @@ class AOS_ContractsController extends SugarController {
 		$this->view = 'edit';
 		$GLOBALS['view'] = $this->view;
 
+        if(isset($this->return_id)){
+           $quote = BeanFactory::getBean('AOS_Quotes', $this->return_id);
+           if(is_object($quote) && $quote->id != ''){
+              foreach($quote->field_defs as $key => $value){
+                  if(isset($quote->$key)){
+                      $this->bean->$key = $quote->$key;
+                  }
+              }
+           }
+        }
+
 		if (isset($_REQUEST['aos_quotes_id'])) {
             		$query = "SELECT * FROM aos_quotes WHERE id = '{$_REQUEST['aos_quotes_id']}'";
             		$result = $this->bean->db->query($query, true);
