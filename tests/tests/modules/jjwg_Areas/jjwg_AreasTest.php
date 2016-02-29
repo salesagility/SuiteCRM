@@ -45,7 +45,7 @@ class jjwg_AreasTest extends PHPUnit_Framework_TestCase {
 
 
     public function testretrieve() {
-
+        $this->markTestSkipped("Skipped pending feedback on the area behaviour.");
     	$jjwgAreas = new jjwg_Areas();
     	
     	
@@ -120,7 +120,7 @@ class jjwg_AreasTest extends PHPUnit_Framework_TestCase {
 
 
     public function testdefine_centroid() {
-        
+        $this->markTestSkipped("Skipped pending feedback on the area behaviour.");
     	$jjwgAreas = new jjwg_Areas();
     	
     	//test without setting up coordinates
@@ -139,7 +139,7 @@ class jjwg_AreasTest extends PHPUnit_Framework_TestCase {
     
 
     public function testdefine_area() {
-
+        $this->markTestSkipped("Skipped pending feedback on the area behaviour.");
     	$jjwgAreas = new jjwg_Areas();
     	 
     	//test without setting up coordinates
