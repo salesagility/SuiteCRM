@@ -42,7 +42,7 @@
  */
 require_once('modules/OutboundEmailAccounts/OutboundEmailAccounts_sugar.php');
 class OutboundEmailAccounts extends OutboundEmailAccounts_sugar {
-	
+
 	function __construct(){
 		parent::__construct();
 	}
@@ -82,45 +82,144 @@ HTML;
 		return $html;
 	}
 
-	public static function getEmailProviderChooser() {
-		return '<div id="smtpButtonGroup" class="yui-buttongroup">
-                    <span id="gmail" class="yui-button yui-radio-button yui-button-checked yui-radio-button-checked">
-                        <span class="first-child">
-                            <button type="button" tabindex="0" id="gmail-button">
-                                &nbsp;&nbsp;&nbsp;&nbsp;Gmail&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                    <span id="yahoomail" class="yui-button yui-radio-button">
-                        <span class="first-child">
-                            <button type="button" tabindex="0" id="yahoomail-button">
-                                &nbsp;&nbsp;&nbsp;&nbsp;Yahoo! Mail&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                    <span id="exchange" class="yui-button yui-radio-button">
-                        <span class="first-child">
-                            <button type="button" tabindex="0" id="exchange-button">
-                                &nbsp;&nbsp;&nbsp;&nbsp;Microsoft Exchange&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                    <span id="other" class="yui-button yui-radio-button">
-                        <span class="first-child">
-                            <button type="button" tabindex="0" id="other-button">
-                                &nbsp;&nbsp;&nbsp;&nbsp;Other&nbsp;&nbsp;&nbsp;&nbsp;
-                            </button>
-                        </span>
-                    </span>
-                </div>
-                <script type="text/javascript">
-
-                </script>
-                ';
+	public static function getEmailProviderChooser($focus, $name, $value, $view) {
+		global $app_strings, $mod_strings;
+		$ss = new Sugar_Smarty();
+		$ss->assign('APP', $app_strings);
+		$ss->assign('MOD', $mod_strings);
+		$ss->assign('mail_smtptype', $focus->mail_smtptype);
+		$html = $ss->fetch('modules/OutboundEmailAccounts/smtpPreselection.tpl');
+		return $html;
 	}
 
 	public static function getSendTestEmailBtn() {
-		return '<input type="button" class="button" value="Send Test Email" onclick="testOutboundSettings();">';
+		global $app_strings, $current_user;
+		$APP = $app_strings;
+		$CURRENT_USER_EMAIL = $current_user->email1;
+		$admin = new Administration();
+		$admin->retrieveSettings();
+		$adminNotifyFromAddress = $admin->settings['notify_fromaddress'];
+		$adminNotifyFromName = $admin->settings['notify_fromname'];
+		$html = <<<HTML
+			<input type="button" class="button" value="{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}" onclick="testOutboundSettings();">
+			<script type="text/javascript" src="cache/include/javascript/sugar_grp_yui_widgets.js"></script>
+			<script type="text/javascript">
+
+				function overlay(reqtitle, body, type) {
+					var config = { };
+					config.type = type;
+					config.title = reqtitle;
+					config.msg = body;
+					YAHOO.SUGAR.MessageBox.show(config);
+				}
+
+				function hideOverlay() {
+					YAHOO.SUGAR.MessageBox.hide();
+				}
+
+
+				var EmailMan = {};
+
+				var testOutboundSettings = function() {
+					testOutboundSettingsDialog();
+				};
+
+				function testOutboundSettingsDialog() {
+					// lazy load dialogue
+					if(!EmailMan.testOutboundDialog) {
+						EmailMan.testOutboundDialog = new YAHOO.widget.Dialog("testOutboundDialog", {
+							modal:true,
+							visible:true,
+							fixedcenter:true,
+							constraintoviewport: true,
+							width   : 600,
+							shadow  : false
+						});
+						EmailMan.testOutboundDialog.setHeader("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}");
+						YAHOO.util.Dom.removeClass("testOutboundDialog", "yui-hidden");
+					} // end lazy load
+
+					EmailMan.testOutboundDialog.render();
+					EmailMan.testOutboundDialog.show();
+				}
+				
+				function sendTestEmail()
+				{
+					var toAddress = document.getElementById("outboundtest_to_address").value;
+					
+					if (trim(toAddress) == "") 
+					{
+						overlay("{$APP['ERR_MISSING_REQUIRED_FIELDS']}", "{$APP['LBL_EMAIL_SETTINGS_FROM_TO_EMAIL_ADDR']}", 'alert');
+						//return;
+					}
+					else if (!isValidEmail(toAddress)) {
+						overlay("{$APP['ERR_INVALID_REQUIRED_FIELDS']}", "{$APP['LBL_EMAIL_SETTINGS_FROM_TO_EMAIL_ADDR']}", 'alert');
+						return;
+					}
+					
+					//Hide the email address window and show a message notifying the user that the test email is being sent.
+					EmailMan.testOutboundDialog.hide();
+					overlay("{$APP['LBL_EMAIL_PERFORMING_TASK']}", "{$APP['LBL_EMAIL_ONE_MOMENT']}", 'alert');
+
+					var callbackOutboundTest = {
+						success	: function(o) {
+							hideOverlay();
+							var responseObject = YAHOO.lang.JSON.parse(o.responseText);
+							if (responseObject.status)
+								overlay("{$APP['LBL_EMAIL_TEST_OUTBOUND_SETTINGS']}", "{$APP['LBL_EMAIL_TEST_NOTIFICATION_SENT']}", 'alert');
+							else
+								overlay("Send Test Email", responseObject.errorMessage, 'alert');
+						}
+					};
+
+					var smtpServer = document.getElementById('mail_smtpserver').value;
+					var smtpPort = document.getElementById('mail_smtpport').value;
+					var smtpssl  = document.getElementById('mail_smtpssl').value;
+					var mailsmtpauthreq = document.getElementById('mail_smtpauth_req');
+					var mail_sendtype = 'SMTP'; 
+					var postDataString =
+						'mail_type=system&' +
+						'mail_sendtype=' + mail_sendtype + '&' +
+						'mail_smtpserver=' + smtpServer + "&" +
+						"mail_smtpport=" + smtpPort + "&mail_smtpssl=" + smtpssl + "&" +
+						"mail_smtpauth_req=" + mailsmtpauthreq.checked + "&" +
+						"mail_smtpuser=" + trim(document.getElementById('mail_smtpuser').value) + "&" +
+						"mail_smtppass=" + trim(document.getElementById('mail_smtppass').value) + "&" +
+						"outboundtest_to_address=" + toAddress + '&' +
+						'outboundtest_from_address=' + '$adminNotifyFromAddress' + '&' +
+						'mail_from_name=' + '$adminNotifyFromName';
+					//YAHOO.util.Connect.asyncRequest("POST", "index.php?action=EmailUIAjax&module=Emails&emailUIAction=testOutbound&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
+					YAHOO.util.Connect.asyncRequest("POST", "index.php?action=testOutboundEmail&module=EmailMan&to_pdf=true&sugar_body_only=true", callbackOutboundTest, postDataString);
+				}
+
+			</script>
+
+			<div id="testOutboundDialog" class="yui-hidden">
+				<div id="testOutbound">
+					<form>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit view">
+						<tr>
+							<td scope="row">
+								{$APP['LBL_EMAIL_SETTINGS_FROM_TO_EMAIL_ADDR']}
+								<span class="required">
+								</span>
+							</td>
+							<td>
+								<input type="text" id="outboundtest_to_address" name="outboundtest_to_address" size="35" maxlength="64" value="{$CURRENT_USER_EMAIL}">
+							</td>
+						</tr>
+						<tr>
+							<td scope="row" colspan="2">
+								<input type="button" class="button" value="   {$APP['LBL_EMAIL_SEND']}   " onclick="javascript:sendTestEmail();">&nbsp;
+								<input type="button" class="button" value="   {$APP['LBL_CANCEL_BUTTON_LABEL']}   " onclick="javascript:EmailMan.testOutboundDialog.hide();">&nbsp;
+							</td>
+						</tr>
+					</table>
+					</form>
+				</div>
+			</div>
+HTML;
+		return $html;
 	}
 	
 }
