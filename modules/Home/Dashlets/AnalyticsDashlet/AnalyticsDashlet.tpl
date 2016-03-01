@@ -2,8 +2,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
@@ -70,26 +69,69 @@
             width: 350,
             modal: true,
             buttons: {
-                "Load": function() {
-                    var savedList = $(this).data("savedList");
-                    //console.log(savedList);
-                    getPivotFromObjectToLoad(savedList);
-                },
-                Cancel: function () {
+                "Load":{
+                    text:"Load",
                     {/literal}
-                    $(".dialogLoad-{$id}").dialog("close");
+                    'class':'dialogBtnLoad-{$id}',
                     {literal}
+                    click: function() {
+                        var savedList = $(this).data("savedList");
+                        ////console.log("PG "+savedList);
+                        getPivotFromObjectToLoad(savedList);
+                    }
+                },
+
+                Cancel: {
+                    text:"Cancel",
+                    {/literal}
+                    'class':'dialogBtnCancel-{$id}',
+                    {literal}
+                    click:function () {
+                        ////console.log("CLICKED ON CANCEL");
+                        //$(this).dialog("close");
+                        {/literal}
+                        $(".dialogLoad-{$id}").dialog("close");
+                        ////console.log("CLICKED ON CANCEL");
+                        {literal}
+                    }
                 }
             },
             open: function () {
-                //console.log($(this).data("containingDiv"));
-                {/literal}
+                ////console.log($(this).data("containingDiv"));
+
                 var savedList = $(this).data("savedList");
-                console.log(savedList);
+                //console.log(savedList);
                 populateLoadPivotList(savedList);
-                {literal}
+                var automated = $(this).data("automated");
+                if(automated === true)
+                {
+                    {/literal}
+                    //console.log($(".pivotLoadList-{$id} option[id='{$pivotToLoad}']"));
+                    console.log("'{$id}'");
+                    console.log("'{$pivotToLoad}'");
+                    //$(".pivotLoadList-{$id} option[id='{$pivotToLoad}']").prop("selected","selected");
+                    $(".pivotLoadList-{$id}").val('{$pivotToLoad}');
+
+                    //$(".dialogBtnCancel-{$id}").click();
+                    $(".dialogBtnLoad-{$id}").click();
+
+                    //$(".dialogLoad-{$id} button[title='Close']").click();
+                    //$(".dialogLoad-{$id}").parent().find("button[title='Close']").click()
+                    //closeDialog(".dialogBtnLoad-{$id}");
+
+                    $(".dialogLoad-{$id}").dialog("close");
+
+
+                    {literal}
+                }
+
             }
         });
+
+        function closeDialog(item)
+        {
+            $(item).click();
+        }
 
         function getPivotFromObjectToLoad(savedPivotList) {
 
@@ -105,16 +147,16 @@
                     return item.id == $(".pivotLoadList-{$id}").val();
                     {literal}
                 });
-
+                //console.log(item);
                 if (item === undefined || item[0] === undefined || item[0].type === undefined || item[0].config === undefined) {
                     toastr.error("Sorry, this pivot cannot be loaded");
                 }
                 else {
-                    //console.log(item[0]);
+                    ////console.log(item[0]);
                    // $('.analysisType').val(item[0].type);
                     loadPivot(item[0].type, item[0].config);
                     toastr.success(item[0].name + " loaded successfully")
-                    //console.log(item[0].config);
+                    ////console.log(item[0].config);
                 }
             }
 
@@ -199,6 +241,13 @@
                 {/literal}
                 $(".txtChosenSave-{$id}").val($(".analysisType-{$id}").val());
                 $(".txtConfigSave-{$id}").val(JSON.stringify(config_copy, undefined, 2));
+
+                //$(".btnLoadPivot-{$id}").data("automated",true).click();
+                ////console.log($("select.pivotLoadList-{$id} option:contains('pgTest')"));//.prop("selected", "selected");
+                ////console.log($("select.pivotLoadList-{$id}"));
+
+                //$(".dialogBtnLoad-{$id}").click();
+                //console.log("ALL LOADED");
                 {literal}
             }
         }
@@ -207,12 +256,12 @@
         $(".btnToggleUI-{$id}").on("click",function()
         {literal}
         {
-
+            //console.log("TOGGLE CLICKED");
             //containingDiv =  $(".analysisContainer").has($(this));
-            //console.log(containingDiv);
+            ////console.log(containingDiv);
             {/literal}
             //$(containingDiv).find("table.pvtUi tbody tr:lt(2), table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType, label.analysisTypeLabel").toggle();;
-            $(".analysisContainer-{$id} table.pvtUi tbody tr:lt(2),.analysisContainer-{$id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType-{$id},.analysisContainer-{$id} label.analysisTypeLabel").toggle();;
+            $(".analysisContainer-{$id} table.pvtUi tbody tr:lt(2),.analysisContainer-{$id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType-{$id},.analysisContainer-{$id} label.analysisTypeLabel-{$id}").toggle();;
             {literal}
         });
 
@@ -224,15 +273,16 @@
         {literal}
         {
 
-
             //{literal}
-            //console.log(containingDiv);
+            ////console.log(containingDiv);
+            var automated = $(this).data("automated");
+            //console.log(automated);
 
             {/literal}
             var containingDiv =  $(".analysisContainer-{$id}").has($(this));
             {literal}
-            console.log(containingDiv);
-            //console.log($(containingDiv).find(".dialogLoad"));
+            //console.log(containingDiv);
+            ////console.log($(containingDiv).find(".dialogLoad"));
             $.getJSON("index.php",
                     {
                         'module': 'Home',
@@ -245,11 +295,13 @@
                         //$(containingDiv).find(".dialogLoad").dialog("open");
 
                         {/literal}
-                        $(".dialogLoad-{$id}").data("savedList",mps).dialog("open");
+                        $(".dialogLoad-{$id}").data("automated",automated).data("savedList",mps).dialog("open");
                         {literal}
 
                     });
 
+            //Only run the automated sequence for the first pass
+            $(this).data("automated",false);
         });
 
         {/literal}
@@ -263,7 +315,7 @@
              */
             //containingDiv =  $(".analysisContainer").has($(this));
 
-            console.log("OPEN DIALOG");
+            //console.log("OPEN DIALOG");
             //$(containingDiv).find(".dialogSave").dialog("open");
             {/literal}
             $(".dialogSave-{$id}").dialog("open");
@@ -277,9 +329,9 @@
             {/literal}
             //containingDiv =  $(".analysisContainer").has($(this));
 
-            //console.log(containingDiv);
-            //console.log($(containingDiv).find(".txtChosenSave").val());
-            //console.log($(containingDiv).find(".analysisType").val());
+            ////console.log(containingDiv);
+            ////console.log($(containingDiv).find(".txtChosenSave").val());
+            ////console.log($(containingDiv).find(".analysisType").val());
 
             $(".txtChosenSave-{$id}").val($(".analysisType-{$id}").val());
 
@@ -287,8 +339,10 @@
             // $(".txtConfigSave").val("");
             //PG refresh the config save
 
-            //console.log($(this));
+            ////console.log($(this));
             getDataForPivot($('.analysisContainer-{$id}'));
+            //$("btnToggleUI-{$id}").click();
+            //$(".analysisContainer-{ $id} table.pvtUi tbody tr:lt(2),.analysisContainer-{ $id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType-{ $id},.analysisContainer-{ $id} label.analysisTypeLabel").toggle();;
             {literal}
         });
 
@@ -298,7 +352,7 @@
             {literal}
             if (type !== undefined) {
                 {/literal}
-                console.log($(".output-{$id}"));
+                //console.log($(".output-{$id}"));
                 {literal}
                 $.getJSON("index.php",
                         {
@@ -309,15 +363,28 @@
                         function (mps) {
                             //$(".output").pivotUI(mps, template, true);
                             {/literal}
-                            console.log("HERE");
+                            //console.log("HERE");
                             $(".output-{$id}").pivotUI(mps, template, true);
+                            ////console.log("T "+{$showUI});
+
                             {literal}
+
+                            //if(true)
+                            //{
+
+                            //}
+
+                            //{literal}
                         });
             }
 
         }
 
         function loadPivot(type, config) {
+
+            //console.log("PG TYPE "+type);
+            //console.log("PG CONFIG "+config);
+
             if (type !== undefined) {
                 {/literal}
                 $(".analysisType-{$id}").val(type);
@@ -335,11 +402,13 @@
                             {literal}
                             var configParsed = JSON.parse(config);
                             var combined = $.extend(configParsed, template);
-                            //console.log(combined);
+                            ////console.log(combined);
 
                             {/literal}
                             $(".output-{$id}").pivotUI(mps, combined, true);
+                            if(!{$showUI})$(".btnToggleUI-{$id}").click();
                             {literal}
+
                         });
             }
 
@@ -353,7 +422,14 @@
         {/literal}
 
         getDataForPivot($(".analysisContainer-{$id}"));
+        $(".btnLoadPivot-{$id}").data("automated",true).click();
+
+
         {literal}
+
+
+
+
 
     });
     {/literal}
@@ -361,18 +437,18 @@
 <hr>
 
 <div class="analysisContainer-{$id}">
-    <label class="analysisTypeLabel-{$id}" for="analysisType-{$id}">Area for Analysis:</label>
+    <!--<label class="analysisTypeLabel-{$id}" for="analysisType-{$id}">Area for Analysis:</label>
     <select class="analysisType-{$id}">
         <option value="getSalesPivotData">Sales</option>
         <option value="getAccountsPivotData">Accounts</option>
         <option value="getLeadsPivotData">Leads</option>
-    </select>
+    </select>-->
     <div class="output-{$id}" style="margin: 30px;"></div>
     <div class="config-{$id}"></div>
     <!--<textarea id="txtConfig"></textarea>-->
-    <button type="button" class="btnSavePivot-{$id}"><i class="fa fa-floppy-o"></i>Save</button>
-    <button type="button" class="btnLoadPivot-{$id}"><i class="fa fa-search"></i>Load</button>
-    <button type="button" class="btnToggleUI-{$id}"><i class="fa fa-toggle-on"></i>Toggle UI</button>
+    <button type="button" class="btnSavePivot-{$id}" style="display:none;"><i class="fa fa-floppy-o"></i>Save</button>
+    <button type="button" class="btnLoadPivot-{$id}" style="display:none;"><i class="fa fa-search"></i>Load</button>
+    <button type="button" class="btnToggleUI-{$id}" style="display:none;"><i class="fa fa-toggle-on"></i>Toggle UI</button>
 
     <input type="hidden" class="txtChosenSave-{$id}">
     <input type="hidden" class="txtConfigSave-{$id}">

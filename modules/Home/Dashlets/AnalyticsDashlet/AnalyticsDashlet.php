@@ -45,6 +45,8 @@ require_once('include/Dashlets/Dashlet.php');
 class AnalyticsDashlet extends Dashlet {
     var $savedText; // users's saved text
     var $height = '200'; // height of the pad
+    var $pivotId;
+    var $showGui;
 
     /**
      * Constructor
@@ -63,6 +65,25 @@ class AnalyticsDashlet extends Dashlet {
 */
         if(!empty($def['height'])) // set a default height if none is set
             $this->height = $def['height'];
+
+        if(!empty($def['pivotId']))
+        {
+            $this->pivotId = $def['pivotId'];
+        }
+        else
+        {
+            $this->pivotId = '';
+        }
+
+        if(!empty($def['showGui']) && $def['showGui']==='on')
+        {
+            $this->showGui = 1;
+        }
+        else
+        {
+            $this->showGui = 0;
+        }
+
 
         parent::Dashlet($id); // call parent constructor
 
@@ -86,6 +107,8 @@ class AnalyticsDashlet extends Dashlet {
         //$ss->assign('saving', $this->dashletStrings['LBL_SAVING']);
         //$ss->assign('saved', $this->dashletStrings['LBL_SAVED']);
         $ss->assign('id', $this->id);
+        $ss->assign('showUI', $this->showGui);
+        $ss->assign('pivotToLoad', $this->pivotId);
         //$ss->assign('height', $this->height);
 
         //$str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
@@ -129,8 +152,31 @@ class AnalyticsDashlet extends Dashlet {
         $ss->assign('title', $this->title);
         $ss->assign('height', $this->height);
         $ss->assign('id', $this->id);
+        $ss->assign('showUI', $this->showGui);
+        $ss->assign('pivotToLoad', $this->pivotId);
+
+        //$pivots[] = ["id"=>123,"name"=>'test'];
+        //$pivots[] = ["id"=>456,"name"=>'test2'];
+        //$ss->assign('pivots',json_encode($pivots));
+        $ss->assign('pivots',$this->getPivotList());
 
         return parent::displayOptions() . $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletOptions.tpl');
+    }
+
+    public function getPivotList()
+    {
+        $pivotBean = BeanFactory::getBean('a007_Pivot');
+        $beanList = $pivotBean->get_full_list('name');
+        $returnArray = [];
+        foreach ($beanList as $b) {
+            $bean = new stdClass();
+            $bean->type = $b->type;
+            $bean->config = htmlspecialchars_decode($b->config);
+            $bean->name = $b->name;
+            $bean->id = $b->id;
+            $returnArray[] = $bean;
+        }
+        return json_encode($returnArray);
     }
 
     /**
@@ -143,35 +189,15 @@ class AnalyticsDashlet extends Dashlet {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $_REQUEST['title'];
-        if(is_numeric($_REQUEST['height'])) {
-            if($_REQUEST['height'] > 0 && $_REQUEST['height'] <= 300) $options['height'] = $_REQUEST['height'];
-            elseif($_REQUEST['height'] > 300) $options['height'] = '300';
-            else $options['height'] = '100';
-        }
 
-        $options['savedText'] = $this->savedText;
+        $options['showGui']= $_REQUEST['showGui'];
+        $options['pivotId']= $_REQUEST['pivots'];
+
+
         return $options;
     }
 
-    /**
-     * Used to save text on textarea blur. Accessed via Home/CallMethodDashlet.php
-     * This is an example of how to to call a custom method via ajax
-     */
-    function saveText() {
-        $json = getJSONobj();
-    	if(isset($_REQUEST['savedText'])) {
-            $optionsArray = $this->loadOptions();
-            $optionsArray['savedText']=$json->decode(html_entity_decode($_REQUEST['savedText']));
-            $optionsArray['savedText']=SugarCleaner::cleanHtml(nl2br($optionsArray['savedText']));
-            $this->storeOptions($optionsArray);
 
-        }
-        else {
-            $optionsArray['savedText'] = '';
-        }
-        echo 'result = ' . $json->encode(array('id' => $_REQUEST['id'],
-                                       'savedText' => $optionsArray['savedText']));
-    }
 }
 
 ?>

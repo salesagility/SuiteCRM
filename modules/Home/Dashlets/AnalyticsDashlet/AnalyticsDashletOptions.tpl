@@ -58,17 +58,46 @@
     	<input class="text" name="title" size='20' value='{$title}'>
     </td>
 </tr>
-<tr>
-    <td valign='top' nowrap class='dataLabel'>{$heightLbl}</td>
-    <td valign='top' class='dataField'>
-    	<input class="text" name="height" size='3' value='{$height}'>
-    </td>
-</tr>
     <tr>
-        <td valign='top' nowrap class='dataLabel'>{$heightLbl}</td>
-        <td valign='top' class='dataField'>
-            <input class="text" name="height" size='3' value='{$height}'>
+        <td scope='row'>Pivot to Load</td>
+        <td>
+            <select name="pivots" id="pivots-{$id}">
+            </select>
+            <script type="text/javascript">
+
+                {literal}
+
+                $(function() {
+                    {/literal}
+                    var options = "";
+                    $({$pivots}).each(function(i,e)
+                    {literal}
+                    {
+                        {/literal}
+                        if("{$pivotToLoad}" !==e.id)
+                            options+="<option value='"+ e.id+"'>"+ e.name+"</option>";
+                        else
+                            options+="<option value='"+ e.id+"' selected>"+ e.name+"</option>";
+                        {literal}
+                    });
+                    {/literal}
+                    $('#pivots-{$id}').empty().append(options);
+                    {literal}
+                    });
+
+                {/literal}
+
+            </script>
         </td>
+    </tr>
+    <tr>
+        <td scope='row'>
+            <label for="showGui{$id}">Show UI</label>
+        </td>
+        <td>
+            <input type='checkbox' id='showGui{$id}' name='showGui' {if $showUI}checked='checked'{/if}>
+        </td>
+
     </tr>
 <tr>
     <td align="right" colspan="2">
