@@ -126,6 +126,10 @@ class SugarApplication
                     $this->controller->action = '';
                     $this->controller->module = '';
                 }
+				elseif(strtolower($this->controller->module) == 'alerts' && strtolower($this->controller->action) == 'get') {
+					echo 'lost session';
+					exit();
+				}
 			}
 
             $authController->authController->redirectToLogin($this);
