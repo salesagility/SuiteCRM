@@ -35,7 +35,7 @@ class AOS_ContractsController extends SugarController {
 
         if(isset($this->return_id)){
            $quote = BeanFactory::getBean('AOS_Quotes', $this->return_id);
-           if(is_object($quote) && $quote->id != ''){
+            if($quote instanceof SugarBean && $quote->object_name == 'AOS_Quotes' && is_object($quote) && $quote->id != ''){
               foreach($quote->field_defs as $key => $value){
                   switch ($key) {
                       case 'name':
