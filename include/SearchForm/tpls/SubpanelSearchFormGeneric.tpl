@@ -65,6 +65,7 @@
 </script>
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
+
 {{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
 {{foreach name=colIteration from=$formData key=col item=colData}}
     {{math assign="accesskeycount" equation="$accesskeycount + 1"}}
@@ -104,6 +105,7 @@
     {/if}
         <input tabindex='2' title='{$APP.LBL_SEARCH_BUTTON_TITLE}' onclick='submitSearch("{$subpanel}");' class='button' type='button' name='search' id='search_form_search' value='{$APP.LBL_SEARCH_BUTTON_TITLE}'/>
 	    <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}' onclick='clearSearch("{$subpanel}");'  class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
-    </td>
+			{$subpanelPageOffset}
+		</td>
 	</tr>
 </table>
