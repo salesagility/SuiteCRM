@@ -148,7 +148,7 @@ Alerts.prototype.redirectToLogin = function() {
         return params;
     };
     var params = getQueryParams(document.location.search);
-    if(params.module != 'Users' && params.action != 'Login') {
+    if(params.entryPoint != 'Changenewpassword' && params.module != 'Users' && params.action != 'Login') {
         document.location.href = 'index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';
         return true;
     }

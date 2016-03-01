@@ -54,7 +54,7 @@ if(typeof AlertObj.options.target_module!=="undefined"){target_module=AlertObj.o
 if(typeof AlertObj.options.type!=="undefined"){type=AlertObj.options.type}}
 $.post(url,{module:'Alerts',action:'add',name:name,description:description,url_redirect:url_redirect,is_read:is_read,target_module:target_module,type:type}).done(function(data){}).fail(function(data){console.log(data);}).always(function(){Alerts.prototype.updateManager();});}
 Alerts.prototype.redirectToLogin=function(){var getQueryParams=function(qs){qs=qs.split('+').join(' ');var params={},tokens,re=/[?&]?([^=]+)=([^&]*)/g;while(tokens=re.exec(qs)){params[decodeURIComponent(tokens[1])]=decodeURIComponent(tokens[2]);}
-return params;};var params=getQueryParams(document.location.search);if(params.module!='Users'&&params.action!='Login'){document.location.href='index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';return true;}
+return params;};var params=getQueryParams(document.location.search);if(params.entryPoint!='Changenewpassword'&&params.module!='Users'&&params.action!='Login'){document.location.href='index.php?module=Users&action=Login&loginErrorMessage=LBL_SESSION_EXPIRED';return true;}
 return false;}
 Alerts.prototype.updateManager=function(){var url='index.php?module=Alerts&action=get&to_pdf=1';$.ajax(url).done(function(data){if(data=='lost session'){Alerts.prototype.redirectToLogin();return false;}
 $('div#alerts').html(data);$('div.alerts').css('width','200px');var alertCount=$('#alerts').find('div.module-alert').size();$('.alert_count').html(alertCount);if(alertCount>0){$('.alertsButton').removeClass('btn-').addClass('btn-danger');}
