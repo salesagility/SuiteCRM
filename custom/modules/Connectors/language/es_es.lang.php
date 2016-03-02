@@ -71,7 +71,6 @@ $mod_strings = array (
   'LBL_ENABLED' => 'Habilitado',
   'LBL_EXTERNAL' => 'Permiten a los usuarios crear registros en cuentas externas.',
   'LBL_EXTERNAL_SET_PROPERTIES' => 'Para poder usar este conector, las propiedades del conector también se debe definir en la página de configuración.',
-  'LBL_FINSALES' => 'Ventas Anuales',
   'LBL_MARKET_CAP' => 'Cap. Bursátil',
   'LBL_MERGE' => 'Combinar',
   'LBL_MODIFY_DISPLAY_TITLE' => 'Habilitar Conectores',
