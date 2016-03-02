@@ -57,6 +57,8 @@ class AnalyticsDashlet extends Dashlet {
      */
     function AnalyticsDashlet($id, $def) {
         $this->loadLanguage('AnalyticsDashlet'); // load the language strings here
+
+        $this->isRefreshable = false;
 /*
         if(!empty($def['savedText']))  // load default text is none is defined
             $this->savedText = $def['savedText'];
@@ -102,13 +104,11 @@ class AnalyticsDashlet extends Dashlet {
      */
     function display() {
 
-        $ss = new Sugar_Smarty();
+
         //$ss->assign('savedText', SugarCleaner::cleanHtml($this->savedText));
         //$ss->assign('saving', $this->dashletStrings['LBL_SAVING']);
         //$ss->assign('saved', $this->dashletStrings['LBL_SAVED']);
-        $ss->assign('id', $this->id);
-        $ss->assign('showUI', $this->showGui);
-        $ss->assign('pivotToLoad', $this->pivotId);
+
         //$ss->assign('height', $this->height);
 
         //$str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
@@ -116,9 +116,20 @@ class AnalyticsDashlet extends Dashlet {
 
         //$_REQUEST['analysisDashletId']= $this->id;
         //$str = file_get_contents("modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletSpecific.php");
-        $str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
-        return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
 
+        if(is_null($this->pivotId) || $this->pivotId === '')
+        {
+            return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . '<span>No pivot selected for display</span>' . '<br />'; // return parent::display for title and such
+        }
+        else
+        {
+            $ss = new Sugar_Smarty();
+            $ss->assign('id', $this->id);
+            $ss->assign('showUI', $this->showGui);
+            $ss->assign('pivotToLoad', $this->pivotId);
+            $str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
+            return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
+        }
     }
 
     /**
@@ -127,13 +138,12 @@ class AnalyticsDashlet extends Dashlet {
      * @return string javascript to use with this dashlet
      */
     function displayScript() {
-        $ss = new Sugar_Smarty();
-        $ss->assign('saving', $this->dashletStrings['LBL_SAVING']);
-        $ss->assign('saved', $this->dashletStrings['LBL_SAVED']);
-        $ss->assign('id', $this->id);
-
-        $str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletScript.tpl');
-        return $str; // return parent::display for title and such
+        //$ss = new Sugar_Smarty();
+        //$ss->assign('saving', $this->dashletStrings['LBL_SAVING']);
+        //$ss->assign('saved', $this->dashletStrings['LBL_SAVED']);
+        //$ss->assign('id', $this->id);
+        //$str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletScript.tpl');
+        //return $str; // return parent::display for title and such
     }
 
     /**
@@ -189,12 +199,24 @@ class AnalyticsDashlet extends Dashlet {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $_REQUEST['title'];
-
         $options['showGui']= $_REQUEST['showGui'];
         $options['pivotId']= $_REQUEST['pivots'];
 
 
         return $options;
+    }
+
+    public function setRefreshIcon()
+    {
+        $additionalTitle = '';
+        if($this->isRefreshable) {
+            $additionalTitle .= '<a href="javascript:void(0)" onclick="SUGAR.mySugar.retrieveDashlet(\''
+                . $this->id . '\'); return false;">'
+                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
+                . '</a>';
+        }
+
+        return $additionalTitle;
     }
 
 

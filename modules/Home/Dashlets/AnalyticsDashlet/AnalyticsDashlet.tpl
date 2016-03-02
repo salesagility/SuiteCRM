@@ -28,7 +28,7 @@
     var minNameLength = 5;
     $(function () {
 
-
+    //console.log("DOM READY EVENT of analyticsDashlet.tpl");
 
         toastr.options = {
             "positionClass": "toast-bottom-right"
@@ -76,7 +76,7 @@
                     {literal}
                     click: function() {
                         var savedList = $(this).data("savedList");
-                        ////console.log("PG "+savedList);
+                        //////console.log("PG "+savedList);
                         getPivotFromObjectToLoad(savedList);
                     }
                 },
@@ -87,28 +87,28 @@
                     'class':'dialogBtnCancel-{$id}',
                     {literal}
                     click:function () {
-                        ////console.log("CLICKED ON CANCEL");
+                        //////console.log("CLICKED ON CANCEL");
                         //$(this).dialog("close");
                         {/literal}
                         $(".dialogLoad-{$id}").dialog("close");
-                        ////console.log("CLICKED ON CANCEL");
+                        //////console.log("CLICKED ON CANCEL");
                         {literal}
                     }
                 }
             },
             open: function () {
-                ////console.log($(this).data("containingDiv"));
+                //////console.log($(this).data("containingDiv"));
 
                 var savedList = $(this).data("savedList");
-                //console.log(savedList);
+                ////console.log(savedList);
                 populateLoadPivotList(savedList);
                 var automated = $(this).data("automated");
                 if(automated === true)
                 {
                     {/literal}
-                    //console.log($(".pivotLoadList-{$id} option[id='{$pivotToLoad}']"));
-                    console.log("'{$id}'");
-                    console.log("'{$pivotToLoad}'");
+                    ////console.log($(".pivotLoadList-{$id} option[id='{$pivotToLoad}']"));
+                    //console.log("'{$id}'");
+                    //console.log("'{$pivotToLoad}'");
                     //$(".pivotLoadList-{$id} option[id='{$pivotToLoad}']").prop("selected","selected");
                     $(".pivotLoadList-{$id}").val('{$pivotToLoad}');
 
@@ -147,16 +147,20 @@
                     return item.id == $(".pivotLoadList-{$id}").val();
                     {literal}
                 });
-                //console.log(item);
+                ////console.log(item);
                 if (item === undefined || item[0] === undefined || item[0].type === undefined || item[0].config === undefined) {
                     toastr.error("Sorry, this pivot cannot be loaded");
                 }
                 else {
-                    ////console.log(item[0]);
+                    {/literal}
+                    $(".type-{$id}").val(item[0].type);
+                    {literal}
+                    //////console.log(item[0]);
                    // $('.analysisType').val(item[0].type);
                     loadPivot(item[0].type, item[0].config);
+                    //console.log(item[0].type);
                     toastr.success(item[0].name + " loaded successfully")
-                    ////console.log(item[0].config);
+                    //////console.log(item[0].config);
                 }
             }
 
@@ -243,11 +247,11 @@
                 $(".txtConfigSave-{$id}").val(JSON.stringify(config_copy, undefined, 2));
 
                 //$(".btnLoadPivot-{$id}").data("automated",true).click();
-                ////console.log($("select.pivotLoadList-{$id} option:contains('pgTest')"));//.prop("selected", "selected");
-                ////console.log($("select.pivotLoadList-{$id}"));
+                //////console.log($("select.pivotLoadList-{$id} option:contains('pgTest')"));//.prop("selected", "selected");
+                //////console.log($("select.pivotLoadList-{$id}"));
 
                 //$(".dialogBtnLoad-{$id}").click();
-                //console.log("ALL LOADED");
+                ////console.log("ALL LOADED");
                 {literal}
             }
         }
@@ -256,9 +260,9 @@
         $(".btnToggleUI-{$id}").on("click",function()
         {literal}
         {
-            //console.log("TOGGLE CLICKED");
+            ////console.log("TOGGLE CLICKED");
             //containingDiv =  $(".analysisContainer").has($(this));
-            ////console.log(containingDiv);
+            //////console.log(containingDiv);
             {/literal}
             //$(containingDiv).find("table.pvtUi tbody tr:lt(2), table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType, label.analysisTypeLabel").toggle();;
             $(".analysisContainer-{$id} table.pvtUi tbody tr:lt(2),.analysisContainer-{$id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType-{$id},.analysisContainer-{$id} label.analysisTypeLabel-{$id}").toggle();;
@@ -272,17 +276,17 @@
         $(".analysisContainer-{$id} .btnLoadPivot-{$id}").on("click",function()
         {literal}
         {
-
+            //console.log("CLICK");
             //{literal}
-            ////console.log(containingDiv);
+            //////console.log(containingDiv);
             var automated = $(this).data("automated");
-            //console.log(automated);
+            ////console.log(automated);
 
             {/literal}
             var containingDiv =  $(".analysisContainer-{$id}").has($(this));
             {literal}
-            //console.log(containingDiv);
-            ////console.log($(containingDiv).find(".dialogLoad"));
+            ////console.log(containingDiv);
+            //////console.log($(containingDiv).find(".dialogLoad"));
             $.getJSON("index.php",
                     {
                         'module': 'Home',
@@ -301,7 +305,7 @@
                     });
 
             //Only run the automated sequence for the first pass
-            $(this).data("automated",false);
+            //$(this).data("automated",false);
         });
 
         {/literal}
@@ -315,7 +319,7 @@
              */
             //containingDiv =  $(".analysisContainer").has($(this));
 
-            //console.log("OPEN DIALOG");
+            ////console.log("OPEN DIALOG");
             //$(containingDiv).find(".dialogSave").dialog("open");
             {/literal}
             $(".dialogSave-{$id}").dialog("open");
@@ -329,9 +333,9 @@
             {/literal}
             //containingDiv =  $(".analysisContainer").has($(this));
 
-            ////console.log(containingDiv);
-            ////console.log($(containingDiv).find(".txtChosenSave").val());
-            ////console.log($(containingDiv).find(".analysisType").val());
+            //////console.log(containingDiv);
+            //////console.log($(containingDiv).find(".txtChosenSave").val());
+            //////console.log($(containingDiv).find(".analysisType").val());
 
             $(".txtChosenSave-{$id}").val($(".analysisType-{$id}").val());
 
@@ -339,8 +343,8 @@
             // $(".txtConfigSave").val("");
             //PG refresh the config save
 
-            ////console.log($(this));
-            getDataForPivot($('.analysisContainer-{$id}'));
+            //////console.log($(this));
+            //getDataForPivot($('.analysisContainer-{$id}'));
             //$("btnToggleUI-{$id}").click();
             //$(".analysisContainer-{ $id} table.pvtUi tbody tr:lt(2),.analysisContainer-{ $id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType-{ $id},.analysisContainer-{ $id} label.analysisTypeLabel").toggle();;
             {literal}
@@ -352,7 +356,8 @@
             {literal}
             if (type !== undefined) {
                 {/literal}
-                //console.log($(".output-{$id}"));
+                //console.log("PG "+type);
+                ////console.log($(".output-{$id}"));
                 {literal}
                 $.getJSON("index.php",
                         {
@@ -363,9 +368,9 @@
                         function (mps) {
                             //$(".output").pivotUI(mps, template, true);
                             {/literal}
-                            //console.log("HERE");
+                            ////console.log("HERE");
                             $(".output-{$id}").pivotUI(mps, template, true);
-                            ////console.log("T "+{$showUI});
+                            //////console.log("T "+{$showUI});
 
                             {literal}
 
@@ -382,8 +387,8 @@
 
         function loadPivot(type, config) {
 
-            //console.log("PG TYPE "+type);
-            //console.log("PG CONFIG "+config);
+            ////console.log("PG TYPE "+type);
+            ////console.log("PG CONFIG "+config);
 
             if (type !== undefined) {
                 {/literal}
@@ -397,12 +402,13 @@
                         },
                         function (mps) {
                             {/literal}
+                            //console.log(mps);
                             $(".txtChosenSave-{$id}").val($(".analysisType").val());
                             $(".txtConfigSave-{$id}").val(config);
                             {literal}
                             var configParsed = JSON.parse(config);
                             var combined = $.extend(configParsed, template);
-                            ////console.log(combined);
+                            //////console.log(combined);
 
                             {/literal}
                             $(".output-{$id}").pivotUI(mps, combined, true);
@@ -414,6 +420,34 @@
 
         }
 
+        function refreshPivot(item) {
+
+            ////console.log("PG TYPE "+type);
+            ////console.log("PG CONFIG "+config);
+            {/literal}
+            var type = $(item).val();
+            //console.log(type);
+            {literal}
+            if (type !== undefined) {
+                $.getJSON("index.php",
+                        {
+                            'module': 'Home',
+                            'action': type,
+                            'to_pdf': 1
+                        },
+                        function (mps) {
+                            {/literal}
+                            $(".output-{$id}").pivotUI(mps, [], false);
+                            if(!{$showUI})$(".btnToggleUI-{$id}").click();
+                            {literal}
+
+                        });
+            }
+
+        }
+
+
+
         //var containingDivs = $(".analysisContainer");
         //$.each(containingDivs,function(i,v){
         //    getDataForPivot(v);
@@ -421,14 +455,15 @@
 
         {/literal}
 
-        getDataForPivot($(".analysisContainer-{$id}"));
+        //getDataForPivot($(".analysisContainer-{$id}"));
         $(".btnLoadPivot-{$id}").data("automated",true).click();
-
-
         {literal}
 
-
-
+        setInterval(function(){
+            {/literal}
+            refreshPivot("input.type-{$id}");
+            {literal}
+        },60000);
 
 
     });
@@ -437,6 +472,7 @@
 <hr>
 
 <div class="analysisContainer-{$id}">
+    <input type="hidden" class="type-{$id}">
     <!--<label class="analysisTypeLabel-{$id}" for="analysisType-{$id}">Area for Analysis:</label>
     <select class="analysisType-{$id}">
         <option value="getSalesPivotData">Sales</option>

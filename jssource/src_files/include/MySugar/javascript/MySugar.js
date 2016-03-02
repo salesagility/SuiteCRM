@@ -617,9 +617,13 @@ SUGAR.mySugar = function() {
 			return false;
 		},
 
-		
-		
-		
+
+		refreshPageForAnalytics: function() {
+			window.location.reload();
+			return false;
+		},
+
+
 		renderDashletsDialog: function(){	
             var minHeight = 120;
             var maxHeight = 520;
