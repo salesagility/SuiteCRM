@@ -75,20 +75,6 @@ class HomeController extends SugarController
 
     public function action_getAccountsPivotData()
     {
-        /*
-        $accountBean = BeanFactory::getBean('Accounts');
-        $beanList = $accountBean->get_full_list(
-            'name'
-        );
-
-        $returnArray = [];
-        foreach ($beanList as $b) {
-            $returnArray[] = $b->toArray();
-        }
-        echo json_encode($returnArray);
-        */
-
-
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 

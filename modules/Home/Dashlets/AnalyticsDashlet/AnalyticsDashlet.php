@@ -59,14 +59,6 @@ class AnalyticsDashlet extends Dashlet {
         $this->loadLanguage('AnalyticsDashlet'); // load the language strings here
 
         $this->isRefreshable = false;
-/*
-        if(!empty($def['savedText']))  // load default text is none is defined
-            $this->savedText = $def['savedText'];
-        else
-            $this->savedText = $this->dashletStrings['LBL_DEFAULT_TEXT'];
-*/
-        if(!empty($def['height'])) // set a default height if none is set
-            $this->height = $def['height'];
 
         if(!empty($def['pivotId']))
         {
@@ -103,20 +95,6 @@ class AnalyticsDashlet extends Dashlet {
      * @return string html to display dashlet
      */
     function display() {
-
-
-        //$ss->assign('savedText', SugarCleaner::cleanHtml($this->savedText));
-        //$ss->assign('saving', $this->dashletStrings['LBL_SAVING']);
-        //$ss->assign('saved', $this->dashletStrings['LBL_SAVED']);
-
-        //$ss->assign('height', $this->height);
-
-        //$str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
-        //return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
-
-        //$_REQUEST['analysisDashletId']= $this->id;
-        //$str = file_get_contents("modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletSpecific.php");
-
         if(is_null($this->pivotId) || $this->pivotId === '')
         {
             return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . '<span>No pivot selected for display</span>' . '<br />'; // return parent::display for title and such
@@ -137,14 +115,7 @@ class AnalyticsDashlet extends Dashlet {
      *
      * @return string javascript to use with this dashlet
      */
-    function displayScript() {
-        //$ss = new Sugar_Smarty();
-        //$ss->assign('saving', $this->dashletStrings['LBL_SAVING']);
-        //$ss->assign('saved', $this->dashletStrings['LBL_SAVED']);
-        //$ss->assign('id', $this->id);
-        //$str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletScript.tpl');
-        //return $str; // return parent::display for title and such
-    }
+    function displayScript() {}
 
     /**
      * Displays the configuration form for the dashlet
@@ -158,16 +129,11 @@ class AnalyticsDashlet extends Dashlet {
         $ss->assign('titleLbl', $this->dashletStrings['LBL_CONFIGURE_TITLE']);
         $ss->assign('heightLbl', $this->dashletStrings['LBL_CONFIGURE_HEIGHT']);
         $ss->assign('saveLbl', $app_strings['LBL_SAVE_BUTTON_LABEL']);
-        $ss->assign('clearLbl', $app_strings['LBL_CLEAR_BUTTON_LABEL']);
         $ss->assign('title', $this->title);
-        $ss->assign('height', $this->height);
         $ss->assign('id', $this->id);
         $ss->assign('showUI', $this->showGui);
         $ss->assign('pivotToLoad', $this->pivotId);
 
-        //$pivots[] = ["id"=>123,"name"=>'test'];
-        //$pivots[] = ["id"=>456,"name"=>'test2'];
-        //$ss->assign('pivots',json_encode($pivots));
         $ss->assign('pivots',$this->getPivotList());
 
         return parent::displayOptions() . $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletOptions.tpl');
@@ -204,19 +170,6 @@ class AnalyticsDashlet extends Dashlet {
 
 
         return $options;
-    }
-
-    public function setRefreshIcon()
-    {
-        $additionalTitle = '';
-        if($this->isRefreshable) {
-            $additionalTitle .= '<a href="javascript:void(0)" onclick="SUGAR.mySugar.retrieveDashlet(\''
-                . $this->id . '\'); return false;">'
-                . SugarThemeRegistry::current()->getImage('dashlet-header-refresh','border="0" align="absmiddle" title="' . translate('LBL_DASHLET_REFRESH', 'Home') . '"',null,null,'.gif',translate('LBL_DASHLET_REFRESH', 'Home'))
-                . '</a>';
-        }
-
-        return $additionalTitle;
     }
 
 

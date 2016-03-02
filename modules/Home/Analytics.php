@@ -8,15 +8,10 @@ global $sugar_config, $mod_strings;
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-
-
 <link rel="stylesheet" type="text/css" href="include/javascript/pivottable/pivot.css">
-<!--<script type="text/javascript" src="include/javascript/jquery/jquery-min.js"></script>-->
-<!--<script type="text/javascript" src="include/javascript/jquery/jquery-ui-min.js"></script>-->
 <script type="text/javascript" src="include/javascript/pivottable/pivot.js"></script>
 <script type="text/javascript" src="include/javascript/pivottable/c3_renderers.js"></script>
 
@@ -25,12 +20,8 @@ global $sugar_config, $mod_strings;
         margin-right:10px;
     }
 </style>
-<!--<script type="text/javascript" src="include/javascript/cookie.js"></script>-->
 
 <script type="text/javascript">
-
-
-
     var minNameLength = 5;
     var savedPivotList;
 
@@ -192,18 +183,11 @@ global $sugar_config, $mod_strings;
         });
 
         $("#btnSavePivot").on("click",function(){
-            /*
-            var config = $("#txtConfig").val();
-            var type = "getLeadsPivotData";
-            loadPivot(type,config);
-            */
             $( "#dialogSave" ).dialog("open");
         });
 
         $('#analysisType').change(function(){
             $("#txtChosenSave").val($("#analysisType").val());
-           // $("#txtConfigSave").val("");
-            //PG refresh the config save
             getDataForPivot();
         });
 
@@ -263,7 +247,7 @@ global $sugar_config, $mod_strings;
 </select>
 <div id="output" style="margin: 30px;"></div>
 <div id="config"></div>
-<!--<textarea id="txtConfig"></textarea>-->
+
 <button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i>Save</button>
 <button type="button" id="btnLoadPivot"><i class="fa fa-search"></i>Load</button>
 
