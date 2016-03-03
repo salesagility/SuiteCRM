@@ -301,4 +301,28 @@ $mod_strings  = array(
 
     'LBL_SUITE_PARTNERS' => 'We have loyal SuiteCRM partners who are passionate about open source. To view our full partner list, see our website.',
 
+	//Analytics
+    'LBL_AN_AREA_FOR_ANALYSIS' => 'Area for Analysis',
+    'LBL_AN_PIVOT_TO_LOAD' => 'Pivot to Load',
+    'LBL_AN_SHOW_UI' => 'Show UI',
+    'LBL_AN_PLEASE_SAVE' => 'Please save a pivot to load',
+    'LBL_AN_PIVOT_LOAD_ERROR' => 'Sorry, this pivot cannot be loaded',
+    'LBL_AN_BTN_SAVE' => 'Save',
+    'LBL_AN_BTN_LOAD' => 'Load',
+    'LBL_AN_BTN_CLOSE' => 'Close',
+    'LBL_AN_BTN_CLOSE' => 'Close',
+    'LBL_AN_BTN_SAVE_PIVOT' => 'Save Pivot',
+    'LBL_AN_TOGGLE_UI' => 'Toggle UI',
+
+    'LBL_AN_LOAD_PIVOT' => 'Load pivot',
+    'LBL_AN_PIVOT_SAVED_AS' => 'Pivot saved as',
+    'LBL_AN_LOADED_SUCCESSFULLY' => 'loaded successfully',
+    'LBL_AN_NO_SAVED_PIVOTS' => 'No saved pivots',
+    'LBL_AN_MIN_PIVOT_NANE' => 'Pivot name must be at least',
+    'LBL_AN_CHARACTERS' => 'characters',
+    'LBL_AN_SHOW_UI' => 'Show UI',
+    'LBL_AN_NAME' => 'Name',
+    'LBL_AN_SALES' => 'Sales',
+    'LBL_AN_ACCOUNTS' => 'Accounts',
+    'LBL_AN_LEADS' => 'Leads'
 );

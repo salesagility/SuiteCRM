@@ -151,6 +151,10 @@ EOF;
             lead_source,
             amount,
             date_closed,
+			QUARTER(date_closed) as quarter,
+			MONTHNAME(date_closed) as month,
+			WEEK(date_closed) as week,
+			YEAR(date_closed) as year,
             sales_stage,
             probability
         FROM opportunities op
@@ -169,6 +173,12 @@ EOF;
             $x->leadSource = $row['lead_source'];
             $x->amount = $row['amount'];
             $x->closedDate = $row['date_closed'];
+
+            $x->closedQuarter = $row['quarter'];
+            $x->closedMonth = $row['month'];
+            $x->closedWeek = $row['week'];
+            $x->closedYear = $row['year'];
+
             $x->salesStage = $row['sales_stage'];
             $x->probability = $row['probability'];
             $returnArray[] = $x;

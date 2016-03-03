@@ -59,7 +59,7 @@
     </td>
 </tr>
     <tr>
-        <td scope='row'>Pivot to Load</td>
+        <td scope='row'>{$pivotToLoadTitleLbl}</td>
         <td>
             <select name="pivots" id="pivots-{$id}">
             </select>
@@ -92,7 +92,7 @@
     </tr>
     <tr>
         <td scope='row'>
-            <label for="showGui{$id}">Show UI</label>
+            <label for="showGui{$id}">{$showUILbl}</label>
         </td>
         <td>
             <input type='checkbox' id='showGui{$id}' name='showGui' {if $showUI}checked='checked'{/if}>

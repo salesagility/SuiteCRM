@@ -97,7 +97,7 @@ class AnalyticsDashlet extends Dashlet {
     function display() {
         if(is_null($this->pivotId) || $this->pivotId === '')
         {
-            return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . '<span>No pivot selected for display</span>' . '<br />'; // return parent::display for title and such
+            return parent::display('') . '<span>No pivot selected for display</span>' . '<br />'; // return parent::display for title and such
         }
         else
         {
@@ -105,6 +105,35 @@ class AnalyticsDashlet extends Dashlet {
             $ss->assign('id', $this->id);
             $ss->assign('showUI', $this->showGui);
             $ss->assign('pivotToLoad', $this->pivotId);
+
+            $ss->assign('lblSaved', $this->dashletStrings['LBL_SAVED']);
+            $ss->assign('lblPivotToLoad', $this->dashletStrings['LBL_PIVOT_TO_LOAD']);
+            $ss->assign('lblShowUI', $this->dashletStrings['LBL_SHOW_UI']);
+            $ss->assign('lblPleaseSave', $this->dashletStrings['LBL_PLEASE_SAVE']);
+            $ss->assign('lblPivotLoadError', $this->dashletStrings['LBL_PIVOT_LOAD_ERROR']);
+            $ss->assign('lblBtnSave', $this->dashletStrings['LBL_BTN_SAVE']);
+            $ss->assign('lblBtnLoad', $this->dashletStrings['LBL_BTN_LOAD']);
+            $ss->assign('lblToggleUI', $this->dashletStrings['LBL_TOGGLE_UI']);
+            $ss->assign('lblLoadPivot', $this->dashletStrings['LBL_LOAD_PIVOT']);
+            $ss->assign('lblPivotSavedAs', $this->dashletStrings['LBL_PIVOT_SAVED_AS']);
+            $ss->assign('lblLoadedSuccessfully', $this->dashletStrings['LBL_LOADED_SUCCESSFULLY']);
+            $ss->assign('lblNoSavedPivots', $this->dashletStrings['LBL_NO_SAVED_PIVOTS']);
+            $ss->assign('lblMinPivotName', $this->dashletStrings['LBL_MIN_PIVOT_NANE']);
+            $ss->assign('lblCharacters', $this->dashletStrings['LBL_CHARACTERS']);
+            $ss->assign('lblShowUi', $this->dashletStrings['LBL_SHOW_UI']);
+            $ss->assign('lblName', $this->dashletStrings['LBL_NAME']);
+            $ss->assign('lblBtnSavePivot', $this->dashletStrings['LBL_BTN_SAVE_PIVOT']);
+
+
+
+
+
+
+
+
+
+
+
             $str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
             return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
         }
@@ -129,10 +158,13 @@ class AnalyticsDashlet extends Dashlet {
         $ss->assign('titleLbl', $this->dashletStrings['LBL_CONFIGURE_TITLE']);
         $ss->assign('heightLbl', $this->dashletStrings['LBL_CONFIGURE_HEIGHT']);
         $ss->assign('saveLbl', $app_strings['LBL_SAVE_BUTTON_LABEL']);
+        $ss->assign('pivotToLoadTitleLbl', $this->dashletStrings['LBL_PIVOT_TO_LOAD']);
+        $ss->assign('showUILbl', $this->dashletStrings['LBL_SHOW_UI']);
         $ss->assign('title', $this->title);
         $ss->assign('id', $this->id);
         $ss->assign('showUI', $this->showGui);
         $ss->assign('pivotToLoad', $this->pivotId);
+
 
         $ss->assign('pivots',$this->getPivotList());
 

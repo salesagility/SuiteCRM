@@ -1,6 +1,6 @@
 <?php
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-global $sugar_config, $mod_strings;
+global $mod_strings;
 ?>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
@@ -37,7 +37,7 @@ global $sugar_config, $mod_strings;
             width: 350,
             modal: true,
             buttons: {
-                "Save pivot": savePivot,
+            "<?php echo $mod_strings['LBL_AN_BTN_SAVE_PIVOT']; ?>": savePivot,
                 Cancel: function() {
                     dialog.dialog( "close" );
                 }
@@ -54,7 +54,7 @@ global $sugar_config, $mod_strings;
             width: 350,
             modal: true,
             buttons: {
-                "Load": getPivotFromObjectToLoad,
+            <?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?>: getPivotFromObjectToLoad,
                 Cancel: function() {
                     dialogLoad.dialog( "close" );
                 }
@@ -69,7 +69,7 @@ global $sugar_config, $mod_strings;
 
             if($("#pivotLoadList").val() === "noEntries")
             {
-                toastr.info("Please save a pivot to load");
+                toastr.info("<?php echo $mod_strings['LBL_AN_PLEASE_SAVE']; ?>");
             }
             else
             {
@@ -79,14 +79,14 @@ global $sugar_config, $mod_strings;
 
                 if(item === undefined || item[0] === undefined || item[0].type === undefined || item[0].config === undefined)
                 {
-                    toastr.error("Sorry, this pivot cannot be loaded");
+                    toastr.error("<?php echo $mod_strings['LBL_AN_PIVOT_LOAD_ERROR']; ?>");
                 }
                 else
                 {
                     //console.log(item[0]);
                     $('#analysisType').val(item[0].type);
                     loadPivot(item[0].type,item[0].config);
-                    toastr.success(item[0].name + " loaded successfully")
+                    toastr.success(item[0].name + " "+ "<?php echo $mod_strings['LBL_AN_LOADED_SUCCESSFULLY']; ?>");
                     //console.log(item[0].config);
                 }
             }
@@ -100,7 +100,7 @@ global $sugar_config, $mod_strings;
             var list = "";
             if(savedPivotList === undefined || savedPivotList.length === 0)
             {
-                list = "<option value='noEntries'>No saved pivots</option>";
+                list = "<option value='noEntries'><?php echo $mod_strings['LBL_AN_NO_SAVED_PIVOTS']; ?></option>";
             }
             else
             {
@@ -117,7 +117,7 @@ global $sugar_config, $mod_strings;
             var name = $("#pivotName").val();
             if(name === undefined || name.length < minNameLength)
             {
-                var message ="Pivot name must be at lest "+minNameLength+" characters";
+                var message ="<?php echo $mod_strings['LBL_AN_MIN_PIVOT_NANE']; ?>"+" "+minNameLength+" "+"<?php echo $mod_strings['LBL_AN_CHARACTERS']; ?>";
                 tips.text(message);
                 $("#pivotName").addClass('ui-state-error')
                 toastr.error(message);
@@ -144,7 +144,7 @@ global $sugar_config, $mod_strings;
 
                     })
                     .done(function( msg ) {
-                        toastr.success("Pivot saved as "+name);
+                        toastr.success("<?php echo $mod_strings['LBL_AN_PIVOT_SAVED_AS']; ?>"+" "+name);
                         $( "#dialogSave" ).dialog("close");
                     });
             }
@@ -239,17 +239,17 @@ global $sugar_config, $mod_strings;
     });
 </script>
 <hr>
-<label for="analysisType">Area for Analysis:</label>
+<label for="analysisType"><?php echo $mod_strings['LBL_AN_AREA_FOR_ANALYSIS']; ?></label>
 <select id="analysisType">
-    <option value="getSalesPivotData">Sales</option>
-    <option value="getAccountsPivotData">Accounts</option>
-    <option value="getLeadsPivotData">Leads</option>
+    <option value="getSalesPivotData"><?php echo $mod_strings['LBL_AN_SALES']; ?></option>
+    <option value="getAccountsPivotData"><?php echo $mod_strings['LBL_AN_ACCOUNTS']; ?></option>
+    <option value="getLeadsPivotData"><?php echo $mod_strings['LBL_AN_LEADS']; ?></option>
 </select>
 <div id="output" style="margin: 30px;"></div>
 <div id="config"></div>
 
-<button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i>Save</button>
-<button type="button" id="btnLoadPivot"><i class="fa fa-search"></i>Load</button>
+<button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i><?php echo $mod_strings['LBL_AN_BTN_SAVE']; ?></button>
+<button type="button" id="btnLoadPivot"><i class="fa fa-search"></i><?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?></button>
 
 <input type="hidden" id="txtChosenSave">
 <input type="hidden" id="txtConfigSave">
@@ -262,6 +262,6 @@ global $sugar_config, $mod_strings;
         </fieldset>
     </form>
 </div>
-<div id="dialogLoad" title="Load pivot">
+<div id="dialogLoad" title="<?php echo $mod_strings['LBL_AN_LOAD_PIVOT']; ?>">
 <select id="pivotLoadList"></select>
 </div>

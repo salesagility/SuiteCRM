@@ -30,28 +30,6 @@
         tips = $(".validateTips");
 
         {/literal}
-        $(".dialogSave-{$id}").dialog(
-        {literal}
-                {
-            autoOpen: false,
-            height: 200,
-            width: 350,
-            modal: true,
-            buttons: {
-                "Save pivot": savePivot,
-                Cancel: function () {
-                    $(this).dialog("close");
-                }
-            },
-            close: function () {
-                {/literal}
-                $(".pivotName-{$id}").val("").removeClass("ui-state-error");
-                {literal}
-                tips.text("");
-            }
-        });
-
-        {/literal}
         $(".analysisContainer-{$id} .dialogLoad-{$id}").dialog(
         {literal}
         {
@@ -109,7 +87,9 @@
             if ($(".pivotLoadList-{$id}").val() === "noEntries")
             {literal}
             {
-                toastr.info("Please save a pivot to load");
+                {/literal}
+                toastr.info("{$lblPleaseSave}");
+                {literal}
             }
             else {
                 var item = $.grep(savedPivotList, function (item) {
@@ -118,14 +98,16 @@
                     {literal}
                 });
                 if (item === undefined || item[0] === undefined || item[0].type === undefined || item[0].config === undefined) {
-                    toastr.error("Sorry, this pivot cannot be loaded");
+                    {/literal}
+                    toastr.error("{$lblPivotLoadError}");
+                    {literal}
                 }
                 else {
                     {/literal}
                     $(".type-{$id}").val(item[0].type);
-                    {literal}
                     loadPivot(item[0].type, item[0].config);
-                    toastr.success(item[0].name + " loaded successfully")
+                    toastr.success(item[0].name + " "+"{$lblLoadedSuccessfully}");
+                    {literal}
                 }
             }
         }
@@ -137,7 +119,9 @@
             if (savedList === undefined || savedList.length === 0)
             {literal}
             {
-                list = "<option value='noEntries'>No saved pivots</option>";
+                {/literal}
+                list = "<option value='noEntries'>"+"{$lblNoSavedPivots}"+"</option>";
+                {literal}
             }
             else {
                 {/literal}
@@ -150,47 +134,6 @@
             {/literal}
             $(".pivotLoadList-{$id}").empty().append(list);
             {literal}
-
-        }
-
-        function savePivot() {
-            {/literal}
-            var name = $(".pivotName-{$id}").val();
-            {literal}
-            if (name === undefined || name.length < minNameLength) {
-                var message = "Pivot name must be at lest " + minNameLength + " characters";
-                tips.text(message);
-                $(".pivotName").addClass('ui-state-error')
-                toastr.error(message);
-            }
-            else {
-
-                //catch if there is an error with the saved pivot details
-                {/literal}
-                var area = $('.txtChosenSave-{$id}').val();
-                var config = $('.txtConfigSave-{$id}').val();
-                {literal}
-
-                $.ajax({
-                            method: "POST",
-                            url: "index.php",
-                            data: {
-                                'module': 'Home',
-                                'action': 'savePivot',
-                                'to_pdf': 1,
-                                'name': name,
-                                'type': area,
-                                'config': config
-                            }
-
-                        })
-                        .done(function (msg) {
-                            toastr.success("Pivot saved as " + name);
-                            {/literal}
-                            $(".dialogSave-{$id}").dialog("close");
-                            {literal}
-                        });
-            }
 
         }
 
@@ -240,15 +183,6 @@
                         $(".dialogLoad-{$id}").data("automated",automated).data("savedList",mps).dialog("open");
                         {literal}
                     });
-        });
-
-        {/literal}
-        $(".btnSavePivot-{$id}").on("click", function ()
-        {literal}
-        {
-            {/literal}
-            $(".dialogSave-{$id}").dialog("open");
-            {literal}
         });
 
         {/literal}
@@ -354,20 +288,10 @@
     <input type="hidden" class="type-{$id}">
     <div class="output-{$id}" style="margin: 30px;"></div>
     <div class="config-{$id}"></div>
-    <button type="button" class="btnSavePivot-{$id}" style="display:none;"><i class="fa fa-floppy-o"></i>Save</button>
-    <button type="button" class="btnLoadPivot-{$id}" style="display:none;"><i class="fa fa-search"></i>Load</button>
-    <button type="button" class="btnToggleUI-{$id}" style="display:none;"><i class="fa fa-toggle-on"></i>Toggle UI</button>
+    <button type="button" class="btnLoadPivot-{$id}" style="display:none;"><i class="fa fa-search"></i>{$lblBtnLoad}</button>
+    <button type="button" class="btnToggleUI-{$id}" style="display:none;"><i class="fa fa-toggle-on"></i>{$lblToggleUI}</button>
     <input type="hidden" class="txtChosenSave-{$id}">
     <input type="hidden" class="txtConfigSave-{$id}">
-    <div class="dialogSave-{$id}" title="Save pivot">
-        <p class="validateTips-{$id}"></p>
-        <form>
-            <fieldset>
-                <label for="name-{$id}">Name</label>
-                <input type="text" name="name-{$id}" class="pivotName-{$id}" class="text ui-widget-content ui-corner-all">
-            </fieldset>
-        </form>
-    </div>
     <div class="dialogLoad-{$id}" title="Load pivot">
         <select class="pivotLoadList-{$id}"></select>
     </div>
