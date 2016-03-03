@@ -152,8 +152,9 @@ EOF;
             amount,
             date_closed,
 			QUARTER(date_closed) as quarter,
-			MONTHNAME(date_closed) as month,
+			concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as month,
 			WEEK(date_closed) as week,
+			DAYNAME(date_closed) as day,
 			YEAR(date_closed) as year,
             sales_stage,
             probability
@@ -172,12 +173,13 @@ EOF;
             $x->type = $row['opportunity_type'];
             $x->leadSource = $row['lead_source'];
             $x->amount = $row['amount'];
-            $x->closedDate = $row['date_closed'];
+            $x->salesDate = $row['date_closed'];
 
-            $x->closedQuarter = $row['quarter'];
-            $x->closedMonth = $row['month'];
-            $x->closedWeek = $row['week'];
-            $x->closedYear = $row['year'];
+            $x->salesQuarter = $row['quarter'];
+            $x->salesMonth = $row['month'];
+            $x->salesWeek = $row['week'];
+            $x->salesDay = $row['day'];
+            $x->salesYear = $row['year'];
 
             $x->salesStage = $row['sales_stage'];
             $x->probability = $row['probability'];

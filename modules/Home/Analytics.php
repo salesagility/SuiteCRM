@@ -54,7 +54,7 @@ global $mod_strings;
             width: 350,
             modal: true,
             buttons: {
-            <?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?>: getPivotFromObjectToLoad,
+            "<?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?>": getPivotFromObjectToLoad,
                 Cancel: function() {
                     dialogLoad.dialog( "close" );
                 }
