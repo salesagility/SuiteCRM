@@ -2134,7 +2134,7 @@ function securexss($value) {
 function securexsskey($value, $die=true){
 	global $sugar_config;
 	$matches = array();
-	preg_match('/[\'"<>]/', $value, $matches);
+	preg_match('/[\'<>]/', $value, $matches);
 	if(!empty($matches)){
 		if($die){
 			die("Bad data passed in; <a href=\"{$sugar_config['site_url']}\">Return to Home</a>");
