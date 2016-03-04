@@ -159,8 +159,13 @@
         $(".btnToggleUI-{$id}").on("click",function()
         {literal}
         {
+            var columnLayout = $("table.pvtUi tr td:nth-child(3)").length;
+            console.log(columnLayout);
             {/literal}
-            $(".analysisContainer-{$id} table.pvtUi tbody tr:lt(2),.analysisContainer-{$id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1), select.analysisType-{$id},.analysisContainer-{$id} label.analysisTypeLabel-{$id}").toggle();;
+            if(columnLayout > 0)
+                $(".analysisContainer-{ $id} table.pvtUi tbody tr:lt(1),.analysisContainer-{ $id} table.pvtUi tbody tr:eq(1) td:lt(2)").toggle();
+            else
+                $(".analysisContainer-{$id} table.pvtUi tbody tr:lt(2),.analysisContainer-{$id} table.pvtUi tbody tr:nth-child(3) td:nth-child(1)").toggle();
             {literal}
         });
 
