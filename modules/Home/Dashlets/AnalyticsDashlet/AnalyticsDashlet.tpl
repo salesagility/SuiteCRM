@@ -159,8 +159,10 @@
         $(".btnToggleUI-{$id}").on("click",function()
         {literal}
         {
+            //This is to ascertain if the pivot ui is laying out the column options horizontally or vertically
+            //It is vertically for larger data sets.  This allows us to hide the pivot ui appropriately
             var columnLayout = $("table.pvtUi tr td:nth-child(3)").length;
-            console.log(columnLayout);
+
             {/literal}
             if(columnLayout > 0)
                 $(".analysisContainer-{ $id} table.pvtUi tbody tr:lt(1),.analysisContainer-{ $id} table.pvtUi tbody tr:eq(1) td:lt(2)").toggle();
