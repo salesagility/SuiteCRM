@@ -64,6 +64,54 @@ global $mod_strings;
             }
         });
 
+        var dialogDelete = $( "#dialogDelete" ).dialog({
+            autoOpen: false,
+            height: 200,
+            width: 350,
+            modal: true,
+            buttons: {
+                "<?php echo $mod_strings['LBL_AN_BTN_DELETE']; ?>": markPivotAsDeleted,
+                Cancel: function() {
+                    dialogDelete.dialog( "close" );
+                }
+            },
+            open:function(){
+                populateDeletePivotList();
+            }
+        });
+
+        function markPivotAsDeleted()
+        {
+            //Send a request to delete the item
+            //close the dialog
+            //report success with toastr.info
+
+            var id = $("#pivotDeleteList").val();
+            if(id === undefined)
+            {
+                toastr.error("<?php echo $mod_strings['LBL_AN_PIVOT_DELETE_ERROR']; ?>");
+            }
+            else
+            {
+                $.ajax({
+                        method: "POST",
+                        url: "index.php",
+                        data:{
+                            'module': 'Home',
+                            'action': 'deletePivot',
+                            'to_pdf':1,
+                            'id':id
+                        }
+
+                    })
+                    .done(function( msg ) {
+                        toastr.info("<?php echo $mod_strings['LBL_AN_DELETED_SUCCESSFULLY']; ?>"+" "+name);
+                        $( "#dialogDelete" ).dialog("close");
+                    });
+            }
+
+        }
+
         function getPivotFromObjectToLoad()
         {
 
@@ -111,6 +159,24 @@ global $mod_strings;
 
             $("#pivotLoadList").empty().append(list);
         }
+
+        function populateDeletePivotList()
+        {
+            var list = "";
+            if(savedPivotList === undefined || savedPivotList.length === 0)
+            {
+                list = "<option value='noEntries'><?php echo $mod_strings['LBL_AN_NO_SAVED_PIVOTS']; ?></option>";
+            }
+            else
+            {
+                $.each(savedPivotList,function(i,v){
+                    list+= "<option value='"+ v.id +"'>"+ v.name+"</option>";
+                });
+            }
+
+            $("#pivotDeleteList").empty().append(list);
+        }
+
 
         function savePivot()
         {
@@ -178,6 +244,20 @@ global $mod_strings;
                 function (mps) {
                     savedPivotList = mps;
                     $( "#dialogLoad" ).dialog("open");
+
+                });
+        });
+
+        $("#btnDeletePivot").on("click",function(){
+            $.getJSON("index.php",
+                {
+                    'module': 'Home',
+                    'action': 'getSavedPivotList',
+                    'to_pdf':1
+                },
+                function (mps) {
+                    savedPivotList = mps;
+                    $( "#dialogDelete" ).dialog("open");
 
                 });
         });
@@ -250,10 +330,11 @@ global $mod_strings;
 
 <button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i><?php echo $mod_strings['LBL_AN_BTN_SAVE']; ?></button>
 <button type="button" id="btnLoadPivot"><i class="fa fa-search"></i><?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?></button>
+<button type="button" id="btnDeletePivot"><i class="fa fa-trash"></i><?php echo $mod_strings['LBL_AN_BTN_DELETE']; ?></button>
 
 <input type="hidden" id="txtChosenSave">
 <input type="hidden" id="txtConfigSave">
-<div id="dialogSave" title="Save pivot">
+<div id="dialogSave" title="<?php echo $mod_strings['LBL_AN_SAVE_PIVOT']; ?>">
     <p class="validateTips"></p>
     <form>
         <fieldset>
@@ -264,4 +345,7 @@ global $mod_strings;
 </div>
 <div id="dialogLoad" title="<?php echo $mod_strings['LBL_AN_LOAD_PIVOT']; ?>">
 <select id="pivotLoadList"></select>
+</div>
+<div id="dialogDelete" title="<?php echo $mod_strings['LBL_AN_DELETE_PIVOT']; ?>">
+    <select id="pivotDeleteList"></select>
 </div>

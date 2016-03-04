@@ -46,6 +46,10 @@ $dashletStrings['AnalyticsDashlet'] = array(
     'LBL_SAVED' => 'Saved',
     'LBL_CONFIGURE_TITLE' => 'Title',
     'LBL_PIVOT_TO_LOAD' => 'Pivot to Load',
+
+    'LBL_NO_PIVOT_SELECTED' => 'No pivot selected for display',
+    'LBL_PIVOT_POINTED_DELETED' => 'This pivot has been deleted',
+
     'LBL_SHOW_UI' => 'Show UI',
     'LBL_PLEASE_SAVE' => 'Please save a pivot to load',
     'LBL_PIVOT_LOAD_ERROR' => 'Sorry, this pivot cannot be loaded',

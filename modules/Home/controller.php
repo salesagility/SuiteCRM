@@ -56,6 +56,19 @@ class HomeController extends SugarController
         $pivotBean->save();
     }
 
+    public function action_deletePivot()
+    {
+        $id = $_REQUEST['id'];
+        $pivotBean = BeanFactory::getBean('a007_Pivot',$id);
+        $pivotBean->deleted = true;
+        $pivotBean->save();
+
+//        $pivotBean->name = $name;
+//        $pivotBean->type = $type;
+//        $pivotBean->config = $config;
+//        $pivotBean->save();
+    }
+
     public function action_getSavedPivotList()
     {
         $pivotBean = BeanFactory::getBean('a007_Pivot');
@@ -151,11 +164,11 @@ EOF;
             lead_source,
             amount,
             date_closed,
-			QUARTER(date_closed) as quarter,
+			COALESCE(QUARTER(date_closed),'undefined') as quarter,
 			concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as month,
-			WEEK(date_closed) as week,
+			CAST(WEEK(date_closed) as CHAR(5)) as week,
 			DAYNAME(date_closed) as day,
-			YEAR(date_closed) as year,
+			CAST(YEAR(date_closed) as CHAR(10)) as year,
             sales_stage,
             probability
         FROM opportunities op

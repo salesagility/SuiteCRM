@@ -89,18 +89,31 @@ class AnalyticsDashlet extends Dashlet {
         else $this->title = $def['title'];
     }
 
+    function checkIfPivotHasBeenDeleted($pivotId)
+    {
+        $pivotBean = BeanFactory::getBean('a007_Pivot',$pivotId);return $pivotBean === false;
+    }
+
     /**
      * Displays the dashlet
      *
      * @return string html to display dashlet
      */
     function display() {
+
+        //As the dashlet may point to a pivot that has been marked as deleted, check this here
+
         if(is_null($this->pivotId) || $this->pivotId === '')
         {
-            return parent::display('') . '<span>No pivot selected for display</span>' . '<br />'; // return parent::display for title and such
+            return parent::display('') .'<span style="margin-left:10px;" class="dashletAnalyticMessage">'. $this->dashletStrings['LBL_NO_PIVOT_SELECTED'] . '</span><br />'; // return parent::display for title and such
         }
         else
         {
+            if($this->checkIfPivotHasBeenDeleted($this->pivotId))
+            {
+                return parent::display('')  .'<span style="margin-left:10px;" class="dashletAnalyticMessage">'. $this->dashletStrings['LBL_PIVOT_POINTED_DELETED'] . '</span><br />'; // return parent::display for title and such
+            }
+
             $ss = new Sugar_Smarty();
             $ss->assign('id', $this->id);
             $ss->assign('showUI', $this->showGui);
@@ -123,16 +136,6 @@ class AnalyticsDashlet extends Dashlet {
             $ss->assign('lblShowUi', $this->dashletStrings['LBL_SHOW_UI']);
             $ss->assign('lblName', $this->dashletStrings['LBL_NAME']);
             $ss->assign('lblBtnSavePivot', $this->dashletStrings['LBL_BTN_SAVE_PIVOT']);
-
-
-
-
-
-
-
-
-
-
 
             $str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
             return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
