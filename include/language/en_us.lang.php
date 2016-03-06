@@ -3456,6 +3456,7 @@ $app_list_strings['date_time_period_list']['yesterday'] = 'Yesterday';
 $app_list_strings['date_time_period_list']['this_week'] = 'This Week';
 $app_list_strings['date_time_period_list']['last_week'] = 'Last Week';
 $app_list_strings['date_time_period_list']['last_month'] = 'Last Month';
+$app_list_strings['date_time_period_list']['this_month'] = 'This Month';
 $app_list_strings['date_time_period_list']['this_quarter'] = 'This Quarter';
 $app_list_strings['date_time_period_list']['last_quarter'] = 'Last Quarter';
 $app_list_strings['date_time_period_list']['this_year'] = 'This year';

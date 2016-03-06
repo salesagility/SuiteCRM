@@ -2356,7 +2356,7 @@ class SugarBean
         //clear relationship.
         foreach ( $this->field_defs as $key => $def )
         {
-            if ($def [ 'type' ] == 'relate' && isset ( $def [ 'id_name'] ) && isset ( $def [ 'link'] ) && isset ( $def[ 'save' ])) {
+            if (isset($def [ 'type' ]) && $def [ 'type' ] == 'relate' && isset ( $def [ 'id_name'] ) && isset ( $def [ 'link'] ) && isset ( $def[ 'save' ])) {
                 if (isset($this->$key)) {
                     $this->rel_fields_before_value[$key]=$this->$key;
                     if (isset($this->$def [ 'id_name']))
@@ -3347,7 +3347,7 @@ class SugarBean
             //Parent Field
             if ($data['type'] == 'parent') {
                 //See if we need to join anything by inspecting the where clause
-                $match = preg_match('/(^|[\s(])parent_(\w+)_(\w+)\.name/', $where, $matches);
+                $match = preg_match('/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/', $where, $matches);
                 if ($match) {
                     $joinTableAlias = 'jt' . $jtcount;
                     $joinModule = $matches[2];

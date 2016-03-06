@@ -772,16 +772,16 @@
 					h = CAL.basic.min_height;
 					
 				
-				var height_string = h + "px";		
-				var row = CAL.get("b_" + start + suffix).parentNode.parentNode;
-					
-		
-				row.parentNode.childNodes[0].childNodes[0].style.height = height_string;
-				CAL.each(row.childNodes,function(i,v){
-					if(typeof row.childNodes[i] == 'object') 				
-						row.childNodes[i].childNodes[0].style.height = height_string;
-				});					
-			
+				var height_string = h + "px";
+
+				if(CAL.get("b_" + start + suffix)) {
+					var row = CAL.get("b_" + start + suffix).parentNode.parentNode;
+					row.parentNode.childNodes[0].childNodes[0].style.height = height_string;
+					CAL.each(row.childNodes, function (i, v) {
+						if (typeof row.childNodes[i] == 'object')
+							row.childNodes[i].childNodes[0].style.height = height_string;
+					});
+				}
 				start = start + step * 3600 * 24;		
 			}
 		}			
