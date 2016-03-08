@@ -575,12 +575,14 @@ function getParameterByName(name, url) {
 
 $(function(){
 	var jump = getParameterByName('jump');
+	var i=0;
 	if(jump != null) {
-		while (jump != document.getElementById('wiz_current_step').value) {
-			if(document.getElementById('wiz_current_step').value > document.getElementById('wiz_total_step').value) {
+		while (jump != document.getElementById('wiz_current_step').value && i<100) {
+			if(document.getElementById('wiz_current_step').value > document.getElementById('wiz_total_steps').value) {
 				break;
 			}
 			navigate('next');
+			i++;
 		}
 	}
 	else {
