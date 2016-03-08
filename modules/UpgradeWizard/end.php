@@ -1,11 +1,14 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -39,7 +42,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 /*********************************************************************************
-
  * Description:
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc. All Rights
  * Reserved. Contributor(s): ______________________________________..
@@ -49,229 +51,169 @@ global $unzip_dir;
 global $path;
 global $sugar_config;
 
-if($unzip_dir == null ) {
-	$unzip_dir = isset($_SESSION['unzip_dir']) ? $_SESSION['unzip_dir'] : null;
+if ($unzip_dir == null) {
+    $unzip_dir = isset($_SESSION['unzip_dir']) ? $_SESSION['unzip_dir'] : null;
 }
-/*
-// creating full text search logic hooks
-// this will be merged into application/Ext/LogicHooks/logichooks.ext.php
-// when rebuild_extensions is called
-logThis(' Writing FTS hooks');
-if (!function_exists('createFTSLogicHook')) {
-    $customFileLoc = create_custom_directory('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');
-    $fp = sugar_fopen($customFileLoc, 'wb');
-    $contents = <<<CIA
-<?php
-if (!isset(\$hook_array) || !is_array(\$hook_array)) {
-    \$hook_array = array();
-}
-if (!isset(\$hook_array['after_save']) || !is_array(\$hook_array['after_save'])) {
-    \$hook_array['after_save'] = array();
-}
-\$hook_array['after_save'][] = array(1, 'fts', 'include/SugarSearchEngine/SugarSearchEngineQueueManager.php', 'SugarSearchEngineQueueManager', 'populateIndexQueue');
-CIA;
-
-    fwrite($fp,$contents);
-    fclose($fp);
-} else {
-    createFTSLogicHook('Extension/application/Ext/LogicHooks/SugarFTSHooks.php');
-}
-*/
 //First repair the databse to ensure it is up to date with the new vardefs/tabledefs
 logThis('About to repair the database.', $path);
 //Use Repair and rebuild to update the database.
 global $dictionary, $beanFiles;
 
-require_once('modules/Trackers/TrackerManager.php');
+require_once 'modules/Trackers/TrackerManager.php';
 $trackerManager = TrackerManager::getInstance();
 $trackerManager->pause();
 $trackerManager->unsetMonitors();
 
-require_once("modules/Administration/QuickRepairAndRebuild.php");
+require_once 'modules/Administration/QuickRepairAndRebuild.php';
 $rac = new RepairAndClear();
 $rac->clearVardefs();
 $rac->rebuildExtensions();
 //bug: 44431 - defensive check to ensure the method exists since upgrades to 6.2.0 may not have this method define yet.
-if(method_exists($rac, 'clearExternalAPICache'))
-{
+if (method_exists($rac, 'clearExternalAPICache')) {
     $rac->clearExternalAPICache();
 }
 
 $repairedTables = array();
 
 foreach ($beanFiles as $bean => $file) {
-	if(file_exists($file)){
-		require_once ($file);
-		unset($GLOBALS['dictionary'][$bean]);
-		$focus = new $bean ();
-		if (($focus instanceOf SugarBean))
-		{
-			if(!isset($repairedTables[$focus->table_name]))
-			{
-				$sql = $GLOBALS['db']->repairTable($focus, true);
-                if(trim($sql) != '')
-                {
-				    logThis('Running sql:' . $sql, $path);
+    if (file_exists($file)) {
+        require_once $file;
+        unset($GLOBALS['dictionary'][$bean]);
+        $focus = new $bean ();
+        if (($focus instanceof SugarBean)) {
+            if (!isset($repairedTables[$focus->table_name])) {
+                $sql = $GLOBALS['db']->repairTable($focus, true);
+                if (trim($sql) != '') {
+                    logThis('Running sql:'.$sql, $path);
                 }
-				$repairedTables[$focus->table_name] = true;
-			}
-
-			//Check to see if we need to create the audit table
-		    if($focus->is_AuditEnabled() && !$focus->db->tableExists($focus->get_audit_table_name())){
-		       logThis('Creating audit table:' . $focus->get_audit_table_name(), $path);
-               $focus->create_audit_table();
+                $repairedTables[$focus->table_name] = true;
             }
-		}
-	}
+
+            //Check to see if we need to create the audit table
+            if ($focus->is_AuditEnabled() && !$focus->db->tableExists($focus->get_audit_table_name())) {
+                logThis('Creating audit table:'.$focus->get_audit_table_name(), $path);
+                $focus->create_audit_table();
+            }
+        }
+    }
 }
 
 // add suite version into upgrade pack!
-if(isset($repairedTables['reminders']) && $repairedTables['reminders'] && isset($_SESSION['suitecrm_version_before_upgrade']) && version_compare($_SESSION['suitecrm_version_before_upgrade'], Reminder::UPGRADE_VERSION, '<')) {
-	Reminder::upgrade();
-	unset($_SESSION['suitecrm_version_before_upgrade']);
+if (isset($repairedTables['reminders']) && $repairedTables['reminders'] && isset($_SESSION['suitecrm_version_before_upgrade']) && version_compare($_SESSION['suitecrm_version_before_upgrade'], Reminder::UPGRADE_VERSION, '<')) {
+    Reminder::upgrade();
+    unset($_SESSION['suitecrm_version_before_upgrade']);
 }
 
 $olddictionary = $dictionary;
 
-unset ($dictionary);
-include ('modules/TableDictionary.php');
+unset($dictionary);
+include 'modules/TableDictionary.php';
 foreach ($dictionary as $meta) {
-	$tablename = $meta['table'];
-	if (isset($repairedTables[$tablename])) continue;
-	$fielddefs = $meta['fields'];
-	$indices = $meta['indices'];
-	$sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
-    if(trim($sql) != '')
-    {
-	    logThis('Running sql:' . $sql, $path);
+    $tablename = $meta['table'];
+    if (isset($repairedTables[$tablename])) {
+        continue;
     }
-	$repairedTables[$tablename] = true;
+    $fielddefs = $meta['fields'];
+    $indices = $meta['indices'];
+    $sql = $GLOBALS['db']->repairTableParams($tablename, $fielddefs, $indices, true);
+    if (trim($sql) != '') {
+        logThis('Running sql:'.$sql, $path);
+    }
+    $repairedTables[$tablename] = true;
 }
 
-		$dictionary = $olddictionary;
+$dictionary = $olddictionary;
 
 logThis('database repaired', $path);
 
 $ce_to_pro_ent = isset($_SESSION['upgrade_from_flavor']) && ($_SESSION['upgrade_from_flavor'] == 'SugarCE to SugarPro' || $_SESSION['upgrade_from_flavor'] == 'SugarCE to SugarEnt' || $_SESSION['upgrade_from_flavor'] == 'SugarCE to SugarCorp' || $_SESSION['upgrade_from_flavor'] == 'SugarCE to SugarUlt');
 
-
-logThis(" Start Rebuilding the config file again", $path);
+logThis(' Start Rebuilding the config file again', $path);
 
 //check and set the logger before rebuilding config
-if(!isset($sugar_config['logger'])){
-	$sugar_config['logger'] =array (
-		'level'=>'fatal',
-	    'file' =>
-	      array (
-		      'ext' => '.log',
-		      'name' => 'sugarcrm',
-		      'dateFormat' => '%c',
-		      'maxSize' => '10MB',
-		      'maxLogs' => 10,
-		      'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
-	  	  ),
-	);
+if (!isset($sugar_config['logger'])) {
+    $sugar_config['logger'] = array(
+        'level' => 'fatal',
+        'file' => array(
+                'ext' => '.log',
+                'name' => 'suitecrm',
+                'dateFormat' => '%c',
+                'maxSize' => '10MB',
+                'maxLogs' => 10,
+                'suffix' => '', // bug51583, change default suffix to blank for backwards comptability
+            ),
+    );
 }
 //for upgraded version, set default lead conversion activity option to 'copy'
-if(!isset($sugar_config['lead_conv_activity_opt'])) {
+if (!isset($sugar_config['lead_conv_activity_opt'])) {
     $sugar_config['lead_conv_activity_opt'] = 'copy';
 }
 
-if(!rebuildConfigFile($sugar_config, $sugar_version)) {
-	logThis('*** WARNING: could not write config.php!', $path);
+if (!rebuildConfigFile($sugar_config, $sugar_version)) {
+    logThis('*** WARNING: could not write config.php!', $path);
 }
-logThis(" Finish Rebuilding the config file again", $path);
+logThis(' Finish Rebuilding the config file again', $path);
 
-set_upgrade_progress('end','in_progress');
+set_upgrade_progress('end', 'in_progress');
 
+if (isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version'])) {
+    if (version_compare($_SESSION['current_db_version'], $_SESSION['target_db_version'], '!=')) {
+    }
 
-if(isset($_SESSION['current_db_version']) && isset($_SESSION['target_db_version'])){
-    if (version_compare($_SESSION['current_db_version'], $_SESSION['target_db_version'], '!='))
-    {
-	 }
-
-
-	 //keeping separate. making easily visible and readable
-     if (version_compare($_SESSION['current_db_version'], $_SESSION['target_db_version'], '='))
-     {
-	    $_REQUEST['upgradeWizard'] = true;
-	    ob_start();
-			include('modules/ACL/install_actions.php');
-			include_once('include/Smarty/internals/core.write_file.php');
-		ob_end_clean();
-	 	$db =& DBManagerFactory::getInstance();
-		if($ce_to_pro_ent){
-	        //Also set license information
-			$admin = new Administration();
-			$category = 'license';
-			$value = '0';
-			$admin->saveSetting($category, 'users', $value);
-			$key = array('num_lic_oc','key','expire_date');
-			$value = '';
-			foreach($key as $k){
-				$admin->saveSetting($category, $k, $value);
-			}
-		}
-	}
+    //keeping separate. making easily visible and readable
+    if (version_compare($_SESSION['current_db_version'], $_SESSION['target_db_version'], '=')) {
+        $_REQUEST['upgradeWizard'] = true;
+        ob_start();
+        include 'modules/ACL/install_actions.php';
+        include_once 'include/Smarty/internals/core.write_file.php';
+        ob_end_clean();
+        $db = &DBManagerFactory::getInstance();
+        if ($ce_to_pro_ent) {
+            //Also set license information
+            $admin = new Administration();
+            $category = 'license';
+            $value = '0';
+            $admin->saveSetting($category, 'users', $value);
+            $key = array('num_lic_oc', 'key', 'expire_date');
+            $value = '';
+            foreach ($key as $k) {
+                $admin->saveSetting($category, $k, $value);
+            }
+        }
+    }
 }
 
 // Mark the instance as having gone thru the admin wizard
 $admin = new Administration();
-$admin->saveSetting('system','adminwizard',1);
-
- /////////////////////////Old Logger settings///////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-if(file_exists('modules/Configurator/Configurator.php')){
-	require_once('include/utils/array_utils.php');
-	require_once('modules/Configurator/Configurator.php');
-	$Configurator = new Configurator();
-	$Configurator->parseLoggerSettings();
-}
-//unset the logger previously instantiated
-if(file_exists('include/SugarLogger/LoggerManager.php')){
-
-	unset($GLOBALS['log']);
-	$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
-}
-
+$admin->saveSetting('system', 'adminwizard', 1);
 
 //Upgrade connectors
 logThis('Begin upgrade_connectors', $path);
 upgrade_connectors();
 logThis('End upgrade_connectors', $path);
 
-
 //Unlink files that have been removed
-if(function_exists('unlinkUpgradeFiles'))
-{
-	unlinkUpgradeFiles($_SESSION['current_db_version']);
+if (function_exists('unlinkUpgradeFiles')) {
+    unlinkUpgradeFiles($_SESSION['current_db_version']);
 }
 
-if(function_exists('rebuildSprites') && function_exists('imagecreatetruecolor'))
-{
-    rebuildSprites(true);
+if (function_exists('rebuildSprites') && function_exists('imagecreatetruecolor')) {
+    if (!empty($sugar_config['use_sprites']) && $sugar_config['use_sprites']) {
+        rebuildSprites(true);
+    }
 }
 
 //Run repairUpgradeHistoryTable
-if (version_compare($_SESSION['current_db_version'], '6.5.0', '<') && function_exists('repairUpgradeHistoryTable'))
-{
+if (version_compare($_SESSION['current_db_version'], '6.5.0', '<') && function_exists('repairUpgradeHistoryTable')) {
     repairUpgradeHistoryTable();
 }
 
-require_once('modules/Administration/upgrade_custom_relationships.php');
+require_once 'modules/Administration/upgrade_custom_relationships.php';
 upgrade_custom_relationships();
 
-require_once('modules/UpgradeWizard/uw_utils.php');
+require_once 'modules/UpgradeWizard/uw_utils.php';
 
-//Update the license
-/*logThis('Start Updating the license ', $path);
-ob_start();
-
-   check_now(get_sugarbeat());
-ob_end_clean();
-logThis('End Updating the license ', $path);*/
-
-set_upgrade_progress('end','done');
+set_upgrade_progress('end', 'done');
 
 logThis('Cleaning up the session.  Goodbye.');
 unlinkUWTempFiles();
@@ -284,57 +226,51 @@ $_SESSION['upgrade_complete'] = true;
 sugar_cache_reset_full();
 
 //add the clean vardefs here
-if(!class_exists('VardefManager')){
-
-}
 VardefManager::clearVardef();
 
-require_once('include/TemplateHandler/TemplateHandler.php');
+require_once 'include/TemplateHandler/TemplateHandler.php';
 TemplateHandler::clearAll();
 
 //also add the cache cleaning here.
-if(function_exists('deleteCache')){
-	deleteCache();
+if (function_exists('deleteCache')) {
+    deleteCache();
 }
 
 global $mod_strings;
 global $current_language;
 
-if(!isset($current_language) || ($current_language == null)){
-	$current_language = 'en_us';
+if (!isset($current_language) || ($current_language == null)) {
+    $current_language = 'en_us';
 }
-if(isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)){
-	$current_language = $GLOBALS['current_language'];
+if (isset($GLOBALS['current_language']) && ($GLOBALS['current_language'] != null)) {
+    $current_language = $GLOBALS['current_language'];
 }
 $mod_strings = return_module_language($current_language, 'UpgradeWizard');
 $stop = false;
 
-
-$httpHost		= $_SERVER['HTTP_HOST'];  // cn: 8472 - HTTP_HOST includes port in some cases
-if($colon = strpos($httpHost, ':')) {
-	$httpHost	= substr($httpHost, 0, $colon);
+$httpHost = $_SERVER['HTTP_HOST'];  // cn: 8472 - HTTP_HOST includes port in some cases
+if ($colon = strpos($httpHost, ':')) {
+    $httpHost = substr($httpHost, 0, $colon);
 }
-$parsedSiteUrl	= parse_url($sugar_config['site_url']);
-$host			= ($parsedSiteUrl['host'] != $httpHost) ? $httpHost : $parsedSiteUrl['host'];
+$parsedSiteUrl = parse_url($sugar_config['site_url']);
+$host = ($parsedSiteUrl['host'] != $httpHost) ? $httpHost : $parsedSiteUrl['host'];
 
 // aw: 9747 - use SERVER_PORT for users who don't plug in the site_url at install correctly
-if ($_SERVER['SERVER_PORT'] != 80){
-	$port = ":".$_SERVER['SERVER_PORT'];
+if ($_SERVER['SERVER_PORT'] != 80) {
+    $port = ':'.$_SERVER['SERVER_PORT'];
+} elseif (isset($parsedSiteUrl['port']) && $parsedSiteUrl['port'] != 80) {
+    $port = ':'.$parsedSiteUrl['port'];
+} else {
+    $port = '';
 }
-else if (isset($parsedSiteUrl['port']) && $parsedSiteUrl['port'] != 80){
-	$port = ":".$parsedSiteUrl['port'];
-}
-else{
-	$port = '';
-}
-$path			= $parsedSiteUrl['path'];
-$cleanUrl		= "{$parsedSiteUrl['scheme']}://{$host}{$port}{$path}/index.php";
+$path = $parsedSiteUrl['path'];
+$cleanUrl = "{$parsedSiteUrl['scheme']}://{$host}{$port}{$path}/index.php";
 
 /*ob_start();
 check_now(get_sugarbeat());
 ob_end_clean();*/
 
-$uwMain =<<<eoq
+$uwMain = <<<eoq
 <table cellpadding="3" cellspacing="0" border="0">
 
 	<tr>
@@ -364,16 +300,16 @@ $uwMain =<<<eoq
 </script>
 eoq;
 
-$showBack		= false;
-$showCancel		= false;
-$showRecheck	= false;
-$showNext		= false;
-$showDone       = true;
+$showBack = false;
+$showCancel = false;
+$showRecheck = false;
+$showNext = false;
+$showDone = true;
 
-$stepBack		= 0;
-$stepNext		= 0;
-$stepCancel	= 0;
-$stepRecheck	= 0;
+$stepBack = 0;
+$stepNext = 0;
+$stepCancel = 0;
+$stepRecheck = 0;
 
 $_SESSION['step'][$steps['files'][$_REQUEST['step']]] = ($stop) ? 'failed' : 'success';
 unset($_SESSION['current_db_version']);

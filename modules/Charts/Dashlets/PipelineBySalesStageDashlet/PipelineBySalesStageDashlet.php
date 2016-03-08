@@ -50,6 +50,8 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
     public $pbss_date_end;
     public $pbss_sales_stages = array();
 
+    public $maxLabelSizeBeforeTotal = 18;
+    public $labelReplacementString = '...';
     /**
      * @see DashletGenericChart::$_seedName
      */
@@ -333,7 +335,7 @@ EOD;
         foreach($data as $i)
         {
             //$chart['labelsAndValues'][]=$i['key'].' ('.$currency.(int)$i['total'].')';
-            $chart['labelsAndValues'][]=$i['key'].' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
+            $chart['labelsAndValues'][]=$this->resizeLabel($i['key']).' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
             $chart['labels'][]=$i['key'];
             $chart['data'][]=(int)$i['total'];
             $total+=(int)$i['total'];
@@ -343,6 +345,16 @@ EOD;
         $chart['total']=$total;
         return $chart;
     }
+
+    protected function resizeLabel($label)
+    {
+        if(strlen($label) < $this->maxLabelSizeBeforeTotal)
+            return $label;
+        else
+            return substr($label,0,$this->maxLabelSizeBeforeTotal).$this->labelReplacementString;
+
+    }
+
 
 
 }

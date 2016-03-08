@@ -2,7 +2,7 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -357,7 +357,6 @@ YUI().use("autocomplete", "autocomplete-filters", "autocomplete-highlighters", "
 <script type="text/javascript">
     if(typeof de_entries == 'undefined'){literal}{var de_entries = new Array;}{/literal}
     var el = document.getElementById("{{$vardef.parentenum}}");
-    el.addEventListener("change", function(){literal}{updateDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}, false);
-    window.onload = function(){literal}{updateDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}
-    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded) {literal}{updateDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}
+    addLoadEvent(function(){literal}{loadDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal});
+    if (SUGAR.ajaxUI && SUGAR.ajaxUI.hist_loaded) {literal}{loadDynamicEnum({/literal}"{{$vardef.parentenum}}","{{if empty($displayParams.idName)}}{{sugarvar key='name'}}{{else}}{{$displayParams.idName}}{{/if}}"{literal})}{/literal}
 </script>
