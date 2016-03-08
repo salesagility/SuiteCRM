@@ -61,6 +61,7 @@ class EmailMarketing extends SugarBean
 	var $all_prospect_lists;
 	var $status;
 	var $inbound_email_id;
+	var $outbound_email_id;
 
 	var $table_name = 'email_marketing';
 	var $object_name = 'EmailMarketing';

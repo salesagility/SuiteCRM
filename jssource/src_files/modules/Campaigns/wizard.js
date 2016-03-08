@@ -307,9 +307,14 @@ var onEmailTemplateChange = function(elem) {
 
         document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
         document.getElementById("html_frame").contentWindow.document.close();
+
+        var htmlCode = $('<textarea />').html(results.data.body_html).text();
+        $('#email_template_editor').html(htmlCode);
+        $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
     });
 
-    show_edit_template_link(elem);
+    //show_edit_template_link(elem);
 };
 
 var onScheduleClick = function(e) {

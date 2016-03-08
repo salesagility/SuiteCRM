@@ -4,10 +4,11 @@ if(mozaik || $.mozaik) {
 
 // mozaik helpers (private)
 var mozaik = {
-    getThumbnailListHTML: function(id, thumbs) {
+    getThumbnailListHTML: function(id, thumbs, base) {
         var html = '<ul class="mozaik-thumbs" id="' + id + '">';
         for(var name in thumbs) {
             var e = thumbs[name];
+            e.thumbnail = base + e.thumbnail;
             html += '<li class="mozaik-thumbnail" data-name="' + name + '">' + (e.thumbnail ? '<img src="' + e.thumbnail + '" alt="' + (e.label ? e.label : '') + '" title="' + (e.label ? e.label : '') + '">' : '') + '</li>';
         }
         html += '</ul>';
@@ -62,6 +63,7 @@ var mozaik = {
     //    var html = '<div class="mozaik-preloader"><img alt="loading.." src="img/725.gif"></div>';
     //    return html;
     //}
+
 };
 
 
@@ -69,6 +71,7 @@ var mozaik = {
     $.fn.mozaik = function(options) {
 
         var settings = $.extend({
+            base: '',
             thumbs: {
                 headline: {thumbnail: 'tpls/default/thumbs/headline.png', label: 'Headline', tpl: 'tpls/default/headline.html'},
                 content1: {thumbnail: 'tpls/default/thumbs/content1.png', label: 'Content', tpl: 'tpls/default/content1.html'},
@@ -133,7 +136,13 @@ var mozaik = {
                     "CCFFFF", "Pale cyan",
                     "99CCFF", "Light sky blue",
                     "CC99FF", "Plum"
-                ]
+                ],
+                //setup: function(editor) {
+                //    var _editor = editor;
+                //    editor.on('focus', function(event){
+                //        mozaik.lastUsedEditor = _editor;
+                //    });
+                //}
             },
             ace: true,
             width: '600px'
@@ -142,16 +151,21 @@ var mozaik = {
         // add ace editor
         if($('#mozaik-ace').length == 0) {
             $('body').append(mozaik.getAceHTML());
-            mozaik.ace = ace.edit('mozaik-ace-editor');
-            mozaik.ace.setTheme("ace/theme/monokai");
-            mozaik.ace.getSession().setMode("ace/mode/html");
-            $('#mozaik-ace-tool-save').click(function(){
-                $('#' + mozaik.aceElementId).html(mozaik.ace.getValue());
-                $('#mozaik-ace').hide();
-            });
-            $('#mozaik-ace-tool-cancel').click(function(){
-                $('#mozaik-ace').hide();
-            });
+            if(typeof ace != 'undefined') {
+                mozaik.ace = ace.edit('mozaik-ace-editor');
+                mozaik.ace.setTheme("ace/theme/monokai");
+                mozaik.ace.getSession().setMode("ace/mode/html");
+                $('#mozaik-ace-tool-save').click(function () {
+                    $('#' + mozaik.aceElementId).html(mozaik.ace.getValue());
+                    $('#mozaik-ace').hide();
+                });
+                $('#mozaik-ace-tool-cancel').click(function () {
+                    $('#mozaik-ace').hide();
+                });
+            }
+            else {
+                console.error('ACE Editor javascript is not defined for Mozaik on this page');
+            }
         }
 
         // template styles added?
@@ -181,7 +195,7 @@ var mozaik = {
 
             // add template styles
             if(!style && $('#mozaik-style-' + i).length==0) {
-                $.get(settings.style, function(css){
+                $.get(settings.base + settings.style, function(css){
                     if(css) {
                         splits = css.split('}');
                         for(var i=0; i<splits.length-1; i++) {
@@ -199,7 +213,7 @@ var mozaik = {
 
             // create thumbnails
             var mozaikThumbsId = 'mozaik-thumbs-' + i;
-            $(e).prepend(mozaik.getThumbnailListHTML(mozaikThumbsId, settings.thumbs));
+            $(e).prepend(mozaik.getThumbnailListHTML(mozaikThumbsId, settings.thumbs, settings.base));
             $('.mozaik-thumbnail').draggable({
                 helper: 'clone'
             });
@@ -315,7 +329,7 @@ var mozaik = {
                 accept: '.mozaik-thumbnail',
                 drop: function(event, ui) {
                     var name = ui.draggable.attr('data-name');
-                    var url = settings.thumbs[name].tpl;
+                    var url = settings.base + settings.thumbs[name].tpl;
                     $.get(url, function(resp){
                         addEditorListElement(name, resp, true);
                         onResize();

@@ -108,14 +108,16 @@
 		{/literal}
 		{/if}
 
-
+		<!--
 		&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
 		<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
 		&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
 		</span>
-
+		-->
 
 		<div>
+			{$BODY_MOZAIK}
+
 			<iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
 			<pre id="email_template_view"></pre>
 		</div>
@@ -233,16 +235,16 @@
 			{literal}});
 
 
-		function show_edit_template_link(field) {
-
-			var field1=document.getElementById('edit_template');
-			if (field.selectedIndex == 0) {
-				field1.style.visibility="hidden";
-			}
-			else {
-				field1.style.visibility="visible";
-			}
-		}
+//		function show_edit_template_link(field) {
+//
+//			var field1=document.getElementById('edit_template');
+//			if (field.selectedIndex == 0) {
+//				field1.style.visibility="hidden";
+//			}
+//			else {
+//				field1.style.visibility="visible";
+//			}
+//		}
 
 		function refresh_email_template_list(template_id, template_name) {
 			var field=document.getElementById('template_id');

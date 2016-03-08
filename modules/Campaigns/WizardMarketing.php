@@ -387,5 +387,9 @@ foreach($links as $link => $url) {
 
 $ss->assign('link_to_target_list', $camp_url.'2');
 
+require_once('include/SuiteMozaik.php');
+$mozaik = new SuiteMozaik();
+$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
+
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

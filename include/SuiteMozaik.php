@@ -44,24 +44,32 @@ HTML;
 <script type="text/javascript">
     $(function() {
         // initialize
-        $('#{$elementId}').mozaik({
+
+        if(typeof window.mozaikSettings == 'undefined') {
+            window.mozaikSettings = {};
+        }
+
+        window.mozaikSettings.{$elementId} = {
+            base: '{$this->mozaikPath}/',
             thumbs: {
-                headline: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/headline.png', label: 'Headline', tpl: '{$this->mozaikPath}/tpls/default/headline.html'},
-                content1: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/content1.png', label: 'Content', tpl: '{$this->mozaikPath}/tpls/default/content1.html'},
-                //content3: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/content3.jpg', label: 'Three column', tpl: '{$this->mozaikPath}/tpls/default/content3.html'},
-                //content2: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/content2.jpg', label: 'Two column', tpl: '{$this->mozaikPath}/tpls/default/content2.html'},
-                //image3: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/image3.jpg', label: 'Three column with image', tpl: '{$this->mozaikPath}/tpls/default/image3.html'},
-                //image2: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/image2.jpg', label: 'Two column with image', tpl: '{$this->mozaikPath}/tpls/default/image2.html'},
-                //image1left: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/image1left.jpg', label: 'Content with image (left)', tpl: '{$this->mozaikPath}/tpls/default/image1left.html'},
-                //image1right: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/image1right.jpg', label: 'Content with image (right)', tpl: '{$this->mozaikPath}/tpls/default/image1right.html'},
-                footer: {thumbnail: '{$this->mozaikPath}/tpls/default/thumbs/footer.png', label: 'Footer', tpl: '{$this->mozaikPath}/tpls/default/footer.html'},
+                headline: {thumbnail: 'tpls/default/thumbs/headline.png', label: 'Headline', tpl: 'tpls/default/headline.html'},
+                content1: {thumbnail: 'tpls/default/thumbs/content1.png', label: 'Content', tpl: 'tpls/default/content1.html'},
+                //content3: {thumbnail: 'tpls/default/thumbs/content3.jpg', label: 'Three column', tpl: 'tpls/default/content3.html'},
+                //content2: {thumbnail: 'tpls/default/thumbs/content2.jpg', label: 'Two column', tpl: 'tpls/default/content2.html'},
+                //image3: {thumbnail: 'tpls/default/thumbs/image3.jpg', label: 'Three column with image', tpl: 'tpls/default/image3.html'},
+                //image2: {thumbnail: 'tpls/default/thumbs/image2.jpg', label: 'Two column with image', tpl: 'tpls/default/image2.html'},
+                //image1left: {thumbnail: 'tpls/default/thumbs/image1left.jpg', label: 'Content with image (left)', tpl: 'tpls/default/image1left.html'},
+                //image1right: {thumbnail: 'tpls/default/thumbs/image1right.jpg', label: 'Content with image (right)', tpl: 'tpls/default/image1right.html'},
+                footer: {thumbnail: 'tpls/default/thumbs/footer.png', label: 'Footer', tpl: 'tpls/default/footer.html'},
             },
             editables: 'editable',
-            style: '{$this->mozaikPath}/tpls/default/styles/default.css',
+            style: 'tpls/default/styles/default.css',
             namespace: false,
             ace: false,
             width: '{$width}'
-        });
+        };
+
+        $('#{$elementId}').mozaik(window.mozaikSettings.{$elementId});
     });
     // refresh textarea
     {$refreshTextareaScript}
