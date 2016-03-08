@@ -8,8 +8,7 @@ var mozaik = {
         var html = '<ul class="mozaik-thumbs" id="' + id + '">';
         for(var name in thumbs) {
             var e = thumbs[name];
-            e.thumbnail = base + e.thumbnail;
-            html += '<li class="mozaik-thumbnail" data-name="' + name + '">' + (e.thumbnail ? '<img src="' + e.thumbnail + '" alt="' + (e.label ? e.label : '') + '" title="' + (e.label ? e.label : '') + '">' : '') + '</li>';
+            html += '<li class="mozaik-thumbnail" data-name="' + name + '">' + (e.thumbnail ? '<img src="' + base + e.thumbnail + '" alt="' + (e.label ? e.label : '') + '" title="' + (e.label ? e.label : '') + '">' : '') + '</li>';
         }
         html += '</ul>';
         return html;
