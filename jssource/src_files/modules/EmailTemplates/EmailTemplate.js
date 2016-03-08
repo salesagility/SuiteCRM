@@ -40,12 +40,12 @@ var focus_obj = false;
 var label = SUGAR.language.get('app_strings', 'LBL_DEFAULT_LINK_TEXT');
 
 function remember_place(obj) {
-  focus_obj = obj;
+	focus_obj = obj;
 }
 
 function showVariable() {
-	document.EditView.variable_text.value = 
-		document.EditView.variable_name.options[document.EditView.variable_name.selectedIndex].value; 
+	document.EditView.variable_text.value =
+		document.EditView.variable_name.options[document.EditView.variable_name.selectedIndex].value;
 }
 
 function addVariables(the_select,the_module) {
@@ -62,27 +62,27 @@ function toggle_text_only(firstRun) {
 	if (typeof(firstRun) == 'undefined')
 		firstRun = false;
 	var text_only = document.getElementById('text_only');
-    //Initialization of TinyMCE
-    if(firstRun){
-        setTimeout("tinyMCE.execCommand('mceAddControl', false, 'body_text');", 500);
-        var tiny = tinyMCE.getInstanceById('body_text');
-    }
+	//Initialization of TinyMCE
+	//if(firstRun){
+	//setTimeout("tinyMCE.execCommand('mceAddControl', false, 'body_text');", 500);
+	//var tiny = tinyMCE.getInstanceById('body_text');
+	//}
 	//check to see if the toggle textonly flag is checked
-    if(document.getElementById('toggle_textonly').checked == true) {
-        //hide the html div (containing TinyMCE)
-        document.getElementById('body_text_div').style.display = 'none';
-        document.getElementById('toggle_textarea_option').style.display = 'none';
-        document.getElementById('text_div').style.display = 'block';
-        text_only.value = 1; 
-    } else {
-        //display the html div (containing TinyMCE)
-        document.getElementById('body_text_div').style.display = 'inline';
-        document.getElementById('toggle_textarea_option').style.display = 'inline';
-        document.getElementById('text_div').style.display = 'none';
-        
-        text_only.value = 0;                     
-    }
-    update_textarea_button();
+	if(document.getElementById('toggle_textonly').checked == true) {
+		//hide the html div (containing TinyMCE)
+		document.getElementById('body_text_div').style.display = 'none';
+		document.getElementById('toggle_textarea_option').style.display = 'none';
+		document.getElementById('text_div').style.display = 'block';
+		text_only.value = 1;
+	} else {
+		//display the html div (containing TinyMCE)
+		document.getElementById('body_text_div').style.display = 'inline';
+		document.getElementById('toggle_textarea_option').style.display = 'inline';
+		document.getElementById('text_div').style.display = 'none';
+
+		text_only.value = 0;
+	}
+	update_textarea_button();
 }
 
 function update_textarea_button()
@@ -98,9 +98,9 @@ function toggle_textarea_edit(obj)
 {
 	if(document.getElementById('text_div').style.display == 'none')
 	{
-        document.getElementById('text_div').style.display = 'block';
+		document.getElementById('text_div').style.display = 'block';
 	} else {
-        document.getElementById('text_div').style.display = 'none';
+		document.getElementById('text_div').style.display = 'none';
 	}
 	update_textarea_button();
 }
@@ -109,13 +109,13 @@ function toggle_textarea_edit(obj)
 
 //This function checks that tinyMCE is initilized before setting the text (IE bug)
 function setTinyHTML(text) {
-    var tiny = tinyMCE.getInstanceById('body_text');
-                
-    if (tiny.getContent() != null) {
-        tiny.setContent(text)
-    } else {
-        setTimeout(setTinyHTML(text), 1000);
-    }
+	var tiny = tinyMCE.getInstanceById('body_text');
+
+	if (tiny.getContent() != null) {
+		tiny.setContent(text)
+	} else {
+		setTimeout(setTinyHTML(text), 1000);
+	}
 }
 
 function stripTags(str) {
@@ -126,8 +126,8 @@ function stripTags(str) {
 	}
 }
 /*
- * this function will insert variables into text area 
-*/
+ * this function will insert variables into text area
+ */
 function insert_variable_text(myField, myValue) {
 	//IE support
 	if (document.selection) {
@@ -140,8 +140,8 @@ function insert_variable_text(myField, myValue) {
 		var startPos = myField.selectionStart;
 		var endPos = myField.selectionEnd;
 		myField.value = myField.value.substring(0, startPos)
-		+ myValue
-		+ myField.value.substring(endPos, myField.value.length);
+			+ myValue
+			+ myField.value.substring(endPos, myField.value.length);
 	} else {
 		myField.value += myValue;
 	}
@@ -151,34 +151,37 @@ function insert_variable_text(myField, myValue) {
  * This function inserts variables into a TinyMCE instance
  */
 function insert_variable_html(text) {
-	var inst = tinyMCE.getInstanceById("body_text");
-	if (inst)
-                    inst.getWin().focus();
-	//var html = inst.getContent(true);
-	//inst.setContent(html + text);
-	inst.execCommand('mceInsertRawHTML', false, text);
+
+	tinyMCE.activeEditor.execCommand('mceInsertRawHTML', false, text);
+
+	//var inst = tinyMCE.getInstanceById("body_text");
+	//if (inst)
+	//               inst.getWin().focus();
+	////var html = inst.getContent(true);
+	////inst.setContent(html + text);
+	//inst.execCommand('mceInsertRawHTML', false, text);
 }
 
 function insert_variable_html_link(text) {
 
 	the_label = document.getElementById('url_text').value;
 	if(typeof(the_label) =='undefined'){
-		the_label = label;	
+		the_label = label;
 	}
 
 	//remove surounding parenthesis around the label
 	if(the_label[0] == '{' && the_label[the_label.length-1] == '}'){
 		the_label = the_label.substring(1,the_label.length-1);
 	}
-	
+
 	var thelink = "<a href='" + text + "' > "+the_label+" </a>";
 	insert_variable_html(thelink);
-}	
+}
 /*
  * this function will check to see if text only flag has been checked.
  * If so, the it will call the text insert function, if not, then it
  * will call the html (tinyMCE eidtor) insert function
-*/
+ */
 function insert_variable(text) {
 	//if text only flag is checked, then insert into text field
 	if(document.getElementById('toggle_textonly').checked == true){
