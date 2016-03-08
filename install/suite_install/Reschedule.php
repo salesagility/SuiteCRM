@@ -1,5 +1,4 @@
 <?php
-
 /**
  *
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -38,64 +37,26 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-class AOS_Products_Quotes_sugar extends Basic
+
+function install_reschedule()
 {
-    var $new_schema = true;
-    var $module_dir = 'AOS_Products_Quotes';
-    var $object_name = 'AOS_Products_Quotes';
-    var $table_name = 'aos_products_quotes';
-    var $tracker_visibility = false;
-    var $importable = true;
+    require_once('ModuleInstall/ModuleInstaller.php');
 
-    var $disable_row_level_security = true; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+    $hooks = array(
+        //Calls
+        array(
+            'module' => 'Calls',
+            'hook' => 'process_record',
+            'order' => 1,
+            'description' => 'count',
+            'file' => 'modules/Calls_Reschedule/reschedule_count.php',
+            'class' => 'reschedule_count',
+            'function' => 'count',
+        ),
+    );
 
-    var $id;
-    var $name;
-    var $date_entered;
-    var $date_modified;
-    var $modified_user_id;
-    var $modified_by_name;
-    var $created_by;
-    var $created_by_name;
-    var $description;
-    var $deleted;
-    var $created_by_link;
-    var $modified_user_link;
-    var $assigned_user_id;
-    var $assigned_user_name;
-    var $assigned_user_link;
-    var $product_qty;
-    var $product_cost_price;
-    var $product_list_price;
-    var $product_discount;
-    var $product_discount_amount;
-    var $product_unit_price;
-    var $vat_amt;
-    var $product_total_price;
-    var $discount;
-    var $vat;
-    var $parent_name;
-    var $parent_type;
-    var $parent_id;
-    var $product_id;
-    var $product;
-    var $group_id;
-    var $number;
-    var $currency_id;
-
-
-    function AOS_Products_Quotes_sugar()
-    {
-        parent::Basic();
-    }
-
-    function bean_implements($interface)
-    {
-        switch ($interface) {
-            case 'ACL':
-                return false;
-        }
-        return false;
+    foreach ($hooks as $hook) {
+        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
 
 }

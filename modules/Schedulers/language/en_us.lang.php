@@ -44,7 +44,7 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-global $sugar_config;
+
 
 $mod_strings = array(
 // OOTB Scheduler Job Names:
@@ -175,4 +175,6 @@ $mod_strings = array(
     'LBL_AORRUNSCHEDULEDREPORTS' => 'Run scheduled reports',
     'LBL_PROCESSAOW_WORKFLOW' => 'Process AOW Workflow',
 );
+
+global $sugar_config;
 ?>

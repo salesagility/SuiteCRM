@@ -174,17 +174,25 @@ class ViewModulefields extends SugarView
                 }
                 foreach($v as $field => $def)
                 {
-                	if (isset($loadedFields[$field]))
+                    /**
+                     * https://github.com/salesagility/SuiteCRM/issues/879
+                     *
+                     * Added check for to see if field is a valid studio field
+                     */
+                    if ($this->isValidStudioField($def))
                     {
-                	   unset($this->mbModule->mbvardefs->vardefs['fields'][$k][$field]);
-                    } else {
-                       $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['label'] = isset($def['vname']) && isset($this->mbModule->mblanguage->strings[$current_language.'.lang.php'][$def['vname']]) ? $this->mbModule->mblanguage->strings[$current_language.'.lang.php'][$def['vname']] : $field;
-                       $customFieldsData[$field] = ($k == $this->mbModule->name) ? true : false;
-                       $loadedFields[$field] = true;
-                        
-                       $type = $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['type'];
-                       $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['type'] = isset($fieldTypes[$type]) ? $fieldTypes[$type] : ucfirst($type);
-                       $fieldsData[] = $this->mbModule->mbvardefs->vardefs['fields'][$k][$field];
+                        if (isset($loadedFields[$field]))
+                        {
+                           unset($this->mbModule->mbvardefs->vardefs['fields'][$k][$field]);
+                        } else {
+                           $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['label'] = isset($def['vname']) && isset($this->mbModule->mblanguage->strings[$current_language.'.lang.php'][$def['vname']]) ? $this->mbModule->mblanguage->strings[$current_language.'.lang.php'][$def['vname']] : $field;
+                           $customFieldsData[$field] = ($k == $this->mbModule->name) ? true : false;
+                           $loadedFields[$field] = true;
+
+                           $type = $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['type'];
+                           $this->mbModule->mbvardefs->vardefs['fields'][$k][$field]['type'] = isset($fieldTypes[$type]) ? $fieldTypes[$type] : ucfirst($type);
+                           $fieldsData[] = $this->mbModule->mbvardefs->vardefs['fields'][$k][$field];
+                        }
                     }
                 }
             }

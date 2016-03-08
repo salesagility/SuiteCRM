@@ -532,7 +532,7 @@ function cleanJobQueue($job)
 
 function pollMonitoredInboxesAOP()
 {
-    require_once 'custom/modules/InboundEmail/AOPInboundEmail.php';
+    require_once 'modules/InboundEmail/AOPInboundEmail.php';
     $GLOBALS['log']->info('----->Scheduler fired job of type pollMonitoredInboxesAOP()');
     global $dictionary;
     global $app_strings;
