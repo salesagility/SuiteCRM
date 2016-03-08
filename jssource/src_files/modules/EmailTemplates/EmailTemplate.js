@@ -183,13 +183,15 @@ function insert_variable_html_link(text) {
  * will call the html (tinyMCE eidtor) insert function
  */
 function insert_variable(text) {
-	//if text only flag is checked, then insert into text field
-	if(document.getElementById('toggle_textonly').checked == true){
-		//use text version insert 
-		insert_variable_text(document.getElementById('body_text_plain'), text) ;
-	}else{
-		//use html version insert 
-		insert_variable_html(text) ;
+	if($('#mozaik .mozaik-list .mozaik-elem').length > 0) {
+		//if text only flag is checked, then insert into text field
+		if (document.getElementById('toggle_textonly').checked == true) {
+			//use text version insert
+			insert_variable_text(document.getElementById('body_text_plain'), text);
+		} else {
+			//use html version insert
+			insert_variable_html(text);
+		}
 	}
 }			
 
