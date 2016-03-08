@@ -1,0 +1,13 @@
+{
+    "name": "gymadarasz/ace",
+    "description": "ACE editor fork for composer",
+    "license": "BSD",
+    "authors": [
+        {
+            "name": "gymadarasz",
+            "email": "gyula.madarasz@gmail.com"
+        }
+    ],
+    "require": {},
+	"minimum-stability": "stable"
+}

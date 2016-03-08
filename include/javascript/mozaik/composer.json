@@ -1,0 +1,16 @@
+{
+    "name": "gymadarasz/mozaik",
+    "authors": [
+        {
+            "name": "gymadarasz",
+            "email": "gyula.madarasz@gmail.com"
+        }
+    ],
+    "require": {
+        "components/jquery": "^2.2",
+        "components/jqueryui": "^1.11",
+        "tinymce/tinymce": "^4.3",
+        "gymadarasz/imagesloaded": "^4.1",
+        "gymadarasz/ace": "^1.2"
+    }
+}
