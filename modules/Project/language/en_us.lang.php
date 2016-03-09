@@ -45,12 +45,11 @@ $mod_strings = array(
     'LBL_SEARCH_FORM_TITLE' => 'Project Search',
     'LBL_LIST_FORM_TITLE' => 'Project List',
     'LBL_HISTORY_TITLE' => 'History',
-
     'LBL_ID' => 'Id:',
     'LBL_DATE_ENTERED' => 'Date Created:',
     'LBL_DATE_MODIFIED' => 'Date Modified:',
     'LBL_ASSIGNED_USER_ID' => 'Assigned To:',
-    'LBL_ASSIGNED_USER_NAME' => 'Assigned to:',
+    'LBL_ASSIGNED_USER_NAME' => 'Project Manager:',
     'LBL_MODIFIED_USER_ID' => 'Modified User Id:',
     'LBL_CREATED_BY' => 'Created By:',
     'LBL_TEAM_ID' => 'Team:',
@@ -65,13 +64,10 @@ $mod_strings = array(
     'LBL_STATUS' => 'Status:',
     'LBL_MY_PROJECTS' => 'My Projects',
     'LBL_MY_PROJECT_TASKS' => 'My Project Tasks',
-
     'LBL_TOTAL_ESTIMATED_EFFORT' => 'Total Estimated Effort (hrs):',
     'LBL_TOTAL_ACTUAL_EFFORT' => 'Total Actual Effort (hrs):',
-
     'LBL_LIST_NAME' => 'Name',
     'LBL_LIST_DAYS' => 'days',
-    'LBL_LIST_ASSIGNED_USER_ID' => 'Assigned To',
     'LBL_LIST_TOTAL_ESTIMATED_EFFORT' => 'Total Estimated Effort (hrs)',
     'LBL_LIST_TOTAL_ACTUAL_EFFORT' => 'Total Actual Effort (hrs)',
     'LBL_LIST_UPCOMING_TASKS' => 'Upcoming Tasks (1 Week)',
@@ -79,8 +75,6 @@ $mod_strings = array(
     'LBL_LIST_OPEN_CASES' => 'Open Cases',
     'LBL_LIST_END_DATE' => 'End Date',
     'LBL_LIST_TEAM_ID' => 'Team',
-
-
     'LBL_PROJECT_SUBPANEL_TITLE' => 'Projects',
     'LBL_PROJECT_TASK_SUBPANEL_TITLE' => 'Project Tasks',
     'LBL_CONTACT_SUBPANEL_TITLE' => 'Contacts',
@@ -90,20 +84,16 @@ $mod_strings = array(
 
     // quick create label
     'LBL_NEW_FORM_TITLE' => 'New Project',
-
     'CONTACT_REMOVE_PROJECT_CONFIRM' => 'Are you sure you want to remove this contact from this project?',
-
     'LNK_NEW_PROJECT' => 'Create Project',
     'LNK_PROJECT_LIST' => 'View Project List',
     'LNK_NEW_PROJECT_TASK' => 'Create Project Task',
     'LNK_PROJECT_TASK_LIST' => 'View Project Tasks',
-
     'LBL_DEFAULT_SUBPANEL_TITLE' => 'Projects',
     'LBL_ACTIVITIES_TITLE' => 'Activities',
     'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
     'LBL_HISTORY_SUBPANEL_TITLE' => 'History',
     'LBL_QUICK_NEW_PROJECT' => 'New Project',
-
     'LBL_PROJECT_TASKS_SUBPANEL_TITLE' => 'Project Tasks',
     'LBL_CONTACTS_SUBPANEL_TITLE' => 'Contacts',
     'LBL_ACCOUNTS_SUBPANEL_TITLE' => 'Accounts',
@@ -111,8 +101,6 @@ $mod_strings = array(
     'LBL_CASES_SUBPANEL_TITLE' => 'Cases',
     'LBL_BUGS_SUBPANEL_TITLE' => 'Bugs',
     'LBL_PRODUCTS_SUBPANEL_TITLE' => 'Products',
-
-
     'LBL_TASK_ID' => 'ID',
     'LBL_TASK_NAME' => 'Task Name',
     'LBL_DURATION' => 'Duration',
@@ -122,7 +110,6 @@ $mod_strings = array(
     'LBL_PREDECESSORS' => 'Predecessors',
     'LBL_PERCENT_COMPLETE' => '% Complete',
     'LBL_MORE' => 'More...',
-
     'LBL_PERCENT_BUSY' => '% Busy',
     'LBL_TASK_ID_WIDGET' => 'id',
     'LBL_TASK_NAME_WIDGET' => 'description',
@@ -132,7 +119,6 @@ $mod_strings = array(
     'LBL_PREDECESSORS_WIDGET' => 'predecessors_',
     'LBL_PERCENT_COMPLETE_WIDGET' => 'percent_complete',
     'LBL_EDIT_PROJECT_TASKS_TITLE' => 'Edit Project Tasks',
-
     'LBL_OPPORTUNITIES' => 'Opportunities',
     'LBL_LAST_WEEK' => 'Previous',
     'LBL_NEXT_WEEK' => 'Next',
@@ -142,12 +128,9 @@ $mod_strings = array(
     'LBL_PROJECT_INFORMATION' => 'Project Overview',
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_INSERTROWS' => 'Insert Rows' /*for 508 compliance fix*/,
-
     'LBL_PROJECT_TASKS_SUBPANEL_TITLE' => 'Project Tasks',
     'LBL_VIEW_GANTT_TITLE' => 'View Gantt',
     'LBL_VIEW_GANTT_DURATION' => 'Duration',
-    'LBL_ASSIGNED_USER_NAME' => 'Project Manager:',
-    'LBL_ASSIGNED_USER_ID' => 'Resource',
     'LBL_TASK_TITLE' => 'Edit Task',
     'LBL_PREDECESSOR_TITLE' => 'Edit Predecessor',
     'LBL_START_DATE_TITLE' => 'Select Start Date',
@@ -166,14 +149,11 @@ $mod_strings = array(
     'LBL_DELETE_TASK' => 'Delete Task',
     'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
     'LBL_PARENT_TASK_ID' => 'Parent Task Id',
-    'LBL_PERCENT_COMPLETE' => '% Cpl',
     'LBL_RESOURCE_CHART' => 'Resource Chart',
     'LBL_RESOURCE_CHART_START' => 'Date Start:',
     'LBL_RESOURCE_CHART_END' => 'Date End:',
     'LBL_RESOURCES' => 'Select Resources:',
     'LBL_RELATIONSHIP_TYPE' => 'Relation Type',
-    'LBL_TASK_NAME' => 'Name',
-    'LBL_PREDECESSORS' => 'Predecessor',
     'LBL_ASSIGNED_TO' => 'Project Manager',
     'LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_AM_PROJECTTEMPLATES_TITLE' => 'Project Template',
     'LBL_STATUS' => 'Status:',
