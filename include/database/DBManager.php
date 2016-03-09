@@ -467,8 +467,16 @@ protected function checkQuery($sql, $object_name = false)
 	public function checkConnection()
 	{
 		$this->last_error = '';
-		if (!isset($this->database))
-			$this->connect();
+		if (!isset($this->database)) {
+            $this->connect();
+        }else{
+            try {
+                $this->database->ping();
+            }catch(Exception $ex){
+                unset($this->database);
+                $this->connect();
+            }
+        }
 	}
 
 	/**

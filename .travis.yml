@@ -1,0 +1,23 @@
+language: php
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - hhvm
+before_script:
+  - composer self-update
+  - composer install --no-interaction
+  - curl -L https://gist.githubusercontent.com/JimMackin/c3db403bae59c2c9a27c/raw/config_si.php > config_si.php
+  - php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);require_once 'install.php';";
+script:
+  - cd tests
+  - ../include/vendor/bin/phpunit
+  - cat ../suitecrm.log
+services:
+  - mysql
+branches:
+  only:
+    - master
+    - hotfix
+    - develop
