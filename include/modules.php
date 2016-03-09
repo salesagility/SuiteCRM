@@ -475,6 +475,12 @@ $modules_exempt_from_availability_check['OutboundEmailAccounts'] = 'OutboundEmai
 $report_include_modules['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
 $modInvisList[] = 'OutboundEmailAccounts';
 
+$beanList['TemplateEditor'] = 'TemplateEditor';
+$beanFiles['TemplateEditor'] = 'modules/TemplateEditor/TemplateEditor.php';
+$modules_exempt_from_availability_check['TemplateEditor'] = 'TemplateEditor';
+$report_include_modules['TemplateEditor'] = 'TemplateEditor';
+$modInvisList[] = 'TemplateEditor';
+
 if (file_exists('include/modules_override.php'))
 {
     include('include/modules_override.php');
