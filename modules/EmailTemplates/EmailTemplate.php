@@ -815,6 +815,25 @@ class EmailTemplate extends SugarBean
         }
         return $this->storedVariables[$text[0]];
     }
+
+    public function save($check_notify = FALSE)
+    {
+        $this->repairMozaikClears();
+       return parent::save($check_notify);
+    }
+
+    public function retrieve($id = -1, $encode = true, $deleted = true)
+    {
+        $ret = parent::retrieve($id, $encode, $deleted);
+        $this->repairMozaikClears();
+        return $ret;
+    }
+
+    private function repairMozaikClears() {
+        // repair tinymce auto correction in mozaik clears
+        $this->body_html = str_replace('&lt;div class=&quot;mozaik-clear&quot;&gt;&nbsp;&lt;br&gt;&lt;/div&gt;', '&lt;div class=&quot;mozaik-clear&quot;&gt;&lt;/div&gt;', $this->body_html);
+    }
+
 }
 
 ?>
