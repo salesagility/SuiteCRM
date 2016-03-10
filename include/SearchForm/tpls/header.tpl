@@ -52,8 +52,7 @@
 function submitOnEnter(e)
 {
     var characterCode = (e && e.which) ? e.which : event.keyCode;
-
-    if (characterCode == 13) {
+    if (characterCode == 13 && event.target.type !== "textarea") {
         document.getElementById('search_form').submit();
         return false;
     } else {
