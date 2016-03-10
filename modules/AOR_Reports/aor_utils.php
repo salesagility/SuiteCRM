@@ -163,7 +163,7 @@ function getPeriodDate($date_time_period_list_selected)
     } else if ($date_time_period_list_selected == 'this_month') {
         $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
     } else if ($date_time_period_list_selected == 'last_month') {
-        $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
+        $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m')-1, 1);
     } else if ($date_time_period_list_selected == 'this_quarter') {
         $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
         if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
