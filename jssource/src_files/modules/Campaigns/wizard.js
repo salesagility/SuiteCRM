@@ -305,8 +305,8 @@ var onEmailTemplateChange = function(elem) {
         $('#email_template_view_html').html(results.data.body_html);
         $('#email_template_view').html(results.data.body);
 
-        document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
-        document.getElementById("html_frame").contentWindow.document.close();
+        //document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
+        //document.getElementById("html_frame").contentWindow.document.close();
 
         var htmlCode = $('<textarea />').html(results.data.body_html).text();
         $('#email_template_editor').html(htmlCode);
