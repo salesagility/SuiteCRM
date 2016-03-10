@@ -36,10 +36,18 @@ ul.mozaik-thumbs li.mozaik-thumbnail {
     float: none;
     text-align: center;
     z-index: 1;
+    width: 100%;
+}
+ul.mozaik-thumbs li.mozaik-thumbnail:hover {
+    background-color: lightgrey;
 }
 ul.mozaik-thumbs li.mozaik-thumbnail img {
     border: 1px solid #ddd;
 }
+span.mozaik-thumb-label {
+    cursor: pointer;
+}
+
 
 
 /* editor area */

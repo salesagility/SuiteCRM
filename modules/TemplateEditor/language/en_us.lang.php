@@ -61,7 +61,7 @@ $mod_strings = array (
   'LBL_MODULE_TITLE' => 'Template Part Editor',
   'LBL_HOMEPAGE_TITLE' => 'My Template Part Editor',
   'LNK_NEW_RECORD' => 'Create Template Part',
-  'LNK_LIST' => 'View Template Part',
+  'LNK_LIST' => 'View Template Parts',
   'LNK_IMPORT_TEMPLATEEDITOR' => 'Import Template Part',
   'LBL_SEARCH_FORM_TITLE' => 'Search Template Part',
   'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
@@ -69,4 +69,5 @@ $mod_strings = array (
   'LBL_TEMPLATEEDITOR_SUBPANEL_TITLE' => 'Template Part Editor',
   'LBL_NEW_FORM_TITLE' => 'New Template Part',
   'LBL_GRP' => 'Group',
+    'LBL_ORD' => 'Order',
 );

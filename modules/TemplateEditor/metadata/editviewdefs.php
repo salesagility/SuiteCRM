@@ -6,7 +6,7 @@ array (
   array (
     'templateMeta' => 
     array (
-      'maxColumns' => '2',
+      'maxColumns' => '1',
       'widths' => 
       array (
         0 => 
@@ -37,13 +37,17 @@ array (
         0 => 
         array (
           0 => 'name',
-          1 => 
+        ),
+        1 =>
           array (
             'name' => 'grp',
             'label' => 'LBL_GRP',
           ),
-        ),
-        1 => 
+          2 => array(
+              'name' => 'ord',
+              'label' => 'LBL_ORD',
+          ),
+        3 =>
         array (
           0 => 'description',
         ),

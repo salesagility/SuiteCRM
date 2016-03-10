@@ -5,6 +5,27 @@ class SuiteMozaik {
     private $mozaikPath = 'include/javascript/mozaik';
     private $vendorPath;
 
+    private static $defaultThumbnails = array(
+        'headline' => array(
+            //'thumbnail' => 'tpls/default/thumbs/headline.png',
+            'label' => 'Headline',
+            //'tpl' => 'tpls/default/headline.html',
+            'tpl' => 'string:<p><h1>Add your headline here..</h1></p>',
+        ),
+        'content' => array(
+            //'thumbnail' => 'tpls/default/thumbs/content1.png',
+            'label' => 'Content',
+            //'tpl' => 'tpls/default/content1.html',
+            'tpl' => 'string:<p>Put your contents here...</p>',
+        ),
+        'footer' => array(
+            //'thumbnail' => 'tpls/default/thumbs/footer.png',
+            'label' => 'Footer',
+            //'tpl' => 'tpls/default/footer.html',
+            'tpl' => 'string:<p class="footer">Take your footer contents and information here..</p>',
+        ),
+    );
+
     public function __construct() {
         $this->vendorPath = $this->mozaikPath . '/vendor';
     }
@@ -31,10 +52,14 @@ HTML;
         return $html;
     }
 
-    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial') {
+    public function getElementHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial', $thumbs = array()) {
         if(is_numeric($width)) {
             $width .= 'px';
         }
+        if(!$thumbs) {
+            $thumbs = self::$defaultThumbnails;
+        }
+        $thumbsJSON = json_encode($thumbs);
         $refreshTextareaScript = '';
         if($textareaId) {
             $refreshTextareaScript = $this->getRefreshTextareaScript($textareaId, $elementId, $width);
@@ -51,17 +76,7 @@ HTML;
 
         window.mozaikSettings.{$elementId} = {
             base: '{$this->mozaikPath}/',
-            thumbs: {
-                headline: {thumbnail: 'tpls/default/thumbs/headline.png', label: 'Headline', tpl: 'tpls/default/headline.html'},
-                content1: {thumbnail: 'tpls/default/thumbs/content1.png', label: 'Content', tpl: 'tpls/default/content1.html'},
-                //content3: {thumbnail: 'tpls/default/thumbs/content3.jpg', label: 'Three column', tpl: 'tpls/default/content3.html'},
-                //content2: {thumbnail: 'tpls/default/thumbs/content2.jpg', label: 'Two column', tpl: 'tpls/default/content2.html'},
-                //image3: {thumbnail: 'tpls/default/thumbs/image3.jpg', label: 'Three column with image', tpl: 'tpls/default/image3.html'},
-                //image2: {thumbnail: 'tpls/default/thumbs/image2.jpg', label: 'Two column with image', tpl: 'tpls/default/image2.html'},
-                //image1left: {thumbnail: 'tpls/default/thumbs/image1left.jpg', label: 'Content with image (left)', tpl: 'tpls/default/image1left.html'},
-                //image1right: {thumbnail: 'tpls/default/thumbs/image1right.jpg', label: 'Content with image (right)', tpl: 'tpls/default/image1right.html'},
-                footer: {thumbnail: 'tpls/default/thumbs/footer.png', label: 'Footer', tpl: 'tpls/default/footer.html'},
-            },
+            thumbs: {$thumbsJSON},
             editables: 'editable',
             style: 'tpls/default/styles/default.css',
             namespace: false,
@@ -78,13 +93,14 @@ HTML;
         return $html;
     }
 
-    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial') {
+    public function getAllHTML($contents = '', $textareaId = null, $elementId = 'mozaik', $width = 'initial', $group = '') {
         if(is_numeric($width)) {
             $width .= 'px';
         }
         $mozaikHTML = $this->getDependenciesHTML();
         $mozaikHTML .= $this->getIncludeHTML();
-        $mozaikHTML .= $this->getElementHTML($contents, $textareaId, $elementId, $width);
+        $thumbs = $this->getThumbs($group);
+        $mozaikHTML .= $this->getElementHTML($contents, $textareaId, $elementId, $width, $thumbs);
         return $mozaikHTML;
     }
 
@@ -98,6 +114,23 @@ setInterval(function(){
 }, 300);
 SCRIPT;
         return $js;
+    }
+
+    private function getThumbs($group = '') {
+        $db = DBManagerFactory::getInstance();
+        $_group = $db->quote($group);
+        $templateEditorBean = BeanFactory::getBean('TemplateEditor');
+        $thumbBeans = $templateEditorBean->get_full_list('ord', "(grp LIKE '$_group' OR grp IS NULL)");
+        $thumbs = array();
+        if($thumbBeans) {
+            foreach ($thumbBeans as $thumbBean) {
+                $thumbs[$thumbBean->name] = array(
+                    'label' => $thumbBean->name,
+                    'tpl' => 'string:' . html_entity_decode($thumbBean->description),
+                );
+            }
+        }
+        return $thumbs;
     }
 
 }
