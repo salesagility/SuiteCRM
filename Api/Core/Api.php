@@ -2,25 +2,29 @@
 
 namespace SuiteCRM\Api\Core;
 
+use Slim\Http\Response as Response;
+
 class Api
 {
-
-    public function generateResponse($response_object, $status, $data, $message)
+    /**
+     * @param Response $responseObject
+     * @param int      $status
+     * @param mixed    $data
+     * @param string   $message
+     *
+     * @return Response
+     */
+    public function generateResponse(Response $responseObject, $status, $data, $message)
     {
-
-
         $response = array(
             'status' => $status,
             'data' => $data,
             'message' => $message,
         );
 
-        return $response_object
+        return $responseObject
             ->withStatus($status)
             ->withHeader('Content-type', 'application/json')
             ->write(json_encode($response, JSON_PRETTY_PRINT));
-
-
     }
-
 }

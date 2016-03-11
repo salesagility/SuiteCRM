@@ -1,11 +1,10 @@
 <?php
-namespace SuiteCRM\Api\V8\Library;
 
+namespace SuiteCRM\Api\V8\Library;
 
 class UserLib
 {
-
-    function getUpcomingActivities($user)
+    public function getUpcomingActivities($user)
     {
         global $beanList;
         $maxCount = 10;
@@ -15,26 +14,26 @@ class UserLib
                 'date_field' => 'date_start',
                 'status' => 'Planned',
                 'status_field' => 'status',
-                'status_opp' => '='
+                'status_opp' => '=',
             ),
             'Calls' => array(
                 'date_field' => 'date_start',
                 'status' => 'Planned',
                 'status_field' => 'status',
-                'status_opp' => '='
+                'status_opp' => '=',
             ),
             'Tasks' => array(
                 'date_field' => 'date_due',
                 'status' => 'Not Started',
                 'status_field' => 'status',
-                'status_opp' => '='
+                'status_opp' => '=',
             ),
             'Opportunities' => array(
                 'date_field' => 'date_closed',
                 'status' => array('Closed Won', 'Closed Lost'),
                 'status_field' => 'sales_stage',
-                'status_opp' => '!='
-            )
+                'status_opp' => '!=',
+            ),
         );
         $results = array();
         foreach ($activityModules as $module => $meta) {
@@ -65,7 +64,7 @@ class UserLib
         }
 
         //Sort the result list by the date due flag in ascending order
-        usort($results, array($this, "cmp_datedue"));
+        usort($results, array($this, 'cmp_datedue'));
 
         //Only return a subset of the results.
         $results = array_slice($results, 0, $maxCount);
@@ -73,7 +72,7 @@ class UserLib
         return $results;
     }
 
-    function generateUpcomingActivitiesWhereClause($seed, $meta, $user)
+    public function generateUpcomingActivitiesWhereClause($seed, $meta, $user)
     {
         $query = array();
         $query_date = \TimeDate::getInstance()->nowDb();
@@ -81,16 +80,16 @@ class UserLib
         $query[] = "{$seed->table_name}.assigned_user_id = '{$user->id}' "; //Add assigned user filter
         if (is_array($meta['status_field'])) {
             foreach ($meta['status'] as $field) {
-                $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '" . $GLOBALS['db']->quote($field) . "' ";
+                $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($field)."' ";
             }
         } else {
-            $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '" . $GLOBALS['db']->quote($meta['status']) . "' ";
+            $query[] = "{$seed->table_name}.{$meta['status_field']} {$meta['status_opp']} '".$GLOBALS['db']->quote($meta['status'])."' ";
         }
 
-        return implode(" AND ", $query);
+        return implode(' AND ', $query);
     }
 
-    function check_modules_access($user, $module_name, $action = 'write')
+    public function check_modules_access($user, $module_name, $action = 'write')
     {
         if (!isset($_SESSION['avail_modules'])) {
             $_SESSION['avail_modules'] = $this->get_user_module_list($user);
@@ -107,12 +106,14 @@ class UserLib
                 //rrs bug: 46000 - If the client is trying to write to the Users module and is not an admin then we need to stop them
                 return false;
             }
+
             return true;
         }
+
         return false;
     }
 
-    function get_user_module_list($user)
+    public function get_user_module_list($user)
     {
         global $app_list_strings, $current_language;
         $app_list_strings = return_app_list_strings_language($current_language);
@@ -139,7 +140,7 @@ class UserLib
         return $modules;
     }
 
-    function format_upcoming_activities_entries($list, $date_field)
+    public function format_upcoming_activities_entries($list, $date_field)
     {
         $results = array();
         foreach ($list as $bean) {
@@ -147,12 +148,10 @@ class UserLib
                 'id' => $bean->id,
                 'module' => $bean->module_dir,
                 'date_due' => $bean->$date_field,
-                'summary' => $bean->get_summary_text()
+                'summary' => $bean->get_summary_text(),
             );
         }
 
         return $results;
     }
-
-
 }

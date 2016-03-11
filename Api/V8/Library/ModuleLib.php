@@ -1,14 +1,19 @@
 <?php
-namespace SuiteCRM\Api\V8\Library;
 
+namespace SuiteCRM\Api\V8\Library;
 
 class ModuleLib
 {
-
-    function getAvailableModules($filter, $user)
+    /**
+     * @param $filter
+     * @param $user
+     *
+     * @return array
+     */
+    public function getAvailableModules($filter, $user)
     {
         if (empty($filter)) {
-            $filter = "all";
+            $filter = 'all';
         }
         $modules = array();
         $availModules = $this->get_user_module_list($user);
@@ -22,13 +27,19 @@ class ModuleLib
         }
         $ret = array();
         $ret['data'] = $modules;
+
         return $ret;
     }
 
-    function get_user_module_list($user)
+    /**
+     * @param $user
+     *
+     * @return mixed
+     */
+    public function get_user_module_list($user)
     {
         global $app_list_strings, $current_language, $beanList, $beanFiles;
-        require_once('include/utils/security_utils.php');
+        require_once 'include/utils/security_utils.php';
         $app_list_strings = return_app_list_strings_language($current_language);
         $modules = query_module_access_list($user);
         \ACLController:: filterModuleList($modules, false);
@@ -51,56 +62,75 @@ class ModuleLib
         }
 
         return $modules;
-
     }
 
-    function updateModuleItem($matchingBean)
+    /**
+     * @param $matchingBean
+     * @param $data
+     */
+    public function updateModuleItem($matchingBean, $data)
     {
-        if (!empty($_REQUEST['update'])) {
-            foreach ($_REQUEST['update'] as $item) {
-                //TODO make sure that the data is safe before it is inserted!
-                if (!empty($item['name']) && !empty($item['value'])) {
-                    $itemToUpdate = $item['name'];
-                    $updateValue = $item['value'];
-                    $matchingBean->$itemToUpdate = $updateValue;
+        if (!empty($data)) {
+            foreach ($data as $key => $value) {
+                if (!empty($key) && !empty($value)) {
+                    $matchingBean->$key = $value;
                 }
             }
             $matchingBean->save();
         }
     }
 
-    function createModuleItem($moduleType)
+    /**
+     * @param $moduleType
+     * @param $data
+     *
+     * @return string
+     */
+    public function createModuleItem($moduleType, $data)
     {
         $GLOBALS['mod_strings'] = return_module_language($GLOBALS['current_language'], $moduleType);
         $matchingBean = \BeanFactory::getBean($moduleType);
-        if (!empty($_REQUEST['create'])) {
-            foreach ($_REQUEST['create'] as $item) {
-                //TODO make sure that the data is safe before it is inserted!
-                if (!empty($item['name']) && !empty($item['value'])) {
-                    $itemToUpdate = $item['name'];
-                    $updateValue = $item['value'];
-                    $matchingBean->$itemToUpdate = $updateValue;
+        if (!empty($data)) {
+            if (isset($data['id'])) {
+                if (\BeanFactory::getBean($moduleType, $data['id'])) {
+                    return '';
+                }
+                $matchingBean->new_with_id = true;
+            }
+            foreach ($data as $key => $value) {
+                if (!empty($key) && !empty($value)) {
+                    $matchingBean->$key = $value;
                 }
             }
+            $matchingBean->save();
+
+            return $matchingBean->id;
         }
-        $matchingBean->save();
-        return $matchingBean->id;
+
+        return '';
     }
 
-
-    function getModuleLayout($modules, $views, $types, $hash)
+    /**
+     * @param $modules
+     * @param $views
+     * @param $types
+     * @param $hash
+     *
+     * @return array
+     */
+    public function getModuleLayout($modules, $views, $types, $hash)
     {
         global $beanList, $beanFiles;
         $results = array();
         foreach ($modules as $module_name) {
             $class_name = $beanList[$module_name];
-            require_once($beanFiles[$class_name]);
+            require_once $beanFiles[$class_name];
             $seed = new $class_name();
 
             foreach ($views as $view) {
                 foreach ($types as $type) {
                     $a_vardefs = $this->get_module_view_defs($module_name, $type, $view);
-                    if (strtolower($hash === "true")) {
+                    if (strtolower($hash === 'true')) {
                         $results[$module_name][$type][$view] = md5(serialize($a_vardefs));
                     } else {
                         $results[$module_name][$type][$view] = $a_vardefs;
@@ -112,17 +142,27 @@ class ModuleLib
         return $results;
     }
 
-
-    function get_visible_modules($availModules)
+    /**
+     * @param $availModules
+     *
+     * @return array
+     */
+    public function get_visible_modules($availModules)
     {
-        require_once("modules/MySettings/TabController.php");
+        require_once 'modules/MySettings/TabController.php';
         $controller = new \TabController();
         $tabs = $controller->get_tabs_system();
-        return $this->getModulesFromList($tabs[0], $availModules);
 
+        return $this->getModulesFromList($tabs[0], $availModules);
     }
 
-    function getModulesFromList($list, $availModules)
+    /**
+     * @param $list
+     * @param $availModules
+     *
+     * @return array
+     */
+    public function getModulesFromList($list, $availModules)
     {
         global $app_list_strings;
         $enabled_modules = array();
@@ -134,15 +174,25 @@ class ModuleLib
                 $enabled_modules[] = array('module_key' => $key, 'module_label' => $label, 'acls' => $acl);
             }
         }
+
         return $enabled_modules;
     }
 
-    function deleteModuleItem($beanType, $id)
+    /**
+     * @param $beanType
+     * @param $id
+     */
+    public function deleteModuleItem($beanType, $id)
     {
         $beanType->mark_deleted($id);
     }
 
-    function checkModuleRoleAccess($module)
+    /**
+     * @param $module
+     *
+     * @return array
+     */
+    public function checkModuleRoleAccess($module)
     {
         $results = array();
         $actions = array('edit', 'delete', 'list', 'view', 'import', 'export');
@@ -154,10 +204,17 @@ class ModuleLib
         return $results;
     }
 
-    function get_module_view_defs($module_name, $type, $view)
+    /**
+     * @param $module_name
+     * @param $type
+     * @param $view
+     *
+     * @return array
+     */
+    public function get_module_view_defs($module_name, $type, $view)
     {
         global $viewdefs, $listViewDefs;
-        require_once('include/MVC/View/SugarView.php');
+        require_once 'include/MVC/View/SugarView.php';
         $metadataFile = null;
         $results = array();
         $view = strtolower($view);
@@ -170,11 +227,11 @@ class ModuleLib
                     $v = new \SugarView(null, array());
                     $v->module = $module_name;
                     $v->type = $view;
-                    $fullView = ucfirst($view) . 'View';
+                    $fullView = ucfirst($view).'View';
                     $metadataFile = $v->getMetaDataFile();
 
                     if ($metadataFile !== null) {
-                        require_once($metadataFile);
+                        require_once $metadataFile;
                         if ($view == 'list') {
                             $results = $listViewDefs[$module_name];
                         } else {
@@ -187,23 +244,41 @@ class ModuleLib
         return $results;
     }
 
-    function getModuleLinks($bean)
+    /**
+     * @param $bean
+     *
+     * @return mixed
+     */
+    public function getModuleLinks($bean)
     {
         return $bean->get_linked_fields();
     }
 
-    function getModuleFields($module, $fields)
+    /**
+     * @param $module
+     * @param $fields
+     *
+     * @return array
+     */
+    public function getModuleFields($module, $fields)
     {
         global $beanList, $beanFiles;
 
         $class_name = $beanList[$module];
-        require_once($beanFiles[$class_name]);
+        require_once $beanFiles[$class_name];
         $seed = new $class_name();
         $list = $this->get_return_module_fields($seed, $module, $fields);
+
         return $list;
     }
 
-    function getLanguageDefinition($modules, $hash)
+    /**
+     * @param $modules
+     * @param $hash
+     *
+     * @return array
+     */
+    public function getLanguageDefinition($modules, $hash)
     {
         global $current_language;
 
@@ -223,40 +298,53 @@ class ModuleLib
                     }
                 }
 
-                if (strtolower($hash) === "true") {
+                if (strtolower($hash) === 'true') {
                     $values = md5(serialize($values));
                 }
 
                 $results[$key] = $values;
             }
         }
+
         return $results;
     }
 
-    function getLastViewed($userId, $module)
+    /**
+     * @param $userId
+     * @param $module
+     *
+     * @return array
+     */
+    public function getLastViewed($userId, $module)
     {
-
         $tracker = new \Tracker();
         $entryList = $tracker->get_recently_viewed($userId, $module);
         $module_results = array();
         foreach ($entryList as $entry) {
             $module_results[] = $entry;
         }
+
         return $module_results;
     }
 
-    function get_subpanel_defs($module, $type)
+    /**
+     * @param $module
+     * @param $type
+     *
+     * @return array
+     */
+    public function get_subpanel_defs($module, $type)
     {
         global $beanList, $layout_defs;
         $results = array();
         switch ($type) {
             case 'default':
             default:
-                if (file_exists('modules/' . $module . '/metadata/subpaneldefs.php')) {
-                    require('modules/' . $module . '/metadata/subpaneldefs.php');
+                if (file_exists('modules/'.$module.'/metadata/subpaneldefs.php')) {
+                    require 'modules/'.$module.'/metadata/subpaneldefs.php';
                 }
-                if (file_exists('custom/modules/' . $module . '/Ext/Layoutdefs/layoutdefs.ext.php')) {
-                    require('custom/modules/' . $module . '/Ext/Layoutdefs/layoutdefs.ext.php');
+                if (file_exists('custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php')) {
+                    require 'custom/modules/'.$module.'/Ext/Layoutdefs/layoutdefs.ext.php';
                 }
         }
 
@@ -274,17 +362,24 @@ class ModuleLib
         }
 
         return $results;
-
     }
 
-    function get_return_module_fields($value, $module, $fields, $translate = true)
+    /**
+     * @param $value
+     * @param $module
+     * @param $fields
+     * @param bool $translate
+     *
+     * @return array
+     */
+    public function get_return_module_fields($value, $module, $fields, $translate = true)
     {
         global $module_name;
         $module_name = $module;
         $result = $this->get_field_list($value, $fields, $translate);
         $tableName = $value->getTableName();
 
-        return Array(
+        return array(
             'module_name' => $module,
             'table_name' => $tableName,
             'module_fields' => $result['module_fields'],
@@ -292,12 +387,18 @@ class ModuleLib
         );
     }
 
-    function get_field_list($value, $fields, $translate = true)
+    /**
+     * @param $value
+     * @param $fields
+     * @param bool $translate
+     *
+     * @return array
+     */
+    public function get_field_list($value, $fields, $translate = true)
     {
         $module_fields = array();
         $link_fields = array();
         if (!empty($value->field_defs)) {
-
             foreach ($value->field_defs as $var) {
                 if (!empty($fields) && !in_array($var['name'], $fields)) {
                     continue;
@@ -382,9 +483,9 @@ class ModuleLib
         }
 
         if ($value->module_dir == 'Bugs') {
-            require_once('modules/Releases/Release.php');
+            require_once 'modules/Releases/Release.php';
             $seedRelease = new \Release();
-            $options = $seedRelease->get_releases(true, "Active");
+            $options = $seedRelease->get_releases(true, 'Active');
             $options_ret = array();
             foreach ($options as $name => $value) {
                 $options_ret[] = array('name' => $name, 'value' => $value);
@@ -427,10 +528,15 @@ class ModuleLib
         return array('module_fields' => $module_fields, 'link_fields' => $link_fields);
     }
 
-
+    /**
+     * @param $note
+     * @param $id
+     *
+     * @return array
+     */
     public function getNoteAttachment($note, $id)
     {
-        require_once('modules/Notes/NoteSoap.php');
+        require_once 'modules/Notes/NoteSoap.php';
         $ns = new \NoteSoap();
         if (!isset($note->filename)) {
             $note->filename = '';
@@ -446,26 +552,30 @@ class ModuleLib
                 'filename' => $note->filename,
                 'file' => $file,
                 'related_module_id' => $note->parent_id,
-                'related_module_name' => $note->parent_type
-            )
+                'related_module_name' => $note->parent_type,
+            ),
         );
     }
 
-
+    /**
+     * @param $related_module
+     * @param $id_list
+     *
+     * @return array
+     */
     public function getModuleRelationships($related_module, $id_list)
     {
         global $beanList, $beanFiles;
 
         $list = array();
 
-        $in = "'" . implode("', '", $id_list) . "'";
+        $in = "'".implode("', '", $id_list)."'";
 
         $related_class_name = $beanList[$related_module];
-        require_once($beanFiles[$related_class_name]);
+        require_once $beanFiles[$related_class_name];
         $related_mod = new $related_class_name();
 
         $sql = "SELECT {$related_mod->table_name}.id FROM {$related_mod->table_name} ";
-
 
         if (isset($related_mod->custom_fields)) {
             $customJoin = $related_mod->custom_fields->getJOIN();
@@ -493,30 +603,48 @@ class ModuleLib
             $return_list[] = array(
                 'id' => $id,
                 'date_modified' => $related_mod->date_modified,
-                'deleted' => $related_mod->deleted
+                'deleted' => $related_mod->deleted,
             );
         }
+
         return $return_list;
     }
 
-    function createRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues)
+    /**
+     * @param $moduleName
+     * @param $moduleId
+     * @param $linkFieldName
+     * @param $relatedIds
+     * @param $nameValues
+     *
+     * @return array
+     */
+    public function createRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues)
     {
-
         $count = 0;
         $failed = 0;
 
         if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues,
             false)
         ) {
-            $count++;
+            ++$count;
         } else {
-            $failed++;
+            ++$failed;
         } // else
 
         return array('created' => $count, 'failed' => $failed);
     }
 
-    function deleteRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues)
+    /**
+     * @param $moduleName
+     * @param $moduleId
+     * @param $linkFieldName
+     * @param $relatedIds
+     * @param $nameValues
+     *
+     * @return array
+     */
+    public function deleteRelationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues)
     {
         $deleted = 0;
         $failed = 0;
@@ -524,16 +652,24 @@ class ModuleLib
         if ($this->new_handle_set_relationship($moduleName, $moduleId, $linkFieldName, $relatedIds, $nameValues,
             true)
         ) {
-            $deleted++;
+            ++$deleted;
         } else {
-            $failed++;
+            ++$failed;
         } // else
 
         return array('deleted' => $deleted, 'failed' => $failed);
     }
 
-
-    function createRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues)
+    /**
+     * @param $moduleNames
+     * @param $moduleIds
+     * @param $linkFieldNames
+     * @param $relatedIds
+     * @param $nameValues
+     *
+     * @return array
+     */
+    public function createRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues)
     {
         $count = 0;
         $failed = 0;
@@ -542,17 +678,26 @@ class ModuleLib
             if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
                 $relatedIds[$counter], $nameValues[$counter], 0)
             ) {
-                $count++;
+                ++$count;
             } else {
-                $failed++;
+                ++$failed;
             }
-            $counter++;
+            ++$counter;
         }
 
         return array('created' => $count, 'failed' => $failed);
     }
 
-    function deleteRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues)
+    /**
+     * @param $moduleNames
+     * @param $moduleIds
+     * @param $linkFieldNames
+     * @param $relatedIds
+     * @param $nameValues
+     *
+     * @return array
+     */
+    public function deleteRelationships($moduleNames, $moduleIds, $linkFieldNames, $relatedIds, $nameValues)
     {
         $failed = 0;
         $counter = 0;
@@ -561,24 +706,30 @@ class ModuleLib
             if ($this->new_handle_set_relationship($moduleName, $moduleIds[$counter], $linkFieldNames[$counter],
                 $relatedIds[$counter], $nameValues[$counter], 1)
             ) {
-                $deleted++;
+                ++$deleted;
             } else {
-                $failed++;
+                ++$failed;
             }
-            $counter++;
+            ++$counter;
         }
 
         return array('deleted' => $deleted, 'failed' => $failed);
     }
 
-
-    function get_linked_records($get_module, $from_module, $get_id)
+    /**
+     * @param $get_module
+     * @param $from_module
+     * @param $get_id
+     *
+     * @return array|bool
+     */
+    public function get_linked_records($get_module, $from_module, $get_id)
     {
         global $beanList, $beanFiles;
 
         // instantiate and retrieve $from_module
         $from_class = $beanList[$from_module];
-        require_once($beanFiles[$from_class]);
+        require_once $beanFiles[$from_class];
         $from_mod = new $from_class();
         $from_mod->retrieve($get_id);
 
@@ -597,15 +748,21 @@ class ModuleLib
             foreach ($emails as $email) {
                 $email_arr[] = $email['email_address_id'];
             }
+
             return $email_arr;
         }
 
         return $id_arr;
     }
 
-
     // Returns name of 'link' field between two given modules
-    function get_module_link_field($module_1, $module_2)
+    /**
+     * @param $module_1
+     * @param $module_2
+     *
+     * @return bool
+     */
+    public function get_module_link_field($module_1, $module_2)
     {
         global $beanList, $beanFiles;
 
@@ -615,7 +772,7 @@ class ModuleLib
         }
 
         $class_1 = $beanList[$module_1];
-        require_once($beanFiles[$class_1]);
+        require_once $beanFiles[$class_1];
 
         $obj_1 = new $class_1();
 
@@ -636,7 +793,17 @@ class ModuleLib
         return false;
     }
 
-    function new_handle_set_relationship(
+    /**
+     * @param $module_name
+     * @param $module_id
+     * @param $link_field_name
+     * @param $related_ids
+     * @param $name_value_list
+     * @param $delete
+     *
+     * @return bool
+     */
+    public function new_handle_set_relationship(
         $module_name,
         $module_id,
         $link_field_name,
@@ -650,7 +817,7 @@ class ModuleLib
             return false;
         }
         $class_name = $beanList[$module_name];
-        require_once($beanFiles[$class_name]);
+        require_once $beanFiles[$class_name];
         $mod = new $class_name();
         $mod->retrieve($module_id);
         if (!$mod->ACLAccess('DetailView')) {
@@ -682,6 +849,4 @@ class ModuleLib
             return false;
         }
     }
-
-
 }
