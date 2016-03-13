@@ -79,7 +79,8 @@ $entry_point_registry = array(
 	'add_dash_page' => array('file' => 'modules/Home/AddDashboardPages.php' , 'auth' => true),
 	'retrieve_dash_page' => array('file' => 'include/MySugar/retrieve_dash_page.php' , 'auth' => true),
 	'remove_dash_page' => array('file' => 'modules/Home/RemoveDashboardPages.php' , 'auth' => true),
-	'rename_dash_page' => array('file' => 'modules/Home/RenameDashboardPages.php' , 'auth' => true)
+	'rename_dash_page' => array('file' => 'modules/Home/RenameDashboardPages.php' , 'auth' => true),
+	'filter_subpanel' => array('file' => 'modules/FP_events/filter_subpanel.php','auth' => true),
 );
 
 ?>

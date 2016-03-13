@@ -14,6 +14,10 @@ array (
           1 => 'DUPLICATE',
           2 => 'DELETE',
           3 => 'FIND_DUPLICATES',
+          4 => 
+          array (
+            'customCode' => '<input title="{$MOD.LBL_ACCEPT_REPORT}" accesskey="{$MOD.LBL_ACCEPT_REPORT_KEY}" class="button" onclick="document.location=\'index.php?module=FP_events&action=accept_report&record={$fields.id.value}\'" name="accept_report" value="{$MOD.LBL_ACCEPT_REPORT}" type="button">'
+          ),
         ),
         'hidden' => 
         array (
@@ -140,6 +144,16 @@ array (
             'name' => 'decline_redirect',
             'label' => 'LBL_DECLINE_REDIRECT',
           ),
+        ),
+        2 => 
+        array (
+          0 => 'nb_invites',
+          1 => 'nb_accept',
+        ),
+        3 => 
+        array (
+          0 => 'nb_declined',
+          1 => 'nb_attended',
         ),
       ),
       'LBL_PANEL_ASSIGNMENT' =>

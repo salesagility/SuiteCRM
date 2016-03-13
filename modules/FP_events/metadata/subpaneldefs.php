@@ -60,6 +60,7 @@ $layout_defs['FP_events'] = array(
 				array('widget_class' => 'SubPanelManageDelegatesButton'),
 				array('widget_class' => 'SubPanelManageAcceptancesButton'),
                                 array('widget_class' => 'SubPanelSendInvitesButton'),
+                                array('widget_class' => 'SubPanelTopEventsFilterInputButton'), // Add filter buttons and search field
    				array('widget_class' => 'SubPanelCheck'),
 			),
 
