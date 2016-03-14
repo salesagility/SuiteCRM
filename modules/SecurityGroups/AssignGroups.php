@@ -121,6 +121,11 @@ function mass_assign($event, $arguments)
     $action = $_REQUEST['action'];
     $module = $_REQUEST['module'];
   
+      global $current_user;
+    if($current_user->is_admin==0) {//custom code to disable the MassAssign for non-admin user.
+		  	return 0;
+		  }
+		  
   	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
     //check if security suite enabled
     $action = strtolower($action);
