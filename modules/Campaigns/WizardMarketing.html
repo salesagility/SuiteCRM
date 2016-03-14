@@ -59,10 +59,8 @@
 	<input type="hidden" id="wiz_next" name="wiz_next" value='2'>
 	<input type="hidden" id="direction" name="wiz_direction" value='exit'>
 	<input type="hidden" id="show_wizard_summary" name="show_wizard_summary" value='0'>
-	<!--
-	<input type="hidden" id="send_marketing_test_email" name="send_marketing_test_email" value='0'>
-	<input type="hidden" id="schedule_marketing_email" name="schedule_marketing_email" value='0'>
-	-->
+	<input type="hidden" id="sendMarketingEmailTest" name="sendMarketingEmailTest" value="0">
+	<input type="hidden" id="sendMarketingEmailSchedule" name="sendMarketingEmailSchedule" value="0">
 
 	{$WIZMENU}
 
@@ -77,8 +75,10 @@
 						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
 						<td><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
 						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$CAMPAIGN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
-						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns'; $('#show_wizard_summary').val('1');" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
+
+						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns'; $('#show_wizard_summary').val('1'); " type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" ></div>
 						</td>
+
 						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:onNextClick();" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
 					</tr>
 				</table>
@@ -557,7 +557,7 @@
 			<div class="box schedule {$PL_DISABLED}">
 
 				{if !$PL_DISABLED}
-				<a href="javascript:;" onclick="onScheduleClick(this);">
+				<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', '{$EmailMarketingId}');">
 					{/if}
 
 					{$MOD.LBL_SEND_EMAIL}

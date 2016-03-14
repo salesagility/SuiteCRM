@@ -186,6 +186,36 @@ if($master !='save'){
 }
 
 if(isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) {
+
+    if( (isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) ||
+        (isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) ) {
+        // set correct post variables..
+        $_POST['module'] = 'Campaigns';
+        $_POST['action'] = 'QueueCampaign';
+        $_POST['process_form'] = false;
+        $_POST['return_module'] = 'Campaigns';
+        $_POST['return_id'] = $marketing->campaign_id;
+        $_POST['return_action'] = 'WizardHome';
+        $_POST['record'] = $marketing->campaign_id;
+        $_POST['direct_step'] = '1';
+        $_POST['campaign_id'] = '';
+        $_POST['wiz_mass'] = $marketing->id;
+        if(isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) {
+            $_POST['mode'] = 'test';
+        }
+        else if(isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
+            $_POST['mode'] = 'send';
+        }
+        else {
+            throw new Exception('request error');
+        }
+
+        //$_POST['SUBMIT'] = 'Send Test';
+        $_REQUEST = array_merge($_REQUEST, $_POST);
+        include 'modules/Campaigns/QueueCampaign.php';
+        exit;
+    }
+
     $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $marketing->campaign_id . "&campaign_id=" . $marketing->campaign_id . "&jump=3&marketing_id=" . $marketing->id;
 }
 else {
