@@ -722,7 +722,7 @@ $mod_strings = array(
         'image' => 'Image',
     ),
     'labelTypes' => array(
-        "" => "Frequently used labels",
+        "frequently_used" => "Frequently used labels",
         "all" => "All Labels",
     ),
 
