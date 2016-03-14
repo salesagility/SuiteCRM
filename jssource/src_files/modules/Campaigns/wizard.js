@@ -318,14 +318,31 @@ var onEmailTemplateChange = function(elem) {
 };
 
 var onScheduleClick = function(e) {
-    $('#wiz_home_next_step').val(3);
+    //$('#wiz_home_next_step').val(3);
+    $('#schedule_marketing_email').val(1);
     $('#wiz_submit_button').click();
 };
 
 
-var onSendAsTestClick = function(e) {
-    $('#wiz_home_next_step').val(2);
-    $('#wiz_submit_button').click();
+var onSendAsTestClick = function(e, campaignId, marketingId) {
+    //$('#wiz_home_next_step').val(2);
+    //$('#send_marketing_test_email').val(1);
+    //$('#wiz_submit_button').click();
+
+
+    //$('<form>')
+    //    .append('<input name="return_module" value="Campaigns">')
+    //    .append('<input name="module" value="Campaigns">')
+    //    .append('<input name="record" value="">')
+    //    .append('<input name="action" value="QueueCampaign">')
+    //    //.append('<input name="return_action" value="WizardHome">')
+    //    .append('<input name="return_action" value="WizardMarketing">')
+    //    .append('<input name="wiz_mass" value="' + campaignId + '">')
+    //    .append('<input name="mode" value="test">')
+    //    .append('<input name="direct_step" value="1">')
+    //    .append('<input name="record" value="' + marketingId + '">')
+    //    .append('<input name="return_id" value="' + marketingId + '">')
+    //    .submit();
 };
 
 
