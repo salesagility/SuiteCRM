@@ -18,7 +18,7 @@ class ModuleController extends Api
      */
     public function getModuleRecords(Request $req, Response $res, $args)
     {
-        $module = \BeanFactory::getBean($args['module_name']);
+        $module = \BeanFactory::getBean($args['module']);
         $return_records = array();
         if (is_object($module)) {
             $records = $module->get_full_list();
@@ -45,7 +45,7 @@ class ModuleController extends Api
     public function getModuleRecord(Request $req, Response $res, $args)
     {
         $id = $args['id'];
-        $module = $args['module_name'];
+        $module = $args['module'];
         $module = \BeanFactory::getBean($module, $id);
 
         if (!is_object($module)) {
@@ -98,39 +98,12 @@ class ModuleController extends Api
     public function getModuleLayout(Request $req, Response $res, $args)
     {
         $lib = new ModuleLib();
-        $data = $req->getParsedBody();
+        $module = $args['module'];
+        $view = $args['view'];
 
-        $modules = '';
-        if (!empty($data['modules'])) {
-            $modules = $data['modules'];
-        }
-
-        $views = '';
-        if (!empty($data['views'])) {
-            $views = $data['views'];
-        }
-
-        $types = '';
-        if (!empty($data['types'])) {
-            $types = $data['types'];
-        }
-
-        $hash = 'false';
-
-        if (!empty($data['hash'])) {
-            $hash = $data['hash'];
-        }
-
-        if (empty($modules) || empty($views) || empty($types) || !is_array($modules) || !is_array($views) || !is_array($types)) {
-            //http://stackoverflow.com/a/10323055
-            return $this->generateResponse($res, 400, 'Incorrect parameters', 'Failure');
-        } else {
-            return $this->generateResponse($res, 200, $lib->getModuleLayout($modules, $views, $types, $hash),
-                'Success');
-        }
+        return $this->generateResponse($res, 200, $lib->get_module_view_defs($module, $view),'Success');
     }
 
-    //Emails?fields[]=name&fields[]=id
     /**
      * @param Request  $req
      * @param Response $res
@@ -384,7 +357,7 @@ class ModuleController extends Api
         $lib = new ModuleLib();
         $data = $req->getParsedBody();
 
-        $moduleName = $data['module_name'];
+        $moduleName = $data['module'];
         $moduleId = $data['module_id'];
         $linkFieldName = $data['link_field_name'];
         $relatedIds = $data['related_ids'];
@@ -410,7 +383,7 @@ class ModuleController extends Api
         $lib = new ModuleLib();
         $data = $req->getParsedBody();
 
-        $moduleName = $data['module_name'];
+        $moduleName = $data['module'];
         $moduleId = $data['module_id'];
         $linkFieldName = $data['link_field_name'];
         $relatedIds = $data['related_ids'];

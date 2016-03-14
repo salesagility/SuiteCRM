@@ -211,7 +211,7 @@ class ModuleLib
      *
      * @return array
      */
-    public function get_module_view_defs($module_name, $type, $view)
+    public function get_module_view_defs($module_name, $view, $type='')
     {
         global $viewdefs, $listViewDefs;
         require_once 'include/MVC/View/SugarView.php';
