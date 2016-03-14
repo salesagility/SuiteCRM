@@ -76,7 +76,7 @@ class SugarRestSerialize extends SugarRest{
 			$this->fault($er);
 		}else{
 			$method = $_REQUEST['method'];
-			$data = unserialize(from_html($data));
+			$data = sugar_unserialize(from_html($data));
 			if(!is_array($data))$data = array($data);
 			$GLOBALS['log']->info('End: SugarRestSerialize->serve');
 			return call_user_func_array(array( $this->implementation, $method),$data);
