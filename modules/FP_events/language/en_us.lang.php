@@ -115,9 +115,9 @@ $mod_strings = array(
 // Attendance report
     'LBL_ACCEPT_REPORT' => 'Attendance',
     'LBL_ACCEPT_REPORT_KEY' => '',
-    'LBL_CONTACT_NAME' => 'NAME',
-    'LBL_ACCOUNT_NAME' => 'COMPANY',
-    'LBL_SIGNATURE' => 'SIGNATURE',
+    'LBL_CONTACT_NAME' => 'Name',
+    'LBL_ACCOUNT_NAME' => 'Company',
+    'LBL_SIGNATURE' => 'Signature',
 // email templates
     'LBL_EMAIL_ACCEPT' => 'Accept',
     'LBL_EMAIL_DECLINE' => 'Decline',
