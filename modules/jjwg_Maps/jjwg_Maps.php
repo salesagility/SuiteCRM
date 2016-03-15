@@ -499,8 +499,7 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             $bean->jjwg_maps_lng_c = (!empty($aInfo['lng'])) ? $aInfo['lng'] : 0;
             $bean->jjwg_maps_geocode_status_c = (!empty($aInfo['status'])) ? $aInfo['status'] : '';
             $bean->jjwg_maps_address_c = (!empty($aInfo['address'])) ? $aInfo['address'] : '';
-            
-            $GLOBALS['log']->info(__METHOD__.' $aInfo: '.print_r($aInfo, true));
+
         }
 
     }
@@ -633,7 +632,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             }
             // Update/Reset the Geocode fields using Queries (not save() bean method)
             $update_result = $this->updateGeocodeInfoByBeanQuery($bean, $aInfo);
-            $GLOBALS['log']->info(__METHOD__.' $update_result: '.print_r($update_result, true));
         }
 
     }
@@ -662,7 +660,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
         $latQ = (!empty($aInfo['lat'])) ? $this->db->quote($aInfo['lat']) : 0;
         $statusQ = (!empty($aInfo['status'])) ? $this->db->quote($aInfo['status']) : '';
         $addressQ = (!empty($aInfo['address'])) ? $this->db->quote($aInfo['address']) : '';
-        $GLOBALS['log']->info(__METHOD__.' $aInfo: '.print_r($aInfo, true));
         
         // Find record by id
         $query = "SELECT ".$table_name.".id, ".$table_name."_cstm.id_c FROM ".$table_name." " .
@@ -704,7 +701,6 @@ class jjwg_Maps extends jjwg_Maps_sugar {
             return false;
         }
         $GLOBALS['log']->info(__METHOD__.' $bean->object_name: '.$bean->object_name);
-        $GLOBALS['log']->info(__METHOD__.' $aInfo: '.print_r($aInfo, true));
         
         $table_name = $bean->table_name;
         if (!(in_array($table_name, $this->settings['valid_geocode_tables']))) {

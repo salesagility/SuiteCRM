@@ -285,7 +285,7 @@ $layout_defs['Contacts'] = array(
             'subpanel_name' => 'ForTargets',
             'title_key' => 'LBL_CAMPAIGN_LIST_SUBPANEL_TITLE',
         ),
-        'contact_aos_quotes"' => array(
+        'contact_aos_quotes' => array(
             'order' => 101,
             'module' => 'AOS_Quotes',
             'subpanel_name' => 'default',
@@ -295,7 +295,7 @@ $layout_defs['Contacts'] = array(
             'get_subpanel_data' => 'aos_quotes',
         ),
 
-        'contact_aos_invoices"' => array(
+        'contact_aos_invoices' => array(
             'order' => 102,
             'module' => 'AOS_Invoices',
             'subpanel_name' => 'default',
@@ -305,7 +305,7 @@ $layout_defs['Contacts'] = array(
             'get_subpanel_data' => 'aos_invoices',
         ),
 
-        'contact_aos_contracts"' => array(
+        'contact_aos_contracts' => array(
             'order' => 103,
             'module' => 'AOS_Contracts',
             'subpanel_name' => 'default',

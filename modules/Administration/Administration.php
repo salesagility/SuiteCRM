@@ -110,16 +110,19 @@ class Administration extends SugarBean {
                 $this->settings[$row['category']."_".$row['name']] = $this->decrypt_after_retrieve($row['value']);
             else
                 $this->settings[$row['category']."_".$row['name']] = $row['value'];
+            $this->settings[$row['category']] = true;
         }
         $this->settings[$category] = true;
 
-        // outbound email settings
-        $oe = new OutboundEmail();
-        $oe->getSystemMailerSettings();
+        if(!isset($this->settings["mail_sendtype"])) {
+            // outbound email settings
+            $oe = new OutboundEmail();
+            $oe->getSystemMailerSettings();
 
-        foreach($oe->field_defs as $def) {
-            if(strpos($def, "mail_") !== false)
-                $this->settings[$def] = $oe->$def;
+            foreach ($oe->field_defs as $def) {
+                if (strpos($def, "mail_") !== false)
+                    $this->settings[$def] = $oe->$def;
+            }
         }
 
         // At this point, we have built a new array that should be cached.

@@ -315,7 +315,6 @@ class CaseUpdatesHook {
 
         $email_template = new EmailTemplate();
         $aop_config = $this->getAOPConfig();
-        $GLOBALS['log']->warn("CaseUpdatesHook: sendClosureEmail Config is ".print_r($aop_config,true));
         $email_template = $email_template->retrieve($aop_config['case_closure_email_template_id']);
 
         if(!$email_template){

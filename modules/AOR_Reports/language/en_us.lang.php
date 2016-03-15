@@ -85,4 +85,5 @@ $mod_strings = array (
   'LBL_PARAMETERS' => 'Parameters',
     'LBL_TOOLTIP_DRAG_DROP_ELEMS' => 'Drag and drop elements into field or condition area',
     'LBL_MAIN_GROUPS' => 'Main Group:',
+    'LBL_CHAR_UNNAMED_DEFAULT_TITLE' => 'Unnamed Chart',
 );

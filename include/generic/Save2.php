@@ -123,7 +123,7 @@ else {
  	if(!empty($_REQUEST['select_entire_list']) &&  $_REQUEST['select_entire_list'] != 'undefined' && isset($_REQUEST['current_query_by_page'])){
 		$order_by = '';
 		$current_query_by_page = $_REQUEST['current_query_by_page'];
- 		$current_query_by_page_array = unserialize(base64_decode($current_query_by_page));
+ 		$current_query_by_page_array = sugar_unserialize(base64_decode($current_query_by_page));
 
         $module = $current_query_by_page_array['module'];
         $seed = BeanFactory::getBean($module);

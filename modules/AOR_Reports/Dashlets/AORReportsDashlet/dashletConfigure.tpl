@@ -90,6 +90,24 @@
                     <select multiple="multiple" name="charts[]" id="charts{$id}">
                         {$chartOptions}
                     </select>
+                    <script type="text/javascript">
+
+                        var chartId = '{$id}';
+                        var chartUnnamedDefaultTitle = '{$MOD.LBL_CHAR_UNNAMED_DEFAULT_TITLE}';
+
+                        {literal}
+
+                        $(function() {
+                            $('#charts' + chartId + ' option').each(function(i,e) {
+                                if(!$(this).html()) {
+                                    $(this).html(chartUnnamedDefaultTitle + ' #' + (i+1));
+                                }
+                            });
+                        });
+
+                        {/literal}
+
+                    </script>
                 </td>
             </tr>
             {foreach from=$parameters item=condition}

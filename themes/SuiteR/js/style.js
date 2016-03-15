@@ -304,22 +304,6 @@ $(window).resize(function () {
     if ($(window).width() > 980 && $('.sidebar').is(':visible')) {
         $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
     }
-    if ($('.navbar-nav').width() < 600 && $(window).width() > 980){
-        $('#usermenucollapsed, #searchbutton').css({
-            'display': 'none'
-        });
-        $('#searchform').css({
-            'display': 'inline'
-        })
-            $('#usermenu').css({
-            'display': 'inline',
-            'padding' :'0',
-            //'border-left' :'1px solid #bbbbbb',
-            'margin': '0 0 0 10px',
-            'font-size':'1.1em'
-        });
-
-    }
 });
 
 // jQuery to toggle sidebar

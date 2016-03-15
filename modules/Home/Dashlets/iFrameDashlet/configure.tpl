@@ -70,7 +70,7 @@
 <tr>
     <td scope='row'>{$urlLBL}</td>
     <td>
-    	<input class="text" name="url" size='20' maxlength='255' value='{$url}'>
+    	<input class="text" name="url" size='20' maxlength='2000' value='{$url}'>
     </td>
 </tr>
 <tr>

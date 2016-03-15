@@ -560,8 +560,10 @@ enableQS(false);
             $linkTypes[$key] = translate('LBL_LINK_TYPE_'.$value,'SugarFeed');
         }
 		$ss->assign('link_types', $linkTypes);
-		return $ss->fetch('modules/SugarFeed/Dashlets/SugarFeedDashlet/UserPostForm.tpl');
 
+        $userPostFormTplFile = 'modules/SugarFeed/Dashlets/SugarFeedDashlet/UserPostForm.tpl';
+        $fetch = $ss->fetch(get_custom_file_if_exists($userPostFormTplFile));
+        return $fetch;
 	}
 
     // This is called from the include/MySugar/DashletsDialog/DashletsDialog.php and determines if we should display the SugarFeed dashlet as an option or not

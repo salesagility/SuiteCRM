@@ -96,7 +96,7 @@ $themedef = array(
         'action_menu_background' => array(
             'vname' => 'LBL_ACTION_MENU_BACKGROUND',
             'type' => 'colour',
-            'default' => '#ffffff'
+            'default' => '#F7F7F7'
         ),
 
         'action_menu_background_hover' => array(
@@ -142,6 +142,11 @@ $themedef = array(
             'type' => 'colour',
             'default' => '#ffffff'
         ),
+        'dashlet_headertext' => array(
+            'vname' => 'LBL_COLOUR_ADMIN_DASHHEADTEXT',
+            'type' => 'colour',
+            'default' => '#3C8DBC'
+        ),        
         'icon' => array(
             'vname' => 'LBL_COLOUR_ADMIN_ICON',
             'type' => 'colour',

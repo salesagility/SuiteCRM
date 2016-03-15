@@ -37,9 +37,8 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-require('modules/SugarFeed/views/view.adminsettings.php');
 
-class customViewAdminsettings extends ViewAdminsettings
+class ViewAdminsettings extends SugarView
 {
     /**
      * @see SugarView::_getModuleTab()
@@ -162,14 +161,12 @@ class customViewAdminsettings extends ViewAdminsettings
                 // Fake module, need to handle specially
                 $userFeedEnabled = $currModule['enabled'];
                 continue;
-            } else {
-                $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
-            }
-
-            if ($module == 'Facebook' || $module == 'Twitter') {
+            } elseif ($module == 'Facebook' || $module == 'Twitter') {
 
                 $currModule['label'] = $module;
 
+            } else {
+                $currModule['label'] = $GLOBALS['app_list_strings']['moduleList'][$module];
             }
 
             $module_list[] = $currModule;

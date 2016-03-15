@@ -48,7 +48,10 @@ class ViewSourceProperties extends ViewList {
  		parent::ViewList();
  	}
 
-    function display() {
+    public function display()
+    {
+        global $sugar_config;
+
 		require_once('include/connectors/sources/SourceFactory.php');
 		require_once('include/connectors/utils/ConnectorUtils.php');
 		
@@ -64,7 +67,17 @@ class ViewSourceProperties extends ViewList {
 	    	$label = isset($connector_language[$field_id]) ? $connector_language[$field_id] : $field_id;
 	        $required_fields[$field_id]=$label;
 	    }
-    	
+
+        // treat string as a template (the string resource plugin is unavailable in the current Smarty version)
+        if (isset($connector_language['LBL_LICENSING_INFO'])) {
+            $siteUrl = rtrim($sugar_config['site_url'], '/');
+            $connector_language['LBL_LICENSING_INFO'] = str_replace(
+                '{$SITE_URL}',
+                $siteUrl,
+                $connector_language['LBL_LICENSING_INFO']
+            );
+        }
+
     	$this->ss->assign('required_properties', $required_fields);
     	$this->ss->assign('source_id', $source_id);
     	$this->ss->assign('properties', $properties);
