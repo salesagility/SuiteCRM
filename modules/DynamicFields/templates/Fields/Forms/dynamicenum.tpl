@@ -1,4 +1,5 @@
 {*
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -37,18 +38,37 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+
+
+
 *}
 
-<script type="text/javascript" src="{sugar_getjspath file='modules/EAPM/EAPMEdit.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/externalAPI.cache.js'}"></script>
-<script type="text/javascript">
-EAPMFormName = 'EditView';
-EAPMOAuthNotice = '{$MOD.LBL_OAUTH_SAVE_NOTICE}';
-EAPMBAsicAuthNotice = '{$MOD.LBL_BASIC_SAVE_NOTICE}';
-EAPMBClickToEdit = '<span class="button">{$MOD.LBL_CLICK_TO_EDIT}</span>';
-YAHOO.util.Event.onDOMReady(function() {ldelim}
-EAPMEditStart(
-{if is_admin($current_user) } true {else} false {/if}
-);
-{rdelim});
-</script>
+ {include file="modules/DynamicFields/templates/Fields/Forms/coreTop.tpl"}
+
+<tr>
+	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="LBL_DROP_DOWN_LIST"}:</td>
+	<td>
+	{if $hideLevel < 5 && empty($vardef.function)}
+		{html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}<br><input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button' onclick="ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value);">&nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}' class='button' onclick="ModuleBuilder.moduleDropDown('', this.form.name.value);">{/if}
+	{else}
+		<input type='hidden' name='options' value='{$selected_dropdown}'>{$selected_dropdown}
+	{/if}
+	</td>
+</tr>
+<tr>
+    <td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_PARENT_ENUM"}:</td>
+    <td>
+           <input type="text" id="parentenum"  name="parentenum" value="{$vardef.parentenum}" />
+    </td>
+</tr>
+<tr>
+	<td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
+	<td>
+	{if $hideLevel < 5}
+		<input type="checkbox" id="massupdate"  name="massupdate" value="1" {if !empty($vardef.massupdate)}checked{/if}/>
+	{else}
+		<input type="checkbox" id="massupdate"  name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
+	{/if}
+	</td>
+</tr>
+{include file="modules/DynamicFields/templates/Fields/Forms/coreBottom.tpl"}

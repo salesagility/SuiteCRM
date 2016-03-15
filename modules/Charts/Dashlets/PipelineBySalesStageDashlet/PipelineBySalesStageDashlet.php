@@ -335,8 +335,8 @@ EOD;
         foreach($data as $i)
         {
             //$chart['labelsAndValues'][]=$i['key'].' ('.$currency.(int)$i['total'].')';
-            $chart['labelsAndValues'][]=$this->resizeLabel($i['key']).' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
-            $chart['labels'][]=$i['key'];
+            $chart['labelsAndValues'][]=$this->resizeLabel($i['value']).' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
+            $chart['labels'][]=$i['value'];
             $chart['data'][]=(int)$i['total'];
             $total+=(int)$i['total'];
         }

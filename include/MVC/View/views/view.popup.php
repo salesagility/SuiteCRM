@@ -102,7 +102,7 @@ class ViewPopup extends SugarView{
             if(!empty($_REQUEST['current_query_by_page'])) {
                 $blockVariables = array('mass', 'uid', 'massupdate', 'delete', 'merge', 'selectCount',
                     'sortOrder', 'orderBy', 'request_data', 'current_query_by_page');
-                $current_query_by_page = unserialize(base64_decode($_REQUEST['current_query_by_page']));
+                $current_query_by_page = sugar_unserialize(base64_decode($_REQUEST['current_query_by_page']));
                 foreach($current_query_by_page as $search_key=>$search_value) {
                     if($search_key != $this->module.'2_'.strtoupper($this->bean->object_name).'_offset'
                     	&& !in_array($search_key, $blockVariables)) {

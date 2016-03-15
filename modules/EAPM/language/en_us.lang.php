@@ -95,6 +95,8 @@ $mod_strings = array (
   
   'LBL_ERR_FAILED_QUICKCHECK' => 'You are not currently connected to your {0} account. Click OK to login to your account and to re-activate the connection.',
 
+  'LBL_CLICK_TO_EDIT' => 'Click to Edit',
+
   // Various strings used throughout the external account modules
   'LBL_MEET_NOW_BUTTON' => 'Meet Now',
   'LBL_VIEW_LOTUS_LIVE_MEETINGS' => 'View Upcoming IBM SmartCloud&trade; Meetings',
