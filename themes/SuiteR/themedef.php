@@ -96,7 +96,7 @@ $themedef = array(
         'action_menu_background' => array(
             'vname' => 'LBL_ACTION_MENU_BACKGROUND',
             'type' => 'colour',
-            'default' => '#ffffff'
+            'default' => '#F7F7F7'
         ),
 
         'action_menu_background_hover' => array(

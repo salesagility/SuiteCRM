@@ -559,7 +559,7 @@ function r_getfile($file) {
 	$text=$this->getfile($file);
 	while (preg_match($this->file_delim,$text,$res)) {
 		$text2=$this->getfile($res[1]);
-		$text=preg_replace("'".preg_quote($res[0])."'",$text2,$text);
+		$text=str_replace($res[0], $text2, $text);
 	}
 	return $text;
 }

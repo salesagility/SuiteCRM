@@ -648,7 +648,7 @@ class SugarController{
                 }
             }
             $_REQUEST = array();
-            $_REQUEST = unserialize(base64_decode($temp_req['current_query_by_page']));
+            $_REQUEST = sugar_unserialize(base64_decode($temp_req['current_query_by_page']));
             unset($_REQUEST[$seed->module_dir.'2_'.strtoupper($seed->object_name).'_offset']);//after massupdate, the page should redirect to no offset page
             $storeQuery->saveFromRequest($_REQUEST['module']);
             $_REQUEST = array('return_module' => $temp_req['return_module'], 'return_action' => $temp_req['return_action']);//for post_massupdate, to go back to original page.

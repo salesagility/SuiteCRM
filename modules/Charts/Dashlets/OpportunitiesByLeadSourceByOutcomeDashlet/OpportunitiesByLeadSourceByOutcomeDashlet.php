@@ -3,9 +3,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -276,7 +276,9 @@ EOD;
         foreach($data as $i)
         {
             $key = $i["lead_source"];
+            $keyDom = $i["lead_source_dom_option"];
             $stage = $i["sales_stage"];
+            $stageDom = $i["sales_stage_dom_option"];
             if(!in_array($key,$chart['labels']))
             {
                 $chart['labels'][] = $key;
@@ -287,7 +289,7 @@ EOD;
 
             $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
             $chart['data'][count($chart['data'])-1][] = $formattedFloat;
-            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage'><input type='hidden' class='category' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
+            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stageDom'><input type='hidden' class='category' value='$keyDom'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
         }
         return $chart;
     }
