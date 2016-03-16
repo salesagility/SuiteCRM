@@ -121,7 +121,7 @@ function mass_assign($event, $arguments)
     $action = $_REQUEST['action'];
     $module = $_REQUEST['module'];
   
-  	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles"); //,"Users"=>"Users");
+  	$no_mass_assign_list = array("Emails"=>"Emails","ACLRoles"=>"ACLRoles","Pivot"=>"Pivot"); //,"Users"=>"Users");
     //check if security suite enabled
     $action = strtolower($action);
     if(isset($module) && ($action == "list" || $action == "index" || $action == "listview") 
