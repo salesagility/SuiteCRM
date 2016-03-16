@@ -37,39 +37,31 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$mod_strings = array (
-  'LBL_ASSIGNED_TO_ID' => 'Assigned User Id',
-  'LBL_ASSIGNED_TO_NAME' => 'Assigned to',
-  'LBL_SECURITYGROUPS' => 'Security Groups',
-  'LBL_SECURITYGROUPS_SUBPANEL_TITLE' => 'Security Groups',
-  'LBL_ID' => 'ID',
-  'LBL_DATE_ENTERED' => 'Date Created',
-  'LBL_DATE_MODIFIED' => 'Date Modified',
-  'LBL_MODIFIED' => 'Modified By',
-  'LBL_MODIFIED_ID' => 'Modified By Id',
-  'LBL_MODIFIED_NAME' => 'Modified By Name',
-  'LBL_CREATED' => 'Created By',
-  'LBL_CREATED_ID' => 'Created By Id',
-  'LBL_DESCRIPTION' => 'Description',
-  'LBL_DELETED' => 'Deleted',
-  'LBL_NAME' => 'Name',
-  'LBL_CREATED_USER' => 'Created by User',
-  'LBL_MODIFIED_USER' => 'Modified by User',
-  'LBL_LIST_NAME' => 'Name',
-  'LBL_EDIT_BUTTON' => 'Edit',
-  'LBL_REMOVE' => 'Remove',
-  'LBL_LIST_FORM_TITLE' => 'Pivot List',
-  'LBL_MODULE_NAME' => 'Pivot',
-  'LBL_MODULE_TITLE' => 'Pivot',
-  'LBL_HOMEPAGE_TITLE' => 'My Pivot',
-  'LNK_NEW_RECORD' => 'Create Pivot',
-  'LNK_LIST' => 'View Pivot',
-  'LNK_IMPORT_A007_PIVOT' => 'Import Pivot',
-  'LBL_SEARCH_FORM_TITLE' => 'Search Pivot',
-  'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
-  'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
-  'LBL_A007_PIVOT_SUBPANEL_TITLE' => 'Pivot',
-  'LBL_NEW_FORM_TITLE' => 'New Pivot',
-  'LBL_CONFIG' => 'config',
-  'LBL_TYPE' => 'type',
+$module_name = 'Pivot';
+$viewdefs[$module_name]['EditView'] = array(
+    'templateMeta' => array('maxColumns' => '2', 
+                            'widths' => array(
+                                            array('label' => '10', 'field' => '30'), 
+                                            array('label' => '10', 'field' => '30')
+                                            ),                                                                                                                                    
+                                            ),
+                                            
+                                            
+ 'panels' =>array (
+  'default' => 
+  array (
+    
+    array (
+      'name',
+      'assigned_user_name',
+    ),
+    
+    array (
+      'description',
+    ),
+  ),
+                                                    
+),
+                        
 );
+?>

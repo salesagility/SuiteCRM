@@ -401,6 +401,12 @@ $moduleList[] = 'AOR_Scheduled_Reports';
 $beanList['AOS_Contracts'] = 'AOS_Contracts';
 $beanFiles['AOS_Contracts'] = 'modules/AOS_Contracts/AOS_Contracts.php';
 $moduleList[] = 'AOS_Contracts';
+
+$beanList['Pivot'] = 'Pivot';
+$beanFiles['Pivot'] = 'modules/Pivot/Pivot.php';
+$moduleList[] = 'Pivot';
+
+
 $beanList['AOS_Invoices'] = 'AOS_Invoices';
 $beanFiles['AOS_Invoices'] = 'modules/AOS_Invoices/AOS_Invoices.php';
 $moduleList[] = 'AOS_Invoices';

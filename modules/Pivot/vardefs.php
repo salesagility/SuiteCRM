@@ -37,31 +37,59 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$module_name = 'a007_Pivot';
-$viewdefs[$module_name]['EditView'] = array(
-    'templateMeta' => array('maxColumns' => '2', 
-                            'widths' => array(
-                                            array('label' => '10', 'field' => '30'), 
-                                            array('label' => '10', 'field' => '30')
-                                            ),                                                                                                                                    
-                                            ),
-                                            
-                                            
- 'panels' =>array (
-  'default' => 
+$dictionary['Pivot'] = array(
+	'table'=>'pivot',
+	'audited'=>true,
+    'inline_edit'=>true,
+		'duplicate_merge'=>true,
+		'fields'=>array (
+  'config' => 
   array (
-    
-    array (
-      'name',
-      'assigned_user_name',
-    ),
-    
-    array (
-      'description',
-    ),
+    'required' => true,
+    'name' => 'config',
+    'vname' => 'LBL_CONFIG',
+    'type' => 'longtext',
+    'massupdate' => 0,
+    'no_default' => false,
+    'comments' => '',
+    'help' => '',
+    'importable' => 'true',
+    'duplicate_merge' => 'disabled',
+    'duplicate_merge_dom_value' => '0',
+    'audited' => false,
+    'inline_edit' => true,
+    'reportable' => true,
+    'unified_search' => false,
+    'merge_filter' => 'disabled'
   ),
-                                                    
+  'type' => 
+  array (
+    'required' => true,
+    'name' => 'type',
+    'vname' => 'LBL_TYPE',
+    'type' => 'varchar',
+    'massupdate' => 0,
+    'no_default' => false,
+    'comments' => '',
+    'help' => '',
+    'importable' => 'true',
+    'duplicate_merge' => 'disabled',
+    'duplicate_merge_dom_value' => '0',
+    'audited' => false,
+    'inline_edit' => true,
+    'reportable' => true,
+    'unified_search' => false,
+    'merge_filter' => 'disabled',
+    'len' => '255',
+    'size' => '20',
+  ),
 ),
-                        
-);
-?>
+	'relationships'=>array (
+),
+	'optimistic_locking'=>true,
+		'unified_search'=>true,
+	);
+if (!class_exists('VardefManager')){
+        require_once('include/SugarObjects/VardefManager.php');
+}
+VardefManager::createVardef('Pivot','Pivot', array('basic','assignable','security_groups'));

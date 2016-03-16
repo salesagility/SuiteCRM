@@ -1,10 +1,9 @@
 <?php
-if (!defined('sugarEntry') || !sugarEntry) {
-    die('Not A Valid Entry Point');
-}
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point'); 
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -39,32 +38,19 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-$dashletStrings['AnalyticsDashlet'] = array(
-    'LBL_TITLE' => 'Analytics',
-    'LBL_DESCRIPTION' => 'Pivot reports of your data',
-    'LBL_SAVING' => 'Saving Analytics ...',
-    'LBL_SAVED' => 'Saved',
-    'LBL_CONFIGURE_TITLE' => 'Title',
-    'LBL_PIVOT_TO_LOAD' => 'Pivot to Load',
+/*********************************************************************************
 
-    'LBL_NO_PIVOT_SELECTED' => 'No pivot selected for display',
-    'LBL_PIVOT_POINTED_DELETED' => 'This pivot has been deleted',
+ * Description:  TODO To be written.
+ * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * All Rights Reserved.
+ * Contributor(s): ______________________________________..
+ ********************************************************************************/
 
-    'LBL_SHOW_UI' => 'Show UI',
-    'LBL_PLEASE_SAVE' => 'Please save a pivot to load',
-    'LBL_PIVOT_LOAD_ERROR' => 'Sorry, this pivot cannot be loaded',
-    'LBL_BTN_SAVE' => 'Save',
-    'LBL_BTN_LOAD' => 'Load',
-    'LBL_BTN_SAVE_PIVOT' => 'Save Pivot',
-    'LBL_TOGGLE_UI' => 'Toggle UI',
+global $mod_strings, $app_strings, $sugar_config;
 
-    'LBL_LOAD_PIVOT' => 'Load pivot',
-    'LBL_PIVOT_SAVED_AS' => 'Pivot saved as',
-    'LBL_LOADED_SUCCESSFULLY' => 'loaded successfully',
-    'LBL_NO_SAVED_PIVOTS' => 'No saved pivots',
-    'LBL_MIN_PIVOT_NANE' => 'Pivot name must be at least',
-    'LBL_CHARACTERS' => 'characters',
-    'LBL_SHOW_UI' => 'Show UI',
-    'LBL_NAME' => 'Name'
-);
+		
+//if(ACLController::checkAccess('Accounts', 'edit', true))$module_menu[]=Array("index.php?module=Accounts&action=EditView&return_module=Accounts&return_action=index", $mod_strings['LNK_NEW_ACCOUNT'],"CreateAccounts", 'Accounts');
+
+//if(ACLController::checkAccess('Accounts', 'list', true))$module_menu[]=Array("index.php?module=Accounts&action=index&return_module=Accounts&return_action=DetailView", $mod_strings['LNK_ACCOUNT_LIST'],"Accounts", 'Accounts');
+//if(ACLController::checkAccess('Accounts', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=Accounts&return_module=Accounts&return_action=index", $mod_strings['LNK_IMPORT_ACCOUNTS'],"Import", 'Accounts');
 ?>

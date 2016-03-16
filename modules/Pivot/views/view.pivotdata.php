@@ -1,7 +1,68 @@
 <?php
+/**
+ *
+ *
+ * @package
+ * @copyright SalesAgility Ltd http://www.salesagility.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU AFFERO GENERAL PUBLIC LICENSE
+ * along with this program; if not, see http://www.gnu.org/licenses
+ * or write to the Free Software Foundation,Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA 02110-1301  USA
+ *
+ * @author Salesagility Ltd <support@salesagility.com>
+ */
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-global $mod_strings;
-?>
+
+require_once('include/MVC/View/SugarView.php');
+require_once('include/MVC/View/views/view.list.php');
+
+class PivotViewPivotData extends SugarView {
+
+    public function __construct() {
+        parent::SugarView();
+    }
+    /**
+     * display the form
+     */
+    public function display(){
+        global $mod_strings,$hook_array;
+
+        //parent::display();
+        $buttonSave = $mod_strings['LBL_AN_BTN_SAVE_PIVOT'];
+        $buttonLoad = $mod_strings['LBL_AN_BTN_LOAD'];
+        $buttonDelete = $mod_strings['LBL_AN_BTN_DELETE'];
+        $pivotDeleteError = $mod_strings['LBL_AN_PIVOT_DELETE_ERROR'];
+        $deletedSuccessfully = $mod_strings['LBL_AN_DELETED_SUCCESSFULLY'];
+        $pleaseSave = $mod_strings['LBL_AN_PLEASE_SAVE'];
+        $loadError = $mod_strings['LBL_AN_PIVOT_LOAD_ERROR'];
+        $loadedSuccessfully = $mod_strings['LBL_AN_LOADED_SUCCESSFULLY'];
+        $noSavedPivots = $mod_strings['LBL_AN_NO_SAVED_PIVOTS'];
+        $minPivotName = $mod_strings['LBL_AN_MIN_PIVOT_NANE'];
+        $pivotCharacters = $mod_strings['LBL_AN_CHARACTERS'];
+        $pivotSavedAs = $mod_strings['LBL_AN_PIVOT_SAVED_AS'];
+        $areaForAnalysis = $mod_strings['LBL_AN_AREA_FOR_ANALYSIS'];
+        $sales = $mod_strings['LBL_AN_SALES'];
+        $accounts = $mod_strings['LBL_AN_ACCOUNTS'];
+        $leads = $mod_strings['LBL_AN_LEADS'];
+        $genericSave = $mod_strings['LBL_AN_BTN_SAVE'];
+        $genericLoad = $mod_strings['LBL_AN_BTN_LOAD'];
+        $genericDelete = $mod_strings['LBL_AN_BTN_DELETE'];
+        $dialogSaveLabel = $mod_strings['LBL_AN_SAVE_PIVOT'];
+        $dialogLoadLabel = $mod_strings['LBL_AN_LOAD_PIVOT'];
+        $dialogDeleteLabel = $mod_strings['LBL_AN_DELETE_PIVOT'];
+
+        $analytics = <<<EOT
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
@@ -37,7 +98,7 @@ global $mod_strings;
             width: 350,
             modal: true,
             buttons: {
-            "<?php echo $mod_strings['LBL_AN_BTN_SAVE_PIVOT']; ?>": savePivot,
+            "$buttonSave": savePivot,
                 Cancel: function() {
                     dialog.dialog( "close" );
                 }
@@ -54,7 +115,7 @@ global $mod_strings;
             width: 350,
             modal: true,
             buttons: {
-            "<?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?>": getPivotFromObjectToLoad,
+            "$buttonLoad": getPivotFromObjectToLoad,
                 Cancel: function() {
                     dialogLoad.dialog( "close" );
                 }
@@ -70,7 +131,7 @@ global $mod_strings;
             width: 350,
             modal: true,
             buttons: {
-                "<?php echo $mod_strings['LBL_AN_BTN_DELETE']; ?>": markPivotAsDeleted,
+                "$buttonDelete": markPivotAsDeleted,
                 Cancel: function() {
                     dialogDelete.dialog( "close" );
                 }
@@ -89,7 +150,7 @@ global $mod_strings;
             var id = $("#pivotDeleteList").val();
             if(id === undefined)
             {
-                toastr.error("<?php echo $mod_strings['LBL_AN_PIVOT_DELETE_ERROR']; ?>");
+                toastr.error("$pivotDeleteError");
             }
             else
             {
@@ -97,7 +158,7 @@ global $mod_strings;
                         method: "POST",
                         url: "index.php",
                         data:{
-                            'module': 'Home',
+                            'module': 'Pivot',
                             'action': 'deletePivot',
                             'to_pdf':1,
                             'id':id
@@ -105,7 +166,7 @@ global $mod_strings;
 
                     })
                     .done(function( msg ) {
-                        toastr.info("<?php echo $mod_strings['LBL_AN_DELETED_SUCCESSFULLY']; ?>"+" "+name);
+                        toastr.info("$deletedSuccessfully"+" "+name);
                         $( "#dialogDelete" ).dialog("close");
                     });
             }
@@ -117,7 +178,7 @@ global $mod_strings;
 
             if($("#pivotLoadList").val() === "noEntries")
             {
-                toastr.info("<?php echo $mod_strings['LBL_AN_PLEASE_SAVE']; ?>");
+                toastr.info("$pleaseSave");
             }
             else
             {
@@ -127,14 +188,14 @@ global $mod_strings;
 
                 if(item === undefined || item[0] === undefined || item[0].type === undefined || item[0].config === undefined)
                 {
-                    toastr.error("<?php echo $mod_strings['LBL_AN_PIVOT_LOAD_ERROR']; ?>");
+                    toastr.error("$loadError");
                 }
                 else
                 {
                     //console.log(item[0]);
                     $('#analysisType').val(item[0].type);
                     loadPivot(item[0].type,item[0].config);
-                    toastr.success(item[0].name + " "+ "<?php echo $mod_strings['LBL_AN_LOADED_SUCCESSFULLY']; ?>");
+                    toastr.success(item[0].name + " "+ "$loadedSuccessfully");
                     //console.log(item[0].config);
                 }
             }
@@ -148,7 +209,7 @@ global $mod_strings;
             var list = "";
             if(savedPivotList === undefined || savedPivotList.length === 0)
             {
-                list = "<option value='noEntries'><?php echo $mod_strings['LBL_AN_NO_SAVED_PIVOTS']; ?></option>";
+                list = "<option value='noEntries'>$noSavedPivots</option>";
             }
             else
             {
@@ -165,7 +226,7 @@ global $mod_strings;
             var list = "";
             if(savedPivotList === undefined || savedPivotList.length === 0)
             {
-                list = "<option value='noEntries'><?php echo $mod_strings['LBL_AN_NO_SAVED_PIVOTS']; ?></option>";
+                list = "<option value='noEntries'>$noSavedPivots</option>";
             }
             else
             {
@@ -183,7 +244,7 @@ global $mod_strings;
             var name = $("#pivotName").val();
             if(name === undefined || name.length < minNameLength)
             {
-                var message ="<?php echo $mod_strings['LBL_AN_MIN_PIVOT_NANE']; ?>"+" "+minNameLength+" "+"<?php echo $mod_strings['LBL_AN_CHARACTERS']; ?>";
+                var message ="$minPivotName"+" "+minNameLength+" "+"$pivotCharacters";
                 tips.text(message);
                 $("#pivotName").addClass('ui-state-error')
                 toastr.error(message);
@@ -200,7 +261,7 @@ global $mod_strings;
                         method: "POST",
                         url: "index.php",
                     data:{
-                        'module': 'Home',
+                        'module': 'Pivot',
                         'action': 'savePivot',
                         'to_pdf':1,
                         'name':name,
@@ -210,7 +271,7 @@ global $mod_strings;
 
                     })
                     .done(function( msg ) {
-                        toastr.success("<?php echo $mod_strings['LBL_AN_PIVOT_SAVED_AS']; ?>"+" "+name);
+                        toastr.success("$pivotSavedAs"+" "+name);
                         $( "#dialogSave" ).dialog("close");
                     });
             }
@@ -237,7 +298,7 @@ global $mod_strings;
         $("#btnLoadPivot").on("click",function(){
             $.getJSON("index.php",
                 {
-                    'module': 'Home',
+                    'module': 'Pivot',
                     'action': 'getSavedPivotList',
                     'to_pdf':1
                 },
@@ -251,7 +312,7 @@ global $mod_strings;
         $("#btnDeletePivot").on("click",function(){
             $.getJSON("index.php",
                 {
-                    'module': 'Home',
+                    'module': 'Pivot',
                     'action': 'getSavedPivotList',
                     'to_pdf':1
                 },
@@ -278,7 +339,7 @@ global $mod_strings;
             {
                 $.getJSON("index.php",
                     {
-                        'module': 'Home',
+                        'module': 'Pivot',
                         'action': type,
                         'to_pdf':1
                     },
@@ -296,7 +357,7 @@ global $mod_strings;
                 $("#analysisType").val(type);
                 $.getJSON("index.php",
                     {
-                        'module': 'Home',
+                        'module': 'Pivot',
                         'action': type,
                         'to_pdf':1
                     },
@@ -318,23 +379,23 @@ global $mod_strings;
 
     });
 </script>
-<hr>
-<label for="analysisType"><?php echo $mod_strings['LBL_AN_AREA_FOR_ANALYSIS']; ?></label>
+<!--<hr>-->
+<label for="analysisType">$areaForAnalysis</label>
 <select id="analysisType">
-    <option value="getSalesPivotData"><?php echo $mod_strings['LBL_AN_SALES']; ?></option>
-    <option value="getAccountsPivotData"><?php echo $mod_strings['LBL_AN_ACCOUNTS']; ?></option>
-    <option value="getLeadsPivotData"><?php echo $mod_strings['LBL_AN_LEADS']; ?></option>
+    <option value="getSalesPivotData">$sales</option>
+    <option value="getAccountsPivotData">$accounts</option>
+    <option value="getLeadsPivotData">$leads</option>
 </select>
 <div id="output" style="margin: 30px;"></div>
 <div id="config"></div>
 
-<button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i><?php echo $mod_strings['LBL_AN_BTN_SAVE']; ?></button>
-<button type="button" id="btnLoadPivot"><i class="fa fa-search"></i><?php echo $mod_strings['LBL_AN_BTN_LOAD']; ?></button>
-<button type="button" id="btnDeletePivot"><i class="fa fa-trash"></i><?php echo $mod_strings['LBL_AN_BTN_DELETE']; ?></button>
+<button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i>$genericSave</button>
+<button type="button" id="btnLoadPivot"><i class="fa fa-search"></i>$genericLoad</button>
+<button type="button" id="btnDeletePivot"><i class="fa fa-trash"></i>$genericDelete</button>
 
 <input type="hidden" id="txtChosenSave">
 <input type="hidden" id="txtConfigSave">
-<div id="dialogSave" title="<?php echo $mod_strings['LBL_AN_SAVE_PIVOT']; ?>">
+<div id="dialogSave" title="$dialogSaveLabel">
     <p class="validateTips"></p>
     <form>
         <fieldset>
@@ -343,9 +404,14 @@ global $mod_strings;
         </fieldset>
     </form>
 </div>
-<div id="dialogLoad" title="<?php echo $mod_strings['LBL_AN_LOAD_PIVOT']; ?>">
+<div id="dialogLoad" title="$dialogLoadLabel">
 <select id="pivotLoadList"></select>
 </div>
-<div id="dialogDelete" title="<?php echo $mod_strings['LBL_AN_DELETE_PIVOT']; ?>">
+<div id="dialogDelete" title="$dialogDeleteLabel">
     <select id="pivotDeleteList"></select>
 </div>
+EOT;
+
+        echo $analytics;
+    }
+}

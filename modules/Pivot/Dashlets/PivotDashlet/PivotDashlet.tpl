@@ -181,7 +181,7 @@
             {literal}
             $.getJSON("index.php",
                     {
-                        'module': 'Home',
+                        'module': 'Pivot',
                         'action': 'getSavedPivotList',
                         'to_pdf': 1
                     },
@@ -210,7 +210,7 @@
                 {literal}
                 $.getJSON("index.php",
                         {
-                            'module': 'Home',
+                            'module': 'Pivot',
                             'action': type,
                             'to_pdf': 1
                         },
@@ -230,7 +230,7 @@
                 {literal}
                 $.getJSON("index.php",
                         {
-                            'module': 'Home',
+                            'module': 'Pivot',
                             'action': type,
                             'to_pdf': 1
                         },
@@ -259,7 +259,7 @@
             if (type !== undefined) {
                 $.getJSON("index.php",
                         {
-                            'module': 'Home',
+                            'module': 'Pivot',
                             'action': type,
                             'to_pdf': 1
                         },

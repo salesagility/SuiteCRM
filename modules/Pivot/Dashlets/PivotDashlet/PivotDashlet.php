@@ -42,7 +42,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/Dashlet.php');
 
 
-class AnalyticsDashlet extends Dashlet {
+class PivotDashlet extends Dashlet {
     var $savedText; // users's saved text
     var $height = '200'; // height of the pad
     var $pivotId;
@@ -55,8 +55,8 @@ class AnalyticsDashlet extends Dashlet {
      * @param guid $id id for the current dashlet (assigned from Home module)
      * @param array $def options saved for this dashlet
      */
-    function AnalyticsDashlet($id, $def) {
-        $this->loadLanguage('AnalyticsDashlet'); // load the language strings here
+    function PivotDashlet($id, $def) {
+        $this->loadLanguage('PivotDashlet','modules/Pivot/Dashlets/'); // load the language strings here
 
         $this->isRefreshable = false;
 
@@ -91,7 +91,7 @@ class AnalyticsDashlet extends Dashlet {
 
     function checkIfPivotHasBeenDeleted($pivotId)
     {
-        $pivotBean = BeanFactory::getBean('a007_Pivot',$pivotId);return $pivotBean === false;
+        $pivotBean = BeanFactory::getBean('Pivot',$pivotId);return $pivotBean === false;
     }
 
     /**
@@ -137,8 +137,8 @@ class AnalyticsDashlet extends Dashlet {
             $ss->assign('lblName', $this->dashletStrings['LBL_NAME']);
             $ss->assign('lblBtnSavePivot', $this->dashletStrings['LBL_BTN_SAVE_PIVOT']);
 
-            $str = $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashlet.tpl');
-            return parent::display($this->dashletStrings['LBL_DBLCLICK_HELP']) . $str . '<br />'; // return parent::display for title and such
+            $str = $ss->fetch('modules/Pivot/Dashlets/PivotDashlet/PivotDashlet.tpl');
+            return parent::display() . $str . '<br />'; // return parent::display for title and such
         }
     }
 
@@ -159,7 +159,6 @@ class AnalyticsDashlet extends Dashlet {
 
         $ss = new Sugar_Smarty();
         $ss->assign('titleLbl', $this->dashletStrings['LBL_CONFIGURE_TITLE']);
-        $ss->assign('heightLbl', $this->dashletStrings['LBL_CONFIGURE_HEIGHT']);
         $ss->assign('saveLbl', $app_strings['LBL_SAVE_BUTTON_LABEL']);
         $ss->assign('pivotToLoadTitleLbl', $this->dashletStrings['LBL_PIVOT_TO_LOAD']);
         $ss->assign('showUILbl', $this->dashletStrings['LBL_SHOW_UI']);
@@ -171,22 +170,26 @@ class AnalyticsDashlet extends Dashlet {
 
         $ss->assign('pivots',$this->getPivotList());
 
-        return parent::displayOptions() . $ss->fetch('modules/Home/Dashlets/AnalyticsDashlet/AnalyticsDashletOptions.tpl');
+        return parent::displayOptions() . $ss->fetch('modules/Pivot/Dashlets/PivotDashlet/PivotDashletOptions.tpl');
     }
 
     public function getPivotList()
     {
-        $pivotBean = BeanFactory::getBean('a007_Pivot');
+        $pivotBean = BeanFactory::getBean('Pivot');
         $beanList = $pivotBean->get_full_list('name');
         $returnArray = [];
-        foreach ($beanList as $b) {
-            $bean = new stdClass();
-            $bean->type = $b->type;
-            $bean->config = htmlspecialchars_decode($b->config);
-            $bean->name = $b->name;
-            $bean->id = $b->id;
-            $returnArray[] = $bean;
+        if(!is_null($beanList))
+        {
+            foreach ($beanList as $b) {
+                $bean = new stdClass();
+                $bean->type = $b->type;
+                $bean->config = htmlspecialchars_decode($b->config);
+                $bean->name = $b->name;
+                $bean->id = $b->id;
+                $returnArray[] = $bean;
+            }
         }
+
         return json_encode($returnArray);
     }
 
@@ -200,8 +203,22 @@ class AnalyticsDashlet extends Dashlet {
         global $sugar_config, $timedate, $current_user, $theme;
         $options = array();
         $options['title'] = $_REQUEST['title'];
-        $options['showGui']= $_REQUEST['showGui'];
-        $options['pivotId']= $_REQUEST['pivots'];
+        if(isset($_REQUEST['showGui']))
+        {
+            $options['showGui']= $_REQUEST['showGui'];
+        }
+        else
+        {
+            $options['showGui']= '';
+        }
+        if(isset($_REQUEST['pivots']))
+        {
+            $options['pivotId']= $_REQUEST['pivots'];
+        }
+        else
+        {
+            $options['pivotId']= '';
+        }
 
 
         return $options;
