@@ -107,6 +107,4 @@ class DevelController extends SugarController
         echo json_encode($response);
         exit();
     }
-
-
 }

@@ -57,6 +57,4 @@ class DevelViewDetail extends DevelView
         $smarty->assign($params['assign'], $answer);
         return NULL;
     }
-
-
 }
