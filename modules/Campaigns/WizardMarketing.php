@@ -391,7 +391,9 @@ require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
 $ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
 
-$ss->assign('EmailMarketingId', $mrkt_lists[0]);
+if(isset($mrkt_lists[0])) {
+    $ss->assign('EmailMarketingId', $mrkt_lists[0]);
+}
 
 
 
@@ -401,7 +403,7 @@ if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
     $has_campaign = false;
 }
 // todo : its for testing, remove this!
-$has_campaign = false;
+//$has_campaign = false;
 
 include_once 'modules/EmailTemplates/templateFields.php';
 $ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());

@@ -158,8 +158,8 @@ global $currentModule;
     $ss->display(file_exists('custom/modules/Campaigns/WizardHome.html') ? 'custom/modules/Campaigns/WizardHome.html' : 'modules/Campaigns/WizardHome.html');
 
     if(isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) {
-        $campaign_id = $focus->campaign_id;
-        $marketing_id = $focus->marketing_id; // TODO ...
+        $campaign_id = $focus->id;
+        $marketing_id = $_REQUEST['marketing_id'];
         $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&marketing_id=" . $marketing_id;
         header($header_URL);
     }

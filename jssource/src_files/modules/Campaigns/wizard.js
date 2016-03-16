@@ -325,6 +325,12 @@ var onScheduleClick = function(e) {
     $('input[name="module"]').val('Campaigns');
     $('#show_wizard_summary').val('1');
     $('#sendMarketingEmailSchedule').val('1');
+    $('#sendMarketingEmailTest').val('0');
+
+    //var data = $('#wizform').serialize();
+    //$.post('index.php?'+data, data, function(resp){
+    //    console.log(resp);
+    //});
     $('#wizform').submit();
 };
 
@@ -333,6 +339,7 @@ var onSendAsTestClick = function(e, campaignId, marketingId) {
     $('input[name="action"]').val('WizardMarketingSave');
     $('input[name="module"]').val('Campaigns');
     $('#show_wizard_summary').val('1');
+    $('#sendMarketingEmailSchedule').val('0');
     $('#sendMarketingEmailTest').val('1');
     $('#wizform').submit();
 };

@@ -95,7 +95,7 @@
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
 					// save marketing email template first
-					onSaveAsMarketingEmailTemplate(function(){
+					onSaveCopyMarketingEmailTemplate(function(){
 						onNext();
 					});
 					break;
@@ -114,39 +114,28 @@
 			}
 		}
 
-		// TODO this function unnecessary
-		function onSaveMarketingEmailTemplate(callback) {
-			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
-				'func': 'update',
-				'emailTemplateId' : $('#template_id').val(),
-				'body_html': $('#email_template_editor').getMozaikValue()
-			}, function(resp){
-				// todo: hide preloader or loading message..
-				if(JSON.parse(resp).error) {
-					// todo: show error
-					console.error(resp.error);
-				}
-				else {
-					callback();
-				}
-			});
-			// todo: show preloader or loading message...
-		}
+		var emailTemplateCopyId = null;
 
-		function onSaveAsMarketingEmailTemplate(callback) {
+		function onSaveCopyMarketingEmailTemplate(callback) {
 			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
-				'func': 'createCopy',
-				'emailTemplateId' : $('#template_id').val(),
+				'func': emailTemplateCopyId ? 'update': 'createCopy',
+				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
 				'body_html': $('#email_template_editor').getMozaikValue(),
 				'name': $('#template_name').val(),
 				'subject': $('#template_subject').val(),
 			}, function(resp){
 				// todo: hide preloader or loading message..
-				if(JSON.parse(resp).error) {
+				resp = JSON.parse(resp);
+				if(resp.error) {
 					// todo: show error
 					console.error(resp.error);
 				}
 				else {
+					if(!emailTemplateCopyId) {
+						emailTemplateCopyId = resp.data.id;
+						$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
+						$('#template_id').val(resp.data.id);
+					}
 					callback();
 				}
 			});
@@ -154,7 +143,11 @@
 		}
 
 		function onSaveMarketingEmail(callback) {
-			$.post('index.php?entryPoint=emailMarketingData&func=wizardUpdate&rand='+Math.random(), $('#wizform').serialize(), function(resp){
+			var data = $('#wizform').serialize();
+			if(emailTemplateCopyId) {
+				data = data.replace(/&template_id=[^&]+&/, '&template_id='+emailTemplateCopyId+'&');
+			}
+			$.post('index.php?entryPoint=emailMarketingData&func=wizardUpdate&rand='+Math.random(), data, function(resp){
 				// todo: hide preloader or loading message..
 				resp = JSON.parse(resp);
 				if(resp.error) {
@@ -223,7 +216,7 @@
 						<slot>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
 					</td>
 					<td>
-						<input type="text" id="template_name" name="template_name" value="{$MOD.LBL_COPY_OF}{$template_name}">
+						<input type="text" id="template_name" name="template_name" value="{$template_name}">
 					</td>
 				</tr>
 				<tr>

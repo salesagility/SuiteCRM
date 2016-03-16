@@ -198,7 +198,7 @@ if(isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) 
         $_POST['return_action'] = 'WizardHome';
         $_POST['record'] = $marketing->campaign_id;
         $_POST['direct_step'] = '1';
-        $_POST['campaign_id'] = '';
+        //$_POST['campaign_id'] = '';
         $_POST['wiz_mass'] = $marketing->id;
         if(isset($_REQUEST['sendMarketingEmailTest']) && $_REQUEST['sendMarketingEmailTest']) {
             $_POST['mode'] = 'test';

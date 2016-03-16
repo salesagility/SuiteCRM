@@ -6,30 +6,31 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 $error = false;
 $data = array();
 
-$emailTemplateId = $_REQUEST['emailTemplateId'];
+$emailTemplateId = isset($_REQUEST['emailTemplateId']) && $_REQUEST['emailTemplateId'] ? $_REQUEST['emailTemplateId'] : null;
 
-if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/', $emailTemplateId)) {
+if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/', $emailTemplateId) || !$emailTemplateId) {
 
     $func = isset($_REQUEST['func']) ? $_REQUEST['func'] : null;
+
+    $fields = array('body_html', 'subject', 'name');
+
     switch($func) {
 
-        // TODO: this function unnecessary
         case 'update':
             $bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId);
-            $fields = array('body_html');
             foreach($bean as $key => $value) {
                 if(in_array($key, $fields)) {
                     $bean->$key = $_POST[$key];
                 }
             }
             $bean->save();
+            $data['id'] = $bean->id;
+            $data['name'] = $bean->name;
             break;
 
         case 'createCopy':
             $bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId);
             $newBean = new EmailTemplate();
-
-            $fields = array('body_html', 'subject', 'name');
             $fieldsForCopy = array('type', 'description');
             foreach($bean as $key => $value) {
                 if(in_array($key, $fields)) {
@@ -41,6 +42,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             }
             $newBean->save();
             $data['id'] = $newBean->id;
+            $data['name'] = $newBean->name;
             break;
 
         default: case 'get':
