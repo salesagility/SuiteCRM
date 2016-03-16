@@ -188,6 +188,7 @@ $mod_strings = array (
   'LBL_DATE_START' => 'Start Date ',
   'LBL_TIME_START' => 'Start Time ',
   'LBL_TEMPLATE' => 'Email Template: ',
+	'LBL_SUBJECT' => 'Subject: ',
   'LBL_CREATE_EMAIL_TEMPLATE'=> 'Create',
   'LBL_MESSAGE_FOR' => 'Send This Message To:',
   'LBL_FINISH' => 'Finish',
@@ -451,7 +452,11 @@ $mod_strings = array (
 	'LBL_REPLY_TO_NAME_HELP' => 'This will be the name that your recipient will reply to',
 	'LBL_REPLY_TO_ADDR_HELP' => 'This will be the email that your recipients will reply to',
 	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
-	'LBL_SEARCH_TARGET_LIST' => 'Target list search'
+	'LBL_SEARCH_TARGET_LIST' => 'Target list search',
+	'LBL_INSERT_VARIABLE'		=> 'Insert Variable:',
+	'LBL_INSERT_URL_REF'		=> 'Insert URL Reference',
+	'LBL_INSERT_TRACKER_URL'	=> 'Insert Tracker URL:',
+	'LBL_INSERT'				=> 'Insert',
 );
 
 

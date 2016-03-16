@@ -13,6 +13,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
     $func = isset($_REQUEST['func']) ? $_REQUEST['func'] : null;
     switch($func) {
 
+        // TODO: this function unnecessary
         case 'update':
             $bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId);
             $fields = array('body_html');
@@ -22,6 +23,24 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                 }
             }
             $bean->save();
+            break;
+
+        case 'createCopy':
+            $bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId);
+            $newBean = new EmailTemplate();
+
+            $fields = array('body_html', 'subject', 'name');
+            $fieldsForCopy = array('type', 'description');
+            foreach($bean as $key => $value) {
+                if(in_array($key, $fields)) {
+                    $newBean->$key = $_POST[$key];
+                }
+                else if(in_array($key, $fieldsForCopy)) {
+                    $newBean->$key = $bean->$key;
+                }
+            }
+            $newBean->save();
+            $data['id'] = $newBean->id;
             break;
 
         default: case 'get':

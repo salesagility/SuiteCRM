@@ -292,7 +292,7 @@
         return true;        
     }
 
-var onEmailTemplateChange = function(elem) {
+var onEmailTemplateChange = function(elem, namePrefixCopyOf) {
     var emailTemplateId = $(elem).val();
 
     $('#email_template_view_html').html('');
@@ -311,6 +311,9 @@ var onEmailTemplateChange = function(elem) {
         var htmlCode = $('<textarea />').html(results.data.body_html).text();
         $('#email_template_editor').html(htmlCode);
         $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
+        $('#template_name').val(namePrefixCopyOf + results.data.name);
+        $('#template_subject').val(results.data.subject);
 
     });
 

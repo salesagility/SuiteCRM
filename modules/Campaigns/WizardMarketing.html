@@ -95,7 +95,7 @@
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
 					// save marketing email template first
-					onSaveMarketingEmailTemplate(function(){
+					onSaveAsMarketingEmailTemplate(function(){
 						onNext();
 					});
 					break;
@@ -114,11 +114,32 @@
 			}
 		}
 
+		// TODO this function unnecessary
 		function onSaveMarketingEmailTemplate(callback) {
 			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 				'func': 'update',
 				'emailTemplateId' : $('#template_id').val(),
 				'body_html': $('#email_template_editor').getMozaikValue()
+			}, function(resp){
+				// todo: hide preloader or loading message..
+				if(JSON.parse(resp).error) {
+					// todo: show error
+					console.error(resp.error);
+				}
+				else {
+					callback();
+				}
+			});
+			// todo: show preloader or loading message...
+		}
+
+		function onSaveAsMarketingEmailTemplate(callback) {
+			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
+				'func': 'createCopy',
+				'emailTemplateId' : $('#template_id').val(),
+				'body_html': $('#email_template_editor').getMozaikValue(),
+				'name': $('#template_name').val(),
+				'subject': $('#template_subject').val(),
 			}, function(resp){
 				// todo: hide preloader or loading message..
 				if(JSON.parse(resp).error) {
@@ -170,25 +191,81 @@
 <div id=wizard>
 
 	<div id='step1' style="display:none;">
-		<slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
-		<select  id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this);" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="edit view" style="width: 450px;">
+			<tbody>
+				<tr>
+					<td scope="col" nowrap valign="top">
+						<slot>{$MOD.LBL_TEMPLATE} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
+					</td>
+					<td>
+						<select  id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 
-		{if $email_template_already_selected}
-		{literal}
-		<script type="text/javascript">
-			$(function(){
-				onEmailTemplateChange(document.getElementById('template_id'));
-			});
-		</script>
-		{/literal}
-		{/if}
+						{if $email_template_already_selected}
+						{literal}
+						<script type="text/javascript">
+							$(function(){
+								onEmailTemplateChange(document.getElementById('template_id'), '{/literal}{$MOD.LBL_COPY_OF}{literal}');
+							});
+						</script>
+						{/literal}
+						{/if}
 
-		<!--
-		&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
-		<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
-		&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
-		</span>
-		-->
+						<!--
+						&nbsp;<input type='button' class='button' onclick='open_email_template_form();' value='{$MOD.LBL_CREATE_EMAIL_TEMPLATE}'>
+						<span name='edit_template' id='edit_template' style="{$EDIT_TEMPLATE}">
+						&nbsp;<input type='button' class='button' onclick='edit_email_template_form();' value='{$MOD.LBL_EDIT_EMAIL_TEMPLATE}'>
+						</span>
+						-->
+					</td>
+				</tr>
+				<tr>
+					<td scope="col" nowrap valign="top">
+						<slot>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
+					</td>
+					<td>
+						<input type="text" id="template_name" name="template_name" value="{$MOD.LBL_COPY_OF}{$template_name}">
+					</td>
+				</tr>
+				<tr>
+					<td scope="col" nowrap valign="top">
+						<slot>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
+					</td>
+					<td>
+						<input type="text" id="template_subject" name="template_subject" value="{$template_subject}">
+					</td>
+				</tr>
+
+				<tr>
+					<td width="15%" scope="row" align='left'>
+						{$MOD.LBL_INSERT_VARIABLE}&nbsp;
+					</td>
+					<td width="30%"  colspan="3" style="position: relative;">
+						<div style="width: 900px; position: absolute; top:0; left: 0;">
+							<script src="modules/EmailTemplates/EmailTemplate.js"></script>
+							<script type="text/javascript">
+								{$FIELD_DEFS_JS}
+							</script>
+							<select name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
+								{$DROPDOWN}
+							</select>
+							<select name='variable_name' tabindex="0" onchange="showVariable('wizform');">
+							</select>
+							<span scope="row">
+								{$MOD.LBL_USE}:
+							</span>
+							<input type="text" size="30" tabindex="0" name="variable_text" />
+							<!-- BEGIN: variable_button -->
+							<input type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT}'>
+							<!-- END: variable_button -->
+						</div>
+						<br />
+						<br />
+					</td>
+				</tr>
+
+
+			</tbody>
+		</table>
 
 		<div>
 			{$BODY_MOZAIK}

@@ -393,5 +393,44 @@ $ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_e
 
 $ss->assign('EmailMarketingId', $mrkt_lists[0]);
 
+
+
+//if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
+$has_campaign = true;
+if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
+    $has_campaign = false;
+}
+// todo : its for testing, remove this!
+$has_campaign = false;
+
+include_once 'modules/EmailTemplates/templateFields.php';
+$ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
+
+
+// create option of "Contact/Lead/Task" from corresponding module
+// translations
+$lblContactAndOthers = implode('/', array(
+    isset($app_list_strings['moduleListSingular']['Contacts']) ? $app_list_strings['moduleListSingular']['Contacts'] : 'Contact',
+    isset($app_list_strings['moduleListSingular']['Leads']) ? $app_list_strings['moduleListSingular']['Leads'] : 'Lead',
+    isset($app_list_strings['moduleListSingular']['Prospects']) ? $app_list_strings['moduleListSingular']['Prospects'] : 'Target',
+));
+
+// The insert variable drodown should be conditionally displayed.
+// If it's campaign then hide the Account.
+if ($has_campaign) {
+    $dropdown = "<option value='Contacts'>
+						" . $lblContactAndOthers . "
+			       </option>";
+    $ss->assign("DROPDOWN", $dropdown);
+    $ss->assign("DEFAULT_MODULE", 'Contacts');
+    //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
+} else {
+
+    $ss->assign("DROPDOWN", genDropDownJS2());
+    $ss->assign("DEFAULT_MODULE", 'Accounts');
+}
+
+$ss->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.wizform.variable_text.value, \"email_template_editor\")");
+
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

@@ -43,12 +43,15 @@ function remember_place(obj) {
 	focus_obj = obj;
 }
 
-function showVariable() {
-	document.EditView.variable_text.value =
-		document.EditView.variable_name.options[document.EditView.variable_name.selectedIndex].value;
+function showVariable(form) {
+	if(!form) {
+		form = 'EditView';
+	}
+	document[form].variable_text.value =
+		document[form].variable_name.options[document[form].variable_name.selectedIndex].value;
 }
 
-function addVariables(the_select,the_module) {
+function addVariables(the_select,the_module, form) {
 	the_select.options.length = 0;
 	for(var i=0;i<field_defs[the_module].length;i++) {
 		var new_option = document.createElement("option");
@@ -56,7 +59,7 @@ function addVariables(the_select,the_module) {
 		new_option.text= field_defs[the_module][i].value;
 		the_select.options.add(new_option,i);
 	}
-	showVariable();
+	showVariable(form);
 }
 function toggle_text_only(firstRun) {
 	if (typeof(firstRun) == 'undefined')
@@ -182,10 +185,13 @@ function insert_variable_html_link(text) {
  * If so, the it will call the text insert function, if not, then it
  * will call the html (tinyMCE eidtor) insert function
  */
-function insert_variable(text) {
-	if($('#mozaik .mozaik-list .mozaik-elem').length > 0) {
+function insert_variable(text, mozaikId) {
+	if(!mozaikId) {
+		mozaikId = 'mozaik';
+	}
+	if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length > 0) {
 		//if text only flag is checked, then insert into text field
-		if (document.getElementById('toggle_textonly').checked == true) {
+		if (document.getElementById('toggle_textonly') && document.getElementById('toggle_textonly').checked == true) {
 			//use text version insert
 			insert_variable_text(document.getElementById('body_text_plain'), text);
 		} else {
