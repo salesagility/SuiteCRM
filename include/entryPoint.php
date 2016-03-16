@@ -179,6 +179,7 @@ require_once('include/MVC/SugarModule.php');
 require_once('include/SugarCache/SugarCache.php');
 require('modules/Currencies/Currency.php');
 require_once('include/MVC/SugarApplication.php');
+require_once('modules/Devel/register.php');
 
 require_once('include/upload_file.php');
 UploadStream::register();
