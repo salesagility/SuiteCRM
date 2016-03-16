@@ -27,7 +27,7 @@ class UtilityLib
         $username = $postData['username'];
         $password = $postData['password'];
 
-        if ($authController->login($username, $password)) {
+        if ($authController->login($username, $password,array('passwordEncrypted' => false))) {
             $usr = new \user();
 
             return array('loginApproved' => true, 'userId' => $usr->retrieve_user_id($username));
