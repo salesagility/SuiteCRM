@@ -187,6 +187,7 @@ EOF;
 
         $query = <<<EOF
         SELECT
+			accounts.name as accountName,
             opportunities.name as name,
             RTRIM(LTRIM(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')))) as userName,
             COALESCE(opportunity_type,'undefined') as opportunity_type,
@@ -201,6 +202,10 @@ EOF;
             sales_stage,
             probability
         FROM opportunities
+		INNER JOIN accounts_opportunities
+			ON accounts_opportunities.opportunity_id = opportunities.id
+		INNER JOIN accounts
+			ON accounts_opportunities.account_id = accounts.id
         INNER JOIN users
             ON opportunities.assigned_user_id = users.id
         WHERE opportunities.deleted = false
@@ -214,6 +219,7 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
+            $x->accoutName = $row['accountName'];
             $x->name = $row['name'];
             $x->userName = $row['userName'];
             $x->type = $row['opportunity_type'];
