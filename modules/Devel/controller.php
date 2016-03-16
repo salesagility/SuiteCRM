@@ -95,7 +95,7 @@ class DevelController extends SugarController
      */
     public function action_develToolbarToggleOpenClosedState() {
         if(!isset($_SESSION['DevelToolsToolbarState'])) {
-            $_SESSION['DevelToolsToolbarState'] = false;
+            $_SESSION['DevelToolsToolbarState'] = true;
         } else {
             $_SESSION['DevelToolsToolbarState'] = !$_SESSION['DevelToolsToolbarState'];
         }
