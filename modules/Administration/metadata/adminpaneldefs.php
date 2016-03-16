@@ -289,6 +289,10 @@ $admin_option_defs['Bugs']['bug_tracker']= array('Releases','LBL_MANAGE_RELEASES
 $admin_group_header[]= array('LBL_BUG_TITLE','',false,$admin_option_defs, 'LBL_BUG_DESC');
 
 
+//Devel Tools
+$admin_option_defs = array();
+$admin_option_defs['Devel']['devel'] = array('DevelTools','LBL_DEVEL_TOOLS_CFG_TITLE','LBL_DEVEL_TOOLS_CFG_DESCRIPTION','./index.php?module=Devel&action=configure');
+$admin_group_header[]= array('LBL_DEVEL_TOOLS_TITLE', '', false, $admin_option_defs, 'LBL_DEVEL_TOOLS_DESCRIPTION');
 
 
 

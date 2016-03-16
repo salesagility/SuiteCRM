@@ -111,6 +111,7 @@ $app_list_strings = array(
 
             'OAuthKeys' => 'OAuth Consumer Keys',
             'OAuthTokens' => 'OAuth Tokens',
+            'Devel' => 'Devel',
         ),
 
     'moduleListSingular' => array(
