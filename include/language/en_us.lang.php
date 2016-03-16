@@ -108,6 +108,7 @@ $app_list_strings = array(
             'SugarFeed' => 'SuiteCRM Feed',
             'KBDocuments' => 'Knowledge Base',
             'SugarFavorites' => 'SuiteCRM Favorites',
+            'Devel' => 'Devel',
 
             'OAuthKeys' => 'OAuth Consumer Keys',
             'OAuthTokens' => 'OAuth Tokens',
