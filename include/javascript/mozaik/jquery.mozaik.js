@@ -19,7 +19,7 @@ var mozaik = {
         return html;
     },
 
-    getEditorListElementHTML: function(name, innertext, ace, style) {
+    getEditorListElementHTML: function(name, innertext, ace, style, toolPlugins) {
         var html =
             '<li class="mozaik-elem" data-name="' + name + '">' +
             '	<ul class="mozaik-tools">' +
@@ -28,13 +28,25 @@ var mozaik = {
             '		<li class="mozaik-tool-btn mozaik-tool-stick"><a href="javascript:;" title="Stick"></a></li>' +
             '		<li class="mozaik-tool-btn mozaik-tool-copy"><a href="javascript:;" title="Copy"></a></li>' +
             (ace ? '<li class="mozaik-tool-btn mozaik-tool-source"><a href="javascript:;" title="Source"></a></li>' : '') +
+            (toolPlugins ? this.getToolPluginIconListHTML(toolPlugins, name) : '') +
             '	</ul>' + this.getMozaikInnerHTML(name, innertext, style) +
             '</li>';
         return html;
     },
 
+    getToolPluginIconListHTML: function(toolPlugins, name) {
+        var html = '';
+        for(var i=0; i<toolPlugins.length; i++) {
+            plugin = toolPlugins[i];
+            html += '<li class="mozaik-tool-btn mozaik-tool-'+plugin.name+'" style="background-image: url('+plugin.image+');"><a href="javascript:;" onclick="'+plugin.callback+'(this, \''+name+'\');" title="'+plugin.title+'"></a></li>';
+        }
+        return html;
+    },
+
     getMozaikInnerHTML: function(name, innertext, style) {
-        var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + (style ? ' style="' + style + '"' : '') + '>' + innertext + '</div>';
+        style = ($(innertext).attr('style') ? $(innertext).attr('style') + ';' : '') + style;
+        style = style.replace(/;\s*;/, ';');
+        var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + ' style="' + style + '">' + innertext + '</div>';
         return html;
     },
 
@@ -65,6 +77,28 @@ var mozaik = {
 
 };
 
+
+var plgBackground = {
+
+    name: 'background',
+    title: 'Background color',
+    image: 'img/paint.png',
+    callback: 'plgBackground.onClick',
+
+    onClick: function(elem, name) {
+        if(!$(elem).attr('data-initialized')) {
+            // TODO : add colorpicker to packagist and composer
+            $(elem).ColorPicker({
+                onChange: function(rbg, hex){
+                    $(elem).closest('.mozaik-elem').find('.mozaik-inner').css('background-color', '#'+hex);
+                },
+            });
+            $(elem).attr('data-initialized', '1');
+            $(elem).click();
+        }
+    },
+
+};
 
 (function($){
     $.fn.mozaik = function(options) {
@@ -144,7 +178,8 @@ var mozaik = {
                 //}
             },
             ace: true,
-            width: '600px'
+            width: '600px',
+            toolPlugins: [plgBackground]
         }, options);
 
         // add ace editor
@@ -223,8 +258,10 @@ var mozaik = {
             //if(!$mozaik.css('background-color')) $mozaik.css('background-color', '#ddd');
 
             // add template particular
-            var addEditorListElement = function(name, html, scrollDown) {
-                var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, 'max-width:' + settings.width);
+            var addEditorListElement = function(name, html, scrollDown, toolPlugins, style) {
+                style = (style ? style + ';' : '') + 'max-width:' + settings.width;
+                style = style.replace(/;\s*;/, ';');
+                var listElemHTML = mozaik.getEditorListElementHTML(name, html, settings.ace, style, toolPlugins);
                 $mozaik.append(listElemHTML);
                 var editables = name && settings.thumbs[name].editables ? settings.thumbs[name].editables.split(',') : settings.editables.split(',');
                 $.each(editables, function(i,e){
@@ -258,7 +295,7 @@ var mozaik = {
                 });
                 $mozaik.find('.mozaik-elem:last-child .mozaik-tool-copy').bind('click', function(){
                     var html = $(this).closest('.mozaik-elem').find('.mozaik-inner').html();
-                    addEditorListElement(false, html, scrollDown);
+                    addEditorListElement(false, html, scrollDown, toolPlugins);
                 });
 
                 if(scrollDown) {
@@ -290,14 +327,14 @@ var mozaik = {
                     html = mozaik.getMozaikInnerHTML(false, html, 'max-width:' + settings.width);
                 }
                 else if(length == -1) {
-                    html = mozaik.getEditorListElementHTML(false, html, settings.ace, 'max-width:' + settings.width);
+                    html = mozaik.getEditorListElementHTML(false, html, settings.ace, 'max-width:' + settings.width, settings.toolPlugins);
                 }
                 if(!$(html).find('.mozaik-inner').length) {
                     html = '<div>' + html + '</div>'
                 }
                 $(html).find('.mozaik-inner').each(function(i,e){
                     //$mozaik.append(mozaik.getEditorListElementHTML($(e).attr('data-name'), $(e).html()));
-                    addEditorListElement($(e).attr('data-name') ? $(e).attr('data-name') : false, $(e).html());
+                    addEditorListElement($(e).attr('data-name') ? $(e).attr('data-name') : false, $(e).html(), null, settings.toolPlugins, $(e).attr('style'));
                 });
 
             }
@@ -322,7 +359,6 @@ var mozaik = {
             };
             onResize();
 
-
             // make drag 'n' drop dropp area
             $mozaik.droppable({
                 accept: '.mozaik-thumbnail',
@@ -330,13 +366,13 @@ var mozaik = {
                     var regex = /^string:/i;
                     var name = ui.draggable.attr('data-name');
                     if(settings.thumbs[name].tpl.match(regex)) {
-                        addEditorListElement(name, settings.thumbs[name].tpl.replace(regex, ''), true);
+                        addEditorListElement(name, settings.thumbs[name].tpl.replace(regex, ''), true, settings.toolPlugins);
                         onResize();
                     }
                     else {
                         var url = settings.base + settings.thumbs[name].tpl;
                         $.get(url, function (resp) {
-                            addEditorListElement(name, resp, true);
+                            addEditorListElement(name, resp, true, settings.toolPlugins);
                             onResize();
                             //!@#
                         });

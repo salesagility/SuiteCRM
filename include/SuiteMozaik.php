@@ -40,6 +40,10 @@ class SuiteMozaik {
 <script src='{$this->vendorPath}/tinymce/tinymce/tinymce.min.js'></script>
 <script src="{$this->vendorPath}/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
 <script src="{$this->vendorPath}/gymadarasz/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- for color picker plugin -->
+<link rel="stylesheet" media="screen" type="text/css" href="{$this->vendorPath}/../colorpicker/css/colorpicker.css" />
+<script type="text/javascript" src="{$this->vendorPath}/../colorpicker/js/colorpicker.js"></script>
 HTML;
         return $html;
     }
@@ -83,6 +87,8 @@ HTML;
             ace: false,
             width: '{$width}'
         };
+
+        window.plgBackground.image = '{$this->mozaikPath}/' + window.plgBackground.image;
 
         $('#{$elementId}').mozaik(window.mozaikSettings.{$elementId});
     });
