@@ -7,27 +7,96 @@ class SuiteMozaik {
 
     private static $defaultThumbnails = array(
         'headline' => array(
-            //'thumbnail' => 'tpls/default/thumbs/headline.png',
             'label' => 'Headline',
             //'tpl' => 'tpls/default/headline.html',
             'tpl' => 'string:<p><h1>Add your headline here..</h1></p>',
+            'thumbnail' => 'tpls/default/thumbs/headline.png',
         ),
         'content' => array(
-            //'thumbnail' => 'tpls/default/thumbs/content1.png',
             'label' => 'Content',
-            //'tpl' => 'tpls/default/content1.html',
-            'tpl' => 'string:<p>Put your contents here...</p>',
+            'tpl' => 'string:<p>{lipsum}</p>',
+            'thumbnail' => 'tpls/default/thumbs/content1.png',
+        ),
+        'content2' => array(
+            'label' => 'Content with two columns',
+            'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{lipsum}</td><td>{lipsum}</td></tr></tbody></table>',
+            'thumbnail' => 'tpls/default/thumbs/content2.jpg',
+        ),
+        'content3' => array(
+            'label' => 'Content with three columns',
+            'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{lipsum}</td><td>{lipsum}</td><td>{lipsum}</td></tr></tbody></table>',
+            'thumbnail' => 'tpls/default/thumbs/content3.jpg',
+        ),
+        'image1left' => array(
+            'label' => 'Content with left image',
+            'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{imageSmall}</td><td>{lipsum}</td></tr></tbody></table>',
+            'thumbnail' => 'tpls/default/thumbs/image1left.jpg',
+        ),
+        'image1right' => array(
+            'label' => 'Content with right image',
+            'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{lipsum}</td><td>{imageSmall}</td></tr></tbody></table>',
+            'thumbnail' => 'tpls/default/thumbs/image1right.jpg',
+        ),
+        'image2' => array(
+            'label' => 'Content with two image',
+            'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{imageSmall}</td><td>{lipsum}</td><td>{imageSmall}</td><td>{lipsum}</td></tr></tbody></table>',
+            'thumbnail' => 'tpls/default/thumbs/image2.jpg',
+        ),
+        'image3' => array(
+            'label' => 'Content with three image',
+            'tpl' => 'string:<table style="width:100%;"><tbody><tr><td>{image}</td><td>{image}</td><td>{image}</td></tr><tr><td>{lipsum}</td><td>{lipsum}</td><td>{lipsum}</td></tr></tbody></table>',
+            'thumbnail' => 'tpls/default/thumbs/image3.jpg',
         ),
         'footer' => array(
-            //'thumbnail' => 'tpls/default/thumbs/footer.png',
             'label' => 'Footer',
             //'tpl' => 'tpls/default/footer.html',
             'tpl' => 'string:<p class="footer">Take your footer contents and information here..</p>',
+            'thumbnail' => 'tpls/default/thumbs/footer.png',
         ),
     );
 
+    private $thumbsCache = array();
+
+    private $autoInsertThumbnails = true;
+
+    private static $devMode = false;
+
     public function __construct() {
         $this->vendorPath = $this->mozaikPath . '/vendor';
+        if($this->autoInsertThumbnails) {
+            if(count($this->getThumbs())==0 || self::$devMode) {
+                $ord = 0;
+                foreach(self::$defaultThumbnails as $thumbName => $thumbData) {
+                    $templateEditor = new TemplateEditor();
+                    $templateEditor->name = $thumbData['label'];
+                    $templateEditor->description = preg_replace('/^string:/', '', $thumbData['tpl']);
+                    $templateEditor->description = str_replace('{lipsum}', $this->getContentLipsum(), $templateEditor->description);
+                    $templateEditor->description = str_replace('{imageSmall}', $this->getContentImageSample(130), $templateEditor->description);
+                    $templateEditor->description = str_replace('{image}', $this->getContentImageSample(), $templateEditor->description);
+                    $templateEditor->thumbnail = file_exists($this->mozaikPath . '/' . $thumbData['thumbnail']) ? $this->mozaikPath . '/' . $thumbData['thumbnail'] : null;
+                    $templateEditor->ord = ++$ord;
+                    $templateEditor->save();
+                }
+            }
+            $this->thumbsCache = array();
+        }
+    }
+
+    private function getContentLipsum() {
+        return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempus odio ante, in feugiat ex pretium eu. In pharetra tincidunt urna et malesuada. Etiam aliquet auctor justo eu placerat. In nec sollicitudin enim. Nulla facilisi. In viverra velit turpis, et lobortis nunc eleifend id. Curabitur semper tincidunt vulputate. Nullam fermentum pellentesque ullamcorper.';
+    }
+
+    private function getContentImageSample($width = null) {
+        if(is_numeric($width)) {
+            $width = ' width="' . $width . '"';
+        }
+        else {
+            $width = '';
+        }
+        $splits = explode('index.php', $_SERVER['REQUEST_URI']);
+        $url = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . $splits[0];
+        $image = '<img src="' . $url . $this->mozaikPath . '/tpls/default/images/sample.jpg" ' . $width . ' />';
+        return $image;
     }
 
     public function getDependenciesHTML() {
@@ -123,20 +192,38 @@ SCRIPT;
     }
 
     private function getThumbs($group = '') {
-        $db = DBManagerFactory::getInstance();
-        $_group = $db->quote($group);
-        $templateEditorBean = BeanFactory::getBean('TemplateEditor');
-        $thumbBeans = $templateEditorBean->get_full_list('ord', "(grp LIKE '$_group' OR grp IS NULL)");
-        $thumbs = array();
-        if($thumbBeans) {
-            foreach ($thumbBeans as $thumbBean) {
-                $thumbs[$thumbBean->name] = array(
-                    'label' => $thumbBean->name,
-                    'tpl' => 'string:' . html_entity_decode($thumbBean->description),
-                );
+        $cacheGroup = 'cached_' . $group;
+
+        if(!isset($this->thumbsCache[$cacheGroup])) {
+            $db = DBManagerFactory::getInstance();
+            $_group = $db->quote($group);
+            $templateEditorBean = BeanFactory::getBean('TemplateEditor');
+            $thumbBeans = $templateEditorBean->get_full_list('ord', "(grp LIKE '$_group' OR grp IS NULL)");
+            $thumbs = array();
+            if ($thumbBeans) {
+                foreach ($thumbBeans as $thumbBean) {
+                    $thumbs[$thumbBean->name] = array(
+                        'label' => $thumbBean->thumbnail ? $this->getThumbImageHTML($thumbBean->thumbnail, $thumbBean->name) : $thumbBean->name,
+                        'tpl' => 'string:' . html_entity_decode($thumbBean->description),
+                    );
+                }
             }
+            $this->thumbsCache[$cacheGroup] = $thumbs;
         }
+
+        $thumbs = $this->thumbsCache[$cacheGroup];
+
         return $thumbs;
+    }
+
+    private function getThumbImageHTML($src, $label) {
+        if(file_exists($src)) {
+            $html = '<img src="' . $src. '" alt="' . $label . '">';
+        }
+        else {
+            $html = $label;
+        }
+        return $html;
     }
 
 }

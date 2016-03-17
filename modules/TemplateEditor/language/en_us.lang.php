@@ -70,4 +70,5 @@ $mod_strings = array (
   'LBL_NEW_FORM_TITLE' => 'New Template Part',
   'LBL_GRP' => 'Group',
     'LBL_ORD' => 'Order',
+    'LBL_THUMBNAIL' => 'Thumbnail',
 );

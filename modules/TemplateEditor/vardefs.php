@@ -43,6 +43,27 @@ $dictionary['TemplateEditor'] = array(
     'inline_edit'=>true,
 		'duplicate_merge'=>true,
 		'fields'=>array (
+			'thumbnail' =>
+				array (
+					'required' => false,
+					'name' => 'thumbnail',
+					'vname' => 'LBL_THUMBNAIL',
+					'type' => 'varchar',
+					'massupdate' => 0,
+					'no_default' => false,
+					'comments' => '',
+					'help' => '',
+					'importable' => 'true',
+					'duplicate_merge' => 'disabled',
+					'duplicate_merge_dom_value' => '0',
+					'audited' => false,
+					'inline_edit' => true,
+					'reportable' => true,
+					'unified_search' => false,
+					'merge_filter' => 'disabled',
+					'len' => '255',
+					'size' => '20',
+				),
   'grp' => 
   array (
     'required' => false,

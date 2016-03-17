@@ -47,10 +47,15 @@ array (
               'name' => 'ord',
               'label' => 'LBL_ORD',
           ),
-        3 =>
-        array (
-          0 => 'description',
-        ),
+          3 =>
+              array (
+                  0 => 'description',
+              ),
+          4 =>
+              array (
+                  'name' => 'thumbnail',
+                  'label' => 'LBL_THUMBNAIL',
+              ),
       ),
     ),
   ),
