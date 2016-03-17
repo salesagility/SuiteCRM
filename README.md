@@ -2,7 +2,7 @@
 
 ### Installation ###
 
-```create-project jakubpas/suitecrm application_name```
+```composer create-project jakubpas/suitecrm your_application_name```
 
 ### What's in this repository ###
 
