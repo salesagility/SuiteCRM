@@ -44,8 +44,8 @@ var mozaik = {
     },
 
     getMozaikInnerHTML: function(name, innertext, style) {
-        style = ($(innertext).attr('style') ? $(innertext).attr('style') + ';' : '') + style;
-        style = style.replace(/;\s*;/, ';');
+        //style = ($(innertext).attr('style') ? $(innertext).attr('style') + ';' : '') + style;
+        //style = style.replace(/;\s*;/, ';');
         var html = '<div class="mozaik-inner"' + (name ? ' data-name="' + name + '"' : '') + ' style="' + style + '">' + innertext + '</div>';
         return html;
     },
@@ -88,9 +88,28 @@ var plgBackground = {
     onClick: function(elem, name) {
         if(!$(elem).attr('data-initialized')) {
             // TODO : add colorpicker to packagist and composer
+            var $mozaikInner = $(elem).closest('.mozaik-elem').find('.mozaik-inner');
             $(elem).ColorPicker({
+                onShow: function (colpkr) {
+                    //Function to convert hex format to a rgb color
+                    function rgb2hex(orig, hash){
+                        if(typeof hash == 'undefined' || !hash) {
+                            hash = false;
+                        }
+                        var rgb = orig.replace(/\s/g,'').match(/^rgba?\((\d+),(\d+),(\d+)/i);
+                        var ret = (rgb && rgb.length === 4) ? "#" +
+                        ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+                        ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+                        ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : orig;
+                        while(!hash && ret.match(/^\#/)) {
+                            ret = ret.replace(/^\#/, '');
+                        }
+                        return ret;
+                    }
+                    $(this).ColorPickerSetColor(rgb2hex($mozaikInner.css('background-color')));
+                },
                 onChange: function(rbg, hex){
-                    $(elem).closest('.mozaik-elem').find('.mozaik-inner').css('background-color', '#'+hex);
+                    $mozaikInner.css('background-color', '#'+hex);
                 },
             });
             $(elem).attr('data-initialized', '1');
@@ -207,6 +226,23 @@ var plgBackground = {
 
         return this.each(function(i, e){
 
+            var insertTemplateSection = function(name){
+                var regex = /^string:/i;
+                if(settings.thumbs[name].tpl.match(regex)) {
+                    addEditorListElement(name, settings.thumbs[name].tpl.replace(regex, ''), true, settings.toolPlugins);
+                    onResize();
+                }
+                else {
+                    var url = settings.base + settings.thumbs[name].tpl;
+                    $.get(url, function (resp) {
+                        addEditorListElement(name, resp, true, settings.toolPlugins);
+                        onResize();
+                        //!@#
+                    });
+                }
+                $(window).mouseup();
+            }
+
             // namespace for styles
             var namespace = settings.namespace;
 
@@ -250,6 +286,10 @@ var plgBackground = {
             $(e).prepend(mozaik.getThumbnailListHTML(mozaikThumbsId, settings.thumbs, settings.base));
             $('.mozaik-thumbnail').draggable({
                 helper: 'clone'
+            });
+            $('.mozaik-thumbnail').click(function(e){
+                var name = $(this).attr('data-name');
+                insertTemplateSection(name);
             });
 
             // set area layout
@@ -363,21 +403,8 @@ var plgBackground = {
             $mozaik.droppable({
                 accept: '.mozaik-thumbnail',
                 drop: function(event, ui) {
-                    var regex = /^string:/i;
                     var name = ui.draggable.attr('data-name');
-                    if(settings.thumbs[name].tpl.match(regex)) {
-                        addEditorListElement(name, settings.thumbs[name].tpl.replace(regex, ''), true, settings.toolPlugins);
-                        onResize();
-                    }
-                    else {
-                        var url = settings.base + settings.thumbs[name].tpl;
-                        $.get(url, function (resp) {
-                            addEditorListElement(name, resp, true, settings.toolPlugins);
-                            onResize();
-                            //!@#
-                        });
-                    }
-                    $(window).mouseup();
+                    insertTemplateSection(name);
                 }
             });
 
@@ -466,33 +493,51 @@ var plgBackground = {
             if(settings.applyStyles) {
                 $(e).find('style').each(function (j, styleElem) {
                     var css = $(styleElem).html();
-                    console.log(css);
                     var splits = css.split('}');
                     for (var k = 0; k < splits.length - 1; k++) {
                         var parts = splits[k].split('{');
                         var sel = parts[0];
                         var defs = parts[1];
                         $(sel).each(function(l, el){
-                            if($(el).hasClass('mozaik-inner') || $(el).closest('.mozaik-inner').length) {
+                            if(($(el).hasClass('mozaik-inner') || $(el).closest('.mozaik-inner').length) && !$(el).hasClass('mozaik-tools') && !$(el).closest('.mozaik-tools').length) {
 
                                 // corrigate inline font-size and line height style
+                                var fontFamily = $(el).css('font-family');
                                 var fontSize = $(el).css('font-size');
                                 var lineHeight = $(el).css('line-height');
+                                var color = $(el).css('color');
+                                $(el).css('font-family', fontFamily);
                                 $(el).css('font-size', fontSize);
                                 $(el).css('line-height', lineHeight);
+                                $(el).css('color', color);
+
+                                // corrigate template section margins and paddings..
+                                var padding = $(el).css('padding-top') + ' ' + $(el).css('padding-right') + ' ' + $(el).css('padding-bottom') + ' ' + $(el).css('padding-left');
+                                var margin = $(el).css('margin-top') + ' ' + $(el).css('margin-right') + ' ' + $(el).css('margin-bottom') + ' ' + $(el).css('margin-left');
+                                $(el).css('padding', padding);
+                                $(el).css('margin', margin);
+
+                                if($(el).hasClass('mozaik-clear')) {
+                                    $(el).css('height', '0');
+                                }
+                                if($(el).hasClass('mozaik-inner')) {
+                                    if($(el).css('width', '100%')) {
+                                        $(el).css('width', 'initial');
+                                    }
+                                }
 
                                 // corrigate inline styles..
                                 var style = defs + (typeof $(el).attr('style') != 'undefined' && $(el).attr('style') ? $(el).attr('style') + ';' : '');
                                 style = style.replace(/;\s*;/, ';');
-                                $(el).attr('style', style);
-
-                                // corrigate template section margins and paddings..
-                                if($(el).hasClass('mozaik-inner')) {
-                                    var padding = $(el).css('padding-top') + ' ' + $(el).css('padding-right') + ' ' + $(el).css('padding-bottom') + ' ' + $(el).css('padding-left');
-                                    var margin = $(el).css('margin-top') + ' ' + $(el).css('margin-right') + ' ' + $(el).css('margin-bottom') + ' ' + $(el).css('margin-left');
-                                    $(el).css('padding', padding);
-                                    $(el).css('margin', margin);
+                                var cssProps = style.split(';');
+                                for (var l=0; l < cssProps.length - 1; l++) {
+                                    var cssDef = cssProps[l].split(':');
+                                    var cssProp = cssDef[0];
+                                    var cssValue = cssDef[1];
+                                    $(el).css(cssProp, $(el).css(cssProp));
                                 }
+
+
                             }
                         })
                     }
