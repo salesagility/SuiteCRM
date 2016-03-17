@@ -38,7 +38,17 @@ class AOS_Products extends AOS_Products_sugar {
 		global $sugar_config,$mod_strings;
 		
 		if (isset($_POST['deleteAttachment']) && $_POST['deleteAttachment']=='1') {
-			$this->product_image = '';
+			$removeFile = $_REQUEST['old_product_image'];
+
+			if(file_exists($removeFile)) {
+				if(!unlink($removeFile)) {
+					$GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
+				}else{
+					$this->product_image = '';
+				}
+			} else {
+				$this->product_image = '';
+			}
 		}
 	
 		require_once('include/upload_file.php');
@@ -49,11 +59,15 @@ class AOS_Products extends AOS_Products_sugar {
 
             if($_FILES['uploadimage']['size'] > $sugar_config['upload_maxsize']) {
                 die($mod_strings['LBL_IMAGE_UPLOAD_FAIL'].$sugar_config['upload_maxsize']);
-
             }
             else {
-                $this->product_image=$sugar_config['site_url'].'/'.$sugar_config['upload_dir'].$_FILES['uploadimage']['name'];
-                move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$_FILES['uploadimage']['name']);
+				//rename uploaded image to the id of the product
+				$filename=$_FILES['uploadimage']['name'];
+				$extension=end(explode(".", $filename));
+				$newfilename=$this->id.".".$extension;
+
+				$this->product_image= $sugar_config['upload_dir'].$newfilename;
+                move_uploaded_file($_FILES['uploadimage']['tmp_name'], $sugar_config['upload_dir'].$newfilename);
 
             }
 	    }
