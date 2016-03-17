@@ -1,4 +1,7 @@
 <?php
+
+use SuiteCRM\SugarLogger\LoggerManager;
+
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -155,6 +158,9 @@ require_once('include/modules.php'); // provides $moduleList, $beanList, $beanFi
 
 require('include/utils/autoloader.php');
 spl_autoload_register(array('SugarAutoLoader', 'autoload'));
+if (file_exists('vendor/autoload.php')) {
+    require_once('vendor/autoload.php');
+}
 require_once('data/SugarBean.php');
 require_once('include/utils/mvc_utils.php');
 require('include/SugarObjects/LanguageManager.php');
@@ -164,7 +170,6 @@ require('modules/DynamicFields/templates/Fields/TemplateText.php');
 
 require_once('include/utils/file_utils.php');
 require_once('include/SugarEmailAddress/SugarEmailAddress.php');
-require_once('include/SugarLogger/LoggerManager.php');
 require_once('modules/Trackers/BreadCrumbStack.php');
 require_once('modules/Trackers/Tracker.php');
 require_once('modules/Trackers/TrackerManager.php');
@@ -195,7 +200,7 @@ require_once 'include/SugarObjects/SugarRegistry.php';
 if(empty($GLOBALS['installing'])){
 ///////////////////////////////////////////////////////////////////////////////
 ////	SETTING DEFAULT VAR VALUES
-$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+$GLOBALS['log'] = LoggerManager::getLogger();
 $error_notice = '';
 $use_current_user_login = false;
 

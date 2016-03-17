@@ -52,7 +52,7 @@ global $even_bg;
 global $sugar_version, $sugar_config;
 global $locale;
 
-$xtpl = new XTemplate('modules/MailMerge/Step3.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/MailMerge/Step3.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

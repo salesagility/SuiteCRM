@@ -136,7 +136,7 @@ $col_width=floor(80/$records).'%';
 global $max_data_length;
 $max_data_length=floor(65/$records);
 global $xtpl;
-$xtpl = new XTemplate("modules/MergeRecords/Step3.html");
+$xtpl = new \SuiteCRM\XTemplate("modules/MergeRecords/Step3.html");
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

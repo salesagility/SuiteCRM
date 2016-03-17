@@ -59,7 +59,7 @@ global $import_file_name, $theme;$app_list_strings;
 $lead = new Lead();
 $fields = array();
 
-$xtpl=new XTemplate ('modules/Campaigns/WebToLeadCreation.html');
+$xtpl=new \SuiteCRM\XTemplate ('modules/Campaigns/WebToLeadCreation.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 if(isset($_REQUEST['module']))

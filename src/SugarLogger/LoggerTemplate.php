@@ -1,5 +1,6 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+namespace SuiteCRM\SugarLogger;
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -46,12 +47,8 @@ interface LoggerTemplate
 {
     /**
      * Main method for handling logging a message to the logger
-     *
-     * @param string $level logging level for the message
+     * @param string $method logging level for the message
      * @param string $message
      */
-    public function log(
-        $method,
-        $message
-        );
+    public function log($method, $message);
 }
