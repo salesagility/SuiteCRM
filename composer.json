@@ -1,0 +1,30 @@
+{
+  "name": "jakubpas/suitecrm",
+  "type": "project",
+  "description": "SuiteCRM - the open source alternative to SalesForce, Microsoft Dynamics and SugarCRM Professional",
+  "keywords": [
+    "SuiteCRM",
+    "SugarCRM",
+    "SalesForce",
+    "Microsoft Dynamics",
+    "Customer Relationship Management"
+  ],
+  "homepage": "https://suitecrm.com/",
+  "license": "GNU Affero General Public License",
+  "authors": [
+    {
+      "name": "Jakub Pas",
+      "email": "jakubpas@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.3.0",
+    "smarty/smarty": "v2.6.29"
+  },
+  "autoload": {
+    "psr-4": {
+      "SuiteCRM\\": "src/"
+    }
+  }
+}

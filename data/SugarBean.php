@@ -1643,7 +1643,7 @@ class SugarBean
         } else {
             $current_language = $_SESSION['authenticated_user_language'];
         }
-        $xtpl = new XTemplate(get_notify_template_file($current_language));
+        $xtpl = new \SuiteCRM\XTemplate(get_notify_template_file($current_language));
         if($this->module_dir == "Cases") {
             $template_name = "Case"; //we should use Case, you can refer to the en_us.notify_template.html.
         }

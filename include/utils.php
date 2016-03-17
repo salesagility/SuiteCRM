@@ -1,4 +1,6 @@
 <?php
+use SuiteCRM\SugarLogger\LoggerManager;
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -2784,7 +2786,7 @@ function _ppd($mixed)
 function _ppl($mixed, $die=false, $displayStackTrace=false, $loglevel="fatal") {
 	if(!isset($GLOBALS['log']) || empty($GLOBALS['log'])) {
 
-		$GLOBALS['log'] = LoggerManager :: getLogger('SugarCRM');
+		$GLOBALS['log'] = LoggerManager :: getLogger();
 	}
 
 
