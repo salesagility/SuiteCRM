@@ -1,5 +1,9 @@
 ##SuiteCRM 7.5
 
+### Installation ###
+
+```create-project jakubpas/suitecrm application_name```
+
 ### What's in this repository ###
 
 This is the git repository for the SuiteCRM project, the fully open source & supercharged fork of SugarCRM Community Edition.
