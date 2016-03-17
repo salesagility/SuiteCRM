@@ -17,7 +17,6 @@
       "email": "jakubpas@gmail.com"
     }
   ],
-  "minimum-stability": "stable",
   "require": {
     "php": ">=5.3.0",
     "smarty/smarty": "v2.6.29"
@@ -26,5 +25,7 @@
     "psr-4": {
       "SuiteCRM\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }
