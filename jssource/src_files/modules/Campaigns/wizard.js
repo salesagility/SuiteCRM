@@ -292,30 +292,37 @@
         return true;        
     }
 
-var onEmailTemplateChange = function(elem, namePrefixCopyOf) {
-    var emailTemplateId = $(elem).val();
+var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault) {
+    var emailTemplateId = $(elem).val() ? $(elem).val() : (typeof templateIdDefault != 'undefined' && templateIdDefault ? templateIdDefault : null);
+    if(emailTemplateId) {
 
-    $('#email_template_view_html').html('');
-    $('#email_template_view').html('');
+        $('#email_template_view_html').html('');
+        $('#email_template_view').html('');
 
-    $.post('index.php?entryPoint=emailTemplateData', {
-        'emailTemplateId': emailTemplateId
-    }, function(resp){
-        var results = JSON.parse(resp);
-        $('#email_template_view_html').html(results.data.body_html);
-        $('#email_template_view').html(results.data.body);
+        $.post('index.php?entryPoint=emailTemplateData', {
+            'emailTemplateId': emailTemplateId
+        }, function (resp) {
+            var results = JSON.parse(resp);
+            if(!results.error) {
+                $('#email_template_view_html').html(results.data.body_html);
+                $('#email_template_view').html(results.data.body);
 
-        //document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
-        //document.getElementById("html_frame").contentWindow.document.close();
+                //document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
+                //document.getElementById("html_frame").contentWindow.document.close();
 
-        var htmlCode = $('<textarea />').html(results.data.body_html).text();
-        $('#email_template_editor').html(htmlCode);
-        $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+                var htmlCode = $('<textarea />').html(results.data.body_html).text();
+                $('#email_template_editor').html(htmlCode);
+                $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
 
-        $('#template_name').val(namePrefixCopyOf + results.data.name);
-        $('#template_subject').val(results.data.subject);
+                $('#template_name').val(namePrefixCopyOf + results.data.name);
+                $('#template_subject').val(results.data.subject);
+            }
+            else {
+                console.log(results.error);
+            }
 
-    });
+        });
+    }
 
     //show_edit_template_link(elem);
 };

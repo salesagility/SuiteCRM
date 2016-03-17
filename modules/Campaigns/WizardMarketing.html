@@ -197,7 +197,8 @@
 						{literal}
 						<script type="text/javascript">
 							$(function(){
-								onEmailTemplateChange(document.getElementById('template_id'), '{/literal}{$MOD.LBL_COPY_OF}{literal}');
+
+								onEmailTemplateChange(document.getElementById('template_id'), '{/literal}{$MOD.LBL_COPY_OF}{literal}', '{/literal}{$TEMPLATE_ID}{literal}');
 							});
 						</script>
 						{/literal}

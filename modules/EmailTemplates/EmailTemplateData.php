@@ -46,15 +46,19 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             break;
 
         default: case 'get':
-            $bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId);
-            $fields = array('id', 'name', 'body', 'body_html', 'subject');
-            foreach($bean as $key => $value) {
-                if(in_array($key, $fields)) {
-                    $data[$key] = $bean->$key;
+            if($bean = BeanFactory::getBean('EmailTemplates', $emailTemplateId)) {
+                $fields = array('id', 'name', 'body', 'body_html', 'subject');
+                foreach ($bean as $key => $value) {
+                    if (in_array($key, $fields)) {
+                        $data[$key] = $bean->$key;
+                    }
                 }
-            }
 
-            $data['body_from_html'] = from_html($bean->body_html);
+                $data['body_from_html'] = from_html($bean->body_html);
+            }
+            else {
+                $error = 'Email Template not found.';
+            }
             break;
     }
 

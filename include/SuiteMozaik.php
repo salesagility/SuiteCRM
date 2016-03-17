@@ -184,9 +184,9 @@ HTML;
             $width .= 'px';
         }
         $js = <<<SCRIPT
-setInterval(function(){
-    $('#{$textareaId}').val($('#{$elementId}').getMozaikValue({width: '{$width}'}));
-}, 300);
+$(window).mouseup(function(){
+     $('#{$textareaId}').val($('#{$elementId}').getMozaikValue({width: '{$width}'}));
+});
 SCRIPT;
         return $js;
     }
