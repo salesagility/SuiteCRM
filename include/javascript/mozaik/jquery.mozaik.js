@@ -377,6 +377,7 @@ var plgBackground = {
                             //!@#
                         });
                     }
+                    $(window).mouseup();
                 }
             });
 
@@ -454,12 +455,51 @@ var plgBackground = {
 
         var settings = $.extend({
             inlineStyles: false,
+            applyStyles: true,
             width: '600px'
         }, options);
 
         var ret = [];
         this.each(function(i, e){
             // todo: test for mozaik already initialized on this element?!
+
+            if(settings.applyStyles) {
+                $(e).find('style').each(function (j, styleElem) {
+                    var css = $(styleElem).html();
+                    console.log(css);
+                    var splits = css.split('}');
+                    for (var k = 0; k < splits.length - 1; k++) {
+                        var parts = splits[k].split('{');
+                        var sel = parts[0];
+                        var defs = parts[1];
+                        $(sel).each(function(l, el){
+                            if($(el).hasClass('mozaik-inner') || $(el).closest('.mozaik-inner').length) {
+
+                                // corrigate inline font-size and line height style
+                                var fontSize = $(el).css('font-size');
+                                var lineHeight = $(el).css('line-height');
+                                $(el).css('font-size', fontSize);
+                                $(el).css('line-height', lineHeight);
+
+                                // corrigate inline styles..
+                                var style = defs + (typeof $(el).attr('style') != 'undefined' && $(el).attr('style') ? $(el).attr('style') + ';' : '');
+                                style = style.replace(/;\s*;/, ';');
+                                $(el).attr('style', style);
+
+                                // corrigate template section margins and paddings..
+                                if($(el).hasClass('mozaik-inner')) {
+                                    var padding = $(el).css('padding-top') + ' ' + $(el).css('padding-right') + ' ' + $(el).css('padding-bottom') + ' ' + $(el).css('padding-left');
+                                    var margin = $(el).css('margin-top') + ' ' + $(el).css('margin-right') + ' ' + $(el).css('margin-bottom') + ' ' + $(el).css('margin-left');
+                                    $(el).css('padding', padding);
+                                    $(el).css('margin', margin);
+                                }
+                            }
+                        })
+                    }
+                });
+            }
+
+
             var html = '';
             $(e).find('ul.mozaik-list div.mozaik-inner').each(function(i,e){
                 if(settings.inlineStyles) {
