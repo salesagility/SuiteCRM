@@ -42,7 +42,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
     $removeFile = "upload://{$_REQUEST[$field . '_record_id'] }_" . $field;
     $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST[$field . "_record_id"]);
 
-
 if(file_exists($removeFile)) {
     if(!unlink($removeFile)) {
         $GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
