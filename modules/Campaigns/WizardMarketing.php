@@ -399,16 +399,36 @@ if(isset($mrkt_lists[0])) {
 
 //if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
 $has_campaign = true;
+$inboundEmail = true;
 if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
     $has_campaign = false;
 }
+if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
+    $inboundEmail = false;
+}
+
 // todo : its for testing, remove this!
 //$has_campaign = false;
 
 include_once 'modules/EmailTemplates/templateFields.php';
 $ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
 
-
+///////////////////////////////////////
+////	CAMPAIGNS
+if ($has_campaign || $inboundEmail) {
+    //$ss->assign("INPOPUPWINDOW", 'true');
+    $ss->assign("INSERT_URL_ONCLICK", "insert_variable_html_link(document.wizform.tracker_url.value)");
+    if ($has_campaign) {
+        $campaign_urls = get_campaign_urls($_REQUEST['campaign_id']);
+    }
+    if (!empty($campaign_urls)) {
+        $ss->assign("DEFAULT_URL_TEXT", key($campaign_urls));
+    }
+    if ($has_campaign) {
+        $ss->assign("TRACKER_KEY_OPTIONS", get_select_options_with_id($campaign_urls, null));
+        //$ss->parse("main.NoInbound.tracker_url");
+    }
+}
 // create option of "Contact/Lead/Task" from corresponding module
 // translations
 $lblContactAndOthers = implode('/', array(

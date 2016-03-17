@@ -257,6 +257,25 @@
 					</td>
 				</tr>
 
+				<!-- BEGIN: tracker_url -->
+				<tr>
+					<td width="15%" scope="row" align='left'>
+						{$MOD.LBL_INSERT_TRACKER_URL}&nbsp;
+					</td>
+					<td width="30%"  colspan="3" style="position: relative;">
+						<div style="width: 900px; position: absolute; top:0; left: 0;">
+							<select tabindex='0' name='tracker_url' onchange='this.form.url_text.value=this.value'>
+								{$TRACKER_KEY_OPTIONS}
+							</select>
+							<input type="text" size="30" id="url_text" name="url_text" value="{$DEFAULT_URL_TEXT}" />
+							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_URL_REF}'>
+						</div>
+						<br />
+						<br />
+					</td>
+				</tr>
+				<!-- END: tracker_url -->
+
 
 			</tbody>
 		</table>
