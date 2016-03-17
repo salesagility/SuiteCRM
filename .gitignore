@@ -4,6 +4,7 @@
 # Ignore large parts of the annoying cache directory without breaking things.
 cache/*
 upload/*
+vendor/*
 !upload/index.html
 # Ignore some files and directories from the custom directory.
 custom/history/*
@@ -15,6 +16,7 @@ custom/modules/unified_search_modules_display.php
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
 install/status.json
+composer.lock
 # Custom configuration should also be ignored.
 /config.php
 # Connector configuration should also be ignored.

@@ -120,7 +120,7 @@ EOQ;
 			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 		$button .= "</form>\n";
 
-		$form = new XTemplate('modules/Contacts/Address_picker.html');
+		$form = new \SuiteCRM\XTemplate('modules/Contacts/Address_picker.html');
 		$form->assign('MOD', $mod_strings);
 		$form->assign('APP', $app_strings);
 		$form->assign('ADDFORMHEADER', $addformheader);
@@ -275,7 +275,7 @@ EOJS;
 			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 		$button .= "</form>\n";
 
-		$form = new XTemplate('modules/Contacts/MailMergePicker.html');
+		$form = new \SuiteCRM\XTemplate('modules/Contacts/MailMergePicker.html');
 		$form->assign('MOD', $mod_strings);
 		$form->assign('APP', $app_strings);
 		$form->assign('THEME', $theme);

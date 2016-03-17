@@ -74,9 +74,9 @@ if (!$focus->ACLAccess('EditView')) {
 $GLOBALS['log']->info("EmailTemplate detail view");
 
 if ($has_campaign || $inboundEmail) {
-    $xtpl = new XTemplate ('modules/EmailTemplates/EditView.html');
+    $xtpl = new \SuiteCRM\XTemplate ('modules/EmailTemplates/EditView.html');
 } else {
-    $xtpl = new XTemplate ('modules/EmailTemplates/EditViewMain.html');
+    $xtpl = new \SuiteCRM\XTemplate ('modules/EmailTemplates/EditViewMain.html');
 } // else
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);

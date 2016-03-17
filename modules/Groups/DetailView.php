@@ -65,7 +65,7 @@ echo getClassicModuleTitle($mod_strings['LBL_MODULE_NAME'], array($mod_strings['
 /* end standard DetailView layout process */
 
 
-$xtpl = new XTemplate('modules/Groups/DetailView.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/Groups/DetailView.html');
 $xtpl->assign('MOD', $mod_strings);
 $xtpl->assign('APP', $app_strings);
 $xtpl->assign("CREATED_BY", $focus->created_by_name);

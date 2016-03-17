@@ -92,7 +92,7 @@ $button .= "<input type='submit' name='button' class='button' onclick=\"window.c
 	.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 $button .= "</form>\n";
 
-$form = new XTemplate('modules/Emails/PopupDocuments.html');
+$form = new \SuiteCRM\XTemplate('modules/Emails/PopupDocuments.html');
 $form->assign('MOD', $current_mod_strings);
 $form->assign('APP', $app_strings);
 $form->assign('THEME', $theme);

@@ -35,19 +35,19 @@
  ********************************************************************************/
 
 *}
-{include file="_head.tpl" theme_template=true}
+{include file="themes/Suite7/tpls/_head.tpl.tpl"}
 <body onMouseOut="closeMenus();">
 <a name="top"></a>
 {$DCSCRIPT}
 {if $AUTHENTICATED}
 <header>
     <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
+        {include file="themes/Suite7/tpls/_headerModuleList.tpl"}
     </div>
-    {include file="_globalLinks.tpl" theme_template=true}
-    {include file="_welcome.tpl" theme_template=true}
+    {include file="themes/Suite7/tpls/_globalLinks.tpl"}
+    {include file="themes/Suite7/tpls/_welcome.tpl"}
     <div class="clear"></div>
-    {include file="_headerSearch.tpl" theme_template=true}
+    {include file="themes/Suite7/tpls/_headerSearch.tpl"}
     <div class="clear"></div>
     {if !$AUTHENTICATED}
         <br /><br />

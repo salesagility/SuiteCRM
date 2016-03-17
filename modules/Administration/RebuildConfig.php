@@ -79,7 +79,7 @@ if( !empty($_POST['perform_rebuild']) && $config_file_ready ){
 
 /////////////////////////////////////////////////////////////////////
 // TEMPLATE ASSIGNING
-$xtpl = new XTemplate('modules/Administration/RebuildConfig.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/Administration/RebuildConfig.html');
 $xtpl->assign('LBL_CONFIG_CHECK', $mod_strings['LBL_CONFIG_CHECK']);
 $xtpl->assign('CONFIG_CHECK', $config_check);
 $xtpl->assign('LBL_PERFORM_REBUILD', $lbl_rebuild_config);

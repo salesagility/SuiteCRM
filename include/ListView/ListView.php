@@ -622,7 +622,7 @@ function setDisplayHeaderAndFooter($bool) {
     $this->xTemplatePath= $value;
 }
 
-/**this is a helper function for allowing ListView to create a new XTemplate it groups parameters that should be set into a single function
+/**this is a helper function for allowing ListView to create a new \SuiteCRM\XTemplate it groups parameters that should be set into a single function
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________.
@@ -817,7 +817,7 @@ function displayArrow() {
     if(!isset($this->xTemplate)) {
         if(isset($this->xTemplatePath)) {
 
-            $this->xTemplate = new XTemplate($this->xTemplatePath);
+            $this->xTemplate = new \SuiteCRM\XTemplate($this->xTemplatePath);
             $this->xTemplate->assign("APP", $this->local_app_strings);
             if(isset($this->local_mod_strings))$this->xTemplate->assign("MOD", $this->local_mod_strings);
             $this->xTemplate->assign("THEME", $this->local_theme);
@@ -1819,7 +1819,7 @@ $close_inline_img = SugarThemeRegistry::current()->getImage('close_inline', 'bor
         $XTemplateSection is the section in the XTemplate file that should be parsed usually main
         $html_VarName is the variable name used in the XTemplateFile e.g. TASK
         $seed is a seed there are two types of seeds one is a subclass of SugarBean, the other is a list usually created from a sugar bean using get_list
-        if no XTemplate is set it will create  a new XTemplate
+        if no XTemplate is set it will create  a new \SuiteCRM\XTemplate
         * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc..
         * All Rights Reserved..
         * Contributor(s): ______________________________________..

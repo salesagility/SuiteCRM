@@ -1,4 +1,6 @@
 <?php
+use SuiteCRM\SugarLogger\LoggerManager;
+
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -260,10 +262,10 @@ function pollMonitoredInboxes()
  */
 function runMassEmailCampaign()
 {
-    if (!class_exists('LoggerManager')) {
+    if (!class_exists('\\SuiteCRM\\SugarLogger\\LoggerManager')) {
 
     }
-    $GLOBALS['log'] = LoggerManager::getLogger('emailmandelivery');
+    $GLOBALS['log'] = LoggerManager::getLogger();
     $GLOBALS['log']->debug('Called:runMassEmailCampaign');
 
     if (!class_exists('DBManagerFactory')) {

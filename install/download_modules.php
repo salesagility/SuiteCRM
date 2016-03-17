@@ -1,4 +1,6 @@
 <?php
+use SuiteCRM\SugarLogger\LoggerManager;
+
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
@@ -64,7 +66,7 @@ require_once('include/upload_file.php');
 
 
 
-$GLOBALS['log'] = LoggerManager::getLogger('SugarCRM');
+$GLOBALS['log'] = LoggerManager::getLogger();
 
 ///////////////////////////////////////////////////////////////////////////////
 ////    PREP VARS FOR LANG PACK

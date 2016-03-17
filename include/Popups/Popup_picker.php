@@ -205,10 +205,10 @@ EOQ;
 			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 
 		if(isset($this->_popupMeta['templateForm'])) { 
-			$form = new XTemplate($this->_popupMeta['templateForm']);
+			$form = new \SuiteCRM\XTemplate($this->_popupMeta['templateForm']);
 		}
 		else {
-			$form = new XTemplate('modules/' . $currentModule . '/Popup_picker.html');
+			$form = new \SuiteCRM\XTemplate('modules/' . $currentModule . '/Popup_picker.html');
 		}
 		
 		$form->assign('MOD', $mod_strings);
