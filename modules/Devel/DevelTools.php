@@ -7,26 +7,31 @@ class DevelTools {
     /** @var DevelRequestStats */
     protected $requestStats;
 
-    /** @var array  */
-    protected $bannedModules = ['Devel'];
+    /**
+     * The '*' key stands for "not specified"
+     * @var array
+     */
+    protected $bannedModules = [
+        'Devel' => ['*'],
+        'Alerts' => ['*'],
+        'Calendar' => ['*'],
+        'app_strings' => ['*'],
+        '*' => ['*']
+    ];
 
     /** @var int  */
     protected $maxAllowedRequests = 50;
 
+    /**
+     * Session is not yet started here(so we must use cookies)!
+     */
     public function __construct() {
-        if(!$this->checkIfAllowed()) {
+        if(!$this->checkIfAllowedForStatisticsRegistration()) {
             return;
         }
-        if(!session_id()) {
-            session_start();
-        }
-        $requestNumber = isset($_SESSION['DevelRequestNumber']) ? (int)$_SESSION['DevelRequestNumber'] : 0;
-        $requestNumber++;
-        $_SESSION['DevelRequestNumber'] = $requestNumber;
-        //
+        $requestNumber = $this->getAndIncrementRequestNumber();
         $this->requestStats = new \DevelRequestStats($requestNumber);
         $GLOBALS['DevelRequestStats'] = $this->requestStats;
-        //
         $GLOBALS['DevelTools'] = $this;
     }
 
@@ -37,13 +42,15 @@ class DevelTools {
      * @param mixed $data
      */
     public function shutdown($data=null) {
-        if(!$this->checkIfAllowed()) {
-            return;
+        if($this->checkIfAllowedForStatisticsRegistration()) {
+            $this->requestStats->registerShutdownValues();
+            $this->saveDevelRequestStats();
+            $this->removeObsoleteStats();
         }
-        $this->requestStats->registerShutdownValues();
-        $this->injectDevelTools();
-        $this->saveDevelRequestStats();
-        $this->removeObsoleteStats();
+
+        if($this->checkIfAllowedForDevelToolsPanel()) {
+            $this->injectDevelToolsPanel();
+        }
     }
 
     /**
@@ -77,7 +84,7 @@ class DevelTools {
      * @param string $event
      * @param array $arguments
      */
-    protected function injectDevelTools($event = null, $arguments = null) {
+    protected function injectDevelToolsPanel($event = null, $arguments = null) {
         $injectJs = '<script type="text/javascript" src="modules/Devel/assets/js/DevelTools.js"></script>';
         $injectCss = '<link rel="stylesheet" type="text/css" href="modules/Devel/assets/css/DevelTools.css" />';
 
@@ -188,21 +195,54 @@ class DevelTools {
     /**
      * @return bool
      */
-    protected function checkIfAllowed() {
-        $answer = $this->checkIfEnabled();
-        if(isset($_REQUEST['to_pdf'])) {
-            $answer = false;
+    protected function checkIfAllowedForDevelToolsPanel() {
+        $allowed = $this->checkIfEnabled() && $this->checkIfNotBanned();
+        if($allowed && isset($_REQUEST['to_pdf'])) {
+            $allowed = false;
         }
-        if(isset($_REQUEST['sugar_body_only'])) {
-            //$answer = false;
+        if($allowed && isset($_REQUEST['sugar_body_only'])) {
+            $allowed = false;
         }
-        if(isset($_REQUEST['module']) && in_array($_REQUEST['module'], $this->bannedModules)) {
-            $answer = false;
+        if($allowed && !preg_match('#\/index\.php#', trim($_SERVER['REQUEST_URI']))) {
+            $allowed = false;
         }
-        if(!preg_match('#\/index\.php#', trim($_SERVER['REQUEST_URI']))) {
-            $answer = false;
+        return $allowed;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function checkIfAllowedForStatisticsRegistration() {
+        $allowed = $this->checkIfEnabled() && $this->checkIfNotBanned();
+        return $allowed;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function checkIfNotBanned() {
+        $answer = true;
+        $m = isset($_REQUEST['module']) && !empty($_REQUEST['module'])  ? $_REQUEST['module'] : '*';
+        $a = isset($_REQUEST['action']) && !empty($_REQUEST['action'])  ? $_REQUEST['action'] : '*';
+
+        if(in_array($m, array_keys($this->bannedModules))) {
+            /** @var array $bannedModuleActions */
+            $bannedModuleActions = $this->bannedModules[$m];
+            if(in_array($a, $bannedModuleActions) || in_array('*', $bannedModuleActions)) {
+                $answer = false;
+            }
         }
         return $answer;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getAndIncrementRequestNumber() {
+        $requestNumber = isset($_COOKIE['devel_tools_request_number']) ? (int)$_COOKIE['devel_tools_request_number'] : 0;
+        $requestNumber++;
+        setcookie('devel_tools_request_number', $requestNumber);
+        return $requestNumber;
     }
 
     /**
@@ -210,9 +250,6 @@ class DevelTools {
      * @return bool
      */
     public static function checkIfEnabled() {
-        if(!session_id()) {
-            session_start();
-        }
-        return isset($_SESSION['devel_tools_enabled']) && $_SESSION['devel_tools_enabled'];
+        return isset($_COOKIE['devel_tools_enabled']) && $_COOKIE['devel_tools_enabled'];
     }
 }

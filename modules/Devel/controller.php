@@ -33,15 +33,16 @@ class DevelController extends SugarController
 
     public function action_configure()
     {
+        $enabled = \DevelTools::checkIfEnabled();
         if(isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
+            $enabled = false;
             if(isset($_POST['devel-tools-enabled']) && $_POST['devel-tools-enabled']) {
-                $_SESSION['devel_tools_enabled'] = true;
-            } else {
-                $_SESSION['devel_tools_enabled'] = false;
+                $enabled = true;
             }
+            setcookie('devel_tools_enabled', $enabled);
         }
         $this->view = 'configure';
-        $this->view_object_map['enabled'] = \DevelTools::checkIfEnabled();
+        $this->view_object_map['enabled'] = $enabled;
     }
 
     public function action_listview()
