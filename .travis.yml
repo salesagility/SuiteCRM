@@ -9,7 +9,7 @@ before_script:
   - composer self-update
   - composer install --no-interaction
   - [ -f "config_si.php" ] || curl -L https://gist.githubusercontent.com/JimMackin/c3db403bae59c2c9a27c/raw/config_si.php > config_si.php
-  - php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);require_once 'install.php';";
+  - php tests/testinstall.php
 script:
   - cd tests
   - ../vendor/bin/phpunit

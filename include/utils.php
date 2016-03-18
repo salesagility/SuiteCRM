@@ -1611,8 +1611,9 @@ function sugar_die($error_message, $exit_code = 1)
 {
 	global $focus;
 	sugar_cleanup();
-	echo $error_message;
-	die($exit_code);
+	//echo $error_message;
+    //die($exit_code);
+    throw new \Exception($error_message, $exit_code);
 }
 
 
@@ -5023,7 +5024,7 @@ function getDuplicateRelationListWithTitle($def, $var_def, $module)
             }
             $select_array[$temp_key] = $temp_value;
         }
-        
+
         // Add the relationship name for easier recognition
         foreach ($select_array as $key => $value)
         {
@@ -5036,7 +5037,7 @@ function getDuplicateRelationListWithTitle($def, $var_def, $module)
 
 /**
  * Gets the list of "*type_display*".
- * 
+ *
  * @return array
  */
 function getTypeDisplayList()
@@ -5046,7 +5047,7 @@ function getTypeDisplayList()
 
 /**
  * Breaks given string into substring according
- * to 'db_concat_fields' from field definition 
+ * to 'db_concat_fields' from field definition
  * and assigns values to corresponding properties
  * of bean.
  *
