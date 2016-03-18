@@ -12,7 +12,7 @@ before_script:
   - php -r "\$_SERVER['HTTP_HOST'] = 'localhost'; \$_SERVER['REQUEST_URI'] = 'install.php';\$_REQUEST = array('goto' => 'SilentInstall', 'cli' => true);require_once 'install.php';";
 script:
   - cd tests
-  - ../include/vendor/bin/phpunit
+  - ../vendor/bin/phpunit
   - cat ../suitecrm.log
 services:
   - mysql
