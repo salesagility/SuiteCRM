@@ -21,6 +21,8 @@ install/status.json
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
 # Logs files can safely be ignored.
 *.log
+## Test specific items
+config_si.php
 ## IDE specific items
 # Eclipse
 *.pydevproject
