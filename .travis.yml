@@ -21,3 +21,4 @@ branches:
     - master
     - hotfix
     - develop
+    - travisFix
