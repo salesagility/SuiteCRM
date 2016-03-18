@@ -10,5 +10,8 @@ $_REQUEST = array(
     'cli' => true
 );
 
+ob_start();
 require_once 'install.php';
+ob_end_clean();
+echo "\ndone.\n";
 
