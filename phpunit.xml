@@ -1,5 +1,5 @@
-<phpunit bootstrap="./tests/bootstrap.php" backupGlobals="false" backupStaticAttributes="false" >
-        <testsuite name="allTests">
-            <directory>./tests</directory>
+<phpunit bootstrap="tests/bootstrap.php">
+        <testsuite name="all">
+            <directory>tests</directory>
         </testsuite>
 </phpunit>

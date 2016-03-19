@@ -24,3 +24,5 @@ $sugar_config_si  = array (
     'setup_site_url' => 'localhost',
     'setup_system_name' => 'SuiteCRM Travis Build',
 );
+
+

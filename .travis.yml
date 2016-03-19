@@ -8,10 +8,10 @@ php:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - tests/runinstall
+  - tests/runinstall 
 script:
   - vendor/bin/phpunit
-  - cat ../suitecrm.log
+  - cat suitecrm.log
 services:
   - mysql
 branches:
