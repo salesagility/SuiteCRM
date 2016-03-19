@@ -25,7 +25,5 @@
     "psr-4": {
       "SuiteCRM\\": "src/"
     }
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
+  }
 }
