@@ -115,12 +115,12 @@ class FieldsMetaData extends SugarBean {
 	// METHODS
 	//////////////////////////////////////////////////////////////////
 
-	function FieldsMetaData()
+    public function __construct()
 	{
-		parent::SugarBean();
+		parent::__construct();
 		$this->disable_row_level_security = true;
 	}
-	
+
 	function mark_deleted($id)
 	{
 		$query = "DELETE FROM $this->table_name WHERE  id='$id'";
@@ -128,7 +128,7 @@ class FieldsMetaData extends SugarBean {
 		$this->mark_relationships_deleted($id);
 
 	}
-	
+
 	function get_list_view_data(){
 	    $data = parent::get_list_view_data();
 	    $data['VNAME'] = translate($this->vname, $this->custom_module);

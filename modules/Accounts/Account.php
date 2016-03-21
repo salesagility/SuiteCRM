@@ -85,13 +85,13 @@ class Account extends Company {
 	var $shipping_address_state;
 	var $shipping_address_country;
 	var $shipping_address_postalcode;
-    
+
     var $shipping_address_street_2;
     var $shipping_address_street_3;
     var $shipping_address_street_4;
-    
+
     var $campaign_id;
-    
+
 	var $sic_code;
 	var $ticker_symbol;
 	var $account_type;
@@ -138,12 +138,13 @@ class Account extends Company {
     var $push_billing;
     var $push_shipping;
 
-	function Account() {
-        parent::Company();
+	public function __construct() {
+        parent::__construct();
+
 
         $this->setupCustomFields('Accounts');
 
-		foreach ($this->field_defs as $field) 
+		foreach ($this->field_defs as $field)
 		{
 			if(isset($field['name']))
 			{
@@ -222,11 +223,11 @@ class Account extends Company {
 			{
 				$this->parent_name = '';
 			}
-        }		
-        
+        }
+
         // Set campaign name if there is a campaign id
 		if( !empty($this->campaign_id)){
-			
+
 			$camp = new Campaign();
 		    $where = "campaigns.id='{$this->campaign_id}'";
 		    $campaign_list = $camp->get_full_list("campaigns.name", $where, true);
@@ -250,7 +251,7 @@ class Account extends Company {
 		}
 		$temp_array["BILLING_ADDRESS_STREET"]  = $this->billing_address_street;
 		$temp_array["SHIPPING_ADDRESS_STREET"] = $this->shipping_address_street;
-    	
+
 		return $temp_array;
 	}
 	/**

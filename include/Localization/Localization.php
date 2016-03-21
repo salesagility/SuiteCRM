@@ -82,13 +82,13 @@ class Localization {
     /* Charset mappings for iconv */
     var $iconvCharsetMap = array(
         'KS_C_5601-1987' => 'CP949',
-        'ISO-8859-8-I' => 'ISO-8859-8'            
+        'ISO-8859-8-I' => 'ISO-8859-8'
         );
 
 	/**
 	 * sole constructor
 	 */
-	function Localization() {
+	public function __construct() {
 		global $sugar_config;
 		$this->localeNameFormatDefault = empty($sugar_config['locale_name_format_default']) ? 's f l' : $sugar_config['default_name_format'];
 		$this->loadCurrencies();

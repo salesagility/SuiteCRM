@@ -53,9 +53,9 @@ class Person extends Basic
      */
     public $email_addresses;
 
-	public function Person()
+	public function __construct()
 	{
-		parent::Basic();
+		parent::__construct();
 		$this->emailAddress = new SugarEmailAddress();
 	}
 
@@ -127,12 +127,12 @@ class Person extends Basic
 		$this->name = $full_name;
 		$this->full_name = $full_name; //used by campaigns
 	}
-	
+
 
 	/**
  	 * @see parent::save()
  	 */
-	public function save($check_notify=false) 
+	public function save($check_notify=false)
 	{
 		//If we are saving due to relationship changes, don't bother trying to update the emails
         if(!empty($GLOBALS['resavingRelatedBeans']))
@@ -168,7 +168,7 @@ class Person extends Basic
 	/**
  	 * @see parent::get_summary_text()
  	 */
-	public function get_summary_text() 
+	public function get_summary_text()
 	{
 		$this->_create_proper_name_field();
         return $this->name;
@@ -177,7 +177,7 @@ class Person extends Basic
 	/**
  	 * @see parent::get_list_view_data()
  	 */
-	public function get_list_view_data() 
+	public function get_list_view_data()
 	{
 		global $system_config;
 		global $current_user;

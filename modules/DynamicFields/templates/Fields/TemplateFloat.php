@@ -48,7 +48,7 @@ class TemplateFloat extends TemplateRange
 	var $len = '18';
 	var $precision = '8';
 
-	function TemplateFloat(){
+	public function __construct(){
 		parent::__construct();
 		$this->vardef_map['precision']='ext1';
 		//$this->vardef_map['precision']='precision';
@@ -65,7 +65,7 @@ class TemplateFloat extends TemplateRange
     	if(empty($this->len)) {
 			return parent::get_db_type();
 		}
-		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $this->len, $precision); 
+		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $this->len, $precision);
 	}
-	
+
 }

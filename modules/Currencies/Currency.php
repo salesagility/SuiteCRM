@@ -75,9 +75,9 @@ class Currency extends SugarBean
 	var $disable_num_format = true;
 
 
-    function Currency()
+    public function __construct()
 	{
-		parent::SugarBean();
+		parent::__construct();
 		global $app_strings, $current_user, $sugar_config, $locale;
 		$this->field_defs['hide'] = array('name'=>'hide', 'source'=>'non-db', 'type'=>'varchar','len'=>25);
 		$this->field_defs['unhide'] = array('name'=>'unhide', 'source'=>'non-db', 'type'=>'varchar','len'=>25);
@@ -185,7 +185,7 @@ class Currency extends SugarBean
 	 	}
 	 	return '';
 	}
-	
+
     function retrieve($id = -99, $encode = true, $deleted = true){
      	if($id == '-99'){
      		$this->name = 	$this->getDefaultCurrencyName();

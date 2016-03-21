@@ -52,8 +52,9 @@ if(!defined('SUGAR_SMARTY_DIR'))
  */
 class Sugar_Smarty extends Smarty
 {
-	function Sugar_Smarty()
+	public function __construct()
 	{
+        parent::__construct();
 		if(!file_exists(SUGAR_SMARTY_DIR))mkdir_recursive(SUGAR_SMARTY_DIR, true);
 		if(!file_exists(SUGAR_SMARTY_DIR . 'templates_c'))mkdir_recursive(SUGAR_SMARTY_DIR . 'templates_c', true);
 		if(!file_exists(SUGAR_SMARTY_DIR . 'configs'))mkdir_recursive(SUGAR_SMARTY_DIR . 'configs', true);
@@ -86,7 +87,7 @@ class Sugar_Smarty extends Smarty
         if(file_exists($resource)) {
             return parent::_unlink($resource, $exp_time);
         }
-        
+
         // file wasn't found, so it must be gone.
         return true;
     }

@@ -166,10 +166,10 @@ class InboundEmail extends SugarBean {
 	/**
 	 * Sole constructor
 	 */
-	function InboundEmail() {
+    public function __construct() {
 	    $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
 	    $this->EmailCachePath = sugar_cached('modules/Emails');
-	    parent::SugarBean();
+	    parent::__construct();
 		if(function_exists("imap_timeout")) {
 			/*
 			 * 1: Open
@@ -3566,7 +3566,7 @@ class InboundEmail extends SugarBean {
 				}
 			}
 		}
-		
+
 	   return $result;
 
     }
