@@ -58,7 +58,7 @@ global $mod_strings;
 global $current_user;
 global $locale;
 
-$xtpl = new XTemplate('modules/MailMerge/Step4.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/MailMerge/Step4.html');
 $xtpl->assign("MOD", $mod_strings);
 $xtpl->assign("APP", $app_strings);
 

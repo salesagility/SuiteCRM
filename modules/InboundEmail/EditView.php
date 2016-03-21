@@ -232,9 +232,9 @@ $default_from_addr = $a['value'];
 
 // TEMPLATE ASSIGNMENTS
 if ($focus->mailbox_type == 'template') {
-	$xtpl = new XTemplate('modules/InboundEmail/EmailAccountTemplateEditView.html');
+	$xtpl = new \SuiteCRM\XTemplate('modules/InboundEmail/EmailAccountTemplateEditView.html');
 } else {
-	$xtpl = new XTemplate('modules/InboundEmail/EditView.html');
+	$xtpl = new \SuiteCRM\XTemplate('modules/InboundEmail/EditView.html');
 }
 // if no IMAP libraries available, disable Save/Test Settings
 if(!function_exists('imap_open')) {
@@ -376,7 +376,7 @@ $quicksearch_js = "";
 //$javascript = get_set_focus_js(). $javascript->getScript() . $quicksearch_js;
 $xtpl->assign('JAVASCRIPT', get_set_focus_js(). $javascript->getScript() . $quicksearch_js);
 
-require_once('include/Smarty/plugins/function.sugar_help.php');
+require_once('custom/include/Smarty/plugins/function.sugar_help.php');
 $tipsStrings = array(
     'LBL_SSL_DESC',
     'LBL_ASSIGN_TO_TEAM_DESC',

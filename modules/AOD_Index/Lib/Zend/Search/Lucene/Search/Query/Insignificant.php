@@ -22,7 +22,7 @@
 
 
 /** Zend_Search_Lucene_Search_Query */
-require_once 'Zend/Search/Lucene/Search/Query.php';
+
 
 
 /**
@@ -66,7 +66,7 @@ class Zend_Search_Lucene_Search_Query_Insignificant extends Zend_Search_Lucene_S
      */
     public function createWeight(Zend_Search_Lucene_Interface $reader)
     {
-        require_once 'Zend/Search/Lucene/Search/Weight/Empty.php';
+
         return new Zend_Search_Lucene_Search_Weight_Empty();
     }
 

@@ -22,7 +22,7 @@
 
 
 /** Zend_Search_Lucene_Analysis_Analyzer_Common */
-require_once 'Zend/Search/Lucene/Analysis/Analyzer/Common.php';
+
 
 
 /**
@@ -58,7 +58,7 @@ class Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num extends Zend_Search_Lu
     {
         if (@preg_match('/\pL/u', 'a') != 1) {
             // PCRE unicode support is turned off
-            require_once 'Zend/Search/Lucene/Exception.php';
+
             throw new Zend_Search_Lucene_Exception('Utf8Num analyzer needs PCRE unicode support to be enabled.');
         }
     }

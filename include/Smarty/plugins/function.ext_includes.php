@@ -20,7 +20,7 @@ r47412 - 2009-05-20 17:50:30 -0700 (Wed, 20 May 2009) - xye - Bug30528 Merged th
 Modified:
 modules/ModuleBuilder/tpls/includes.tpl
 modules/Configurator/EditView.tpl
-include/Smarty/plugins/function.ext_includes.php
+custom/include/Smarty/plugins/function.ext_includes.php
 
 r42807 - 2008-12-29 11:16:59 -0800 (Mon, 29 Dec 2008) - dwong - Branch from trunk/sugarcrm r42806 to branches/tokyo/sugarcrm
 
@@ -32,7 +32,7 @@ r32667 - 2008-03-11 17:16:04 -0700 (Tue, 11 Mar 2008) - majed - changes for temp
 
 r31712 - 2008-02-11 18:44:00 -0800 (Mon, 11 Feb 2008) - awu - fixing END sugarcrm int tag
 Touched:
-- include/Smarty/plugins/function.ext_includes.php
+- custom/include/Smarty/plugins/function.ext_includes.php
 
 r31615 - 2008-02-05 10:52:49 -0800 (Tue, 05 Feb 2008) - dwheeler - Added Ext theming abilities as well as an ext_includes smarty function.
 
