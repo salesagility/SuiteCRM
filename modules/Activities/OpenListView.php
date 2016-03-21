@@ -217,7 +217,7 @@ if (count($focus_calls_list)>0) {
 ///////////////////////////////////////////////////////////////////////////////
 ////	START OUTPUT
 
-$xtpl=new XTemplate ('modules/Activities/OpenListView.html');
+$xtpl=new \SuiteCRM\XTemplate ('modules/Activities/OpenListView.html');
 $xtpl->assign("MOD", $current_module_strings);
 $xtpl->assign("APP", $app_strings);
 $xtpl->assign('JSON_CONFIG_JAVASCRIPT', $json_config->get_static_json_server());

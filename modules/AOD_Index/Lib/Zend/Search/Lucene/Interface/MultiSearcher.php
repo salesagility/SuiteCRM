@@ -21,5 +21,5 @@
 
 
 /** Zend_Search_Lucene_MultiSearcher */
-require_once 'Zend/Search/Lucene/MultiSearcher.php';
+
 

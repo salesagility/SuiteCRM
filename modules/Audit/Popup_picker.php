@@ -102,7 +102,7 @@ class Popup_Picker
         global $current_language;
 
 		$audit_list =  Audit::get_audit_list();
-        $xtpl=new XTemplate ('modules/Audit/Popup_picker.html');
+        $xtpl=new \SuiteCRM\XTemplate ('modules/Audit/Popup_picker.html');
 
 		$xtpl->assign('MOD', $mod_strings);
 		$xtpl->assign('APP', $app_strings);

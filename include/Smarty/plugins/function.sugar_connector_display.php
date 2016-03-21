@@ -19,7 +19,7 @@ r50375 - 2009-08-24 18:07:43 -0700 (Mon, 24 Aug 2009) - dwong - branch kobe2 fro
 r44079 - 2009-02-12 22:27:15 -0800 (Thu, 12 Feb 2009) - clee - Merged Code from Solana to Tokyo and Trunk branches
 Modified:
 include/connectors/component.php
-include/Smarty/plugins/function.sugar_connector_display.php
+custom/include/Smarty/plugins/function.sugar_connector_display.php
 modules/Connectors/Connector.js
 modules/Connectors/connectors/filters/ext/rest/zoominfocompany/zoominfocompany.php
 modules/Connectors/connectors/filters/ext/rest/zoominfoperson/zoominfoperson.php
