@@ -293,6 +293,19 @@
     }
 
 var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault) {
+
+    if(!$('#template_id').val()) {
+        $('input[name="update_exists_template"]').prop('checked', false);
+        $('input[name="update_exists_template"]').prop('disabled', true);
+    }
+    else {
+        $('input[name="update_exists_template"]').prop('disabled', false);
+    }
+
+    if($('input[name="update_exists_template"]').prop('checked')) {
+        namePrefixCopyOf = '';
+    }
+
     var emailTemplateId = $(elem).val() ? $(elem).val() : (typeof templateIdDefault != 'undefined' && templateIdDefault ? templateIdDefault : null);
     if(emailTemplateId) {
 

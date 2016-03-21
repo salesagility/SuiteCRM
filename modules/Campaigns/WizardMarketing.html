@@ -117,8 +117,9 @@
 		var emailTemplateCopyId = null;
 
 		function onSaveCopyMarketingEmailTemplate(callback) {
+			var func = emailTemplateCopyId && $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
-				'func': emailTemplateCopyId ? 'update': 'createCopy',
+				'func': func,
 				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
 				'body_html': $('#email_template_editor').getMozaikValue(),
 				'name': $('#template_name').val(),
@@ -131,7 +132,7 @@
 					console.error(resp.error);
 				}
 				else {
-					if(!emailTemplateCopyId) {
+					if(!emailTemplateCopyId && func == 'createCopy') {
 						emailTemplateCopyId = resp.data.id;
 						$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
 						$('#template_id').val(resp.data.id);
@@ -186,6 +187,7 @@
 	<div id='step1' style="display:none;">
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class="edit view" style="width: 450px;">
 			<tbody>
+				<tr><td>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</td><td><input type="checkbox" name="update_exists_template"></td></tr>
 				<tr>
 					<td scope="col" nowrap valign="top">
 						<slot>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
