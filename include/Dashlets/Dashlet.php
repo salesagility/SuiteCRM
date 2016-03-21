@@ -35,7 +35,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * "Powered by SugarCRM".
  ********************************************************************************/
 
-require_once('include/Sugar_Smarty.php');
+require_once('include/Smarty/Sugar_Smarty.php');
 require_once('include/utils/layout_utils.php');
 
 /**

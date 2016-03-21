@@ -98,7 +98,6 @@ $uw_files = array(
     'include/modules.php',
     'include/Localization/Localization.php',
     'install/language/en_us.lang.php',
-    'XTemplate/xtpl.php',
     'include/database/DBHelper.php',
     'include/database/DBManager.php',
     'include/database/DBManagerFactory.php',

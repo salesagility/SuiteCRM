@@ -21,7 +21,7 @@
  */
 
 /** Zend_Search_Lucene_Search_QueryEntry */
-require_once 'Zend/Search/Lucene/Search/QueryEntry.php';
+
 
 /**
  * @category   Zend
@@ -57,7 +57,7 @@ class Zend_Search_Lucene_Search_QueryEntry_Subquery extends Zend_Search_Lucene_S
      */
     public function processFuzzyProximityModifier($parameter = null)
     {
-        require_once 'Zend/Search/Lucene/Search/QueryParserException.php';
+
         throw new Zend_Search_Lucene_Search_QueryParserException('\'~\' sign must follow term or phrase');
     }
 

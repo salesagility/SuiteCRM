@@ -54,7 +54,7 @@ global $app_strings;
 global $app_list_strings;
 global $mod_strings;
 
-$xtpl = new XTemplate('modules/MailMerge/Merge.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/MailMerge/Merge.html');
 $xtpl->assign("MAILMERGE_IS_REDIRECT", false);
 
 $mTime = microtime();

@@ -37,7 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
+require_once 'include/Zend/Oauth/Provider.php';
 require_once 'modules/OAuthTokens/OAuthToken.php';
 require_once 'modules/OAuthKeys/OAuthKey.php';
 /**

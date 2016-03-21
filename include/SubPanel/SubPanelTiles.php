@@ -436,7 +436,7 @@ class SubPanelTiles
 			}
 
         }
-        require_once('include/Smarty/plugins/function.sugar_action_menu.php');
+        require_once('custom/include/Smarty/plugins/function.sugar_action_menu.php');
         $widget_contents = smarty_function_sugar_action_menu(array(
             'buttons' => $buttons,
             'class' => 'clickMenu fancymenu',

@@ -166,8 +166,8 @@ class EmailReminder
 
         $mail->From = $from_address;
         $mail->FromName = $from_name;
-
-        $xtpl = new XTemplate(get_notify_template_file($current_language));
+        
+        $xtpl = new \SuiteCRM\XTemplate(get_notify_template_file($current_language));
         $xtpl = $this->setReminderBody($xtpl, $bean, $user);
 
         $template_name = $GLOBALS['beanList'][$bean->module_dir] . 'Reminder';
