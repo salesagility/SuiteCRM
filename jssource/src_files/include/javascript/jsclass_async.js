@@ -138,7 +138,7 @@ SugarVCalClient.prototype.parseResults = function(textResult, adjusted, meetingD
     var offset = d.getTimezoneOffset();
 
     if (offset > 0 || offset < 0) {
-        gmt_offset_secs= 60 * 60;
+        gmt_offset_secs = (GLOBAL_REGISTRY.current_user.fields.gmt_offset + 60) * 60;
     } else {
         gmt_offset_secs = GLOBAL_REGISTRY.current_user.fields.gmt_offset*60;
     }
