@@ -24,7 +24,7 @@
 /**
  * Zend_Search_Lucene base exception
  */
-require_once 'Zend/Search/Lucene/Exception.php';
+
 
 
 /**

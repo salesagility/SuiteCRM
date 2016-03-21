@@ -193,7 +193,7 @@ if(!empty($create_case_email_template)) {
 if (!empty($distrib_method)) {
 	$distributionMethod = $app_list_strings['dom_email_distribution_for_auto_create'][$distrib_method];
 } // if
-$xtpl = new XTemplate('modules/InboundEmail/DetailView.html');
+$xtpl = new \SuiteCRM\XTemplate('modules/InboundEmail/DetailView.html');
 ////	ERRORS from Save
 if(isset($_REQUEST['error'])) {
 	$xtpl->assign('ERROR', "<div class='error'>".$mod_strings['ERR_NO_OPTS_SAVED']."</div>");

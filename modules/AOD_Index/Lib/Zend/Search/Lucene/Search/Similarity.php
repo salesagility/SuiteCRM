@@ -322,7 +322,7 @@ abstract class Zend_Search_Lucene_Search_Similarity
     public static function getDefault()
     {
         if (!self::$_defaultImpl instanceof Zend_Search_Lucene_Search_Similarity) {
-            require_once 'Zend/Search/Lucene/Search/Similarity/Default.php';
+
             self::$_defaultImpl = new Zend_Search_Lucene_Search_Similarity_Default();
         }
 

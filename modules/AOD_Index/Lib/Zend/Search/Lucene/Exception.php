@@ -23,7 +23,7 @@
 /**
  * Framework base exception
  */
-require_once 'Zend/Search/Exception.php';
+
 
 
 /**

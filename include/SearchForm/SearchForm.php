@@ -483,7 +483,7 @@ class SearchForm {
     function setup() {
         global $mod_strings, $app_strings, $app_list_strings, $theme, $timedate;
         $GLOBALS['log']->debug('SearchForm.php->setup()');
-        $this->xtpl = new XTemplate($this->tpl);
+        $this->xtpl = new \SuiteCRM\XTemplate($this->tpl);
         $this->xtpl->assign("MOD", $mod_strings);
         $this->xtpl->assign("APP", $app_strings);
         $this->xtpl->assign("THEME", $theme);
