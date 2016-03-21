@@ -13,15 +13,15 @@ class layout_utilsTest extends PHPUnit_Framework_TestCase
         //help param true
         $html1 = get_form_header('test Header', 'test subheader', true);
         $this->assertGreaterThan(0, strlen($html1));
-        $this->assertNotFalse(strpos($html1, 'test Header'));
-        $this->assertNotFalse(strpos($html1, 'test subheader'));
+        $this->assertContains('test Header', $html1);
+        $this->assertContains('test subheader', $html1);
+
 
         // help param false
         $html2 = get_form_header('new test Header', 'new test subheader', false);
         $this->assertGreaterThan(0, strlen($html2));
-        $this->assertNotFalse(strpos($html2, 'new test Header'));
-        $this->assertNotFalse(strpos($html2, 'new test subheader'));
-
+        $this->assertContains('new test Header', $html2);
+        $this->assertContains('new test subheader', $html2);
         $this->assertGreaterThan(strlen($html2), strlen($html1));
     }
 
@@ -32,21 +32,21 @@ class layout_utilsTest extends PHPUnit_Framework_TestCase
         //with show_create true, generates more html
         $html1 = get_module_title('Users', 'Users Home', true);
         $this->assertGreaterThan(0, strlen($html1));
-        $this->assertNotFalse(strpos($html1, 'Users'));
-        $this->assertNotFalse(strpos($html1, 'Users Home'));
+        $this->assertContains('Users', $html1);
+        $this->assertContains('Users Home', $html1);
 
         //with show_create false, generates less html
         $html2 = get_module_title('Users', 'Users Home', false);
         $this->assertGreaterThan(0, strlen($html2));
-        $this->assertNotFalse(strpos($html2, 'Users'));
-        $this->assertNotFalse(strpos($html2, 'Users Home'));
+        $this->assertContains('Users', $html2);
+        $this->assertContains('Users Home', $html2);
         $this->assertGreaterThan(strlen($html2), strlen($html1));
 
         //with show_create flase and count > 1, generates more html compared to count =0
         $html3 = get_module_title('Users', 'Users Home', false, 2);
         $this->assertGreaterThan(0, strlen($html3));
-        $this->assertNotFalse(strpos($html3, 'Users'));
-        $this->assertNotFalse(strpos($html3, 'Users Home'));
+        $this->assertContains('Users', $html3);
+        $this->assertContains('Users Home', $html3);
         $this->assertGreaterThan(strlen($html2), strlen($html3));
         $this->assertGreaterThan(strlen($html3), strlen($html1));
     }
@@ -58,12 +58,12 @@ class layout_utilsTest extends PHPUnit_Framework_TestCase
         //with show_create false, generates less html
         $html1 = getClassicModuleTitle('users', array('Users Home'));
         $this->assertGreaterThan(0, strlen($html1));
-        $this->assertNotFalse(strpos($html1, 'Users Home'));
+        $this->assertContains('Users Home', $html1);
 
         //with show_create true, generates more html
         $html2 = getClassicModuleTitle('users', array('Users Home'), true);
         $this->assertGreaterThan(0, strlen($html2));
-        $this->assertNotFalse(strpos($html2, 'Users Home'));
+        $this->assertContains('Users Home', $html2);
         $this->assertGreaterThan(strlen($html1), strlen($html2));
     }
 
@@ -71,7 +71,7 @@ class layout_utilsTest extends PHPUnit_Framework_TestCase
     {
         //execute the method and test if it returns html/JS
 
-        //with includeJS true, generates more html		
+        //with includeJS true, generates more html
         ob_start();
         insert_popup_header();
         $renderedContent1 = ob_get_contents();
@@ -90,7 +90,7 @@ class layout_utilsTest extends PHPUnit_Framework_TestCase
 
     public function testinsert_popup_footer()
     {
-        //execute the method and test if it returns html 
+        //execute the method and test if it returns html
 
         ob_start();
         insert_popup_footer();
