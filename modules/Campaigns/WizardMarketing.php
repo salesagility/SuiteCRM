@@ -427,6 +427,19 @@ if ($has_campaign || $inboundEmail) {
     if ($has_campaign) {
         $ss->assign("TRACKER_KEY_OPTIONS", get_select_options_with_id($campaign_urls, null));
         //$ss->parse("main.NoInbound.tracker_url");
+
+        // create tracker URL fields
+        $campaignTracker = new CampaignTracker();
+        if(isset($_REQUEST['campaign_tracker_id']) && $_REQUEST['campaign_tracker_id']) {
+            $campaignTracker->retrieve((int) $_REQUEST['campaign_tracker_id']);
+        }
+        $ss->assign("TRACKER_NAME", $focus->tracker_name);
+        $ss->assign("TRACKER_URL", $focus->tracker_url);
+        if (!empty($focus->is_optout) && $focus->is_optout == 1) {
+            $ss->assign("IS_OPTOUT_CHECKED","checked");
+            $ss->assign("TRACKER_URL_DISABLED","disabled");
+        }
+
     }
 }
 // create option of "Contact/Lead/Task" from corresponding module

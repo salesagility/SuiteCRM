@@ -457,6 +457,9 @@ $mod_strings = array (
 	'LBL_INSERT_URL_REF'		=> 'Insert URL Reference',
 	'LBL_INSERT_TRACKER_URL'	=> 'Insert Tracker URL:',
 	'LBL_INSERT'				=> 'Insert',
+	'LBL_SAVE' => 'Save',
+	'ERR_REQUIRED_TRACKER_NAME' => 'Tracker Name is required',
+	'ERR_REQUIRED_TRACKER_URL' => 'Tracker URL is required',
 );
 
 
