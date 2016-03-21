@@ -242,6 +242,13 @@
 							<select name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
 								{$DROPDOWN}
 							</select>
+							{literal}
+							<script>
+								$(function(){
+									addVariables(document.wizform.variable_name,document.wizform.variable_module.options[document.wizform.variable_module.selectedIndex].value, 'wizform');
+								});
+							</script>
+							{/literal}
 							<select name='variable_name' tabindex="0" onchange="showVariable('wizform');">
 							</select>
 							<span scope="row">
