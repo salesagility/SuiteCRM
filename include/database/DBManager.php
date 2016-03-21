@@ -1510,8 +1510,9 @@ protected function checkQuery($sql, $object_name = false)
 
 	/**
 	 * This function increments the global $sql_queries variable
+     * @param string $sql
 	 */
-	public function countQuery()
+	public function countQuery($sql=null)
 	{
 		if (self::$queryLimit != 0 && ++self::$queryCount > self::$queryLimit
 			&&(empty($GLOBALS['current_user']) || !is_admin($GLOBALS['current_user']))) {
@@ -1519,6 +1520,12 @@ protected function checkQuery($sql, $object_name = false)
             $resourceManager = ResourceManager::getInstance();
             $resourceManager->notifyObservers('ERR_QUERY_LIMIT');
 		}
+
+        if(isset($GLOBALS['DevelRequestStats']) && $GLOBALS['DevelRequestStats'] instanceof \DevelRequestStats) {
+            /** @var \DevelRequestStats $requestStats */
+            $requestStats = $GLOBALS['DevelRequestStats'];
+            $requestStats->registerExecutedQuery($sql);
+        }
 	}
 
 	/**
