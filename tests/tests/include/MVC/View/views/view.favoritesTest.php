@@ -5,17 +5,13 @@
 */
 class ViewFavoritesTest extends PHPUnit_Framework_TestCase
 {
-	
- 	public function test__construct()
- 	{
- 		$this->markTestIncomplete('Can Not be implemented');
- 	}	
- 	
- 	public function testdisplay()
- 	{
- 		$this->markTestIncomplete('Can Not be implemented');
- 	}
- 	
- 	
+    public function test__construct()
+    {
+        $this->markTestIncomplete('Can Not be implemented');
+    }
+
+    public function testdisplay()
+    {
+        $this->markTestIncomplete('Can Not be implemented');
+    }
 }
-?>
