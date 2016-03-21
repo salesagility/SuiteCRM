@@ -45,12 +45,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
- 
+
  require_once('include/SugarObjects/templates/basic/Basic.php');
  class Chance extends Basic{
 
- 	function Chance(){
- 		parent::SugarBean();
+     public function __construct(){
+ 		parent::__construct();
 
  	}
 

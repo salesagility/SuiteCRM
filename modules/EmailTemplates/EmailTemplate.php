@@ -111,9 +111,9 @@ class EmailTemplate extends SugarBean
      */
     protected $storedVariables = array();
 
-    function EmailTemplate()
+    public function __construct()
     {
-        parent::SugarBean();
+        parent::__construct();
     }
 
     /**

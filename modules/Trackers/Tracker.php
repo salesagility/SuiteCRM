@@ -65,7 +65,7 @@ class Tracker extends SugarBean
         "visible"
     );
 
-    function Tracker()
+    function __construct()
     {
         global $dictionary;
         if(isset($this->module_dir) && isset($this->object_name) && !isset($GLOBALS['dictionary'][$this->object_name])){
@@ -73,7 +73,7 @@ class Tracker extends SugarBean
             if(defined('TEMPLATE_URL'))$path = SugarTemplateUtilities::getFilePath($path);
             require_once($path);
         }
-        parent::SugarBean();
+        parent::__construct();
     }
 
     /*
@@ -101,13 +101,13 @@ class Tracker extends SugarBean
 	        } else {
 	           $history_max_viewed = (!empty($GLOBALS['sugar_config']['history_max_viewed']))? $GLOBALS['sugar_config']['history_max_viewed'] : 50;
 	        }
-	         
+
 	        $query = 'SELECT item_id, item_summary, module_name, id FROM ' . $this->table_name . ' WHERE id = (SELECT MAX(id) as id FROM ' . $this->table_name . ' WHERE user_id = \'' . $user_id . '\' AND deleted = 0 AND visible = 1' . $module_query . ')';
 	        $result = $this->db->limitQuery($query,0,$history_max_viewed,true,$query);
 	        while(($row = $this->db->fetchByAssoc($result))) {
 	               $breadCrumb->push($row);
 	        }
-        }     
+        }
 
         $list = $breadCrumb->getBreadCrumbList($modules);
         $GLOBALS['log']->info("Tracker: retrieving ".count($list)." items");

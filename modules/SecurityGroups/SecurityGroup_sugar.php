@@ -21,21 +21,21 @@ class SecurityGroup_sugar extends Basic {
 		var $assigned_user_id;
 		var $assigned_user_name;
 		var $assigned_user_link;
-	
 
 
 
 
-	function SecurityGroup_sugar(){	
-		parent::Basic();
+
+	public function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

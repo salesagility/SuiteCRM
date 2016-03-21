@@ -93,9 +93,9 @@ class Project extends SugarBean {
 	/**
 	 *
 	 */
-	function Project()
+    public function __construct()
 	{
-		parent::SugarBean();
+		parent::__construct();
 	}
 
 	/**

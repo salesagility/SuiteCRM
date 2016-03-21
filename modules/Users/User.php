@@ -110,8 +110,8 @@ class User extends Person {
 
 	var $new_schema = true;
 
-	function User() {
-		parent::Person();
+	function __construct() {
+		parent::__construct();
 
 		$this->_loadUserPreferencesFocus();
 	}
@@ -1846,7 +1846,7 @@ EOQ;
 
     /**
      * Checks if the passed email is primary.
-     * 
+     *
      * @param string $email
      * @return bool Returns TRUE if the passed email is primary.
      */

@@ -71,9 +71,9 @@ class Favorites_sugar extends Basic
     var $currency_id;
     var $invite_templates;
 
-    function Favorites_sugar()
+    public function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     function bean_implements($interface)
