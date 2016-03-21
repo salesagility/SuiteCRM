@@ -35,12 +35,12 @@
  ********************************************************************************/
 
 *}
-{include file="_head.tpl" theme_template=true}
+{include file="themes/SuiteR/tpls/_head.tpl"}
 <body onMouseOut="closeMenus();">
 {$DCSCRIPT}
 {if $AUTHENTICATED}
     <div id="ajaxHeader">
-        {include file="_headerModuleList.tpl" theme_template=true}
+        {include file="themes/SuiteR/tpls/_headerModuleList.tpl"}
     </div>
 {/if}
 {literal}

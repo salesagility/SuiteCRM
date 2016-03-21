@@ -238,9 +238,9 @@ $default_from_addr = $a['value'];
 
 // TEMPLATE ASSIGNMENTS
 if ($focus->mailbox_type == 'template') {
-	$xtpl = new XTemplate('modules/InboundEmail/EmailAccountTemplateEditView.html');
+	$xtpl = new \SuiteCRM\XTemplate('modules/InboundEmail/EmailAccountTemplateEditView.html');
 } else {
-	$xtpl = new XTemplate('modules/InboundEmail/EditView.html');
+	$xtpl = new \SuiteCRM\XTemplate('modules/InboundEmail/EditView.html');
 }
 // if no IMAP libraries available, disable Save/Test Settings
 if(!function_exists('imap_open')) {

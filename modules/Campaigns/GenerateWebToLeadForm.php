@@ -103,7 +103,7 @@ if(!empty($_REQUEST['assigned_user_id'])){
 
  $lead = new Lead();
  $fieldsMetaData = new FieldsMetaData();
- $xtpl=new XTemplate ('modules/Campaigns/WebToLeadForm.html');
+ $xtpl=new \SuiteCRM\XTemplate ('modules/Campaigns/WebToLeadForm.html');
  $xtpl->assign("MOD", $mod_strings);
  $xtpl->assign("APP", $app_strings);
  $Web_To_Lead_Form_html = '';

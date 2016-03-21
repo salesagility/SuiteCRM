@@ -24,6 +24,7 @@ class progress_bar_utilsTest extends PHPUnit_Framework_TestCase
 		//execute the method and test if it doesn't throw an exception.
 		//this method uses flush so we cannot get and verify content printed
 		try {
+			ob_start();
 			display_flow_bar("test",0);
 			$this->assertTrue(true);
 		}
@@ -38,6 +39,7 @@ class progress_bar_utilsTest extends PHPUnit_Framework_TestCase
 		//execute the method and test if it doesn't throw an exception.
 		//this method uses flush so we cannot get and verify content printed
 		try {
+			ob_start();
 			start_flow_bar("test", 1);
 			$this->assertTrue(true);
 		}
@@ -51,7 +53,9 @@ class progress_bar_utilsTest extends PHPUnit_Framework_TestCase
 	{
 		//execute the method and test if it doesn't throw an exception.
 		//this method uses flush so we cannot get and verify content printed
-		try {
+		try
+		{
+			ob_start();
 			destroy_flow_bar("test");
 			$this->assertTrue(true);
 		}
@@ -67,6 +71,7 @@ class progress_bar_utilsTest extends PHPUnit_Framework_TestCase
 		//execute the method and test if it doesn't throw an exception.
 		//this method uses flush so we cannot get and verify content printed
 		try {
+			ob_start();
 			display_progress_bar("test",80, 100);
 			$this->assertTrue(true);
 		}
@@ -81,6 +86,7 @@ class progress_bar_utilsTest extends PHPUnit_Framework_TestCase
 		//execute the method and test if it doesn't throw an exception.
 		//this method uses flush so we cannot get and verify content printed
 		try {
+			ob_start();
 			update_progress_bar("test",80, 100);
 			$this->assertTrue(true);
 		}
