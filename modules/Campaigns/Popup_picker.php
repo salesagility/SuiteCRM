@@ -143,7 +143,7 @@ class Popup_Picker
 			.$app_strings['LBL_CANCEL_BUTTON_LABEL']."  ' />\n";
 		$button .= "</form>\n";
 
-		$form = new XTemplate('modules/Campaigns/Popup_picker.html');
+		$form = new \SuiteCRM\XTemplate('modules/Campaigns/Popup_picker.html');
 		$form->assign('MOD', $mod_strings);
 		$form->assign('APP', $app_strings);
 		$form->assign('THEME', $theme);

@@ -1,25 +1,32 @@
 {
   "name": "salesagility/suitecrm",
-  "description": "SuiteCRM",
   "type": "project",
+  "description": "GPL-3.0",
+  "keywords": [
+    "SuiteCRM",
+    "SugarCRM",
+    "SalesForce",
+    "Microsoft Dynamics",
+    "Customer Relationship Management"
+  ],
+  "homepage": "https://suitecrm.com/",
   "license": "GPL-3.0",
   "authors": [],
   "minimum-stability": "dev",
-  "config": {
-    "vendor-dir": "vendor"
+  "require": {
+    "php": ">=5.3.0",
+    "smarty/smarty": "~2.6.29",
+    "zendframework/zendframework1": "~1.12.0"
   },
-  "require": {},
   "require-dev": {
-    "leafo/scssphp": "dev-master",
-    "phpunit/phpunit": "^3.7",
+    "phpunit/phpunit": "4.*.*",
+    "symfony/yaml": "~2.1",
     "mikey179/vfsStream": "1.4.*"
   },
-  "scripts": {},
   "prefer-stable": true,
   "autoload": {
-    "psr-0": {
-      "": "src/"
+    "psr-4": {
+      "SuiteCRM\\": "src/"
     }
-  },
-  "extra": {}
+  }
 }
