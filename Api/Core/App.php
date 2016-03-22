@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
             $container['jwt'] = $arguments['decoded'];
         },
         'error' => function ($request, $response, $arguments) use ($app) {
-            return $response->write('Error');
+            return $response->write('Authentication Failed');
         },
     ]));
 }
