@@ -110,6 +110,7 @@ var plgBackground = {
                 },
                 onChange: function(rbg, hex){
                     $mozaikInner.css('background-color', '#'+hex);
+                    $mozaikInner.find('td').css('background-color', '#'+hex);
                 },
             });
             $(elem).attr('data-initialized', '1');
