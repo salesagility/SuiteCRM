@@ -4,19 +4,19 @@ class directw {
 
 var $mpdf = null;
 
-function directw(&$mpdf) {
+function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 }
 
 
 function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
-	if (!$align) { 
+	if (!$align) {
 		if ($directionality=='rtl') { $align = 'R'; }
 		else { $align = 'L'; }
 	}
 	if ($h == 0) { $this->mpdf->SetLineHeight(); $h = $this->mpdf->lineheight; }
 	//Output text in flowing mode
-	$w = $this->mpdf->w - $this->mpdf->rMargin - $this->mpdf->x; 
+	$w = $this->mpdf->w - $this->mpdf->rMargin - $this->mpdf->x;
 
 	$wmax = ($w - ($this->mpdf->cMarginL+$this->mpdf->cMarginR));
 	$s=str_replace("\r",'',$txt);
@@ -97,10 +97,10 @@ function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
 						// JUSTIFY J using Unicode fonts (Word spacing doesn't work)
 						// WORD SPACING
 						// Change NON_BREAKING SPACE to spaces so they are 'spaced' properly
-					      $tmp = str_replace(chr(194).chr(160),chr(32),$tmp ); 
+					      $tmp = str_replace(chr(194).chr(160),chr(32),$tmp );
 						$len_ligne = $this->mpdf->GetStringWidth($tmp );
-						$nb_carac = mb_strlen( $tmp , $this->mpdf->mb_enc ) ;  
-						$nb_spaces = mb_substr_count( $tmp ,' ', $this->mpdf->mb_enc ) ;  
+						$nb_carac = mb_strlen( $tmp , $this->mpdf->mb_enc ) ;
+						$nb_spaces = mb_substr_count( $tmp ,' ', $this->mpdf->mb_enc ) ;
 						$inclCursive=false;
 						if ($checkCursive) {
 							if (preg_match("/([".$this->mpdf->pregRTLchars."])/u", $tmp)) { $inclCursive = true; }	// *RTL*
@@ -182,8 +182,8 @@ function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
 						// Change NON_BREAKING SPACE to spaces so they are 'spaced' properly
 					      $tmp = str_replace(chr(160),chr(32),$tmp );
 						$len_ligne = $this->mpdf->GetStringWidth($tmp );
-						$nb_carac = strlen( $tmp ) ;  
-						$nb_spaces = substr_count( $tmp ,' ' ) ;  
+						$nb_carac = strlen( $tmp ) ;
+						$nb_spaces = substr_count( $tmp ,' ' ) ;
 						list($charspacing,$ws) = $this->mpdf->GetJspacing($nb_carac,$nb_spaces,((($w-2) - $len_ligne) * _MPDFK),$false);
 						$this->mpdf->SetSpacing($charspacing,$ws);
 						//////////////////////////////////////////
@@ -212,7 +212,7 @@ function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
 	//Last chunk
 	if($i!=$j) {
 		if ($currentx != 0) $this->mpdf->x=$currentx;
-		else $this->mpdf->x=$this->mpdf->lMargin;	
+		else $this->mpdf->x=$this->mpdf->lMargin;
 		if ($this->mpdf->usingCoreFont) { $tmp = substr($s,$j,$i-$j); }
 		else {
 			$tmp = mb_substr($s,$j,$i-$j,$this->mpdf->mb_enc);
@@ -227,7 +227,7 @@ function Write($h,$txt,$currentx=0,$link='',$directionality='ltr',$align='') {
 function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsizePt=0, $fontstyle='', $kerning=120, $fontwidth=100, $divider='') {	// mPDF 5.5.23
 	if ($font || $fontstyle || $fontsizePt) $this->mpdf->SetFont($fontfamily,$fontstyle,$fontsizePt);
 	$kerning/=100;
-	$fontwidth/=100;        
+	$fontwidth/=100;
 	if($kerning==0) $this->mpdf->Error('Please use values unequal to zero for kerning (CircularText)');
 	if($fontwidth==0) $this->mpdf->Error('Please use values unequal to zero for font width (CircularText)');
 	$text=str_replace("\r",'',$text);
@@ -240,15 +240,15 @@ function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsize
 	   $t=0;
 	   $w = array();
 	   if ($this->mpdf->usingCoreFont)  {
-		$nb=strlen($text); 
+		$nb=strlen($text);
 		for($i=0; $i<$nb; $i++){
 			$w[$i]=$this->mpdf->GetStringWidth($text[$i]);
 			$w[$i]*=$kerning*$fontwidth;
 			$t+=$w[$i];
 		}
 	   }
-	   else { 
-		$nb=mb_strlen($text, $this->mpdf->mb_enc ); 
+	   else {
+		$nb=mb_strlen($text, $this->mpdf->mb_enc );
 		$lastchar = '';
 		$unicode = $this->mpdf->UTF8StringToArray($text);
 		for($i=0; $i<$nb; $i++){
@@ -257,8 +257,8 @@ function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsize
 			$w[$i]*=$kerning*$fontwidth;
 			$char = $unicode[$i];
 			if ($this->mpdf->useKerning && $lastchar) {
-				if (isset($this->mpdf->CurrentFont['kerninfo'][$lastchar][$char])) { 
-					$tk = $this->mpdf->CurrentFont['kerninfo'][$lastchar][$char] * ($this->mpdf->FontSize/ 1000) * $kerning * $fontwidth; 
+				if (isset($this->mpdf->CurrentFont['kerninfo'][$lastchar][$char])) {
+					$tk = $this->mpdf->CurrentFont['kerninfo'][$lastchar][$char] * ($this->mpdf->FontSize/ 1000) * $kerning * $fontwidth;
 					$w[$i] += $tk/2;
 					$w[$i-1] += $tk/2;
 					$t+=$tk;
@@ -275,7 +275,7 @@ function CircularText($x, $y, $r, $text, $align='top', $fontfamily='', $fontsize
 			$t+=$this->mpdf->GetStringWidth('  ');
 		if ($fontsizePt==-2)
 			$fontsizePt = $this->mpdf->FontSizePt * 0.5  *  $u/$t;
-		else 
+		else
 			$fontsizePt = $this->mpdf->FontSizePt * $u/$t;
 		$this->mpdf->SetFontSize($fontsizePt);
 		$autoset = true;
@@ -377,7 +377,7 @@ function Shaded_box( $text,$font='',$fontstyle='B',$szfont='',$width='70%',$styl
 
 	$mid = ($r1 + $r2 ) / 2;
 	$loop   = 0;
-    
+
 	while ( $loop == 0 )
 	{
 		$this->mpdf->SetFont( $font, $fontstyle, $szfont );

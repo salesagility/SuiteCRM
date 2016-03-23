@@ -21,7 +21,7 @@
    var $CacheDB;
 
    /* Class creator */
-   function pCache($Settings="")
+   function __construct($Settings="")
     {
      $CacheFolder	= isset($Settings["CacheFolder"]) ? $Settings["CacheFolder"] : "cache";
      $CacheIndex	= isset($Settings["CacheIndex"]) ? $Settings["CacheIndex"] : "index.db";
@@ -263,7 +263,7 @@
      /* Not in the cache */
      if (!$CacheInfo) { return(NULL); }
 
-     /* Get the database extended information */     
+     /* Get the database extended information */
      $DBPos   = $CacheInfo["DBPos"];
      $PicSize = $CacheInfo["PicSize"];
 

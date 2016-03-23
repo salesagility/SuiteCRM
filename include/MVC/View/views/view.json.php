@@ -39,17 +39,18 @@
 
 class ViewJson extends SugarView{
 	var $type ='detail';
-	function ViewJson(){
- 		parent::SugarView();
+
+	public function __construct(){
+ 		parent::__construct();
  	}
- 	
+
 	function display(){
  		global $beanList;
 		$module = $GLOBALS['module'];
 		$json = getJSONobj();
 		$bean = $this->bean;
 		$all_fields = array_merge($bean->column_fields,$bean->additional_column_fields);
-		
+
 		$js_fields_arr = array();
 		foreach($all_fields as $field) {
 			if(isset($bean->$field)) {

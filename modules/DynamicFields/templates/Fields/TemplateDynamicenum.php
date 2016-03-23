@@ -45,7 +45,7 @@ class TemplateDynamicenum extends TemplateEnum
     var $type = 'dynamicenum';
     var $parentenum = '';
 
-    function TemplateDynamicenum()
+    function __construct()
     {
         parent::__construct();
         $this->vardef_map['parentenum'] = 'ext2';

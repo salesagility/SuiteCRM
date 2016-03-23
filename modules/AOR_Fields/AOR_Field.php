@@ -72,9 +72,9 @@ class AOR_Field extends Basic
     var $group_display;
     var $aor_report_id;
 
-    function AOR_Field()
+    function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     function save_lines($post_data, $parent, $key = '')

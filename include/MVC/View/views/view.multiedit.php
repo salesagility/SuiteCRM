@@ -46,10 +46,11 @@
 require_once('include/EditView/EditView2.php');
  class ViewMultiedit extends SugarView{
  	var $type ='edit';
- 	function ViewMultiedit(){
- 		parent::SugarView();
+
+ 	public function __construct(){
+ 		parent::__construct();
  	}
- 	
+
  	function display(){
 		global $beanList, $beanFiles;
 		if($this->action == 'AjaxFormSave'){
@@ -57,7 +58,7 @@ require_once('include/EditView/EditView2.php');
 		}else{
 			if(!empty($_REQUEST['modules'])){
 				$js_array = 'Array(';
-				
+
 				$count = count($_REQUEST['modules']);
 				$index = 1;
 				foreach($_REQUEST['modules'] as $module){

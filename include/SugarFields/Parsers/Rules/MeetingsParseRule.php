@@ -43,8 +43,8 @@ require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
 
 class MeetingsParseRule extends ActivitiesParseRule {
 
-function MeetingsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -57,7 +57,7 @@ function preParse($panels, $view) {
 		   	  	 	if($this->matches($column, '/^tag.parent$/') || $this->matches($column, '/^parent_id$/')) {
 		   	  	 	   $panels[$name][$rowCount][$key] = 'parent_name';
 		   	  	 	}
-				} //foreach 
+				} //foreach
 		   	} //foreach
 	    } //foreach
 	}

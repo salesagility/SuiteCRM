@@ -95,9 +95,9 @@ class SchedulersJob extends Basic
 	/**
 	 * Job constructor.
 	 */
-	function SchedulersJob()
+	function __construct()
 	{
-        parent::Basic();
+        parent::__construct();
         if(!empty($GLOBALS['sugar_config']['jobs']['min_retry_interval'])) {
             $this->min_interval = $GLOBALS['sugar_config']['jobs']['min_retry_interval'];
         }

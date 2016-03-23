@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -63,16 +63,17 @@ class AOS_Contracts_sugar extends Basic {
 		var $company_signed_date;
 		var $renewal_reminder_date;
 		var $contract_type;
-		function AOS_Contracts_sugar(){	
-		parent::Basic();
+
+    function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

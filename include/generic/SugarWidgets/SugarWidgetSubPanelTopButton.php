@@ -56,7 +56,7 @@ class SugarWidgetSubPanelTopButton extends SugarWidget
 
 	/** Take the keys for the strings and look them up.  Module is literal, the rest are label keys
 	*/
-	function SugarWidgetSubPanelTopButton($module='', $title='', $access_key='', $form_value='')
+	function __construct($module='', $title='', $access_key='', $form_value='')
 	{
 		global $app_strings;
 

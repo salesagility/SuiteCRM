@@ -31,7 +31,7 @@ class AOR_Chart extends Basic {
 	var $table_name = 'aor_charts';
 	var $importable = true;
 	var $disable_row_level_security = true ;
-	
+
 	var $id;
 	var $name;
 	var $date_entered;
@@ -52,8 +52,8 @@ class AOR_Chart extends Basic {
 
 
 
-	function AOR_Chart(){
-		parent::Basic();
+	public function __construct(){
+		parent::__construct();
 	}
 
     function save_lines(array $post,AOR_Report $bean,$postKey){

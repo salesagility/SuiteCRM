@@ -2,7 +2,7 @@
 if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class SugarWidgetFieldCronSchedule extends SugarWidgetFieldVarchar
 {
-    public function SugarWidgetFieldCronSchedule($layout_manager) {
-        parent::SugarWidgetFieldText($layout_manager);
+    public function __construct($layout_manager) {
+        parent::__construct($layout_manager);
     }
 }

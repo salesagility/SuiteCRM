@@ -52,7 +52,7 @@ class Configurator {
 	var $useAuthenticationClass = false;
     protected $error = null;
 
-	function Configurator() {
+	function __construct() {
 		$this->loadConfig();
 	}
 

@@ -39,10 +39,11 @@
 
 class ViewSerialized extends SugarView{
 	var $type ='detail';
-	function ViewSerialized(){
- 		parent::SugarView();
+
+	public function __construct(){
+ 		parent::__construct();
  	}
- 	
+
 	function display(){
 		ob_clean();
 		echo serialize($this->bean->toArray());

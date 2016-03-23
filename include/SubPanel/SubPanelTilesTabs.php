@@ -48,7 +48,7 @@ require_once('include/SubPanel/SubPanelTiles.php');
 class SubPanelTilesTabs extends SubPanelTiles
 {
 
-	function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = '')
+	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 
 		$this->focus = $focus;

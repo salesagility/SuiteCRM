@@ -36,7 +36,7 @@
    var $LabelPos = "" ;
 
    /* Class creator */
-   function pPie($Object,$pDataObject)
+   function __construct($Object,$pDataObject)
     {
      /* Cache the pChart object reference */
      $this->pChartObject = $Object;
@@ -228,7 +228,7 @@
            $Yc = sin(($i-90)*PI/180) * $Radius + $Y;
 
            if ( $FirstPoint ) { $this->pChartObject->drawLine($Xc,$Yc,$X0,$Y0,$Settings); } { $FirstPoint = FALSE; }
-  
+
            $this->pChartObject->drawAntialiasPixel($Xc,$Yc,$Settings);
           }
          $this->pChartObject->drawLine($Xc,$Yc,$X0,$Y0,$Settings);
@@ -251,7 +251,7 @@
            else
             $this->writePieLabel($Xc,$Yc,$Label,$Angle,$Settings,FALSE);
           }
-  
+
          $Offset = $i + $DataGapAngle; $ID++;
         }
       }
@@ -452,7 +452,7 @@
          $Settings = $SliceColors[$SliceID];
          if ( $Border )
           { $Settings["R"]+= 30; $Settings["G"]+= 30; $Settings["B"]+= 30;; }
-  
+
          if ( isset($SliceAngle[$SliceID][1]) ) /* Empty error handling */
           {
            $Angle = $SliceAngle[$SliceID][1];
@@ -481,7 +481,7 @@
          $this->pChartObject->drawLine($Plots[2],$Plots[3],$Plots[2],$Plots[3]- $SliceHeight,array("R"=>$Settings["R"],"G"=>$Settings["G"],"B"=>$Settings["B"]));
          $Border = "";
          $Border[] = $Plots[0]; $Border[] = $Plots[1]; $Border[] = $Plots[0]; $Border[] = $Plots[1] - $SliceHeight;
-         $Border[] = $Plots[2]; $Border[] = $Plots[3] - $SliceHeight; $Border[] = $Plots[2]; $Border[] = $Plots[3]; 
+         $Border[] = $Plots[2]; $Border[] = $Plots[3] - $SliceHeight; $Border[] = $Plots[2]; $Border[] = $Plots[3];
          $this->pChartObject->drawPolygon($Border,$Settings);
         }
       }
@@ -498,7 +498,7 @@
 
          $Border = "";
          $Border[] = $Plots[0]; $Border[] = $Plots[1]; $Border[] = $Plots[0]; $Border[] = $Plots[1] - $SliceHeight;
-         $Border[] = $Plots[count($Plots)-2]; $Border[] = $Plots[count($Plots)-1] - $SliceHeight; $Border[] = $Plots[count($Plots)-2]; $Border[] = $Plots[count($Plots)-1]; 
+         $Border[] = $Plots[count($Plots)-2]; $Border[] = $Plots[count($Plots)-1] - $SliceHeight; $Border[] = $Plots[count($Plots)-2]; $Border[] = $Plots[count($Plots)-1];
          $this->pChartObject->drawPolygon($Border,$Settings);
         }
       }
@@ -528,7 +528,7 @@
          $Settings = $SliceColors[$SliceID];
          if ( $Border )
           { $Settings["R"]+= 30; $Settings["G"]+= 30; $Settings["B"]+= 30; }
-  
+
          if ( isset($SliceAngle[$SliceID][1]) ) /* Empty error handling */
           {
            $Angle = $SliceAngle[$SliceID][1];
@@ -615,7 +615,7 @@
            $Yc = sin(($i-90)*PI/180) * $Radius*$SkewFactor + $Y - $SliceHeight;
 
            if ( $FirstPoint ) { $this->pChartObject->drawLine($Xc,$Yc,$X0,$Y0,$Settings); } { $FirstPoint = FALSE; }
-  
+
            $this->pChartObject->drawAntialiasPixel($Xc,$Yc,$Settings);
            if ($i < 270 && $i > 90 ) { $this->pChartObject->drawAntialiasPixel($Xc,$Yc+$SliceHeight,$Settings); }
           }
@@ -1400,7 +1400,7 @@
       {
        $Settings = $SliceColors[$SliceID];  $Settings["NoBorder"] = TRUE;
        $Settings["R"] = $Settings["R"]+$Cf*2; $Settings["G"] = $Settings["G"]+$Cf*2; $Settings["B"] = $Settings["B"]+$Cf*2;
- 
+
        $this->pChartObject->drawPolygon($Plots["TopPoly"],$Settings);
 
        if ( $RecordImageMap ) { $this->pChartObject->addToImageMap("POLY",$this->arraySerialize($Plots["TopPoly"]),$this->pChartObject->toHTMLColor($Settings["R"],$Settings["G"],$Settings["B"]),$Data["Series"][$Data["Abscissa"]]["Data"][$SliceID],$Data["Series"][$DataSerie]["Data"][count($Slices)-$SliceID-1]); }

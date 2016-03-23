@@ -11,9 +11,9 @@ class SubPanelSearchForm extends SearchForm  {
 
     var $subPanel; // the instantiated bean of the subPanel
 
-    function SubPanelSearchForm($seed, $module, $subPanel, $options = array()){
+    function __construct($seed, $module, $subPanel, $options = array()){
         $this->subPanel = $subPanel;
-        parent::SearchForm($seed, $module, 'DetailView', $options);
+        parent::__construct($seed, $module, 'DetailView', $options);
     }
 
     function display($header = false){
@@ -52,4 +52,4 @@ class SubPanelSearchForm extends SearchForm  {
         return null;
     }
 
-} 
+}

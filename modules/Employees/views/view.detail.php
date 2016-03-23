@@ -44,10 +44,10 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class EmployeesViewDetail extends ViewDetail {
 
- 	function EmployeesViewDetail(){
- 		parent::ViewDetail();
+ 	function __construct(){
+ 		parent::__construct();
  	}
- 	
+
    /**
     * Return the "breadcrumbs" to display at the top of the page
     *
@@ -122,7 +122,7 @@ EOHTML;
  		     $this->ss->assign('DELETE_WARNING', $deleteWarning);
         }
         $this->ss->assign('DISPLAY_DELETE', $showDeleteButton);
-        
+
  		parent::display();
  	}
 }

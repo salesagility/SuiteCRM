@@ -68,7 +68,7 @@ class Reminder extends Basic
 
     public function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     public function bean_implements($interface)
