@@ -1051,10 +1051,17 @@ class Link {
 		}
 	}
 
-	/*
-	 */
+
 	function _get_link_table_definition($table_name,$def_name) {
 	    global $dictionary;
+
+        /*
+         * If this method is called statically will throw FATAL error on php7 because of the $this usage
+         */
+        $staticContext = !isset($this);
+        if($staticContext) {
+            return null;
+        }
 
 		include_once('modules/TableDictionary.php');
 	    // first check to see if already loaded - assumes hasn't changed in the meantime

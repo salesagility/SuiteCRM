@@ -24,7 +24,7 @@ class AdministrationTest extends PHPUnit_Framework_TestCase
     {
         $admin = new Administration();
 
-        //execute with default parameters and test if it returns object itself   	
+        //execute with default parameters and test if it returns object itself
         $result = $admin->retrieveSettings();
         $this->assertInstanceOf('Administration', $result);
         $this->assertSame($admin, $result);

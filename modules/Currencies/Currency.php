@@ -93,7 +93,7 @@ class Currency extends SugarBean
      * @return currency value in US Dollars from conversion
      */
 	function convertToDollar($amount, $precision = 6) {
-		return round(($amount / $this->conversion_rate), $precision);
+		return $this->conversion_rate ? round(($amount / $this->conversion_rate), $precision) : 0;
 	}
 
     /**
