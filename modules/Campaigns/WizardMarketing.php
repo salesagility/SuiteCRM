@@ -467,5 +467,42 @@ if ($has_campaign) {
 
 $ss->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.wizform.variable_text.value, \"email_template_editor\")");
 
+
+///////////////////////////////////////
+////    ATTACHMENTS
+$attachments = '';
+if (!empty($mrkt_focus->id)) {
+    $etid = $mrkt_focus->id;
+} elseif (!empty($old_id)) {
+    $ss->assign('OLD_ID', $old_id);
+    $etid = $old_id;
+}
+if (!empty($etid)) {
+    $note = new Note();
+    $where = "notes.parent_id='{$etid}' AND notes.filename IS NOT NULL";
+    $notes_list = $note->get_full_list("", $where, true);
+
+    if (!isset($notes_list)) {
+        $notes_list = array();
+    }
+    for ($i = 0; $i < count($notes_list); $i++) {
+        $the_note = $notes_list[$i];
+        if (empty($the_note->filename)) {
+            continue;
+        }
+        $secureLink = 'index.php?entryPoint=download&id=' . $the_note->id . '&type=Notes';
+        $attachments .= '<input type="checkbox" name="remove_attachment[]" value="' . $the_note->id . '"> ' . $app_strings['LNK_REMOVE'] . '&nbsp;&nbsp;';
+        $attachments .= '<a href="' . $secureLink . '" target="_blank">' . $the_note->filename . '</a><br>';
+    }
+}
+$attJs = '<script type="text/javascript">';
+$attJs .= 'var lnk_remove = "' . $app_strings['LNK_REMOVE'] . '";';
+$attJs .= '</script>';
+$ss->assign('ATTACHMENTS', $attachments);
+$ss->assign('ATTACHMENTS_JAVASCRIPT', $attJs);
+
+////    END ATTACHMENTS
+///////////////////////////////////////
+
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

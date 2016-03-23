@@ -14,6 +14,8 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
 
     $fields = array('body_html', 'subject', 'name');
 
+    // TODO: validate for email template before save it!
+
     switch($func) {
 
         case 'update':
@@ -43,6 +45,11 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             $newBean->save();
             $data['id'] = $newBean->id;
             $data['name'] = $newBean->name;
+            break;
+
+        case 'uploadAttachments':
+            // TODO : upload attachments
+            $error = 'function is not supported';
             break;
 
         default: case 'get':

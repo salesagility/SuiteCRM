@@ -44,7 +44,7 @@
 
 
 <div id='wiz_stage'>
-<form  id="wizform" name="wizform" method="POST" action="index.php">
+<form  id="wizform" name="wizform" method="POST" action="index.php" enctype="multipart/form-data">
 	<input type="hidden" name="module" value="Campaigns">
 	<input type="hidden" id="record" name="record" value="{$MRKT_ID}">
 	<input type="hidden" name="campaign_id" value="{$CAMPAIGN_ID}">
@@ -91,12 +91,26 @@
 
 	<script type="text/javascript">
 		{literal}
+
+		var hasNewAttachments = function() {
+			return $('#upload_form input[type=file]').length > 1;
+		};
+
+		var submitMarketingEmailAttachments = function() {
+			$('#upload_form').submit();
+		};
+
 		function onNextClick() {
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
 					// save marketing email template first
 					onSaveCopyMarketingEmailTemplate(function(){
-						onNext();
+						if(hasNewAttachments()) {
+							submitMarketingEmailAttachments();
+						}
+						else {
+							onNext();
+						}
 					});
 					break;
 
@@ -117,7 +131,16 @@
 		var emailTemplateCopyId = null;
 
 		function onSaveCopyMarketingEmailTemplate(callback) {
+
+			// todo : validate email template form before save
+
 			var func = emailTemplateCopyId && $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+//			<!-- BEGIN: NoInbound1 -->
+//			addUploadFiles('wizform');
+//			addUploadDocs('wizform');
+//			<!-- END: NoInbound1 -->
+
 			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 				'func': func,
 				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
@@ -136,6 +159,8 @@
 						emailTemplateCopyId = resp.data.id;
 						$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
 						$('#template_id').val(resp.data.id);
+
+						$('input[name="update_exists_template"]').prop('checked', true);
 					}
 					callback();
 				}
@@ -819,6 +844,52 @@ function determine_back(){
 </script>
 {/literal}
 </form>
+
+	<div id="step1_uploader" style="display: none;">
+
+		<table>
+			<!-- BEGIN: NoInbound2 -->
+			<tr>
+				<td valign="top" scope="row">
+					{$MOD.LBL_ATTACHMENTS}:
+				</td>
+				<td colspan="2" nowrap>
+					{$ATTACHMENTS_JAVASCRIPT} {$ATTACHMENTS}
+				</td>
+			</tr>
+			<!-- END: NoInbound2 -->
+		</table>
+
+		<!-- BEGIN: NoInbound3 -->
+		<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
+			<div id="upload_div">
+				<input type="file" id="my_file" name="file_1" size="40" />
+				<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
+				<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
+				<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
+				<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
+				<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUGAR_DOCUMENT}' class="button" />
+			</div>
+			<div id="attachments_div">
+			</div>
+		</form>
+		<!-- END: NoInbound3 -->
+	</div>
+	<script type="text/javascript" src="modules/Emails/javascript/Email.js"></script>
+	{literal}
+	<script type="text/javascript">
+		$(function(){
+			setInterval(function(){
+				$('#step1_uploader').css('display', $('#step1').css('display'));
+			}, 300);
+		});
+
+		var multi_selector = new multiFiles(document.getElementById('upload_div'));
+		multi_selector.addElement( document.getElementById('my_file'));
+
+	</script>
+	{/literal}
+
 </div>
 
 {sugar_getscript file="modules/Campaigns/wizard.js"}
