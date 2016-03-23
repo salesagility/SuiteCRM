@@ -388,7 +388,7 @@
 				<!-- Create/Edit a Tracker URL -->
 				<tr>
 					<td scope="row"><slot>{$MOD.LBL_EDIT_TRACKER_NAME|replace:' ':'&nbsp'}<span class="required">&nbsp;{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-					<td><slot><input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable"></slot><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span></td>
+					<td><slot><input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable"></slot><br><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span></td>
 
 					<td scope="row"><slot>{$MOD.LBL_EDIT_TRACKER_URL|replace:' ':'&nbsp'}&nbsp;<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 					<td colspan=3><slot><input type="text" size="100" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable" placeholder="http://"></slot><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span></td>
