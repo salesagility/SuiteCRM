@@ -48,9 +48,28 @@ class AOS_ProductsTest extends PHPUnit_Framework_TestCase
         $aosProducts = new AOS_Products();
         $aosProducts->id = 1;
 
-        //execute the method and verify that it retunrs expected results
-        $expected = "\n 			SELECT * FROM (\n 				SELECT\n					aos_quotes.*,\n					accounts.id AS account_id,\n					accounts.name AS billing_account,\n					\n					opportunity_id AS opportunity,\n					billing_contact_id AS billing_contact,\n					'' AS created_by_name,\n					'' AS modified_by_name,\n					'' AS assigned_user_name\n				FROM\n					aos_products\n\n				JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '1' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0\n				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0\n				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0\n\n				GROUP BY accounts.id\n			) AS aos_quotes\n\n		";
+        //execute the method and verify that it returns expected results
+        $expected = "SELECT * FROM (
+ 				SELECT
+					aos_quotes.*,
+					accounts.id AS account_id,
+					accounts.name AS billing_account,
+
+					opportunity_id AS opportunity,
+					billing_contact_id AS billing_contact,
+					'' AS created_by_name,
+					'' AS modified_by_name,
+					'' AS assigned_user_name
+				FROM
+					aos_products
+
+				JOIN aos_products_quotes ON aos_products_quotes.product_id = aos_products.id AND aos_products.id = '1' AND aos_products_quotes.deleted = 0 AND aos_products.deleted = 0
+				JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0
+				JOIN accounts ON accounts.id = aos_quotes.billing_account_id -- AND accounts.deleted = 0
+
+				GROUP BY accounts.id
+			) AS aos_quotes";
         $actual = $aosProducts->getCustomersPurchasedProductsQuery();
-        $this->assertSame($expected, $actual);
+        $this->assertSame(trim($expected), trim($actual));
     }
 }
