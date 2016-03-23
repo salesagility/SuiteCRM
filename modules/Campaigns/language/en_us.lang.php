@@ -462,6 +462,8 @@ $mod_strings = array (
 	'ERR_REQUIRED_TRACKER_URL' => 'Tracker URL is required',
 	'LBL_UPDATE_TEMPLATE' => 'Update template',
 	'LBL_ATTACHMENTS'			=> 'Attachments:',
+	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
+	'LBL_SUGAR_DOCUMENT' => 'Document',
 );
 
 

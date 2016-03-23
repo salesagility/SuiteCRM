@@ -100,22 +100,91 @@
 			$('#upload_form').submit();
 		};
 
+		// validations
+
+		var emailTemplateFormValidationRules = [
+			{id: 'template_id', rules: ['required']},
+			{id: 'template_name', rules: ['required']},
+			{id: 'template_subject', rules: ['required']},
+		];
+
+		var ruleMessages = {
+			required: '{/literal}{$MOD.ERR_MISSING_REQUIRED_FIELDS}{literal}'
+		};
+
+		var hideEmailTemplateFormErrors = function() {
+			var fields = emailTemplateFormValidationRules;
+			for(var i=0; i<fields.length; i++) {
+				var field = fields[i];
+				$('#' + field.id).css('background-color', 'initial');
+				var errorElem = $('#' + field.id).next();
+				if(errorElem.hasClass('required') && errorElem.hasClass('validation-message')) {
+					errorElem.remove();
+				}
+			}
+		};
+
+		var showEmailTemplateFormErrors = function(errors) {
+			hideEmailTemplateFormErrors();
+			for(var i=0; i<errors.length; i++) {
+				var error = errors[i];
+				$('#' + error.field.id).css('background-color', 'red');
+				$('#' + error.field.id).animate({'background-color': 'white'}, 1500);
+				$('#' + error.field.id).after('<div class="required validation-message">' + error.message + '</div>');
+			}
+		};
+
+		var isValidEmailTemplateFormAndShowErrors = function() {
+			var errors = [];
+
+			var fields = emailTemplateFormValidationRules;
+
+
+			for(var i=0; i<fields.length; i++) {
+				var field = fields[i];
+				for(var j=0; j<field.rules.length; j++) {
+					var rule = field.rules[j];
+
+					switch(rule) {
+						default: case 'required':
+							if(!$('#' + field.id).val()) {
+								errors.push({
+									'field': field,
+									'rule': rule,
+									'message': ruleMessages[rule],
+								});
+							}
+							break;
+					}
+
+				}
+			}
+
+			if(errors.length) {
+				showEmailTemplateFormErrors(errors);
+				return false;
+			}
+			return true;
+		};
+
 		function onNextClick() {
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
-					// save marketing email template first
-					onSaveCopyMarketingEmailTemplate(function(){
-						if(hasNewAttachments()) {
-							submitMarketingEmailAttachments();
-						}
-						else {
-							onNext();
-						}
-					});
+					// validate email template form before save
+					if(isValidEmailTemplateFormAndShowErrors()) {
+						onSaveCopyMarketingEmailTemplate(function () {
+							if (hasNewAttachments()) {
+								submitMarketingEmailAttachments();
+							}
+							else {
+								onNext();
+							}
+						});
+					}
 					break;
 
 				case '2':
-					// TODO: save/create marketing email first
+					// save/create marketing email first
 					onSaveMarketingEmail(function(){
 						onNext();
 					});
@@ -132,7 +201,7 @@
 
 		function onSaveCopyMarketingEmailTemplate(callback) {
 
-			// todo : validate email template form before save
+
 
 			var func = emailTemplateCopyId && $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
