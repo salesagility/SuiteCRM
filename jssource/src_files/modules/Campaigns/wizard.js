@@ -292,15 +292,19 @@
         return true;        
     }
 
-var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault) {
+var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, callback) {
 
-    if(!$('#template_id').val()) {
-        $('input[name="update_exists_template"]').prop('checked', false);
-        $('input[name="update_exists_template"]').prop('disabled', true);
+    var autoCheckUpdateCheckbox = function() {
+        if (!$('#template_id').val()) {
+            $('input[name="update_exists_template"]').prop('checked', false);
+            $('input[name="update_exists_template"]').prop('disabled', true);
+        }
+        else {
+            $('input[name="update_exists_template"]').prop('disabled', false);
+        }
     }
-    else {
-        $('input[name="update_exists_template"]').prop('disabled', false);
-    }
+
+    autoCheckUpdateCheckbox();
 
     if($('input[name="update_exists_template"]').prop('checked')) {
         namePrefixCopyOf = '';
@@ -327,8 +331,15 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault) 
                 $('#email_template_editor').html(htmlCode);
                 $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
 
+                $('#template_id').val(results.data.id);
+                $('input[name="update_exists_template"]').prop('checked', true);
+                autoCheckUpdateCheckbox();
+
                 $('#template_name').val(namePrefixCopyOf + results.data.name);
                 $('#template_subject').val(results.data.subject);
+                if(typeof callback != 'undefined') {
+                    callback();
+                }
             }
             else {
                 console.log(results.error);

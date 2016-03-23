@@ -48,8 +48,21 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             break;
 
         case 'uploadAttachments':
-            // TODO : upload attachments
-            $error = 'function is not supported';
+            // TODO : upload attachments (recover or use correct request and post arguments!!)
+//            $error = 'function is not supported';
+
+//            ob_start();
+//            include 'modules/EmailTemplates/Save.php';
+//            ob_get_contents();
+//            ob_end_clean();
+
+            include_once 'modules/EmailTemplates/EmailTemplateFormBase.php';
+            $formBase = new EmailTemplateFormBase();
+            $focus = BeanFactory::getBean('EmailTemplates', $_REQUEST['attach_to_template_id']);
+            $data = $formBase->handleAttachments($focus, false, null);
+            $redirectUrl = 'index.php?module=Campaigns&action=WizardMarketing&campaign_id=' . $_REQUEST['campaign_id'] . "&jump=2&template_id=" . $_REQUEST['attach_to_template_id']; // . '&marketing_id=' . $_REQUEST['attach_to_marketing_id'] . '&record=' . $_REQUEST['attach_to_marketing_id'];
+            header('Location: ' . $redirectUrl);
+            die();
             break;
 
         default: case 'get':
