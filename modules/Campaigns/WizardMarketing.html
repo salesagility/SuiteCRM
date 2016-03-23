@@ -390,7 +390,7 @@
 					<td><slot><input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable"></slot><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span></td>
 
 					<td scope="row"><slot>{$MOD.LBL_EDIT_TRACKER_URL|replace:' ':'&nbsp'}&nbsp;<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-					<td colspan=3><slot><input type="text" size="100" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url" id="tracker_url" value="{$TRACKER_URL}" class="errorable"></slot><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span></td>
+					<td colspan=3><slot><input type="text" size="100" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable" placeholder="http://"></slot><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span></td>
 
 					<td scope="row" style="display: block; min-width: 100px;"><slot>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</slot></td>
 					<td><slot><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' class="checkbox" type="checkbox" {$IS_OPTOUT_CHECKED}/></slot></td></slot></td>
@@ -403,7 +403,7 @@
 				</style>
 				<script type="text/javascript">
 					function toggle_tracker_url(isoptout) {
-						tracker_url = document.getElementById('tracker_url');
+						tracker_url = document.getElementById('tracker_url_add');
 						if (isoptout.checked) {
 							tracker_url.disabled=true;
 							tracker_url.value="index.php?entryPoint=removeme";
@@ -414,6 +414,7 @@
 
 					var setFieldErrorMessage = function(field, message) {
 						$('#' + field).css('background-color', 'red');
+						$('#' + field).css({'background-color': 'white'}, 1500);
 						$('#' + field + '_error').html(message).show();
 					};
 
@@ -427,7 +428,7 @@
 					var onCampaignTrackerSaveClick = function() {
 
 						var trackerName = $('#tracker_name').val();
-						var trackerURL = $('#tracker_url').val();
+						var trackerURL = $('#tracker_url_add').val();
 
 						// validate elements fisrt
 
