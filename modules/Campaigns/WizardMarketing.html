@@ -192,6 +192,7 @@
 					// save/create marketing email first
 					onSaveMarketingEmail(function(){
 						onNext();
+						refreshMarketingSelect();
 					});
 					break;
 
@@ -764,7 +765,47 @@
 
 		<br>
 
-		<h3>{$MOD.LBL_WIZ_SENDMAIL_TITLE} {$MRKT_NAME}</h3>
+		<h3>
+			{$MOD.LBL_WIZ_SENDMAIL_TITLE} <!-- {$MRKT_NAME}
+			{$MOD.LBL_WIZ_MARKETING_TITLE} -->
+			<select id="marketing_select">
+
+			</select>
+			{literal}
+			<script type="text/javascript">
+				var refreshMarketingSelect = function() {
+					var marketingSelectValue = '{/literal}{$EmailMarketingId}{literal}';
+					if($('#marketing_select').val()){
+						marketingSelectValue = $('#marketing_select').val();
+					}
+					$.get('index.php?entryPoint=emailMarketingList&campaign_id={/literal}{$CAMPAIGN_ID}{literal}', function(resp){
+						resp = JSON.parse(resp);
+						if(resp.error) {
+							// todo: show error
+							console.log(error);
+						}
+						else {
+							$('#marketing_select').html('');
+							for(var i=0; i<resp.data.length; i++) {
+								var elem = resp.data[i];
+								var selected = '';
+								if(elem.id == marketingSelectValue) {
+									selected = ' selected="selected"';
+								}
+								$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
+							}
+						}
+					});
+
+				};
+
+				$(function(){
+					refreshMarketingSelect();
+				});
+			</script>
+			{/literal}
+
+		</h3>
 		<br>
 
 		{if $WARNING_MESSAGE}
@@ -848,7 +889,7 @@
 			<div class="box schedule {$PL_DISABLED}">
 
 				{if !$PL_DISABLED}
-				<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', '{$EmailMarketingId}');">
+				<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
 					{/if}
 
 					{$MOD.LBL_SEND_EMAIL}
@@ -865,7 +906,7 @@
 			<div class="box test {$PL_DISABLED}">
 
 				{if !$PL_DISABLED}
-				<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', '{$EmailMarketingId}');">
+				<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
 					{/if}
 
 					{$MOD.LBL_SEND_AS_TEST}
