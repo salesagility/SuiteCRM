@@ -67,5 +67,6 @@ Desktop.ini
 lang_cmp.php
 .kdev4/
 SuiteCRM.kdev4
+
 #Ignore composer vendor folder
-include/vendor/
+vendor/
