@@ -26,3 +26,4 @@ branches:
     - hotfix
     - develop
     - travisFix
+    - travisFixPhp7

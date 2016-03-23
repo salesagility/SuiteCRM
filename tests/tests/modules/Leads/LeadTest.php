@@ -343,13 +343,13 @@ class LeadTest extends PHPUnit_Framework_TestCase {
     {
     	$lead = new Lead();
 
-    	$expected = array (
-					  "select" => "SELECT calls.id ",
-					  "from" => "FROM calls ",
-					  "where" => " WHERE calls.parent_id = '' \n            AND calls.parent_type = 'Leads' AND calls.id NOT IN ( SELECT call_id FROM calls_leads ) ",
-					  "join" => "",
-					  "join_tables" =>  array (""),
-					);
+    	$expected = array();
+        $expected['select']='SELECT calls.id ';
+        $expected['from']='FROM calls ';
+        $expected['where']=" WHERE calls.parent_id = '$this->id'
+            AND calls.parent_type = 'Leads' AND calls.id NOT IN ( SELECT call_id FROM calls_leads ) ";
+        $expected['join'] = "";
+        $expected['join_tables'][0] = '';
 
     	$actual = $lead->get_old_related_calls();
     	$this->assertSame($expected,$actual);
@@ -372,13 +372,13 @@ class LeadTest extends PHPUnit_Framework_TestCase {
     {
     	$lead = new Lead();
 
-    	$expected = array (
-					  "select" => "SELECT meetings.id ",
-					  "from" => "FROM meetings ",
-					  "where" => " WHERE meetings.parent_id = '' \n            AND meetings.parent_type = 'Leads' AND meetings.id NOT IN ( SELECT meeting_id FROM meetings_leads ) ",
-					  "join" => "",
-					  "join_tables" => array (""),
-					);
+    	$expected = array();
+        $expected['select']='SELECT meetings.id ';
+        $expected['from']='FROM meetings ';
+        $expected['where']=" WHERE meetings.parent_id = ''
+            AND meetings.parent_type = 'Leads' AND meetings.id NOT IN ( SELECT meeting_id FROM meetings_leads ) ";
+        $expected['join'] = "";
+        $expected['join_tables'][0] = '';
 
     	$actual = $lead->get_old_related_meetings();
     	 $this->assertSame($expected,$actual);
