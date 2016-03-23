@@ -47,8 +47,8 @@ class SugarWidgetFieldName extends SugarWidgetFieldVarchar
 {
     protected static $moduleSavePermissions = array();
 
-    function SugarWidgetFieldName(&$layout_manager) {
-        parent::SugarWidgetFieldVarchar($layout_manager);
+    function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute('reporter');
     }
 

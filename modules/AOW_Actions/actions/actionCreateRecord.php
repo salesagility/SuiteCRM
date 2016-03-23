@@ -26,8 +26,8 @@
 require_once('modules/AOW_Actions/actions/actionBase.php');
 class actionCreateRecord extends actionBase {
 
-    function actionCreateRecord($id = ''){
-        parent::actionBase($id);
+    function __construct($id = ''){
+        parent::__construct($id);
     }
 
     function loadJS(){

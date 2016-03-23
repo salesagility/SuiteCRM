@@ -62,8 +62,8 @@ class Alert extends Basic {
     var $assigned_user_link;
     var $is_read;
 
-    function Alert(){
-        parent::Basic();
+    function __construct(){
+        parent::__construct();
     }
 
     function bean_implements($interface){

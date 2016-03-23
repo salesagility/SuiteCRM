@@ -24,11 +24,11 @@
 
 require_once('modules/AOS_Quotes/AOS_Quotes_sugar.php');
 class AOS_Quotes extends AOS_Quotes_sugar {
-	
-	function AOS_Quotes(){	
-		parent::AOS_Quotes_sugar();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
 	function save($check_notify = FALSE){
         global $sugar_config;
 
@@ -53,17 +53,17 @@ class AOS_Quotes extends AOS_Quotes_sugar {
         perform_aos_save($this);
 
 		parent::save($check_notify);
-		
+
 		require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
 		$productQuoteGroup = new AOS_Line_Item_Groups();
 		$productQuoteGroup->save_groups($_POST, $this, 'group_');
 	}
-	
+
 	function mark_deleted($id)
 	{
 		$productQuote = new AOS_Products_Quotes();
 		$productQuote->mark_lines_deleted($this);
 		parent::mark_deleted($id);
-	}	
+	}
 }
 ?>

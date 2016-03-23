@@ -70,16 +70,17 @@ class Calls_Reschedule_sugar extends Basic {
 		var $reason;
 		var $call_id_c;
 		var $calls;
-		function Calls_Reschedule_sugar(){	
-		parent::Basic();
+
+    function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

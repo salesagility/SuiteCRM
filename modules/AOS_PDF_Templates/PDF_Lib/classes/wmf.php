@@ -5,7 +5,7 @@ class wmf {
 var $mpdf = null;
 var $gdiObjectArray;
 
-function wmf(&$mpdf) {
+function __construct(&$mpdf) {
 	$this->mpdf = $mpdf;
 }
 
@@ -16,10 +16,10 @@ function _getWMFimage($data) {
 		$this->gdiObjectArray = array();
 		$a=unpack('stest',"\1\0");
 		if ($a['test']!=1)
-		return array(0, 'Error parsing WMF image - Big-endian architecture not supported'); 
+		return array(0, 'Error parsing WMF image - Big-endian architecture not supported');
 		// check for Aldus placeable metafile header
 		$key = unpack('Lmagic', substr($data, 0, 4));
-		$p = 18;  // WMF header 
+		$p = 18;  // WMF header
 		if ($key['magic'] == (int)0x9AC6CDD7) { $p +=22; } // Aldus header
 		// define some state variables
 		$wo=null; // window origin
@@ -94,12 +94,12 @@ function _getWMFimage($data) {
 							$nullBrush = false;
 							if ($obj['style'] == 1) { $nullBrush = true; }
 							else {
-								$wmfdata .= $this->mpdf->SetFColor($this->mpdf->ConvertColor('rgb('.$obj['r'].','.$obj['g'].','.$obj['b'].')'), true)."\n";	
+								$wmfdata .= $this->mpdf->SetFColor($this->mpdf->ConvertColor('rgb('.$obj['r'].','.$obj['g'].','.$obj['b'].')'), true)."\n";
 							}
 							break;
 						case 'P':
 							$nullPen = false;
-							$dashArray = array(); 
+							$dashArray = array();
 							// dash parameters are custom
 							switch ($obj['style']) {
 								case 0: // PS_SOLID

@@ -43,8 +43,8 @@ require_once('include/generic/SugarWidgets/SugarWidgetFieldvarchar.php');
 
 class SugarWidgetFieldText extends SugarWidgetFieldVarchar
 {
-    function SugarWidgetFieldText(&$layout_manager) {
-        parent::SugarWidgetFieldVarchar($layout_manager);
+    function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
     }
 
     function queryFilterEquals($layout_def)
@@ -71,7 +71,7 @@ class SugarWidgetFieldText extends SugarWidgetFieldVarchar
         $column = $this->_get_column_select($layout_def);
         return "($column IS NULL OR ".$this->reporter->db->convert($column, "length")." = 0)";
     }
-	
+
     function displayList($layout_def) {
         return nl2br(parent::displayListPlain($layout_def));
     }

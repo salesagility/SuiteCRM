@@ -46,7 +46,7 @@ require_once('include/generic/SugarWidgets/SugarWidgetSubPanelTopButton.php');
 class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
 {
 	//button_properties is a collection of properties associated with the widget_class definition. layoutmanager
-	function SugarWidgetSubPanelTopSelectButton($button_properties=array())
+	function __construct($button_properties=array())
 	{
 		$this->button_properties=$button_properties;
 	}
@@ -157,7 +157,7 @@ class SugarWidgetSubPanelTopSelectButton extends SugarWidgetSubPanelTopButton
                     $popup_request_data['passthru_data']['marketing_id'] = $_REQUEST['mkt_id'];
                 }
 
-                if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data'])) 
+                if (is_array($this->button_properties) && !empty($this->button_properties['add_to_passthru_data']))
                 {
                     $popup_request_data['passthru_data']= array_merge($popup_request_data['passthru_data'],$this->button_properties['add_to_passthru_data']);
                 }

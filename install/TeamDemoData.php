@@ -66,14 +66,14 @@ class TeamDemoData {
 	/**
 	 * Constructor for creating demo data for teams
 	 */
-	function TeamDemoData($seed_team, $large_scale_test = false)
+	function __construct($seed_team, $large_scale_test = false)
 	{
 		$this->_team = $seed_team;
 		$this->_large_scale_test = $large_scale_test;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function create_demo_data() {
 		global $current_language;
@@ -92,7 +92,7 @@ class TeamDemoData {
 				$this->_quick_create($team_name);
 			}
 		}
-		
+
 		$this->add_users_to_team();
 	}
 
@@ -108,50 +108,50 @@ class TeamDemoData {
 		$this->_team->add_user_to_team($this->guids["will"]);
 		$this->_team->add_user_to_team($this->guids['chris']);
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function get_random_team()
 	{
 		$team_list = $this->_seed_data_get_team_list();
 		$team_list_size = count($team_list);
 		$random_index = mt_rand(0,$team_list_size-1);
-		
+
 		return $team_list[$random_index];
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	function get_random_teamset()
 	{
 		$team_list = $this->_seed_data_get_teamset_list();
 		$team_list_size = count($team_list);
 		$random_index = mt_rand(0,$team_list_size-1);
-		
+
 		return $team_list[$random_index];
-	}	
-	
-	
+	}
+
+
 	/**
-	 * 
+	 *
 	 */
 	function _seed_data_get_teamset_list()
 	{
 		$teamsets = Array();
 		$teamsets[] = array("East", "West");
 		$teamsets[] = array("East", "West", "1");
-		$teamsets[] = array("West", "East");		
+		$teamsets[] = array("West", "East");
 		$teamsets[] = array("West", "East", "1");
 		$teamsets[] = array("1", "East");
 		$teamsets[] = array("1", "West");
 		return $teamsets;
 	}
-		
-	
+
+
 	/**
-	 * 
+	 *
 	 */
 	function _seed_data_get_team_list()
 	{
@@ -177,9 +177,9 @@ class TeamDemoData {
 
 		return $teams;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function _quick_create($name)
 	{
@@ -188,7 +188,7 @@ class TeamDemoData {
 			$this->_team->create_team($name, $name, $name);
 		}
 	}
-	
-	
+
+
 }
 ?>

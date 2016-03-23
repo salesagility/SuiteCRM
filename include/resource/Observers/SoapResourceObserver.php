@@ -44,8 +44,8 @@ class SoapResourceObserver extends ResourceObserver {
 
 private $soapServer;
 
-function SoapResourceObserver($module) {
-   parent::ResourceObserver($module);
+function __construct($module) {
+   parent::__construct($module);
 }
 
 
@@ -74,11 +74,11 @@ $error->set_error('resource_management_error');
 //Override the description
 $error->description = $msg;
 $this->soapServer->methodreturn = array('result'=>$msg, 'error'=>$error->get_soap_array());
-$this->soapServer->serialize_return();	
+$this->soapServer->serialize_return();
 $this->soapServer->send_response();
 sugar_cleanup(true);
 
-}	
-	
+}
+
 }
 ?>

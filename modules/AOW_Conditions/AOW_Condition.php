@@ -69,9 +69,9 @@ class AOW_Condition extends Basic
     var $value_type;
     var $condition_operator;
 
-    function AOW_Condition()
+    function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     function bean_implements($interface)

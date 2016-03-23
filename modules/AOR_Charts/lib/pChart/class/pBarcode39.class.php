@@ -24,7 +24,7 @@
    var $MOD43;
 
    /* Class creator */
-   function pBarcode39($BasePath="",$EnableMOD43=FALSE)
+   function __construct($BasePath="",$EnableMOD43=FALSE)
     {
      $this->MOD43  = $EnableMOD43;
      $this->Codes   = "";
@@ -189,12 +189,12 @@
 
      for( $i=0; $i < $length; ++$i )
       $checksum += strpos( $charset, $string[$i] );
- 
+
      return substr( $charset, ($checksum % 43), 1 );
     }
 
-   function left($value,$NbChar) { return substr($value,0,$NbChar); }  
-   function right($value,$NbChar) { return substr($value,strlen($value)-$NbChar,$NbChar); }  
-   function mid($value,$Depart,$NbChar) { return substr($value,$Depart-1,$NbChar); }  
+   function left($value,$NbChar) { return substr($value,0,$NbChar); }
+   function right($value,$NbChar) { return substr($value,strlen($value)-$NbChar,$NbChar); }
+   function mid($value,$Depart,$NbChar) { return substr($value,$Depart-1,$NbChar); }
   }
 ?>

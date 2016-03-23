@@ -30,8 +30,8 @@ require_once 'util.php';
 require_once 'include/clean.php';
 class AOP_Case_Updates extends AOP_Case_Updates_sugar {
 
-    function AOP_Case_Updates(){
-        parent::AOP_Case_Updates_sugar();
+    public function __construct(){
+        parent::__construct();
     }
 
     function save($check_notify = false){

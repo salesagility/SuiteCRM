@@ -54,8 +54,8 @@ class SugarWidgetReportField extends SugarWidgetField
      */
     protected $reporter;
 
-	function SugarWidgetReportField(&$layout_manager) {
-        parent::SugarWidgetField($layout_manager);
+	function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute("reporter");
     }
 

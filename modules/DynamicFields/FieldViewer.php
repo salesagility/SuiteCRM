@@ -38,7 +38,7 @@
  ********************************************************************************/
 
 class FieldViewer{
-	function FieldViewer(){
+	function __construct(){
 		$this->ss = new Sugar_Smarty();
 	}
 	function getLayout($vardef){
@@ -50,7 +50,7 @@ class FieldViewer{
 		$this->ss->assign('APP', $GLOBALS['app_strings']);
 		//Only display range search option if in Studio, not ModuleBuilder
 		$this->ss->assign('range_search_option_enabled', empty($_REQUEST['view_package']));
-		
+
 		$GLOBALS['log']->debug('FieldViewer.php->getLayout() = '.$vardef['type']);
 		switch($vardef['type']){
 			case 'address':
@@ -114,7 +114,7 @@ class FieldViewer{
 				if(!empty($file)){
 					require_once($file);
 					return get_body($this->ss, $vardef);
-				}else{ 
+				}else{
 					return $this->ss->fetch('modules/DynamicFields/templates/Fields/Forms/varchar.tpl');
 				}
 		}

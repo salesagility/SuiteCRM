@@ -53,7 +53,7 @@ class SubpanelQuickCreate{
      */
     public $viewType = 'QuickCreate';
 
-    public function SubpanelQuickCreate($module, $view='QuickCreate', $proccessOverride = false)
+    public function __construct($module, $view='QuickCreate', $proccessOverride = false)
     {
         $this->viewType = $view;
 

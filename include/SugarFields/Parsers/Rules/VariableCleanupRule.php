@@ -41,19 +41,19 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * VariableCleanupRule.php
- * 
- * This is a utility base class to provide further refinement when converting 
+ *
+ * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.
  *
  * @author Collin Lee
  */
- 
+
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
- 
+
 class VariableCleanupRule extends BaseRule {
 
-function VariableCleanupRule() {
-	
+function __construct() {
+
 }
 
 function parsePanels($panels, $view) {
@@ -70,14 +70,14 @@ function parsePanels($panels, $view) {
 	   	  	 	} else if($this->matches($column, '/^parent_id$/si')) {
 	   	  	 		  $panels[$name][$rowCount][$key] = '';
 				} else if($this->matches($column, '/^assigned_user_id$/si')) {
-	   	  	 	   $panels[$name][$rowCount][$key] = '';	
+	   	  	 	   $panels[$name][$rowCount][$key] = '';
 	   	  	 	}
-	   	  	 } //foreach 
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
-	   
+
    } else if ($view == 'EditView') {
-   	    
+
 		foreach($panels as $name=>$panel) {
 	   	  foreach($panel as $rowCount=>$row) {
 	   	  	 foreach($row as $key=>$column) {
@@ -87,10 +87,10 @@ function parsePanels($panels, $view) {
 	   	  	 	   $panels[$name][$rowCount][$key] = $val[1] . '_c';
 	   	  	 	} else if($this->matches($column, '/^parent_id$/si')) {
 	   	  	 	   //Remove parent_id field (replaced with parent_name from master copy)
-	   	  	 	   $panels[$name][$rowCount][$key] = '';	
+	   	  	 	   $panels[$name][$rowCount][$key] = '';
 	   	  	 	} else if($this->matches($column, '/^assigned_user_id$/si')) {
 	   	  	 	   //Remove assigned_user_id field (replaced with assigned_user_name from master copy)
-	   	  	 	   $panels[$name][$rowCount][$key] = '';	
+	   	  	 	   $panels[$name][$rowCount][$key] = '';
 	   	  	 	} else if($this->matches($column, '/^RADIOOPTIONS_/si')) {
 	   	  	 	   //This converts radioenum variables
 	   	  	 	   $val = $this->getMatch($column, '/^RADIOOPTIONS_(.*)?$/si');
@@ -98,9 +98,9 @@ function parsePanels($panels, $view) {
 	   	  	 	}
 	   	  	 } //foreach
 	   	  } //foreach
-	   } //foreach   	
+	   } //foreach
    }
-   
+
    return $panels;
 }
 

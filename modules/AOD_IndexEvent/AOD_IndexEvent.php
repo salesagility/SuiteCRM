@@ -42,10 +42,10 @@
  */
 require_once('modules/AOD_IndexEvent/AOD_IndexEvent_sugar.php');
 class AOD_IndexEvent extends AOD_IndexEvent_sugar {
-	
-	function AOD_IndexEvent(){
-		parent::AOD_IndexEvent_sugar();
+
+	public function __construct(){
+		parent::__construct();
 	}
-	
+
 }
 ?>

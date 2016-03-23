@@ -4,20 +4,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class Jjwg_AreasViewArea_Detail_Map extends SugarView {
 
-  function Jjwg_AreasViewArea_Detail_Map() {
-    parent::SugarView();
+  public function __construct() {
+    parent::__construct();
   }
-  
+
   function display() {
-    
+
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
- 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-  <head> 
-  <title><?php echo $GLOBALS['mod_strings']['LBL_AREA_MAP']; ?></title> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <title><?php echo $GLOBALS['mod_strings']['LBL_AREA_MAP']; ?></title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8"/> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
     html { height: 100% }
@@ -44,11 +44,11 @@ class Jjwg_AreasViewArea_Detail_Map extends SugarView {
       color: #000000;
     }
   </style>
-  
+
   <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
 
   <script type="text/javascript">
-  
+
 // Define Map Data for Javascript
 var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
 var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config']) : '[]'; ?>;
@@ -58,8 +58,8 @@ function initialize() {
 
     //create map
   var latLng = new google.maps.LatLng(
-    <?php echo (!empty($GLOBALS['loc']['lat'])) ? $GLOBALS['loc']['lat'] : $GLOBALS['jjwg_config']['map_default_center_latitude']; ?>, 
-    <?php echo (!empty($GLOBALS['loc']['lng'])) ? $GLOBALS['loc']['lng'] : $GLOBALS['jjwg_config']['map_default_center_longitude']; ?> 
+    <?php echo (!empty($GLOBALS['loc']['lat'])) ? $GLOBALS['loc']['lat'] : $GLOBALS['jjwg_config']['map_default_center_latitude']; ?>,
+    <?php echo (!empty($GLOBALS['loc']['lng'])) ? $GLOBALS['loc']['lng'] : $GLOBALS['jjwg_config']['map_default_center_longitude']; ?>
   );
 
   var map = new google.maps.Map(document.getElementById('mapCanvas'), {
@@ -67,17 +67,17 @@ function initialize() {
     center: latLng,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
-  
+
   var bounds = new google.maps.LatLngBounds();
-  
+
 
   // Define the Custom Area Polygons (jjwg_Areas Module)
   var polygon = [];
   var p = [];
   var myAreaPolygon = [];
-  
+
   if (polygonPoints.length > 0) {
-    
+
     // Define coordinates from objects
     myCoords = [];
     for (var j=0; j<polygonPoints.length; j++) {
@@ -95,11 +95,11 @@ function initialize() {
         zIndex: 1
     });
     //console.log(myAreaPolygon[0]);
-    
+
     myAreaPolygon[0].setMap(map);
 
     map.fitBounds(bounds);
-    
+
   }
 
 }
