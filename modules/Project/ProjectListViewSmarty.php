@@ -6,9 +6,9 @@ require_once('include/ListView/ListViewSmarty.php');
 
 class ProjectListViewSmarty extends ListViewSmarty {
 
-    function ProjectListViewSmarty() {
+    function __construct() {
 
-        parent::ListViewSmarty();
+        parent::__construct();
     }
 
     function buildExportLink($id = 'export_link') {
@@ -25,12 +25,12 @@ class ProjectListViewSmarty extends ListViewSmarty {
                     "onmouseout='unhiliteItem(this);' onclick=\"return sListView.send_form(true, 'jjwg_Maps', " .
                     "'index.php?entryPoint=jjwg_Maps&display_module={$_REQUEST['module']}', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_MAP']}</a>";
-                    
+
         } else { // Newer v6.5+
-            
+
             $script = "<a href='javascript:void(0)' id='export_listview_top' ".
                     "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
-                    "'index.php?entryPoint=export', " . 
+                    "'index.php?entryPoint=export', " .
                     "'{$app_strings['LBL_LISTVIEW_NO_SELECTED']}')\">{$app_strings['LBL_EXPORT']}</a>" .
                     "</li><li>". // List item hack
                     "<a href='javascript:void(0)' id='map_listview_top' " .

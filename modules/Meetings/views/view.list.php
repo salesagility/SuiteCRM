@@ -44,9 +44,9 @@ require_once('modules/Meetings/MeetingsListViewSmarty.php');
 class MeetingsViewList extends ViewList
 {
 
-    function MeetingsViewList()
+    function __construct()
     {
-        parent::ViewList();
+        parent::__construct();
     }
 
     function preDisplay()

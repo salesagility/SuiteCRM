@@ -42,18 +42,18 @@
  */
 require_once('modules/FP_events/FP_events_sugar.php');
 class FP_events extends FP_events_sugar {
-	
-	function FP_events(){	
-		parent::FP_events_sugar();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
 	//assign email templates to drop_down in module
 	function email_templates(){
 
 		global $app_list_strings;
 
 		$app_list_strings['email_templet_list'] = get_bean_select_array(true, 'EmailTemplate','name');
-         
+
 
 	}
 }

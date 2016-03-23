@@ -42,8 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 /**
- * This file is used to control the authentication process. 
- * It will call on the user authenticate and controll redirection 
+ * This file is used to control the authentication process.
+ * It will call on the user authenticate and controll redirection
  * based on the users validation
  *
  */
@@ -57,9 +57,9 @@ class EmailAuthenticate extends SugarAuthenticate {
 	 *
 	 * @return EmailAuthenticate
 	 */
-	function EmailAuthenticate(){
-	    
-		parent::SugarAuthenticate();
+	function __construct(){
+
+		parent::__construct();
 	}
 
 }

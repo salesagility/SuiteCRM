@@ -69,7 +69,7 @@ require_once 'include/HTTP_WebDAV_Server/Server.php';
         var $source = "";
         var $publish_key = "";
 
-        function HTTP_WebDAV_Server_vCal()
+        function __construct()
         {
            $this->vcal_focus = new vCal();
            $this->user_focus = new User();

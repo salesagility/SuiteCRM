@@ -107,8 +107,8 @@ class Prospect extends Person {
 	var $additional_column_fields = Array('assigned_user_name');
 
 
-	function Prospect() {
-		parent::Person();
+	function __construct() {
+		parent::__construct();
 	}
 
 	function fill_in_additional_list_fields()
