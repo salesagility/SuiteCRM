@@ -157,10 +157,29 @@ global $currentModule;
     /********** FINAL END OF PAGE UI Stuff ********/
     $ss->display(file_exists('custom/modules/Campaigns/WizardHome.html') ? 'custom/modules/Campaigns/WizardHome.html' : 'modules/Campaigns/WizardHome.html');
 
-    if(isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) {
+    function isWizardSummary() {
+        return $_REQUEST['action'] == 'WizardHome';
+    }
+
+    function getFirstMarketingId($campaignId) {
+        global $db;
+        $campaignId = $db->quote($campaignId);
+        $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");
+        $firstEmailMarketing = $emailMarketings[0];
+        $ret = $firstEmailMarketing->id;
+        return $ret;
+    }
+
+    function getMarketingId() {
+        $campaignId = isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'] ? $_REQUEST['campaign_id'] : $_REQUEST['record'];
+        $ret = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : getFirstMarketingId($campaignId);
+        return $ret;
+    }
+
+    if((isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) || isWizardSummary()) {
         $campaign_id = $focus->id;
-        $marketing_id = $_REQUEST['marketing_id'];
-        $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&marketing_id=" . $marketing_id;
+        $marketing_id = getMarketingId();
+        $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id;
         header($header_URL);
     }
     

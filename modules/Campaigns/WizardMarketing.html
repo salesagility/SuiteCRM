@@ -996,7 +996,16 @@ function determine_back(){
 	<script type="text/javascript">
 		$(function(){
 			setInterval(function(){
+
+				// show uploader form below template form only
+
 				$('#step1_uploader').css('display', $('#step1').css('display'));
+
+				// hide cancel and save button on summary page
+
+				$('#wiz_cancel_button').css('display', $('#step3').css('display') == 'block' ? 'none' : 'block');
+				$('#wiz_submit_button').css('display', $('#step3').css('display') == 'block' ? 'none' : 'block');
+
 			}, 300);
 		});
 
