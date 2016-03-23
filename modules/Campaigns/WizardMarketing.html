@@ -41,9 +41,14 @@
 
  ********************************************************************************/
 -->
-
-
-<div id='wiz_stage'>
+{literal}
+<script type="text/javascript">
+	$(function(){
+		$('#wiz_stage').show();
+	});
+</script>
+{/literal}
+<div id='wiz_stage' style="display:none;">
 <form  id="wizform" name="wizform" method="POST" action="index.php" enctype="multipart/form-data">
 	<input type="hidden" name="module" value="Campaigns">
 	<input type="hidden" id="record" name="record" value="{$MRKT_ID}">
