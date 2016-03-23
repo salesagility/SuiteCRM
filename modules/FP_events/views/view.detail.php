@@ -5,10 +5,10 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class FP_eventsViewDetail extends ViewDetail {
 	var $currSymbol;
-	function FP_eventsViewDetail(){
- 		parent::ViewDetail();
+	function __construct(){
+ 		parent::__construct();
  	}
-	
+
 	function display(){
 		$this->bean->email_templates();
 		parent::display();

@@ -44,13 +44,13 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class ProspectsViewDetail extends ViewDetail {
 
- 	function ProspectsViewDetail(){
- 		parent::ViewDetail();
+ 	function __construct(){
+ 		parent::__construct();
  	}
- 	
+
  	function display() {
 		if(isset($this->bean->lead_id) && !empty($this->bean->lead_id)){
-			
+
 			//get lead name
 			$lead = new Lead();
 			$lead->retrieve($this->bean->lead_id);

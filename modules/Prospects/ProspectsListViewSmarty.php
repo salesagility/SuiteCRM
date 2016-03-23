@@ -4,15 +4,15 @@ require_once('include/ListView/ListViewSmarty.php');
 
 class ProspectsListViewSmarty extends ListViewSmarty {
 
-    function ProspectsListViewSmarty() {
+    function __construct() {
 
-        parent::ListViewSmarty();
+        parent::__construct();
     }
 
     function buildExportLink($id = 'export_link') {
 
         global $app_strings;
-            
+
         $script = "<a href='javascript:void(0)' id='export_listview_top' ".
                 "onclick=\"return sListView.send_form(true, '{$_REQUEST['module']}', " .
                 "'index.php?entryPoint=export', " .

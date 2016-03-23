@@ -48,8 +48,8 @@ class SugarNewsDashlet extends iFrameDashlet {
     var $defaultURL = 'https://suitecrm.com/';
     var $url;
 
-    function SugarNewsDashlet($id, $options = null) {
+    function __construct($id, $options = null) {
         $this->title = translate('LBL_DASHLET_SUGAR_NEWS', 'Home');
-        parent::iFrameDashlet($id, $options);
+        parent::__construct($id, $options);
     }
 }

@@ -42,10 +42,10 @@
  */
 require_once('modules/FP_Event_Locations/FP_Event_Locations_sugar.php');
 class FP_Event_Locations extends FP_Event_Locations_sugar {
-	
-	function FP_Event_Locations(){	
-		parent::FP_Event_Locations_sugar();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
 }
 ?>

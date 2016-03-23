@@ -7,7 +7,7 @@ class MeetingsJjwg_MapsLogicHook
 
     var $jjwg_Maps;
 
-    function MeetingsJjwg_MapsLogicHook()
+    function __construct()
     {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }

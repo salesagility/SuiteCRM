@@ -51,14 +51,14 @@ class MailMerge
 	var $visible = false;
 	var $list;
 	var $fieldList;
-	
-	function MailMerge($list = NULL, $fieldList = null, $data_dir = 'data') {
+
+	function __construct($list = NULL, $fieldList = null, $data_dir = 'data') {
 		// this is the path to your data dir.
 		$this->mm_data_dir = $data_dir;
 		$this->list = $list;
 		$this->fieldList = $fieldList;
 	}
-	
+
 	function Execute() {
 		$this->Initialize();
 		if( count( $this->list ) > 0 ) {
@@ -70,11 +70,11 @@ class MailMerge
 			}
 		} else return '';
 	}
-	
+
 	function Template($template = NULL) {
 		if(is_array($template)) $this->template = $template;
 	}
-	
+
 	function CleanUp() {
 		//remove the temp files
 		unlink($this->mm_data_dir.'/Temp/'.$this->datasource_file);
@@ -83,10 +83,10 @@ class MailMerge
 		rmdir($this->mm_data_dir.'/Temp/');
 		$this->Quit();
 	}
-	
+
 	function CreateHeaderFile() {
 		$this->obj->Documents->Add();
-		
+
 		$this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range,1,$this->fieldcnt);
 		foreach($this->fieldList as $key => $value) {
 			$this->obj->Selection->TypeText($key);
@@ -96,14 +96,14 @@ class MailMerge
 		$this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->header_file);
 		$this->obj->ActiveDocument->Close();
 	}
-	
+
 	function CreateDataSource() {
 		$this->obj->Documents->Add();
 		$this->obj->ActiveDocument->Tables->Add($this->obj->Selection->Range,$this->rowcnt,$this->fieldcnt);
 
 		for($i = 0; $i < $this->rowcnt; $i++) {
 			foreach($this->fieldList as $field => $value)
-         	{  
+         	{
 				$this->obj->Selection->TypeText($this->list[$i]->$field);
 				$this->obj->Selection->MoveRight();
 			}
@@ -111,15 +111,15 @@ class MailMerge
 		$this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/Temp/'.$this->datasource_file);
 		$this->obj->ActiveDocument->Close();
 	}
-	
+
 	function CreateDocument($template) {
 		//$this->obj->Documents->Open($this->mm_data_dir.'/Templates/'.$template[0].'.dot');
 		$this->obj->Documents->Open($template[0]);
 
 		$this->obj->ActiveDocument->MailMerge->OpenHeaderSource($this->mm_data_dir.'/Temp/'.$this->header_file);
-		
+
 		$this->obj->ActiveDocument->MailMerge->OpenDataSource($this->mm_data_dir.'/Temp/'.$this->datasource_file);
-		
+
 		$this->obj->ActiveDocument->MailMerge->Execute();
 		$this->obj->ActiveDocument->SaveAs($this->mm_data_dir.'/'.$template[1].'.doc');
 		//$this->obj->Documents[$template[0]]->Close();
@@ -127,26 +127,26 @@ class MailMerge
 		$this->obj->ActiveDocument->Close();
 		return $template[1].'.doc';
 	}
-	
+
 	function Initialize() {
 		$this->rowcnt = count($this->list);
 		$this->fieldcnt = count($this->fieldList);
 		$this->obj = new COM("word.application") or die("Unable to instanciate Word");
 		$this->obj->Visible = $this->visible;
-		
+
 		//try to make the temp dir
 		sugar_mkdir($this->mm_data_dir);
 		sugar_mkdir($this->mm_data_dir.'/Temp/');
 	}
-	
+
 	function Quit() {
 		$this->obj->Quit();
 	}
-	
+
 	function SetDataList($list = NULL) {
 		if(is_array($list)) $this->list = $list;
 	}
-	
+
 	function SetFieldList($list = NULL) {
 		if(is_array($list)) $this->fieldList = $list;
 	}

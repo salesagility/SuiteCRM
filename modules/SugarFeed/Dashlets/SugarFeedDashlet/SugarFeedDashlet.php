@@ -52,12 +52,12 @@ var $userfeed_created;
 var $selectedCategories = array();
 
 
-    function SugarFeedDashlet($id, $def = null) {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings, $app_list_strings;
 
 		require_once('modules/SugarFeed/metadata/dashletviewdefs.php');
 		$this->myItemsOnly = false;
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 		$this->myItemsOnly = false;
 		$this->isConfigurable = true;
 		$this->hasScript = true;
@@ -72,7 +72,7 @@ var $selectedCategories = array();
         $this->categories['ALL'] = translate('LBL_ALL','SugarFeed');
         // Need to get the rest of the active SugarFeed modules
         $module_list = SugarFeed::getActiveFeedModules();
-        
+
         // Translate the category names
         if ( ! is_array($module_list) ) { $module_list = array(); }
         foreach ( $module_list as $module ) {
@@ -242,8 +242,8 @@ var $selectedCategories = array();
                                     'created_by',
                                     /* BEGIN - SECURITY GROUPS */
 									//related_module now included but keep this here just in case
-                                    'related_module', 
-                                    'related_id', 
+                                    'related_module',
+                                    'related_id',
                                     /* END - SECURITY GROUPS */
 
 

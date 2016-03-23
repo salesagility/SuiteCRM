@@ -4,12 +4,12 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class Jjwg_MapsViewGeocoding_Test extends SugarView {
 
- 	function Jjwg_MapsViewGeocoding_Test() {
- 		parent::SugarView();
+ 	function __construct() {
+ 		parent::__construct();
  	}
 
 	function display() {
-		
+
         if (!isset($_REQUEST['geocoding_address'])) $_REQUEST['geocoding_address'] = '';
 ?>
 
@@ -20,7 +20,7 @@ class Jjwg_MapsViewGeocoding_Test extends SugarView {
 <input type="hidden" name="module" value="<?php echo $GLOBALS['currentModule']; ?>">
 <input type="hidden" name="action" value="geocoding_test" />
 <strong><?php echo $GLOBALS['mod_strings']['LBL_MAP_ADDRESS'].': '; ?> </strong>
-<input autocomplete="off" type="text" name="geocoding_address" id="geocoding_address" 
+<input autocomplete="off" type="text" name="geocoding_address" id="geocoding_address"
 value="<?php echo htmlspecialchars($_REQUEST['geocoding_address']); ?>" title='' tabindex='1' size="40" maxlength="255">
 <br /><br />
 <input class="button" type="submit" name="submit" value="<?php echo $GLOBALS['mod_strings']['LBL_MAP_PROCESS']; ?>" align="bottom">
@@ -28,12 +28,12 @@ value="<?php echo htmlspecialchars($_REQUEST['geocoding_address']); ?>" title=''
 </form>
 
 <?php
-    if (!empty($_REQUEST['process_trigger'])) { 
-    
+    if (!empty($_REQUEST['process_trigger'])) {
+
       echo '<br /><br /><pre>';
       print_r($this->bean->geocoding_results);
       echo '</pre><br /><br />';
-    
+
     }
 
   }

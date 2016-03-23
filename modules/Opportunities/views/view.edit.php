@@ -50,11 +50,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class OpportunitiesViewEdit extends ViewEdit {
 
- 	function OpportunitiesViewEdit(){
- 		parent::ViewEdit();
+ 	function __construct(){
+ 		parent::__construct();
  		$this->useForSubpanel = true;
  	}
- 	
+
  	function display() {
 		global $app_list_strings;
 		$json = getJSONobj();
@@ -63,7 +63,7 @@ class OpportunitiesViewEdit extends ViewEdit {
  		if(empty($this->bean->id) && empty($_REQUEST['probability'])) {
 		   $prePopProb = 'document.getElementsByName(\'sales_stage\')[0].onchange();';
 		}
-		
+
 $probability_script=<<<EOQ
 	<script>
 	prob_array = $prob_array;
@@ -74,13 +74,13 @@ $probability_script=<<<EOQ
 				document.getElementsByName('probability')[0].value = prob_array[document.getElementsByName('sales_stage')[0].value];
 				SUGAR.util.callOnChangeListers(document.getElementsByName('probability')[0]);
 
-			} 
+			}
 		};
 	$prePopProb
 	</script>
 EOQ;
-	    
-	    $this->ss->assign('PROBABILITY_SCRIPT', $probability_script);    
+
+	    $this->ss->assign('PROBABILITY_SCRIPT', $probability_script);
  		parent::display();
  	}
 }
