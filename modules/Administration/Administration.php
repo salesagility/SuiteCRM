@@ -179,7 +179,9 @@ class Administration extends SugarBean {
     }
 
     function get_config_prefix($str) {
-        return Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1));
+        return $str
+            ? Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1))
+            : Array(false, false);
     }
 }
 ?>
