@@ -196,10 +196,23 @@ var plgBackground = {
                 //        mozaik.lastUsedEditor = _editor;
                 //    });
                 //}
+
+                file_browser_callback: function(field_name, url, type, win, e) {
+                    mozaik.uploadPathField = field_name;
+                    if(type=='image') {
+                       // $('#mozaik_upload_form input').click();
+                        $('form#upload_form input[type="file"]').each(function(i,e){
+                            if($(e).css('display') != 'none') {
+                                $(e).click();
+                            }
+                        });
+                    }
+                }
             },
             ace: true,
             width: '600px',
-            toolPlugins: [plgBackground]
+            toolPlugins: [plgBackground],
+            uploadPathField: null
         }, options);
 
         // add ace editor
