@@ -213,7 +213,9 @@ function clickedawayclose(field,id,module, type){
         if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
             var output_value = loadFieldHTMLValue(field,id,module);
             var user_value = getInputValue(field, type);
-            if(user_value != output_value) {
+            // Fix for issue #373 strip HTML tags for correct comparison
+            var output_value_compare = $(output_value).text();
+            if(user_value != output_value_compare) {
                 var r = confirm("You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing " + message_field);
                 if(r == true) {
                     var output = setValueClose(output_value);
