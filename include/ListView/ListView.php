@@ -366,7 +366,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
             $thepanel=$subpanel_def;
         }
 
-		/* BEGIN - SECURITY GROUPS */ 
+		/* BEGIN - SECURITY GROUPS */
 
 		//This check is costly doing it field by field in the below foreach
 		//instead pull up here and do once per record....
@@ -382,15 +382,15 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
 
 		require_once("modules/SecurityGroups/SecurityGroup.php");
 		$aclaccess_in_group = SecurityGroup::groupHasAccess($aItem->module_dir,$aItem->id);
-        	
-    	/* END - SECURITY GROUPS */ 
-    	
+
+    	/* END - SECURITY GROUPS */
+
         //get data source name
         $linked_field=$thepanel->get_data_source_name();
         $linked_field_set=$thepanel->get_data_source_name(true);
         static $count;
         if(!isset($count))$count = 0;
-		/* BEGIN - SECURITY GROUPS */ 
+		/* BEGIN - SECURITY GROUPS */
 		/**
         $field_acl['DetailView'] = $aItem->ACLAccess('DetailView');
         $field_acl['ListView'] = $aItem->ACLAccess('ListView');
@@ -402,7 +402,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
         $field_acl['ListView'] = $aItem->ACLAccess('ListView',$aclaccess_is_owner,$aclaccess_in_group);
         $field_acl['EditView'] = $aItem->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
         $field_acl['Delete'] = $aItem->ACLAccess('Delete',$aclaccess_is_owner,$aclaccess_in_group);
-		/* END - SECURITY GROUPS */ 
+		/* END - SECURITY GROUPS */
         foreach($thepanel->get_list_fields() as $field_name=>$list_field)
         {
             //add linked field attribute to the array.
@@ -579,7 +579,7 @@ function setDisplayHeaderAndFooter($bool) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________.
 */
- function ListView() {
+ function __construct() {
 
 
     if(!$this->initialized) {

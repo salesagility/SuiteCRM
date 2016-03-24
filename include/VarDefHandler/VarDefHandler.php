@@ -55,7 +55,7 @@ class VarDefHandler {
 	var $start_none_lbl = null;
 
 
-    function VarDefHandler($module, $meta_array_name=null)
+    function __construct($module, $meta_array_name=null)
     {
         $this->meta_array_name = $meta_array_name;
 		$this->module_object = $module;

@@ -49,18 +49,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/FP_Event_Locations/FP_Event_Locations.php');
 
-class FP_Event_LocationsDashlet extends DashletGeneric { 
-    function FP_Event_LocationsDashlet($id, $def = null) {
+class FP_Event_LocationsDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/FP_Event_Locations/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'FP_Event_Locations');
 
         $this->searchFields = $dashletData['FP_Event_LocationsDashlet']['searchFields'];
         $this->columns = $dashletData['FP_Event_LocationsDashlet']['columns'];
 
-        $this->seedBean = new FP_Event_Locations();        
+        $this->seedBean = new FP_Event_Locations();
     }
 }

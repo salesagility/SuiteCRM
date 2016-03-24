@@ -28,8 +28,8 @@ class jjwg_Areas_sugar extends Basic {
     var $country;
     var $coordinates;
 
-    function jjwg_Areas_sugar() {
-        parent::Basic();
+    function __construct() {
+        parent::__construct();
     }
 
     function bean_implements($interface) {

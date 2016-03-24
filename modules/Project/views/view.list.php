@@ -52,24 +52,24 @@ require_once('include/MVC/View/views/view.list.php');
 require_once('modules/Project/ProjectListViewSmarty.php');
 
 class ProjectViewList extends ViewList{
- 	function ProjectViewList()
+ 	function __construct()
  	{
- 		parent::ViewList();
+ 		parent::__construct();
  	}
- 	
+
  	/*
  	 * Override listViewProcess with addition to where clause to exclude project templates
  	 */
     function listViewProcess()
     {
         $this->processSearchForm();
-                
-        
+
+
         $this->lv->searchColumns = $this->searchForm->searchColumns;
-        
+
         if(!$this->headers)
             return;
-            
+
         if(empty($_REQUEST['search_form_only']) || $_REQUEST['search_form_only'] == false)
         {
             $this->lv->setup($this->seed, 'include/ListView/ListViewGeneric.tpl', $this->where, $this->params);

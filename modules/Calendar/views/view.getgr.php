@@ -41,14 +41,14 @@ require_once('include/MVC/View/SugarView.php');
 
 class CalendarViewGetGR extends SugarView {
 
-	function CalendarViewGetGR(){
- 		parent::SugarView();
+	function __construct(){
+ 		parent::__construct();
 	}
-	
+
 	function process(){
 		$this->display();
 	}
-	
+
 	function display(){
 		error_reporting(0);
 		require_once('include/json_config.php');
@@ -58,7 +58,7 @@ class CalendarViewGetGR extends SugarView {
         	$GRjavascript = $json_config->getFocusData($_REQUEST['type'], $_REQUEST['record']);
         	ob_clean();
         	echo $GRjavascript;
-	}	
+	}
 
 }
 

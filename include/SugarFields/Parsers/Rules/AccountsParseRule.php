@@ -43,15 +43,15 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class AccountsParseRule extends BaseRule {
 
-function AccountsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
     if($view == 'DetailView') {
 		foreach($panels as $name=>$panel) {
 		   	foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {  	
+		   	  	 foreach($row as $key=>$column) {
 		   	  	     if($this->matches($column, '/^parent_id$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'parent_name';
    		   	  	 	 } else if($this->matches($column, '/_address_(street|country)$/') && is_array($column) && isset($column['customCode'])) {
@@ -60,11 +60,11 @@ function preParse($panels, $view) {
 			   	  	 	 	$panels[$name][$rowCount][$key] = $column;
 		   	  	 	 	}
 		   	  	 	 }
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	} //foreach
 		} //foreach
     }
-	return $panels;	
+	return $panels;
 }
 
 }

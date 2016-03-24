@@ -13,7 +13,7 @@ class SecurityGroupUserRelationship extends SugarBean {
     var $user_id;
     var $noninheritable;
     var $primary_group;
-    
+
     // Related fields
     var $securitygroup_name;
     var $user_name;
@@ -29,7 +29,7 @@ class SecurityGroupUserRelationship extends SugarBean {
         );
 
     var $new_schema = true;
-    
+
     var $additional_column_fields = Array();
         var $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
@@ -40,7 +40,7 @@ class SecurityGroupUserRelationship extends SugarBean {
       , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
       , 'deleted'=>array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>true)
       );
-    function SecurityGroupUserRelationship() {
+    function __construct() {
         $this->db = DBManagerFactory::getInstance();
         $this->dbManager = DBManagerFactory::getInstance();
 

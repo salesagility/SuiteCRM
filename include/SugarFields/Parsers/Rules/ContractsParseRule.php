@@ -43,8 +43,8 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class ContractsParseRule extends BaseRule {
 
-function ContractsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -54,13 +54,13 @@ function preParse($panels, $view) {
 	   	  	 foreach($row as $key=>$column) {
 				if($this->matches($column, '/^expiration_notice_date$/')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = 'expiration_notice';
-				} 
-	   	  	 } //foreach 
+				}
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
    } //if
-   return $panels; 	
+   return $panels;
 }
-	
+
 }
 ?>

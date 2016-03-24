@@ -121,8 +121,8 @@ class Call extends SugarBean {
                                         'lead_id'			=> 'leads',
 								);
 
-	function Call() {
-		parent::SugarBean();
+	public function __construct() {
+		parent::__construct();
 		global $app_list_strings;
 
        	$this->setupCustomFields('Calls');
@@ -679,7 +679,7 @@ class Call extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 
@@ -711,7 +711,7 @@ class Call extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 			/* BEGIN - SECURITY GROUPS */

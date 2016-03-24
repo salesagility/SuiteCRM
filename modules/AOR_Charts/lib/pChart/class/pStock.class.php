@@ -22,7 +22,7 @@
    var $pDataObject;
 
    /* Class creator */
-   function pStock($pChartObject,$pDataObject)
+   function __construct($pChartObject,$pDataObject)
     {
      $this->pChartObject = $pChartObject;
      $this->pDataObject  = $pDataObject;
@@ -126,7 +126,7 @@
 
        $Values = "Open :".$Data["Series"][$SerieOpen]["Data"][$Key]."<BR>Close : ".$Data["Series"][$SerieClose]["Data"][$Key]."<BR>Min : ".$Data["Series"][$SerieMin]["Data"][$Key]."<BR>Max : ".$Data["Series"][$SerieMax]["Data"][$Key]."<BR>";
        if ( $SerieMedian != NULL ) { $Values = $Values."Median : ".$Data["Series"][$SerieMedian]["Data"][$Key]."<BR>"; }
-       if ( $PosArray[0] > $PosArray[1] ) { $ImageMapColor = $this->pChartObject->toHTMLColor($BoxUpR,$BoxUpG,$BoxUpB); } else { $ImageMapColor = $this->pChartObject->toHTMLColor($BoxDownR,$BoxDownG,$BoxDownB); } 
+       if ( $PosArray[0] > $PosArray[1] ) { $ImageMapColor = $this->pChartObject->toHTMLColor($BoxUpR,$BoxUpG,$BoxUpB); } else { $ImageMapColor = $this->pChartObject->toHTMLColor($BoxDownR,$BoxDownG,$BoxDownB); }
 
        if ( $Data["Orientation"] == SCALE_POS_LEFTRIGHT )
         {

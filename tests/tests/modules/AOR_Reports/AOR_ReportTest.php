@@ -145,8 +145,8 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, strlen($html3));
 
         //verify that group and identifier exist in the strings
-        $this->assertNotFalse(strpos($html3, 'grouptest'));
-        $this->assertNotFalse(strpos($html3, 'testidentifier'));
+        $this->assertContains('grouptest', $html3);
+        $this->assertContains('testidentifier', $html3);
     }
 
     public function testgetTotalHTML()
@@ -183,7 +183,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         //this method uses exit so it cannot be tested
 
         /*$aor_Report = new AOR_Report();
-        $aor_Report->report_module = "Accounts";    	
+        $aor_Report->report_module = "Accounts";
         $aor_Report->build_report_csv();
         */
 

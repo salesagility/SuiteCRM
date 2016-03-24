@@ -46,7 +46,7 @@
          * Constructor: this class is called from the the ajax call and handles invoking the correct
          * functionality on the server.
          */
-        function PackageController(){
+        function __construct(){
            $this->_pm = new PackageManager();
         }
 

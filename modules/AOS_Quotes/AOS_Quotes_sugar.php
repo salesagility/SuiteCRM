@@ -93,21 +93,21 @@ class AOS_Quotes_sugar extends Basic {
 		var $terms_c;
 		var $approval_status;
 		var $invoice_status;
-	
 
 
 
 
-	function AOS_Quotes_sugar(){	
-		parent::Basic();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

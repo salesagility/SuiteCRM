@@ -64,8 +64,8 @@ class AOR_Scheduled_Reports extends basic {
     var $last_run;
     var $aor_report_id;
 
-	function AOR_Scheduled_Reports(){
-        parent::Basic();
+	function __construct(){
+        parent::__construct();
 	}
 
     function bean_implements($interface){

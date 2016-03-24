@@ -42,10 +42,10 @@
  */
 require_once('modules/AOK_Knowledge_Base_Categories/AOK_Knowledge_Base_Categories_sugar.php');
 class AOK_Knowledge_Base_Categories extends AOK_Knowledge_Base_Categories_sugar {
-	
-	function AOK_Knowledge_Base_Categories(){	
-		parent::AOK_Knowledge_Base_Categories_sugar();
+
+	public function __construct(){
+		parent::__construct();
 	}
-	
+
 }
 ?>

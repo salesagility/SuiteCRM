@@ -49,8 +49,8 @@ class iFrameDashlet extends Dashlet {
     var $url;
     protected $allowed_schemes = array("http", "https");
 
-    function iFrameDashlet($id, $options = null) {
-        parent::Dashlet($id);
+    function __construct($id, $options = null) {
+        parent::__construct($id);
         $this->isConfigurable = true;
 
         if (empty($this->title)) {

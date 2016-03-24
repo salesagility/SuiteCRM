@@ -48,7 +48,7 @@ require_once('include/EditView/EditView2.php');
 class SubpanelQuickEdit{
 	var $defaultProcess = true;
 
-	function SubpanelQuickEdit($module, $view='QuickEdit', $proccessOverride = false){
+	function __construct($module, $view='QuickEdit', $proccessOverride = false){
         //treat quickedit and quickcreate views as the same
         if($view == 'QuickEdit') {$view = 'QuickCreate';}
 
@@ -109,7 +109,7 @@ class SubpanelQuickEdit{
 		if(file_exists($viewEditSource) && !$proccessOverride) {
             include($viewEditSource);
             $c = $module . 'ViewEdit';
-            
+
             $customClass = 'Custom' . $c;
             if(class_exists($customClass)) {
                 $c = $customClass;

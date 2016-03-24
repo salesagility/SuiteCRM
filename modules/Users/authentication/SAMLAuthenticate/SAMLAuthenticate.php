@@ -42,8 +42,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 /**
- * This file is used to control the authentication process. 
- * It will call on the user authenticate and controll redirection 
+ * This file is used to control the authentication process.
+ * It will call on the user authenticate and controll redirection
  * based on the users validation
  *
  */
@@ -60,13 +60,13 @@ class SAMLAuthenticate extends SugarAuthenticate {
 	 *
 	 * @return SAMLAuthenticate
 	 */
-	function SAMLAuthenticate(){
-		parent::SugarAuthenticate();
+	function __construct(){
+		parent::__construct();
 	}
 
     /**
      * pre_login
-     * 
+     *
      * Override the pre_login function from SugarAuthenticate so that user is
      * redirected to SAML entry point if other is not specified
      */
@@ -92,7 +92,7 @@ class SAMLAuthenticate extends SugarAuthenticate {
 
     /**
      * Redirect to login page
-     * 
+     *
      * @param SugarApplication $app
      */
     public function redirectToLogin(SugarApplication $app)
@@ -102,8 +102,8 @@ class SAMLAuthenticate extends SugarAuthenticate {
         $loginVars = $app->createLoginVars();
 
         // $settings - variable from modules/Users/authentication/SAMLAuthenticate/settings.php
-        $settings->assertion_consumer_service_url .= htmlspecialchars($loginVars); 
-        
+        $settings->assertion_consumer_service_url .= htmlspecialchars($loginVars);
+
         $authRequest = new SamlAuthRequest($settings);
         $url = $authRequest->create();
 

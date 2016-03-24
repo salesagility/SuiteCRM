@@ -62,7 +62,7 @@ class SubPanelTiles
 	var $hidden_tabs=array(); //consumer of this class can array of tabs that should be hidden. the tab name
 							//should be the array.
 
-	function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = '')
+	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 		$this->focus = $focus;
 		$this->id = $focus->id;
@@ -327,7 +327,7 @@ if(document.DetailView != null &&
 			{
 				$div_display = 'none';
 			}
-				
+
 			if(isset($div_cookies[$cookie_name])){
 				//If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
 				//To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.

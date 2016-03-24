@@ -265,11 +265,17 @@ class MergeRecordTest extends PHPUnit_Framework_TestCase
 
     public function testemail_addresses_query()
     {
+        $table = 'accounts';
+        $module = 'Accounts';
+        $bean_id = 1;
+        $expected = $table.".id IN (SELECT ear.bean_id FROM email_addresses ea
+									LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
+									WHERE ear.bean_module = '{$module}'
+									AND ear.bean_id != '{$bean_id}'
+									AND ear.deleted = 0";
+
         $mergeRecord = new MergeRecord();
-
-        $expected = "accounts.id IN (SELECT ear.bean_id FROM email_addresses ea\n									LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id \n									WHERE ear.bean_module = 'Accounts'\n									AND ear.bean_id != '1' \n									AND ear.deleted = 0";
-
-        $result = $mergeRecord->email_addresses_query('accounts', 'Accounts', 1);
+        $result = $mergeRecord->email_addresses_query($table, $module, $bean_id);
 
         $this->assertSame($expected, $result);
     }

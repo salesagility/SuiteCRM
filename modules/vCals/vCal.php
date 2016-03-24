@@ -69,10 +69,10 @@ class vCal extends SugarBean {
     const TAB = "\t";
     const CHARSPERLINE = 75;
 
-	function vCal()
+    public function __construct()
 	{
 
-		parent::SugarBean();
+		parent::__construct();
 		$this->disable_row_level_security = true;
 	}
 

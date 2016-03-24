@@ -97,8 +97,8 @@ class Document extends File {
 	 );
 
 
-	function Document() {
-		parent :: File();
+	function __construct() {
+		parent::__construct();
 		$this->setupCustomFields('Documents'); //parameter is module name
 		$this->disable_row_level_security = false;
 	}

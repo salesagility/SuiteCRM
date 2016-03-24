@@ -43,9 +43,9 @@ require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups_sugar.php');
 class AOS_Line_Item_Groups extends AOS_Line_Item_Groups_sugar
 {
 
-    function AOS_Line_Item_Groups()
+    function __construct()
     {
-        parent::AOS_Line_Item_Groups_sugar();
+        parent::__construct();
     }
 
     function save_groups($post_data, $parent, $key = '')

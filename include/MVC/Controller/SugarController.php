@@ -162,7 +162,7 @@ class SugarController{
 	 * Constructor. This ie meant tot load up the module, action, record as well
 	 * as the mapping arrays.
 	 */
-	function SugarController(){
+	public function __construct(){
 	}
 
 	/**

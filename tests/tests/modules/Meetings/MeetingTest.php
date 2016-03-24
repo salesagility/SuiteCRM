@@ -205,7 +205,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
 
         $meeting = new Meeting();
 
-        //test with attributes preset and verify template variables are set accordingly		
+        //test with attributes preset and verify template variables are set accordingly
         $meeting->name = 'test';
         $meeting->status = 'Not Held';
         $meeting->type = 'Sugar';
@@ -324,16 +324,17 @@ class MeetingTest extends PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * This will throw FATAL error on php7
+     */
     public function testafterImportSave()
     {
         require_once 'data/Link.php';
 
-        $meeting = new Meeting();
-
         //execute the method and test if it works and does not throws an exception.
         try {
-
-            //test without parent_type 
+            $meeting = new Meeting();
+            //test without parent_type
             $meeting->afterImportSave();
 
             //test with parent_type Contacts

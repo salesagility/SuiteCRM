@@ -41,23 +41,23 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * EdtiViewMetaParser.php
- * This is a utility file that attempts to provide support for parsing pre 5.0 SugarCRM 
+ * This is a utility file that attempts to provide support for parsing pre 5.0 SugarCRM
  * QuickCreate.html files and produce a best guess editviewdefs.php file equivalent.
- * 
+ *
  * @author Collin Lee
  */
-  
+
 require_once('include/SugarFields/Parsers/MetaParser.php');
 
 class QuickCreateMetaParser extends MetaParser {
 
-function QuickCreateMetaParser() {
+function __construct() {
    $this->mView = 'QuickCreate';
 }
 
 /**
  * parse
- * 
+ *
  * @param $filePath The file path of the HTML file to parse
  * @param $vardefs The module's vardefs
  * @param $moduleDir The module's directory
@@ -69,11 +69,11 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 
    global $app_strings;
    $contents = file_get_contents($filePath);
-   
+
    // The contents are not well formed so we add this section to make it easier to parse
    $contents = $this->trimHTML($contents) . '</td></tr></table>';
    $moduleName = '';
-   
+
    $forms = $this->getElementsByType("form", $contents);
    $tables = $this->getElementsByType("table", $forms[0] . "</td></tr></table>");
    $mainrow = $this->getElementsByType("tr", $tables[1]);
@@ -81,59 +81,59 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
    $tablerows = $this->getElementsByType("tr", $rows);
 
    foreach($tablerows as $trow) {
-   	
+
    	   $emptyCount = 0;
    	   $tablecolumns = $this->getElementsByType("td", $trow);
        $col = array();
        $slot = 0;
-       
+
 	   foreach($tablecolumns as $tcols) {
-	   	  	 	  
+
 	   	  $sugarAttrLabel = $this->getTagAttribute("sugar", $tcols, "'^slot[^b]+$'");
 	   	  $sugarAttrValue = $this->getTagAttribute("sugar", $tcols, "'slot[0-9]+b$'");
 
           // If there wasn't any slot numbering/lettering then just default to expect label->vallue pairs
           $sugarAttrLabel = count($sugarAttrLabel) != 0 ? $sugarAttrLabel : ($slot % 2 == 0) ? true : false;
           $sugarAttrValue = count($sugarAttrValue) != 0 ? $sugarAttrValue : ($slot % 2 == 1) ? true : false;
-          
+
           $slot++;
-          
+
           if($sugarAttrValue) {
-	   	     	 
+
 	   	  	 $spanValue = strtolower($this->getElementValue("span", $tcols));
              if(empty($spanValue)) {
-                $spanValue = strtolower($this->getElementValue("slot", $tcols));	
+                $spanValue = strtolower($this->getElementValue("slot", $tcols));
              }
              if(empty($spanValue)) {
                 $spanValue = strtolower($this->getElementValue("td", $tcols));
              }
-             
+
              //Get all the editable form elements' names
-	   	  	 $formElementNames = $this->getFormElementsNames($spanValue);		   	  	 
+	   	  	 $formElementNames = $this->getFormElementsNames($spanValue);
 	   	  	 $customField = $this->getCustomField($formElementNames);
-	   	  	 
+
 	   	  	 $name = '';
              $readOnly = false;
              $fields = null;
              $customCode = null;
-                        
-             if(!empty($customField)) {           
+
+             if(!empty($customField)) {
                // If it's a custom field we just set the name
                $name = $customField;
-                     
+
              } else if(empty($formElementNames) && preg_match_all('/[\{]([^\}]*?)[\}]/s', $spanValue, $matches, PREG_SET_ORDER)) {
 	   	  	   // We are here if the $spanValue did not contain a form element for editing.
 	   	  	   // We will assume that it is read only (since there were no edit form elements)
-	   	  	   
+
 
 	           // If there is more than one matching {} value then try to find the right one to key off
 	           // based on vardefs.php file.  Also, use the entire spanValue as customCode
 	           	if(count($matches) > 1) {
-			       $name = $matches[0][1];  
+			       $name = $matches[0][1];
 			       $customCode = $spanValue;
 			       foreach($matches as $pair) {
 		   	  	 	   if(preg_match("/^(mod[\.]|app[\.]).*?/s", $pair[1])) {
-		   	  	 	       $customCode = str_replace($pair[1], '$'.strtoupper($pair[1]), $customCode);      
+		   	  	 	       $customCode = str_replace($pair[1], '$'.strtoupper($pair[1]), $customCode);
 		   	  	 	   } else if(!empty($vardefs[$pair[1]])) {
 		   	  	 	       $name = $pair[1];
 		   	  	 	       $customCode = str_replace($pair[1], '$fields.'.$pair[1].'.value', $customCode);
@@ -144,19 +144,19 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 		       	   if(preg_match("/^(mod[\.]|app[\.]).*?/s", $matches[0][1])) {
 		       	   	  continue;
 		       	   } else if(preg_match("/^[\$].*?/s", $matches[0][1])) {
-		       	   	  $name = '{' . strtoupper($matches[0][1]) . '}';  
-		       	   } else {         
+		       	   	  $name = '{' . strtoupper($matches[0][1]) . '}';
+		       	   } else {
 		   	  	   	  $name = $matches[0][1];
-		       	   }   
+		       	   }
 		   	   }
-		   	  	   
-		   	   $readOnly = true;  
+
+		   	   $readOnly = true;
 	   	  	 } else if(is_array($formElementNames)) {
-                  
+
 	   	  	      if(count($formElementNames) == 1) {
 	   	  	      	 if(!empty($vardefs[$formElementNames[0]])) {
 	   	  	            $name = $formElementNames[0];
-	   	  	      	 } 
+	   	  	      	 }
 	   	  	      } else {
 	   	  	      	 $fields = array();
 	   	  	      	 foreach($formElementNames as $elementName) {
@@ -172,13 +172,13 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 	   	  	      	 	   } else {
 	   	  	      	          unset($fields);
 	   	  	      	 	      $name = $elementName;
-	   	  	      	 	      break;	
+	   	  	      	 	      break;
 	   	  	      	 	   }
 	   	  	      	 	}
 	   	  	      	 }
 	   	  	      } //if-else
 	   	  	 }
-	   	  	 
+
 	   	  	 // Build the entry
 	   	  	 if(preg_match("/<textarea/si", $spanValue)) {
 	   	  	 	//special case for textarea form elements (add the displayParams)
@@ -191,7 +191,7 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 		   	  	    $field['name'] = $name;
 					$field['displayParams'] = $displayParams;
 	   	  	    } else {
-	   	  	        $field = $name;	
+	   	  	        $field = $name;
 	   	  	    }
 	   	  	    $col[] = $field;
 	   	  	 } else if($readOnly) {
@@ -213,32 +213,32 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
 	   	  	 	   if(isset($customCode)) {
 	   	  	 	   	  $field['customCode'] = $customCode;
 	   	  	 	   }
-  	 	   
+
 	   	  	 	   $col[] = $field;
 	   	  	 	} else {
 	   	  	 	   $emptyCount = $name == '' ? $emptyCount + 1 : $emptyCount;
 	   	  	 	   $col[] = $name;
-	   	  	 	}	
+	   	  	 	}
 	   	  	 } //if-else if-else block
 	   	  } //if($sugarAttrValue)
 	   } //foreach
-	   
-	   // One last final check.  If $emptyCount does not equal Array $col count, don't add 
+
+	   // One last final check.  If $emptyCount does not equal Array $col count, don't add
 	   if($emptyCount != count($col)) {
    	      $metarow[] = $col;
 	   } //if
    } //foreach
-   
+
    $templateMeta = array();
    $templateMeta['form']['buttons'] = 'button';
 
    preg_match_all("/(<input[^>]*?)>/si", $tables[0], $matches);
    $buttons = array();
    foreach($matches[0] as $button) {
-   		$buttons[] = array('customCode'=>$button);	   
+   		$buttons[] = array('customCode'=>$button);
    }
    $templateMeta['form']['buttons'] = $buttons;
-   
+
    $formElements = $this->getFormElements($contents);
    $hiddenInputs = array();
    foreach($formElements as $elem) {
@@ -249,18 +249,18 @@ function parse($filePath, $vardefs = array(), $moduleDir = '', $merge=false, $ma
    	         $index = stripos($value, '$REQUEST');
    	         $value =  !empty($index) ? '$smarty.request.' . substr($value, 10) : $value;
    	         $hiddenInputs[] = '<input id="' . $name . '" name="' . $name . '" value="' . $value . '">';
-   	      } 
+   	      }
    } //foreach
-   
+
    $templateMeta['form']['hidden'] = $hiddenInputs;
    $templateMeta['widths'] = array(array('label' => '10', 'field' => '30'),  array('label' => '10', 'field' => '30'));
    $templateMeta['maxColumns'] = 2;
-   
+
    $panels = array();
    $panels['default'] = $metarow;
    $panels = $this->appplyRules($moduleDir, $panels);
    return $this->createFileContents($moduleDir, $panels, $templateMeta, $filePath);
-   
+
 
 }
 

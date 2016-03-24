@@ -27,7 +27,7 @@
    var $pChartObject;
 
    /* Class creator */
-   function pRadar()
+   function __construct()
     { }
 
    /* Draw a radar chart */
@@ -350,7 +350,7 @@
           $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
 
          $PointsArray = "";
-         for($i=0; $i<count($Points);$i++) 
+         for($i=0; $i<count($Points);$i++)
           { $PointsArray[] = $Points[$i][0]; $PointsArray[] = $Points[$i][1]; }
          $Object->drawPolygon($PointsArray,$Color);
         }
@@ -370,7 +370,7 @@
         $Object->drawLine($Points[count($Points)-1][0],$Points[count($Points)-1][1],$Points[0][0],$Points[0][1],$Color);
 
        /* Draw the lines & points */
-       for($i=0; $i<count($Points);$i++) 
+       for($i=0; $i<count($Points);$i++)
         {
          if ( $DrawLines && $i < count($Points)-1)
           $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);
@@ -580,7 +580,7 @@
         {
          $LabelX = cos(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$LabelPadding+$TicksLength) + $CenterX;
          $LabelY = sin(deg2rad($i+$AxisRotation)) * ($EdgeHeight+$LabelPadding+$TicksLength) + $CenterY;
-         $Label = $i."°";
+         $Label = $i."ï¿½";
 
          if ( $LabelPos == RADAR_LABELS_ROTATED )
           $Object->drawText($LabelX,$LabelY,$Label,array("Angle"=>(360-$i),"Align"=>TEXT_ALIGN_BOTTOMMIDDLE));
@@ -634,7 +634,7 @@
           $Color = array("R"=>$Palette[$ID]["R"],"G"=>$Palette[$ID]["G"],"B"=>$Palette[$ID]["B"],"Alpha"=>$PolyAlpha,"Surrounding"=>$PointSurrounding);
 
          $PointsArray = "";
-         for($i=0; $i<count($Points);$i++) 
+         for($i=0; $i<count($Points);$i++)
           { $PointsArray[] = $Points[$i][0]; $PointsArray[] = $Points[$i][1]; }
 
          $Object->drawPolygon($PointsArray,$Color);
@@ -653,9 +653,9 @@
        /* Loop to the starting points if asked */
        if ( $LineLoopStart && $DrawLines )
         $Object->drawLine($Points[count($Points)-1][0],$Points[count($Points)-1][1],$Points[0][0],$Points[0][1],$Color);
-       
+
        /* Draw the lines & points */
-       for($i=0; $i<count($Points);$i++) 
+       for($i=0; $i<count($Points);$i++)
         {
          if ( $DrawLines && $i < count($Points)-1)
           $Object->drawLine($Points[$i][0],$Points[$i][1],$Points[$i+1][0],$Points[$i+1][1],$Color);

@@ -39,25 +39,25 @@
 
 
 class ViewMain extends SugarView
-{ 	
- 	function ViewMain(){
+{
+ 	function __construct(){
 		$this->options['show_footer'] = true;
- 		parent::SugarView();
+ 		parent::__construct();
  	}
- 	
+
  	/**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
 	protected function _getModuleTitleParams($browserTitle = false)
 	{
 	    global $mod_strings;
-	    
+
     	return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
-    
+
  	function display()
  	{
 		global $app_strings, $current_user, $mod_strings, $theme;
@@ -88,7 +88,7 @@ class ViewMain extends SugarView
  			    $mbt = new DropDownTree();
  			    break;
  			default:
- 				//$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=home")');	
+ 				//$smarty->assign('ONLOAD','ModuleBuilder.getContent("module=ModuleBuilder&action=home")');
 				require_once('modules/ModuleBuilder/Module/MainTree.php');
 				$mbt = new MainTree();
  		}
@@ -101,9 +101,9 @@ class ViewMain extends SugarView
 			$smarty->assign('TREElabel', $mbt->getName());
 		}
 		$userPref = $current_user->getPreference('mb_assist', 'Assistant');
-		if(!$userPref) $userPref="na"; 
+		if(!$userPref) $userPref="na";
 		$smarty->assign('userPref',$userPref);
-		
+
 		///////////////////////////////////
 	    require_once('include/SugarTinyMCE.php');
 	    $tiny = new SugarTinyMCE();
@@ -116,8 +116,8 @@ class ViewMain extends SugarView
 	    $tiny->buttonConfig3 = "";
 	    $ed = $tiny->getInstance();
 	    $smarty->assign("tiny", $ed);
-		
+
 		$smarty->display('modules/ModuleBuilder/tpls/index.tpl');
-		
+
  	}
 }

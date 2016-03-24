@@ -80,7 +80,7 @@ class UploadFile
 	 * Create upload file handler
 	 * @param string $field_name Form field name
 	 */
-	function UploadFile ($field_name = '')
+	public function __construct($field_name = '')
 	{
 		// $field_name is the name of your passed file selector field in your form
 		// i.e., for Emails, it is "email_attachmentX" where X is 0-9
@@ -126,7 +126,7 @@ class UploadFile
 	    }
 	    return "index.php?entryPoint=download&type=$type&id={$document->id}";
 	}
-	
+
 	/**
 	 * Try renaming a file to bean_id name
 	 * @param string $filename
@@ -326,40 +326,40 @@ class UploadFile
 	{
 		return $this->stored_file_name;
 	}
-	
+
 	function get_temp_file_location()
 	{
 	    return $this->temp_file_location;
 	}
-	
+
 	function get_uploaded_file_name()
 	{
 	    return $this->uploaded_file_name;
 	}
-	
+
 	function get_mime_type()
 	{
 	    return $this->mime_type;
 	}
-	
+
 	/**
 	 * Returns the contents of the uploaded file
 	 */
 	public function get_file_contents() {
-	    
+
 	    // Need to call
 	    if ( !isset($this->temp_file_location) ) {
 	        $this->confirm_upload();
 	    }
-	    
+
 	    if (($data = @file_get_contents($this->temp_file_location)) === false) {
 	        return false;
         }
-           
+
         return $data;
 	}
 
-	
+
 
 	/**
 	 * creates a file's name for preparation for saving

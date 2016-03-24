@@ -36,14 +36,22 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
-chdir('..');
 
-define('sugarEntry', true);
+/* bootstrap composer's autoloader */
+require_once '../vendor/autoload.php';
 
+/* bootstrap sugarcrm */
+chdir('../');
+define('sugarEntry',TRUE);
 global $sugar_config, $db;
 require_once 'include/utils.php';
 require_once 'include/modules.php';
 require_once 'include/entryPoint.php';
 //Oddly entry point loads app_strings but not app_list_strings, manually do this here.
 $GLOBALS['app_list_strings'] = return_app_list_strings_language($GLOBALS['current_language']);
+
+/* VERY BAD :-( - but for now at least tests are running */
+$GLOBALS['sugar_config']['resource_management']['default_limit'] = 999999;
+
+
 define('WITHIN_TESTS', true);

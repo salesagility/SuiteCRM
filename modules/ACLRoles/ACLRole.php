@@ -52,8 +52,8 @@ class ACLRole extends SugarBean{
 
     var $created_by;
 
-    function ACLRole(){
-        parent::SugarBean();
+    public function __construct(){
+        parent::__construct();
     }
 
     // bug 16790 - missing get_summary_text method led Tracker to display SugarBean's "base implementation"
@@ -224,14 +224,14 @@ function getRoleActions($role_id, $type='module'){
 
 
         }
-        
+
         // Sort by translated categories
         uksort($role_actions, "ACLRole::langCompare");
         return $role_actions;
 
     }
-    
-    private static function langCompare($a, $b) 
+
+    private static function langCompare($a, $b)
     {
         global $app_list_strings;
         // Fallback to array key if translation is empty

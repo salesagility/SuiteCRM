@@ -51,8 +51,8 @@ class AOW_WorkFlow extends Basic {
 	var $status;
 	var $run_when;
 
-	function AOW_WorkFlow($init=true){
-		parent::Basic();
+	public function __construct($init=true){
+		parent::__construct();
         if($init){
             $this->load_flow_beans();
             require_once('modules/AOW_WorkFlow/aow_utils.php');
@@ -441,7 +441,7 @@ class AOW_WorkFlow extends Basic {
 
         if($this->flow_run_on){
 
-            // database time correction with the user's time-zoneqq 
+            // database time correction with the user's time-zoneqq
             $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
             $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
             $thisDateEnteredTimestamp = strtotime($this->date_entered);

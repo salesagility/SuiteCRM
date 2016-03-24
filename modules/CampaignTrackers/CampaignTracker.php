@@ -101,9 +101,10 @@ class CampaignTracker extends SugarBean {
     var $relationship_fields = Array('campaing_id'=>'campaign');
 
     var $required_fields =  array('tracker_name'=>1,'tracker_url'=>1);
+
     /*This bean's constructor*/
-    function CampaignTracker() {
-        parent::SugarBean();
+    public function __construct() {
+        parent::__construct();
     }
 
     function save($check_notify = false) {

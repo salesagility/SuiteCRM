@@ -30,7 +30,7 @@
    var $Points;
 
    /* Class creator */
-   function pSurface($pChartObject)
+   function __construct($pChartObject)
     {
      $this->pChartObject = $pChartObject;
      $this->GridSize     = 10;
@@ -40,7 +40,7 @@
    /* Define the grid size and initialise the 2D matrix */
    function setGrid($XSize=10,$YSize=10)
     {
-     for($X=0; $X<=$XSize; $X++) { for($Y=0; $Y<=$YSize; $Y++) { $this->Points[$X][$Y]=UNKNOWN; } } 
+     for($X=0; $X<=$XSize; $X++) { for($Y=0; $Y<=$YSize; $Y++) { $this->Points[$X][$Y]=UNKNOWN; } }
 
      $this->GridSizeX = $XSize;
      $this->GridSizeY = $YSize;
@@ -264,7 +264,7 @@
         }
       }
      shuffle($Missing);
-     
+
      foreach($Missing as $Key => $Pos)
       {
        $Pos = preg_split("/,/",$Pos);

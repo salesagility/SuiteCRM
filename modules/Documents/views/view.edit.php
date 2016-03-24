@@ -46,8 +46,8 @@ class DocumentsViewEdit extends ViewEdit
     /**
      * @see SugarView::ViewEdit()
      */
-     function DocumentsViewEdit(){
-         parent::ViewEdit();
+     function __construct(){
+         parent::__construct();
          $this->useForSubpanel = true;
      }
 

@@ -53,7 +53,7 @@ var $mView;
 var $mModule;
 var $mCustomPanels;
 
-function MetaParser() {
+function __construct() {
 
 }
 

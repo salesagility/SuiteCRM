@@ -8,7 +8,7 @@ if (!defined('sugarEntry') || !sugarEntry)
 class AccountsJjwg_MapsLogicHook {
 
     var $jjwg_Maps;
-    function AccountsJjwg_MapsLogicHook() {
+    function __construct() {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }
 
@@ -76,7 +76,7 @@ class AccountsJjwg_MapsLogicHook {
 
     function addRelationship(&$bean, $event, $arguments) {
         // after_relationship_add
-        // $arguments['module'], $arguments['related_module'], $arguments['id'] and $arguments['related_id'] 
+        // $arguments['module'], $arguments['related_module'], $arguments['id'] and $arguments['related_id']
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
             $focus = get_module_info($arguments['module']);
             if (!empty($arguments['id'])) {
@@ -92,7 +92,7 @@ class AccountsJjwg_MapsLogicHook {
 
     function deleteRelationship(&$bean, $event, $arguments) {
         // after_relationship_delete
-        // $arguments['module'], $arguments['related_module'], $arguments['id'] and $arguments['related_id'] 
+        // $arguments['module'], $arguments['related_module'], $arguments['id'] and $arguments['related_id']
         if ($this->jjwg_Maps->settings['logic_hooks_enabled']) {
             $focus = get_module_info($arguments['module']);
             if (!empty($arguments['id'])) {
@@ -105,5 +105,5 @@ class AccountsJjwg_MapsLogicHook {
             }
         }
     }
-    
+
 }

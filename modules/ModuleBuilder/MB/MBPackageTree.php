@@ -40,18 +40,18 @@
 require_once('include/ytree/Tree.php');
 require_once('include/ytree/Node.php');
 class MBPackageTree{
-	
-	function MBPackageTree(){
+
+	function __construct(){
 		$this->tree = new Tree('package_tree');
 		$this->tree->id = 'package_tree';
 		$this->mb = new ModuleBuilder();
 		$this->populateTree($this->mb->getNodes(), $this->tree);
 	}
-	
+
 	function getName(){
 		return 'Packages';
 	}
-	
+
 	function populateTree($nodes, &$parent){
 		foreach($nodes as $node){
 			if(empty($node['label']))$node['label'] = $node['name'];
@@ -64,19 +64,19 @@ class MBPackageTree{
 			$parent->add_node($yn);
 		}
 	}
-	
+
 	function fetch(){
 		//return $this->tree->generate_header() . $this->tree->generate_nodes_array();
 		return $this->tree->generate_nodes_array();
 	}
-	
+
 	function fetchNodes(){
 		return $this->tree->generateNodesRaw();
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }
 ?>

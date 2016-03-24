@@ -4,8 +4,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.edit.php');
 
 class AOS_Product_CategoriesViewEdit extends ViewEdit {
-    function AOS_Product_CategoriesViewEdit(){
-        parent::ViewEdit();
+    function __construct(){
+        parent::__construct();
     }
 
     function display(){

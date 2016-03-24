@@ -43,8 +43,8 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class ProductsParseRule extends BaseRule {
 
-function ProductsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -61,12 +61,12 @@ function preParse($panels, $view) {
 				} else if ($this->matches($column, '/^type$/i')) {
 				   $panels[$name][$rowCount][$key] = 'type_name';
 				}
-	   	  	 } //foreach 
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
    } //if
-   return $panels; 	
+   return $panels;
 }
-	
+
 }
 ?>

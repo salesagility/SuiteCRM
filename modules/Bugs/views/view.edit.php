@@ -42,10 +42,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class BugsViewEdit extends ViewEdit {
 
- 	function BugsViewEdit(){
- 		parent::ViewEdit();
+ 	function __construct(){
+ 		parent::__construct();
  	}
- 	
+
  	function display() {
         $admin = new Administration();
         $admin->retrieveSettings();

@@ -106,8 +106,8 @@ class Employee extends Person {
 
 	var $new_schema = true;
 
-	function Employee() {
-		parent::Person();
+	function __construct() {
+		parent::__construct();
 		$this->setupCustomFields('Users');
 		$this->emailAddress = new SugarEmailAddress();
 	}
