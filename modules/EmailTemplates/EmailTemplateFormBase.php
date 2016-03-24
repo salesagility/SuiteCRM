@@ -137,7 +137,7 @@ EOQ;
 	}
 
 
-	function handleSave($prefix,$redirect=true, $useRequired=false)
+	function handleSave($prefix,$redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
 	{
 		require_once('include/formbase.php');
 		require_once('include/upload_file.php');
@@ -162,10 +162,10 @@ EOQ;
 		}
 		if (!isset($_REQUEST['published'])) $focus->published = 'off';
 
-		$this->handleAttachmentsProcessImages($focus, $redirect);
+		$this->handleAttachmentsProcessImages($focus, $redirect, $useSiteURL, $entryPoint, $useUploadFolder);
 	}
 
-	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false) {
+	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false) {
 		global $sugar_config;
 		$preProcessedImages = array();
 		$emailTemplateBodyHtml = from_html($focus->body_html);
@@ -193,7 +193,13 @@ EOQ;
 					if (!copy($file_location, $newFileLocation)) {
 						$GLOBALS['log']->debug("EMAIL Template could not copy attachment to $newFileLocation");
 					} else {
-						$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=download&type=Notes&id={$id}";
+						if($useUploadFolder) {
+							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "upload/{$id}";
+						}
+						else {
+							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=" . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
+						}
+
 						$emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
 						unlink($file_location);
 						$preProcessedImages[$filename] = $id;

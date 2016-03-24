@@ -67,6 +67,6 @@ if(isset($_REQUEST['inpopupwindow']) and $_REQUEST['inpopupwindow'] == true) {
 		</script>";
 	echo  $body1;
 } else {
-	$form->handleSave('',true, false);
+	$form->handleSave('',true, false, true, 'download', true);
 }
 ?>

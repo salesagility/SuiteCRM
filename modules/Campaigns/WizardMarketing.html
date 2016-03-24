@@ -222,7 +222,7 @@
 
 
 
-			var func = emailTemplateCopyId && $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+			var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
 //			<!-- BEGIN: NoInbound1 -->
 //			addUploadFiles('wizform');
