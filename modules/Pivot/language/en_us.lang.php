@@ -100,5 +100,6 @@ $mod_strings = array (
     'LBL_AN_NAME' => 'Name',
     'LBL_AN_SALES' => 'Sales',
     'LBL_AN_ACCOUNTS' => 'Accounts',
-    'LBL_AN_LEADS' => 'Leads'
+    'LBL_AN_LEADS' => 'Leads',
+    'LBL_AN_SERVICE' => 'Service'
 );

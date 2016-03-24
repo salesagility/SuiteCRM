@@ -171,7 +171,7 @@ EOF;
             $x->leadTitle = $row['leadTitle'];
             $x->leadCountry = $row['primary_address_country'];
             $x->leadCity = $row['primary_address_city'];
-            $x->source = $row['lead_source'];
+            $x->leadSource = $row['lead_source'];
             $x->status = $row['status'];
             $x->accountName = $row['account_name'];
             $returnArray[] = $x;
@@ -220,9 +220,9 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->accoutName = $row['accountName'];
-            $x->name = $row['name'];
-            $x->userName = $row['userName'];
-            $x->type = $row['opportunity_type'];
+            $x->opportunityName = $row['name'];
+            $x->assignedUser = $row['userName'];
+            $x->opportunityType = $row['opportunity_type'];
             $x->leadSource = $row['lead_source'];
             $x->amount = $row['amount'];
             $x->salesDate = $row['date_closed'];
@@ -235,6 +235,284 @@ EOF;
 
             $x->salesStage = $row['sales_stage'];
             $x->probability = $row['probability'];
+            $returnArray[] = $x;
+        }
+        echo json_encode($returnArray);
+    }
+
+    public function action_getServicePivotData()
+    {
+        $returnArray = [];
+        $db = DBManagerFactory::getInstance();
+
+        $query = <<<EOF
+        SELECT
+            accounts.name,
+            cases.state,
+            cases.status,
+            cases.priority,
+            DAYNAME(cases.date_entered) as day,
+            CAST(WEEK(cases.date_entered) as CHAR(5)) as week,
+            concat('(',MONTH(cases.date_entered),') ',MONTHNAME(cases.date_entered)) as month,
+            COALESCE(QUARTER(cases.date_entered),'undefined') as quarter,
+            CAST(YEAR(cases.date_entered) as CHAR(10)) as year,
+            COALESCE(NULLIF(RTRIM(LTRIM(CONCAT(COALESCE(u2.first_name,''),' ',COALESCE(u2.last_name,'')))),''),'undefined') as contactName,
+            RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
+        FROM cases
+        INNER JOIN users
+            ON cases.assigned_user_id = users.id
+        INNER JOIN accounts
+            ON cases.account_id = accounts.id
+        LEFT JOIN users u2
+            ON cases.contact_created_by_id = u2.id
+        WHERE cases.deleted = false
+EOF;
+
+        $opps = BeanFactory::getBean('Opportunities');
+        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
+
+        $queryString = $query.$aclWhereOpps;
+        $result = $db->query($queryString);
+
+        while ($row = $db->fetchByAssoc($result)) {
+            $x = new stdClass();
+            $x->accoutName = $row['name'];
+            $x->state = $row['state'];
+            $x->status = $row['status'];
+            $x->priority = $row['priority'];
+            $x->createdDay = $row['day'];
+            $x->createdWeek = $row['week'];
+            $x->createdMonth = $row['month'];
+            $x->createdQuarter = $row['quarter'];
+            $x->createdYear = $row['year'];
+            $x->contactName = $row['contactName'];
+            $x->assignedTo = $row['assignedUser'];
+
+            $returnArray[] = $x;
+        }
+        echo json_encode($returnArray);
+    }
+
+    public function action_getActivityCallsPivotData()
+    {
+        $returnArray = [];
+        $db = DBManagerFactory::getInstance();
+
+        $query = <<<EOF
+        SELECT
+            calls.name as callName,
+            calls.status as callStatus,
+            RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
+            COALESCE(accounts.name, 'undefined'),
+            DAYNAME(calls.date_start) as day,
+            CAST(WEEK(calls.date_start) as CHAR(5)) as week,
+            concat('(',MONTH(calls.date_start),') ',MONTHNAME(calls.date_start)) as month,
+            COALESCE(QUARTER(calls.date_start),'undefined') as quarter
+            , YEAR(calls.date_start) as year
+			, CONCAT(COALESCE(contacts.first_name,''),COALESCE(contacts.last_name)) as contactName
+        FROM calls
+        LEFT JOIN users
+            ON calls.assigned_user_id = users.id
+        LEFT JOIN accounts
+            ON calls.parent_id = accounts.id
+		LEFT JOIN calls_contacts
+			ON calls.id = calls_contacts.call_id
+		LEFT JOIN contacts
+			ON calls_contacts.contact_id = contacts.id
+        WHERE calls.deleted = false
+EOF;
+
+        $opps = BeanFactory::getBean('Opportunities');
+        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
+
+        $queryString = $query.$aclWhereOpps;
+        $result = $db->query($queryString);
+
+        while ($row = $db->fetchByAssoc($result)) {
+            $x = new stdClass();
+            $x->accoutName = $row['name'];
+            $x->state = $row['state'];
+            $x->status = $row['status'];
+            $x->priority = $row['priority'];
+            $x->createdDay = $row['day'];
+            $x->createdWeek = $row['week'];
+            $x->createdMonth = $row['month'];
+            $x->createdQuarter = $row['quarter'];
+            $x->createdYear = $row['year'];
+            $x->contactName = $row['contactName'];
+            $x->assignedTo = $row['assignedUser'];
+
+            $returnArray[] = $x;
+        }
+        echo json_encode($returnArray);
+    }
+
+    public function action_getActivityMeetingsPivotData()
+    {
+        $returnArray = [];
+        $db = DBManagerFactory::getInstance();
+
+        $query = <<<EOF
+        SELECT
+            meetings.name as meetingName,
+            meetings.status as meetingStatus,
+            RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
+            COALESCE(accounts.name, 'undefined') as accountName,
+            DAYNAME(meetings.date_start) as day,
+            CAST(WEEK(meetings.date_start) as CHAR(5)) as week,
+             concat('(',MONTH(meetings.date_start),') ',MONTHNAME(meetings.date_start)) as month,
+             COALESCE(QUARTER(meetings.date_start),'undefined') as quarter
+             , YEAR(meetings.date_start) as year
+        FROM meetings
+        LEFT JOIN users
+            ON meetings.assigned_user_id = users.id
+        LEFT JOIN accounts
+            ON meetings.parent_id = accounts.id
+        WHERE meetings.deleted = false
+EOF;
+
+        $opps = BeanFactory::getBean('Opportunities');
+        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
+
+        $queryString = $query.$aclWhereOpps;
+        $result = $db->query($queryString);
+
+        while ($row = $db->fetchByAssoc($result)) {
+            $x = new stdClass();
+            $x->accoutName = $row['name'];
+            $x->state = $row['state'];
+            $x->status = $row['status'];
+            $x->priority = $row['priority'];
+            $x->createdDay = $row['day'];
+            $x->createdWeek = $row['week'];
+            $x->createdMonth = $row['month'];
+            $x->createdQuarter = $row['quarter'];
+            $x->createdYear = $row['year'];
+            $x->contactName = $row['contactName'];
+            $x->assignedTo = $row['assignedUser'];
+
+            $returnArray[] = $x;
+        }
+        echo json_encode($returnArray);
+    }
+
+    public function action_getMarketingPivotData()
+    {
+        $returnArray = [];
+        $db = DBManagerFactory::getInstance();
+
+        $query = <<<EOF
+        SELECT
+             opportunities.name as opportunityName
+            , opportunities.amount as opportunityAmount
+            , opportunities.sales_stage as opportunitySalesStage
+            , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
+            , opportunities.opportunity_type as opportunityType
+            , opportunities.date_closed as opportunityDateClosed
+            , DAYNAME(opportunities.date_closed) as day
+            , CAST(WEEK(opportunities.date_closed) as CHAR(5)) as week
+            , concat('(',MONTH(opportunities.date_closed),') ',MONTHNAME(opportunities.date_closed)) as month
+            , COALESCE(QUARTER(opportunities.date_closed),'undefined') as quarter
+            , YEAR(opportunities.date_closed) as year
+            , accounts.name
+            , COALESCE(campaigns.status,'undefined') as campaignStatus
+            , COALESCE(campaigns.campaign_type,'undefined') as campaignType
+            , COALESCE(campaigns.budget,'undefined') as campaignBudget
+            , COALESCE(campaigns.expected_cost,'undefined') as campaignExpectedCost
+            , COALESCE(campaigns.expected_revenue,'undefined') as campaignExpectedRevenue
+        FROM opportunities
+        LEFT JOIN users
+            ON opportunities.assigned_user_id = users.id
+        LEFT JOIN accounts_opportunities
+            ON opportunities.id =  accounts_opportunities.opportunity_id
+        LEFT JOIN accounts
+            ON accounts_opportunities.account_id = accounts.id
+        LEFT JOIN campaigns
+            ON opportunities.campaign_id = campaigns.id
+EOF;
+
+        $opps = BeanFactory::getBean('Opportunities');
+        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
+
+        $queryString = $query.$aclWhereOpps;
+        $result = $db->query($queryString);
+
+        while ($row = $db->fetchByAssoc($result)) {
+            $x = new stdClass();
+            $x->accoutName = $row['name'];
+            $x->state = $row['state'];
+            $x->status = $row['status'];
+            $x->priority = $row['priority'];
+            $x->createdDay = $row['day'];
+            $x->createdWeek = $row['week'];
+            $x->createdMonth = $row['month'];
+            $x->createdQuarter = $row['quarter'];
+            $x->createdYear = $row['year'];
+            $x->contactName = $row['contactName'];
+            $x->assignedTo = $row['assignedUser'];
+
+            $returnArray[] = $x;
+        }
+        echo json_encode($returnArray);
+    }
+
+    public function action_getQuotesPivotData()
+    {
+        $returnArray = [];
+        $db = DBManagerFactory::getInstance();
+
+        $query = <<<EOF
+SELECT
+	 opportunities.name as opportunityName
+	, opportunities.opportunity_type as opportunityType
+	, opportunities.sales_stage as opportunitySalesStage
+	, aos_quotes.stage as quoteStage
+	, accounts.name as accountName
+	, aos_products.name as productName
+
+
+
+
+
+
+FROM opportunities
+LEFT JOIN users
+	ON opportunities.assigned_user_id = users.id
+LEFT JOIN aos_quotes
+	ON opportunities.id = aos_quotes.opportunity_id
+LEFT JOIN accounts_opportunities
+	ON opportunities.id =  accounts_opportunities.opportunity_id
+LEFT JOIN accounts
+	ON accounts_opportunities.account_id = accounts.id
+LEFT JOIN aos_products_quotes
+	ON aos_quotes.id = aos_products_quotes.parent_id
+LEFT JOIN aos_products
+	ON aos_products_quotes.product_id = aos_products.id
+
+
+
+EOF;
+
+        $opps = BeanFactory::getBean('Opportunities');
+        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
+
+        $queryString = $query.$aclWhereOpps;
+        $result = $db->query($queryString);
+
+        while ($row = $db->fetchByAssoc($result)) {
+            $x = new stdClass();
+            $x->accoutName = $row['name'];
+            $x->state = $row['state'];
+            $x->status = $row['status'];
+            $x->priority = $row['priority'];
+            $x->createdDay = $row['day'];
+            $x->createdWeek = $row['week'];
+            $x->createdMonth = $row['month'];
+            $x->createdQuarter = $row['quarter'];
+            $x->createdYear = $row['year'];
+            $x->contactName = $row['contactName'];
+            $x->assignedTo = $row['assignedUser'];
+
             $returnArray[] = $x;
         }
         echo json_encode($returnArray);

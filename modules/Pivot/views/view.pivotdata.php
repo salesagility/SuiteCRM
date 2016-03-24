@@ -55,6 +55,7 @@ class PivotViewPivotData extends SugarView {
         $sales = $mod_strings['LBL_AN_SALES'];
         $accounts = $mod_strings['LBL_AN_ACCOUNTS'];
         $leads = $mod_strings['LBL_AN_LEADS'];
+        $service = $mod_strings['LBL_AN_SERVICE'];
         $genericSave = $mod_strings['LBL_AN_BTN_SAVE'];
         $genericLoad = $mod_strings['LBL_AN_BTN_LOAD'];
         $genericDelete = $mod_strings['LBL_AN_BTN_DELETE'];
@@ -385,6 +386,7 @@ class PivotViewPivotData extends SugarView {
     <option value="getSalesPivotData">$sales</option>
     <option value="getAccountsPivotData">$accounts</option>
     <option value="getLeadsPivotData">$leads</option>
+    <option value="getServicePivotData">$service</option>
 </select>
 <div id="output" style="margin: 30px;"></div>
 <div id="config"></div>
