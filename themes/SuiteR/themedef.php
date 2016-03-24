@@ -93,6 +93,12 @@ $themedef = array(
             'default' => '#ffffff'
         ),
 
+        'action_menu_button' => array(
+            'vname' => 'LBL_ACTION_MENU_BUTTON',
+            'type' => 'colour',
+            'default' => '#eeeeee'
+        ),
+
         'action_menu_background' => array(
             'vname' => 'LBL_ACTION_MENU_BACKGROUND',
             'type' => 'colour',
