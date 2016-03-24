@@ -25,4 +25,4 @@ branches:
     - hotfix
     - develop
     - travisFix
-    - travisFixPhp7
+    - php7-tests
