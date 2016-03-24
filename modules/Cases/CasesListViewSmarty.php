@@ -4,9 +4,9 @@ require_once('include/ListView/ListViewSmarty.php');
 
 class CasesListViewSmarty extends ListViewSmarty {
 
-    function CasesListViewSmarty() {
+    function __construct() {
 
-        parent::ListViewSmarty();
+        parent::__construct();
     }
 
     function buildExportLink($id = 'export_link') {

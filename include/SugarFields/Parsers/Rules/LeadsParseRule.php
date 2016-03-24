@@ -43,12 +43,12 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class LeadsParseRule extends BaseRule {
 
-function LeadsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
-	
+
 	if($view == 'DetailView') {
 		foreach($panels as $name=>$panel) {
 		   	  foreach($panel as $rowCount=>$row) {
@@ -56,13 +56,13 @@ function preParse($panels, $view) {
 		   	  	 	if($this->matches($column, '/^lead_view_c$/')) {
 		   	  	 	   $panels[$name][$rowCount][$key] = 'full_name';
 		   	  	 	}
-				} //foreach 
+				} //foreach
 		   	} //foreach
 	    } //foreach
 	}
-	
-	return $panels;	
-	
+
+	return $panels;
+
 }
 
 }

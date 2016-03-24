@@ -44,7 +44,7 @@
 class SugarFieldHandler
 {
 
-    function SugarFieldHandler() {
+    function __construct() {
     }
 
     static function fixupFieldType($field) {

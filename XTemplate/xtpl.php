@@ -148,7 +148,7 @@ var $AUTORESET=1;										/* auto-reset sub blocks */
 
 /***[ constructor ]*********************************************************/
 
-function XTemplate ($file, $alt_include = "", $mainblock="main") {
+function __construct ($file, $alt_include = "", $mainblock="main") {
 	$this->alternate_include_directory = $alt_include;
 	$this->mainblock=$mainblock;
 	$this->filecontents=$this->r_getfile($file);	/* read in template file */

@@ -69,9 +69,9 @@ class AOR_Condition extends Basic
     var $value;
     var $value_type;
 
-    function AOR_Condition()
+    function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     function save_lines($post_data, $parent, $key = '')

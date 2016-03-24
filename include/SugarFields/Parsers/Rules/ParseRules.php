@@ -41,15 +41,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * ParseRule.php
- * 
- * This is a utility base class to provide further refinement when converting 
+ *
+ * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.
- 
+
  * @author Collin Lee
  */
 class ParseRules {
 
-function ParseRules() {
+function __construct() {
 
 }
 

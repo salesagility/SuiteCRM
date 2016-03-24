@@ -47,7 +47,7 @@ require_once 'modules/ModuleBuilder/parsers/constants.php' ;
 
 class ViewLayoutView extends SugarView
 {
-    function ViewLayoutView ()
+    function __construct()
     {
         $GLOBALS [ 'log' ]->debug ( 'in ViewLayoutView' ) ;
         $this->editModule = $_REQUEST [ 'view_module' ] ;
@@ -74,7 +74,7 @@ class ViewLayoutView extends SugarView
 	protected function _getModuleTitleParams($browserTitle = false)
 	{
 	    global $mod_strings;
-	    
+
     	return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),
@@ -143,50 +143,50 @@ class ViewLayoutView extends SugarView
             if (! $this->fromModuleBuilder)
             {
 	            $buttons [] = array (
-                    'id' => 'saveBtn' , 
-                    'text' => translate ( 'LBL_BTN_SAVE' ) , 
+                    'id' => 'saveBtn' ,
+                    'text' => translate ( 'LBL_BTN_SAVE' ) ,
                     'actionScript' => "onclick='if(Studio2.checkGridLayout(\"{$this->editLayout}\")) Studio2.handleSave();'",
-                	'disabled' => $disableLayout, 
+                	'disabled' => $disableLayout,
                 ) ;
-                $buttons [] = array ( 
-                    'id' => 'publishBtn' , 
-                    'text' => translate ( 'LBL_BTN_SAVEPUBLISH' ) , 
+                $buttons [] = array (
+                    'id' => 'publishBtn' ,
+                    'text' => translate ( 'LBL_BTN_SAVEPUBLISH' ) ,
                     'actionScript' => "onclick='if(Studio2.checkGridLayout(\"{$this->editLayout}\")) Studio2.handlePublish();'",
-                	'disabled' => $disableLayout, 
+                	'disabled' => $disableLayout,
                 ) ;
                 $buttons [] = array ( 'id' => 'spacer' , 'width' => '33px' ) ;
-                $buttons [] = array ( 
-	                'id' => 'historyBtn' , 
-	                'text' => translate ( 'LBL_HISTORY' ) , 
+                $buttons [] = array (
+	                'id' => 'historyBtn' ,
+	                'text' => translate ( 'LBL_HISTORY' ) ,
 	                'actionScript' => "onclick='ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")'",
                     'disabled' => $disableLayout,
                 ) ;
-                $buttons [] = array ( 
-	                'id' => 'historyDefault' , 
-	                'text' => translate ( 'LBL_RESTORE_DEFAULT' ) , 
+                $buttons [] = array (
+	                'id' => 'historyDefault' ,
+	                'text' => translate ( 'LBL_RESTORE_DEFAULT' ) ,
 	                'actionScript' => "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"\")'",
-                	'disabled' => $disableLayout, 
+                	'disabled' => $disableLayout,
                 ) ;
             } else
             {
-                $buttons [] = array ( 
-                    'id' => 'saveBtn' , 
-                    'text' => $GLOBALS [ 'mod_strings' ] [ 'LBL_BTN_SAVE' ] , 
+                $buttons [] = array (
+                    'id' => 'saveBtn' ,
+                    'text' => $GLOBALS [ 'mod_strings' ] [ 'LBL_BTN_SAVE' ] ,
                     'actionScript' => "onclick='if(Studio2.checkGridLayout(\"{$this->editLayout}\")) Studio2.handlePublish();'",
                     'disabled' => $disableLayout,
                 ) ;
                 $buttons [] = array ( 'id' => 'spacer' , 'width' => '33px' ) ;
                 $buttons [] = array (
-                    'id' => 'historyBtn' , 
-                    'text' => translate ( 'LBL_HISTORY' ) , 
+                    'id' => 'historyBtn' ,
+                    'text' => translate ( 'LBL_HISTORY' ) ,
                     'actionScript' => "onclick='ModuleBuilder.history.browse(\"{$this->editModule}\", \"{$this->editLayout}\")'",
-                    'disabled' => $disableLayout, 
+                    'disabled' => $disableLayout,
                 ) ;
-                $buttons [] = array ( 
-                    'id' => 'historyDefault' , 
-                    'text' => translate ( 'LBL_RESTORE_DEFAULT' ) , 
+                $buttons [] = array (
+                    'id' => 'historyDefault' ,
+                    'text' => translate ( 'LBL_RESTORE_DEFAULT' ) ,
                     'actionScript' => "onclick='ModuleBuilder.history.revert(\"{$this->editModule}\", \"{$this->editLayout}\", \"{$history->getLast()}\", \"\")'",
-                    'disabled' => $disableLayout, 
+                    'disabled' => $disableLayout,
                 ) ;
             }
 
@@ -221,7 +221,7 @@ class ViewLayoutView extends SugarView
 
         // assign fields and layout
         $smarty->assign ( 'available_fields', $parser->getAvailableFields () ) ;
-        
+
         $smarty->assign ( 'disable_layout', $disableLayout) ;
         $smarty->assign ( 'required_fields', $requiredFields) ;
         $smarty->assign ( 'layout', $parser->getLayout () ) ;

@@ -30,53 +30,25 @@ require_once 'util.php';
 require_once 'include/clean.php';
 class AOP_Case_Updates extends AOP_Case_Updates_sugar {
 
-    function AOP_Case_Updates(){
-        parent::AOP_Case_Updates_sugar();
+    public function __construct(){
+        parent::__construct();
     }
 
     function save($check_notify = false){
         $this->name = SugarCleaner::cleanHtml($this->name);
         $this->description = SugarCleaner::cleanHtml($this->description);
-        global $current_user, $sugar_config;
         parent::save($check_notify);
-        $email_template = new EmailTemplate();
-        if($_REQUEST['module'] == 'Import'){
-            //Don't send email on import
-            return;
-        }
-        if(!isAOPEnabled()){
-            return;
-        }
-        if($this->internal){
-            return;
-        }
-        $signature = array();
-        $addDelimiter = true;
-        $aop_config = $sugar_config['aop'];
-        if($this->assigned_user_id){
-            if($aop_config['contact_email_template_id']){
-                $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
-                $signature = $current_user->getDefaultSignature();
-            }
-            if($email_template) {
-                foreach ($this->getContacts() as $contact) {
-                    $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
-                    $emails = array();
-                    $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
-                    $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter, $contact->id);
-                }
-            }
+        if(file_exists('custom/modules/AOP_Case_Updates/CaseUpdatesHook.php')){
+            require_once 'custom/modules/AOP_Case_Updates/CaseUpdatesHook.php';
         }else{
-            $emails = $this->getEmailForUser();
-            if($aop_config['user_email_template_id']){
-                $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
-            }
-            $addDelimiter = false;
-            if($emails && $email_template){
-                $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
-                $res = $this->sendEmail($emails, $email_template, $signature, $this->case_id, $addDelimiter,$this->contact_id);
-            }
+            require_once 'modules/AOP_Case_Updates/CaseUpdatesHook.php';
         }
+        if(class_exists('CustomCaseUpdatesHook')){
+            $hook = new CustomCaseUpdatesHook();
+        }else{
+            $hook = new CaseUpdatesHook();
+        }
+        $hook->sendCaseUpdate($this);
 
     }
 
@@ -111,7 +83,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         return $user;
     }
 
-    private function getEmailForUser(){
+    public function getEmailForUser(){
         $user = $this->getUser();
         if($user){
             return array($user->emailAddress->getPrimaryAddress($user));
@@ -141,7 +113,7 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
         return $ret;
     }
 
-    private function sendEmail($emails, $template, $signature = array(), $caseId = null, $addDelimiter = true, $contactId = null){
+    public function sendEmail($emails, $template, $signature = array(), $caseId = null, $addDelimiter = true, $contactId = null){
         $GLOBALS['log']->info("AOPCaseUpdates: sendEmail called");
         require_once("include/SugarPHPMailer.php");
         $mailer=new SugarPHPMailer();

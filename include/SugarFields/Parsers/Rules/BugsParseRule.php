@@ -43,8 +43,8 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class BugsParseRule extends BaseRule {
 
-function BugsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -54,13 +54,13 @@ function preParse($panels, $view) {
 	   	  	 foreach($row as $key=>$column) {
 				if($this->matches($column, '/^release$/')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = 'found_in_release';
-				} 
-	   	  	 } //foreach 
+				}
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
    } //if
-   return $panels; 	
+   return $panels;
 }
-	
+
 }
 ?>

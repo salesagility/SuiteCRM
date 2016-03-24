@@ -48,12 +48,12 @@ class Group extends User {
 	var $default_team;
 	var $importable = false;
 
-    
-	function Group() {
-		parent::User();
+
+	function __construct() {
+		parent::__construct();
 	}
 
-	/** 
+	/**
 	 * overrides SugarBean method
 	 */
 	function mark_deleted($id) {
@@ -75,7 +75,7 @@ class Group extends User {
 			$query .= " ORDER BY users.user_name";
 		return $query;
 	}
-	
-} // end class def 
+
+} // end class def
 
 ?>

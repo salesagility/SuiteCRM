@@ -42,9 +42,9 @@
  */
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories_sugar.php');
 class AOS_Product_Categories extends AOS_Product_Categories_sugar {
-	
-	function AOS_Product_Categories(){	
-		parent::AOS_Product_Categories_sugar();
+
+	function __construct(){
+		parent::__construct();
 	}
 
     private function clearParent(){
@@ -71,6 +71,6 @@ class AOS_Product_Categories extends AOS_Product_Categories_sugar {
 
         parent::save($check_notify);
     }
-	
+
 }
 ?>

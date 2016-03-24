@@ -4,9 +4,9 @@ require_once('include/ListView/ListViewSmarty.php');
 
 class OpportunitiesListViewSmarty extends ListViewSmarty {
 
-    function OpportunitiesListViewSmarty() {
+    function __construct() {
 
-        parent::ListViewSmarty();
+        parent::__construct();
     }
 
     function buildExportLink($id = 'export_link') {

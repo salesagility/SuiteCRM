@@ -4,20 +4,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class Jjwg_AreasViewArea_Edit_Map extends SugarView {
 
-  function Jjwg_AreasViewArea_Edit_Map() {
-    parent::SugarView();
+  function __construct() {
+    parent::__construct();
   }
-  
+
   function display() {
-    
+
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
- 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-  <head> 
-  <title><?php echo $GLOBALS['mod_strings']['LBL_AREA_MAP']; ?></title> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <title><?php echo $GLOBALS['mod_strings']['LBL_AREA_MAP']; ?></title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  <meta http-equiv="content-type" content="text/html; charset=utf-8"/> 
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
   <style type="text/css">
     html,body{
@@ -40,9 +40,9 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
       line-height: 16px;
       font-family:Arial,Verdana,Helvetica,sans-serif;
       color: #444444;
-      font-weight: normal;  
+      font-weight: normal;
     }
-    
+
     #dataPanel{
       overflow:auto;
       border:1px solid #DDDDDD;
@@ -50,22 +50,22 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
       line-height: 16px;
       font-family:Arial,Verdana,Helvetica,sans-serif;
       color: #444444;
-      font-weight: normal;  
+      font-weight: normal;
     }
     input{
       font-size: 12px;
       line-height: 16px;
       font-family:Arial,Verdana,Helvetica,sans-serif;
       color: #444444;
-      font-weight: normal;  
+      font-weight: normal;
     }
-    
+
     input.navi{
       font-size: 12px;
       line-height: 16px;
       font-family:Arial,Verdana,Helvetica,sans-serif;
       color: #444444;
-      font-weight: normal;  
+      font-weight: normal;
       margin-bottom:10px;
     }
     p{
@@ -95,14 +95,14 @@ class Jjwg_AreasViewArea_Edit_Map extends SugarView {
 // Define Map Data for Javascript
 var jjwg_config_defaults = <?php echo (!empty($GLOBALS['jjwg_config_defaults'])) ? json_encode($GLOBALS['jjwg_config_defaults']) : '[]'; ?>;
 var jjwg_config = <?php echo (!empty($GLOBALS['jjwg_config'])) ? json_encode($GLOBALS['jjwg_config']) : '[]'; ?>;
-var polygonPoints = <?php echo (!empty($GLOBALS['polygon'])) ? json_encode($GLOBALS['polygon']) : '[]'; ?>;    
+var polygonPoints = <?php echo (!empty($GLOBALS['polygon'])) ? json_encode($GLOBALS['polygon']) : '[]'; ?>;
 
 $(function(){
 
     //create map
     var latLng = new google.maps.LatLng(
-        <?php echo (!empty($GLOBALS['loc']['lat'])) ? $GLOBALS['loc']['lat'] : $GLOBALS['jjwg_config']['map_default_center_latitude']; ?>, 
-        <?php echo (!empty($GLOBALS['loc']['lng'])) ? $GLOBALS['loc']['lng'] : $GLOBALS['jjwg_config']['map_default_center_longitude']; ?> 
+        <?php echo (!empty($GLOBALS['loc']['lat'])) ? $GLOBALS['loc']['lat'] : $GLOBALS['jjwg_config']['map_default_center_latitude']; ?>,
+        <?php echo (!empty($GLOBALS['loc']['lng'])) ? $GLOBALS['loc']['lng'] : $GLOBALS['jjwg_config']['map_default_center_longitude']; ?>
     );
 
     var myOptions = {
@@ -141,9 +141,9 @@ $(function(){
     var p = [];
     var myAreaPolygon = [];
 
-  
+
     if (polygonPoints.length > 0) {
-        
+
         // Define coordinates from objects
         myCoords = [];
         for (var j=0; j<polygonPoints.length; j++) {
@@ -162,33 +162,33 @@ $(function(){
             zIndex: 1
         });
         //console.log(myAreaPolygon[0]);
-        
+
         // Set to global array for later reference and destroy
         myAreaPolygon[0].setMap(map);
-        
-        
+
+
         // Right click to remove vertex
         myAreaPolygon[0].addListener('rightclick', function(mev){
             if (mev.vertex != null && this.getPath().getLength() > 2) {
                 this.getPath().removeAt(mev.vertex);
             }
         });
-        
-        
+
+
         map.fitBounds(bounds);
 
     }
-    
-    
+
+
     // Event listener on add new polygon
     google.maps.event.addListener(drawingManager, 'polygoncomplete', function(polygon) {
         // Push to reference array
         myAreaPolygon.push(polygon);
     });
-    
-    
+
+
     // Reset polygon(s)
-    $('#reset').click(function(){ 
+    $('#reset').click(function(){
         // Destroy existing polygons on map
         for (var i=0; i<myAreaPolygon.length; i++) {
             myAreaPolygon[i].setMap(null);
@@ -200,11 +200,11 @@ $(function(){
 
     // Define polygon(s) coordinates as lng,lat,elv string and set to 'coordinates' field
     $('#showData').click(function() {
-        
+
         $('#dataPanel').empty();
         var myCoords = Array();
         var myDataString = '';
-        
+
         for (var i=0; i<myAreaPolygon.length; i++) {
             var polygon = myAreaPolygon[i];
             if (polygon != '') {
@@ -223,7 +223,7 @@ $(function(){
                 }
             }
         }
-        
+
         // Update Coordinates display
         myDataString = myDataString.replace(/^[\s\n\r]+|[\s\n\r]+$/g,"");
         $('#dataPanel').append(myDataString.replace(/[\n\r]/g,"<br />"));

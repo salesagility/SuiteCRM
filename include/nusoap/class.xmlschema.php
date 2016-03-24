@@ -13,7 +13,7 @@ r56989 - 2010-06-16 13:01:33 -0700 (Wed, 16 Jun 2010) - kjing - defunt "Mango" s
 
 r55980 - 2010-04-19 13:31:28 -0700 (Mon, 19 Apr 2010) - kjing - create Mango (6.1) based on windex
 
-r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system 
+r51719 - 2009-10-22 10:18:00 -0700 (Thu, 22 Oct 2009) - mitani - Converted to Build 3  tags and updated the build system
 
 r51634 - 2009-10-19 13:32:22 -0700 (Mon, 19 Oct 2009) - mitani - Windex is the branch for Sugar Sales 1.0 development
 
@@ -59,7 +59,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 * @access   public
 */
 class nusoap_xmlschema extends nusoap_base  {
-	
+
 	// files
 	var $schema = '';
 	var $xml = '';
@@ -88,7 +88,7 @@ class nusoap_xmlschema extends nusoap_base  {
 	var $depth_array = array();
 	var $message = array();
 	var $defaultNamespace = array();
-    
+
 	/**
 	* constructor
 	*
@@ -97,8 +97,8 @@ class nusoap_xmlschema extends nusoap_base  {
 	* @param	string $namespaces namespaces defined in enclosing XML
 	* @access   public
 	*/
-	function nusoap_xmlschema($schema='',$xml='',$namespaces=array()){
-		parent::nusoap_base();
+	function __construct($schema='',$xml='',$namespaces=array()){
+		parent::__construct();
 		$this->debug('nusoap_xmlschema class instantiated, inside constructor');
 		// files
 		$this->schema = $schema;
@@ -188,7 +188,7 @@ class nusoap_xmlschema extends nusoap_base  {
 				$this->debug("XML payload:\n" . $xml);
 				$this->setError($errstr);
 	    	}
-            
+
 			xml_parser_free($this->parser);
 		} else{
 			$this->debug('no xml passed to parseString()!!');
@@ -210,7 +210,7 @@ class nusoap_xmlschema extends nusoap_base  {
 		}
 		return $scope . $ename . '_ContainedType';
 	}
-	
+
 	/**
 	* start-element handler
 	*
@@ -220,13 +220,13 @@ class nusoap_xmlschema extends nusoap_base  {
 	* @access   private
 	*/
 	function schemaStartElement($parser, $name, $attrs) {
-		
+
 		// position in the total number of elements, starting from 0
 		$pos = $this->position++;
 		$depth = $this->depth++;
 		// set self as current value for this depth
 		$this->depth_array[$depth] = $pos;
-		$this->message[$pos] = array('cdata' => ''); 
+		$this->message[$pos] = array('cdata' => '');
 		if ($depth > 0) {
 			$this->defaultNamespace[$pos] = $this->defaultNamespace[$this->depth_array[$depth - 1]];
 		} else {
@@ -240,7 +240,7 @@ class nusoap_xmlschema extends nusoap_base  {
 		} else {
         	$prefix = '';
         }
-		
+
         // loop thru attributes, expanding, and registering namespace declarations
         if(count($attrs) > 0){
         	foreach($attrs as $k => $v){
@@ -316,7 +316,7 @@ class nusoap_xmlschema extends nusoap_base  {
 					$aname = $attrs['ref'];
                     $this->attributes[$attrs['ref']] = $attrs;
 				}
-                
+
 				if($this->currentComplexType){	// This should *always* be
 					$this->complexTypes[$this->currentComplexType]['attrs'][$aname] = $attrs;
 				}
@@ -609,8 +609,8 @@ class nusoap_xmlschema extends nusoap_base  {
 						$xml .= " <$schemaPrefix:import namespace=\"" . $ns . "\" />\n";
 					}
 				}
-			} 
-		} 
+			}
+		}
 		// complex types
 		foreach($this->complexTypes as $typeName => $attrs){
 			$contentStr = '';
@@ -907,12 +907,12 @@ class nusoap_xmlschema extends nusoap_base  {
 		}
 		return $buffer;
 	}
-	
+
 	/**
 	* adds a complex type to the schema
-	* 
+	*
 	* example: array
-	* 
+	*
 	* addType(
 	* 	'ArrayOfstring',
 	* 	'complexType',
@@ -922,9 +922,9 @@ class nusoap_xmlschema extends nusoap_base  {
 	* 	array('ref'=>'SOAP-ENC:arrayType','wsdl:arrayType'=>'string[]'),
 	* 	'xsd:string'
 	* );
-	* 
+	*
 	* example: PHP associative array ( SOAP Struct )
-	* 
+	*
 	* addType(
 	* 	'SOAPStruct',
 	* 	'complexType',
@@ -932,7 +932,7 @@ class nusoap_xmlschema extends nusoap_base  {
 	* 	'all',
 	* 	array('myVar'=> array('name'=>'myVar','type'=>'string')
 	* );
-	* 
+	*
 	* @param name
 	* @param typeClass (complexType|simpleType|attribute)
 	* @param phpType: currently supported are array and struct (php assoc array)
@@ -960,11 +960,11 @@ class nusoap_xmlschema extends nusoap_base  {
 	    'attrs'		=> $attrs,
 	    'arrayType'	=> $arrayType
 		);
-		
+
 		$this->xdebug("addComplexType $name:");
 		$this->appendDebug($this->varDump($this->complexTypes[$name]));
 	}
-	
+
 	/**
 	* adds a simple type to the schema
 	*
@@ -985,7 +985,7 @@ class nusoap_xmlschema extends nusoap_base  {
 	    'type'			=> $restrictionBase,
 	    'enumeration'	=> $enumeration
 		);
-		
+
 		$this->xdebug("addSimpleType $name:");
 		$this->appendDebug($this->varDump($this->simpleTypes[$name]));
 	}
@@ -1003,7 +1003,7 @@ class nusoap_xmlschema extends nusoap_base  {
 		}
 		$this->elements[ $attrs['name'] ] = $attrs;
 		$this->elements[ $attrs['name'] ]['typeClass'] = 'element';
-		
+
 		$this->xdebug("addElement " . $attrs['name']);
 		$this->appendDebug($this->varDump($this->elements[ $attrs['name'] ]));
 	}

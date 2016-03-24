@@ -46,7 +46,7 @@ class DynamicField {
     var $use_existing_labels = false; // this value is set to true by install_custom_fields() in ModuleInstaller.php; everything else expects it to be false
     var $base_path = "";
 
-    function DynamicField($module = '') {
+    public function __construct($module = '') {
         $this->module = (! empty ( $module )) ? $module :( (isset($_REQUEST['module']) && ! empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
         $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
     }

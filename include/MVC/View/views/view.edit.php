@@ -52,8 +52,8 @@ require_once('include/EditView/EditView2.php');
  	var $useModuleQuickCreateTemplate = false; //boolean variable to determine whether or not SubpanelQuickCreate has a separate display function
  	var $showTitle = true;
 
- 	function ViewEdit(){
- 		parent::SugarView();
+ 	public function __construct(){
+ 		parent::__construct();
  	}
 
     /**

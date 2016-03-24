@@ -56,7 +56,7 @@ class SugarAuthenticate{
 	 *
 	 * @return SugarAuthenticate
 	 */
-	function SugarAuthenticate()
+	public function __construct()
 	{
 	    // check in custom dir first, in case someone want's to override an auth controller
 		if (file_exists('custom/modules/Users/authentication/'.$this->authenticationDir.'/' . $this->userAuthenticateClass . '.php')) {
@@ -371,7 +371,7 @@ class SugarAuthenticate{
 
     /**
      * Redirect to login page
-     * 
+     *
      * @param SugarApplication $app
      */
     public function redirectToLogin(SugarApplication $app)

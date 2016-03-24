@@ -53,7 +53,7 @@ class Chart_outcome_by_month
 {
 	var $modules = array('Opportunities');
 	var $order = 0;
-function Chart_outcome_by_month()
+function __construct()
 {
 
 }

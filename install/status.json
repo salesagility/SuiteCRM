@@ -1,1 +1,1 @@
-{"message":"[ok]<br>Configuration relationships...","command":null}
+{"message":"Configuration relationships...[ok]<br>Create database...[ok]<br>Create default settings...[ok]<br>Install finish...[ok]<br>Installation process finished, <a href=\"\/\/localhostindex.php\">please log in...<\/a>","command":{"function":"redirect","arguments":"\/\/localhostindex.php"}}

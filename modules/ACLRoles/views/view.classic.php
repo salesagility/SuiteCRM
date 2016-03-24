@@ -6,8 +6,8 @@ require_once('include/MVC/View/views/view.detail.php');
 class ACLRolesViewClassic extends ViewDetail {
 
 
- 	function ACLRolesViewClassic(){
- 		parent::ViewDetail();
+ 	function __construct(){
+ 		parent::__construct();
 
         //turn off normal display of subpanels
         $this->options['show_subpanels'] = false; //no longer works in 6.3.0

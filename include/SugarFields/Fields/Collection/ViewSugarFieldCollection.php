@@ -61,7 +61,7 @@ class ViewSugarFieldCollection{
     var $action_type;
     var $form_name;
 
-    function ViewSugarFieldCollection($fill_data = true){
+    function __construct($fill_data = true){
     	$this->json = getJSONobj();
     	if($fill_data){
 	        $this->displayParams = $this->json->decode(html_entity_decode($_REQUEST['displayParams']));

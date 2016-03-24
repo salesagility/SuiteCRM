@@ -43,8 +43,8 @@ requireLucene();
 
 class AOD_Index extends AOD_Index_sugar {
 
-	function AOD_Index(){
-		parent::AOD_Index_sugar();
+	function __construct(){
+		parent::__construct();
         Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding('utf-8');
         Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8Num_CaseInsensitive());
     }
@@ -280,7 +280,7 @@ class AOD_Index extends AOD_Index_sugar {
                 return false;
             }
 
-            $bean->retrieve($beanId);
+            $bean = $bean->retrieve($beanId);
             if(!$bean){
                 return false;
             }

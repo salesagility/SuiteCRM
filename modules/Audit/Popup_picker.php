@@ -64,7 +64,7 @@ class Popup_Picker
 	/*
 	 *
 	 */
-	function Popup_Picker()
+	function __construct()
 	{
 
 	}

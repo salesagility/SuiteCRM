@@ -72,7 +72,7 @@ class ContactOpportunityRelationship extends SugarBean {
 		);
 
 	var $new_schema = true;
-	
+
 	var $additional_column_fields = Array();
 		var $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
@@ -82,7 +82,8 @@ class ContactOpportunityRelationship extends SugarBean {
       , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
       , 'deleted'=>array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>true)
       );
-	function ContactOpportunityRelationship() {
+	function __construct() {
+        parent::__construct();
 		$this->db = DBManagerFactory::getInstance();
         $this->dbManager = DBManagerFactory::getInstance();
 

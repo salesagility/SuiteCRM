@@ -86,7 +86,7 @@ class SugarView
     /**
      * Constructor which will peform the setup.
      */
-    public function SugarView(
+    public function __construct(
         $bean = null,
         $view_object_map = array()
         )
@@ -644,7 +644,7 @@ class SugarView
 
 
         }
-        
+
         if ( isset($extraTabs) && is_array($extraTabs) ) {
             // Adding shortcuts array to extra menu array for displaying shortcuts associated with each module
             $shortcutExtraMenu = array();
@@ -664,12 +664,12 @@ class SugarView
             }
             $ss->assign("shortcutExtraMenu",$shortcutExtraMenu);
         }
-       
+
        if(!empty($current_user)){
        	$ss->assign("max_tabs", $current_user->getPreference("max_tabs"));
-       } 
-      
-       
+       }
+
+
         $imageURL = SugarThemeRegistry::current()->getImageURL("dashboard.png");
         $homeImage = "<img src='$imageURL'>";
 		$ss->assign("homeImage",$homeImage);
@@ -1249,7 +1249,7 @@ EOHTML;
 		$userTabs = query_module_access_list($current_user);
 		//If the home tab is in the user array use it as the default tab, otherwise use the first element in the tab array
 		$defaultTab = (in_array("Home",$userTabs)) ? "Home" : key($userTabs);
-		
+
         // Need to figure out what tab this module belongs to, most modules have their own tabs, but there are exceptions.
         if ( !empty($_REQUEST['module_tab']) )
             return $_REQUEST['module_tab'];

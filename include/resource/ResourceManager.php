@@ -50,8 +50,8 @@ private $_observers = array();
 /**
  * The constructor; declared as private
  */
-private function ResourceManager() {
-	
+private function __construct() {
+
 }
 
 /**
@@ -59,7 +59,7 @@ private function ResourceManager() {
  * Singleton method to return static instance of ResourceManager
  * @return The static singleton ResourceManager instance
  */
-static public function getInstance(){	
+static public function getInstance(){
     if (!isset(self::$instance)) {
         self::$instance = new ResourceManager();
     } // if
@@ -69,7 +69,7 @@ static public function getInstance(){
 /**
  * setup
  * Handles determining the appropriate setup based on client type.
- * It will create a SoapResourceObserver instance if the $module parameter is set to 
+ * It will create a SoapResourceObserver instance if the $module parameter is set to
  * 'Soap'; otherwise, it will try to create a WebResourceObserver instance.
  * @param $module The module value used to create the corresponding observer
  * @return boolean value indicating whether or not an observer was successfully setup
@@ -77,24 +77,26 @@ static public function getInstance(){
 public function setup($module) {
 	//Check if config.php exists
 	if(!file_exists('config.php') || empty($module)) {
-	   return false;	
+	   return false;
 	}
-    
+
     if($module == 'Soap') {
       require_once('include/resource/Observers/SoapResourceObserver.php');
-      $observer = new SoapResourceObserver('Soap');      	
-    } else {
+      $observer = new SoapResourceObserver('Soap');
+    } elseif(defined('WITHIN_TESTS')) {
+        return;
+    }else{
       require_once('include/resource/Observers/WebResourceObserver.php');
-      $observer = new WebResourceObserver($module);    	
+      $observer = new WebResourceObserver($module);
     }
-    
+
 	//Load config
 	if(!empty($observer->module)) {
 		$limit = 0;
-		
+
 		if(isset($GLOBALS['sugar_config']['resource_management'])) {
 			   $res = $GLOBALS['sugar_config']['resource_management'];
-			if(!empty($res['special_query_modules']) && 
+			if(!empty($res['special_query_modules']) &&
 			   in_array($observer->module, $res['special_query_modules']) &&
 			   !empty($res['special_query_limit']) &&
 			   is_int($res['special_query_limit']) &&
@@ -104,17 +106,17 @@ public function setup($module) {
 			   $limit = $res['default_limit'];
 			}
 		} //if
-		
+
 		if($limit) {
-		   
-		   $db = DBManagerFactory::getInstance();			
+
+		   $db = DBManagerFactory::getInstance();
 		   $db->setQueryLimit($limit);
 		   $observer->setLimit($limit);
 		   $this->_observers[] = $observer;
 		}
 		return true;
-	} 
-	
+	}
+
 	return false;
 }
 
@@ -124,14 +126,14 @@ public function setup($module) {
  * @param $msg Message from language file to notify observers with
  */
 public function notifyObservers($msg) {
-	
+
 	if(empty($this->_observers)) {
-	   return;	
+	   return;
 	}
 
     //Notify observers limit has been reached
     if(empty($GLOBALS['app_strings'])) {
-       $GLOBALS['app_strings'] = return_application_language($GLOBALS['current_language']);	
+       $GLOBALS['app_strings'] = return_application_language($GLOBALS['current_language']);
     }
     $limitMsg = $GLOBALS['app_strings'][$msg];
     foreach( $this->_observers as $observer) {
@@ -140,7 +142,7 @@ public function notifyObservers($msg) {
 	    eval("\$limitMsg = \"$limitMsg\";");
 	    $GLOBALS['log']->fatal($limitMsg);
 	    $observer->notify($limitMsg);
-    }		
+    }
 }
 
 
@@ -152,6 +154,6 @@ public function notifyObservers($msg) {
 function getObservers() {
     return $this->_observers;
 }
-	
+
 }
 ?>

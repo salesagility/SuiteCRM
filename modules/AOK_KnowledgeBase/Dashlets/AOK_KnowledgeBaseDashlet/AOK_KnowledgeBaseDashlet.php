@@ -49,18 +49,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOK_KnowledgeBase/AOK_KnowledgeBase.php');
 
-class AOK_KnowledgeBaseDashlet extends DashletGeneric { 
-    function AOK_KnowledgeBaseDashlet($id, $def = null) {
+class AOK_KnowledgeBaseDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOK_KnowledgeBase/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOK_KnowledgeBase');
 
         $this->searchFields = $dashletData['AOK_KnowledgeBaseDashlet']['searchFields'];
         $this->columns = $dashletData['AOK_KnowledgeBaseDashlet']['columns'];
 
-        $this->seedBean = new AOK_KnowledgeBase();        
+        $this->seedBean = new AOK_KnowledgeBase();
     }
 }

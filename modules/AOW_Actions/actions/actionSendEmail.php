@@ -28,8 +28,8 @@ class actionSendEmail extends actionBase {
 
     private $emailableModules = array();
 
-    function actionSendEmail($id = ''){
-        parent::actionBase($id);
+    function __construct($id = ''){
+        parent::__construct($id);
     }
 
     function loadJS(){

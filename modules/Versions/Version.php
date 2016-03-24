@@ -75,14 +75,14 @@ class Version extends SugarBean {
 	// This is used to retrieve related fields from form posts.
 	var $additional_column_fields = Array();
 
-	function Version() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 	}
 
-	
 
 
-	
+
+
 	/**
 		builds a generic search based on the query string using or
 		do not include any $this-> because this is called on without having the class instantiated
@@ -106,11 +106,11 @@ class Version extends SugarBean {
 function is_expected_version($expected_version){
 	foreach($expected_version as $name=>$val){
 		if($this->$name != $val){
-			return false;	
-		}	
+			return false;
+		}
 	}
 	return true;
-		
+
 }
 /**
  * Updates the version info based on the information provided
@@ -123,14 +123,14 @@ function mark_upgraded($name, $dbVersion, $fileVersion){
 	$version->file_version = $fileVersion;
 	$version->db_version = $dbVersion;
 	$version->save();
-	
+
 	if(isset($_SESSION['invalid_versions'][$name])) {
 		unset($_SESSION['invalid_versions'][$name]);
 	}
 }
 
 function get_profile(){
-	return array('name'=> $this->name, 'file_version'=> $this->file_version, 'db_version'=>$this->db_version);	
+	return array('name'=> $this->name, 'file_version'=> $this->file_version, 'db_version'=>$this->db_version);
 }
 
 

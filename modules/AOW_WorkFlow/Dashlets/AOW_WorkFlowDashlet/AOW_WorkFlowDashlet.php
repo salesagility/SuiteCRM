@@ -28,11 +28,11 @@ require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOW_WorkFlow/AOW_WorkFlow.php');
 
 class AOW_WorkFlowDashlet extends DashletGeneric {
-    function AOW_WorkFlowDashlet($id, $def = null) {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOW_WorkFlow/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOW_WorkFlow');
 

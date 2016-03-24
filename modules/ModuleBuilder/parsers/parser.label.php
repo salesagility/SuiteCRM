@@ -45,7 +45,7 @@ require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
 class ParserLabel //extends ModuleBuilderParser
 {
 
-    function ParserLabel ($moduleName, $packageName = '' )
+    public function __construct ($moduleName, $packageName = '' )
     {
         $this->moduleName = $moduleName;
         if (!empty($packageName))

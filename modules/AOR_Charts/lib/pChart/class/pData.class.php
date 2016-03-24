@@ -67,7 +67,7 @@
                         "7"=>array("R"=>224,"G"=>176,"B"=>46,"Alpha"=>100));
 
    /* Class creator */
-   function pData()
+   function __construct()
     {
      $this->Data = "";
      $this->Data["XAxisDisplay"]	= AXIS_FORMAT_DEFAULT;
@@ -265,7 +265,7 @@
 
    /* Mark all series as drawable */
    function drawAll()
-    { foreach($this->Data["Series"] as $Key => $Value) { if ( $this->Data["Abscissa"] != $Key ) { $this->Data["Series"][$Key]["isDrawable"]=TRUE; } } }    
+    { foreach($this->Data["Series"] as $Key => $Value) { if ( $this->Data["Abscissa"] != $Key ) { $this->Data["Series"][$Key]["isDrawable"]=TRUE; } } }
 
    /* Return the average value of the given serie */
    function getSerieAverage($Serie)
@@ -606,7 +606,7 @@
        $this->Data["Series"][$Serie]["Color"]["Alpha"] = 100;
       }
     }
-     
+
    function normalize($NormalizationFactor=100,$UnitChange=NULL,$Round=1)
     {
      $Abscissa = $this->Data["Abscissa"];
@@ -781,8 +781,8 @@
    function __toString()
     { return("pData object."); }
 
-   function left($value,$NbChar)	{ return substr($value,0,$NbChar); }  
-   function right($value,$NbChar)	{ return substr($value,strlen($value)-$NbChar,$NbChar); }  
-   function mid($value,$Depart,$NbChar)	{ return substr($value,$Depart-1,$NbChar); }  
+   function left($value,$NbChar)	{ return substr($value,0,$NbChar); }
+   function right($value,$NbChar)	{ return substr($value,strlen($value)-$NbChar,$NbChar); }
+   function mid($value,$Depart,$NbChar)	{ return substr($value,$Depart-1,$NbChar); }
   }
 ?>

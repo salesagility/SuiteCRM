@@ -70,8 +70,8 @@ class Administration extends SugarBean {
     var $disable_custom_fields = true;
     var $checkbox_fields = Array("notify_send_by_default", "mail_smtpauth_req", "notify_on", 'portal_on', 'skypeout_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled','captcha_on');
 
-    function Administration() {
-        parent::SugarBean();
+    function __construct() {
+        parent::__construct();
 
         $this->setupCustomFields('Administration');
     }
@@ -179,7 +179,9 @@ class Administration extends SugarBean {
     }
 
     function get_config_prefix($str) {
-        return Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1));
+        return $str
+            ? Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1))
+            : Array(false, false);
     }
 }
 ?>

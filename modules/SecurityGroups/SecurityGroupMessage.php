@@ -7,7 +7,7 @@ class SecurityGroupMessage extends Basic {
 	var $object_name = 'SecurityGroupMessage';
 	var $table_name = 'securitygroups_message';
 	var $importable = false;
-	
+
 	var $id;
 	var $name;
 	var $date_entered;
@@ -21,7 +21,7 @@ class SecurityGroupMessage extends Basic {
 	var $created_by_link;
 	var $modified_user_link;
 
-	
+
 	var $additional_column_fields = Array();
 	var $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
@@ -35,11 +35,11 @@ class SecurityGroupMessage extends Basic {
       , 'securitygroup_id'=>array('name' =>'securitygroup_id', 'type' =>'char', 'len'=>'36',)
     );
 
-    
-	function SecurityGroupMessage(){	
-		parent::Basic();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
 
 	function get_list_view_data(){
 		$data = parent::get_list_view_data();
@@ -54,12 +54,12 @@ class SecurityGroupMessage extends Basic {
 			$securitygroup = new SecurityGroup();
 			$securitygroup->retrieve($data['SECURITYGROUP_ID']);
 			$securitygroup_name = $securitygroup->name;
-			
+
 			if($securitygroup->assigned_user_id == $GLOBALS['current_user']->id) {
 				$group_owner = true;
 			}
 		}
-		
+
 		if(is_admin($GLOBALS['current_user']) || $data['CREATED_BY'] == $GLOBALS['current_user']->id || $group_owner) {
 			$delete = SugarThemeRegistry::current()->getImage( 'delete_inline', 'width="12" height="12" border="0" align="absmiddle" style="vertical-align: bottom;" onclick=\'Message.deleteMessage("'. $data['ID'] . '", "{this.id}")\'',null,null,'.gif','');
 		}
@@ -73,7 +73,7 @@ class SecurityGroupMessage extends Basic {
 			$user->retrieve($data['CREATED_BY']);
 			$username = $user->user_name;
 		}
-		
+
 		$data['NAME'] = $data['DESCRIPTION'];
 		$data['NAME'] =  '<div class="list view" style="padding:5px;border:none;">' . html_entity_decode($data['NAME']);
         $data['NAME'] .= '<div class="byLineBox" style="padding-top: 2px"><span class="byLineLeft">'.$username.' ['.$securitygroup_name.']';
@@ -99,7 +99,7 @@ class SecurityGroupMessage extends Basic {
 		$message->securitygroup_id = $securitygroup_id;
 		$message->save();
 	}
-	
+
 	function getTimeLapse($startDate)
 	{
 		$startDate = $GLOBALS['timedate']->to_db($startDate);
@@ -122,7 +122,7 @@ class SecurityGroupMessage extends Basic {
 			return $result;
 		}else if($weeks > 1){
 			$result .= $weeks . ' '.translate('LBL_TIME_WEEKS','SugarFeed').' ';
-			if($days > 0) { 
+			if($days > 0) {
                 $result .= $days . ' '.translate('LBL_TIME_DAYS','SugarFeed').' ';
             }
 		}else{
@@ -145,20 +145,20 @@ class SecurityGroupMessage extends Basic {
                     }
 				}
 				if($hours == 0 && $minutes == 0) {
-                    if($seconds == 1 ) { 
+                    if($seconds == 1 ) {
                         $result = $seconds . ' ' . translate('LBL_TIME_SECOND','SugarFeed');
-                    } else { 
-                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS','SugarFeed'); 
+                    } else {
+                        $result = $seconds . ' ' . translate('LBL_TIME_SECONDS','SugarFeed');
                     }
                 }
 			}
 		}
 		return $result . ' ' . translate('LBL_TIME_AGO','SugarFeed');
 
-		
-	
-    } 
-	
+
+
+    }
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL':return false;

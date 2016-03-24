@@ -65,7 +65,7 @@ class ModuleInstaller{
 	var $modulesInPackage = array();
 	public $disabled_path = DISABLED_PATH;
     public $id_name;
-	function ModuleInstaller(){
+	function __construct(){
 		$this->ms = new ModuleScanner();
 		$this->modules = get_module_dir_list();
 		$this->db = DBManagerFactory::getInstance();
@@ -940,7 +940,7 @@ class ModuleInstaller{
 
     /**
      * Function return path to file where store label
-     * 
+     *
      * @param $packs
      * @return string
      */
@@ -1096,7 +1096,7 @@ class ModuleInstaller{
 
     /**
      * Check labels inside label files and remove them
-     * 
+     *
      * @param $basePath - path to files with labels
      * @param array $labelDefinitions - format like output from AbstractRelationship buildLabels()
      */
@@ -1119,7 +1119,7 @@ class ModuleInstaller{
 
     /**
      * Check labels inside label file and remove them
-     * 
+     *
      * @param $uninstalLabes
      * @param $definition
      * @param $filename
@@ -1152,7 +1152,7 @@ class ModuleInstaller{
 
     /**
      * Save labels that not need be uninstalled at this case
-     * 
+     *
      * @param $filename
      * @param $stringsName
      * @param $strings
@@ -1168,7 +1168,7 @@ class ModuleInstaller{
 
     /**
      * Uninstall extend labels
-     * 
+     *
      * @param $labelDefinitions
      */
     public function uninstallExtLabels($labelDefinitions)
@@ -1177,7 +1177,7 @@ class ModuleInstaller{
             if (!isset($GLOBALS['sugar_config']['languages']) || !is_array($GLOBALS['sugar_config']['languages'])) {
                 continue;
             }
-            
+
             foreach (array_keys($GLOBALS['sugar_config']['languages']) AS $language) {
                 $pathDef = array(
                     'language' => $language,
@@ -1194,7 +1194,7 @@ class ModuleInstaller{
 
     /**
      * Returns the names of the label(key 'system_label') from a multi-dimensional array $labelDefinitions
-     * 
+     *
      * @param $labelDefinitions
      * @return array of labels
      */
@@ -1929,7 +1929,7 @@ class ModuleInstaller{
 					if(is_subclass_of($mod, 'SugarBean')  && $mod->disable_vardefs == false ){
 						$GLOBALS['log']->debug( "Creating Tables Bean : $bean");
 						$mod->create_tables();
-						SugarBean::createRelationshipMeta($mod->getObjectName(), $mod->db,$mod->table_name,'',$mod->module_dir);    
+						SugarBean::createRelationshipMeta($mod->getObjectName(), $mod->db,$mod->table_name,'',$mod->module_dir);
 					}
 				}else{
 					$GLOBALS['log']->debug( "File Does Not Exist:" . $beanFiles[$class] );

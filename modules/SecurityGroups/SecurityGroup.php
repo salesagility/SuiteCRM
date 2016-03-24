@@ -4,8 +4,8 @@ require_once('modules/SecurityGroups/SecurityGroup_sugar.php');
 class SecurityGroup extends SecurityGroup_sugar {
 
 
-    function SecurityGroup(){
-        parent::SecurityGroup_sugar();
+    public function __construct(){
+        parent::__construct();
     }
 
     var $last_run = array('module' => '', 'record' => '', 'action' => '', 'response' => '');
@@ -21,8 +21,8 @@ class SecurityGroup extends SecurityGroup_sugar {
      */
     function getGroupWhere($table_name,$module,$user_id)
     {
-       
-            
+
+
         //need a different query if doing a securitygroups check
         if($module == "SecurityGroups") {
             return " $table_name.id in (
@@ -32,16 +32,16 @@ class SecurityGroup extends SecurityGroup_sugar {
                 where secg.deleted = 0
             )";
 
-        } else {    
+        } else {
             return " EXISTS (SELECT  1
                   FROM    securitygroups secg
-                          INNER JOIN securitygroups_users secu 
-                            ON secg.id = secu.securitygroup_id 
-                               AND secu.deleted = 0 
+                          INNER JOIN securitygroups_users secu
+                            ON secg.id = secu.securitygroup_id
+                               AND secu.deleted = 0
                                AND secu.user_id = '$user_id'
-                          INNER JOIN securitygroups_records secr 
-                            ON secg.id = secr.securitygroup_id 
-                               AND secr.deleted = 0 
+                          INNER JOIN securitygroups_records secr
+                            ON secg.id = secr.securitygroup_id
+                               AND secr.deleted = 0
                                AND secr.module = '$module'
                        WHERE   secr.record_id = ".$table_name.".id
                                AND secg.deleted = 0) ";
@@ -172,10 +172,10 @@ class SecurityGroup extends SecurityGroup_sugar {
     {
         global $sugar_config;
         SecurityGroup::assign_default_groups($focus,$isUpdate); //this must be first because it does not check for dups
-        
+
         SecurityGroup::inherit_assigned($focus,$isUpdate);
         SecurityGroup::inherit_parent($focus,$isUpdate);
-        
+
         //don't do creator inheritance if popup selector method is chosen and a user is making the request...
         //don't if saving from a popup (subpanel_field_name check. Save2 is the action but to be safe use the subpanel check)
         if(
@@ -212,7 +212,7 @@ class SecurityGroup extends SecurityGroup_sugar {
             if(!in_array($focus->module_dir,array_keys($security_modules))) {
                 return;
             }
-            
+
             $defaultGroups = $groupFocus->retrieveDefaultGroups();
             foreach($defaultGroups as $default_id => $defaultGroup) {
 
@@ -532,7 +532,7 @@ class SecurityGroup extends SecurityGroup_sugar {
         $security_modules = array();
 
         //https://www.sugaroutfitters.com/support/securitysuite/496
-        //There are some modules that shouldn't ever inherit groups...        
+        //There are some modules that shouldn't ever inherit groups...
         $module_blacklist = array('SchedulersJobs','Schedulers','Trackers');
 
         require_once('modules/Relationships/Relationship.php');
@@ -546,14 +546,14 @@ class SecurityGroup extends SecurityGroup_sugar {
                 if(in_array($row['rhs_module'],$module_blacklist)) {
                     continue;
                 }
-                
+
                 //$security_modules[$row['rhs_module']] = $row['rhs_module'];
                 $security_modules[$row['rhs_module']] = $app_list_strings['moduleList'][$row['rhs_module']];//rost fix
             } else {
                 if(in_array($row['lhs_module'],$module_blacklist)) {
                     continue;
                 }
-                
+
                 //$security_modules[$row['lhs_module']] = $row['lhs_module'];
                 $security_modules[$row['lhs_module']] = $app_list_strings['moduleList'][$row['lhs_module']];//rost fix
 
@@ -682,22 +682,22 @@ class SecurityGroup extends SecurityGroup_sugar {
         $query = "select ";
         if($db->dbType == 'mssql') {
             $query .= " top 1 ";
-        }       
-        $query .= "securitygroups.id from securitygroups_users 
-inner join securitygroups on securitygroups_users.securitygroup_id = securitygroups.id 
-      and securitygroups.deleted = 0 
-where securitygroups_users.user_id='".$current_user->id."' and securitygroups_users.deleted = 0 
+        }
+        $query .= "securitygroups.id from securitygroups_users
+inner join securitygroups on securitygroups_users.securitygroup_id = securitygroups.id
+      and securitygroups.deleted = 0
+where securitygroups_users.user_id='".$current_user->id."' and securitygroups_users.deleted = 0
 order by securitygroups_users.primary_group desc ";
         if($db->dbType == 'mysql') {
             $query .= " limit 0,1 ";
-        } 
-                
+        }
+
         $result = $db->query($query,true,"Error finding the current users primary group: ");
         if(($row=$db->fetchByAssoc($result)) != null) {
             $primary_group_id = $row['id'];
         }
 
-        return $primary_group_id;   
+        return $primary_group_id;
     }
 }
 ?>

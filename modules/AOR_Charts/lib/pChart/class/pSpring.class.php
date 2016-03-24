@@ -43,7 +43,7 @@
    var $Labels;
 
    /* Class creator */
-   function pSpring()
+   function __construct()
     {
      /* Initialise data arrays */
      $this->Data = "";
@@ -327,7 +327,7 @@
 
            $Ring  = $MaxConnections - $Connections;
            $Angle = rand(0,360);
-           
+
            $this->Data[$Key]["X"] = cos(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterX;
            $this->Data[$Key]["Y"] = sin(deg2rad($Angle)) * ($Ring*$this->RingSize) + $CenterY;
           }
@@ -373,7 +373,7 @@
                    if ( !isset($this->Data[$BiggestPartner]["Angular"][$Angle]) || !isset($this->Data[$BiggestPartner]["Angular"]) )
                     {
                      $this->Data[$BiggestPartner]["Angular"][$Angle] = $Angle;
-                     $Done = TRUE; 
+                     $Done = TRUE;
                     }
                   }
                  if ( !$Done )
@@ -664,7 +664,7 @@
        $this->firstPass($Algorithm);
 
        /* Apply the vectors */
-       if ( $Pass > 0 ) 
+       if ( $Pass > 0 )
         {
          for ($i=0; $i<=$Pass; $i++) { $this->doPass(); }
         }
@@ -862,7 +862,7 @@
         { return(TRUE); }
       }
 
-      return(FALSE);   
+      return(FALSE);
     }
   }
 ?>

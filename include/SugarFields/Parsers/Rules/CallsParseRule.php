@@ -43,8 +43,8 @@ require_once('include/SugarFields/Parsers/Rules/ActivitiesParseRule.php');
 
 class CallsParseRule extends ActivitiesParseRule {
 
-function CallsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -55,18 +55,18 @@ function preParse($panels, $view) {
 	   	  	 foreach($row as $key=>$column) {
 				if($this->matches($column, '/^direction$/si')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = 'status';
-				} 
-	   	  	 } //foreach 
+				}
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
    } //if
-   return $panels; 	
+   return $panels;
 }
 
 function parsePanels($panels, $view) {
    $panels = parent::parsePanels($panels, $view);
-   return $panels;  
+   return $panels;
 }
-	
+
 }
 ?>

@@ -42,10 +42,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class EmployeesViewEdit extends ViewEdit {
     var $useForSubpanel = true;
- 	function EmployeesViewEdit(){
- 		parent::ViewEdit();
+ 	function __construct(){
+ 		parent::__construct();
  	}
- 	
+
  	function display() {
        	if(is_admin($GLOBALS['current_user'])) {
             $json = getJSONobj();

@@ -49,7 +49,8 @@ class TemplateHandler {
     var $cacheDir;
     var $templateDir = 'modules/';
     var $ss;
-    function TemplateHandler() {
+
+    public function __construct() {
       $this->cacheDir = sugar_cached('');
     }
 
@@ -521,7 +522,7 @@ class TemplateHandler {
        return '';
     }
 
-    
+
     /**
      * Get lookup array for QuickSearchDefaults custom class
      * @return array

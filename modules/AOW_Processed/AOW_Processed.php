@@ -50,17 +50,17 @@ class AOW_Processed extends Basic {
 	var $parent_id;
 	var $parent_type;
 	var $status;
-	
-	function AOW_Processed(){	
-		parent::Basic();
+
+	function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 	}
-		
+
 }
 ?>

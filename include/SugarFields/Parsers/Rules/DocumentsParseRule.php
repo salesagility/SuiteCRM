@@ -43,14 +43,14 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class DocumentsParseRule extends BaseRule {
 
-function DocumentsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
 		foreach($panels as $name=>$panel) {
 		   	foreach($panel as $rowCount=>$row) {
-		   	  	 foreach($row as $key=>$column) {  	
+		   	  	 foreach($row as $key=>$column) {
 		   	  	     if($this->matches($column, '/^related_doc_id$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_name';
 		   	  	 	 } else if($this->matches($column, '/^related_doc_rev_id$/')) {
@@ -72,10 +72,10 @@ function preParse($panels, $view) {
 		   	  	 	 } else if($this->matches($column, '/^related_document_version$/')) {
 		   	  	 	 	$panels[$name][$rowCount][$key] = 'related_doc_rev_number';
 		   	  	 	 }
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	} //foreach
 		} //foreach
-	return $panels;	
+	return $panels;
 }
 
 function parsePanels(& $panels, $view) {
@@ -88,12 +88,12 @@ function parsePanels(& $panels, $view) {
 				   $this->matches($column, '/latest_revision/si') ||
 				   $this->matches($column, '/file_name/si')) {
 	   	  	 	   $panels[$name][$rowCount][$key] = '';
-				} 	
-	   	  	 } //foreach 
+				}
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
-      
-	   return $panels;		
+
+	   return $panels;
 }
 
 }

@@ -43,8 +43,8 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class OpportunitiesParseRule extends BaseRule {
 
-function OpportunitiesParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -55,12 +55,12 @@ function preParse($panels, $view) {
 				if ($this->matches($column, '/^type$/i')) {
                    $panels[$name][$rowCount][$key] = 'opportunity_type';
 				}
-	   	  	 } //foreach 
+	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
    } //if
-   return $panels; 	
+   return $panels;
 }
-	
+
 }
 ?>

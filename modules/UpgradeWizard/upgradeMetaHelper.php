@@ -58,7 +58,7 @@ class UpgradeMetaHelper{
 	 * @param $debugMode Debug mode, default is false
 	 *
 	 */
-	function UpgradeMetaHelper($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false) {
+	function __construct($dir='upgrade', $masterCopyDirecotry='modules_50', $debugMode = false) {
 		$this->upgrade_dir = $dir;
 		$this->debug_mode = $debugMode;
 		$this->upgrade_modules = $this->getModifiedModules();

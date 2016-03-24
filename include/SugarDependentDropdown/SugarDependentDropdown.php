@@ -50,12 +50,12 @@ class SugarDependentDropdown {
 	 * Holds processed metadata, ready for JSON
 	 */
 	var $metadata;
-	
+
 	/*
 	 * Flag to suppress errors and/or log more heavily
 	 */
 	var $debugMode = false;
-	
+
 	/*
 	 * Default metadata array that will be merged with any passed fields to
 	 * ensure uniformity
@@ -67,7 +67,7 @@ class SugarDependentDropdown {
 		'label_pos'	=> 'left',		// valid: 'left', 'right', 'top', 'bottom', 'none' (none)
 		'hidden'	=> array(),		// metadata to create hidden fields with values you choose
 	);
-	
+
 	/*
 	 * Fields that must exist in an element (single dropdown/field) metadata
 	 * array.
@@ -79,14 +79,14 @@ class SugarDependentDropdown {
 		//'onchange',
 		//'force_render',
 	);
-	
+
 	/**
 	 * Fields that will be merged down into individual elements and handlers
 	 */
 	var $alwaysMerge = array(
 		'force_render',
 	);
-	
+
 	/*
 	 * Valid 'types' for a dependent dropdown
 	 */
@@ -102,12 +102,12 @@ class SugarDependentDropdown {
 	 * Sole constructor
 	 * @param string $metadata Path to metadata file to consume
 	 */
-	function SugarDependentDropdown($metadata='') {
+	function __construct($metadata='') {
 		if(!empty($metadata)) {
 			$this->init($metadata);
 		}
 	}
-	
+
 	/**
 	 * Prepares an instance of SDD for use with a given set
 	 * @param string $metadata Path to metadata file to consume
@@ -122,13 +122,13 @@ class SugarDependentDropdown {
 				/*
 				 * The metadata file should be prepped in an associative array.
 				 * The array should be named "$sugarDependentDropdown".
-				 * 
+				 *
 				 * Examine:
 				 * "include/SugarDependentDropdown/metadata/dependentDropdown.
 				 * php" for a commented example.
 				 */
 				include($metadata); // provides $sugarDependentDropdown
-				
+
 				foreach($sugarDependentDropdown as $key => $type) {
 					if(is_array($type)) {
 						foreach($type as $k => $v) {
@@ -149,7 +149,7 @@ class SugarDependentDropdown {
 					}
 					$sugarDependentDropdown[$key] = $type;
 				} // end foreach of metadata
-				
+
 				/* we made it through all checks so assign this to the output attribute */
 				$this->metadata = $sugarDependentDropdown;
 			} // end file_exists();
@@ -158,8 +158,8 @@ class SugarDependentDropdown {
 			}
 		} // end is_string();
 	} // end init()
-	
-	
+
+
 	///////////////////////////////////////////////////////////////////////////
 	////	PRIVATE UTILS
 	/**
@@ -178,7 +178,7 @@ class SugarDependentDropdown {
 			}
 			return true;
 		}
-		
+
 		if($this->debugMode) {
 			$this->debugOutput("isValidElement is returning false.  Passed the following as an argument:");
 			$this->debugOutput($element);
@@ -194,7 +194,7 @@ class SugarDependentDropdown {
 	function initElement($element, $alwaysMerge) {
 		if($this->isValidElement($element)) {
 			$mergedElement = sugarArrayMerge($this->defaults, $element);
-			
+
 			foreach($alwaysMerge as $key => $val) {
 				if(!isset($mergedElement[$key]))
 					$mergedElement[$key] = $val;
@@ -207,7 +207,7 @@ class SugarDependentDropdown {
 					}
 				}
 			}
-			
+
 			// iterate through "handlers - mini-elements"
 			if(isset($mergedElement['handlers'])) {
 				if(is_array($mergedElement['handlers']) && !empty($mergedElement['handlers'])) {
@@ -218,7 +218,7 @@ class SugarDependentDropdown {
 								$miniElement[$key] = $mergedElement[$key];
 							}
 						}
-						
+
 						$miniElement = $this->initElement($miniElement, $alwaysMerge);
 						$mergedElement['handlers'][$miniKey] = $miniElement;
 					}
@@ -229,7 +229,7 @@ class SugarDependentDropdown {
 					}
 				}
 			}
-			
+
 			return $mergedElement;
 		} else {
 			if($this->debugMode) {
@@ -238,7 +238,7 @@ class SugarDependentDropdown {
 			}
 		}
 	}
-	
+
 	/**
 	 * Verifies that required metadata is present for all dependencies. Called after all metadata defaults are merged
 	 * and the final array is created.
@@ -248,7 +248,7 @@ class SugarDependentDropdown {
 	function verifyMetadata($metadata) {
 		if(isset($metadata['elements']) && !empty($metadata['elements']) && is_array($metadata['elements'])) {
 			$elements = $metadata['elements'];
-			
+
 			foreach($elements as $indexName => $element) {
 				/* confirm each element has a valid type */
 				if(!isset($element['type']) && in_array($element['type'], $this->validTypes)) {
@@ -257,7 +257,7 @@ class SugarDependentDropdown {
 					}
 					return false;
 				}
-				
+
 				/************************************************
 				 * Check based on "type"
 				 */
@@ -265,14 +265,14 @@ class SugarDependentDropdown {
 					case "select":
 						if(isset($element['values'])) {
 							$index = substr($indexName, 7, strlen($indexName));
-							
-							
+
+
 							/* if we have an array to iterate through - this is not the case with lazy-loaded values */
 							if(is_array($element['values']) && !empty($element['values'])) {
 								$index++; // string to int conversion, i know, sucks
 								$nextElementKey = "element".$index;
 								$nextElement = $elements[$nextElementKey];
-								
+
 								foreach($element['values'] as $key => $value) {
 									if(!array_key_exists($key, $nextElement['handlers'])) {
 										if($this->debugMode) {
@@ -292,7 +292,7 @@ class SugarDependentDropdown {
 						}
 					break; // end "select" check
 				}
-				
+
 				/*
 				 * Handler "handlers" mini-element metadata definition verification
 				 */
@@ -301,7 +301,7 @@ class SugarDependentDropdown {
 					$fakeMetadata = array('elements' => null);
 					$fakeMetadata['elements'] = $element['handlers'];
 					$result = $this->verifyMetadata($fakeMetadata);
-					
+
 					if(!$result) {
 						if($this->debugMode) {
 							$this->debugOutput("SugarRouting: metadata verification for 'handlers' failed: "); $this->debugOutput($fakeMetadata);
@@ -310,7 +310,7 @@ class SugarDependentDropdown {
 					}
 				}
 			}
-			
+
 			if($this->debugMode) {
 				$this->debugOutput((count($metadata) > 1) ? "SugarRouting: all checks passed, valid metadata confirmed" : "SugarRouting: 'handlers' checks passed, valid metadata confirmed.");
 			}
@@ -322,7 +322,7 @@ class SugarDependentDropdown {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Prints debug messages to the screen
 	 * @param mixed

@@ -308,9 +308,10 @@ class SugarBean
      *    if needed
      * 3. Setup row-level security preference
      * All implementing classes  must call this constructor using the parent::SugarBean() class.
+     * @todo - fix this comment
      *
      */
-    function SugarBean()
+    public function __construct()
     {
         global  $dictionary, $current_user;
         static $loaded_defs = array();
@@ -1483,10 +1484,10 @@ class SugarBean
         }
 
 
-		/* BEGIN - SECURITY GROUPS - inheritance */ 
+		/* BEGIN - SECURITY GROUPS - inheritance */
 		require_once('modules/SecurityGroups/SecurityGroup.php');
 		SecurityGroup::inherit($this,$isUpdate);
-		/* END - SECURITY GROUPS */ 
+		/* END - SECURITY GROUPS */
         //If we aren't in setup mode and we have a current user and module, then we track
         if(isset($GLOBALS['current_user']) && isset($this->module_dir))
         {
@@ -3252,7 +3253,7 @@ class SugarBean
 	$addrelate = array();
 	foreach($fields as $field=>$value)
 	{
-		if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) && 
+		if (isset($this->field_defs[$field]) && isset($this->field_defs[$field]['source']) &&
 			$this->field_defs[$field]['source'] == 'non-db')
 		{
 			$addrelatefield = $this->get_relationship_field($field);
@@ -3306,7 +3307,7 @@ class SugarBean
                         break;
                     }
                 }
-		
+
             	if (!$process_field)
                 	continue;
             }
@@ -3652,12 +3653,12 @@ class SugarBean
         return  $ret_array['select'] . $ret_array['from'] . $ret_array['where']. $ret_array['order_by'];
     }
 
-	// Check if field is defined through a relationship_info field, add this field when not present 
+	// Check if field is defined through a relationship_info field, add this field when not present
 	function get_relationship_field($field)
 	{
 		foreach ($this->field_defs as $field_def => $value)
 		{
-			if (isset($value['relationship_fields']) && 
+			if (isset($value['relationship_fields']) &&
 				in_array($field, $value['relationship_fields']) &&
                 (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
             )
@@ -5436,7 +5437,7 @@ class SugarBean
     * @param $view string required, the view to determine access for i.e. DetailView, ListView...
     * @param $is_owner bool optional, this is part of the ACL check if the current user is an owner they will receive different access
     */
-	/* BEGIN - SECURITY GROUPS - aclaccess */  
+	/* BEGIN - SECURITY GROUPS - aclaccess */
 	/**
     function ACLAccess($view,$is_owner='not_set')
 	*/
@@ -5499,7 +5500,7 @@ class SugarBean
 					$action = "";
 					break;
     			}
-			$in_group = SecurityGroup::groupHasAccess($this->module_dir,$this->id, $action); 
+			$in_group = SecurityGroup::groupHasAccess($this->module_dir,$this->id, $action);
 			// DJM - OBS Customizations - END CHANGE
     	}
         //if we don't implent acls return true

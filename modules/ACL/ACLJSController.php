@@ -41,14 +41,14 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class ACLJSController{
-	
-	function ACLJSController($module,$form='', $is_owner=false){
-		
+
+	public function __construct($module,$form='', $is_owner=false){
+
 		$this->module = $module;
 		$this->is_owner = $is_owner;
 		$this->form = $form;
 	}
-	
+
 	function getJavascript(){
 		global $action;
 		if(!ACLController::moduleSupportsACL($this->module)){
@@ -66,7 +66,7 @@ class ACLJSController{
 							if(typeof(document.DetailView.elements['Duplicate']) != 'undefined'){
 								document.DetailView.elements['Duplicate'].disabled = 'disabled';
 							}
-						} 		
+						}
 EOQ;
 }
 			if(!ACLController::checkAccess($this->module,'delete', $this->is_owner)){
@@ -75,17 +75,17 @@ EOQ;
 							if(typeof(document.DetailView.elements['Delete']) != 'undefined'){
 								document.DetailView.elements['Delete'].disabled = 'disabled';
 							}
-						} 		
+						}
 EOQ;
 }
 		}
 		if(file_exists('modules/'. $this->module . '/metadata/acldefs.php')){
 			include('modules/'. $this->module . '/metadata/acldefs.php');
-			
+
 			foreach($acldefs[$this->module]['forms'] as $form_name=>$form){
-			
+
 				foreach($form as $field_name=>$field){
-					
+
 					if($field['app_action'] == $action){
 						switch($form_name){
 							case 'by_id':
@@ -99,17 +99,17 @@ EOQ;
 								break;
 						}
 					}
-					
+
 				}
 			}
 		}
 		$script .=  '</SCRIPT>';
-		
+
 		return $script;
-		
-		
+
+
 	}
-	
+
 	function getHTMLValues($def){
 		$return_array = array();
 		switch($def['display_option']){
@@ -120,12 +120,12 @@ EOQ;
 			default;
 				$return_array[$def['display_option']] = $def['display_option'];
 				break;
-			
+
 		}
 		return $return_array;
-		
+
 	}
-	
+
 	function getFieldByIdScript($name, $def){
 		$script = '';
 		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
@@ -134,13 +134,13 @@ EOQ;
 		}
 		}
 		return $script;
-	
+
 	}
-	
+
 	function getFieldByNameScript($name, $def){
 		$script = '';
 		if(!ACLController::checkAccess($def['module'], $def['action_option'], true)){
-			
+
 		foreach($this->getHTMLValues($def) as $key=>$value){
 			$script .=  <<<EOQ
 			var aclfields = document.getElementsByName('$name');
@@ -151,9 +151,9 @@ EOQ;
 		}
 		}
 		return $script;
-	
+
 	}
-	
+
 	function getFieldByFormScript($form, $name, $def){
 		$script = '';
 
@@ -164,16 +164,16 @@ EOQ;
 			}
 		}
 		return $script;
-	
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
 }
 
 

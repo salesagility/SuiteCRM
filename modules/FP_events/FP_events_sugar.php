@@ -72,16 +72,17 @@ class FP_events_sugar extends Basic {
 		var $budget;
 		var $currency_id;
 		var $invite_templates;
-		function FP_events_sugar(){	
-		parent::Basic();
+
+    function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

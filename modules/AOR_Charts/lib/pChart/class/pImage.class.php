@@ -82,7 +82,7 @@
    var $LastChartLayout	= CHART_LAST_LAYOUT_REGULAR;	// Last layout : regular or stacked
 
    /* Class constructor */
-   function pImage($XSize,$YSize,$DataSet=NULL,$TransparentBackground=FALSE)
+   function __construct($XSize,$YSize,$DataSet=NULL,$TransparentBackground=FALSE)
     {
      $this->TransparentBackground = $TransparentBackground;
 
@@ -97,7 +97,7 @@
        imagealphablending($this->Picture,FALSE);
        imagefilledrectangle($this->Picture, 0,0,$XSize, $YSize, imagecolorallocatealpha($this->Picture, 255, 255, 255, 127));
        imagealphablending($this->Picture,TRUE);
-       imagesavealpha($this->Picture,true); 
+       imagesavealpha($this->Picture,true);
       }
      else
       {
@@ -247,7 +247,7 @@
 
      if ( $FontName != NULL  )
       $this->FontName = $FontName;
- 
+
      if ( $FontSize != NULL  )
       $this->FontSize = $FontSize;
     }
@@ -332,7 +332,7 @@
      if ( $this->ImageMapStorageMode == NULL ) { return(-1); }
 
      if ( is_array($NewTitle) ) { $NewTitle = $this->removeVOIDFromArray($OldTitle, $NewTitle); }
- 
+
      if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION )
       {
        if(!isset($_SESSION)) { return(-1); }
@@ -373,7 +373,7 @@
      if ( $this->ImageMapStorageMode == NULL ) { return(-1); }
 
      $Values = $this->removeVOIDFromArray($Title, $Values);
-     $ID = 0; 
+     $ID = 0;
      if ( $this->ImageMapStorageMode == IMAGE_MAP_STORAGE_SESSION )
       {
        if(!isset($_SESSION)) { return(-1); }
@@ -460,7 +460,7 @@
 
      $Picture = imagecreatetruecolor($this->XSize,$this->YSize);
      imagecopy($Picture,$this->Picture,0,0,0,0,$this->XSize,$this->YSize);
-     
+
      for($i=1;$i<=$Height;$i++)
       {
        if ( $Y+($i-1) < $this->YSize && $Y-$i > 0 ) { imagecopymerge($Picture,$this->Picture,$X,$Y+($i-1),$X,$Y-$i,$Width,1,$StartAlpha-$AlphaStep*$i); }

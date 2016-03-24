@@ -41,7 +41,7 @@ require_once('modules/ModuleBuilder/MB/AjaxCompose.php');
 
 class ViewDisplaydeployresult extends SugarView
 {
-	function ViewDisplaydeployresult(){
+	function __construct(){
 		$this->show_header = false;
 		$this->show_title = false;
  		$this->show_subpanels = false;

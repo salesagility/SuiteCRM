@@ -55,8 +55,8 @@ class Crypt_Blowfish
      * @access private
      */
     var $_P = array();
-    
-    
+
+
     /**
      * Array of four S-Blocks each containing 256 32-bit entries
      *
@@ -81,7 +81,7 @@ class Crypt_Blowfish
      */
     var $_iv = null;
 
-    
+
     /**
      * Crypt_Blowfish Constructor
      * Initializes the Crypt_Blowfish object, and gives a sets
@@ -90,7 +90,7 @@ class Crypt_Blowfish
      * @param string $key
      * @access public
      */
-    function Crypt_Blowfish($key)
+    public function __construct($key)
     {
 		/*
         if (extension_loaded('mcrypt')) {
@@ -100,7 +100,7 @@ class Crypt_Blowfish
         */
         $this->setKey($key);
     }
-    
+
     /**
      * Deprecated isReady method
      *
@@ -112,7 +112,7 @@ class Crypt_Blowfish
     {
         return true;
     }
-    
+
     /**
      * Deprecated init method - init is now a private
      * method and has been replaced with _init
@@ -126,7 +126,7 @@ class Crypt_Blowfish
     {
         $this->_init();
     }
-    
+
     /**
      * Initializes the Crypt_Blowfish object
      *
@@ -138,7 +138,7 @@ class Crypt_Blowfish
         $this->_P = $defaults->P;
         $this->_S = $defaults->S;
     }
-            
+
     /**
      * Enciphers a single 64 bit block
      *
@@ -159,8 +159,8 @@ class Crypt_Blowfish
         $Xr = $Xl ^ $this->_P[16];
         $Xl = $temp ^ $this->_P[17];
     }
-    
-    
+
+
     /**
      * Deciphers a single 64 bit block
      *
@@ -181,8 +181,8 @@ class Crypt_Blowfish
         $Xr = $Xl ^ $this->_P[1];
         $Xl = $temp ^ $this->_P[0];
     }
-    
-    
+
+
     /**
      * Encrypts a string
      *
@@ -212,8 +212,8 @@ class Crypt_Blowfish
         }
         return $cipherText;
     }
-    
-    
+
+
     /**
      * Decrypts an encrypted string
      *
@@ -243,8 +243,8 @@ class Crypt_Blowfish
         }
         return $plainText;
     }
-    
-    
+
+
     /**
      * Sets the secret key
      * The key must be non-zero, and less than or equal to
@@ -276,12 +276,12 @@ class Crypt_Blowfish
         require_once 'include/Pear/Crypt_Blowfish/Blowfish/DefaultKey.php';
 
         $this->_init();
-        
+
         $k = 0;
         $data = 0;
         $datal = 0;
         $datar = 0;
-        
+
         for ($i = 0; $i < 18; $i++) {
             $data = 0;
             for ($j = 4; $j > 0; $j--) {
@@ -290,7 +290,7 @@ class Crypt_Blowfish
             }
             $this->_P[$i] ^= $data;
         }
-        
+
         for ($i = 0; $i <= 16; $i += 2) {
             $this->_encipher($datal, $datar);
             $this->_P[$i] = $datal;
@@ -316,10 +316,10 @@ class Crypt_Blowfish
             $this->_S[3][$i] = $datal;
             $this->_S[3][$i+1] = $datar;
         }
-        
+
         return true;
     }
-    
+
 }
 
 ?>

@@ -41,20 +41,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 /**
  * EmailAddressRule.php
- * 
- * This is a utility base class to provide further refinement when converting 
+ *
+ * This is a utility base class to provide further refinement when converting
  * pre 5.x files to the new meta-data rules.  We basically scan for email1 or
  * email2 defined outside of the email address panel and remove it.
  *
  * @author Collin Lee
  */
- 
+
 require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
- 
+
 class EmailAddressRule extends BaseRule {
 
-function EmailAddressRule() {
-	
+function __construct() {
+
 }
 
 function parsePanels(& $panels, $view) {
@@ -66,13 +66,13 @@ function parsePanels(& $panels, $view) {
 	   	  if(preg_match('/lbl_email_addresses/si', $name)) {
 	   	  	 continue;
 	   	  }
-			
+
 	   	  foreach($panel as $rowCount=>$row) {
 	   	  	 foreach($row as $key=>$column) {
-	   	  	 	
+
                 if($this->isCustomField($column)) {
-                   continue;	
-                } else if(is_array($column) && !empty($column['name']) && preg_match('/^email(s|2)$/si', $column['name']) && !isset($column['type'])) {             
+                   continue;
+                } else if(is_array($column) && !empty($column['name']) && preg_match('/^email(s|2)$/si', $column['name']) && !isset($column['type'])) {
 		           $panels[$name][$rowCount][$key] = '';
                 } else if($this->matches($column, '/^email[1]_link$/si')) {
                    $panels[$name][$rowCount][$key] = 'email1';
@@ -90,7 +90,7 @@ function parsePanels(& $panels, $view) {
 	   	  	 } //foreach
 	   	  } //foreach
 	   } //foreach
-   
+
    } else if($view == 'EditView') {
 
 		foreach($panels as $name=>$panel) {
@@ -98,12 +98,12 @@ function parsePanels(& $panels, $view) {
 	   	  if(preg_match('/lbl_email_addresses/si', $name)) {
 	   	  	 continue;
 	   	  }
-	   	
+
 	   	  foreach($panel as $rowCount=>$row) {
 	   	  	 foreach($row as $key=>$column) {
 
                 if($this->isCustomField($column)) {
-                   continue;	
+                   continue;
                 }
 
                 if($this->matches($column, '/email(s)*?([1|2])*?/si')) {
@@ -115,7 +115,7 @@ function parsePanels(& $panels, $view) {
 	   	  } //foreach
 	   } //foreach
    }
-   
+
 
    return $panels;
 }

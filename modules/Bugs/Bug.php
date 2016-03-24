@@ -95,13 +95,13 @@ class Bug extends SugarBean {
 	var $type;
 
 	//BEGIN Additional fields being added to Bugs
-	
+
 	var $fixed_in_release;
 	var $work_log;
 	var $source;
 	var $product_category;
 	//END Additional fields being added to Bugs
-	
+
 	var $module_dir = 'Bugs';
 	var $table_name = "bugs";
 	var $rel_account_table = "accounts_bugs";
@@ -117,9 +117,9 @@ class Bug extends SugarBean {
 									'task_id'=>'tasks', 'note_id'=>'notes', 'meeting_id'=>'meetings',
 									'call_id'=>'calls', 'email_id'=>'emails');
 
-	function Bug() {
-		parent::SugarBean();
-		
+    public function __construct() {
+		parent::__construct();
+
 
 		$this->setupCustomFields('Bugs');
 
@@ -132,9 +132,9 @@ class Bug extends SugarBean {
 
 	var $new_schema = true;
 
-	
 
-	
+
+
 
 	function get_summary_text()
 	{
@@ -142,21 +142,21 @@ class Bug extends SugarBean {
 	}
 
 	function create_list_query($order_by, $where, $show_deleted = 0)
-	{		
+	{
 		// Fill in the assigned_user_name
 //		$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
 
         $custom_join = $this->getCustomJoin();
-		
+
                 $query = "SELECT ";
-                
+
 		$query .= "
                                bugs.*
 
                                 ,users.user_name as assigned_user_name, releases.id release_id, releases.name release_name";
         $query .= $custom_join['select'];
                                 $query .= " FROM bugs ";
-                               
+
 
 		$query .= "				LEFT JOIN releases ON bugs.found_in_release=releases.id
 								LEFT JOIN users
@@ -167,9 +167,9 @@ class Bug extends SugarBean {
 			if($show_deleted == 0){
             	$where_auto = " $this->table_name.deleted=0 ";
 			}else if($show_deleted == 1){
-				$where_auto = " $this->table_name.deleted=1 ";	
+				$where_auto = " $this->table_name.deleted=1 ";
 			}
-          
+
 
 		if($where != "")
 			$query .= "where $where AND ".$where_auto;
@@ -222,13 +222,13 @@ class Bug extends SugarBean {
 		parent::fill_in_additional_list_fields();
 		// Fill in the assigned_user_name
 		//$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
-		
+
 //	   $this->set_fixed_in_release();
 	}
 
 	function fill_in_additional_detail_fields()
-	{   
-		
+	{
+
 	    /*
 		// Fill in the assigned_user_name
 		$this->assigned_user_name = get_assigned_user_name($this->assigned_user_id);
@@ -241,10 +241,10 @@ class Bug extends SugarBean {
 	}
 
 
-	public function set_release() 
+	public function set_release()
 	{
 	    static $releases;
-	    
+
 	    if ( empty($this->found_in_release) ) {
 	        return;
 	    }
@@ -252,7 +252,7 @@ class Bug extends SugarBean {
 	        $this->release_name = $releases[$this->found_in_release];
 	        return;
 	    }
-	    
+
 		$query = "SELECT r1.name from releases r1, $this->table_name i1 where r1.id = i1.found_in_release and i1.id = '$this->id' and i1.deleted=0 and r1.deleted=0";
         $result = $this->db->query($query,true," Error filling in additional detail fields: ");
 
@@ -267,15 +267,15 @@ class Bug extends SugarBean {
         {
             $this->release_name = '';
         }
-        
+
         $releases[$this->found_in_release] = $this->release_name;
 	}
 
-	
-	public function set_fixed_in_release() 
+
+	public function set_fixed_in_release()
 	{
 	    static $releases;
-	    
+
 	    if ( empty($this->fixed_in_release) ) {
 	        return;
 	    }
@@ -283,15 +283,15 @@ class Bug extends SugarBean {
 	        $this->fixed_in_release_name = $releases[$this->fixed_in_release];
 	        return;
 	    }
-	    
+
         $query = "SELECT r1.name from releases r1, $this->table_name i1 where r1.id = i1.fixed_in_release and i1.id = '$this->id' and i1.deleted=0 and r1.deleted=0";
         $result = $this->db->query($query,true," Error filling in additional detail fields: ");
 
         // Get the id and the name.
         $row = $this->db->fetchByAssoc($result);
 
-        
-        
+
+
         if($row != null)
         {
             $this->fixed_in_release_name = $row['name'];
@@ -300,12 +300,12 @@ class Bug extends SugarBean {
         {
             $this->fixed_in_release_name = '';
         }
-			
+
         $releases[$this->fixed_in_release] = $this->fixed_in_release_name;
-			
+
 	}
-	
-	
+
+
 	function get_list_view_data(){
 		global $current_language;
 		$the_array = parent::get_list_view_data();
@@ -313,18 +313,18 @@ class Bug extends SugarBean {
 		$mod_strings = return_module_language($current_language, 'Bugs');
 
 		$this->set_release();
-	    
+
         // The new listview code only fetches columns that we're displaying and not all
-        // the columns so we need these checks. 
+        // the columns so we need these checks.
 	   $the_array['NAME'] = (($this->name == "") ? "<em>blank</em>" : $this->name);
         $the_array['PRIORITY'] = empty($this->priority)? "" : (!isset($app_list_strings[$this->field_name_map['priority']['options']][$this->priority]) ? $this->priority : $app_list_strings[$this->field_name_map['priority']['options']][$this->priority]);
         $the_array['STATUS'] = empty($this->status)? "" : (!isset($app_list_strings[$this->field_name_map['status']['options']][$this->status]) ? $this->status : $app_list_strings[$this->field_name_map['status']['options']][$this->status]);
         $the_array['TYPE'] = empty($this->type)? "" : (!isset($app_list_strings[$this->field_name_map['type']['options']][$this->type]) ? $this->type : $app_list_strings[$this->field_name_map['type']['options']][$this->type]);
-       
+
 	   $the_array['RELEASE']= $this->release_name;
 	   $the_array['BUG_NUMBER'] = $this->bug_number;
 	   $the_array['ENCODED_NAME']=$this->name;
-    			
+
     	return  $the_array;
 	}
 
@@ -365,14 +365,14 @@ class Bug extends SugarBean {
 		$xtpl->assign("BUG_BUG_NUMBER", $bug->bug_number);
 		return $xtpl;
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL':return true;
 		}
 		return false;
 	}
-	
+
 	function save($check_notify = FALSE){
 		return parent::save($check_notify);
 	}

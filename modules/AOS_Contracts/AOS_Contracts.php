@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -30,10 +30,10 @@
 require_once('modules/AOS_Contracts/AOS_Contracts_sugar.php');
 
 class AOS_Contracts extends AOS_Contracts_sugar {
-	
-	function AOS_Contracts(){
 
-		parent::AOS_Contracts_sugar();
+	function __construct(){
+
+		parent::__construct();
 
         //Process the default reminder date setting
         if($this->id == null && $this->renewal_reminder_date == null){
@@ -57,7 +57,7 @@ class AOS_Contracts extends AOS_Contracts_sugar {
             }
         }
 	}
-	
+
 	function save($check_notify = FALSE){
         if (empty($this->id)){
             unset($_POST['group_id']);
@@ -84,7 +84,7 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 		}
 
 	}
-	
+
 	function mark_deleted($id)
 	{
         $productQuote = new AOS_Products_Quotes();
@@ -93,11 +93,11 @@ class AOS_Contracts extends AOS_Contracts_sugar {
 		parent::mark_deleted($id);
 
 	}
-	
+
 	function createReminder(){
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
-	
+
         if($this->renewal_reminder_date != 0){
 
             $call->id = $this->call_id;
@@ -116,11 +116,11 @@ class AOS_Contracts extends AOS_Contracts_sugar {
             $this->call_id = $call->id;
         }
 	}
-	
+
 	function createLink(){
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
-	
+
 		if($this->renewal_reminder_date != 0){
             $call->id = $this->call_id;
             $call->parent_id = $this->contract_account_id;
@@ -129,16 +129,16 @@ class AOS_Contracts extends AOS_Contracts_sugar {
             $call->save();
 		}
 	}
-	
+
 	function deleteCall(){
 	    require_once('modules/Calls/Call.php');
 	    $call = new call();
-	
+
 		if($this->call_id != null){
             $call->id = $this->call_id;
             $call->mark_deleted($call->id);
 		}
 	}
-	
+
 }
 ?>
