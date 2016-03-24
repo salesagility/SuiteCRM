@@ -16,6 +16,8 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
 
     // TODO: validate for email template before save it!
 
+    include_once 'modules/EmailTemplates/EmailTemplateFormBase.php';
+
     switch($func) {
 
         case 'update':
@@ -26,6 +28,8 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                 }
             }
             $bean->save();
+            //$formBase = new EmailTemplateFormBase();
+            //$bean = $formBase->handleAttachmentsProcessImages($bean, false, true);
             $data['id'] = $bean->id;
             $data['name'] = $bean->name;
             break;
@@ -43,23 +47,17 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                 }
             }
             $newBean->save();
+            //$formBase = new EmailTemplateFormBase();
+            //$newBean = $formBase->handleAttachmentsProcessImages($newBean, false, true);
             $data['id'] = $newBean->id;
             $data['name'] = $newBean->name;
             break;
 
         case 'uploadAttachments':
-            // TODO : upload attachments (recover or use correct request and post arguments!!)
-//            $error = 'function is not supported';
-
-//            ob_start();
-//            include 'modules/EmailTemplates/Save.php';
-//            ob_get_contents();
-//            ob_end_clean();
-
-            include_once 'modules/EmailTemplates/EmailTemplateFormBase.php';
             $formBase = new EmailTemplateFormBase();
             $focus = BeanFactory::getBean('EmailTemplates', $_REQUEST['attach_to_template_id']);
-            $data = $formBase->handleAttachments($focus, false, null);
+            //$data = $formBase->handleAttachments($focus, false, null);
+            $data = $formBase->handleAttachmentsProcessImages($focus, false, true);
             $redirectUrl = 'index.php?module=Campaigns&action=WizardMarketing&campaign_id=' . $_REQUEST['campaign_id'] . "&jump=2&template_id=" . $_REQUEST['attach_to_template_id']; // . '&marketing_id=' . $_REQUEST['attach_to_marketing_id'] . '&record=' . $_REQUEST['attach_to_marketing_id'];
             header('Location: ' . $redirectUrl);
             die();

@@ -464,6 +464,7 @@ $mod_strings = array (
 	'LBL_ATTACHMENTS'			=> 'Attachments:',
 	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
 	'LBL_SUGAR_DOCUMENT' => 'Document',
+	'LBL_EMAIL_ATTACHMENT'		=> 'Email Attachment',
 );
 
 

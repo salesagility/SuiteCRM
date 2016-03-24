@@ -433,8 +433,9 @@ if ($has_campaign || $inboundEmail) {
         if(isset($_REQUEST['campaign_tracker_id']) && $_REQUEST['campaign_tracker_id']) {
             $campaignTracker->retrieve((int) $_REQUEST['campaign_tracker_id']);
         }
-        $ss->assign("TRACKER_NAME", $focus->tracker_name);
-        $ss->assign("TRACKER_URL", $focus->tracker_url);
+        // todo: hide tracker select if it has no trackers
+        $ss->assign("TRACKER_NAME", isset($focus) ? $focus->tracker_name : null);
+        $ss->assign("TRACKER_URL", isset($focus) ? $focus->tracker_url : null);
         if (!empty($focus->is_optout) && $focus->is_optout == 1) {
             $ss->assign("IS_OPTOUT_CHECKED","checked");
             $ss->assign("TRACKER_URL_DISABLED","disabled");

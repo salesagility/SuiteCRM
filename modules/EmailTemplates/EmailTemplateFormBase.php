@@ -162,6 +162,11 @@ EOQ;
 		}
 		if (!isset($_REQUEST['published'])) $focus->published = 'off';
 
+		$this->handleAttachmentsProcessImages($focus, $redirect);
+	}
+
+	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false) {
+		global $sugar_config;
 		$preProcessedImages = array();
 		$emailTemplateBodyHtml = from_html($focus->body_html);
 		if (strpos($emailTemplateBodyHtml, '"cache/images/')) {
@@ -178,12 +183,17 @@ EOQ;
 				$mime_type = pathinfo($filename, PATHINFO_EXTENSION);
 
 				if (file_exists($file_location)) {
-					$id = create_guid();
+					//$id = create_guid();
+
+					$note = new Note();
+					$note->save();
+					$id = $note->id;
+
 					$newFileLocation = "upload://$id";
 					if (!copy($file_location, $newFileLocation)) {
 						$GLOBALS['log']->debug("EMAIL Template could not copy attachment to $newFileLocation");
 					} else {
-						$secureLink = "index.php?entryPoint=download&type=Notes&id={$id}";
+						$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=download&type=Notes&id={$id}";
 						$emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
 						unlink($file_location);
 						$preProcessedImages[$filename] = $id;
