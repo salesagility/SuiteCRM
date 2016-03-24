@@ -110,7 +110,9 @@
 		// validations
 
 		var emailTemplateFormValidationRules = [
-			{id: 'template_id', rules: ['required']},
+			{id: 'template_id', rules: ['required'], dependency: function() {
+				return !$('input[name="update_exists_template"]').prop('checked');
+			}},
 			{id: 'template_name', rules: ['required']},
 			{id: 'template_subject', rules: ['required']},
 		];
@@ -151,8 +153,17 @@
 				var field = fields[i];
 				for(var j=0; j<field.rules.length; j++) {
 					var rule = field.rules[j];
-
 					switch(rule) {
+						default: case 'required':
+							if(typeof field.dependency != 'undefined') {
+								if(field.dependency()) {
+									rule = 'none';
+								}
+							}
+						break;
+					}
+					switch(rule) {
+						case 'none': break;
 						default: case 'required':
 							if(!$('#' + field.id).val()) {
 								errors.push({
