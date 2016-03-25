@@ -45,9 +45,6 @@
 <script type="text/javascript" src="include/javascript/popup_parent_helper.js?v={VERSION_MARK}"></script>
 <script type="text/javascript" src="modules/Campaigns/WebToLead.js?v={VERSION_MARK}"></script>
 <script type="text/javascript" src="include/javascript/jquery/jquery-ui-min.js?v={VERSION_MARK}"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
 
 <hr>
 
@@ -165,12 +162,12 @@
             var errorFound = false;
             if(assignedUser === '')
             {
-                toastr.error('{APP.LBL_ASSIGNED_TO_REQUIRED}')
+                alert('{APP.LBL_ASSIGNED_TO_REQUIRED}')
                 errorFound = true;
             }
             if(campaignId === '')
             {
-                toastr.error('{APP.LBL_RELATED_CAMPAIGN_REQUIRED}')
+                alert('{APP.LBL_RELATED_CAMPAIGN_REQUIRED}')
                 errorFound = true;
             }
 
@@ -191,17 +188,10 @@
             $("#personTypeSelect").empty().append(list);
         }
 
-
-
-        toastr.options={
-            "positionClass": "toast-bottom-right"
-        }
-
         $('#personTypeSelect').on('change',function(){
             //RESET THE LIST AND CHANGE TYPE
             $('.field-list').empty();
             populateFields(beanList,getSelectedPersonType(),"#backlog");
-            toastr.info("You have selected type: "+$("#personTypeSelect option:selected").text());
         });
 
         $('#btnResetAllFields').on('click',function(){
@@ -291,9 +281,9 @@
             {
                 var requiredFields = "";
                 $.each(requiredItemsNotIncluded,function(i,v){
-                   requiredFields += '<br>'+v.innerText;
+                   requiredFields += '\n'+v.innerText;
                 });
-                toastr.error("Sorry, required field(s):"+requiredFields);
+                alert("Sorry, required field(s):"+requiredFields);
             }
 
         })
@@ -305,7 +295,7 @@
         function populateFields(beanList,index,destination){
             if(beanList === undefined || index === undefined || beanList[index] === undefined )
             {
-                toastr.error("Sorry, no person type items found");
+                alert("Sorry, no person type items found");
                 return;
             }
             var availableFields = "";

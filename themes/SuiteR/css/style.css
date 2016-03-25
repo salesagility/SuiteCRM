@@ -4919,17 +4919,18 @@ object{
 }
 #fieldChoices .field-header {
     background-clip: padding-box;
-    background-color: #343434;
+    background-color: #3c8dbc;
     border-radius: 2px 2px 0 0;
     color: white;
-    font-family:"Lato", sans-serif;
     font-size: 14px;
     height: 22px;
     position: relative;
 }
+/*
 #fieldChoices .field.required .field-header{
     background-color: red;
 }
+*/
 #fieldChoices .field-type {
     float: left;
     padding: 2px;
@@ -4957,6 +4958,7 @@ object{
     text-align: center;
     font-weight: bold;
     font-size: 15px;
+    color: #337ab7;
 }
 #fieldChoices #personTypeSelect {
     margin-bottom: 20px;
