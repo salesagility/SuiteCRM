@@ -195,19 +195,20 @@ EOF;
         $query = <<<EOF
         SELECT
 			accounts.name as accountName,
-            opportunities.name as name,
-            RTRIM(LTRIM(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')))) as userName,
+            opportunities.name as opportunityName,
+            RTRIM(LTRIM(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')))) as assignedUser,
             COALESCE(opportunity_type,'undefined') as opportunity_type,
             lead_source,
             amount,
-            date_closed,
-			COALESCE(QUARTER(date_closed),'undefined') as quarter,
-			concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as month,
-			CAST(WEEK(date_closed) as CHAR(5)) as week,
-			DAYNAME(date_closed) as day,
-			CAST(YEAR(date_closed) as CHAR(10)) as year,
             sales_stage,
-            probability
+            probability,
+            date_closed as expectedCloseDate,
+			COALESCE(QUARTER(date_closed),'undefined') as salesQuarter,
+			concat('(',MONTH(date_closed),') ',MONTHNAME(date_closed)) as salesMonth,
+			CAST(WEEK(date_closed) as CHAR(5)) as salesWeek,
+			DAYNAME(date_closed) as salesDay,
+			CAST(YEAR(date_closed) as CHAR(10)) as salesYear,
+            COALESCE(campaigns.name,'undefined') as campaign
         FROM opportunities
 		INNER JOIN accounts_opportunities
 			ON accounts_opportunities.opportunity_id = opportunities.id
@@ -215,6 +216,8 @@ EOF;
 			ON accounts_opportunities.account_id = accounts.id
         INNER JOIN users
             ON opportunities.assigned_user_id = users.id
+        LEFT JOIN campaigns
+            ON opportunities.campaign_id = campaigns.id
         WHERE opportunities.deleted = false
 EOF;
 
@@ -227,21 +230,24 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->accoutName = $row['accountName'];
-            $x->opportunityName = $row['name'];
-            $x->assignedUser = $row['userName'];
+            $x->opportunityName = $row['opportunityName'];
+            $x->assignedUser = $row['assignedUser'];
             $x->opportunityType = $row['opportunity_type'];
             $x->leadSource = $row['lead_source'];
             $x->amount = $row['amount'];
-            $x->salesDate = $row['date_closed'];
-
-            $x->salesQuarter = $row['quarter'];
-            $x->salesMonth = $row['month'];
-            $x->salesWeek = $row['week'];
-            $x->salesDay = $row['day'];
-            $x->salesYear = $row['year'];
-
             $x->salesStage = $row['sales_stage'];
             $x->probability = $row['probability'];
+            $x->salesDate = $row['date_closed'];
+
+            $x->salesQuarter = $row['salesQuarter'];
+            $x->salesMonth = $row['salesMonth'];
+            $x->salesWeek = $row['salesWeek'];
+            $x->salesDay = $row['salesDay'];
+            $x->salesYear = $row['salesYear'];
+            $x->campaign = $row['campaign'];
+
+
+
             $returnArray[] = $x;
         }
         echo json_encode($returnArray);
@@ -300,33 +306,41 @@ EOF;
         echo json_encode($returnArray);
     }
 
-    public function action_getActivityCallsPivotData()
+    public function action_getActivitiesPivotData()
     {
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
         $query = <<<EOF
         SELECT
-            calls.name as callName,
-            calls.status as callStatus,
-            RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
-            COALESCE(accounts.name, 'undefined'),
-            DAYNAME(calls.date_start) as day,
-            CAST(WEEK(calls.date_start) as CHAR(5)) as week,
-            concat('(',MONTH(calls.date_start),') ',MONTHNAME(calls.date_start)) as month,
-            COALESCE(QUARTER(calls.date_start),'undefined') as quarter
-            , YEAR(calls.date_start) as year
-			, CONCAT(COALESCE(contacts.first_name,''),COALESCE(contacts.last_name)) as contactName
+            'call' as type
+            , calls.name
+            , calls.status
+            , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
         FROM calls
         LEFT JOIN users
             ON calls.assigned_user_id = users.id
-        LEFT JOIN accounts
-            ON calls.parent_id = accounts.id
-		LEFT JOIN calls_contacts
-			ON calls.id = calls_contacts.call_id
-		LEFT JOIN contacts
-			ON calls_contacts.contact_id = contacts.id
         WHERE calls.deleted = false
+        UNION
+        SELECT
+            'meeting' as type
+            , meetings.name
+            , meetings.status
+            , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
+        FROM meetings
+        LEFT JOIN users
+            ON meetings.assigned_user_id = users.id
+        WHERE meetings.deleted = false
+        UNION
+        SELECT
+            'task' as type
+            , tasks.name
+            , tasks.status
+            , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
+        FROM tasks
+        LEFT JOIN users
+            ON tasks.assigned_user_id = users.id
+        WHERE tasks.deleted = false
 EOF;
 
         $opps = BeanFactory::getBean('Opportunities');
@@ -337,16 +351,9 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->accoutName = $row['name'];
-            $x->state = $row['state'];
+            $x->type = $row['type'];
+            $x->name = $row['name'];
             $x->status = $row['status'];
-            $x->priority = $row['priority'];
-            $x->createdDay = $row['day'];
-            $x->createdWeek = $row['week'];
-            $x->createdMonth = $row['month'];
-            $x->createdQuarter = $row['quarter'];
-            $x->createdYear = $row['year'];
-            $x->contactName = $row['contactName'];
             $x->assignedTo = $row['assignedUser'];
 
             $returnArray[] = $x;
@@ -410,23 +417,16 @@ EOF;
 
         $query = <<<EOF
         SELECT
-             opportunities.name as opportunityName
-            , opportunities.amount as opportunityAmount
-            , opportunities.sales_stage as opportunitySalesStage
-            , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
-            , opportunities.opportunity_type as opportunityType
-            , opportunities.date_closed as opportunityDateClosed
-            , DAYNAME(opportunities.date_closed) as day
-            , CAST(WEEK(opportunities.date_closed) as CHAR(5)) as week
-            , concat('(',MONTH(opportunities.date_closed),') ',MONTHNAME(opportunities.date_closed)) as month
-            , COALESCE(QUARTER(opportunities.date_closed),'undefined') as quarter
-            , YEAR(opportunities.date_closed) as year
-            , accounts.name
-            , COALESCE(campaigns.status,'undefined') as campaignStatus
+              COALESCE(campaigns.status,'undefined') as campaignStatus
             , COALESCE(campaigns.campaign_type,'undefined') as campaignType
             , COALESCE(campaigns.budget,'undefined') as campaignBudget
             , COALESCE(campaigns.expected_cost,'undefined') as campaignExpectedCost
             , COALESCE(campaigns.expected_revenue,'undefined') as campaignExpectedRevenue
+            , opportunities.name as opportunityName
+            , opportunities.amount as opportunityAmount
+            , opportunities.sales_stage as opportunitySalesStage
+            , RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser
+            , accounts.name as accountsName
         FROM opportunities
         LEFT JOIN users
             ON opportunities.assigned_user_id = users.id
@@ -446,17 +446,55 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->accoutName = $row['name'];
-            $x->state = $row['state'];
-            $x->status = $row['status'];
-            $x->priority = $row['priority'];
-            $x->createdDay = $row['day'];
-            $x->createdWeek = $row['week'];
-            $x->createdMonth = $row['month'];
-            $x->createdQuarter = $row['quarter'];
-            $x->createdYear = $row['year'];
-            $x->contactName = $row['contactName'];
-            $x->assignedTo = $row['assignedUser'];
+            $x->status = $row['campaignStatus'];
+            $x->type = $row['campaignType'];
+            $x->budget = $row['campaignBudget'];
+            $x->expectedCost = $row['campaignExpectedCost'];
+            $x->expectedRevenue = $row['campaignExpectedRevenue'];
+            $x->opportunityName = $row['opportunityName'];
+            $x->opportunityAmount = $row['opportunityAmount'];
+            $x->opportunitySalesStage = $row['opportunitySalesStage'];
+            $x->opportunityAssignedTo = $row['assignedUser'];
+            $x->accountName = $row['accountsName'];
+
+            $returnArray[] = $x;
+        }
+        echo json_encode($returnArray);
+    }
+
+    public function action_getMarketingActivityPivotData()
+    {
+        $returnArray = [];
+        $db = DBManagerFactory::getInstance();
+
+        $query = <<<EOF
+        SELECT
+            campaigns.name,
+            campaign_log.activity_date,
+            campaign_log.activity_type,
+            campaign_log.related_type,
+            campaign_log.related_id
+        FROM campaigns
+        LEFT JOIN campaign_log
+            ON campaigns.id = campaign_log.campaign_id
+        where campaigns.deleted = false
+        and campaign_log.deleted = false
+EOF;
+
+        $opps = BeanFactory::getBean('Opportunities');
+        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
+
+        $queryString = $query.$aclWhereOpps;
+        $result = $db->query($queryString);
+
+        while ($row = $db->fetchByAssoc($result)) {
+            $x = new stdClass();
+            $x->campaignName = $row['name'];
+            $x->activityDate = $row['activity_date'];
+            $x->activityType = $row['activity_type'];
+            $x->relatedType = $row['related_type'];
+            $x->relatedId = $row['related_id'];
+
 
             $returnArray[] = $x;
         }
