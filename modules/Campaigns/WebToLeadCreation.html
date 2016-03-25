@@ -100,7 +100,10 @@
 					id='campaign_id' name='campaign_id' type="hidden" value="{CAMPAIGN_ID}" /> <input
 					title="{APP.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='1'
 					class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
-					onclick='open_popup("Campaigns", 600, 400, "", true, false,{encoded_campaigns_popup_request_data});' /></span sugar='slot'></td>
+					onclick='open_popup("Campaigns", 600, 400, "", true, false,{encoded_campaigns_popup_request_data});' /></span sugar='slot'>
+                    <div class="required validation-message webToPersonError" id="relatedCampaignError"></div>
+                </td>
+
 			</tr>
 			<tr>
 	        	 <td scope="row"><span sugar='slot45'>{APP.LBL_ASSIGNED_TO}</span sugar='slot'><span
@@ -108,7 +111,9 @@
           	  	 <td  ><span sugar='slot45b'><input class="sqsEnabled" tabindex="1" autocomplete="off" id="assigned_user_name" name='assigned_user_name' type="text" value="{ASSIGNED_USER_NAME}"><input id='assigned_user_id' name='assigned_user_id' type="hidden" value="{ASSIGNED_USER_ID}" />
 		    	 <input title="{APP.LBL_SELECT_BUTTON_TITLE}" type="button" tabindex='1' class="button" value='{APP.LBL_SELECT_BUTTON_LABEL}' name=btn1
 				  onclick='open_popup("Users", 600, 400, "", true, false, {encoded_users_popup_request_data});' /></span sugar='slot'>
+                     <div class="required validation-message webToPersonError" id="assignedToError"></div>
 				</td>
+
       	    </tr>
 			<tr>
 				<td scope="row"><slot>{MOD.LBL_LEAD_FOOTER}</slot></td>
@@ -160,14 +165,17 @@
             var assignedUser = $('#assigned_user_id').val();
             var campaignId = $('#campaign_id').val();
             var errorFound = false;
+
+            $('.webToPersonError').text('');
+
             if(assignedUser === '')
             {
-                alert('{APP.LBL_ASSIGNED_TO_REQUIRED}')
+                $('#assignedToError').text('{APP.LBL_ASSIGNED_TO_REQUIRED}');
                 errorFound = true;
             }
             if(campaignId === '')
             {
-                alert('{APP.LBL_RELATED_CAMPAIGN_REQUIRED}')
+                $('#relatedCampaignError').text('{APP.LBL_RELATED_CAMPAIGN_REQUIRED}');
                 errorFound = true;
             }
 
