@@ -101,14 +101,8 @@ class SuiteMozaik {
 
     public function getDependenciesHTML() {
         $html = <<<HTML
-<link rel="stylesheet" href="{$this->vendorPath}/components/jqueryui/themes/ui-lightness/jquery-ui.min.css">
-<!--
-<script src='{$this->vendorPath}/components/jquery/jquery.min.js'></script>
--->
-<script src="{$this->vendorPath}/components/jqueryui/jquery-ui.min.js"></script>
 <script src='{$this->vendorPath}/tinymce/tinymce/tinymce.min.js'></script>
 <script src="{$this->vendorPath}/gymadarasz/imagesloaded/imagesloaded.pkgd.min.js"></script>
-<script src="{$this->vendorPath}/gymadarasz/ace/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- for color picker plugin -->
 <link rel="stylesheet" media="screen" type="text/css" href="{$this->vendorPath}/../colorpicker/css/colorpicker.css" />

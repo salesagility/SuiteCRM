@@ -231,7 +231,7 @@ var plgBackground = {
                 });
             }
             else {
-                console.error('ACE Editor javascript is not defined for Mozaik on this page');
+                //console.error('ACE Editor javascript is not defined for Mozaik on this page');
             }
         }
 
