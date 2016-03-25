@@ -2181,8 +2181,8 @@ $app_strings = array (
     'LBL_AVAILABLE_FIELDS'=>'Available Fields',
     'LBL_FIRST_FORM_COLUMN'=>'First Form Column',
     'LBL_SECOND_FORM_COLUMN'=>'Second Form Column',
-    'LBL_ASSIGNED_TO_REQUIRED'=>'Please choose which user this item is assigned to',
-    'LBL_RELATED_CAMPAIGN_REQUIRED'=>'Please choose which campaign this item is assigned to',
+    'LBL_ASSIGNED_TO_REQUIRED'=>'Missing required field: Assigned to',
+    'LBL_RELATED_CAMPAIGN_REQUIRED'=>'Missing required field: Related campaign',
     'LBL_TYPE_OF_PERSON_FOR_FORM'=>'Web form to create ',
     'LBL_TYPE_OF_PERSON_FOR_FORM_DESC'=>'Submitting this form will create ',
 
