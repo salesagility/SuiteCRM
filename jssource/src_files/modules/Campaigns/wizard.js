@@ -335,7 +335,7 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
                 $('input[name="update_exists_template"]').prop('checked', true);
                 autoCheckUpdateCheckbox();
 
-                $('#template_name').val(namePrefixCopyOf + results.data.name);
+                $('#template_name').val( ($('#update_exists_template').prop('checked') ? namePrefixCopyOf : '') + results.data.name);
                 $('#template_subject').val(results.data.subject);
                 if(typeof callback != 'undefined') {
                     callback();
