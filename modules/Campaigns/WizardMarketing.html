@@ -380,7 +380,7 @@
 				</tr>
 
 				<!-- BEGIN: tracker_url -->
-				<tr>
+				<tr id="insert_tracker_url_line" style="display: none;">
 					<td width="15%" scope="row" align='left'>
 						{$MOD.LBL_INSERT_TRACKER_URL|replace:' ':'&nbsp'}&nbsp;
 					</td>
@@ -389,6 +389,21 @@
 							<select tabindex='0' name='tracker_url' onchange='this.form.url_text.value=this.value'>
 								{$TRACKER_KEY_OPTIONS}
 							</select>
+							{literal}
+							<script type="text/javascript">
+								var setTrackerUrlSelectVisibility = function(){
+									if($('select[name="tracker_url"] option').length) {
+										$('#insert_tracker_url_line').show();
+									}
+									else {
+										$('#insert_tracker_url_line').hide();
+									}
+								};
+								$(function(){
+									setTrackerUrlSelectVisibility();
+								});
+							</script>
+							{/literal}
 							<input type="text" size="30" id="url_text" name="url_text" value="{$DEFAULT_URL_TEXT}" />
 							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_URL_REF}'>
 						</div>
@@ -478,6 +493,7 @@
 									$('select[name="tracker_url"]').val('{' + trackerName + '}');
 									$('#url_text').val('{' + trackerName + '}');
 								}
+								setTrackerUrlSelectVisibility();
 							});
 
 						}
