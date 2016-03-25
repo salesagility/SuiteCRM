@@ -42,11 +42,15 @@ HTML;
         return $html;
     }
 
-    private static function getFormFooterHTML($webFormFooter, $webFormSubmitLabel, $webFormCampaign, $webRedirectURL, $webAssignedUser, $booleanFields) {
+    private static function getFormFooterHTML($webFormFooter, $webFormSubmitLabel, $webFormCampaign, $webRedirectURL, $webAssignedUser, $booleanFields, $typeOfPerson, $moduleDir, $moduleName) {
         $webFormCampaignInput = $webFormCampaign ? "<input type='hidden' id='campaign_id' name='campaign_id' value='$webFormCampaign'>" : '';
         $webRedirectURLInput = $webRedirectURL ? "<input type='hidden' id='redirect_url' name='redirect_url' value='$webRedirectURL'>" : '';
         $webAssignedUserInput = $webAssignedUser ? "<input type='hidden' id='assigned_user_id' name='assigned_user_id' value='$webAssignedUser'>" : '';
         $booleanFieldsInput = $booleanFields ? "<input type='hidden' id='bool_id' name='bool_id' value='$booleanFields'>" : '';
+        $typeOfPersonInput = "<input type='hidden' id='typeOfPerson' name='typeOfPerson' value='$typeOfPerson'>";
+        $moduleDirInput = "<input type='hidden' id='moduleDir' name='moduleDir' value='$moduleDir'>";
+        $moduleNameInput = "<input type='hidden' id='moduleName' name='moduleName' value='$moduleName'>";
+
 
         $html = <<<HTML
 $webFormFooter
@@ -58,6 +62,9 @@ $webFormCampaignInput
 $webRedirectURLInput
 $webAssignedUserInput
 $booleanFieldsInput
+$typeOfPersonInput
+$moduleDirInput
+$moduleNameInput
 HTML;
         return $html;
     }
@@ -301,6 +308,9 @@ HTML;
 
     public static function generate($request,
                                     $lead,
+                                    $typeOfPerson,
+                                    $moduleDir,
+                                    $moduleName,
                                     $siteURL,
                                     $webPostURL,
                                     $webFormHeader,
@@ -410,7 +420,10 @@ HTML;
             $webFormCampaign,
             $webRedirectURL,
             $webAssignedUser,
-            $booleanFields
+            $booleanFields,
+            $typeOfPerson,
+            $moduleDir,
+            $moduleName
         );
 
         $Web_To_Lead_Form_html .= self::getFormFinishHTML($webFormRequiredFieldsMsg);

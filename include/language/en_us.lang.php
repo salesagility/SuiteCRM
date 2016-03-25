@@ -2177,7 +2177,14 @@ $app_strings = array (
     'LBL_REMOVE_FROM_FAVORITES' => 'Remove From My Favorites',
     //web to lead
     'LBL_GENERATE_WEB_TO_LEAD_FORM' => 'Generate Form',
-    'LBL_SAVE_WEB_TO_LEAD_FORM' =>'Save Web To Lead Form',
+    'LBL_SAVE_WEB_TO_LEAD_FORM' =>'Save Web Form',
+    'LBL_AVAILABLE_FIELDS'=>'Available Fields',
+    'LBL_FIRST_FORM_COLUMN'=>'First Form Column',
+    'LBL_SECOND_FORM_COLUMN'=>'Second Form Column',
+    'LBL_ASSIGNED_TO_REQUIRED'=>'Please choose which user this item is assigned to',
+    'LBL_RELATED_CAMPAIGN_REQUIRED'=>'Please choose which campaign this item is assigned to',
+    'LBL_TYPE_OF_PERSON_FOR_FORM'=>'Web form to create ',
+    'LBL_TYPE_OF_PERSON_FOR_FORM_DESC'=>'Submitting this form will create ',
 
     'LBL_PLEASE_SELECT' => 'Please Select',
     'LBL_REDIRECT_URL'=>'Redirect URL',

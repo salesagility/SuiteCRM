@@ -4882,181 +4882,86 @@ object{
 }
 /*End of Rgraph charts*/
 
-
-/* campaign wizard */
-.wizard-box {
-    position: relative;
-    display: block;
-    float: left;
-    width: 350px;
-    min-width: 300px;
-    border: 1px solid lightgrey;
-    padding: 20px;
-    margin: 20px;
-    min-height: 150px;
-    background-color: #f6f6f6;
-    color: #333333;
-}
-.wizard-box label {
-    margin-bottom: 15px;
-}
-.wizard-box input {
+/*Form to Person section*/
+ #fieldChoices #fieldcontainer {
+     margin: 0 auto;
     width: 100%;
+     min-height: 100%;
+     background-color: transparent;
+     border: 0;
 }
-.wizard-box span.helpmsg {
-    position: absolute;
-    bottom: 15px;
-}
-#step2 table {
-    /* width: 350px; */
-    min-width: 300px;
-}
-#step2 table tr td,
-#step2 table th td {
-    /* min-width: 150px; */
-    width: 60px;
-}
-
-#step2 .target-list-table {
-    min-width:  570px;
-}
-
-
-.wizard-summary-left {
-    display: block;
-    margin: 0 20px 0 0; padding: 0; border: none;
-    width: 450px;
+#fieldChoices .field-list {
+    background-color: white;
+    border-left: 2px solid #D8D8DC;
+    border-right: 2px solid #D8D8DC;
+    border-top: 3px solid #D8D8DC;
+    border-bottom: 3px solid #D8D8DC;
+    box-shadow: 0 1px 1px 0 rgba(50, 50, 50, 0.75);
     float: left;
-}
-.wizard-summary-left .box,
-.wizard-summary-right .box {
-    display: block;
-    float: none;
-    border: 1px solid lightgrey;
-    margin: 0 0 20px 0;
-    padding: 20px 20px 20px 80px;
-    background-position-x: 10px;
-    background-position-y: center;
-    background-repeat: no-repeat;
-    background-color: #f3f3f3;
-}
-.wizard-summary-left .box.ok {
-    background-image: url(../../../../themes/default/images/green_camp.gif);
-}
-.wizard-summary-left .box.fail {
-    background-image: url(../../../../themes/default/images/red_camp.gif);
-}
-.wizard-summary-left .box.small {
-    width: 210px;
-    float: none;
-    height: 80px;
-
-    display: table-cell;
-    vertical-align: middle;
-    padding-left: 55px;
-    padding-right: 5px;
-}
-.wizard-summary-left .space {
-    width: 28px;
-    float: none;
-    height: 80px;
-
-    display: table-cell;
-
-}
-.wizard-summary-right {
-    display: block;
+    height: 100%;
     margin: 0;
-    padding: 20px;
-    width: 280px;
-    float: left;
-    border: 1px solid lightgrey;
-}
-.wizard-summary-right .box {
-    height: 180px;
-    margin-left: 20px;
-    padding: 0;
-    float: none;
-    display: table-cell;
-    vertical-align: middle;
-    width: 260px;
+    min-height: 240px;
+    padding: 15px;
     text-align: center;
-    background-position: top 10px right 10px;
-}
-.wizard-summary-right .send {
-    background-image: url(../../../../themes/default/images/cmpwzrd/email167.png);
-}
-.wizard-summary-right .schedule {
-    background-image: url(../../../../themes/default/images/cmpwzrd/wallclock.png);
-}
+    width: 22%;
 
-.wizard-summary-right .test {
-    background-image: url(../../../../themes/default/images/cmpwzrd/email167.png);
-    background-position-y: -7px;
 }
-.wizard-summary-right .disabled {
-    color: gray;
+#fieldChoices .field-list input, .field-list textarea {
+    width: 240px;
+    margin: 1px 5px;
 }
-.wizard-summary-right .space {
-    height: 20px;
+#fieldChoices .field-list input {
+    height: 30px;
 }
-
-/* campaign wizard / target list*/
-ul.target-list {
-    list-style-type: none;
-    padding: 10px;
-    margin: 0;
-    display: block;
+#fieldChoices .field {
+    margin: 5px;
+    padding: 5px;
+}
+#fieldChoices .field-header {
+    background-clip: padding-box;
+    background-color: #343434;
+    border-radius: 2px 2px 0 0;
+    color: white;
+    font-family:"Lato", sans-serif;
+    font-size: 14px;
+    height: 22px;
+    position: relative;
+}
+#fieldChoices .field.required .field-header{
+    background-color: red;
+}
+#fieldChoices .field-type {
+    float: left;
+    padding: 2px;
+}
+#fieldChoices .field-list input[type="button"] {
+    width: 100px;
+    margin: 5px;
+}
+#fieldChoices .field > .field-header {
+    font-weight: bold;
+}
+#fieldChoices .field-container{
     max-height: 300px;
-    overflow: scroll;
-    border: 1px solid lightgray;
+    min-height: 300px;
+    height:300px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
-ul.target-list li {
-    margin: 5px 0;
-    padding: 0;
+#fieldChoices .optionButtonsHolder {
+    margin-top: 5px;
 }
-div.target-list-create {
-    border: 1px solid lightgray;
-    padding: 10px;
-    margin: 10px 0 0 0;
-}
-div.target-list-table {
-    padding: 10px;
-    margin: 0 0 0 10px;
-    border: 1px solid lightgray;
-    min-height: 490px;
-}
-
-.icon-btn-lst {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-.icon-btn-lst .icon-btn {
-    margin: 10px;
-    list-style-type: none;
-    background-color: #3C8DBC;
-    display: block;
-    float: left;
-    width: 150px;
-    min-height: 150px;
+#fieldChoices .title {
+    display: inline-block;
+    width: 22%;
     text-align: center;
-    border: none;
+    font-weight: bold;
+    font-size: 15px;
 }
-.icon-btn-lst .icon-btn:hover {
-    background-color: #286090;
-}
-.icon-btn-lst .icon-btn img {
-    margin-top: 10px;
+#fieldChoices #personTypeSelect {
     margin-bottom: 20px;
 }
-.icon-btn-lst .icon-btn a {
-    color: #fff;
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-}
+/*Form to Person section*/
 
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
