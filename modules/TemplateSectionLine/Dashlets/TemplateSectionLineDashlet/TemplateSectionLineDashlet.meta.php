@@ -48,8 +48,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  
 global $app_strings;
 
-$dashletMeta['TemplateEditorDashlet'] = array('module'		=> 'TemplateEditor',
-										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'TemplateEditor'),
-                                          'description' => 'A customizable view into TemplateEditor',
-                                          'icon'        => 'icon_TemplateEditor_32.gif',
+$dashletMeta['TemplateSectionLineDashlet'] = array('module'		=> 'TemplateSectionLine',
+										  'title'       => translate('LBL_HOMEPAGE_TITLE', 'TemplateSectionLine'),
+                                          'description' => 'A customizable view into TemplateSectionLine',
+                                          'icon'        => 'icon_TemplateSectionLine_32.gif',
                                           'category'    => 'Module Views');

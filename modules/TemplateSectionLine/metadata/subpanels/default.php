@@ -1,5 +1,5 @@
 <?php
-$module_name='TemplateEditor';
+$module_name='TemplateSectionLine';
 $subpanel_layout = array (
   'top_buttons' => 
   array (
@@ -10,7 +10,7 @@ $subpanel_layout = array (
     1 => 
     array (
       'widget_class' => 'SubPanelTopSelectButton',
-      'popup_module' => 'TemplateEditor',
+      'popup_module' => 'TemplateSectionLine',
     ),
   ),
   'where' => '',
@@ -42,7 +42,7 @@ $subpanel_layout = array (
     array (
       'vname' => 'LBL_EDIT_BUTTON',
       'widget_class' => 'SubPanelEditButton',
-      'module' => 'TemplateEditor',
+      'module' => 'TemplateSectionLine',
       'width' => '4%',
       'default' => true,
     ),
@@ -50,7 +50,7 @@ $subpanel_layout = array (
     array (
       'vname' => 'LBL_REMOVE',
       'widget_class' => 'SubPanelRemoveButton',
-      'module' => 'TemplateEditor',
+      'module' => 'TemplateSectionLine',
       'width' => '5%',
       'default' => true,
     ),

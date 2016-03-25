@@ -3994,6 +3994,6 @@ $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
 $app_list_strings['collection_temp_list'] = array ( 'Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails' );
 
-$app_list_strings['moduleList']['TemplateEditor'] = 'Template Part Editor';
+$app_list_strings['moduleList']['TemplateSectionLine'] = 'Template Part Editor';
 
 ?>

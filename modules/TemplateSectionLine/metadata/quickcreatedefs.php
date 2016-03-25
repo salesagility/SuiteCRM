@@ -1,21 +1,11 @@
 <?php
-$module_name = 'TemplateEditor';
+$module_name = 'TemplateSectionLine';
 $viewdefs [$module_name] = 
 array (
-  'DetailView' => 
+  'QuickCreate' => 
   array (
     'templateMeta' => 
     array (
-      'form' => 
-      array (
-        'buttons' => 
-        array (
-          0 => 'EDIT',
-          1 => 'DUPLICATE',
-          2 => 'DELETE',
-          3 => 'FIND_DUPLICATES',
-        ),
-      ),
       'maxColumns' => '2',
       'widths' => 
       array (
@@ -55,7 +45,12 @@ array (
         ),
         1 => 
         array (
-          0 => 'description',
+          0 => 
+          array (
+            'name' => 'description',
+            'comment' => 'Full text of the note',
+            'label' => 'LBL_DESCRIPTION',
+          ),
         ),
       ),
     ),

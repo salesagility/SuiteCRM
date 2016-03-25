@@ -1,5 +1,5 @@
 <?php
-$dashletData['TemplateEditorDashlet']['searchFields'] = array (
+$dashletData['TemplateSectionLineDashlet']['searchFields'] = array (
   'date_entered' => 
   array (
     'default' => '',
@@ -14,7 +14,7 @@ $dashletData['TemplateEditorDashlet']['searchFields'] = array (
     'default' => 'Administrator',
   ),
 );
-$dashletData['TemplateEditorDashlet']['columns'] = array (
+$dashletData['TemplateSectionLineDashlet']['columns'] = array (
   'name' => 
   array (
     'width' => '40%',

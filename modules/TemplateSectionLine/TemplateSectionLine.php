@@ -1,5 +1,4 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,29 +37,15 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*********************************************************************************
-
- * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
- * All Rights Reserved.
- * Contributor(s): ______________________________________..
- ********************************************************************************/
-
-require_once('include/Dashlets/DashletGeneric.php');
-require_once('modules/TemplateEditor/TemplateEditor.php');
-
-class TemplateEditorDashlet extends DashletGeneric {
-    function __construct($id, $def = null) {
-		global $current_user, $app_strings;
-		require('modules/TemplateEditor/metadata/dashletviewdefs.php');
-
-        parent::__construct($id, $def);
-
-        if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'TemplateEditor');
-
-        $this->searchFields = $dashletData['TemplateEditorDashlet']['searchFields'];
-        $this->columns = $dashletData['TemplateEditorDashlet']['columns'];
-
-        $this->seedBean = new TemplateEditor();
-    }
+/**
+ * THIS CLASS IS FOR DEVELOPERS TO MAKE CUSTOMIZATIONS IN
+ */
+require_once('modules/TemplateSectionLine/TemplateSectionLine_sugar.php');
+class TemplateSectionLine extends TemplateSectionLine_sugar {
+	
+	function __construct(){
+		parent::__construct();
+	}
+	
 }
+?>

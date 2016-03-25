@@ -67,15 +67,15 @@ class SuiteMozaik {
             if(count($this->getThumbs())==0 || self::$devMode) {
                 $ord = 0;
                 foreach(self::$defaultThumbnails as $thumbName => $thumbData) {
-                    $templateEditor = new TemplateEditor();
-                    $templateEditor->name = $thumbData['label'];
-                    $templateEditor->description = preg_replace('/^string:/', '', $thumbData['tpl']);
-                    $templateEditor->description = str_replace('{lipsum}', $this->getContentLipsum(), $templateEditor->description);
-                    $templateEditor->description = str_replace('{imageSmall}', $this->getContentImageSample(130), $templateEditor->description);
-                    $templateEditor->description = str_replace('{image}', $this->getContentImageSample(), $templateEditor->description);
-                    $templateEditor->thumbnail = file_exists($this->mozaikPath . '/' . $thumbData['thumbnail']) ? $this->mozaikPath . '/' . $thumbData['thumbnail'] : null;
-                    $templateEditor->ord = ++$ord;
-                    $templateEditor->save();
+                    $templateSectionLine = new TemplateSectionLine();
+                    $templateSectionLine->name = $thumbData['label'];
+                    $templateSectionLine->description = preg_replace('/^string:/', '', $thumbData['tpl']);
+                    $templateSectionLine->description = str_replace('{lipsum}', $this->getContentLipsum(), $templateSectionLine->description);
+                    $templateSectionLine->description = str_replace('{imageSmall}', $this->getContentImageSample(130), $templateSectionLine->description);
+                    $templateSectionLine->description = str_replace('{image}', $this->getContentImageSample(), $templateSectionLine->description);
+                    $templateSectionLine->thumbnail = file_exists($this->mozaikPath . '/' . $thumbData['thumbnail']) ? $this->mozaikPath . '/' . $thumbData['thumbnail'] : null;
+                    $templateSectionLine->ord = ++$ord;
+                    $templateSectionLine->save();
                 }
             }
             $this->thumbsCache = array();
@@ -191,8 +191,8 @@ SCRIPT;
         if(!isset($this->thumbsCache[$cacheGroup])) {
             $db = DBManagerFactory::getInstance();
             $_group = $db->quote($group);
-            $templateEditorBean = BeanFactory::getBean('TemplateEditor');
-            $thumbBeans = $templateEditorBean->get_full_list('ord', "(grp LIKE '$_group' OR grp IS NULL)");
+            $templateSectionLineBean = BeanFactory::getBean('TemplateSectionLine');
+            $thumbBeans = $templateSectionLineBean->get_full_list('ord', "(grp LIKE '$_group' OR grp IS NULL)");
             $thumbs = array();
             if ($thumbBeans) {
                 foreach ($thumbBeans as $thumbBean) {

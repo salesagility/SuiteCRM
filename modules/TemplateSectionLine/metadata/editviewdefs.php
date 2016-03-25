@@ -1,5 +1,5 @@
 <?php
-$module_name = 'TemplateEditor';
+$module_name = 'TemplateSectionLine';
 $viewdefs [$module_name] = 
 array (
   'EditView' => 

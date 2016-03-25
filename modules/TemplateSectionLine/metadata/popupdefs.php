@@ -1,12 +1,12 @@
 <?php
 $popupMeta = array (
-    'moduleMain' => 'TemplateEditor',
-    'varName' => 'TemplateEditor',
-    'orderBy' => 'templateeditor.name',
+    'moduleMain' => 'TemplateSectionLine',
+    'varName' => 'TemplateSectionLine',
+    'orderBy' => 'templatesectionline.name',
     'whereClauses' => array (
-  'name' => 'templateeditor.name',
-  'grp' => 'templateeditor.grp',
-  'description' => 'templateeditor.description',
+  'name' => 'templatesectionline.name',
+  'grp' => 'templatesectionline.grp',
+  'description' => 'templatesectionline.description',
 ),
     'searchInputs' => array (
   1 => 'name',
