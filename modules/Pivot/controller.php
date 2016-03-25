@@ -147,15 +147,19 @@ EOF;
         $query = <<<EOF
         SELECT
             RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
-            COALESCE(leads.title,'undefined') as leadTitle,
-            primary_address_country,
-            primary_address_city,
-            lead_source,
             leads.status,
-            account_name
+            COALESCE(lead_source, 'undefined') as leadSource,
+			COALESCE(campaigns.name, 'undefined') as campaignName,
+			CAST(YEAR(leads.date_entered) as CHAR(10)) as year,
+            COALESCE(QUARTER(leads.date_entered),'undefined') as quarter,
+			concat('(',MONTH(leads.date_entered),') ',MONTHNAME(leads.date_entered)) as month,
+			CAST(WEEK(leads.date_entered) as CHAR(5)) as week,
+			DAYNAME(leads.date_entered) as day
         FROM leads
         INNER JOIN users
             ON leads.assigned_user_id = users.id
+		LEFT JOIN campaigns
+			ON leads.campaign_id = campaigns.id
         WHERE leads.deleted = false
 EOF;
 
@@ -168,12 +172,15 @@ EOF;
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
             $x->assignedUser = $row['assignedUser'];
-            $x->leadTitle = $row['leadTitle'];
-            $x->leadCountry = $row['primary_address_country'];
-            $x->leadCity = $row['primary_address_city'];
-            $x->leadSource = $row['lead_source'];
             $x->status = $row['status'];
-            $x->accountName = $row['account_name'];
+            $x->leadSource = $row['leadSource'];
+            $x->campaignName = $row['campaignName'];
+            $x->year = $row['year'];
+            $x->quarter = $row['quarter'];
+            $x->month = $row['month'];
+            $x->week = $row['week'];
+            $x->day = $row['day'];
+
             $returnArray[] = $x;
         }
         echo json_encode($returnArray);
