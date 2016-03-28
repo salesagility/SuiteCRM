@@ -271,6 +271,7 @@ echo $javascript->getScript();
 
     }
     //if count is 0, then hide inputs and and print warning message
+    $pl_diabled_test_too = true;
     if ($pl_count==0){
         if ($pl_lists==0){
             //print no target list warning
@@ -281,6 +282,7 @@ echo $javascript->getScript();
             if($campaign_focus->campaign_type='NewsLetter'){
                 $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
+                $pl_diabled_test_too = false;
             }else{
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
@@ -288,6 +290,7 @@ echo $javascript->getScript();
         }
         //disable the send email options
         $ss->assign("PL_DISABLED",'disabled');
+        $ss->assign("PL_DISABLED_TEST", $pl_diabled_test_too ? 'disabled' : false);
 
     }else{
         //show inputs and assign type to be radio
