@@ -119,6 +119,9 @@ if($_REQUEST['func'] == 'wizardUpdate') {
 		if (preg_match('/^wiz_step3_(.*)$/', $key, $match)) {
 			$field = $match[1];
 			$marketing->$field = $value;
+			if($field=='time_start') {
+				$marketing->date_start .= ' ' . $value;
+			}
 		}
 	}
 }
