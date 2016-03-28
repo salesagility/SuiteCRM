@@ -123,13 +123,17 @@
     *  5.adjusts the step location message
     */
 
-    function navigate(direction){
+    function navigate(direction, noValidation){
+        if(typeof noValidation == 'undefined') {
+            noValidation = false;
+        }
+
         //get the current step
         var current_step = document.getElementById('wiz_current_step');
         var currentValue = parseInt(current_step.value);
     
         //validation needed. (specialvalidation,  plus step number, plus submit button)
-        if(validate_wiz(current_step.value,direction)){
+        if(noValidation || validate_wiz(current_step.value,direction)){
             
             //change current step value to that of the step being navigated to
             if(direction == 'back'){

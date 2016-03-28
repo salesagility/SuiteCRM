@@ -505,5 +505,6 @@ $ss->assign('ATTACHMENTS_JAVASCRIPT', $attJs);
 ////    END ATTACHMENTS
 ///////////////////////////////////////
 
+$ss->assign('campaign_type', isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] ? $_REQUEST['campaign_type'] : $campaign_focus->campaign_type);
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
