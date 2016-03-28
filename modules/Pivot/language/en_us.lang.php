@@ -183,6 +183,39 @@ $mod_strings = array (
     'LBL_AN_MARKETING_OPPORTUNITY_NAME'=>'Opportunity Name',
     'LBL_AN_MARKETING_OPPORTUNITY_AMOUNT'=>'Opportunity Amount',
     'LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE'=>'Opportunity Sales Stage',
-    'LBL_AN_MARKETING_OPPORTUNITY_ASSGINED_TO'=>'Opportunity Assigned To',
-    'LBL_AN_MARKETING_ACCOUNT_NAME'=>'Account Name'
+    'LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO'=>'Opportunity Assigned To',
+    'LBL_AN_MARKETING_ACCOUNT_NAME'=>'Account Name',
+
+    //Analytics labels for the marketing activities pivot
+    'LBL_AN_MARKETING_ACTIVITY_CAMPAIGN_NAME'=>'Campaign Name',
+    'LBL_AN_MARKETING_ACTIVITY_ACTIVITY_DATE'=>'Activity Date',
+    'LBL_AN_MARKETING_ACTIVITY_ACTIVITY_TYPE'=>'Activity Type',
+    'LBL_AN_MARKETING_ACTIVITY_RELATED_TYPE'=>'Related Type',
+    'LBL_AN_MARKETING_ACTIVITY_RELATED_ID'=>'Related ID',
+
+    //Analytics labels for the quotes pivot
+    'LBL_AN_QUOTES_OPPORTUNITY_NAME'=>'Opportunity Name',
+    'LBL_AN_QUOTES_OPPORTUNITY_TYPE'=>'Opportunity Type',
+    'LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE'=>'Opportunity Lead Source',
+    'LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE'=>'Opportunity Sales Stage',
+    'LBL_AN_QUOTES_ACCOUNT_NAME'=>'Account Name',
+    'LBL_AN_QUOTES_CONTACT_NAME'=>'Contact Name',
+    'LBL_AN_QUOTES_ITEM_NAME'=>'Item Name',
+    'LBL_AN_QUOTES_ITEM_TYPE'=>'Item Type',
+    'LBL_AN_QUOTES_ITEM_CATEGORY'=>'Item Category',
+    'LBL_AN_QUOTES_ITEM_QTY'=>'Item Qty',
+    'LBL_AN_QUOTES_ITEM_LIST_PRICE'=>'Item List Price',
+    'LBL_AN_QUOTES_ITEM_SALE_PRICE'=>'Item Sale Price',
+    'LBL_AN_QUOTES_ITEM_COST_PRICE'=>'Item Cost Price',
+    'LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE'=>'Item Discount Price',
+    'LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT'=>'Discount Amount',
+    'LBL_AN_QUOTES_ITEM_TOTAL'=>'Item Total',
+    'LBL_AN_QUOTES_GRAND_TOTAL'=>'Grand Total',
+    'LBL_AN_QUOTES_ASSIGNED_TO'=>'Assigned User',
+    'LBL_AN_QUOTES_DATE_CREATED'=>'Date Created',
+    'LBL_AN_QUOTES_DAY_CREATED'=>'Day Created',
+    'LBL_AN_QUOTES_WEEK_CREATED'=>'Week Created',
+    'LBL_AN_QUOTES_MONTH_CREATED'=>'Month Created',
+    'LBL_AN_QUOTES_QUARTER_CREATED'=>'Quarter Created',
+    'LBL_AN_QUOTES_YEAR_CREATED'=>'Year Created'
 );

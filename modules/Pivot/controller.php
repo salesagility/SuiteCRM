@@ -472,16 +472,16 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->status = $row['campaignStatus'];
-            $x->type = $row['campaignType'];
-            $x->budget = $row['campaignBudget'];
-            $x->expectedCost = $row['campaignExpectedCost'];
-            $x->expectedRevenue = $row['campaignExpectedRevenue'];
-            $x->opportunityName = $row['opportunityName'];
-            $x->opportunityAmount = $row['opportunityAmount'];
-            $x->opportunitySalesStage = $row['opportunitySalesStage'];
-            $x->opportunityAssignedTo = $row['assignedUser'];
-            $x->accountName = $row['accountsName'];
+            $x->$mod_strings['LBL_AN_MARKETING_STATUS'] = $row['campaignStatus'];
+            $x->$mod_strings['LBL_AN_MARKETING_TYPE'] = $row['campaignType'];
+            $x->$mod_strings['LBL_AN_MARKETING_BUDGET'] = $row['campaignBudget'];
+            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_COST'] = $row['campaignExpectedCost'];
+            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_REVENUE'] = $row['campaignExpectedRevenue'];
+            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_NAME'] = $row['opportunityName'];
+            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_AMOUNT'] = $row['opportunityAmount'];
+            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
+            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO'] = $row['assignedUser'];
+            $x->$mod_strings['LBL_AN_MARKETING_ACCOUNT_NAME'] = $row['accountsName'];
 
             $returnArray[] = $x;
         }
@@ -490,6 +490,7 @@ EOF;
 
     public function action_getMarketingActivityPivotData()
     {
+        global $mod_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -515,11 +516,11 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->campaignName = $row['name'];
-            $x->activityDate = $row['activity_date'];
-            $x->activityType = $row['activity_type'];
-            $x->relatedType = $row['related_type'];
-            $x->relatedId = $row['related_id'];
+            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_CAMPAIGN_NAME'] = $row['name'];
+            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_ACTIVITY_DATE'] = $row['activity_date'];
+            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_ACTIVITY_TYPE'] = $row['activity_type'];
+            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_RELATED_TYPE'] = $row['related_type'];
+            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_RELATED_ID'] = $row['related_id'];
 
 
             $returnArray[] = $x;
@@ -529,6 +530,7 @@ EOF;
 
     public function action_getQuotesPivotData()
     {
+        global $mod_strings;
         $returnArray = [];
         $db = DBManagerFactory::getInstance();
 
@@ -546,6 +548,7 @@ EOF;
 	aos_products_quotes.product_list_price as productListPrice,
 	aos_products_quotes.product_cost_price as productCostPrice,
 	aos_products.price as productPrice,
+	aos_products_quotes.product_discount as productDiscount,
 	aos_quotes.discount_amount as discountAmount,
 	aos_product_categories.name as categoryName,
 	aos_products_quotes.product_total_price as productTotal,
@@ -594,30 +597,31 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->opportunityName = $row['opportunityName'];
-            $x->opportunityType = $row['opportunityType'];
-            $x->opportunityLeadSource = $row['opportunityLeadSource'];
-            $x->opportunitySalesStage = $row['opportunitySalesStage'];
-            $x->accoutName = $row['accountName'];
-            $x->contactName = $row['contactName'];
-            $x->itemName = $row['productName'];
-            $x->itemType = $row['itemType'];
-            $x->itemCategory = $row['categoryName'];
-            $x->itemQty = $row['productQty'];
-            $x->itemListPrice = $row['productListPrice'];
-            $x->itemSalePrice = $row['productPrice'];
-            $x->itemCostPrice = $row['productCostPrice'];
-            $x->itemDiscountAmount = $row['discountAmount'];
-            $x->itemTotal = $row['productTotal'];
-            $x->grandTotal = $row['grandTotal'];
-            $x->assignedTo = $row['assignedUser'];
+            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_NAME'] = $row['opportunityName'];
+            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE'] = $row['opportunityType'];
+            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE'] = $row['opportunityLeadSource'];
+            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
+            $x->$mod_strings['LBL_AN_QUOTES_ACCOUNT_NAME'] = $row['accountName'];
+            $x->$mod_strings['LBL_AN_QUOTES_CONTACT_NAME'] = $row['contactName'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_NAME'] = $row['productName'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TYPE'] = $row['itemType'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_CATEGORY'] = $row['categoryName'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_QTY'] = $row['productQty'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_LIST_PRICE'] = $row['productListPrice'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_SALE_PRICE'] = $row['productPrice'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_COST_PRICE'] = $row['productCostPrice'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE'] = $row['productDiscount'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT'] = $row['discountAmount'];
+            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TOTAL'] = $row['productTotal'];
+            $x->$mod_strings['LBL_AN_QUOTES_GRAND_TOTAL'] = $row['grandTotal'];
+            $x->$mod_strings['LBL_AN_QUOTES_ASSIGNED_TO'] = $row['assignedUser'];
 
-            $x->dateCreated = $row['dateCreated'];
-            $x->dateCreatedWeek = $row['dateCreatedDay'];
-            $x->dateCreatedWeek = $row['dateCreatedWeek'];
-            $x->dateCreatedMonth = $row['dateCreatedMonth'];
-            $x->dateCreatedQuarter = $row['dateCreatedQuarter'];
-            $x->dateCreatedYear = $row['dateCreatedYear'];
+            $x->$mod_strings['LBL_AN_QUOTES_DATE_CREATED'] = $row['dateCreated'];
+            $x->$mod_strings['LBL_AN_QUOTES_DAY_CREATED'] = $row['dateCreatedDay'];
+            $x->$mod_strings['LBL_AN_QUOTES_WEEK_CREATED'] = $row['dateCreatedWeek'];
+            $x->$mod_strings['LBL_AN_QUOTES_MONTH_CREATED'] = $row['dateCreatedMonth'];
+            $x->$mod_strings['LBL_AN_QUOTES_QUARTER_CREATED'] = $row['dateCreatedQuarter'];
+            $x->$mod_strings['LBL_AN_QUOTES_YEAR_CREATED'] = $row['dateCreatedYear'];
 
 
             $returnArray[] = $x;
