@@ -465,6 +465,12 @@ $mod_strings = array (
 	'ERR_MISSING_REQUIRED_FIELDS' => 'Missing required field',
 	'LBL_SUGAR_DOCUMENT' => 'Document',
 	'LBL_EMAIL_ATTACHMENT'		=> 'Email Attachment',
+	'LBL_PROCESS_BOUNCED_EMAILS' => 'Process Bounced Emails',
+	'LBL_PROCESS_CAMPAIGN_EMAILS' => 'Process Campaign Emails',
+	'LBL_SENDER_DETAILS' => 'Sender Details',
+	'LBL_CHOOSE_TEMPLATES' => 'Choose Templates',
+	'LBL_CHOOSE_TARGETS' => 'Choose Targets',
+	'LBL_CAMPAIGN_DETAILS_AND_CONDITIONS' => 'Campaign Details and Conditions',
 );
 
 

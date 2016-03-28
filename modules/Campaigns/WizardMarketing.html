@@ -855,7 +855,7 @@
 		<div class="wizard-summary-left">
 
 			<div class="box ok">
-				<h2>Campaign Details and Conditions</h2>
+				<h2>{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</h2>
 			</div>
 
 			<div class="box {if $error_on_target_list}fail{else}ok{/if}">
@@ -865,7 +865,7 @@
 					<a href="{$link_to_target_list}" title="{$error_on_target_list}">
 					{/if}
 
-						Choose Targets
+						{$MOD.LBL_CHOOSE_TARGETS}
 
 					{if $error_on_target_list}
 					</a>
@@ -877,11 +877,11 @@
 
 			{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 			<div class="box ok">
-				<h2>Choose Templates</h2>
+				<h2>{$MOD.LBL_CHOOSE_TEMPLATES}</h2>
 			</div>
 
 			<div class="box ok">
-				<h2>Sender Details</h2>
+				<h2>{$MOD.LBL_SENDER_DETAILS}</h2>
 			</div>
 
 
@@ -891,7 +891,7 @@
 				<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
 					{/if}
 
-					Process Campaign Emails
+					{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}
 
 					{if $error_on_scheduler2 || $error_on_mailbox2}
 				</a>
@@ -907,7 +907,7 @@
 				<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
 					{/if}
 
-					Process Bounced Emails
+					{$MOD.LBL_PROCESS_BOUNCED_EMAILS}
 
 					{if $error_on_scheduler2 || $error_on_mailbox1}
 				</a>
