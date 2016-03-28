@@ -82,6 +82,7 @@ $mod_strings = array (
     'LBL_AN_PIVOT_DELETE_ERROR' => 'Sorry, there has been an error',
     'LBL_AN_BTN_SAVE' => 'Save',
     'LBL_AN_BTN_LOAD' => 'Load',
+    'LBL_AN_BTN_CANCEL' => 'Cancel',
     'LBL_AN_BTN_CLOSE' => 'Close',
     'LBL_AN_BTN_DELETE' => 'Delete',
     'LBL_AN_BTN_SAVE_PIVOT' => 'Save Pivot',
@@ -94,7 +95,7 @@ $mod_strings = array (
     'LBL_AN_LOADED_SUCCESSFULLY' => 'loaded successfully',
     'LBL_AN_DELETED_SUCCESSFULLY' => 'Pivot marked as deleted',
     'LBL_AN_NO_SAVED_PIVOTS' => 'No saved pivots',
-    'LBL_AN_MIN_PIVOT_NANE' => 'Pivot name must be at least',
+    'LBL_AN_MIN_PIVOT_NAME' => 'Pivot name must be at least',
     'LBL_AN_CHARACTERS' => 'characters',
     'LBL_AN_SHOW_UI' => 'Show UI',
     'LBL_AN_NAME' => 'Name',
@@ -104,5 +105,84 @@ $mod_strings = array (
     'LBL_AN_SERVICE' => 'Service',
     'LBL_AN_MARKETING' => 'Marketing',
     'LBL_AN_MARKETING_ACTIVITY' => 'Marketing Activity',
-    'LBL_AN_ACTIVITIES'=>'Activities'
+    'LBL_AN_ACTIVITIES'=>'Activities',
+    'LBL_AN_QUOTES'=>'Quotes',
+
+    //Analytics labels for accounts pivot
+    'LBL_AN_ACCOUNTS_ACCOUNT_NAME'=>'Name',
+    'LBL_AN_ACCOUNTS_ACCOUNT_TYPE'=>'Account Type',
+    'LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY'=>'Industry',
+    'LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY'=>'Billing Country',
+
+    //Analytics labels for leads pivot
+    'LBL_AN_LEADS_ASSIGNED_USER'=>'Assigned User',
+    'LBL_AN_LEADS_STATUS'=>'Status',
+    'LBL_AN_LEADS_LEAD_SOURCE'=>'Lead Source',
+    'LBL_AN_LEADS_CAMPAIGN_NAME'=>'Campaign Name',
+    'LBL_AN_LEADS_YEAR'=>'Year',
+    'LBL_AN_LEADS_QUARTER'=>'Quarter',
+    'LBL_AN_LEADS_MONTH'=>'Month',
+    'LBL_AN_LEADS_WEEK'=>'Week',
+    'LBL_AN_LEADS_DAY'=>'Day',
+
+    //Analytics labels for sales pivot
+    'LBL_AN_SALES_ACCOUNT_NAME'=>'Account Name',
+    'LBL_AN_SALES_OPPORTUNITY_NAME'=>'Opportunity Name',
+    'LBL_AN_SALES_ASSIGNED_USER'=>'Assigned User',
+    'LBL_AN_SALES_OPPORTUNITY_TYPE'=>'OpportunityType',
+    'LBL_AN_SALES_LEAD_SOURCE'=>'Lead Source',
+    'LBL_AN_SALES_AMOUNT'=>'Amount',
+    'LBL_AN_SALES_STAGE'=>'Sales Stage',
+    'LBL_AN_SALES_PROBABILITY'=>'Probability',
+    'LBL_AN_SALES_DATE'=>'Sales Day',
+    'LBL_AN_SALES_QUARTER'=>'Sales Quarter',
+    'LBL_AN_SALES_MONTH'=>'Sales Month',
+    'LBL_AN_SALES_WEEK'=>'Sales Week',
+    'LBL_AN_SALES_DAY'=>'Sales Day',
+    'LBL_AN_SALES_YEAR'=>'Sales Year',
+    'LBL_AN_SALES_CAMPAIGN'=>'Campaign',
+
+    //Analytics labels for service pivot
+    'LBL_AN_SERVICE_ACCOUNT_NAME'=>'Account Name',
+    'LBL_AN_SERVICE_STATE'=>'State',
+    'LBL_AN_SERVICE_STATUS'=>'Status',
+    'LBL_AN_SERVICE_PRIORITY'=>'Priority',
+    'LBL_AN_SERVICE_CREATED_DAY'=>'Created Day',
+    'LBL_AN_SERVICE_CREATED_WEEK'=>'Created Week',
+    'LBL_AN_SERVICE_CREATED_MONTH'=>'Created Month',
+    'LBL_AN_SERVICE_CREATED_QUARTER'=>'Created Quarter',
+    'LBL_AN_SERVICE_CREATED_YEAR'=>'Created Year',
+    'LBL_AN_SERVICE_CONTACT_NAME'=>'Contact Name',
+    'LBL_AN_SERVICE_ASSIGNED_TO'=>'Assigned User',
+
+    //Analytics labels for the activities pivot
+    'LBL_AN_ACTIVITIES_TYPE'=>'Type',
+    'LBL_AN_ACTIVITIES_NAME'=>'Name',
+    'LBL_AN_ACTIVITIES_STATUS'=>'Status',
+    'LBL_AN_ACTIVITIES_ASSIGNED_TO'=>'Assigned User',
+
+    //Analytics labels for the activity meetings pivot
+    'LBL_AN_ACTIVITY_MEETINGS_NAME'=>'Account Name',
+    'LBL_AN_ACTIVITY_MEETINGS_STATE'=>'State',
+    'LBL_AN_ACTIVITY_MEETINGS_STATUS'=>'Status',
+    'LBL_AN_ACTIVITY_MEETINGS_PRIORITY'=>'Priority',
+    'LBL_AN_ACTIVITY_MEETINGS_CREATED_DAY'=>'Created Day',
+    'LBL_AN_ACTIVITY_MEETINGS_CREATED_WEEK'=>'Created Week',
+    'LBL_AN_ACTIVITY_MEETINGS_CREATED_MONTH'=>'Created Month',
+    'LBL_AN_ACTIVITY_MEETINGS_CREATED_QUARTER'=>'Created Quarter',
+    'LBL_AN_ACTIVITY_MEETINGS_CREATED_YEAR'=>'Created Year',
+    'LBL_AN_ACTIVITY_MEETINGS_CONTACT_NAME'=>'Contact Name',
+    'LBL_AN_ACTIVITY_MEETINGS_ASSIGNED_TO'=>'Assigned User',
+
+    //Analytics labels for the marketing pivot
+    'LBL_AN_MARKETING_STATUS'=>'Status',
+    'LBL_AN_MARKETING_TYPE'=>'Type',
+    'LBL_AN_MARKETING_BUDGET'=>'Budget',
+    'LBL_AN_MARKETING_EXPECTED_COST'=>'Expected Cost',
+    'LBL_AN_MARKETING_EXPECTED_REVENUE'=>'Expected Revenue',
+    'LBL_AN_MARKETING_OPPORTUNITY_NAME'=>'Opportunity Name',
+    'LBL_AN_MARKETING_OPPORTUNITY_AMOUNT'=>'Opportunity Amount',
+    'LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE'=>'Opportunity Sales Stage',
+    'LBL_AN_MARKETING_OPPORTUNITY_ASSGINED_TO'=>'Opportunity Assigned To',
+    'LBL_AN_MARKETING_ACCOUNT_NAME'=>'Account Name'
 );

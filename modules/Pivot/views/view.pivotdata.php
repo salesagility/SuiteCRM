@@ -36,21 +36,7 @@ class PivotViewPivotData extends SugarView {
      * display the form
      */
     public function display(){
-        global $mod_strings,$hook_array;
-
-        //parent::display();
-        $buttonSave = $mod_strings['LBL_AN_BTN_SAVE_PIVOT'];
-        $buttonLoad = $mod_strings['LBL_AN_BTN_LOAD'];
-        $buttonDelete = $mod_strings['LBL_AN_BTN_DELETE'];
-        $pivotDeleteError = $mod_strings['LBL_AN_PIVOT_DELETE_ERROR'];
-        $deletedSuccessfully = $mod_strings['LBL_AN_DELETED_SUCCESSFULLY'];
-        $pleaseSave = $mod_strings['LBL_AN_PLEASE_SAVE'];
-        $loadError = $mod_strings['LBL_AN_PIVOT_LOAD_ERROR'];
-        $loadedSuccessfully = $mod_strings['LBL_AN_LOADED_SUCCESSFULLY'];
-        $noSavedPivots = $mod_strings['LBL_AN_NO_SAVED_PIVOTS'];
-        $minPivotName = $mod_strings['LBL_AN_MIN_PIVOT_NANE'];
-        $pivotCharacters = $mod_strings['LBL_AN_CHARACTERS'];
-        $pivotSavedAs = $mod_strings['LBL_AN_PIVOT_SAVED_AS'];
+        global $mod_strings;
         $areaForAnalysis = $mod_strings['LBL_AN_AREA_FOR_ANALYSIS'];
         $sales = $mod_strings['LBL_AN_SALES'];
         $accounts = $mod_strings['LBL_AN_ACCOUNTS'];
@@ -58,6 +44,7 @@ class PivotViewPivotData extends SugarView {
         $service = $mod_strings['LBL_AN_SERVICE'];
         $marketing =  $mod_strings['LBL_AN_MARKETING'];
         $marketingActivity = $mod_strings['LBL_AN_MARKETING_ACTIVITY'];
+        $quotes = $mod_strings['LBL_AN_QUOTES'];
         $activities = $mod_strings['LBL_AN_ACTIVITIES'];
         $genericSave = $mod_strings['LBL_AN_BTN_SAVE'];
         $genericLoad = $mod_strings['LBL_AN_BTN_LOAD'];
@@ -73,12 +60,10 @@ class PivotViewPivotData extends SugarView {
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <link rel="stylesheet" type="text/css" href="include/javascript/pivottable/pivot.css">
 <script type="text/javascript" src="include/javascript/pivottable/pivot.js"></script>
 <script type="text/javascript" src="include/javascript/pivottable/c3_renderers.js"></script>
+<script type="text/javascript" src="include/javascript/suitePivot/suitePivot.js"></script>
 
 <style>
     i.fa{
@@ -86,304 +71,6 @@ class PivotViewPivotData extends SugarView {
     }
 </style>
 
-<script type="text/javascript">
-    var minNameLength = 5;
-    var savedPivotList;
-
-    $(function() {
-        toastr.options={
-            "positionClass": "toast-bottom-right"
-        }
-        tips = $( ".validateTips" );
-
-        var dialog = $( "#dialogSave" ).dialog({
-            autoOpen: false,
-            height: 200,
-            width: 350,
-            modal: true,
-            buttons: {
-            "$buttonSave": savePivot,
-                Cancel: function() {
-                    dialog.dialog( "close" );
-                }
-            },
-            close: function() {
-                $("#pivotName").val("").removeClass( "ui-state-error" );
-                tips.text("");
-            }
-        });
-
-        var dialogLoad = $( "#dialogLoad" ).dialog({
-            autoOpen: false,
-            height: 200,
-            width: 350,
-            modal: true,
-            buttons: {
-            "$buttonLoad": getPivotFromObjectToLoad,
-                Cancel: function() {
-                    dialogLoad.dialog( "close" );
-                }
-            },
-            open:function(){
-                populateLoadPivotList();
-            }
-        });
-
-        var dialogDelete = $( "#dialogDelete" ).dialog({
-            autoOpen: false,
-            height: 200,
-            width: 350,
-            modal: true,
-            buttons: {
-                "$buttonDelete": markPivotAsDeleted,
-                Cancel: function() {
-                    dialogDelete.dialog( "close" );
-                }
-            },
-            open:function(){
-                populateDeletePivotList();
-            }
-        });
-
-        function markPivotAsDeleted()
-        {
-            //Send a request to delete the item
-            //close the dialog
-            //report success with toastr.info
-
-            var id = $("#pivotDeleteList").val();
-            if(id === undefined)
-            {
-                toastr.error("$pivotDeleteError");
-            }
-            else
-            {
-                $.ajax({
-                        method: "POST",
-                        url: "index.php",
-                        data:{
-                            'module': 'Pivot',
-                            'action': 'deletePivot',
-                            'to_pdf':1,
-                            'id':id
-                        }
-
-                    })
-                    .done(function( msg ) {
-                        toastr.info("$deletedSuccessfully"+" "+name);
-                        $( "#dialogDelete" ).dialog("close");
-                    });
-            }
-
-        }
-
-        function getPivotFromObjectToLoad()
-        {
-
-            if($("#pivotLoadList").val() === "noEntries")
-            {
-                toastr.info("$pleaseSave");
-            }
-            else
-            {
-                var item = $.grep(savedPivotList, function (item) {
-                    return item.id == $("#pivotLoadList").val();
-                });
-
-                if(item === undefined || item[0] === undefined || item[0].type === undefined || item[0].config === undefined)
-                {
-                    toastr.error("$loadError");
-                }
-                else
-                {
-                    //console.log(item[0]);
-                    $('#analysisType').val(item[0].type);
-                    loadPivot(item[0].type,item[0].config);
-                    toastr.success(item[0].name + " "+ "$loadedSuccessfully");
-                    //console.log(item[0].config);
-                }
-            }
-
-
-
-        }
-
-        function populateLoadPivotList()
-        {
-            var list = "";
-            if(savedPivotList === undefined || savedPivotList.length === 0)
-            {
-                list = "<option value='noEntries'>$noSavedPivots</option>";
-            }
-            else
-            {
-                $.each(savedPivotList,function(i,v){
-                    list+= "<option value='"+ v.id +"'>"+ v.name+"</option>";
-                });
-            }
-
-            $("#pivotLoadList").empty().append(list);
-        }
-
-        function populateDeletePivotList()
-        {
-            var list = "";
-            if(savedPivotList === undefined || savedPivotList.length === 0)
-            {
-                list = "<option value='noEntries'>$noSavedPivots</option>";
-            }
-            else
-            {
-                $.each(savedPivotList,function(i,v){
-                    list+= "<option value='"+ v.id +"'>"+ v.name+"</option>";
-                });
-            }
-
-            $("#pivotDeleteList").empty().append(list);
-        }
-
-
-        function savePivot()
-        {
-            var name = $("#pivotName").val();
-            if(name === undefined || name.length < minNameLength)
-            {
-                var message ="$minPivotName"+" "+minNameLength+" "+"$pivotCharacters";
-                tips.text(message);
-                $("#pivotName").addClass('ui-state-error')
-                toastr.error(message);
-            }
-            else
-            {
-
-                //catch if there is an error with the saved pivot details
-                var area = $('#txtChosenSave').val();
-                var config = $('#txtConfigSave').val();
-
-
-                $.ajax({
-                        method: "POST",
-                        url: "index.php",
-                    data:{
-                        'module': 'Pivot',
-                        'action': 'savePivot',
-                        'to_pdf':1,
-                        'name':name,
-                        'type':area,
-                        'config':config
-                    }
-
-                    })
-                    .done(function( msg ) {
-                        toastr.success("$pivotSavedAs"+" "+name);
-                        $( "#dialogSave" ).dialog("close");
-                    });
-            }
-
-        }
-
-
-
-        var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
-        var template = {
-            renderers: renderers,
-            onRefresh:function(config)
-            {
-                var config_copy = JSON.parse(JSON.stringify(config));
-                delete config_copy["aggregators"];
-                delete config_copy["renderers"];
-                delete config_copy["rendererOptions"];
-                delete config_copy["localeStrings"];
-                $("#txtChosenSave").val($("#analysisType").val());
-                $("#txtConfigSave").val(JSON.stringify(config_copy, undefined, 2));
-            }
-        }
-
-        $("#btnLoadPivot").on("click",function(){
-            $.getJSON("index.php",
-                {
-                    'module': 'Pivot',
-                    'action': 'getSavedPivotList',
-                    'to_pdf':1
-                },
-                function (mps) {
-                    savedPivotList = mps;
-                    $( "#dialogLoad" ).dialog("open");
-
-                });
-        });
-
-        $("#btnDeletePivot").on("click",function(){
-            $.getJSON("index.php",
-                {
-                    'module': 'Pivot',
-                    'action': 'getSavedPivotList',
-                    'to_pdf':1
-                },
-                function (mps) {
-                    savedPivotList = mps;
-                    $( "#dialogDelete" ).dialog("open");
-
-                });
-        });
-
-        $("#btnSavePivot").on("click",function(){
-            $( "#dialogSave" ).dialog("open");
-        });
-
-        $('#analysisType').change(function(){
-            $("#txtChosenSave").val($("#analysisType").val());
-            getDataForPivot();
-        });
-
-        function getDataForPivot()
-        {
-            var type = $('#analysisType').val();
-            if(type !== undefined)
-            {
-                $.getJSON("index.php",
-                    {
-                        'module': 'Pivot',
-                        'action': type,
-                        'to_pdf':1
-                    },
-                    function (mps) {
-                        $("#output").pivotUI(mps, template,true);
-                    });
-            }
-
-        }
-
-        function loadPivot(type,config)
-        {
-            if(type !== undefined)
-            {
-                $("#analysisType").val(type);
-                $.getJSON("index.php",
-                    {
-                        'module': 'Pivot',
-                        'action': type,
-                        'to_pdf':1
-                    },
-                    function (mps) {
-                        $("#txtChosenSave").val($("#analysisType").val());
-                        $("#txtConfigSave").val(config);
-
-                        var configParsed =JSON.parse(config);
-                        var combined = $.extend(configParsed,template);
-                        //console.log(combined);
-
-                        $("#output").pivotUI(mps,combined,true);
-                    });
-            }
-
-        }
-
-        getDataForPivot();
-
-    });
-</script>
-<!--<hr>-->
 <label for="analysisType">$areaForAnalysis</label>
 <select id="analysisType">
     <option value="getSalesPivotData">$sales</option>
@@ -393,13 +80,14 @@ class PivotViewPivotData extends SugarView {
     <option value="getMarketingPivotData">$marketing</option>
     <option value="getMarketingActivityPivotData">$marketingActivity</option>
     <option value="getActivitiesPivotData">$activities</option>
+    <option value="getQuotesPivotData">$quotes</option>
 </select>
 <div id="output" style="margin: 30px;"></div>
 <div id="config"></div>
 
-<button type="button" id="btnSavePivot"><i class="fa fa-floppy-o"></i>$genericSave</button>
-<button type="button" id="btnLoadPivot"><i class="fa fa-search"></i>$genericLoad</button>
-<button type="button" id="btnDeletePivot"><i class="fa fa-trash"></i>$genericDelete</button>
+<button type="button" id="btnSavePivot" class="button"><i class="fa fa-floppy-o"></i>$genericSave</button>
+<button type="button" id="btnLoadPivot" class="button"><i class="fa fa-search"></i>$genericLoad</button>
+<button type="button" id="btnDeletePivot" class="button"><i class="fa fa-trash"></i>$genericDelete</button>
 
 <input type="hidden" id="txtChosenSave">
 <input type="hidden" id="txtConfigSave">
