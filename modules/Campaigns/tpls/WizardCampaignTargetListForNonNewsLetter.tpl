@@ -172,13 +172,15 @@
 						<script type="text/javascript">
 							$(function(){
 								setInterval(function(){
-									$('li.target-list-item').show();
-									$('#added_targets input[type="hidden"]').each(function(i,e){
-										if($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
-											var targetListId = $(e).val();
-											$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
-										}
-									});
+									if(!$('input[name="targetListSearch"]').val()) {
+										$('li.target-list-item').show();
+										$('#added_targets input[type="hidden"]').each(function (i, e) {
+											if ($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
+												var targetListId = $(e).val();
+												$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
+											}
+										});
+									}
 								}, 300);
 							});
 						</script>
