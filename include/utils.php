@@ -5082,6 +5082,23 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
     }
 }
 
+/**
+ * Performs unserialization. Accepts all types except Objects
+ *
+ * @param string $value Serialized value of any type except Object
+ * @return mixed False if Object, converted value for other cases
+ */
+function sugar_unserialize($value)
+{
+    preg_match('/[oc]:\d+:/i', $value, $matches);
+
+    if (count($matches)) {
+        return false;
+    }
+
+    return unserialize($value);
+}
+
 define("DEFAULT_UTIL_SUITE_ENCODING","UTF-8");
 
 function suite_strlen($input, $encoding = DEFAULT_UTIL_SUITE_ENCODING)

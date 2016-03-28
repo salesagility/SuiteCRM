@@ -269,6 +269,7 @@ EOD;
         {
             $key = $i["m"];
             $stage = $i["sales_stage"];
+            $stage_dom_option = $i["sales_stage_dom_option"];
             if(!in_array($key,$chart['labels']))
             {
                 $chart['labels'][] = $key;
@@ -279,7 +280,7 @@ EOD;
 
             $formattedFloat = (float)number_format((float)$i["total"], 2, '.', '');
             $chart['data'][count($chart['data'])-1][] = $formattedFloat;
-            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
+            $chart['tooltips'][]="<div><input type='hidden' class='stage' value='$stage_dom_option'><input type='hidden' class='date' value='$key'></div>".$stage.'('.$currency_symbol.$formattedFloat.$thousands_symbol.') '.$key;
         }
         return $chart;
     }

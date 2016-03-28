@@ -160,7 +160,6 @@ class AOP_Case_Updates extends AOP_Case_Updates_sugar {
             $signaturePlain = $signature['signature'];
         }
         $emailSettings = getPortalEmailSettings();
-        $GLOBALS['log']->info("AOPCaseUpdates: sendEmail email portal settings are ".print_r($emailSettings,true));
         $text = $this->populateTemplate($template, $addDelimiter, $contactId);
         $mailer->Subject = $text['subject'];
         $mailer->Body = $text['body'] . $signatureHTML;

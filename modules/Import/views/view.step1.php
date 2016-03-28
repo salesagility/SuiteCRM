@@ -271,6 +271,7 @@ YAHOO.util.Event.onDOMReady(function(){
         if( !isExtSourceAuthenticated(v) )
         {
             document.getElementById('ext_source_sign_in_bttn').style.display = '';
+            document.getElementById('ext_source_sign_out_bttn').style.display = 'none';
             document.getElementById('gonext').disabled = true;
         }
         else
@@ -282,9 +283,23 @@ YAHOO.util.Event.onDOMReady(function(){
 
     function openExtAuthWindow()
     {
-        var import_module = document.getElementById('importstep1').import_module.value;
-        var url = "index.php?module=EAPM&return_module=Import&action=EditView&application=" + selectedExternalSource + "&return_action=" + import_module;
-        document.location = url;
+        var api = externalApis[selectedExternalSource];
+        if (!api) {
+            return;
+        }
+
+        if (api.authMethod === "oauth2") {
+            openOauth2Window(api.loginUrl);
+        } else {
+            var import_module = document.getElementById('importstep1').import_module.value;
+            var url = api.loginUrl + "&return_module=Import&return_action=" + import_module;
+            document.location = url;
+        }
+    }
+
+    function openOauth2Window(url)
+    {
+        window.open(url, '_blank', "width=600,height=400,centerscreen=1,resizable=1");
     }
 
     function setImportModule()
@@ -304,7 +319,7 @@ YAHOO.util.Event.onDOMReady(function(){
     YAHOO.util.Event.addListener('ext_source_sign_in_bttn', "click", openExtAuthWindow);
     YAHOO.util.Event.addListener('admin_import_module', "change", setImportModule);
 
-    
+
     function initExtSourceSelection()
     {
         var el1 = YAHOO.util.Dom.get('ext_source');

@@ -120,8 +120,11 @@ class AOR_Report extends Basic {
 
     function build_report_chart($chartIds = null, $chartType = self::CHART_TYPE_PCHART){
         global $beanList;
-
-        $html = '';
+        $linkedCharts = $this->get_linked_beans('aor_charts','AOR_Charts');
+	if(!$linkedCharts){
+            //No charts to display
+            return '';
+        }
 
         $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
         $result = $this->db->query($sql);
@@ -162,6 +165,8 @@ class AOR_Report extends Basic {
             $fields[$label]['total'] = $field->total;
 
 
+            $fields[$label]['params'] = array("date_format" => $field->format);
+
             // get the main group
 
             if($field->group_display) {
@@ -193,13 +198,12 @@ class AOR_Report extends Basic {
                         break;
                     default:
                         if(!is_numeric($row[$name])) {
-                            $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id)));
+                            $row[$name] = trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView', $row[$name], '', $currency_id,$att['params'])));
+
                         }
                         break;
                 }
             }
-
-
             $data[] = $row;
         }
         $fields = $this->getReportFields();
@@ -218,7 +222,7 @@ class AOR_Report extends Basic {
                 break;
         }
         $x = 0;
-        foreach($this->get_linked_beans('aor_charts','AOR_Charts') as $chart){
+        foreach($linkedCharts as $chart){
             if($chartIds !== null && !in_array($chart->id,$chartIds)){
                 continue;
             }
@@ -929,7 +933,7 @@ class AOR_Report extends Basic {
         $query_where_clean = '';
         while($query_where_clean != $query_where) {
             $query_where_clean = $query_where;
-            $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|\(\s*\)/i', '', $query_where_clean);
+            $query_where = preg_replace('/\b(AND|OR)\s*\(\s*\)|[^\w+\s*]\(\s*\)/i', '', $query_where_clean);
             $safe++;
             if($safe>100){
                 $GLOBALS['log']->fatal('Invalid report query conditions');
@@ -1279,7 +1283,7 @@ class AOR_Report extends Basic {
                                 }
                                 $value .= ')';
                             }
-                            $query['where'][] = $value;
+                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $value;
                             $where_set = true;
                             break;
                         case "Period":

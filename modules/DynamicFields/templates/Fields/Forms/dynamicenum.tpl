@@ -1,5 +1,5 @@
-<?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+{*
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -39,32 +39,36 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-$filePath = 'modules/Home/QuickSearch.php';
-if (file_exists('custom/' . $filePath))
-{
-    require_once('custom/' . $filePath);
-    $quicksearchQuery = new quicksearchQueryCustom();
-    $conditionEqual = quicksearchQueryCustom::CONDITION_EQUAL;
-}
-else
-{
-    require_once($filePath);
-    $quicksearchQuery = new quicksearchQuery();
-    $conditionEqual = quicksearchQuery::CONDITION_EQUAL;
-}
 
-$json = getJSONobj();
-$data = $json->decode(html_entity_decode($_REQUEST['data']));
-if(isset($_REQUEST['query']) && !empty($_REQUEST['query'])){
-    foreach($data['conditions'] as $k=>$v){
-        if (empty($data['conditions'][$k]['value']) && ($data['conditions'][$k]['op'] != $conditionEqual))
-        {
-            $data['conditions'][$k]['value']=urldecode($_REQUEST['query']);
-        }
-    }
-}
 
-$method = !empty($data['method']) ? $data['method'] : 'query';
-if(method_exists($quicksearchQuery, $method)) {
-   echo $quicksearchQuery->$method($data);
-}
+*}
+
+ {include file="modules/DynamicFields/templates/Fields/Forms/coreTop.tpl"}
+
+<tr>
+	<td class='mbLBL'>{sugar_translate module="DynamicFields" label="LBL_DROP_DOWN_LIST"}:</td>
+	<td>
+	{if $hideLevel < 5 && empty($vardef.function)}
+		{html_options name="options" id="options" selected=$selected_dropdown values=$dropdowns output=$dropdowns onChange="ModuleBuilder.dropdownChanged(this.value);"}{if !$uneditable}<br><input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_EDIT"}' class='button' onclick="ModuleBuilder.moduleDropDown(this.form.options.value, this.form.options.value);">&nbsp;<input type='button' value='{sugar_translate module="DynamicFields" label="LBL_BTN_ADD"}' class='button' onclick="ModuleBuilder.moduleDropDown('', this.form.name.value);">{/if}
+	{else}
+		<input type='hidden' name='options' value='{$selected_dropdown}'>{$selected_dropdown}
+	{/if}
+	</td>
+</tr>
+<tr>
+    <td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_PARENT_ENUM"}:</td>
+    <td>
+           <input type="text" id="parentenum"  name="parentenum" value="{$vardef.parentenum}" />
+    </td>
+</tr>
+<tr>
+	<td class='mbLBL' >{sugar_translate module="DynamicFields" label="COLUMN_TITLE_MASS_UPDATE"}:</td>
+	<td>
+	{if $hideLevel < 5}
+		<input type="checkbox" id="massupdate"  name="massupdate" value="1" {if !empty($vardef.massupdate)}checked{/if}/>
+	{else}
+		<input type="checkbox" id="massupdate"  name="massupdate" value="1" disabled {if !empty($vardef.massupdate)}checked{/if}/>
+	{/if}
+	</td>
+</tr>
+{include file="modules/DynamicFields/templates/Fields/Forms/coreBottom.tpl"}

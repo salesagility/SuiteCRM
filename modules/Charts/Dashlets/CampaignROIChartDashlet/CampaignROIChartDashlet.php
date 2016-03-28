@@ -216,9 +216,16 @@ EOD;
         //   return $this->getTitle('<div align="center"></div>') . '<div align="center">' . $returnStr . '</div>'. $this->processAutoRefresh();
     }
 
-    protected function constructQuery($datay= array(),$targets=array(),$campaign_id, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
+    protected function constructQuery($datay= array(),$targets=array(),$campaign_id = null, $cache_file_name='a_file', $refresh=false,$marketing_id='',$is_dashlet=false,$dashlet_id='') {
         //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
         global $mod_strings;
+
+        $campaign_id = (int) $campaign_id;
+        if(!$campaign_id) {
+            $GLOBALS['log']->debug('roi chart need a campaign id');
+            return false;
+        }
+
         $not_empty = false;
 
         $chartData = array();
