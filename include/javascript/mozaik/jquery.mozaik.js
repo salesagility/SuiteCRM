@@ -5,7 +5,7 @@ if(mozaik || $.mozaik) {
 // mozaik helpers (private)
 var mozaik = {
     getThumbnailListHTML: function(id, thumbs, base) {
-        var html = '<ul class="mozaik-thumbs" id="' + id + '">';
+        var html = '<ul class="mozaik-thumbs" id="' + id + '" title="Click to add..">';
         for(var name in thumbs) {
             var e = thumbs[name];
             html += '<li class="mozaik-thumbnail" data-name="' + name + '">' + (e.thumbnail ? '<img src="' + base + e.thumbnail + '" alt="' + (e.label ? e.label : '') + '" title="' + (e.label ? e.label : '') + '">' : '<span class="mozaik-thumb-label">' + (e.label ? e.label : '') + '</span>') + '</li>';
