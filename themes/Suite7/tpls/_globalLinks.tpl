@@ -38,12 +38,6 @@
  ********************************************************************************/
 
 *}
-<div id="alert-nav" class="dropdown nav navbar-nav navbar-right">
-    <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false" onclick="$('#alert-nav #alerts').toggleClass('hidden');">
-                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
-    </button>
-    <div id="alerts" class="dropdown-menu hidden" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
-</div>
 <div id="globalLinks">
     {* <ul>
     {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
@@ -91,4 +85,11 @@
 
         </li>
     </ul>
+</div>
+{include file="_welcome.tpl" theme_template=true}
+<div id="alert-nav" class="dropdown nav navbar-nav navbar-right">
+    <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown" aria-expanded="false" onclick="$('#alert-nav #alerts').toggleClass('hidden');">
+                   <span class="badge"><span class="alert_count" >0</span> <span class="glyphicon glyphicon-comment"></span>
+    </button>
+    <div id="alerts" class="dropdown-menu hidden" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
 </div>
