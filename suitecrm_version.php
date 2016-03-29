@@ -1,5 +1,5 @@
 <?php
  if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-$suitecrm_version      = '7.5.3';
-$suitecrm_timestamp    = '2016-03-15 17:00';
+$suitecrm_version      = '7.6beta';
+$suitecrm_timestamp    = '2016-03-29 17:00';
