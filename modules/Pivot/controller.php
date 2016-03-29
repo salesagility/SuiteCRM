@@ -517,6 +517,7 @@ EOF;
         FROM calls
         LEFT JOIN users
             ON calls.assigned_user_id = users.id
+            AND users.deleted = false
         WHERE calls.deleted = false
         UNION
         SELECT
@@ -527,6 +528,7 @@ EOF;
         FROM meetings
         LEFT JOIN users
             ON meetings.assigned_user_id = users.id
+            AND users.deleted = false
         WHERE meetings.deleted = false
         UNION
         SELECT
@@ -537,6 +539,7 @@ EOF;
         FROM tasks
         LEFT JOIN users
             ON tasks.assigned_user_id = users.id
+            AND users.deleted = false
         WHERE tasks.deleted = false
 EOF;
 
@@ -579,17 +582,17 @@ EOF;
         FROM opportunities
         LEFT JOIN users
             ON opportunities.assigned_user_id = users.id
+            AND users.deleted = false
         LEFT JOIN accounts_opportunities
             ON opportunities.id =  accounts_opportunities.opportunity_id
+            AND accounts_opportunities.deleted = false
         LEFT JOIN accounts
             ON accounts_opportunities.account_id = accounts.id
+            AND accounts.deleted = false
         LEFT JOIN campaigns
             ON opportunities.campaign_id = campaigns.id
+            AND campaigns.deleted = false
         WHERE opportunities.deleted = false
-        AND users.deleted = false
-        AND accounts_opportunities.deleted = false
-        AND accounts.deleted = false
-        AND campaigns.deleted = false
 EOF;
 
         $opps = BeanFactory::getBean('Opportunities');
@@ -632,8 +635,9 @@ EOF;
         FROM campaigns
         LEFT JOIN campaign_log
             ON campaigns.id = campaign_log.campaign_id
+            and campaign_log.deleted = false
         where campaigns.deleted = false
-        and campaign_log.deleted = false
+
 EOF;
 
         $opps = BeanFactory::getBean('Opportunities');
