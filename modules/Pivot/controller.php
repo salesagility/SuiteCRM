@@ -32,18 +32,146 @@ class PivotController extends SugarController {
         $this->view = 'pivotdata';
     }
 
+    public function getKeyForLabel($type, $label)
+    {
+        global $mod_strings;
+        $labelPrefix = "";
+        switch($type){
+            case "getAccountsPivotData":
+                $labelPrefix = "LBL_AN_ACCOUNTS_";
+                break;
+            case "getLeadsPivotData":
+                $labelPrefix = "LBL_AN_LEADS_";
+                break;
+            case "getSalesPivotData":
+                $labelPrefix = "LBL_AN_SALES_";
+                break;
+            case "getServicePivotData":
+                $labelPrefix = "LBL_AN_SERVICE_";
+                break;
+            case "getActivitiesPivotData":
+                $labelPrefix = "LBL_AN_ACTIVITIES_";
+                break;
+            case "getMarketingPivotData":
+                $labelPrefix = "LBL_AN_MARKETING_";
+                break;
+            case "getMarketingActivityPivotData":
+                $labelPrefix = "LBL_AN_MARKETINGACTIVITY";
+                break;
+            case "getQuotesPivotData":
+                $labelPrefix = "LBL_AN_QUOTES_";
+                break;
+        }
+        $allMatchingLabels = array_keys($mod_strings,$label);
+
+        $matches = array_filter($allMatchingLabels,function($e)use($labelPrefix){
+            return(strpos($e,$labelPrefix)!==false);
+        });
+
+        return $matches;
+    }
+
+    public function getKeysForLabels($type,$items)
+    {
+        $keys = array();
+        foreach($items as $i)
+        {
+            $key = $this->getKeyForLabel($type,$i);
+            //Check that the returned array has only 1 element, else there is a potential error
+            //Log error and return empty keys
+            //Error if 0 || >1
+            $countOfMatches = count($key);
+            if($countOfMatches !== 1)
+            {
+                $this->logPivotErrorWithKeyMatching($type);
+                return array();
+            }
+            else
+            {
+                $keys[] = reset($key);
+            }
+
+        }
+        return $keys;
+    }
+
+    public function logPivotErrorWithKeyMatching($type)
+    {
+        global $mod_strings;
+        $GLOBALS['log']->error($mod_strings['LBL_AN_DUPLICATE_LABEL_FOR_SUBAREA'].' '.$type);
+
+    }
+
     public function action_savePivot()
     {
-        $config = htmlspecialchars_decode($_REQUEST['config']);
 
         $type = $_REQUEST['type'];
         $name = $_REQUEST['name'];
+        $config = htmlspecialchars_decode($_REQUEST['config']);
+        $jsonConfig = json_decode($config,true);
+
+        $colsLabels = array();
+        $rowsLabels = array();
+        if(isset($jsonConfig['cols']) && count($jsonConfig['cols'])>0)
+        {
+            $colsLabels= $this->getKeysForLabels($type,$jsonConfig['cols']);
+            $jsonConfig['cols'] = $colsLabels;
+        }
+        if(isset($jsonConfig['rows']) && count($jsonConfig['rows'])>0)
+        {
+            $rowsLabels= $this->getKeysForLabels($type,$jsonConfig['rows']);
+            $jsonConfig['rows'] = $rowsLabels;
+        }
+
+        //Set the key value for the inclusions / exclusions
+        if(isset($jsonConfig['exclusions']) && count($jsonConfig['exclusions'])>0)
+        {
+            foreach($jsonConfig['exclusions'] as $key=>$value)
+            {
+                $newKey = $this->getKeyForLabel($type, $key);
+
+                $jsonConfig['exclusions'][reset($newKey)] = $jsonConfig['exclusions'][$key];
+                unset($jsonConfig['exclusions'][$key]);
+                //Check that this is an array with 1 element
+                if(count($newKey) !== 1)
+                    $this->logPivotErrorWithKeyMatching($type);
+            }
+        }
+
+        if(isset($jsonConfig['inclusions']) && count($jsonConfig['inclusions'])>0)
+        {
+            foreach($jsonConfig['inclusions'] as $key=>$value)
+            {
+                $newKey = $this->getKeyForLabel($type, $key);
+
+                $jsonConfig['inclusions'][reset($newKey)] = $jsonConfig['inclusions'][$key];
+                unset($jsonConfig['inclusions'][$key]);
+                //Check that this is an array with 1 element
+                if(count($newKey) !== 1)
+                    $this->logPivotErrorWithKeyMatching($type);
+            }
+        }
+
+        if(isset($jsonConfig['inclusionsInfo']) && count($jsonConfig['inclusionsInfo'])>0)
+        {
+            foreach($jsonConfig['inclusionsInfo'] as $key=>$value)
+            {
+                $newKey = $this->getKeyForLabel($type, $key);
+
+                $jsonConfig['inclusionsInfo'][reset($newKey)] = $jsonConfig['inclusionsInfo'][$key];
+                unset($jsonConfig['inclusionsInfo'][$key]);
+                //Check that this is an array with 1 element
+                if(count($newKey) !== 1)
+                    $this->logPivotErrorWithKeyMatching($type);
+            }
+        }
 
         $pivotBean = BeanFactory::getBean('Pivot');
         $pivotBean->name = $name;
         $pivotBean->type = $type;
-        $pivotBean->config = $config;
+        $pivotBean->config = json_encode($jsonConfig);
         $pivotBean->save();
+
     }
 
     public function action_deletePivot()
@@ -52,6 +180,58 @@ class PivotController extends SugarController {
         $pivotBean = BeanFactory::getBean('Pivot',$id);
         $pivotBean->deleted = true;
         $pivotBean->save();
+    }
+
+    public function replaceKeyValueWithLabel($config)
+    {
+        global $mod_strings;
+        $jsonConfig = json_decode($config,true);
+        if(isset($jsonConfig['cols']) && count($jsonConfig['cols'])>0) {
+            foreach($jsonConfig['cols'] as $k=>$v)
+            {
+                $jsonConfig['cols'][$k] = $mod_strings[$v];
+            }
+        }
+
+        if(isset($jsonConfig['rows']) && count($jsonConfig['rows'])>0) {
+            foreach($jsonConfig['rows'] as $k=>$v)
+            {
+                $jsonConfig['rows'][$k] = $mod_strings[$v];
+            }
+        }
+
+        if(isset($jsonConfig['exclusions']) && count($jsonConfig['exclusions'])>0)
+        {
+            foreach($jsonConfig['exclusions'] as $key=>$value)
+            {
+                $newKey = $mod_strings[$key];
+
+                $jsonConfig['exclusions'][$newKey] = $jsonConfig['exclusions'][$key];
+                unset($jsonConfig['exclusions'][$key]);
+            }
+        }
+
+        if(isset($jsonConfig['inclusions']) && count($jsonConfig['inclusions'])>0)
+        {
+            foreach($jsonConfig['inclusions'] as $key=>$value)
+            {
+                $newKey = $mod_strings[$key];
+                $jsonConfig['inclusions'][$newKey] = $jsonConfig['inclusions'][$key];
+                unset($jsonConfig['inclusions'][$key]);
+            }
+        }
+
+        if(isset($jsonConfig['inclusionsInfo']) && count($jsonConfig['inclusionsInfo'])>0)
+        {
+            foreach($jsonConfig['inclusionsInfo'] as $key=>$value)
+            {
+                $newKey = $mod_strings[$key];
+                $jsonConfig['inclusionsInfo'][$newKey] = $jsonConfig['inclusionsInfo'][$key];
+                unset($jsonConfig['inclusionsInfo'][$key]);
+            }
+        }
+
+        return json_encode($jsonConfig);
     }
 
     public function action_getSavedPivotList()
@@ -64,7 +244,7 @@ class PivotController extends SugarController {
             foreach ($beanList as $b) {
                 $bean = new stdClass();
                 $bean->type = $b->type;
-                $bean->config = htmlspecialchars_decode($b->config);
+                $bean->config = $this->replaceKeyValueWithLabel(htmlspecialchars_decode($b->config));
                 $bean->name = $b->name;
                 $bean->id = $b->id;
                 $returnArray[] = $bean;
@@ -378,58 +558,6 @@ EOF;
         echo json_encode($returnArray);
     }
 
-    public function action_getActivityMeetingsPivotData()
-    {
-        global $mod_strings;
-        $returnArray = [];
-        $db = DBManagerFactory::getInstance();
-
-        $query = <<<EOF
-        SELECT
-            meetings.name as meetingName,
-            meetings.status as meetingStatus,
-            RTRIM(LTRIM(CONCAT(COALESCE(users.first_name,''),' ',COALESCE(users.last_name,'')))) as assignedUser,
-            COALESCE(accounts.name, '$this->nullSqlPlaceholder') as accountName,
-            DAYNAME(meetings.date_start) as day,
-            CAST(WEEK(meetings.date_start) as CHAR(5)) as week,
-             concat('(',MONTH(meetings.date_start),') ',MONTHNAME(meetings.date_start)) as month,
-             COALESCE(QUARTER(meetings.date_start),'$this->nullSqlPlaceholder') as quarter
-             , YEAR(meetings.date_start) as year
-        FROM meetings
-        LEFT JOIN users
-            ON meetings.assigned_user_id = users.id
-        LEFT JOIN accounts
-            ON meetings.parent_id = accounts.id
-        WHERE meetings.deleted = false
-        AND users.deleted = false
-        AND accounts.deleted = false
-EOF;
-
-        $opps = BeanFactory::getBean('Opportunities');
-        $aclWhereOpps = $this->build_report_access_query($opps,$opps->table_name);
-
-        $queryString = $query.$aclWhereOpps;
-        $result = $db->query($queryString);
-
-        while ($row = $db->fetchByAssoc($result)) {
-            $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_STATE'] = $row['state'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_PRIORITY'] = $row['priority'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_CREATED_DAY'] = $row['day'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_CREATED_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_CREATED_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_CREATED_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_CREATED_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_ACTIVITY_MEETINGS_ASSIGNED_TO'] = $row['assignedUser'];
-
-            $returnArray[] = $x;
-        }
-        echo json_encode($returnArray);
-    }
-
     public function action_getMarketingPivotData()
     {
         global $mod_strings;
@@ -516,11 +644,11 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_CAMPAIGN_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_ACTIVITY_DATE'] = $row['activity_date'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_ACTIVITY_TYPE'] = $row['activity_type'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_RELATED_TYPE'] = $row['related_type'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACTIVITY_RELATED_ID'] = $row['related_id'];
+            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME'] = $row['name'];
+            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE'] = $row['activity_date'];
+            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE'] = $row['activity_type'];
+            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_TYPE'] = $row['related_type'];
+            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_ID'] = $row['related_id'];
 
 
             $returnArray[] = $x;

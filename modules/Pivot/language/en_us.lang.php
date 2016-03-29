@@ -161,19 +161,6 @@ $mod_strings = array (
     'LBL_AN_ACTIVITIES_STATUS'=>'Status',
     'LBL_AN_ACTIVITIES_ASSIGNED_TO'=>'Assigned User',
 
-    //Analytics labels for the activity meetings pivot
-    'LBL_AN_ACTIVITY_MEETINGS_NAME'=>'Account Name',
-    'LBL_AN_ACTIVITY_MEETINGS_STATE'=>'State',
-    'LBL_AN_ACTIVITY_MEETINGS_STATUS'=>'Status',
-    'LBL_AN_ACTIVITY_MEETINGS_PRIORITY'=>'Priority',
-    'LBL_AN_ACTIVITY_MEETINGS_CREATED_DAY'=>'Created Day',
-    'LBL_AN_ACTIVITY_MEETINGS_CREATED_WEEK'=>'Created Week',
-    'LBL_AN_ACTIVITY_MEETINGS_CREATED_MONTH'=>'Created Month',
-    'LBL_AN_ACTIVITY_MEETINGS_CREATED_QUARTER'=>'Created Quarter',
-    'LBL_AN_ACTIVITY_MEETINGS_CREATED_YEAR'=>'Created Year',
-    'LBL_AN_ACTIVITY_MEETINGS_CONTACT_NAME'=>'Contact Name',
-    'LBL_AN_ACTIVITY_MEETINGS_ASSIGNED_TO'=>'Assigned User',
-
     //Analytics labels for the marketing pivot
     'LBL_AN_MARKETING_STATUS'=>'Status',
     'LBL_AN_MARKETING_TYPE'=>'Type',
@@ -187,11 +174,11 @@ $mod_strings = array (
     'LBL_AN_MARKETING_ACCOUNT_NAME'=>'Account Name',
 
     //Analytics labels for the marketing activities pivot
-    'LBL_AN_MARKETING_ACTIVITY_CAMPAIGN_NAME'=>'Campaign Name',
-    'LBL_AN_MARKETING_ACTIVITY_ACTIVITY_DATE'=>'Activity Date',
-    'LBL_AN_MARKETING_ACTIVITY_ACTIVITY_TYPE'=>'Activity Type',
-    'LBL_AN_MARKETING_ACTIVITY_RELATED_TYPE'=>'Related Type',
-    'LBL_AN_MARKETING_ACTIVITY_RELATED_ID'=>'Related ID',
+    'LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME'=>'Campaign Name',
+    'LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE'=>'Activity Date',
+    'LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE'=>'Activity Type',
+    'LBL_AN_MARKETINGACTIVITY_RELATED_TYPE'=>'Related Type',
+    'LBL_AN_MARKETINGACTIVITY_RELATED_ID'=>'Related ID',
 
     //Analytics labels for the quotes pivot
     'LBL_AN_QUOTES_OPPORTUNITY_NAME'=>'Opportunity Name',
@@ -217,5 +204,8 @@ $mod_strings = array (
     'LBL_AN_QUOTES_WEEK_CREATED'=>'Week Created',
     'LBL_AN_QUOTES_MONTH_CREATED'=>'Month Created',
     'LBL_AN_QUOTES_QUARTER_CREATED'=>'Quarter Created',
-    'LBL_AN_QUOTES_YEAR_CREATED'=>'Year Created'
+    'LBL_AN_QUOTES_YEAR_CREATED'=>'Year Created',
+
+    //Error message when there are multiple values for the label
+    'LBL_AN_DUPLICATE_LABEL_FOR_SUBAREA'=>'Error ascertaining the label for the pivot sub-area'
 );
