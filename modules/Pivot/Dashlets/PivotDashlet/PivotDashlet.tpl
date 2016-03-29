@@ -251,9 +251,9 @@
                                 delete configParsed["rendererOptions"];
 
                             ["aggregators"];
-                            delete config_copy["renderers"];
-                            delete config_copy["rendererOptions"];
-                            delete config_copy["localeStrings"];
+                            delete combined["renderers"];
+                            delete combined["rendererOptions"];
+                            delete combined["localeStrings"];
 
 
                             {/literal}
