@@ -43,8 +43,6 @@ require_once('include/Dashlets/Dashlet.php');
 
 
 class PivotDashlet extends Dashlet {
-    var $savedText; // users's saved text
-    var $height = '200'; // height of the pad
     var $pivotId;
     var $showGui;
 

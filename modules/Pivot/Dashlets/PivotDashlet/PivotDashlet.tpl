@@ -105,6 +105,8 @@
                 else {
                     {/literal}
                     $(".type-{$id}").val(item[0].type);
+                    //console.log(item[0].type);
+                    //console.log(item[0].config);
                     loadPivot(item[0].type, item[0].config);
                     toastr.success(item[0].name + " "+"{$lblLoadedSuccessfully}");
                     {literal}
@@ -236,11 +238,23 @@
                         },
                         function (mps) {
                             {/literal}
+
                             $(".txtChosenSave-{$id}").val($(".analysisType").val());
                             $(".txtConfigSave-{$id}").val(config);
                             {literal}
                             var configParsed = JSON.parse(config);
                             var combined = $.extend(configParsed, template);
+                            //Remove the two items that can cause issue by being array rather than objects
+                            if("derivedAttributes" in combined)
+                                delete configParsed["derivedAttributes"];
+                            if("rendererOptions" in combined)
+                                delete configParsed["rendererOptions"];
+
+                            ["aggregators"];
+                            delete config_copy["renderers"];
+                            delete config_copy["rendererOptions"];
+                            delete config_copy["localeStrings"];
+
 
                             {/literal}
                             $(".output-{$id}").pivotUI(mps, combined, true);

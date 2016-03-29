@@ -40,9 +40,9 @@ if (!defined('sugarEntry') || !sugarEntry) {
  ********************************************************************************/
 
 $dashletStrings['PivotDashlet'] = array(
-    'LBL_TITLE' => 'Analytics',
+    'LBL_TITLE' => 'Pivot',
     'LBL_DESCRIPTION' => 'Pivot reports of your data',
-    'LBL_SAVING' => 'Saving Analytics ...',
+    'LBL_SAVING' => 'Saving Pivot ...',
     'LBL_SAVED' => 'Saved',
     'LBL_CONFIGURE_TITLE' => 'Title',
     'LBL_PIVOT_TO_LOAD' => 'Pivot to Load',
