@@ -279,10 +279,13 @@ $(function() {
                 function (mps) {
                     $("#txtChosenSave").val($("#analysisType").val());
                     $("#txtConfigSave").val(config);
-
                     var configParsed =JSON.parse(config);
                     var combined = $.extend(configParsed,template);
-
+                    //Remove the two keys that can cause issue if passed as array rather than object
+                    if("derivedAttributes" in combined)
+                        delete configParsed["derivedAttributes"];
+                    if("rendererOptions" in combined)
+                        delete configParsed["rendererOptions"];
                     $("#output").pivotUI(mps,combined,true);
                 });
         }
