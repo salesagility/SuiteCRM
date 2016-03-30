@@ -209,7 +209,10 @@ $(function() {
         onRefresh:function(config)
         {
             var config_copy = JSON.parse(JSON.stringify(config));
-
+            delete config_copy["aggregators"];
+            delete config_copy["renderers"];
+            delete config_copy["rendererOptions"];
+            delete config_copy["localeStrings"];
             $("#txtChosenSave").val($("#analysisType").val());
             $("#txtConfigSave").val(JSON.stringify(config_copy, undefined, 2));
         }
