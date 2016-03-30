@@ -15,14 +15,14 @@ custom/modules/unified_search_modules_display.php
 # Ignore AOD indexes
 modules/AOD_Index/Index/*
 install/status.json
-# Custom configuration should also be ignored.
+# Configuration files should be ignored.
 /config.php
+/config_override.php
+/config_si.php
 # Connector configuration should also be ignored.
 custom/modules/Connectors/connectors/sources/ext/*/*/config.php
 # Logs files can safely be ignored.
 *.log
-## Test specific items
-config_si.php
 ## IDE specific items
 # Eclipse
 *.pydevproject
