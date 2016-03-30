@@ -210,7 +210,7 @@ if($mrkt_focus->template_id) {
     $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
 }
 else {
-    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, ""));
+    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : ""));
     $ss->assign("EDIT_TEMPLATE","visibility:hidden");
 }
 
