@@ -895,8 +895,8 @@
 
 
 			{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-			<div class="box ok">
-				<h2><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></h2>
+			<div class="box {if $error_on_templates}fail{else}ok{/if}">
+				<h2><a href="{$link_to_choose_template}"{if $error_on_templates} title="{$error_on_templates}"{/if}>{$MOD.LBL_CHOOSE_TEMPLATES}</a></h2>
 			</div>
 
 			<div class="box ok">
