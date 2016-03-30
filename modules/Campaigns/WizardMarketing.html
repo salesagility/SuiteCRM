@@ -864,21 +864,21 @@
 		<div class="wizard-summary-left">
 
 			<div class="box ok">
-				<h2>{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</h2>
+				<h2><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></h2>
 			</div>
 
 			<div class="box {if $error_on_target_list}fail{else}ok{/if}">
 				<h2>
 
-					{if $error_on_target_list}
+					{if $error_on_target_list}{/if}
 					<a href="{$link_to_target_list}" title="{$error_on_target_list}">
-					{/if}
+
 
 						{$MOD.LBL_CHOOSE_TARGETS}
 
-					{if $error_on_target_list}
+					{if $error_on_target_list}{/if}
 					</a>
-					{/if}
+
 
 				</h2>
 			</div>
@@ -886,11 +886,11 @@
 
 			{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 			<div class="box ok">
-				<h2>{$MOD.LBL_CHOOSE_TEMPLATES}</h2>
+				<h2><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></h2>
 			</div>
 
 			<div class="box ok">
-				<h2>{$MOD.LBL_SENDER_DETAILS}</h2>
+				<h2><a href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></h2>
 			</div>
 
 

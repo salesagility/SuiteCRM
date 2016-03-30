@@ -388,7 +388,12 @@ foreach($links as $link => $url) {
     }
 }
 
+$ss->assign('link_to_campaign_header', $camp_url.'1');
+
 $ss->assign('link_to_target_list', $camp_url.'2');
+
+$ss->assign('link_to_choose_template', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id);
+$ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id . '&jump=2');
 
 require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
