@@ -245,7 +245,7 @@
 							"<div id='trgt_added_"+targets_added+"'> " +
 							"	<table width='100%' class='tabDetailViewDL2'>" +
 							"		<tr class='tabDetailViewDL2' >" +
-							"			<td width='100' style=\"width:33%\">"+trgt_name_html+"</td>" +
+							"			<td width='100' style=\"width:33%\"><a href=\"index.php?module=ProspectLists&action=DetailView&record=" + trgt_id.value + "\" target=\"_blank\" title=\"{$MOD.LBL_OPEN_IN_NEW_WINDOW}\">"+trgt_name_html+"</a></td>" +
 							"			<td width='100' style=\"width:33%\">"+trgt_type_html+"</td>" +
 							"			<td width='100' style=\"width:33%\">"+trgt_id_html+
 							"				<a href='#' onclick=\"remove_target('trgt_added_"+targets_added+"','"+targets_added+"'); \" >  "+'{sugar_getimage name="delete_inline" ext=".gif" width="12" height="12" alt=$alt_remove other_attributes='align="absmiddle" border="0" '}'+"{$MOD.LBL_REMOVE}</a>" +

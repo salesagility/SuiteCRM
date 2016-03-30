@@ -471,6 +471,7 @@ $mod_strings = array (
 	'LBL_CHOOSE_TEMPLATES' => 'Choose Templates',
 	'LBL_CHOOSE_TARGETS' => 'Choose Targets',
 	'LBL_CAMPAIGN_DETAILS_AND_CONDITIONS' => 'Campaign Details and Conditions',
+	'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window..',
 );
 
 
