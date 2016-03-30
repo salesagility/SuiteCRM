@@ -2,6 +2,14 @@ var minNameLength = 5;
 var savedPivotList;
 
 $(function() {
+
+    //Chrome drag and drop fix
+    //The category drag and drop is thrown out and scrolls down quickly (and is not usable) hence this fix
+    //This is taken from the style.js for responding to smaller screens
+    $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 sidebar main');
+    $('.sidebar,#buttontoggle').hide();
+    //End of Chrome drag and drop fix
+
     var buttonLoad = SUGAR.language.get('Pivot','LBL_AN_BTN_LOAD');
     var buttonCancel = SUGAR.language.get('Pivot','LBL_AN_BTN_CANCEL');
     var buttonSave = SUGAR.language.get('Pivot','LBL_AN_BTN_SAVE');
@@ -193,22 +201,15 @@ $(function() {
 
     }
 
-
-
     var renderers = $.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers);
+
+
     var template = {
         renderers: renderers,
         onRefresh:function(config)
         {
             var config_copy = JSON.parse(JSON.stringify(config));
-            if(config_copy !== undefined && "aggregators" in config_copy)
-                delete config_copy["aggregators"];
-            if(config_copy !== undefined && "renderers" in config_copy)
-                delete config_copy["renderers"];
-            if(config_copy !== undefined && "rendererOptions" in config_copy)
-                delete config_copy["rendererOptions"];
-            if(config_copy !== undefined && "localeStrings" in config_copy)
-                delete config_copy["localeStrings"];
+
             $("#txtChosenSave").val($("#analysisType").val());
             $("#txtConfigSave").val(JSON.stringify(config_copy, undefined, 2));
         }
@@ -288,8 +289,8 @@ $(function() {
                     //Remove the two keys that can cause issue if passed as array rather than object
                     if("derivedAttributes" in combined)
                         delete configParsed["derivedAttributes"];
-                    if("rendererOptions" in combined)
-                        delete configParsed["rendererOptions"];
+
+                    console.log(combined);
                     $("#output").pivotUI(mps,combined,true);
                 });
         }

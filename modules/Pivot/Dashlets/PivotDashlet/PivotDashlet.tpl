@@ -1,14 +1,14 @@
 {literal}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.10/c3.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="include/javascript/d3/d3.min.js"></script>
+<script type="text/javascript" src="include/javascript/c3/c3.min.js"></script>
+<script type="text/javascript" src="include/javascript/touchPunch/jquery.ui.touch-punch.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
 <link rel="stylesheet" type="text/css" href="include/javascript/pivottable/pivot.css">
 <script type="text/javascript" src="include/javascript/pivottable/pivot.js"></script>
 <script type="text/javascript" src="include/javascript/pivottable/c3_renderers.js"></script>
+<script type="text/javascript" src="include/javascript/suitePivot/suitePivot.js"></script>
 
 <style>
     i.fa {
@@ -237,14 +237,6 @@
                             //Remove the two items that can cause issue by being array rather than objects
                             if("derivedAttributes" in combined)
                                 delete configParsed["derivedAttributes"];
-                            if("rendererOptions" in combined)
-                                delete configParsed["rendererOptions"];
-
-                            ["aggregators"];
-                            delete combined["renderers"];
-                            delete combined["rendererOptions"];
-                            delete combined["localeStrings"];
-
 
                             {/literal}
                             $(".output-{$id}").pivotUI(mps, combined, true);
