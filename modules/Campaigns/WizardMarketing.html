@@ -289,6 +289,16 @@
 			if(document.getElementById('wiz_current_step').value == document.getElementById('wiz_total_steps').value) {
 				wizardMenuFillAll();
 			}
+			changeNextBtnLabel();
+		}
+
+		function changeNextBtnLabel() {
+			if(document.getElementById('wiz_current_step').value == '2') {
+				$('#wiz_next_button').val('{/literal}{$MOD.LBL_CREATE_MARKETING_RECORD}{literal}');
+			}
+			else {
+				$('#wiz_next_button').val('{/literal}{$APP.LBL_NEXT_BUTTON_LABEL}{literal}');
+			}
 		}
 
 		{/literal}
@@ -1114,6 +1124,7 @@ var jumpToPageByURL = function() {
 				break;
 			}
 		}
+		changeNextBtnLabel();
 	};
 
 	if(jump != null) {
