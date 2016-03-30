@@ -5,4 +5,6 @@ $sugar_config['dashlet_auto_refresh_min'] = '30';
 $sugar_config['enable_action_menu'] = true;
 $sugar_config['stack_trace_errors'] = false;
 $sugar_config['developerMode'] = true;
+$sugar_config['addAjaxBannedModules'][62] = 'Pivot';
+$sugar_config['addAjaxBannedModules'][63] = 'SecurityGroups';
 /***CONFIGURATOR***/
