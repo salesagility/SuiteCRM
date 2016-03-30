@@ -95,9 +95,9 @@ SugarVCalClient.prototype.load = function(user_id, request_id) {
                 GLOBAL_REGISTRY.freebusy_adjusted = new Object();
             }
             // parse vCal and put it in the registry using the user_id as a key:
-            GLOBAL_REGISTRY.freebusy[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, false);
+            GLOBAL_REGISTRY.freebusy[user_id]=SugarVCalClient.prototype.parseResults(result.responseText,false , global_request_registry[request_id][0].timeslots[0].date_obj);
             // parse for current user adjusted vCal
-            GLOBAL_REGISTRY.freebusy_adjusted[user_id] = SugarVCalClient.prototype.parseResults(result.responseText, true);
+            GLOBAL_REGISTRY.freebusy_adjusted[user_id]=SugarVCalClient.prototype.parseResults(result.responseText,true, global_request_registry[request_id][0].timeslots[0].date_obj);
             // now call the display() on the widget registered at request_id:
             global_request_registry[request_id][0].display();
         },
@@ -107,7 +107,7 @@ SugarVCalClient.prototype.load = function(user_id, request_id) {
 }
 
 // parse vCal freebusy info and return object
-SugarVCalClient.prototype.parseResults = function(textResult, adjusted) {
+SugarVCalClient.prototype.parseResults = function(textResult, adjusted, meetingDate) {
     var matchXFREEBUSYID = /X\-FREEBUSY\-ID.*?\:([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)\-([\w]+)/g;
     var matchFREEBUSY = /FREEBUSY.*?\:([\w]+)\/([\w]+)/g;
     var matchFREEBUSYTYPE = /X\-FREEBUSY\-TYPE.*?\:([\w]+)/g;
@@ -133,7 +133,15 @@ SugarVCalClient.prototype.parseResults = function(textResult, adjusted) {
     else
         dst_end = GLOBAL_REGISTRY.current_user.fields.dst_end.replace(/ /gi, 'T').replace(/:/gi, '').replace(/-/gi, '') + 'Z';
 
-    gmt_offset_secs = GLOBAL_REGISTRY.current_user.fields.gmt_offset * 60;
+    // Fix for issue #208 - take Daylight saving time into consideration
+    var d = new Date(meetingDate);
+    var offset = d.getTimezoneOffset();
+
+    if (offset > 0 || offset < 0) {
+        gmt_offset_secs = (GLOBAL_REGISTRY.current_user.fields.gmt_offset + 60) * 60;
+    } else {
+        gmt_offset_secs = GLOBAL_REGISTRY.current_user.fields.gmt_offset*60;
+    }
 
     var index = 0;
     // New loop through all FREEBUSY & Customer Values
