@@ -65,7 +65,7 @@
                 }
                 document.getElementById("mailsettings1").style.display = 'none';
                 document.getElementById("mailsettings2").style.display = 'none';
-                document.getElementById("password_change_label").innerHTML =
+                //document.getElementById("password_change_label").innerHTML =
                         document.getElementById("password_change_label").innerHTML = '{/literal}{$MOD.LBL_YAHOOMAIL_SMTPPASS}{literal}';
                 document.getElementById("mail_smtpuser_label").innerHTML = '{/literal}{$MOD.LBL_YAHOOMAIL_SMTPUSER}{literal}';
                 break;
@@ -92,7 +92,7 @@
                         || document.getElementById("mail_smtpserver").value == 'smtp.gmail.com' ) {
                     document.getElementById("mail_smtpserver").value = '';
                 }
-                //document.getElementById("mail_smtpport").value = '25';
+                document.getElementById("mail_smtpport").value = '465';
                 //document.getElementById("mail_smtpauth_req").checked = true; bug 40998
                 document.getElementById("mailsettings1").style.display = '';
                 document.getElementById("mailsettings2").style.display = '';
