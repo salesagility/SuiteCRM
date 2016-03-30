@@ -191,17 +191,20 @@
 		function onNextClick() {
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
-					// validate email template form before save
-					if(isValidEmailTemplateFormAndShowErrors()) {
-						onSaveCopyMarketingEmailTemplate(function () {
-							if (hasNewAttachments()) {
-								submitMarketingEmailAttachments();
+						var updateChecked = $('input[name="update_exists_template"]').prop('checked');
+						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+							// validate email template form before save
+							if (isValidEmailTemplateFormAndShowErrors()) {
+								onSaveCopyMarketingEmailTemplate(function () {
+									if (hasNewAttachments()) {
+										submitMarketingEmailAttachments();
+									}
+									else {
+										onNext();
+									}
+								});
 							}
-							else {
-								onNext();
-							}
-						});
-					}
+						}
 					break;
 
 				case '2':
