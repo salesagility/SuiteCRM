@@ -6,8 +6,9 @@ $(function() {
     //Chrome drag and drop fix
     //The category drag and drop is thrown out and scrolls down quickly (and is not usable) hence this fix
     //This is taken from the style.js for responding to smaller screens
-    $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 sidebar main');
-    $('.sidebar,#buttontoggle').hide();
+    //$('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 sidebar main');
+    //$('.sidebar,#buttontoggle').hide();
+    $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10');
     //End of Chrome drag and drop fix
 
     var buttonLoad = SUGAR.language.get('Pivot','LBL_AN_BTN_LOAD');
