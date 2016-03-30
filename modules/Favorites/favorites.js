@@ -33,7 +33,7 @@ function add_favorite_sidebar(sidebar_element){
 
 /*Finds the related record in the sidebar and removes the html*/
 function remove_favorite_sidebar() {
-    $('#' + favorite_id).remove();
+    $('#' + favorite_id + '_favorite').remove();
 }
 
 /*Shows or hides the relevant star icon passed in*/
@@ -104,7 +104,7 @@ function format_sidebar_elements(data){
     var elements = JSON.parse(data.responseText);
     elements = elements[0];
 
-    var div_start = "<div class='recently_viewed_link_container_sidebar' id='" + elements.id +"'>";
+    var div_start = "<div class='recently_viewed_link_container_sidebar' id='" + elements.id +"_favorite'>";
     var edit_link = "<li class='recentlinks_edit'><a href='index.php?module=" + elements.module_name + "&action=EditView&record=" + elements.id + "'><span class=' glyphicon glyphicon-pencil' aria-hidden='true'></span></a></li>";
     var detail_link = "<li class='recentlinks' role='presenation'><a href='index.php?module=" + elements.module_name + "&action=DetailView&record=" + elements.id + "'>" + elements.image + "<span aria-hidden='true'> " + elements.item_summary_short + "</span></a></li>";
     var div_close = "</div>";

@@ -342,18 +342,6 @@ EOF;
     //or stacked (false)
     private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
-        //$keys = array_keys($chartTooltips);
-
-
-        $i=0;
-        foreach($chartDataValues as $rowKey => $row) {
-            foreach($row as $key => $value) {
-                $_tooltips[$rowKey][$key] = $chartTooltips[$i];
-                $i++;
-            }
-        }
-
-
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
         if(!$grouped)
@@ -669,7 +657,7 @@ EOF;
             foreach($reportData as $key2 => $row2) {
                 if($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
                     $data      [ $row[$xName]  ]   [] = (float) $row[$yName];
-                    $tooltips  [ $row[$xName]  ]   [] = $row[$zName];
+                    $tooltips  [ $row[$xName]  ]   [] = isset($row[$zName]) ? $row[$zName] : null;
                     $usedKeys[] = $key;
                 }
             }

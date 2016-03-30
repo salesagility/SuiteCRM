@@ -43,7 +43,7 @@
 -->
 <!-- BEGIN: main -->
 <style>
-	#subjectfield { height: 1.6em; }
+	#subjectfield { height: 27px; }
 </style>
 {JAVASCRIPT}
 <script type="text/javascript" language="Javascript" src="modules/Emails/javascript/Email.js?v={VERSION_MARK}"></script>
@@ -194,8 +194,13 @@
 
 <!-- BEGIN: textarea -->
 						<td colspan="4" >
+
+
+							{BODY_MOZAIK}
+
+
 							<div id='body_text_div'>
-							<textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40">{BODY_HTML}</textarea>
+							<textarea id='body_text' tabindex='0' name='body_html' cols="100" rows="40" style="display: none;">{BODY_HTML}</textarea>
 							</div>
                             <br>
 							<div id='toggle_textarea_option'>
@@ -237,7 +242,7 @@
 	</div>
 </form>
 <!-- END: NoInbound3 -->
-{tiny}
+
 <script type="text/javascript" language="javascript">
 <!-- BEGIN: NoInbound4 -->
 toggle_textarea_elem_values = ['{MOD.LBL_EDIT_ALT_TEXT}', '{MOD.LBL_HIDE_ALT_TEXT}'];

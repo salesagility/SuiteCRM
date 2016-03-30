@@ -194,6 +194,9 @@ if ($test) {
 	$header_URL = "Location: index.php?action={$return_action}&module={$return_module}&record={$return_id}";
     if($from_wiz){$header_URL .= "&from=send";}
 }
+if($action=='WizardMarketingSave') {
+	$header_URL .= '&WizardMarketingSave=1&marketing_id=' . $_REQUEST['wiz_mass'];
+}
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
 header($header_URL);
 ?>

@@ -137,7 +137,7 @@ EOQ;
 	}
 
 
-	function handleSave($prefix,$redirect=true, $useRequired=false)
+	function handleSave($prefix,$redirect=true, $useRequired=false, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false)
 	{
 		require_once('include/formbase.php');
 		require_once('include/upload_file.php');
@@ -146,45 +146,61 @@ EOQ;
 		global $sugar_config;
 
 		$focus = new EmailTemplate();
-		if($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
+		if ($useRequired && !checkRequired($prefix, array_keys($focus->required_fields))) {
 			return null;
 		}
 		$focus = populateFromPost($prefix, $focus);
-        //process the text only flag
-        if(isset($_POST['text_only']) && ($_POST['text_only'] == '1')){
-            $focus->text_only = 1;
-        }else{
-            $focus->text_only = 0;
-        }
-		if(!$focus->ACLAccess('Save')) {
+		//process the text only flag
+		if (isset($_POST['text_only']) && ($_POST['text_only'] == '1')) {
+			$focus->text_only = 1;
+		} else {
+			$focus->text_only = 0;
+		}
+		if (!$focus->ACLAccess('Save')) {
 			ACLController::displayNoAccess(true);
 			sugar_cleanup(true);
 		}
-		if(!isset($_REQUEST['published'])) $focus->published = 'off';
+		if (!isset($_REQUEST['published'])) $focus->published = 'off';
 
+		$this->handleAttachmentsProcessImages($focus, $redirect, $useSiteURL, $entryPoint, $useUploadFolder);
+	}
+
+	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false) {
+		global $sugar_config;
 		$preProcessedImages = array();
 		$emailTemplateBodyHtml = from_html($focus->body_html);
-		if(strpos($emailTemplateBodyHtml, '"cache/images/')) {
+		if (strpos($emailTemplateBodyHtml, '"cache/images/')) {
 			$matches = array();
 			preg_match_all('#<img[^>]*[\s]+src[^=]*=[\s]*["\']cache/images/(.+?)["\']#si', $emailTemplateBodyHtml, $matches);
-			foreach($matches[1] as $match) {
+			foreach ($matches[1] as $match) {
 				$filename = urldecode($match);
-                if($filename != pathinfo($filename, PATHINFO_BASENAME)) {
-                    // don't allow paths there
-                    $emailTemplateBodyHtml = str_replace("cache/images/$match", "", $emailTemplateBodyHtml);
-                    continue;
-                }
+				if ($filename != pathinfo($filename, PATHINFO_BASENAME)) {
+					// don't allow paths there
+					$emailTemplateBodyHtml = str_replace("cache/images/$match", "", $emailTemplateBodyHtml);
+					continue;
+				}
 				$file_location = sugar_cached("images/{$filename}");
 				$mime_type = pathinfo($filename, PATHINFO_EXTENSION);
 
-				if(file_exists($file_location)) {
-					$id = create_guid();
+				if (file_exists($file_location)) {
+					//$id = create_guid();
+
+					$note = new Note();
+					$note->save();
+					$id = $note->id;
+
 					$newFileLocation = "upload://$id";
-					if(!copy($file_location, $newFileLocation)) {
+					if (!copy($file_location, $newFileLocation)) {
 						$GLOBALS['log']->debug("EMAIL Template could not copy attachment to $newFileLocation");
 					} else {
-						$secureLink = "index.php?entryPoint=download&type=Notes&id={$id}";
-					    $emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
+						if($useUploadFolder) {
+							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "upload/{$id}";
+						}
+						else {
+							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=" . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
+						}
+
+						$emailTemplateBodyHtml = str_replace("cache/images/$match", $secureLink, $emailTemplateBodyHtml);
 						unlink($file_location);
 						$preProcessedImages[$filename] = $id;
 					}
@@ -192,18 +208,24 @@ EOQ;
 			} // foreach
 		} // if
 		if (isset($GLOBALS['check_notify'])) {
-            $check_notify = $GLOBALS['check_notify'];
-        }
-        else {
-            $check_notify = FALSE;
-        }
-        $focus->body_html = $emailTemplateBodyHtml;
-        $return_id = $focus->save($check_notify);
+			$check_notify = $GLOBALS['check_notify'];
+		} else {
+			$check_notify = FALSE;
+		}
+		$focus->body_html = $emailTemplateBodyHtml;
+		$return_id = $focus->save($check_notify);
+
+		return $this->handleAttachments($focus, $redirect, $return_id);
+	}
+
+	public function handleAttachments($focus, $redirect, $return_id) {
 		///////////////////////////////////////////////////////////////////////////////
 		////	ATTACHMENT HANDLING
 
 		///////////////////////////////////////////////////////////////////////////
 		////	ADDING NEW ATTACHMENTS
+
+		global $mod_strings;
 
 		$max_files_upload = count($_FILES);
 
