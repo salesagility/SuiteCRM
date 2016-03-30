@@ -198,13 +198,25 @@ function validateFormAndSave(field,id,module,type){
  */
 
 function clickedawayclose(field,id,module, type){
+    // Fix for issue #373 get name from system field name.
+    var message_field = 'LBL_' + field.toUpperCase();
+    message_field = SUGAR.language.get(module, message_field);
+
+    // Fix for issue #373 remove ':'
+    var last_charachter = message_field.substring(message_field.length, message_field.length - 1);
+    if (':'.toUpperCase() === last_charachter.toUpperCase()) {
+        message_field = message_field.substring(0, message_field.length - 1);
+    }
+
     $(document).on('click', function (e) {
 
         if(!$(e.target).parents().is(".inlineEditActive, .cal_panel") && !$(e.target).hasClass("inlineEditActive")){
             var output_value = loadFieldHTMLValue(field,id,module);
             var user_value = getInputValue(field, type);
-            if(user_value != output_value) {
-                var r = confirm("You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing " + field);
+            // Fix for issue #373 strip HTML tags for correct comparison
+            var output_value_compare = $(output_value).text();
+            if(user_value != output_value_compare) {
+                var r = confirm("You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing " + message_field);
                 if(r == true) {
                     var output = setValueClose(output_value);
                     $(document).off('click');
@@ -250,7 +262,7 @@ function getInputValue(field,type){
                 break;
             case 'enum':
                 if($('#'+ field + ' :selected').text().length > 0){
-                    return $('#'+ field + ' :selected').text();
+                    return $('#'+ field + ' :selected').val();
                 }
                 break;
             case 'datetime':
@@ -281,6 +293,11 @@ function getInputValue(field,type){
                    return "on";
                 }else{
                     return "off";
+                }
+                break;
+            case 'radioenum':
+                if($('input[name='+field+']:checked').val()){
+                    return $('input[name='+field+']:checked').val();
                 }
                 break;
             default:

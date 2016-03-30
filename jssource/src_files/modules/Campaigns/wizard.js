@@ -123,13 +123,17 @@
     *  5.adjusts the step location message
     */
 
-    function navigate(direction){
+    function navigate(direction, noValidation){
+        if(typeof noValidation == 'undefined') {
+            noValidation = false;
+        }
+
         //get the current step
         var current_step = document.getElementById('wiz_current_step');
         var currentValue = parseInt(current_step.value);
     
         //validation needed. (specialvalidation,  plus step number, plus submit button)
-        if(validate_wiz(current_step.value,direction)){
+        if(noValidation || validate_wiz(current_step.value,direction)){
             
             //change current step value to that of the step being navigated to
             if(direction == 'back'){
@@ -292,35 +296,87 @@
         return true;        
     }
 
-var onEmailTemplateChange = function(elem) {
-    var emailTemplateId = $(elem).val();
+var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, callback) {
 
-    $('#email_template_view_html').html('');
-    $('#email_template_view').html('');
+    var autoCheckUpdateCheckbox = function() {
+        if (!$('#template_id').val()) {
+            $('input[name="update_exists_template"]').prop('checked', false);
+            $('input[name="update_exists_template"]').prop('disabled', true);
+        }
+        else {
+            $('input[name="update_exists_template"]').prop('disabled', false);
+        }
+    }
 
-    $.post('index.php?entryPoint=emailTemplateData', {
-        'emailTemplateId': emailTemplateId
-    }, function(resp){
-        var results = JSON.parse(resp);
-        $('#email_template_view_html').html(results.data.body_html);
-        $('#email_template_view').html(results.data.body);
+    autoCheckUpdateCheckbox();
 
-        document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
-        document.getElementById("html_frame").contentWindow.document.close();
-    });
+    if($('input[name="update_exists_template"]').prop('checked')) {
+        namePrefixCopyOf = '';
+    }
 
-    show_edit_template_link(elem);
+    var emailTemplateId = $(elem).val() ? $(elem).val() : (typeof templateIdDefault != 'undefined' && templateIdDefault ? templateIdDefault : null);
+    if(emailTemplateId) {
+
+        $('#email_template_view_html').html('');
+        $('#email_template_view').html('');
+
+        $.post('index.php?entryPoint=emailTemplateData', {
+            'emailTemplateId': emailTemplateId
+        }, function (resp) {
+            var results = JSON.parse(resp);
+            if(!results.error) {
+                $('#email_template_view_html').html(results.data.body_html);
+                $('#email_template_view').html(results.data.body);
+
+                //document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
+                //document.getElementById("html_frame").contentWindow.document.close();
+
+                var htmlCode = $('<textarea />').html(results.data.body_html).text();
+                $('#email_template_editor').html(htmlCode);
+                $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
+                $('#template_id').val(results.data.id);
+                $('input[name="update_exists_template"]').prop('checked', true);
+                autoCheckUpdateCheckbox();
+
+                $('#template_name').val( ($('#update_exists_template').prop('checked') ? namePrefixCopyOf : '') + results.data.name);
+                $('#template_subject').val(results.data.subject);
+                if(typeof callback != 'undefined') {
+                    callback();
+                }
+            }
+            else {
+                console.log(results.error);
+            }
+
+        });
+    }
+
+    //show_edit_template_link(elem);
 };
 
 var onScheduleClick = function(e) {
-    $('#wiz_home_next_step').val(3);
-    $('#wiz_submit_button').click();
+    $('input[name="action"]').val('WizardMarketingSave');
+    $('input[name="module"]').val('Campaigns');
+    $('#show_wizard_summary').val('1');
+    $('#sendMarketingEmailSchedule').val('1');
+    $('#sendMarketingEmailTest').val('0');
+
+    //var data = $('#wizform').serialize();
+    //$.post('index.php?'+data, data, function(resp){
+    //    console.log(resp);
+    //});
+    $('#wizform').submit();
 };
 
 
-var onSendAsTestClick = function(e) {
-    $('#wiz_home_next_step').val(2);
-    $('#wiz_submit_button').click();
+var onSendAsTestClick = function(e, campaignId, marketingId) {
+    $('input[name="action"]').val('WizardMarketingSave');
+    $('input[name="module"]').val('Campaigns');
+    $('#show_wizard_summary').val('1');
+    $('#sendMarketingEmailSchedule').val('0');
+    $('#sendMarketingEmailTest').val('1');
+    $('#wizform').submit();
 };
 
 

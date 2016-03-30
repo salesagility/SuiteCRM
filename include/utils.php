@@ -4723,7 +4723,8 @@ function verify_uploaded_image($path, $jpeg_only = false)
 
 	$img_size = getimagesize($path);
 	$filetype = $img_size['mime'];
-	$ext = end(explode(".", $path));
+	$tmpArray = explode(".", $path);
+	$ext = end($tmpArray);
 	if(substr_count('..', $path) > 0 || ($ext !== $path && !isset($supportedExtensions[strtolower($ext)])) ||
 	    !in_array($filetype, array_values($supportedExtensions))) {
 	        return false;
@@ -5079,6 +5080,23 @@ function assignConcatenatedValue(SugarBean $bean, $fieldDef, $value)
             $bean->$fieldName .= ' ' . implode(' ', $valueParts);
         }
     }
+}
+
+/**
+ * Performs unserialization. Accepts all types except Objects
+ *
+ * @param string $value Serialized value of any type except Object
+ * @return mixed False if Object, converted value for other cases
+ */
+function sugar_unserialize($value)
+{
+    preg_match('/[oc]:\d+:/i', $value, $matches);
+
+    if (count($matches)) {
+        return false;
+    }
+
+    return unserialize($value);
 }
 
 define("DEFAULT_UTIL_SUITE_ENCODING","UTF-8");

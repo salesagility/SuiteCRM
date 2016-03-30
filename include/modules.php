@@ -475,6 +475,12 @@ $modules_exempt_from_availability_check['OutboundEmailAccounts'] = 'OutboundEmai
 $report_include_modules['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
 $modInvisList[] = 'OutboundEmailAccounts';
 
+$beanList['TemplateSectionLine'] = 'TemplateSectionLine';
+$beanFiles['TemplateSectionLine'] = 'modules/TemplateSectionLine/TemplateSectionLine.php';
+$modules_exempt_from_availability_check['TemplateSectionLine'] = 'TemplateSectionLine';
+$report_include_modules['TemplateSectionLine'] = 'TemplateSectionLine';
+$modInvisList[] = 'TemplateSectionLine';
+
 if (file_exists('include/modules_override.php'))
 {
     include('include/modules_override.php');

@@ -44,18 +44,20 @@ if (file_exists('custom/' . $filePath))
 {
     require_once('custom/' . $filePath);
     $quicksearchQuery = new quicksearchQueryCustom();
+    $conditionEqual = quicksearchQueryCustom::CONDITION_EQUAL;
 }
 else
 {
     require_once($filePath);
     $quicksearchQuery = new quicksearchQuery();
+    $conditionEqual = quicksearchQuery::CONDITION_EQUAL;
 }
 
 $json = getJSONobj();
 $data = $json->decode(html_entity_decode($_REQUEST['data']));
 if(isset($_REQUEST['query']) && !empty($_REQUEST['query'])){
     foreach($data['conditions'] as $k=>$v){
-        if (empty($data['conditions'][$k]['value']) && ($data['conditions'][$k]['op'] != quicksearchQuery::CONDITION_EQUAL)) 
+        if (empty($data['conditions'][$k]['value']) && ($data['conditions'][$k]['op'] != $conditionEqual))
         {
             $data['conditions'][$k]['value']=urldecode($_REQUEST['query']);
         }

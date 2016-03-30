@@ -80,7 +80,10 @@ $entry_point_registry = array(
 	'retrieve_dash_page' => array('file' => 'include/MySugar/retrieve_dash_page.php' , 'auth' => true),
 	'remove_dash_page' => array('file' => 'modules/Home/RemoveDashboardPages.php' , 'auth' => true),
 	'rename_dash_page' => array('file' => 'modules/Home/RenameDashboardPages.php' , 'auth' => true),
-	'emailTemplateData' => array('file' => 'modules/EmailTemplates/EmailTemplateData.php', 'auth' => true)
+	'emailTemplateData' => array('file' => 'modules/EmailTemplates/EmailTemplateData.php', 'auth' => true),
+	'emailMarketingData' => array('file' => 'modules/EmailMarketing/Save.php', 'auth' => true),
+	'campaignTrackerSave' => array('file' => 'modules/CampaignTrackers/Save.php', 'auth' => true),
+	'emailMarketingList' => array('file' => 'modules/EmailMarketing/List.php', 'auth' => true),
 );
 
 ?>

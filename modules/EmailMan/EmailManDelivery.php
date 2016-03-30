@@ -279,7 +279,16 @@ if(isset($temp_user)){
 if (isset($_REQUEST['return_module']) && isset($_REQUEST['return_action']) && isset($_REQUEST['return_id'])) {
     $from_wiz=' ';
     if(isset($_REQUEST['from_wiz'])&& $_REQUEST['from_wiz']==true){
-        header("Location: index.php?module={$_REQUEST['return_module']}&action={$_REQUEST['return_action']}&record={$_REQUEST['return_id']}&from=test");
+
+		if(isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) {
+			//header("Location: index.php?module={$_REQUEST['return_module']}&action={$_REQUEST['return_action']}&record={$_REQUEST['return_id']}&from=test");
+			$header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardMarketing&return_id=" . $_REQUEST['campaign_id'] . "&campaign_id=" . $_REQUEST['campaign_id'] . "&show_wizard_marketing&jump=3&marketing_id=" . $_REQUEST['marketing_id'] . "&record=" . $_REQUEST['marketing_id'];
+			header($header_URL);
+		}
+		else {
+			header("Location: index.php?module={$_REQUEST['return_module']}&action={$_REQUEST['return_action']}&record={$_REQUEST['return_id']}&from=test");
+		}
+
     }else{
 		header("Location: index.php?module={$_REQUEST['return_module']}&action={$_REQUEST['return_action']}&record={$_REQUEST['return_id']}");
     }

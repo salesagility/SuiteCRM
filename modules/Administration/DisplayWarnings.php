@@ -3,9 +3,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -61,20 +61,6 @@ if(isset($_SESSION['rebuild_extensions'])){
 	displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if (empty($license)){
-	$license=new Administration();
-	$license=$license->retrieveSettings('license');
-}
-
-
-
-if(!empty($_SESSION['HomeOnly'])){
-	displayAdminError(translate('FATAL_LICENSE_ALTERED', 'Administration'));
-}
-
-if(isset($license) && !empty($license->settings['license_msg_all'])){
-	displayAdminError(base64_decode($license->settings['license_msg_all']));
-}
 if ( (strpos($_SERVER["SERVER_SOFTWARE"],'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0') ) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }
@@ -135,18 +121,6 @@ if($smtp_error) {
 			}
         }
 
-//		if (!isset($_SESSION['dst_fixed']) || $_SESSION['dst_fixed'] != true) {
-//			$qDst = "SELECT count(*) AS dst FROM versions WHERE name = 'DST Fix'";
-//			$rDst = $db->query($qDst);
-//			$rowsDst = $db->fetchByAssoc($rDst);
-//			if($rowsDst['dst'] > 0) {
-//				$_SESSION['dst_fixed'] = true;
-//			} else {
-//				$_SESSION['dst_fixed'] = false;
-//				displayAdminError($app_strings['LBL_DST_NEEDS_FIXIN']);
-//			}
-//
-//		}
 
 		if(isset($_SESSION['administrator_error']))
 		{

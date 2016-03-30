@@ -176,7 +176,7 @@
 
 
             </div>
-            <script type="text/javascript" src=include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+            <script type="text/javascript" src="include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
             <script type="text/javascript" src="include/MySugar/javascript/retrievePage.js"></script>
 
             <link rel="stylesheet" type="text/css" href="include/MySugar/dashboardstyle.css">

@@ -211,6 +211,7 @@ class AOD_Index extends AOD_Index_sugar {
     }
 
     private function getIndexEvent($module, $beanId){
+    	global $timedate;
         $indexEventBean = BeanFactory::getBean("AOD_IndexEvent");
         $indexEvents = $indexEventBean->get_full_list('',"aod_indexevent.record_id = '".$beanId."' AND aod_indexevent.record_module = '".$module."'");
         if($indexEvents){
@@ -227,6 +228,13 @@ class AOD_Index extends AOD_Index_sugar {
             $indexEvent->record_id = $beanId;
             $indexEvent->record_module = $module;
         }
+        /*
+         * "Now" is cached in the SugarBean which means for long running processes (such as the indexing scheduler) that
+         * the date_modified could be in the past. This caused issues when comparing the date modified of the event with that
+         * of a bean. Here we explicitly set the date modified to be the current date.
+         */
+        $indexEvent->update_date_modified = false;
+        $indexEvent->date_modified = $timedate->asDb(new DateTime());
         return $indexEvent;
     }
 
@@ -295,6 +303,7 @@ class AOD_Index extends AOD_Index_sugar {
             $GLOBALS['log']->error($ex->getMessage());
             return false;
         }
+        return true;
     }
     private function getIdForDoc($module, $beanId){
         return $module . " " . $beanId;

@@ -112,7 +112,7 @@
 		<ul class="target-list">
 			<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" style="width: 100%;"></li>
 			{foreach from=$targetListData item=targetList}
-				<li class="target-list-item" data-id="{$tagetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
+				<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
 			{/foreach}
 		</ul>
 		{literal}
@@ -168,6 +168,23 @@
 				<div id='added_targets'>
 					{$EXISTING_TARGETS}
 				</div>
+					{literal}
+						<script type="text/javascript">
+							$(function(){
+								setInterval(function(){
+									if(!$('input[name="targetListSearch"]').val()) {
+										$('li.target-list-item').show();
+										$('#added_targets input[type="hidden"]').each(function (i, e) {
+											if ($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
+												var targetListId = $(e).val();
+												$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
+											}
+										});
+									}
+								}, 300);
+							});
+						</script>
+					{/literal}
 
 
 			</td></tr>

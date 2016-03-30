@@ -271,6 +271,7 @@ echo $javascript->getScript();
 
     }
     //if count is 0, then hide inputs and and print warning message
+    $pl_diabled_test_too = true;
     if ($pl_count==0){
         if ($pl_lists==0){
             //print no target list warning
@@ -281,6 +282,7 @@ echo $javascript->getScript();
             if($campaign_focus->campaign_type='NewsLetter'){
                 $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
+                $pl_diabled_test_too = false;
             }else{
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
@@ -288,6 +290,7 @@ echo $javascript->getScript();
         }
         //disable the send email options
         $ss->assign("PL_DISABLED",'disabled');
+        $ss->assign("PL_DISABLED_TEST", $pl_diabled_test_too ? 'disabled' : false);
 
     }else{
         //show inputs and assign type to be radio
@@ -387,5 +390,124 @@ foreach($links as $link => $url) {
 
 $ss->assign('link_to_target_list', $camp_url.'2');
 
+require_once('include/SuiteMozaik.php');
+$mozaik = new SuiteMozaik();
+$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
+
+if(isset($mrkt_lists[0])) {
+    $ss->assign('EmailMarketingId', $mrkt_lists[0]);
+}
+
+
+
+//if campaign_id is passed then we assume this is being invoked from the campaign module and in a popup.
+$has_campaign = true;
+$inboundEmail = true;
+if (!isset($_REQUEST['campaign_id']) || empty($_REQUEST['campaign_id'])) {
+    $has_campaign = false;
+}
+if (!isset($_REQUEST['inboundEmail']) || empty($_REQUEST['inboundEmail'])) {
+    $inboundEmail = false;
+}
+
+// todo : its for testing, remove this!
+//$has_campaign = false;
+
+include_once 'modules/EmailTemplates/templateFields.php';
+$ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
+
+///////////////////////////////////////
+////	CAMPAIGNS
+if ($has_campaign || $inboundEmail) {
+    //$ss->assign("INPOPUPWINDOW", 'true');
+    $ss->assign("INSERT_URL_ONCLICK", "insert_variable_html_link(document.wizform.tracker_url.value)");
+    if ($has_campaign) {
+        $campaign_urls = get_campaign_urls($_REQUEST['campaign_id']);
+    }
+    if (!empty($campaign_urls)) {
+        $ss->assign("DEFAULT_URL_TEXT", key($campaign_urls));
+    }
+    if ($has_campaign) {
+        $ss->assign("TRACKER_KEY_OPTIONS", get_select_options_with_id($campaign_urls, null));
+        //$ss->parse("main.NoInbound.tracker_url");
+
+        // create tracker URL fields
+        $campaignTracker = new CampaignTracker();
+        if(isset($_REQUEST['campaign_tracker_id']) && $_REQUEST['campaign_tracker_id']) {
+            $campaignTracker->retrieve((int) $_REQUEST['campaign_tracker_id']);
+        }
+        // todo: hide tracker select if it has no trackers
+        $ss->assign("TRACKER_NAME", isset($focus) ? $focus->tracker_name : null);
+        $ss->assign("TRACKER_URL", isset($focus) ? $focus->tracker_url : null);
+        if (!empty($focus->is_optout) && $focus->is_optout == 1) {
+            $ss->assign("IS_OPTOUT_CHECKED","checked");
+            $ss->assign("TRACKER_URL_DISABLED","disabled");
+        }
+
+    }
+}
+// create option of "Contact/Lead/Task" from corresponding module
+// translations
+$lblContactAndOthers = implode('/', array(
+    isset($app_list_strings['moduleListSingular']['Contacts']) ? $app_list_strings['moduleListSingular']['Contacts'] : 'Contact',
+    isset($app_list_strings['moduleListSingular']['Leads']) ? $app_list_strings['moduleListSingular']['Leads'] : 'Lead',
+    isset($app_list_strings['moduleListSingular']['Prospects']) ? $app_list_strings['moduleListSingular']['Prospects'] : 'Target',
+));
+
+// The insert variable drodown should be conditionally displayed.
+// If it's campaign then hide the Account.
+if ($has_campaign) {
+    $dropdown = "<option value='Contacts'>
+						" . $lblContactAndOthers . "
+			       </option>";
+    $ss->assign("DROPDOWN", $dropdown);
+    $ss->assign("DEFAULT_MODULE", 'Contacts');
+    //$xtpl->assign("CAMPAIGN_POPUP_JS", '<script type="text/javascript" src="include/javascript/sugar_3.js"></script>');
+} else {
+
+    $ss->assign("DROPDOWN", genDropDownJS2());
+    $ss->assign("DEFAULT_MODULE", 'Accounts');
+}
+
+$ss->assign("INSERT_VARIABLE_ONCLICK", "insert_variable(document.wizform.variable_text.value, \"email_template_editor\")");
+
+
+///////////////////////////////////////
+////    ATTACHMENTS
+$attachments = '';
+if (!empty($mrkt_focus->id)) {
+    $etid = $mrkt_focus->id;
+} elseif (!empty($old_id)) {
+    $ss->assign('OLD_ID', $old_id);
+    $etid = $old_id;
+}
+if (!empty($etid)) {
+    $note = new Note();
+    $where = "notes.parent_id='{$etid}' AND notes.filename IS NOT NULL";
+    $notes_list = $note->get_full_list("", $where, true);
+
+    if (!isset($notes_list)) {
+        $notes_list = array();
+    }
+    for ($i = 0; $i < count($notes_list); $i++) {
+        $the_note = $notes_list[$i];
+        if (empty($the_note->filename)) {
+            continue;
+        }
+        $secureLink = 'index.php?entryPoint=download&id=' . $the_note->id . '&type=Notes';
+        $attachments .= '<input type="checkbox" name="remove_attachment[]" value="' . $the_note->id . '"> ' . $app_strings['LNK_REMOVE'] . '&nbsp;&nbsp;';
+        $attachments .= '<a href="' . $secureLink . '" target="_blank">' . $the_note->filename . '</a><br>';
+    }
+}
+$attJs = '<script type="text/javascript">';
+$attJs .= 'var lnk_remove = "' . $app_strings['LNK_REMOVE'] . '";';
+$attJs .= '</script>';
+$ss->assign('ATTACHMENTS', $attachments);
+$ss->assign('ATTACHMENTS_JAVASCRIPT', $attJs);
+
+////    END ATTACHMENTS
+///////////////////////////////////////
+
+$ss->assign('campaign_type', isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] ? $_REQUEST['campaign_type'] : $campaign_focus->campaign_type);
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

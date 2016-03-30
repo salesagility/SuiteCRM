@@ -57,7 +57,7 @@ function submitSearch(subpanel) {
             if($(this).is(":checked")) submit_data.push($(this).attr("name")+'='+$(this).val());
         }
         else if (type != "button" && type != "submit") {
-            if ($(this).val() != '') submit_data.push($(this).attr("name")+'='+$(this).val());
+            if ($(this).val() != '') submit_data.push($(this).attr("name")+'='+encodeURIComponent($(this).val()));
         }
     });
 
