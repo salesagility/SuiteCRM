@@ -226,7 +226,7 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'Releases','Sync',
     'Users',  'Versions', 'LabelEditor','Roles','EmailMarketing'
     ,'OptimisticLock', 'TeamMemberships', 'TeamSets', 'TeamSetModule', 'Audit', 'MailMerge', 'MergeRecords', 'EmailAddresses','EmailText',
-    'Schedulers','Schedulers_jobs', /*'Queues',*/ 'EmailTemplates',
+    'Schedulers','Schedulers_jobs', /*'Queues', 'EmailTemplates',*/
     'CampaignTrackers', 'CampaignLog', 'EmailMan', 'Prospects', 'ProspectLists',
     'Groups','InboundEmail',
     'ACLActions', 'ACLRoles',
@@ -292,7 +292,7 @@ $GLOBALS['moduleTabMap'] = array(
     'Currencies' => 'Administration',
     'SugarFeed' => 'Administration',
     'DocumentRevisions' => 'Documents',
-    'EmailTemplates' => 'Emails',
+    'EmailTemplates' => 'EmailTemplates',
     'EmailMarketing' => 'Campaigns',
  );
 $beanList['EAPM'] = 'EAPM';
