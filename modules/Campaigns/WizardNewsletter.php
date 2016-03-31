@@ -165,7 +165,10 @@ $ss->assign("CAMP_IMPRESSIONS", $focus->impressions);
 if (empty($focus->assigned_user_id) && empty($focus->id))  $focus->assigned_user_id = $current_user->id;
 if (empty($focus->assigned_name) && empty($focus->id))  $focus->assigned_user_name = $current_user->user_name;
 $ss->assign("ASSIGNED_USER_OPTIONS", get_select_options_with_id(get_user_array(TRUE, "Active", $focus->assigned_user_id), $focus->assigned_user_id));
-$ss->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
+//$ss->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
+
+$focus->list_view_parse_additional_sections($ss);
+
 $ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
 if((!isset($focus->status)) && (!isset($focus->id)))
