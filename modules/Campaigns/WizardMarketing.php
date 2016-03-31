@@ -305,8 +305,16 @@ if(!$list = BeanFactory::getBean('EmailTemplates')->get_full_list("", "campaign_
 
 /**************************** WIZARD UI DIV Stuff *******************/
 
+$additionalParams = '';
+if(isset($_REQUEST['template_id']) && $_REQUEST['template_id']) {
+    $additionalParams .= '&template_id=' . $_REQUEST['template_id'];
+}
+if(isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id']) {
+    $additionalParams .= '&marketing_id=' . $_REQUEST['marketing_id'];
+}
+
 $camp_url = "index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome";
-$camp_url .= "&return_id=".$campaign_focus->id."&record=".$campaign_focus->id."&direct_step=";
+$camp_url .= "&return_id=".$campaign_focus->id."&record=".$campaign_focus->id . $additionalParams ."&direct_step=";
 $ss->assign("CAMP_WIZ_URL", $camp_url);
     $summ_url = $mod_strings['LBL_NAVIGATION_MENU_SUMMARY'];
     if(!empty($focus->id)){
@@ -367,7 +375,10 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
     $templateURLForProgressBar = '#';
     if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
-        $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=2&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
+        $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
+    }
+    if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
+        $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=1&campaign_type=Email&template_id={$mrkt_focus->template_id}";
     }
 
     $marketingURLForProgressBar = false;
@@ -392,11 +403,20 @@ else {
 }
 if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
     $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
+    if(!$marketingURLForProgressBar) {
+        $marketingURLForProgressBar = 'javascript:$(\'#wiz_next_button\').click();';;
+    }
     $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingURLForProgressBar;
 
+    if($summaryURLForProgressBar == '#') {
+        $summaryURLForProgressBar = 'javascript:$(\'#wiz_cancel_button\').click();';
+    }
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summaryURLForProgressBar;
 }
 else {
+    if($summaryURLForProgressBar == '#') {
+        $summaryURLForProgressBar = 'javascript:$("#wiz_cancel_button").click();';
+    }
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SUMMARY']] = $summaryURLForProgressBar;
 }
 

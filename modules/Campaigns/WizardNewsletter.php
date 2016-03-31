@@ -568,8 +568,20 @@ if($campaign_type == 'general'){
     $ss->assign('HIDE_CONTINUE','hidden');
 
 }elseif($campaign_type == 'email'){
-    $steps = create_email_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'email',$mrkt_string,$summ_url, 'dotlist'));
+    $steps = create_email_steps();
+    if($focus->id) {
+        $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
+    }
+    else {
+        $summ_url = false;
+    }
+    foreach($steps as $key => $step) {
+        $_steps[$key] = false;
+    }
+    $campaign_id = $focus->id;
+    $marketing_id = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : null;
+    $template_id = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : null;
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'email',$mrkt_string,$summ_url, 'dotlist', $campaign_id, $marketing_id, $template_id));
     $ss->assign('HIDE_CONTINUE','submit');
 }else{
     $steps = create_newsletter_steps();  
@@ -652,22 +664,31 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
         include_once 'modules/Campaigns/DotListWizardMenu.php';
 
         if($type!='campaign') {
-            $templateURLForProgressBar = '#';
+            $templateURLForProgressBar = false;
             if ($campaign_id && $marketing_id && $template_id) {
                 $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_id}&campaign_id={$campaign_id}&jump=2&marketing_id={$marketing_id}&record={$marketing_id}&campaign_type=Email&template_id={$template_id}";
             }
+
+            if(preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches)) {
+                $templateURLForProgressBar = $matches[1];
+            }
+
             $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
         }
 
         if ($type == 'newsletter' || $type == 'email') {
-            $steps[$mrkt_string] = '#';
-            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = '#';
+
+            preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches);
+            $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : '');
+
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingLink;
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ? $summ_url : false;
             //$steps[$summ_url] = '#';
         } else {
             $steps[$summ_url] = '#';
         }
 
-        $nav_html = new DotListWizardMenu($mod_strings, $steps);
+        $nav_html = new DotListWizardMenu($mod_strings, $steps, true);
 
     }
     else {
