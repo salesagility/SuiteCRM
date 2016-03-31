@@ -178,11 +178,12 @@ global $currentModule;
 
     if((isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) || isWizardSummary()) {
         $campaign_id = $focus->id;
-        if($marketing_id = getMarketingId()) {
-            $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type . (isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? '&template_id=' . $_REQUEST['template_id'] : '');
+        $marketing_id = getMarketingId();
+        if(!$marketing_id && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'WizardHome') {
+            $header_URL = "Location: index.php?module=Campaigns&offset=1&return_module=Campaigns&action=DetailView&record=" . $campaign_id;
         }
         else {
-            $header_URL = "Location: index.php?module=Campaigns&offset=1&return_module=Campaigns&action=DetailView&record=" . $campaign_id;
+            $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type . (isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? '&template_id=' . $_REQUEST['template_id'] : '');
         }
         header($header_URL);
     }
