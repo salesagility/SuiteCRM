@@ -475,6 +475,7 @@ $mod_strings = array (
 	'LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG' => 'It will overwrite the selected template. Are you sure?',
 	'LBL_CREATE_MARKETING_RECORD' => 'Create Marketing Record',
 	'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
+	'LBL_SELECT_TEMPLATE' => 'Templates',
 );
 
 

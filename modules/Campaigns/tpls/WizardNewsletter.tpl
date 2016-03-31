@@ -50,7 +50,7 @@
 	<input type="hidden" name="return_module" value="{$RETURN_MODULE}">
 	<input type="hidden" name="return_id" value="{$RETURN_ID}">
 	<input type="hidden" name="return_action" value="{$RETURN_ACTION}">
-	<input type='hidden' name='campaign_type' value="{$MOD.LBL_NEWSLETTER_FORENTRY}">
+	<input type='hidden' name='campaign_type' value="{if $campaign_type}{$campaign_type}{else}{$MOD.LBL_NEWSLETTER_FORENTRY}{/if}">
 	<input type="hidden" id="wiz_total_steps" name="totalsteps" value="{$TOTAL_STEPS}">
 	<input type="hidden" id="wiz_current_step" name="currentstep" value='1'>
 	<input type="hidden" id="direction" name="wiz_direction" value='exit'>
@@ -100,4 +100,27 @@
 <script language="javascript">
 {$HILITE_ALL}
 </script>
+
+{literal}
+	<script language="javascript">
+
+		function getParameterByName(name, url) {
+			if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+		}
+
+		$(function(){
+			if(getParameterByName('show_target_list')) {
+				//navigate('next');
+				direct('3');
+				wizardMenuSetStepLink(3, '#', "javascript:direct('3');")
+			}
+		});
+	</script>
+{/literal}
 

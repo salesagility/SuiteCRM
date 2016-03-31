@@ -363,16 +363,56 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 
+
+if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
+    $templateURLForProgressBar = '#';
+    if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
+        $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=2&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
+    }
+
+    $marketingURLForProgressBar = false;
+    if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
+        $marketingURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=2&show_wizard_marketing=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
+    }
+}
+
+$summaryURLForProgressBar = '#';
+if(isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
+    $summaryURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=3&show_wizard_marketing=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
+}
+
+$steps = array();
+$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']] = $camp_url.'1';
+if($campaign_focus->campaign_type == 'Telesales' || $_REQUEST['campaign_type'] == 'Telesales') {
+    $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']] = 'index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $campaign_focus->id . '&record=' . $campaign_focus->id . '&direct_step=2';
+    $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url.'2&show_target_list=1';
+}
+else {
+    $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url . '2';
+}
+if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
+    $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
+    $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingURLForProgressBar;
+
+    $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summaryURLForProgressBar;
+}
+else {
+    $steps[$mod_strings['LBL_NAVIGATION_MENU_SUMMARY']] = $summaryURLForProgressBar;
+}
+
 include_once('DotListWizardMenu.php');
-$dotListWizardMenu = new DotListWizardMenu($mod_strings, array(
-    $mod_strings['LBL_NAVIGATION_MENU_GEN1'] => $camp_url.'1',
-    $mod_strings['LBL_TARGET_LIST'] => $camp_url.'2',
-    //$mod_strings['LBL_NAVIGATION_MENU_GEN2'] => $camp_url.'2',
-    //$mod_strings['LBL_NAVIGATION_MENU_TRACKERS'] => $camp_url.'3',
-    $mod_strings['LBL_NAVIGATION_MENU_MARKETING'] => '#', //$camp_url.'3',
-    $mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY'] => false,
-    //$mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] => false,
-), true);
+$dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
+//    array(
+//        $mod_strings['LBL_NAVIGATION_MENU_GEN1'] => $camp_url.'1',
+//        $mod_strings['LBL_TARGET_LIST'] => $camp_url.'2',
+//        //$mod_strings['LBL_NAVIGATION_MENU_GEN2'] => $camp_url.'2',
+//        //$mod_strings['LBL_NAVIGATION_MENU_TRACKERS'] => $camp_url.'3',
+//        $mod_strings['LBL_SELECT_TEMPLATE'] => $templateURLForProgressBar,
+//        $mod_strings['LBL_NAVIGATION_MENU_MARKETING'] => $marketingURLForProgressBar, //$camp_url.'3',
+//        $mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY'] => $summaryURLForProgressBar,
+//        //$mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] => false,
+//    )
+//    , true);
 
 $ss->assign('WIZMENU', $dotListWizardMenu);
 

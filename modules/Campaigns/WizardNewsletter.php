@@ -584,6 +584,20 @@ $ss->assign('STEPS',$sshtml);
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 
+if(isset($_REQUEST['wizardtype'])) {
+    switch($_REQUEST['wizardtype']) {
+        case '1':
+            $ss->assign('campaign_type', 'NewsLetter');
+            break;
+        case '2':
+            $ss->assign('campaign_type', 'Email');
+            break;
+        case '3':
+            $ss->assign('campaign_type', 'Telesales');
+            break;
+    }
+}
+
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
 
@@ -628,7 +642,7 @@ function create_wiz_step_divs($steps,$ss){
     return $step_html;
 }
 
-function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null){
+function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null, $campaign_id = null, $marketing_id = null, $template_id = null){
 
     global $mod_strings;
 
@@ -637,7 +651,13 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
 
         include_once 'modules/Campaigns/DotListWizardMenu.php';
 
-
+        if($type!='campaign') {
+            $templateURLForProgressBar = '#';
+            if ($campaign_id && $marketing_id && $template_id) {
+                $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_id}&campaign_id={$campaign_id}&jump=2&marketing_id={$marketing_id}&record={$marketing_id}&campaign_type=Email&template_id={$template_id}";
+            }
+            $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
+        }
 
         if ($type == 'newsletter' || $type == 'email') {
             $steps[$mrkt_string] = '#';

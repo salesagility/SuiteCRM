@@ -80,6 +80,21 @@ var wizardMenuSetToCurrentStep = function() {
     });
 };
 
+var wizardMenuCleanupAlreadyFinishedStep = function() {
+    var doAgain = false;
+    $('.wizmenu ul li').each(function(i,e){
+        if(!$(e).find('a').length) {
+            if($(e).next().find('a').length) {
+                $(e).html('<a href="#">' + $(e).html() + '</a>');
+                doAgain = true;
+            }
+        }
+    });
+    if(doAgain) {
+        wizardMenuCleanupAlreadyFinishedStep();
+    }
+};
+
 var wizardMenuCleanup = function() {
     $('.wizmenu ul li a').each(function(i,e){
         if(!$(e).html()) {
@@ -87,6 +102,8 @@ var wizardMenuCleanup = function() {
         }
     });
     $('.wizmenu ul li a.removable').remove();
+
+    wizardMenuCleanupAlreadyFinishedStep();
 }
 
 var wizardMenuResetWidth = function() {
@@ -110,6 +127,27 @@ var wizardMenuFillAll = function() {
             $(e).prepend('<a href="#">&nbsp;</a>');
         }
     });
+};
+
+var wizardMenuSetStepLink = function(step, link, script) {
+    if(typeof link == 'undefined') {
+        link = '#';
+    }
+    if(typeof script == 'undefined') {
+        var onClick = false;
+    }
+    else {
+        var onClick = ' onclick="' + script + '"';
+    }
+    if($('#nav_step' + step + ' a').length == 0) {
+        $('#nav_step' + step).html('<a href="' + link + '"' + (onClick ? onClick : '') + '>' + $('#nav_step' + step).html() + '</a>');
+    }
+    else {
+        $('#nav_step' + step + ' a').attr('href', link);
+        if(onClick) {
+            $('#nav_step' + step + ' a').attr('onclick', script);
+        }
+    }
 };
 
 var wizardMenu = function() {
