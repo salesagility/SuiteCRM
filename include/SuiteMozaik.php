@@ -180,6 +180,17 @@ HTML;
         $js = <<<SCRIPT
 $(window).mouseup(function(){
      $('#{$textareaId}').val($('#{$elementId}').getMozaikValue({width: '{$width}'}));
+
+     // fix table editor panel
+     var found = false;
+     $('.mce-tinymce').each(function(i,e){
+        if(!$(e).hasClass('mce-tinymce-inline-inside') && $(e).css('display') == 'block'){
+            found = true;
+        }
+     });
+     if(!found) {
+        $('.mce-tinymce-inline-inside').css('display', 'none');
+     }
 });
 SCRIPT;
         return $js;
