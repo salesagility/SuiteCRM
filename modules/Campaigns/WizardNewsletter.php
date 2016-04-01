@@ -588,8 +588,18 @@ if($campaign_type == 'general'){
     $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'email',$mrkt_string,$summ_url, 'dotlist', $campaign_id, $marketing_id, $template_id));
     $ss->assign('HIDE_CONTINUE','submit');
 }else{
-    $steps = create_newsletter_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'newsletter',$mrkt_string,$summ_url, 'dotlist'));
+    $steps = create_newsletter_steps();
+
+    if($focus->id) {
+        $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
+    }
+    else {
+        $summ_url = false;
+    }
+    foreach($steps as $key => $step) {
+        $_steps[$key] = false;
+    }
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'newsletter',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','submit');
 }
 
@@ -683,7 +693,7 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
         if ($type == 'newsletter' || $type == 'email') {
 
             preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches);
-            $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : '');
+            $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : false);
 
             $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingLink;
             $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ? $summ_url : false;
