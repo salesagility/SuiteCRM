@@ -41,7 +41,7 @@ HTML;
 .wizmenu {float: left; height: 80px;}
 .wizmenu * {margin: 0; padding: 0; border: none; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 9.9px; font-weight: bold; line-height: 9.9px;}
 .wizmenu ul {display: block; float: none; list-style-type: none; margin: 0; padding: 0;}
-.wizmenu ul li {background-image: url({$imgdir}center-empty.png); background-repeat: no-repeat; display: block; float: left; width: 90px; height: 35px; list-style-type: none; margin: 0; padding: 40px 0 0 0; text-align: center;}
+.wizmenu ul li {position: relative; background-image: url({$imgdir}center-empty.png); background-repeat: no-repeat; display: block; float: left; width: 90px; height: 35px; list-style-type: none; margin: 0; padding: 40px 0 0 0; text-align: center;}
 .wizmenu ul li:first-child {background-image: url({$imgdir}left-start.png);}
 .wizmenu ul li:last-child {background-image: url({$imgdir}right-empty.png);}
 .wizmenu.tiny ul li {margin-right: -33px}
@@ -49,6 +49,7 @@ HTML;
 .wizmenu a .label {color: #337ab7; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 9.9px; font-weight: bold; line-height: 9.9px;}
 .wizmenu a:hover .label {color: #136aa7;}
 .wizmenu .clear {clear: both;}
+.wizmenu .dot {display: block; float: none; position: absolute; top: 1px; left: 0; width: 90px; height: 35px; background-image: url({$imgdir}dot.png);}
 
 </style>
 <div class="wizmenu">
@@ -150,11 +151,91 @@ var wizardMenuSetStepLink = function(step, link, script) {
     }
 };
 
+var wizardMenuGetCurrentPage = function() {
+    var campaignType = getParameterByName('campaign_type') ? getParameterByName('campaign_type') : (document.getElementById('campaign_type') ? document.getElementById('campaign_type').value : null);
+    var step1Shows = $('#step1').css('display') && $('#step1').css('display') != 'none'; // Campaign Header OR!! Email Templates
+    var step2Shows = $('#step2').css('display') && $('#step2').css('display') != 'none'; // Subscriptions / Target Lists / Budget OR!! Marketing
+    var step3Shows = $('#step3').css('display') && $('#step3').css('display') != 'none'; // Target Lists / Summary
+
+    var step;
+
+    if(campaignType == 'NewsLetter' || campaignType == 'Email' || campaignType == null) {
+        if(step1Shows) {
+            if(typeof step3Shows == 'undefined') {
+                step = 1;
+            }
+            else {
+                step = 3;
+            }
+        }
+        else if(step2Shows) {
+            if(typeof step3Shows == 'undefined') {
+                step = 2;
+            }
+            else {
+                step = 4;
+            }
+        }
+        else if(step3Shows) {
+            step = 5;
+        }
+        else {
+            console.log('unknown page - 1');
+        }
+    }
+    else if(campaignType == 'Telesales') {
+        if(step1Shows) {
+            step = 1;
+        }
+        else if(step2Shows) {
+            step = 2;
+        }
+        else if(step3Shows) {
+            if($('#step3').attr('data') == 'summary-page') {
+                step = 4;
+            }
+            else {
+                step = 3;
+            }
+        }
+        else {
+            console.log('unknown page - 2');
+        }
+    }
+    else {
+        console.log('unknown page - 3');
+    }
+
+    return step-1;
+};
+
+var getBGImageName = function(elem) {
+    var bgImage = $(elem).css('background-image').split('/');
+    bgImage = bgImage[bgImage.length-1].split('.')[0];
+    return bgImage;
+};
+
+var wizardMenuPutDotToCurrentPage = function() {
+    var page = wizardMenuGetCurrentPage();
+    $('.wizmenu li').each(function(i,e){
+        if(i==page) {
+            var bgImage = getBGImageName(e);
+            if(!$(e).find('.dot').length) {
+                $(e).append('<span class="dot"></span>');
+            }
+        }
+        else {
+            $(e).find('.dot').remove();
+        }
+    });
+};
+
 var wizardMenu = function() {
     wizardMenuCleanup();
     wizardMenuCenter();
     wizardMenuSetToCurrentStep();
     wizardMenuResetWidth();
+    wizardMenuPutDotToCurrentPage();
 };
 
 $(function(){
