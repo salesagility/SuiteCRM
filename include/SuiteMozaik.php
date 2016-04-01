@@ -136,6 +136,10 @@ HTML;
 #{$elementId} {position: relative; top: 0; left: 0;}
 #{$elementId} ul.mozaik-thumbs li.mozaik-thumbnail {padding: 5px 0;}
 #{$elementId} ul.mozaik-thumbs li.mozaik-thumbnail:hover {background-color: lightgray;}
+#{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle {cursor: -webkit-grab;}
+#{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {cursor: -webkit-grab;}
+#{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle.ui-draggable-dragging {cursor: -webkit-grabbing;}
+#{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle.ui-draggable-dragging * {cursor: -webkit-grabbing;}
 </style>
 <div id="{$elementId}">{$contents}</div>
 <script type="text/javascript">
