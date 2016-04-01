@@ -132,6 +132,11 @@ HTML;
             $refreshTextareaScript = $this->getRefreshTextareaScript($textareaId, $elementId, $width);
         }
         $html = <<<HTML
+<style type="text/css">
+#{$elementId} {position: relative; top: 0; left: 0;}
+#{$elementId} ul.mozaik-thumbs li.mozaik-thumbnail {padding: 5px 0;}
+#{$elementId} ul.mozaik-thumbs li.mozaik-thumbnail:hover {background-color: lightgray;}
+</style>
 <div id="{$elementId}">{$contents}</div>
 <script type="text/javascript">
     $(function() {
@@ -154,9 +159,16 @@ HTML;
         window.plgBackground.image = '{$this->mozaikPath}/' + window.plgBackground.image;
 
         $('#{$elementId}').mozaik(window.mozaikSettings.{$elementId});
+
+        $(window).mousemove(function(){
+            var correction = -( ($('#{$elementId}').width()-100) / 2);
+            $('#{$elementId} .mozaik-thumbnail.ui-draggable-dragging').css('margin-left', correction + 'px');
+        });
+
     });
     // refresh textarea
     {$refreshTextareaScript}
+
 </script>
 HTML;
         return $html;
