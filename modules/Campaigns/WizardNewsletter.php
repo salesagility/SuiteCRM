@@ -563,8 +563,12 @@ $sshtml = ' ';
 //Create the html to fill in the wizard steps
 
 if($campaign_type == 'general'){
-    $steps = create_campaign_steps();    
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
+    $steps = create_campaign_steps();
+
+    foreach($steps as $key => $step) {
+        $_steps[$key] = false;
+    }
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
 }elseif($campaign_type == 'email'){
@@ -685,7 +689,7 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
             $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ? $summ_url : false;
             //$steps[$summ_url] = '#';
         } else {
-            $steps[$summ_url] = '#';
+            $steps[$summ_url] = false; //'#';
         }
 
         $nav_html = new DotListWizardMenu($mod_strings, $steps, true);
