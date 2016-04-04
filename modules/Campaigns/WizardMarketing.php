@@ -404,7 +404,7 @@ else {
 if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
     $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
     if(!$marketingURLForProgressBar) {
-        $marketingURLForProgressBar = 'javascript:$(\'#wiz_next_button\').click();';;
+        $marketingURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=2&show_wizard_marketing=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
     }
     $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingURLForProgressBar;
 
