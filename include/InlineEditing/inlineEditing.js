@@ -41,7 +41,12 @@ buildEditField();
 //Global Variables.
 
 var inlineEditSaveButtonImg = "themes/SuiteR/images/inline_edit_save_icon.svg";
-var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
+if($("#inline_edit_icon").length) {
+    var inlineEditIcon = $("#inline_edit_icon")[0].outerHTML;
+} else {
+    var inlineEditIcon = "";
+}
+
 var view = action_sugar_grp1;
 var currentModule = module_sugar_grp1;
 
