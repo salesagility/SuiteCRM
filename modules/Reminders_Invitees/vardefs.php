@@ -67,6 +67,15 @@ $dictionary['Reminder_Invitee']['fields']= array(
     ),
 );
 
+$dictionary['Reminder_Invitee']['indices'] = array (
+    array('name' =>'reminder_invitee_pk', 'type' =>'primary', 'fields'=>array('id')),
+    array('name' =>'idx_reminder_invitee_name', 'type'=>'index', 'fields'=>array('name')),
+    array('name' =>'idx_reminder_invitee_assigned_user_id', 'type'=>'index', 'fields'=>array('assigned_user_id')),
+    array('name' =>'idx_reminder_invitee_reminder_id', 'type'=>'index', 'fields'=>array('reminder_id')),
+    array('name' =>'idx_reminder_invitee_related_invitee_module', 'type'=>'index', 'fields'=>array('related_invitee_module')),
+    array('name' =>'idx_reminder_invitee_related_invitee_module_id', 'type'=>'index', 'fields'=>array('related_invitee_module_id')),
+);
+
 //$dictionary['Reminder_Invitee']['indices'] = array(
 //    array('name' => 'reminder_invitee_uk', 'type' => 'unique', 'fields' => array('reminder_id', 'related_invitee_module', 'related_invitee_module_id')),
 //);
