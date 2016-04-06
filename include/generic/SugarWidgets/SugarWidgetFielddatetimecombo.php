@@ -45,8 +45,8 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime {
 	var $reporter;
 	var $assigned_user=null;
 
-    function SugarWidgetFieldDateTimecombo(&$layout_manager) {
-        parent::SugarWidgetFieldDateTime($layout_manager);
+    function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
         $this->reporter = $this->layout_manager->getAttribute('reporter');
     }
 	//TODO:now for date time field , we just search from date start to date end. The time is from 00:00:00 to 23:59:59

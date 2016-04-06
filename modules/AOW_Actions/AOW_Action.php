@@ -65,9 +65,9 @@ class AOW_Action extends Basic
     var $action;
     var $parameters;
 
-    function AOW_Action()
+    function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     function save_lines($post_data, $parent, $key = '')

@@ -42,8 +42,8 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class CampaignsParseRule extends BaseRule {
 
-function CampaignsParseRule() {
-	
+function __construct() {
+
 }
 
 function preParse($panels, $view) {
@@ -62,17 +62,17 @@ function preParse($panels, $view) {
 		   	  	 	 	//We will just remove the field since you shouldn't be able to edit this information anyway
 		   	  	 	 	$panels[$name][$rowCount][$key] = '';
 		   	  	 	 }
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	} //foreach
 		} //foreach
-		
+
 		//If all the row/columns were taken up, then add frequency as a last row
 		if(!$frequencyAdded) {
 		   $panels['default'][][] = 'frequency';
 		}
 	}
-	return $panels;	
+	return $panels;
 }
-	
+
 }
 ?>

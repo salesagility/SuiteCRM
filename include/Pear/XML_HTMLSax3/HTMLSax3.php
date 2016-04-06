@@ -156,7 +156,7 @@ class XML_HTMLSax3_StateParser {
     * @var XML_HTMLSax3 instance of user front end class
     * @access protected
     */
-    function XML_HTMLSax3_StateParser (& $htmlsax) {
+    function __construct (& $htmlsax) {
         $this->htmlsax = & $htmlsax;
         $this->State[XML_HTMLSAX3_STATE_START] = new XML_HTMLSax3_StartingState();
 
@@ -327,8 +327,8 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser {
     * @var XML_HTMLSax3 instance of user front end class
     * @access protected
     */
-    function XML_HTMLSax3_StateParser_Lt430(& $htmlsax) {
-        parent::XML_HTMLSax3_StateParser($htmlsax);
+    function __construct(& $htmlsax) {
+        parent::__construct($htmlsax);
         $this->parser_options['XML_OPTION_TRIM_DATA_NODES'] = 0;
         $this->parser_options['XML_OPTION_CASE_FOLDING'] = 0;
         $this->parser_options['XML_OPTION_LINEFEED_BREAK'] = 0;
@@ -359,7 +359,7 @@ class XML_HTMLSax3_StateParser_Lt430 extends XML_HTMLSax3_StateParser {
     * @return void
     */
     function ignoreWhitespace() {
-        while ($this->position < $this->length && 
+        while ($this->position < $this->length &&
             strpos(" \n\r\t", $this->rawtext{$this->position}) !== FALSE) {
             $this->position++;
         }
@@ -391,8 +391,8 @@ class XML_HTMLSax3_StateParser_Gtet430 extends XML_HTMLSax3_StateParser {
     * @var XML_HTMLSax3 instance of user front end class
     * @access protected
     */
-    function XML_HTMLSax3_StateParser_Gtet430(& $htmlsax) {
-        parent::XML_HTMLSax3_StateParser($htmlsax);
+    function __construct(& $htmlsax) {
+        parent::__construct($htmlsax);
         $this->parser_options['XML_OPTION_TRIM_DATA_NODES'] = 0;
         $this->parser_options['XML_OPTION_CASE_FOLDING'] = 0;
         $this->parser_options['XML_OPTION_LINEFEED_BREAK'] = 0;
@@ -527,7 +527,7 @@ class XML_HTMLSax3 {
     * <li>XML_OPTION_ENTITIES_UNPARSED: XML entities are returned as
     * seperate data handler calls in unparsed form</li>
     * <li>XML_OPTION_ENTITIES_PARSED: (PHP 4.3.0+ only) XML entities are
-    * returned as seperate data handler calls and are parsed with 
+    * returned as seperate data handler calls and are parsed with
     * PHP's html_entity_decode() function</li>
     * <li>XML_OPTION_STRIP_ESCAPES: strips out the -- -- comment markers
     * or CDATA markup inside an XML escape, if found.</li>

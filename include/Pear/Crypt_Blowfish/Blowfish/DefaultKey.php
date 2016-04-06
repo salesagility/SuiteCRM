@@ -41,10 +41,10 @@
 class Crypt_Blowfish_DefaultKey
 {
     var $P = array();
-    
+
     var $S = array();
-    
-    function Crypt_Blowfish_DefaultKey()
+
+    function __construct()
     {
         $this->P = array(
             0x243F6A88, 0x85A308D3, 0x13198A2E, 0x03707344,
@@ -53,7 +53,7 @@ class Crypt_Blowfish_DefaultKey
             0xC0AC29B7, 0xC97C50DD, 0x3F84D5B5, 0xB5470917,
             0x9216D5D9, 0x8979FB1B
         );
-        
+
         $this->S = array(
             array(
                 0xD1310BA6, 0x98DFB5AC, 0x2FFD72DB, 0xD01ADFB7,
@@ -321,7 +321,7 @@ class Crypt_Blowfish_DefaultKey
             )
         );
     }
-    
+
 }
 
 ?>

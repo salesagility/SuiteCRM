@@ -5,10 +5,10 @@ require_once('include/ListView/ListViewSmarty.php');
 class MeetingsListViewSmarty extends ListViewSmarty
 {
 
-    function MeetingsListViewSmarty()
+    function __construct()
     {
 
-        parent::ListViewSmarty();
+        parent::__construct();
     }
 
     function buildExportLink($id = 'export_link')

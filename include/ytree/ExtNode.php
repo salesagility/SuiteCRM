@@ -47,12 +47,12 @@ class ExtNode {
 	var $_label;		//this is the only required property for a node.
 	var $_href;
 	var $id;
-	
+
 	//ad-hoc collection of node properties
 	var $_properties=array();
 	//collection of parmeter properties;
 	var $_params=array();
-	
+
 	//sent to the javascript.
 	var $uid; 		//unique id for the node.
 
@@ -60,10 +60,10 @@ class ExtNode {
 	var $dynamic_load=false; //false means child records are pre-loaded.
 	var $dynamicloadfunction='loadDataForNode'; //default script to load node data (children)
 	var $expanded=false;  //show node expanded during initial load.
-	 
-	function ExtNode($id,$label,$show_expanded=true) {
+
+	function __construct($id,$label,$show_expanded=true) {
 		$this->_label=$label;
-		$this->id = $id;	
+		$this->id = $id;
 		$this->_properties['text']=$label;
 		$this->uid=microtime();
 		$this->set_property('id',$id);
@@ -80,10 +80,10 @@ class ExtNode {
  				$this->_properties[$name]=$value;
  			} else {
  				$this->_params[$name]=$value;
- 			}	
+ 			}
  		}
  	}
- 	
+
 	//add a child node.
  	function add_node($node) {
   		$this->nodes[$node->uid]=$node;
@@ -92,26 +92,26 @@ class ExtNode {
 	//return definition of the node. the definition is a multi-dimension array and has 3 parts.
 	// data-> definition of the current node.
 	// attributes=> collection of additional attributes such as style class etc..
-	// nodes: definition of children nodes. 	
+	// nodes: definition of children nodes.
  	function get_definition() {
  		$ret=array();
 
- 		$ret = $this->_properties; 
+ 		$ret = $this->_properties;
  		if (!empty($this->_params)) {
- 			$ret[] = $this->_params;	
- 		}		
- 		
+ 			$ret[] = $this->_params;
+ 		}
+
 		$ret['dynamicload']=$this->dynamic_load;
 		$ret['dynamicloadfunction']=$this->dynamicloadfunction;
 		$ret['expanded']=$this->expanded;
 		$ret['children'] = array();
 		$ret['type'] = 1;
-						 	
+
  		foreach ($this->nodes as $node) {
  			$ret['children'][]=$node->get_definition();
  		}
 		//$ret['leaf'] = empty($ret['children']);
-		return $ret;		
+		return $ret;
  	}
 }
 ?>

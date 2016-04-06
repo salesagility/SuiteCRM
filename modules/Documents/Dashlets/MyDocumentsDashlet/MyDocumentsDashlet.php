@@ -41,21 +41,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/Dashlets/DashletGeneric.php');
 
-class MyDocumentsDashlet extends DashletGeneric { 
+class MyDocumentsDashlet extends DashletGeneric {
 
-	function MyDocumentsDashlet($id, $def = null)
+	function __construct($id, $def = null)
 	{
 		global $current_user, $app_strings;
 		require('modules/Documents/Dashlets/MyDocumentsDashlet/MyDocumentsDashlet.data.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'Documents');
 
         $this->searchFields = $dashletData['MyDocumentsDashlet']['searchFields'];
         $this->columns = $dashletData['MyDocumentsDashlet']['columns'];
 
-        $this->seedBean = new Document();        
+        $this->seedBean = new Document();
     }
 
     function displayOptions() {

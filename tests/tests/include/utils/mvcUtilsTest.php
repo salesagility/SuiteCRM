@@ -39,10 +39,62 @@ class mvc_utilsTest extends PHPUnit_Framework_TestCase
 
     public function testajaxLink()
     {
-        //execute the method and test if it returns expected contents
+        global $sugar_config;
+        $ajaxUIDisabled = isset($sugar_config['disableAjaxUI']) && $sugar_config['disableAjaxUI'];
 
-        $this->assertSame('?action=ajaxui#ajaxUILoc=', ajaxLink());
-        $this->assertSame('index.php?module=Users&action=detail&record=1', ajaxLink('index.php?module=Users&action=detail&record=1'));
-        $this->assertSame('?action=ajaxui#ajaxUILoc=module%3DHome%26action%3Ddetail', ajaxLink('module=Home&action=detail'));
+        if(!$ajaxUIDisabled) {
+            $this->assertSame('?action=ajaxui#ajaxUILoc=', ajaxLink(''));
+            $testModules = array(
+                'Calendar',
+                'Emails',
+                'Campaigns',
+                'Documents',
+                'DocumentRevisions',
+                'Project',
+                'ProjectTask',
+                'EmailMarketing',
+                'CampaignLog',
+                'CampaignTrackers',
+                'Releases',
+                'Groups',
+                'EmailMan',
+                "Administration",
+                "ModuleBuilder",
+                'Schedulers',
+                'SchedulersJobs',
+                'DynamicFields',
+                'EditCustomFields',
+                'EmailTemplates',
+                'Users',
+                'Currencies',
+                'Trackers',
+                'Connectors',
+                'Import_1',
+                'Import_2',
+                'Versions',
+                'vCals',
+                'CustomFields',
+                'Roles',
+                'Audit',
+                'InboundEmail',
+                'SavedSearch',
+                'UserPreferences',
+                'MergeRecords',
+                'EmailAddresses',
+                'Relationships',
+                'Employees',
+                'Import',
+                'OAuthKeys'
+            );
+            $bannedModules = ajaxBannedModules();
+            foreach($testModules as $module) {
+                $uri = "index.php?module=$module&action=detail&record=1";
+                if(!in_array($module, $bannedModules)) {
+                    $this->assertSame("?action=ajaxui#ajaxUILoc=" . urlencode($uri), ajaxLink($uri));
+                } else {
+                    $this->assertSame($uri, ajaxLink($uri));
+                }
+            }
+        }
     }
 }

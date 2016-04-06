@@ -66,7 +66,7 @@ class Monitor implements Trackable {
     /**
      * Monitor constructor
      */
-    function Monitor($name='', $monitorId='', $metadata='', $store='') {
+    public function __construct($name='', $monitorId='', $metadata='', $store='') {
 
     	if(empty($metadata) || !file_exists($metadata)) {
     	   $GLOBALS['log']->error($GLOBALS['app_strings']['ERR_MONITOR_FILE_MISSING'] . "($metadata)");

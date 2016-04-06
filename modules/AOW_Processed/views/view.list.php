@@ -25,9 +25,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class AOW_ProcessedViewList extends ViewList
 {
-    function AOW_ProcessedViewList()
+    function __construct()
     {
-        parent::ViewList();
+        parent::__construct();
     }
     function Display()
     {

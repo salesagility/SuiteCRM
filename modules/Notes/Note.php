@@ -93,8 +93,8 @@ class Note extends SugarBean {
 
 
 
-	function Note() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 	}
 
 	function safeAttachmentName() {
@@ -191,7 +191,7 @@ class Note extends SugarBean {
 
 		$query .= "	LEFT JOIN contacts ON notes.contact_id=contacts.id ";
         	$query .= "  LEFT JOIN users ON notes.assigned_user_id=users.id ";
-	
+
         $query .= $custom_join['join'];
 
 		$where_auto = " notes.deleted=0 AND (contacts.deleted IS NULL OR contacts.deleted=0)";
@@ -287,7 +287,7 @@ class Note extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 
@@ -319,7 +319,7 @@ class Note extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 

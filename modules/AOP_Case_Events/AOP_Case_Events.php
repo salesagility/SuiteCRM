@@ -27,10 +27,10 @@
  */
 require_once('modules/AOP_Case_Events/AOP_Case_Events_sugar.php');
 class AOP_Case_Events extends AOP_Case_Events_sugar {
-	
-	function AOP_Case_Events(){	
-		parent::AOP_Case_Events_sugar();
+
+	public function __construct(){
+		parent::__construct();
 	}
-	
+
 }
 ?>

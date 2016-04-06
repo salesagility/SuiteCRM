@@ -43,8 +43,8 @@ class TemplateDecimal extends TemplateFloat{
 	var $type = 'decimal';
 	var $default = null;
 	var $default_value = null;
-	
-	function TemplateDecimal(){
+
+	function __construct(){
     	parent::__construct();
 	}
 
@@ -54,7 +54,7 @@ class TemplateDecimal extends TemplateFloat{
 			return parent::get_db_type();
 		}
 		$precision = (!empty($this->precision)) ? $this->precision : 6;
-		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $this->len, $precision); 
+		return " ".sprintf($GLOBALS['db']->getColumnType("decimal_tpl"), $this->len, $precision);
 	}
 }
 

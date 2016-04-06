@@ -25,8 +25,8 @@ require_once('include/MVC/View/views/view.detail.php');
 class AM_ProjectTemplatesViewDetail extends ViewDetail {
 
 
-    function AM_ProjectTemplatesViewDetail(){
-        parent::ViewDetail();
+    function __construct(){
+        parent::__construct();
     }
 
     function display(){

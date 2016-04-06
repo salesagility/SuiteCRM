@@ -84,9 +84,9 @@ class AOS_Products_Quotes_sugar extends Basic
     var $currency_id;
 
 
-    function AOS_Products_Quotes_sugar()
+    function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     function bean_implements($interface)

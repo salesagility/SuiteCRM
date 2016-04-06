@@ -175,7 +175,7 @@ class AOPAssignManager{
         }
         $users = array_keys($this->assignableUsers);
         $lastOffset = array_search($lastUserId,$users);
-        $newOffset = ($lastOffset + 1) % count($users);
+        $newOffset = count($users) != 0 ? ($lastOffset + 1) % count($users) : 0;
         if(!empty($users[$newOffset])) {
             return $users[$newOffset];
         }

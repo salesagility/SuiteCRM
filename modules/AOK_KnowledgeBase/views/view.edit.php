@@ -42,11 +42,11 @@ require_once('include/MVC/View/views/view.edit.php');
 
 class AOK_KnowledgeBaseViewEdit extends ViewEdit
 {
-    function AOK_KnowledgeBaseViewEdit()
+    function __construct()
     {
-        parent::ViewEdit();
+        parent::__construct();
     }
-	
+
 	public function preDisplay() {
 		global $current_user;
 		parent::preDisplay();

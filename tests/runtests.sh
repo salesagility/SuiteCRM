@@ -1,2 +1,2 @@
 #!/bin/sh
-../include/vendor/bin/phpunit
+../vendor/bin/phpunit

@@ -30,8 +30,22 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with //test with securitygroups module module
-        $expected = " EXISTS (SELECT  1\n                  FROM    securitygroups secg\n                          INNER JOIN securitygroups_users secu \n                            ON secg.id = secu.securitygroup_id \n                               AND secu.deleted = 0 \n                               AND secu.user_id = '1'\n                          INNER JOIN securitygroups_records secr \n                            ON secg.id = secr.securitygroup_id \n                               AND secr.deleted = 0 \n                               AND secr.module = 'Users'\n                       WHERE   secr.record_id = users.id\n                               AND secg.deleted = 0) ";
-        $actual = $securityGroup->getGroupWhere('users', 'Users', 1);
+        $table_name = 'users';
+        $module = 'Users';
+        $user_id = 1;
+        $expected = " EXISTS (SELECT  1
+                  FROM    securitygroups secg
+                          INNER JOIN securitygroups_users secu
+                            ON secg.id = secu.securitygroup_id
+                               AND secu.deleted = 0
+                               AND secu.user_id = '$user_id'
+                          INNER JOIN securitygroups_records secr
+                            ON secg.id = secr.securitygroup_id
+                               AND secr.deleted = 0
+                               AND secr.module = '$module'
+                       WHERE   secr.record_id = ".$table_name.".id
+                               AND secg.deleted = 0) ";
+        $actual = $securityGroup->getGroupWhere($table_name, $module, $user_id);
         $this->assertSame($expected, $actual);
     }
 
@@ -257,12 +271,12 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         $this->assertGreaterThan(0, count($result));
 
-        //execute removeDefaultGroup method for each default group			
+        //execute removeDefaultGroup method for each default group
         foreach ($result as $key => $value) {
             $securityGroup->removeDefaultGroup($key);
         }
 
-        //retrieve back and verify that default securith groups are deleted 
+        //retrieve back and verify that default securith groups are deleted
         $result = $securityGroup->retrieveDefaultGroups();
         $this->assertEquals(0, count($result));
 

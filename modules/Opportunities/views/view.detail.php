@@ -53,12 +53,12 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class OpportunitiesViewDetail extends ViewDetail {
 
- 	function OpportunitiesViewDetail(){
- 		parent::ViewDetail();
+ 	function __construct(){
+ 		parent::__construct();
  	}
- 	
+
  	function display() {
-	    
+
 	    $currency = new Currency();
 	    if(isset($this->bean->currency_id) && !empty($this->bean->currency_id))
 	    {
@@ -66,12 +66,12 @@ class OpportunitiesViewDetail extends ViewDetail {
 	    	if( $currency->deleted != 1){
 	    		$this->ss->assign('CURRENCY', $currency->iso4217 .' '.$currency->symbol);
 	    	}else {
-	    	    $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());	
+	    	    $this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
 	    	}
 	    }else{
 	    	$this->ss->assign('CURRENCY', $currency->getDefaultISO4217() .' '.$currency->getDefaultCurrencySymbol());
 	    }
-	   	    
+
  		parent::display();
  	}
 }

@@ -47,8 +47,8 @@ class AOR_Report extends Basic {
 	var $assigned_user_link;
 	var $report_module;
 
-	function AOR_Report(){
-		parent::Basic();
+	function __construct(){
+		parent::__construct();
         $this->load_report_beans();
         require_once('modules/AOW_WorkFlow/aow_utils.php');
         require_once('modules/AOR_Reports/aor_utils.php');
@@ -526,7 +526,7 @@ class AOR_Report extends Basic {
             }
 
             $html .= "<thead><tr class='pagination'>";
-            
+
 
             $moduleFieldByGroupValue = $this->getModuleFieldByGroupValue($beanList, $group_value);
 

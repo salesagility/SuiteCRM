@@ -5,7 +5,7 @@
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -29,9 +29,9 @@
  */
 require_once('modules/AOS_Invoices/AOS_Invoices_sugar.php');
 class AOS_Invoices extends AOS_Invoices_sugar {
-	
-	function AOS_Invoices(){	
-		parent::AOS_Invoices_sugar();
+
+	function __construct(){
+		parent::__construct();
 	}
 
     function save($check_notify = FALSE){

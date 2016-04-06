@@ -14,9 +14,9 @@ class jjwg_Markers extends jjwg_Markers_sugar {
      */
     var $settings = array();
 
-    function jjwg_Markers($init=true) {
-        
-        parent::jjwg_Markers_sugar();
+    function __construct($init=true) {
+
+        parent::__construct();
         // Admin Config Setting
         if($init) $this->configuration();
     }
@@ -34,7 +34,7 @@ class jjwg_Markers extends jjwg_Markers_sugar {
     }
 
     /**
-     * 
+     *
      * Define Marker Location
      * @param $marker mixed (array or object)
      */
@@ -69,7 +69,7 @@ class jjwg_Markers extends jjwg_Markers_sugar {
     }
 
     /**
-     * 
+     *
      * Check for valid longitude
      * @param $lng float
      */
@@ -78,7 +78,7 @@ class jjwg_Markers extends jjwg_Markers_sugar {
     }
 
     /**
-     * 
+     *
      * Check for valid latitude
      * @param $lat float
      */

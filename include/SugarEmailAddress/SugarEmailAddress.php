@@ -72,8 +72,8 @@ class SugarEmailAddress extends SugarBean {
     /**
      * Sole constructor
      */
-    function SugarEmailAddress() {
-        parent::SugarBean();
+    public function __construct() {
+        parent::__construct();
         $this->index = self::$count;
         self::$count++;
     }
@@ -730,7 +730,7 @@ class SugarEmailAddress extends SugarBean {
             return $guid;
         }
     }
- 
+
     /**
      * Returns Primary or newest email address
      * @param object $focus Object in focus

@@ -11,10 +11,10 @@ class AORReportsDashlet extends Dashlet {
     var $charts;
     var $onlyCharts;
 
-    function AORReportsDashlet($id, $def = array()) {
+    function __construct($id, $def = array()) {
 		global $current_user, $app_strings;
 
-        parent::Dashlet($id);
+        parent::__construct($id);
         $this->isConfigurable = true;
         $this->def = $def;
         if(empty($def['dashletTitle'])) {

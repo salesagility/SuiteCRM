@@ -111,9 +111,9 @@ class EmailTemplate extends SugarBean
      */
     protected $storedVariables = array();
 
-    function EmailTemplate()
+    public function __construct()
     {
-        parent::SugarBean();
+        parent::__construct();
     }
 
     /**
@@ -301,7 +301,8 @@ class EmailTemplate extends SugarBean
     {
         global $app_list_strings, $focus, $action, $currentModule;
         $fields = $this->get_list_view_array();
-        $fields["DATE_MODIFIED"] = substr($fields["DATE_MODIFIED"], 0, 10);
+        //$fields["DATE_MODIFIED"] = substr($fields["DATE_MODIFIED"], 0, 10);
+        $fields["DATE_MODIFIED"] = isset($fields["DATE_MODIFIED"]) && !empty($fields["DATE_MODIFIED"]) ? substr($fields["DATE_MODIFIED"], 0, 10) : false;
         return $fields;
     }
 

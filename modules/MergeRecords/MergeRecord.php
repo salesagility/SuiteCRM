@@ -73,7 +73,7 @@ class MergeRecord extends SugarBean {
     //store a copy of the merge bean related strings
     var $merge_bean_strings = Array ();
 
-    function MergeRecord($merge_module = '', $merge_id = '') {
+    function __construct($merge_module = '', $merge_id = '') {
         global $sugar_config;
        //parent :: SugarBean();
 
@@ -102,13 +102,13 @@ class MergeRecord extends SugarBean {
         $this->merge_bean = new $this->merge_bean_class();
         if ($merge_id != '')
             $this->merge_bean->retrieve($merge_id);
-        
+
         // Bug 18853 - Disable this view if the user doesn't have edit and delete permissions
         if ( !$this->merge_bean->ACLAccess('edit') || !$this->merge_bean->ACLAccess('delete') ) {
             ACLController::displayNoAccess();
             sugar_die('');
         }
-        
+
         //load master module strings
         if ($load_module_strings)
             $this->merge_bean_strings = return_module_language($current_language, $merge_module);
@@ -139,7 +139,7 @@ class MergeRecord extends SugarBean {
     //-----------------------------------------------------------------------
     //-------------Wrapping Necessary Merge Bean Calls-----------------------
     //-----------------------------------------------------------------------
-    
+
     function fill_in_additional_list_fields() {
         return $this->merge_bean->fill_in_additional_list_fields();
     }
@@ -175,22 +175,22 @@ class MergeRecord extends SugarBean {
         }
         return false;
     }
-    
+
     function ACLAccess($view,$is_owner='not_set', $in_group = 'not_set'){
         global $current_user;
 
-        //if the module doesn't implement ACLS or is empty  
+        //if the module doesn't implement ACLS or is empty
         if(empty($this->merge_bean) || !$this->merge_bean->bean_implements('ACL'))
         {
         	return true;
         }
-        
+
         if($is_owner == 'not_set'){
             $is_owner = $this->merge_bean->isOwner($current_user->id);
         }
         return ACLController::checkAccess($this->merge_bean->module_dir,'edit', true);
     }
-    
+
 
     //keep save function to handle anything special on merges
     function save($check_notify = FALSE) {
@@ -202,7 +202,7 @@ class MergeRecord extends SugarBean {
        foreach ($this->merge_bean->field_defs as $key=>$value) {
             $searchFieldString=$key.'SearchField';
             $searchTypeString=$key.'SearchType';
-             
+
             if (isset($search_params[$searchFieldString]) ) {
 
                 if (isset($search_params[$searchFieldString]) == '') {
@@ -220,32 +220,32 @@ class MergeRecord extends SugarBean {
             }
        }
     }
-    
-    function get_inputs_for_search_params($search_params) 
+
+    function get_inputs_for_search_params($search_params)
     {
         $returnString = '';
         foreach ($this->merge_bean->field_defs as $key=>$value) {
             $searchFieldString=$key.'SearchField';
             $searchTypeString=$key.'SearchType';
-            
+
             if (isset($search_params[$searchFieldString]) ) {
                 $returnString .= "<input type='hidden' name='$searchFieldString' value='{$search_params[$searchFieldString]}' />\n";
                 $returnString .= "<input type='hidden' name='$searchTypeString' value='{$search_params[$searchTypeString]}' />\n";
             }
         }
-        
+
         return $returnString;
     }
-    
+
     function email_addresses_query($table, $module, $bean_id) {
     	$query = $table.".id IN (SELECT ear.bean_id FROM email_addresses ea
-									LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id 
+									LEFT JOIN email_addr_bean_rel ear ON ea.id = ear.email_address_id
 									WHERE ear.bean_module = '{$module}'
-									AND ear.bean_id != '{$bean_id}' 
+									AND ear.bean_id != '{$bean_id}'
 									AND ear.deleted = 0";
     	return $query;
     }
-    
+
     function release_name_query($search_type, $value) {
     	$this->load_merge_bean2('Releases');
     	if($search_type=='like') {
@@ -296,7 +296,7 @@ class MergeRecord extends SugarBean {
             }
             elseif (isset ($vDefArray['search_type']) && $vDefArray['search_type'] == 'start') {
                 if ($merge_field != "email1" && $merge_field != "email2" && $merge_field !="release_name") {
-            		array_push($where_clauses, $table_name.".".$merge_field." LIKE '".$GLOBALS['db']->quote($vDefArray['value'])."%'"); 
+            		array_push($where_clauses, $table_name.".".$merge_field." LIKE '".$GLOBALS['db']->quote($vDefArray['value'])."%'");
                 }
                 elseif($merge_field =="release_name"){
                         if(isset($vDefArray['value'])){
@@ -324,7 +324,7 @@ class MergeRecord extends SugarBean {
 	                $query = $this->email_addresses_query($table_name, $this->merge_module, $this->merge_bean->id);
 	                $query .= " AND ea.email_address = '".$GLOBALS['db']->quote($vDefArray['value'])."')";
 	                $where_clauses[] = $query;
-                }                
+                }
             }
         }
         // Add ACL Check

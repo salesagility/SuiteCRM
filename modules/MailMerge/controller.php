@@ -39,8 +39,8 @@
 
 require_once('soap/SoapHelperFunctions.php');
 class MailMergeController extends SugarController{
-	function MailMergeController(){
-		parent::SugarController();
+	function __construct(){
+		parent::__construct();
 	}
 
     public function action_search(){
@@ -59,7 +59,7 @@ class MailMergeController extends SugarController{
         $order_by = !empty($_REQUEST['order_by']) ? $_REQUEST['order_by'] : $lmodule.".name";
         $offset = !empty($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
         $response = array();
-        
+
         if(!empty($module)){
             $where = '';
             $deleted = '0';
@@ -110,7 +110,7 @@ class MailMergeController extends SugarController{
 
             $response['result'] = array('result_count'=>$row_count,'entry_list'=>$output_list);
         }
-        
+
         $json = getJSONobj();
         $json_response = $json->encode($response, true);
         print $json_response;

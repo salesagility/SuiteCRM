@@ -44,9 +44,9 @@ require_once('modules/Favorites/Favorites_sugar.php');
 class Favorites extends Favorites_sugar
 {
 
-    function Favorites()
+    public function __construct()
     {
-        parent::Favorites_sugar();
+        parent::__construct();
     }
 
     public function deleteFavorite($id){

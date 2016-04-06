@@ -43,8 +43,8 @@ require_once('modules/Users/UserViewHelper.php');
 
 class UsersViewDetail extends ViewDetail {
 
- 	function UsersViewDetail(){
- 		parent::ViewDetail();
+ 	public function __construct(){
+ 		parent::__construct();
  	}
 
     function preDisplay() {

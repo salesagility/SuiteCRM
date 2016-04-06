@@ -46,7 +46,7 @@
 class SugarFieldBase {
     var $ss; // Sugar Smarty Object
     var $hasButton = false;
-    function SugarFieldBase($type) {
+    function __construct($type) {
     	$this->type = $type;
         $this->ss = new Sugar_Smarty();
     }
@@ -128,7 +128,7 @@ class SugarFieldBase {
 
     function getListViewSmarty($parentFieldArray, $vardef, $displayParams, $col) {
         $tabindex = 1;
-        //fixing bug #46666: don't need to format enum and radioenum fields 
+        //fixing bug #46666: don't need to format enum and radioenum fields
         //because they are already formated in SugarBean.php in the function get_list_view_array() as fix of bug #21672
         if ($this->type != 'Enum' && $this->type != 'Radioenum')
         {
@@ -138,7 +138,7 @@ class SugarFieldBase {
         {
         	$vardef['name'] = strtoupper($vardef['name']);
         }
-        
+
     	$this->setup($parentFieldArray, $vardef, $displayParams, $tabindex, false);
 
         $this->ss->left_delimiter = '{';
@@ -180,7 +180,7 @@ class SugarFieldBase {
 	// If readonly is set in displayParams, the vardef will be displayed as in DetailView.
 	if (isset($displayParams['readonly']) && $displayParams['readonly']) {
 		return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'DetailView');
-	}	
+	}
 	// ~ jpereira@dri - #Bug49513 - Readonly type not working as expected
        return $this->getSmartyView($parentFieldArray, $vardef, $displayParams, $tabindex, 'EditView');
     }

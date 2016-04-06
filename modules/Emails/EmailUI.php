@@ -72,7 +72,7 @@ class EmailUI {
 	/**
 	 * Sole constructor
 	 */
-	function EmailUI() {
+	function __construct() {
 		global $sugar_config;
 		global $current_user;
 
@@ -2125,7 +2125,7 @@ eoq;
 				$t .= " AND (".  $owner_where." or ".$group_where.") ";
 			}
 			/* END - SECURITY GROUPS */
-    	
+
 
 			if(!empty($q)) {
 				$q .= "\n UNION ALL \n";

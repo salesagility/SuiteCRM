@@ -63,7 +63,7 @@ class ListViewData {
 	 *
 	 * @return ListViewData
 	 */
-	function ListViewData() {
+	public function __construct() {
 		$this->limitName = 'list_max_entries_per_page';
 		$this->db = DBManagerFactory::getInstance('listviews');
 	}

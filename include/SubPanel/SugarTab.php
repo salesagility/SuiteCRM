@@ -44,7 +44,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  */
 class SugarTab
 {
-    function SugarTab($type='singletabmenu')
+    function __construct($type='singletabmenu')
     {
         $this->type = $type;
         $this->ss = new Sugar_Smarty();
@@ -56,7 +56,7 @@ class SugarTab
 
         $max_tabs = $current_user->getPreference('max_tabs');
         if(!isset($max_tabs) || $max_tabs <= 0) $max_tabs = $GLOBALS['sugar_config']['default_max_tabs'];
-				
+
 				$key_all = translate('LBL_TABGROUP_ALL');
 				if ($selected_group == 'All') {
 						$selected_group = $key_all;

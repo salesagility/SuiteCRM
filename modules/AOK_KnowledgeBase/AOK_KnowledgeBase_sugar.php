@@ -72,16 +72,17 @@ class AOK_KnowledgeBase_sugar extends Basic {
 		var $author;
 		var $user_id1_c;
 		var $approver;
-		function AOK_KnowledgeBase_sugar(){	
-		parent::Basic();
+
+    public function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

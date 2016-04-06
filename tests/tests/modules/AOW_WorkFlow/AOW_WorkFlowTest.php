@@ -244,12 +244,19 @@ class AOW_WorkFlowTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($aowWorkFlow->compare_condition(1, 2, 'Less_Than'));
         $this->assertTrue($aowWorkFlow->compare_condition(5, 4, 'Greater_Than_or_Equal_To'));
         $this->assertTrue($aowWorkFlow->compare_condition(2, 3, 'Less_Than_or_Equal_To'));
-        $this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
-        $this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
-        $this->assertNotFalse($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
         $this->assertTrue($aowWorkFlow->compare_condition('', '', 'is_null'));
         $this->assertTrue($aowWorkFlow->compare_condition('test2', array('test1', 'test2'), 'One_of'));
         $this->assertTrue($aowWorkFlow->compare_condition('test', array('test1', 'test2'), 'Not_One_of'));
+
+        //These do not return bool but 'strpos' result
+        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
+        $this->assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Contains'));
+
+        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
+        $this->assertEquals(0, $aowWorkFlow->compare_condition('test1', 'test', 'Starts_With'));
+
+        //$this->assertNotFalse($aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
+        $this->assertEquals(4, $aowWorkFlow->compare_condition('test1', '1', 'Ends_With'));
     }
 
     public function testcheck_in_group()

@@ -66,16 +66,17 @@ class FP_Event_Locations_sugar extends Basic {
 		var $assigned_user_id;
 		var $assigned_user_name;
 		var $assigned_user_link;
-		function FP_Event_Locations_sugar(){	
-		parent::Basic();
+
+    function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

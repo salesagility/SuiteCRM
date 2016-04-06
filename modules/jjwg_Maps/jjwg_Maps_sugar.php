@@ -30,8 +30,8 @@ class jjwg_Maps_sugar extends Basic {
     var $parent_type;
     var $parent_id;
 
-    function jjwg_Maps_sugar() {
-        parent::Basic();
+    function __construct() {
+        parent::__construct();
     }
 
     function bean_implements($interface) {

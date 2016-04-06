@@ -5,19 +5,19 @@ require_once('include/MVC/View/views/view.detail.php');
 
 class AOS_ContractsViewDetail extends ViewDetail {
 
-	function AOS_ContractsViewDetail(){
- 		parent::ViewDetail();
+	function __construct(){
+ 		parent::__construct();
  	}
-	
+
 	function display(){
 		$this->populateContractTemplates();
 		$this->displayPopupHtml();
 		parent::display();
 	}
-	
+
 	function populateContractTemplates(){
 		global $app_list_strings;
-		
+
 		$sql = "SELECT id, name FROM aos_pdf_templates WHERE deleted = 0 AND type='AOS_Contracts' AND active = 1";
 
 		$res = $this->bean->db->query($sql);
@@ -26,12 +26,12 @@ class AOS_ContractsViewDetail extends ViewDetail {
 			$app_list_strings['template_ddown_c_list'][$row['id']] = $row['name'];
 		}
 	}
-	
+
 	function displayPopupHtml(){
 		global $app_list_strings,$app_strings, $mod_strings;
         $templates = array_keys($app_list_strings['template_ddown_c_list']);
         if($templates){
-		
+
 		echo '	<div id="popupDiv_ara" style="display:none;position:fixed;top: 39%; left: 41%;opacity:1;z-index:9999;background:#FFFFFF;">
 				<form id="popupForm" action="index.php?entryPoint=generatePdf" method="post">
  				<table style="border: #000 solid 2px;padding-left:40px;padding-right:40px;padding-top:10px;padding-bottom:10px;font-size:110%;" >

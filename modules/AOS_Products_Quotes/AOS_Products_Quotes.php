@@ -43,9 +43,9 @@ require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes_sugar.php');
 class AOS_Products_Quotes extends AOS_Products_Quotes_sugar
 {
 
-    function AOS_Products_Quotes()
+    function __construct()
     {
-        parent::AOS_Products_Quotes_sugar();
+        parent::__construct();
     }
 
     function save_lines($post_data, $parent, $groups = array(), $key = '')

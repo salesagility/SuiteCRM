@@ -43,9 +43,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.list.php');
 
 class ViewSourceProperties extends ViewList {
-   
- 	function ViewSourceProperties(){
- 		parent::ViewList();
+
+ 	function __construct(){
+ 		parent::__construct();
  	}
 
     public function display()
@@ -54,12 +54,12 @@ class ViewSourceProperties extends ViewList {
 
 		require_once('include/connectors/sources/SourceFactory.php');
 		require_once('include/connectors/utils/ConnectorUtils.php');
-		
+
 		$source_id = $_REQUEST['source_id'];
 		$connector_language = ConnectorUtils::getConnectorStrings($source_id);
     	$source = SourceFactory::getSource($source_id);
     	$properties = $source->getProperties();
-        
+
     	$required_fields = array();
     	$config_fields = $source->getRequiredConfigFields();
 	    $fields = $source->getRequiredConfigFields();

@@ -53,18 +53,17 @@ global $theme;
 
 class Popup_Picker
 {
-	
-	
+
+
 	/*
-	 * 
+	 *
 	 */
-	function Popup_Picker()
+	function __construct()
 	{
-		;
 	}
-	
+
 	/*
-	 * 
+	 *
 	 */
 	function _get_where_clause()
 	{
@@ -74,17 +73,17 @@ class Popup_Picker
 			$where_clauses = array();
 			append_where_clause($where_clauses, "target_id", "campaign_log.target_id");
 			//append_where_clause($where_clauses, "last_name", "prospects.last_name");
-		
+
 			$where = generate_where_statement($where_clauses);
-			if (!empty($where)) 
+			if (!empty($where))
 				$where.=" AND ";
 			$where .=" activity_type='targeted'";
-			
+
 		}
 
 		return $where;
 	}
-	
+
 	/**
 	 *
 	 */
@@ -96,20 +95,20 @@ class Popup_Picker
 		global $app_list_strings;
 		global $currentModule;
 		global $sugar_version, $sugar_config;
-		
+
 		$output_html = '';
 		$where = '';
-		
+
 		$where = $this->_get_where_clause();
-		
-		
-		
+
+
+
 		$first_name = empty($_REQUEST['first_name']) ? '' : $_REQUEST['first_name'];
 		$last_name = empty($_REQUEST['last_name']) ? '' : $_REQUEST['last_name'];
-		
+
 		$request_data = empty($_REQUEST['request_data']) ? '' : $_REQUEST['request_data'];
 		$hide_clear_button = empty($_REQUEST['hide_clear_button']) ? false : true;
-		
+
 		$button  = "<form action='index.php' method='post' name='form' id='form'>\n";
 		//START:FOR MULTI-SELECT
 		$multi_select=false;
@@ -144,12 +143,12 @@ class Popup_Picker
 		insert_popup_header($theme);
 		$output_html .= ob_get_contents();
 		ob_end_clean();
-		
+
 		//$output_html .= get_form_header($mod_strings['LBL_SEARCH_FORM_TITLE'], '', false);
-		
+
 		$form->parse('main.SearchHeader');
 		$output_html .= $form->text('main.SearchHeader');
-		
+
 		// Reset the sections that are already in the page so that they do not print again later.
 		$form->reset('main.SearchHeader');
 
@@ -159,7 +158,7 @@ class Popup_Picker
 		$ListView->show_export_button = false;
 		$ListView->process_for_popups = true;
 		$ListView->setXTemplate($form);
-		$ListView->multi_select_popup=$multi_select;  //FOR MULTI-SELECT	
+		$ListView->multi_select_popup=$multi_select;  //FOR MULTI-SELECT
 		if ($multi_select) $ListView->xTemplate->assign("TAG_TYPE","SPAN"); else  $ListView->xTemplate->assign("TAG_TYPE","A");//FOR MULTI-SELECT
 		//$ListView->setHeaderTitle($mod_strings['LBL_LIST_FORM_TITLE']); //FOR MULTI-SELECT
 		//$ListView->setHeaderText($button); //FOR MULTI-SELECT
@@ -167,11 +166,11 @@ class Popup_Picker
 		$ListView->setModStrings($mod_strings);
 
 		ob_start();
-		$output_html .= get_form_header($mod_strings['LBL_LIST_FORM_TITLE'], $button, false); //FOR MULTI-SELECT		
+		$output_html .= get_form_header($mod_strings['LBL_LIST_FORM_TITLE'], $button, false); //FOR MULTI-SELECT
 		$ListView->processListView($seed_bean, 'main', 'CAMPAIGNLOG');
 		$output_html .= ob_get_contents();
 		ob_end_clean();
-				
+
 		$output_html .= insert_popup_footer();
 		return $output_html;
 	}
