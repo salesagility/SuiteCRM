@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,23 +36,26 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-    $field = $_REQUEST['field'];
-    $removeFile = "upload://{$_REQUEST[$field . '_record_id'] }_" . $field;
-    $bean = BeanFactory::getBean($_REQUEST['module'], $_REQUEST[$field . "_record_id"]);
+function install_social()
+{
+    require_once('ModuleInstall/ModuleInstaller.php');
 
+    $hooks = array(
+        array(
+            'module' => '',
+            'hook' => 'after_ui_frame',
+            'order' => 1,
+            'description' => 'Load Social JS',
+            'file' => 'include/social/hooks.php',
+            'class' => 'hooks',
+            'function' => 'load_js',
+        ),
+    );
 
-if(file_exists($removeFile)) {
-    if(!unlink($removeFile)) {
-        $GLOBALS['log']->error("*** Could not unlink() file: [ {$removeFile} ]");
-    }else{
-        $bean->$field = '';
-        $bean->save();
-        echo "true";
+    foreach ($hooks as $hook) {
+        check_logic_hook_file($hook['module'], $hook['hook'], array($hook['order'], $hook['description'], $hook['file'], $hook['class'], $hook['function']));
     }
-} else {
-    $bean->$field = '';
-    $bean->save();
-    echo 'true';
+
 }

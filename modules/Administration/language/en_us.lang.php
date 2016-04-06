@@ -1171,6 +1171,7 @@ $mod_strings = array(
     'LBL_COLOUR_ADMIN_DDLINK' => 'Drop down link colour: ',
     'LBL_COLOUR_ADMIN_DDMENU' => 'Drop down menu colour: ',
     'LBL_COLOUR_ADMIN_DDLINK_HOVER' => 'Drop down menu link hover colour: ',
+    'LBL_ACTION_MENU_BUTTON' => 'Action Menu button colour',
     'LBL_ACTION_MENU_BACKGROUND' => 'Action Menu background colour',
     'LBL_ACTION_MENU_BACKGROUND_HOVER' => 'Action Menu hover colour',
     'LBL_COLOUR_ADMIN_MENUFONT' => 'Menu link colour',

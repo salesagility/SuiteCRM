@@ -70,8 +70,8 @@ class templateParser{
 						$value='';
 					}
 				}
-				if ($name === 'aos_products_product_image'){
-				$value = '<img src="'.$value.'"width="50" height="50"/>';
+				if ($name === 'aos_products_product_image' && !empty($value)){
+					$value = '<img src="'.$value.'"width="50" height="50"/>';
 				}
 				if ($name === 'aos_products_quotes_product_qty'){
 					$sep = get_number_seperators();

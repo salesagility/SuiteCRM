@@ -602,7 +602,7 @@ EOQ3;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPAUTH_REQ']}</label>
-                    <input type="checkbox" name="smtp_tab_gmail[mail_smtpauth_req]" value="1" checked="checked">
+                    <input type="checkbox" name="smtp_tab_gmail[mail_smtpauth_req]" id="smtp_tab_gmail__mail_smtpauth_req" value="1" checked="checked" onclick="toggleSMTPAuthSettings(this, 'toggleArea_1');">
                 </div>
 
                 <div class="formrow">
@@ -614,23 +614,26 @@ EOQ3;
 
                 <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_GMAIL_SMTPUSER']}</label>
-                    <input type="text" name="smtp_tab_gmail[mail_smtpuser]" size="25" maxlength="64">
-                </div>
 
-                <div class="clear"></div>
+                <div class="toggleArea" id="toggleArea_1">
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_GMAIL_SMTPUSER']}</label>
+                        <input type="text" name="smtp_tab_gmail[mail_smtpuser]" id="smtp_tab_gmail__mail_smtpuser" size="25" maxlength="64">
+                    </div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_GMAIL_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_gmail[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
-                </div>
+                    <div class="clear"></div>
 
-                <div class="clear"></div>
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_GMAIL_SMTPPASS']}</label>
+                        <input type="password" name="smtp_tab_gmail[mail_smtppass]" id="smtp_tab_gmail__mail_smtppass" size="25" maxlength="64" value="" tabindex="1">
+                    </div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION']} <i>i<div class="tooltip">{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION_HELP']}</div></i></label>
-                    <input name="smtp_tab_gmail[notify_allow_default_outbound]" value="2" tabindex="1" class="checkbox" type="checkbox" {$notify_allow_default_outbound_checked}>
+                    <div class="clear"></div>
+
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION']} <i>i<div class="tooltip">{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION_HELP']}</div></i></label>
+                        <input name="smtp_tab_gmail[notify_allow_default_outbound]" id="smtp_tab_gmail__notify_allow_default_outbound" value="2" tabindex="1" class="checkbox" type="checkbox" {$notify_allow_default_outbound_checked}>
+                    </div>
                 </div>
 
                 <div class="clear"></div>
@@ -684,7 +687,7 @@ EOQ3;
 
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPAUTH_REQ']}</label>
-                    <input type="checkbox" name="smtp_tab_exchange[mail_smtpauth_req]" value="1" checked="checked">
+                    <input type="checkbox" name="smtp_tab_exchange[mail_smtpauth_req]" id="smtp_tab_exchange__mail_smtpauth_req" value="1" checked="checked" onclick="toggleSMTPAuthSettings(this, 'toggleArea_2');">
                 </div>
 
                 <div class="formrow">
@@ -696,23 +699,25 @@ EOQ3;
 
                 <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_EXCHANGE_SMTPUSER']}</label>
-                    <input type="text" name="smtp_tab_exchange[mail_smtpuser]" size="25" maxlength="64">
-                </div>
+                <div class="toggleArea" id="toggleArea_2">
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_EXCHANGE_SMTPUSER']}</label>
+                        <input type="text" name="smtp_tab_exchange[mail_smtpuser]" id="smtp_tab_exchange__mail_smtpuser" size="25" maxlength="64">
+                    </div>
 
-                <div class="clear"></div>
+                    <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_EXCHANGE_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_exchange[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
-                </div>
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_EXCHANGE_SMTPPASS']}</label>
+                        <input type="password" name="smtp_tab_exchange[mail_smtppass]" id="smtp_tab_exchange__mail_smtppass" size="25" maxlength="64" value="" tabindex="1">
+                    </div>
 
-                <div class="clear"></div>
+                    <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION']} <i>i<div class="tooltip">{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION_HELP']}</div></i></label>
-                    <input name="smtp_tab_exchange[notify_allow_default_outbound]" value="2" tabindex="1" class="checkbox" type="checkbox" {$notify_allow_default_outbound_checked}>
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION']} <i>i<div class="tooltip">{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION_HELP']}</div></i></label>
+                        <input name="smtp_tab_exchange[notify_allow_default_outbound]" id="smtp_tab_exchange__notify_allow_default_outbound" value="2" tabindex="1" class="checkbox" type="checkbox" {$notify_allow_default_outbound_checked}>
+                    </div>
                 </div>
 
                 <div class="clear"></div>
@@ -737,7 +742,7 @@ EOQ3;
                 <div class="formrow">
                     <label>{$mod_strings['LBL_MAIL_SMTPAUTH_REQ']}</label>
                     <input type="hidden" name="smtp_tab_other[mail_smtpauth_req]" value="0">
-                    <input type="checkbox" id="mail_smtpauth_req_chk" name="smtp_tab_other[mail_smtpauth_req]" value="1" checked="checked">
+                    <input type="checkbox" id="mail_smtpauth_req_chk" name="smtp_tab_other[mail_smtpauth_req]" value="1" checked="checked" onclick="toggleSMTPAuthSettings(this, 'toggleArea_3');">
                 </div>
 
                 <div class="formrow">
@@ -749,24 +754,26 @@ EOQ3;
 
                 <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_MAIL_SMTPUSER']}</label>
-                    <input type="text" name="smtp_tab_other[mail_smtpuser]" size="25" maxlength="64">
-                </div>
+                <div class="toggleArea" id="toggleArea_3">
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_MAIL_SMTPUSER']}</label>
+                        <input type="text" name="smtp_tab_other[mail_smtpuser]" id="smtp_tab_other__mail_smtpuser" size="25" maxlength="64">
+                    </div>
 
-                <div class="clear"></div>
+                    <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_MAIL_SMTPPASS']}</label>
-                    <input type="password" name="smtp_tab_other[mail_smtppass]" size="25" maxlength="64" value="" tabindex="1">
-                </div>
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_MAIL_SMTPPASS']}</label>
+                        <input type="password" name="smtp_tab_other[mail_smtppass]" id="smtp_tab_other__mail_smtppass" size="25" maxlength="64" value="" tabindex="1">
+                    </div>
 
-                <div class="clear"></div>
+                    <div class="clear"></div>
 
-                <div class="formrow">
-                    <label>{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION']} <i>i<div class="tooltip">{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION_HELP']}</div></i></label>
-                    <input type="hidden" name="smtp_tab_other[notify_allow_default_outbound]" value="0">
-                    <input id="notify_allow_default_outbound_chk" name="smtp_tab_other[notify_allow_default_outbound]" value="2" tabindex="1" class="checkbox" type="checkbox" {$notify_allow_default_outbound_checked}>
+                    <div class="formrow">
+                        <label>{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION']} <i>i<div class="tooltip">{$mod_strings['LBL_ALLOW_DEFAULT_SELECTION_HELP']}</div></i></label>
+                        <input type="hidden" name="smtp_tab_other[notify_allow_default_outbound]" value="0">
+                        <input id="notify_allow_default_outbound_chk" name="smtp_tab_other[notify_allow_default_outbound]" value="2" tabindex="1" class="checkbox" type="checkbox" {$notify_allow_default_outbound_checked}>
+                    </div>
                 </div>
 
                 <div class="clear"></div>
@@ -775,6 +782,37 @@ EOQ3;
             <!-- smtp default values & tabs toggler js & tooltip help -->
 
             <script>
+
+                var toggleSMTPAuthFields = {
+                    toggleArea_1 : {
+                        user: 'smtp_tab_gmail__mail_smtpuser',
+                        pass: 'smtp_tab_gmail__mail_smtppass',
+                        allow: 'smtp_tab_gmail__notify_allow_default_outbound'
+                    },
+                    toggleArea_2 : {
+                        user: 'smtp_tab_exchange__mail_smtpuser',
+                        pass: 'smtp_tab_exchange__mail_smtppass',
+                        allow: 'smtp_tab_exchange__notify_allow_default_outbound'
+                    },
+                    toggleArea_3 : {
+                        user: 'smtp_tab_other__mail_smtpuser',
+                        pass: 'smtp_tab_other__mail_smtppass',
+                        allow: 'notify_allow_default_outbound_chk'
+                    }
+                };
+
+                var toggleSMTPAuthSettings = function(chkbox, elemID) {
+                    if($(chkbox).prop('checked')) {
+                        $('#' + elemID).show();
+                    }
+                    else {
+                        $('#' + toggleSMTPAuthFields[elemID].user).val('');
+                        $('#' + toggleSMTPAuthFields[elemID].pass).val('');
+                        $('#' + toggleSMTPAuthFields[elemID].allow).prop('checked', false);
+                        $('#' + elemID).hide();
+                    }
+                };
+
                 $(function(){
 
                     $('.smtp_tab_toggler').click(function(){
@@ -808,6 +846,11 @@ EOQ3;
                             $(this).html('-none-');
                         }
                     });
+
+
+                    toggleSMTPAuthSettings(document.getElementById('smtp_tab_gmail__mail_smtpauth_req'), 'toggleArea_1');
+                    toggleSMTPAuthSettings(document.getElementById('smtp_tab_exchange__mail_smtpauth_req'), 'toggleArea_2');
+                    toggleSMTPAuthSettings(document.getElementById('mail_smtpauth_req_chk'), 'toggleArea_3');
 
                 });
             </script>
