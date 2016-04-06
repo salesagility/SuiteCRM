@@ -494,7 +494,9 @@ class AOR_Report extends Basic {
 
         global $beanList, $sugar_config;
 
-        $report_sql = $this->build_report_query($group_value, $extra);
+        $_group_value = $this->db->quote($group_value);
+
+        $report_sql = $this->build_report_query($_group_value, $extra);
         $max_rows = 20;
         $total_rows = 0;
         $count_sql = explode('ORDER BY', $report_sql);
