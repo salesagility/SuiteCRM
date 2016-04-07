@@ -1,14 +1,14 @@
 <?php
-
+/* DEFINE SOME VARIABLES FOR INSTALLER */
 $_SERVER['HTTP_HOST'] = 'localhost';
 $_SERVER['REQUEST_URI'] = 'install.php';
 $_SERVER['SERVER_NAME'] = '';
 $_SERVER['SERVER_PORT'] = '';
 
-$_REQUEST = array(
-    'goto' => 'SilentInstall',
-    'cli' => TRUE
-);
+$_SESSION['setup_site_url'] = 'http://localhost';
+
+$_REQUEST['goto'] = 'SilentInstall';
+$_REQUEST['cli'] = true;
 
 
 try {
