@@ -152,23 +152,23 @@ class LogicHookTest extends PHPUnit_Framework_TestCase {
         );
 
         $expected_default = array(
+					'after_save' => array(
+						array(30, 'popup_select', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_select'),
+						array(1, 'AOD Index Changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleChanges'),
+						array(99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php', 'AOW_WorkFlow', 'run_bean_flows'),
+					),
+					'after_delete' => array(
+						array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleDelete'),
+					),
+					'after_restore' => array(
+						array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleRestore'),
+					),
                     'after_ui_footer' => array(
                             array(10, 'popup_onload', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_onload'),
                     ),
                     'after_ui_frame' => array(
                             array(20, 'mass_assign', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'mass_assign'),
                             array(1, 'Load Social JS', 'include/social/hooks.php', 'hooks', 'load_js'),
-                    ),
-                    'after_save' => array(
-                            array(30, 'popup_select', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_select'),
-                            array(1, 'AOD Index Changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleChanges'),
-                            array(99, 'AOW_Workflow', 'modules/AOW_WorkFlow/AOW_WorkFlow.php', 'AOW_WorkFlow', 'run_bean_flows'),
-                    ),
-                    'after_delete' => array(
-                            array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleDelete'),
-                    ),
-                    'after_restore' => array(
-                            array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleRestore'),
                     ),
                 );
 
