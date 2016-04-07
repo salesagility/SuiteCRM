@@ -9,6 +9,8 @@ $_SERVER['SERVER_PORT'] = '80';
 $_REQUEST['goto'] = 'SilentInstall';
 $_REQUEST['cli'] = true;
 
+// this will fix warning in modules/Users/Save.php:295 during installation
+$_POST['email_reminder_checked'] = false;
 
 
 try {
@@ -24,10 +26,9 @@ try {
          . "\n" . str_repeat("-", 120)
          . "\n";
     /*
-     * Do some cleanup so we can relaunch
+     * Do some cleanup so we can relaunch installer over and over again (we can get rid of this)
      */
     unlink("config.php");
-
 }
 
 
