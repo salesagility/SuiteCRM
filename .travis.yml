@@ -16,8 +16,6 @@ script:
   - cd tests
   - ../vendor/bin/phpunit
   - cat ../suitecrm.log
-after_failure:
-  - cat suitecrm.log
 services:
   - mysql
 branches:
