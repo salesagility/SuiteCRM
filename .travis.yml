@@ -25,3 +25,5 @@ branches:
     - master
     - hotfix
     - develop
+    - travis-install-fix
+
