@@ -17,7 +17,9 @@ try {
     /*
      * Do some cleanup so we can relaunch installer over and over again (we can get rid of this)
      */
-    unlink("config.php");
+    if(is_file("config.php")) {
+        unlink("config.php");
+    }
 
     ob_start();
     require_once 'install.php';
