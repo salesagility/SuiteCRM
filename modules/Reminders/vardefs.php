@@ -102,7 +102,6 @@ $dictionary['Reminder']['fields']= array(
 );
 
 $dictionary['Reminder']['indices'] = array (
-    /*array('name' =>'reminder_pk', 'type' =>'primary', 'fields'=>array('id')),*/
     array('name' =>'idx_reminder_name', 'type'=>'index', 'fields'=>array('name')),
     array('name' =>'idx_reminder_deleted', 'type'=>'index', 'fields'=>array('deleted')),
     array('name' =>'idx_reminder_related_event_module', 'type'=>'index', 'fields'=>array('related_event_module')),
