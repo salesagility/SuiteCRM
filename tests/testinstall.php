@@ -14,10 +14,14 @@ $_POST['email_reminder_checked'] = false;
 
 
 try {
+    /*
+     * Do some cleanup so we can relaunch installer over and over again (we can get rid of this)
+     */
+    unlink("config.php");
+
     ob_start();
     require_once 'install.php';
     ob_end_clean();
-    echo "\ndone.\n";
 } catch(\Exception $e) {
     echo "\nINSTALLATION FAILED! file: " . $e->getFile() . " - line: " . $e->getLine()
          . "\n" . $e->getMessage()
@@ -25,10 +29,6 @@ try {
          . "\n" . print_r($e->getTrace(), true)
          . "\n" . str_repeat("-", 120)
          . "\n";
-    /*
-     * Do some cleanup so we can relaunch installer over and over again (we can get rid of this)
-     */
-    unlink("config.php");
 }
 
 
