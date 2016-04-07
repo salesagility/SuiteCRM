@@ -64,10 +64,11 @@ class RepairAndClear
         switch($current_action)
         {
             case 'repairDatabase':
-                if(in_array($mod_strings['LBL_ALL_MODULES'], $this->module_list))
+                if(isset($mod_strings['LBL_ALL_MODULES']) && in_array($mod_strings['LBL_ALL_MODULES'], $this->module_list)) {
                     $this->repairDatabase();
-                else
+                } else {
                     $this->repairDatabaseSelectModules();
+                }
                 break;
             case 'rebuildExtensions':
                 $this->rebuildExtensions();
@@ -150,7 +151,7 @@ class RepairAndClear
                 ob_flush();
             }
 	    	$sql = '';
-			if($this->module_list && !in_array($mod_strings['LBL_ALL_MODULES'],$this->module_list))
+			if(!isset($mod_strings['LBL_ALL_MODULES']) || ($this->module_list && !in_array($mod_strings['LBL_ALL_MODULES'],$this->module_list)))
 			{
 				$repair_related_modules = array_keys($dictionary);
 				//repair DB

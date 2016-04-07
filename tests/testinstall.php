@@ -17,7 +17,7 @@ try {
     ob_end_clean();
     echo "\ndone.\n";
 } catch(\Exception $e) {
-    echo "\nINSTALLATION FAILED!"
+    echo "\nINSTALLATION FAILED! file: " . $e->getFile() . " - line: " . $e->getLine()
          . "\n" . $e->getMessage()
          . "\n" . str_repeat("-", 120)
          . "\n" . print_r($e->getTrace(), true)
