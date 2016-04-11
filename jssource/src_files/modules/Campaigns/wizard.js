@@ -114,74 +114,76 @@
     }
 
 
-    
-    /*this function runs on each navigation in the wizard.  It will call the methods that:
-    *  1.hide the divs
-    *  2.show the div being navigated to
-    *  3.shows/hides the proper buttons
-    *  4.highlites the step title
-    *  5.adjusts the step location message
-    */
 
-    function navigate(direction, noValidation){
-        if(typeof noValidation == 'undefined') {
-            noValidation = false;
-        }
+/*this function runs on each navigation in the wizard.  It will call the methods that:
+ *  1.hide the divs
+ *  2.show the div being navigated to
+ *  3.shows/hides the proper buttons
+ *  4.highlites the step title
+ *  5.adjusts the step location message
+ */
 
-        //get the current step
-        var current_step = document.getElementById('wiz_current_step');
-        var currentValue = parseInt(current_step.value);
-    
-        //validation needed. (specialvalidation,  plus step number, plus submit button)
-        if(noValidation || validate_wiz(current_step.value,direction)){
-            
-            //change current step value to that of the step being navigated to
-            if(direction == 'back'){
-                current_step.value = currentValue-1;
-            }
-            if(direction == 'next'){
-                current_step.value = currentValue+1;
-            }
-            if(direction == 'direct'){
-            //no need to modify current step, this is a direct navigation
-            }
-                
-            //show next step        
-            showdiv("step"+current_step.value);
-        
-            //set nav hi-lite
-            hilite(current_step.value);
+function navigate(direction, noValidation){
+  if(typeof noValidation == 'undefined') {
+    noValidation = false;
+  }
 
-            //enable save button if on last step
-            var total = document.getElementById('wiz_total_steps').value;
-            var save_button = document.getElementById('wiz_submit_button');
-			var back_button_div = document.getElementById('back_button_div');
-			var save_button_div = document.getElementById('save_button_div');		
-			var next_button_div = document.getElementById('next_button_div');		
-            if(current_step.value==total){
-                //save_button.display='';
-                save_button.disabled = false;
-				back_button_div.style.display = '';
-				save_button_div.style.display = '';		
-				next_button_div.style.display = 'none';
-                
-            }else{
-	            if(current_step.value<2){                
-		            back_button_div.style.display = 'none';	
-	            }else{
-		            back_button_div.style.display = '';		            	
-	            }
-				var next_button = document.getElementById('wiz_next_button');	            
-				next_button_div.style.display = '';
-				save_button_div.style.display = 'none';		
-				next_button.focus();                
-            }
+  //get the current step
+  var current_step = document.getElementById('wiz_current_step');
+  var currentValue = parseInt(current_step.value);
 
-        }else{
-         //error occurred, do nothing   
-        }    
-    
+  //validation needed. (specialvalidation,  plus step number, plus submit button)
+  if(noValidation || validate_wiz(current_step.value,direction)){
+
+    //change current step value to that of the step being navigated to
+    if(direction == 'back'){
+      current_step.value = currentValue-1;
     }
+    if(direction == 'next'){
+      current_step.value = currentValue+1;
+    }
+    if(direction == 'direct'){
+      //no need to modify current step, this is a direct navigation
+    }
+
+    //show next step
+    showdiv("step"+current_step.value);
+
+    //set nav hi-lite
+    hilite(current_step.value);
+
+    //enable save button if on last step
+    var total = document.getElementById('wiz_total_steps').value;
+    var save_button = document.getElementById('wiz_submit_button');
+    var finish_button = document.getElementById('wiz_submit_finish_button');
+    var back_button_div = document.getElementById('back_button_div');
+    var save_button_div = document.getElementById('save_button_div');
+    var next_button_div = document.getElementById('next_button_div');
+    if(current_step.value==total){
+      //save_button.display='';
+      save_button.disabled = false;
+      back_button_div.style.display = '';
+      save_button_div.style.display = '';
+      next_button_div.style.display = 'none';
+      finish_button.style.display = 'none';
+
+    }else{
+      if(current_step.value<2){
+        back_button_div.style.display = 'none';
+      }else{
+        back_button_div.style.display = '';
+      }
+      var next_button = document.getElementById('wiz_next_button');
+      next_button_div.style.display = '';
+      save_button_div.style.display = 'none';
+      next_button.focus();
+    }
+
+  }else{
+    //error occurred, do nothing
+  }
+
+}
 
     /*
      * This function highlites the right title on the navigation div.
