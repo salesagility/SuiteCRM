@@ -271,10 +271,12 @@ if($campaign_type == 'general'){
     //Assign Email as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_EMAIL']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='Email'");
+    $ss->assign("HIDE_CAMPAIGN_TYPE", true);
 }else{
     //Assign NewsLetter as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_NEWSLETTER']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='NewsLetter'");
+    $ss->assign("HIDE_CAMPAIGN_TYPE", true);
 
 }
 
