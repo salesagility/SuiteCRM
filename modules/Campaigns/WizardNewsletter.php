@@ -458,38 +458,36 @@ if(count($prospect_lists)>0){
 
 
 }else{
- //this is not a newlsetter campaign, so fill in target list table
+    //this is not a newlsetter campaign, so fill in target list table
     //create array for javascript, this will help to display the option text, not the value
     $dom_txt =' ';
     foreach($app_list_strings['prospect_list_type_dom'] as $key=>$val){
         $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='$val';}";
     }
-    $ss->assign("PL_DOM_STMT", $dom_txt); 
+    $ss->assign("PL_DOM_STMT", $dom_txt);
     $trgt_count = 0;
     $trgt_html = ' ';
     if(count($prospect_lists)>0){
-        
+
         foreach($prospect_lists as $pl_id){
-        //retrieve prospect list
-             $pl = new ProspectList();   
-             $pl_focus = $pl->retrieve($pl_id);
-             $trgt_html .= "<div id='existing_trgt".$trgt_count."'> <table class='tabDetailViewDL2' width='100%'>" ;
-             $trgt_html .= "<td width='100' style=\"width:33%\"> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". $pl_focus->name."' ><a href=\"index.php?module=ProspectLists&action=DetailView&record=" . $pl_focus->id . "\" target=\"_blank\" title=\"" . $mod_strings['LBL_OPEN_IN_NEW_WINDOW'] . "\">". $pl_focus->name."</a></td>";
-             $trgt_html .= "<td width='100' style=\"width:33%\"><input type='hidden' size='60' maxlength='255' name='existing_tracker_list_type". $trgt_count ."'   id='existing_tracker_list_type". $trgt_count ."' value='".$pl_focus->list_type."' >".$app_list_strings['prospect_list_type_dom'][$pl_focus->list_type];
-             $trgt_html .= "<input type='hidden' name='added_target_id". $trgt_count ."' id='added_target_id". $trgt_count ."' value='". $pl_focus->id ."' ></td>";
-             $trgt_html .= "<td width='100' style=\"width:33%\"><a href='#' onclick=\"javascript:remove_existing_target('existing_trgt".$trgt_count."','".$pl_focus->id."'); \" >  ";
-             $trgt_html .= SugarThemeRegistry::current()->getImage('delete_inline', "border='0' align='absmiddle'", 12, 12, ".gif", $mod_strings['LBL_DELETE'])."</a></td></tr></table></div>";
+            //retrieve prospect list
+            $pl = new ProspectList();
+            $pl_focus = $pl->retrieve($pl_id);
+            $trgt_html .= "<div id='existing_trgt".$trgt_count."'> <table class='tabDetailViewDL2' width='100%'>" ;
+            $trgt_html .= "<td width='100' style=\"width:25%\"> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". $pl_focus->name."' ><a href=\"index.php?module=ProspectLists&action=DetailView&record=" . $pl_focus->id . "\" target=\"_blank\" title=\"" . $mod_strings['LBL_OPEN_IN_NEW_WINDOW'] . "\">". $pl_focus->name."</a></td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\">".$pl_focus->get_entry_count()."</td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\"><input type='hidden' size='60' maxlength='255' name='existing_tracker_list_type". $trgt_count ."'   id='existing_tracker_list_type". $trgt_count ."' value='".$pl_focus->list_type."' >".$app_list_strings['prospect_list_type_dom'][$pl_focus->list_type];
+            $trgt_html .= "<input type='hidden' name='added_target_id". $trgt_count ."' id='added_target_id". $trgt_count ."' value='". $pl_focus->id ."' ></td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\"><a href='#' onclick=\"javascript:remove_existing_target('existing_trgt".$trgt_count."','".$pl_focus->id."'); \" >  ";
+            $trgt_html .= SugarThemeRegistry::current()->getImage('delete_inline', "border='0' align='absmiddle'", 12, 12, ".gif", $mod_strings['LBL_DELETE'])."</a></td></tr></table></div>";
 
-
-    
-          
-          $trgt_count =$trgt_count +1;
+            $trgt_count =$trgt_count +1;
         }
-        
+
         $trgt_html  .= "<div id='no_targets'></div>";
     }else{
         $trgt_html  .= "<div id='no_targets'><table width='100%' border='0' cellspacing='0' cellpadding='0'><tr class='evenListRowS1'><td>".$mod_strings['LBL_NONE']."</td></tr></table></div>";
-        
+
     }
     $ss->assign('EXISTING_TARGETS', $trgt_html );
 
