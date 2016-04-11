@@ -78,7 +78,7 @@ var wizardMenuSetToCurrentStep = function() {
         }
         else if(i > 0 && i < $('.wizmenu ul li').length-2 && $(e).find('a').length && $(e).next().find('a').length) {
             $(e).css('background-image', 'url({$imgdir}center-full.png)');
-            $(e).next().css('background-image', 'url({$imgdir}center-active.png)');
+            $(e).next().css('background-image', 'url({$imgdir}center-full-half.png)');
         }
         else if(i > 0 && $(e).find('a').length && $(e).next().find('a').length) {
             $(e).css('background-image', 'url({$imgdir}center-full.png)');
