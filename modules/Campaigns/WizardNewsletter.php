@@ -401,6 +401,7 @@ foreach($targetList as $prospectLst) {
         //'type' => $prospectLst->type,
         'description' => $prospectLst->description,
         'type' => $prospectLst->list_type,
+        'count' => $prospectLst->get_entry_count(),
     );
     $targetListDataArray[] = $nxt;
     $targetListDataAssoc[$prospectLst->id] = $nxt;

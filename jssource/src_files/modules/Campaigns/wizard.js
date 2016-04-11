@@ -381,15 +381,16 @@ var onSendAsTestClick = function(e, campaignId, marketingId) {
 
 
 var addTargetListData = function(id) {
-    var result_data = {
-        "form_name": 'wizform',
-        "name_to_value_array": {
-            popup_target_list_id: id,
-            popup_target_list_name: targetListDataJSON[id].name,
-            popup_target_list_type: targetListDataJSON[id].type
-        },
-        "passthru_data": Object(),
-        "popupConfirm": 0
-    };
-    set_return_prospect_list(result_data);
+  var result_data = {
+    "form_name": 'wizform',
+    "name_to_value_array": {
+      popup_target_list_id: id,
+      popup_target_list_name: targetListDataJSON[id].name,
+      popup_target_list_type: targetListDataJSON[id].type,
+      popup_target_list_count: targetListDataJSON[id].count,
+    },
+    "passthru_data": Object(),
+    "popupConfirm": 0
+  };
+  set_return_prospect_list(result_data);
 };

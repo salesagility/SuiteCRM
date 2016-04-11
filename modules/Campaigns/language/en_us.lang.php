@@ -281,6 +281,7 @@ $mod_strings = array (
   'LBL_TARGET_LIST' => 'Target List',
   'LBL_TARGET_TYPE' => 'Target List Type',
   'LBL_TARGET_NAME' => 'Target List Name',
+  'LBL_NUMBER_OF_TARGET' => 'Number of target',
   'LBL_EMAILS_SCHEDULED' => 'Emails Scheduled',
   'LBL_TEST_EMAILS_SENT' => 'Test Emails Sent',
   'LBL_USERS_CANNOT_OPTOUT' => 'System Users cannot opt out of receiving emails.',

@@ -52,6 +52,7 @@
 <input id="popup_target_list_type" name="popup_target_list_type" type='hidden'>
 <input id="popup_target_list_name" name="popup_target_list_name" type="hidden" value="">
 <input id='popup_target_list_id' name='popup_target_list_id' title='List ID' type="hidden" value=''>
+<input id='popup_target_list_count' name='popup_target_list_count' title='Number of targets' type="hidden" value=''>
 
 <!--
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -112,7 +113,7 @@
 		<ul class="target-list">
 			<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" style="width: 100%;"></li>
 			{foreach from=$targetListData item=targetList}
-				<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}</a></li>
+				<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}&nbsp;({$targetList.count})</a></li>
 			{/foreach}
 		</ul>
 		{literal}
@@ -160,9 +161,10 @@
 			<tr><td>
 
 				<table border=1 width='100%'><tr class='detail view'>
-					<th scope='col' width='100' style="width:33%"><b>{$MOD.LBL_TARGET_NAME}</b></th>
-					<th scope='col' width='100' style="width:33%"><b>{$MOD.LBL_TARGET_TYPE}</b></th><td>&nbsp;</td>
-					<td width='100' style="width:33%"><b>&nbsp;</b></td>
+					<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_TARGET_NAME}</b></th>
+					<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_NUMBER_OF_TARGET}</b></th>
+					<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_TARGET_TYPE}</b></th><td>&nbsp;</td>
+					<td width='100' style="width:25%; text-align: left;"><b>&nbsp;</b></td>
 				</tr>
 				</table>
 				<div id='added_targets'>
@@ -212,11 +214,13 @@
 					TRGTNAME = 'target_list_name';
 					TRGTID = 'target_list_id';
 					TRGTYPE = 'target_list_type';
+					TRGCOUNT = 'target_list_count';
 
 				if(from_popup == 'true'){
-					TRGTNAME = 'popup_target_list_name'
-					TRGTID = 'popup_target_list_id'
-					TRGTYPE = 'popup_target_list_type'
+					TRGTNAME = 'popup_target_list_name';
+					TRGTID = 'popup_target_list_id';
+					TRGTYPE = 'popup_target_list_type';
+					TRGCOUNT = 'popup_target_list_count';
 				}
 
 				//increment target count value
@@ -226,6 +230,7 @@
 					var trgt_name = document.getElementById(TRGTNAME);
 					var trgt_id = document.getElementById(TRGTID);
 					var trgt_type = document.getElementById(TRGTYPE);
+					var trgt_count = document.getElementById(TRGCOUNT);
 //					var selInd = trgt_type.selectedIndex;
 //                    trgt_type_text_value = trgt_type.options[selInd].text
 					var trgt_type_text = trgt_type.value ;
@@ -237,6 +242,7 @@
 					var trgt_name_html = "<input id='target_name"+targets_added +"' type='hidden' size='20' maxlength='255' name='added_target_name"+targets_added+"' value='"+trgt_name.value+"' >"+trgt_name.value;
 					var trgt_id_html = "<input type='hidden' name='added_target_id"+targets_added+"' id='added_target_id"+targets_added+"' value='"+trgt_id.value+"' >";
 					var trgt_type_html = "<input name='added_target_type"+targets_added+"' id='added_target_type"+targets_added+"' type='hidden' value='"+trgt_type.value+"'/>"+trgt_type_text;
+					var trgt_count_html = trgt_count.value;
 
 					{/literal}
 					//display the html
@@ -245,9 +251,10 @@
 							"<div id='trgt_added_"+targets_added+"'> " +
 							"	<table width='100%' class='tabDetailViewDL2'>" +
 							"		<tr class='tabDetailViewDL2' >" +
-							"			<td width='100' style=\"width:33%\"><a href=\"index.php?module=ProspectLists&action=DetailView&record=" + trgt_id.value + "\" target=\"_blank\" title=\"{$MOD.LBL_OPEN_IN_NEW_WINDOW}\">"+trgt_name_html+"</a></td>" +
-							"			<td width='100' style=\"width:33%\">"+trgt_type_html+"</td>" +
-							"			<td width='100' style=\"width:33%\">"+trgt_id_html+
+							"			<td width='100' style=\"width:25%\"><a href=\"index.php?module=ProspectLists&action=DetailView&record=" + trgt_id.value + "\" target=\"_blank\" title=\"{$MOD.LBL_OPEN_IN_NEW_WINDOW}\">"+trgt_name_html+"</a></td>" +
+							"			<td width='100' style=\"width:25%\">"+trgt_count_html+"</td>" +
+							"			<td width='100' style=\"width:25%\">"+trgt_type_html+"</td>" +
+							"			<td width='100' style=\"width:25%\">"+trgt_id_html+
 							"				<a href='#' onclick=\"remove_target('trgt_added_"+targets_added+"','"+targets_added+"'); \" >  "+'{sugar_getimage name="delete_inline" ext=".gif" width="12" height="12" alt=$alt_remove other_attributes='align="absmiddle" border="0" '}'+"{$MOD.LBL_REMOVE}</a>" +
 							"			</td>" +
 							"		</tr>" +
