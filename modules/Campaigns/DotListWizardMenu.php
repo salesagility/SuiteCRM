@@ -74,7 +74,7 @@ var wizardMenuSetToCurrentStep = function() {
     $('.wizmenu ul li').each(function(i,e){
         if(i==0 && $(e).find('a').length && $(e).next().find('a').length) {
             $(e).css('background-image', 'url({$imgdir}left-full.png)');
-            $(e).next().css('background-image', 'url({$imgdir}center-active.png)');
+            $(e).next().css('background-image', 'url({$imgdir}center-full-half.png)');
         }
         else if(i > 0 && i < $('.wizmenu ul li').length-2 && $(e).find('a').length && $(e).next().find('a').length) {
             $(e).css('background-image', 'url({$imgdir}center-full.png)');
@@ -223,6 +223,8 @@ var getBGImageName = function(elem) {
 
 var wizardMenuPutDotToCurrentPage = function() {
     var page = wizardMenuGetCurrentPage();
+    var link = '#';
+    wizardMenuSetStepLink(page+1, link);
     $('.wizmenu li').each(function(i,e){
         if(i==page) {
             var bgImage = getBGImageName(e);
@@ -259,10 +261,6 @@ $(function(){
 </script>
 HTML;
         return $html;
-    }
-
-    public function startNewCampaing() {
-        $_SESSION['DotListWizardMenu_newCampaign'] = true;
     }
 
     public function __toString()
