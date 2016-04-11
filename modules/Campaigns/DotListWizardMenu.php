@@ -23,6 +23,12 @@ class DotListWizardMenu
 
     private function getWizardMenuItemHTML($i, $label, $link = false)
     {
+        if($i>=4) {
+            parse_str($link, $args);
+            if(!$args['marketing_id']) {
+                $link = false;
+            }
+        }
         $label = $link ? ('<a href="' . $link . '">' . $label . '</a>')  : $label;
         $html = <<<HTML
 <li class="step" id="nav_step$i">
@@ -253,6 +259,10 @@ $(function(){
 </script>
 HTML;
         return $html;
+    }
+
+    public function startNewCampaing() {
+        $_SESSION['DotListWizardMenu_newCampaign'] = true;
     }
 
     public function __toString()
