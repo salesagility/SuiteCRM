@@ -2047,6 +2047,33 @@ function validate_manifest($manifest) {
 		return $mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.";
     }
 
+	if(isset($manifest['acceptable_php_versions'])) {
+		$version_ok = false;
+		$matches_empty = true;
+		if(isset($manifest['acceptable_php_versions']['exact_matches'])) {
+			$matches_empty = false;
+			foreach($manifest['acceptable_php_versions']['exact_matches'] as $match) {
+				if($match == PHP_VERSION) {
+					$version_ok = true;
+				}
+			}
+		}
+		if(!$version_ok && isset($manifest['acceptable_php_versions']['regex_matches'])) {
+			$matches_empty = false;
+			foreach($manifest['acceptable_php_versions']['regex_matches'] as $match) {
+				if(preg_match("/$match/", PHP_VERSION)) {
+					$version_ok = true;
+				}
+			}
+		}
+
+		if(!$matches_empty && !$version_ok) {
+			return $mod_strings['ERROR_PHP_VERSION_INCOMPATIBLE']."(php version check!!)<br />".
+			$mod_strings['ERR_UW_PHP_VERSION'].PHP_VERSION;
+		}
+	}
+
+
     if(isset($manifest['acceptable_sugar_versions'])) {
         $version_ok = false;
         $matches_empty = true;
