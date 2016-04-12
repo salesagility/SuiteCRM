@@ -55,14 +55,19 @@ class templateParser{
 				if (strpos($name,'product_discount')>0){
 					if($value != '' && $value != '0.00')
 					{
-						if($repl_arr['aos_products_quotes_discount'] == 'Percentage')
+						if($repl_arr['aos_products_quotes_discount'] == 'Percentage' || $repl_arr['aos_products_quotes_discount'] == 'Pct')
 						{
-							$sep = get_number_seperators();
-							$value=rtrim(rtrim(format_number($value), '0'),$sep[1]);//.$app_strings['LBL_PERCENTAGE_SYMBOL'];
+							if (strpos($name,'product_discount_amount')>0){
+								$value=currency_format_number($value,$params = array('currency_symbol' => false));
+							}
+							else{
+								$sep = get_number_seperators();
+								$value=rtrim(rtrim(format_number($value), '0'),$sep[1]).$app_strings['LBL_PERCENTAGE_SYMBOL'];
+							}
 						}
 						else
 						{
-							$value=currency_format_number($value,$params = array('currency_symbol' => false));
+							$value = $value; // This value has already been formatted, re-reformatting would cause issues for decimal/thousand seperators
 						}
 					}
 					else
