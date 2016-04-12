@@ -76,6 +76,7 @@ $mod_strings = array(
 	'ERR_UW_UPLOAD_ERR'							=> 'There was an error uploading the file, please try again!<br>\n',
 	'ERR_UW_VERSION'							=> 'SuiteCRM System Version: ',
 	'ERR_UW_PHP_VERSION'							=> 'PHP Version: ',
+	'ERR_UW_SUITECRM_VERSION'							=> 'SuiteCRM System Version: ',
 	'ERR_UW_WRONG_TYPE'							=> 'This page is not for running ',
 	'LBL_BUTTON_BACK'							=> '< Back',
 	'LBL_BUTTON_CANCEL'							=> 'Cancel',
@@ -295,6 +296,7 @@ $mod_strings = array(
 	'LBL_SELECT_FILE' => 'Select File:',
     'ERROR_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_PHP_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of PHP: ',
+    'ERROR_SUITECRM_VERSION_INCOMPATIBLE' => 'The uploaded file is not compatible with this version of SuiteCRM: ',
     'ERROR_FLAVOR_INCOMPATIBLE'  => 'The uploaded file is not compatible with this flavor (Community Edition, Professional, or Enterprise) of SuiteCRM: ',
 	'LBL_LANGPACKS' => 'Language Packs' /*for 508 compliance fix*/,
 	'LBL_MODULELOADER' => 'Module Loader' /*for 508 compliance fix*/,
@@ -314,4 +316,5 @@ $mod_strings = array(
 													7 => 'Failed to write file to disk.',
 													8 => 'File upload stopped by extension.',
 ),
+	'ERROR_NO_VERSION_SET' => 'Compatible version is not set in manifest file',
 );
