@@ -54,7 +54,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $timedate;
 global $current_user;
 if(!empty($_POST['meridiem'])){
-	$_POST['time_start'] = $timedate->merge_time_meridiem($_POST['time_start'],$timedate->get_time_format(), $_POST['meridiem']);
+	$time_start = isset($_POST['time_start']) ? $_POST['time_start'] : $_POST['wiz_step3_time_start'];
+	$_POST['time_start'] = $timedate->merge_time_meridiem($time_start,$timedate->get_time_format(), $_POST['meridiem']);
 }
 
 if(empty($_REQUEST['time_start'])) {
