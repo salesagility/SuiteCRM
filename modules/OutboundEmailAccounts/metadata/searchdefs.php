@@ -23,7 +23,7 @@ array (
       'mail_smtpserver' =>
       array (
         'type' => 'varchar',
-        'label' => 'LBL_smtp_servername',
+        'label' => 'LBL_SMTP_SERVERNAME',
         'width' => '10%',
         'default' => true,
         'name' => 'mail_smtpserver',
@@ -56,7 +56,7 @@ array (
       'mail_smtpserver' =>
       array (
         'type' => 'varchar',
-        'label' => 'LBL_smtp_servername',
+        'label' => 'LBL_SMTP_SERVERNAME',
         'width' => '10%',
         'default' => true,
         'name' => 'mail_smtpserver',

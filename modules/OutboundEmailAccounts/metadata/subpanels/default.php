@@ -63,7 +63,7 @@ $subpanel_layout = array (
     'mail_smtpserver' =>
     array (
       'type' => 'varchar',
-      'vname' => 'LBL_smtp_servername',
+      'vname' => 'LBL_SMTP_SERVERNAME',
       'width' => '10%',
       'default' => true,
     ),

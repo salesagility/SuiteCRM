@@ -68,7 +68,7 @@ $dashletData['OutboundEmailAccountsDashlet']['columns'] = array (
   'mail_smtpserver' =>
   array (
     'type' => 'varchar',
-    'label' => 'LBL_smtp_servername',
+    'label' => 'LBL_SMTP_SERVERNAME',
     'width' => '10%',
     'default' => false,
   ),

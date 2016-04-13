@@ -2034,8 +2034,11 @@ function validate_manifest($manifest) {
     // takes a manifest.php manifest array and validates contents
     global $subdirs;
     global $sugar_version;
+	global $sugar_config;
     global $sugar_flavor;
 	global $mod_strings;
+
+	$suitecrm_version = $sugar_config['suitecrm_version'];
 
     if(!isset($manifest['type'])) {
         return $mod_strings['ERROR_MANIFEST_TYPE'];
@@ -2047,31 +2050,92 @@ function validate_manifest($manifest) {
 		return $mod_strings['ERROR_PACKAGE_TYPE']. ": '" . $type . "'.";
     }
 
-    if(isset($manifest['acceptable_sugar_versions'])) {
-        $version_ok = false;
-        $matches_empty = true;
-        if(isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
-            $matches_empty = false;
-            foreach($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
-                if($match == $sugar_version) {
-                    $version_ok = true;
-                }
-            }
-        }
-        if(!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
-            $matches_empty = false;
-            foreach($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
-                if(preg_match("/$match/", $sugar_version)) {
-                    $version_ok = true;
-                }
-            }
-        }
+	if(isset($manifest['acceptable_php_versions'])) {
+		$version_ok = false;
+		$matches_empty = true;
+		if(isset($manifest['acceptable_php_versions']['exact_matches'])) {
+			$matches_empty = false;
+			foreach($manifest['acceptable_php_versions']['exact_matches'] as $match) {
+				if($match == PHP_VERSION) {
+					$version_ok = true;
+				}
+			}
+		}
+		if(!$version_ok && isset($manifest['acceptable_php_versions']['regex_matches'])) {
+			$matches_empty = false;
+			foreach($manifest['acceptable_php_versions']['regex_matches'] as $match) {
+				if(preg_match("/$match/", PHP_VERSION)) {
+					$version_ok = true;
+				}
+			}
+		}
 
-        if(!$matches_empty && !$version_ok) {
-            return $mod_strings['ERROR_VERSION_INCOMPATIBLE']."<br />".
-            $mod_strings['ERR_UW_VERSION'].$sugar_version;
-        }
-    }
+		if(!$matches_empty && !$version_ok) {
+			return $mod_strings['ERROR_PHP_VERSION_INCOMPATIBLE']."<br />".
+			$mod_strings['ERR_UW_PHP_VERSION'].PHP_VERSION;
+		}
+	}
+
+
+	if(!isset($manifest['acceptable_suitecrm_versions'])) {
+		// If sugarcrm version set 'acceptable_sugar_versions', and acceptable_suitecrm_versions not set check on sugar version.
+		if (isset($manifest['acceptable_sugar_versions'])) {
+			$version_ok = false;
+			$matches_empty = true;
+			if (isset($manifest['acceptable_sugar_versions']['exact_matches'])) {
+				$matches_empty = false;
+				foreach ($manifest['acceptable_sugar_versions']['exact_matches'] as $match) {
+					if ($match == $sugar_version) {
+						$version_ok = true;
+					}
+				}
+			}
+			if (!$version_ok && isset($manifest['acceptable_sugar_versions']['regex_matches'])) {
+				$matches_empty = false;
+				foreach ($manifest['acceptable_sugar_versions']['regex_matches'] as $match) {
+					if (preg_match("/$match/", $sugar_version)) {
+						$version_ok = true;
+					}
+				}
+			}
+
+			if (!$matches_empty && !$version_ok) {
+				return $mod_strings['ERROR_VERSION_INCOMPATIBLE'] . "<br />" .
+				$mod_strings['ERR_UW_VERSION'] . $sugar_version;
+			}
+		}
+		else {
+			// if neither set reject
+			return $mod_strings['ERROR_NO_VERSION_SET'];
+		}
+	}
+	else {
+		// If sugarcrm version set 'acceptable_sugar_versions', and acceptable_suitecrm_versions set check only on suitecrm version
+		// If sugarcrm version not set 'acceptable_sugar_versions', and acceptable_suitecrm_versions set check only on suitecrm version
+		$version_ok = false;
+		$matches_empty = true;
+		if (isset($manifest['acceptable_suitecrm_versions']['exact_matches'])) {
+			$matches_empty = false;
+			foreach ($manifest['acceptable_suitecrm_versions']['exact_matches'] as $match) {
+				if ($match == $suitecrm_version) {
+					$version_ok = true;
+				}
+			}
+		}
+		if (!$version_ok && isset($manifest['acceptable_suitecrm_versions']['regex_matches'])) {
+			$matches_empty = false;
+			foreach ($manifest['acceptable_suitecrm_versions']['regex_matches'] as $match) {
+				if (preg_match("/$match/", $suitecrm_version)) {
+					$version_ok = true;
+				}
+			}
+		}
+
+		if (!$matches_empty && !$version_ok) {
+			return $mod_strings['ERROR_SUITECRM_VERSION_INCOMPATIBLE'] . "<br />" .
+			$mod_strings['ERR_UW_SUITECRM_VERSION'] . $suitecrm_version;
+		}
+	}
 
     if(isset($manifest['acceptable_sugar_flavors']) && sizeof($manifest['acceptable_sugar_flavors']) > 0) {
         $flavor_ok = false;
@@ -2089,6 +2153,7 @@ function validate_manifest($manifest) {
 
     return '';
 }
+
 }
 
 function unlinkUploadFiles() {

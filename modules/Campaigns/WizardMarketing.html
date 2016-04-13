@@ -77,9 +77,9 @@
 				<table border="0" cellspacing="0" cellpadding="0" ><tr>
 
 					<tr>
-						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
+						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="{$APP.LBL_BACK}"></div></td>
 
-						<td{if $campaign_type != 'NewsLetter' || $campaign_type=='Email'} style="display:none;"{/if}><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="  {$APP.LBL_BACK}"></div></td>
+						<td{if $campaign_type != 'NewsLetter' || $campaign_type=='Email'} style="display:none;"{/if}><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="{$APP.LBL_BACK}"></div></td>
 
 
 						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$CAMPAIGN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
@@ -191,17 +191,21 @@
 		function onNextClick() {
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
-					// validate email template form before save
-					if(isValidEmailTemplateFormAndShowErrors()) {
-						onSaveCopyMarketingEmailTemplate(function () {
-							if (hasNewAttachments()) {
-								submitMarketingEmailAttachments();
+						var updateChecked = $('input[name="update_exists_template"]').prop('checked');
+						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+							// validate email template form before save
+							if (isValidEmailTemplateFormAndShowErrors()) {
+								onSaveCopyMarketingEmailTemplate(function () {
+									if (hasNewAttachments()) {
+										submitMarketingEmailAttachments();
+									}
+									else {
+										onNext();
+										wizardMenuSetStepLink(4);
+									}
+								});
 							}
-							else {
-								onNext();
-							}
-						});
-					}
+						}
 					break;
 
 				case '2':
@@ -286,6 +290,16 @@
 			if(document.getElementById('wiz_current_step').value == document.getElementById('wiz_total_steps').value) {
 				wizardMenuFillAll();
 			}
+			changeNextBtnLabel();
+		}
+
+		function changeNextBtnLabel() {
+			if(document.getElementById('wiz_current_step').value == '2') {
+				$('#wiz_next_button').val('{/literal}{$MOD.LBL_CREATE_MARKETING_RECORD}{literal}');
+			}
+			else {
+				$('#wiz_next_button').val('{/literal}{$APP.LBL_NEXT_BUTTON_LABEL}{literal}');
+			}
 		}
 
 		{/literal}
@@ -335,7 +349,7 @@
 						<slot>{$MOD.LBL_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
 					</td>
 					<td>
-						<input type="text" id="template_name" name="template_name" value="{$template_name}">
+						<input type="text" id="template_name" name="template_name" value="{$template_name}" size="60">
 					</td>
 				</tr>
 				<tr>
@@ -343,7 +357,7 @@
 						<slot>{$MOD.LBL_SUBJECT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot>
 					</td>
 					<td>
-						<input type="text" id="template_subject" name="template_subject" value="{$template_subject}">
+						<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" size="60">
 					</td>
 				</tr>
 
@@ -799,7 +813,7 @@
 	</div>
 
 
-	<div id='step3'>
+	<div id='step3' data="summary-page">
 
 		<br>
 
@@ -861,33 +875,33 @@
 		<div class="wizard-summary-left">
 
 			<div class="box ok">
-				<h2>{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</h2>
+				<h2><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></h2>
 			</div>
 
 			<div class="box {if $error_on_target_list}fail{else}ok{/if}">
 				<h2>
 
-					{if $error_on_target_list}
+					{if $error_on_target_list}{/if}
 					<a href="{$link_to_target_list}" title="{$error_on_target_list}">
-					{/if}
+
 
 						{$MOD.LBL_CHOOSE_TARGETS}
 
-					{if $error_on_target_list}
+					{if $error_on_target_list}{/if}
 					</a>
-					{/if}
+
 
 				</h2>
 			</div>
 
 
 			{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-			<div class="box ok">
-				<h2>{$MOD.LBL_CHOOSE_TEMPLATES}</h2>
+			<div class="box {if $error_on_templates}fail{else}ok{/if}">
+				<h2><a href="{$link_to_choose_template}"{if $error_on_templates} title="{$error_on_templates}"{/if}>{$MOD.LBL_CHOOSE_TEMPLATES}</a></h2>
 			</div>
 
 			<div class="box ok">
-				<h2>{$MOD.LBL_SENDER_DETAILS}</h2>
+				<h2><a href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></h2>
 			</div>
 
 
@@ -1000,7 +1014,7 @@ function determine_back(){
 		}
 	}
 
-
+	changeNextBtnLabel();
 }
 </script>
 {/literal}
@@ -1111,6 +1125,7 @@ var jumpToPageByURL = function() {
 				break;
 			}
 		}
+		changeNextBtnLabel();
 	};
 
 	if(jump != null) {
