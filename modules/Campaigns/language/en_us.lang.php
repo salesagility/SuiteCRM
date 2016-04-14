@@ -478,6 +478,7 @@ $mod_strings = array (
 	'LBL_CREATE_MARKETING_RECORD' => 'Next',
 	'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
 	'LBL_SELECT_TEMPLATE' => 'Templates',
+	'LBL_WIZARD_ADD_TARGET' => 'Add targets',
 );
 
 
