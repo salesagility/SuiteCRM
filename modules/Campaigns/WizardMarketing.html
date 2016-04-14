@@ -407,7 +407,7 @@
 			<input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable" placeholder="{$MOD.LBL_EDIT_TRACKER_NAME}"></slot><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span>
 			<input type="text" size="100" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable" placeholder="http://" title="{$MOD.LBL_EDIT_TRACKER_URL}"><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span>
 			<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
-			<input type="button" value="{$MOD.LBL_SAVE}" onclick="onCampaignTrackerSaveClick();">
+			<input type="button" value="{$MOD.LBL_INSERT_URL_REF}" onclick="onCampaignTrackerSaveClick();">
 		</div>
 
 
