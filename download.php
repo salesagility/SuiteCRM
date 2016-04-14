@@ -67,7 +67,8 @@ else {
             }
         }
         $bean_name = $beanList[$module];
-        if(!file_exists('modules/' . $module . '/' . $bean_name . '.php')) {
+        $bean_file = $beanFiles[$module];
+        if(!file_exists($bean_file)) {
             die($app_strings['ERROR_TYPE_NOT_VALID']);
         }
 
