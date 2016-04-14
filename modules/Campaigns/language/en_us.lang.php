@@ -474,7 +474,7 @@ $mod_strings = array (
 	'LBL_CAMPAIGN_DETAILS_AND_CONDITIONS' => 'Campaign Details and Conditions',
 	'LBL_OPEN_IN_NEW_WINDOW' => 'Open in new window..',
 	'LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG' => 'It will overwrite the selected template. Are you sure?',
-	'LBL_CREATE_MARKETING_RECORD' => 'Create Marketing Record',
+	'LBL_CREATE_MARKETING_RECORD' => 'Next',
 	'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
 	'LBL_SELECT_TEMPLATE' => 'Templates',
 );
