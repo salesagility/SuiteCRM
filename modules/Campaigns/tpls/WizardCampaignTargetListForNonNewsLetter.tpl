@@ -149,6 +149,7 @@
 
 			<br>
 
+			<input id="target_list_count" name="target_list_count" type='hidden' size='35' value="0">
 			<input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');">
 
 		</div>
