@@ -108,7 +108,7 @@ class VarDefHandler {
 					 if(!empty($app_list_strings['moduleList'][$this->module_object->$relName->getRelatedModuleName()])){
 						 $label_name = $app_list_strings['moduleList'][$this->module_object->$relName->getRelatedModuleName()];
 					 }else{
-                    	$label_name = $this->module_object->$value_array['name']->getRelatedModuleName();
+                    	$label_name = $this->module_object->$relName->getRelatedModuleName();
 					 }
                 }
 				else if(!empty($value_array['vname'])){

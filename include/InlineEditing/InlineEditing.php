@@ -446,7 +446,8 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $vardef['module'] = $bean->parent_type;
             $name = $bean->parent_name;
         }
-        $record = $bean->$vardef['id_name'];
+        $idName = $vardef['id_name'];
+        $record = $bean->$idName;
 
         $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
 
