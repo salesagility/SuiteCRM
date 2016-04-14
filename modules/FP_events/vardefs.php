@@ -246,6 +246,51 @@ $dictionary['FP_events'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_FP_EVENTS_CONTACTS_FROM_CONTACTS_TITLE',
             ),
+        'e_invite_status_fields' =>
+		array (
+			'name' => 'e_invite_status_fields',
+			'rname' => 'id',
+			'relationship_fields'=>array('id' => 'event_invite_id', 'invite_status' => 'event_status_name', 'accept_status' => 'event_accept_status'),
+			'vname' => 'LBL_CONT_INVITE_STATUS',
+			'type' => 'relate',
+			'link' => 'fp_events_contacts',
+			'link_type' => 'relationship_info',
+            'join_link_name' => 'fp_events_contacts_c',
+			'source' => 'non-db',
+			'importable' => 'false',
+            'duplicate_merge'=> 'disabled',
+			'studio' => false,
+			'join_primary' => false,
+		),
+        'event_status_name' =>
+		array(
+            'name' => 'event_status_name',
+            'type' => 'enum',
+            'source' => 'non-db',
+            'vname' => 'LBL_LIST_INVITE_STATUS_EVENT',
+            'options' => 'fp_event_invite_status_dom',
+        ),
+        'event_invite_id' =>
+		array(
+			'name' => 'event_invite_id',
+			'type' => 'varchar',
+			'source' => 'non-db',
+			'vname' => 'LBL_LIST_INVITE_STATUS',
+			'studio' => array('listview' => false),
+		),
+
+        'event_accept_status' =>
+        array(
+            'massupdate' => false,
+            'name' => 'event_accept_status',
+            'type' => 'enum',
+            'studio' => 'false',
+            'source' => 'non-db',
+            'vname' => 'LBL_LIST_ACCEPT_STATUS_EVENT',
+            'options' => 'fp_event_status_dom',
+            'importable' => 'false',
+        ),
+
         'fp_events_prospects_1' =>
             array(
                 'name' => 'fp_events_prospects_1',
@@ -254,6 +299,52 @@ $dictionary['FP_events'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_FP_EVENTS_PROSPECTS_1_FROM_PROSPECTS_TITLE',
             ),
+        'e_prospects_invite_status_fields' =>
+			array (
+				'name' => 'e_prospects_invite_status_fields',
+				'rname' => 'id',
+				'relationship_fields'=>array('id' => 'event_prospect_invite_id', 'invite_status' => 'event_prospect_status_name', 'accept_status' => 'event_prospect_accept_status'),
+				'vname' => 'LBL_CONT_INVITE_STATUS',
+				'type' => 'relate',
+				'link' => 'fp_events_prospects_1',
+				'link_type' => 'relationship_info',
+				'join_link_name' => 'fp_events_prospects_1_c',
+				'source' => 'non-db',
+				'importable' => 'false',
+				'duplicate_merge'=> 'disabled',
+				'studio' => false,
+				'join_primary' => false,
+		),
+
+        'event_prospect_status_name' =>
+		array(
+            'name' => 'event_prospect_status_name',
+            'type' => 'enum',
+            'source' => 'non-db',
+            'vname' => 'LBL_LIST_INVITE_STATUS_EVENT',
+            'options' => 'fp_event_invite_status_dom',
+        ),
+        'event_prospect_invite_id' =>
+		array(
+			'name' => 'event_prospect_invite_id',
+			'type' => 'varchar',
+			'source' => 'non-db',
+			'vname' => 'LBL_LIST_INVITE_STATUS',
+			'studio' => array('listview' => false),
+		),
+
+        'event_prospect_accept_status' =>
+        array(
+            'massupdate' => false,
+            'name' => 'event_prospect_accept_status',
+            'type' => 'enum',
+            'studio' => 'false',
+            'source' => 'non-db',
+            'vname' => 'LBL_LIST_ACCEPT_STATUS_EVENT',
+            'options' => 'fp_event_status_dom',
+            'importable' => 'false',
+        ),
+
         'fp_events_leads_1' =>
             array(
                 'name' => 'fp_events_leads_1',
@@ -262,6 +353,52 @@ $dictionary['FP_events'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_FP_EVENTS_LEADS_1_FROM_LEADS_TITLE',
             ),
+        'e_leads_invite_status_fields' =>
+		array (
+			'name' => 'e_leads_invite_status_fields',
+			'rname' => 'id',
+			'relationship_fields'=>array('id' => 'event_lead_invite_id', 'invite_status' => 'event_lead_status_name', 'accept_status' => 'event_lead_accept_status'),
+			'vname' => 'LBL_CONT_INVITE_STATUS',
+			'type' => 'relate',
+			'link' => 'fp_events_leads_1',
+			'link_type' => 'relationship_info',
+            'join_link_name' => 'fp_events_leads_1_c',
+			'source' => 'non-db',
+			'importable' => 'false',
+            'duplicate_merge'=> 'disabled',
+			'studio' => false,
+			'join_primary' => false,
+		),
+
+        'event_lead_status_name' =>
+		array(
+            'name' => 'event_lead_status_name',
+            'type' => 'enum',
+            'source' => 'non-db',
+            'vname' => 'LBL_LIST_INVITE_STATUS_EVENT',
+            'options' => 'fp_event_invite_status_dom',
+        ),
+        'event_lead_invite_id' =>
+		array(
+			'name' => 'event_lead_invite_id',
+			'type' => 'varchar',
+			'source' => 'non-db',
+			'vname' => 'LBL_LIST_INVITE_STATUS',
+			'studio' => array('listview' => false),
+		),
+
+        'event_lead_accept_status' =>
+        array(
+            'massupdate' => false,
+            'name' => 'event_lead_accept_status',
+            'type' => 'enum',
+            'studio' => 'false',
+            'source' => 'non-db',
+            'vname' => 'LBL_LIST_ACCEPT_STATUS_EVENT',
+            'options' => 'fp_event_status_dom',
+            'importable' => 'false',
+        ),
+
         'fp_event_locations_fp_events_1' =>
             array(
                 'name' => 'fp_event_locations_fp_events_1',
@@ -294,6 +431,38 @@ $dictionary['FP_events'] = array(
                 'side' => 'right',
                 'vname' => 'LBL_FP_EVENT_LOCATIONS_FP_EVENTS_1_FROM_FP_EVENTS_TITLE',
             ),
+        'nb_invites' => array (
+			'name' => 'nb_invites',
+			'vname' => 'LBL_NB_INVITES',
+			'type' => 'int',
+			'function' => array('name'=>'nb_invites', 'returns'=>'html', 'include'=>'modules/FP_events/CalculatedFields.php'),
+			'source' => 'non-db',
+			'len' => '6',
+		),
+        'nb_accept' => array (
+			'name' => 'nb_accept',
+			'vname' => 'LBL_NB_ACCEPT',
+			'type' => 'int',
+			'function' => array('name'=>'nb_accept', 'returns'=>'html', 'include'=>'modules/FP_events/CalculatedFields.php'),
+			'source' => 'non-db',
+			'len' => '6',
+		),
+        'nb_declined' => array (
+			'name' => 'nb_declined',
+			'vname' => 'LBL_NB_DECLINED',
+			'type' => 'int',
+			'function' => array('name'=>'nb_declined', 'returns'=>'html', 'include'=>'modules/FP_events/CalculatedFields.php'),
+			'source' => 'non-db',
+			'len' => '6',
+		),
+        'nb_attended' => array (
+			'name' => 'nb_attended',
+			'vname' => 'LBL_NB_ATTENDED',
+			'type' => 'int',
+			'function' => array('name'=>'nb_attended', 'returns'=>'html', 'include'=>'modules/FP_events/CalculatedFields.php'),
+			'source' => 'non-db',
+			'len' => '6',
+		),
     ),
     'relationships' => array(),
     'optimistic_locking' => true,
