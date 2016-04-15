@@ -46,7 +46,9 @@ var current_step=document.getElementById('wiz_current_step');var currentValue=pa
 if(direction=='next'){current_step.value=currentValue+1;}
 if(direction=='direct'){}
 showdiv("step"+current_step.value);hilite(current_step.value);var total=document.getElementById('wiz_total_steps').value;var save_button=document.getElementById('wiz_submit_button');var finish_button=document.getElementById('wiz_submit_finish_button');var back_button_div=document.getElementById('back_button_div');var save_button_div=document.getElementById('save_button_div');var next_button_div=document.getElementById('next_button_div');if(current_step.value==total){save_button.disabled=false;back_button_div.style.display='';save_button_div.style.display='';next_button_div.style.display='none';finish_button.style.display='none';}else{if(current_step.value<2){back_button_div.style.display='none';}else{back_button_div.style.display='';}
-var next_button=document.getElementById('wiz_next_button');next_button_div.style.display='';save_button_div.style.display='none';next_button.focus();}}else{}}
+var next_button=document.getElementById('wiz_next_button');if(current_step.value==2){next_button_div.style.display='none';save_button_div.style.display='';$('#wiz_submit_button').removeAttr('disabled');}
+else{next_button_div.style.display='';save_button_div.style.display='none';}
+next_button.focus();}}else{}}
 var already_linked='';function hilite(hilite){var last=parseInt(document.getElementById('wiz_total_steps').value);for(i=1;i<=last;i++){var nav_step=document.getElementById('nav_step'+i);nav_step.className='';}
 var nav_step=document.getElementById('nav_step'+hilite);nav_step.className='';if(already_linked.indexOf(hilite)<0){nav_step.innerHTML="<a href='#'  onclick=\"javascript:direct('"+hilite+"');\">"+nav_step.innerHTML+"</a>";already_linked+=',hilite';}}
 function link_navs(beg,end){if(beg==''){beg=1;}

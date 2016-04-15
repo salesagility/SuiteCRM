@@ -174,8 +174,16 @@ function navigate(direction, noValidation){
         back_button_div.style.display = '';
       }
       var next_button = document.getElementById('wiz_next_button');
-      next_button_div.style.display = '';
-      save_button_div.style.display = 'none';
+
+      if(current_step.value==2) {
+        next_button_div.style.display = 'none';
+        save_button_div.style.display = '';
+        $('#wiz_submit_button').removeAttr('disabled');
+      }
+      else {
+        next_button_div.style.display = '';
+        save_button_div.style.display = 'none';
+      }
       next_button.focus();
     }
 
