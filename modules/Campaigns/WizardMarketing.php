@@ -297,7 +297,7 @@ echo $javascript->getScript();
     }
 
 
-if(!$list = BeanFactory::getBean('EmailTemplates')->get_full_list("", "campaign_id = '{$campaign_focus->id}'")) {
+if(!$list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_focus->id}' AND template_id")) {
     $ss->assign('error_on_templates', $mod_strings['LBL_NO_TEMPLATE_SELECTED']);
 }
 
