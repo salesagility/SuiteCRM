@@ -401,6 +401,24 @@ $dictionary['AOS_Contracts'] = array(
                 'size' => '20',
             ),
 
+        'accounts' =>
+            array(
+                'name' => 'accounts',
+                'type' => 'link',
+                'relationship' => 'account_aos_contracts',
+                'module' => 'Accounts',
+                'bean_name' => 'Account',
+                'source' => 'non-db',
+            ),
+        'contacts' =>
+            array(
+                'name' => 'contacts',
+                'type' => 'link',
+                'relationship' => 'contact_aos_contracts',
+                'module' => 'Contacts',
+                'bean_name' => 'Contact',
+                'source' => 'non-db',
+            ),
         'tasks' =>
             array(
                 'name' => 'tasks',
