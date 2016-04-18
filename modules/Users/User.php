@@ -720,7 +720,7 @@ EOQ;
 	        // fall back to old md5
 	        return strtolower(md5($password));
 	    }
-	    return crypt(strtolower(md5($password)));
+	    return @crypt(strtolower(md5($password)));
 	}
 
 	/**

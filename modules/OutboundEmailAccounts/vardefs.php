@@ -521,8 +521,13 @@
 //VardefManager::createVardef('OutboundEmailAccounts','OutboundEmailAccounts', array('basic','assignable'));
 
 include 'metadata/outboundEmailMetaData.php';
-$dictionary['OutboundEmailAccounts']['fields'] = array_merge($dictionary['OutboundEmailAccounts']['fields'], $dictionary['OutboundEmail']['fields']);
-$dictionary['OutboundEmailAccounts']['indices'] = array_merge($dictionary['OutboundEmailAccounts']['indices'], $dictionary['OutboundEmail']['indices']);
+
+if(isset($dictionary['OutboundEmail']['fields'])) {
+    $dictionary['OutboundEmailAccounts']['fields'] = array_merge($dictionary['OutboundEmailAccounts']['fields'], $dictionary['OutboundEmail']['fields']);
+}
+if(isset($dictionary['OutboundEmail']['indices'])) {
+    $dictionary['OutboundEmailAccounts']['indices'] = array_merge($dictionary['OutboundEmailAccounts']['indices'], $dictionary['OutboundEmail']['indices']);
+}
 
 $dictionary['OutboundEmailAccounts']['fields']['mail_smtpssl']['type'] = 'enum';
 $dictionary['OutboundEmailAccounts']['fields']['mail_smtpssl']['options'] = 'email_settings_for_ssl';
