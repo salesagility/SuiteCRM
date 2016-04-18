@@ -3481,10 +3481,8 @@ function search_filter_rel_info(& $focus, $tar_rel_module, $relationship_name){
 
 	foreach($focus->relationship_fields as $rel_key => $rel_value){
 		if($rel_value == $relationship_name){
-			$temp_bean = get_module_info($tar_rel_module);
-	//		echo $focus->$rel_key;
-			$temp_bean->retrieve($focus->$rel_key);
-			if($temp_bean->id!=""){
+			$temp_bean = BeanFactory::getBean($tar_rel_module, $focus->$rel_key);
+			if($temp_bean){
 
 				$rel_list[] = $temp_bean;
 				return $rel_list;
@@ -3499,20 +3497,16 @@ function search_filter_rel_info(& $focus, $tar_rel_module, $relationship_name){
 		&& !empty($focus->field_defs[$field_def['id_name']]['relationship'])
 		&& $focus->field_defs[$field_def['id_name']]['relationship'] == $relationship_name)
 		{
-			$temp_bean = get_module_info($tar_rel_module);
-		//	echo $focus->$field_def['id_name'];
-			$temp_bean->retrieve($focus->$field_def['id_name']);
-			if($temp_bean->id!=""){
+			$temp_bean = BeanFactory::getBean($tar_rel_module, $field_def['id_name']);
+			if($temp_bean){
 
 				$rel_list[] = $temp_bean;
 				return $rel_list;
 			}
 		//Check if the relationship_name matches a "link" in a relate field
 		} else if(!empty($rel_value['link']) && !empty($rel_value['id_name']) && $rel_value['link'] == $relationship_name){
-			$temp_bean = get_module_info($tar_rel_module);
-		//	echo $focus->$rel_value['id_name'];
-			$temp_bean->retrieve($focus->$rel_value['id_name']);
-			if($temp_bean->id!=""){
+			$temp_bean = BeanFactory::getBean($tar_rel_module, $rel_value['id_name']);
+			if($temp_bean){
 
 				$rel_list[] = $temp_bean;
 				return $rel_list;
@@ -3522,9 +3516,9 @@ function search_filter_rel_info(& $focus, $tar_rel_module, $relationship_name){
 
 	// special case for unlisted parent-type relationships
 	if( !empty($focus->parent_type) && $focus->parent_type == $tar_rel_module && !empty($focus->parent_id)) {
-		$temp_bean = get_module_info($tar_rel_module);
-		$temp_bean->retrieve($focus->parent_id);
-		if($temp_bean->id!=""){
+		$temp_bean = BeanFactory::getBean($tar_rel_module, $focus->parent_id);
+		if($temp_bean){
+
 			$rel_list[] = $temp_bean;
 			return $rel_list;
 		}
@@ -4478,15 +4472,14 @@ function encodeMultienumValue($arr) {
  * @param $module: the module name
  * @param $searchFields: searchFields which is got after $searchForm->populateFromArray()
  * @param $where: where clauses
- * @return $ret_array['where']: corrected where clause
- * @return $ret_array['join']: extra join condition
+ * @return array
  */
 function create_export_query_relate_link_patch($module, $searchFields, $where){
 	if(file_exists('modules/'.$module.'/SearchForm.html')){
 		$ret_array['where'] = $where;
 		return $ret_array;
 	}
-	$seed = loadBean($module);
+	$seed = BeanFactory::getBean($module);
     foreach($seed->field_defs as $name=>$field)
 	{
 
@@ -4518,7 +4511,8 @@ function create_export_query_relate_link_patch($module, $searchFields, $where){
 			{
 				$params['join_table_link_alias'] = 'join_link_'.$field['name'];
 			}
-			$join = $seed->$field['link']->getJoin($params, true);
+			$fieldLink = $field['link'];
+			$join = $seed->$fieldLink->getJoin($params, true);
 			$join_table_alias = 'join_'.$field['name'];
 			if(isset($field['db_concat_fields'])){
 				$db_field = db_concat($join_table_alias, $field['db_concat_fields']);

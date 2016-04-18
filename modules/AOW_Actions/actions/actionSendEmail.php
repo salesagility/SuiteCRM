@@ -210,16 +210,18 @@ class actionSendEmail extends actionBase {
                         $field = $relatedFields[$emailTarget];
                         if($field['type'] == 'relate') {
                             $linkedBeans = array();
-                            $id = $bean->$field['id_name'];
+                            $idName = $field['id_name'];
+                            $id = $bean->$idName;
                             $linkedBeans[] = BeanFactory::getBean($field['module'], $id);
                         }
                         else if($field['type'] == 'link'){
+                            $relField = $field['name'];
                             if(isset($field['module']) && $field['module'] != '') {
                                 $rel_module = $field['module'];
-                            } else if($bean->load_relationship($field['name'])){
-                                $rel_module = $bean->$field['name']->getRelatedModuleName();
+                            } else if($bean->load_relationship($relField)){
+                                $rel_module = $bean->$relField->getRelatedModuleName();
                             }
-                            $linkedBeans = $bean->get_linked_beans($field['name'],$rel_module);
+                            $linkedBeans = $bean->get_linked_beans($relField,$rel_module);
                         }else{
                             $linkedBeans = $bean->get_linked_beans($field['link'],$field['module']);
                         }
@@ -289,8 +291,9 @@ class actionSendEmail extends actionBase {
         foreach($bean->field_defs as $bean_arr){
             if($bean_arr['type'] == 'relate'){
                 if(isset($bean_arr['module']) &&  $bean_arr['module'] != '' && isset($bean_arr['id_name']) &&  $bean_arr['id_name'] != '' && $bean_arr['module'] != 'EmailAddress'){
-                    if(isset($bean->field_defs[$bean_arr['id_name']]) && $bean->field_defs[$bean_arr['id_name']]['source'] != 'non-db'){
-                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$bean_arr['id_name'];
+                    $idName = $bean_arr['id_name'];
+                    if(isset($bean->field_defs[$idName]) && $bean->field_defs[$idName]['source'] != 'non-db'){
+                        if(!isset($object_arr[$bean_arr['module']])) $object_arr[$bean_arr['module']] = $bean->$idName;
                     }
                 }
             }

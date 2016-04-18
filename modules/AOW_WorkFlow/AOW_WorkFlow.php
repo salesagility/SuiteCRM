@@ -543,7 +543,8 @@ class AOW_WorkFlow extends Basic {
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
                         } else {
-                            $value = $condition_bean->$params[0];
+                            $fieldName = $params[0];
+                            $value = $condition_bean->$fieldName;
                         }
 
                         if($params[1] != 'now'){
