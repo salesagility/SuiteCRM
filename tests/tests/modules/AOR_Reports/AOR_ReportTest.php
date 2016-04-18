@@ -35,13 +35,13 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $aor_Report = new AOR_Report();
 
         //populate value for aor_fields related/child object
-        $_POST['aor_fields_field'][] = 'test_field';
+        $_POST['aor_fields_field'][] = 'last_name';
         $_POST['aor_fields_name'][] = 'test';
-        $_POST['aor_fields_module_path'][] = 'test_path';
+        $_POST['aor_fields_module_path'][] = 'contacts';
         $_POST['aor_fields_display'][] = '1';
         $_POST['aor_fields_link'][] = '1';
         $_POST['aor_fields_label'][] = 'test_label';
-        $_POST['aor_fields_field_function'][] = 'test_function';
+        $_POST['aor_fields_field_function'][] = 'count';
         $_POST['aor_fields_total'][] = 'total';
         $_POST['aor_fields_group_by'][] = '1';
         $_POST['aor_fields_group_order'][] = 'desc';
