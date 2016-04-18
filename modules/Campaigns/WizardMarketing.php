@@ -105,6 +105,9 @@ $mrkt_focus = new EmailMarketing();
 //if record param exists and it is not empty, then retrieve this bean
 if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
+}
+else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
+    $mrkt_focus->retrieve($_REQUEST['marketing_id']);
 }else{
         //check to see if this campaign has an email marketing already attached, and if so, create duplicate
         $campaign_focus->load_relationship('emailmarketing');
@@ -579,5 +582,14 @@ $ss->assign('ATTACHMENTS_JAVASCRIPT', $attJs);
 ///////////////////////////////////////
 
 $ss->assign('campaign_type', isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] ? $_REQUEST['campaign_type'] : $campaign_focus->campaign_type);
+
+
+$ss->assign('fields', array(
+    'date_start' => array(
+        'name' => 'date_start',
+        'value' => $mrkt_focus->date_start . ' ' . $mrkt_focus->time_start,
+    )
+));
+
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
