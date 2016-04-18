@@ -852,11 +852,11 @@
 
 		<div class="wizard-summary-left">
 
-			<div class="box ok">
+			<div class="box button ok">
 				<h2><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></h2>
 			</div>
 
-			<div class="box {if $error_on_target_list}fail{else}ok{/if}">
+			<div class="box button {if $error_on_target_list}fail{else}ok{/if}">
 				<h2>
 
 					{if $error_on_target_list}{/if}
@@ -874,11 +874,11 @@
 
 
 			{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-			<div class="box {if $error_on_templates}fail{else}ok{/if}">
+			<div class="box button {if $error_on_templates}fail{else}ok{/if}">
 				<h2><a href="{$link_to_choose_template}"{if $error_on_templates} title="{$error_on_templates}"{/if}>{$MOD.LBL_CHOOSE_TEMPLATES}</a></h2>
 			</div>
 
-			<div class="box ok">
+			<div class="box button ok">
 				<h2><a href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></h2>
 			</div>
 
@@ -922,7 +922,7 @@
 
 			<input type="hidden" name="wiz_home_next_step" value="1" />
 
-			<div class="box schedule {$PL_DISABLED}">
+			<div class="box button schedule {$PL_DISABLED}">
 
 				{if !$PL_DISABLED}
 				<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
@@ -939,7 +939,7 @@
 
 			<div class="space"></div>
 
-			<div class="box test {$PL_DISABLED}">
+			<div class="box button test {$PL_DISABLED}">
 
 				{if !$PL_DISABLED_TEST}
 				<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
