@@ -344,13 +344,13 @@ class SugarFieldRelate extends SugarFieldBase {
                 $relatedFieldDef = $newbean->getFieldDefinition($vardef['rname']);
                 if ( isset($relatedFieldDef['db_concat_fields'])
                         && is_array($relatedFieldDef['db_concat_fields']) )
-                    $fieldname = $focus->db->concat($vardef['table'],$relatedFieldDef['db_concat_fields']);
+                    $fieldName = $focus->db->concat($vardef['table'],$relatedFieldDef['db_concat_fields']);
                 else
-                    $fieldname = $vardef['rname'];
+                    $fieldName = $vardef['rname'];
                 // lookup first record that matches in linked table
                 $query = "SELECT id
                             FROM {$vardef['table']}
-                            WHERE {$fieldname} = '" . $focus->db->quote($value) . "'
+                            WHERE {$fieldName} = '" . $focus->db->quote($value) . "'
                                 AND deleted != 1";
 
                 $result = $focus->db->limitQuery($query,0,1,true, "Want only a single row");
@@ -367,9 +367,9 @@ class SugarFieldRelate extends SugarFieldBase {
                         if ( isset($relatedFieldDef['db_concat_fields'])
                                 && is_array($relatedFieldDef['db_concat_fields']) ) {
                             assignConcatenatedValue($newbean, $relatedFieldDef, $value);
+                        } else {
+                            $newbean->$fieldName = $value;
                         }
-                        else
-                            $newbean->$vardef['rname'] = $value;
                         if ( !isset($focus->assigned_user_id) || $focus->assigned_user_id == '' )
                             $newbean->assigned_user_id = $GLOBALS['current_user']->id;
                         else

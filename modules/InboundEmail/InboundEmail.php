@@ -796,19 +796,20 @@ class InboundEmail extends SugarBean {
 						$values .= ", ";
 					}
 
+					$fieldName = $colDef['name'];
 					// trim values for Oracle/MSSql
 					if(	isset($colDef['len']) && !empty($colDef['len']) &&
 						isset($colDef['type']) && !empty($colDef['type']) &&
 						$colDef['type'] == 'varchar'
 					)
                     {
-                        if (isset($overview->$colDef['name']))
+                        if (isset($overview->$fieldName))
                         {
-                            $overview->$colDef['name'] = substr($overview->$colDef['name'], 0, $colDef['len']);
+                            $overview->$fieldName = substr($overview->$fieldName, 0, $colDef['len']);
                         }
                     }
 
-					switch($colDef['name']) {
+					switch($fieldName) {
 						case "imap_uid":
 							if(isset($overview->uid) && !empty($overview->uid)) {
 								$this->imap_uid = $overview->uid;
@@ -850,8 +851,8 @@ class InboundEmail extends SugarBean {
 						break;
 
 						default:
-							$overview->$colDef['name'] = SugarCleaner::cleanHtml(from_html($overview->$colDef['name']));
-							$values .= $this->db->quoted($overview->$colDef['name']);
+							$overview->$fieldName = SugarCleaner::cleanHtml(from_html($overview->$fieldName));
+							$values .= $this->db->quoted($overview->$fieldName);
 						break;
 					}
 				}
@@ -878,7 +879,8 @@ class InboundEmail extends SugarBean {
 				$set = '';
 				foreach($this->overview->fieldDefs as $colDef) {
 
-					switch($colDef['name']) {
+					$fieldName = $colDef['name'];
+					switch($fieldName) {
 						case "toaddr":
 						case "fromaddr":
 						case "mailsize":
@@ -893,15 +895,15 @@ class InboundEmail extends SugarBean {
                                 $set .= ",";
                             }
                             $value = '';
-                            if (isset($overview->$colDef['name']))
+                            if (isset($overview->$fieldName))
                             {
-                                $value = $this->db->quoted($overview->$colDef['name']);
+                                $value = $this->db->quoted($overview->$fieldName);
                             }
                             else
                             {
                                 $value = $this->db->quoted($value);
                             }
-                            $set .= "{$colDef['name']} = " . $value;
+                            $set .= "{$fieldName} = " . $value;
 						break;
 					}
 				}

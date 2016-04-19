@@ -4493,7 +4493,8 @@ class SugarBean
                                 $mod->retrieve($this->$id_name);
 
                                 if (!empty($field['rname'])) {
-                                    $this->$name = $mod->$field['rname'];
+                                    $rname = $field['rname'];
+                                    $this->$name = $mod->$rname;
                                 } else if (isset($mod->name)) {
                                     $this->$name = $mod->name;
                                 }

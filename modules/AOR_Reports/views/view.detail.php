@@ -137,7 +137,9 @@ class AOR_ReportsViewDetail extends ViewDetail {
                 RGraph.redrawCanvas(graphs[i]);
                 */
                 }
-                RGraph.redraw();
+                if (typeof RGraph !== 'undefined') {
+                    RGraph.redraw();
+                }
         }
         </script>
 

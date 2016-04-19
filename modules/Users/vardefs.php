@@ -605,14 +605,6 @@ $dictionary['User'] = array(
             'source' => 'non-db',
             'vname' => 'LBL_EMAILS'
         ),
-        'holidays' => array(
-            'name' => 'holidays',
-            'type' => 'link',
-            'relationship' => 'users_holidays',
-            'source' => 'non-db',
-            'side' => 'right',
-            'vname' => 'LBL_HOLIDAYS',
-        ),
         'eapm' =>
             array(
                 'name' => 'eapm',
