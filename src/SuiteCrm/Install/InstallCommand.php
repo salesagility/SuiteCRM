@@ -129,19 +129,25 @@ class InstallCommand extends Command implements CommandInterface {
 
         $setup_db_admin_password = $_SESSION['setup_db_admin_password'];
         $setup_db_admin_user_name = $_SESSION['setup_db_admin_user_name'];
+
         $setup_db_sugarsales_password = $setup_db_admin_password;
         $setup_db_sugarsales_user = $setup_db_admin_user_name;
 
+        $setup_site_admin_user_name = $_SESSION['setup_site_admin_user_name'];
+        $setup_site_admin_password = $_SESSION['setup_site_admin_password'];
+
         $setup_db_create_database = $_SESSION['setup_db_create_database'];
         $setup_db_create_sugarsales_user = $_SESSION['setup_db_create_sugarsales_user'];
+
         $setup_db_database_name = $_SESSION['setup_db_database_name'];
         $setup_db_drop_tables = $_SESSION['setup_db_drop_tables'];
         $setup_db_host_instance = $_SESSION['setup_db_host_instance'];
         $setup_db_port_num = $_SESSION['setup_db_port_num'];
         $setup_db_host_name = $_SESSION['setup_db_host_name'];
         $demoData = $_SESSION['demoData'];
-        $setup_site_admin_user_name = $_SESSION['setup_site_admin_user_name'];
-        $setup_site_admin_password = $_SESSION['setup_site_admin_password'];
+
+
+
         $setup_site_guid = (isset($_SESSION['setup_site_specify_guid'])
                             && $_SESSION['setup_site_specify_guid'] != '') ? $_SESSION['setup_site_guid'] : '';
         $setup_site_url = $_SESSION['setup_site_url'];
@@ -156,13 +162,18 @@ class InstallCommand extends Command implements CommandInterface {
         $GLOBALS['cache_dir'] = $cache_dir;
         $GLOBALS['mod_strings'] = $mod_strings;
         $GLOBALS['setup_site_log_level'] = $setup_site_log_level;
+        $GLOBALS['create_default_user'] = false;
 
         $GLOBALS['setup_db_host_name'] = $setup_db_host_name;
         $GLOBALS['setup_db_host_instance'] = $setup_db_host_instance;
         $GLOBALS['setup_db_port_num'] = $setup_db_port_num;
 
+        //some of these username/pwd pairs must be unused ... but which?
         $GLOBALS['setup_db_admin_user_name'] = $setup_db_admin_user_name;
         $GLOBALS['setup_db_admin_password'] = $setup_db_admin_password;
+
+        $GLOBALS['setup_site_admin_user_name'] = $setup_site_admin_user_name;
+        $GLOBALS['setup_site_admin_password'] = $setup_site_admin_password;
 
         $GLOBALS['setup_db_sugarsales_user'] = $setup_db_sugarsales_user;
         $GLOBALS['setup_db_sugarsales_password'] = $setup_db_sugarsales_password;
@@ -209,7 +220,9 @@ class InstallCommand extends Command implements CommandInterface {
 
 
         global $db;
+        /** @ var \DBManager $db */
         $db = \DBManagerFactory::getInstance();
+
         $startTime = microtime(TRUE);
         $focus = 0;
         $processed_tables = []; // for keeping track of the tables we have worked on
@@ -228,6 +241,7 @@ class InstallCommand extends Command implements CommandInterface {
         /**
          * loop through all the Beans and create their tables
          */
+        $this->log(str_repeat("-", 120));
         $this->log("Creating database tables...");
 
         installerHook('pre_createAllModuleTables');
@@ -301,6 +315,9 @@ class InstallCommand extends Command implements CommandInterface {
         }
         installerHook('post_createAllModuleTables');
 
+        /**
+         * loop through all Relationships and create their tables
+         */
         $this->log(str_repeat("-", 120));
         $this->log("Creating relationships...");
         ksort($rel_dictionary);
@@ -324,10 +341,269 @@ class InstallCommand extends Command implements CommandInterface {
             \SugarBean::createRelationshipMeta($rel_name, $db, $table, $rel_dictionary, '');
         }
 
+        /**
+         * Create Default Settings
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Creating default settings...");
+        installerHook('pre_createDefaultSettings');
+        if ($new_config) {
+            /** @var string $sugar_db_version - loaded from sugar_version.php*/
+            $GLOBALS['sugar_db_version'] =  $sugar_db_version;
+            insert_default_settings();
+        }
+        installerHook('post_createDefaultSettings');
+
+        /**
+         * Create Administrator User
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Creating admin user...");
+        installerHook('pre_createUsers');
+        if ($new_tables) {
+            create_default_users();
+        } else {
+            //@todo: CHECK ME! - cannot find methods: setUserName, setUserPassword
+            //$db->setUserName($setup_db_sugarsales_user);
+            //$db->setUserPassword($setup_db_sugarsales_password);
+            set_admin_password($setup_site_admin_password);
+        }
+        installerHook('post_createUsers');
+
+
+        /**
+         * Rebuild Shedulers
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Rebuilding schedulers...");
+        $scheduler = new \Scheduler();
+        installerHook('pre_createDefaultSchedulers');
+        $scheduler->rebuildDefaultSchedulers();
+        installerHook('post_createDefaultSchedulers');
+
+        /**
+         * Update upgrade history
+         */
+        if(isset($_SESSION['INSTALLED_LANG_PACKS']) &&
+           is_array($_SESSION['INSTALLED_LANG_PACKS']) &&
+           !empty($_SESSION['INSTALLED_LANG_PACKS'])) {
+            $this->log(str_repeat("-", 120));
+            $this->log("Updating upgrade history...");
+            updateUpgradeHistory();
+        }
+
+
+        /**
+         *  Enable Sugar Feeds
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Enabling Sugar Feeds...");
+        enableSugarFeeds();
+
+
+        /**
+         * Handle Sugar Versions
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Handling Sugar Versions...");
+        require_once(PROJECT_ROOT . '/modules/Versions/InstallDefaultVersions.php');
+
+
+        /**
+         * Advanced Password Seeds
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Handling Advanced Password Seeds...");
+        include(PROJECT_ROOT . '/install/seed_data/Advanced_Password_SeedData.php');
+
+        /**
+         * Advanced Password Seeds
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Handling Advanced Password Seeds...");
+        include(PROJECT_ROOT . '/install/seed_data/Advanced_Password_SeedData.php');
+
+        /**
+         * Administration Variables
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Handling Administration Variables...");
+        if( isset($_SESSION['setup_site_sugarbeet_automatic_checks']) &&
+            $_SESSION['setup_site_sugarbeet_automatic_checks'] == true) {
+            set_CheckUpdates_config_setting('automatic');
+        }else{
+            set_CheckUpdates_config_setting('manual');
+        }
+        if(!empty($_SESSION['setup_system_name'])){
+            $admin = new \Administration();
+            $admin->saveSetting('system','name',$_SESSION['setup_system_name']);
+        }
+
+        /**
+         * Setting Default Tabs
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Setting Default Tabs...");
+        // Bug 28601 - Set the default list of tabs to show
+        $enabled_tabs = array();
+        $enabled_tabs[] = 'Home';
+        $enabled_tabs[] = 'Accounts';
+        $enabled_tabs[] = 'Contacts';
+        $enabled_tabs[] = 'Opportunities';
+        $enabled_tabs[] = 'Leads';
+        $enabled_tabs[] = 'AOS_Quotes';
+        $enabled_tabs[] = 'Calendar';
+        $enabled_tabs[] = 'Documents';
+        $enabled_tabs[] = 'Emails';
+        $enabled_tabs[] = 'Campaigns';
+        $enabled_tabs[] = 'Calls';
+        $enabled_tabs[] = 'Meetings';
+        $enabled_tabs[] = 'Tasks';
+        $enabled_tabs[] = 'Notes';
+        $enabled_tabs[] = 'AOS_Invoices';
+        $enabled_tabs[] = 'AOS_Contracts';
+        $enabled_tabs[] = 'Cases';
+        $enabled_tabs[] = 'Prospects';
+        $enabled_tabs[] = 'ProspectLists';
+        $enabled_tabs[] = 'Project';
+        $enabled_tabs[] = 'AM_ProjectTemplates';
+        $enabled_tabs[] = 'AM_TaskTemplates';
+        $enabled_tabs[] = 'FP_events';
+        $enabled_tabs[] = 'FP_Event_Locations';
+        $enabled_tabs[] = 'AOS_Products';
+        $enabled_tabs[] = 'AOS_Product_Categories';
+        $enabled_tabs[] = 'AOS_PDF_Templates';
+        $enabled_tabs[] = 'jjwg_Maps';
+        $enabled_tabs[] = 'jjwg_Markers';
+        $enabled_tabs[] = 'jjwg_Areas';
+        $enabled_tabs[] = 'jjwg_Address_Cache';
+        $enabled_tabs[] = 'AOR_Reports';
+        $enabled_tabs[] = 'AOW_WorkFlow';
+        $enabled_tabs[] = 'AOK_KnowledgeBase';
+        $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+
+        installerHook('pre_setSystemTabs');
+        require_once(PROJECT_ROOT . '/modules/MySettings/TabController.php');
+        $tabs = new \TabController();
+        $tabs->set_system_tabs($enabled_tabs);
+        installerHook('post_setSystemTabs');
+
+        /**
+         * Modules Post Install
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Modules Post Install...");
+        include_once(PROJECT_ROOT . '/install/suite_install/suite_install.php');
+        post_install_modules();
+
+        /**
+         * @todo: 6 million warnings & errors - CHECK ME!
+         * Install Demo Data
+         */
+        if(isset($_SESSION['demoData']) &&  $_SESSION['demoData'] === true){
+            $this->log(str_repeat("-", 120));
+            $this->log("Installing Demo Data...");
+
+            installerHook('pre_installDemoData');
+            global $current_user;
+            $current_user = new \User();
+            $current_user->retrieve(1);
+            include(PROJECT_ROOT . '/install/populateSeedData.php');
+            installerHook('post_installDemoData');
+        }
+
+
+        /**
+         * Save Administration Configuration
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Saving Administration Configuration...");
+        $varStack['GLOBALS'] = $GLOBALS;
+        $varStack['defined_vars'] = get_defined_vars();
+        $_REQUEST = array_merge($_REQUEST, $_SESSION);
+        $_POST = array_merge($_POST, $_SESSION);
+        $admin = new \Administration();
+        $admin->saveSetting('system','adminwizard',1);
+        $admin->saveConfig();
+
+
+        /**
+         * Save Global Configuration
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Saving Global Configuration...");
+        $configurator = new \Configurator();
+        $configurator->populateFromPost();
+        // add local settings to config overrides
+        if(!empty($_SESSION['default_date_format'])) $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
+        if(!empty($_SESSION['default_time_format'])) $sugar_config['default_date_format'] = $_SESSION['default_time_format'];
+        if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
+        if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
+        $configurator->saveConfig();
+
+
+        /**
+         * @todo: check and remove this
+         * Fix Currency - Bug 37310
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Fix Currency - Bug 37310...");
+        $currency = new \Currency();
+        $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
+        if (!empty($currency->id)
+             && $currency->symbol == $_REQUEST['default_currency_symbol']
+             && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
+            $currency->deleted = 1;
+            $currency->save();
+        }
+
+
+        /**
+         * Save User
+         * old note: set all of these default parameters since the Users save action
+         * will undo the defaults otherwise
+         */
+        $this->log(str_repeat("-", 120));
+        $this->log("Saving Admin User...");
+        $current_user = new \User();
+        $current_user->retrieve(1);
+        $current_user->is_admin = '1';
+        $sugar_config = get_sugar_config_defaults();
+
+        // set locale settings
+        if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
+            $current_user->setPreference('timezone', $_REQUEST['timezone']);
+        }
+        $_POST['dateformat'] = $_REQUEST['default_date_format'];
+        $_POST['record'] = $current_user->id;
+        $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
+        $_POST['use_real_names'] = true;
+        $_POST['reminder_checked'] = '1';
+        $_POST['reminder_time'] = 1800;
+        $_POST['email_reminder_time'] = 3600;
+        $_POST['mailmerge_on'] = 'on';
+        $_POST['receive_notifications'] = $current_user->receive_notifications;
+        installLog('DBG: SugarThemeRegistry::getDefault');
+        $_POST['user_theme'] = (string) \SugarThemeRegistry::getDefault();
+        require(PROJECT_ROOT . '/modules/Users/Save.php');
+
+        // restore superglobals and vars
+        $GLOBALS = $varStack['GLOBALS'];
+        foreach($varStack['defined_vars'] as $__key => $__value) {
+            $$__key = $__value;
+        }
+
+        $endTime = microtime(true);
+        $deltaTime = $endTime - $startTime;
 
         $this->log(str_repeat("-", 120));
-        $this->log("SESSION VARS: " . json_encode($_SESSION));
+        $this->log("Calling Post Install Modules Hook...");
+        installerHook('post_installModules');
 
+        $this->log(str_repeat("-", 120));
+        $this->log(str_repeat("-", 120));
+        //$this->log("SESSION VARS: " . json_encode($_SESSION));
+        $this->log("Installation complete.");
     }
 
 
@@ -376,7 +652,7 @@ class InstallCommand extends Command implements CommandInterface {
             'setup_site_url' => 'http://localhost',
             'host' => 'localhost',
             'dbUSRData' => 'create',
-            'demoData' => 'no',
+            'demoData' => false,
             'default_date_format' => 'Y-m-d',
             'default_time_format' => 'H:i',
             'default_decimal_seperator' => '.',
