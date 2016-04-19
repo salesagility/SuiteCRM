@@ -47,7 +47,7 @@ class Command extends ConsoleCommand {
      * @param string $msg
      * @param string $level - available: debug|info|warn|deprecated|error|fatal|security|off
      */
-    public function log($msg, $level = 'debug') {
+    public function log($msg, $level = 'warn') {
         $this->loggerManager->log($msg, $level);
     }
 }

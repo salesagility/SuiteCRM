@@ -16,8 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class InstallCommand
  * @package SuiteCrm\Install
  */
-class InstallCommand extends Command implements CommandInterface
-{
+class InstallCommand extends Command implements CommandInterface {
     const COMMAND_NAME = 'app:install';
     const COMMAND_DESCRIPTION = 'Install the SuiteCrm application';
 
@@ -37,7 +36,7 @@ class InstallCommand extends Command implements CommandInterface
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      * @return bool
      */
@@ -58,10 +57,15 @@ class InstallCommand extends Command implements CommandInterface
      *
      */
     protected function performInstallation() {
-        define('sugarEntry', true);
+        define('sugarEntry', TRUE);
         global $beanList;
         global $app_list_strings;
         global $timedate;
+
+        if (is_file("config.php")) {
+            $this->log("Removing stale configuration file.");
+            unlink("config.php");
+        }
 
         require_once(PROJECT_ROOT . '/sugar_version.php');
         require_once(PROJECT_ROOT . '/suitecrm_version.php');
@@ -81,7 +85,7 @@ class InstallCommand extends Command implements CommandInterface
         $locale = new \Localization();
         /** @var  string $suitecrm_version */
         $setup_sugar_version = $suitecrm_version;
-        $install_script = true;
+        $install_script = TRUE;
         $current_language = 'en_us';
 
         $mod_strings = [];
@@ -92,7 +96,7 @@ class InstallCommand extends Command implements CommandInterface
         SystemChecker::runChecks();
         DatabaseChecker::runChecks();
 
-        ini_set("output_buffering","0");
+        ini_set("output_buffering", "0");
         set_time_limit(3600);
 
         $this->log(str_repeat("-", 120));
@@ -115,37 +119,38 @@ class InstallCommand extends Command implements CommandInterface
         create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('include/javascript'));
         recursive_make_writable(PROJECT_ROOT . '/' . sugar_cached('modules'));
 
-        $cache_dir                          = sugar_cached("");
-        $line_entry_format                  = "&nbsp&nbsp&nbsp&nbsp&nbsp<b>";
-        $line_exit_format                   = "... &nbsp&nbsp</b>";
+        $cache_dir = sugar_cached("");
+        $line_entry_format = "&nbsp&nbsp&nbsp&nbsp&nbsp<b>";
+        $line_exit_format = "... &nbsp&nbsp</b>";
         /** @var  array $dictionary */
-        $rel_dictionary                     = $dictionary; // sourced by modules/TableDictionary.php
-        $render_table_close                 = "";
-        $render_table_open                  = "";
+        $rel_dictionary = $dictionary; // sourced by modules/TableDictionary.php
+        $render_table_close = "";
+        $render_table_open = "";
 
-        $setup_db_admin_password            = $_SESSION['setup_db_admin_password'];
-        $setup_db_admin_user_name           = $_SESSION['setup_db_admin_user_name'];
-        $setup_db_sugarsales_password       = $setup_db_admin_password;
-        $setup_db_sugarsales_user           = $setup_db_admin_user_name;
+        $setup_db_admin_password = $_SESSION['setup_db_admin_password'];
+        $setup_db_admin_user_name = $_SESSION['setup_db_admin_user_name'];
+        $setup_db_sugarsales_password = $setup_db_admin_password;
+        $setup_db_sugarsales_user = $setup_db_admin_user_name;
 
-        $setup_db_create_database           = $_SESSION['setup_db_create_database'];
-        $setup_db_create_sugarsales_user    = $_SESSION['setup_db_create_sugarsales_user'];
-        $setup_db_database_name             = $_SESSION['setup_db_database_name'];
-        $setup_db_drop_tables               = $_SESSION['setup_db_drop_tables'];
-        $setup_db_host_instance             = $_SESSION['setup_db_host_instance'];
-        $setup_db_port_num                  = $_SESSION['setup_db_port_num'];
-        $setup_db_host_name                 = $_SESSION['setup_db_host_name'];
-        $demoData                           = $_SESSION['demoData'];
-        $setup_site_admin_user_name         = $_SESSION['setup_site_admin_user_name'];
-        $setup_site_admin_password          = $_SESSION['setup_site_admin_password'];
-        $setup_site_guid                    = (isset($_SESSION['setup_site_specify_guid']) && $_SESSION['setup_site_specify_guid'] != '') ? $_SESSION['setup_site_guid'] : '';
-        $setup_site_url                     = $_SESSION['setup_site_url'];
-        $parsed_url                         = parse_url($setup_site_url);
-        $setup_site_host_name               = $parsed_url['host'];
-        $setup_site_log_dir                 = isset($_SESSION['setup_site_custom_log_dir']) ? $_SESSION['setup_site_log_dir'] : '.';
-        $setup_site_log_file                = 'suitecrm.log';  // may be an option later
-        $setup_site_session_path            = isset($_SESSION['setup_site_custom_session_path']) ? $_SESSION['setup_site_session_path'] : '';
-        $setup_site_log_level				='fatal';
+        $setup_db_create_database = $_SESSION['setup_db_create_database'];
+        $setup_db_create_sugarsales_user = $_SESSION['setup_db_create_sugarsales_user'];
+        $setup_db_database_name = $_SESSION['setup_db_database_name'];
+        $setup_db_drop_tables = $_SESSION['setup_db_drop_tables'];
+        $setup_db_host_instance = $_SESSION['setup_db_host_instance'];
+        $setup_db_port_num = $_SESSION['setup_db_port_num'];
+        $setup_db_host_name = $_SESSION['setup_db_host_name'];
+        $demoData = $_SESSION['demoData'];
+        $setup_site_admin_user_name = $_SESSION['setup_site_admin_user_name'];
+        $setup_site_admin_password = $_SESSION['setup_site_admin_password'];
+        $setup_site_guid = (isset($_SESSION['setup_site_specify_guid'])
+                            && $_SESSION['setup_site_specify_guid'] != '') ? $_SESSION['setup_site_guid'] : '';
+        $setup_site_url = $_SESSION['setup_site_url'];
+        $parsed_url = parse_url($setup_site_url);
+        $setup_site_host_name = $parsed_url['host'];
+        $setup_site_log_dir = isset($_SESSION['setup_site_custom_log_dir']) ? $_SESSION['setup_site_log_dir'] : '.';
+        $setup_site_log_file = 'suitecrm.log';  // may be an option later
+        $setup_site_session_path = isset($_SESSION['setup_site_custom_session_path']) ? $_SESSION['setup_site_session_path'] : '';
+        $setup_site_log_level = 'fatal';
 
 
         $GLOBALS['cache_dir'] = $cache_dir;
@@ -193,26 +198,25 @@ class InstallCommand extends Command implements CommandInterface
         installerHook('post_handleDbCharsetCollation');
 
         /**
-         * @var array $beanFiles
+         * @var array  $beanFiles
          * @var string $beanName
          * @var string $beanFile
          */
-        foreach($beanFiles as $beanName => $beanFile )
-        {
-            //$this->log("Requiring bean[$beanName] file: $beanFile");
+        foreach ($beanFiles as $beanName => $beanFile) {
+            $this->log("Requiring bean[$beanName] file: $beanFile", "info");
             require_once($beanFile);
         }
 
 
         global $db;
-        $db                 = \DBManagerFactory::getInstance();
-        $startTime          = microtime(true);
-        $focus              = 0;
-        $processed_tables   = []; // for keeping track of the tables we have worked on
-        $empty              = '';
-        $new_tables         = 1; // is there ever a scenario where we DON'T create the admin user?
-        $new_config         = 1;
-        $new_report         = 1;
+        $db = \DBManagerFactory::getInstance();
+        $startTime = microtime(TRUE);
+        $focus = 0;
+        $processed_tables = []; // for keeping track of the tables we have worked on
+        $empty = '';
+        $new_tables = 1; // is there ever a scenario where we DON'T create the admin user?
+        $new_config = 1;
+        $new_report = 1;
         $nonStandardModules = [];
 
 
@@ -224,38 +228,49 @@ class InstallCommand extends Command implements CommandInterface
         /**
          * loop through all the Beans and create their tables
          */
-        $this->log("Creating database tables");
-        installerHook('pre_createAllModuleTables');
-        foreach( $beanFiles as $beanName => $beanFile ) {
+        $this->log("Creating database tables...");
 
-            $doNotInitModules = ['Scheduler', 'SchedulersJob', 'ProjectTask','jjwg_Maps','jjwg_Address_Cache','jjwg_Areas','jjwg_Markers'];
+        installerHook('pre_createAllModuleTables');
+        foreach ($beanFiles as $beanName => $beanFile) {
+
+            $doNotInitModules = [
+                'Scheduler',
+                'SchedulersJob',
+                'ProjectTask',
+                'jjwg_Maps',
+                'jjwg_Address_Cache',
+                'jjwg_Areas',
+                'jjwg_Markers'
+            ];
 
             /** @var \SugarBean $focus */
-            if(in_array($beanName, $doNotInitModules)) {
-                $focus = new $beanName(false);
-            } else {
+            if (in_array($beanName, $doNotInitModules)) {
+                $focus = new $beanName(FALSE);
+            }
+            else {
                 $focus = new $beanName();
             }
 
-            if ( $beanName == 'Configurator' ) {
+            if ($beanName == 'Configurator') {
                 continue;
             }
 
             $table_name = $focus->table_name;
 
-            $this->log("processing table: ".$focus->table_name);
+            $this->log("processing Module: " . $beanName . "(" . $focus->table_name . ")");
 
             // check to see if we have already setup this table
-            if(!in_array($table_name, $processed_tables)) {
-                if(!file_exists("modules/".$focus->module_dir."/vardefs.php")){
+            if (!in_array($table_name, $processed_tables)) {
+                if (!file_exists("modules/" . $focus->module_dir . "/vardefs.php")) {
                     continue;
                 }
-                if(!in_array($beanName, $nonStandardModules)) {
-                    require_once("modules/".$focus->module_dir."/vardefs.php"); // load up $dictionary
-                    if($dictionary[$focus->object_name]['table'] == 'does_not_exist') {
+                if (!in_array($beanName, $nonStandardModules)) {
+                    require_once("modules/" . $focus->module_dir . "/vardefs.php"); // load up $dictionary
+                    if ($dictionary[$focus->object_name]['table'] == 'does_not_exist') {
                         continue; // support new vardef definitions
                     }
-                } else {
+                }
+                else {
                     continue; //no further processing needed for ignored beans.
                 }
 
@@ -264,17 +279,17 @@ class InstallCommand extends Command implements CommandInterface
 
                 $focus->db->database = $db->database; // set db connection so we do not need to reconnect
 
-                if($setup_db_drop_tables) {
+                if ($setup_db_drop_tables) {
                     drop_table_install($focus);
                     //$this->log("dropping table: ".$focus->table_name);
                 }
 
-                if(create_table_if_not_exist($focus)) {
+                if (create_table_if_not_exist($focus)) {
                     //$this->log("creating table: ". $focus->table_name );
-                    if( $beanName == "User" ){
+                    if ($beanName == "User") {
                         $new_tables = 1;
                     }
-                    if($beanName == "Administration") {
+                    if ($beanName == "Administration") {
                         $new_config = 1;
                     }
                 }
@@ -286,13 +301,31 @@ class InstallCommand extends Command implements CommandInterface
         }
         installerHook('post_createAllModuleTables');
 
-
-
-        $this->log("");
         $this->log(str_repeat("-", 120));
+        $this->log("Creating relationships...");
+        ksort($rel_dictionary);
+        foreach ($rel_dictionary as $rel_name => $rel_data) {
+            $table = $rel_data['table'];
+
+            $this->log("processing Relationship: " . $rel_name . "(" . $table . ")");
+
+            if ($setup_db_drop_tables) {
+                if ($db->tableExists($table)) {
+                    $db->dropTableName($table);
+                }
+            }
+
+            if (!$db->tableExists($table)) {
+                $fields = isset($rel_data['fields']) ? $rel_data['fields'] : [];
+                $indices = isset($rel_data['indices']) ? $rel_data['indices'] : [];
+                $db->createTableParams($table, $fields, $indices);
+            }
+
+            \SugarBean::createRelationshipMeta($rel_name, $db, $table, $rel_dictionary, '');
+        }
 
 
-
+        $this->log(str_repeat("-", 120));
         $this->log("SESSION VARS: " . json_encode($_SESSION));
 
     }
@@ -311,20 +344,26 @@ class InstallCommand extends Command implements CommandInterface
      * @param array $data
      */
     protected function setupSugarSessionVars($data) {
-        if((function_exists('session_status') && session_status() == PHP_SESSION_NONE) || session_id() == '') {
+        if ((function_exists('session_status') && session_status() == PHP_SESSION_NONE) || session_id() == '') {
             session_start();
         }
 
         $databaseConfigData = [
-            /*BASIC*/
+            /* DATABASE */
             'setup_db_type' => 'mysql',
             'setup_db_admin_user_name' => 'jack',
             'setup_db_admin_password' => '02203505',
             'setup_db_database_name' => 'suitecrm_bradipo_travis',
             'setup_db_host_name' => 'localhost',
             'setup_db_port_num' => '3306',
-            'setup_db_host_instance' => '',//SQLEXPRESS
-            'setup_db_manager' => '',//'MysqliManager',
+            'setup_db_host_instance' => '',
+            'setup_db_manager' => '',
+            'setup_db_create_database' => TRUE,
+            'setup_db_drop_tables' => TRUE,
+            'setup_db_username_is_privileged' => TRUE,
+            'setup_db_create_sugarsales_user' => FALSE,
+            //            'setup_db_pop_demo_data' => true,
+
             /*SITE DEFAULT ADMIN USER*/
             'setup_site_admin_user_name' => 'admin',
             'setup_site_admin_password' => 'admin',
@@ -333,12 +372,20 @@ class InstallCommand extends Command implements CommandInterface
             'setup_fts_host' => '',
             'setup_fts_port' => '',
             /* INTERNAL */
-            'setup_db_create_sugarsales_user' => false,
-            'setup_db_create_database' => true,
-            'setup_db_drop_tables' => true,
+            'setup_system_name' => 'SuiteCRM Travis Build',
             'setup_site_url' => 'http://localhost',
             'host' => 'localhost',
+            'dbUSRData' => 'create',
             'demoData' => 'no',
+            'default_date_format' => 'Y-m-d',
+            'default_time_format' => 'H:i',
+            'default_decimal_seperator' => '.',
+            'default_export_charset' => 'ISO-8859-1',
+            'export_delimiter' => ',',
+            'default_language' => 'en_us',
+            'default_locale_name_format' => 's f l',
+            'default_number_grouping_seperator' => ',',
+            'setup_site_sugarbeet_automatic_checks' => TRUE
         ];
 
         $data = array_merge_recursive($data, $databaseConfigData);
@@ -349,7 +396,7 @@ class InstallCommand extends Command implements CommandInterface
      * Setup Globals prior to requiring Sugar application files
      */
     protected function setupSugarGlobals() {
-        $GLOBALS['installing'] = true;
+        $GLOBALS['installing'] = TRUE;
         define('SUGARCRM_IS_INSTALLING', $GLOBALS['installing']);
         $GLOBALS['sql_queries'] = 0;
     }
@@ -358,15 +405,15 @@ class InstallCommand extends Command implements CommandInterface
      * Mostly for avoiding undefined index notices
      */
     protected function setupSugarServerValues() {
-        $_SERVER['SERVER_SOFTWARE'] = null;
+        $_SERVER['SERVER_SOFTWARE'] = NULL;
     }
 
     /**
      * @throws \Exception
      */
     protected function doPhpVersionCheck() {
-        if (version_compare(phpversion(),'5.2.0') < 0) {
-            throw new \Exception('Minimum PHP version required is 5.2.0.  You are using PHP version  '. phpversion());
+        if (version_compare(phpversion(), '5.2.0') < 0) {
+            throw new \Exception('Minimum PHP version required is 5.2.0.  You are using PHP version  ' . phpversion());
         }
     }
 }
