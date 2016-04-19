@@ -44,16 +44,12 @@ class InstallCommand extends Command implements CommandInterface
     protected function execute(InputInterface $input, OutputInterface $output) {
         parent::_execute($input, $output);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
-
-
-        //$this->doPhpVersionCheck();
-        //$this->setupSugarGlobals();
-        //$this->setupSugarSessionVars([]);
-        //$this->setupSugarLogger();
-        //$this->performInstallation();
-
-
-
+        $this->doPhpVersionCheck();
+        $this->setupSugarServerValues();
+        $this->setupSugarGlobals();
+        $this->setupSugarSessionVars([]);
+        $this->setupSugarLogger();
+        $this->performInstallation();
         $this->log("Command " . static::COMMAND_NAME . " done.");
     }
 
@@ -66,7 +62,7 @@ class InstallCommand extends Command implements CommandInterface
         global $beanList;
         global $app_list_strings;
         global $timedate;
-        //require_once(PROJECT_ROOT . '/include/SugarLogger/LoggerManager.php');
+
         require_once(PROJECT_ROOT . '/sugar_version.php');
         require_once(PROJECT_ROOT . '/suitecrm_version.php');
         require_once(PROJECT_ROOT . '/include/utils.php');
@@ -79,7 +75,7 @@ class InstallCommand extends Command implements CommandInterface
         require_once(PROJECT_ROOT . '/data/SugarBean.php');
         require_once(PROJECT_ROOT . '/include/entryPoint.php');
         require_once(PROJECT_ROOT . '/modules/TableDictionary.php');
-        //
+
         $timedate = \TimeDate::getInstance();
         setPhpIniSettings();
         $locale = new \Localization();
@@ -303,11 +299,10 @@ class InstallCommand extends Command implements CommandInterface
 
 
     /**
-     * Set up a custom logger for the installation
-     * use one of: 'debug', 'info', 'warn', 'deprecated', 'error', 'fatal', 'security', 'off'
+     * Set up our own LoggerManager for the installation
      */
     protected function setupSugarLogger() {
-        $GLOBALS['log'] = new LoggerManager($this->cmdOutput, 'error');
+        $GLOBALS['log'] = $this->loggerManager;
     }
 
     /**
@@ -325,7 +320,7 @@ class InstallCommand extends Command implements CommandInterface
             'setup_db_type' => 'mysql',
             'setup_db_admin_user_name' => 'jack',
             'setup_db_admin_password' => '02203505',
-            'setup_db_database_name' => 'suitecrm_bradipo_tests',
+            'setup_db_database_name' => 'suitecrm_bradipo_travis',
             'setup_db_host_name' => 'localhost',
             'setup_db_port_num' => '3306',
             'setup_db_host_instance' => '',//SQLEXPRESS
@@ -339,7 +334,7 @@ class InstallCommand extends Command implements CommandInterface
             'setup_fts_port' => '',
             /* INTERNAL */
             'setup_db_create_sugarsales_user' => false,
-            'setup_db_create_database' => false,
+            'setup_db_create_database' => true,
             'setup_db_drop_tables' => true,
             'setup_site_url' => 'http://localhost',
             'host' => 'localhost',
@@ -356,9 +351,14 @@ class InstallCommand extends Command implements CommandInterface
     protected function setupSugarGlobals() {
         $GLOBALS['installing'] = true;
         define('SUGARCRM_IS_INSTALLING', $GLOBALS['installing']);
-
         $GLOBALS['sql_queries'] = 0;
+    }
 
+    /**
+     * Mostly for avoiding undefined index notices
+     */
+    protected function setupSugarServerValues() {
+        $_SERVER['SERVER_SOFTWARE'] = null;
     }
 
     /**

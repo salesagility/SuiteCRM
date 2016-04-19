@@ -66,7 +66,7 @@ class LoggerManager {
         $msg = is_array($msg) ? implode(" - ", $msg) : $msg;
         $now = new \DateTime();
         $timestamp = $now->format("Y-m-d H:i:s");
-        $this->cmdOutput->writeln("[${timestamp}]: ${msg}", $option);
+        $this->cmdOutput->writeln("[${timestamp}(${level})]: ${msg}", $option);
     }
 
     /**
