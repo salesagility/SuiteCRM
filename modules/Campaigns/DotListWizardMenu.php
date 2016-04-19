@@ -25,7 +25,7 @@ class DotListWizardMenu
     {
         if($i>=4) {
             parse_str($link, $args);
-            if(!$args['marketing_id']) {
+            if(empty($args['marketing_id'])) {
                 $link = false;
             }
         }

@@ -375,7 +375,7 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 
 
-if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
+if($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign_type']) || $_REQUEST['campaign_type'] != 'Telesales')) {
     $templateURLForProgressBar = '#';
     if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
         $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
@@ -397,14 +397,14 @@ if(isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) &
 
 $steps = array();
 $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']] = $camp_url.'1';
-if($campaign_focus->campaign_type == 'Telesales' || $_REQUEST['campaign_type'] == 'Telesales') {
+if($campaign_focus->campaign_type == 'Telesales' || (isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] == 'Telesales')) {
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']] = 'index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $campaign_focus->id . '&record=' . $campaign_focus->id . '&direct_step=2';
     $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url.'2&show_target_list=1';
 }
 else {
     $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url . '2';
 }
-if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
+if($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign_type']) || $_REQUEST['campaign_type'] != 'Telesales')) {
     $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
     if(!$marketingURLForProgressBar) {
         $marketingURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=2&show_wizard_marketing=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
