@@ -1651,6 +1651,7 @@ $app_strings = array(
     'LBL_CONTACT_LIST' => 'Contact List',
     'LBL_CONTACT' => 'Contact',
     'LBL_CONTACTS' => 'Contacts',
+    'LBL_CONTRACT' => 'Contract',
     'LBL_CONTRACTS' => 'Contracts',
     'LBL_COUNTRY' => 'Country:',
     'LBL_CREATE_BUTTON_LABEL' => 'Create',

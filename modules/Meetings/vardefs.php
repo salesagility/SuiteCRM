@@ -417,6 +417,14 @@ $dictionary['Meeting'] = array('table' => 'meetings',
                 'source' => 'non-db',
                 'vname' => 'LBL_CASE',
             ),
+        'aos_contracts' =>
+            array (
+                'name' => 'aos_contracts',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_meetings',
+                'source'=>'non-db',
+                'vname'=>'LBL_CONTRACT',
+            ),
         'notes' =>
             array(
                 'name' => 'notes',
