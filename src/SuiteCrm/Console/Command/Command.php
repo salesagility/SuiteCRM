@@ -6,6 +6,8 @@
  */
 
 namespace SuiteCrm\Console\Command;
+
+use SuiteCrm\Install\LoggerManager;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,8 +23,8 @@ class Command extends ConsoleCommand {
     /** @var  OutputInterface */
     protected $cmdOutput;
 
-    /** @var bool */
-    private $logToConsole = FALSE;
+    /** @var  LoggerManager */
+    protected $loggerManager;
 
     /**
      * @param string $name
@@ -38,22 +40,14 @@ class Command extends ConsoleCommand {
     protected function _execute(InputInterface $input, OutputInterface $output) {
         $this->cmdInput = $input;
         $this->cmdOutput = $output;
+        $this->loggerManager = new LoggerManager($this->cmdOutput);
     }
 
     /**
-     * @param $enable
-     */
-    protected function enableConsoleLogging($enable) {
-        $this->logToConsole = ($enable === TRUE);
-    }
-
-    /**
-     * @todo: need to use LoggerManager here
      * @param string $msg
+     * @param string $level - available: debug|info|warn|deprecated|error|fatal|security|off
      */
-    public function log($msg) {
-        if ($this->logToConsole) {
-            $this->cmdOutput->writeln($msg);
-        }
+    public function log($msg, $level = 'debug') {
+        $this->loggerManager->log($msg, $level);
     }
 }

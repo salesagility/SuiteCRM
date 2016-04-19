@@ -21,14 +21,10 @@ class InstallCommand extends Command implements CommandInterface
     const COMMAND_NAME = 'app:install';
     const COMMAND_DESCRIPTION = 'Install the SuiteCrm application';
 
-    /** @var bool */
-    private $logToConsole = TRUE;
-
     /**
      * Constructor
      */
     public function __construct() {
-        $this->enableConsoleLogging($this->logToConsole);
         parent::__construct(NULL);
     }
 
@@ -48,11 +44,13 @@ class InstallCommand extends Command implements CommandInterface
     protected function execute(InputInterface $input, OutputInterface $output) {
         parent::_execute($input, $output);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
-        $this->doPhpVersionCheck();
-        $this->setupSugarGlobals();
-        $this->setupSugarSessionVars([]);
-        $this->setupSugarLogger();
-        $this->performInstallation();
+
+
+        //$this->doPhpVersionCheck();
+        //$this->setupSugarGlobals();
+        //$this->setupSugarSessionVars([]);
+        //$this->setupSugarLogger();
+        //$this->performInstallation();
 
 
 

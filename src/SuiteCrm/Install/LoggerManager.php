@@ -21,9 +21,6 @@ class LoggerManager {
     /** @var  OutputInterface */
     protected $cmdOutput;
 
-    /** @var bool */
-    protected $logToConsole = TRUE;
-
     /** @var string */
     protected $defaultLogLevel = 'debug';
 
@@ -53,10 +50,7 @@ class LoggerManager {
      * @param mixed  $message
      */
     public function __call($logLevel, $message) {
-        $logLevel = (!in_array($logLevel, array_keys(self::$logLevelMapping)) ? $this->defaultLogLevel : $logLevel);
-        if ($this->wouldLog($logLevel)) {
-            $this->log($message, $logLevel);
-        }
+        $this->log($message, $logLevel);
     }
 
     /**
@@ -66,11 +60,32 @@ class LoggerManager {
      * @param string $msg
      * @param string $level
      */
-    protected function log($msg, $level) {
-        if ($this->logToConsole) {
-            $msg = is_array($msg) ? implode(" - ", $msg) : $msg;
-            $this->cmdOutput->writeln("[$level]: " . $msg);
+    public function log($msg, $level = 'debug') {
+        $level = (!in_array($level, array_keys(self::$logLevelMapping)) ? $this->defaultLogLevel : $level);
+        $option = $this->getOutputInterfaceVerbosityOptionForLogLevel($level);
+        $msg = is_array($msg) ? implode(" - ", $msg) : $msg;
+        $now = new \DateTime();
+        $timestamp = $now->format("Y-m-d H:i:s");
+        $this->cmdOutput->writeln("[${timestamp}]: ${msg}", $option);
+    }
+
+    /**
+     * @param string $level
+     * @return int
+     */
+    protected function getOutputInterfaceVerbosityOptionForLogLevel($level) {
+        $option = OutputInterface::OUTPUT_NORMAL;
+        $numericLevel = self::$logLevelMapping[$level];
+        if($numericLevel == 100) {
+            $option = $option | OutputInterface::VERBOSITY_DEBUG;
+        } else if ($numericLevel >= 70) {
+            $option = $option | OutputInterface::VERBOSITY_VERY_VERBOSE;
+        } else if ($numericLevel >= 40) {
+            $option = $option | OutputInterface::VERBOSITY_VERBOSE;
+        } else {
+            $option = $option | OutputInterface::VERBOSITY_NORMAL;
         }
+        return $option;
     }
 
     /**
