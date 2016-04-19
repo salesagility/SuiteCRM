@@ -192,6 +192,8 @@ $mod_strings = array(
 	'LBL_NO_ACCESS' => 'You have no access to create $module',
 	'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
 	'LBL_REMOVE' => 'rem',
+	'LBL_VIEW_DETAIL' => 'View Details',
 
+ 
 );
 ?>

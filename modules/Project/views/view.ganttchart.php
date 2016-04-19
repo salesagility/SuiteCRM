@@ -164,7 +164,8 @@ class ProjectViewGanttChart extends SugarView {
  
 			<div class="moduleTitle">
 				<h2> <?php echo $project->name;?> </h2>
-
+				<span class="utils">&nbsp; 
+				<a class="utilsLink" href="index.php?module=Project&action=DetailView&record=<?php echo $_REQUEST["project_id"];?>&return_module=Project&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL'];?></a></span>
 				<div class="clear"></div>
 			</div>
 
