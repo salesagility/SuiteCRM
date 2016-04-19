@@ -176,5 +176,22 @@ $mod_strings = array(
     'LBL_LIST_ASSIGNED_USER' => 'Project Manager',
     'LBL_UNASSIGNED' => 'Unassigned',
     'LBL_PROJECT_USERS_1_FROM_USERS_TITLE' => 'Resources',
+
+	'LBL_EMAIL' => 'Email',
+	'LBL_PHONE' => 'Phone Office:',
+	'LBL_ADD_BUTTON'=> 'Add',
+	'LBL_ADD_INVITEE' => 'Add Resource',
+	'LBL_FIRST_NAME' => 'First Name',
+	'LBL_LAST_NAME' => 'Last Name',
+	'LBL_SEARCH_BUTTON'=> 'Search',
+	'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
+	'LBL_CREATE_INVITEE' => 'Create an Resource',
+	'LBL_CREATE_CONTACT' => 'As Contact',
+	'LBL_CREATE_AND_ADD' => 'Create & Add',
+	'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
+	'LBL_NO_ACCESS' => 'You have no access to create $module',
+	'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
+	'LBL_REMOVE' => 'rem',
+
 );
 ?>
