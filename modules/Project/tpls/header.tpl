@@ -1,5 +1,4 @@
-<?php
-
+{*
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -38,36 +37,12 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-require_once('include/json_config.php');
+*}
+{{include file='include/EditView/header.tpl'}}
+<input type="hidden" name="send_invites">
+<input type="hidden" name="user_invitees">
+<input type="hidden" name="contact_invitees">
+<input type="hidden" name="date_start" id="date_start" >
+<input type="hidden" name="duration_hours" id="duration_hours" value=0 >
+<input type="hidden" name="duration_minutes" id="duration_minutes" value=0>
 
-class ProjectViewEdit extends ViewEdit {
-
- 	function ProjectViewEdit(){
- 		parent::ViewEdit();
- 	}
-
- 	function display() {
-
-	 	global $json;
-		
-		$this->bean->is_template = 0;
-        $this->ev->ss->assign("is_template", 0);
- 		
-        $json = getJSONobj();
-        $json_config = new json_config();
-		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
-			$javascript = $json_config->get_static_json_server(false, true, 'Project', $this->bean->json_id);
-		} else {
-			$this->bean->json_id = $this->bean->id;
-			$javascript = $json_config->get_static_json_server(false, true, 'Project', $this->bean->id);
-		}
- 		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
- 		if($this->ev->isDuplicate){
-	        $this->bean->status = $this->bean->getDefaultStatus();
- 		} //if
-
- 		parent::display();
-
- 	}
-}
-?>

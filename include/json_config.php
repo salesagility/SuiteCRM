@@ -134,7 +134,9 @@ class json_config {
 		return "\n".$this->global_registry_var_name."['focus'] = ". $json->encode($module_arr).";\n";
 	}
 
+	/*	multiple project module related changes added by haris raheem*/
 	function meeting_retrieve($module, $record) {
+
 		global $json, $response;
 		global $beanFiles, $beanList;
 		require_once($beanFiles[$beanList[$module]]);
@@ -152,8 +154,11 @@ class json_config {
 		}
 		else if ( $module == 'Calls') {
 			$users = $focus->get_call_users();
+		} 
+		else if ( $module == 'Project') { 
+			$focus->load_relationships('users');
+			$users=$focus->get_linked_beans('project_users_1','User');
 		}
-
 		$module_arr['users_arr'] = array();
 
 		foreach($users as $user) {
@@ -169,18 +174,27 @@ class json_config {
 		$module_arr['contacts_arr'] = array();
 
 		$focus->load_relationships('contacts');
-		$contacts=$focus->get_linked_beans('contacts','Contact');
+
+		if($module == 'Project')			
+			$contacts=$focus->get_linked_beans('project_contacts_1','Contact');
+		else
+			$contacts=$focus->get_linked_beans('contacts','Contact');
+
 		foreach($contacts as $contact) {
 			array_push($module_arr['users_arr'], $this->populateBean($contact));
 	  	}
-		$module_arr['leads_arr'] = array();
-        $focus->load_relationships('leads');
-		$leads=$focus->get_linked_beans('leads','Lead');
-		foreach($leads as $lead) {
-			array_push($module_arr['users_arr'], $this->populateBean($lead));
-	  	}
 
+		$module_arr['leads_arr'] = array();
+
+		if($module != 'Project'){
+			$focus->load_relationships('leads');
+			$leads=$focus->get_linked_beans('leads','Lead');
+			foreach($leads as $lead) {
+				array_push($module_arr['users_arr'], $this->populateBean($lead));
+			}
+		}
 		return $module_arr;
+	
 	}
 
 	function getStringsJSON($module) {

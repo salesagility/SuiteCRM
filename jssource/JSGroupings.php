@@ -201,6 +201,12 @@
                 'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_jsolait.js',
                 'modules/Meetings/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_jsolait.js',
             ),
+			$sugar_grp_project = array(
+                'include/javascript/jsclass_base.js'    => 'include/javascript/sugar_grp_project.js',
+                'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project.js',
+				'modules/Project/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project.js',
+            ),
+
         );
 
     /**
