@@ -229,7 +229,9 @@ class AOW_WorkFlow extends Basic {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
                 $query = $this->build_query_where($condition,$module,$query);
-
+                if(empty($query)){
+                    return $query;
+                }
             }
             if($this->flow_run_on){
                 switch($this->flow_run_on){
