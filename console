@@ -1,0 +1,11 @@
+#!/usr/bin/env php
+<?php
+defined("PROJECT_ROOT") || define("PROJECT_ROOT", __DIR__);
+set_time_limit(0);
+if(!file_exists('vendor/autoload.php')) {
+    echo "Composer has not been initialized! Please run 'composer update' from project root folder.\n";
+    exit(1);
+}
+require_once 'vendor/autoload.php';
+$app = new SuiteCrm\Console\Application('SuiteCrm Console', '1.0');
+$app->run();
