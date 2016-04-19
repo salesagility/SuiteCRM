@@ -80,7 +80,7 @@ class LoggerManager {
             $option = $option | OutputInterface::VERBOSITY_DEBUG;
         } else if ($numericLevel >= 70) {
             $option = $option | OutputInterface::VERBOSITY_VERY_VERBOSE;
-        } else if ($numericLevel >= 40) {
+        } else if ($numericLevel >= 50) {
             $option = $option | OutputInterface::VERBOSITY_VERBOSE;
         } else {
             $option = $option | OutputInterface::VERBOSITY_NORMAL;

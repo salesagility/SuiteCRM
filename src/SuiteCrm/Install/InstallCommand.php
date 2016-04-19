@@ -233,7 +233,7 @@ class InstallCommand extends Command implements CommandInterface {
         $nonStandardModules = [];
 
 
-        $this->log("cleaning bean vardefs");
+        $this->log("Cleaning Bean Vardefs");
         //$this->log("BEAN-LIST: " . json_encode($beanList));
         \VardefManager::clearVardef();
 
@@ -242,7 +242,7 @@ class InstallCommand extends Command implements CommandInterface {
          * loop through all the Beans and create their tables
          */
         $this->log(str_repeat("-", 120));
-        $this->log("Creating database tables...");
+        $this->log("Creating Database Tables...");
 
         installerHook('pre_createAllModuleTables');
         foreach ($beanFiles as $beanName => $beanFile) {
@@ -271,7 +271,7 @@ class InstallCommand extends Command implements CommandInterface {
 
             $table_name = $focus->table_name;
 
-            $this->log("processing Module: " . $beanName . "(" . $focus->table_name . ")");
+            $this->log("Processing Module: " . $beanName . "(" . $focus->table_name . ")");
 
             // check to see if we have already setup this table
             if (!in_array($table_name, $processed_tables)) {
@@ -295,11 +295,9 @@ class InstallCommand extends Command implements CommandInterface {
 
                 if ($setup_db_drop_tables) {
                     drop_table_install($focus);
-                    //$this->log("dropping table: ".$focus->table_name);
                 }
 
                 if (create_table_if_not_exist($focus)) {
-                    //$this->log("creating table: ". $focus->table_name );
                     if ($beanName == "User") {
                         $new_tables = 1;
                     }
@@ -316,15 +314,17 @@ class InstallCommand extends Command implements CommandInterface {
         installerHook('post_createAllModuleTables');
 
         /**
+         * @todo: this is done above isn't it?
          * loop through all Relationships and create their tables
          */
+
         $this->log(str_repeat("-", 120));
         $this->log("Creating relationships...");
         ksort($rel_dictionary);
         foreach ($rel_dictionary as $rel_name => $rel_data) {
             $table = $rel_data['table'];
 
-            $this->log("processing Relationship: " . $rel_name . "(" . $table . ")");
+            $this->log("Processing Relationship: " . $rel_name . "(" . $table . ")");
 
             if ($setup_db_drop_tables) {
                 if ($db->tableExists($table)) {
@@ -345,7 +345,7 @@ class InstallCommand extends Command implements CommandInterface {
          * Create Default Settings
          */
         $this->log(str_repeat("-", 120));
-        $this->log("Creating default settings...");
+        $this->log("Creating Default Settings...");
         installerHook('pre_createDefaultSettings');
         if ($new_config) {
             /** @var string $sugar_db_version - loaded from sugar_version.php*/
@@ -358,7 +358,7 @@ class InstallCommand extends Command implements CommandInterface {
          * Create Administrator User
          */
         $this->log(str_repeat("-", 120));
-        $this->log("Creating admin user...");
+        $this->log("Creating Admin User...");
         installerHook('pre_createUsers');
         if ($new_tables) {
             create_default_users();
@@ -375,7 +375,7 @@ class InstallCommand extends Command implements CommandInterface {
          * Rebuild Shedulers
          */
         $this->log(str_repeat("-", 120));
-        $this->log("Rebuilding schedulers...");
+        $this->log("Rebuilding Schedulers...");
         $scheduler = new \Scheduler();
         installerHook('pre_createDefaultSchedulers');
         $scheduler->rebuildDefaultSchedulers();
@@ -546,17 +546,20 @@ class InstallCommand extends Command implements CommandInterface {
          * @todo: check and remove this
          * Fix Currency - Bug 37310
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Fix Currency - Bug 37310...");
-        $currency = new \Currency();
-        $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
-        if (!empty($currency->id)
-             && $currency->symbol == $_REQUEST['default_currency_symbol']
-             && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
-            $currency->deleted = 1;
-            $currency->save();
+        if(isset($_REQUEST['default_currency_name']) && !empty($_REQUEST['default_currency_name'])) {
+            $this->log(str_repeat("-", 120));
+            $this->log("Fix Currency - Bug 37310...");
+            $currency = new \Currency();
+            $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
+            if (!empty($currency->id)
+                && isset($_REQUEST['default_currency_symbol'])
+                && isset($_REQUEST['default_currency_iso4217'])
+                && $currency->symbol == $_REQUEST['default_currency_symbol']
+                && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
+                $currency->deleted = 1;
+                $currency->save();
+            }
         }
-
 
         /**
          * Save User
@@ -578,7 +581,8 @@ class InstallCommand extends Command implements CommandInterface {
         $_POST['record'] = $current_user->id;
         $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
         $_POST['use_real_names'] = true;
-        $_POST['reminder_checked'] = '1';
+        $_POST['reminder_checked'] = '0';
+        $_POST['email_reminder_checked'] = '0';
         $_POST['reminder_time'] = 1800;
         $_POST['email_reminder_time'] = 3600;
         $_POST['mailmerge_on'] = 'on';
@@ -602,8 +606,7 @@ class InstallCommand extends Command implements CommandInterface {
 
         $this->log(str_repeat("-", 120));
         $this->log(str_repeat("-", 120));
-        //$this->log("SESSION VARS: " . json_encode($_SESSION));
-        $this->log("Installation complete.");
+        $this->log("Installation complete(".floor($deltaTime)."s).");
     }
 
 
