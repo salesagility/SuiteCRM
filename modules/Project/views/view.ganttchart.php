@@ -161,46 +161,91 @@ class ProjectViewGanttChart extends SugarView {
 
 
         <!--Mark-up for the main body of the view-->
-        <div id="wrapper">
-            <table id="header_table">
+ 
+			<div class="moduleTitle">
+				<h2> <?php echo $project->name;?> </h2>
+
+				<div class="clear"></div>
+			</div>
+
+			<div class="yui-navset detailview_tabs yui-navset-top" id="Project_detailview_tabs">
+				<!--ul class="yui-nav"-->
+				<div class="yui-content">    
+					<div id="tabcontent0">
+						<div id="detailpanel_1" class="detail view  detail508 expanded">
+							<table cellspacing="0" width="100%">
+							<tbody>
+							<tr>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_START'];?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo $project->estimated_start_date;?></td>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_FINISH'];?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo $project->estimated_end_date;?> </td>
+							</tr>
+							<tr>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_VIEW_GANTT_DURATION'];?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo $this->time_range($start_date, $end_date);?></td>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_STATUS'];?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo $app_list_strings['project_status_dom'][$project->status];?></td>
+							</tr>
+							<tr>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_ASSIGNED_USER_NAME'];?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo $project->assigned_user_name;?></td>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
+							<td class="" width="37.5%"><?php echo $app_list_strings['projects_priority_options'][$project->priority];?></td>
+							</tr>
+							<tr>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
+							<td class="inlineEdit" type="text" colspan="3" width="87.5%"><?php echo $project->description;?></td>
+							</tr>
+							</tbody></table>
+						</div>
+					</div>
+				</div>
+				<br>
+				<?php
+					if(ACLController::checkAccess('Project', 'edit', true)){
+						echo '<button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button>';
+						echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
+					}
+				?>
+			</div>
+
+			<span id="exportToPDFSpan">
+
+			</span>
+        <div id="wrapper" >
+			<!--table id="header_table">
                 <tr>
                     <td colspan="4"><h2><a title="<?php echo $mod_strings['LBL_PROJECT_TITLE_HOVER'];?>" href="index.php?module=Project&action=DetailView&record=<?php echo $project->id;?>"><?php echo $project->name;?></a></h2></td>
                 </tr>
                 <tr>
-                    <td class="heading"><?php echo $mod_strings['LBL_START'];?></td>
-                    <td><?php echo $project->estimated_start_date;?></td>
-                    <td class="heading"><?php echo $mod_strings['LBL_FINISH'];?></td>
-                    <td><?php echo $project->estimated_end_date;?></td>
+                    <td class=""><?php echo $mod_strings['LBL_START'];?></td>
+                    <td><span class="sugar_field"><?php echo $project->estimated_start_date;?></span></td>
+                    <td class=""><?php echo $mod_strings['LBL_FINISH'];?></td>
+                    <td><span class="sugar_field"><?php echo $project->estimated_end_date;?></span></td>
                 </tr>
                 <tr>
                     <td class="heading"><?php echo $mod_strings['LBL_VIEW_GANTT_DURATION'];?></td>
-                    <td><?php echo $this->time_range($start_date, $end_date);?></td>
+                    <td><span class="sugar_field"><?php echo $this->time_range($start_date, $end_date);?></span></td>
                     <td class="heading"><?php echo $mod_strings['LBL_STATUS'];?></td>
-                    <td><?php echo $app_list_strings['project_status_dom'][$project->status];?></td>
+                    <td><span class="sugar_field"><?php echo $app_list_strings['project_status_dom'][$project->status];?></span></td>
                 </tr>
                 <tr>
                     <td class="heading"><?php echo $mod_strings['LBL_ASSIGNED_USER_NAME'];?></td>
-                    <td><?php echo $project->assigned_user_name;?></td>
+                    <td><span class="sugar_field"><?php echo $project->assigned_user_name;?></span></td>
                     <td class="heading"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
-                    <td><?php echo $app_list_strings['projects_priority_options'][$project->priority];?></td>
+                    <td><span class="sugar_field"><?php echo $app_list_strings['projects_priority_options'][$project->priority];?></span></td>
                 </tr>
                 <tr>
                     <td class="heading"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
-                    <td colspan="3"><?php echo $project->description;?></td>
+                    <td colspan="3"><span class="sugar_field"><?php echo $project->description;?></td>
                 </tr>
                 <tr>
                     <td class="header_gap" colspan="4">
-                        <span id="exportToPDFSpan">
-                            <?php
-                                if(ACLController::checkAccess('Project', 'edit', true)){
-                                    echo '<button id="add_button" class="gantt_button">' . $mod_strings['LBL_ADD_NEW_TASK'] . '</button>';
-                                    echo '<input id="is_editable" name="is_editable" type="hidden" value="1" >';
-                                }
-                            ?>
-                        </span>
+
                     </td>
                 </tr>
-            </table>
+            </table-->
             <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["project_id"];?>" />
             <div id="project_wrapper">
 
