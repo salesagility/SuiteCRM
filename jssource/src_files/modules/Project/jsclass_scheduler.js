@@ -545,8 +545,8 @@ SugarWidgetScheduler.fill_invitees = function(form) {
         } /*else if (GLOBAL_REGISTRY.focus.users_arr[i].module == 'Lead') {
             form.lead_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
         }*/
-		console.log(form.user_invitees.value);
-		console.log(form.contact_invitees.value);
+		//console.log(form.user_invitees.value);
+		//console.log(form.contact_invitees.value);
     }
 }
 
