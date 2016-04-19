@@ -132,7 +132,7 @@ $(function() {
     });
 
     $('#add_button').button({
-        text: false,
+        text: true,
         icons: {
                 primary: 'ui-icon-plusthick'
             }
