@@ -105,6 +105,9 @@ $mrkt_focus = new EmailMarketing();
 //if record param exists and it is not empty, then retrieve this bean
 if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
+}
+else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
+    $mrkt_focus->retrieve($_REQUEST['marketing_id']);
 }else{
         //check to see if this campaign has an email marketing already attached, and if so, create duplicate
         $campaign_focus->load_relationship('emailmarketing');
@@ -297,7 +300,7 @@ echo $javascript->getScript();
     }
 
 
-if(!$list = BeanFactory::getBean('EmailTemplates')->get_full_list("", "campaign_id = '{$campaign_focus->id}'")) {
+if(!$list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_focus->id}' AND template_id")) {
     $ss->assign('error_on_templates', $mod_strings['LBL_NO_TEMPLATE_SELECTED']);
 }
 
@@ -372,7 +375,7 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 
 
-if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
+if($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign_type']) || $_REQUEST['campaign_type'] != 'Telesales')) {
     $templateURLForProgressBar = '#';
     if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
         $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
@@ -394,14 +397,14 @@ if(isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) &
 
 $steps = array();
 $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']] = $camp_url.'1';
-if($campaign_focus->campaign_type == 'Telesales' || $_REQUEST['campaign_type'] == 'Telesales') {
+if($campaign_focus->campaign_type == 'Telesales' || (isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] == 'Telesales')) {
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']] = 'index.php?action=WizardNewsletter&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $campaign_focus->id . '&record=' . $campaign_focus->id . '&direct_step=2';
     $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url.'2&show_target_list=1';
 }
 else {
     $steps[$mod_strings['LBL_TARGET_LIST']] = $camp_url . '2';
 }
-if($campaign_focus->campaign_type != 'Telesales' && $_REQUEST['campaign_type'] != 'Telesales') {
+if($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign_type']) || $_REQUEST['campaign_type'] != 'Telesales')) {
     $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
     if(!$marketingURLForProgressBar) {
         $marketingURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=2&show_wizard_marketing=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
@@ -455,7 +458,13 @@ foreach($links as $link => $url) {
 
 $ss->assign('link_to_campaign_header', $camp_url.'1');
 
-$ss->assign('link_to_target_list', $camp_url.'2');
+if($campaign_focus->campaign_type == 'Telesales') {
+    $stepValues = array_values($steps);
+    $ss->assign('link_to_target_list', $stepValues[2]);
+}
+else {
+    $ss->assign('link_to_target_list', $camp_url.'2');
+}
 
 $ss->assign('link_to_choose_template', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id);
 $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=Campaigns&action=WizardMarketing&campaign_id=' . $campaign_focus->id . '&jump=2');
@@ -579,5 +588,14 @@ $ss->assign('ATTACHMENTS_JAVASCRIPT', $attJs);
 ///////////////////////////////////////
 
 $ss->assign('campaign_type', isset($_REQUEST['campaign_type']) && $_REQUEST['campaign_type'] ? $_REQUEST['campaign_type'] : $campaign_focus->campaign_type);
+
+
+$ss->assign('fields', array(
+    'date_start' => array(
+        'name' => 'date_start',
+        'value' => $mrkt_focus->date_start . ' ' . $mrkt_focus->time_start,
+    )
+));
+
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

@@ -111,9 +111,10 @@
 
 
 		<ul class="target-list">
+			<li>{$MOD.LBL_WIZARD_ADD_TARGET}</li>
 			<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" style="width: 100%;"></li>
 			{foreach from=$targetListData item=targetList}
-				<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}">{$targetList.name}&nbsp;({$targetList.count})</a></li>
+				<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}"><span class="targetListName">{$targetList.name}</span>&nbsp;-&nbsp;<span class="targetListType">{$targetList.type}</span>&nbsp;<span class="targetListCount">({$targetList.count})</span></a></li>
 			{/foreach}
 		</ul>
 		{literal}
@@ -149,6 +150,7 @@
 
 			<br>
 
+			<input id="target_list_count" name="target_list_count" type='hidden' size='35' value="0">
 			<input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');">
 
 		</div>

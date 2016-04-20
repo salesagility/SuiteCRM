@@ -4953,7 +4953,15 @@ object{
     background-position-x: 10px;
     background-position-y: center;
     background-repeat: no-repeat;
+    /*background-color: #f3f3f3;*/
+}
+.wizard-summary-left .box.button.disabled,
+.wizard-summary-right .box.button.disabled {
     background-color: #f3f3f3;
+}
+.wizard-summary-left .box.button.disabled a,
+.wizard-summary-right .box.button.disabled a {
+    color: gray;
 }
 .wizard-summary-left .box.ok {
     background-image: url(../../../../themes/default/images/green_camp.gif);
@@ -4970,6 +4978,10 @@ object{
     vertical-align: middle;
     padding-left: 55px;
     padding-right: 5px;
+}
+.wizard-summary-left .box.button a ,
+.wizard-summary-right .box.button a {
+    color: white;
 }
 .wizard-summary-left .space {
     width: 28px;

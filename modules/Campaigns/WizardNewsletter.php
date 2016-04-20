@@ -694,7 +694,12 @@ function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null
         if ($type == 'newsletter' || $type == 'email') {
 
             preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches);
-            $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : false);
+            if(isset($matches[1])) {
+                $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : false);
+            }
+            else {
+                $marketingLink = false;
+            }
 
             $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingLink;
             $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ? $summ_url : false;

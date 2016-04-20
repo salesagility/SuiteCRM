@@ -165,8 +165,12 @@ function navigate(direction, noValidation){
       back_button_div.style.display = '';
       save_button_div.style.display = '';
       next_button_div.style.display = 'none';
-      finish_button.style.display = 'none';
-
+      if(finish_button) {
+        finish_button.style.display = 'none';
+      }
+      if(typeof campaignBudget != 'undefined' && campaignBudget) {
+        finish_button.style.display = '';
+      }
     }else{
       if(current_step.value<2){
         back_button_div.style.display = 'none';
@@ -174,8 +178,22 @@ function navigate(direction, noValidation){
         back_button_div.style.display = '';
       }
       var next_button = document.getElementById('wiz_next_button');
-      next_button_div.style.display = '';
-      save_button_div.style.display = 'none';
+
+      if(typeof campaignBudget != 'undefined' && campaignBudget) {
+        var targetListStep = 3;
+      }
+      else {
+        var targetListStep = 2;
+      }
+      if (current_step.value == targetListStep) {
+        next_button_div.style.display = 'none';
+        save_button_div.style.display = '';
+        $('#wiz_submit_button').removeAttr('disabled');
+      }
+      else {
+        next_button_div.style.display = '';
+        save_button_div.style.display = 'none';
+      }
       next_button.focus();
     }
 
