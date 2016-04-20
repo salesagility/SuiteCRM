@@ -315,6 +315,7 @@ class InstallCommand extends Command implements CommandInterface {
 
         /** @var array $sugar_config */
         global $sugar_config;
+        global $db;
 
 
         $this->log("Calling: handleSugarConfig()");
@@ -326,24 +327,24 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log("Calling: handleHtaccess()");
         handleHtaccess();
 
-        //We are NOT creating database user - it must exists
         if($setup_db_create_database) {
-            $this->log("Creating database: " . $setup_db_database_name);
+            $this->log("Creating Database: " . $setup_db_database_name);
+            installLog("calling handleDbCreateDatabase()");
+            installerHook('pre_handleDbCreateDatabase');
             $db = getDbConnection();
             if($db->dbExists($setup_db_database_name)) {
                 $db->dropDatabase($setup_db_database_name);
             }
             $db->createDatabase($setup_db_database_name);
-            unset($db);
+            installerHook('post_handleDbCreateDatabase');
+        } else {
+            $this->log("Configuring Database Collation()");
+            installLog("calling handleDbCharsetCollation()");
+            installerHook('pre_handleDbCharsetCollation');
+            handleDbCharsetCollation();
+            installerHook('post_handleDbCharsetCollation');
         }
 
-
-
-
-        $this->log("Calling: handleDbCharsetCollation()");
-        installerHook('pre_handleDbCharsetCollation');
-        handleDbCharsetCollation();
-        installerHook('post_handleDbCharsetCollation');
 
         /**
          * @var array  $beanFiles
@@ -355,9 +356,8 @@ class InstallCommand extends Command implements CommandInterface {
             require_once($beanFile);
         }
 
-        global $db;
-        $db = \DBManagerFactory::getInstance();
 
+        $db = \DBManagerFactory::getInstance();
         $startTime = microtime(TRUE);
         $focus = 0;
         $processed_tables = []; // for keeping track of the tables we have worked on
@@ -366,7 +366,6 @@ class InstallCommand extends Command implements CommandInterface {
         $new_config = 1;
         $new_report = 1;
         $nonStandardModules = [];
-
 
         $this->log("Cleaning Bean Vardefs");
         \VardefManager::clearVardef();
@@ -377,6 +376,23 @@ class InstallCommand extends Command implements CommandInterface {
          */
         $this->log(str_repeat("-", 120));
         $this->log("Creating Database Tables...");
+
+
+        print_r($beanFiles);
+        $beanFiles = array_merge(
+            [
+                'ACLAction' => $beanFiles['ACLAction'],
+                'ACLRole' => $beanFiles['ACLRole'],
+                'Relationship' => $beanFiles['Relationship'],
+                'AOW_WorkFlow' => $beanFiles['AOW_WorkFlow'],
+            ],
+            $beanFiles
+        );
+        print_r($beanFiles);
+        //exit(1);
+
+
+
 
         installerHook('pre_createAllModuleTables');
         foreach ($beanFiles as $beanName => $beanFile) {
