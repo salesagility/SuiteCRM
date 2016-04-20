@@ -218,9 +218,7 @@ class InstallCommand extends Command implements CommandInterface {
             require_once($beanFile);
         }
 
-
         global $db;
-        /** @ var \DBManager $db */
         $db = \DBManagerFactory::getInstance();
 
         $startTime = microtime(TRUE);
@@ -234,7 +232,6 @@ class InstallCommand extends Command implements CommandInterface {
 
 
         $this->log("Cleaning Bean Vardefs");
-        //$this->log("BEAN-LIST: " . json_encode($beanList));
         \VardefManager::clearVardef();
 
 
@@ -417,13 +414,6 @@ class InstallCommand extends Command implements CommandInterface {
         include(PROJECT_ROOT . '/install/seed_data/Advanced_Password_SeedData.php');
 
         /**
-         * Advanced Password Seeds
-         */
-        $this->log(str_repeat("-", 120));
-        $this->log("Handling Advanced Password Seeds...");
-        include(PROJECT_ROOT . '/install/seed_data/Advanced_Password_SeedData.php');
-
-        /**
          * Administration Variables
          */
         $this->log(str_repeat("-", 120));
@@ -532,14 +522,28 @@ class InstallCommand extends Command implements CommandInterface {
          */
         $this->log(str_repeat("-", 120));
         $this->log("Saving Global Configuration...");
-        $configurator = new \Configurator();
-        $configurator->populateFromPost();
+        /** @var array $sugar_config */
+        global $sugar_config;
+
+
         // add local settings to config overrides
-        if(!empty($_SESSION['default_date_format'])) $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
-        if(!empty($_SESSION['default_time_format'])) $sugar_config['default_date_format'] = $_SESSION['default_time_format'];
-        if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
-        if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
+        if(!empty($_SESSION['default_date_format'])) {
+            $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
+        }
+        if(!empty($_SESSION['default_time_format'])) {
+            $sugar_config['default_time_format'] = $_SESSION['default_time_format'];
+        }
+        if(!empty($_SESSION['default_language'])) {
+            $sugar_config['default_language'] = $_SESSION['default_language'];
+        }
+        if(!empty($_SESSION['default_locale_name_format'])) {
+            $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
+        }
+
+
+        $configurator = new \Configurator();
         $configurator->saveConfig();
+        writeSugarConfig($configurator->config);
 
 
         /**
@@ -571,13 +575,15 @@ class InstallCommand extends Command implements CommandInterface {
         $current_user = new \User();
         $current_user->retrieve(1);
         $current_user->is_admin = '1';
-        $sugar_config = get_sugar_config_defaults();
+        //$sugar_config = get_sugar_config_defaults();// - why?
+
 
         // set locale settings
         if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
             $current_user->setPreference('timezone', $_REQUEST['timezone']);
         }
-        $_POST['dateformat'] = $_REQUEST['default_date_format'];
+        $_POST['dateformat'] = 'Y-m-d';
+        $_POST['timeformat'] = 'H:i:s';
         $_POST['record'] = $current_user->id;
         $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
         $_POST['use_real_names'] = true;
@@ -587,9 +593,13 @@ class InstallCommand extends Command implements CommandInterface {
         $_POST['email_reminder_time'] = 3600;
         $_POST['mailmerge_on'] = 'on';
         $_POST['receive_notifications'] = $current_user->receive_notifications;
-        installLog('DBG: SugarThemeRegistry::getDefault');
         $_POST['user_theme'] = (string) \SugarThemeRegistry::getDefault();
+
+
+
         require(PROJECT_ROOT . '/modules/Users/Save.php');
+        die("---KILLED---");
+
 
         // restore superglobals and vars
         $GLOBALS = $varStack['GLOBALS'];
@@ -600,10 +610,16 @@ class InstallCommand extends Command implements CommandInterface {
         $endTime = microtime(true);
         $deltaTime = $endTime - $startTime;
 
+        /**
+         * Post Install Modules Hook
+         */
         $this->log(str_repeat("-", 120));
         $this->log("Calling Post Install Modules Hook...");
         installerHook('post_installModules');
 
+        /**
+         * DONE
+         */
         $this->log(str_repeat("-", 120));
         $this->log(str_repeat("-", 120));
         $this->log("Installation complete(".floor($deltaTime)."s).");
