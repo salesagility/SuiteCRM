@@ -185,11 +185,6 @@ class InstallCommand extends Command implements CommandInterface {
         global $app_list_strings;
         global $timedate;
 
-        if (is_file("config.php")) {
-            $this->log("Removing stale configuration file.");
-            unlink("config.php");
-        }
-
         require_once(PROJECT_ROOT . '/sugar_version.php');
         require_once(PROJECT_ROOT . '/suitecrm_version.php');
         require_once(PROJECT_ROOT . '/include/utils.php');
@@ -213,16 +208,22 @@ class InstallCommand extends Command implements CommandInterface {
 
         $mod_strings = [];
         @include(PROJECT_ROOT . '/install/language/en_us.lang.php');
-
         $app_list_strings = return_app_list_strings_language($current_language);
 
         SystemChecker::runChecks();
         DatabaseChecker::runChecks();
 
+        //INSTALLATION IS GOOD TO GO
+
+        if (is_file("config.php")) {
+            $this->log("Removing stale configuration file.");
+            unlink("config.php");
+        }
+
         ini_set("output_buffering", "0");
         set_time_limit(3600);
 
-        $this->log(str_repeat("-", 120));
+
 
         $trackerManager = \TrackerManager::getInstance();
         $trackerManager->pause();
@@ -317,7 +318,7 @@ class InstallCommand extends Command implements CommandInterface {
         global $sugar_config;
         global $db;
 
-
+        $this->log(str_repeat("-", 120));
         $this->log("Calling: handleSugarConfig()");
         handleSugarConfig();
 

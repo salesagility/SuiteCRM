@@ -18,6 +18,7 @@ class SystemChecker {
      * @throws \Exception
      */
     public static function runChecks() {
+        self::checkLockedInstaller();
         self::checkPhpVersion();
         self::checkPhpBackwardCompatibilityVersion();
         self::checkXmlParsing();
@@ -134,6 +135,18 @@ class SystemChecker {
         $php_version = constant('PHP_VERSION');
         if (check_php_version($php_version) == -1) {
             throw new \Exception("Your version of PHP is not supported by SuiteCRM: $php_version!");
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected static function checkLockedInstaller() {
+        if (file_exists(PROJECT_ROOT . '/config.php')){
+            require(PROJECT_ROOT . '/config.php');
+            if(isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
+                throw new \Exception("Your deployment is locked! If you are sure you want to rerun the installation process, open your configuration.php file and set the 'installer_locked' key to false.");
+            }
         }
     }
 }
