@@ -224,7 +224,9 @@ var getBGImageName = function(elem) {
 var wizardMenuPutDotToCurrentPage = function() {
     var page = wizardMenuGetCurrentPage();
     var link = '#';
-    wizardMenuSetStepLink(page+1, link);
+    if(page != '2') {
+        wizardMenuSetStepLink(page+1, link);
+    }
     $('.wizmenu li').each(function(i,e){
         if(i==page) {
             var bgImage = getBGImageName(e);
