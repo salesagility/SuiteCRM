@@ -87,6 +87,7 @@
 	<script>
 	var	num_grp_sep ='{$NUM_GRP_SEP}';
 	var	dec_sep = '{$DEC_SEP}';
+	var campaignBudget = true;
 
     /*
      * this is the custom validation script that will validate the fields on step2 of wizard

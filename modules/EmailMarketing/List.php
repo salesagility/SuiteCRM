@@ -49,12 +49,13 @@ if(!isset($_REQUEST['campaign_id']) || !$_REQUEST['campaign_id']) {
 }
 else {
     $campaign_id = $db->quote($_REQUEST['campaign_id']);
-    $list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}'");
-    foreach($list as $elem) {
-        $results['data'][] = array(
-            'id' => $elem->id,
-            'name' => $elem->name,
-        );
+    if($list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}'")) {
+        foreach ($list as $elem) {
+            $results['data'][] = array(
+                'id' => $elem->id,
+                'name' => $elem->name,
+            );
+        }
     }
 }
 
