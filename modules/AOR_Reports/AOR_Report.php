@@ -1324,7 +1324,7 @@ class AOR_Report extends Basic {
                         $value = "{$value} OR {$field} IS NULL";
                     }
 
-                    if(!$where_set) {
+                    if($tiltLogicOp) {
                         if ($condition->value_type == "Period") {
                             $date = '"' . getPeriodEndDate($params)->format('Y-m-d H:i:s') . '"';
                             if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
@@ -1342,14 +1342,8 @@ class AOR_Report extends Basic {
                                     $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
                                     break;
                                 case ">":
-                                    $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                    break;
                                 case "<":
-                                    $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                    break;
                                 case ">=":
-                                    $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
-                                    break;
                                 case "<=":
                                     $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                                     break;
