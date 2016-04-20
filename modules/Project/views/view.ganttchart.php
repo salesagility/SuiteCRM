@@ -79,75 +79,86 @@ class ProjectViewGanttChart extends SugarView {
                 </p>
                 <form id="popup_form">
                     <fieldset>
-                        <input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
-                        <input type="text" style="display: none;" name="task_id" id="task_id" value="">
-                        <input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
-                        <label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
-                        <input type="radio" name="Milestone" value="Milestone" id="Milestone" />
-                        <label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
-                        <label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
-                        <input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
-                        <label for="name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
-                        <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-                        <label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>
-                        <?php
-                        echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
-                       /* foreach ($tasks as $task) {
-                            echo '<option rel="'.$task->id.'" value="'.$task->order_number.'">'.$task->name.'</opion>';
-                        }*/
-                        echo '</select>';
-                        ?>
-                        <label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE'];?></label>
-                        <?php
-                        echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
-                                '.get_select_options_with_id($app_list_strings['relationship_type_list'],'').'
-                        </select>';
+						<table>
+							<tr><td>
+						
+							<input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
+							<input type="text" style="display: none;" name="task_id" id="task_id" value="">
+							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
+							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
+							<input type="radio" name="Milestone" value="Milestone" id="Milestone" />
+							<label id="Milestone_label" for="Milestone"><?php echo $mod_strings['LBL_MILESTONE_FLAG'];?></label>&nbsp;<br /><br />
+							<label id="parent_task_id" for="parent_task" style="display: none;"><?php echo $mod_strings['LBL_PARENT_TASK_ID']; ?></label>
+							<input id="parent_task" class="text ui-widget-content ui-corner-all" style="display: none;" type="text" name="parent_task" value="" />
+							<label for="name"><?php echo $mod_strings['LBL_TASK_NAME']; ?></label>
+							<input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+							<label for="Predecessor"><?php echo $mod_strings['LBL_PREDECESSORS'];?></label>
+							<?php
+							echo '<select id="Predecessor" name="Predecessor" class="text ui-widget-content ui-corner-all" />';
+						   /* foreach ($tasks as $task) {
+								echo '<option rel="'.$task->id.'" value="'.$task->order_number.'">'.$task->name.'</opion>';
+							}*/
+							echo '</select>';
+							?>
+							<label for="relation_type"><?php echo $mod_strings['LBL_RELATIONSHIP_TYPE'];?></label>
+							<?php
+							echo '<select id="relation_type" name="relation_type" class="text ui-widget-content ui-corner-all">
+									'.get_select_options_with_id($app_list_strings['relationship_type_list'],'').'
+							</select>';
 
-                        ?>
-                        <label for="Lag"><?php echo $mod_strings['LBL_LAG'];?></label>
-                        <input type="text" name="Lag" value="0" id="Lag" class="text ui-widget-content ui-corner-all" />
-                        <select id="Lag_unit" name="Lag_unit" class="text ui-widget-content ui-corner-all" />
-                        <option value="Days"><?php echo $mod_strings['LBL_DAYS'];?></option>
-                        <!-- <option value="Hours">--><?php //echo $mod_strings['LBL_HOURS'];?><!--</option>-->
-                        </select>
-                        <label for="start"><?php echo $mod_strings['LBL_START'];?></label>
-                        <input type="text" name="Start" id="Start" value="" class="text ui-widget-content ui-corner-all" />
-                        <script type="text/javascript">
-                            var now = new Date();
-                            Calendar.setup ({
-                                inputField : "Start",
-                                ifFormat : cal_date_format,
-                                daFormat : "%m/%d/%Y %I:%M%P",
-                                button : "Start",
-                                singleClick : true,
-                                step : 1,
-                                weekNumbers: false,
-                                startWeekday: 0
-                            });
-                        </script>
-                        <label for="Duration"><?php echo $mod_strings['LBL_DURATION_TITLE'];?></label>
-                        <input type="text" name="Duration" id="Duration" class="text ui-widget-content ui-corner-all" />
-                        <select id="Duration_unit" name="Duration_unit" class="text ui-widget-content ui-corner-all" />
-                        <?php
-                        echo get_select_options_with_id($app_list_strings['duration_unit_dom'],'');
-                        ?>
-                        </select>
-                        <label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID'];?></label>
-                        <?php
-                        echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
-                        echo '<option value="0">'.$mod_strings['LBL_UNASSIGNED'].'</option>';
-                        foreach ($resource_array as $resource) {
-                            echo '<option rel="'.$resource->type.'" value="'.$resource->id.'">'.$resource->name.'</opion>';
-                        }
-                        echo '</select>';
-                        ?>
-                        <label for="%Complete"><?php echo $mod_strings['LBL_PERCENT_COMPLETE'];?></label>
-                        <input type="text" name="Complete" id="Complete" value="0" class="text ui-widget-content ui-corner-all" />
-                        <label for="Actual_duration"><?php echo $mod_strings['LBL_ACTUAL_DURATION'];?></label>
-                        <input type="text" name="Actual_duration" id="Actual_duration" value="" class="text ui-widget-content ui-corner-all" />
-                        <label for="Notes"><?php echo $mod_strings['LBL_DESCRIPTION'];?></label>
-                        <textarea id="Notes" cols="34" name="Notes" class="text ui-widget-content ui-corner-all"></textarea>
-                    </fieldset>
+							?>
+							<label for="Lag"><?php echo $mod_strings['LBL_LAG'];?></label>
+							<input type="text" name="Lag" value="0" id="Lag" class="text ui-widget-content ui-corner-all" />
+							<select id="Lag_unit" name="Lag_unit" class="text ui-widget-content ui-corner-all" />
+							<option value="Days"><?php echo $mod_strings['LBL_DAYS'];?></option>
+							<!-- <option value="Hours">--><?php //echo $mod_strings['LBL_HOURS'];?><!--</option>-->
+							</select>
+
+							<label for="start"><?php echo $mod_strings['LBL_START'];?></label>
+							<input type="text" name="Start" id="Start" value="" class="text ui-widget-content ui-corner-all" />
+							<script type="text/javascript">
+								var now = new Date();
+								Calendar.setup ({
+									inputField : "Start",
+									ifFormat : cal_date_format,
+									daFormat : "%m/%d/%Y %I:%M%P",
+									button : "Start",
+									singleClick : true,
+									step : 1,
+									weekNumbers: false,
+									startWeekday: 0
+								});
+							</script>
+					
+						</td><td> 
+
+							<label for="Duration"><?php echo $mod_strings['LBL_DURATION_TITLE'];?></label>
+							<input type="text" name="Duration" id="Duration" class="text ui-widget-content ui-corner-all" />
+							<select id="Duration_unit" name="Duration_unit" class="text ui-widget-content ui-corner-all" />
+							<?php
+							echo get_select_options_with_id($app_list_strings['duration_unit_dom'],'');
+							?>
+							</select>
+
+							<label for="Resources"><?php echo $mod_strings['LBL_ASSIGNED_USER_ID'];?></label>
+							<?php
+							echo '<select id="Resources" name="Resources" class="text ui-widget-content ui-corner-all" />';
+							echo '<option value="0">'.$mod_strings['LBL_UNASSIGNED'].'</option>';
+							foreach ($resource_array as $resource) {
+								echo '<option rel="'.$resource->type.'" value="'.$resource->id.'">'.$resource->name.'</opion>';
+							}
+							echo '</select>';
+							?>
+							<label for="%Complete"><?php echo $mod_strings['LBL_PERCENT_COMPLETE'];?></label>
+							<input type="text" name="Complete" id="Complete" value="0" class="text ui-widget-content ui-corner-all" />
+							<label for="Actual_duration"><?php echo $mod_strings['LBL_ACTUAL_DURATION'];?></label>
+							<input type="text" name="Actual_duration" id="Actual_duration" value="" class="text ui-widget-content ui-corner-all" />
+							<label for="Notes"><?php echo $mod_strings['LBL_DESCRIPTION'];?></label>
+							<textarea id="Notes" cols="34" name="Notes" class="text ui-widget-content ui-corner-all"></textarea>
+						</td>
+						</tr>
+						</table>
+					</fieldset>
                 </form>
             </div>
             <!--Delete task pop-up-->
@@ -161,7 +172,7 @@ class ProjectViewGanttChart extends SugarView {
 
 
         <!--Mark-up for the main body of the view-->
- 
+        
 			<div class="moduleTitle">
 				<h2> <?php echo $project->name;?> </h2>
 				<span class="utils">&nbsp; 
@@ -174,7 +185,7 @@ class ProjectViewGanttChart extends SugarView {
 				<div class="yui-content">    
 					<div id="tabcontent0">
 						<div id="detailpanel_1" class="detail view  detail508 expanded">
-							<table cellspacing="0" width="100%">
+							<table id="project_information" class="panelContainer" cellspacing="0">
 							<tbody>
 							<tr>
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_START'];?></td>
@@ -211,42 +222,9 @@ class ProjectViewGanttChart extends SugarView {
 				?>
 			</div>
 
-			<span id="exportToPDFSpan">
 
-			</span>
         <div id="wrapper" >
-			<!--table id="header_table">
-                <tr>
-                    <td colspan="4"><h2><a title="<?php echo $mod_strings['LBL_PROJECT_TITLE_HOVER'];?>" href="index.php?module=Project&action=DetailView&record=<?php echo $project->id;?>"><?php echo $project->name;?></a></h2></td>
-                </tr>
-                <tr>
-                    <td class=""><?php echo $mod_strings['LBL_START'];?></td>
-                    <td><span class="sugar_field"><?php echo $project->estimated_start_date;?></span></td>
-                    <td class=""><?php echo $mod_strings['LBL_FINISH'];?></td>
-                    <td><span class="sugar_field"><?php echo $project->estimated_end_date;?></span></td>
-                </tr>
-                <tr>
-                    <td class="heading"><?php echo $mod_strings['LBL_VIEW_GANTT_DURATION'];?></td>
-                    <td><span class="sugar_field"><?php echo $this->time_range($start_date, $end_date);?></span></td>
-                    <td class="heading"><?php echo $mod_strings['LBL_STATUS'];?></td>
-                    <td><span class="sugar_field"><?php echo $app_list_strings['project_status_dom'][$project->status];?></span></td>
-                </tr>
-                <tr>
-                    <td class="heading"><?php echo $mod_strings['LBL_ASSIGNED_USER_NAME'];?></td>
-                    <td><span class="sugar_field"><?php echo $project->assigned_user_name;?></span></td>
-                    <td class="heading"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
-                    <td><span class="sugar_field"><?php echo $app_list_strings['projects_priority_options'][$project->priority];?></span></td>
-                </tr>
-                <tr>
-                    <td class="heading"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
-                    <td colspan="3"><span class="sugar_field"><?php echo $project->description;?></td>
-                </tr>
-                <tr>
-                    <td class="header_gap" colspan="4">
 
-                    </td>
-                </tr>
-            </table-->
             <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["project_id"];?>" />
             <div id="project_wrapper">
 

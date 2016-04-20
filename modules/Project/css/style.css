@@ -125,7 +125,7 @@
 .main_table th, td {
     padding: 0px;
     overflow: hidden;
-    width: 24px;
+    /*width: 24px;*/
 }
 .month_row {
     border-bottom: 1px solid #DDDDDD;
@@ -385,4 +385,8 @@
     text-align: left;
     position: relative;
     z-index: 9999;
+}
+
+label {
+    font-weight: normal;
 }
