@@ -188,12 +188,14 @@ class InstallCommand extends Command implements CommandInterface {
         $GLOBALS['setup_site_guid'] = $setup_site_guid;
         $GLOBALS['setup_site_url'] = $setup_site_url;
         $GLOBALS['setup_sugar_version'] = $setup_sugar_version;
+        $GLOBALS['timedate'] = $timedate;
 
-        //global $sugar_config;
+        /** @var array $sugar_config */
+        global $sugar_config;
 
-        //install/install_utils.php:724
+
         $this->log("Calling: handleSugarConfig()");
-        $bottle = handleSugarConfig();
+        handleSugarConfig();
 
         $this->log("Calling: handleWebConfig()");
         handleWebConfig();
@@ -311,10 +313,8 @@ class InstallCommand extends Command implements CommandInterface {
         installerHook('post_createAllModuleTables');
 
         /**
-         * @todo: this is done above isn't it?
          * loop through all Relationships and create their tables
          */
-
         $this->log(str_repeat("-", 120));
         $this->log("Creating relationships...");
         ksort($rel_dictionary);
@@ -366,7 +366,6 @@ class InstallCommand extends Command implements CommandInterface {
             set_admin_password($setup_site_admin_password);
         }
         installerHook('post_createUsers');
-
 
         /**
          * Rebuild Shedulers
@@ -486,6 +485,7 @@ class InstallCommand extends Command implements CommandInterface {
         include_once(PROJECT_ROOT . '/install/suite_install/suite_install.php');
         post_install_modules();
 
+
         /**
          * @todo: 6 million warnings & errors - CHECK ME!
          * Install Demo Data
@@ -522,10 +522,6 @@ class InstallCommand extends Command implements CommandInterface {
          */
         $this->log(str_repeat("-", 120));
         $this->log("Saving Global Configuration...");
-        /** @var array $sugar_config */
-        global $sugar_config;
-
-
         // add local settings to config overrides
         if(!empty($_SESSION['default_date_format'])) {
             $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
@@ -579,11 +575,13 @@ class InstallCommand extends Command implements CommandInterface {
 
 
         // set locale settings
-        if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
-            $current_user->setPreference('timezone', $_REQUEST['timezone']);
-        }
-        $_POST['dateformat'] = 'Y-m-d';
-        $_POST['timeformat'] = 'H:i:s';
+        $current_user->setPreference('datef', 'Y-m-d');
+        $current_user->setPreference('timef', 'H:i:s');
+        $current_user->setPreference('timezone', 'Europe/Rome');//get it from php - default to 'UTC'
+
+
+        $_POST['dateformat'] = 'Y-m-d';//$sugar_config['default_date_format']
+        $_POST['timeformat'] = 'H:i:s';//$sugar_config['default_time_format']
         $_POST['record'] = $current_user->id;
         $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
         $_POST['use_real_names'] = true;
@@ -594,18 +592,14 @@ class InstallCommand extends Command implements CommandInterface {
         $_POST['mailmerge_on'] = 'on';
         $_POST['receive_notifications'] = $current_user->receive_notifications;
         $_POST['user_theme'] = (string) \SugarThemeRegistry::getDefault();
-
-
-
         require(PROJECT_ROOT . '/modules/Users/Save.php');
-        die("---KILLED---");
 
 
         // restore superglobals and vars
-        $GLOBALS = $varStack['GLOBALS'];
-        foreach($varStack['defined_vars'] as $__key => $__value) {
-            $$__key = $__value;
-        }
+//        $GLOBALS = $varStack['GLOBALS'];
+//        foreach($varStack['defined_vars'] as $__key => $__value) {
+//            $$__key = $__value;
+//        }
 
         $endTime = microtime(true);
         $deltaTime = $endTime - $startTime;
