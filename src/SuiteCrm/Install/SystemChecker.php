@@ -20,7 +20,6 @@ class SystemChecker {
     public static function runChecks() {
         self::checkPhpVersion();
         self::checkPhpBackwardCompatibilityVersion();
-        self::checkDatabaseDrivers();
         self::checkXmlParsing();
         self::checkMbstrings();
         self::checkZipSupport();
@@ -117,15 +116,7 @@ class SystemChecker {
         }
     }
 
-    /**
-     * @throws \Exception
-     */
-    protected static function checkDatabaseDrivers() {
-        $drivers = \DBManagerFactory::getDbDrivers();
-        if (empty($drivers)) {
-            throw new \Exception("No Database driver is available!");
-        }
-    }
+
 
     /**
      * @throws \Exception

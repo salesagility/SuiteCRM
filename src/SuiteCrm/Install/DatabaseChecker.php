@@ -18,8 +18,19 @@ class DatabaseChecker {
      * @throws \Exception
      */
     public static function runChecks() {
+        self::checkDatabaseDrivers();
         self::checkSessionData();
         self::checkDatabaseConnection();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    protected static function checkDatabaseDrivers() {
+        $drivers = \DBManagerFactory::getDbDrivers();
+        if (empty($drivers)) {
+            throw new \Exception("No Database driver is available!");
+        }
     }
 
     /**

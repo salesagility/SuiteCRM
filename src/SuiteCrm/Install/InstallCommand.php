@@ -10,6 +10,7 @@ namespace SuiteCrm\Install;
 use SuiteCrm\Console\Command\Command;
 use SuiteCrm\Console\Command\CommandInterface;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -19,6 +20,51 @@ use Symfony\Component\Console\Output\OutputInterface;
 class InstallCommand extends Command implements CommandInterface {
     const COMMAND_NAME = 'app:install';
     const COMMAND_DESCRIPTION = 'Install the SuiteCrm application';
+
+    /**
+     * These are the default values that can be overridden by command options
+     * @var array
+     */
+    protected $config = [
+        /* DATABASE */
+        'setup_db_type' => 'mysql',
+        'setup_db_host_name' => 'localhost',
+        'setup_db_port_num' => '3306',
+        'setup_db_database_name' => null,
+        'setup_db_admin_user_name' => null,
+        'setup_db_admin_password' => null,
+        'setup_db_host_instance' => '',
+        'setup_db_manager' => '',
+        'setup_db_create_database' => TRUE,
+        'setup_db_drop_tables' => TRUE,
+        'setup_db_username_is_privileged' => TRUE,
+        'setup_db_create_sugarsales_user' => FALSE,
+
+        /*SITE DEFAULT ADMIN USER*/
+        'setup_site_admin_user_name' => 'admin',
+        'setup_site_admin_password' => 'admin',
+
+        /*FTS SUPPORT*/
+        'setup_fts_type' => '',
+        'setup_fts_host' => '',
+        'setup_fts_port' => '',
+
+        /* INTERNAL */
+        'setup_system_name' => 'SuiteCRM',
+        'setup_site_url' => '',
+        'host' => 'localhost',
+        'dbUSRData' => 'create',
+        'demoData' => false,
+        'default_date_format' => 'Y-m-d',
+        'default_time_format' => 'H:i',
+        'default_decimal_seperator' => '.',
+        'default_export_charset' => 'ISO-8859-1',
+        'export_delimiter' => ',',
+        'default_language' => 'en_us',
+        'default_locale_name_format' => 's f l',
+        'default_number_grouping_seperator' => ',',
+        'setup_site_sugarbeet_automatic_checks' => TRUE
+    ];
 
     /**
      * Constructor
@@ -33,6 +79,82 @@ class InstallCommand extends Command implements CommandInterface {
     protected function configure() {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
+        $this->setDefinition(
+            [
+                new InputOption(
+                    'db-type',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'Database type',
+                    isset($this->config['setup_db_type']) ? $this->config['setup_db_type'] : ''
+                ),
+                new InputOption(
+                    'db-host',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'Database host name(fqdn or ip)',
+                    isset($this->config['setup_db_host_name']) ? $this->config['setup_db_host_name'] : ''
+                ),
+                new InputOption(
+                    'db-port',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'Database port on host',
+                    isset($this->config['setup_db_port_num']) ? $this->config['setup_db_port_num'] : ''
+                ),
+                new InputOption(
+                    'db-name',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The name of the database',
+                    $this->config['setup_db_database_name']
+                ),
+                new InputOption(
+                    'db-username',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The username for the database',
+                    $this->config['setup_db_admin_user_name']
+                ),
+                new InputOption(
+                    'db-password',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The password for the database',
+                    $this->config['setup_db_admin_password']
+                ),
+                new InputOption(
+                    'site-admin-username',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The username for the default administrator account',
+                    $this->config['setup_site_admin_user_name']
+                ),
+                new InputOption(
+                    'site-admin-password',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The password for the default administrator account',
+                    $this->config['setup_site_admin_password']
+                ),
+                new InputOption(
+                    'site-hostname',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The FQDN of the site (without protocol)',
+                    $this->config['host']
+                ),
+                new InputOption(
+                    'site-system-name',
+                    '',
+                    InputOption::VALUE_REQUIRED,
+                    'The name of this deployment',
+                    $this->config['setup_system_name']
+                ),
+
+
+            ]
+        );
     }
 
     /**
@@ -43,18 +165,19 @@ class InstallCommand extends Command implements CommandInterface {
     protected function execute(InputInterface $input, OutputInterface $output) {
         parent::_execute($input, $output);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
-        $this->doPhpVersionCheck();
+        $this->checkAndSetConfigurationOptions();
         $this->setupSugarServerValues();
         $this->setupSugarGlobals();
-        $this->setupSugarSessionVars([]);
+        $this->setupSugarSessionVars();
         $this->setupSugarLogger();
         $this->performInstallation();
         $this->log("Command " . static::COMMAND_NAME . " done.");
     }
 
 
+
     /**
-     *
+     *  Main setup method
      */
     protected function performInstallation() {
         define('sugarEntry', TRUE);
@@ -577,7 +700,7 @@ class InstallCommand extends Command implements CommandInterface {
         // set locale settings
         $current_user->setPreference('datef', 'Y-m-d');
         $current_user->setPreference('timef', 'H:i:s');
-        $current_user->setPreference('timezone', 'Europe/Rome');//get it from php - default to 'UTC'
+        $current_user->setPreference('timezone', date_default_timezone_get());//get it from php - default to 'UTC'
 
 
         $_POST['dateformat'] = 'Y-m-d';//$sugar_config['default_date_format']
@@ -621,64 +744,38 @@ class InstallCommand extends Command implements CommandInterface {
 
 
     /**
-     * Set up our own LoggerManager for the installation
+     * @throws \Exception
      */
-    protected function setupSugarLogger() {
-        $GLOBALS['log'] = $this->loggerManager;
+    protected function checkAndSetConfigurationOptions() {
+        $this->log("Options: " . json_encode($this->cmdInput->getOptions()));
+
+        //DATABASE
+        $this->config['setup_db_type'] = $this->cmdInput->getOption('db-type');
+        $this->config['setup_db_host_name'] = $this->cmdInput->getOption('db-host');
+        $this->config['setup_db_port_num'] = $this->cmdInput->getOption('db-port');
+        $this->config['setup_db_database_name'] = $this->cmdInput->getOption('db-name');
+        $this->config['setup_db_admin_user_name'] = $this->cmdInput->getOption('db-username');
+        $this->config['setup_db_admin_password'] = $this->cmdInput->getOption('db-password');
+
+        //SITE
+        $this->config['setup_site_admin_user_name'] = $this->cmdInput->getOption('site-admin-username');
+        $this->config['setup_site_admin_password'] = $this->cmdInput->getOption('site-admin-password');
+        $this->config['host'] = $this->cmdInput->getOption('site-hostname');
+        $this->config['setup_site_url'] = 'http://' . $this->cmdInput->getOption('site-hostname');
+        $this->config['setup_system_name'] = $this->cmdInput->getOption('site-system-name');
+
+        //$this->log(print_r($this->config, true));
     }
+
 
     /**
      * Setup Session variables prior to executing installation
-     *
-     * @param array $data
      */
-    protected function setupSugarSessionVars($data) {
+    protected function setupSugarSessionVars() {
         if ((function_exists('session_status') && session_status() == PHP_SESSION_NONE) || session_id() == '') {
             session_start();
         }
-
-        $databaseConfigData = [
-            /* DATABASE */
-            'setup_db_type' => 'mysql',
-            'setup_db_admin_user_name' => 'jack',
-            'setup_db_admin_password' => '02203505',
-            'setup_db_database_name' => 'suitecrm_bradipo_travis',
-            'setup_db_host_name' => 'localhost',
-            'setup_db_port_num' => '3306',
-            'setup_db_host_instance' => '',
-            'setup_db_manager' => '',
-            'setup_db_create_database' => TRUE,
-            'setup_db_drop_tables' => TRUE,
-            'setup_db_username_is_privileged' => TRUE,
-            'setup_db_create_sugarsales_user' => FALSE,
-            //            'setup_db_pop_demo_data' => true,
-
-            /*SITE DEFAULT ADMIN USER*/
-            'setup_site_admin_user_name' => 'admin',
-            'setup_site_admin_password' => 'admin',
-            /*FTS SUPPORT*/
-            'setup_fts_type' => '',
-            'setup_fts_host' => '',
-            'setup_fts_port' => '',
-            /* INTERNAL */
-            'setup_system_name' => 'SuiteCRM Travis Build',
-            'setup_site_url' => 'http://localhost',
-            'host' => 'localhost',
-            'dbUSRData' => 'create',
-            'demoData' => false,
-            'default_date_format' => 'Y-m-d',
-            'default_time_format' => 'H:i',
-            'default_decimal_seperator' => '.',
-            'default_export_charset' => 'ISO-8859-1',
-            'export_delimiter' => ',',
-            'default_language' => 'en_us',
-            'default_locale_name_format' => 's f l',
-            'default_number_grouping_seperator' => ',',
-            'setup_site_sugarbeet_automatic_checks' => TRUE
-        ];
-
-        $data = array_merge_recursive($data, $databaseConfigData);
-        $_SESSION = array_merge_recursive($_SESSION, $data);
+        $_SESSION = array_merge_recursive($_SESSION, $this->config);
     }
 
     /**
@@ -698,11 +795,9 @@ class InstallCommand extends Command implements CommandInterface {
     }
 
     /**
-     * @throws \Exception
+     * Set up our own LoggerManager for the installation
      */
-    protected function doPhpVersionCheck() {
-        if (version_compare(phpversion(), '5.2.0') < 0) {
-            throw new \Exception('Minimum PHP version required is 5.2.0.  You are using PHP version  ' . phpversion());
-        }
+    protected function setupSugarLogger() {
+        $GLOBALS['log'] = $this->loggerManager;
     }
 }
