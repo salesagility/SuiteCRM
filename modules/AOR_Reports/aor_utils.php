@@ -163,7 +163,7 @@ function getPeriodDate($date_time_period_list_selected)
     } else if ($date_time_period_list_selected == 'this_month') {
         $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
     } else if ($date_time_period_list_selected == 'last_month') {
-        $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m')-1, 1);
+        $datetime_period = $datetime_period->modify('first day of last month');
     } else if ($date_time_period_list_selected == 'this_quarter') {
         $thisMonth = $datetime_period->setDate($datetime_period->format('Y'), $datetime_period->format('m'), 1);
         if ($thisMonth >= $q[1]['start'] && $thisMonth <= $q[1]['end']) {
@@ -186,13 +186,13 @@ function getPeriodDate($date_time_period_list_selected)
             $datetime_period = $q[1]['start']->sub(new DateInterval('P3M'));
         } else if ($thisMonth >= $q[2]['start'] && $thisMonth <= $q[2]['end']) {
             // quarter 2 - 3 months
-            $q[2]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[2]['start']->sub(new DateInterval('P3M'));
         } else if ($thisMonth >= $q[3]['start'] && $thisMonth <= $q[3]['end']) {
             // quarter 3 - 3 months
-            $q[3]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
         } else if ($thisMonth >= $q[4]['start'] && $thisMonth <= $q[4]['end']) {
             // quarter 4 - 3 months
-            $q[3]['start']->sub(new DateInterval('P3M'));
+            $datetime_period = $q[3]['start']->sub(new DateInterval('P3M'));
         }
     } else if ($date_time_period_list_selected == 'this_year') {
         $datetime_period = $datetime_period = $datetime_period->setDate($datetime_period->format('Y'), 1, 1);
