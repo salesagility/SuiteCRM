@@ -78,7 +78,7 @@
 	<td colspan='2'><span sugar='slot27b'>
 	<input  class="sqsEnabled" autocomplete="off" id="unsubscription_name" name="wiz_step3_unsubscription_name" title='{$MOD.LBL_UNSUBSCRIPTION_LIST_NAME}' type="text" size='35' value="{$UNSUBSCRIPTION_NAME}" >
 	<input id='prospect_list_type_exempt' name='prospect_list_type_exempt' type="hidden" value="exempt" />	
-	<iput id='wiz_step3_unsubscription_name_id' name='wiz_step3_unsubscription_list_id' title='UnSubscription List ID' type="hidden" value='{$UNSUBSCRIPTION_ID}'>
+	<input id='wiz_step3_unsubscription_name_id' name='wiz_step3_unsubscription_list_id' title='UnSubscription List ID' type="hidden" value='{$UNSUBSCRIPTION_ID}'>
 	<input title="{$APP.LBL_SELECT_BUTTON_TITLE}" type="button"  class="button" value='{$APP.LBL_SELECT_BUTTON_LABEL}' name=btn2 id='wiz_step3_unsubscription_name_button'
  	onclick='open_popup("ProspectLists", 600, 400, "&list_type=exempt", true, false,  {$encoded_unsubscription_popup_request_data}, "single", true);'>
 	</span sugar='slot'></td>
