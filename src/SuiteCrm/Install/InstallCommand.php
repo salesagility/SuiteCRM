@@ -165,7 +165,7 @@ class InstallCommand extends Command implements CommandInterface {
     protected function execute(InputInterface $input, OutputInterface $output) {
         parent::_execute($input, $output);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
-        $this->checkAndSetConfigurationOptions();
+        $this->setConfigurationOptions();
         $this->setupSugarServerValues();
         $this->setupSugarGlobals();
         $this->setupSugarSessionVars();
@@ -326,8 +326,20 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log("Calling: handleHtaccess()");
         handleHtaccess();
 
+        //We are NOT creating database user - it must exists
+        if($setup_db_create_database) {
+            $this->log("Creating database: " . $setup_db_database_name);
+            $db = getDbConnection();
+            if($db->dbExists($setup_db_database_name)) {
+                $db->dropDatabase($setup_db_database_name);
+            }
+            $db->createDatabase($setup_db_database_name);
+            unset($db);
+        }
 
-        //We are NOT creating database (nor db user) - do that yourself!
+
+
+
         $this->log("Calling: handleDbCharsetCollation()");
         installerHook('pre_handleDbCharsetCollation');
         handleDbCharsetCollation();
@@ -746,7 +758,7 @@ class InstallCommand extends Command implements CommandInterface {
     /**
      * @throws \Exception
      */
-    protected function checkAndSetConfigurationOptions() {
+    protected function setConfigurationOptions() {
         $this->log("Options: " . json_encode($this->cmdInput->getOptions()));
 
         //DATABASE
