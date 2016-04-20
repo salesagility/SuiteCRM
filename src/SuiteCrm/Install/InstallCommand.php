@@ -347,7 +347,7 @@ class InstallCommand extends Command implements CommandInterface {
 
 
         /**
-         * @var array  $beanFiles
+         * @var array  $beanFiles - defined in include/modules.php
          * @var string $beanName
          * @var string $beanFile
          */
@@ -355,7 +355,6 @@ class InstallCommand extends Command implements CommandInterface {
             $this->log("Requiring bean[$beanName] file: $beanFile", "info");
             require_once($beanFile);
         }
-
 
         $db = \DBManagerFactory::getInstance();
         $startTime = microtime(TRUE);
@@ -377,8 +376,10 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log(str_repeat("-", 120));
         $this->log("Creating Database Tables...");
 
-
-        print_r($beanFiles);
+        /**
+         * We must place AOW_WorkFlow right after the Relationship module, otherwise
+         * if we have empty database we will get tons of sql fails
+         */
         $beanFiles = array_merge(
             [
                 'ACLAction' => $beanFiles['ACLAction'],
@@ -388,10 +389,6 @@ class InstallCommand extends Command implements CommandInterface {
             ],
             $beanFiles
         );
-        print_r($beanFiles);
-        //exit(1);
-
-
 
 
         installerHook('pre_createAllModuleTables');
@@ -775,7 +772,7 @@ class InstallCommand extends Command implements CommandInterface {
      * @throws \Exception
      */
     protected function setConfigurationOptions() {
-        $this->log("Options: " . json_encode($this->cmdInput->getOptions()));
+        $this->log("Command Options: " . json_encode($this->cmdInput->getOptions()));
 
         //DATABASE
         $this->config['setup_db_type'] = $this->cmdInput->getOption('db-type');
