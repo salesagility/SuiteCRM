@@ -1324,8 +1324,40 @@ class AOR_Report extends Basic {
                         $value = "{$value} OR {$field} IS NULL";
                     }
 
-                    if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                    if ($condition->value_type == "Period") {
 
+                        $date = date('Y-m-d H:i:s');
+                        if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
+                            $params = $condition->value;
+                        } else {
+                            $params = base64_decode($condition->value);
+                        }
+                        $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
+
+                        switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
+                            case "=":
+                                if (!$where_set) $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                break;
+                            case "!=":
+                                if (!$where_set) $query['where'][] = $field . ' NOT BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
+                                break;
+                            case ">":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                            case "<":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                            case ">=":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                            case "<=":
+                                if (!$where_set) $query['where'][] = $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                break;
+                        }
+                    } else {
+                        if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ' : 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                    }
+                    
                     $tiltLogicOp = false;
                 }
                 else if($condition->parenthesis) {
