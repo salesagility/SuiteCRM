@@ -101,7 +101,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
             $vardef['rname'] = 'name';
             $vardef['id_name'] = $vardef['name'] . '_id';
             if ((!isset($vardef['module']) || $vardef['module'] == '') && $focus->load_relationship($vardef['name'])) {
-                $vardef['module'] = $focus->$vardef['name']->getRelatedModuleName();
+                $vardef['module'] = $focus->{$vardef['name']}->getRelatedModuleName();
             }
 
         }
@@ -222,7 +222,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
         $fieldlist[$fieldname]['id_name'] = $fieldlist[$fieldname]['name'] . '_id';
 
         if ((!isset($fieldlist[$fieldname]['module']) || $fieldlist[$fieldname]['module'] == '') && $focus->load_relationship($fieldlist[$fieldname]['name'])) {
-            $fieldlist[$fieldname]['module'] = $focus->$fieldlist[$fieldname]['name']->getRelatedModuleName();
+            $relateField = $fieldlist[$fieldname]['name'];
+            $fieldlist[$fieldname]['module'] = $focus->$relateField->getRelatedModuleName();
         }
     }
 
@@ -238,7 +239,8 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 
     if (isset($fieldlist[$fieldname]['id_name']) && $fieldlist[$fieldname]['id_name'] != '' && $fieldlist[$fieldname]['id_name'] != $fieldlist[$fieldname]['name']) {
         if($value){
-            $rel_value =  $bean->$fieldlist[$fieldname]['id_name'];
+            $relateIdField = $fieldlist[$fieldname]['id_name'];
+            $rel_value =  $bean->$relateIdField;
 
         }
         $fieldlist[$fieldlist[$fieldname]['id_name']]['value'] = $rel_value;
@@ -444,7 +446,8 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $vardef['module'] = $bean->parent_type;
             $name = $bean->parent_name;
         }
-        $record = $bean->$vardef['id_name'];
+        $idName = $vardef['id_name'];
+        $record = $bean->$idName;
 
         $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
 

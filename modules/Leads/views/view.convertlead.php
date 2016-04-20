@@ -466,15 +466,16 @@ class ViewConvertLead extends SugarView
                 $fieldDef = $beans['Contacts']->field_defs[$select];
                 if (!empty($fieldDef['id_name']) && !empty($_REQUEST[$fieldDef['id_name']]))
                 {
-                    $beans['Contacts']->$fieldDef['id_name'] = $_REQUEST[$fieldDef['id_name']];
-                    $selects[$module] = $_REQUEST[$fieldDef['id_name']];
+                    $idName = $fieldDef['id_name'];
+                    $beans['Contacts']->$idName = $_REQUEST[$idName];
+                    $selects[$module] = $_REQUEST[$idName];
                     if (!empty($_REQUEST[$select]))
                     {
                         $beans['Contacts']->$select = $_REQUEST[$select];
                     }
                     // Bug 39268 - Add the existing beans to a list of beans we'll potentially add the lead's activities to
                     $bean = loadBean($module);
-                    $bean->retrieve($_REQUEST[$fieldDef['id_name']]);
+                    $bean->retrieve($_REQUEST[$idName]);
                     $selectedBeans[$module] = $bean;
                     // If we selected the Contact, just overwrite the $beans['Contacts']
                     if ($module == 'Contacts')
@@ -869,8 +870,9 @@ class ViewConvertLead extends SugarView
 			{
 				$bean->id = create_guid();
 				$bean->new_with_id = true;
-				$contact->$fieldDef['id_name'] = $bean->id ;
-				if ($fieldDef['id_name'] != $select) {
+                $idName = $fieldDef['id_name'];
+				$contact->$idName = $bean->id ;
+				if ($idName != $select) {
 					$rname = isset($fieldDef['rname']) ? $fieldDef['rname'] : "";
 					if (!empty($rname) && isset($bean->$rname))
 						$contact->$select = $bean->$rname;
