@@ -398,8 +398,8 @@ class AOR_Report extends Basic {
 
             if(  (isset($data['source']) && $data['source'] == 'custom_fields')) {
                 $select_field = $this->db->quoteIdentifier($table_alias.'_cstm').'.'.$field->field;
-                // ? $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm',$table_alias, $field_module, 'custom', $query);
-                $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm', $field_module, 'custom', $query);
+                // Fix for #1251 - added a missing parameter to the function call
+                $query_array = $this->build_report_query_join($table_alias.'_cstm', $table_alias.'_cstm', $table_alias, $field_module, 'custom', $query);
             } else {
                 $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
             }
