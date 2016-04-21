@@ -40,7 +40,7 @@
 *}
 
     {if strval($parentFieldArray.$col) == "1" || strval($parentFieldArray.$col) == "yes" || strval($parentFieldArray.$col) == "on"}
-{assign var="checked" value="CHECKED"}
+{assign var="checked" value='checked="checked"'}
 {else}
 {assign var="checked" value=""}
 {/if}

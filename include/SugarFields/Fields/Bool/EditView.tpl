@@ -39,7 +39,7 @@
 
 *}
 {if strval({{sugarvar key='value' stringFormat='false'}}) == "1" || strval({{sugarvar key='value' stringFormat='false'}}) == "yes" || strval({{sugarvar key='value' stringFormat='false'}}) == "on"} 
-{assign var="checked" value="CHECKED"}
+{assign var="checked" value='checked="checked"'}
 {else}
 {assign var="checked" value=""}
 {/if}

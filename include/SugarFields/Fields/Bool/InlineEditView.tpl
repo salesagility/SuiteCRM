@@ -40,7 +40,7 @@
 *}
 {{assign var=fieldName value=$vardef.name}}
 {{if strval($parentFieldArray->$fieldName) == "1"}}
-{{assign var="checked" value="CHECKED"}}
+{{assign var="checked" value='checked="checked"'}}
 {{else}}
 {{assign var="checked" value=""}}
 {{/if}}
