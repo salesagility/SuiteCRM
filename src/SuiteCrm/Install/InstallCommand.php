@@ -84,6 +84,7 @@ class InstallCommand extends Command implements CommandInterface {
     protected function execute(InputInterface $input, OutputInterface $output) {
         parent::_execute($input, $output);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
+        $this->setPhpOptions();
         $this->setConfigurationOptions();
         $this->setupSugarServerValues();
         $this->setupSugarGlobals();
@@ -118,7 +119,6 @@ class InstallCommand extends Command implements CommandInterface {
         require_once(PROJECT_ROOT . '/modules/TableDictionary.php');
 
         $timedate = \TimeDate::getInstance();
-        setPhpIniSettings();
         $locale = new \Localization();
         /** @var  string $suitecrm_version */
         $setup_sugar_version = $suitecrm_version;
@@ -137,7 +137,7 @@ class InstallCommand extends Command implements CommandInterface {
             $this->log("Removing stale configuration file.");
             unlink("config.php");
         }
-        ini_set("output_buffering", "0");
+
 
 
         $trackerManager = \TrackerManager::getInstance();
@@ -176,14 +176,18 @@ class InstallCommand extends Command implements CommandInterface {
         $setup_site_admin_password = $_SESSION['setup_site_admin_password'];
 
         $setup_db_create_database = $_SESSION['setup_db_create_database'];
+        $setup_db_drop_tables = $_SESSION['setup_db_drop_tables'];
+
         $setup_db_create_sugarsales_user = $_SESSION['setup_db_create_sugarsales_user'];
 
-        $setup_db_database_name = $_SESSION['setup_db_database_name'];
-        $setup_db_drop_tables = $_SESSION['setup_db_drop_tables'];
-        $setup_db_host_instance = $_SESSION['setup_db_host_instance'];
-        $setup_db_port_num = $_SESSION['setup_db_port_num'];
+
         $setup_db_host_name = $_SESSION['setup_db_host_name'];
-        $demoData = $_SESSION['demoData'];
+        $setup_db_port_num = $_SESSION['setup_db_port_num'];
+        $setup_db_database_name = $_SESSION['setup_db_database_name'];
+        $setup_db_host_instance = $_SESSION['setup_db_host_instance'];
+
+        $demoData = $_SESSION['demo-data'];
+        $_SESSION['demoData'] = $demoData;//@todo: get rid of me!
 
 
 
@@ -709,7 +713,7 @@ class InstallCommand extends Command implements CommandInterface {
             $this->config["config"]['setup_site_url'] = 'http://' . $this->config["config"]['host'];
         }
 
-        $this->log("CONFIG SECTION: " . print_r($this->config["config"], true));
+        $this->log("CONFIG SECTION: " . print_r($this->config["config"], true), 'info');
     }
 
 
@@ -725,7 +729,7 @@ class InstallCommand extends Command implements CommandInterface {
         //FORCE INSTALLATION?
         $_SESSION["FORCE_INSTALLATION"] = $this->cmdInput->getOption('force');
 
-        $this->log("SESSION: " . print_r($_SESSION, true));
+        $this->log("SESSION VARIABLES: " . print_r($_SESSION, true), 'info');
     }
 
     /**
@@ -742,6 +746,22 @@ class InstallCommand extends Command implements CommandInterface {
      */
     protected function setupSugarServerValues() {
         $_SERVER['SERVER_SOFTWARE'] = NULL;
+    }
+
+    /**
+     * Set Php options
+     */
+    protected function setPhpOptions() {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        ini_set("output_buffering", "0");
+
+        // http://us3.php.net/manual/en/ref.pcre.php#ini.pcre.backtrack-limit
+        // starting with 5.2.0, backtrack_limit breaks JSON decoding
+        $backtrack_limit = ini_get('pcre.backtrack_limit');
+        if(!empty($backtrack_limit)) {
+            ini_set('pcre.backtrack_limit', '-1');
+        }
     }
 
     /**
