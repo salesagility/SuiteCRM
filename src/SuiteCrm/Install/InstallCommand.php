@@ -9,9 +9,11 @@ namespace SuiteCrm\Install;
 
 use SuiteCrm\Console\Command\Command;
 use SuiteCrm\Console\Command\CommandInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Class InstallCommand
@@ -21,50 +23,13 @@ class InstallCommand extends Command implements CommandInterface {
     const COMMAND_NAME = 'app:install';
     const COMMAND_DESCRIPTION = 'Install the SuiteCrm application';
 
+    /** @var array */
+    protected $configurableSections = ["database", "install"];
     /**
      * These are the default values that can be overridden by command options
      * @var array
      */
-    protected $config = [
-        /* DATABASE */
-        'setup_db_type' => 'mysql',
-        'setup_db_host_name' => 'localhost',
-        'setup_db_port_num' => '3306',
-        'setup_db_database_name' => null,
-        'setup_db_admin_user_name' => null,
-        'setup_db_admin_password' => null,
-        'setup_db_host_instance' => '',
-        'setup_db_manager' => '',
-        'setup_db_create_database' => TRUE,
-        'setup_db_drop_tables' => TRUE,
-        'setup_db_username_is_privileged' => TRUE,
-        'setup_db_create_sugarsales_user' => FALSE,
-
-        /*SITE DEFAULT ADMIN USER*/
-        'setup_site_admin_user_name' => 'admin',
-        'setup_site_admin_password' => 'admin',
-
-        /*FTS SUPPORT*/
-        'setup_fts_type' => '',
-        'setup_fts_host' => '',
-        'setup_fts_port' => '',
-
-        /* INTERNAL */
-        'setup_system_name' => 'SuiteCRM',
-        'setup_site_url' => '',
-        'host' => 'localhost',
-        'dbUSRData' => 'create',
-        'demoData' => false,
-        'default_date_format' => 'Y-m-d',
-        'default_time_format' => 'H:i',
-        'default_decimal_seperator' => '.',
-        'default_export_charset' => 'ISO-8859-1',
-        'export_delimiter' => ',',
-        'default_language' => 'en_us',
-        'default_locale_name_format' => 's f l',
-        'default_number_grouping_seperator' => ',',
-        'setup_site_sugarbeet_automatic_checks' => TRUE
-    ];
+    protected $config = [];
 
     /**
      * Constructor
@@ -79,82 +44,36 @@ class InstallCommand extends Command implements CommandInterface {
     protected function configure() {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
-        $this->setDefinition(
-            [
-                new InputOption(
-                    'db-type',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'Database type',
-                    isset($this->config['setup_db_type']) ? $this->config['setup_db_type'] : ''
-                ),
-                new InputOption(
-                    'db-host',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'Database host name(fqdn or ip)',
-                    isset($this->config['setup_db_host_name']) ? $this->config['setup_db_host_name'] : ''
-                ),
-                new InputOption(
-                    'db-port',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'Database port on host',
-                    isset($this->config['setup_db_port_num']) ? $this->config['setup_db_port_num'] : ''
-                ),
-                new InputOption(
-                    'db-name',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The name of the database',
-                    $this->config['setup_db_database_name']
-                ),
-                new InputOption(
-                    'db-username',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The username for the database',
-                    $this->config['setup_db_admin_user_name']
-                ),
-                new InputOption(
-                    'db-password',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The password for the database',
-                    $this->config['setup_db_admin_password']
-                ),
-                new InputOption(
-                    'site-admin-username',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The username for the default administrator account',
-                    $this->config['setup_site_admin_user_name']
-                ),
-                new InputOption(
-                    'site-admin-password',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The password for the default administrator account',
-                    $this->config['setup_site_admin_password']
-                ),
-                new InputOption(
-                    'site-hostname',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The FQDN of the site (without protocol)',
-                    $this->config['host']
-                ),
-                new InputOption(
-                    'site-system-name',
-                    '',
-                    InputOption::VALUE_REQUIRED,
-                    'The name of this deployment',
-                    $this->config['setup_system_name']
-                ),
+        $this->readConfig();
 
+        $commandModeMap = [
+            'none' => InputOption::VALUE_NONE,
+            'required' => InputOption::VALUE_REQUIRED,
+            'optional' => InputOption::VALUE_OPTIONAL,
+        ];
 
-            ]
-        );
+        //SETUP OPTIONS FROM CONFIGURATION
+        foreach($this->configurableSections as $section) {
+            foreach($this->config[$section] as $name => $data) {
+                $commandName = $section . '-' . $name;
+                $commandShortcut = null;
+                $commandMode = InputOption::VALUE_OPTIONAL;
+                $commandDescription = null;
+                $commandDefaultValue = null;
+                if(is_array($data)) {
+                    $commandDefaultValue = isset($data["default"]) ? $data["default"] : $commandDefaultValue;
+                    $commandMode = isset($data["mode"]) && array_key_exists($data["mode"], $commandModeMap) ? $commandModeMap[$data["mode"]] : $commandMode;
+                    $commandDescription = isset($data["description"]) ? $data["description"] : $commandDescription;
+                    $commandShortcut = isset($data["shortcut"]) ? $data["shortcut"] : $commandShortcut;
+                } else {
+                    $commandDefaultValue = !empty($data) ? $data : $commandDefaultValue;
+                }
+                $this->addOption($commandName, $commandShortcut, $commandMode, $commandDescription, $commandDefaultValue);
+            }
+        }
+
+        //ADDITIONAL OPTIONS
+        $this->addOption('force', 'f', InputOption::VALUE_NONE, "Force the installation to run even if 'installer_locked' is set to true in config.php");
     }
 
     /**
@@ -214,15 +133,11 @@ class InstallCommand extends Command implements CommandInterface {
         DatabaseChecker::runChecks();
 
         //INSTALLATION IS GOOD TO GO
-
         if (is_file("config.php")) {
             $this->log("Removing stale configuration file.");
             unlink("config.php");
         }
-
         ini_set("output_buffering", "0");
-        set_time_limit(3600);
-
 
 
         $trackerManager = \TrackerManager::getInstance();
@@ -770,27 +685,31 @@ class InstallCommand extends Command implements CommandInterface {
 
 
     /**
+     * Remap Command options to config section of configuration
      * @throws \Exception
      */
     protected function setConfigurationOptions() {
-        $this->log("Command Options: " . json_encode($this->cmdInput->getOptions()));
+        //$this->log("Command Options: " . json_encode($this->cmdInput->getOptions()));
 
-        //DATABASE
-        $this->config['setup_db_type'] = $this->cmdInput->getOption('db-type');
-        $this->config['setup_db_host_name'] = $this->cmdInput->getOption('db-host');
-        $this->config['setup_db_port_num'] = $this->cmdInput->getOption('db-port');
-        $this->config['setup_db_database_name'] = $this->cmdInput->getOption('db-name');
-        $this->config['setup_db_admin_user_name'] = $this->cmdInput->getOption('db-username');
-        $this->config['setup_db_admin_password'] = $this->cmdInput->getOption('db-password');
+        //REMAP FROM COMMAND OPTIONS
+        foreach($this->configurableSections as $section) {
+            foreach($this->config[$section] as $name => $data) {
+                if(is_array($data) && isset($data['config-key']) && !empty($data['config-key'])) {
+                    $commandName = $section . '-' . $name;
+                    $configKey = $data['config-key'];
+                    $configValue = $this->cmdInput->getOption($commandName);
+                    //$this->log("Remapping(${commandName} -> ${configKey}): " . $configValue);
+                    $this->config["config"][$configKey] = $configValue;
+                }
+            }
+        }
 
-        //SITE
-        $this->config['setup_site_admin_user_name'] = $this->cmdInput->getOption('site-admin-username');
-        $this->config['setup_site_admin_password'] = $this->cmdInput->getOption('site-admin-password');
-        $this->config['host'] = $this->cmdInput->getOption('site-hostname');
-        $this->config['setup_site_url'] = 'http://' . $this->cmdInput->getOption('site-hostname');
-        $this->config['setup_system_name'] = $this->cmdInput->getOption('site-system-name');
+        //ADDITIONAL
+        if(isset($this->config["config"]['host'])) {
+            $this->config["config"]['setup_site_url'] = 'http://' . $this->config["config"]['host'];
+        }
 
-        //$this->log(print_r($this->config, true));
+        $this->log("CONFIG SECTION: " . print_r($this->config["config"], true));
     }
 
 
@@ -801,7 +720,12 @@ class InstallCommand extends Command implements CommandInterface {
         if ((function_exists('session_status') && session_status() == PHP_SESSION_NONE) || session_id() == '') {
             session_start();
         }
-        $_SESSION = array_merge_recursive($_SESSION, $this->config);
+        $_SESSION = array_merge_recursive($_SESSION, $this->config["config"]);
+
+        //FORCE INSTALLATION?
+        $_SESSION["FORCE_INSTALLATION"] = $this->cmdInput->getOption('force');
+
+        $this->log("SESSION: " . print_r($_SESSION, true));
     }
 
     /**
@@ -825,5 +749,22 @@ class InstallCommand extends Command implements CommandInterface {
      */
     protected function setupSugarLogger() {
         $GLOBALS['log'] = $this->loggerManager;
+    }
+
+    /**
+     * Reads in the installer default parameters
+     */
+    protected function readConfig() {
+        $defaultsPath = dirname(__FILE__) . '/assets/install_defaults.yml';
+        if(!file_exists($defaultsPath)) {
+            throw new \Exception("Installation defaults file not found!");
+        }
+        $parser = new Parser();
+        $this->config = $parser->parse(file_get_contents($defaultsPath));
+        foreach(['database', 'install', 'config'] as $section) {
+            if(!isset($this->config[$section])) {
+                throw new \Exception("Missing '".$section."' section from installation defaults file!");
+            }
+        }
     }
 }

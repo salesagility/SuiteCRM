@@ -1,0 +1,115 @@
+# DATABASE (all options with 'database-' prefix will be mapped onto here)
+database:
+  type:
+    default: mysql
+    mode: required
+    description: Database type(mysql|mssql)
+    config-key: setup_db_type
+  host:
+    default: localhost
+    mode: required
+    description: Database host name(FQDN or ip)
+    config-key: setup_db_host_name
+  port:
+    default: 3306
+    mode: required
+    description: Database port on host
+    config-key: setup_db_port_num
+  name:
+    mode: required
+    description: The name of the database
+    config-key: setup_db_database_name
+  username:
+    mode: required
+    description: The username for the database
+    config-key: setup_db_admin_user_name
+  password:
+    mode: required
+    description: The password for the database
+    config-key: setup_db_admin_password
+
+# INSTALL (all options with 'install-' prefix will be mapped onto here)
+install:
+  host-name:
+    default: localhost
+    mode: required
+    description: The FQDN of the site (without protocol)
+    config-key: host
+  system-name:
+    default: SuiteCRM
+    mode: required
+    description: The name of this deployment
+    config-key: setup_system_name
+  admin-username:
+    default: admin
+    mode: required
+    description: The username for the default administrator account
+    config-key: setup_site_admin_user_name
+  admin-password:
+    default: admin
+    mode: required
+    description: The password for the default administrator account
+    config-key: setup_site_admin_password
+  create-database:
+    default: true
+    mode: required
+    description: Create the database if it does not exist
+    config-key: setup_db_create_database
+  drop-tables:
+    default: false
+    mode: required
+    description: Drop and recreate tables in database
+    config-key: setup_db_drop_tables
+  demo-data:
+    default: false
+    mode: required
+    description: Install demo data
+    config-key: demo-data
+
+# CONFIG (these will be passed to the installer)
+#  Any of the above sections defining a 'config-key' will be mapped onto here
+config:
+  setup_site_log_level: fatal
+  language: en_us
+  default_language: en_us
+  setup_site_url:
+  site_default_theme: SuiteR
+  default_date_format: Y-m-d
+  default_time_format: H:i
+  default_decimal_seperator: '.'
+  default_number_grouping_seperator: ','
+  default_charset: UTF-8
+  default_email_charset: UTF-8
+  default_export_charset: UTF-8
+  default_currency_name: US Dollars
+  default_currency_symbol: $
+  default_currency_iso4217: USD
+  default_locale_name_format: s f l
+  export_delimiter: ','
+
+  #other - unnown
+#  oc_install:
+#  setup_license_accept: false
+#  test_session: sessions are available
+#  license_submitted: false
+#  setup_license_key_users: 0
+#  setup_license_key_expire_date:
+#  setup_license_key:
+#  setup_num_lic_oc: 0
+#  install_type: typical
+#  dbConfig_submitted: false
+#  setup_site_sugarbeet: true
+#  setup_site_defaults: true
+#  setup_site_custom_session_path: false
+#  setup_site_session_path: false
+#  setup_site_custom_log_dir: false
+#  setup_site_log_dir: false
+#  setup_site_specify_guid: false
+#  setup_site_guid:
+#  disable_persistent_connections: false
+#  rss_cache_time: 10800
+#  language_keys: en_us
+#  language_values: US+English
+#  setup_site_sugarbeet_automatic_checks: true
+#  setup_site_sugarbeet_anonymous_stats: true
+#  siteConfig_submitted: false

@@ -142,10 +142,12 @@ class SystemChecker {
      * @throws \Exception
      */
     protected static function checkLockedInstaller() {
-        if (file_exists(PROJECT_ROOT . '/config.php')){
-            require(PROJECT_ROOT . '/config.php');
-            if(isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
-                throw new \Exception("Your deployment is locked! If you are sure you want to rerun the installation process, open your configuration.php file and set the 'installer_locked' key to false.");
+        if(!isset($_SESSION["FORCE_INSTALLATION"]) || $_SESSION["FORCE_INSTALLATION"] != true) {
+            if (file_exists(PROJECT_ROOT . '/config.php')){
+                require(PROJECT_ROOT . '/config.php');
+                if(isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
+                    throw new \Exception("Your deployment is locked! If you are sure you want to rerun the installation process, use the --force option.");
+                }
             }
         }
     }

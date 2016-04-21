@@ -10,7 +10,7 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - ./console -v app:install --db-name=suitecrm --db-username=travis --site-admin-username=admin --site-admin-password=admin --site-system-name="SuiteCRM Travis Build" --no-interaction
+  - ./console -v app:install --database-name=suitecrm --database-username=travis --install-admin-username=admin --install-admin-password=admin --install-system-name="SuiteCRM Travis Build" --no-interaction
 script:
   - cd tests
   - ../vendor/bin/phpunit
