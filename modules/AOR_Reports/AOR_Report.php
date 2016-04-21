@@ -1326,12 +1326,12 @@ class AOR_Report extends Basic {
 
                     if($tiltLogicOp) {
                         if ($condition->value_type == "Period") {
-                            $date = '"' . getPeriodEndDate($params)->format('Y-m-d H:i:s') . '"';
                             if (array_key_exists($condition->value, $app_list_strings['date_time_period_list'])) {
                                 $params = $condition->value;
                             } else {
                                 $params = base64_decode($condition->value);
                             }
+                            $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
                             $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
 
                             switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
@@ -1352,7 +1352,6 @@ class AOR_Report extends Basic {
                             $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                         }
                     }
-
                     $tiltLogicOp = false;
                 }
                 else if($condition->parenthesis) {
