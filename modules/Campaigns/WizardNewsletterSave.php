@@ -212,13 +212,20 @@ $_REQUEST['action'] = "WizardMarketing";
 $_REQUEST['record'] = $campaign_focus->id;;
 
 $action = '';
-if(isset($_REQUEST['wiz_direction'])  &&  $_REQUEST['wiz_direction']== 'continue'){
-    $action = 'WizardMarketing';
+$redirectToTargetList = '';
+if(isset($_REQUEST['wiz_direction'])){
+    if($_REQUEST['wiz_direction']== 'continue') {
+        $action = 'WizardMarketing';
+    }
+    else if($_REQUEST['wiz_direction'] == 'continue_targetList') {
+        $action = 'WizardMarketing';
+        $redirectToTargetList = '&redirectToTargetList=1';
+    }
 }else{
     $action = 'WizardHome&record='.$campaign_focus->id;
 }
 //require_once('modules/Campaigns/WizardMarketing.php');
-$header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action."&campaign_id=".$campaign_focus->id."&return_action=WizardNewsLetter&return_id=".$campaign_focus->id;
+$header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action.$redirectToTargetList."&campaign_id=".$campaign_focus->id."&return_action=WizardNewsLetter&return_id=".$campaign_focus->id;
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
  header($header_URL);
 
