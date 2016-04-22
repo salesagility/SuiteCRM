@@ -25,11 +25,6 @@ if (!defined('sugarEntry') || !sugarEntry)
 
 class ProjectViewResourceList extends SugarView {
 
-    //Constructor
-    public function __construct() {
-        parent::SugarView();
-    }
-
     public function display() {
         include('modules/Project/chart.php');
 
