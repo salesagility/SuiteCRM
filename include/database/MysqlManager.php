@@ -175,14 +175,14 @@ class MysqlManager extends DBManager
 		}
 
 		parent::countQuery($sql);
-		$GLOBALS['log']->info('Query:' . $sql);
+		$GLOBALS['log']->debug('Query:' . $sql);
 		$this->checkConnection();
 		$this->query_time = microtime(true);
 		$this->lastsql = $sql;
 		$result = $suppress?@mysql_query($sql, $this->database):mysql_query($sql, $this->database);
 
 		$this->query_time = microtime(true) - $this->query_time;
-		$GLOBALS['log']->info('Query Execution Time:'.$this->query_time);
+		$GLOBALS['log']->debug('Query Execution Time:'.$this->query_time);
 
 
 		if($keepResult)
@@ -415,7 +415,7 @@ class MysqlManager extends DBManager
 	 */
 	public function tableExists($tableName)
 	{
-		$this->log->info("tableExists: $tableName");
+		$this->log->debug("tableExists: $tableName");
 
 		if ($this->getDatabase()) {
 			$result = $this->query("SHOW TABLES LIKE ".$this->quoted($tableName));

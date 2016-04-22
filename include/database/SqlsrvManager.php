@@ -214,14 +214,14 @@ class SqlsrvManager extends MssqlManager
         $sql = $this->_appendN($sql);
 
         $this->countQuery($sql);
-        $GLOBALS['log']->info('Query:' . $sql);
+        $GLOBALS['log']->debug('Query:' . $sql);
         $this->checkConnection();
         $this->query_time = microtime(true);
 
         $result = $suppress?@sqlsrv_query($this->database, $sql):sqlsrv_query($this->database, $sql);
 
         $this->query_time = microtime(true) - $this->query_time;
-        $GLOBALS['log']->info('Query Execution Time:'.$this->query_time);
+        $GLOBALS['log']->debug('Query Execution Time:'.$this->query_time);
 
 
         $this->checkError($msg.' Query Failed:' . $sql . '::', $dieOnError);

@@ -289,7 +289,7 @@ class MssqlManager extends DBManager
 
 		$sql = $this->_appendN($sql);
 
-        $GLOBALS['log']->info('Query:' . $sql);
+        $GLOBALS['log']->debug('Query:' . $sql);
         $this->checkConnection();
         $this->countQuery($sql);
         $this->query_time = microtime(true);
@@ -320,7 +320,7 @@ class MssqlManager extends DBManager
         }
 
         $this->query_time = microtime(true) - $this->query_time;
-        $GLOBALS['log']->info('Query Execution Time:'.$this->query_time);
+        $GLOBALS['log']->debug('Query Execution Time:'.$this->query_time);
 
 
         $this->checkError($msg.' Query Failed: ' . $sql, $dieOnError);
@@ -1048,7 +1048,7 @@ class MssqlManager extends DBManager
      */
     public function tableExists($tableName)
     {
-        $GLOBALS['log']->info("tableExists: $tableName");
+        $GLOBALS['log']->debug("tableExists: $tableName");
 
         $this->checkConnection();
         $result = $this->getOne(
