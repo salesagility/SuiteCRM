@@ -57,7 +57,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             $formBase = new EmailTemplateFormBase();
             $focus = BeanFactory::getBean('EmailTemplates', $_REQUEST['attach_to_template_id']);
             //$data = $formBase->handleAttachments($focus, false, null);
-            $data = $formBase->handleAttachmentsProcessImages($focus, false, true, 'download');
+            $data = $formBase->handleAttachmentsProcessImages($focus, false, true, 'download', true);
             $redirectUrl = 'index.php?module=Campaigns&action=WizardMarketing&campaign_id=' . $_REQUEST['campaign_id'] . "&jump=2&template_id=" . $_REQUEST['attach_to_template_id']; // . '&marketing_id=' . $_REQUEST['attach_to_marketing_id'] . '&record=' . $_REQUEST['attach_to_marketing_id'];
             header('Location: ' . $redirectUrl);
             die();
