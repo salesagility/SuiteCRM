@@ -11,31 +11,41 @@ namespace SuiteCrm\Install;
  * Class SystemChecker
  * @package SuiteCrm\Install
  */
-class SystemChecker {
+class SystemChecker
+{
+    /** @var  array */
+    protected static $configuration;
 
     /**
-     * Run all system checks prior to installation
+     * Run system checks prior to installation
+     *
+     * @param array $configuration
      * @throws \Exception
+     * @return array
      */
-    public static function runChecks() {
+    public static function runChecks($configuration)
+    {
+        self::$configuration = $configuration;
+
         self::checkLockedInstaller();
         self::checkPhpVersion();
         self::checkPhpBackwardCompatibilityVersion();
         self::checkXmlParsing();
         self::checkMbstrings();
         self::checkZipSupport();
-        self::checkConfigFile();
-        self::checkConfigOverrideFile();
+        self::checkConfigFiles();
         self::checkCustomDirectory();
         self::checkCacheDirs();
         //@todo: still missing some checks from 'install/installSystemCheck.php' from line: 270
 
+        return self::$configuration;
     }
 
     /**
      * @throws \Exception
      */
-    protected static function checkCacheDirs() {
+    protected static function checkCacheDirs()
+    {
         $cache_files = [
             'images',
             'layout',
@@ -44,13 +54,10 @@ class SystemChecker {
             'include/javascript'
         ];
         foreach ($cache_files as $cache_file) {
-            $dirname = PROJECT_ROOT . '/' . sugar_cached( $cache_file);
-            $ok = FALSE;
+            $dirname = PROJECT_ROOT . '/' . sugar_cached($cache_file);
+
             if ((is_dir($dirname)) || @sugar_mkdir($dirname, 0755, TRUE)) {
-                $ok = make_writable($dirname);
-            }
-            if (!$ok) {
-                throw new \Exception("The Cache Directory($dirname) is not writable.");
+                InstallUtils::makeWritable($dirname);
             }
         }
     }
@@ -58,34 +65,23 @@ class SystemChecker {
     /**
      * @throws \Exception
      */
-    protected static function checkCustomDirectory() {
-        if (!make_writable(PROJECT_ROOT . '/custom')) {
-            throw new \Exception("The Custom Directory exists but is not writable.");
-        }
+    protected static function checkCustomDirectory()
+    {
+        InstallUtils::makeWritable(PROJECT_ROOT . '/custom');
     }
+
+
 
     /**
      * @throws \Exception
      */
-    protected static function checkConfigOverrideFile() {
-        if (file_exists(PROJECT_ROOT . '/config_override.php')
-            && (!(make_writable(PROJECT_ROOT . '/config_override.php'))
-                || !(is_writable(
-                    PROJECT_ROOT . '/config_override.php'
-                )))
-        ) {
-            throw new \Exception("The config_override file is not writable!");
+    protected static function checkConfigFiles()
+    {
+        if (file_exists(PROJECT_ROOT . '/config.php')) {
+            InstallUtils::makeWritable(PROJECT_ROOT . '/config.php');
         }
-    }
-
-    /**
-     * @throws \Exception
-     */
-    protected static function checkConfigFile() {
-        if (file_exists(PROJECT_ROOT . '/config.php')
-            && (!(make_writable(PROJECT_ROOT . '/config.php')) || !(is_writable(PROJECT_ROOT . '/config.php')))
-        ) {
-            throw new \Exception("The config file is not writable!");
+        if (file_exists(PROJECT_ROOT . '/config_override.php')) {
+            InstallUtils::makeWritable(PROJECT_ROOT . '/config.php');
         }
     }
 
@@ -93,7 +89,8 @@ class SystemChecker {
     /**
      * @throws \Exception
      */
-    protected static function checkZipSupport() {
+    protected static function checkZipSupport()
+    {
         if (!class_exists('ZipArchive')) {
             throw new \Exception("ZIP support is unavailable!");
         }
@@ -102,7 +99,8 @@ class SystemChecker {
     /**
      * @throws \Exception
      */
-    protected static function checkMbstrings() {
+    protected static function checkMbstrings()
+    {
         if (!function_exists('mb_strlen')) {
             throw new \Exception("MBString support is unavailable!");
         }
@@ -111,27 +109,31 @@ class SystemChecker {
     /**
      * @throws \Exception
      */
-    protected static function checkXmlParsing() {
+    protected static function checkXmlParsing()
+    {
         if (!function_exists('xml_parser_create')) {
             throw new \Exception("XML Parser Libraries are unavailable!");
         }
     }
 
 
-
     /**
      * @throws \Exception
      */
-    protected static function checkPhpBackwardCompatibilityVersion() {
+    protected static function checkPhpBackwardCompatibilityVersion()
+    {
         if (ini_get("zend.ze1_compatibility_mode")) {
-            throw new \Exception("Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off!");
+            throw new \Exception(
+                "Php Backward Compatibility mode is turned on. Set zend.ze1_compatibility_mode to Off!"
+            );
         }
     }
 
     /**
      * @throws \Exception
      */
-    protected static function checkPhpVersion() {
+    protected static function checkPhpVersion()
+    {
         $php_version = constant('PHP_VERSION');
         if (check_php_version($php_version) == -1) {
             throw new \Exception("Your version of PHP is not supported by SuiteCRM: $php_version!");
@@ -141,12 +143,15 @@ class SystemChecker {
     /**
      * @throws \Exception
      */
-    protected static function checkLockedInstaller() {
-        if(!isset($_SESSION["FORCE_INSTALLATION"]) || $_SESSION["FORCE_INSTALLATION"] != true) {
-            if (file_exists(PROJECT_ROOT . '/config.php')){
+    protected static function checkLockedInstaller()
+    {
+        if (!isset($_SESSION["FORCE_INSTALLATION"]) || $_SESSION["FORCE_INSTALLATION"] != TRUE) {
+            if (file_exists(PROJECT_ROOT . '/config.php')) {
                 require(PROJECT_ROOT . '/config.php');
-                if(isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == true) {
-                    throw new \Exception("Your deployment is locked! If you are sure you want to rerun the installation process, use the --force option.");
+                if (isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == TRUE) {
+                    throw new \Exception(
+                        "Your deployment is locked! If you are sure you want to rerun the installation process, use the --force option."
+                    );
                 }
             }
         }

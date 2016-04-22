@@ -34,7 +34,7 @@ install:
     default: localhost
     mode: required
     description: The FQDN of the site (without protocol)
-    config-key: host
+    config-key: setup_site_host_name
   system-name:
     default: SuiteCRM
     mode: required
@@ -88,6 +88,12 @@ config:
   export_delimiter: ','
   setup_db_host_instance: SQLEXPRESS
   setup_db_create_sugarsales_user: false
+  setup_db_options: []
+  session_dir:
+  setup_site_guid:
+  setup_installed_lang_packs: []
+
+
 
 
   #other - unnown

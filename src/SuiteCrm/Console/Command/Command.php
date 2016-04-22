@@ -16,7 +16,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class Command
  * @package SuiteCrm\Console\Command
  */
-class Command extends ConsoleCommand {
+class Command extends ConsoleCommand
+{
     /** @var  InputInterface */
     protected $cmdInput;
 
@@ -29,15 +30,17 @@ class Command extends ConsoleCommand {
     /**
      * @param string $name
      */
-    public function __construct($name = NULL) {
+    public function __construct($name = NULL)
+    {
         parent::__construct($name);
     }
 
     /**
-     * @param InputInterface   $input
-     * @param OutputInterface  $output
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
-    protected function _execute(InputInterface $input, OutputInterface $output) {
+    protected function _execute(InputInterface $input, OutputInterface $output)
+    {
         $this->cmdInput = $input;
         $this->cmdOutput = $output;
         $this->loggerManager = new LoggerManager($this->cmdOutput);
@@ -47,7 +50,8 @@ class Command extends ConsoleCommand {
      * @param string $msg
      * @param string $level - available: debug|info|warn|deprecated|error|fatal|security|off
      */
-    public function log($msg, $level = 'warn') {
+    public function log($msg, $level = 'warn')
+    {
         $this->loggerManager->log($msg, $level);
     }
 }

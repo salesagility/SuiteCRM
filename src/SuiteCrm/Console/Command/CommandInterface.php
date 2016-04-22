@@ -14,7 +14,8 @@ namespace SuiteCrm\Console\Command;
  * Interface CommandInterface
  * @package SuiteCrm\Console\Command
  */
-interface CommandInterface {
+interface CommandInterface
+{
     /**
      * Constructor
      */

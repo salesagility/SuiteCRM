@@ -19,29 +19,30 @@ use Symfony\Component\Yaml\Parser;
  * Class InstallCommand
  * @package SuiteCrm\Install
  */
-class InstallCommand extends Command implements CommandInterface {
+class InstallCommand extends Command implements CommandInterface
+{
     const COMMAND_NAME = 'app:install';
     const COMMAND_DESCRIPTION = 'Install the SuiteCrm application';
 
     /** @var array */
     protected $configurableSections = ["database", "install"];
-    /**
-     * These are the default values that can be overridden by command options
-     * @var array
-     */
+
+    /** @var array */
     protected $config = [];
 
     /**
      * Constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(NULL);
     }
 
     /**
      * Configure command
      */
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
         $this->readConfig();
@@ -53,27 +54,36 @@ class InstallCommand extends Command implements CommandInterface {
         ];
 
         //SETUP OPTIONS FROM CONFIGURATION
-        foreach($this->configurableSections as $section) {
-            foreach($this->config[$section] as $name => $data) {
+        foreach ($this->configurableSections as $section) {
+            foreach ($this->config[$section] as $name => $data) {
                 $commandName = $section . '-' . $name;
-                $commandShortcut = null;
+                $commandShortcut = NULL;
                 $commandMode = InputOption::VALUE_OPTIONAL;
-                $commandDescription = null;
-                $commandDefaultValue = null;
-                if(is_array($data)) {
+                $commandDescription = NULL;
+                $commandDefaultValue = NULL;
+                if (is_array($data)) {
                     $commandDefaultValue = isset($data["default"]) ? $data["default"] : $commandDefaultValue;
-                    $commandMode = isset($data["mode"]) && array_key_exists($data["mode"], $commandModeMap) ? $commandModeMap[$data["mode"]] : $commandMode;
+                    $commandMode = isset($data["mode"])
+                                   && array_key_exists(
+                                       $data["mode"], $commandModeMap
+                                   ) ? $commandModeMap[$data["mode"]] : $commandMode;
                     $commandDescription = isset($data["description"]) ? $data["description"] : $commandDescription;
                     $commandShortcut = isset($data["shortcut"]) ? $data["shortcut"] : $commandShortcut;
-                } else {
+                }
+                else {
                     $commandDefaultValue = !empty($data) ? $data : $commandDefaultValue;
                 }
-                $this->addOption($commandName, $commandShortcut, $commandMode, $commandDescription, $commandDefaultValue);
+                $this->addOption(
+                    $commandName, $commandShortcut, $commandMode, $commandDescription, $commandDefaultValue
+                );
             }
         }
 
         //ADDITIONAL OPTIONS
-        $this->addOption('force', 'f', InputOption::VALUE_NONE, "Force the installation to run even if 'installer_locked' is set to true in config.php");
+        $this->addOption(
+            'force', 'f', InputOption::VALUE_NONE,
+            "Force the installation to run even if 'installer_locked' is set to true in config.php"
+        );
     }
 
     /**
@@ -81,7 +91,8 @@ class InstallCommand extends Command implements CommandInterface {
      * @param OutputInterface $output
      * @return bool
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         parent::_execute($input, $output);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
         $this->setPhpOptions();
@@ -94,22 +105,35 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log("Command " . static::COMMAND_NAME . " done.");
     }
 
-
-
     /**
      *  Main setup method
      */
-    protected function performInstallation() {
+    protected function performInstallation()
+    {
         define('sugarEntry', TRUE);
+
+        $startTime = microtime(TRUE);
+
+        /** @var array $sugar_config */
+        global $sugar_config;
+
+        /** @var \DBManager $db */
+        global $db;
+
+        /** @var array $beanList */
         global $beanList;
+
+        /** @var array $app_list_strings */
         global $app_list_strings;
+
+        /** @var \TimeDate $timedate */
         global $timedate;
 
         require_once(PROJECT_ROOT . '/sugar_version.php');
         require_once(PROJECT_ROOT . '/suitecrm_version.php');
         require_once(PROJECT_ROOT . '/include/utils.php');
-        require_once(PROJECT_ROOT . '/install/install_utils.php');
-        require_once(PROJECT_ROOT . '/install/install_defaults.php');
+//        require_once(PROJECT_ROOT . '/install/install_utils.php');
+//        require_once(PROJECT_ROOT . '/install/install_defaults.php');
         require_once(PROJECT_ROOT . '/include/TimeDate.php');
         require_once(PROJECT_ROOT . '/include/Localization/Localization.php');
         require_once(PROJECT_ROOT . '/include/SugarTheme/SugarTheme.php');
@@ -118,50 +142,62 @@ class InstallCommand extends Command implements CommandInterface {
         require_once(PROJECT_ROOT . '/include/entryPoint.php');
         require_once(PROJECT_ROOT . '/modules/TableDictionary.php');
 
+        /** @var array $dictionary */
+
         $timedate = \TimeDate::getInstance();
+
         $locale = new \Localization();
-        /** @var  string $suitecrm_version */
-        $setup_sugar_version = $suitecrm_version;
+
+        /** @var string $suitecrm_version */
+        //$setup_sugar_version = $suitecrm_version;
+        $this->config['config']['setup_sugar_version'] = $suitecrm_version;
+
         $install_script = TRUE;
         $current_language = 'en_us';
 
         $mod_strings = [];
-        @include(PROJECT_ROOT . '/install/language/en_us.lang.php');
+        //@include(PROJECT_ROOT . '/install/language/en_us.lang.php');
         $app_list_strings = return_app_list_strings_language($current_language);
 
-        SystemChecker::runChecks();
-        DatabaseChecker::runChecks();
+        $this->config["config"] = SystemChecker::runChecks($this->config["config"]);
+        $this->config["config"] = DatabaseChecker::runChecks($this->config["config"]);
 
         //INSTALLATION IS GOOD TO GO
+        $this->log(str_repeat("-", 120));
+        $this->log("Starting installer...");
+
+
         if (is_file("config.php")) {
-            $this->log("Removing stale configuration file.");
+            $this->log("Removing stale configuration file");
             unlink("config.php");
         }
 
-
-
+        $this->log("Pausing TrackerManager");
         $trackerManager = \TrackerManager::getInstance();
         $trackerManager->pause();
 
-        make_writable(PROJECT_ROOT . '/config.php');
-        make_writable(PROJECT_ROOT . '/custom');
-        recursive_make_writable(PROJECT_ROOT . '/modules');
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('custom_fields'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('dyn_lay'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('images'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('modules'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('layout'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('pdf'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('upload'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('upload/import'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('xml'));
-        create_writable_dir(PROJECT_ROOT . '/' . sugar_cached('include/javascript'));
-        recursive_make_writable(PROJECT_ROOT . '/' . sugar_cached('modules'));
 
+        $this->log("Ensuring file/folder states");
+        InstallUtils::makeWritable(PROJECT_ROOT . '/config.php');
+        InstallUtils::makeWritable(PROJECT_ROOT . '/custom');
+        InstallUtils::makeWritableRecursive(PROJECT_ROOT . '/modules');
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('custom_fields'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('dyn_lay'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('images'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('modules'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('layout'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('pdf'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('upload'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('upload/import'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('xml'));
+        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('include/javascript'));
+        InstallUtils::makeWritableRecursive(PROJECT_ROOT . '/' . sugar_cached('modules'));
+
+        /*
         $cache_dir = sugar_cached("");
         $line_entry_format = "&nbsp&nbsp&nbsp&nbsp&nbsp<b>";
         $line_exit_format = "... &nbsp&nbsp</b>";
-        /** @var  array $dictionary */
+        /** @var  array $dictionary * /
         $rel_dictionary = $dictionary; // sourced by modules/TableDictionary.php
         $render_table_close = "";
         $render_table_open = "";
@@ -190,13 +226,14 @@ class InstallCommand extends Command implements CommandInterface {
         $_SESSION['demoData'] = $demoData;//@todo: get rid of me!
 
 
-
         $setup_site_guid = (isset($_SESSION['setup_site_specify_guid'])
                             && $_SESSION['setup_site_specify_guid'] != '') ? $_SESSION['setup_site_guid'] : '';
         $setup_site_url = $_SESSION['setup_site_url'];
         $parsed_url = parse_url($setup_site_url);
         $setup_site_host_name = $parsed_url['host'];
+
         $setup_site_log_dir = isset($_SESSION['setup_site_custom_log_dir']) ? $_SESSION['setup_site_log_dir'] : '.';
+
         $setup_site_log_file = 'suitecrm.log';  // may be an option later
         $setup_site_session_path = isset($_SESSION['setup_site_custom_session_path']) ? $_SESSION['setup_site_session_path'] : '';
         $setup_site_log_level = 'fatal';
@@ -205,7 +242,7 @@ class InstallCommand extends Command implements CommandInterface {
         $GLOBALS['cache_dir'] = $cache_dir;
         $GLOBALS['mod_strings'] = $mod_strings;
         $GLOBALS['setup_site_log_level'] = $setup_site_log_level;
-        $GLOBALS['create_default_user'] = false;
+        $GLOBALS['create_default_user'] = FALSE;
 
         $GLOBALS['setup_db_host_name'] = $setup_db_host_name;
         $GLOBALS['setup_db_host_instance'] = $setup_db_host_instance;
@@ -232,69 +269,69 @@ class InstallCommand extends Command implements CommandInterface {
         $GLOBALS['setup_site_url'] = $setup_site_url;
         $GLOBALS['setup_sugar_version'] = $setup_sugar_version;
         $GLOBALS['timedate'] = $timedate;
+        */
 
-        /** @var array $sugar_config */
-        global $sugar_config;
-        global $db;
 
-        $this->log(str_repeat("-", 120));
-        $this->log("Calling: handleSugarConfig()");
-        handleSugarConfig();
 
-        $this->log("Calling: handleWebConfig()");
-        handleWebConfig();
+        $this->log("Creating Sugar Configuration");
+        InstallUtils::handleSugarConfig($this->config["config"]);
+        $this->log("Sugar Configuration(config.php) has been written to disk");
 
-        $this->log("Calling: handleHtaccess()");
-        handleHtaccess();
+        $this->log("Handling Web Config");
+        InstallUtils::handleWebConfig();
 
-        if($setup_db_create_database) {
-            $this->log("Creating Database: " . $setup_db_database_name);
-            installLog("calling handleDbCreateDatabase()");
-            installerHook('pre_handleDbCreateDatabase');
-            $db = getDbConnection();
-            if($db->dbExists($setup_db_database_name)) {
-                $db->dropDatabase($setup_db_database_name);
+        $this->log("Handling Htaccess");
+        InstallUtils::handleHtaccess();
+
+
+
+
+        if ($this->config["config"]['setup_db_create_database']) {
+            InstallUtils::installerHook('pre_handleDbCreateDatabase');
+            $db = InstallUtils::getDatabaseConnection($this->config["config"]);
+            if ($db->dbExists($this->config["config"]['setup_db_database_name'])) {
+                $this->log("Dropping Database: " . $this->config["config"]['setup_db_database_name']);
+                $db->dropDatabase($this->config["config"]['setup_db_database_name']);
             }
-            $db->createDatabase($setup_db_database_name);
-            installerHook('post_handleDbCreateDatabase');
-        } else {
-            $this->log("Configuring Database Collation()");
-            installLog("calling handleDbCharsetCollation()");
-            installerHook('pre_handleDbCharsetCollation');
-            handleDbCharsetCollation();
-            installerHook('post_handleDbCharsetCollation');
+            $this->log("Creating Database: " . $this->config["config"]['setup_db_database_name']);
+            $db->createDatabase($this->config["config"]['setup_db_database_name']);
+            InstallUtils::installerHook('post_handleDbCreateDatabase');
         }
-
+        else {
+            $this->log("Configuring Database Collation");
+            InstallUtils::installerHook('pre_handleDbCharsetCollation');
+            InstallUtils::handleDbCharsetCollation($this->config["config"]);
+            InstallUtils::installerHook('post_handleDbCharsetCollation');
+        }
 
         /**
          * @var array  $beanFiles - defined in include/modules.php
          * @var string $beanName
          * @var string $beanFile
          */
+        $this->log("Loading Bean files");
         foreach ($beanFiles as $beanName => $beanFile) {
             $this->log("Requiring bean[$beanName] file: $beanFile", "info");
             require_once($beanFile);
         }
 
-        $db = \DBManagerFactory::getInstance();
-        $startTime = microtime(TRUE);
-        $focus = 0;
-        $processed_tables = []; // for keeping track of the tables we have worked on
-        $empty = '';
-        $new_tables = 1; // is there ever a scenario where we DON'T create the admin user?
-        $new_config = 1;
-        $new_report = 1;
-        $nonStandardModules = [];
-
-        $this->log("Cleaning Bean Vardefs");
+        $this->log("Cleaning Vardefs");
         \VardefManager::clearVardef();
 
+        /**
+         * @todo: check this - does not work: MySQL error 1046: No database selected
+         */
+        //$db = InstallUtils::getDatabaseConnection($this->config["config"]);
+        /** @var \DBManager $db */
+        $db = \DBManagerFactory::getInstance();
 
         /**
          * loop through all the Beans and create their tables
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Creating Database Tables...");
+        $this->log("Creating Database Tables");
+
+        $processed_tables = []; //for keeping track of the tables we have worked on
+        $nonStandardModules = []; //?useful?
 
         /**
          * We must place AOW_WorkFlow right after the Relationship module, otherwise
@@ -311,9 +348,8 @@ class InstallCommand extends Command implements CommandInterface {
         );
 
 
-        installerHook('pre_createAllModuleTables');
+        InstallUtils::installerHook('pre_createAllModuleTables');
         foreach ($beanFiles as $beanName => $beanFile) {
-
             $doNotInitModules = [
                 'Scheduler',
                 'SchedulersJob',
@@ -327,8 +363,7 @@ class InstallCommand extends Command implements CommandInterface {
             /** @var \SugarBean $focus */
             if (in_array($beanName, $doNotInitModules)) {
                 $focus = new $beanName(FALSE);
-            }
-            else {
+            } else {
                 $focus = new $beanName();
             }
 
@@ -338,7 +373,7 @@ class InstallCommand extends Command implements CommandInterface {
 
             $table_name = $focus->table_name;
 
-            $this->log("Processing Module: " . $beanName . "(" . $focus->table_name . ")");
+            $this->log("Processing Module: " . $beanName . "(" . $focus->table_name . ")", 'info');
 
             // check to see if we have already setup this table
             if (!in_array($table_name, $processed_tables)) {
@@ -360,25 +395,24 @@ class InstallCommand extends Command implements CommandInterface {
 
                 $focus->db->database = $db->database; // set db connection so we do not need to reconnect
 
-                if ($setup_db_drop_tables) {
-                    drop_table_install($focus);
+                if ($this->config["config"]['setup_db_drop_tables'] == true) {
+                    InstallUtils::dropBeanTables($db, $focus);
                 }
 
-                if (create_table_if_not_exist($focus)) {
-                    if ($beanName == "User") {
-                        $new_tables = 1;
-                    }
-                    if ($beanName == "Administration") {
-                        $new_config = 1;
-                    }
-                }
+                InstallUtils::createBeanTables($db, $focus);
+
                 //$this->log("creating Relationship Meta for ".$focus->getObjectName());
-                installerHook('pre_createModuleTable', array('module' => $focus->getObjectName()));
-                \SugarBean::createRelationshipMeta($focus->getObjectName(), $db, $table_name, $empty, $focus->module_dir);
-                installerHook('post_createModuleTable', array('module' => $focus->getObjectName()));
+                InstallUtils::installerHook('pre_createModuleTable', array('module' => $focus->getObjectName()));
+                \SugarBean::createRelationshipMeta(
+                    $focus->getObjectName(), $db, $table_name, '', $focus->module_dir
+                );
+                InstallUtils::installerHook('post_createModuleTable', array('module' => $focus->getObjectName()));
             }
         }
-        installerHook('post_createAllModuleTables');
+        InstallUtils::installerHook('post_createAllModuleTables');
+
+        die("---KILLED---\n");
+
 
         /**
          * loop through all Relationships and create their tables
@@ -412,11 +446,9 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log(str_repeat("-", 120));
         $this->log("Creating Default Settings...");
         installerHook('pre_createDefaultSettings');
-        if ($new_config) {
-            /** @var string $sugar_db_version - loaded from sugar_version.php*/
-            $GLOBALS['sugar_db_version'] =  $sugar_db_version;
-            insert_default_settings();
-        }
+        /** @var string $sugar_db_version - loaded from sugar_version.php */
+        $GLOBALS['sugar_db_version'] = $sugar_db_version;
+        insert_default_settings();
         installerHook('post_createDefaultSettings');
 
         /**
@@ -425,14 +457,7 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log(str_repeat("-", 120));
         $this->log("Creating Admin User...");
         installerHook('pre_createUsers');
-        if ($new_tables) {
-            create_default_users();
-        } else {
-            //@todo: CHECK ME! - cannot find methods: setUserName, setUserPassword
-            //$db->setUserName($setup_db_sugarsales_user);
-            //$db->setUserPassword($setup_db_sugarsales_password);
-            set_admin_password($setup_site_admin_password);
-        }
+        create_default_users();
         installerHook('post_createUsers');
 
         /**
@@ -448,9 +473,9 @@ class InstallCommand extends Command implements CommandInterface {
         /**
          * Update upgrade history
          */
-        if(isset($_SESSION['INSTALLED_LANG_PACKS']) &&
-           is_array($_SESSION['INSTALLED_LANG_PACKS']) &&
-           !empty($_SESSION['INSTALLED_LANG_PACKS'])) {
+        if (isset($_SESSION['INSTALLED_LANG_PACKS']) && is_array($_SESSION['INSTALLED_LANG_PACKS'])
+            && !empty($_SESSION['INSTALLED_LANG_PACKS'])
+        ) {
             $this->log(str_repeat("-", 120));
             $this->log("Updating upgrade history...");
             updateUpgradeHistory();
@@ -485,15 +510,17 @@ class InstallCommand extends Command implements CommandInterface {
          */
         $this->log(str_repeat("-", 120));
         $this->log("Handling Administration Variables...");
-        if( isset($_SESSION['setup_site_sugarbeet_automatic_checks']) &&
-            $_SESSION['setup_site_sugarbeet_automatic_checks'] == true) {
+        if (isset($_SESSION['setup_site_sugarbeet_automatic_checks'])
+            && $_SESSION['setup_site_sugarbeet_automatic_checks'] == TRUE
+        ) {
             set_CheckUpdates_config_setting('automatic');
-        }else{
+        }
+        else {
             set_CheckUpdates_config_setting('manual');
         }
-        if(!empty($_SESSION['setup_system_name'])){
+        if (!empty($_SESSION['setup_system_name'])) {
             $admin = new \Administration();
-            $admin->saveSetting('system','name',$_SESSION['setup_system_name']);
+            $admin->saveSetting('system', 'name', $_SESSION['setup_system_name']);
         }
 
         /**
@@ -558,7 +585,7 @@ class InstallCommand extends Command implements CommandInterface {
          * @todo: 6 million warnings & errors - CHECK ME!
          * Install Demo Data
          */
-        if(isset($_SESSION['demoData']) &&  $_SESSION['demoData'] === true){
+        if (isset($_SESSION['demoData']) && $_SESSION['demoData'] === TRUE) {
             $this->log(str_repeat("-", 120));
             $this->log("Installing Demo Data...");
 
@@ -581,7 +608,7 @@ class InstallCommand extends Command implements CommandInterface {
         $_REQUEST = array_merge($_REQUEST, $_SESSION);
         $_POST = array_merge($_POST, $_SESSION);
         $admin = new \Administration();
-        $admin->saveSetting('system','adminwizard',1);
+        $admin->saveSetting('system', 'adminwizard', 1);
         $admin->saveConfig();
 
 
@@ -591,16 +618,16 @@ class InstallCommand extends Command implements CommandInterface {
         $this->log(str_repeat("-", 120));
         $this->log("Saving Global Configuration...");
         // add local settings to config overrides
-        if(!empty($_SESSION['default_date_format'])) {
+        if (!empty($_SESSION['default_date_format'])) {
             $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
         }
-        if(!empty($_SESSION['default_time_format'])) {
+        if (!empty($_SESSION['default_time_format'])) {
             $sugar_config['default_time_format'] = $_SESSION['default_time_format'];
         }
-        if(!empty($_SESSION['default_language'])) {
+        if (!empty($_SESSION['default_language'])) {
             $sugar_config['default_language'] = $_SESSION['default_language'];
         }
-        if(!empty($_SESSION['default_locale_name_format'])) {
+        if (!empty($_SESSION['default_locale_name_format'])) {
             $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
         }
 
@@ -614,7 +641,7 @@ class InstallCommand extends Command implements CommandInterface {
          * @todo: check and remove this
          * Fix Currency - Bug 37310
          */
-        if(isset($_REQUEST['default_currency_name']) && !empty($_REQUEST['default_currency_name'])) {
+        if (isset($_REQUEST['default_currency_name']) && !empty($_REQUEST['default_currency_name'])) {
             $this->log(str_repeat("-", 120));
             $this->log("Fix Currency - Bug 37310...");
             $currency = new \Currency();
@@ -623,7 +650,8 @@ class InstallCommand extends Command implements CommandInterface {
                 && isset($_REQUEST['default_currency_symbol'])
                 && isset($_REQUEST['default_currency_iso4217'])
                 && $currency->symbol == $_REQUEST['default_currency_symbol']
-                && $currency->iso4217 == $_REQUEST['default_currency_iso4217'] ) {
+                && $currency->iso4217 == $_REQUEST['default_currency_iso4217']
+            ) {
                 $currency->deleted = 1;
                 $currency->save();
             }
@@ -651,8 +679,8 @@ class InstallCommand extends Command implements CommandInterface {
         $_POST['dateformat'] = 'Y-m-d';//$sugar_config['default_date_format']
         $_POST['timeformat'] = 'H:i:s';//$sugar_config['default_time_format']
         $_POST['record'] = $current_user->id;
-        $_POST['is_admin'] = ( $current_user->is_admin ? 'on' : '' );
-        $_POST['use_real_names'] = true;
+        $_POST['is_admin'] = ($current_user->is_admin ? 'on' : '');
+        $_POST['use_real_names'] = TRUE;
         $_POST['reminder_checked'] = '0';
         $_POST['email_reminder_checked'] = '0';
         $_POST['reminder_time'] = 1800;
@@ -669,7 +697,7 @@ class InstallCommand extends Command implements CommandInterface {
 //            $$__key = $__value;
 //        }
 
-        $endTime = microtime(true);
+        $endTime = microtime(TRUE);
         $deltaTime = $endTime - $startTime;
 
         /**
@@ -684,7 +712,7 @@ class InstallCommand extends Command implements CommandInterface {
          */
         $this->log(str_repeat("-", 120));
         $this->log(str_repeat("-", 120));
-        $this->log("Installation complete(".floor($deltaTime)."s).");
+        $this->log("Installation complete(" . floor($deltaTime) . "s).");
     }
 
 
@@ -692,13 +720,14 @@ class InstallCommand extends Command implements CommandInterface {
      * Remap Command options to config section of configuration
      * @throws \Exception
      */
-    protected function setConfigurationOptions() {
+    protected function setConfigurationOptions()
+    {
         //$this->log("Command Options: " . json_encode($this->cmdInput->getOptions()));
 
         //REMAP FROM COMMAND OPTIONS
-        foreach($this->configurableSections as $section) {
-            foreach($this->config[$section] as $name => $data) {
-                if(is_array($data) && isset($data['config-key']) && !empty($data['config-key'])) {
+        foreach ($this->configurableSections as $section) {
+            foreach ($this->config[$section] as $name => $data) {
+                if (is_array($data) && isset($data['config-key']) && !empty($data['config-key'])) {
                     $commandName = $section . '-' . $name;
                     $configKey = $data['config-key'];
                     $configValue = $this->cmdInput->getOption($commandName);
@@ -709,33 +738,35 @@ class InstallCommand extends Command implements CommandInterface {
         }
 
         //ADDITIONAL
-        if(isset($this->config["config"]['host'])) {
-            $this->config["config"]['setup_site_url'] = 'http://' . $this->config["config"]['host'];
+        if (isset($this->config["config"]['setup_site_host_name'])) {
+            $this->config["config"]['setup_site_url'] = 'http://' . $this->config["config"]['setup_site_host_name'];
         }
 
-        $this->log("CONFIG SECTION: " . print_r($this->config["config"], true), 'info');
+        $this->log("CONFIG SECTION: " . print_r($this->config["config"], TRUE), 'info');
     }
 
 
     /**
      * Setup Session variables prior to executing installation
      */
-    protected function setupSugarSessionVars() {
+    protected function setupSugarSessionVars()
+    {
         if ((function_exists('session_status') && session_status() == PHP_SESSION_NONE) || session_id() == '') {
             session_start();
         }
-        $_SESSION = array_merge_recursive($_SESSION, $this->config["config"]);
+        //$_SESSION = array_merge_recursive($_SESSION, $this->config["config"]);
 
         //FORCE INSTALLATION?
         $_SESSION["FORCE_INSTALLATION"] = $this->cmdInput->getOption('force');
 
-        $this->log("SESSION VARIABLES: " . print_r($_SESSION, true), 'info');
+        $this->log("SESSION VARIABLES: " . print_r($_SESSION, TRUE), 'info');
     }
 
     /**
      * Setup Globals prior to requiring Sugar application files
      */
-    protected function setupSugarGlobals() {
+    protected function setupSugarGlobals()
+    {
         $GLOBALS['installing'] = TRUE;
         define('SUGARCRM_IS_INSTALLING', $GLOBALS['installing']);
         $GLOBALS['sql_queries'] = 0;
@@ -744,14 +775,16 @@ class InstallCommand extends Command implements CommandInterface {
     /**
      * Mostly for avoiding undefined index notices
      */
-    protected function setupSugarServerValues() {
+    protected function setupSugarServerValues()
+    {
         $_SERVER['SERVER_SOFTWARE'] = NULL;
     }
 
     /**
      * Set Php options
      */
-    protected function setPhpOptions() {
+    protected function setPhpOptions()
+    {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         ini_set("output_buffering", "0");
@@ -759,7 +792,7 @@ class InstallCommand extends Command implements CommandInterface {
         // http://us3.php.net/manual/en/ref.pcre.php#ini.pcre.backtrack-limit
         // starting with 5.2.0, backtrack_limit breaks JSON decoding
         $backtrack_limit = ini_get('pcre.backtrack_limit');
-        if(!empty($backtrack_limit)) {
+        if (!empty($backtrack_limit)) {
             ini_set('pcre.backtrack_limit', '-1');
         }
     }
@@ -767,23 +800,25 @@ class InstallCommand extends Command implements CommandInterface {
     /**
      * Set up our own LoggerManager for the installation
      */
-    protected function setupSugarLogger() {
+    protected function setupSugarLogger()
+    {
         $GLOBALS['log'] = $this->loggerManager;
     }
 
     /**
      * Reads in the installer default parameters
      */
-    protected function readConfig() {
+    protected function readConfig()
+    {
         $defaultsPath = dirname(__FILE__) . '/assets/install_defaults.yml';
-        if(!file_exists($defaultsPath)) {
+        if (!file_exists($defaultsPath)) {
             throw new \Exception("Installation defaults file not found!");
         }
         $parser = new Parser();
         $this->config = $parser->parse(file_get_contents($defaultsPath));
-        foreach(['database', 'install', 'config'] as $section) {
-            if(!isset($this->config[$section])) {
-                throw new \Exception("Missing '".$section."' section from installation defaults file!");
+        foreach (['database', 'install', 'config'] as $section) {
+            if (!isset($this->config[$section])) {
+                throw new \Exception("Missing '" . $section . "' section from installation defaults file!");
             }
         }
     }

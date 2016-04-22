@@ -17,7 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class LoggerManager
  * @package SuiteCrm\Install
  */
-class LoggerManager {
+class LoggerManager
+{
     /** @var  OutputInterface */
     protected $cmdOutput;
 
@@ -40,7 +41,8 @@ class LoggerManager {
      * @param OutputInterface $cmdOutput
      * @param string          $defaultLogLevel
      */
-    public function __construct(OutputInterface $cmdOutput, $defaultLogLevel = 'debug') {
+    public function __construct(OutputInterface $cmdOutput, $defaultLogLevel = 'debug')
+    {
         $this->cmdOutput = $cmdOutput;
         $this->setLevel($defaultLogLevel);
     }
@@ -49,7 +51,8 @@ class LoggerManager {
      * @param string $logLevel
      * @param mixed  $message
      */
-    public function __call($logLevel, $message) {
+    public function __call($logLevel, $message)
+    {
         $this->log($message, $logLevel);
     }
 
@@ -60,7 +63,8 @@ class LoggerManager {
      * @param string $msg
      * @param string $level
      */
-    public function log($msg, $level = 'debug') {
+    public function log($msg, $level = 'debug')
+    {
         $level = (!in_array($level, array_keys(self::$logLevelMapping)) ? $this->defaultLogLevel : $level);
         $option = $this->getOutputInterfaceVerbosityOptionForLogLevel($level);
         $msg = is_array($msg) ? implode(" - ", $msg) : $msg;
@@ -73,16 +77,20 @@ class LoggerManager {
      * @param string $level
      * @return int
      */
-    protected function getOutputInterfaceVerbosityOptionForLogLevel($level) {
+    protected function getOutputInterfaceVerbosityOptionForLogLevel($level)
+    {
         $option = OutputInterface::OUTPUT_NORMAL;
         $numericLevel = self::$logLevelMapping[$level];
-        if($numericLevel == 100) {
+        if ($numericLevel == 100) {
             $option = $option | OutputInterface::VERBOSITY_DEBUG;
-        } else if ($numericLevel >= 70) {
+        }
+        else if ($numericLevel >= 70) {
             $option = $option | OutputInterface::VERBOSITY_VERY_VERBOSE;
-        } else if ($numericLevel >= 50) {
+        }
+        else if ($numericLevel >= 50) {
             $option = $option | OutputInterface::VERBOSITY_VERBOSE;
-        } else {
+        }
+        else {
             $option = $option | OutputInterface::VERBOSITY_NORMAL;
         }
         return $option;
@@ -92,7 +100,8 @@ class LoggerManager {
      * @param string $logLevel
      * @return bool
      */
-    public function wouldLog($logLevel) {
+    public function wouldLog($logLevel)
+    {
         $logLevel = (!in_array($logLevel, array_keys(self::$logLevelMapping)) ? $this->defaultLogLevel : $logLevel);
         $wouldLog = $logLevel == $this->defaultLogLevel
                     || self::$logLevelMapping[$this->defaultLogLevel] >= self::$logLevelMapping[$logLevel];
@@ -100,18 +109,20 @@ class LoggerManager {
     }
 
     /**
-     * @param string $message
+     * @param string  $message
      * @param boolean $condition
      */
-    public function assert($message, $condition) {
+    public function assert($message, $condition)
+    {
         //do nothing
     }
 
     /**
      * @param string $logLevel
      */
-    public function setLevel($logLevel) {
-        if(in_array($logLevel, array_keys(self::$logLevelMapping))) {
+    public function setLevel($logLevel)
+    {
+        if (in_array($logLevel, array_keys(self::$logLevelMapping))) {
             $this->defaultLogLevel = $logLevel;
         }
     }
@@ -119,7 +130,8 @@ class LoggerManager {
     /**
      * @throws \Exception
      */
-    public static function getLogger() {
+    public static function getLogger()
+    {
         throw new \Exception("getLogger is not available now!");
     }
 
@@ -127,21 +139,24 @@ class LoggerManager {
      * @param string $level
      * @param string $logger
      */
-    public static function setLogger($level, $logger) {
+    public static function setLogger($level, $logger)
+    {
         //do nothing
     }
 
     /**
      * @return array
      */
-    public static function getAvailableLoggers() {
+    public static function getAvailableLoggers()
+    {
         return [];
     }
 
     /**
      * @return array
      */
-    public static function getLoggerLevels() {
+    public static function getLoggerLevels()
+    {
         return self::$logLevelMapping;
     }
 

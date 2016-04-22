@@ -15,13 +15,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Class Application
  * @package SuiteCrm\Console
  */
-class Application extends BaseApplication {
+class Application extends BaseApplication
+{
 
     /**
      * @param string $name
      * @param string $version
      */
-    public function __construct($name, $version) {
+    public function __construct($name, $version)
+    {
         parent::__construct($name, $version);
         $commands = $this->enumerateCommands();
         foreach ($commands as $command) {
@@ -39,7 +41,8 @@ class Application extends BaseApplication {
      *
      * @throws \Exception When doRun returns Exception
      */
-    public function run(InputInterface $input = NULL, OutputInterface $output = NULL) {
+    public function run(InputInterface $input = NULL, OutputInterface $output = NULL)
+    {
         return parent::run($input, $output);
     }
 
@@ -49,7 +52,8 @@ class Application extends BaseApplication {
      * 2) implementing the \SuiteCrm\Console\Command\CommandInterface
      * @return array
      */
-    protected function enumerateCommands() {
+    protected function enumerateCommands()
+    {
         $answer = [];
         $searchPath = realpath(PROJECT_ROOT . '/src');
         $iterator = new \RecursiveDirectoryIterator($searchPath);

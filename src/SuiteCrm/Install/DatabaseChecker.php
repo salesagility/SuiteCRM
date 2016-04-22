@@ -11,22 +11,51 @@ namespace SuiteCrm\Install;
  * Class DatabaseChecker
  * @package SuiteCrm\Install
  */
-class DatabaseChecker {
+class DatabaseChecker
+{
+    /** @var  array */
+    protected static $configuration;
 
     /**
      * Run database checks prior to installation
+     *
+     * @param array $configuration
      * @throws \Exception
+     * @return array
      */
-    public static function runChecks() {
+    public static function runChecks($configuration)
+    {
+        self::$configuration = $configuration;
+
+        self::checkConfigurationData();
         self::checkDatabaseDrivers();
-        self::checkSessionData();
         self::checkDatabaseConnection();
+
+        return self::$configuration;
     }
+
 
     /**
      * @throws \Exception
      */
-    protected static function checkDatabaseDrivers() {
+    protected static function checkDatabaseConnection()
+    {
+        $db = InstallUtils::getInstallDatabaseInstance(
+            self::$configuration['setup_db_type'],
+            ["db_manager" => self::$configuration['setup_db_manager']]
+        );
+
+        if (!$db->isDatabaseNameValid(self::$configuration['setup_db_database_name'])) {
+            throw new \Exception('Invalid database name("' . self::$configuration['setup_db_database_name'] . '") was supplied!');
+        }
+    }
+
+
+    /**
+     * @throws \Exception
+     */
+    protected static function checkDatabaseDrivers()
+    {
         $drivers = \DBManagerFactory::getDbDrivers();
         if (empty($drivers)) {
             throw new \Exception("No Database driver is available!");
@@ -34,37 +63,30 @@ class DatabaseChecker {
     }
 
     /**
+     * Check the configuration options which refer to the database
+     *
      * @throws \Exception
      */
-    protected static function checkDatabaseConnection() {
-        $db = getInstallDbInstance();
-
-        if (!$db->isDatabaseNameValid($_SESSION['setup_db_database_name'])) {
-            throw new \Exception('Invalid database name("'.$_SESSION['setup_db_database_name'].'") was supplied!');
-        }
-
-
-    }
-
-    /**
-     * Work out some configuration values
-     * @throws \Exception
-     */
-    protected static function checkSessionData() {
-        if(empty(trim($_SESSION['setup_db_database_name']))){
+    protected static function checkConfigurationData()
+    {
+        if (empty(trim(self::$configuration['setup_db_database_name']))) {
             throw new \Exception('No database name was supplied!');
         }
 
-        if($_SESSION['setup_db_type'] != 'oci8') {
+        if (self::$configuration['setup_db_type'] != 'oci8') {
             // Oracle doesn't need host name, others do
-            if(empty(trim($_SESSION['setup_db_host_name']))){
+            if (empty(trim(self::$configuration['setup_db_host_name']))) {
                 throw new \Exception('No database hostname name was supplied!');
             }
         }
 
-        if(isset($_SESSION['setup_db_type']) && (!isset($_SESSION['setup_db_manager']) || empty($_SESSION['setup_db_manager']))) {
-            $_SESSION['setup_db_manager'] = \DBManagerFactory::getManagerByType($_SESSION['setup_db_type']);
+        if (isset(self::$configuration['setup_db_type'])
+            && (!isset(self::$configuration['setup_db_manager'])
+                || empty(self::$configuration['setup_db_manager']))
+        ) {
+            self::$configuration['setup_db_manager'] = \DBManagerFactory::getManagerByType(
+                self::$configuration['setup_db_type']
+            );
         }
     }
-
 }
