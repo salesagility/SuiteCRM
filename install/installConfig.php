@@ -100,8 +100,8 @@ class InstallLayout
         $out = <<<EOQ
        <link REL="SHORTCUT ICON" HREF="include/images/sugar_icon.ico">
        <link rel="stylesheet" href="install/install2.css" type="text/css">
-       <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-       <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+       <link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
+       <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
        <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
 EOQ;
         return $out;
