@@ -411,21 +411,17 @@ class InstallCommand extends Command implements CommandInterface
         }
         InstallUtils::installerHook('post_createAllModuleTables');
 
-        die("---KILLED---\n");
-
 
         /**
          * loop through all Relationships and create their tables
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Creating relationships...");
-        ksort($rel_dictionary);
-        foreach ($rel_dictionary as $rel_name => $rel_data) {
+        $this->log("Creating Relationships");
+        ksort($dictionary);
+        foreach ($dictionary as $rel_name => $rel_data) {
             $table = $rel_data['table'];
 
-            $this->log("Processing Relationship: " . $rel_name . "(" . $table . ")");
-
-            if ($setup_db_drop_tables) {
+            $this->log("Processing Relationship: " . $rel_name . "(" . $table . ")", 'info');
+            if ($this->config["config"]['setup_db_drop_tables'] == true) {
                 if ($db->tableExists($table)) {
                     $db->dropTableName($table);
                 }
@@ -437,38 +433,40 @@ class InstallCommand extends Command implements CommandInterface
                 $db->createTableParams($table, $fields, $indices);
             }
 
-            \SugarBean::createRelationshipMeta($rel_name, $db, $table, $rel_dictionary, '');
+            \SugarBean::createRelationshipMeta($rel_name, $db, $table, $dictionary, '');
         }
 
         /**
          * Create Default Settings
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Creating Default Settings...");
-        installerHook('pre_createDefaultSettings');
-        /** @var string $sugar_db_version - loaded from sugar_version.php */
-        $GLOBALS['sugar_db_version'] = $sugar_db_version;
-        insert_default_settings();
-        installerHook('post_createDefaultSettings');
+        $this->log("Creating Default Settings");
+        InstallUtils::installerHook('pre_createDefaultSettings');
+        /**
+         * @todo: $sugar_db_version should be in config
+         * @var string $sugar_db_version - loaded from sugar_version.php
+         */
+        InstallUtils::insertDefaultConfigSettings($db, $this->config["config"], $sugar_db_version);
+        InstallUtils::installerHook('post_createDefaultSettings');
 
         /**
          * Create Administrator User
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Creating Admin User...");
-        installerHook('pre_createUsers');
-        create_default_users();
-        installerHook('post_createUsers');
+        $this->log("Creating Administrator User");
+        InstallUtils::installerHook('pre_createUsers');
+        $current_user = InstallUtils::createAdministratorUser($this->config["config"]);
+        InstallUtils::installerHook('post_createUsers');
 
         /**
          * Rebuild Shedulers
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Rebuilding Schedulers...");
+        $this->log("Rebuilding Schedulers");
         $scheduler = new \Scheduler();
-        installerHook('pre_createDefaultSchedulers');
-        $scheduler->rebuildDefaultSchedulers();
-        installerHook('post_createDefaultSchedulers');
+        InstallUtils::installerHook('pre_createDefaultSchedulers');
+        InstallUtils::rebuildDefaultSchedulers($db, $this->config["config"]);
+        InstallUtils::installerHook('post_createDefaultSchedulers');
+
+
+        die("---KILLED---\n");
 
         /**
          * Update upgrade history
@@ -566,11 +564,11 @@ class InstallCommand extends Command implements CommandInterface
         $enabled_tabs[] = 'AOK_KnowledgeBase';
         $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
 
-        installerHook('pre_setSystemTabs');
+        InstallUtils::installerHook('pre_setSystemTabs');
         require_once(PROJECT_ROOT . '/modules/MySettings/TabController.php');
         $tabs = new \TabController();
         $tabs->set_system_tabs($enabled_tabs);
-        installerHook('post_setSystemTabs');
+        InstallUtils::installerHook('post_setSystemTabs');
 
         /**
          * Modules Post Install
@@ -589,12 +587,12 @@ class InstallCommand extends Command implements CommandInterface
             $this->log(str_repeat("-", 120));
             $this->log("Installing Demo Data...");
 
-            installerHook('pre_installDemoData');
+            InstallUtils::installerHook('pre_installDemoData');
             global $current_user;
             $current_user = new \User();
             $current_user->retrieve(1);
             include(PROJECT_ROOT . '/install/populateSeedData.php');
-            installerHook('post_installDemoData');
+            InstallUtils::installerHook('post_installDemoData');
         }
 
 
@@ -705,7 +703,7 @@ class InstallCommand extends Command implements CommandInterface
          */
         $this->log(str_repeat("-", 120));
         $this->log("Calling Post Install Modules Hook...");
-        installerHook('post_installModules');
+        InstallUtils::installerHook('post_installModules');
 
         /**
          * DONE

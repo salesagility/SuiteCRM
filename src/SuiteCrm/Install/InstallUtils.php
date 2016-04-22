@@ -14,6 +14,265 @@ namespace SuiteCrm\Install;
 class InstallUtils
 {
 
+    /**
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     * @return string
+     */
+    public static function createDate($year=null,$month=null,$day=null)
+    {
+        $timedate = \TimeDate::getInstance();
+        $now = $timedate->getNow();
+        if ($day==null) $day=$now->day+mt_rand(0,365);
+        return $timedate->asDbDate($now->get_day_begin($day, $month, $year));
+    }
+
+    /**
+     * @param int $hour
+     * @param int $min
+     * @param int $sec
+     * @return string
+     */
+    public static function createTime($hour=null,$min=null,$sec=null)
+    {
+        $timedate = \TimeDate::getInstance();
+        $date = $timedate->fromTimestamp(0);
+        if ($hour==null) $hour=mt_rand(6,19);
+        if ($min==null) $min=(mt_rand(0,3)*15);
+        if ($sec==null) $sec=0;
+        return $timedate->asDbTime($date->setDate(2007, 10, 7)->setTime($hour, $min, $sec));
+    }
+
+    /**
+     * Remove all schedulers and create the new ones
+     *
+     * @param \DBManager $db
+     * @param array $config
+     */
+    public static function rebuildDefaultSchedulers($db, $config) {
+        $mod_strings = return_module_language($config["language"], 'Schedulers');
+
+        // truncate scheduler-related tables - @todo: shouldn't be needed
+        $db->query('DELETE FROM schedulers');
+
+        $sched1 = new \Scheduler();
+        $sched1->name               = $mod_strings['LBL_OOTB_WORKFLOW'];
+        $sched1->job                = 'function::processAOW_Workflow';
+        $sched1->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched1->date_time_end      = null;
+        $sched1->job_interval       = '*::*::*::*::*';
+        $sched1->status             = 'Active';
+        $sched1->created_by         = '1';
+        $sched1->modified_user_id   = '1';
+        $sched1->catch_up           = '1';
+        $sched1->save();
+
+        $sched2 = new \Scheduler();
+        $sched2->name               = $mod_strings['LBL_OOTB_REPORTS'];
+        $sched2->job                = 'function::aorRunScheduledReports';
+        $sched2->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched2->date_time_end      = null;
+        $sched2->job_interval       = '*::*::*::*::*';
+        $sched2->status             = 'Active';
+        $sched2->created_by         = '1';
+        $sched2->modified_user_id   = '1';
+        $sched2->catch_up           = '1';
+        $sched2->save();
+
+        $sched3 = new \Scheduler();
+        $sched3->name               = $mod_strings['LBL_OOTB_TRACKER'];
+        $sched3->job                = 'function::trimTracker';
+        $sched3->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched3->date_time_end      = null;
+        $sched3->job_interval       = '0::2::1::*::*';
+        $sched3->status             = 'Active';
+        $sched3->created_by         = '1';
+        $sched3->modified_user_id   = '1';
+        $sched3->catch_up           = '1';
+        $sched3->save();
+
+        $sched4 = new \Scheduler();
+        $sched4->name				= $mod_strings['LBL_OOTB_IE'];
+        $sched4->job				= 'function::pollMonitoredInboxesAOP';
+        $sched4->date_time_start	= self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched4->date_time_end		= null;
+        $sched4->job_interval		= '*::*::*::*::*';
+        $sched4->status				= 'Active';
+        $sched4->created_by			= '1';
+        $sched4->modified_user_id	= '1';
+        $sched4->catch_up			= '0';
+        $sched4->save();
+
+        $sched5 = new \Scheduler();
+        $sched5->name				= $mod_strings['LBL_OOTB_BOUNCE'];
+        $sched5->job				= 'function::pollMonitoredInboxesForBouncedCampaignEmails';
+        $sched5->date_time_start	= self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched5->date_time_end		= null;
+        $sched5->job_interval		= '0::2-6::*::*::*';
+        $sched5->status				= 'Active';
+        $sched5->created_by			= '1';
+        $sched5->modified_user_id	= '1';
+        $sched5->catch_up			= '1';
+        $sched5->save();
+
+        $sched6 = new \Scheduler();
+        $sched6->name				= $mod_strings['LBL_OOTB_CAMPAIGN'];
+        $sched6->job				= 'function::runMassEmailCampaign';
+        $sched6->date_time_start	= self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched6->date_time_end		= null;
+        $sched6->job_interval		= '0::2-6::*::*::*';
+        $sched6->status				= 'Active';
+        $sched6->created_by			= '1';
+        $sched6->modified_user_id	= '1';
+        $sched6->catch_up			= '1';
+        $sched6->save();
+
+        $sched7 = new \Scheduler();
+        $sched7->name               = $mod_strings['LBL_OOTB_PRUNE'];
+        $sched7->job                = 'function::pruneDatabase';
+        $sched7->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched7->date_time_end      = null;
+        $sched7->job_interval       = '0::4::1::*::*';
+        $sched7->status             = 'Inactive';
+        $sched7->created_by         = '1';
+        $sched7->modified_user_id   = '1';
+        $sched7->catch_up           = '0';
+        $sched7->save();
+
+        $sched8 = new \Scheduler();
+        $sched8->name               = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
+        $sched8->job                = 'function::aodIndexUnindexed';
+        $sched8->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched8->date_time_end      = null;
+        $sched8->job_interval       = "0::0::*::*::*";
+        $sched8->status             = 'Active';
+        $sched8->created_by         = '1';
+        $sched8->modified_user_id   = '1';
+        $sched8->catch_up           = '0';
+        $sched8->save();
+
+        $sched9 = new \Scheduler();
+        $sched9->name               = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
+        $sched9->job                = 'function::aodOptimiseIndex';
+        $sched9->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched9->date_time_end      = null;
+        $sched9->job_interval       = "0::*/3::*::*::*";
+        $sched9->status             = 'Active';
+        $sched9->created_by         = '1';
+        $sched9->modified_user_id   = '1';
+        $sched9->catch_up           = '0';
+        $sched9->save();
+
+        $sched12 = new \Scheduler();
+        $sched12->name               = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
+        $sched12->job                = 'function::sendEmailReminders';
+        $sched12->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched12->date_time_end      = null;
+        $sched12->job_interval       = '*::*::*::*::*';
+        $sched12->status             = 'Active';
+        $sched12->created_by         = '1';
+        $sched12->modified_user_id   = '1';
+        $sched12->catch_up           = '0';
+        $sched12->save();
+
+        $sched13 = new \Scheduler();
+        $sched13->name               = $mod_strings['LBL_OOTB_CLEANUP_QUEUE'];
+        $sched13->job                = 'function::cleanJobQueue';
+        $sched13->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched13->date_time_end      = null;
+        $sched13->job_interval       = '0::5::*::*::*';
+        $sched13->status             = 'Active';
+        $sched13->created_by         = '1';
+        $sched13->modified_user_id   = '1';
+        $sched13->catch_up           = '0';
+        $sched13->save();
+
+        $sched14 = new \Scheduler();
+        $sched14->name              = $mod_strings['LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS'];
+        $sched14->job               = 'function::removeDocumentsFromFS';
+        $sched14->date_time_start   = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched14->date_time_end     = null;
+        $sched14->job_interval      = '0::3::1::*::*';
+        $sched14->status            = 'Active';
+        $sched14->created_by        = '1';
+        $sched14->modified_user_id  = '1';
+        $sched14->catch_up          = '0';
+        $sched14->save();
+
+        $sched15 = new \Scheduler();
+        $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
+        $sched15->job                = 'function::trimSugarFeeds';
+        $sched15->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
+        $sched15->date_time_end      = null;
+        $sched15->job_interval       = '0::2::1::*::*';
+        $sched15->status             = 'Active';
+        $sched15->created_by         = '1';
+        $sched15->modified_user_id   = '1';
+        $sched15->catch_up           = '1';
+        $sched15->save();
+    }
+
+    /**
+     * Create Admin user
+     *
+     * @param array $config
+     * @return \User
+     */
+    public static function createAdministratorUser($config)
+    {
+        //Create default admin user
+        $user = new \User();
+        $user->id = 1;
+        $user->new_with_id = true;
+        $user->last_name = 'Administrator';
+        $user->user_name = $config["setup_site_admin_user_name"];
+        $user->title = "Administrator";
+        $user->status = 'Active';
+        $user->is_admin = true;
+        $user->employee_status = 'Active';
+        $user->user_hash = \User::getPasswordHash($config["setup_site_admin_password"]);
+        $user->email = '';//@todo: a config for this would be good
+        //$user->picture = UserDemoData::_copy_user_image($user->id);
+        $user->save();
+
+        //I'd get rid of this - let Administrator create users after login
+        /*
+        if( $create_default_user ){
+            $default_user = new User();
+            $default_user->last_name = $sugar_config['default_user_name'];
+            $default_user->user_name = $sugar_config['default_user_name'];
+            $default_user->status = 'Active';
+            if( isset($sugar_config['default_user_is_admin']) && $sugar_config['default_user_is_admin'] ){
+                $default_user->is_admin = true;
+            }
+            $default_user->user_hash = User::getPasswordHash($sugar_config['default_password']);
+            $default_user->save();
+        }
+        */
+        return $user;
+    }
+
+    /**
+     * @todo: resolve and remove $sugar_db_version parameter from here (put it to $config)
+     * @param \DBManager $db
+     * @param array $config
+     */
+    public static function insertDefaultConfigSettings($db, $config, $sugar_db_version = null)
+    {
+        $sugar_db_version = $sugar_db_version ? $sugar_db_version : $config['setup_sugar_version'];
+
+        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', 'do_not_reply@example.com')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', 'SuiteCRM')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_by_default', '1')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'on', '1')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_from_assigning_user', '0')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('info', 'sugar_version', '" . $sugar_db_version . "')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('MySettings', 'tab', '')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('portal', 'on', '0')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('tracker', 'Tracker', '1')");
+        $db->query( "INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')" );
+    }
 
     /**
      * @todo: write template file for this: load, substitute, save
