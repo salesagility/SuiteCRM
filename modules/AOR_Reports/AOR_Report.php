@@ -1234,6 +1234,12 @@ class AOR_Report extends Basic {
 
                         case 'Date':
                             $params = unserialize(base64_decode($condition->value));
+
+                            // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+                            if($params == false) {
+                                $params = $condition->value;
+                            }
+
                             if ($params[0] == 'now') {
                                 if ($sugar_config['dbconfig']['db_type'] == 'mssql') {
                                     $value = 'GetDate()';
