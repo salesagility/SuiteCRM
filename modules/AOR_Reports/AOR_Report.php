@@ -1334,6 +1334,9 @@ class AOR_Report extends Basic {
                             $date = getPeriodEndDate($params)->format('Y-m-d H:i:s');
                             $value = '"' . getPeriodDate($params)->format('Y-m-d H:i:s') . '"';
 
+                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND '));
+                            $tiltLogicOp = false;
+
                             switch ($app_list_strings['aor_sql_operator_list'][$condition->operator]) {
                                 case "=":
                                     $query['where'][] = $field . ' BETWEEN ' . $value .  ' AND ' . '"' . $date . '"';
