@@ -460,32 +460,27 @@ class InstallCommand extends Command implements CommandInterface
          * Rebuild Shedulers
          */
         $this->log("Rebuilding Schedulers");
-        $scheduler = new \Scheduler();
         InstallUtils::installerHook('pre_createDefaultSchedulers');
         InstallUtils::rebuildDefaultSchedulers($db, $this->config["config"]);
         InstallUtils::installerHook('post_createDefaultSchedulers');
 
 
-        die("---KILLED---\n");
-
         /**
-         * Update upgrade history
+         * @todo: check this - setup_installed_lang_packs in $config is not set anywhere
+         * Update upgrade history - language packs
          */
-        if (isset($_SESSION['INSTALLED_LANG_PACKS']) && is_array($_SESSION['INSTALLED_LANG_PACKS'])
-            && !empty($_SESSION['INSTALLED_LANG_PACKS'])
-        ) {
-            $this->log(str_repeat("-", 120));
-            $this->log("Updating upgrade history...");
-            updateUpgradeHistory();
+        if (!empty($this->config["config"]['setup_installed_lang_packs'])) {
+            $this->log("Registering Language Packs");
+            InstallUtils::registerLanguagePacks($this->config["config"]);
         }
-
 
         /**
          *  Enable Sugar Feeds
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Enabling Sugar Feeds...");
-        enableSugarFeeds();
+        $this->log("Enabling Sugar Feeds");
+        InstallUtils::enableSugarFeeds();
+
+        die("---KILLED---\n");
 
 
         /**

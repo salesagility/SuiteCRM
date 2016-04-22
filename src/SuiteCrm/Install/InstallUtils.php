@@ -15,6 +15,47 @@ class InstallUtils
 {
 
     /**
+     * Fully enable SugarFeeds, enabling the user feed and all available modules that have SugarFeed data.
+     */
+    public static function enableSugarFeeds()
+    {
+        $admin = new \Administration();
+        $admin->saveSetting('sugarfeed','enabled','1');
+
+        foreach ( \SugarFeed::getAllFeedModules() as $module ) {
+            \SugarFeed::activateModuleFeed($module);
+        }
+
+        check_logic_hook_file('Users','after_login', array(1, 'SugarFeed old feed entry remover', 'modules/SugarFeed/SugarFeedFlush.php', 'SugarFeedFlush', 'flushStaleEntries'));
+    }
+
+    /**
+     * Registers Language packs
+     *
+     * @todo: make me work! DISABLED
+     * this is messy: install/install_utils.php:118
+     *
+     *
+     * @param array $config
+     */
+    public static function registerLanguagePacks($config) {
+        /*
+        if(count($config['setup_installed_lang_packs']) > 0) {
+            foreach($config['setup_installed_lang_packs'] as $k => $zipFile) {
+                $new_upgrade = new \UpgradeHistory();
+                $new_upgrade->filename      = $zipFile;
+                $new_upgrade->md5sum        = md5_file($zipFile);
+                $new_upgrade->type          = 'langpack';
+                $new_upgrade->version       = $_SESSION['INSTALLED_LANG_PACKS_VERSION'][$k];
+                $new_upgrade->status        = "installed";
+                $new_upgrade->manifest      = $_SESSION['INSTALLED_LANG_PACKS_MANIFEST'][$k];
+                $new_upgrade->save();
+            }
+        }
+        */
+    }
+
+    /**
      * @param int $year
      * @param int $month
      * @param int $day
