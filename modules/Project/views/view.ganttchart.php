@@ -43,6 +43,10 @@ class ProjectViewGanttChart extends SugarView {
         echo '<script type="text/javascript" src="modules/Project/js/jquery.validate.min.js"></script>';
 
         $project = new Project();
+
+		if( !isset($_REQUEST["project_id"]) || trim($_REQUEST["project_id"]) == "")
+			$_REQUEST["project_id"] = $_REQUEST["record"];
+
         $project->retrieve($_REQUEST["project_id"]);
         //Get project resources (users & contacts)
         $resources1 = $project->get_linked_beans('project_users_1','User');
