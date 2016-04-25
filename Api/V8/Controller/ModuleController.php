@@ -63,7 +63,7 @@ class ModuleController extends Api
      *
      * @return Response
      */
-    public function getAvailableModules(Request $req, Response $res, $args)
+    public function getModules(Request $req, Response $res, $args)
     {
         global $container;
 
@@ -275,7 +275,7 @@ class ModuleController extends Api
      *
      * @return Response
      */
-    public function getLastViewed(Request $req, Response $res, $args)
+    public function getViewed(Request $req, Response $res, $args)
     {
         global $container, $moduleList;
         $lib = new ModuleLib();
@@ -313,6 +313,25 @@ class ModuleController extends Api
         }
     }
 
+
+    public function getModulesMenu(Request $req, Response $res, $args)
+    {
+        global $app_list_strings, $current_user;
+
+        $menuList = [];
+        foreach (query_module_access_list($current_user) as $module) {
+            if (isset($app_list_strings['moduleList'][$module])) {
+                $menuList[$module] = $app_list_strings['moduleList'][$module];
+            }
+        }
+
+        if (!empty($menuList)) {
+            return $this->generateResponse($res, 200, $menuList, 'Success');
+        }
+
+        return $this->generateResponse($res, 404, 'No Menu Found', 'Failure');
+    }
+
     /**
      * @param Request  $req
      * @param Response $res
@@ -320,7 +339,7 @@ class ModuleController extends Api
      *
      * @return Response
      */
-    public function deleteModuleItem(Request $req, Response $res, $args)
+    public function deleteModuleRecord(Request $req, Response $res, $args)
     {
         global $moduleList;
         $lib = new ModuleLib();
@@ -473,7 +492,7 @@ class ModuleController extends Api
      *
      * @return Response
      */
-    public function updateModuleItem(Request $req, Response $res, $args)
+    public function updateModuleRecord(Request $req, Response $res, $args)
     {
         global $moduleList;
         $lib = new ModuleLib();
@@ -507,7 +526,7 @@ class ModuleController extends Api
      *
      * @return Response
      */
-    public function createModuleItem(Request $req, Response $res, $args)
+    public function createModuleRecord(Request $req, Response $res, $args)
     {
         global $moduleList;
         $module = $args['module'];

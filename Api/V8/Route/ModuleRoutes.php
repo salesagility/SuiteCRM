@@ -1,15 +1,23 @@
 <?php
 
-$app->group('/V8', function () use ($app) {
+$app->group('/V8/module', function () use ($app) {
 
-    $app->group('/module/{module}', function () use ($app) {
+    $app->get('', 'SuiteCRM\Api\V8\Controller\ModuleController:getModules');
+    $app->get('/menu', 'SuiteCRM\Api\V8\Controller\ModuleController:getModulesMenu');
+    $app->get('/viewed', 'SuiteCRM\Api\V8\Controller\ModuleController:getRecordsViewed');
+    $app->get('/favorites', 'SuiteCRM\Api\V8\Controller\ModuleController:getFavorites');
+    
+    $app->group('/{module}', function () use ($app) {
 
         $app->get('', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleRecords');
-        $app->post('', 'SuiteCRM\Api\V8\Controller\ModuleController:createModuleItem');
+        $app->post('', 'SuiteCRM\Api\V8\Controller\ModuleController:createModuleRecord');
 
         $app->get('/language', 'SuiteCRM\Api\V8\Controller\ModuleController:getLanguageDefinition');
         $app->get('/fields', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleFields');
         $app->get('/links', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleLinks');
+        $app->get('/menu', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleMenu');
+        $app->get('/viewed', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleRecordsViewed');
+        $app->get('/favorites', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleFavorites');
 
         $app->get('/view/{view}', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleLayout');
 
@@ -26,14 +34,8 @@ $app->group('/V8', function () use ($app) {
         $app->delete('/{id}/{link}','SuiteCRM\Api\V8\Controller\ModuleController:deleteRelationships');
 
         $app->get('/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:getModuleRecord');
-        $app->put('/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:updateModuleItem');
-        $app->delete('/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteModuleItem');
+        $app->put('/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:updateModuleRecord');
+        $app->delete('/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:deleteModuleRecord');
 
     });
-
-    $app->get('/available_modules', 'SuiteCRM\Api\V8\Controller\ModuleController:getAvailableModules');
-    $app->get('/last_viewed', 'SuiteCRM\Api\V8\Controller\ModuleController:getLastViewed');
-    $app->get('/note_attachment/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:getNoteAttachment');
-
-    $app->post('/convert_lead/{id}', 'SuiteCRM\Api\V8\Controller\ModuleController:convertLead');
 });

@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('sugarEntry')) {
     define('sugarEntry', true);
 }
@@ -23,14 +22,16 @@ foreach ($routeFiles as $routeFile) {
     require $routeFile;
 }
 
+$services = require_once __DIR__ . '/serviceConfig.php';
 $container = $app->getContainer();
-$container['jwt'] = function ($container) {
-    return new StdClass();
-};
+foreach ($services as $service => $closure) {
+    $container[$service] = $closure;
+}
 
 if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
     $app->add(new \Slim\Middleware\JwtAuthentication([
         'secure' => false,
+        "cookie" => "SUITECRM_REST_API_TOKEN",
         'secret' => $sugar_config['unique_key'],
         'environment' => 'REDIRECT_HTTP_AUTHORIZATION',
         'rules' => [
@@ -40,10 +41,14 @@ if ($_SERVER['REQUEST_METHOD'] != 'OPTIONS') {
             ]),
         ],
         'callback' => function ($request, $response, $arguments) use ($container) {
-            $container['jwt'] = $arguments['decoded'];
+            global $current_user;
+            $token = $arguments['decoded'];
+            $current_user = new \user();
+            $current_user->retrieve($token->userId);
+            $container['jwt'] = $token;
         },
         'error' => function ($request, $response, $arguments) use ($app) {
-            return $response->write('Authentication Failed');
+            return $response->write('Authentication Error');
         },
     ]));
 }
