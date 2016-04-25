@@ -66,7 +66,7 @@ class ProjectListViewData extends ListViewData{
 				. " style='position: relative;'><!--not_in_theme!--><img vertical-align='middle' class='info' border='0' alt='".$app_strings['LBL_ADDITIONAL_DETAILS']."' src='$jscalendarImage'></span>";
 
         $extra .= "&nbsp;&nbsp;<span id='aadspan_" . $id . "' "
-                . "onclick=\"location.href='index.php?module=Project&action=view_GanttChart&project_id=". $id ."'\" "
+                . "onclick=\"location.href='index.php?module=Project&action=DetailView&record=". $id ."'\" "
 				. " style='position: relative;'><!--not_in_theme!--><img vertical-align='middle' class='info' border='0' alt='".$app_strings['LBL_ADDITIONAL_DETAILS']."' src='$jsdetailviewImage'></span>";
 
         return array('fieldToAddTo' => $this->additionalDetailsFieldToAdd, 'string' => $extra);
