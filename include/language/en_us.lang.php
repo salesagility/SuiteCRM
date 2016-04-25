@@ -620,8 +620,8 @@ $app_list_strings = array(
             'Active' => 'Active',
             'Inactive' => 'Inactive',
             'Complete' => 'Complete',
-            'In Queue' => 'In Queue',
-            'Sending' => 'Sending',
+            //'In Queue' => 'In Queue',
+            //'Sending' => 'Sending',
         ),
     'campaign_type_dom' => array(
             '' => '',
