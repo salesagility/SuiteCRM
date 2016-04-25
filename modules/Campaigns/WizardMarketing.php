@@ -436,6 +436,18 @@ $dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
 //    )
 //    , true);
 
+
+if(isset($_REQUEST['redirectToTargetList']) && $_REQUEST['redirectToTargetList']) {
+    $ss->assign('hideScreen', true);
+    $dotListWizardMenu .= <<<JS
+<script type="text/javascript">
+$(function(){
+    document.location.href = $('#nav_step2 a').first().attr('href');
+});
+</script>
+JS;
+}
+
 $ss->assign('WIZMENU', $dotListWizardMenu);
 
 $diagnose = diagnose($errors, $links);

@@ -46,13 +46,15 @@
         elem1.style.display = 'none';
     }
 
-	/*
-	 * this function shows a div using the passed in value
-	 */
-    function show(div){
-        var elem1 = document.getElementById(div);
-        elem1.style.display = '';
-    }
+/*
+ * this function shows a div using the passed in value
+ */
+function show(div){
+  var elem1 = document.getElementById(div);
+  if(elem1) {
+    elem1.style.display = '';
+  }
+}
 	/*
 	 * this function calls the methods to hide all divs and show the passed in div
 	 */
@@ -132,14 +134,28 @@ function navigate(direction, noValidation){
   var current_step = document.getElementById('wiz_current_step');
   var currentValue = parseInt(current_step.value);
 
+  var campaignId = $('input[name="record"]').val();
+  if(!campaignId) {
+    campaignId = $('input[name="campaign_id"]').val();
+  }
+
   //validation needed. (specialvalidation,  plus step number, plus submit button)
-  if(noValidation || validate_wiz(current_step.value,direction)){
+  var validationResult = validate_wiz(current_step.value,direction);
+  if(noValidation || validationResult){
 
     //change current step value to that of the step being navigated to
     if(direction == 'back'){
       current_step.value = currentValue-1;
     }
     if(direction == 'next'){
+      if(currentValue == 1) {
+        if(!campaignId) {
+          campaignCreateAndRefreshPage();
+        }
+        else {
+          campaignUpdate();
+        }
+      }
       current_step.value = currentValue+1;
     }
     if(direction == 'direct'){
@@ -201,6 +217,23 @@ function navigate(direction, noValidation){
     //error occurred, do nothing
   }
 
+}
+
+
+function campaignCreateAndRefreshPage() {
+  var wizform = document.getElementById('wizform');
+  wizform.action.value = 'WizardNewsletterSave';
+  wizform.direction.value='continue_targetList';
+  wizform.submit();
+}
+
+function campaignUpdate() {
+  var wizform = document.getElementById('wizform');
+  wizform.action.value = 'WizardNewsletterSave';
+  wizform.direction.value='continue';
+  $.post($('#wizform').attr('action'), $('#wizform').serialize(), function(){
+
+  });
 }
 
     /*
