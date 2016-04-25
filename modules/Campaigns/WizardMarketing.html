@@ -919,6 +919,14 @@
 			<select id="marketing_select">
 
 			</select>
+
+			&nbsp;
+
+			{$MOD.LBL_WIZ_EMAILTPL_TITLE}
+			<select id="template_select">
+				{$EMAIL_TEMPLATE_OPTIONS}
+			</select>
+
 			{literal}
 			<script type="text/javascript">
 				var refreshMarketingSelect = function() {
@@ -947,8 +955,27 @@
 
 				};
 
+				var saveMarketingAndTemplate = function() {
+					var campaignId = '{/literal}{$CAMPAIGN_ID}{literal}';
+					var marketingId = $('#marketing_select').val();
+					var templateId = $('#template_select').val();
+					$.post('index.php?entryPoint=setCampaignMarketingAndTemplate', {
+						'campaignId': campaignId,
+						'marketingId': marketingId,
+						'templateId': templateId
+					}, function(resp){
+						console.log(resp);
+					});
+				};
+
 				$(function(){
 					refreshMarketingSelect();
+					$('#marketing_select').change(function(){
+						saveMarketingAndTemplate();
+					});
+					$('#template_select').change(function(){
+						saveMarketingAndTemplate();
+					});
 				});
 			</script>
 			{/literal}

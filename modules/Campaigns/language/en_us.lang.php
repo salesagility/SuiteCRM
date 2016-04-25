@@ -238,6 +238,7 @@ $mod_strings = array (
   'LBL_WIZ_NEWSLETTER_TITLE_STEP4' => 'Subscription Information',
   'LBL_WIZ_MARKETING_TITLE' => 'Marketing Email',
   'LBL_WIZ_SENDMAIL_TITLE' => 'Select Email Marketing',
+	'LBL_WIZ_EMAILTPL_TITLE' => 'Select Email Template',
   'LBL_WIZ_TEST_EMAIL_TITLE' => 'Test Email',
   'LBL_WIZ_NEWSLETTER_TITLE_SUMMARY' => 'Summary',
   'LBL_NAVIGATION_MENU_GEN1' => 'Campaign Header',

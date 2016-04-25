@@ -84,6 +84,7 @@ $entry_point_registry = array(
 	'emailMarketingData' => array('file' => 'modules/EmailMarketing/Save.php', 'auth' => true),
 	'campaignTrackerSave' => array('file' => 'modules/CampaignTrackers/Save.php', 'auth' => true),
 	'emailMarketingList' => array('file' => 'modules/EmailMarketing/List.php', 'auth' => true),
+	'setCampaignMarketingAndTemplate' => array('file' => 'modules/Campaigns/WizardCampaignSave.php', 'auth' => true),
 );
 
 ?>
