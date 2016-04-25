@@ -135,6 +135,9 @@ function navigate(direction, noValidation){
   var currentValue = parseInt(current_step.value);
 
   var campaignId = $('input[name="record"]').val();
+  if(!campaignId) {
+    campaignId = $('input[name="campaign_id"]').val();
+  }
 
   //validation needed. (specialvalidation,  plus step number, plus submit button)
   var validationResult = validate_wiz(current_step.value,direction);

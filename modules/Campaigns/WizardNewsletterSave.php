@@ -51,8 +51,11 @@ global $mod_strings;
 
     //create new campaign bean and populate
     $campaign_focus = new Campaign();
-    if(isset($_REQUEST['record'])) {
+    if(isset($_REQUEST['record']) && $_REQUEST['record'] && !(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'])) {
         $campaign_focus->retrieve($_REQUEST['record']);
+    }
+    else if(isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id']) {
+        $campaign_focus->retrieve($_REQUEST['campaign_id']);
     }
 
     $camp_steps[] = 'wiz_step1_';
