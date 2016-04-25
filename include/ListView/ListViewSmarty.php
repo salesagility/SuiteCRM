@@ -69,8 +69,8 @@ class ListViewSmarty extends ListViewDisplay{
      * Constructor, Smarty object immediately available after
      *
      */
-	function ListViewSmarty() {
-		parent::ListViewDisplay();
+    public function __construct() {
+		parent::__construct();
 		$this->ss = new Sugar_Smarty();
 	}
 
@@ -106,7 +106,7 @@ class ListViewSmarty extends ListViewDisplay{
         }
 
         //Check if inline editing is enabled for list view.
-        if($sugar_config['enable_line_editing_list']){
+        if(!isset($sugar_config['enable_line_editing_list']) || $sugar_config['enable_line_editing_list']){
             $this->ss->assign('inline_edit', true);
         }
 
@@ -144,7 +144,7 @@ class ListViewSmarty extends ListViewDisplay{
             $menu_location = 'bottom';
             $this->ss->assign('actionsLinkBottom', $this->buildActionsLink('actions_link' ,$menu_location));
 		}
-		
+
 		$this->ss->assign('quickViewLinks', $this->quickViewLinks);
 
 		// handle save checks and stuff
@@ -216,7 +216,7 @@ class ListViewSmarty extends ListViewDisplay{
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
         $this->ss->assign('data', $this->data['data']);
         $this->ss->assign('query', $this->data['query']);
-        $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version, 
+        $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
 											  "sugar_flavor" => $sugar_flavor));
 		$this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
 		$this->ss->assign('pageData', $this->data['pageData']);
@@ -229,7 +229,7 @@ class ListViewSmarty extends ListViewDisplay{
         $this->ss->assign('navStrings', $navStrings);
 
         $displayEmptyDataMessages = TRUE;
-        //TODO: Cleanup, better logic for which modules are exempt from the new messaging. 
+        //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
         $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
         if( (isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
             || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule, $modulesExemptFromEmptyDataMessages) )

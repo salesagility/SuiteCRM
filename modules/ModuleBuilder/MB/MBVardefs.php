@@ -46,7 +46,7 @@ class MBVardefs{
 	var $name = '';
 	var $errors = array();
 
-	function MBVardefs($name, $path, $key_name){
+	function __construct($name, $path, $key_name){
 		$this->path = $path;
 		$this->name = $name;
 		$this->key_name = $key_name;
@@ -123,7 +123,7 @@ class MBVardefs{
 	function getVardef(){
 		return $this->vardef;
 	}
-		
+
 
     function addFieldVardef($vardef)
     {

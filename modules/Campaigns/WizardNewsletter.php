@@ -165,7 +165,10 @@ $ss->assign("CAMP_IMPRESSIONS", $focus->impressions);
 if (empty($focus->assigned_user_id) && empty($focus->id))  $focus->assigned_user_id = $current_user->id;
 if (empty($focus->assigned_name) && empty($focus->id))  $focus->assigned_user_name = $current_user->user_name;
 $ss->assign("ASSIGNED_USER_OPTIONS", get_select_options_with_id(get_user_array(TRUE, "Active", $focus->assigned_user_id), $focus->assigned_user_id));
-$ss->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
+//$ss->assign("ASSIGNED_USER_NAME", $focus->assigned_user_name);
+
+$focus->list_view_parse_additional_sections($ss);
+
 $ss->assign("ASSIGNED_USER_ID", $focus->assigned_user_id );
 
 if((!isset($focus->status)) && (!isset($focus->id)))
@@ -268,10 +271,12 @@ if($campaign_type == 'general'){
     //Assign Email as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_EMAIL']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='Email'");
+    $ss->assign("HIDE_CAMPAIGN_TYPE", true);
 }else{
     //Assign NewsLetter as type of campaign being created an disable the select widget
     $ss->assign("CAMPAIGN_TYPE_OPTIONS", $mod_strings['LBL_NEWSLETTER']);
     $ss->assign("SHOULD_TYPE_BE_DISABLED", "input type='hidden' value='NewsLetter'");
+    $ss->assign("HIDE_CAMPAIGN_TYPE", true);
 
 }
 
@@ -383,6 +388,34 @@ $json = getJSONobj();
 $encoded_newsletter_popup_request_data = $json->encode($popup_request_data);
 $ss->assign('encoded_target_list_popup_request_data', $encoded_newsletter_popup_request_data);
 
+
+// ----- show target lists...
+
+$targetList = BeanFactory::getBean('ProspectLists')->get_full_list();
+
+$targetListData = array();
+foreach($targetList as $prospectLst) {
+    $nxt = array(
+        'id' => $prospectLst->id,
+        'name' => $prospectLst->name,
+        //'type' => $prospectLst->type,
+        'description' => $prospectLst->description,
+        'type' => $prospectLst->list_type,
+        'count' => $prospectLst->get_entry_count(),
+    );
+    $targetListDataArray[] = $nxt;
+    $targetListDataAssoc[$prospectLst->id] = $nxt;
+}
+
+
+$ss->assign('targetListData', $targetListDataArray);
+
+$targetListDataJSON = json_encode($targetListDataAssoc);
+$ss->assign('targetListDataJSON', $targetListDataJSON);
+
+// -----
+
+
 $ss->assign('TARGET_OPTIONS', get_select_options_with_id($app_list_strings['prospect_list_type_dom'], 'default'));
 
 //retrieve the subscriptions
@@ -425,38 +458,36 @@ if(count($prospect_lists)>0){
 
 
 }else{
- //this is not a newlsetter campaign, so fill in target list table
+    //this is not a newlsetter campaign, so fill in target list table
     //create array for javascript, this will help to display the option text, not the value
     $dom_txt =' ';
     foreach($app_list_strings['prospect_list_type_dom'] as $key=>$val){
         $dom_txt .="if(trgt_type_text =='$key'){trgt_type_text='$val';}";
     }
-    $ss->assign("PL_DOM_STMT", $dom_txt); 
+    $ss->assign("PL_DOM_STMT", $dom_txt);
     $trgt_count = 0;
     $trgt_html = ' ';
     if(count($prospect_lists)>0){
-        
+
         foreach($prospect_lists as $pl_id){
-        //retrieve prospect list
-             $pl = new ProspectList();   
-             $pl_focus = $pl->retrieve($pl_id);
-             $trgt_html .= "<div id='existing_trgt".$trgt_count."'> <table class='tabDetailViewDL2' width='100%'>" ;
-             $trgt_html .= "<td width='25%'> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". $pl_focus->name."' >". $pl_focus->name."</td>";
-             $trgt_html .= "<td width='25%'><input type='hidden' size='60' maxlength='255' name='existing_tracker_list_type". $trgt_count ."'   id='existing_tracker_list_type". $trgt_count ."' value='".$pl_focus->list_type."' >".$app_list_strings['prospect_list_type_dom'][$pl_focus->list_type];
-             $trgt_html .= "<input type='hidden' name='added_target_id". $trgt_count ."' id='added_target_id". $trgt_count ."' value='". $pl_focus->id ."' ></td>";
-             $trgt_html .= "<td><a href='#' onclick=\"javascript:remove_existing_target('existing_trgt".$trgt_count."','".$pl_focus->id."'); \" >  ";
-             $trgt_html .= SugarThemeRegistry::current()->getImage('delete_inline', "border='0' align='absmiddle'", 12, 12, ".gif", $mod_strings['LBL_DELETE'])."</a></td></tr></table></div>";
+            //retrieve prospect list
+            $pl = new ProspectList();
+            $pl_focus = $pl->retrieve($pl_id);
+            $trgt_html .= "<div id='existing_trgt".$trgt_count."'> <table class='tabDetailViewDL2' width='100%'>" ;
+            $trgt_html .= "<td width='100' style=\"width:25%\"> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". $pl_focus->name."' ><a href=\"index.php?module=ProspectLists&action=DetailView&record=" . $pl_focus->id . "\" target=\"_blank\" title=\"" . $mod_strings['LBL_OPEN_IN_NEW_WINDOW'] . "\">". $pl_focus->name."</a></td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\">".$pl_focus->get_entry_count()."</td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\"><input type='hidden' size='60' maxlength='255' name='existing_tracker_list_type". $trgt_count ."'   id='existing_tracker_list_type". $trgt_count ."' value='".$pl_focus->list_type."' >".$app_list_strings['prospect_list_type_dom'][$pl_focus->list_type];
+            $trgt_html .= "<input type='hidden' name='added_target_id". $trgt_count ."' id='added_target_id". $trgt_count ."' value='". $pl_focus->id ."' ></td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\"><a href='#' onclick=\"javascript:remove_existing_target('existing_trgt".$trgt_count."','".$pl_focus->id."'); \" >  ";
+            $trgt_html .= SugarThemeRegistry::current()->getImage('delete_inline', "border='0' align='absmiddle'", 12, 12, ".gif", $mod_strings['LBL_DELETE'])."</a></td></tr></table></div>";
 
-
-    
-          
-          $trgt_count =$trgt_count +1;
+            $trgt_count =$trgt_count +1;
         }
-        
+
         $trgt_html  .= "<div id='no_targets'></div>";
     }else{
         $trgt_html  .= "<div id='no_targets'><table width='100%' border='0' cellspacing='0' cellpadding='0'><tr class='evenListRowS1'><td>".$mod_strings['LBL_NONE']."</td></tr></table></div>";
-        
+
     }
     $ss->assign('EXISTING_TARGETS', $trgt_html );
 
@@ -482,9 +513,17 @@ if(!empty($focus->id)){
 
 $script_to_call ='';
     if (!empty($focus->id)){
-        $script_to_call = "link_navs(1,4);";
+        $maxStep = 2;
+        $script_to_call = "link_navs(1, {$maxStep});";
         if(isset($_REQUEST['direct_step']) and !empty($_REQUEST['direct_step'])){
-            $script_to_call .='   direct('.$_REQUEST['direct_step'].');';
+            $directStep = (int) $_REQUEST['direct_step'];
+            if($directStep < 1) {
+                $directStep = 1;
+            }
+            if($directStep > $maxStep) {
+                $directStep = $maxStep;
+            }
+            $script_to_call .='   direct(' . $directStep . ');';
         }
     } 
     $ss->assign("HILITE_ALL", $script_to_call);
@@ -504,7 +543,7 @@ $script_to_call ='';
             if(!validate_step1()){return false;}
             break;
             case 'step2':
-            if(!validate_step2()){return false;} 
+            //if(!validate_step2()){return false;}
             break;                  
             default://no additional validation needed      
         }
@@ -525,17 +564,43 @@ $sshtml = ' ';
 //Create the html to fill in the wizard steps
 
 if($campaign_type == 'general'){
-    $steps = create_campaign_steps();    
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'campaign',$mrkt_string,$summ_url));
+    $steps = create_campaign_steps();
+
+    foreach($steps as $key => $step) {
+        $_steps[$key] = false;
+    }
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'campaign',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','hidden');
 
 }elseif($campaign_type == 'email'){
-    $steps = create_email_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'email',$mrkt_string,$summ_url));
+    $steps = create_email_steps();
+    if($focus->id) {
+        $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
+    }
+    else {
+        $summ_url = false;
+    }
+    foreach($steps as $key => $step) {
+        $_steps[$key] = false;
+    }
+    $campaign_id = $focus->id;
+    $marketing_id = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : null;
+    $template_id = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : null;
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'email',$mrkt_string,$summ_url, 'dotlist', $campaign_id, $marketing_id, $template_id));
     $ss->assign('HIDE_CONTINUE','submit');
 }else{
-    $steps = create_newsletter_steps();  
-    $ss->assign('NAV_ITEMS',create_wiz_menu_items($steps,'newsletter',$mrkt_string,$summ_url));
+    $steps = create_newsletter_steps();
+
+    if($focus->id) {
+        $summ_url = "index.php?action=WizardHome&module=Campaigns&return_id=" . $focus->id . "&record=" . $focus->id;
+    }
+    else {
+        $summ_url = false;
+    }
+    foreach($steps as $key => $step) {
+        $_steps[$key] = false;
+    }
+    $ss->assign('NAV_ITEMS',create_wiz_menu_items($_steps,'newsletter',$mrkt_string,$summ_url, 'dotlist'));
     $ss->assign('HIDE_CONTINUE','submit');
 }
 
@@ -546,14 +611,28 @@ $ss->assign('STEPS',$sshtml);
 
 /**************************** FINAL END OF PAGE UI Stuff *******************/
 
+if(isset($_REQUEST['wizardtype'])) {
+    switch($_REQUEST['wizardtype']) {
+        case '1':
+            $ss->assign('campaign_type', 'NewsLetter');
+            break;
+        case '2':
+            $ss->assign('campaign_type', 'Email');
+            break;
+        case '3':
+            $ss->assign('campaign_type', 'Telesales');
+            break;
+    }
+}
+
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
 
 function create_newsletter_steps(){
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
     $steps[$mod_strings['LBL_NAVIGATION_MENU_SUBSCRIPTIONS']] = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetList.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetList.tpl';
     return  $steps;
 }
@@ -569,8 +648,8 @@ function create_campaign_steps(){
 function create_email_steps(){
     global $mod_strings;
     $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN1']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignHeader.tpl' : 'modules/Campaigns/tpls/WizardCampaignHeader.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
-    $steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_GEN2']]          = file_exists('custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignBudget.tpl' : 'modules/Campaigns/tpls/WizardCampaignBudget.tpl';
+    //$steps[$mod_strings['LBL_NAVIGATION_MENU_TRACKERS']]      = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTracker.tpl' : 'modules/Campaigns/tpls/WizardCampaignTracker.tpl';
     $steps[$mod_strings['LBL_TARGET_LISTS']]                   = file_exists('custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl') ? 'custom/modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl' : 'modules/Campaigns/tpls/WizardCampaignTargetListForNonNewsLetter.tpl';
     return  $steps;
 }
@@ -589,27 +668,69 @@ function create_wiz_step_divs($steps,$ss){
     }
     return $step_html;
 }
- 
-function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url){
+
+function create_wiz_menu_items($steps,$type,$mrkt_string,$summ_url, $view = null, $campaign_id = null, $marketing_id = null, $template_id = null){
+
     global $mod_strings;
-    $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
-    if(isset($steps)  && !empty($steps)){
-        $i=1;
-        foreach($steps as $name=>$step){
-            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step$i'>$name</div></td></tr>";
-            $i=$i+1;
+
+
+    if($view == 'dotlist') {
+
+        include_once 'modules/Campaigns/DotListWizardMenu.php';
+
+        if($type!='campaign') {
+            $templateURLForProgressBar = false;
+            if ($campaign_id && $marketing_id && $template_id) {
+                $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_id}&campaign_id={$campaign_id}&jump=2&marketing_id={$marketing_id}&record={$marketing_id}&campaign_type=Email&template_id={$template_id}";
+            }
+
+            if(preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches)) {
+                $templateURLForProgressBar = $matches[1];
+            }
+
+            $steps[$mod_strings['LBL_SELECT_TEMPLATE']] = $templateURLForProgressBar;
         }
+
+        if ($type == 'newsletter' || $type == 'email') {
+
+            preg_match('/\bhref=\'([^\']*)/', $mrkt_string, $matches);
+            if(isset($matches[1])) {
+                $marketingLink = $matches[1] . ($matches[1] ? '&jump=2' : false);
+            }
+            else {
+                $marketingLink = false;
+            }
+
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_MARKETING']] = $marketingLink;
+            $steps[$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL_AND_SUMMARY']] = $summ_url ? $summ_url : false;
+            //$steps[$summ_url] = '#';
+        } else {
+            $steps[$summ_url] = false; //'#';
+        }
+
+        $nav_html = new DotListWizardMenu($mod_strings, $steps, true);
+
     }
-    if($type == 'newsletter'  ||  $type == 'email'){
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
-        $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
-    }else{
-     $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";   
+    else {
+        $nav_html = '<table border="0" cellspacing="0" cellpadding="0" width="100%" >';
+        if(isset($steps)  && !empty($steps)){
+            $i=1;
+            foreach($steps as $name=>$step){
+                $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step$i'>$name</div></td></tr>";
+                $i=$i+1;
+            }
+        }
+        if($type == 'newsletter'  ||  $type == 'email'){
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">$mrkt_string</div></td></tr>";
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+2).">".$mod_strings['LBL_NAVIGATION_MENU_SEND_EMAIL']."</div></li>";
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+3).">".$summ_url."</div></td></tr>";
+        }else{
+            $nav_html .= "<tr><td scope='row' nowrap><div id='nav_step'".($i+1).">".$summ_url."</div></td></tr>";
+        }
+
+        $nav_html .= '</table>';
     }
-       
-    $nav_html .= '</table>';
-  
+
     return $nav_html;
 }
     

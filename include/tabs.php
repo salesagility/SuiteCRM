@@ -48,7 +48,7 @@ class SugarWidgetTabs
  var $tabs;
  var $current_key;
 
- function SugarWidgetTabs(&$tabs,$current_key,$jscallback)
+ function __construct(&$tabs,$current_key,$jscallback)
  {
    $this->tabs = $tabs;
    $this->current_key = $current_key;
@@ -62,10 +62,10 @@ class SugarWidgetTabs
 <script>
 var keys = [ <?php
 $tabs_count = count($this->tabs);
-for($i=0; $i < $tabs_count;$i++) 
+for($i=0; $i < $tabs_count;$i++)
 {
  $tab = $this->tabs[$i];
- echo "\"".$tab['key']."\""; 
+ echo "\"".$tab['key']."\"";
  if ($tabs_count > ($i + 1))
  {
    echo ",";

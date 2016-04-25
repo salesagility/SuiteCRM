@@ -26,8 +26,8 @@ class jjwg_Address_Cache_sugar extends Basic {
     var $lat;
     var $lng;
 
-    function jjwg_Address_Cache_sugar() {
-        parent::Basic();
+    function __construct() {
+        parent::__construct();
     }
 
     function bean_implements($interface) {

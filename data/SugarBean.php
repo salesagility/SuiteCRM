@@ -274,9 +274,10 @@ class SugarBean
      *    if needed
      * 3. Setup row-level security preference
      * All implementing classes  must call this constructor using the parent::SugarBean() class.
+     * @todo - fix this comment
      *
      */
-    public function SugarBean()
+    public function __construct()
     {
         global $dictionary;
         static $loaded_defs = array();
@@ -3107,7 +3108,7 @@ class SugarBean
             //Parent Field
             if ($data['type'] == 'parent') {
                 //See if we need to join anything by inspecting the where clause
-                $match = preg_match('/(^|[\s(])parent_(\w+)_(\w+)\.name/', $where, $matches);
+                $match = preg_match('/(^|[\s(])parent_([a-zA-Z]+_?[a-zA-Z]+)_([a-zA-Z]+_?[a-zA-Z]+)\.name/', $where, $matches);
                 if ($match) {
                     $joinTableAlias = 'jt' . $jtcount;
                     $joinModule = $matches[2];
@@ -3135,9 +3136,12 @@ class SugarBean
                 }
             }
 
-            if ($this->is_relate_field($field)) {
-                $this->load_relationship($data['link']);
-                if (!empty($this->$data['link'])) {
+            if ($this->is_relate_field($field))
+            {
+                $linkField = $data['link'];
+                $this->load_relationship($linkField);
+                if(!empty($this->$linkField))
+                {
                     $params = array();
                     if (empty($join_type)) {
                         $params['join_type'] = ' LEFT JOIN ';
@@ -3156,9 +3160,9 @@ class SugarBean
                     }
                     $join_primary = !isset($data['join_primary']) || $data['join_primary'];
 
-                    $join = $this->$data['link']->getJoin($params, true);
+                    $join = $this->$linkField->getJoin($params, true);
                     $used_join_key[] = $join['rel_key'];
-                    $rel_module = $this->$data['link']->getRelatedModuleName();
+                    $rel_module = $this->$linkField->getRelatedModuleName();
                     $table_joined = !empty($joined_tables[$params['join_table_alias']]) || (!empty($joined_tables[$params['join_table_link_alias']]) && isset($data['link_type']) && $data['link_type'] == 'relationship_info');
 
                     //if rname is set to 'name', and bean files exist, then check if field should be a concatenated name
@@ -4257,8 +4261,9 @@ class SugarBean
                                 $mod->retrieve($this->$id_name);
 
                                 if (!empty($field['rname'])) {
-                                    $this->$name = $mod->$field['rname'];
-                                } elseif (isset($mod->name)) {
+                                    $rname = $field['rname'];
+                                    $this->$name = $mod->$rname;
+                                } else if (isset($mod->name)) {
                                     $this->$name = $mod->name;
                                 }
                             }

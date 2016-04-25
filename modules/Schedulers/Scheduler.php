@@ -86,7 +86,7 @@ class Scheduler extends SugarBean {
 
     public function __construct($init=true)
     {
-        parent::SugarBean();
+        parent::__construct();
         $job = new SchedulersJob();
         $this->job_queue_table = $job->table_name;
     }
@@ -107,14 +107,14 @@ class Scheduler extends SugarBean {
     {
         $user = new User();
         $db = DBManagerFactory::getInstance();
-        
+
         //Check is default admin exists
         $adminId = $db->getOne(
             'SELECT id FROM users WHERE id = ' . $db->quoted('1') . ' AND is_admin = 1 AND deleted = 0 AND status = ' . $db->quoted('Active'),
             true,
             'Error retrieving Admin account info'
         );
-        
+
         if ($adminId === false) {// Retrieve another admin if default admin doesn't exist
             $adminId = $db->getOne(
                 'SELECT id FROM users WHERE is_admin = 1 AND deleted = 0 AND status = ' . $db->quoted('Active'),
@@ -128,7 +128,7 @@ class Scheduler extends SugarBean {
                 return false;
             }
         } else {// Scheduler jobs run as default Admin
-            $user->retrieve('1'); 
+            $user->retrieve('1');
         }
         return $user;
     }

@@ -467,8 +467,16 @@ protected function checkQuery($sql, $object_name = false)
 	public function checkConnection()
 	{
 		$this->last_error = '';
-		if (!isset($this->database))
-			$this->connect();
+		if (!isset($this->database)) {
+            $this->connect();
+        }else{
+            try {
+                $this->database->ping();
+            }catch(Exception $ex){
+                unset($this->database);
+                $this->connect();
+            }
+        }
 	}
 
 	/**
@@ -1929,7 +1937,7 @@ protected function checkQuery($sql, $object_name = false)
 			if (isset($fieldDef['source']) && $fieldDef['source'] != 'db')  continue;
 			// Do not write out the id field on the update statement.
     		// We are not allowed to change ids.
-    		if ($fieldDef['name'] == $primaryField['name']) continue;
+    		if (empty($fieldDef['name']) || $fieldDef['name'] == $primaryField['name']) continue;
 
     		// If the field is an auto_increment field, then we shouldn't be setting it.  This was added
     		// specially for Bugs and Cases which have a number associated with them.

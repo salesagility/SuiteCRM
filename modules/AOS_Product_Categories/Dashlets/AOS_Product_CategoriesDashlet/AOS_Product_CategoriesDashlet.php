@@ -49,18 +49,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories.php');
 
-class AOS_Product_CategoriesDashlet extends DashletGeneric { 
-    function AOS_Product_CategoriesDashlet($id, $def = null) {
+class AOS_Product_CategoriesDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_Product_Categories/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOS_Product_Categories');
 
         $this->searchFields = $dashletData['AOS_Product_CategoriesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_Product_CategoriesDashlet']['columns'];
 
-        $this->seedBean = new AOS_Product_Categories();        
+        $this->seedBean = new AOS_Product_Categories();
     }
 }

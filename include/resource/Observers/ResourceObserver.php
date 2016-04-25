@@ -48,7 +48,7 @@ class ResourceObserver {
 var $module;
 var $limit;
 
-function ResourceObserver($module) {
+public function __construct($module) {
 	$this->module = $module;
 }
 
@@ -60,10 +60,10 @@ function notify($msg = '') {
     if($this->dieOnError) {
        die($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
     } else {
-       echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);	
+       echo($GLOBALS['app_strings']['ERROR_NOTIFY_OVERRIDE']);
     }
-}	
-	
+}
+
 }
 
 ?>

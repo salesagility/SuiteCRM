@@ -88,7 +88,7 @@ class SearchForm {
      * @param string $tpl template to use, defaults to moduleDir/SearchForm.html
      *
      */
-    function SearchForm($module, &$seedBean, $tpl = null) {
+    function __construct($module, &$seedBean, $tpl = null) {
         global $app_strings;
 
         $this->module = $module;

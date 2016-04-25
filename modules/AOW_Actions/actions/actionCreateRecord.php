@@ -26,8 +26,8 @@
 require_once('modules/AOW_Actions/actions/actionBase.php');
 class actionCreateRecord extends actionBase {
 
-    function actionCreateRecord($id = ''){
-        parent::actionBase($id);
+    function __construct($id = ''){
+        parent::__construct($id);
     }
 
     function loadJS(){
@@ -132,7 +132,8 @@ class actionCreateRecord extends actionBase {
                 switch($params['value_type'][$key]) {
                     case 'Field':
                         if($params['value'][$key] == '') continue;
-                        $data = $bean->field_defs[$params['value'][$key]];
+                        $fieldName = $params['value'][$key];
+                        $data = $bean->field_defs[$fieldName];
 
                         switch($data['type'] ) {
                             case 'double':
@@ -145,15 +146,16 @@ class actionCreateRecord extends actionBase {
                             case 'short':
                             case 'tinyint':
                             case 'int':
-                                $value = format_number($bean->$params['value'][$key]);
+                                $value = format_number($bean->$fieldName);
                                 break;
                             case 'relate':
                                 if(isset($data['id_name'])) {
-                                    $value = $bean->$data['id_name'];
+                                    $idName = $data['id_name'];
+                                    $value = $bean->$idName;
                                 }
                                 break;
                             default:
-                                $value = $bean->$params['value'][$key];
+                                $value = $bean->$fieldName;
                                 break;
                         }
                         break;
@@ -318,18 +320,20 @@ class actionCreateRecord extends actionBase {
             foreach($params['rel'] as $key => $field){
                 if($field == '' || $params['rel_value'][$key] == '') continue;
 
+                $relField = $params['rel_value'][$key];
+
                 switch($params['rel_value_type'][$key]) {
                     case 'Field':
 
-                        $data = $bean->field_defs[$params['rel_value'][$key]];
+                        $data = $bean->field_defs[$relField];
 
                         if($data['type'] == 'relate' && isset($data['id_name'])) {
-                            $params['rel_value'][$key] = $data['id_name'];
+                            $relField = $data['id_name'];
                         }
-                        $rel_id = $bean->$params['rel_value'][$key];
+                        $rel_id = $bean->$relField;
                         break;
                     default:
-                        $rel_id = $params['rel_value'][$key];
+                        $rel_id = $relField;
                         break;
                 }
 

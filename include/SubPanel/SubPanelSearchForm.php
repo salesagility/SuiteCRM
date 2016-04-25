@@ -11,9 +11,9 @@ class SubPanelSearchForm extends SearchForm  {
 
     var $subPanel; // the instantiated bean of the subPanel
 
-    function SubPanelSearchForm($seed, $module, $subPanel, $options = array()){
+    function __construct($seed, $module, $subPanel, $options = array()){
         $this->subPanel = $subPanel;
-        parent::SearchForm($seed, $module, 'DetailView', $options);
+        parent::__construct($seed, $module, 'DetailView', $options);
     }
 
     function display($header = false){
@@ -22,6 +22,11 @@ class SubPanelSearchForm extends SearchForm  {
             $GLOBALS['app_list_strings']['collection_temp_list'] = $this->getCollectionList($this->subPanel->subpanel_defs->base_collection_list);
         }*/
         $this->th->ss->assign('subpanel', $this->subPanel->subpanel_id);
+
+        // Adding the offset to subpanel search field - this has no affect on pagination
+        if($this->subPanel->parent_bean->module_dir != ''){
+            $this->th->ss->assign('subpanelPageOffset', '<input type="hidden" name="'.$this->subPanel->parent_bean->module_dir.'_'.$this->subPanel->subpanel_id.'_CELL_offset" value="0" />');
+        }
         $this->parsedView = 'sps';
         return parent::display($header);
     }
@@ -47,4 +52,4 @@ class SubPanelSearchForm extends SearchForm  {
         return null;
     }
 
-} 
+}

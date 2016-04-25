@@ -24,14 +24,14 @@
 
 class AOR_Chart extends Basic {
 
-    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']";
+    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
 	var $new_schema = true;
 	var $module_dir = 'AOR_Charts';
 	var $object_name = 'AOR_Chart';
 	var $table_name = 'aor_charts';
 	var $importable = true;
 	var $disable_row_level_security = true ;
-	
+
 	var $id;
 	var $name;
 	var $date_entered;
@@ -52,8 +52,8 @@ class AOR_Chart extends Basic {
 
 
 
-	function AOR_Chart(){
-		parent::Basic();
+	public function __construct(){
+		parent::__construct();
 	}
 
     function save_lines(array $post,AOR_Report $bean,$postKey){
@@ -303,7 +303,7 @@ class AOR_Chart extends Basic {
         return $chart;
     }
 
-    private function getRGraphRoseChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphRoseChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -340,20 +340,8 @@ EOF;
     //I have not used a parameter for getRGraphBarChart to say whether to group etc, as the future development could be quite different
     //for both, hence the separate methods.  However, the $grouped parameter allows us to specify whether the chart is grouped (true)
     //or stacked (false)
-    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
+    private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
-        //$keys = array_keys($chartTooltips);
-
-
-        $i=0;
-        foreach($chartDataValues as $rowKey => $row) {
-            foreach($row as $key => $value) {
-                $_tooltips[$rowKey][$key] = $chartTooltips[$i];
-                $i++;
-            }
-        }
-
-
         $dataArray = json_decode($chartDataValues);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
         if(!$grouped)
@@ -388,7 +376,8 @@ EOF;
                 labels: $chartLabelValues,
                 textSize:10,
                 textAngle: 90,
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -398,7 +387,7 @@ EOF;
 
 
 
-    private function getRGraphBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -429,7 +418,8 @@ EOF;
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -437,7 +427,7 @@ EOF;
         return $html;
     }
 
-    private function getRGraphRadarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphRadarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -461,7 +451,8 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
         </script>
@@ -469,7 +460,7 @@ EOF;
         return $html;
     }
 
-    private function getRGraphPieChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphPieChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -505,7 +496,7 @@ EOF;
         return $html;
     }
 
-    private function getRGraphLineChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName= '', $chartId, $chartHeight = 400, $chartWidth = 400)
+    private function getRGraphLineChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
         if(!is_array($dataArray)||count($dataArray) < 1)
@@ -526,6 +517,7 @@ EOF;
                 tickmarks:'encircle',
                 textSize:10,
                 titleSize:10,
+                gutterLeft:70,
                 //title: '$chartName',
                 labels: $chartLabelValues,
 
@@ -538,7 +530,8 @@ EOF;
                 textAngle: 90,
                 //titleSize:10,
                 backgroundGrid:false,
-                colors: $this->colours
+                colors: $this->colours,
+                ymax:calculateMaxYForSmallNumbers($chartDataValues),
             }
         }).draw();
         </script>
@@ -664,7 +657,7 @@ EOF;
             foreach($reportData as $key2 => $row2) {
                 if($row2[$xName] == $filter && !in_array($key, $usedKeys)) {
                     $data      [ $row[$xName]  ]   [] = (float) $row[$yName];
-                    $tooltips  [ $row[$xName]  ]   [] = $row[$zName];
+                    $tooltips  [ $row[$xName]  ]   [] = isset($row[$zName]) ? $row[$zName] : null;
                     $usedKeys[] = $key;
                 }
             }
@@ -685,7 +678,7 @@ EOF;
         $_labels = array();
         $_tooltips = array();
         foreach($data as $label => $values) {
-            $_labels[] = $this->getShortenedLabel($label) . $this->getChartDataNameLabel($label);
+            $_labels[] = $this->getShortenedLabel($label);
             $_values = array();
             foreach($values as $tooltip => $value) {
                 $_tooltips[] = $tooltip . " ($value)";
@@ -711,8 +704,8 @@ EOF;
         $chart['data']=array();
         $chart['tooltips']=array();
         foreach($reportData as $row){
-            $chart['labels'][] = $this->getShortenedLabel($row[$xName]) . $this->getChartDataNameLabel($row[$xName]);
-            $chart['tooltips'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $chart['labels'][] = $this->getShortenedLabel($row[$xName]);
+            $chart['tooltips'][] = $row[$xName];
             $chart['data'][] = (float)$row[$yName];
 
         }
@@ -725,7 +718,7 @@ EOF;
         $data['labels'] = array();
         $datasetData = array();
         foreach($reportData as $row){
-            $data['labels'][] = $row[$xName] . $this->getChartDataNameLabel($row[$xName]);
+            $data['labels'][] = $row[$xName];
             $datasetData[] = $row[$yName];
         }
 
@@ -739,18 +732,6 @@ EOF;
             'pointHighlightStroke' => "rgba(151,187,205,1)4",
             'data'=>$datasetData);
         return $data;
-    }
-
-    private function getChartDataNameLabel($name) {
-        if(isset($GLOBALS['app_list_strings'])) {
-            $keys = array_keys($GLOBALS['app_list_strings']);
-            foreach ($keys as $key) {
-                if (isset($GLOBALS['app_list_strings'][$key][$name])) {
-                    return " [{$GLOBALS['app_list_strings'][$key][$name]}]";
-                }
-            }
-        }
-        return '';
     }
 
     private function getLineChartData($reportData, $xName,$yName){
@@ -809,7 +790,7 @@ EOF;
             $colour = $this->getColour($row[$xName]);
             $data[] = array(
                 'value' => (int)$row[$yName],
-                'label' => $row[$xName] . $this->getChartDataNameLabel($row[$xName]),
+                'label' => $row[$xName],
                 'color' => $colour['main'],
                 'highlight' => $colour['highlight'],
             );

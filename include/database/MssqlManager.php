@@ -647,9 +647,10 @@ class MssqlManager extends DBManager
                     continue;
                 }
             }
+            $p_len = strlen("##". $patt.$i."##");
             $p_sql = substr($p_sql, 0, $beg_sin) . " ##". $patt.$i."## " . substr($p_sql, $sec_sin+1);
             //move the marker up
-            $offset = $sec_sin+1;
+            $offset = ($sec_sin-($sec_sin-$beg_sin))+$p_len+1; // Adjusting the starting point of the marker
 
             $i = $i + 1;
         }

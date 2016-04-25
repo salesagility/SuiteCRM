@@ -46,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 class MySugar{
 	var $type;
 
-	function MySugar($type){
+	public function __construct($type){
 		$this->type = $type;
 	}
 

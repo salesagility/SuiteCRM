@@ -65,7 +65,7 @@
 	$object_arr['Contacts'] = $module->billing_contact_id;
 	$object_arr['Users'] = $module->assigned_user_id;
 	$object_arr['Currencies'] = $module->currency_id;
-	
+
 	$search = array ('@<script[^>]*?>.*?</script>@si', 		// Strip out javascript
 					'@<[\/\!]*?[^<>]*?>@si',		// Strip out HTML tags
 					'@([\r\n])[\s]+@',			// Strip out white space
@@ -75,8 +75,9 @@
 					'@&(gt|#62);@i',
 					'@&(nbsp|#160);@i',
 					'@&(iexcl|#161);@i',
-					'@&#(\d+);@e',
-					'@<address[^>]*?>@si'
+					'@<address[^>]*?>@si',
+                    '@&(apos|#0*39);@',
+                    '@&#(\d+);@e'
 	);
 
 	$replace = array ('',
@@ -88,8 +89,9 @@
 					 '>',
 					 ' ',
 					 chr(161),
-					 'chr(\1)',
-					 '<br>'
+                     '<br>',
+                     "'",
+                     'chr(\1)'
 		);
 	
 	$header = preg_replace($search, $replace, $template->pdfheader);

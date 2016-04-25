@@ -4,16 +4,16 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class Jjwg_MapsViewDonate extends SugarView {
 
- 	function Jjwg_MapsViewDonate() {
- 		parent::SugarView();
+ 	function __construct() {
+ 		parent::__construct();
  	}
-	
+
 	function display() {
-		
+
 ?>
 
 <div style="margin: 15px;">
-     
+
 <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong>Please, donate to this project!</strong></p>
 
 <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; width: 700px;">
@@ -33,15 +33,15 @@ Donations from users like you will help keep this project alive.
 <br />
 
 <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; line-height: 1.5em; width: 700px;">
-<b>This project is COMPLETELY FREE!</b>, but relies heavily on donations to keep it alive. 
+<b>This project is COMPLETELY FREE!</b>, but relies heavily on donations to keep it alive.
 </p>
 
 <p style="margin: 15px 0px 15px 0px; font-size: 1.7em;"><strong>All Professional Modules are Now Included (02/09/2012)</strong></p>
 
 
 <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; line-height: 1.5em; width: 700px;">
-Several additional advanced modules (previously referred to as the professional version) have now been added to this package. 
-All future versions will include the professional version modules (several enhancements). 
+Several additional advanced modules (previously referred to as the professional version) have now been added to this package.
+All future versions will include the professional version modules (several enhancements).
 All professional version features and modules are included in this free version that you are using now.
 </p>
 <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; line-height: 1.5em; width: 700px;">
@@ -54,7 +54,7 @@ Address Cache information is used during the &quot;Geocoding Addresses&quot; pro
 <strong>Custom &quot;Markers&quot; Module:</strong> This module provides an easy way to define custom markers with many different icons to choose from.
 It's a great way to define your favorite meeting places, restaurants, airports, trip highlights or other locations.
 Custom markers can be added to any of your maps created by the maps module.
-Tools are provided to either hand position the markers or address geocoding can be done to determine position. 
+Tools are provided to either hand position the markers or address geocoding can be done to determine position.
 </p>
 <p style="margin: 15px 0px 15px 0px; font-size: 1.25em; line-height: 1.5em; width: 700px;">
 <strong>Custom &quot;Areas&quot; (Polygons) Module:</strong> This module provides an easy way to define custom areas

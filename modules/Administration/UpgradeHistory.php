@@ -72,9 +72,9 @@ class UpgradeHistory extends SugarBean
         $this->db->query( "delete from " . $this->table_name . " where id = " . $this->db->quoted($this->id));
     }
 
-    function UpgradeHistory()
+    public function __construct()
     {
-        parent::SugarBean();
+        parent::__construct();
         $this->disable_row_level_security = true;
     }
 

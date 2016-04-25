@@ -30,8 +30,8 @@ class jjwg_Markers_sugar extends Basic {
     var $jjwg_maps_lng;
     var $marker_image;
 
-    function jjwg_Markers_sugar() {
-        parent::Basic();
+    function __construct() {
+        parent::__construct();
     }
 
     function bean_implements($interface) {

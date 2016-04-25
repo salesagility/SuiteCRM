@@ -92,6 +92,7 @@ $mod_strings = array (
   'LBL_EDIT_EMAIL_TEMPLATE'=>	'Edit',
   'LBL_FROM_MAILBOX'=>'From Mailbox',
   'LBL_FROM_MAILBOX_NAME'=>'Use Mailbox:',
+    'LBL_OUTBOUND_EMAIL_ACCOUNT_NAME' => 'Outbound Email Account:',
   'LBL_PROSPECT_LIST_SUBPANEL_TITLE'=>'Target Lists',
   'LBL_ALL_PROSPECT_LISTS'=>'Select to choose all Target List(s) in the Campaign.',
   'LBL_RELATED_PROSPECT_LISTS'=>'All Target List(s) related to this message.',
@@ -104,7 +105,8 @@ $mod_strings = array (
   'LBL_SCHEDULE_BUTTON_TITLE'=>'Send',
   'LBL_SCHEDULE_BUTTON_LABEL'=>'Send',
   'LBL_SCHEDULE_BUTTON_KEY'=>'T',
-
+//    'LBL_OUTBOUND_EMAIL_ACCOUNT_DEFAULT' => 'Use System Default',
+//    'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
 
 
 );

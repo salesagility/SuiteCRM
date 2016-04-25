@@ -41,8 +41,8 @@ require_once('include/SugarTinyMCE.php');
 
 class CasesViewEdit extends ViewEdit {
 
-    function CasesViewEdit(){
-        parent::ViewEdit();
+    function __construct(){
+        parent::__construct();
     }
 
     function display(){

@@ -59,7 +59,8 @@ class SugarPHPMailer extends PHPMailer
 	/**
 	 * Sole constructor
 	 */
-	function SugarPHPMailer() {
+	public function __construct() {
+        parent::__construct();
 		global $locale;
 		global $current_user;
 		global $sugar_config;
@@ -334,7 +335,7 @@ eoq;
 		// remove bad img line from outbound email
 		$this->Body = preg_replace('#<img[^>]+src[^=]*=\"\/([^>]*?[^>]*)>#sim', '', $this->Body);
 	}
-	
+
 	/**
 	 * @param notes	array of note beans
 	 */

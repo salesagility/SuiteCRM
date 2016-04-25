@@ -145,8 +145,8 @@ class Contact extends Person {
 								'meeting_id'=>'meetings','note_id'=>'notes','task_id'=>'tasks', 'opportunity_id'=>'opportunities', 'contacts_users_id' => 'user_sync'
 								);
 
-	function Contact() {
-		parent::Person();
+	public function __construct() {
+		parent::__construct();
 	}
 
 	function add_list_count_joins(&$query, $where)

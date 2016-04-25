@@ -68,7 +68,7 @@ $entry_point_registry = array(
     'UploadFileCheck' => array('file' => 'modules/Configurator/UploadFileCheck.php', 'auth' => true),
     'SAML'=>  array('file' => 'modules/Users/authentication/SAMLAuthenticate/index.php', 'auth' => false),
     'jslang'=> array('file' => 'include/language/getJSLanguage.php', 'auth' => true),
-	'deleteAttachment' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),
+	'deleteAttachment' => array('file' => 'include/SugarFields/Fields/Image/deleteAttachment.php', 'auth' => false),
 	'responseEntryPoint' => array('file' => 'modules/FP_events/responseEntryPoint.php', 'auth' => false),
 	'formLetter' => array('file' => 'modules/AOS_PDF_Templates/formLetterPdf.php' , 'auth' => true),
 	'generatePdf' => array('file' => 'modules/AOS_PDF_Templates/generatePdf.php' , 'auth' => true),
@@ -79,7 +79,11 @@ $entry_point_registry = array(
 	'add_dash_page' => array('file' => 'modules/Home/AddDashboardPages.php' , 'auth' => true),
 	'retrieve_dash_page' => array('file' => 'include/MySugar/retrieve_dash_page.php' , 'auth' => true),
 	'remove_dash_page' => array('file' => 'modules/Home/RemoveDashboardPages.php' , 'auth' => true),
-	'rename_dash_page' => array('file' => 'modules/Home/RenameDashboardPages.php' , 'auth' => true)
+	'rename_dash_page' => array('file' => 'modules/Home/RenameDashboardPages.php' , 'auth' => true),
+	'emailTemplateData' => array('file' => 'modules/EmailTemplates/EmailTemplateData.php', 'auth' => true),
+	'emailMarketingData' => array('file' => 'modules/EmailMarketing/Save.php', 'auth' => true),
+	'campaignTrackerSave' => array('file' => 'modules/CampaignTrackers/Save.php', 'auth' => true),
+	'emailMarketingList' => array('file' => 'modules/EmailMarketing/List.php', 'auth' => true),
 );
 
 ?>

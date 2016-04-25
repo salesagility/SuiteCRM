@@ -1,4 +1,7 @@
-##SuiteCRM 7.4
+##SuiteCRM 7.6 RC
+
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
+
 
 ### What's in this repository ###
 

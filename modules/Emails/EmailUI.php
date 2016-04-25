@@ -72,7 +72,7 @@ class EmailUI {
 	/**
 	 * Sole constructor
 	 */
-	function EmailUI() {
+	function __construct() {
 		global $sugar_config;
 		global $current_user;
 
@@ -2125,7 +2125,7 @@ eoq;
 				$t .= " AND (".  $owner_where." or ".$group_where.") ";
 			}
 			/* END - SECURITY GROUPS */
-    	
+
 
 			if(!empty($q)) {
 				$q .= "\n UNION ALL \n";
@@ -2493,7 +2493,7 @@ eoq;
 
 		if(ACLController::checkAccess('EmailTemplates', 'list', true) && ACLController::checkAccess('EmailTemplates', 'view', true)) {
 			$et = new EmailTemplate();
-            $etResult = $et->db->query($et->create_new_list_query('',"(type IS NULL OR type='' OR type='email')",array(),array(),''));
+            $etResult = $et->db->query($et->create_new_list_query('',"(email_templates.type IS NULL OR email_templates.type='' OR email_templates.type='email')",array(),array(),''));
 			$email_templates_arr = array('' => $app_strings['LBL_NONE']);
 			while($etA = $et->db->fetchByAssoc($etResult)) {
 				$email_templates_arr[$etA['id']] = $etA['name'];

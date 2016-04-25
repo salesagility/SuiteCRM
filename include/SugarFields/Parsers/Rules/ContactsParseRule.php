@@ -43,13 +43,13 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class ContactsParseRule extends BaseRule {
 
-function ContactsParseRule() {
-	
+function __construct() {
+
 }
 
 
 function preParse($panels, $view) {
-	
+
 	if($view == 'DetailView') {
 		foreach($panels as $name=>$panel) {
 		   	  foreach($panel as $rowCount=>$row) {
@@ -57,12 +57,12 @@ function preParse($panels, $view) {
 		   	  	 	if($this->matches($column, '/^(last_)?name$/')) {
 		   	  	 	   $panels[$name][$rowCount][$key] = 'full_name';
 		   	  	 	}
-				} //foreach 
+				} //foreach
 		   	} //foreach
 	    } //foreach
 	}
-	
-	return $panels;		
+
+	return $panels;
 }
 
 function parsePanels(& $panels, $view) {
@@ -74,12 +74,12 @@ function parsePanels(& $panels, $view) {
 					if($this->matches($column, '/portal_password1/si')) {
 		   	  	 	   $panels[$name][$rowCount][$key] = array('name'=>'portal_password1', 'type'=>'password', 'customCode'=>'<input id="portal_password1" name="portal_password1" type="password" size="32" maxlength="32" value="{$fields.portal_password.value}">', 'label'=>'LBL_PORTAL_PASSWORD');
 					}
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	  } //foreach
 		   } //foreach
        }
-	   return $panels;	
+	   return $panels;
 }
-	
+
 }
 ?>

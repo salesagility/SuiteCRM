@@ -226,7 +226,7 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'Releases','Sync',
     'Users',  'Versions', 'LabelEditor','Roles','EmailMarketing'
     ,'OptimisticLock', 'TeamMemberships', 'TeamSets', 'TeamSetModule', 'Audit', 'MailMerge', 'MergeRecords', 'EmailAddresses','EmailText',
-    'Schedulers','Schedulers_jobs', /*'Queues',*/ 'EmailTemplates',
+    'Schedulers','Schedulers_jobs', /*'Queues', 'EmailTemplates',*/
     'CampaignTrackers', 'CampaignLog', 'EmailMan', 'Prospects', 'ProspectLists',
     'Groups','InboundEmail',
     'ACLActions', 'ACLRoles',
@@ -292,7 +292,7 @@ $GLOBALS['moduleTabMap'] = array(
     'Currencies' => 'Administration',
     'SugarFeed' => 'Administration',
     'DocumentRevisions' => 'Documents',
-    'EmailTemplates' => 'Emails',
+    'EmailTemplates' => 'EmailTemplates',
     'EmailMarketing' => 'Campaigns',
  );
 $beanList['EAPM'] = 'EAPM';
@@ -468,6 +468,18 @@ $modInvisList[] = 'Calls_Reschedule';
 $beanList['SecurityGroups'] = 'SecurityGroup';
 $beanFiles['SecurityGroup'] = 'modules/SecurityGroups/SecurityGroup.php';
 $moduleList[] = 'SecurityGroups';
+
+$beanList['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
+$beanFiles['OutboundEmailAccounts'] = 'modules/OutboundEmailAccounts/OutboundEmailAccounts.php';
+$modules_exempt_from_availability_check['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
+$report_include_modules['OutboundEmailAccounts'] = 'OutboundEmailAccounts';
+$modInvisList[] = 'OutboundEmailAccounts';
+
+$beanList['TemplateSectionLine'] = 'TemplateSectionLine';
+$beanFiles['TemplateSectionLine'] = 'modules/TemplateSectionLine/TemplateSectionLine.php';
+$modules_exempt_from_availability_check['TemplateSectionLine'] = 'TemplateSectionLine';
+$report_include_modules['TemplateSectionLine'] = 'TemplateSectionLine';
+$modInvisList[] = 'TemplateSectionLine';
 
 if (file_exists('include/modules_override.php'))
 {

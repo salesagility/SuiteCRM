@@ -46,8 +46,8 @@ if(!defined('sugarEntry') || !sugarEntry)
 
 class SugarWidgetField extends SugarWidget {
 
-	function SugarWidgetField(&$layout_manager) {
-        parent::SugarWidget($layout_manager);
+	function __construct(&$layout_manager) {
+        parent::__construct($layout_manager);
     }
 
 	function display($layout_def) {
@@ -90,8 +90,8 @@ class SugarWidgetField extends SugarWidget {
         $layout_def = '';
 		return $layout_def;
 	}
-	
-	function displayHeaderCellPlain($layout_def) 
+
+	function displayHeaderCellPlain($layout_def)
 	{
 		if (!empty ($layout_def['label'])) {
 			return $layout_def['label'];
@@ -108,11 +108,7 @@ class SugarWidgetField extends SugarWidget {
 		$this->local_current_module = $_REQUEST['module'];
 		$this->is_dynamic = true;
 		// don't show sort links if name isn't defined
-		if ((empty ($layout_def['name']) || (isset ($layout_def['sortable']) && !$layout_def['sortable']))
-        && !empty ($layout_def['label'])) {
-			return $layout_def['label'];
-		}
-		if (isset ($layout_def['sortable']) && !$layout_def['sortable']) {
+		if (empty ($layout_def['name']) || (isset ($layout_def['sortable']) && !$layout_def['sortable'])) {
 			return $this->displayHeaderCellPlain($layout_def);
 		}
 
@@ -170,12 +166,12 @@ class SugarWidgetField extends SugarWidget {
 		return $value;
 	}
 
-	function _get_list_value(& $layout_def) 
+	function _get_list_value(& $layout_def)
 	{
 		$key = '';
 		if ( isset($layout_def['varname']) ) {
 		    $key = strtoupper($layout_def['varname']);
-		} 
+		}
 		else {
 			$key = strtoupper($this->_get_column_alias($layout_def));
 		}
@@ -183,7 +179,7 @@ class SugarWidgetField extends SugarWidget {
 		if ( isset($layout_def['fields'][$key]) ) {
 			return $layout_def['fields'][$key];
 		}
-		
+
 		return '';
 	}
 

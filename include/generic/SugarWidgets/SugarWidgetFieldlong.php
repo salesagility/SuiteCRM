@@ -51,9 +51,9 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetFieldLong extends SugarWidgetFieldDecimal
 {
-	function SugarWidgetFieldLong(&$layout_manager) {
-		parent::SugarWidgetFieldDecimal($layout_manager);
-	}	
+	function __construct(&$layout_manager) {
+		parent::__construct($layout_manager);
+	}
 }
 
 ?>

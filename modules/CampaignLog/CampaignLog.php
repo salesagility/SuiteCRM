@@ -61,9 +61,10 @@ class CampaignLog extends SugarBean {
     var $hits;
     var $more_information;
     var $marketing_id;
-    function CampaignLog() {
+
+    public function __construct() {
         global $sugar_config;
-        parent::SugarBean();
+        parent::__construct();
 
     }
 
@@ -136,7 +137,7 @@ class CampaignLog extends SugarBean {
 
 
     //this function is called statically by the campaign_log subpanel.
-    function get_related_name($related_id, $related_type) {
+    static function get_related_name($related_id, $related_type) {
         global $locale;
         $db= DBManagerFactory::getInstance();
         if ($related_type == 'Emails') {

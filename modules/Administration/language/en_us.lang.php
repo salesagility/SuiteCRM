@@ -661,12 +661,7 @@ $mod_strings = array(
     'LBL_REPAIR_DATABASE_DESC' => 'Repairs database based on values defined in vardefs',
     'LBL_REPAIR_DATABASE_PROCESSING' => 'Processing database and vardef comparison...',
     'LBL_REPAIR_DATABASE_DIFFERENCES' => "Differences found between database and vardefs",
-    'LBL_REPAIR_DATABASE_TEXT' => "The following script will sync the database structure with the structure defined " .
-        "in the vardefs. You have the option of exporting this script and then running it " .
-        "against your database using external database management tools, or to allow the " .
-        "administration module to run the script." .
-        "<br><br><strong>NOTE: any changes you make to the script in the textbox will be reflected " .
-        "in the exported or executed code.<br><br>",
+    'LBL_REPAIR_DATABASE_TEXT' =>   "The following script will sync the database structure with the structure defined in the vardefs. You have the option of exporting this script and then running it against your database using external database management tools, or to allow the administration module to run the script. <br><br><strong>NOTE</strong>: any changes you make to the script in the textbox will be reflected in the exported or executed code.<br><br>",
     'LBL_REPAIR_DATABASE_SYNCED' => "Database tables are synced with vardefs",
     'LBL_REPAIR_DATABASE_EXECUTE' => "Execute",
     'LBL_REPAIR_DATABASE_EXPORT' => "Export",
@@ -1176,6 +1171,7 @@ $mod_strings = array(
     'LBL_COLOUR_ADMIN_DDLINK' => 'Drop down link colour: ',
     'LBL_COLOUR_ADMIN_DDMENU' => 'Drop down menu colour: ',
     'LBL_COLOUR_ADMIN_DDLINK_HOVER' => 'Drop down menu link hover colour: ',
+    'LBL_ACTION_MENU_BUTTON' => 'Action Menu button colour',
     'LBL_ACTION_MENU_BACKGROUND' => 'Action Menu background colour',
     'LBL_ACTION_MENU_BACKGROUND_HOVER' => 'Action Menu hover colour',
     'LBL_COLOUR_ADMIN_MENUFONT' => 'Menu link colour',
@@ -1185,6 +1181,7 @@ $mod_strings = array(
     'LBL_COLOUR_ADMIN_BTNLNK' => 'Button link colour: ',
     'LBL_COLOUR_ADMIN_BTNLNKHOVER' => 'Button link hover colour: ',
     'LBL_COLOUR_ADMIN_DASHHEAD' => 'Dashlet header colour: ',
+    'LBL_COLOUR_ADMIN_DASHHEADTEXT' => 'Dashlet header text colour: ',
     'LBL_COLOUR_ADMIN_ICON' => 'Icon colour: ',
     'LBL_COLOUR_ADMIN_TABS' => 'Menu contents config',
     'LBL_SUGGESTION_POPUP_FROM' => 'Suggestion & Pop-up gradient (from):',

@@ -40,8 +40,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class UpgradeSavedSearch {
 
-	function UpgradeSavedSearch() {
-		
+	function __construct() {
+
 		$result = $GLOBALS['db']->query("SELECT id FROM saved_search");
 		while($row = $GLOBALS['db']->fetchByAssoc($result)) {
 		      $focus = new SavedSearch();
@@ -54,36 +54,36 @@ class UpgradeSavedSearch {
 			  	 $module = $contents['search_module'];
 			  	 $advanced = !empty($contents['advanced']);
 			  	 $field_map = array();
-			  	 
+
 			  	 if(file_exists("custom/modules/{$module}/metadata/searchdefs.php")) {
 			  	 	require("custom/modules/{$module}/metadata/searchdefs.php");
-			  	 	$field_map = $advanced ? $searchdefs[$module]['layout']['advanced_search'] : $searchdefs[$module]['layout']['basic_search'];			  	 
+			  	 	$field_map = $advanced ? $searchdefs[$module]['layout']['advanced_search'] : $searchdefs[$module]['layout']['basic_search'];
 			     }else if(file_exists("modules/{$module}/metadata/SearchFields.php")) {
 			  	 	require("modules/{$module}/metadata/SearchFields.php");
 			  	 	$field_map = $searchFields[$module];
 			  	 } else {
-				  	
+
 				  	$bean = loadBean($module);
-				  	$field_map = $bean->field_name_map;	 	 
+				  	$field_map = $bean->field_name_map;
 			  	 }
 
 			  	 //Special case for team_id field (from 4.5.x)
 			  	 if(isset($contents['team_id'])) {
 			  	    $contents['team_name'] = $contents['team_id'];
-			  	    unset($contents['team_id']);	
+			  	    unset($contents['team_id']);
 			  	 }
-			  	 
+
 			  	 foreach($contents as $key=>$value) {
 			  	 	 if(isset($field_map[$key])) {
 			  	 	 	$new_key = $key . ($advanced ? '_advanced' : '_basic');
 			  	 	    if(preg_match('/^team_name_(advanced|basic)$/', $new_key)) {
-			  	 	 	   
+
 			  	 	       if(!is_array($value)) {
 			  	 	       	  $temp_value = array();
 			  	 	       	  $teap_value[] = $value;
 			  	 	       	  $value = $temp_value;
 			  	 	       }
-			  	 	    
+
 			  	 	       $team_results = $GLOBALS['db']->query("SELECT id, name FROM teams where id in ('" . implode("','", $value) . "')");
 			  	 	       if(!empty($team_results)) {
 			  	 	       	  $count = 0;
@@ -94,14 +94,14 @@ class UpgradeSavedSearch {
 				  	 	       	 	$count++;
 			  	 	       	  } //while
 			  	 	       } //if
-			  	 	       
-			  	 	       
+
+
 			  	 	       //Unset the original key
 			  	 	       unset($new_contents[$key]);
-			  	 	       
+
 			  	 	       //Add the any switch
 			  	 	       $new_contents[$new_key . '_type'] = 'any';
-			  	 	 	} else {			  	 	 	
+			  	 	 	} else {
 			  	 	 	   $new_contents[$new_key] = $value;
 			  	 	 	}
 			  	 	 } else {
@@ -122,9 +122,9 @@ class UpgradeSavedSearch {
 				  	 	$contents['team_name_advanced_type'] = 'any';
 				  	 	unset($contents['team_name_advanced']);
 					  	$content = base64_encode(serialize($contents));
-					  	$GLOBALS['db']->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'"); 				  	 	
+					  	$GLOBALS['db']->query("UPDATE saved_search SET contents = '{$content}' WHERE id = '{$row['id']}'");
 			  	 	}
-			  	 } 				
+			  	 }
 			}
 		} //while
 	}

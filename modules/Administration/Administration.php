@@ -70,8 +70,8 @@ class Administration extends SugarBean {
     var $disable_custom_fields = true;
     var $checkbox_fields = Array("notify_send_by_default", "mail_smtpauth_req", "notify_on", 'portal_on', 'skypeout_on', 'system_mailmerge_on', 'proxy_auth', 'proxy_on', 'system_ldap_enabled','captcha_on');
 
-    function Administration() {
-        parent::SugarBean();
+    function __construct() {
+        parent::__construct();
 
         $this->setupCustomFields('Administration');
     }
@@ -110,16 +110,19 @@ class Administration extends SugarBean {
                 $this->settings[$row['category']."_".$row['name']] = $this->decrypt_after_retrieve($row['value']);
             else
                 $this->settings[$row['category']."_".$row['name']] = $row['value'];
+            $this->settings[$row['category']] = true;
         }
         $this->settings[$category] = true;
 
-        // outbound email settings
-        $oe = new OutboundEmail();
-        $oe->getSystemMailerSettings();
+        if(!isset($this->settings["mail_sendtype"])) {
+            // outbound email settings
+            $oe = new OutboundEmail();
+            $oe->getSystemMailerSettings();
 
-        foreach($oe->field_defs as $def) {
-            if(strpos($def, "mail_") !== false)
-                $this->settings[$def] = $oe->$def;
+            foreach ($oe->field_defs as $def) {
+                if (strpos($def, "mail_") !== false)
+                    $this->settings[$def] = $oe->$def;
+            }
         }
 
         // At this point, we have built a new array that should be cached.
@@ -176,7 +179,9 @@ class Administration extends SugarBean {
     }
 
     function get_config_prefix($str) {
-        return Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1));
+        return $str
+            ? Array(substr($str, 0, strpos($str, "_")), substr($str, strpos($str, "_")+1))
+            : Array(false, false);
     }
 }
 ?>

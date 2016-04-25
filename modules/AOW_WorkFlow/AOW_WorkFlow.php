@@ -51,8 +51,8 @@ class AOW_WorkFlow extends Basic {
 	var $status;
 	var $run_when;
 
-	function AOW_WorkFlow($init=true){
-		parent::Basic();
+	public function __construct($init=true){
+		parent::__construct();
         if($init){
             $this->load_flow_beans();
             require_once('modules/AOW_WorkFlow/aow_utils.php');
@@ -229,7 +229,9 @@ class AOW_WorkFlow extends Basic {
                 $condition = new AOW_Condition();
                 $condition->retrieve($row['id']);
                 $query = $this->build_query_where($condition,$module,$query);
-
+                if(empty($query)){
+                    return $query;
+                }
             }
             if($this->flow_run_on){
                 switch($this->flow_run_on){
@@ -441,7 +443,7 @@ class AOW_WorkFlow extends Basic {
 
         if($this->flow_run_on){
 
-            // database time correction with the user's time-zoneqq 
+            // database time correction with the user's time-zoneqq
             $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
             $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
             $thisDateEnteredTimestamp = strtotime($this->date_entered);
@@ -543,7 +545,8 @@ class AOW_WorkFlow extends Basic {
                             $value = date('Y-m-d');
                             $field = strtotime(date('Y-m-d', $field));
                         } else {
-                            $value = $condition_bean->$params[0];
+                            $fieldName = $params[0];
+                            $value = $condition_bean->$fieldName;
                         }
 
                         if($params[1] != 'now'){

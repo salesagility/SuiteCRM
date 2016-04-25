@@ -60,7 +60,7 @@ class UserSignature extends SugarBean {
 	var $object_name ='UserSignature';
 	var $disable_custom_fields = true;
 
-	function UserSignature() {
+    public function __construct() {
 		//Ensure the vardefs get loaded.
 		global $dictionary;
 		if(file_exists('custom/metadata/users_signaturesMetaData.php')) {
@@ -68,11 +68,11 @@ class UserSignature extends SugarBean {
 		} else {
 			require_once('metadata/users_signaturesMetaData.php');
 		}
-		
-		
-		parent::SugarBean();	
+
+
+		parent::__construct();
 	}
-	
+
 	/**
 	 * returns the bean name - overrides SugarBean's
 	 */

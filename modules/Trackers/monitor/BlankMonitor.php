@@ -44,34 +44,34 @@ require_once('modules/Trackers/Metric.php');
 require_once('modules/Trackers/Trackable.php');
 
 class BlankMonitor extends Monitor implements Trackable {
-    
+
     /**
      * BlankMonitor constructor
      */
-    function BlankMonitor() {
+    function __construct() {
 
     }
-    
+
     /**
      * setValue
      * Sets the value defined in the monitor's metrics for the given name
      * @param $name String value of metric name
-     * @param $value Mixed value 
+     * @param $value Mixed value
      * @throws Exception Thrown if metric name is not configured for monitor instance
      */
     function setValue($name, $value) {
 
     }
-    
+
     /**
      * getStores
      * Returns Array of store names defined for monitor instance
      * @return Array of store names defined for monitor instance
      */
     function getStores() {
-        return null;	
+        return null;
     }
-    
+
     /**
      * getMetrics
      * Returns Array of metric instances defined for monitor instance
@@ -80,15 +80,15 @@ class BlankMonitor extends Monitor implements Trackable {
     function getMetrics() {
     	return null;
     }
-    
+
     /**
      * save
      * This method retrieves the Store instances associated with monitor and calls
      * the flush method passing with the montior ($this) instance.
-     * 
+     *
      */
     public function save() {
- 	
+
     }
 
 
@@ -105,7 +105,7 @@ class BlankMonitor extends Monitor implements Trackable {
 		return null;
 	}
 
-    
+
 	/**
 	 * clear
 	 * This function clears the metrics data in the monitor instance

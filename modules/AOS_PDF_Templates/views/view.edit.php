@@ -4,8 +4,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.edit.php');
 
 class AOS_PDF_TemplatesViewEdit extends ViewEdit {
-    function AOS_PDF_TemplatesViewEdit(){
-        parent::ViewEdit();
+    function __construct(){
+        parent::__construct();
     }
 
     function display(){
@@ -210,7 +210,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
         //Start of insert_fields
         $insert_fields = '';
         $insert_fields .= <<<HTML
-	
+
 		$insert_fields_js
 		$insert_fields_js2
 		<select name='module_name' id='module_name' tabindex="50" onchange="populateVariables(this.options[this.selectedIndex].value);">
@@ -222,7 +222,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
 		<script type="text/javascript">
 			populateModuleVariables("$type");
 	</script>
-		
+
 
 HTML;
 
@@ -240,7 +240,7 @@ HTML;
 		<script language="javascript" type="text/javascript">
 		$tinyMCE
 		var df = '{$locale->getPrecedentPreference('default_date_format')}';
- 		
+
  		tinyMCE.init({
     		theme : "advanced",
     		theme_advanced_toolbar_align : "left",
@@ -266,7 +266,7 @@ HTML;
 			extended_valid_elements : "textblock",
 			custom_elements: "textblock",
 		});
-		
+
 		tinyMCE.init({
     		theme : "advanced",
     		theme_advanced_toolbar_align : "left",

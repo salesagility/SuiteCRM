@@ -6,7 +6,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @package Advanced OpenSales for SugarCRM
  * @subpackage Products
  * @copyright SalesAgility Ltd http://www.salesagility.com
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU AFFERO GENERAL PUBLIC LICENSE as published by
  * the Free Software Foundation; either version 3 of the License, or
@@ -36,18 +36,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_PDF_Templates/AOS_PDF_Templates.php');
 
-class AOS_PDF_TemplatesDashlet extends DashletGeneric { 
-    function AOS_PDF_TemplatesDashlet($id, $def = null) {
+class AOS_PDF_TemplatesDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_PDF_Templates/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOS_PDF_Templates');
 
         $this->searchFields = $dashletData['AOS_PDF_TemplatesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_PDF_TemplatesDashlet']['columns'];
 
-        $this->seedBean = new AOS_PDF_Templates();        
+        $this->seedBean = new AOS_PDF_Templates();
     }
 }

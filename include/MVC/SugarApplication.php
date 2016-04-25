@@ -2,9 +2,9 @@
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -57,7 +57,7 @@ class SugarApplication
  	var $default_module = 'Home';
  	var $default_action = 'index';
 
- 	function SugarApplication()
+ 	public function __construct()
  	{}
 
  	/**
@@ -84,9 +84,7 @@ class SugarApplication
 
         SugarThemeRegistry::buildRegistry();
         $this->loadLanguages();
-		$this->checkDatabaseVersion();
 		$this->loadDisplaySettings();
-		//$this->loadLicense();
 		$this->loadGlobals();
 		$this->setupResourceManagement($module);
 		$this->controller->execute();
@@ -104,7 +102,7 @@ class SugarApplication
 		$allowed_actions = (!empty($this->controller->allowed_actions)) ? $this->controller->allowed_actions : $allowed_actions = array('Authenticate', 'Login', 'LoggedOut');
 
         $authController = new AuthenticationController();
-        
+
 		if(($user_unique_key != $server_unique_key) && (!in_array($this->controller->action, $allowed_actions)) &&
 		   (!isset($_SESSION['login_error'])))
 		   {
@@ -123,11 +121,15 @@ class SugarApplication
 			        $this->controller->action = 'index';
 			    elseif($this->isModifyAction())
 			        $this->controller->action = 'index';
-                elseif ($this->controller->action == $this->default_action 
+                elseif ($this->controller->action == $this->default_action
                     && $this->controller->module == $this->default_module) {
                     $this->controller->action = '';
                     $this->controller->module = '';
                 }
+				elseif(strtolower($this->controller->module) == 'alerts' && strtolower($this->controller->action) == 'get') {
+					echo 'lost session';
+					exit();
+				}
 			}
 
             $authController->authController->redirectToLogin($this);

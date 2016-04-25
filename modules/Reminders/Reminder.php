@@ -68,7 +68,7 @@ class Reminder extends Basic
 
     public function __construct()
     {
-        parent::Basic();
+        parent::__construct();
     }
 
     public function bean_implements($interface)
@@ -279,12 +279,14 @@ class Reminder extends Basic
             return;
         }
 
-        //Create separate variable to hold timedate value
-        $alertDateTimeNow = $timedate->nowDb();
+        // Create separate variable to hold timedate value
+        // These timedates need to be in the user time zone as the
+        // datetime returned by the Bean below is in the user time zone
+        $alertDateTimeNow = $timedate->getNow(true)->asDb(false);
 
         // cn: get a boundary limiter
-        $dateTimeMax = $timedate->getNow()->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb();
-        $dateTimeNow = $timedate->nowDb();
+        $dateTimeMax = $timedate->getNow(true)->modify("+{$app_list_strings['reminder_max_time']} seconds")->asDb(false);
+        $dateTimeNow = $timedate->getNow(true)->asDb(false);
 
         $dateTimeNow = $db->convert($db->quoted($dateTimeNow), 'datetime');
         $dateTimeMax = $db->convert($db->quoted($dateTimeMax), 'datetime');

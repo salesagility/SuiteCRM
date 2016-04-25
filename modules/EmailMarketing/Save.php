@@ -54,15 +54,20 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 global $timedate;
 global $current_user;
 if(!empty($_POST['meridiem'])){
-	$_POST['time_start'] = $timedate->merge_time_meridiem($_POST['time_start'],$timedate->get_time_format(), $_POST['meridiem']);
+	$time_start = isset($_POST['time_start']) ? $_POST['time_start'] : $_POST['wiz_step3_time_start'];
+	$_POST['time_start'] = $timedate->merge_time_meridiem($time_start,$timedate->get_time_format(), $_POST['meridiem']);
 }
 
 if(empty($_REQUEST['time_start'])) {
-  $_REQUEST['date_start'] = $_REQUEST['date_start'] . ' 00:00'; 
-   $_POST['date_start'] = $_POST['date_start'] . ' 00:00';
+	if(!empty($_REQUEST['date_start'])) {
+		$_REQUEST['date_start'] = $_REQUEST['date_start'] . ' 00:00';
+		$_POST['date_start'] = $_POST['date_start'] . ' 00:00';
+	}
 } else {
-  $_REQUEST['date_start'] = $_REQUEST['date_start'] . ' ' . $_REQUEST['time_start'];
-  $_POST['date_start'] = $_POST['date_start'] . ' ' . $_POST['time_start'];
+	if(!empty($_REQUEST['date_start'])) {
+		$_REQUEST['date_start'] = $_REQUEST['date_start'] . ' ' . $_REQUEST['time_start'];
+		$_POST['date_start'] = $_POST['date_start'] . ' ' . $_POST['time_start'];
+	}
 }
 
 $marketing = new EmailMarketing();
@@ -83,7 +88,7 @@ else {
 foreach($marketing->column_fields as $field)
 {
 	if ($field == 'all_prospect_lists') {
-		if(isset($_POST[$field]) && $_POST[$field]='on' )
+		if(isset($_POST[$field]) && $_POST[$field]=='on' )
 		{
 			$marketing->$field = 1;
 		} else {
@@ -109,6 +114,19 @@ foreach($marketing->additional_column_fields as $field)
 }
 
 $marketing->campaign_id = $_REQUEST['campaign_id'];
+
+if($_REQUEST['func'] == 'wizardUpdate') {
+	foreach ($_POST as $key => $value) {
+		if (preg_match('/^wiz_step3_(.*)$/', $key, $match)) {
+			$field = $match[1];
+			$marketing->$field = $value;
+			if($field=='time_start') {
+				$marketing->date_start .= ' ' . $value;
+			}
+		}
+	}
+}
+
 $marketing->save($check_notify);
 
 //add prospect lists to campaign.
@@ -137,9 +155,18 @@ if ($marketing->all_prospect_lists==1) {
 		}
 	}
 }
-if($_REQUEST['action'] != 'WizardMarketingSave'){
+if($_REQUEST['action'] != 'WizardMarketingSave' && (!isset($_REQUEST['func']) || $_REQUEST['func'] != 'wizardUpdate')) {
     $header_URL = "Location: index.php?action=DetailView&module=Campaigns&record={$_REQUEST['campaign_id']}";
     $GLOBALS['log']->debug("about to post header URL of: $header_URL");
     header($header_URL);
 }
+
+if($_REQUEST['func'] == 'wizardUpdate') {
+	$resp = array();
+	$resp['error'] = false;
+	$resp['data'] = json_encode(array('id' => $marketing->id));
+	$resp = json_encode($resp);
+	echo $resp;
+}
+
 ?>

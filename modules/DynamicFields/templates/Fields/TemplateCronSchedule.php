@@ -5,7 +5,7 @@ require_once('modules/DynamicFields/templates/Fields/TemplateText.php');
 class TemplateCronSchedule extends TemplateText{
     var $type='CronSchedule';
 
-    function TemplateCronSchedule(){
+    function __construct(){
         parent::__construct();
     }
 

@@ -11,10 +11,10 @@ class AORReportsDashlet extends Dashlet {
     var $charts;
     var $onlyCharts;
 
-    function AORReportsDashlet($id, $def = array()) {
+    function __construct($id, $def = array()) {
 		global $current_user, $app_strings;
 
-        parent::Dashlet($id);
+        parent::__construct($id);
         $this->isConfigurable = true;
         $this->def = $def;
         if(empty($def['dashletTitle'])) {
@@ -52,10 +52,10 @@ class AORReportsDashlet extends Dashlet {
         $dashletSmarty->assign('chartHTML',$this->getChartHTML());
         $dashletSmarty->assign('onlyCharts', $this->onlyCharts);
         $dashletSmarty->assign('parameters',json_encode(array(
-                                            'ids' => $this->def['parameter_id'],
-                                            'operators' => $this->def['parameter_operator'],
-                                            'types' => $this->def['parameter_type'],
-                                            'values' => $this->def['parameter_value'])));
+                                            'ids' => isset($this->def['parameter_id']) ? $this->def['parameter_id'] : null,
+                                            'operators' => isset($this->def['parameter_operator']) ? $this->def['parameter_operator'] : null,
+                                            'types' => isset($this->def['parameter_type']) ? $this->def['parameter_type'] : null,
+                                            'values' => isset($this->def['parameter_value']) ? $this->def['parameter_value'] : null)));
         return $dashletSmarty->fetch($dashletTemplate);
     }
 

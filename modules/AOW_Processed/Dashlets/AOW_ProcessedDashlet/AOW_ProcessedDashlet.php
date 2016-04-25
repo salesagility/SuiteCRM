@@ -27,18 +27,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOW_Processed/AOW_Processed.php');
 
-class AOW_ProcessedDashlet extends DashletGeneric { 
-    function AOW_ProcessedDashlet($id, $def = null) {
+class AOW_ProcessedDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOW_Processed/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOW_Processed');
 
         $this->searchFields = $dashletData['AOW_ProcessedDashlet']['searchFields'];
         $this->columns = $dashletData['AOW_ProcessedDashlet']['columns'];
 
-        $this->seedBean = new AOW_Processed();        
+        $this->seedBean = new AOW_Processed();
     }
 }

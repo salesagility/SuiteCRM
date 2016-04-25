@@ -55,7 +55,7 @@ class LayoutManager
 	var $default_widget_name = 'Field';
 	var $DBHelper;
 
-	function LayoutManager()
+	function __construct()
 	{
 		// set a sane default for context
 		$this->defs['context'] = 'Detail';
@@ -363,7 +363,7 @@ class LayoutManager
         if ($grabId) {
             return $theclass->getWidgetId();
         }
-        
+
 		return $theclass->display($widget_def, null, null);
 	}
 

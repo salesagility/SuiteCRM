@@ -69,16 +69,17 @@ class AOD_IndexEvent_sugar extends Basic {
 		var $assigned_user_link;
 		var $error;
 		var $success;
-		function AOD_IndexEvent_sugar(){
-		parent::Basic();
+
+    public function __construct(){
+		parent::__construct();
 	}
-	
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
 		}
 		return false;
 }
-		
+
 }
 ?>

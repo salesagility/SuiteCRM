@@ -57,7 +57,7 @@ class Chart_pipeline_by_sales_stage
 {
 	  var $modules = array('Opportunities');
 	  var $order = 0;
-function Chart_pipeline_by_sales_stage()
+function __construct()
 {
 }
 

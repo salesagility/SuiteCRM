@@ -97,7 +97,7 @@ class SugarFolder {
 	/**
 	 * Sole constructor
 	 */
-	function SugarFolder() {
+	function __construct() {
 		$this->db = DBManagerFactory::getInstance();
 	}
 

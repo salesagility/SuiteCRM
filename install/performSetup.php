@@ -592,7 +592,7 @@ $configurator->populateFromPost();
 installLog('handleOverride');
 // add local settings to config overrides
 if(!empty($_SESSION['default_date_format'])) $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
-if(!empty($_SESSION['default_time_format'])) $sugar_config['default_date_format'] = $_SESSION['default_time_format'];
+if(!empty($_SESSION['default_time_format'])) $sugar_config['default_time_format'] = $_SESSION['default_time_format'];
 if(!empty($_SESSION['default_language'])) $sugar_config['default_language'] = $_SESSION['default_language'];
 if(!empty($_SESSION['default_locale_name_format'])) $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
 //$configurator->handleOverride();
