@@ -47,7 +47,7 @@ class updateEndDate
             $dateformat = $current_user->getPreference('datef');
             $bean->get_linked_beans('projects');
 
-            if (empty($bean->projects->beans)) {
+            if (!empty($bean->projects->beans)) {
                 foreach ($bean->projects->beans as $id => $project) {
                     // if the task's "end date" is after the project's "end date",
                     // extend the project to fit the new task end date.
