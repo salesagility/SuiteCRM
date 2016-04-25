@@ -486,7 +486,7 @@
 						module: 'CampaignTrackers',
 						record: '', // TODO .. campaign tracker ID on update
 						action: 'Save',
-						campaign_id: '{$CAMPAIGN_ID}',
+						campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
 						tracker_name: trackerName,
 						tracker_url: trackerURL,
 						is_optout: $('#is_optout').prop('checked') ? 'on' : '',
