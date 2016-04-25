@@ -602,6 +602,9 @@
 										$('input[name="wiz_step3_date_start"]').val($('#date_start_date').val());
 										$('input[name="wiz_step3_time_start"]').val($('#date_start_hours').val() + ':' + $('#date_start_minutes').val());
 										$('select[name="meridiem"]').val($('#date_start_meridiem').val());
+										if(parseInt($('#date_start_hours').val())>12) {
+											$('#date_start_meridiem').val('PM');
+										}
 									},100);
 								</script>
 								{/literal}
