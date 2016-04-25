@@ -205,6 +205,7 @@ if(isset($_REQUEST['show_wizard_summary']) && $_REQUEST['show_wizard_summary']) 
         }
         else if(isset($_REQUEST['sendMarketingEmailSchedule']) && $_REQUEST['sendMarketingEmailSchedule']) {
             $_POST['mode'] = 'send';
+            $_SESSION['msg'] = 'LBL_EMAILS_SCHEDULED';
         }
         else {
             throw new Exception('request error');

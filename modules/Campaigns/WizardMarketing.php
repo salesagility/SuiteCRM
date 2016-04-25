@@ -608,5 +608,9 @@ $ss->assign('fields', array(
     )
 ));
 
+if(isset($_SESSION['msg']) && $_SESSION['msg']) {
+    $ss->assign('msg', $mod_strings[$_SESSION['msg']]);
+    unset($_SESSION['msg']);
+}
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
