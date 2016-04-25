@@ -497,7 +497,14 @@ class AOR_Report extends Basic {
         $_group_value = $this->db->quote($group_value);
 
         $report_sql = $this->build_report_query($_group_value, $extra);
-        $max_rows = 20;
+
+        // Fix for issue 1232 - items listed in a single report, should adhere to the same standard as ListView items.
+        if($sugar_config['list_max_entries_per_page']!='') {
+            $max_rows = $sugar_config['list_max_entries_per_page'];
+        } else {
+            $max_rows = 20;
+        }
+        
         $total_rows = 0;
         $count_sql = explode('ORDER BY', $report_sql);
         $count_query = 'SELECT count(*) c FROM ('.$count_sql[0].') as n';
