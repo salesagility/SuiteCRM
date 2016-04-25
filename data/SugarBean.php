@@ -2,12 +2,13 @@
 if (!defined('sugarEntry') || !sugarEntry) {
     die('Not A Valid Entry Point');
 }
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -38,7 +39,7 @@ if (!defined('sugarEntry') || !sugarEntry) {
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
 /*********************************************************************************
  * Description:  Defines the base class for all data entities used throughout the
@@ -215,9 +216,6 @@ class SugarBean
     public $optimistic_lock = false;
     public $disable_custom_fields = false;
     public $number_formatting_done = false;
-    /*
-    * The default ACL type
-    */
     public $process_field_encrypted = false;
     public $acltype = 'module';
     public $additional_meta_fields = array();
@@ -274,7 +272,6 @@ class SugarBean
      *    if needed
      * 3. Setup row-level security preference
      * All implementing classes  must call this constructor using the parent::SugarBean() class.
-     * @todo - fix this comment
      *
      */
     public function __construct()
@@ -878,7 +875,7 @@ class SugarBean
                 $performSecondQuery = false;
             }
             if (!empty($rows_found) && (empty($limit) || $limit == -1)) {
-                $limit = $sugar_config['list_max_entries_per_subpanel'];
+                $limit = $max_per_page;
             }
             if ($toEnd) {
                 $row_offset = (floor(($rows_found - 1) / $limit)) * $limit;
@@ -1041,7 +1038,6 @@ class SugarBean
                 }
             }
         } else {
-            $row_found = 0;
             $parent_fields = array();
         }
         $response = array();
@@ -1074,7 +1070,6 @@ class SugarBean
         }
 
         $result = $this->db->query($count_query, true, "Error running count query for $this->object_name List: ");
-        $row_num = 0;
         while ($row = $this->db->fetchByAssoc($result, true)) {
             $num_rows_in_query += current($row);
         }
@@ -2678,7 +2673,7 @@ class SugarBean
                     return;
                 }
 
-                if (!$notify_mail->Send()) {
+                if (!$notify_mail->send()) {
                     $GLOBALS['log']->fatal("Notifications: error sending e-mail (method: {$notify_mail->Mailer}), (error: {$notify_mail->ErrorInfo})");
                 } else {
                     $GLOBALS['log']->info("Notifications: e-mail successfully sent");
@@ -2696,7 +2691,6 @@ class SugarBean
     {
         global $sugar_version;
         global $sugar_config;
-        global $app_list_strings;
         global $current_user;
         global $locale;
         global $beanList;
@@ -2710,7 +2704,7 @@ class SugarBean
         $GLOBALS['log']->debug("Notifications: user has e-mail defined");
 
         $notify_mail = new SugarPHPMailer();
-        $notify_mail->AddAddress($notify_address, $locale->translateCharsetMIME(trim($notify_name), 'UTF-8', $OBCharset));
+        $notify_mail->addAddress($notify_address, $locale->translateCharsetMIME(trim($notify_name), 'UTF-8', $OBCharset));
 
         if (empty($_SESSION['authenticated_user_language'])) {
             $current_language = $sugar_config['default_language'];
@@ -2740,21 +2734,6 @@ class SugarBean
         }
         $xtpl->assign("ASSIGNED_USER", $this->new_assigned_user_name);
         $xtpl->assign("ASSIGNER", $current_user->name);
-        $port = '';
-
-        if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443) {
-            $port = $_SERVER['SERVER_PORT'];
-        }
-
-        if (!isset($_SERVER['HTTP_HOST'])) {
-            $_SERVER['HTTP_HOST'] = '';
-        }
-
-        $httpHost = $_SERVER['HTTP_HOST'];
-
-        if ($colon = strpos($httpHost, ':')) {
-            $httpHost = substr($httpHost, 0, $colon);
-        }
 
         $parsedSiteUrl = parse_url($sugar_config['site_url']);
         $host = $parsedSiteUrl['host'];
@@ -3874,20 +3853,22 @@ class SugarBean
         $this->is_updated_dependent_fields = false;
         $this->fill_in_additional_detail_fields();
         $this->fill_in_relationship_fields();
-// save related fields values for audit
+        // save related fields values for audit
         foreach ($this->get_related_fields() as $rel_field_name) {
-            if (!empty($this->$rel_field_name['name'])) {
-                $this->fetched_rel_row[$rel_field_name['name']] = $this->$rel_field_name['name'];
+            $field_name = $rel_field_name['name'];
+            if (!empty($this->$field_name)) {
+                $this->fetched_rel_row[$rel_field_name['name']] = $this->$field_name;
             }
         }
         //make a copy of fields in the relationship_fields array. These field values will be used to
         //clear relationship.
         foreach ($this->field_defs as $key => $def) {
-            if ($def ['type'] == 'relate' && isset($def ['id_name']) && isset($def ['link']) && isset($def['save'])) {
+            if ($def['type'] == 'relate' && isset($def['id_name']) && isset($def['link']) && isset($def['save'])) {
                 if (isset($this->$key)) {
                     $this->rel_fields_before_value[$key] = $this->$key;
-                    if (isset($this->$def ['id_name'])) {
-                        $this->rel_fields_before_value[$def ['id_name']] = $this->$def ['id_name'];
+                    $defIdName = $def['id_name'];
+                    if (isset($this->$defIdName)) {
+                        $this->rel_fields_before_value[$defIdName] = $this->$defIdName;
                     }
                 } else {
                     $this->rel_fields_before_value[$key] = null;
@@ -4360,9 +4341,6 @@ class SugarBean
             return $response;
         }
         $GLOBALS['log']->debug("get_related_list:  order_by = '$order_by' and where = '$where' and limit = '$limit'");
-        if (isset($_SESSION['show_deleted'])) {
-            $show_deleted = 1;
-        }
 
         $this->load_relationship($related_field_name);
 
