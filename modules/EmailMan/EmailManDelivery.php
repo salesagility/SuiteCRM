@@ -191,7 +191,7 @@ do {
 		$lock_count=$db->getAffectedRowCount($lock_result);
 
 		//do not process the message if unable to acquire lock.
-		if ($lock_count!= 1) {
+		if (!$test && $lock_count!= 1) {
 			$GLOBALS['log']->fatal("Error acquiring lock for the emailman entry, skipping email delivery. lock status=$lock_count " . print_r($row,true));
 			continue;  //do not process this row we will examine it after 24 hrs. the email address based dupe check is in place too.
 		}
