@@ -130,9 +130,12 @@ function show(div){
  *  5.adjusts the step location message
  */
 
-function navigate(direction, noValidation){
+function navigate(direction, noValidation, noSave){
   if(typeof noValidation == 'undefined') {
     noValidation = false;
+  }
+  if(typeof noSave == 'undefined') {
+    noSave = false;
   }
 
   //get the current step
@@ -156,11 +159,15 @@ function navigate(direction, noValidation){
       if(currentValue == 1) {
         if(!campaignId) {
           if(typeof document.getElementById('wizform').direction != 'undefined') {
-            campaignCreateAndRefreshPage();
+            if(!noSave) {
+              campaignCreateAndRefreshPage();
+            }
           }
         }
         else {
-          campaignUpdate();
+          if(!noSave) {
+            campaignUpdate();
+          }
         }
       }
       current_step.value = currentValue+1;

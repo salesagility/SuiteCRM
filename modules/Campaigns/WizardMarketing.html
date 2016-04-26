@@ -287,7 +287,7 @@
 		}
 
 		function onNext() {
-			navigate('next');
+			navigate('next', false, true);
 			if(document.getElementById('wiz_current_step').value == document.getElementById('wiz_total_steps').value) {
 				wizardMenuFillAll();
 			}
@@ -1241,7 +1241,7 @@ var jumpToPageByURL = function() {
 			if(document.getElementById('wiz_current_step').value > document.getElementById('wiz_total_steps').value) {
 				break;
 			}
-			navigate('next', noValidation);
+			navigate('next', noValidation, true);
 			i++;
 			if(document.getElementById('wiz_current_step').value == currentStep) {
 				break;
