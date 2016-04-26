@@ -10,11 +10,11 @@ matrix:
 before_script:
   - composer self-update
   - composer install --no-interaction
-  - ./console -v app:install --database-name=suitecrm --database-username=travis --install-admin-username=admin --install-admin-password=admin --install-system-name="SuiteCRM Travis Build" --no-interaction
+  - ./console -vv app:install --database-name=suitecrm --database-username=travis --install-admin-username=admin --install-admin-password=admin --install-system-name="SuiteCRM Travis Build" --no-interaction
 script:
   - cd tests
   - ../vendor/bin/phpunit
-  - cat ../suitecrm.log
+#  - cat ../suitecrm.log
 services:
   - mysql
 branches:
