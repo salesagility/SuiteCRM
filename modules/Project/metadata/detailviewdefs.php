@@ -174,7 +174,7 @@ array (
             'name' => 'estimated_end_date',
             'label' => 'LBL_DATE_END',
           ),
-          1 => '',
+          1 => 'override_business_hours',
         ),
         3 => 
         array (

@@ -154,11 +154,12 @@ $(function() {
                     effect: "drop",
                     duration: 500
                 },
-                width: 350,
+                width: 700,
                 modal: false,
                 buttons: {
                     "Add": function() {
                         var Project_id = $('#project_id').val();
+						var override_business_hours = $('#override_business_hours').val();
                         //var Parent_task = $('#parent_task').val();
                         var Task_name = $('#name').val();
                         var milestone = milestone_flag;
@@ -175,7 +176,7 @@ $(function() {
 
                         if($("#popup_form").valid()){
 
-                            var dataString = '&project_id=' + Project_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes;
+                            var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes;
                             //block();
                             $.ajax({
                                 type: "POST",
@@ -289,7 +290,7 @@ function remove_button(){
                 effect: "drop",
                 duration: 500
             },
-            width: 350,
+            width: 700,
             modal: true,
             buttons: {
                 "Delete": function() {
@@ -451,12 +452,13 @@ function edit_task(task){
             effect: "drop",
             duration: 500
         },
-        width: 350,
+        width: 700,
         modal: true,
         buttons: {
             "Update": function() {
                 var Project_id = $('#project_id').val();
-                var Task_id = $('#task_id').val();
+                var override_business_hours = $('#override_business_hours').val();
+				var Task_id = $('#task_id').val();
                 //var Parent_task = $('#parent_task').val();
                 var Task_name = $('#name').val();
 
@@ -481,7 +483,7 @@ function edit_task(task){
 
                 if($("#popup_form").valid()){
 
-                    var dataString = '&project_id=' + Project_id + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
+                    var dataString = '&project_id=' + Project_id + '&override_business_hours=' + override_business_hours + '&task_id=' + Task_id + '&milestone=' + milestone + '&task_name=' +Task_name + '&predecessor=' + Task_pre + '&rel_type=' + rel_type + '&start=' + Task_Start + '&duration=' + Task_Duration + '&unit=' + Task_Duration_unit + '&resource=' + Task_Resource + '&percent=' + Task_Percent + '&note=' + Task_Notes + '&actual_duration=' + Actual_duration;
                     //block();
                     $.ajax({
                         type: "POST",

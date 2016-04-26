@@ -193,7 +193,6 @@ $mod_strings = array(
 	'LBL_SCHEDULING_FORM_TITLE' => 'Scheduling',
 	'LBL_REMOVE' => 'rem',
 	'LBL_VIEW_DETAIL' => 'View Details',
-
- 
+	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Override Business Hours',
 );
 ?>

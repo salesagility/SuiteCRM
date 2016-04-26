@@ -80,6 +80,7 @@ class ProjectController extends SugarController {
 
         $task_name = $_POST['task_name'];
         $project_id = $_POST['project_id'];
+		$override_business_hours = intval($_POST['override_business_hours']);
         $task_id = $_POST['task_id'];
         $predecessor = $_POST['predecessor'];
         $rel_type = $_POST['rel_type'];
@@ -113,9 +114,10 @@ class ProjectController extends SugarController {
 		//
 		//code block to calculate end date based on user's business hours
 		//
+
 		$configurator = new Configurator;
 		
-		if( $duration_unit == 'Hours' && isset($configurator->config['businessHours'])){
+		if( $duration_unit == 'Hours' && isset($configurator->config['businessHours']) && $override_business_hours == 1){
 			$bhours = $configurator->config['businessHours'];
 			
 			$enddate = $startdate;
@@ -123,16 +125,12 @@ class ProjectController extends SugarController {
 			$d = 0;
 			
 			while($duration > $h){
-				$day = strtolower($enddate->format('D'));
-				$GLOBALS['log']->fatal("start:". $day );
+				$day = strtolower($enddate->format('D'));	
 				$h += $bhours[$day];	
-				$GLOBALS['log']->fatal("start:". $h);
 				$enddate = $enddate->modify('+1 Days');
 			} 
 			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
 			$enddate = $enddate->format('Y-m-d');
-			
-			$GLOBALS['log']->fatal("start:". var_export($enddate,true) );
 
 		}
 		else{
