@@ -41,12 +41,12 @@ class DatabaseChecker
     protected static function checkDatabaseConnection()
     {
         $db = InstallUtils::getInstallDatabaseInstance(
-            self::$configuration['setup_db_type'],
-            ["db_manager" => self::$configuration['setup_db_manager']]
+            self::$configuration['database-type'],
+            ["db_manager" => self::$configuration['database-manager']]
         );
 
-        if (!$db->isDatabaseNameValid(self::$configuration['setup_db_database_name'])) {
-            throw new \Exception('Invalid database name("' . self::$configuration['setup_db_database_name'] . '") was supplied!');
+        if (!$db->isDatabaseNameValid(self::$configuration['database-name'])) {
+            throw new \Exception('Invalid database name("' . self::$configuration['database-name'] . '") was supplied!');
         }
     }
 
@@ -69,23 +69,23 @@ class DatabaseChecker
      */
     protected static function checkConfigurationData()
     {
-        if (empty(trim(self::$configuration['setup_db_database_name']))) {
+        if (empty(trim(self::$configuration['database-name']))) {
             throw new \Exception('No database name was supplied!');
         }
 
-        if (self::$configuration['setup_db_type'] != 'oci8') {
+        if (self::$configuration['database-type'] != 'oci8') {
             // Oracle doesn't need host name, others do
-            if (empty(trim(self::$configuration['setup_db_host_name']))) {
+            if (empty(trim(self::$configuration['database-host']))) {
                 throw new \Exception('No database hostname name was supplied!');
             }
         }
 
-        if (isset(self::$configuration['setup_db_type'])
-            && (!isset(self::$configuration['setup_db_manager'])
-                || empty(self::$configuration['setup_db_manager']))
+        if (isset(self::$configuration['database-type'])
+            && (!isset(self::$configuration['database-manager'])
+                || empty(self::$configuration['database-manager']))
         ) {
-            self::$configuration['setup_db_manager'] = \DBManagerFactory::getManagerByType(
-                self::$configuration['setup_db_type']
+            self::$configuration['database-manager'] = \DBManagerFactory::getManagerByType(
+                self::$configuration['database-type']
             );
         }
     }

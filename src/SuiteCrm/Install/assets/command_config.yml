@@ -1,0 +1,69 @@
+# DATABASE (all options with 'database-' prefix will be mapped onto here)
+database:
+  type:
+    default: mysql
+    mode: required
+    description: Database type(mysql|mssql)
+    #config-key: setup_db_type
+  host:
+    default: localhost
+    mode: required
+    description: Database host name(FQDN or ip)
+    #config-key: setup_db_host_name
+  port:
+    default: 3306
+    mode: required
+    description: Database port on host
+    #config-key: setup_db_port_num
+  name:
+    mode: required
+    description: The name of the database
+    #config-key: setup_db_database_name
+  username:
+    mode: required
+    description: The username for the database
+    config-key: setup_db_admin_user_name
+  password:
+    mode: required
+    description: The password for the database
+    #config-key: setup_db_admin_password
+  host-instance:
+    default: SQLEXPRESS
+    mode: required
+    description: Database host instance
+    #config-key: setup_db_host_instance
+
+# INSTALL (all options with 'install-' prefix will be mapped onto here)
+install:
+  host-name:
+    default: localhost
+    mode: required
+    description: The FQDN of the site (without protocol)
+    #config-key: setup_site_host_name
+  system-name:
+    default: SuiteCRM
+    mode: required
+    description: The name of this deployment
+    #config-key: setup_system_name
+  admin-username:
+    default: admin
+    mode: required
+    description: The username for the default administrator account
+    #config-key: setup_site_admin_user_name
+  admin-password:
+    default: admin
+    mode: required
+    description: The password for the default administrator account
+    #config-key: setup_site_admin_password
+  create-database:
+    mode: none
+    description: Create the database if it does not exist
+    #config-key: setup_db_create_database
+  drop-tables:
+    mode: none
+    description: Drop and recreate tables in database
+    #config-key: setup_db_drop_tables
+  demo-data:
+    mode: none
+    description: Install demo data
+    #config-key: demo-data

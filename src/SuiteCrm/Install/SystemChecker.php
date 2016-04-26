@@ -145,7 +145,7 @@ class SystemChecker
      */
     protected static function checkLockedInstaller()
     {
-        if (!isset($_SESSION["FORCE_INSTALLATION"]) || $_SESSION["FORCE_INSTALLATION"] != TRUE) {
+        if (!isset(self::$configuration["force"]) || self::$configuration["force"] != TRUE) {
             if (file_exists(PROJECT_ROOT . '/config.php')) {
                 require(PROJECT_ROOT . '/config.php');
                 if (isset($sugar_config['installer_locked']) && $sugar_config['installer_locked'] == TRUE) {

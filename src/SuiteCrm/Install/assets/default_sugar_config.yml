@@ -1,0 +1,284 @@
+#
+# DEFAULT SUGAR CONFIGURATION
+#
+
+cache_dir: 'cache/'
+tmp_dir: 'cache/xml/'
+upload_dir: 'upload/'
+session_dir: '/tmp/'
+log_dir: '.'
+log_file: 'suitecrm.log'
+
+logger:
+    level: fatal
+    file:
+        ext:        '.log'
+        name:       'suitecrm'
+        dateFormat: '%c'
+        maxSize:    '10MB'
+        maxLogs:    10
+        suffix:     ''
+
+enable_line_editing_detail: true
+enable_line_editing_list: true
+default_email_client: sugar
+default_email_editor: html
+disable_convert_lead: false
+
+currency: ''
+datef: m/d/Y
+timef: 'H:i'
+default_currency_significant_digits: 2
+default_currency_symbol: $
+default_export_charset: UTF-8
+default_locale_name_format: 's f l'
+default_number_grouping_seperator: ','
+default_decimal_seperator: .
+export_delimiter: ','
+default_email_charset: UTF-8
+admin_export_only: false
+export_excel_compatible: false
+
+calculate_response_time: true
+create_default_user: false
+chartEngine: Jit
+name_formats:
+    's f l': 's f l'
+    'f l': 'f l'
+    's l': 's l'
+    'l, s f': 'l, s f'
+    'l, f': 'l, f'
+    's l, f': 's l, f'
+    'l s f': 'l s f'
+    'l f s': 'l f s'
+date_formats:
+    Y-m-d: '2010-12-23'
+    m-d-Y: 12-23-2010
+    d-m-Y: 23-12-2010
+    Y/m/d: 2010/12/23
+    m/d/Y: 12/23/2010
+    d/m/Y: 23/12/2010
+    Y.m.d: 2010.12.23
+    d.m.Y: 23.12.2010
+    m.d.Y: 12.23.2010
+time_formats:
+    'H:i': '23:00'
+    'h:ia': '11:00pm'
+    'h:iA': '11:00PM'
+    'h:i a': '11:00 pm'
+    'h:i A': '11:00 PM'
+    'H.i': '23.00'
+    'h.ia': 11.00pm
+    'h.iA': 11.00PM
+    'h.i a': '11.00 pm'
+    'h.i A': '11.00 PM'
+dbconfigoption:
+    persistent: true
+    autofree: false
+    debug: 0
+    ssl: false
+default_action: index
+default_charset: UTF-8
+default_currency_name: 'US Dollars'
+default_currency_iso4217: USD
+default_date_format: m/d/Y
+default_language: en_us
+default_module: Home
+default_password: ''
+default_permissions:
+    dir_mode: 1528
+    file_mode: 493
+    user: ''
+    group: ''
+default_theme: Sugar5
+default_time_format: 'h:ia'
+default_user_is_admin: false
+default_user_name: ''
+disable_export: false
+disable_persistent_connections: 'false'
+display_email_template_variable_chooser: false
+display_inbound_email_buttons: false
+dump_slow_queries: false
+email_address_separator: ','
+email_default_editor: html
+email_default_client: sugar
+email_default_delete_attachments: true
+history_max_viewed: 50
+installer_locked: true
+import_max_records_per_file: 100
+import_max_records_total_limit: ''
+languages:
+    en_us: 'English (US)'
+large_scale_test: false
+list_max_entries_per_page: 20
+list_max_entries_per_subpanel: 10
+lock_default_user_name: false
+log_memory_usage: false
+portal_view: single_user
+resource_management:
+    special_query_limit: 50000
+    special_query_modules: [Reports, Export, Import, Administration, Sync]
+    default_limit: 1000
+require_accounts: true
+rss_cache_time: '10800'
+save_query: all
+showDetailData: true
+showThemePicker: true
+slow_query_time_msec: '100'
+sugarbeet: true
+tracker_max_display_length: 15
+translation_string_prefix: false
+upload_badext:
+    - php
+    - php3
+    - php4
+    - php5
+    - pl
+    - cgi
+    - py
+    - asp
+    - cfm
+    - js
+    - vbs
+    - html
+    - htm
+    - phtml
+upload_maxsize: 30000000
+import_max_execution_time: 3600
+verify_client_ip: true
+js_custom_version: ''
+js_lang_version: 1
+lead_conv_activity_opt: donothing
+lock_homepage: false
+lock_subpanels: false
+max_dashlets_homepage: '15'
+default_max_tabs: '7'
+dashlet_display_row_options:
+    - '1'
+    - '3'
+    - '5'
+    - '10'
+default_subpanel_tabs: true
+default_subpanel_links: false
+default_swap_last_viewed: false
+default_swap_shortcuts: false
+default_navigation_paradigm: gm
+admin_access_control: false
+use_common_ml_dir: false
+common_ml_dir: ''
+vcal_time: '2'
+calendar:
+    default_view: week
+    show_calls_by_default: true
+    show_tasks_by_default: true
+    show_completed_by_default: true
+    editview_width: 990
+    editview_height: 485
+    day_timestep: 15
+    week_timestep: 30
+    items_draggable: true
+    items_resizable: true
+    enable_repeat: true
+    max_repeat_count: 1000
+passwordsetting:
+    SystemGeneratedPasswordON: ''
+    generatepasswordtmpl: ''
+    lostpasswordtmpl: ''
+    forgotpasswordON: false
+    linkexpiration: '1'
+    linkexpirationtime: '30'
+    linkexpirationtype: '1'
+    systexpiration: '0'
+    systexpirationtime: ''
+    systexpirationtype: '0'
+    systexpirationlogin: ''
+use_real_names: true
+search_wildcard_infront: false
+search_wildcard_char: '%'
+jobs:
+    min_retry_interval: 30
+    max_retries: 5
+    timeout: 86400
+cron:
+    max_cron_jobs: 10
+    max_cron_runtime: 30
+    min_cron_interval: 30
+default_currencies:
+    AUD: { name: 'Australian Dollars', iso4217: AUD, symbol: $ }
+    BRL: { name: 'Brazilian Reais', iso4217: BRL, symbol: R$ }
+    GBP: { name: 'British Pounds', iso4217: GBP, symbol: £ }
+    CAD: { name: 'Canadian Dollars', iso4217: CAD, symbol: $ }
+    CNY: { name: 'Chinese Yuan', iso4217: CNY, symbol: ￥ }
+    EUR: { name: Euro, iso4217: EUR, symbol: € }
+    HKD: { name: 'Hong Kong Dollars', iso4217: HKD, symbol: $ }
+    INR: { name: 'Indian Rupees', iso4217: INR, symbol: ₨ }
+    KRW: { name: 'Korean Won', iso4217: KRW, symbol: ₩ }
+    YEN: { name: 'Japanese Yen', iso4217: JPY, symbol: ¥ }
+    MXM: { name: 'Mexican Pesos', iso4217: MXM, symbol: $ }
+    SGD: { name: 'Singaporean Dollars', iso4217: SGD, symbol: $ }
+    CHF: { name: 'Swiss Franc', iso4217: CHF, symbol: SFr. }
+    THB: { name: 'Thai Baht', iso4217: THB, symbol: ฿ }
+    USD: { name: 'US Dollars', iso4217: USD, symbol: $ }
+
+
+
+
+
+sugar_version: ''
+suitecrm_version: ''
+
+
+
+
+#  setup_site_log_level: fatal
+#  language: en_us
+#  default_language: en_us
+#  setup_site_url:
+#  site_default_theme: SuiteR
+#  default_date_format: Y-m-d
+#  default_time_format: H:i
+#  default_decimal_seperator: '.'
+#  default_number_grouping_seperator: ','
+#  default_charset: UTF-8
+#  default_email_charset: UTF-8
+#  default_export_charset: UTF-8
+#  default_currency_name: US Dollars
+#  default_currency_symbol: $
+#  default_currency_iso4217: USD
+#  default_locale_name_format: s f l
+#  export_delimiter: ','
+#  setup_db_host_instance: SQLEXPRESS
+#  setup_db_create_sugarsales_user: false
+#  setup_db_options: []
+#  session_dir:
+#  setup_site_guid:
+#  setup_installed_lang_packs: []
+#  setup_site_sugarbeet_automatic_checks: true
+
+
+  #other - unnown
+#  oc_install:
+#  setup_license_accept: false
+#  test_session: sessions are available
+#  license_submitted: false
+#  setup_license_key_users: 0
+#  setup_license_key_expire_date:
+#  setup_license_key:
+#  setup_num_lic_oc: 0
+#  install_type: typical
+#  dbConfig_submitted: false
+#  setup_site_sugarbeet: true
+#  setup_site_defaults: true
+#  setup_site_custom_session_path: false
+#  setup_site_session_path: false
+#  setup_site_custom_log_dir: false
+#  setup_site_log_dir: false
+#  setup_site_specify_guid: false
+#  setup_site_guid:
+#  disable_persistent_connections: false
+#  rss_cache_time: 10800
+#  language_keys: en_us
+#  language_values: US+English
+#  setup_site_sugarbeet_automatic_checks: true
+#  setup_site_sugarbeet_anonymous_stats: true
+#  siteConfig_submitted: false

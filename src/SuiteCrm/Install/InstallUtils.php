@@ -7,6 +7,8 @@
 
 namespace SuiteCrm\Install;
 use SuiteCrm\Install\Extra\ExtraInterface;
+use Symfony\Component\Yaml\Dumper;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Class InstallUtils
@@ -493,48 +495,30 @@ class InstallUtils
         $user->id = 1;
         $user->new_with_id = true;
         $user->last_name = 'Administrator';
-        $user->user_name = $config["setup_site_admin_user_name"];
+        $user->user_name = $config["install-admin-username"];
         $user->title = "Administrator";
         $user->status = 'Active';
         $user->is_admin = true;
         $user->employee_status = 'Active';
-        $user->user_hash = \User::getPasswordHash($config["setup_site_admin_password"]);
+        $user->user_hash = \User::getPasswordHash($config["install-admin-password"]);
         $user->email = '';//@todo: a config for this would be good
-        //$user->picture = UserDemoData::_copy_user_image($user->id);
         $user->save();
-
-        //I'd get rid of this - let Administrator create users after login
-        /*
-        if( $create_default_user ){
-            $default_user = new User();
-            $default_user->last_name = $sugar_config['default_user_name'];
-            $default_user->user_name = $sugar_config['default_user_name'];
-            $default_user->status = 'Active';
-            if( isset($sugar_config['default_user_is_admin']) && $sugar_config['default_user_is_admin'] ){
-                $default_user->is_admin = true;
-            }
-            $default_user->user_hash = User::getPasswordHash($sugar_config['default_password']);
-            $default_user->save();
-        }
-        */
         return $user;
     }
 
     /**
-     * @todo: resolve and remove $sugar_db_version parameter from here (put it to $config)
+     * @todo: this will duplicate data if we do not drop db tables
      * @param \DBManager $db
      * @param array $config
      */
-    public static function insertDefaultConfigSettings($db, $config, $sugar_db_version = null)
+    public static function insertDefaultConfigSettings($db, $config)
     {
-        $sugar_db_version = $sugar_db_version ? $sugar_db_version : $config['setup_sugar_version'];
-
         $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', 'do_not_reply@example.com')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', 'SuiteCRM')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_by_default', '1')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'on', '1')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_from_assigning_user', '0')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('info', 'sugar_version', '" . $sugar_db_version . "')");
+        $db->query("INSERT INTO config (category, name, value) VALUES ('info', 'sugar_version', '" . $config['sugar_db_version'] . "')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('MySettings', 'tab', '')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('portal', 'on', '0')");
         $db->query("INSERT INTO config (category, name, value) VALUES ('tracker', 'Tracker', '1')");
@@ -703,110 +687,53 @@ class InstallUtils
      *
      * Generates config.php
      *
-     * @param array $config
+     * @param array $configOverride
      * @throws \Exception
      */
-    public static function handleSugarConfig($config)
+    public static function createDefaultSugarConfig($configOverride)
     {
-        /*
-        global $bottle;
-        global $cache_dir;
-        global $mod_strings;
-        global $setup_db_host_name;
-        global $setup_db_host_instance;
-        global $setup_db_port_num;
-        global $setup_db_sugarsales_user;
-        global $setup_db_sugarsales_password;
-        global $setup_db_database_name;
-        global $setup_site_host_name;
-        global $setup_site_log_dir;
-        global $setup_site_log_file;
-        global $setup_site_session_path;
-        global $setup_site_guid;
-        global $setup_site_url;
-        global $setup_sugar_version;
-        global $setup_site_log_level;
-        */
 
         /** @var array $sugar_config */
         global $sugar_config;
 
-        // build default sugar_config
-        $sugar_config = get_sugar_config_defaults();
+        // load the default configuration
+        //$sugar_config = get_sugar_config_defaults();
+        $sugar_config = self::getConfigFileContent("default_sugar_config.yml");
 
         // always lock the installer
         $sugar_config['installer_locked'] = TRUE;
 
-        // DATABASE
-        $sugar_config['dbconfig']['db_host_name'] = $config["setup_db_host_name"];
-        $sugar_config['dbconfig']['db_host_instance'] = $config["setup_db_host_instance"];
-        $sugar_config['dbconfig']['db_user_name'] = $config["setup_db_admin_user_name"];
-        $sugar_config['dbconfig']['db_password'] = $config["setup_db_admin_password"];
-        $sugar_config['dbconfig']['db_name'] = $config["setup_db_database_name"];
-        $sugar_config['dbconfig']['db_type'] = $config["setup_db_type"];
-        $sugar_config['dbconfig']['db_port'] = $config["setup_db_port_num"];
-        $sugar_config['dbconfig']['db_manager'] = $config["setup_db_manager"];
-        if (!empty($config['setup_db_options'])) {
-            $sugar_config['dbconfigoption'] = array_merge($sugar_config['dbconfigoption'], $config['setup_db_options']);
+        //MERGE WITH OVERRIDE - (ONLY KEYS THAT EXIST IN $sugar_config)
+        $sugar_config = array_merge($sugar_config, array_intersect_key($configOverride, $sugar_config));
+
+        // SET DATABASE RELATED OPTIONS
+        $sugar_config['dbconfig']['db_host_name'] = $configOverride["database-host"];
+        $sugar_config['dbconfig']['db_host_instance'] = $configOverride["database-host-instance"];
+        $sugar_config['dbconfig']['db_user_name'] = $configOverride["database-username"];
+        $sugar_config['dbconfig']['db_password'] = $configOverride["database-password"];
+        $sugar_config['dbconfig']['db_name'] = $configOverride["database-name"];
+        $sugar_config['dbconfig']['db_type'] = $configOverride["database-type"];
+        $sugar_config['dbconfig']['db_port'] = $configOverride["database-port"];
+        $sugar_config['dbconfig']['db_manager'] = $configOverride["database-manager"];
+        if (!empty($configOverride['database-options'])) {
+            $sugar_config['dbconfigoption'] = array_merge($sugar_config['dbconfigoption'], $configOverride['database-options']);
         }
 
-        // GENERIC
-        $sugar_config['cache_dir'] = sugar_cached("");
-        $sugar_config['default_charset'] = $config['default_charset'];
-        $sugar_config['default_email_client'] = 'sugar';
-        $sugar_config['default_email_editor'] = 'html';
-        $sugar_config['host_name'] = $config['setup_site_host_name'];
-        $sugar_config['js_custom_version'] = '';
-        $sugar_config['use_real_names'] = TRUE;
-        $sugar_config['disable_convert_lead'] = FALSE;
-        $sugar_config['log_dir'] = '.';
-        $sugar_config['log_file'] = 'suitecrm.log';
-        $sugar_config['enable_line_editing_detail'] = TRUE;
-        $sugar_config['enable_line_editing_list'] = TRUE;
 
-        $sugar_config['session_dir'] = $config['session_dir'];
-        $sugar_config['site_url'] = $config['setup_site_url'];
-        $sugar_config['sugar_version'] = $config['setup_sugar_version'];
-        $sugar_config['tmp_dir'] = $sugar_config['cache_dir'] . 'xml/';//why 'xml'?
-        $sugar_config['upload_dir'] = 'upload/';
-
-        // FTS - @todo: check me!
-        /*
-        if (!empty($_SESSION['setup_fts_type'])) {
-            $sugar_config['full_text_engine'] = array(
-                $_SESSION['setup_fts_type'] => getFtsSettings()
-            );
-            if (isset($_SESSION['setup_fts_hide_config'])) {
-                $sugar_config['hide_full_text_engine_config'] = $_SESSION['setup_fts_hide_config'];
-            }
-        }*/
-
-        // Logger
-        $sugar_config['logger'] = [
-            'level' => $config['setup_site_log_level'],
-            'file' => [
-                'ext' => '.log',
-                'name' => 'suitecrm',
-                'dateFormat' => '%c',
-                'maxSize' => '10MB',
-                'maxLogs' => 10,
-                'suffix' => ''
-            ],
-        ];
-
-        //isn't this misspelled?
-        $sugar_config['sugarbeet'] = FALSE;
+        // SET INSTALLER RELATED OPTIONS
+        $sugar_config['host_name'] = $configOverride['install-host-name'];
+        $sugar_config['site_url'] = 'http://' . $configOverride['install-host-name'];
 
 
-        $sugar_config['unique_key'] = !empty($config['setup_site_guid'])
-            ? $config['setup_site_guid']
+        // SET DYNAMIC OPTIONS
+        $sugar_config['unique_key'] = isset($configOverride['setup_site_guid'])
+            ? $configOverride['setup_site_guid']
             : md5(create_guid());
-
 
         // LANGUAGES
         // entry in upgrade_history comes AFTER table creation
-        if (!empty($config['setup_installed_lang_packs'])) {
-            foreach ($config['setup_installed_lang_packs'] as $langZip) {
+        if (!empty($configOverride['setup_installed_lang_packs'])) {
+            foreach ($configOverride['setup_installed_lang_packs'] as $langZip) {
                 $lang = self::getSugarConfigLanguageArray($langZip);
                 if (!empty($lang)) {
                     $exLang = explode('::', $lang);
@@ -884,11 +811,11 @@ class InstallUtils
      */
     public static function handleDbCharsetCollation($config)
     {
-        if ($config['setup_db_type'] == 'mysql') {
+        if ($config['database-type'] == 'mysql') {
             $db = self::getDatabaseConnection($config);
-            $db->query("ALTER DATABASE `" . $config['setup_db_database_name'] . "` DEFAULT CHARACTER SET utf8", TRUE);
+            $db->query("ALTER DATABASE `" . $config['database-name'] . "` DEFAULT CHARACTER SET utf8", TRUE);
             $db->query(
-                "ALTER DATABASE `" . $config['setup_db_database_name'] . "` DEFAULT COLLATE utf8_general_ci", TRUE
+                "ALTER DATABASE `" . $config['database-name'] . "` DEFAULT COLLATE utf8_general_ci", TRUE
             );
         }
     }
@@ -901,31 +828,30 @@ class InstallUtils
     public static function getDatabaseConnection($config)
     {
         if(
-            !isset($config['setup_db_host_name']) ||
-            !isset($config['setup_db_admin_user_name']) ||
-            !isset($config['setup_db_host_instance']) ||
-            !isset($config['setup_db_port_num'])
+            !isset($config['database-username']) ||
+            !isset($config['database-host-instance']) ||
+            !isset($config['database-port'])
         ) {
             throw new \Exception("Missing database configuration data!");
         }
         $dbconfig = array(
-            "db_host_name" => $config['setup_db_host_name'],
-            "db_user_name" => $config['setup_db_admin_user_name'],
-            "db_password" => $config['setup_db_admin_password'],
-            "db_host_instance" => $config['setup_db_host_instance'],
-            "db_port" => $config['setup_db_port_num'],
+            "db_host_name" => $config['database-host'],
+            "db_user_name" => $config['database-username'],
+            "db_password" => $config['database-password'],
+            "db_host_instance" => $config['database-host-instance'],
+            "db_port" => $config['database-port'],
         );
-        if (empty($config['setup_db_database_name'])) {
-            $dbconfig["db_name"] = $config['setup_db_database_name'];
+        if (!empty($config['database-name'])) {
+            $dbconfig["db_name"] = $config['database-name'];
         }
 
         $db = InstallUtils::getInstallDatabaseInstance(
-            $config['setup_db_type'],
-            ["db_manager" => $config['setup_db_manager']]
+            $config['database-type'],
+            ["db_manager" => $config['database-manager']]
         );
 
-        if (!empty($config['setup_db_options'])) {
-            $db->setOptions($config['setup_db_options']);
+        if (!empty($config['database-options'])) {
+            $db->setOptions($config['database-options']);
         }
         $db->connect($dbconfig, TRUE);
         return $db;
@@ -1044,4 +970,20 @@ class InstallUtils
         }
     }
 
+    /**
+     * Reads in the installer default parameters
+     *
+     * @param string $fileName
+     * @throws \Exception
+     * @return array
+     */
+    public static function getConfigFileContent($fileName)
+    {
+        $configFilePath = dirname(__FILE__) . '/assets/' . $fileName;
+        if (!file_exists($configFilePath)) {
+            throw new \Exception("Config file($fileName) not found!");
+        }
+        $parser = new Parser();
+        return $parser->parse(file_get_contents($configFilePath));
+    }
 }
