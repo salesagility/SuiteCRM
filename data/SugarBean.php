@@ -1867,9 +1867,6 @@ class SugarBean
             $this->custom_fields->save($isUpdate);
         }
 
-        // use the db independent query generator
-        $this->preprocess_fields_on_save();
-
         //construct the SQL to create the audit record if auditing is enabled.
         $auditDataChanges = array();
         if ($this->is_AuditEnabled()) {
@@ -2559,15 +2556,6 @@ class SugarBean
         } else {
             return false;
         }
-    }
-
-    /**
-     * This function processes the fields before save.
-     * Internal function, do not override.
-     */
-    public function preprocess_fields_on_save()
-    {
-        $GLOBALS['log']->deprecated('SugarBean.php: preprocess_fields_on_save() is deprecated');
     }
 
     /**
@@ -3362,7 +3350,7 @@ class SugarBean
 	public function get_relationship_field($field)
 	{
 		foreach ($this->field_defs as $field_def => $value) {
-			if (isset($value['relationship_fields']) && 
+			if (isset($value['relationship_fields']) &&
 				in_array($field, $value['relationship_fields']) &&
                 (!isset($value['link_type']) || $value['link_type'] != 'relationship_info')
             ) {
