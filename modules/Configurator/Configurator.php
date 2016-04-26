@@ -197,15 +197,17 @@ class Configurator {
 		}
 		return $sugar_config;
 	}
+
+    /**
+     * @param array $override
+     * @throws \Exception
+     */
 	function saveOverride($override) {
-        require_once('install/install_utils.php');
 	    if ( !file_exists('config_override.php') ) {
 	    	touch('config_override.php');
 	    }
-	    if ( !(make_writable('config_override.php')) ||  !(is_writable('config_override.php')) ) {
-	        $GLOBALS['log']->fatal("Unable to write to the config_override.php file. Check the file permissions");
-	        return;
-	    }
+
+        \SuiteCrm\Install\InstallUtils::makeWritable('config_override.php');
 		$fp = sugar_fopen('config_override.php', 'w');
 		fwrite($fp, $override);
 		fclose($fp);

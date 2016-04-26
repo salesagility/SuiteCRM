@@ -1,7 +1,7 @@
 <?php
 
 require_once 'include/SugarQueue/SugarJobQueue.php';
-require_once 'install/install_utils.php';
+//require_once 'install/install_utils.php';
 
 class SchedulerTest extends PHPUnit_Framework_TestCase
 {
@@ -171,7 +171,7 @@ class SchedulerTest extends PHPUnit_Framework_TestCase
     {
         $scheduler = new Scheduler();
 
-        //execute the method and capture the echo output 
+        //execute the method and capture the echo output
         ob_start();
 
         $scheduler->displayCronInstructions();

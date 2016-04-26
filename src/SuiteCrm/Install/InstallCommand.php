@@ -159,7 +159,6 @@ class InstallCommand extends Command implements CommandInterface
         $this->config['config']['setup_suitecrm_version'] = $suitecrm_version;
 
 
-
         $install_script = TRUE;
         $current_language = 'en_us';
 
@@ -201,86 +200,6 @@ class InstallCommand extends Command implements CommandInterface
         InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('include/javascript'));
         InstallUtils::makeWritableRecursive(PROJECT_ROOT . '/' . sugar_cached('modules'));
 
-        /*
-        $cache_dir = sugar_cached("");
-        $line_entry_format = "&nbsp&nbsp&nbsp&nbsp&nbsp<b>";
-        $line_exit_format = "... &nbsp&nbsp</b>";
-        /** @var  array $dictionary * /
-        $rel_dictionary = $dictionary; // sourced by modules/TableDictionary.php
-        $render_table_close = "";
-        $render_table_open = "";
-
-        $setup_db_admin_password = $_SESSION['setup_db_admin_password'];
-        $setup_db_admin_user_name = $_SESSION['setup_db_admin_user_name'];
-
-        $setup_db_sugarsales_password = $setup_db_admin_password;
-        $setup_db_sugarsales_user = $setup_db_admin_user_name;
-
-        $setup_site_admin_user_name = $_SESSION['setup_site_admin_user_name'];
-        $setup_site_admin_password = $_SESSION['setup_site_admin_password'];
-
-        $setup_db_create_database = $_SESSION['setup_db_create_database'];
-        $setup_db_drop_tables = $_SESSION['setup_db_drop_tables'];
-
-        $setup_db_create_sugarsales_user = $_SESSION['setup_db_create_sugarsales_user'];
-
-
-        $setup_db_host_name = $_SESSION['setup_db_host_name'];
-        $setup_db_port_num = $_SESSION['setup_db_port_num'];
-        $setup_db_database_name = $_SESSION['setup_db_database_name'];
-        $setup_db_host_instance = $_SESSION['setup_db_host_instance'];
-
-        $demoData = $_SESSION['demo-data'];
-        $_SESSION['demoData'] = $demoData;//@todo: get rid of me!
-
-
-        $setup_site_guid = (isset($_SESSION['setup_site_specify_guid'])
-                            && $_SESSION['setup_site_specify_guid'] != '') ? $_SESSION['setup_site_guid'] : '';
-        $setup_site_url = $_SESSION['setup_site_url'];
-        $parsed_url = parse_url($setup_site_url);
-        $setup_site_host_name = $parsed_url['host'];
-
-        $setup_site_log_dir = isset($_SESSION['setup_site_custom_log_dir']) ? $_SESSION['setup_site_log_dir'] : '.';
-
-        $setup_site_log_file = 'suitecrm.log';  // may be an option later
-        $setup_site_session_path = isset($_SESSION['setup_site_custom_session_path']) ? $_SESSION['setup_site_session_path'] : '';
-        $setup_site_log_level = 'fatal';
-
-
-        $GLOBALS['cache_dir'] = $cache_dir;
-        $GLOBALS['mod_strings'] = $mod_strings;
-        $GLOBALS['setup_site_log_level'] = $setup_site_log_level;
-        $GLOBALS['create_default_user'] = FALSE;
-
-        $GLOBALS['setup_db_host_name'] = $setup_db_host_name;
-        $GLOBALS['setup_db_host_instance'] = $setup_db_host_instance;
-        $GLOBALS['setup_db_port_num'] = $setup_db_port_num;
-
-        //some of these username/pwd pairs must be unused ... but which?
-        $GLOBALS['setup_db_admin_user_name'] = $setup_db_admin_user_name;
-        $GLOBALS['setup_db_admin_password'] = $setup_db_admin_password;
-
-        $GLOBALS['setup_site_admin_user_name'] = $setup_site_admin_user_name;
-        $GLOBALS['setup_site_admin_password'] = $setup_site_admin_password;
-
-        $GLOBALS['setup_db_sugarsales_user'] = $setup_db_sugarsales_user;
-        $GLOBALS['setup_db_sugarsales_password'] = $setup_db_sugarsales_password;
-
-        $GLOBALS['setup_db_database_name'] = $setup_db_database_name;
-
-        $GLOBALS['setup_site_host_name'] = $setup_site_host_name;
-        $GLOBALS['setup_site_log_dir'] = $setup_site_log_dir;
-        $GLOBALS['setup_site_log_file'] = $setup_site_log_file;
-        $GLOBALS['setup_site_session_path'] = $setup_site_session_path;
-
-        $GLOBALS['setup_site_guid'] = $setup_site_guid;
-        $GLOBALS['setup_site_url'] = $setup_site_url;
-        $GLOBALS['setup_sugar_version'] = $setup_sugar_version;
-        $GLOBALS['timedate'] = $timedate;
-        */
-
-
-
         $this->log("Creating Sugar Configuration");
         InstallUtils::handleSugarConfig($this->config["config"]);
         $this->log("Sugar Configuration(config.php) has been written to disk");
@@ -290,9 +209,6 @@ class InstallCommand extends Command implements CommandInterface
 
         $this->log("Handling Htaccess");
         InstallUtils::handleHtaccess();
-
-
-
 
         if ($this->config["config"]['setup_db_create_database']) {
             InstallUtils::installerHook('pre_handleDbCreateDatabase');
@@ -354,8 +270,6 @@ class InstallCommand extends Command implements CommandInterface
             ],
             $beanFiles
         );
-
-
         InstallUtils::installerHook('pre_createAllModuleTables');
         foreach ($beanFiles as $beanName => $beanFile) {
             $doNotInitModules = [
@@ -444,6 +358,7 @@ class InstallCommand extends Command implements CommandInterface
             \SugarBean::createRelationshipMeta($rel_name, $db, $table, $dictionary, '');
         }
 
+
         /**
          * Create Default Settings
          */
@@ -456,6 +371,7 @@ class InstallCommand extends Command implements CommandInterface
         InstallUtils::insertDefaultConfigSettings($db, $this->config["config"], $sugar_db_version);
         InstallUtils::installerHook('post_createDefaultSettings');
 
+
         /**
          * Create Administrator User
          */
@@ -463,6 +379,7 @@ class InstallCommand extends Command implements CommandInterface
         InstallUtils::installerHook('pre_createUsers');
         $current_user = InstallUtils::createAdministratorUser($this->config["config"]);
         InstallUtils::installerHook('post_createUsers');
+
 
         /**
          * Rebuild Shedulers
@@ -482,11 +399,13 @@ class InstallCommand extends Command implements CommandInterface
             InstallUtils::registerLanguagePacks($this->config["config"]);
         }
 
+
         /**
          *  Enable Sugar Feeds
          */
         $this->log("Enabling Sugar Feeds");
         InstallUtils::enableSugarFeeds();
+
 
         /**
          * Handle Sugar Versions
@@ -509,7 +428,6 @@ class InstallCommand extends Command implements CommandInterface
         InstallUtils::registerAdministrationVariables($this->config["config"]);
 
 
-
         /**
          * Setting Default Tabs
          */
@@ -519,9 +437,8 @@ class InstallCommand extends Command implements CommandInterface
         InstallUtils::installerHook('post_setSystemTabs');
 
 
-
         /**
-         * Modules Post Install
+         * SuiteCrm
          */
         $this->log("Configuring SuiteCrm");
         InstallUtils::registerSuiteCrmConfiguration($this->config["config"]);
@@ -542,7 +459,6 @@ class InstallCommand extends Command implements CommandInterface
             $this->log("Installing Demo Data");
             InstallUtils::installerHook('pre_installDemoData');
             InstallUtils::installDemoData();
-            //include(PROJECT_ROOT . '/install/populateSeedData.php');
             InstallUtils::installerHook('post_installDemoData');
         }
 
@@ -551,10 +467,6 @@ class InstallCommand extends Command implements CommandInterface
          * Save Administration Configuration
          */
         $this->log("Updating Administration Configuration");
-//        $varStack['GLOBALS'] = $GLOBALS;
-//        $varStack['defined_vars'] = get_defined_vars();
-//        $_REQUEST = array_merge($_REQUEST, $_SESSION);
-//        $_POST = array_merge($_POST, $_SESSION);
         $admin = new \Administration();
         $admin->saveSetting('system', 'adminwizard', 1);
         $admin->saveConfig();
@@ -570,28 +482,7 @@ class InstallCommand extends Command implements CommandInterface
         $sugar_config['default_locale_name_format'] = $this->config["config"]['default_locale_name_format'];
         $configurator = new \Configurator();
         $configurator->saveConfig();
-        writeSugarConfig($configurator->config);
-
-        /**
-         * @todo: check and remove this
-         * Fix Currency - Bug 37310
-         */
-        /*
-        if (isset($_REQUEST['default_currency_name']) && !empty($_REQUEST['default_currency_name'])) {
-            $this->log(str_repeat("-", 120));
-            $this->log("Fix Currency - Bug 37310...");
-            $currency = new \Currency();
-            $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
-            if (!empty($currency->id)
-                && isset($_REQUEST['default_currency_symbol'])
-                && isset($_REQUEST['default_currency_iso4217'])
-                && $currency->symbol == $_REQUEST['default_currency_symbol']
-                && $currency->iso4217 == $_REQUEST['default_currency_iso4217']
-            ) {
-                $currency->deleted = 1;
-                $currency->save();
-            }
-        }*/
+        write_array_to_file("sugar_config", $configurator->config, "config.php");
 
 
 
@@ -601,11 +492,6 @@ class InstallCommand extends Command implements CommandInterface
          * will undo the defaults otherwise
          */
         $this->log("Updating Admin User");
-        //$current_user = new \User();
-        //$current_user->retrieve(1);
-        //$current_user->is_admin = '1';
-        //$sugar_config = get_sugar_config_defaults();// - why?
-
         // set locale settings
         $current_user->setPreference('datef', 'Y-m-d');
         $current_user->setPreference('timef', 'H:i:s');
@@ -626,21 +512,14 @@ class InstallCommand extends Command implements CommandInterface
         require(PROJECT_ROOT . '/modules/Users/Save.php');
 
 
-        // restore superglobals and vars
-//        $GLOBALS = $varStack['GLOBALS'];
-//        foreach($varStack['defined_vars'] as $__key => $__value) {
-//            $$__key = $__value;
-//        }
-
         /**
          * Post Install Modules Hook
          */
         $this->log("Calling Post-Install Modules Hook");
         InstallUtils::installerHook('post_installModules');
 
-        //BAN ALL MODULES
-        //['addAjaxBannedModules'][] = '';
 
+        //BAN ALL MODULES BY DEFAULT: ['addAjaxBannedModules'][] = '';
 
         /**
          * DONE
