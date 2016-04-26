@@ -112,7 +112,12 @@ class ConfiguratorViewEdit extends ViewEdit
         if(!empty($_POST['restore'])){
             $configurator->restoreConfig();
         }
-        
+
+		if(!isset($configurator->config['businessHours'])){
+			$configurator->config['businessHours'] = array( 'mon' => '8', 'tue' => '8', 'wed' => '8', 'thu' => '8', 'fri' => '8', 'sat' => '0', 'sun' => '0');
+			$configurator->saveConfig();
+		}
+
         $this->ss->assign('MOD', $mod_strings);
         $this->ss->assign('APP', $app_strings);
         $this->ss->assign('APP_LIST', $app_list_strings);
@@ -123,6 +128,7 @@ class ConfiguratorViewEdit extends ViewEdit
         $this->ss->assign("JAVASCRIPT",get_set_focus_js(). get_configsettings_js());
         $this->ss->assign('company_logo', SugarThemeRegistry::current()->getImageURL('company_logo.png'));
         $this->ss->assign("settings", $focus->settings);
+		$this->ss->assign("businessHours", $configurator->config['businessHours']);
         $this->ss->assign("mail_sendtype_options", get_select_options_with_id($app_list_strings['notifymail_sendtype'], $focus->settings['mail_sendtype']));
         if(!empty($focus->settings['proxy_on'])){
             $this->ss->assign("PROXY_CONFIG_DISPLAY", 'inline');
