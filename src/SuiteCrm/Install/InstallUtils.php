@@ -6,6 +6,7 @@
  */
 
 namespace SuiteCrm\Install;
+use SuiteCrm\Install\Extra\ExtraInterface;
 
 /**
  * Class InstallUtils
@@ -13,6 +14,231 @@ namespace SuiteCrm\Install;
  */
 class InstallUtils
 {
+    /**
+     * Start from here: /install/populateSeedData.php
+     * and redo all of it
+     */
+    public static function installDemoData()
+    {
+
+    }
+
+    /**
+     * original function: post_install_modules in: install/install_utils.php:2053
+     * "This method will look for a file modules_post_install.php in the root directory and based on the
+     * contents of this file, it will silently install any modules as specified in this array."...
+     *
+     * Let's not do this... now we can use Extra classes to be pulled into installation automatically
+     */
+    public static function modulesPostInstall()
+    {
+        /*
+        if(is_file('modules_post_install.php')){
+            global $current_user, $mod_strings;
+            $current_user = new User();
+            $current_user->is_admin = '1';
+            require_once('ModuleInstall/PackageManager/PackageManager.php');
+            require_once('modules_post_install.php');
+            //we now have the $modules_to_install array in memory
+            $pm = new PackageManager();
+            $old_mod_strings = $mod_strings;
+            foreach($modules_to_install as $module_to_install){
+                if(is_file($module_to_install)){
+                    $pm->performSetup($module_to_install, 'module', false);
+                    $file_to_install = sugar_cached('upload/upgrades/module/').basename($module_to_install);
+                    $_REQUEST['install_file'] = $file_to_install;
+                    $pm->performInstall($file_to_install);
+                }
+            }
+            $mod_strings = $old_mod_strings;
+        }
+        */
+    }
+
+    /**
+     * @todo: how do we ensure correct execution order?
+     * @param array $config
+     */
+    public static function executeExtraInstallation($config) {
+        $classes = [];
+        $searchPath = realpath(PROJECT_ROOT . '/src/SuiteCrm/Install/Extra');
+        $iterator = new \RecursiveDirectoryIterator($searchPath);
+        foreach (new \RecursiveIteratorIterator($iterator) as $file) {
+            if (strpos($file, '.php') !== FALSE) {
+                if (is_file($file)) {
+                    $extraClassPath = str_replace(PROJECT_ROOT . '/src/', '', $file);
+                    $extraClassPath = str_replace('.php', '', $extraClassPath);
+                    $extraClassPath = str_replace('/', '\\', $extraClassPath);
+                    if (in_array('SuiteCrm\Install\Extra\ExtraInterface', class_implements($extraClassPath))) {
+                        $classes[] = $extraClassPath;
+                    }
+                }
+            }
+        }
+
+        if(count($classes)) {
+            foreach($classes as $class) {
+                //echo "\nExecuting Extra: " . $class;
+                /** @var ExtraInterface $instance */
+                $instance = new $class();
+                $instance->execute($config);
+            }
+        }
+
+        //echo "\nQuickRepairAndRebuild...";
+        require_once(PROJECT_ROOT . '/modules/Administration/QuickRepairAndRebuild.php');
+        $actions = array('clearAll');
+        $RAC = new \RepairAndClear();
+        $RAC->repairAndClearAll($actions, array('All Modules'), true, false);
+    }
+
+    /**
+     * @param array $config
+     */
+    public static function registerSuiteCrmConfiguration($config) {
+        global $sugar_config;
+        require(PROJECT_ROOT . '/sugar_version.php');
+        require(PROJECT_ROOT . '/suitecrm_version.php');
+
+        $sugar_config['default_max_tabs'] = 10;
+        $sugar_config['sugar_version'] = $config['setup_sugar_version'];
+        $sugar_config['suitecrm_version'] = $config['setup_suitecrm_version'];
+        $sugar_config['sugarbeet'] = false;
+        ksort($sugar_config);
+        write_array_to_file('sugar_config', $sugar_config, 'config.php');
+    }
+
+    /**
+     * @todo: list of modules must be moved out to $config
+     * @param array $config
+     */
+    public static function configureDefaultTabs($config)
+    {
+        // Bug 28601 - Set the default list of tabs to show
+        $enabled_tabs = array();
+        $enabled_tabs[] = 'Home';
+        $enabled_tabs[] = 'Accounts';
+        $enabled_tabs[] = 'Contacts';
+        $enabled_tabs[] = 'Opportunities';
+        $enabled_tabs[] = 'Leads';
+        $enabled_tabs[] = 'AOS_Quotes';
+        $enabled_tabs[] = 'Calendar';
+        $enabled_tabs[] = 'Documents';
+        $enabled_tabs[] = 'Emails';
+        $enabled_tabs[] = 'Campaigns';
+        $enabled_tabs[] = 'Calls';
+        $enabled_tabs[] = 'Meetings';
+        $enabled_tabs[] = 'Tasks';
+        $enabled_tabs[] = 'Notes';
+        $enabled_tabs[] = 'AOS_Invoices';
+        $enabled_tabs[] = 'AOS_Contracts';
+        $enabled_tabs[] = 'Cases';
+        $enabled_tabs[] = 'Prospects';
+        $enabled_tabs[] = 'ProspectLists';
+        $enabled_tabs[] = 'Project';
+        $enabled_tabs[] = 'AM_ProjectTemplates';
+        $enabled_tabs[] = 'AM_TaskTemplates';
+        $enabled_tabs[] = 'FP_events';
+        $enabled_tabs[] = 'FP_Event_Locations';
+        $enabled_tabs[] = 'AOS_Products';
+        $enabled_tabs[] = 'AOS_Product_Categories';
+        $enabled_tabs[] = 'AOS_PDF_Templates';
+        $enabled_tabs[] = 'jjwg_Maps';
+        $enabled_tabs[] = 'jjwg_Markers';
+        $enabled_tabs[] = 'jjwg_Areas';
+        $enabled_tabs[] = 'jjwg_Address_Cache';
+        $enabled_tabs[] = 'AOR_Reports';
+        $enabled_tabs[] = 'AOW_WorkFlow';
+        $enabled_tabs[] = 'AOK_KnowledgeBase';
+        $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+
+        require_once(PROJECT_ROOT . '/modules/MySettings/TabController.php');
+        $tabs = new \TabController();
+        $tabs->set_system_tabs($enabled_tabs);
+    }
+
+    /**
+     * @param array $config
+     */
+    public static function registerAdministrationVariables($config)
+    {
+        $type = $config['setup_site_sugarbeet_automatic_checks'] ? 'automatic' : 'manual';
+        set_CheckUpdates_config_setting($type);
+
+        $admin = new \Administration();
+        $admin->saveSetting('system', 'name', $config['setup_system_name']);
+    }
+
+    /**
+     * @todo: all other default settings should be coming from $config
+     * @todo - missing lang data!!!
+     * @param array $config
+     * @param array $lang - this is to be created
+     */
+    public static function registerAdvancedPasswordConfiguration($config, $lang=[])
+    {
+        /** @var array $sugar_config */
+        global $sugar_config;
+
+        $lang = [
+            'advanced_password_new_account_email' =>  [
+                'name' => 'System-generated password email',
+                'description' => 'This template is used when the System Administrator sends a new password to a user.',
+                'subject' => 'New account information',
+                'txt_body' => '',
+                'body' => '',
+            ],
+            'advanced_password_forgot_password_email' =>  [
+                'name' => 'Forgot Password email',
+                'description' => 'This template is used to send a user a link to click to reset the user\'s account password.',
+                'subject' => 'Reset your account password',
+                'txt_body' => '',
+                'body' => '',
+            ],
+        ];
+
+
+        //Sent when the admin generate a new password
+        $EmailTemp = new \EmailTemplate();
+        $EmailTemp->name = $lang['advanced_password_new_account_email']['name'];
+        $EmailTemp->description = $lang['advanced_password_new_account_email']['description'];
+        $EmailTemp->subject = $lang['advanced_password_new_account_email']['subject'];
+        $EmailTemp->body = $lang['advanced_password_new_account_email']['txt_body'];
+        $EmailTemp->body_html = $lang['advanced_password_new_account_email']['body'];
+        $EmailTemp->deleted = 0;
+        $EmailTemp->published = 'off';
+        $EmailTemp->text_only = 0;
+        $id = $EmailTemp->save();
+        $sugar_config['passwordsetting']['generatepasswordtmpl'] = $id;
+
+        //User generate a link to set a new password
+        $EmailTemp = new \EmailTemplate();
+        $EmailTemp->name = $lang['advanced_password_forgot_password_email']['name'];
+        $EmailTemp->description = $lang['advanced_password_forgot_password_email']['description'];
+        $EmailTemp->subject = $lang['advanced_password_forgot_password_email']['subject'];
+        $EmailTemp->body = $lang['advanced_password_forgot_password_email']['txt_body'];
+        $EmailTemp->body_html = $lang['advanced_password_forgot_password_email']['body'];
+        $EmailTemp->deleted = 0;
+        $EmailTemp->published = 'off';
+        $EmailTemp->text_only = 0;
+        $id =$EmailTemp->save();
+        $sugar_config['passwordsetting']['lostpasswordtmpl'] = $id;
+
+        // set all other default settings
+        $sugar_config['passwordsetting']['forgotpasswordON'] = true;
+        $sugar_config['passwordsetting']['SystemGeneratedPasswordON'] = true;
+        $sugar_config['passwordsetting']['systexpirationtime'] = 7;
+        $sugar_config['passwordsetting']['systexpiration'] = 1;
+        $sugar_config['passwordsetting']['linkexpiration'] = true;
+        $sugar_config['passwordsetting']['linkexpirationtime'] = 24;
+        $sugar_config['passwordsetting']['linkexpirationtype'] = 60;
+        $sugar_config['passwordsetting']['minpwdlength'] = 6;
+        $sugar_config['passwordsetting']['oneupper'] = false;
+        $sugar_config['passwordsetting']['onelower'] = false;
+        $sugar_config['passwordsetting']['onenumber'] = false;
+
+        write_array_to_file("sugar_config", $sugar_config, "config.php");
+    }
 
     /**
      * Fully enable SugarFeeds, enabling the user feed and all available modules that have SugarFeed data.
@@ -571,11 +797,11 @@ class InstallUtils
         //isn't this misspelled?
         $sugar_config['sugarbeet'] = FALSE;
 
-        if (!empty($config['setup_site_guid'])) {
-            $sugar_config['unique_key'] = !empty($config['setup_site_guid']) ? $config['setup_site_guid'] : md5(
-                create_guid()
-            );
-        }
+
+        $sugar_config['unique_key'] = !empty($config['setup_site_guid'])
+            ? $config['setup_site_guid']
+            : md5(create_guid());
+
 
         // LANGUAGES
         // entry in upgrade_history comes AFTER table creation

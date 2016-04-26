@@ -54,7 +54,7 @@ $EmailTemp->body_html = $mod_strings['advanced_password_new_account_email']['bod
 $EmailTemp->deleted = 0;
 $EmailTemp->published = 'off';
 $EmailTemp->text_only = 0;
-$id =$EmailTemp->save();
+$id = $EmailTemp->save();
 $sugar_config['passwordsetting']['generatepasswordtmpl'] = $id;
 
 //User generate a link to set a new password

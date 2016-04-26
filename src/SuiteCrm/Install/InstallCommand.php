@@ -123,17 +123,21 @@ class InstallCommand extends Command implements CommandInterface
         /** @var array $beanList */
         global $beanList;
 
+        /** @var array $beanFiles */
+        global $beanFiles;
+
         /** @var array $app_list_strings */
         global $app_list_strings;
 
         /** @var \TimeDate $timedate */
         global $timedate;
 
+        /** @var \User $current_user */
+        global $current_user;
+
         require_once(PROJECT_ROOT . '/sugar_version.php');
         require_once(PROJECT_ROOT . '/suitecrm_version.php');
         require_once(PROJECT_ROOT . '/include/utils.php');
-//        require_once(PROJECT_ROOT . '/install/install_utils.php');
-//        require_once(PROJECT_ROOT . '/install/install_defaults.php');
         require_once(PROJECT_ROOT . '/include/TimeDate.php');
         require_once(PROJECT_ROOT . '/include/Localization/Localization.php');
         require_once(PROJECT_ROOT . '/include/SugarTheme/SugarTheme.php');
@@ -143,14 +147,18 @@ class InstallCommand extends Command implements CommandInterface
         require_once(PROJECT_ROOT . '/modules/TableDictionary.php');
 
         /** @var array $dictionary */
+        /** @var string $sugar_version */
+        /** @var string $suitecrm_version */
 
         $timedate = \TimeDate::getInstance();
 
         $locale = new \Localization();
 
-        /** @var string $suitecrm_version */
-        //$setup_sugar_version = $suitecrm_version;
-        $this->config['config']['setup_sugar_version'] = $suitecrm_version;
+        //@todo: build unified vesion info and add it to $config
+        $this->config['config']['setup_sugar_version'] = $sugar_version;
+        $this->config['config']['setup_suitecrm_version'] = $suitecrm_version;
+
+
 
         $install_script = TRUE;
         $current_language = 'en_us';
@@ -163,7 +171,7 @@ class InstallCommand extends Command implements CommandInterface
         $this->config["config"] = DatabaseChecker::runChecks($this->config["config"]);
 
         //INSTALLATION IS GOOD TO GO
-        $this->log(str_repeat("-", 120));
+        $this->log(str_repeat("-", 80));
         $this->log("Starting installer...");
 
 
@@ -480,113 +488,61 @@ class InstallCommand extends Command implements CommandInterface
         $this->log("Enabling Sugar Feeds");
         InstallUtils::enableSugarFeeds();
 
-        die("---KILLED---\n");
-
-
         /**
          * Handle Sugar Versions
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Handling Sugar Versions...");
+        $this->log("Handling Version Info");
         require_once(PROJECT_ROOT . '/modules/Versions/InstallDefaultVersions.php');
 
 
         /**
          * Advanced Password Seeds
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Handling Advanced Password Seeds...");
-        include(PROJECT_ROOT . '/install/seed_data/Advanced_Password_SeedData.php');
+        $this->log("Handling Advanced Password Configuration");
+        InstallUtils::registerAdvancedPasswordConfiguration($this->config["config"]);
+
 
         /**
          * Administration Variables
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Handling Administration Variables...");
-        if (isset($_SESSION['setup_site_sugarbeet_automatic_checks'])
-            && $_SESSION['setup_site_sugarbeet_automatic_checks'] == TRUE
-        ) {
-            set_CheckUpdates_config_setting('automatic');
-        }
-        else {
-            set_CheckUpdates_config_setting('manual');
-        }
-        if (!empty($_SESSION['setup_system_name'])) {
-            $admin = new \Administration();
-            $admin->saveSetting('system', 'name', $_SESSION['setup_system_name']);
-        }
+        $this->log("Handling Administration Variables");
+        InstallUtils::registerAdministrationVariables($this->config["config"]);
+
+
 
         /**
          * Setting Default Tabs
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Setting Default Tabs...");
-        // Bug 28601 - Set the default list of tabs to show
-        $enabled_tabs = array();
-        $enabled_tabs[] = 'Home';
-        $enabled_tabs[] = 'Accounts';
-        $enabled_tabs[] = 'Contacts';
-        $enabled_tabs[] = 'Opportunities';
-        $enabled_tabs[] = 'Leads';
-        $enabled_tabs[] = 'AOS_Quotes';
-        $enabled_tabs[] = 'Calendar';
-        $enabled_tabs[] = 'Documents';
-        $enabled_tabs[] = 'Emails';
-        $enabled_tabs[] = 'Campaigns';
-        $enabled_tabs[] = 'Calls';
-        $enabled_tabs[] = 'Meetings';
-        $enabled_tabs[] = 'Tasks';
-        $enabled_tabs[] = 'Notes';
-        $enabled_tabs[] = 'AOS_Invoices';
-        $enabled_tabs[] = 'AOS_Contracts';
-        $enabled_tabs[] = 'Cases';
-        $enabled_tabs[] = 'Prospects';
-        $enabled_tabs[] = 'ProspectLists';
-        $enabled_tabs[] = 'Project';
-        $enabled_tabs[] = 'AM_ProjectTemplates';
-        $enabled_tabs[] = 'AM_TaskTemplates';
-        $enabled_tabs[] = 'FP_events';
-        $enabled_tabs[] = 'FP_Event_Locations';
-        $enabled_tabs[] = 'AOS_Products';
-        $enabled_tabs[] = 'AOS_Product_Categories';
-        $enabled_tabs[] = 'AOS_PDF_Templates';
-        $enabled_tabs[] = 'jjwg_Maps';
-        $enabled_tabs[] = 'jjwg_Markers';
-        $enabled_tabs[] = 'jjwg_Areas';
-        $enabled_tabs[] = 'jjwg_Address_Cache';
-        $enabled_tabs[] = 'AOR_Reports';
-        $enabled_tabs[] = 'AOW_WorkFlow';
-        $enabled_tabs[] = 'AOK_KnowledgeBase';
-        $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
-
+        $this->log("Configuring Default Tabs");
         InstallUtils::installerHook('pre_setSystemTabs');
-        require_once(PROJECT_ROOT . '/modules/MySettings/TabController.php');
-        $tabs = new \TabController();
-        $tabs->set_system_tabs($enabled_tabs);
+        InstallUtils::configureDefaultTabs($this->config["config"]);
         InstallUtils::installerHook('post_setSystemTabs');
+
+
 
         /**
          * Modules Post Install
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Modules Post Install...");
-        include_once(PROJECT_ROOT . '/install/suite_install/suite_install.php');
-        post_install_modules();
+        $this->log("Configuring SuiteCrm");
+        InstallUtils::registerSuiteCrmConfiguration($this->config["config"]);
+        InstallUtils::executeExtraInstallation($this->config["config"]);
 
 
         /**
-         * @todo: 6 million warnings & errors - CHECK ME!
+         * Modules Post Install - ALL DISABLED  - REMOVE ME!
+         */
+        $this->log("Executing Modules Post Install");
+        InstallUtils::modulesPostInstall();
+
+
+        /**
          * Install Demo Data
          */
-        if (isset($_SESSION['demoData']) && $_SESSION['demoData'] === TRUE) {
-            $this->log(str_repeat("-", 120));
-            $this->log("Installing Demo Data...");
-
+        if ($this->config["config"]['demo-data']) {
+            $this->log("Installing Demo Data");
             InstallUtils::installerHook('pre_installDemoData');
-            global $current_user;
-            $current_user = new \User();
-            $current_user->retrieve(1);
-            include(PROJECT_ROOT . '/install/populateSeedData.php');
+            InstallUtils::installDemoData();
+            //include(PROJECT_ROOT . '/install/populateSeedData.php');
             InstallUtils::installerHook('post_installDemoData');
         }
 
@@ -594,46 +550,33 @@ class InstallCommand extends Command implements CommandInterface
         /**
          * Save Administration Configuration
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Saving Administration Configuration...");
-        $varStack['GLOBALS'] = $GLOBALS;
-        $varStack['defined_vars'] = get_defined_vars();
-        $_REQUEST = array_merge($_REQUEST, $_SESSION);
-        $_POST = array_merge($_POST, $_SESSION);
+        $this->log("Updating Administration Configuration");
+//        $varStack['GLOBALS'] = $GLOBALS;
+//        $varStack['defined_vars'] = get_defined_vars();
+//        $_REQUEST = array_merge($_REQUEST, $_SESSION);
+//        $_POST = array_merge($_POST, $_SESSION);
         $admin = new \Administration();
         $admin->saveSetting('system', 'adminwizard', 1);
         $admin->saveConfig();
 
 
         /**
-         * Save Global Configuration
+         * Save Configuration Overrides
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Saving Global Configuration...");
-        // add local settings to config overrides
-        if (!empty($_SESSION['default_date_format'])) {
-            $sugar_config['default_date_format'] = $_SESSION['default_date_format'];
-        }
-        if (!empty($_SESSION['default_time_format'])) {
-            $sugar_config['default_time_format'] = $_SESSION['default_time_format'];
-        }
-        if (!empty($_SESSION['default_language'])) {
-            $sugar_config['default_language'] = $_SESSION['default_language'];
-        }
-        if (!empty($_SESSION['default_locale_name_format'])) {
-            $sugar_config['default_locale_name_format'] = $_SESSION['default_locale_name_format'];
-        }
-
-
+        $this->log("Saving Configuration Overrides");
+        $sugar_config['default_date_format'] = $this->config["config"]['default_date_format'];
+        $sugar_config['default_time_format'] = $this->config["config"]['default_time_format'];
+        $sugar_config['default_language'] = $this->config["config"]['default_language'];
+        $sugar_config['default_locale_name_format'] = $this->config["config"]['default_locale_name_format'];
         $configurator = new \Configurator();
         $configurator->saveConfig();
         writeSugarConfig($configurator->config);
-
 
         /**
          * @todo: check and remove this
          * Fix Currency - Bug 37310
          */
+        /*
         if (isset($_REQUEST['default_currency_name']) && !empty($_REQUEST['default_currency_name'])) {
             $this->log(str_repeat("-", 120));
             $this->log("Fix Currency - Bug 37310...");
@@ -648,31 +591,30 @@ class InstallCommand extends Command implements CommandInterface
                 $currency->deleted = 1;
                 $currency->save();
             }
-        }
+        }*/
+
+
 
         /**
          * Save User
          * old note: set all of these default parameters since the Users save action
          * will undo the defaults otherwise
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Saving Admin User...");
-        $current_user = new \User();
-        $current_user->retrieve(1);
-        $current_user->is_admin = '1';
+        $this->log("Updating Admin User");
+        //$current_user = new \User();
+        //$current_user->retrieve(1);
+        //$current_user->is_admin = '1';
         //$sugar_config = get_sugar_config_defaults();// - why?
-
 
         // set locale settings
         $current_user->setPreference('datef', 'Y-m-d');
         $current_user->setPreference('timef', 'H:i:s');
-        $current_user->setPreference('timezone', date_default_timezone_get());//get it from php - default to 'UTC'
-
-
+        $current_user->setPreference('timezone', date_default_timezone_get());
+        // set some POST data for '/modules/Users/Save.php'
         $_POST['dateformat'] = 'Y-m-d';//$sugar_config['default_date_format']
         $_POST['timeformat'] = 'H:i:s';//$sugar_config['default_time_format']
         $_POST['record'] = $current_user->id;
-        $_POST['is_admin'] = ($current_user->is_admin ? 'on' : '');
+        $_POST['is_admin'] = 'on';
         $_POST['use_real_names'] = TRUE;
         $_POST['reminder_checked'] = '0';
         $_POST['email_reminder_checked'] = '0';
@@ -690,21 +632,22 @@ class InstallCommand extends Command implements CommandInterface
 //            $$__key = $__value;
 //        }
 
-        $endTime = microtime(TRUE);
-        $deltaTime = $endTime - $startTime;
-
         /**
          * Post Install Modules Hook
          */
-        $this->log(str_repeat("-", 120));
-        $this->log("Calling Post Install Modules Hook...");
+        $this->log("Calling Post-Install Modules Hook");
         InstallUtils::installerHook('post_installModules');
+
+        //BAN ALL MODULES
+        //['addAjaxBannedModules'][] = '';
+
 
         /**
          * DONE
          */
-        $this->log(str_repeat("-", 120));
-        $this->log(str_repeat("-", 120));
+        $endTime = microtime(TRUE);
+        $deltaTime = $endTime - $startTime;
+        $this->log(str_repeat("-", 80));
         $this->log("Installation complete(" . floor($deltaTime) . "s).");
     }
 

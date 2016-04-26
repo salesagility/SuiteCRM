@@ -92,6 +92,7 @@ config:
   session_dir:
   setup_site_guid:
   setup_installed_lang_packs: []
+  setup_site_sugarbeet_automatic_checks: true
 
 
 
