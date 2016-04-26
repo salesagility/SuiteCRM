@@ -136,30 +136,8 @@ class SugarAuthenticate{
 	 */
 	function postLoginAuthenticate(){
 
-		global $reset_theme_on_default_user, $reset_language_on_default_user, $sugar_config;
-		//THIS SECTION IS TO ENSURE VERSIONS ARE UPTODATE
-
-		require_once ('modules/Versions/CheckVersions.php');
-		$invalid_versions = get_invalid_versions();
-		if (!empty ($invalid_versions)) {
-			if (isset ($invalid_versions['Rebuild Relationships'])) {
-				unset ($invalid_versions['Rebuild Relationships']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_relationships'] = true;
-			}
-
-			if (isset ($invalid_versions['Rebuild Extensions'])) {
-				unset ($invalid_versions['Rebuild Extensions']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_extensions'] = true;
-			}
-
-			$_SESSION['invalid_versions'] = $invalid_versions;
-		}
-
-
+		global $reset_language_on_default_user, $sugar_config;
+		
 		//just do a little house cleaning here
 		unset($_SESSION['login_password']);
 		unset($_SESSION['login_error']);

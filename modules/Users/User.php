@@ -677,26 +677,6 @@ EOQ;
 		$this->loadFromRow($row);
 		$this->loadPreferences();
 
-		require_once ('modules/Versions/CheckVersions.php');
-		$invalid_versions = get_invalid_versions();
-
-		if (!empty ($invalid_versions)) {
-			if (isset ($invalid_versions['Rebuild Relationships'])) {
-				unset ($invalid_versions['Rebuild Relationships']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_relationships'] = true;
-			}
-
-			if (isset ($invalid_versions['Rebuild Extensions'])) {
-				unset ($invalid_versions['Rebuild Extensions']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_extensions'] = true;
-			}
-
-			$_SESSION['invalid_versions'] = $invalid_versions;
-		}
 		if ($this->status != "Inactive")
 			$this->authenticated = true;
 
