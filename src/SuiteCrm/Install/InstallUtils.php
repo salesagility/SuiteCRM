@@ -903,7 +903,6 @@ class InstallUtils
         if(
             !isset($config['setup_db_host_name']) ||
             !isset($config['setup_db_admin_user_name']) ||
-            !isset($config['setup_db_admin_password']) ||
             !isset($config['setup_db_host_instance']) ||
             !isset($config['setup_db_port_num'])
         ) {
