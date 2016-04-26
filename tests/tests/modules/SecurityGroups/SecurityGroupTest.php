@@ -54,7 +54,7 @@ class SecurityGroupTest extends PHPUnit_Framework_TestCase
         $securityGroup = new SecurityGroup();
 
         $expected = " users.id in (\n            select sec.user_id from securitygroups_users sec\n            inner join securitygroups_users secu on sec.securitygroup_id = secu.securitygroup_id and secu.deleted = 0\n                and secu.user_id = '1'\n            where sec.deleted = 0\n        )";
-        $actual = $securityGroup->getGroupUsersWhere(1);
+        $actual = $securityGroup::getGroupUsersWhere(1);
 
         $this->assertSame($expected, $actual);
     }
