@@ -101,13 +101,18 @@ function show(div){
 		var next_button_div = document.getElementById('next_button_div');	
 		var back_button_div = document.getElementById('back_button_div');			
 
+      if(typeof document.getElementById('wizform').direction != 'undefined') {
         save_button.disabled = true;
-		back_button_div.style.display = 'none';
-		save_button_div.style.display = 'none';		
-		next_button.focus();
-		if(wiz_mode == 'marketing'){
-			back_button_div.style.display = '';
-		}
+        back_button_div.style.display = 'none';
+        save_button_div.style.display = 'none';
+        next_button.focus();
+        if (wiz_mode == 'marketing') {
+          back_button_div.style.display = '';
+        }
+      }
+      else{
+        back_button_div.style.display = 'none';
+      }
         
         //set nav hi-lite
         hilite(current_step.value);
@@ -150,7 +155,9 @@ function navigate(direction, noValidation){
     if(direction == 'next'){
       if(currentValue == 1) {
         if(!campaignId) {
-          campaignCreateAndRefreshPage();
+          if(typeof document.getElementById('wizform').direction != 'undefined') {
+            campaignCreateAndRefreshPage();
+          }
         }
         else {
           campaignUpdate();
@@ -202,9 +209,11 @@ function navigate(direction, noValidation){
         var targetListStep = 2;
       }
       if (current_step.value == targetListStep) {
-        next_button_div.style.display = 'none';
-        save_button_div.style.display = '';
-        $('#wiz_submit_button').removeAttr('disabled');
+        if(typeof document.getElementById('wizform').direction != 'undefined') {
+          next_button_div.style.display = 'none';
+          save_button_div.style.display = '';
+          $('#wiz_submit_button').removeAttr('disabled');
+        }
       }
       else {
         next_button_div.style.display = '';
@@ -222,8 +231,10 @@ function navigate(direction, noValidation){
 
 function campaignCreateAndRefreshPage() {
   var wizform = document.getElementById('wizform');
-  wizform.action.value = 'WizardNewsletterSave';
-  wizform.direction.value='continue_targetList';
+  if(typeof wizform.direction != 'undefined') {
+    wizform.action.value = 'WizardNewsletterSave';
+    wizform.direction.value = 'continue_targetList';
+  }
   wizform.submit();
 }
 

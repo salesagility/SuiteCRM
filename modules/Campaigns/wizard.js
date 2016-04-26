@@ -39,12 +39,13 @@ function hide(divname){var elem1=document.getElementById(divname);elem1.style.di
 function show(div){var elem1=document.getElementById(div);if(elem1){elem1.style.display='';}}
 function showdiv(div){hideall();show(div);}
 function hideall(){var last_val=document.getElementById('wiz_total_steps');var last=parseInt(last_val.value);for(i=1;i<=last;i++){hide('step'+i);}}
-function showfirst(wiz_mode){showdiv('step1');var current_step=document.getElementById('wiz_current_step');current_step.value="1";var save_button=document.getElementById('wiz_submit_button');var next_button=document.getElementById('wiz_next_button');var save_button_div=document.getElementById('save_button_div');var next_button_div=document.getElementById('next_button_div');var back_button_div=document.getElementById('back_button_div');save_button.disabled=true;back_button_div.style.display='none';save_button_div.style.display='none';next_button.focus();if(wiz_mode=='marketing'){back_button_div.style.display='';}
+function showfirst(wiz_mode){showdiv('step1');var current_step=document.getElementById('wiz_current_step');current_step.value="1";var save_button=document.getElementById('wiz_submit_button');var next_button=document.getElementById('wiz_next_button');var save_button_div=document.getElementById('save_button_div');var next_button_div=document.getElementById('next_button_div');var back_button_div=document.getElementById('back_button_div');if(typeof document.getElementById('wizform').direction!='undefined'){save_button.disabled=true;back_button_div.style.display='none';save_button_div.style.display='none';next_button.focus();if(wiz_mode=='marketing'){back_button_div.style.display='';}}
+else{back_button_div.style.display='none';}
 hilite(current_step.value);}
 function navigate(direction,noValidation){if(typeof noValidation=='undefined'){noValidation=false;}
 var current_step=document.getElementById('wiz_current_step');var currentValue=parseInt(current_step.value);var campaignId=$('input[name="record"]').val();if(!campaignId){campaignId=$('input[name="campaign_id"]').val();}
 var validationResult=validate_wiz(current_step.value,direction);if(noValidation||validationResult){if(direction=='back'){current_step.value=currentValue-1;}
-if(direction=='next'){if(currentValue==1){if(!campaignId){campaignCreateAndRefreshPage();}
+if(direction=='next'){if(currentValue==1){if(!campaignId){if(typeof document.getElementById('wizform').direction!='undefined'){campaignCreateAndRefreshPage();}}
 else{campaignUpdate();}}
 current_step.value=currentValue+1;}
 if(direction=='direct'){}
@@ -52,10 +53,11 @@ showdiv("step"+current_step.value);hilite(current_step.value);var total=document
 if(typeof campaignBudget!='undefined'&&campaignBudget){finish_button.style.display='';}}else{if(current_step.value<2){back_button_div.style.display='none';}else{back_button_div.style.display='';}
 var next_button=document.getElementById('wiz_next_button');if(typeof campaignBudget!='undefined'&&campaignBudget){var targetListStep=3;}
 else{var targetListStep=2;}
-if(current_step.value==targetListStep){next_button_div.style.display='none';save_button_div.style.display='';$('#wiz_submit_button').removeAttr('disabled');}
+if(current_step.value==targetListStep){if(typeof document.getElementById('wizform').direction!='undefined'){next_button_div.style.display='none';save_button_div.style.display='';$('#wiz_submit_button').removeAttr('disabled');}}
 else{next_button_div.style.display='';save_button_div.style.display='none';}
 next_button.focus();}}else{}}
-function campaignCreateAndRefreshPage(){var wizform=document.getElementById('wizform');wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue_targetList';wizform.submit();}
+function campaignCreateAndRefreshPage(){var wizform=document.getElementById('wizform');if(typeof wizform.direction!='undefined'){wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue_targetList';}
+wizform.submit();}
 function campaignUpdate(){var wizform=document.getElementById('wizform');wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue';$.post($('#wizform').attr('action'),$('#wizform').serialize(),function(){});}
 var already_linked='';function hilite(hilite){var last=parseInt(document.getElementById('wiz_total_steps').value);for(i=1;i<=last;i++){var nav_step=document.getElementById('nav_step'+i);nav_step.className='';}
 var nav_step=document.getElementById('nav_step'+hilite);nav_step.className='';if(already_linked.indexOf(hilite)<0){nav_step.innerHTML="<a href='#'  onclick=\"javascript:direct('"+hilite+"');\">"+nav_step.innerHTML+"</a>";already_linked+=',hilite';}}
