@@ -152,10 +152,17 @@ class Installer
          */
         if ($this->config['install-create-database']) {
             InstallUtils::installerHook('pre_handleDbCreateDatabase');
-            $db = InstallUtils::getDatabaseConnection($this->config);
-            if ($db->dbExists($this->config['database-name'])) {
-                $this->log("Dropping Database: " . $this->config['database-name']);
-                $db->dropDatabase($this->config['database-name']);
+            try {
+                $db = InstallUtils::getDatabaseConnection($this->config);
+                if ($db->dbExists($this->config['database-name'])) {
+                    $this->log("Dropping Database: " . $this->config['database-name']);
+                    $db->dropDatabase($this->config['database-name']);
+                }
+            } catch(\Exception $e) {
+                $configOverride = array_merge($this->config, [
+                    'database-name' => '',
+                ]);
+                $db = InstallUtils::getDatabaseConnection($configOverride);
             }
             $this->log("Creating Database: " . $this->config['database-name']);
             $db->createDatabase($this->config['database-name']);
@@ -182,7 +189,6 @@ class Installer
         \VardefManager::clearVardef();
 
         /** @var \DBManager $db */
-        //$db = \DBManagerFactory::getInstance();
         $db = InstallUtils::getDatabaseConnection($this->config);
 
         /**
