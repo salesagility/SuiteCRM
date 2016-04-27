@@ -1,10 +1,11 @@
 <?php
+if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,19 +38,19 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
+global $db;
 
-require_once('include/MVC/Controller/SugarController.php');
-class CampaignsController extends SugarController{
+$campaignId = $db->quote($_POST['campaignId']);
+$marketingId = $db->quote($_POST['marketingId']);
+$templateId = $db->quote($_POST['templateId']);
 
-    function action_newsletterlist(){
-        $this->view = 'newsletterlist';
-    }
+//$campaign = new Campaign();
+//$campaign->retrieve($campaignId);
 
-    public function process() {
-        if($this->action == 'EditView') {
-            $this->action = 'WizardHome';
-        }
-        parent::process();
-    }
-}
-?>
+$marketing = new EmailMarketing();
+$marketing->retrieve($marketingId);
+$marketing->campaign_id = $campaignId;
+$marketing->template_id = $templateId;
+$marketing->save();
+
+echo json_encode($_POST);

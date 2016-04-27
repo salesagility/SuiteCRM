@@ -4897,6 +4897,88 @@ object{
 }
 /*End of Rgraph charts*/
 
+/*Form to Person section*/
+#fieldChoices #fieldcontainer {
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100%;
+    background-color: transparent;
+    border: 0;
+}
+#fieldChoices .field-list {
+    background-color: white;
+    border-left: 2px solid #D8D8DC;
+    border-right: 2px solid #D8D8DC;
+    border-top: 3px solid #D8D8DC;
+    border-bottom: 3px solid #D8D8DC;
+    box-shadow: 0 1px 1px 0 rgba(50, 50, 50, 0.75);
+    float: left;
+    height: 100%;
+    margin: 0;
+    min-height: 240px;
+    padding: 15px;
+    text-align: center;
+    width: 22%;
+
+}
+#fieldChoices .field-list input, .field-list textarea {
+    width: 240px;
+    margin: 1px 5px;
+}
+#fieldChoices .field-list input {
+    height: 30px;
+}
+#fieldChoices .field {
+    margin: 5px;
+    padding: 5px;
+}
+#fieldChoices .field-header {
+    background-clip: padding-box;
+    background-color: #3c8dbc;
+    border-radius: 2px 2px 0 0;
+    color: white;
+    font-size: 14px;
+    height: 22px;
+    position: relative;
+}
+/*
+#fieldChoices .field.required .field-header{
+    background-color: red;
+}
+*/
+#fieldChoices .field-type {
+    float: left;
+    padding: 2px;
+}
+#fieldChoices .field-list input[type="button"] {
+    width: 100px;
+    margin: 5px;
+}
+#fieldChoices .field > .field-header {
+    font-weight: bold;
+}
+#fieldChoices .field-container{
+    max-height: 300px;
+    min-height: 300px;
+    height:300px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#fieldChoices .optionButtonsHolder {
+    margin-top: 5px;
+}
+#fieldChoices .title {
+    display: inline-block;
+    width: 22%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    color: #337ab7;
+}
+#fieldChoices #personTypeSelect {
+    margin-bottom: 20px;
+}
+/*Form to Person section*/
 
 /* campaign wizard */
 .wizard-box {
@@ -4968,6 +5050,12 @@ object{
 }
 .wizard-summary-left .box.fail {
     background-image: url(../../../../themes/default/images/red_camp.gif);
+}
+.wizard-summary-left .box.ok.button {
+    background-image: url(../../../../themes/default/images/green_camp_clean.gif);
+}
+.wizard-summary-left .box.fail.button {
+    background-image: url(../../../../themes/default/images/red_camp_clean.gif);
 }
 .wizard-summary-left .box.small {
     width: 210px;

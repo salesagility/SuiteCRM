@@ -46,13 +46,15 @@
         elem1.style.display = 'none';
     }
 
-	/*
-	 * this function shows a div using the passed in value
-	 */
-    function show(div){
-        var elem1 = document.getElementById(div);
-        elem1.style.display = '';
-    }
+/*
+ * this function shows a div using the passed in value
+ */
+function show(div){
+  var elem1 = document.getElementById(div);
+  if(elem1) {
+    elem1.style.display = '';
+  }
+}
 	/*
 	 * this function calls the methods to hide all divs and show the passed in div
 	 */
@@ -99,13 +101,18 @@
 		var next_button_div = document.getElementById('next_button_div');	
 		var back_button_div = document.getElementById('back_button_div');			
 
+      if(typeof document.getElementById('wizform').direction != 'undefined') {
         save_button.disabled = true;
-		back_button_div.style.display = 'none';
-		save_button_div.style.display = 'none';		
-		next_button.focus();
-		if(wiz_mode == 'marketing'){
-			back_button_div.style.display = '';
-		}
+        back_button_div.style.display = 'none';
+        save_button_div.style.display = 'none';
+        next_button.focus();
+        if (wiz_mode == 'marketing') {
+          back_button_div.style.display = '';
+        }
+      }
+      else{
+        back_button_div.style.display = 'none';
+      }
         
         //set nav hi-lite
         hilite(current_step.value);
@@ -123,23 +130,46 @@
  *  5.adjusts the step location message
  */
 
-function navigate(direction, noValidation){
+function navigate(direction, noValidation, noSave){
   if(typeof noValidation == 'undefined') {
     noValidation = false;
+  }
+  if(typeof noSave == 'undefined') {
+    noSave = false;
   }
 
   //get the current step
   var current_step = document.getElementById('wiz_current_step');
   var currentValue = parseInt(current_step.value);
 
+  var campaignId = $('input[name="record"]').val();
+  if(!campaignId) {
+    campaignId = $('input[name="campaign_id"]').val();
+  }
+
   //validation needed. (specialvalidation,  plus step number, plus submit button)
-  if(noValidation || validate_wiz(current_step.value,direction)){
+  var validationResult = validate_wiz(current_step.value,direction);
+  if(noValidation || validationResult){
 
     //change current step value to that of the step being navigated to
     if(direction == 'back'){
       current_step.value = currentValue-1;
     }
     if(direction == 'next'){
+      if(currentValue == 1) {
+        if(!campaignId) {
+          if(typeof document.getElementById('wizform').direction != 'undefined') {
+            if(!noSave) {
+              campaignCreateAndRefreshPage();
+            }
+          }
+        }
+        else {
+          if(!noSave) {
+            campaignUpdate();
+          }
+        }
+      }
       current_step.value = currentValue+1;
     }
     if(direction == 'direct'){
@@ -186,9 +216,11 @@ function navigate(direction, noValidation){
         var targetListStep = 2;
       }
       if (current_step.value == targetListStep) {
-        next_button_div.style.display = 'none';
-        save_button_div.style.display = '';
-        $('#wiz_submit_button').removeAttr('disabled');
+        if(typeof document.getElementById('wizform').direction != 'undefined') {
+          next_button_div.style.display = 'none';
+          save_button_div.style.display = '';
+          $('#wiz_submit_button').removeAttr('disabled');
+        }
       }
       else {
         next_button_div.style.display = '';
@@ -201,6 +233,25 @@ function navigate(direction, noValidation){
     //error occurred, do nothing
   }
 
+}
+
+
+function campaignCreateAndRefreshPage() {
+  var wizform = document.getElementById('wizform');
+  if(typeof wizform.direction != 'undefined') {
+    wizform.action.value = 'WizardNewsletterSave';
+    wizform.direction.value = 'continue_targetList';
+  }
+  wizform.submit();
+}
+
+function campaignUpdate() {
+  var wizform = document.getElementById('wizform');
+  wizform.action.value = 'WizardNewsletterSave';
+  wizform.direction.value='continue';
+  $.post($('#wizform').attr('action'), $('#wizform').serialize(), function(){
+
+  });
 }
 
     /*

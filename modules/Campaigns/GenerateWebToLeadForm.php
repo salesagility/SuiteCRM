@@ -64,7 +64,7 @@ $web_form_submit_label = $mod_strings['LBL_DEFAULT_LEAD_SUBMIT'];
 $web_form_required_fields_msg = $mod_strings['LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'];
 $web_required_symbol = $app_strings['LBL_REQUIRED_SYMBOL'];
 $web_not_valid_email_address = $mod_strings['LBL_NOT_VALID_EMAIL_ADDRESS'];
-$web_post_url = $site_url.'/index.php?entryPoint=WebToLeadCapture';
+$web_post_url = $site_url.'/index.php?entryPoint=WebToPersonCapture';
 $web_redirect_url = '';
 $web_notify_campaign = '';
 $web_assigned_user = '';
@@ -72,6 +72,21 @@ $web_team_user = '';
 $web_form_footer = '';
 $regex = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 //_ppd($web_required_symbol);
+
+$typeOfPerson = '';
+if(!empty($_REQUEST['typeOfPerson'])){
+    $typeOfPerson= $_REQUEST['typeOfPerson'];
+}
+
+$moduleDir = '';
+if(!empty($_REQUEST['moduleDir'])){
+    $moduleDir= $_REQUEST['moduleDir'];
+}
+$moduleName = '';
+if(!empty($_REQUEST['moduleName'])){
+    $moduleName= $_REQUEST['moduleName'];
+}
+
 if(!empty($_REQUEST['web_header'])){
     $web_form_header= $_REQUEST['web_header'];
 }
@@ -111,6 +126,9 @@ include_once 'WebToLeadFormBuilder.php';
 $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
     $_REQUEST,
     $lead,
+    $typeOfPerson,
+    $moduleDir,
+    $moduleName,
     $site_url,
     $web_post_url,
     $web_form_header,

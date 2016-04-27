@@ -299,8 +299,7 @@ echo $javascript->getScript();
         //show inputs and assign type to be radio
     }
 
-
-if(!$list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_focus->id}' AND template_id")) {
+if(!$list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_focus->id}' AND template_id IS NOT NULL AND template_id != ''")) {
     $ss->assign('error_on_templates', $mod_strings['LBL_NO_TEMPLATE_SELECTED']);
 }
 
@@ -436,6 +435,18 @@ $dotListWizardMenu = new DotListWizardMenu($mod_strings, $steps, true);
 //        //$mod_strings['LBL_NAVIGATION_MENU_SUMMARY'] => false,
 //    )
 //    , true);
+
+
+if(isset($_REQUEST['redirectToTargetList']) && $_REQUEST['redirectToTargetList']) {
+    $ss->assign('hideScreen', true);
+    $dotListWizardMenu .= <<<JS
+<script type="text/javascript">
+$(function(){
+    document.location.href = $('#nav_step2 a').first().attr('href');
+});
+</script>
+JS;
+}
 
 $ss->assign('WIZMENU', $dotListWizardMenu);
 
@@ -597,5 +608,9 @@ $ss->assign('fields', array(
     )
 ));
 
+if(isset($_SESSION['msg']) && $_SESSION['msg']) {
+    $ss->assign('msg', $mod_strings[$_SESSION['msg']]);
+    unset($_SESSION['msg']);
+}
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>

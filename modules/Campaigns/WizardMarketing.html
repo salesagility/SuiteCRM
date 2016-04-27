@@ -41,6 +41,7 @@
 
  ********************************************************************************/
 -->
+{if $hideScreen}<div style="display:none;">{/if}
 {literal}
 <script type="text/javascript">
 	$(function(){
@@ -286,7 +287,7 @@
 		}
 
 		function onNext() {
-			navigate('next');
+			navigate('next', false, true);
 			if(document.getElementById('wiz_current_step').value == document.getElementById('wiz_total_steps').value) {
 				wizardMenuFillAll();
 			}
@@ -312,6 +313,7 @@
 
 <td  rowspan='2' width='100%' style="padding: 0;">
 <div id="wiz_message"></div>
+	{$msg}
 <div id=wizard>
 
 	<div id='step1' class="edit view" style="display:none;">
@@ -484,7 +486,7 @@
 						module: 'CampaignTrackers',
 						record: '', // TODO .. campaign tracker ID on update
 						action: 'Save',
-						campaign_id: '{$CAMPAIGN_ID}',
+						campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
 						tracker_name: trackerName,
 						tracker_url: trackerURL,
 						is_optout: $('#is_optout').prop('checked') ? 'on' : '',
@@ -601,6 +603,9 @@
 										$('input[name="wiz_step3_date_start"]').val($('#date_start_date').val());
 										$('input[name="wiz_step3_time_start"]').val($('#date_start_hours').val() + ':' + $('#date_start_minutes').val());
 										$('select[name="meridiem"]').val($('#date_start_meridiem').val());
+										if(parseInt($('#date_start_hours').val())>12) {
+											$('#date_start_meridiem').val('PM');
+										}
 									},100);
 								</script>
 								{/literal}
@@ -914,6 +919,14 @@
 			<select id="marketing_select">
 
 			</select>
+
+			&nbsp;
+
+			{$MOD.LBL_WIZ_EMAILTPL_TITLE}
+			<select id="template_select">
+				{$EMAIL_TEMPLATE_OPTIONS}
+			</select>
+
 			{literal}
 			<script type="text/javascript">
 				var refreshMarketingSelect = function() {
@@ -942,8 +955,27 @@
 
 				};
 
+				var saveMarketingAndTemplate = function() {
+					var campaignId = '{/literal}{$CAMPAIGN_ID}{literal}';
+					var marketingId = $('#marketing_select').val();
+					var templateId = $('#template_select').val();
+					$.post('index.php?entryPoint=setCampaignMarketingAndTemplate', {
+						'campaignId': campaignId,
+						'marketingId': marketingId,
+						'templateId': templateId
+					}, function(resp){
+						console.log(resp);
+					});
+				};
+
 				$(function(){
 					refreshMarketingSelect();
+					$('#marketing_select').change(function(){
+						saveMarketingAndTemplate();
+					});
+					$('#template_select').change(function(){
+						saveMarketingAndTemplate();
+					});
 				});
 			</script>
 			{/literal}
@@ -1209,7 +1241,7 @@ var jumpToPageByURL = function() {
 			if(document.getElementById('wiz_current_step').value > document.getElementById('wiz_total_steps').value) {
 				break;
 			}
-			navigate('next', noValidation);
+			navigate('next', noValidation, true);
 			i++;
 			if(document.getElementById('wiz_current_step').value == currentStep) {
 				break;
@@ -1258,4 +1290,4 @@ $(function(){
 
 </script>
 
-
+{if $hideScreen}</div>{/if}
