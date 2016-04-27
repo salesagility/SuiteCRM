@@ -53,9 +53,9 @@ class ViewWizard extends SugarView
 	/**
 	 * Constructor.
 	 */
-	public function __construct()
+	public function __construct($bean = null, $view_object_map = array())
 	{
-		parent::SugarView();
+		parent::__construct($bean, $view_object_map);
 
         $this->options['show_header'] = false;
         $this->options['show_footer'] = false;
