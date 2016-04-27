@@ -42,6 +42,8 @@ class actionCreateRecord extends actionBase {
 
         $checked = 'CHECKED';
         if(isset($params['relate_to_workflow']) && !$params['relate_to_workflow']) $checked = '';
+        $copy_email_addresses_checked = '';
+        if(isset($params['copy_email_addresses']) && $params['copy_email_addresses']) $copy_email_addresses_checked = 'CHECKED';
 
         $html = "<table border='0' cellpadding='0' cellspacing='0' width='100%'>";
         $html .= "<tr>";
@@ -50,6 +52,9 @@ class actionCreateRecord extends actionBase {
         $html .= '<td id="relate_label" scope="row" valign="top">'.translate("LBL_RELATE_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
         $html .= "<input type='hidden' name='aow_actions_param[".$line."][relate_to_workflow]' value='0' >";
         $html .= "<input type='checkbox' id='aow_actions_param[".$line."][relate_to_workflow]' name='aow_actions_param[".$line."][relate_to_workflow]' value='1' $checked></td>";
+        $html .= '<td id="copy_email_addresses_label" scope="row" valign="top">'.translate("LBL_COPY_EMAIL_ADDRESSES_WORKFLOW","AOW_Actions").':&nbsp;&nbsp;';
+        $html .= "<input type='hidden' name='aow_actions_param[".$line."][copy_email_addresses]' value='0' >";
+        $html .= "<input type='checkbox' id='aow_actions_param[".$line."][copy_email_addresses]' name='aow_actions_param[".$line."][copy_email_addresses]' value='1' $copy_email_addresses_checked></td>";
         $html .= "</tr>";
         $html .= "<tr>";
         $html .= '<td colspan="4" scope="row"><table id="crLine'.$line.'_table" width="100%"></table></td>';
@@ -99,6 +104,7 @@ class actionCreateRecord extends actionBase {
                 $record = new $beanList[$params['record_type']]();
                 $this->set_record($record, $bean, $params);
                 $this->set_relationships($record, $bean, $params);
+                $this->copy_email_addresses($record, $bean, $params);
 
                 if(isset($params['relate_to_workflow']) && $params['relate_to_workflow']){
                     require_once('modules/Relationships/Relationship.php');
@@ -344,6 +350,21 @@ class actionCreateRecord extends actionBase {
                 }
             }
         }
+    }
+
+    function copy_email_addresses(SugarBean $record, SugarBean $bean, $params = array()){
+
+
+	if(isset($params['copy_email_addresses']) && $params['copy_email_addresses']){
+		$record->addresses=$bean->addresses;
+		$record->email1=$bean->email1;
+		$record->email2=$bean->email2;
+		$tmp_sea2 = new SugarEmailAddress();
+		foreach ($bean->emailAddress->addresses as $email_address_index => $current_email_address){
+			$tmp_sea2->addAddress($current_email_address['email_address'], $current_email_address['primary_address'], $current_email_address['reply_to_address'],$current_email_address['invalid_email'],$current_email_address['opt_out'],$current_email_address['email_address_id']);
+		}
+		$tmp_sea2->save($record->id,$record->module_name);
+	}
     }
 
 
