@@ -5,8 +5,8 @@
 sugar_version: ''
 suitecrm_version: ''
 
-default_date_format: Y-m-d
-default_time_format: 'H:i:s'
+default_date_format: 'm/d/Y'
+default_time_format: 'H:i'
 
 
 cache_dir: 'cache/'

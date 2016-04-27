@@ -6,7 +6,7 @@ fixtures:
   -
       category: notify
       name:     fromaddress
-      value:    no_reply@example.com
+      value:    do_not_reply@example.com
   -
       category: notify
       name:     fromname
