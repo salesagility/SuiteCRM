@@ -67,3 +67,7 @@ install:
     mode: none
     description: Install demo data
     #config-key: demo-data
+  check-updates:
+      mode: none
+      description: Check for updates automatically
+      #config-key: demo-data

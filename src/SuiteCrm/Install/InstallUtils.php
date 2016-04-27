@@ -102,19 +102,16 @@ class InstallUtils
     public static function registerSuiteCrmConfiguration($config)
     {
         global $sugar_config;
-        require(PROJECT_ROOT . '/sugar_version.php');
-        require(PROJECT_ROOT . '/suitecrm_version.php');
-
         $sugar_config['default_max_tabs'] = 10;
-        $sugar_config['sugar_version'] = $config['setup_sugar_version'];
-        $sugar_config['suitecrm_version'] = $config['setup_suitecrm_version'];
+        $sugar_config['sugar_version'] = $config['sugar_version'];
+        $sugar_config['suitecrm_version'] = $config['suitecrm_version'];
         $sugar_config['sugarbeet'] = FALSE;
         ksort($sugar_config);
         write_array_to_file('sugar_config', $sugar_config, 'config.php');
     }
 
     /**
-     * @todo: list of modules must be moved out to $config
+     * @todo: list of modules should be moved out to yml
      * @param array $config
      */
     public static function configureDefaultTabs($config)
@@ -167,11 +164,12 @@ class InstallUtils
      */
     public static function registerAdministrationVariables($config)
     {
-        $type = $config['setup_site_sugarbeet_automatic_checks'] ? 'automatic' : 'manual';
+        $type = $config['install-check-updates'] ? 'automatic' : 'manual';
         set_CheckUpdates_config_setting($type);
-
         $admin = new \Administration();
-        $admin->saveSetting('system', 'name', $config['setup_system_name']);
+        $admin->saveSetting('system', 'name', $config['install-system-name']);
+        $admin->saveSetting('system', 'adminwizard', 1);
+        $admin->saveConfig();
     }
 
     /**
@@ -258,13 +256,15 @@ class InstallUtils
         }
 
         check_logic_hook_file(
-            'Users', 'after_login', array(
-            1,
-            'SugarFeed old feed entry remover',
-            'modules/SugarFeed/SugarFeedFlush.php',
-            'SugarFeedFlush',
-            'flushStaleEntries'
-        )
+            'Users',
+            'after_login',
+            array(
+                1,
+                'SugarFeed old feed entry remover',
+                'modules/SugarFeed/SugarFeedFlush.php',
+                'SugarFeedFlush',
+                'flushStaleEntries'
+            )
         );
     }
 
@@ -465,7 +465,6 @@ class InstallUtils
                 $where = substr($where, 0, -5);//remove trailing ' AND '
                 $sql = str_replace('{WHERE}', $where, $checkSql);
                 $res = $db->getOne($sql);
-                echo "\nCHECK RES: " . json_encode($res);
                 $doInsert = ($res == 0);
             }
 

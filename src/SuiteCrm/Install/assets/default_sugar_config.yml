@@ -2,6 +2,13 @@
 # DEFAULT SUGAR CONFIGURATION
 #
 
+sugar_version: ''
+suitecrm_version: ''
+
+default_date_format: Y-m-d
+default_time_format: 'H:i:s'
+
+
 cache_dir: 'cache/'
 tmp_dir: 'cache/xml/'
 upload_dir: 'upload/'
@@ -26,8 +33,7 @@ default_email_editor: html
 disable_convert_lead: false
 
 currency: ''
-datef: m/d/Y
-timef: 'H:i'
+
 default_currency_significant_digits: 2
 default_currency_symbol: $
 default_export_charset: UTF-8
@@ -81,7 +87,7 @@ default_action: index
 default_charset: UTF-8
 default_currency_name: 'US Dollars'
 default_currency_iso4217: USD
-default_date_format: m/d/Y
+
 default_language: en_us
 default_module: Home
 default_password: ''
@@ -91,7 +97,6 @@ default_permissions:
     user: ''
     group: ''
 default_theme: Sugar5
-default_time_format: 'h:ia'
 default_user_is_admin: false
 default_user_name: ''
 disable_export: false
@@ -222,14 +227,8 @@ default_currencies:
 
 
 
-
-
-sugar_version: ''
-suitecrm_version: ''
-
-
-
-
+#datef: m/d/Y
+#timef: 'H:i'
 #  setup_site_log_level: fatal
 #  language: en_us
 #  default_language: en_us

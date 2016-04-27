@@ -325,22 +325,6 @@ class Installer
         InstallUtils::loadFixtures($db, $configOverride, 'fixtures/schedulers.yml');
         InstallUtils::installerHook('post_createDefaultSchedulers');
 
-    }
-
-    /**
-     *  Main setup method
-     */
-    protected function performInstallationOld()
-    {
-
-
-
-
-
-
-
-
-
 
         /**
          * @todo: check this - setup_installed_lang_packs in $config is not set anywhere
@@ -350,7 +334,6 @@ class Installer
             $this->log("Registering Language Packs");
             InstallUtils::registerLanguagePacks($this->config);
         }
-
 
         /**
          *  Enable Sugar Feeds
@@ -393,7 +376,7 @@ class Installer
          * SuiteCrm
          */
         $this->log("Configuring SuiteCrm");
-        InstallUtils::registerSuiteCrmConfiguration($this->config);
+        InstallUtils::registerSuiteCrmConfiguration($configOverride);
         InstallUtils::executeExtraInstallation($this->config);
 
 
@@ -407,7 +390,7 @@ class Installer
         /**
          * Install Demo Data
          */
-        if ($this->config['demo-data']) {
+        if ($this->config['install-demo-data']) {
             $this->log("Installing Demo Data");
             InstallUtils::installerHook('pre_installDemoData');
             InstallUtils::installDemoData();
@@ -415,33 +398,36 @@ class Installer
         }
 
 
-        /**
-         * Save Administration Configuration
-         */
-        $this->log("Updating Administration Configuration");
-        $admin = new \Administration();
-        $admin->saveSetting('system', 'adminwizard', 1);
-        $admin->saveConfig();
-
 
         /**
-         * Save Configuration Overrides
+         * Save Administration Configuration - moved to 'Administration Variables'
          */
-        $this->log("Saving Configuration Overrides");
-        $sugar_config['default_date_format'] = $this->config['default_date_format'];
-        $sugar_config['default_time_format'] = $this->config['default_time_format'];
-        $sugar_config['default_language'] = $this->config['default_language'];
-        $sugar_config['default_locale_name_format'] = $this->config['default_locale_name_format'];
-        $configurator = new \Configurator();
-        $configurator->saveConfig();
-        write_array_to_file("sugar_config", $configurator->config, "config.php");
+//        $this->log("Updating Administration Configuration");
+//        $admin = new \Administration();
+//        $admin->saveSetting('system', 'adminwizard', 1);
+//        $admin->saveConfig();
 
+
+        /**
+         * Save Configuration Overrides - this is now already done by default sugar yml
+         */
+//        $this->log("Saving Configuration Overrides");
+//        $sugar_config['default_date_format'] = $this->config['default_date_format'];
+//        $sugar_config['default_time_format'] = $this->config['default_time_format'];
+//        $sugar_config['default_language'] = $this->config['default_language'];
+//        $sugar_config['default_locale_name_format'] = $this->config['default_locale_name_format'];
+//        $configurator = new \Configurator();
+//        $configurator->saveConfig();
+//        write_array_to_file("sugar_config", $configurator->config, "config.php");
 
 
         /**
          * Save User
-         * old note: set all of these default parameters since the Users save action
+         *
+         * Old note: set all of these default parameters since the Users save action
          * will undo the defaults otherwise
+         *
+         * My note: @todo: this is horrible - extract needed functionality from '/modules/Users/Save.php'
          */
         $this->log("Updating Admin User");
         // set locale settings
@@ -473,6 +459,7 @@ class Installer
 
         //BAN ALL MODULES BY DEFAULT: ['addAjaxBannedModules'][] = '';
 
+
         /**
          * DONE
          */
@@ -481,7 +468,6 @@ class Installer
         $this->log(str_repeat("-", 80));
         $this->log("Installation complete(" . floor($deltaTime) . "s).");
     }
-
 
     /**
      * Setup Session variables prior to executing installation
