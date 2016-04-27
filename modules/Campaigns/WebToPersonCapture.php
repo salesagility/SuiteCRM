@@ -1,11 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,62 +40,36 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-require_once('include/formbase.php');
+require_once 'include/formbase.php';
 
-$typeOfPerson = '';
-if (isset($_REQUEST['typeOfPerson']) && $_REQUEST['typeOfPerson'] != null)
-{
-    $typeOfPerson = $_REQUEST['typeOfPerson'];
-}
-else
-{
-    die('Not a valid subclass of person');
-}
 $moduleDir = '';
-if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null)
-{
+if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null) {
     $moduleDir = $_REQUEST['moduleDir'];
-}
-else
-{
+} else {
     die('Not a valid module directory');
 }
-$moduleName = '';
-if (isset($_REQUEST['moduleName']) && $_REQUEST['moduleName'] != null)
-{
-    $moduleName = $_REQUEST['moduleName'];
-}
-else
-{
-    die('Not a valid module name');
-}
-//$formBase = "{$typeOfPerson}FormBase";
-//$formBasePath = "modules/$moduleDir/{$formBase}.php";
-//require_once($formBasePath);
-
-
 
 global $app_strings, $sugar_config, $timedate, $current_user;
 
-$mod_strings = return_module_language($sugar_config['default_language'], $moduleName);
+$mod_strings = return_module_language($sugar_config['default_language'], $moduleDir);
 
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
     $_POST['client_id_address'] = query_client_ip();
-    $campaign_id=$_POST['campaign_id'];
+    $campaign_id = $_POST['campaign_id'];
     $campaign = new Campaign();
-    $camp_query  = "select name,id from campaigns where id='$campaign_id'";
-    $camp_query .= " and deleted=0";
-    $camp_result=$campaign->db->query($camp_query);
+    $camp_query = "select name,id from campaigns where id='$campaign_id'";
+    $camp_query .= ' and deleted=0';
+    $camp_result = $campaign->db->query($camp_query);
     $camp_data = $campaign->db->fetchByAssoc($camp_result);
     // Bug 41292 - have to select marketing_id for new lead
     $db = DBManagerFactory::getInstance();
     $marketing = new EmailMarketing();
     $marketing_query = $marketing->create_new_list_query(
         'date_start desc, date_modified desc',
-        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < " . $db->convert('', 'today'),
+        "campaign_id = '{$campaign_id}' and status = 'active' and date_start < ".$db->convert('', 'today'),
         array('id')
     );
     $marketing_result = $db->limitQuery($marketing_query, 0, 1, true);
@@ -102,22 +80,22 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
         $current_user->retrieve($_REQUEST['assigned_user_id']);
     }
 
-    if(isset($camp_data) && $camp_data != null ){
+    if (isset($camp_data) && $camp_data != null) {
         //$personForm = new $formBase();
-        $person = new $typeOfPerson();
+        $person = BeanFactory::getBean($moduleDir);
         $prefix = '';
-        if(!empty($_POST['prefix'])){
+        if (!empty($_POST['prefix'])) {
             $prefix = $_POST['prefix'];
         }
 
-        if(empty($person->id)) {
+        if (empty($person->id)) {
             $person->id = create_guid();
             $person->new_with_id = true;
         }
         $GLOBALS['check_notify'] = true;
 
         //bug: 47574 - make sure, that webtolead_email1 field has same required attribute as email1 field
-        if(isset($person->required_fields['email1'])){
+        if (isset($person->required_fields['email1'])) {
             $person->required_fields['webtolead_email1'] = $person->required_fields['email1'];
         }
 
@@ -135,182 +113,158 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
         //As form base items are not necessarily in place for the custom classes that extend Person, cannot use
         //the hendleSave method of the formbase
-        if(!empty($person))
-        {
-            foreach($_POST as $k =>$v)
-            {
+        if (!empty($person)) {
+            foreach ($_POST as $k => $v) {
                 //Skip the admin items that are not part of the bean
-                if( $k === 'client_id_address' || $k === 'req_id'
-                    || $k === 'moduleDir' || $k === 'moduleName' || $k === 'typeOfPerson' || $k === 'dup_checked')
+                if ($k === 'client_id_address' || $k === 'req_id'
+                    || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
-                else
-                {
-                    if(array_key_exists($k,$person)){
+                } else {
+                    if (array_key_exists($k, $person)) {
                         $person->$k = $v;
                     }
                 }
             }
         }
 
-
-        if(!empty($person)){
+        if (!empty($person)) {
 
             //create campaign log
             $camplog = new CampaignLog();
-            $camplog->campaign_id  = $_POST['campaign_id'];
-            $camplog->related_id   = $person->id;
+            $camplog->campaign_id = $_POST['campaign_id'];
+            $camplog->related_id = $person->id;
             $camplog->related_type = $person->module_dir;
-            $camplog->activity_type = "$typeOfPerson";
+            $camplog->activity_type = $person->object_name;
             $camplog->target_type = $person->module_dir;
-            $campaign_log->activity_date=$timedate->now();
-            $camplog->target_id    = $person->id;
-            if(isset($marketing_data['id']))
-            {
+            $campaign_log->activity_date = $timedate->now();
+            $camplog->target_id = $person->id;
+            if (isset($marketing_data['id'])) {
                 $camplog->marketing_id = $marketing_data['id'];
             }
             $camplog->save();
 
             //link campaignlog and lead
 
-            if (isset($_POST['email1']) && $_POST['email1'] != null)
-            {
+            if (isset($_POST['email1']) && $_POST['email1'] != null) {
                 $person->email1 = $_POST['email1'];
             }
             //in case there are old forms used webtolead_email1
-            elseif (isset($_POST['webtolead_email1']) && $_POST['webtolead_email1'] != null)
-            {
+            elseif (isset($_POST['webtolead_email1']) && $_POST['webtolead_email1'] != null) {
                 $person->email1 = $_POST['webtolead_email1'];
             }
 
-            if (isset($_POST['email2']) && $_POST['email2'] != null)
-            {
+            if (isset($_POST['email2']) && $_POST['email2'] != null) {
                 $person->email2 = $_POST['email2'];
             }
             //in case there are old forms used webtolead_email2
-            elseif (isset($_POST['webtolead_email2']) && $_POST['webtolead_email2'] != null)
-            {
+            elseif (isset($_POST['webtolead_email2']) && $_POST['webtolead_email2'] != null) {
                 $person->email2 = $_POST['webtolead_email2'];
             }
 
             $person->load_relationship('campaigns');
-            if(isset($person->campaigns))
-            {
+            if (isset($person->campaigns)) {
                 $person->campaigns->add($camplog->id);
             }
 
-            if(!empty($GLOBALS['check_notify'])) {
+            if (!empty($GLOBALS['check_notify'])) {
                 $person->save($GLOBALS['check_notify']);
-            }
-            else {
-                $person->save(FALSE);
+            } else {
+                $person->save(false);
             }
         }
 
         //in case there are forms out there still using email_opt_out
-        if(isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])){
-
-            if(isset ($person->email1) && !empty($person->email1)){
+        if (isset($_POST['webtolead_email_opt_out']) || isset($_POST['email_opt_out'])) {
+            if (isset($person->email1) && !empty($person->email1)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email1,0,1);
+                $sea->AddUpdateEmailAddress($person->email1, 0, 1);
             }
-            if(isset ($person->email2) && !empty($person->email2)){
+            if (isset($person->email2) && !empty($person->email2)) {
                 $sea = new SugarEmailAddress();
-                $sea->AddUpdateEmailAddress($person->email2,0,1);
-
+                $sea->AddUpdateEmailAddress($person->email2, 0, 1);
             }
         }
-        if(isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])){
+        if (isset($_POST['redirect_url']) && !empty($_POST['redirect_url'])) {
             // Get the redirect url, and make sure the query string is not too long
             $redirect_url = $_POST['redirect_url'];
             $query_string = '';
             $first_char = '&';
-            if(strpos($redirect_url, '?') === FALSE){
+            if (strpos($redirect_url, '?') === false) {
                 $first_char = '?';
             }
             $first_iteration = true;
             $get_and_post = array_merge($_GET, $_POST);
-            foreach($get_and_post as $param => $value) {
-
-                if($param == 'redirect_url' && $param == 'submit')
+            foreach ($get_and_post as $param => $value) {
+                if ($param == 'redirect_url' && $param == 'submit') {
                     continue;
+                }
 
-                if($first_iteration){
+                if ($first_iteration) {
                     $first_iteration = false;
                     $query_string .= $first_char;
-                }
-                else{
-                    $query_string .= "&";
+                } else {
+                    $query_string .= '&';
                 }
                 $query_string .= "{$param}=".urlencode($value);
             }
-            if(empty($person)) {
-                if($first_iteration){
+            if (empty($person)) {
+                if ($first_iteration) {
                     $query_string .= $first_char;
+                } else {
+                    $query_string .= '&';
                 }
-                else{
-                    $query_string .= "&";
-                }
-                $query_string .= "error=1";
+                $query_string .= 'error=1';
             }
 
             $redirect_url = $redirect_url.$query_string;
 
-
             // Check if the headers have been sent, or if the redirect url is greater than 2083 characters (IE max URL length)
             //   and use a javascript form submission if that is the case.
-            if(headers_sent() || strlen($redirect_url) > 2083){
-                echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
-                echo '<form name="redirect" action="' .$_POST['redirect_url']. '" method="GET">';
+            if (headers_sent() || strlen($redirect_url) > 2083) {
+                echo '<html '.get_language_header().'><head><title>SugarCRM</title></head><body>';
+                echo '<form name="redirect" action="'.$_POST['redirect_url'].'" method="GET">';
 
-                foreach($_POST as $param => $value) {
-                    if($param != 'redirect_url' ||$param != 'submit') {
+                foreach ($_POST as $param => $value) {
+                    if ($param != 'redirect_url' || $param != 'submit') {
                         echo '<input type="hidden" name="'.$param.'" value="'.$value.'">';
                     }
                 }
-                if(empty($person)) {
+                if (empty($person)) {
                     echo '<input type="hidden" name="error" value="1">';
                 }
                 echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
                 echo '</body></html>';
-            }
-            else{
+            } else {
                 header("Location: {$redirect_url}");
                 die();
             }
-        }
-        else{
-            if(isset($mod_strings['LBL_THANKS_FOR_SUBMITTING']))
-            {
+        } else {
+            if (isset($mod_strings['LBL_THANKS_FOR_SUBMITTING'])) {
                 echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
-            }
-            else
-            {//If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
+            } else {
+                //If the custom module does not have a LBL_THANKS_FOR_SUBMITTING label, default to this general one
                 echo 'Success';
             }
-            header($_SERVER['SERVER_PROTOCOL'] . '201', true, 201);
+            header($_SERVER['SERVER_PROTOCOL'].'201', true, 201);
         }
         sugar_cleanup();
         // die to keep code from running into redirect case below
         die();
-    }
-    else{
+    } else {
         echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
     }
 }
 
 if (!empty($_POST['redirect'])) {
-    if(headers_sent()){
-        echo '<html ' . get_language_header() . '><head><title>SugarCRM</title></head><body>';
-        echo '<form name="redirect" action="' .$_POST['redirect']. '" method="GET">';
+    if (headers_sent()) {
+        echo '<html '.get_language_header().'><head><title>SugarCRM</title></head><body>';
+        echo '<form name="redirect" action="'.$_POST['redirect'].'" method="GET">';
         echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
         echo '</body></html>';
-    }
-    else{
+    } else {
         header("Location: {$_POST['redirect']}");
         die();
     }
 }
 
 echo $mod_strings['LBL_SERVER_IS_CURRENTLY_UNAVAILABLE'];
-
-?>

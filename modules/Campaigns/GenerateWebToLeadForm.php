@@ -73,18 +73,9 @@ $web_form_footer = '';
 $regex = "/^\w+(['\.\-\+]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+\$/";
 //_ppd($web_required_symbol);
 
-$typeOfPerson = '';
-if(!empty($_REQUEST['typeOfPerson'])){
-    $typeOfPerson= $_REQUEST['typeOfPerson'];
-}
-
 $moduleDir = '';
 if(!empty($_REQUEST['moduleDir'])){
     $moduleDir= $_REQUEST['moduleDir'];
-}
-$moduleName = '';
-if(!empty($_REQUEST['moduleName'])){
-    $moduleName= $_REQUEST['moduleName'];
 }
 
 if(!empty($_REQUEST['web_header'])){
@@ -126,9 +117,7 @@ include_once 'WebToLeadFormBuilder.php';
 $Web_To_Lead_Form_html = WebToLeadFormBuilder::generate(
     $_REQUEST,
     $lead,
-    $typeOfPerson,
     $moduleDir,
-    $moduleName,
     $site_url,
     $web_post_url,
     $web_form_header,
