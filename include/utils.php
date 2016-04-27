@@ -124,7 +124,7 @@ function make_sugar_config(&$sugar_config)
         'dbconfigoption' => $dbconfigoption,  // this must be set!!
         'default_action' => empty($default_action) ? 'index' : $default_action,
         'default_charset' => empty($default_charset) ? 'UTF-8' : $default_charset,
-        'default_currency_name' => empty($default_currency_name) ? 'US Dollar' : $default_currency_name,
+        'default_currency_name' => empty($default_currency_name) ? 'US Dollars' : $default_currency_name,
         'default_currency_symbol' => empty($default_currency_symbol) ? '$' : $default_currency_symbol,
         'default_currency_iso4217' => empty($default_currency_iso4217) ? '$' : $default_currency_iso4217,
         'default_date_format' => empty($defaultDateFormat) ? 'm/d/Y' : $defaultDateFormat,
@@ -262,7 +262,7 @@ function get_sugar_config_defaults()
         'default_action' => 'index',
         'default_charset' => return_session_value_or_default('default_charset',
             'UTF-8'),
-        'default_currency_name' => return_session_value_or_default('default_currency_name', 'US Dollar'),
+        'default_currency_name' => return_session_value_or_default('default_currency_name', 'US Dollars'),
         'default_currency_symbol' => return_session_value_or_default('default_currency_symbol', '$'),
         'default_currency_iso4217' => return_session_value_or_default('default_currency_iso4217', 'USD'),
         'default_currency_significant_digits' => return_session_value_or_default('default_currency_significant_digits', 2),
