@@ -123,7 +123,7 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
         }
     }
     // Define Dir of Group Icons
-    $icons_dir_base = 'custom/themes/default/images/jjwg_Maps/';
+    $icons_dir_base = 'themes/default/images/jjwg_Maps/';
     if ($num_groups <= 10) {
       $icons_dir = $icons_dir_base.'0-10/';
     } elseif ($num_groups <= 25) {
@@ -150,7 +150,7 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
 var num_markers = <?php echo (!empty($num_markers)) ? json_encode($num_markers) : '0'; ?>;
 var num_groups = <?php echo (!empty($num_groups)) ? json_encode($num_groups) : '0'; ?>;
 var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? json_encode($group_name_to_num) : '[]'; ?>;
-var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir) : "'custom/themes/default/images/jjwg_Maps/0-10/'"; ?>;
+var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir) : "'themes/default/images/jjwg_Maps/0-10/'"; ?>;
 var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? json_encode($num_custom_markers) : '0'; ?>;
 var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? json_encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
 var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? json_encode($custom_markers_icons) : '[]'; ?>;
@@ -747,7 +747,7 @@ function setODataTable() {
                     "mRender": function (data, type, row) {
                         if (type == 'display') {
                             return '<a href="#" onclick="clickMarkerById(\'' + row.id + '\')" class="link">' +
-                                '<img src="custom/themes/default/images/jjwg_Address_Cache.gif" /></a>';
+                                '<img src="themes/default/images/jjwg_Address_Cache.gif" /></a>';
                         } else {
                             return '';
                         }

@@ -1,9 +1,9 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
@@ -37,36 +37,26 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+class updateEndDate
+{
+// logic hook is used to update "project end date" when task "end date" exceeds project end date
+    function update(&$bean, $event, $arguments)
+    {
+        if (!empty($bean->project_id)) {
+            global $current_user, $timedate;
+            $dateformat = $current_user->getPreference('datef');
+            $bean->get_linked_beans('projects');
 
-class updateEndDate {
-//logichook is used to update project end date when task end date exceeds project end date
-    function update(&$bean, $event, $arguments){
-
-        if(!$this->IsNullOrEmptyString($bean->project_id)){
-
-            if($this->IsNullOrEmptyString($bean->set_project_end_date)){
-                global $current_user;
-                $dateformat = $current_user->getPreference('datef');
-                $project = new Project();
-                $project->retrieve($bean->project_id);
-                $projectend = DateTime::createFromFormat($dateformat, $project->estimated_end_date);
-                $projectend = $projectend->format('Y-m-d');
-                $taskend = $bean->date_finish;
-                //if the task end date is after the projects end date, extend the project to fit the new task end date.
-                if(strtotime($taskend) > strtotime($projectend))
-                {
-                    $project->estimated_end_date = $taskend;
-                    $project->save();
+            if (!empty($bean->projects->beans)) {
+                foreach ($bean->projects->beans as $id => $project) {
+                    // if the task's "end date" is after the project's "end date",
+                    // extend the project to fit the new task end date.
+                    if ($timedate->fromDbDate($bean->date_finish) > $timedate->fromDbDate($project->estimated_end_date)) {
+                        $project->estimated_end_date = $bean->date_finish;
+                        $project->save();
+                    }
                 }
-
             }
         }
     }
-
-
-    //Function for basic field validation (present and neither empty nor only white space
-     function IsNullOrEmptyString($question){
-        return (!isset($question) || trim($question)==='');
-    }
-
 }
