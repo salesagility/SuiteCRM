@@ -40,15 +40,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 require_once('include/formbase.php');
 
-$typeOfPerson = '';
-if (isset($_REQUEST['typeOfPerson']) && $_REQUEST['typeOfPerson'] != null)
-{
-    $typeOfPerson = $_REQUEST['typeOfPerson'];
-}
-else
-{
-    die('Not a valid subclass of person');
-}
+
 $moduleDir = '';
 if (isset($_REQUEST['moduleDir']) && $_REQUEST['moduleDir'] != null)
 {
@@ -58,24 +50,11 @@ else
 {
     die('Not a valid module directory');
 }
-$moduleName = '';
-if (isset($_REQUEST['moduleName']) && $_REQUEST['moduleName'] != null)
-{
-    $moduleName = $_REQUEST['moduleName'];
-}
-else
-{
-    die('Not a valid module name');
-}
-//$formBase = "{$typeOfPerson}FormBase";
-//$formBasePath = "modules/$moduleDir/{$formBase}.php";
-//require_once($formBasePath);
-
 
 
 global $app_strings, $sugar_config, $timedate, $current_user;
 
-$mod_strings = return_module_language($sugar_config['default_language'], $moduleName);
+$mod_strings = return_module_language($sugar_config['default_language'], $moduleDir);
 
 if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
     //adding the client ip address
@@ -104,7 +83,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 
     if(isset($camp_data) && $camp_data != null ){
         //$personForm = new $formBase();
-        $person = new $typeOfPerson();
+        $person = BeanFactory::getBean($moduleDir);
         $prefix = '';
         if(!empty($_POST['prefix'])){
             $prefix = $_POST['prefix'];
@@ -141,7 +120,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             {
                 //Skip the admin items that are not part of the bean
                 if( $k === 'client_id_address' || $k === 'req_id'
-                    || $k === 'moduleDir' || $k === 'moduleName' || $k === 'typeOfPerson' || $k === 'dup_checked')
+                    || $k === 'moduleDir' || $k === 'dup_checked')
                     continue;
                 else
                 {
@@ -160,7 +139,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
             $camplog->campaign_id  = $_POST['campaign_id'];
             $camplog->related_id   = $person->id;
             $camplog->related_type = $person->module_dir;
-            $camplog->activity_type = "$typeOfPerson";
+            $camplog->activity_type = $person->object_name;
             $camplog->target_type = $person->module_dir;
             $campaign_log->activity_date=$timedate->now();
             $camplog->target_id    = $person->id;
