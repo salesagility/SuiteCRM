@@ -1,11 +1,15 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
-/*********************************************************************************
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2016 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,100 +40,66 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
-
-
-global $db;
-function displayAdminError($errorString){
-	$output = '<p class="error">' . $errorString .'</p>';
-		echo $output;
+global $db, $current_user, $timedate;
+function displayAdminError($errorString)
+{
+    $output = '<p class="error">'.$errorString.'</p>';
+    echo $output;
 }
 
-if(!empty($_SESSION['display_lotuslive_alert'])){
-    displayAdminError(translate('MSG_RECONNECT_LOTUSLIVE', 'Administration'));
+if (isset($_SESSION['rebuild_relationships'])) {
+    displayAdminError(translate('MSG_REBUILD_RELATIONSHIPS', 'Administration'));
 }
 
-
-
-
-if(isset($_SESSION['rebuild_relationships'])){
-	displayAdminError(translate('MSG_REBUILD_RELATIONSHIPS', 'Administration'));
+if (isset($_SESSION['rebuild_extensions'])) {
+    displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
 }
 
-if(isset($_SESSION['rebuild_extensions'])){
-	displayAdminError(translate('MSG_REBUILD_EXTENSIONS', 'Administration'));
-}
-
-if ( (strpos($_SERVER["SERVER_SOFTWARE"],'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0') ) {
+if ((strpos($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') !== false) && (php_sapi_name() == 'cgi-fcgi') && (ini_get('fastcgi.logging') != '0')) {
     displayAdminError(translate('LBL_FASTCGI_LOGGING', 'Administration'));
 }
-if(is_admin($current_user)){
-if(!empty($_SESSION['COULD_NOT_CONNECT'])){
-	displayAdminError(translate('LBL_COULD_NOT_CONNECT', 'Administration') . ' '. $timedate->to_display_date_time($_SESSION['COULD_NOT_CONNECT']));
-}
-if(!empty($_SESSION['EXCEEDING_OC_LICENSES']) && $_SESSION['EXCEEDING_OC_LICENSES'] == true){
-    displayAdminError(translate('LBL_EXCEEDING_OC_LICENSES', 'Administration'));
-}
-if(isset($license) && !empty($license->settings['license_msg_admin'])){
-    // UUDDLRLRBA
-	$GLOBALS['log']->fatal(base64_decode($license->settings['license_msg_admin']));
-    //displayAdminError(base64_decode($license->settings['license_msg_admin']));
-	return;
-}
-
-//No SMTP server is set up Error.
-$smtp_error = false;
-$admin = new Administration();
-$admin->retrieveSettings();
-
-//If sendmail has been configured by setting the config variable ignore this warning
-$sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
-
-if(trim($admin->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
-    if($admin->settings['notify_on']) {
-        $smtp_error = true;
+if (is_admin($current_user)) {
+    if (!empty($_SESSION['COULD_NOT_CONNECT'])) {
+        displayAdminError(translate('LBL_COULD_NOT_CONNECT', 'Administration').' '.$timedate->to_display_date_time($_SESSION['COULD_NOT_CONNECT']));
     }
-}
+    //No SMTP server is set up Error.
+    $smtp_error = false;
+    $admin = new Administration();
+    $admin->retrieveSettings();
 
-if($smtp_error) {
-    displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR','Administration'));
-}
+    //If sendmail has been configured by setting the config variable ignore this warning
+    $sendMailEnabled = isset($sugar_config['allow_sendmail_outbound']) && $sugar_config['allow_sendmail_outbound'];
 
- if(!empty($dbconfig['db_host_name']) || $sugar_config['sugar_version'] != $sugar_version ){
-       		displayAdminError(translate('WARN_REPAIR_CONFIG', 'Administration'));
+    if (trim($admin->settings['mail_smtpserver']) == '' && !$sendMailEnabled) {
+        if ($admin->settings['notify_on']) {
+            $smtp_error = true;
         }
+    }
 
-        if( !isset($sugar_config['installer_locked']) || $sugar_config['installer_locked'] == false ){
-        	displayAdminError(translate('WARN_INSTALLER_LOCKED', 'Administration'));
-		}
+    if ($smtp_error) {
+        displayAdminError(translate('WARN_NO_SMTP_SERVER_AVAILABLE_ERROR', 'Administration'));
+    }
 
+    if (!isset($sugar_config['installer_locked']) || $sugar_config['installer_locked'] == false) {
+        displayAdminError(translate('WARN_INSTALLER_LOCKED', 'Administration'));
+    }
 
-        if(empty($GLOBALS['sugar_config']['admin_access_control'])){
-			if(isset($_SESSION['invalid_versions'])){
-				$invalid_versions = $_SESSION['invalid_versions'];
-				foreach($invalid_versions as $invalid){
-					displayAdminError(translate('WARN_UPGRADE', 'Administration'). $invalid['name'] .translate('WARN_UPGRADE2', 'Administration'));
-				}
-			}
-
-			if (isset($_SESSION['available_version'])){
-				if($_SESSION['available_version'] != $sugar_version)
-				{
-					displayAdminError(translate('WARN_UPGRADENOTE', 'Administration').$_SESSION['available_version_description']);
-				}
-			}
+    if (empty($sugar_config['admin_access_control'])) {
+        if (isset($_SESSION['invalid_versions'])) {
+            $invalid_versions = $_SESSION['invalid_versions'];
+            foreach ($invalid_versions as $invalid) {
+                displayAdminError(translate('WARN_UPGRADE', 'Administration').$invalid['name'].translate('WARN_UPGRADE2', 'Administration'));
+            }
         }
+    }
 
+    if (isset($_SESSION['administrator_error'])) {
+        // Only print DB errors once otherwise they will still look broken
+        // after they are fixed.
+        displayAdminError($_SESSION['administrator_error']);
+    }
 
-		if(isset($_SESSION['administrator_error']))
-		{
-			// Only print DB errors once otherwise they will still look broken
-			// after they are fixed.
-			displayAdminError($_SESSION['administrator_error']);
-		}
-
-		unset($_SESSION['administrator_error']);
+    unset($_SESSION['administrator_error']);
 }
-
-?>

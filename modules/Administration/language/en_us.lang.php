@@ -1131,7 +1131,6 @@ $mod_strings = array(
 4) Click Schedule System Index. Make sure that crontab is set up to run cron.php. This will handle indexing as well as the fallback mechanism when the connection to the search engine is interrupted.',
     'LBL_FTS_DISABLED' => 'Full Text Search has been disabled because the system is not able to connect to the search engine.',
     'LBL_FTS_CONNECTION_INVALID' => 'The Full Text Search Settings you have entered are invalid and may slow down system performance.  Please change or clear your settings.',
-    'MSG_RECONNECT_LOTUSLIVE' => 'You are currently not connected to IBM SmartCloud. Connect to IBM SmartCloud within your Profile to be able to access IBM SmartCloud meetings and files.',
     'LBL_REPAIR_UPLOAD_FOLDER' => 'Remove missed files from upload directory',
     'LBL_REPAIR_UPLOAD_FOLDER_DESC' => 'Please note that removal can take a lot of time',
     'LBL_TOTAL_FILES' => 'Total files',

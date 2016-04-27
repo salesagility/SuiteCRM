@@ -254,20 +254,7 @@ class RepairAndClear
 		global $mod_strings;
 		if($this->show_output) echo "<h3>{$mod_strings['LBL_QR_XMLFILES']}</h3>";
 		$this->_clearCache(sugar_cached("xml"), '.xml');
-
-		include('modules/Versions/ExpectedVersions.php');
-
-        global $expect_versions;
-
-        if (isset($expect_versions['Chart Data Cache'])) {
-            $version = new Version();
-            $version->retrieve_by_string_fields(array('name'=>'Chart Data Cache'));
-
-            $version->name = $expect_versions['Chart Data Cache']['name'];
-            $version->file_version = $expect_versions['Chart Data Cache']['file_version'];
-            $version->db_version = $expect_versions['Chart Data Cache']['db_version'];
-            $version->save();
-        }
+		
 	}
 	public function clearDashlets()
 	{

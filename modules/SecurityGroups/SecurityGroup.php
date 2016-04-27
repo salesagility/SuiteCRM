@@ -66,7 +66,7 @@ class SecurityGroup extends SecurityGroup_sugar {
      * @param GUID $user_id
      * @return STRING
      */
-    function getGroupUsersWhere($user_id)
+    static function getGroupUsersWhere($user_id)
     {
 
         return " users.id in (
