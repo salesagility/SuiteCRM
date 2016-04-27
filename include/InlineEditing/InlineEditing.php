@@ -460,7 +460,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
             $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record) . "</a>";
 
-        }else if(!empty($vardef['rname'])){
+        } else if(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
             $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record) . "</a>";
 
         } else {
