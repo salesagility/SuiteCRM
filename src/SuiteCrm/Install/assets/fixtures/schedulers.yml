@@ -1,0 +1,135 @@
+module_name:  'Schedulers'
+bean_name:    '\Scheduler'
+table_name:   ''
+check_props: [job]
+fixtures:
+  -
+      name:               LBL_OOTB_WORKFLOW
+      job:                'function::processAOW_Workflow'
+      date_time_start:    '2015-01-01 09:00:01'
+      date_time_end:      ''
+      job_interval:       '*::*::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           1
+  -
+      name:               LBL_OOTB_REPORTS
+      job:                'function::aorRunScheduledReports'
+      date_time_start:    '2015-01-01 09:01:01'
+      date_time_end:      ''
+      job_interval:       '*::*::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           1
+  -
+      name:               LBL_OOTB_TRACKER
+      job:                'function::trimTracker'
+      date_time_start:    '2015-01-01 09:02:01'
+      date_time_end:      ''
+      job_interval:       '0::2::1::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           1
+  -
+      name:               LBL_OOTB_IE
+      job:                'function::pollMonitoredInboxesAOP'
+      date_time_start:    '2015-01-01 09:03:01'
+      date_time_end:      ''
+      job_interval:       '*::*::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_BOUNCE
+      job:                'function::pollMonitoredInboxesForBouncedCampaignEmails'
+      date_time_start:    '2015-01-01 09:04:01'
+      date_time_end:      ''
+      job_interval:       '0::2-6::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           1
+  -
+      name:               LBL_OOTB_CAMPAIGN
+      job:                'function::runMassEmailCampaign'
+      date_time_start:    '2015-01-01 09:05:01'
+      date_time_end:      ''
+      job_interval:       '0::2-6::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           1
+  -
+      name:               LBL_OOTB_PRUNE
+      job:                'function::pruneDatabase'
+      date_time_start:    '2015-01-01 09:06:01'
+      date_time_end:      ''
+      job_interval:       '0::4::1::*::*'
+      status:             Inactive
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_LUCENE_INDEX
+      job:                'function::aodIndexUnindexed'
+      date_time_start:    '2015-01-01 09:07:01'
+      date_time_end:      ''
+      job_interval:       '0::0::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_OPTIMISE_INDEX
+      job:                'function::aodOptimiseIndex'
+      date_time_start:    '2015-01-01 09:08:01'
+      date_time_end:      ''
+      job_interval:       '0::*/3::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_SEND_EMAIL_REMINDERS
+      job:                'function::sendEmailReminders'
+      date_time_start:    '2015-01-01 09:09:01'
+      date_time_end:      ''
+      job_interval:       '*::*::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_CLEANUP_QUEUE
+      job:                'function::cleanJobQueue'
+      date_time_start:    '2015-01-01 09:10:01'
+      date_time_end:      ''
+      job_interval:       '0::5::*::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS
+      job:                'function::removeDocumentsFromFS'
+      date_time_start:    '2015-01-01 09:11:01'
+      date_time_end:      ''
+      job_interval:       '0::3::1::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           0
+  -
+      name:               LBL_OOTB_SUGARFEEDS
+      job:                'function::trimSugarFeeds'
+      date_time_start:    '2015-01-01 09:12:01'
+      date_time_end:      ''
+      job_interval:       '0::2::1::*::*'
+      status:             Active
+      created_by:         1
+      modified_user_id:   1
+      catch_up:           1

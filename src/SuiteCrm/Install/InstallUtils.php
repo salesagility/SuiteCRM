@@ -334,262 +334,254 @@ class InstallUtils
     }
 
     /**
-     * Remove all schedulers and create the new ones
-     *
-     * @param \DBManager $db
-     * @param array      $config
-     */
-    public static function rebuildDefaultSchedulers($db, $config)
-    {
-        $mod_strings = return_module_language($config["language"], 'Schedulers');
-
-        // truncate scheduler-related tables - @todo: shouldn't be needed
-        $db->query('DELETE FROM schedulers');
-
-        $sched1 = new \Scheduler();
-        $sched1->name = $mod_strings['LBL_OOTB_WORKFLOW'];
-        $sched1->job = 'function::processAOW_Workflow';
-        $sched1->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched1->date_time_end = NULL;
-        $sched1->job_interval = '*::*::*::*::*';
-        $sched1->status = 'Active';
-        $sched1->created_by = '1';
-        $sched1->modified_user_id = '1';
-        $sched1->catch_up = '1';
-        $sched1->save();
-
-        $sched2 = new \Scheduler();
-        $sched2->name = $mod_strings['LBL_OOTB_REPORTS'];
-        $sched2->job = 'function::aorRunScheduledReports';
-        $sched2->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched2->date_time_end = NULL;
-        $sched2->job_interval = '*::*::*::*::*';
-        $sched2->status = 'Active';
-        $sched2->created_by = '1';
-        $sched2->modified_user_id = '1';
-        $sched2->catch_up = '1';
-        $sched2->save();
-
-        $sched3 = new \Scheduler();
-        $sched3->name = $mod_strings['LBL_OOTB_TRACKER'];
-        $sched3->job = 'function::trimTracker';
-        $sched3->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched3->date_time_end = NULL;
-        $sched3->job_interval = '0::2::1::*::*';
-        $sched3->status = 'Active';
-        $sched3->created_by = '1';
-        $sched3->modified_user_id = '1';
-        $sched3->catch_up = '1';
-        $sched3->save();
-
-        $sched4 = new \Scheduler();
-        $sched4->name = $mod_strings['LBL_OOTB_IE'];
-        $sched4->job = 'function::pollMonitoredInboxesAOP';
-        $sched4->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched4->date_time_end = NULL;
-        $sched4->job_interval = '*::*::*::*::*';
-        $sched4->status = 'Active';
-        $sched4->created_by = '1';
-        $sched4->modified_user_id = '1';
-        $sched4->catch_up = '0';
-        $sched4->save();
-
-        $sched5 = new \Scheduler();
-        $sched5->name = $mod_strings['LBL_OOTB_BOUNCE'];
-        $sched5->job = 'function::pollMonitoredInboxesForBouncedCampaignEmails';
-        $sched5->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched5->date_time_end = NULL;
-        $sched5->job_interval = '0::2-6::*::*::*';
-        $sched5->status = 'Active';
-        $sched5->created_by = '1';
-        $sched5->modified_user_id = '1';
-        $sched5->catch_up = '1';
-        $sched5->save();
-
-        $sched6 = new \Scheduler();
-        $sched6->name = $mod_strings['LBL_OOTB_CAMPAIGN'];
-        $sched6->job = 'function::runMassEmailCampaign';
-        $sched6->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched6->date_time_end = NULL;
-        $sched6->job_interval = '0::2-6::*::*::*';
-        $sched6->status = 'Active';
-        $sched6->created_by = '1';
-        $sched6->modified_user_id = '1';
-        $sched6->catch_up = '1';
-        $sched6->save();
-
-        $sched7 = new \Scheduler();
-        $sched7->name = $mod_strings['LBL_OOTB_PRUNE'];
-        $sched7->job = 'function::pruneDatabase';
-        $sched7->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched7->date_time_end = NULL;
-        $sched7->job_interval = '0::4::1::*::*';
-        $sched7->status = 'Inactive';
-        $sched7->created_by = '1';
-        $sched7->modified_user_id = '1';
-        $sched7->catch_up = '0';
-        $sched7->save();
-
-        $sched8 = new \Scheduler();
-        $sched8->name = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
-        $sched8->job = 'function::aodIndexUnindexed';
-        $sched8->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched8->date_time_end = NULL;
-        $sched8->job_interval = "0::0::*::*::*";
-        $sched8->status = 'Active';
-        $sched8->created_by = '1';
-        $sched8->modified_user_id = '1';
-        $sched8->catch_up = '0';
-        $sched8->save();
-
-        $sched9 = new \Scheduler();
-        $sched9->name = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
-        $sched9->job = 'function::aodOptimiseIndex';
-        $sched9->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched9->date_time_end = NULL;
-        $sched9->job_interval = "0::*/3::*::*::*";
-        $sched9->status = 'Active';
-        $sched9->created_by = '1';
-        $sched9->modified_user_id = '1';
-        $sched9->catch_up = '0';
-        $sched9->save();
-
-        $sched12 = new \Scheduler();
-        $sched12->name = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
-        $sched12->job = 'function::sendEmailReminders';
-        $sched12->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched12->date_time_end = NULL;
-        $sched12->job_interval = '*::*::*::*::*';
-        $sched12->status = 'Active';
-        $sched12->created_by = '1';
-        $sched12->modified_user_id = '1';
-        $sched12->catch_up = '0';
-        $sched12->save();
-
-        $sched13 = new \Scheduler();
-        $sched13->name = $mod_strings['LBL_OOTB_CLEANUP_QUEUE'];
-        $sched13->job = 'function::cleanJobQueue';
-        $sched13->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched13->date_time_end = NULL;
-        $sched13->job_interval = '0::5::*::*::*';
-        $sched13->status = 'Active';
-        $sched13->created_by = '1';
-        $sched13->modified_user_id = '1';
-        $sched13->catch_up = '0';
-        $sched13->save();
-
-        $sched14 = new \Scheduler();
-        $sched14->name = $mod_strings['LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS'];
-        $sched14->job = 'function::removeDocumentsFromFS';
-        $sched14->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched14->date_time_end = NULL;
-        $sched14->job_interval = '0::3::1::*::*';
-        $sched14->status = 'Active';
-        $sched14->created_by = '1';
-        $sched14->modified_user_id = '1';
-        $sched14->catch_up = '0';
-        $sched14->save();
-
-        $sched15 = new \Scheduler();
-        $sched15->name = $mod_strings['LBL_OOTB_SUGARFEEDS'];
-        $sched15->job = 'function::trimSugarFeeds';
-        $sched15->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched15->date_time_end = NULL;
-        $sched15->job_interval = '0::2::1::*::*';
-        $sched15->status = 'Active';
-        $sched15->created_by = '1';
-        $sched15->modified_user_id = '1';
-        $sched15->catch_up = '1';
-        $sched15->save();
-    }
-
-    /**
      * Create Admin user
      *
+     * @param \DBManager $db
      * @param array $config
      * @return \User
      */
-    public static function createAdministratorUser($config)
+    public static function createAdministratorUser($db, $config)
     {
-        //Create default admin user
+        $res = $db->fetchOne('SELECT COUNT(*) AS C FROM users WHERE id = 1');
+        $exists = ($res["C"] == 1);
         $user = new \User();
-        $user->id = 1;
-        $user->new_with_id = TRUE;
-        $user->last_name = 'Administrator';
-        $user->user_name = $config["install-admin-username"];
-        $user->title = "Administrator";
-        $user->status = 'Active';
-        $user->is_admin = TRUE;
-        $user->employee_status = 'Active';
-        $user->user_hash = \User::getPasswordHash($config["install-admin-password"]);
-        $user->email = '';//@todo: a config for this would be good
-        $user->save();
+        if(!$exists) {
+            $user->id = 1;
+            $user->new_with_id = TRUE;
+            $user->last_name = 'Administrator';
+            $user->user_name = $config["install-admin-username"];
+            $user->title = "Administrator";
+            $user->status = 'Active';
+            $user->is_admin = TRUE;
+            $user->employee_status = 'Active';
+            $user->user_hash = \User::getPasswordHash($config["install-admin-password"]);
+            $user->email = '';//@todo: a config for this would be good
+            $user->save();
+        } else {
+            $user->retrieve(1);
+        }
         return $user;
     }
 
     /**
      * Inserts data fixtures into database from a specific fixture file
      * File Format:
-     *   table: [name of the database table]
-     *   check_records: [check if record exists (true|false)]
+     *   module_name:  [name of the module used to get the correct language file]
+     *   bean_name:    [name of the bean to user for fixture registration]
+     *   table_name:   [name of the database table]
+     *   check_props:  [array of columns/props to use to check if fixture exists]
      *   fixtures:
      *      -
      *          [column1]:      [value1]
      *          [column2]:      [value2]
      *          [column3]:      [value3]
      *      -
-     *          category:       notify
-     *          name:           fromaddress
-     *          value:          do_not_reply@example.com
+     *          [column1]:      [value1]
+     *          [column2]:      [value2]
+     *          [column3]:      [value3]
      *      ...
      *
      *  Substitutions:
      *      Any value in the format of '%key%' will be checked and if found substituted with the
      *      value found in the $config array
+     *      Any value in the format of 'LBL_.....' will be checked and if found substituted with the
+     *      value found in the loaded $mod_strings for the specific module_name key
+     *
+     *  Dupe Checks:
+     *      With check_props you can provide an array of columns/props to use to check if a fixture exists
      *
      * @param \DBManager $db
      * @param array      $config
      * @param string     $dataFile
+     * @throws \Exception
      */
     public static function loadFixtures($db, $config, $dataFile)
     {
-        $data = self::getConfigFileContent($dataFile);
-        foreach ($data["fixtures"] as $fixture) {
+        $data = self::getYamlData($dataFile);
+        if(!isset($data['module_name'])) {
+            throw new \Exception("Key 'module_name' is missing from fixture definition!");
+        }
+        if(!isset($data['bean_name'])) {
+            throw new \Exception("Key 'bean_name' is missing from fixture definition!");
+        }
+        if(!isset($data['table_name'])) {
+            throw new \Exception("Key 'table_name' is missing from fixture definition!");
+        }
+        if(!isset($data['fixtures'])) {
+            throw new \Exception("Key 'fixtures' is missing from fixture definition!");
+        }
 
-            //substitution
-            foreach ($fixture as $k => $v) {
-                if(preg_match('#^%.*%$#', $v)) {
-                    $configKey = substr($v, 1, -1);
-                    if(array_key_exists($configKey, $config)) {
-                        $fixture[$k] = $config[$configKey];
-                    }
-                }
-            }
+        $moduleName = $data['module_name'];
+        $beanName = $data['bean_name'];
+        $tableName = $data['table_name'];
+
+        if(empty($beanName) && empty($tableName)) {
+            throw new \Exception("Both 'bean_name' and 'table_name' keys are empty!");
+        }
+
+        //load language for module
+        $mod_strings = [];
+        if(!empty($moduleName)) {
+            $mod_strings = return_module_language($config["language"], $moduleName);
+        }
+
+        //substitutions
+        foreach ($data["fixtures"] as &$fixture) {
+            $fixture = self::doFixtureVariableSubstitutions($fixture, $config);
+            $fixture = self::doFixtureLanguageSubstitutions($fixture, $mod_strings);
+        }
+
+        //execute the proper fixture loader
+        if(!empty($beanName)) {
+            self::loadFixturesBean($db, $data);
+        } else {
+            self::loadFixturesDatabase($db, $data);
+        }
+    }
+
+    /**
+     * @param \DBManager $db
+     * @param array      $data
+     */
+    protected static function loadFixturesDatabase($db, $data)
+    {
+        $checkProps = false;
+        $checkSql = false;
+        if(isset($data['check_props']) && is_array($data['check_props']) && count($data['check_props'])) {
+            $checkProps = $data['check_props'];
+            $checkSql = 'SELECT COUNT(*) CNT FROM `' . $data["table_name"] . '` WHERE {WHERE}';
+        }
+        foreach ($data["fixtures"] as $fixture) {
+            $doInsert = true;
 
             //check if record exists
-            $doInsert = true;
-            if($data["check_records"] == true) {
-                $checkSql = 'SELECT COUNT(*) AS C FROM `' . $data["table"] . '` WHERE ({WHERE})';
+            if(is_array($checkProps)) {
                 $where = '';
-                foreach ($fixture as $k => $v) {
-                    $where .= $k . ' = ' . '\''  . $v . '\'' . ' AND ';
+                foreach ($checkProps as $prop) {
+                    if(isset($fixture[$prop])) {
+                        $where .= $prop . '=' . '\''  . $fixture[$prop] . '\'' . ' AND ';
+                    }
                 }
                 $where = substr($where, 0, -5);//remove trailing ' AND '
-                $checkSql = str_replace('{WHERE}', $where, $checkSql);
-                $res = $db->fetchOne($checkSql);
-                $doInsert = ($res["C"] == 0);
+                $sql = str_replace('{WHERE}', $where, $checkSql);
+                $res = $db->getOne($sql);
+                echo "\nCHECK RES: " . json_encode($res);
+                $doInsert = ($res == 0);
             }
 
-            //insert fixture
+            $sql = false;
             if($doInsert) {
-                $insertSql = 'INSERT INTO `' . $data["table"] . '`'
+                //insert fixture
+                $sql = 'INSERT INTO `' . $data["table_name"] . '`'
                              . ' (' . implode(', ', array_keys($fixture)) . ')'
                              . ' VALUES ('
                              . '\'' . implode('\', \'', array_values($fixture)) . '\''
                              . ')';
-                $db->query($insertSql);
+            } else {
+                //we can only do this if we have $checkProps
+                if(is_array($checkProps)) {
+                    //update fixture
+                    $sql = 'UPDATE `' . $data["table_name"] . '` SET {SET} WHERE {WHERE}';
+                    $updateFields = array_diff(array_keys($fixture), $checkProps);
+
+                    $set = '';
+                    foreach ($updateFields as $prop) {
+                        if(isset($fixture[$prop])) {
+                            $set .= $prop . '=' . '\''  . $fixture[$prop] . '\'' . ', ';
+                        }
+                    }
+                    $set = substr($set, 0, -2);//remove trailing ', '
+
+                    $where = '';
+                    foreach ($checkProps as $prop) {
+                        if(isset($fixture[$prop])) {
+                            $where .= $prop . '=' . '\''  . $fixture[$prop] . '\'' . ' AND ';
+                        }
+                    }
+                    $where = substr($where, 0, -5);//remove trailing ' AND '
+                    $sql = str_replace(['{SET}', '{WHERE}'], [$set, $where], $sql);
+                }
+            }
+            if($sql) {
+                $db->query($sql);
             }
         }
+    }
+
+    /**
+     * @param \DBManager $db
+     * @param array      $data
+     */
+    protected static function loadFixturesBean($db, $data)
+    {
+        $beanName = $data['bean_name'];
+        $checkProps = false;
+        if(isset($data['check_props']) && is_array($data['check_props']) && count($data['check_props'])) {
+            $checkProps = $data['check_props'];
+        }
+
+        foreach ($data["fixtures"] as $fixture) {
+            /** @var \SugarBean $bean */
+            $bean = new $beanName();
+
+            //check if record exists
+            if(is_array($checkProps)) {
+                $checkFields = [];
+                foreach ($checkProps as $k) {
+                    if(isset($fixture[$k])) {
+                        $checkFields[$k] = $fixture[$k];
+                    }
+                }
+                $res = $bean->retrieve_by_string_fields($checkFields);
+                if(!is_null($res)) {
+                    $bean = $res;
+                }
+            }
+
+            //set fixture data and save Bean
+            foreach ($fixture as $k => $v) {
+                $bean->$k = $v;
+            }
+            $bean->save();
+        }
+    }
+
+    /**
+     * @param array $fixture
+     * @param array $substitutes
+     * @return array
+     */
+    protected static function doFixtureVariableSubstitutions($fixture, $substitutes) {
+        if (count($substitutes)) {
+            foreach ($fixture as $k => $v) {
+                if (preg_match('#^%.*%$#', $v)) {
+                    $substKey = substr($v, 1, -1);
+                    if (array_key_exists($substKey, $substitutes)) {
+                        $fixture[$k] = $substitutes[$substKey];
+                    }
+                }
+            }
+        }
+        return $fixture;
+    }
+
+    /**
+     * @param array $fixture
+     * @param array $substitutes
+     * @return array
+     */
+    protected static function doFixtureLanguageSubstitutions($fixture, $substitutes) {
+        if (count($substitutes)) {
+            foreach ($fixture as $k => $v) {
+                if (preg_match('#^LBL_#', $v)) {
+                    $substKey = $v;
+                    if (array_key_exists($substKey, $substitutes)) {
+                        $fixture[$k] = $substitutes[$substKey];
+                    }
+                }
+            }
+        }
+        return $fixture;
     }
 
     /**
@@ -765,7 +757,7 @@ class InstallUtils
 
         // load the default configuration
         //$sugar_config = get_sugar_config_defaults();
-        $sugar_config = self::getConfigFileContent("default_sugar_config.yml");
+        $sugar_config = self::getYamlData("default_sugar_config.yml");
 
         // always lock the installer
         $sugar_config['installer_locked'] = TRUE;
@@ -1046,7 +1038,7 @@ class InstallUtils
      * @throws \Exception
      * @return array
      */
-    public static function getConfigFileContent($fileName)
+    public static function getYamlData($fileName)
     {
         $configFilePath = dirname(__FILE__) . '/assets/' . $fileName;
         if (!file_exists($configFilePath)) {

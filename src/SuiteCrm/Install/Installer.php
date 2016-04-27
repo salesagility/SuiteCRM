@@ -168,7 +168,6 @@ class Installer
             InstallUtils::installerHook('post_handleDbCharsetCollation');
         }
 
-
         /**
          * @var string $beanName
          * @var string $beanFile
@@ -186,9 +185,8 @@ class Installer
         //$db = \DBManagerFactory::getInstance();
         $db = InstallUtils::getDatabaseConnection($this->config);
 
-
         /**
-         * loop through all the Beans and create their tables
+         * Loop through all the Beans and create their tables
          */
         $this->log("Creating Database Tables");
 
@@ -272,6 +270,7 @@ class Installer
         }
         InstallUtils::installerHook('post_createAllModuleTables');
 
+
         /**
          * Create Relationships tables
          */
@@ -302,21 +301,29 @@ class Installer
         $this->log("Creating Default Settings");
         InstallUtils::installerHook('pre_createDefaultSettings');
         $configOverride = array_merge($configOverride, [
+            'language' => $current_language,
             'sugar_db_version' => $sugar_db_version,
         ]);
         InstallUtils::loadFixtures($db, $configOverride, 'fixtures/config.yml');
         InstallUtils::installerHook('post_createDefaultSettings');
 
+
         /**
          * Create Administrator User
          */
-//        $this->log("Creating Administrator User");
-//        InstallUtils::installerHook('pre_createUsers');
-//        $current_user = InstallUtils::createAdministratorUser($this->config);
-//        InstallUtils::installerHook('post_createUsers');
+        $this->log("Creating Administrator User");
+        InstallUtils::installerHook('pre_createUsers');
+        $current_user = InstallUtils::createAdministratorUser($db, $this->config);
+        InstallUtils::installerHook('post_createUsers');
 
 
-
+        /**
+         * Rebuild Shedulers
+         */
+        $this->log("Rebuilding Schedulers");
+        InstallUtils::installerHook('pre_createDefaultSchedulers');
+        InstallUtils::loadFixtures($db, $configOverride, 'fixtures/schedulers.yml');
+        InstallUtils::installerHook('post_createDefaultSchedulers');
 
     }
 
@@ -332,13 +339,7 @@ class Installer
 
 
 
-        /**
-         * Rebuild Shedulers
-         */
-        $this->log("Rebuilding Schedulers");
-        InstallUtils::installerHook('pre_createDefaultSchedulers');
-        InstallUtils::rebuildDefaultSchedulers($db, $this->config);
-        InstallUtils::installerHook('post_createDefaultSchedulers');
+
 
 
         /**

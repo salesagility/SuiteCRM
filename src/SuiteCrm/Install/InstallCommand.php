@@ -40,7 +40,7 @@ class InstallCommand extends Command implements CommandInterface
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
 
-        $commandConfig = InstallUtils::getConfigFileContent('command_config.yml');
+        $commandConfig = InstallUtils::getYamlData('command_config.yml');
         $sections = array_keys($commandConfig);
 
         $commandModeMap = [

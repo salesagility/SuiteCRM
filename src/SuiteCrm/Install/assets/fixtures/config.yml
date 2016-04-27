@@ -1,10 +1,12 @@
-table: config
-check_records: true
+module_name:  ''
+bean_name:    ''
+table_name:   config
+check_props: [category, name]
 fixtures:
   -
       category: notify
       name:     fromaddress
-      value:    do_not_reply@example.com
+      value:    no_reply@example.com
   -
       category: notify
       name:     fromname
