@@ -304,16 +304,16 @@ class Installer
         $configOverride = array_merge($configOverride, [
             'sugar_db_version' => $sugar_db_version,
         ]);
-        InstallUtils::insertDefaultConfigSettings($db, $configOverride);
+        InstallUtils::loadFixtures($db, $configOverride, 'fixtures/config.yml');
         InstallUtils::installerHook('post_createDefaultSettings');
 
         /**
          * Create Administrator User
          */
-        $this->log("Creating Administrator User");
-        InstallUtils::installerHook('pre_createUsers');
-        $current_user = InstallUtils::createAdministratorUser($this->config);
-        InstallUtils::installerHook('post_createUsers');
+//        $this->log("Creating Administrator User");
+//        InstallUtils::installerHook('pre_createUsers');
+//        $current_user = InstallUtils::createAdministratorUser($this->config);
+//        InstallUtils::installerHook('post_createUsers');
 
 
 

@@ -1,0 +1,43 @@
+table: config
+check_records: true
+fixtures:
+  -
+      category: notify
+      name:     fromaddress
+      value:    do_not_reply@example.com
+  -
+      category: notify
+      name:     fromname
+      value:    SuiteCRM
+  -
+      category: notify
+      name:     send_by_default
+      value:    1
+  -
+      category: notify
+      name:     on
+      value:    1
+  -
+      category: notify
+      name:     send_from_assigning_user
+      value:    0
+  -
+      category: info
+      name:     sugar_version
+      value:    %sugar_db_version%
+  -
+      category: MySettings
+      name:     tab
+      value:    ''
+  -
+      category: portal
+      name:     on
+      value:    0
+  -
+      category: tracker
+      name:     Tracker
+      value:    1
+  -
+      category: system
+      name:     skypeout_on
+      value:    1

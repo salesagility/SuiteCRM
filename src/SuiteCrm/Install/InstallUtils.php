@@ -6,6 +6,7 @@
  */
 
 namespace SuiteCrm\Install;
+
 use SuiteCrm\Install\Extra\ExtraInterface;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
@@ -61,7 +62,8 @@ class InstallUtils
      * @todo: how do we ensure correct execution order?
      * @param array $config
      */
-    public static function executeExtraInstallation($config) {
+    public static function executeExtraInstallation($config)
+    {
         $classes = [];
         $searchPath = realpath(PROJECT_ROOT . '/src/SuiteCrm/Install/Extra');
         $iterator = new \RecursiveDirectoryIterator($searchPath);
@@ -78,8 +80,8 @@ class InstallUtils
             }
         }
 
-        if(count($classes)) {
-            foreach($classes as $class) {
+        if (count($classes)) {
+            foreach ($classes as $class) {
                 //echo "\nExecuting Extra: " . $class;
                 /** @var ExtraInterface $instance */
                 $instance = new $class();
@@ -91,13 +93,14 @@ class InstallUtils
         require_once(PROJECT_ROOT . '/modules/Administration/QuickRepairAndRebuild.php');
         $actions = array('clearAll');
         $RAC = new \RepairAndClear();
-        $RAC->repairAndClearAll($actions, array('All Modules'), true, false);
+        $RAC->repairAndClearAll($actions, array('All Modules'), TRUE, FALSE);
     }
 
     /**
      * @param array $config
      */
-    public static function registerSuiteCrmConfiguration($config) {
+    public static function registerSuiteCrmConfiguration($config)
+    {
         global $sugar_config;
         require(PROJECT_ROOT . '/sugar_version.php');
         require(PROJECT_ROOT . '/suitecrm_version.php');
@@ -105,7 +108,7 @@ class InstallUtils
         $sugar_config['default_max_tabs'] = 10;
         $sugar_config['sugar_version'] = $config['setup_sugar_version'];
         $sugar_config['suitecrm_version'] = $config['setup_suitecrm_version'];
-        $sugar_config['sugarbeet'] = false;
+        $sugar_config['sugarbeet'] = FALSE;
         ksort($sugar_config);
         write_array_to_file('sugar_config', $sugar_config, 'config.php');
     }
@@ -177,20 +180,20 @@ class InstallUtils
      * @param array $config
      * @param array $lang - this is to be created
      */
-    public static function registerAdvancedPasswordConfiguration($config, $lang=[])
+    public static function registerAdvancedPasswordConfiguration($config, $lang = [])
     {
         /** @var array $sugar_config */
         global $sugar_config;
 
         $lang = [
-            'advanced_password_new_account_email' =>  [
+            'advanced_password_new_account_email' => [
                 'name' => 'System-generated password email',
                 'description' => 'This template is used when the System Administrator sends a new password to a user.',
                 'subject' => 'New account information',
                 'txt_body' => '',
                 'body' => '',
             ],
-            'advanced_password_forgot_password_email' =>  [
+            'advanced_password_forgot_password_email' => [
                 'name' => 'Forgot Password email',
                 'description' => 'This template is used to send a user a link to click to reset the user\'s account password.',
                 'subject' => 'Reset your account password',
@@ -223,21 +226,21 @@ class InstallUtils
         $EmailTemp->deleted = 0;
         $EmailTemp->published = 'off';
         $EmailTemp->text_only = 0;
-        $id =$EmailTemp->save();
+        $id = $EmailTemp->save();
         $sugar_config['passwordsetting']['lostpasswordtmpl'] = $id;
 
         // set all other default settings
-        $sugar_config['passwordsetting']['forgotpasswordON'] = true;
-        $sugar_config['passwordsetting']['SystemGeneratedPasswordON'] = true;
+        $sugar_config['passwordsetting']['forgotpasswordON'] = TRUE;
+        $sugar_config['passwordsetting']['SystemGeneratedPasswordON'] = TRUE;
         $sugar_config['passwordsetting']['systexpirationtime'] = 7;
         $sugar_config['passwordsetting']['systexpiration'] = 1;
-        $sugar_config['passwordsetting']['linkexpiration'] = true;
+        $sugar_config['passwordsetting']['linkexpiration'] = TRUE;
         $sugar_config['passwordsetting']['linkexpirationtime'] = 24;
         $sugar_config['passwordsetting']['linkexpirationtype'] = 60;
         $sugar_config['passwordsetting']['minpwdlength'] = 6;
-        $sugar_config['passwordsetting']['oneupper'] = false;
-        $sugar_config['passwordsetting']['onelower'] = false;
-        $sugar_config['passwordsetting']['onenumber'] = false;
+        $sugar_config['passwordsetting']['oneupper'] = FALSE;
+        $sugar_config['passwordsetting']['onelower'] = FALSE;
+        $sugar_config['passwordsetting']['onenumber'] = FALSE;
 
         write_array_to_file("sugar_config", $sugar_config, "config.php");
     }
@@ -248,13 +251,21 @@ class InstallUtils
     public static function enableSugarFeeds()
     {
         $admin = new \Administration();
-        $admin->saveSetting('sugarfeed','enabled','1');
+        $admin->saveSetting('sugarfeed', 'enabled', '1');
 
-        foreach ( \SugarFeed::getAllFeedModules() as $module ) {
+        foreach (\SugarFeed::getAllFeedModules() as $module) {
             \SugarFeed::activateModuleFeed($module);
         }
 
-        check_logic_hook_file('Users','after_login', array(1, 'SugarFeed old feed entry remover', 'modules/SugarFeed/SugarFeedFlush.php', 'SugarFeedFlush', 'flushStaleEntries'));
+        check_logic_hook_file(
+            'Users', 'after_login', array(
+            1,
+            'SugarFeed old feed entry remover',
+            'modules/SugarFeed/SugarFeedFlush.php',
+            'SugarFeedFlush',
+            'flushStaleEntries'
+        )
+        );
     }
 
     /**
@@ -266,7 +277,8 @@ class InstallUtils
      *
      * @param array $config
      */
-    public static function registerLanguagePacks($config) {
+    public static function registerLanguagePacks($config)
+    {
         /*
         if(count($config['setup_installed_lang_packs']) > 0) {
             foreach($config['setup_installed_lang_packs'] as $k => $zipFile) {
@@ -289,11 +301,13 @@ class InstallUtils
      * @param int $day
      * @return string
      */
-    public static function createDate($year=null,$month=null,$day=null)
+    public static function createDate($year = NULL, $month = NULL, $day = NULL)
     {
         $timedate = \TimeDate::getInstance();
         $now = $timedate->getNow();
-        if ($day==null) $day=$now->day+mt_rand(0,365);
+        if ($day == NULL) {
+            $day = $now->day + mt_rand(0, 365);
+        }
         return $timedate->asDbDate($now->get_day_begin($day, $month, $year));
     }
 
@@ -303,13 +317,19 @@ class InstallUtils
      * @param int $sec
      * @return string
      */
-    public static function createTime($hour=null,$min=null,$sec=null)
+    public static function createTime($hour = NULL, $min = NULL, $sec = NULL)
     {
         $timedate = \TimeDate::getInstance();
         $date = $timedate->fromTimestamp(0);
-        if ($hour==null) $hour=mt_rand(6,19);
-        if ($min==null) $min=(mt_rand(0,3)*15);
-        if ($sec==null) $sec=0;
+        if ($hour == NULL) {
+            $hour = mt_rand(6, 19);
+        }
+        if ($min == NULL) {
+            $min = (mt_rand(0, 3) * 15);
+        }
+        if ($sec == NULL) {
+            $sec = 0;
+        }
         return $timedate->asDbTime($date->setDate(2007, 10, 7)->setTime($hour, $min, $sec));
     }
 
@@ -317,168 +337,169 @@ class InstallUtils
      * Remove all schedulers and create the new ones
      *
      * @param \DBManager $db
-     * @param array $config
+     * @param array      $config
      */
-    public static function rebuildDefaultSchedulers($db, $config) {
+    public static function rebuildDefaultSchedulers($db, $config)
+    {
         $mod_strings = return_module_language($config["language"], 'Schedulers');
 
         // truncate scheduler-related tables - @todo: shouldn't be needed
         $db->query('DELETE FROM schedulers');
 
         $sched1 = new \Scheduler();
-        $sched1->name               = $mod_strings['LBL_OOTB_WORKFLOW'];
-        $sched1->job                = 'function::processAOW_Workflow';
-        $sched1->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched1->date_time_end      = null;
-        $sched1->job_interval       = '*::*::*::*::*';
-        $sched1->status             = 'Active';
-        $sched1->created_by         = '1';
-        $sched1->modified_user_id   = '1';
-        $sched1->catch_up           = '1';
+        $sched1->name = $mod_strings['LBL_OOTB_WORKFLOW'];
+        $sched1->job = 'function::processAOW_Workflow';
+        $sched1->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched1->date_time_end = NULL;
+        $sched1->job_interval = '*::*::*::*::*';
+        $sched1->status = 'Active';
+        $sched1->created_by = '1';
+        $sched1->modified_user_id = '1';
+        $sched1->catch_up = '1';
         $sched1->save();
 
         $sched2 = new \Scheduler();
-        $sched2->name               = $mod_strings['LBL_OOTB_REPORTS'];
-        $sched2->job                = 'function::aorRunScheduledReports';
-        $sched2->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched2->date_time_end      = null;
-        $sched2->job_interval       = '*::*::*::*::*';
-        $sched2->status             = 'Active';
-        $sched2->created_by         = '1';
-        $sched2->modified_user_id   = '1';
-        $sched2->catch_up           = '1';
+        $sched2->name = $mod_strings['LBL_OOTB_REPORTS'];
+        $sched2->job = 'function::aorRunScheduledReports';
+        $sched2->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched2->date_time_end = NULL;
+        $sched2->job_interval = '*::*::*::*::*';
+        $sched2->status = 'Active';
+        $sched2->created_by = '1';
+        $sched2->modified_user_id = '1';
+        $sched2->catch_up = '1';
         $sched2->save();
 
         $sched3 = new \Scheduler();
-        $sched3->name               = $mod_strings['LBL_OOTB_TRACKER'];
-        $sched3->job                = 'function::trimTracker';
-        $sched3->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched3->date_time_end      = null;
-        $sched3->job_interval       = '0::2::1::*::*';
-        $sched3->status             = 'Active';
-        $sched3->created_by         = '1';
-        $sched3->modified_user_id   = '1';
-        $sched3->catch_up           = '1';
+        $sched3->name = $mod_strings['LBL_OOTB_TRACKER'];
+        $sched3->job = 'function::trimTracker';
+        $sched3->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched3->date_time_end = NULL;
+        $sched3->job_interval = '0::2::1::*::*';
+        $sched3->status = 'Active';
+        $sched3->created_by = '1';
+        $sched3->modified_user_id = '1';
+        $sched3->catch_up = '1';
         $sched3->save();
 
         $sched4 = new \Scheduler();
-        $sched4->name				= $mod_strings['LBL_OOTB_IE'];
-        $sched4->job				= 'function::pollMonitoredInboxesAOP';
-        $sched4->date_time_start	= self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched4->date_time_end		= null;
-        $sched4->job_interval		= '*::*::*::*::*';
-        $sched4->status				= 'Active';
-        $sched4->created_by			= '1';
-        $sched4->modified_user_id	= '1';
-        $sched4->catch_up			= '0';
+        $sched4->name = $mod_strings['LBL_OOTB_IE'];
+        $sched4->job = 'function::pollMonitoredInboxesAOP';
+        $sched4->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched4->date_time_end = NULL;
+        $sched4->job_interval = '*::*::*::*::*';
+        $sched4->status = 'Active';
+        $sched4->created_by = '1';
+        $sched4->modified_user_id = '1';
+        $sched4->catch_up = '0';
         $sched4->save();
 
         $sched5 = new \Scheduler();
-        $sched5->name				= $mod_strings['LBL_OOTB_BOUNCE'];
-        $sched5->job				= 'function::pollMonitoredInboxesForBouncedCampaignEmails';
-        $sched5->date_time_start	= self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched5->date_time_end		= null;
-        $sched5->job_interval		= '0::2-6::*::*::*';
-        $sched5->status				= 'Active';
-        $sched5->created_by			= '1';
-        $sched5->modified_user_id	= '1';
-        $sched5->catch_up			= '1';
+        $sched5->name = $mod_strings['LBL_OOTB_BOUNCE'];
+        $sched5->job = 'function::pollMonitoredInboxesForBouncedCampaignEmails';
+        $sched5->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched5->date_time_end = NULL;
+        $sched5->job_interval = '0::2-6::*::*::*';
+        $sched5->status = 'Active';
+        $sched5->created_by = '1';
+        $sched5->modified_user_id = '1';
+        $sched5->catch_up = '1';
         $sched5->save();
 
         $sched6 = new \Scheduler();
-        $sched6->name				= $mod_strings['LBL_OOTB_CAMPAIGN'];
-        $sched6->job				= 'function::runMassEmailCampaign';
-        $sched6->date_time_start	= self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched6->date_time_end		= null;
-        $sched6->job_interval		= '0::2-6::*::*::*';
-        $sched6->status				= 'Active';
-        $sched6->created_by			= '1';
-        $sched6->modified_user_id	= '1';
-        $sched6->catch_up			= '1';
+        $sched6->name = $mod_strings['LBL_OOTB_CAMPAIGN'];
+        $sched6->job = 'function::runMassEmailCampaign';
+        $sched6->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched6->date_time_end = NULL;
+        $sched6->job_interval = '0::2-6::*::*::*';
+        $sched6->status = 'Active';
+        $sched6->created_by = '1';
+        $sched6->modified_user_id = '1';
+        $sched6->catch_up = '1';
         $sched6->save();
 
         $sched7 = new \Scheduler();
-        $sched7->name               = $mod_strings['LBL_OOTB_PRUNE'];
-        $sched7->job                = 'function::pruneDatabase';
-        $sched7->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched7->date_time_end      = null;
-        $sched7->job_interval       = '0::4::1::*::*';
-        $sched7->status             = 'Inactive';
-        $sched7->created_by         = '1';
-        $sched7->modified_user_id   = '1';
-        $sched7->catch_up           = '0';
+        $sched7->name = $mod_strings['LBL_OOTB_PRUNE'];
+        $sched7->job = 'function::pruneDatabase';
+        $sched7->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched7->date_time_end = NULL;
+        $sched7->job_interval = '0::4::1::*::*';
+        $sched7->status = 'Inactive';
+        $sched7->created_by = '1';
+        $sched7->modified_user_id = '1';
+        $sched7->catch_up = '0';
         $sched7->save();
 
         $sched8 = new \Scheduler();
-        $sched8->name               = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
-        $sched8->job                = 'function::aodIndexUnindexed';
-        $sched8->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched8->date_time_end      = null;
-        $sched8->job_interval       = "0::0::*::*::*";
-        $sched8->status             = 'Active';
-        $sched8->created_by         = '1';
-        $sched8->modified_user_id   = '1';
-        $sched8->catch_up           = '0';
+        $sched8->name = $mod_strings['LBL_OOTB_LUCENE_INDEX'];
+        $sched8->job = 'function::aodIndexUnindexed';
+        $sched8->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched8->date_time_end = NULL;
+        $sched8->job_interval = "0::0::*::*::*";
+        $sched8->status = 'Active';
+        $sched8->created_by = '1';
+        $sched8->modified_user_id = '1';
+        $sched8->catch_up = '0';
         $sched8->save();
 
         $sched9 = new \Scheduler();
-        $sched9->name               = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
-        $sched9->job                = 'function::aodOptimiseIndex';
-        $sched9->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched9->date_time_end      = null;
-        $sched9->job_interval       = "0::*/3::*::*::*";
-        $sched9->status             = 'Active';
-        $sched9->created_by         = '1';
-        $sched9->modified_user_id   = '1';
-        $sched9->catch_up           = '0';
+        $sched9->name = $mod_strings['LBL_OOTB_OPTIMISE_INDEX'];
+        $sched9->job = 'function::aodOptimiseIndex';
+        $sched9->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched9->date_time_end = NULL;
+        $sched9->job_interval = "0::*/3::*::*::*";
+        $sched9->status = 'Active';
+        $sched9->created_by = '1';
+        $sched9->modified_user_id = '1';
+        $sched9->catch_up = '0';
         $sched9->save();
 
         $sched12 = new \Scheduler();
-        $sched12->name               = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
-        $sched12->job                = 'function::sendEmailReminders';
-        $sched12->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched12->date_time_end      = null;
-        $sched12->job_interval       = '*::*::*::*::*';
-        $sched12->status             = 'Active';
-        $sched12->created_by         = '1';
-        $sched12->modified_user_id   = '1';
-        $sched12->catch_up           = '0';
+        $sched12->name = $mod_strings['LBL_OOTB_SEND_EMAIL_REMINDERS'];
+        $sched12->job = 'function::sendEmailReminders';
+        $sched12->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched12->date_time_end = NULL;
+        $sched12->job_interval = '*::*::*::*::*';
+        $sched12->status = 'Active';
+        $sched12->created_by = '1';
+        $sched12->modified_user_id = '1';
+        $sched12->catch_up = '0';
         $sched12->save();
 
         $sched13 = new \Scheduler();
-        $sched13->name               = $mod_strings['LBL_OOTB_CLEANUP_QUEUE'];
-        $sched13->job                = 'function::cleanJobQueue';
-        $sched13->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched13->date_time_end      = null;
-        $sched13->job_interval       = '0::5::*::*::*';
-        $sched13->status             = 'Active';
-        $sched13->created_by         = '1';
-        $sched13->modified_user_id   = '1';
-        $sched13->catch_up           = '0';
+        $sched13->name = $mod_strings['LBL_OOTB_CLEANUP_QUEUE'];
+        $sched13->job = 'function::cleanJobQueue';
+        $sched13->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched13->date_time_end = NULL;
+        $sched13->job_interval = '0::5::*::*::*';
+        $sched13->status = 'Active';
+        $sched13->created_by = '1';
+        $sched13->modified_user_id = '1';
+        $sched13->catch_up = '0';
         $sched13->save();
 
         $sched14 = new \Scheduler();
-        $sched14->name              = $mod_strings['LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS'];
-        $sched14->job               = 'function::removeDocumentsFromFS';
-        $sched14->date_time_start   = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
-        $sched14->date_time_end     = null;
-        $sched14->job_interval      = '0::3::1::*::*';
-        $sched14->status            = 'Active';
-        $sched14->created_by        = '1';
-        $sched14->modified_user_id  = '1';
-        $sched14->catch_up          = '0';
+        $sched14->name = $mod_strings['LBL_OOTB_REMOVE_DOCUMENTS_FROM_FS'];
+        $sched14->job = 'function::removeDocumentsFromFS';
+        $sched14->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched14->date_time_end = NULL;
+        $sched14->job_interval = '0::3::1::*::*';
+        $sched14->status = 'Active';
+        $sched14->created_by = '1';
+        $sched14->modified_user_id = '1';
+        $sched14->catch_up = '0';
         $sched14->save();
 
         $sched15 = new \Scheduler();
-        $sched15->name               = $mod_strings['LBL_OOTB_SUGARFEEDS'];
-        $sched15->job                = 'function::trimSugarFeeds';
-        $sched15->date_time_start    = self::createDate(2015,1,1) . ' ' . self::createTime(0,0,1);
-        $sched15->date_time_end      = null;
-        $sched15->job_interval       = '0::2::1::*::*';
-        $sched15->status             = 'Active';
-        $sched15->created_by         = '1';
-        $sched15->modified_user_id   = '1';
-        $sched15->catch_up           = '1';
+        $sched15->name = $mod_strings['LBL_OOTB_SUGARFEEDS'];
+        $sched15->job = 'function::trimSugarFeeds';
+        $sched15->date_time_start = self::createDate(2015, 1, 1) . ' ' . self::createTime(0, 0, 1);
+        $sched15->date_time_end = NULL;
+        $sched15->job_interval = '0::2::1::*::*';
+        $sched15->status = 'Active';
+        $sched15->created_by = '1';
+        $sched15->modified_user_id = '1';
+        $sched15->catch_up = '1';
         $sched15->save();
     }
 
@@ -493,12 +514,12 @@ class InstallUtils
         //Create default admin user
         $user = new \User();
         $user->id = 1;
-        $user->new_with_id = true;
+        $user->new_with_id = TRUE;
         $user->last_name = 'Administrator';
         $user->user_name = $config["install-admin-username"];
         $user->title = "Administrator";
         $user->status = 'Active';
-        $user->is_admin = true;
+        $user->is_admin = TRUE;
         $user->employee_status = 'Active';
         $user->user_hash = \User::getPasswordHash($config["install-admin-password"]);
         $user->email = '';//@todo: a config for this would be good
@@ -507,22 +528,68 @@ class InstallUtils
     }
 
     /**
-     * @todo: this will duplicate data if we do not drop db tables
+     * Inserts data fixtures into database from a specific fixture file
+     * File Format:
+     *   table: [name of the database table]
+     *   check_records: [check if record exists (true|false)]
+     *   fixtures:
+     *      -
+     *          [column1]:      [value1]
+     *          [column2]:      [value2]
+     *          [column3]:      [value3]
+     *      -
+     *          category:       notify
+     *          name:           fromaddress
+     *          value:          do_not_reply@example.com
+     *      ...
+     *
+     *  Substitutions:
+     *      Any value in the format of '%key%' will be checked and if found substituted with the
+     *      value found in the $config array
+     *
      * @param \DBManager $db
-     * @param array $config
+     * @param array      $config
+     * @param string     $dataFile
      */
-    public static function insertDefaultConfigSettings($db, $config)
+    public static function loadFixtures($db, $config, $dataFile)
     {
-        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromaddress', 'do_not_reply@example.com')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'fromname', 'SuiteCRM')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_by_default', '1')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'on', '1')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('notify', 'send_from_assigning_user', '0')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('info', 'sugar_version', '" . $config['sugar_db_version'] . "')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('MySettings', 'tab', '')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('portal', 'on', '0')");
-        $db->query("INSERT INTO config (category, name, value) VALUES ('tracker', 'Tracker', '1')");
-        $db->query( "INSERT INTO config (category, name, value) VALUES ( 'system', 'skypeout_on', '1')" );
+        $data = self::getConfigFileContent($dataFile);
+        foreach ($data["fixtures"] as $fixture) {
+
+            //substitution
+            foreach ($fixture as $k => $v) {
+                if(preg_match('#^%.*%$#', $v)) {
+                    $configKey = substr($v, 1, -1);
+                    if(array_key_exists($configKey, $config)) {
+                        $fixture[$k] = $config[$configKey];
+                    }
+                }
+            }
+
+            //check if record exists
+            $doInsert = true;
+            if($data["check_records"] == true) {
+                $checkSql = 'SELECT COUNT(*) AS C FROM `' . $data["table"] . '` WHERE ({WHERE})';
+                $where = '';
+                foreach ($fixture as $k => $v) {
+                    $where .= $k . ' = ' . '\''  . $v . '\'' . ' AND ';
+                }
+                $where = substr($where, 0, -5);//remove trailing ' AND '
+                $checkSql = str_replace('{WHERE}', $where, $checkSql);
+                $res = $db->fetchOne($checkSql);
+                $doInsert = ($res["C"] == 0);
+            }
+
+            //insert fixture
+            if($doInsert) {
+                $insertSql = 'INSERT INTO `' . $data["table"] . '`'
+                             . ' (' . implode(', ', array_keys($fixture)) . ')'
+                             . ' VALUES ('
+                             . '\'' . implode('\', \'', array_values($fixture)) . '\''
+                             . ')';
+                $db->query($insertSql);
+            }
+        }
     }
 
     /**
@@ -716,7 +783,9 @@ class InstallUtils
         $sugar_config['dbconfig']['db_port'] = $configOverride["database-port"];
         $sugar_config['dbconfig']['db_manager'] = $configOverride["database-manager"];
         if (!empty($configOverride['database-options'])) {
-            $sugar_config['dbconfigoption'] = array_merge($sugar_config['dbconfigoption'], $configOverride['database-options']);
+            $sugar_config['dbconfigoption'] = array_merge(
+                $sugar_config['dbconfigoption'], $configOverride['database-options']
+            );
         }
 
 
@@ -777,11 +846,10 @@ class InstallUtils
      */
     public static function createBeanTables($db, &$focus)
     {
-        $table_created = false;
-        if(!$db->tableExists($focus->table_name))
-        {
+        $table_created = FALSE;
+        if (!$db->tableExists($focus->table_name)) {
             $focus->create_tables();
-            $table_created = true;
+            $table_created = TRUE;
         }
         return $table_created;
     }
@@ -796,10 +864,11 @@ class InstallUtils
     public static function dropBeanTables($db, &$focus)
     {
         $result = $db->tableExists($focus->table_name);
-        if( $result ){
+        if ($result) {
             $focus->drop_tables();
             return 1;
-        } else {
+        }
+        else {
             return 0;
         }
     }
@@ -827,10 +896,9 @@ class InstallUtils
      */
     public static function getDatabaseConnection($config)
     {
-        if(
-            !isset($config['database-username']) ||
-            !isset($config['database-host-instance']) ||
-            !isset($config['database-port'])
+        if (
+            !isset($config['database-username']) || !isset($config['database-host-instance'])
+            || !isset($config['database-port'])
         ) {
             throw new \Exception("Missing database configuration data!");
         }
@@ -893,7 +961,8 @@ class InstallUtils
         else {
             if (function_exists($function_name)) {
                 return call_user_func_array($function_name, $options);
-            } else {
+            }
+            else {
                 return FALSE;
             }
         }
