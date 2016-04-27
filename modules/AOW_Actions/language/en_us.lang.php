@@ -56,4 +56,5 @@ $mod_strings = array (
   'LBL_SETAPPROVAL' => 'Set Approval',
   'LBL_RELATE_WORKFLOW' => 'Relate to WorkFlow Module',
   'LBL_INDIVIDUAL_EMAILS' => 'Send Individual Emails',
+  'LBL_COPY_EMAIL_ADDRESSES_WORKFLOW' => 'Copy emails from WorkFlow Module',
 );
