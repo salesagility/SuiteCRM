@@ -90,10 +90,6 @@ class Installer
         $timedate = \TimeDate::getInstance();
         $locale = new \Localization();
 
-        //@todo: build unified version info and add it to $config
-        //$this->commandConfig['config']['setup_sugar_version'] = $sugar_version;
-        //$this->commandConfig['config']['setup_suitecrm_version'] = $suitecrm_version;
-
         $install_script = TRUE;
         $current_language = 'en_us';
 
@@ -349,10 +345,10 @@ class Installer
 
 
         /**
-         * Handle Sugar Versions
+         * Handle Sugar Versions - this has disappeared from branch 2016-04-27 - @todo: check and remove
          */
-        $this->log("Handling Version Info");
-        require_once(PROJECT_ROOT . '/modules/Versions/InstallDefaultVersions.php');
+        //$this->log("Handling Version Info");
+        //require_once(PROJECT_ROOT . '/modules/Versions/InstallDefaultVersions.php');
 
 
         /**
@@ -381,8 +377,9 @@ class Installer
         /**
          * SuiteCrm
          */
-        $this->log("Configuring SuiteCrm");
+        $this->log("Registering SuiteCrm Configuration");
         InstallUtils::registerSuiteCrmConfiguration($configOverride);
+        $this->log("SuiteCrm Extra Installs");
         InstallUtils::executeExtraInstallation($this->config);
 
 

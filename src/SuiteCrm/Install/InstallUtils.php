@@ -89,7 +89,6 @@ class InstallUtils
             }
         }
 
-        //echo "\nQuickRepairAndRebuild...";
         require_once(PROJECT_ROOT . '/modules/Administration/QuickRepairAndRebuild.php');
         $actions = array('clearAll');
         $RAC = new \RepairAndClear();
