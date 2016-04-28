@@ -257,11 +257,6 @@ abstract class DBManager
 	 */
 	protected $options = array();
 
-    public function DBManager(){
-        self::__construct();
-    }
-
-
     /**
      * Create DB Driver
      */

@@ -59,11 +59,6 @@ class MBModule
 
     public $config_md5 = null ;
 
-    function MBModule(){
-        self::__construct();
-    }
-
-
     function __construct ($name , $path , $package , $package_key)
     {
         global $mod_strings;

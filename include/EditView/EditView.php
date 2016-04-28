@@ -59,11 +59,6 @@ class EditView {
      */
     var $module;
 
-    function EditView(){
-        self::__construct();
-    }
-
-
     /**
      *
      * @param string $module module to use

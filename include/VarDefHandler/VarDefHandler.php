@@ -54,11 +54,6 @@ class VarDefHandler {
 	var $module_object;
 	var $start_none_lbl = null;
 
-    function VarDefHandler(){
-        self::__construct();
-    }
-
-
 
     function __construct($module, $meta_array_name=null)
     {

@@ -82,11 +82,6 @@ class Importer
      */
     protected $sugarToExternalSourceFieldMap = array();
 
-    public function Importer(){
-        self::__construct();
-    }
-
-
 
     public function __construct($importSource, $bean)
     {

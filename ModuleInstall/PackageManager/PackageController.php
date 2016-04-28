@@ -42,11 +42,6 @@
  class PackageController{
         var $_pm;
 
-    function PackageController(){
-        self::__construct();
-    }
-
-
         /**
          * Constructor: this class is called from the the ajax call and handles invoking the correct
          * functionality on the server.

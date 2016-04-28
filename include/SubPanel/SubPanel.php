@@ -61,11 +61,6 @@ class SubPanel
 	var $search_query='';
 	var $collections = array();
 
-    function SubPanel(){
-        self::__construct();
-    }
-
-
 	function __construct($module, $record_id, $subpanel_id, $subpanelDef, $layout_def_key='', $collections = array() )
 	{
 		global $beanList, $beanFiles, $focus, $app_strings;

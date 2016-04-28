@@ -45,11 +45,6 @@ class XML_HTMLSax3_Trim {
     * @access private
     */
     var $orig_method;
-
-    function XML_HTMLSax3_Trim(){
-        self::__construct();
-    }
-
     /**
     * Constructs XML_HTMLSax3_Trim
     * @param object handler object being decorated

@@ -80,11 +80,6 @@ class OutboundEmail {
 	var $mail_smtpdisplay; // calculated value, not in DB
 	var $new_with_id = FALSE;
 
-    public function OutboundEmail(){
-        self::__construct();
-    }
-
-
 	/**
 	 * Sole constructor
 	 */

@@ -83,11 +83,6 @@ class SugarView
     var $responseTime;
     var $fileResources;
 
-    public function SugarView(){
-        self::__construct();
-    }
-
-
     /**
      * Constructor which will peform the setup.
      */

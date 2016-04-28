@@ -59,12 +59,7 @@ class ExtNode {
 	var $nodes=array();
 	var $dynamic_load=false; //false means child records are pre-loaded.
 	var $dynamicloadfunction='loadDataForNode'; //default script to load node data (children)
-	var $expanded=false;
-
-    function ExtNode(){
-        self::__construct();
-    }
-  //show node expanded during initial load.
+	var $expanded=false;  //show node expanded during initial load.
 
 	function __construct($id,$label,$show_expanded=true) {
 		$this->_label=$label;

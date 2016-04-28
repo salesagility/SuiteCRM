@@ -46,11 +46,6 @@ class NoteSoap
 {
     var $upload_file;
 
-    function NoteSoap(){
-        self::__construct();
-    }
-
-
     function __construct()
     {
     	$this->upload_file = new UploadFile('uploadfile');

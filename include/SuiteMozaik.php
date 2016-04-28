@@ -61,11 +61,6 @@ class SuiteMozaik {
 
     private static $devMode = false;
 
-    public function SuiteMozaik(){
-        self::__construct();
-    }
-
-
     public function __construct() {
         $this->vendorPath = $this->mozaikPath . '/vendor';
         if($this->autoInsertThumbnails) {

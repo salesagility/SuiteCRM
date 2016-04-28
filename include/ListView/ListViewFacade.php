@@ -71,11 +71,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  	var $prefix = '';
  	var $mod_strings = array();
 
-    function ListViewFacade(){
-        self::__construct();
-    }
-
-
  	/**
  	 * Constructor
  	 * @param $focus - the bean

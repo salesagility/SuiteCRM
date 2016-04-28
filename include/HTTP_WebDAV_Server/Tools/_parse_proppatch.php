@@ -69,11 +69,6 @@ class _parse_proppatch
      */
     var $current;
 
-    function _parse_proppatch(){
-        self::__construct();
-    }
-
-
     /**
      * constructor
      *

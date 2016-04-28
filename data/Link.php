@@ -75,11 +75,6 @@ class Link {
 	var $_duplicate_key;
 	var $_duplicate_where;
 
-    function Link(){
-        self::__construct();
-    }
-
-
 	/* Parameters:
 	 * 		$_rel_name: use this relationship key.
 	 * 		$_bean: reference of the bean that instantiated this class.

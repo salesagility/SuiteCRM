@@ -52,11 +52,6 @@ require_once('ModuleInstall/PackageManager/PackageManagerComm.php');
 class PackageManager{
     var $soap_client;
 
-    function PackageManager(){
-        self::__construct();
-    }
-
-
     /**
      * Constructor: In this method we will initialize the nusoap client to point to the hearbeat server
      */

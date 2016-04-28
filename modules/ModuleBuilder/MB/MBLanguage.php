@@ -40,11 +40,6 @@
 class MBLanguage{
 		var $iTemplates = array();
 		var $templates = array();
-
-    function MBLanguage(){
-        self::__construct();
-    }
-
 		function __construct( $name, $path, $label, $key_name){
 			$this->path = $path;
 			$this->name = $name;

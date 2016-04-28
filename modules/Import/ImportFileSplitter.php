@@ -68,11 +68,6 @@ class ImportFileSplitter
      */
     private $_recordThreshold;
 
-    public function ImportFileSplitter(){
-        self::__construct();
-    }
-
-
     /**
      * Constructor
      *

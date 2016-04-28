@@ -49,11 +49,6 @@ class MBPackage{
     var $author = '';
     var $key = '';
     var $readme='';
-
-    function MBPackage(){
-        self::__construct();
-    }
-
     function __construct($name){
         $this->name = $name;
         $this->load();

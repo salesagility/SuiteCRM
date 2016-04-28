@@ -54,11 +54,6 @@ class SugarWidget
     protected $form_value;
     protected $parent_bean;
 
-    function SugarWidget(){
-        self::__construct();
-    }
-
-
 	function __construct(&$layout_manager)
 	{
 		$this->layout_manager = $layout_manager;

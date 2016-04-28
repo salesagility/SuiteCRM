@@ -5,11 +5,6 @@ class DotListWizardMenu
 
     private $html;
 
-    public function DotListWizardMenu(){
-        self::__construct();
-    }
-
-
     public function __construct($mod_strings, $steps, $showLinks = false) {
         $nav_html = '';
 

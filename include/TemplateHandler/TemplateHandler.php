@@ -50,11 +50,6 @@ class TemplateHandler {
     var $templateDir = 'modules/';
     var $ss;
 
-    public function TemplateHandler(){
-        self::__construct();
-    }
-
-
     public function __construct() {
       $this->cacheDir = sugar_cached('');
     }

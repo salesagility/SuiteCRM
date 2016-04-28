@@ -88,11 +88,6 @@ class Dashlet
      */
     var $autoRefresh = "0";
 
-    public function Dashlet(){
-        self::__construct();
-    }
-
-
     /**
      * Constructor
      *

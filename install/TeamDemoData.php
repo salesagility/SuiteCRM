@@ -63,11 +63,6 @@ class TeamDemoData {
 	*/
 	);
 
-    function TeamDemoData(){
-        self::__construct();
-    }
-
-
 	/**
 	 * Constructor for creating demo data for teams
 	 */

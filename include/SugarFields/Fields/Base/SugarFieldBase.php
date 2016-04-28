@@ -46,11 +46,6 @@
 class SugarFieldBase {
     var $ss; // Sugar Smarty Object
     var $hasButton = false;
-
-    function SugarFieldBase(){
-        self::__construct();
-    }
-
     function __construct($type) {
     	$this->type = $type;
         $this->ss = new Sugar_Smarty();

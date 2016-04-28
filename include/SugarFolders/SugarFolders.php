@@ -94,11 +94,6 @@ class SugarFolder {
 	// private attributes
 	var $_depth;
 
-    function SugarFolder(){
-        self::__construct();
-    }
-
-
 	/**
 	 * Sole constructor
 	 */

@@ -60,11 +60,6 @@ class BreadCrumbStack {
     */
    private $deleteInvisible = false;
 
-    public function BreadCrumbStack(){
-        self::__construct();
-    }
-
-
 
    /**
     * BreadCrumbStack

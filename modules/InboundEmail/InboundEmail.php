@@ -163,11 +163,6 @@ class InboundEmail extends SugarBean {
 	// prefix to use when importing inlinge images in emails
 	public $imagePrefix;
 
-    public function temp(){
-        self::__construct();
-    }
-
-
 	/**
 	 * Sole constructor
 	 */

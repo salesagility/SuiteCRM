@@ -65,11 +65,6 @@ class ModuleInstaller{
 	var $modulesInPackage = array();
 	public $disabled_path = DISABLED_PATH;
     public $id_name;
-
-    function ModuleInstaller(){
-        self::__construct();
-    }
-
 	function __construct(){
 		$this->ms = new ModuleScanner();
 		$this->modules = get_module_dir_list();

@@ -57,11 +57,6 @@ class Chart_pipeline_by_lead_source
 	var $order = 0;
 	var $modules = array('Opportunities');
 
-    function Chart_pipeline_by_lead_source(){
-        self::__construct();
-    }
-
-
 function __construct()
 {
 }

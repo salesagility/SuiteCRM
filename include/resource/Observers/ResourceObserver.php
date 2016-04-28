@@ -48,11 +48,6 @@ class ResourceObserver {
 var $module;
 var $limit;
 
-    public function ResourceObserver(){
-        self::__construct();
-    }
-
-
 public function __construct($module) {
 	$this->module = $module;
 }
