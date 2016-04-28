@@ -81,6 +81,11 @@ require_once('include/EditView/EditView2.php');
      */
     protected $options;
 
+    public function SearchForm(){
+        self::__construct();
+    }
+
+
     public function __construct($seed, $module, $action = 'index', $options = array())
     {
  		$this->th = new TemplateHandler();

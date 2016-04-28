@@ -5,6 +5,11 @@ class AOPAssignManager{
     private $aopFallback = true;
     private $assignableUsers = array();
 
+    function AOPAssignManager(){
+        self::__construct();
+    }
+
+
     function __construct($ieX = false){
         global $sugar_config;
         $this->ieX = $ieX;

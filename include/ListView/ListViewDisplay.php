@@ -67,6 +67,11 @@ class ListViewDisplay {
 	var $mergeDisplayColumns = false;
     public $actionsMenuExtraItems = array();
 
+    public function ListViewDisplay(){
+        self::__construct();
+    }
+
+
 	/**
 	 * Constructor
 	 */

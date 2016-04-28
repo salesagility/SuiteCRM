@@ -67,6 +67,11 @@ class LogicHook{
 
 	var $bean = null;
 
+    public function LogicHook(){
+        self::__construct();
+    }
+
+
 	public function __construct(){
 	}
 

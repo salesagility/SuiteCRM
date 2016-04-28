@@ -80,6 +80,11 @@ class SearchForm {
      */
     var $showSavedSearchOptions = true;
 
+    function SearchForm(){
+        self::__construct();
+    }
+
+
     /**
      * loads SearchFields MetaData, sets member variables
      *

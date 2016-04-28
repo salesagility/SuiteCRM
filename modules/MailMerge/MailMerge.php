@@ -52,6 +52,11 @@ class MailMerge
 	var $list;
 	var $fieldList;
 
+    function MailMerge(){
+        self::__construct();
+    }
+
+
 	function __construct($list = NULL, $fieldList = null, $data_dir = 'data') {
 		// this is the path to your data dir.
 		$this->mm_data_dir = $data_dir;

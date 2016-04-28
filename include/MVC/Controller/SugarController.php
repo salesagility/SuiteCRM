@@ -158,6 +158,11 @@ class SugarController{
 										'listview'=>'ListView'
 									  );
 
+    public function SugarController(){
+        self::__construct();
+    }
+
+
 	/**
 	 * Constructor. This ie meant tot load up the module, action, record as well
 	 * as the mapping arrays.

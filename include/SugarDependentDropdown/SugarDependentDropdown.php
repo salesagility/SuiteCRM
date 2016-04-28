@@ -98,6 +98,11 @@ class SugarDependentDropdown {
 		"multiple"	// custom functionality
 	);
 
+    function SugarDependentDropdown(){
+        self::__construct();
+    }
+
+
 	/**
 	 * Sole constructor
 	 * @param string $metadata Path to metadata file to consume

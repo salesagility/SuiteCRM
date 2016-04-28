@@ -51,6 +51,11 @@ private $monitors = array();
 private $disabledMonitors = array();
 private static $paused = false;
 
+    private function TrackerManager(){
+        self::__construct();
+    }
+
+
 /**
  * Constructor for TrackerManager.  Declared private for singleton pattern.
  *

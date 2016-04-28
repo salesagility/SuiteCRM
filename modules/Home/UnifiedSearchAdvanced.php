@@ -58,6 +58,11 @@ class UnifiedSearchAdvanced {
     /*search form class name*/
     var $searchFormClass = 'SearchForm';
 
+    function UnifiedSearchAdvanced(){
+        self::__construct();
+    }
+
+
     function __construct(){
         if(!empty($_REQUEST['query_string'])){
             $query_string = trim($_REQUEST['query_string']);

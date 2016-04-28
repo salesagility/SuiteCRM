@@ -264,6 +264,11 @@ class SugarBean
      */
     protected $is_updated_dependent_fields = false;
 
+    public function SugarBean(){
+        self::__construct();
+    }
+
+
     /**
      * Constructor for the bean, it performs following tasks:
      *

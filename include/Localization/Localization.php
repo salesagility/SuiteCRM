@@ -85,6 +85,11 @@ class Localization {
         'ISO-8859-8-I' => 'ISO-8859-8'
         );
 
+    public function Localization(){
+        self::__construct();
+    }
+
+
 	/**
 	 * sole constructor
 	 */

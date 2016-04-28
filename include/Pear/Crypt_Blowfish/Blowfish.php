@@ -81,6 +81,11 @@ class Crypt_Blowfish
      */
     var $_iv = null;
 
+    public function Crypt_Blowfish(){
+        self::__construct();
+    }
+
+
 
     /**
      * Crypt_Blowfish Constructor

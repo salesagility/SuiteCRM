@@ -45,6 +45,11 @@ class default_filter {
 
 var $_component;
 
+    public function default_filter(){
+        self::__construct();
+    }
+
+
 public function __construct() {
 
 }

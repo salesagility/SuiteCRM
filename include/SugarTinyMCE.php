@@ -99,6 +99,11 @@ class SugarTinyMCE {
 
 	);
 
+    function SugarTinyMCE(){
+        self::__construct();
+    }
+
+
 
 	/**
 	 * Sole constructor

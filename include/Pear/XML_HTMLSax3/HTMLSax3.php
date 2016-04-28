@@ -151,6 +151,11 @@ class XML_HTMLSax3_StateParser {
     */
     var $State = array();
 
+    function XML_HTMLSax3_StateParser(){
+        self::__construct();
+    }
+
+
     /**
     * Constructs XML_HTMLSax3_StateParser setting up states
     * @var XML_HTMLSax3 instance of user front end class

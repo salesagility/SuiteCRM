@@ -167,6 +167,11 @@ class parseCSV {
 	# two dimensional array of CSV data
 	var $data = array();
 
+    function parseCSV(){
+        self::__construct();
+    }
+
+
 
 	/**
 	 * Constructor

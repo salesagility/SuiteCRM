@@ -8,6 +8,11 @@ if (!defined('sugarEntry') || !sugarEntry)
 class AccountsJjwg_MapsLogicHook {
 
     var $jjwg_Maps;
+
+    function AccountsJjwg_MapsLogicHook(){
+        self::__construct();
+    }
+
     function __construct() {
         $this->jjwg_Maps = get_module_info('jjwg_Maps');
     }

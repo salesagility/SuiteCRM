@@ -50,6 +50,11 @@ class Popup_Picker
 	var $_create = false;
 	var $_hide_clear_button = false;
 
+    function Popup_Picker(){
+        self::__construct();
+    }
+
+
 	/**
 	 * Creates a new Popup_Picker object. Controls displaying of single select and multi select popups
 	 *

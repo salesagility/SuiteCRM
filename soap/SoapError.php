@@ -44,6 +44,11 @@ class SoapError{
 	var $number;
 	var $description;
 
+    function SoapError(){
+        self::__construct();
+    }
+
+
 	function __construct(){
 		$this->set_error('no_error');
 	}

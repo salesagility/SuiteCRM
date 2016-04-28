@@ -81,6 +81,11 @@ class aSubPanel
 	var $search_query;
 	var $base_collection_list = array();
 
+    function aSubPanel(){
+        self::__construct();
+    }
+
+
 	function __construct ($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
 
 		$this->_instance_properties = $instance_properties ;

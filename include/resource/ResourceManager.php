@@ -47,6 +47,11 @@ class ResourceManager {
 private static $instance;
 private $_observers = array();
 
+    private function ResourceManager(){
+        self::__construct();
+    }
+
+
 /**
  * The constructor; declared as private
  */

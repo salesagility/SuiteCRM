@@ -50,6 +50,11 @@ class javascript{
 		$this->formname = $name;
 	}
 
+    function javascript(){
+        self::__construct();
+    }
+
+
 	function __construct(){
 		global $app_strings, $current_user, $sugar_config;
 

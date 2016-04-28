@@ -69,6 +69,11 @@ function setHideNewButton($value){
 	$this->hideNewButton = $value;
 }
 
+    function SubPanelViewNotes(){
+        self::__construct();
+    }
+
+
 function __construct(){
 	global $theme;
 }

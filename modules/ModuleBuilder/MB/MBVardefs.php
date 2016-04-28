@@ -46,6 +46,11 @@ class MBVardefs{
 	var $name = '';
 	var $errors = array();
 
+    function MBVardefs(){
+        self::__construct();
+    }
+
+
 	function __construct($name, $path, $key_name){
 		$this->path = $path;
 		$this->name = $name;

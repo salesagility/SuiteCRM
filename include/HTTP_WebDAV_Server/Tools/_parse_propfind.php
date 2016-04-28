@@ -53,6 +53,11 @@ class _parse_propfind
 	 */
 	var $depth = 0;
 
+    function _parse_propfind(){
+        self::__construct();
+    }
+
+
 
 	/**
 	 * constructor

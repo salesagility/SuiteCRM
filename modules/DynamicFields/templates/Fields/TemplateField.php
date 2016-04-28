@@ -110,6 +110,11 @@ class TemplateField{
     // fields to decode from post request
     var $decode_from_request_fields_map = array('formula', 'dependency');
 
+    function TemplateField(){
+        self::__construct();
+    }
+
+
     function __construct(){
     }
 

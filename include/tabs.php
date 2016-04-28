@@ -48,6 +48,11 @@ class SugarWidgetTabs
  var $tabs;
  var $current_key;
 
+    function SugarWidgetTabs(){
+        self::__construct();
+    }
+
+
  function __construct(&$tabs,$current_key,$jscallback)
  {
    $this->tabs = $tabs;

@@ -69,6 +69,11 @@ class _parse_lockinfo
 	 */
 	var $collect_owner = false;
 
+    function _parse_lockinfo(){
+        self::__construct();
+    }
+
+
 	/**
 	 * constructor
 	 *

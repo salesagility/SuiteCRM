@@ -69,6 +69,11 @@ class EmailUI {
 								   JOIN emails_text on emails.id = emails_text.email_id
                                    WHERE (type = '::TYPE::' OR status = '::STATUS::') AND assigned_user_id = '::USER_ID::' AND emails.deleted = '0'";
 
+    function EmailUI(){
+        self::__construct();
+    }
+
+
 	/**
 	 * Sole constructor
 	 */

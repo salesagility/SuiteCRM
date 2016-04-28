@@ -61,6 +61,11 @@ class CalendarDisplay {
 		),
 	);
 
+    function CalendarDisplay(){
+        self::__construct();
+    }
+
+
 	/**
 	 * constructor
 	 * @param Calendar $cal

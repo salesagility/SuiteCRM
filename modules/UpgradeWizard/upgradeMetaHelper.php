@@ -50,6 +50,11 @@ class UpgradeMetaHelper{
 	var $evparser;
 	var $dvparser;
 	var $path_to_master_copy;
+
+    function UpgradeMetaHelper(){
+        self::__construct();
+    }
+
 	/**
 	 * UpgradeMetaHelper
 	 * This is the constructor for the UpgradeMetaHelper class

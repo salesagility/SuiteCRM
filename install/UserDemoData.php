@@ -62,6 +62,11 @@ class UserDemoData {
 	*/
 	);
 
+    function UserDemoData(){
+        self::__construct();
+    }
+
+
 	/**
 	 * Constructor for creating user demo data
 	 */

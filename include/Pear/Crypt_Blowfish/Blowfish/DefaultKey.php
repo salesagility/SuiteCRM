@@ -44,6 +44,11 @@ class Crypt_Blowfish_DefaultKey
 
     var $S = array();
 
+    function Crypt_Blowfish_DefaultKey(){
+        self::__construct();
+    }
+
+
     function __construct()
     {
         $this->P = array(

@@ -57,6 +57,11 @@ class SugarApplication
  	var $default_module = 'Home';
  	var $default_action = 'index';
 
+    public function SugarApplication(){
+        self::__construct();
+    }
+
+
  	public function __construct()
  	{}
 
