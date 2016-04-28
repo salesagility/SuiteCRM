@@ -240,7 +240,7 @@ class RepairAndClear
 		global $mod_strings;
 		if($this->show_output) echo "<h3>{$mod_strings['LBL_QR_XMLFILES']}</h3>";
 		$this->_clearCache(sugar_cached("xml"), '.xml');
-		
+
 	}
 	public function clearDashlets()
 	{
