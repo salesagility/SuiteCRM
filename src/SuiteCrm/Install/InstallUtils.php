@@ -899,13 +899,16 @@ class InstallUtils
             "db_host_instance" => $config['database-host-instance'],
             "db_port" => $config['database-port'],
         );
+
         if (!empty($config['database-name'])) {
             $dbconfig["db_name"] = $config['database-name'];
         }
 
         $db = InstallUtils::getInstallDatabaseInstance(
             $config['database-type'],
-            ["db_manager" => $config['database-manager']]
+            [
+                "db_manager" => isset($config['database-manager']) ? $config['database-manager'] : null
+            ]
         );
 
         if (!empty($config['database-options'])) {

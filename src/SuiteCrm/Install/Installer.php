@@ -146,30 +146,40 @@ class Installer
         /**
          * Set up database
          */
+        $connectionConfig = [
+            "database-type" =>          $this->config['database-type'],
+            "database-host" =>          $this->config['database-host'],
+            "database-port" =>          $this->config['database-port'],
+            "database-username" =>      $this->config['database-username'],
+            "database-password" =>      $this->config['database-password'],
+            "database-host-instance" => $this->config['database-host-instance'],
+        ];
+        //try to connect to database server without setting the database name
+        $db = InstallUtils::getDatabaseConnection($connectionConfig);
+        $databaseExists = $db->dbExists($this->config['database-name']);
         if ($this->config['install-create-database']) {
-            InstallUtils::installerHook('pre_handleDbCreateDatabase');
-            try {
-                $db = InstallUtils::getDatabaseConnection($this->config);
-                if ($db->dbExists($this->config['database-name'])) {
-                    $this->log("Dropping Database: " . $this->config['database-name']);
-                    $db->dropDatabase($this->config['database-name']);
-                }
-            } catch(\Exception $e) {
-                $configOverride = array_merge($this->config, [
-                    'database-name' => '',
-                ]);
-                $db = InstallUtils::getDatabaseConnection($configOverride);
+            if($databaseExists) {
+                $this->log("Dropping Database: " . $this->config['database-name']);
+                $db->dropDatabase($this->config['database-name']);
             }
+            InstallUtils::installerHook('pre_handleDbCreateDatabase');
             $this->log("Creating Database: " . $this->config['database-name']);
             $db->createDatabase($this->config['database-name']);
             InstallUtils::installerHook('post_handleDbCreateDatabase');
+        } else {
+            if(!$databaseExists) {
+                $sugar_config['dbconfig'] = '';//sugar_cleanup() trick
+                throw new \Exception("Database does not exist! Use the --install-create-database option to create it.");
+            } else {
+                $this->log("Configuring Database Collation");
+                InstallUtils::installerHook('pre_handleDbCharsetCollation');
+                InstallUtils::handleDbCharsetCollation($this->config);
+                InstallUtils::installerHook('post_handleDbCharsetCollation');
+            }
         }
-        else {
-            $this->log("Configuring Database Collation");
-            InstallUtils::installerHook('pre_handleDbCharsetCollation');
-            InstallUtils::handleDbCharsetCollation($this->config);
-            InstallUtils::installerHook('post_handleDbCharsetCollation');
-        }
+        //now we should have database
+        $connectionConfig['database-name'] = $this->config['database-name'];
+        $db = InstallUtils::getDatabaseConnection($connectionConfig);
 
         /**
          * @var string $beanName
