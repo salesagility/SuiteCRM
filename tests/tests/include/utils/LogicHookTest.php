@@ -163,13 +163,14 @@ class LogicHookTest extends PHPUnit_Framework_TestCase {
 					'after_restore' => array(
 						array(1, 'AOD Index changes', 'modules/AOD_Index/AOD_LogicHooks.php', 'AOD_LogicHooks', 'saveModuleRestore'),
 					),
+                    'after_ui_frame' => array(
+                        array(1, 'Load Social JS', 'include/social/hooks.php', 'hooks', 'load_js'),
+                        array(20, 'mass_assign', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'mass_assign'),
+                    ),
                     'after_ui_footer' => array(
                             array(10, 'popup_onload', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'popup_onload'),
                     ),
-                    'after_ui_frame' => array(
-                            array(20, 'mass_assign', 'modules/SecurityGroups/AssignGroups.php', 'AssignGroups', 'mass_assign'),
-                            array(1, 'Load Social JS', 'include/social/hooks.php', 'hooks', 'load_js'),
-                    ),
+
                 );
 
         $LogicHook = new LogicHook();
@@ -180,7 +181,7 @@ class LogicHookTest extends PHPUnit_Framework_TestCase {
 
         //test with an invalid module, it will get the application hooks
         $default_hooks = $LogicHook->loadHooks('');
-        $this->assertSame($expected_default, $default_hooks);
+        $this->assertEquals($expected_default, $default_hooks);
     }
 
     /*
