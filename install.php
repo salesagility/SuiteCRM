@@ -67,8 +67,8 @@ require_once('include/SugarLogger/LoggerManager.php');
 require_once('sugar_version.php');
 require_once('suitecrm_version.php');
 require_once('include/utils.php');
-require_once('installOld/install_utils.php');
-require_once('installOld/install_defaults.php');
+require_once('install/install_utils.php');
+require_once('install/install_defaults.php');
 require_once('include/TimeDate.php');
 require_once('include/Localization/Localization.php');
 require_once('include/SugarTheme/SugarTheme.php');
@@ -113,7 +113,7 @@ function getSupportedInstallLanguages(){
 	'en_us'	=> 'English (US)',
 	);
 	if(file_exists('install/lang.config.php')){
-		include('installOld/lang.config.php');
+		include('install/lang.config.php');
 		if(!empty($config['languages'])){
 
 			foreach($config['languages'] as $k=>$v){
@@ -147,14 +147,14 @@ if(isset($_POST['language'])) {
 $current_language = isset($_SESSION['language']) ? $_SESSION['language'] : $default_lang;
 
 if(file_exists("install/language/{$current_language}.lang.php")) {
-	require_once("installOld/language/{$current_language}.lang.php");
+	require_once("install/language/{$current_language}.lang.php");
 } else {
-	require_once("installOld/language/{$default_lang}.lang.php");
+	require_once("install/language/{$default_lang}.lang.php");
 }
 
 if($current_language != 'en_us') {
 	$my_mod_strings = $mod_strings;
-	include('installOld/language/en_us.lang.php');
+	include('install/language/en_us.lang.php');
 	$mod_strings = sugarLangArrayMerge($mod_strings, $my_mod_strings);
 }
 
@@ -168,7 +168,7 @@ $help_url = get_help_button_url();
 //if this license print, then redirect and exit,
 if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'licensePrint')
 {
-    include('installOld/licensePrint.php');
+    include('install/licensePrint.php');
     exit ();
 }
 
@@ -293,7 +293,7 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
     }
 
     if(isset($_REQUEST['checkInstallSystem']) && ($_REQUEST['checkInstallSystem'])){
-        require_once('installOld/installSystemCheck.php');
+        require_once('install/installSystemCheck.php');
         echo runCheck($install_script, $mod_strings);
         return;
     }
@@ -301,7 +301,7 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
     //if this is a DB Settings check, then just run the check and return,
     //this is an ajax call and there is no need for further processing
     if(isset($_REQUEST['checkDBSettings']) && ($_REQUEST['checkDBSettings'])){
-        require_once('installOld/checkDBSettings.php');
+        require_once('install/checkDBSettings.php');
         echo checkDBSettings();
         return;
     }
