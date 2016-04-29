@@ -61,6 +61,21 @@ class MyAccountsDashlet extends DashletGeneric {
     }
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function MyAccountsDashlet($id, $def = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
+
+    /**
      * Overrides the generic process to include custom logic for email addresses,
      * since they are no longer stored in  a list view friendly manner.
      * (A record may have an undetermined number of email addresses).
