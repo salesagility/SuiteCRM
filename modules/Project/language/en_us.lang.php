@@ -149,7 +149,7 @@ $mod_strings = array(
     'LBL_DELETE_TASK' => 'Delete Task',
     'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
     'LBL_PARENT_TASK_ID' => 'Parent Task Id',
-    'LBL_RESOURCE_CHART' => 'Resource Chart',
+    'LBL_RESOURCE_CHART' => 'Resource Calendar',
     'LBL_RESOURCE_CHART_START' => 'Date Start:',
     'LBL_RESOURCE_CHART_END' => 'Date End:',
     'LBL_RESOURCES' => 'Select Resources:',
@@ -194,5 +194,13 @@ $mod_strings = array(
 	'LBL_REMOVE' => 'rem',
 	'LBL_VIEW_DETAIL' => 'View Details',
 	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Override Business Hours',
+
+	'LBL_PROJECTS_SEARCH' => 'Search Projects',
+	'LBL_USERS_SEARCH' => 'Search Users',
+	'LBL_CONTACTS_SEARCH' => 'Select  Contacts',
+	'LBL_RESOURCE_CHART_SEARCH_BUTTON' => 'Search',
+	
+	
+
 );
 ?>

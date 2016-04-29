@@ -23,42 +23,71 @@ class chart {
     private $start_date;
     private $end_date;
     private $tasks;
+	private $projects; 
+	private $users; 
+	private $contacts;
 
-    public function __construct($start_date, $end_date, $tasks)
+    public function __construct($start_date, $end_date, $projects, $users, $contacts, $tasks)
     {
         $this->start_date = $start_date;
         $this->end_date = $end_date;
         $this->tasks = $tasks;
+		$this->projects = $projects;
+		$this->users = $users;
+		$this->contacts = $contacts;
         //draw the grid
-        $this->draw($this->start_date, $this->end_date, $this->tasks);
+        $this->draw($this->start_date, $this->end_date, $this->projects, $this->users, $this->contacts, $this->tasks);
     }
 
-    public function draw($start_date, $end_date, $resources){
+    public function draw($start_date, $end_date, $sel_projects ,$sel_users, $sel_contacts, $resources){
         global $current_user, $db, $mod_strings;
 
         $time_span = $this->year_month($start_date, $end_date);
         $day_count = $this->count_days($start_date, $end_date) + 1;
         $weeks = $this->get_weeks($start_date, $end_date);
 
+
+        //Get projects. This is for the Select box values
+        $projects_query = "SELECT DISTINCT id, name FROM project WHERE deleted =0";
+        $projects_list = $db->query($projects_query);
+        
+		$project_list = array();
+        while($row = $db->fetchByAssoc($projects_list))
+        {
+            //create array of user objects
+            $project_list[] = (object)$row;
+        }
+
         //Get users that are associated to any project. This is for the Select box values
-        $resource_query = "SELECT project_users_1users_idb AS id, first_name, last_name, 'project_users_1_c' AS
+        $users_query = "SELECT DISTINCT project_users_1users_idb AS id, first_name, last_name, 'project_users_1_c' AS
                                     type
                                     FROM project_users_1_c
                                     JOIN users ON users.id = project_users_1users_idb
-                                    WHERE project_users_1_c.deleted =0
-                                    UNION
-                                    SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS
+                                    WHERE project_users_1_c.deleted =0";
+        $users_list = $db->query($users_query);
+
+        $user_list = array();
+        while($row = $db->fetchByAssoc($users_list))
+        {
+            //create array of user objects
+            $user_list[] = (object)$row;
+        }
+
+        //Get contacts that are associated to any project. This is for the Select box values
+        $contacts_query = "SELECT DISTINCT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS
                                     type
                                     FROM project_contacts_1_c
                                     JOIN contacts ON contacts.id = project_contacts_1contacts_idb
                                     WHERE project_contacts_1_c.deleted =0";
-        $resources_list = $db->query($resource_query);
+        $contacts_list = $db->query($contacts_query);
 
-        $resource_list = array();
-        while($row = $db->fetchByAssoc($resources_list))
+
+
+        $contact_list = array();
+        while($row = $db->fetchByAssoc($contacts_list))
         {
             //create array of user objects
-            $resource_list[] = (object)$row;
+            $contact_list[] = (object)$row;
         }
 
         //Generate main table and the first row containing the months
@@ -67,48 +96,112 @@ class chart {
                     <td colspan="100%">
                         <table id="header_table_chart">
                         <tr>
-                            <td class="heading_chart">'.$mod_strings["LBL_RESOURCES"].'</td>
+							<td class="heading_chart">'.$mod_strings["LBL_PROJECTS_SEARCH"].'</td>
+                            <td class="heading_chart">'.$mod_strings["LBL_USERS_SEARCH"].'</td>
+							<td class="heading_chart">'.$mod_strings["LBL_CONTACTS_SEARCH"].'</td>
+							<td class="heading_chart">'.$mod_strings["LBL_DATE_START"].'</td>						
                         </tr>
                         <tr>
                             <td class="field_chart">
-                                <input id="date_start" type="hidden" name="date_start" value="'.$start_date.'" />
-                                <input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" />
-                                <select id="resources" name="resources">
-                                <option value="all">All Resources</option>';
-                                $re_id ='';
-                                $re=0;
-                                //get resources passed in to the draw function
-                                foreach($resources as $resource){
-                                    $re_id = $resource->id;
-                                    $re++;
-                                }
+                                <select id="projects" name="projects" multiple>
+                                <option value="">All Projects</option>';
 
                                 //From the query above, populates the select box
-                                foreach( $resource_list as $resource)
+                                foreach( $project_list as $project)
                                 {
-                                    if($re == 1){//Make sure its a single selected resource
-                                        if($re_id == $resource->id){//Check if the select box option matches the resource passed in.
-                                            $selected = "selected='selected'"; //if so set it to selected
-                                        }
-                                        else {
-                                            $selected = "";
-                                        }
-                                    }
-                                    echo '<option '.$selected.' data-type="'.$resource->type.'" value="'.$resource->id.'">'.$resource->last_name.'</option>';
+									if( in_array($project->id, $sel_projects) ){//Check if the select box option matches the resource passed in.
+										$selected = "selected='selected'"; //if so set it to selected
+									}
+									else {
+										$selected = "";
+									}
+
+                                    echo '<option '.$selected.'  value="'.$project->id.'">'.$project->name.'</option>';
                                 }
 
                            echo '</select><br /><br />';
 
-                            if(empty($resource_list)){
+                            if(empty($project_list)){
                                 echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
                             }
 
                           echo '</td>
-                        </tr>
+                            <td class="field_chart">
+                                <select id="users" name="users" multiple>
+                                <option value="">All Users</option>';
+
+                                //From the query above, populates the select box
+                                foreach( $user_list as $user)
+                                {
+									if( in_array($user->id, $sel_users) ){//Check if the select box option matches the resource passed in.
+										$selected = "selected='selected'"; //if so set it to selected
+									}
+									else {
+										$selected = "";
+									}
+                                    echo '<option '.$selected.' data-type="'.$user->type.'" value="'.$user->id.'">'.$user->last_name.'</option>';
+                                }
+
+                           echo '</select><br /><br />';
+
+                            if(empty($user_list)){
+                                echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
+                            }
+
+                          echo '</td>
+						  <td class="field_chart">
+                                <select id="contacts" name="contacts" multiple>
+                                <option value="">All Contacts</option>';
+
+                                //From the query above, populates the select box
+                                foreach( $contact_list as $contact)
+                                {
+									if( in_array($contact->id, $sel_contacts) ){//Check if the select box option matches the resource passed in.
+										$selected = "selected='selected'"; //if so set it to selected
+									}
+									else {
+										$selected = "";
+									}
+
+                                    echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact->last_name.'</option>';
+                                }
+
+                           echo '</select><br /><br />';
+
+                            if(empty($contact_list)){
+                                echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
+                            }
+
+                          echo '</td>
+						        <td class="field_chart"><input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/></td>
+								<td class="field_chart"><input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" /></td>';
+							
+						echo
+							'<script type="text/javascript">
+								var now = new Date();
+								Calendar.setup ({
+									inputField : "date_start",
+									ifFormat : cal_date_format,
+									daFormat : "%m/%d/%Y %I:%M%P",
+									button : "date_start",
+									singleClick : true,
+									step : 1,
+									weekNumbers: false,
+									startWeekday: 0
+								});
+								
+							</script>';
+
+						 echo	'<td class="field_chart">							 
+									&nbsp;<a class="utilsLink" href="#" id="create_link">'.$mod_strings['LBL_RESOURCE_CHART_SEARCH_BUTTON'].'</a>
+								</td>
+
+							</tr>
+						
                         </table>
                     </td>
-                </tr>
-                <tr>
+                </tr>	
+				<tr>
                     <td colspan="100%">
                         <table style="border: none;" class="main_table" width="100%" cellspacing="0" cellpadding="0" border="0">
                             <tr>

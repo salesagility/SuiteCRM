@@ -23,6 +23,7 @@ $(document).ajaxStop($.unblockUI);
 var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
 
 $(function() {
+   
    //generate the chart on page load
     gen_chart('0');
 
@@ -30,7 +31,7 @@ $(function() {
     var msg = '<div><br />' +
         '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
     //on button click re-generate the chart
-    $(document.body).on('change','#resources', function(e) {
+    $(document.body).on('click','#create_link', function(e) {
         $(".qtip").remove(); //Clear all tooltips before re-generating the chart
 
         $.blockUI({//ajax loading screen
@@ -84,19 +85,37 @@ $(function() {
 * */
 
  function gen_chart(month, flag){
+
     //Get the chart properties
     var start = $('#date_start').val();
     var end = $('#date_end').val();
-    var resources = $('#resources').val();
-    var type = 'all';
+	var projects = $('#projects').val();
+    var users = $('#users').val();
+	var contacts = $('#contacts').val();
+    //var type = 'all';
 
-    if(!resources){
-        resources = 'all';
+
+    if(!start){
+        start = '';
     }
-    else {
-        var selected = $('#resources').find('option:selected');
-        type = selected.data('type');
+
+	if(!end){
+        end = '';
     }
+
+    if(!projects){
+        projects = '';
+    }
+
+    if(!users){
+        users = '';
+    }
+
+    if(!contacts){
+        contacts = '';
+    }
+
+
     if(flag){
         flag = '1';
     }
@@ -105,8 +124,9 @@ $(function() {
     }
 
     //Put the properties into a string
-    var dataString = '&start=' + start + '&end=' + end + '&resources=' + resources + '&month=' + month + '&flag=' + flag + '&type=' + type ;
-    //Pass the properties to the controller function via ajax
+    var dataString = '&start=' + start + '&end=' + end +  '&projects=' + projects + '&users=' + users + '&contacts=' + contacts + '&month=' + month + '&flag=' + flag  ;
+    
+	//Pass the properties to the controller function via ajax
     $.ajax({
         type: "POST",
         url: "index.php?module=Project&action=update_chart",

@@ -286,10 +286,12 @@ class ProjectController extends SugarController {
         //Get  specified dates and users
         $start = $_POST['start'];
         //$end = $_POST['end'];
-        $users = $_POST['resources'];
+		$projects = explode(',', $_POST['projects']);
+        $users = explode(',', $_POST['users']);
+		$contacts = explode(',', $_POST['contacts']);
         $month = $_POST['month'];
         $flag = $_POST['flag'];
-        $type = $_POST['type'];
+        //$type = $_POST['type'];
 
         $start = new DateTime($start);
 
@@ -314,36 +316,32 @@ class ProjectController extends SugarController {
         $end->add(new DateInterval('P1D'));
         $end = $end->format('Y-m-d');
 
-        //set query to get all users
-        if($users == 'all'){
+        $project_where = "";
+		if( count($projects) > 1 || $projects[0] != '' ){
+			$project_where = " AND project_id IN( '" . implode("','", $projects) . "' )";
+		}
 
-            //Get the users data from the database
-            $resource_query = "SELECT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
-                                  FROM project_users_1_c
-                                  JOIN users ON users.id = project_users_1users_idb
-                                  WHERE project_users_1_c.deleted =0
-                               UNION
-                               SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
-                                  FROM project_contacts_1_c
-                                  JOIN contacts ON contacts.id = project_contacts_1contacts_idb
-                                  WHERE project_contacts_1_c.deleted =0";
-        }
-        else {//get specified user
+        $user_where = "";
+		if( count($users) > 1 || $users[0] != '' ){
+			$user_where = " AND project_users_1users_idb IN( '" . implode("','", $users) . "' )";
+		}
 
-            if($type == 'project_users_1_c'){
-                $resource_query = "SELECT DISTINCT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
-                                    FROM project_users_1_c
-                                    JOIN users ON users.id = project_users_1users_idb
-                                    WHERE project_users_1_c.deleted =0 AND project_users_1users_idb ='".$users."'";
+		$contacts_where = "";
+		if( count($contacts) > 1 || $contacts[0] != '' ){
+			$contacts_where = " AND project_contacts_1contacts_idb IN( '" . implode("','", $contacts) . "' )";
+		}
+	
+		//Get the users data from the database
+		$resource_query = "SELECT project_users_1users_idb as id, first_name, last_name, 'project_users_1_c' AS type
+							  FROM project_users_1_c
+							  JOIN users ON users.id = project_users_1users_idb
+							  WHERE project_users_1_c.deleted =0 " . $user_where . "
+						   UNION
+						   SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
+							  FROM project_contacts_1_c
+							  JOIN contacts ON contacts.id = project_contacts_1contacts_idb
+							  WHERE project_contacts_1_c.deleted =0 " . $contacts_where ;
 
-            }
-            else if($type == 'project_contacts_1_c'){
-                $resource_query = "SELECT DISTINCT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS type
-                                    FROM project_contacts_1_c
-                                    JOIN contacts ON contacts.id = project_contacts_1contacts_idb
-                                    WHERE project_contacts_1_c.deleted =0 AND project_contacts_1contacts_idb='".$users."'";
-            }
-        }
 
         $resources = $db->query($resource_query);
 
@@ -354,7 +352,7 @@ class ProjectController extends SugarController {
         while($row = $db->fetchByAssoc($resources))
         {  //get each users associated project tasks
             $Task = BeanFactory::getBean('ProjectTask');
-            $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$row['id']."'");
+            $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$row['id']."'" . $project_where);
             //put users tasks in an array
             $taskarr = array();
             $t = 0;
@@ -384,7 +382,7 @@ class ProjectController extends SugarController {
         }
 
         //Generate the resource chart by passing in the start date, end date and the array of user objects
-        new chart($start, $end, $resource_list);
+        new chart($start, $end, $projects, $users, $contacts, $resource_list);
       /* echo '<pre>';
         print_r($resource_list);
         echo '</pre>';*/
