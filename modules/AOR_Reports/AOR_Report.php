@@ -718,8 +718,8 @@ class AOR_Report extends Basic {
     private function getModuleFieldByGroupValue($beanList, $group_value) {
         $moduleFieldByGroupValues = array();
 
-        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC LIMIT 1;";
-        $result = $this->db->query($sql);
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->db->limitQuery($sql, 0, 1);
         while ($row = $this->db->fetchByAssoc($result)) {
 
             $field = new AOR_Field();
