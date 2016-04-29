@@ -242,10 +242,14 @@ class Reminder extends Basic
         if (!empty($reminderBeans)) {
             foreach ($reminderBeans as $reminderBean) {
                 $eventBean = BeanFactory::getBean($reminderBean->related_event_module, $reminderBean->related_event_module_id);
-                $remind_ts = $timedate->fromUser($eventBean->date_start)->modify("-{$reminderBean->timer_email} seconds")->ts;
-                $now_ts = $timedate->getNow()->ts;
-                if ($now_ts >= $remind_ts) {
-                    $reminders[$reminderBean->id] = $reminderBean;
+                if($eventBean) {
+                    $remind_ts = $timedate->fromUser($eventBean->date_start)->modify("-{$reminderBean->timer_email} seconds")->ts;
+                    $now_ts = $timedate->getNow()->ts;
+                    if ($now_ts >= $remind_ts) {
+                        $reminders[$reminderBean->id] = $reminderBean;
+                    }
+                } else {
+                    $reminderBean->mark_deleted($reminderBean->id);
                 }
             }
         }
