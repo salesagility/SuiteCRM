@@ -71,6 +71,21 @@ class SubPanelTiles
 		$this->subpanel_definitions=new SubPanelDefinitions($focus, $layout_def_key, $layout_def_override);
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($focus, $layout_def_key, $layout_def_override);
+    }
+
+
 	/*
 	 * Return the current selected or requested subpanel tab
 	 * @return	string	The identifier for the selected subpanel tab (e.g., 'Other')

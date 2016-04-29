@@ -84,6 +84,21 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  		$this->build();
  	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ListViewFacade($focus, $module, $type = 0){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($focus, $module, $type);
+    }
+
+
  	function build(){
  		//we will assume that if the ListView.html file exists we will want to use that one
  		if(file_exists('modules/'.$this->module.'/ListView.html')){
