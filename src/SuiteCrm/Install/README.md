@@ -22,12 +22,12 @@ To list all available options of the installer and to see the default values you
 Available Options
 -----------------
 
-###--database-type=DATABASE-TYPE
+####--database-type=DATABASE-TYPE
    Set the type of the database you want to use.
    
    *(possible values: mysql, mssql - default: **mysql**)*
    
-###--database-host=DATABASE-HOST
+####--database-host=DATABASE-HOST
    The FQDN(Fully Qualified Domain Name) or IP of the database server. Tipically it will be 'localhost'.
    
    *(possible values: any - default: **localhost**)*
