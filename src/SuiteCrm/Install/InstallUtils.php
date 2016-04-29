@@ -1041,7 +1041,7 @@ class InstallUtils
      */
     public static function getYamlData($fileName)
     {
-        $configFilePath = dirname(__FILE__) . '/assets/' . $fileName;
+        $configFilePath = dirname(__FILE__) . '/Resources/yml/' . $fileName;
         if (!file_exists($configFilePath)) {
             throw new \Exception("Config file($fileName) not found!");
         }
