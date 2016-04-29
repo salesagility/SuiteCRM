@@ -93,6 +93,7 @@ class Installer
         $install_script = TRUE;
         $current_language = 'en_us';
 
+        //@todo: implement multi-language responses for web-installer (add --install-language option)
         $mod_strings = [];
         //@include(PROJECT_ROOT . '/install/language/en_us.lang.php');
         $app_list_strings = return_app_list_strings_language($current_language);
@@ -396,30 +397,6 @@ class Installer
             InstallUtils::installDemoData();
             InstallUtils::installerHook('post_installDemoData');
         }
-
-
-
-        /**
-         * Save Administration Configuration - moved to 'Administration Variables'
-         */
-//        $this->log("Updating Administration Configuration");
-//        $admin = new \Administration();
-//        $admin->saveSetting('system', 'adminwizard', 1);
-//        $admin->saveConfig();
-
-
-        /**
-         * Save Configuration Overrides - this is now already done by default sugar yml
-         */
-//        $this->log("Saving Configuration Overrides");
-//        $sugar_config['default_date_format'] = $this->config['default_date_format'];
-//        $sugar_config['default_time_format'] = $this->config['default_time_format'];
-//        $sugar_config['default_language'] = $this->config['default_language'];
-//        $sugar_config['default_locale_name_format'] = $this->config['default_locale_name_format'];
-//        $configurator = new \Configurator();
-//        $configurator->saveConfig();
-//        write_array_to_file("sugar_config", $configurator->config, "config.php");
-
 
         /**
          * Save User
