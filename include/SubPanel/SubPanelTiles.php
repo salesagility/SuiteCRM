@@ -82,7 +82,7 @@ class SubPanelTiles
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct(&$focus, $layout_def_key, $layout_def_override);
+        self::__construct($focus, $layout_def_key, $layout_def_override);
     }
 
 

@@ -67,7 +67,7 @@ class XML_HTMLSax3_Trim {
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct(&$orig_obj, $orig_method);
+        self::__construct($orig_obj, $orig_method);
     }
 
     /**

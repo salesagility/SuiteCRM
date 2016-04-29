@@ -180,7 +180,7 @@ class XML_HTMLSax3_StateParser {
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct(& $htmlsax);
+        self::__construct( $htmlsax);
     }
 
 

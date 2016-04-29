@@ -139,7 +139,7 @@ class SearchForm {
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct($module, &$seedBean, $tpl);
+        self::__construct($module, $seedBean, $tpl);
     }
 
     /**

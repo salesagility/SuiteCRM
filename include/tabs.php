@@ -66,7 +66,7 @@ class SugarWidgetTabs
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct(&$tabs, $current_key, $jscallback);
+        self::__construct($tabs, $current_key, $jscallback);
     }
 
 

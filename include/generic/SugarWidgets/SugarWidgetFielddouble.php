@@ -57,7 +57,7 @@ class SugarWidgetFieldDouble extends SugarWidgetFieldInt
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct(&$layout_manager);
+        self::__construct($layout_manager);
     }
 
 }

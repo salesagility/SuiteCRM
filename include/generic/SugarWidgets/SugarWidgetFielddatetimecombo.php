@@ -61,7 +61,7 @@ class SugarWidgetFieldDateTimecombo extends SugarWidgetFieldDateTime {
         else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
-        self::__construct(&$layout_manager);
+        self::__construct($layout_manager);
     }
 
 	//TODO:now for date time field , we just search from date start to date end. The time is from 00:00:00 to 23:59:59
