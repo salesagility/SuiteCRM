@@ -8,11 +8,15 @@
 namespace SuiteCrm\Install;
 
 use Symfony\Component\Console\Output\OutputInterface;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
 
 /**
  * Custom implementation of include/SugarLogger/LoggerManager.php
  *
- * This class is inserted in $GLOBALS['log'] during install so
+ * This class is inserted in $GLOBALS['log'] during installation process so to catch all log
+ * messages from application
  *
  * Class LoggerManager
  * @package SuiteCrm\Install
@@ -25,8 +29,10 @@ class LoggerManager
     /** @var string */
     protected $defaultLogLevel = 'debug';
 
+    protected $installLogFile = 'logs/install.log';
+
     /** @var array */
-    private static $logLevelMapping = [
+    private static $sugarLogLevelMapping = [
         'debug' => 100,
         'info' => 70,
         'warn' => 50,
@@ -37,6 +43,23 @@ class LoggerManager
         'off' => 0,
     ];
 
+    /** @var array */
+    private static $monologLogLevelMapping = [
+        'debug' => Logger::DEBUG,
+        'info' => Logger::INFO,
+        'warn' => Logger::WARNING,
+        'deprecated' => Logger::WARNING,
+        'error' => Logger::ERROR,
+        'fatal' => Logger::CRITICAL,
+        'security' => Logger::CRITICAL,
+        'off' => Logger::DEBUG,
+    ];
+
+    /** @var  Logger */
+    protected $fileLogger;
+
+
+
     /**
      * @param OutputInterface $cmdOutput
      * @param string          $defaultLogLevel
@@ -45,6 +68,15 @@ class LoggerManager
     {
         $this->cmdOutput = $cmdOutput;
         $this->setLevel($defaultLogLevel);
+
+        if(file_exists(PROJECT_ROOT . '/' . $this->installLogFile)) {
+            unlink(PROJECT_ROOT . '/' . $this->installLogFile);
+        }
+        $this->fileLogger = new Logger("INSTALLER");
+        $streamHandler = new StreamHandler(PROJECT_ROOT . '/' . $this->installLogFile, Logger::INFO);
+        $formatter = new LineFormatter("[%datetime%(%level_name%)]: %message%\n", "Y-m-d H:i:s");
+        $streamHandler->setFormatter($formatter);
+        $this->fileLogger->pushHandler($streamHandler);
     }
 
     /**
@@ -65,12 +97,17 @@ class LoggerManager
      */
     public function log($msg, $level = 'debug')
     {
-        $level = (!in_array($level, array_keys(self::$logLevelMapping)) ? $this->defaultLogLevel : $level);
-        $option = $this->getOutputInterfaceVerbosityOptionForLogLevel($level);
+        //LOG TO CONSOLE
+        $sugarLogLevel = (!in_array($level, array_keys(self::$sugarLogLevelMapping)) ? $this->defaultLogLevel : $level);
+        $option = $this->getOutputInterfaceVerbosityOptionForLogLevel($sugarLogLevel);
         $msg = is_array($msg) ? implode(" - ", $msg) : $msg;
         $now = new \DateTime();
         $timestamp = $now->format("Y-m-d H:i:s");
-        $this->cmdOutput->writeln("[${timestamp}(${level})]: ${msg}", $option);
+        $this->cmdOutput->writeln("[${timestamp}(${sugarLogLevel})]: ${msg}", $option);
+
+        //LOG TO FILE
+        $monologLogLevel = (!in_array($level, array_keys(self::$monologLogLevelMapping)) ? Logger::DEBUG : self::$monologLogLevelMapping[$level]);
+        $this->fileLogger->log($monologLogLevel, $msg);
     }
 
     /**
@@ -80,7 +117,7 @@ class LoggerManager
     protected function getOutputInterfaceVerbosityOptionForLogLevel($level)
     {
         $option = OutputInterface::OUTPUT_NORMAL;
-        $numericLevel = self::$logLevelMapping[$level];
+        $numericLevel = self::$sugarLogLevelMapping[$level];
         if ($numericLevel == 100) {
             $option = $option | OutputInterface::VERBOSITY_DEBUG;
         }
@@ -102,9 +139,9 @@ class LoggerManager
      */
     public function wouldLog($logLevel)
     {
-        $logLevel = (!in_array($logLevel, array_keys(self::$logLevelMapping)) ? $this->defaultLogLevel : $logLevel);
+        $logLevel = (!in_array($logLevel, array_keys(self::$sugarLogLevelMapping)) ? $this->defaultLogLevel : $logLevel);
         $wouldLog = $logLevel == $this->defaultLogLevel
-                    || self::$logLevelMapping[$this->defaultLogLevel] >= self::$logLevelMapping[$logLevel];
+                    || self::$sugarLogLevelMapping[$this->defaultLogLevel] >= self::$sugarLogLevelMapping[$logLevel];
         return $wouldLog;
     }
 
@@ -122,7 +159,7 @@ class LoggerManager
      */
     public function setLevel($logLevel)
     {
-        if (in_array($logLevel, array_keys(self::$logLevelMapping))) {
+        if (in_array($logLevel, array_keys(self::$sugarLogLevelMapping))) {
             $this->defaultLogLevel = $logLevel;
         }
     }
@@ -157,7 +194,7 @@ class LoggerManager
      */
     public static function getLoggerLevels()
     {
-        return self::$logLevelMapping;
+        return self::$sugarLogLevelMapping;
     }
 
 }

@@ -928,38 +928,28 @@ class InstallUtils
         return \DBManagerFactory::getTypeInstance($type, $config);
     }
 
-    /**
-     * Calls a custom function (if it exists) based on the first parameter,
-     *   and returns result of function call, or false if the function doesn't exist
-     *
-     * @param string $function_name - function to call in custom install hooks
-     * @param array  $options - function to call in custom install hooks
-     * @return mixed function call result, or 'undefined'
-     */
-    public static function installerHook($function_name, $options = [])
-    {
-        if (!isset($GLOBALS['customInstallHooksExist'])) {
-            if (file_exists(PROJECT_ROOT . '/custom/install/install_hooks.php')) {
-                require_once(PROJECT_ROOT - '/custom/install/install_hooks.php');
-                $GLOBALS['customInstallHooksExist'] = TRUE;
-            }
-            else {
-                $GLOBALS['customInstallHooksExist'] = FALSE;
-            }
-        }
 
-        if ($GLOBALS['customInstallHooksExist'] === FALSE) {
-            return FALSE;
-        }
-        else {
-            if (function_exists($function_name)) {
-                return call_user_func_array($function_name, $options);
-            }
-            else {
-                return FALSE;
-            }
-        }
+    /**
+     * check/fix file folder permissions
+     */
+    public static function ensureFileFolderStates() {
+        self::makeWritable(PROJECT_ROOT . '/config.php');
+        self::makeWritable(PROJECT_ROOT . '/custom');
+        self::makeWritableRecursive(PROJECT_ROOT . '/modules');
+        self::createWritableDir(PROJECT_ROOT . '/logs');
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('custom_fields'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('dyn_lay'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('images'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('modules'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('layout'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('pdf'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('upload'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('upload/import'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('xml'));
+        self::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('include/javascript'));
+        self::makeWritableRecursive(PROJECT_ROOT . '/' . sugar_cached('modules'));
     }
+
 
     /**
      * @param string $dirname
@@ -1033,7 +1023,40 @@ class InstallUtils
     }
 
     /**
-     * Reads in the installer default parameters
+     * Calls a custom function (if it exists) based on the first parameter,
+     *   and returns result of function call, or false if the function doesn't exist
+     *
+     * @param string $function_name - function to call in custom install hooks
+     * @param array  $options - function to call in custom install hooks
+     * @return mixed function call result, or 'undefined'
+     */
+    public static function installerHook($function_name, $options = [])
+    {
+        if (!isset($GLOBALS['customInstallHooksExist'])) {
+            if (file_exists(PROJECT_ROOT . '/custom/install/install_hooks.php')) {
+                require_once(PROJECT_ROOT - '/custom/install/install_hooks.php');
+                $GLOBALS['customInstallHooksExist'] = TRUE;
+            }
+            else {
+                $GLOBALS['customInstallHooksExist'] = FALSE;
+            }
+        }
+
+        if ($GLOBALS['customInstallHooksExist'] === FALSE) {
+            return FALSE;
+        }
+        else {
+            if (function_exists($function_name)) {
+                return call_user_func_array($function_name, $options);
+            }
+            else {
+                return FALSE;
+            }
+        }
+    }
+
+    /**
+     * Reads in any yml file from the yml directory
      *
      * @param string $fileName
      * @throws \Exception

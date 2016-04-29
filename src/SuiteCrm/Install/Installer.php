@@ -114,20 +114,7 @@ class Installer
         $trackerManager->pause();
 
         $this->log("Ensuring file/folder states");
-        InstallUtils::makeWritable(PROJECT_ROOT . '/config.php');
-        InstallUtils::makeWritable(PROJECT_ROOT . '/custom');
-        InstallUtils::makeWritableRecursive(PROJECT_ROOT . '/modules');
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('custom_fields'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('dyn_lay'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('images'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('modules'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('layout'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('pdf'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('upload'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('upload/import'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('xml'));
-        InstallUtils::createWritableDir(PROJECT_ROOT . '/' . sugar_cached('include/javascript'));
-        InstallUtils::makeWritableRecursive(PROJECT_ROOT . '/' . sugar_cached('modules'));
+        InstallUtils::ensureFileFolderStates();
 
         $this->log("Creating Default Sugar Configuration");
         $configOverride = array_merge($this->config, [

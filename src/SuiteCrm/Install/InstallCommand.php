@@ -24,6 +24,9 @@ class InstallCommand extends Command implements CommandInterface
     const COMMAND_NAME = 'app:install';
     const COMMAND_DESCRIPTION = 'Install the SuiteCrm application';
 
+    /** @var  LoggerManager */
+    protected $loggerManager;
+
     /**
      * Constructor
      */
@@ -90,6 +93,7 @@ class InstallCommand extends Command implements CommandInterface
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         parent::_execute($input, $output);
+        $this->loggerManager = new LoggerManager($this->cmdOutput);
         $this->log("Starting command " . static::COMMAND_NAME . "...");
         $this->log(str_repeat("-", 80));
         $installer = new Installer($this->cmdInput->getOptions(), $this->loggerManager);
@@ -97,5 +101,14 @@ class InstallCommand extends Command implements CommandInterface
         $this->log(str_repeat("-", 80));
         $this->log("Command " . static::COMMAND_NAME . " done.");
         return true;
+    }
+
+    /**
+     * @param string $msg
+     * @param string $level - available: debug|info|warn|deprecated|error|fatal|security|off
+     */
+    protected function log($msg, $level = 'warn')
+    {
+        $this->loggerManager->log($msg, $level);
     }
 }
