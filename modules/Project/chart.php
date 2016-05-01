@@ -285,15 +285,18 @@ class chart {
                 }
 
                 $square = '';
-                for($c=0; $c < $count; $c++){
+                $dup = 0;
+
+				for($c=0; $c < $count; $c++){
 
                     if($x == $resource->tasks[$c]['start_day']){
-
-                        $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' h"></div></td>';
+						$dup++;
+                        $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dup.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
 
                     }
                     else if($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']){
-                        $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' h"></div></td>';
+						$dup++;
+                        $square =  '<td class="inner_td"><div rel="'. $dup.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
                     }
 
                 }
@@ -414,5 +417,17 @@ class chart {
         $interval = $datetime1->diff($datetime2);
         echo $interval->format('%y years %m months and %d days');
     }
+
+	//returns the css class for cell color/ h => non duplicate, d =>duplicate
+    public function get_cell_class($days){
+	
+		if($days > 1)
+			return " d";
+		else
+			return " h";
+	
+	}
+
+
 
 }
