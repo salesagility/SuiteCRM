@@ -291,12 +291,12 @@ class chart {
 
                     if($x == $resource->tasks[$c]['start_day']){
 						$dup++;
-                        $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dup.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                        $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
 
                     }
                     else if($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']){
 						$dup++;
-                        $square =  '<td class="inner_td"><div rel="'. $dup.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+                        $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
                     }
 
                 }

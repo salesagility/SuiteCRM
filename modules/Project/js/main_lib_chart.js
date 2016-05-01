@@ -146,11 +146,12 @@ $(function() {
 
  function add_tooltips(){
     //loop through each task and add tooltips
-    $('.h').each(function(event) {
+    $('.h,.d').each(function(event) {
 
         //set tooltip title
         var title = SUGAR.language.get('Project', 'LBL_TOOLTIP_TITLE');
-        //get start and end date of the task to pass via ajax to the tooltip controller function
+        //console.log(title);
+		//get start and end date of the task to pass via ajax to the tooltip controller function
         var rel = $(this).attr('rel');
         var dates = rel.split("|");
         var dataString = 'start_date=' + dates[0] + '&resource_id=' + dates[1] + '&type=' + dates[2];
