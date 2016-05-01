@@ -66,6 +66,7 @@ $moduleList[] = 'Documents';
 $moduleList[] = 'Cases';
 $moduleList[] = 'Project';
 $moduleList[] = 'Bugs';
+$moduleList[] = 'ResourceCalendar';
 
 
 // this list defines all of the module names and bean names in the app
@@ -233,7 +234,8 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'DocumentRevisions',
     'ProjectTask',
     'ModuleBuilder',
-    'Alert'
+    'Alert',
+	'ResourceCalendar'
     );
 $adminOnlyList = array(
                     //module => list of actions  (all says all actions are admin only)
