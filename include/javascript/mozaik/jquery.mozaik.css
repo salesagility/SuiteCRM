@@ -54,7 +54,7 @@ span.mozaik-thumb-label {
 
 ul.mozaik-list {
     list-style-type: none;
-    padding: 30px 10px 100px 10px;
+    padding: 30px 10px 120px 10px;
     margin: 0;
     display: block;
     float: left;
@@ -82,8 +82,8 @@ ul.mozaik-list li.mozaik-elem:hover {
 
 ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 0px;
     display: block;
 
     background-color: white;
@@ -105,7 +105,6 @@ ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools li.mozaik-tool-btn {
 ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools li.mozaik-tool-btn a {
     display: block;
     float: none;
-    height: 100%;
 }
 
 /* show on mouseover */
@@ -115,10 +114,11 @@ ul.mozaik-list li.mozaik-elem {
 ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools {
     display: block;
 }
+
 ul.mozaik-list li.mozaik-elem ul.mozaik-tools {
     position: absolute;
     top: 0;
-    left: 0;
+    left: -8px;
     display: none;
     z-index: 1;
     opacity: 1;
@@ -206,4 +206,15 @@ div.mozaik-preloader {
     border: none;
     z-index: 1;
     opacity: 0.8;
+}
+
+
+#email_template_editor > ul.mozaik-list.ui-droppable.ui-sortable > li > ul > li.mozaik-tool-btn > a {
+    margin-bottom: 8px;
+}
+
+#email_template_editor > ul.mozaik-list.ui-droppable.ui-sortable > li:nth-child(2) > ul > li.mozaik-tool-btn {
+    width: 32px;
+    background-position: center;
+    background-repeat:  no-repeat;
 }
