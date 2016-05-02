@@ -225,7 +225,7 @@ $mod_strings = array (
   'LBL_WIZARD_BUDGET_MESSAGE' => 'Enter the budget to calculate the ROI.',
   'LBL_WIZARD_SUBSCRIPTION_MESSAGE' => 'Each newsletter must have three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the newsletter.',
   'LBL_WIZARD_TARGET_MESSAGE1' => 'Select or create a target list for use with your campaign.  This list will be used while sending emails with your marketing messages.',
-  'LBL_WIZARD_TARGET_MESSAGE2' => 'Or create a new one using the form below:',
+  'LBL_WIZARD_TARGET_MESSAGE2' => 'Create New Target:',
   'LBL_WIZARD_TRACKER_MESSAGE' => 'Define a tracker URL here to use with this campaign. You must enter both the name and the URL to create the tracker.',
   'LBL_WIZARD_MARKETING_MESSAGE' => 'Fill out the form below to create an email instance for your newsletter.  This will allow you to specify the information regarding when and how your newsletter should be distributed.',
   'LBL_WIZARD_SENDMAIL_MESSAGE' => 'This is the last step in the process.  Select whether you wish to send out a test email, schedule your newsletter for distribution, or save the changes and proceed to the summary page.',
@@ -281,7 +281,7 @@ $mod_strings = array (
   'LBL_OTHER_TYPE_CAMPAIGN' => 'Non-email based Campaign',
   'LBL_CHOOSE_CAMPAIGN_TYPE' => 'Campaign Type',
   'LBL_TARGET_LIST' => 'Target List',
-  'LBL_TARGET_TYPE' => 'Target List Type',
+  'LBL_TARGET_TYPE' => 'Target List Type:',
   'LBL_TARGET_NAME' => 'Target List Name',
   'LBL_NUMBER_OF_TARGET' => 'Number of target',
   'LBL_EMAILS_SCHEDULED' => 'Emails Scheduled',
@@ -455,7 +455,7 @@ $mod_strings = array (
 	'LBL_REPLY_TO_NAME_HELP' => 'This will be the name that your recipient will reply to',
 	'LBL_REPLY_TO_ADDR_HELP' => 'This will be the email that your recipients will reply to',
 	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
-	'LBL_SEARCH_TARGET_LIST' => 'Target list search',
+	'LBL_SEARCH_TARGET_LIST' => 'Target list filter',
 	'LBL_INSERT_VARIABLE'		=> 'Insert Variable:',
 	'LBL_INSERT_URL_REF'		=> 'Insert URL Reference',
 	'LBL_INSERT_TRACKER_URL'	=> 'Insert Tracker URL:',
@@ -480,7 +480,8 @@ $mod_strings = array (
 	'LBL_CREATE_MARKETING_RECORD' => 'Next',
 	'LBL_NO_TEMPLATE_SELECTED' => 'Email Template not selected',
 	'LBL_SELECT_TEMPLATE' => 'Templates',
-	'LBL_WIZARD_ADD_TARGET' => 'Add targets',
+	'LBL_WIZARD_ADD_TARGET' => 'Add Existing Targets:',
+	'LBL_CLICK_TO_ADD' => 'Click to add...',
 );
 
 

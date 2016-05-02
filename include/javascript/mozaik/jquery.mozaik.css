@@ -54,7 +54,7 @@ span.mozaik-thumb-label {
 
 ul.mozaik-list {
     list-style-type: none;
-    padding: 30px 10px;
+    padding: 30px 10px 100px 10px;
     margin: 0;
     display: block;
     float: left;
@@ -85,7 +85,7 @@ ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools {
     padding: 0;
     margin: 0;
     display: block;
-    float: left;
+
     background-color: white;
     border: 1px solid #ddd;
     -webkit-box-shadow: 0px 10px 10px -10px rgba(0,0,0,0.75);
@@ -97,7 +97,6 @@ ul.mozaik-list li.mozaik-elem:hover ul.mozaik-tools li.mozaik-tool-btn {
     padding: 0;
     margin: 0;
     display: block;
-    float: left;
     width: 24px;
     height: 24px;
     cursor: pointer;
@@ -122,7 +121,7 @@ ul.mozaik-list li.mozaik-elem ul.mozaik-tools {
     left: 0;
     display: none;
     z-index: 1;
-    opacity: 0.3;
+    opacity: 1;
 }
 ul.mozaik-list li.mozaik-elem ul.mozaik-tools:hover {
     opacity: 1;
@@ -144,7 +143,6 @@ ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-stick {
 ul.mozaik-list li.mozaik-elem ul.mozaik-tools li.mozaik-tool-copy {
     background-image: url('img/archive46.png');
 }
-
 /* ace editor */
 div#mozaik-ace {
     position: fixed;
@@ -198,7 +196,7 @@ div.mozaik-preloader {
     background-color: black;
     color: white;
     text-align: center;
-    display: black;
+    color: black;
     float: none;
     position: absolute;
     width: 100%;
