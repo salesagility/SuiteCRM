@@ -175,7 +175,7 @@ $(function() {
                     return 'Loading...'; // Set some initial text
                 },
                 title: {
-                    button: true,
+                    //button: true,
                     text: title
                 }
             },
@@ -190,10 +190,11 @@ $(function() {
                 }
             },
             show: {
-                event: 'click'
-
+                event: 'mouseover'
             },
-            hide: false,
+            hide: {
+                event: 'mouseout'
+            },
             style: {
                 classes : 'qtip-green qtip-shadow qtip_box', //qtip-rounded'
                 tip: {
