@@ -217,40 +217,40 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $datetimePeriod = new DateTime();
             break;
         case 'this_week':
-            $datetime_period = new DateTime("next week monday");
-            $datetime_period->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("next week monday");
+            $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'last_week':
-            $datetime_period = new DateTime("this week monday");
-            $datetime_period->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("this week monday");
+            $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'this_month':
-            $datetime_period = new DateTime('first day of next month');
-            $datetime_period->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime('first day of next month');
+            $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'last_month':
-            $datetime_period = new DateTime("first day of this month");
-            $datetime_period->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("first day of this month");
+            $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'this_quarter':
             $thisMonth = new DateTime('first day of this month');
             $thisMonth = $thisMonth->format('n');
             if ($thisMonth < 4) {
                 // quarter 1
-                $datetime_period = new DateTime('first day of april');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('first day of april');
+                $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 3 && $thisMonth < 7) {
                 // quarter 2
-                $datetime_period = new DateTime('first day of july');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('first day of july');
+                $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 6 && $thisMonth < 10) {
                 // quarter 3
-                $datetime_period = new DateTime('first day of october');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('first day of october');
+                $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 9) {
                 // quarter 4
-                $datetime_period = new DateTime('next year first day of january');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('next year first day of january');
+                $datetimePeriod->setTime(0, 0, 0);
             }
             break;
         case 'last_quarter':
@@ -258,33 +258,33 @@ function getPeriodEndDate($dateTimePeriodListSelected)
             $thisMonth = $thisMonth->format('n');
             if ($thisMonth < 4) {
                 // previous quarter 1
-                $datetime_period = new DateTime('this year first day of january');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('this year first day of january');
+                $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 3 && $thisMonth < 7) {
                 // previous quarter 2
-                $datetime_period = new DateTime('first day of april');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('first day of april');
+                $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 6 && $thisMonth < 10) {
                 // previous quarter 3
-                $datetime_period = new DateTime('first day of july');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('first day of july');
+                $datetimePeriod->setTime(0, 0, 0);
             } elseif ($thisMonth > 9) {
                 // previous quarter 4
-                $datetime_period = new DateTime('first day of october');
-                $datetime_period->setTime(0, 0, 0);
+                $datetimePeriod = new DateTime('first day of october');
+                $datetimePeriod->setTime(0, 0, 0);
             }
             break;
         case 'this_year':
-            $datetime_period = new DateTime('next year first day of january');
-            $datetime_period->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime('next year first day of january');
+            $datetimePeriod->setTime(0, 0, 0);
             break;
         case 'last_year':
-            $datetime_period = new DateTime("this year first day of january");
-            $datetime_period->setTime(0, 0, 0);
+            $datetimePeriod = new DateTime("this year first day of january");
+            $datetimePeriod->setTime(0, 0, 0);
             break;
     }
 
-    return $datetime_period;
+    return $datetimePeriod;
 }
 
 /**
