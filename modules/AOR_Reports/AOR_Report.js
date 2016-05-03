@@ -21,6 +21,65 @@
  * @author SalesAgility <info@salesagility.com>
  */
 
+$(document).ready(function() {
+
+    $('#download_pdf_button_old').click(function() {
+        //Update the Detail view form to have the parameter info and reload the page
+        var _form = $('#formDetailView');
+        $('#formDetailView :input[name="action"]').val("DownloadPDF");
+        //Add each parameter to the form in turn
+        $('.aor_conditions_id').each(function(index, elem){
+            $elem = $(elem);
+            var ln = $elem.attr('id').substr(17);
+            var id = $elem.val();
+            _form.append('<input type="hidden" name="parameter_id[]" value="'+id+'">');
+            var operator = $("#aor_conditions_operator\\["+ln+"\\]").val();
+            _form.append('<input type="hidden" name="parameter_operator[]" value="'+operator+'">');
+            var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
+            _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
+            var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
+            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
+        });
+
+        //Get the data url of each of the rgraph canvases for PDF generation on the server
+        var encodedGraphs = [];
+        var rgraphs = document.getElementsByClassName('resizableCanvas');
+        for(var i = 0; i < rgraphs.length; i++)
+        {
+            //encodedGraphs.push(rgraphs[i].toDataURL());
+
+            _form.append('<input type="hidden" id="graphsForPDF" name="graphsForPDF[]" value='+rgraphs[i].toDataURL()+'>');
+        }
+
+        //$('#formDetailView :input[name="encodedGraphs"]').val(JSON.stringify(encodedGraphs));
+        //var graphString = JSON.stringify(encodedGraphs);
+
+        _form.submit();
+
+        //$('#graphsForPDF').remove();
+        $("#formDetailView #graphsForPDF").remove();
+    });
+
+    $('#download_csv_button_old').click(function() {
+        //Update the Detail view form to have the parameter info and reload the page
+        var _form = $('#formDetailView');
+        $('#formDetailView :input[name="action"]').val("Export");
+        //Add each parameter to the form in turn
+        $('.aor_conditions_id').each(function(index, elem){
+            $elem = $(elem);
+            var ln = $elem.attr('id').substr(17);
+            var id = $elem.val();
+            _form.append('<input type="hidden" name="parameter_id[]" value="'+id+'">');
+            var operator = $("#aor_conditions_operator\\["+ln+"\\]").val();
+            _form.append('<input type="hidden" name="parameter_operator[]" value="'+operator+'">');
+            var fieldType = $('#aor_conditions_value_type\\['+ln+'\\]').val();
+            _form.append('<input type="hidden" name="parameter_type[]" value="'+fieldType+'">');
+            var fieldInput = $('#aor_conditions_value\\['+ln+'\\]').val();
+            _form.append('<input type="hidden" name="parameter_value[]" value="'+fieldInput+'">');
+        });
+        _form.submit();
+    });
+});
 
 function openProspectPopup(){
 

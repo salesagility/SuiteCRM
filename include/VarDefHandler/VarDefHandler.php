@@ -55,7 +55,7 @@ class VarDefHandler {
 	var $start_none_lbl = null;
 
 
-    function VarDefHandler($module, $meta_array_name=null)
+    function __construct($module, $meta_array_name=null)
     {
         $this->meta_array_name = $meta_array_name;
 		$this->module_object = $module;
@@ -66,6 +66,20 @@ class VarDefHandler {
 		}
 
 	//end function setup
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function VarDefHandler($module, $meta_array_name=null){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($module, $meta_array_name);
 	}
 
 	function get_vardef_array($use_singular=false, $remove_dups = false, $use_field_name = false, $use_field_label = false){
@@ -102,14 +116,14 @@ class VarDefHandler {
 			$compare_results = $this->compare_type($value_array);
 
 			if($compare_results == true){
-				 $label_name = '';
                  if($value_array['type'] == 'link' && !$use_field_label){
-                 	$this->module_object->load_relationship($value_array['name']);
-                    if(!empty($app_list_strings['moduleList'][$this->module_object->$value_array['name']->getRelatedModuleName()])){
-                    	$label_name = $app_list_strings['moduleList'][$this->module_object->$value_array['name']->getRelatedModuleName()];
-                    }else{
-                    	$label_name = $this->module_object->$value_array['name']->getRelatedModuleName();
-                    }
+					 $relName = $value_array['name'];
+					 $this->module_object->load_relationship($relName);
+					 if(!empty($app_list_strings['moduleList'][$this->module_object->$relName->getRelatedModuleName()])){
+						 $label_name = $app_list_strings['moduleList'][$this->module_object->$relName->getRelatedModuleName()];
+					 }else{
+                    	$label_name = $this->module_object->$relName->getRelatedModuleName();
+					 }
                 }
 				else if(!empty($value_array['vname'])){
 					$label_name = $value_array['vname'];

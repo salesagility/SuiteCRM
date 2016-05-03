@@ -37,7 +37,6 @@
  ********************************************************************************/
 
 
-
 //////////////////////////////////////////////////
 // class: SugarWidgetListView
 // widget to display a list view
@@ -168,9 +167,12 @@ SugarWidgetSchedulerSearch.submit = function(form) {
 		conditions[conditions.length] = {"name":"email1","op":"starts_with","value":form.search_email.value}
 	}
 
-	var query = {"modules":["Users","Contacts"
-        ,"Leads"
-        ],"group":"and","field_list":['id','full_name','email1','phone_work'],"conditions":conditions};
+	var query = {
+        "modules":["Users","Contacts","Leads"],
+        "group":"and",
+        "field_list":['id','full_name','email1','phone_work'],
+        "conditions":conditions
+    };
 	global_request_registry[req_count] = [this,'display'];
 	req_id = global_rpcClient.call_method('query',query);
 	global_request_registry[req_id] = [ GLOBAL_REGISTRY['widget_element_map'][form.id],'refresh_list'];
@@ -511,6 +513,12 @@ SugarWidgetSchedulerSearch.createInvitee = function(form){
 
 SugarClass.inherit("SugarWidgetScheduler","SugarClass");
 
+SugarWidgetScheduler.popupControl = null;
+SugarWidgetScheduler.popupControlDelayTime = 600;
+SugarWidgetScheduler.mouseX = 0;
+SugarWidgetScheduler.mouseY = 0;
+SugarWidgetScheduler.isMouseOverToolTip = false;
+
 function SugarWidgetScheduler() {
 	this.init();
 }
@@ -527,14 +535,14 @@ SugarWidgetScheduler.prototype.load = function(parentNode) {
 
 SugarWidgetScheduler.fill_invitees = function(form) {
 	for(var i=0;i<GLOBAL_REGISTRY.focus.users_arr.length;i++) {
-		if(GLOBAL_REGISTRY.focus.users_arr[i].module == 'User') {
-			form.user_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
-		} else if(GLOBAL_REGISTRY.focus.users_arr[i].module == 'Contact') {
-			form.contact_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
-		} else if(GLOBAL_REGISTRY.focus.users_arr[i].module == 'Lead') {
-			form.lead_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
-		}
-	}
+        if (GLOBAL_REGISTRY.focus.users_arr[i].module == 'User') {
+            form.user_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
+        } else if (GLOBAL_REGISTRY.focus.users_arr[i].module == 'Contact') {
+            form.contact_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
+        } else if (GLOBAL_REGISTRY.focus.users_arr[i].module == 'Lead') {
+            form.lead_invitees.value += GLOBAL_REGISTRY.focus.users_arr[i].fields.id + ",";
+        }
+    }
 }
 
 SugarWidgetScheduler.update_time = function() {
@@ -586,9 +594,218 @@ SugarWidgetScheduler.prototype.display = function() {
 
 	var search = new SugarWidgetSchedulerSearch();
 	search.load(this.parentNode);
+
+    // Create div so that popup can be generated below it
+    $('div#scheduler').append('<div id="SugarWidgetSchedulerPopup"></div>');
+
+    YUI().use('overlay', 'event', 'widget-anim', function (Y) {
+        SugarWidgetScheduler.popupControl = new Y.Overlay({
+            srcNode: "#SugarWidgetSchedulerPopup",
+            visible: false,
+            width: "50em"
+        }).plug(Y.Plugin.WidgetAnim);
+        SugarWidgetScheduler.popupControl.render();
+
+    });
+
+    // Hold off hiding the tool tip overlay if the mouse is over the tool tip
+    // hide the tool tip if the mouse is not over the tool tip
+    $('div#SugarWidgetSchedulerPopup').hover(
+        function(e) {
+            SugarWidgetScheduler.isMouseOverToolTip = true;
+        },
+        function(e) {
+            SugarWidgetScheduler.isMouseOverToolTip = false;
+            SugarWidgetScheduler.popupControl.hide();
+        }
+    );
 }
 
+// TODO: SortStartDate
+SugarWidgetScheduler.sortByStartdate = function(a, b) {
+    //console.log(a);
+    //console.log(b);
+    var dateA = new Date($('<div></div>').append(a).find('span[data-field=DATE_START]').attr('data-date'));
+    var dateB = new Date($('<div></div>').append(b).find('span[data-field=DATE_START]').attr('data-date'));
+    //console.log(dateA);
+    //console.log(dateB);
+    if(dateA < dateB) {
+        //console.log('progress: A < B');
+        return -1;
+    }
+    else if(dateA > dateB) {
+        //console.log('progress: A > B');
+        return 1;
+    }
+    //console.log('progress: A == B');
+    return 0;
+}
 
+// TODO: SortByType
+SugarWidgetScheduler.sortByType = function(a, b) {
+    //console.log(a);
+    //console.log(b);
+    var valueA = $('<div></div>').append(a).find('input[id=type]').attr('value');
+    var valueB = $('<div></div>').append(b).find('input[id=type]').attr('value');
+    //console.log(valueA);
+    //console.log(valueB);
+    if(valueA == valueB) {
+        //console.log('progress: A == B');
+        return 0;
+    }
+    else if(valueB == 'Meeting') {
+        //console.log('progress: B = Meetings');
+        return 1;
+    }
+    //console.log('progress: A == B');
+    return 0;
+}
+
+/**
+ * SugarWidgetScheduler.createDialog
+ * @param elementId
+ * @param body
+ * @param caption
+ * @param width
+ * @param theme
+ * @returns {*|jQuery}
+ */
+
+SugarWidgetScheduler.createDialog = function(elementId, body, caption, width, theme) {
+
+    caption = caption.replace( SUGAR.language.get('app_strings', 'LBL_ADDITIONAL_DETAILS'), '');
+
+    $(".ui-dialog").find(".open").dialog("close");
+
+    var $dialog = $('<div class="open"></div>')
+        .html(body)
+        .dialog({
+            autoOpen: false,
+            title: caption,
+            width: width,
+            height: 250,
+            position: {
+                my: 'right top',
+                at: 'left top',
+                of: $(elementId)
+            },
+            open: function() {
+                var closeBtn = $('.ui-dialog-titlebar-close');
+                closeBtn.append('<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span><span class="ui-button-text">close</span>');
+            }
+        });
+        //$(".ui-dialog").find('.ui-dialog-titlebar-close').css("display","none");
+        //$(".ui-dialog").find('.ui-dialog-title').css("width","100%");
+        // Remove caption buttons
+        $("a[title='Edit']").remove();
+        $("a[title='View']").remove();
+
+    var width = $dialog.dialog( "option", "width" );
+    var pos = $(elementId).offset({top: SugarWidgetScheduler.mouseY, left: SugarWidgetScheduler.mouseX});
+    var ofWidth = $(elementId).width();
+
+    if((pos.left + ofWidth) - 40 < width) {
+        $dialog.dialog("option","position",{my: 'left top',at: 'right top',of: $(elementId)})	;
+    }
+    //console.log("Dialog: open");
+    $dialog.dialog('open');
+
+    $(".ui-dialog").appendTo("#content");
+
+    var timeout = function() {
+        setTimeout(function () {
+            if ($($dialog).is(":hover")) {
+                timeout();
+            } else {
+                $dialog.dialog('close');
+            }
+        }, 3000)
+    };
+
+    timeout();
+
+    return $dialog;
+}
+/*
+ * Derived from SUGAR.utils.getAdditionalDetails.
+ * Sets the position of the dialog/popup to the mouse offset position.
+ */
+
+SugarWidgetScheduler.getScheduleDetails = function(beans, ids) {
+    var elementId = '#SugarWidgetSchedulerPopup';
+    var show_buttons = true;
+    //console.log('getScheduleDetails():');
+    //console.log(ids);
+    //console.log(beans);
+
+    var caption = '';//SUGAR.language.get('app_strings', 'LBL_EMAIL_DETAILS');
+    var body = new Array();
+    var width = 300;
+    var theme = '';
+    var $dialog = SugarWidgetScheduler.createDialog(
+        elementId,
+        body,
+        caption,
+        width,
+        theme
+    );
+    var getScheduleItems = function() {
+        var deffereds = [];
+        $dialog.html(SUGAR.language.get('app_strings', 'LBL_LOADING'));
+        body = '';
+        jQuery.each(ids, function(index, value) {
+            var url = 'index.php?to_pdf=1&module=Home&action=AdditionalDetailsRetrieve&bean=' + beans[index] + '&id=' + ids[index] + '&show_buttons=true';
+            //console.log('url: ' +url);
+            deffereds.push(
+            $.ajax(url)
+                .done(function () {
+                    //console.log("success");
+                })
+                .fail(function () {
+                    //console.log("error");
+                })
+                .always(function () {
+                    //console.log("complete");
+                })
+            );
+        });
+        return deffereds;
+    }
+    // get requests
+    var requests = getScheduleItems();
+    $.when.apply(null, requests).done(function() {
+        //console.log('parsing: getSchedule Items');
+        var containers = [];
+        // build results array
+        //console.log('arguments:');
+        //console.log(arguments);
+        // if just one result
+        if(typeof arguments[0] === "string") {
+                //console.log('found: single result');
+                var oldArgs = arguments;
+                arguments = new Array();
+                arguments[0] = oldArgs;
+        }
+
+        $.each(arguments, function(index, value) {
+                //console.log('value:');
+                //console.log(value);
+                eval(value[0]);
+                //console.log('div:');
+                var container = result.body;
+                //console.log(container);
+                containers.push(container);
+        });
+        // Sort
+        //console.log('SugarWidgetScheduler.sortByStartdate()');
+        containers.sort(SugarWidgetScheduler.sortByStartdate);
+        //console.log('SugarWidgetScheduler.sortByType()');
+        containers.sort(SugarWidgetScheduler.sortByType);
+        //console.log(containers);
+        $dialog.html(containers);
+        //console.log('\n\n');
+    });
+}
 //////////////////////////////////////////////////
 // class: SugarWidgetSchedulerAttendees
 // widget to display the meeting attendees and availability
@@ -602,7 +819,6 @@ function SugarWidgetSchedulerAttendees() {
 }
 
 SugarWidgetSchedulerAttendees.prototype.init = function() {
-
 	var form_name;
 	if(typeof document.EditView != 'undefined')
 		form_name = "EditView";
@@ -613,7 +829,8 @@ SugarWidgetSchedulerAttendees.prototype.init = function() {
 
 	// this.datetime = new SugarDateTime();
 	GLOBAL_REGISTRY.scheduler_attendees_obj = this;
-	var date_start = document.forms[form_name].date_start.value;
+
+    var date_start = document.forms[form_name].date_start.value;
 	var hour_start = parseInt(date_start.substring(11,13), 10);
 	var minute_start = parseInt(date_start.substring(14,16), 10);
 	var has_meridiem = /am|pm/i.test(date_start);
@@ -652,7 +869,7 @@ SugarWidgetSchedulerAttendees.prototype.init = function() {
 	var has_start = false;
 	var has_end = false;
 
-	for(i=0;i < this.hours*this.segments; i++) {
+	for(i = 0;i < this.hours * this.segments; i++) {
 		var hash = SugarDateTime.getUTCHash(curdate);
 		var obj = {"hash":hash,"date_obj":curdate};
 		if(has_start == false && GLOBAL_REGISTRY.focus.fields.datetime_start.getTime() <= curdate.getTime()) {
@@ -664,7 +881,6 @@ SugarWidgetSchedulerAttendees.prototype.init = function() {
 			has_end = true;
 		}
 		this.timeslots.push(obj);
-
 		curdate = new Date(curdate.getFullYear(),curdate.getMonth(),curdate.getDate(),curdate.getHours(),curdate.getMinutes()+minute_interval);
 	}
     //Bug#51357: Reset the search input fields after attandee popup is initiated.
@@ -812,7 +1028,8 @@ SugarWidgetScheduleRow.prototype.display = function() {
             tr = this.thetable.insertRow(this.thetable.rows.length);
         }
         tr.className = "schedulerAttendeeRow";
-
+        $(tr).attr('data-id', this.focus_bean.fields.id);
+        $(tr).attr('data-module', this.focus_bean.module +'s');
         td = document.createElement('td');
         tr.appendChild(td);
         //insertCell(tr.cells.length);
@@ -821,6 +1038,7 @@ SugarWidgetScheduleRow.prototype.display = function() {
         td.scope = 'row';
         var img = '<img align="absmiddle" src="index.php?entryPoint=getImage&themeName='
                 + SUGAR.themes.theme_name+'&imageName='+this.focus_bean.module+'s.gif"/>&nbsp;';
+
         td.innerHTML = img;
 
         td.innerHTML = td.innerHTML;
@@ -829,7 +1047,6 @@ SugarWidgetScheduleRow.prototype.display = function() {
             td.innerHTML += ' ' + this.focus_bean.fields.full_name;
         else
             td.innerHTML += ' ' + this.focus_bean.fields.name;
-
         // add freebusy tds here:
         this.add_freebusy_nodes(tr);
 
@@ -917,7 +1134,8 @@ function DL_GetElementTop(eElement) {
 
 //////////////////////////////////////////
 // adds the <td>s for freebusy display within a row
-SugarWidgetScheduleRow.prototype.add_freebusy_nodes = function(tr,attendee) {
+//////////////////////////////////////////
+SugarWidgetScheduleRow.prototype.add_freebusy_nodes = function(tr, attendee) {
 	var hours = 9;
 	var segments = 4;
 	var html = '';
@@ -928,26 +1146,98 @@ SugarWidgetScheduleRow.prototype.add_freebusy_nodes = function(tr,attendee) {
 	}
 
 	for(var i=0;i < this.timeslots.length; i++) {
+
 		var td = document.createElement('td');
 		tr.appendChild(td);
 		//var td = tr.insertCell(tr.cells.length);
         td.innerHTML = '&nbsp;';
+
 		if(typeof(this.timeslots[i]['is_start']) != 'undefined') {
 			td.className = 'schedulerSlotCellStartTime';
 		}
-		if(typeof(this.timeslots[i]['is_end']) != 'undefined') {
-			td.className = 'schedulerSlotCellEndTime';
-		}
+
+        if(typeof(this.timeslots[i]['is_end']) != 'undefined') {
+            td.className = 'schedulerSlotCellEndTime';
+        }
 
 		if(is_loaded) {
-			// iftheres a freebusy stack in this slice
+			// if there's a freebusy stack in this slice
 			if(	typeof(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash]) != 'undefined') {
 				td.style.backgroundColor="#4D5EAA";
 
-				if(	GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash] > 1) {
-					td.style.backgroundColor="#AA4D4D";
-				}
+                var dataid = '',
+                    module = '';
+                $.each(GLOBAL_REGISTRY['freebusy_adjusted'][this.focus_bean.fields.id][this.timeslots[i].hash]['records'], function(index, value) {
+                    if(dataid == '')
+                        dataid = index;
+                    else
+                        dataid += ',' + index;
+
+                    if(module == '')
+                        module = value +'s';
+                    else
+                        module += ',' + value +'s';
+                });
+
+                $(td).attr('data-id', dataid);
+                $(td).attr('data-module', module);
+
+                if((dataid.split(',').length) > 1) {
+                    td.style.backgroundColor="#AA4D4D";
+                }
 			}
 		}
+            // Hover Logic
+            $(td).hover(
+                function (e) {
+                    // On hover in
+                    var domElement = $(this);
+                    // Only add hover logic to the fields that need it.
+                    if(domElement.css( "background-color" ) || domElement.hasClass('schedulerSlotCellStartTime')) {
+                        //
+                        // If the id is in the td:
+                        if (domElement.attr('data-id') != null) {
+                            var id = domElement.attr('data-id').split(',');
+                            var module = domElement.attr('data-module').split(',');
+                            if (module == "undefined" || module == null) {
+                                module = 'Meetings';
+                            }
+                            // Only show popup if user leaves mouse over the td
+                            setTimeout(function () {
+                                if ($(domElement).is(":hover")) {
+                                    SugarWidgetScheduler.getScheduleDetails(module, id);
+                                }
+                            }, SugarWidgetScheduler.popupControlDelayTime);
+                        }
+                    }
+                },
+                function (e) {
+                    // On hover out
+                }
+            );
 	}
+
+    // Add hover logic to tr title
+    $(tr).find('td').first().hover(function(e) {
+        var domElement = $(this);
+        var module = domElement.closest('tr').attr('data-module').split(','),
+            id = domElement.closest('tr').attr('data-id').split(',');
+        //
+        // if id is stored in the row:
+        if (id != 'undefined' || id != null) {
+            setTimeout(function () {
+                if ($(domElement).is(":hover")) {
+                    SugarWidgetScheduler.getScheduleDetails(module, id);
+                }
+            }, SugarWidgetScheduler.popupControlDelayTime);
+        }
+    }, function(e){});
 }
+
+$().ready(function (e) {
+    $(document).on("mousemove", function(event) {
+        SugarWidgetScheduler.mouseX = event.pageX;
+        SugarWidgetScheduler.mouseY = event.pageY;
+    });
+});
+

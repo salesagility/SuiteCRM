@@ -206,8 +206,9 @@
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
 				{foreach from=$displayColumns key=col item=params}
+                    {$displayColumns[type]}
 				    {strip}
-					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" class="{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
+					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" type="{$displayColumns.$col.type}" field="{$col|lower}" class="{if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}inlineEdit{/if}{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
 						{if $col == 'NAME' || $params.bold}<b>{/if}
 					    {if $params.link && !$params.customCode}
 	{capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}{/capture}
@@ -216,6 +217,7 @@
 	{capture assign=url}index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$record}{/capture}
 	                        <{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href="{sugar_ajax_url url=$url}">
 						{/if}
+
 						{if $params.customCode}
 							{sugar_evalcolumn_old var=$params.customCode rowData=$rowData}
 						{else}
@@ -226,11 +228,12 @@
 						{if $params.link && !$params.customCode}
 							</{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN}>
 	                    {/if}
-	                    {if $col == 'NAME' || $params.bold}</b>{/if}
+                        {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}<div class="inlineEditIcon">{sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{/if}
 					</td>
 					{/strip}
 	                {assign var='scope_row' value=false}
 					{counter name="colCounter"}
+
 				{/foreach}
 				<td align='right'>{$pageData.additionalDetails.$id}</td>
 		    	</tr>
@@ -276,4 +279,5 @@ function lvg_nav(m,id,act,offset,t){
     function lvg_dtails(id){{/literal}
         return SUGAR.util.getAdditionalDetails( '{$pageData.bean.moduleDir|default:$params.module}',id, 'adspan_'+id);{literal}}{/literal}
 </script>
+<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 {/if}

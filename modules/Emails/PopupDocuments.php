@@ -46,7 +46,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-require_once('modules/Documents/Popup_picker.php');
+require_once('include/Popups/Popup_picker.php');
 $popup = new Popup_Picker();
 
 global $theme;

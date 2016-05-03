@@ -146,7 +146,7 @@ class TemplateMultiEnum extends TemplateEnum{
 		return $def;
 	}
 
-	function get_db_default(){
+	function get_db_default($modify = false){
     	return '';
 	}
 

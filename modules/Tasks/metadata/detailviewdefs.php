@@ -83,6 +83,7 @@ array (
                 'name' => 'button1',
                 'id' => 'close_button',
               ),
+                'template' => '{if $fields.status.value != "Completed"}[CONTENT]{/if}'
             ),
           ),
         ),

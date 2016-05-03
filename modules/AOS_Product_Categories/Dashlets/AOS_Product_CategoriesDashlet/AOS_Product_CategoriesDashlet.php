@@ -49,18 +49,33 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/AOS_Product_Categories/AOS_Product_Categories.php');
 
-class AOS_Product_CategoriesDashlet extends DashletGeneric { 
-    function AOS_Product_CategoriesDashlet($id, $def = null) {
+class AOS_Product_CategoriesDashlet extends DashletGeneric {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/AOS_Product_Categories/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', 'AOS_Product_Categories');
 
         $this->searchFields = $dashletData['AOS_Product_CategoriesDashlet']['searchFields'];
         $this->columns = $dashletData['AOS_Product_CategoriesDashlet']['columns'];
 
-        $this->seedBean = new AOS_Product_Categories();        
+        $this->seedBean = new AOS_Product_Categories();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOS_Product_CategoriesDashlet($id, $def = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $def);
+    }
+
 }

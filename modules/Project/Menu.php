@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,7 +40,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 
-
 global $current_user;
 global $mod_strings, $app_strings;
 $module_menu = array();
@@ -48,8 +47,9 @@ $module_menu = array();
 // Each index of module_menu must be an array of:
 // the link url, display text for the link, and the icon name.
 
+
 // Create Project
-if(ACLController::checkAccess('Project', 'edit', true)) {
+if (ACLController::checkAccess('Project', 'edit', true)) {
     $module_menu[] = array(
         'index.php?module=Project&action=EditView&return_module=Project&return_action=DetailView',
         isset($mod_strings['LNK_NEW_PROJECT']) ? $mod_strings['LNK_NEW_PROJECT'] : '',
@@ -57,25 +57,30 @@ if(ACLController::checkAccess('Project', 'edit', true)) {
     );
 }
 
-	
+
 // Project List
-if(ACLController::checkAccess('Project', 'list', true)) {
+if (ACLController::checkAccess('Project', 'list', true)) {
     $module_menu[] = array(
         'index.php?module=Project&action=index',
         isset($mod_strings['LNK_PROJECT_LIST']) ? $mod_strings['LNK_PROJECT_LIST'] : '',
         'Project'
     );
 }
-	
-	
+
+// Project List
+if (ACLController::checkAccess('Project', 'list', true)) {
+    $module_menu[] = array(
+        'index.php?module=Project&action=ResourceList',
+        isset($mod_strings['LBL_RESOURCE_CHART']) ? $mod_strings['LBL_RESOURCE_CHART'] : '',
+        'Project'
+    );
+}
+
 // Project Tasks
-if(ACLController::checkAccess('ProjectTask', 'list', true)) {
+if (ACLController::checkAccess('ProjectTask', 'list', true)) {
     $module_menu[] = array(
         'index.php?module=ProjectTask&action=index',
         isset($mod_strings['LNK_PROJECT_TASK_LIST']) ? $mod_strings['LNK_PROJECT_TASK_LIST'] : '',
         'ProjectTask'
     );
 }
-	
-
-?>

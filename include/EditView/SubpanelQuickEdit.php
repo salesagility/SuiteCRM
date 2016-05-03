@@ -48,7 +48,7 @@ require_once('include/EditView/EditView2.php');
 class SubpanelQuickEdit{
 	var $defaultProcess = true;
 
-	function SubpanelQuickEdit($module, $view='QuickEdit', $proccessOverride = false){
+	function __construct($module, $view='QuickEdit', $proccessOverride = false){
         //treat quickedit and quickcreate views as the same
         if($view == 'QuickEdit') {$view = 'QuickCreate';}
 
@@ -109,7 +109,7 @@ class SubpanelQuickEdit{
 		if(file_exists($viewEditSource) && !$proccessOverride) {
             include($viewEditSource);
             $c = $module . 'ViewEdit';
-            
+
             $customClass = 'Custom' . $c;
             if(class_exists($customClass)) {
                 $c = $customClass;
@@ -143,6 +143,20 @@ class SubpanelQuickEdit{
 		if($this->defaultProcess && !$proccessOverride) {
 		   $this->process($module);
 		}
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function SubpanelQuickEdit($module, $view='QuickEdit', $proccessOverride = false){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($module, $view, $proccessOverride);
 	}
 
 	function process($module){

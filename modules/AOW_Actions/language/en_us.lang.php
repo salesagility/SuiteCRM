@@ -55,5 +55,5 @@ $mod_strings = array (
   'LBL_EMAIL_TEMPLATE' => 'Email Template',
   'LBL_SETAPPROVAL' => 'Set Approval',
   'LBL_RELATE_WORKFLOW' => 'Relate to WorkFlow Module',
-
+  'LBL_INDIVIDUAL_EMAILS' => 'Send Individual Emails',
 );

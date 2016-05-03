@@ -54,6 +54,9 @@
 
 <div class="h3Row" id="scheduler"></div>
 
+<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
   
 <script type="text/javascript">
 {literal}

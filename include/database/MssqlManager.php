@@ -250,7 +250,7 @@ class MssqlManager extends DBManager
                     if(isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
                         sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
                     } else {
-                        sugar_die("Could not connect to the database. Please refer to sugarcrm.log for details.");
+                        sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
                     }
                 } else {
                     return false;
@@ -647,9 +647,10 @@ class MssqlManager extends DBManager
                     continue;
                 }
             }
+            $p_len = strlen("##". $patt.$i."##");
             $p_sql = substr($p_sql, 0, $beg_sin) . " ##". $patt.$i."## " . substr($p_sql, $sec_sin+1);
             //move the marker up
-            $offset = $sec_sin+1;
+            $offset = ($sec_sin-($sec_sin-$beg_sin))+$p_len+1; // Adjusting the starting point of the marker
 
             $i = $i + 1;
         }
@@ -996,7 +997,7 @@ class MssqlManager extends DBManager
     /**
      * @see DBManager::getAffectedRowCount()
      */
-	public function getAffectedRowCount()
+	public function getAffectedRowCount($result)
     {
         return $this->getOne("SELECT @@ROWCOUNT");
     }

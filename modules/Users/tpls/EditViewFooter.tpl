@@ -244,9 +244,20 @@
                             <slot>{$MOD.LBL_REMINDER}:</slot>&nbsp;{sugar_help text=$MOD.LBL_REMINDER_TEXT }
                             </td>
                             <td valign="top"  nowrap>
+								<!--
                                 <slot>{include file="modules/Meetings/tpls/reminders.tpl"}</slot>
+								-->
+								<slot>{include file="modules/Reminders/tpls/remindersDefaults.tpl"}</slot>
                             </td>
                         </tr>
+            <tr>
+                <td></td><td></td><td></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sm" onClick="Alerts.prototype.enable()">
+                        {$MOD.LBL_ENABLE_NOTIFICATIONS}
+                    </button>
+                </td>
+            </tr>
                         <tr>
                             <td scope="row" valign="top"><slot>{$MOD.LBL_USE_REAL_NAMES}:</slot>&nbsp;{sugar_help text=$MOD.LBL_USE_REAL_NAMES_DESC }</td>
                             <td ><slot><input tabindex='12' type="checkbox" name="use_real_names" {$USE_REAL_NAMES}></slot></td>

@@ -151,6 +151,12 @@ class ViewModulefield extends SugarView
 
             VardefManager::loadVardef($moduleName, $objectName,true);
             global $dictionary;
+
+            // Fix for issue #1177 - when trying to add or edit fields in a module an error message is shown:
+            // "Warning: Creating default object from empty value"
+            if(!isset($module->mbvardefs) || is_null($module->mbvardefs)) {
+                $module->mbvardefs = new stdClass();
+            }
             $module->mbvardefs->vardefs =  $dictionary[$objectName];
 			
             $module->name = $moduleName;
@@ -368,8 +374,9 @@ class ViewModulefield extends SugarView
      * @param string $template the file to fetch
      * @return string contents from calling the fetch method on the FieldViewer Sugar_Smarty instance
      */
-    protected function fetchTemplate($fv, $template)
+    protected function fetchTemplate($fv/*, $template*/)
     {
+        $template = func_get_arg(1);
         return $fv->ss->fetch($this->getCustomFilePathIfExists($template));
     }
 }

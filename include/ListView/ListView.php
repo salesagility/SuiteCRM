@@ -366,7 +366,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
             $thepanel=$subpanel_def;
         }
 
-		/* BEGIN - SECURITY GROUPS */ 
+		/* BEGIN - SECURITY GROUPS */
 
 		//This check is costly doing it field by field in the below foreach
 		//instead pull up here and do once per record....
@@ -382,15 +382,15 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
 
 		require_once("modules/SecurityGroups/SecurityGroup.php");
 		$aclaccess_in_group = SecurityGroup::groupHasAccess($aItem->module_dir,$aItem->id);
-        	
-    	/* END - SECURITY GROUPS */ 
-    	
+
+    	/* END - SECURITY GROUPS */
+
         //get data source name
         $linked_field=$thepanel->get_data_source_name();
         $linked_field_set=$thepanel->get_data_source_name(true);
         static $count;
         if(!isset($count))$count = 0;
-		/* BEGIN - SECURITY GROUPS */ 
+		/* BEGIN - SECURITY GROUPS */
 		/**
         $field_acl['DetailView'] = $aItem->ACLAccess('DetailView');
         $field_acl['ListView'] = $aItem->ACLAccess('ListView');
@@ -402,7 +402,7 @@ function process_dynamic_listview($source_module, $sugarbean,$subpanel_def)
         $field_acl['ListView'] = $aItem->ACLAccess('ListView',$aclaccess_is_owner,$aclaccess_in_group);
         $field_acl['EditView'] = $aItem->ACLAccess('EditView',$aclaccess_is_owner,$aclaccess_in_group);
         $field_acl['Delete'] = $aItem->ACLAccess('Delete',$aclaccess_is_owner,$aclaccess_in_group);
-		/* END - SECURITY GROUPS */ 
+		/* END - SECURITY GROUPS */
         foreach($thepanel->get_list_fields() as $field_name=>$list_field)
         {
             //add linked field attribute to the array.
@@ -579,7 +579,7 @@ function setDisplayHeaderAndFooter($bool) {
  * All Rights Reserved.
  * Contributor(s): ______________________________________.
 */
- function ListView() {
+ function __construct() {
 
 
     if(!$this->initialized) {
@@ -593,6 +593,22 @@ function setDisplayHeaderAndFooter($bool) {
         $this->local_current_module = $currentModule;
     }
 }
+
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ListView(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 /**sets how many records should be displayed per page in the list view
  * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
@@ -1228,15 +1244,15 @@ function getUserVariable($localVarName, $varName) {
                 $end_URL = $this->start_link_wrapper.$end_URL.$this->end_link_wrapper;
             }
 
-            $moduleString = "{$currentModule}_{$html_varName}_offset";
-            $moduleStringOrder = "{$currentModule}_{$html_varName}_ORDER_BY";
+            $moduleString = htmlspecialchars("{$currentModule}_{$html_varName}_offset");
+            $moduleStringOrder = htmlspecialchars("{$currentModule}_{$html_varName}_ORDER_BY");
             if($this->shouldProcess && !$this->multi_select_popup) {
                 // check the checkboxes onload
                 echo "<script>YAHOO.util.Event.addListener(window, \"load\", sListView.check_boxes);</script>\n";
 
                 $massUpdateRun = isset($_REQUEST['massupdate']) && $_REQUEST['massupdate'] == 'true';
                 $uids = empty($_REQUEST['uid']) || $massUpdateRun ? '' : $_REQUEST['uid'];
-                $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? $_REQUEST['select_entire_list'] : 0));
+                $select_entire_list = ($massUpdateRun) ? 0 : (isset($_POST['select_entire_list']) ? $_POST['select_entire_list'] : (isset($_REQUEST['select_entire_list']) ? htmlspecialchars($_REQUEST['select_entire_list']) : 0));
 
                 echo "<textarea style='display: none' name='uid'>{$uids}</textarea>\n" .
                     "<input type='hidden' name='select_entire_list' value='{$select_entire_list}'>\n".

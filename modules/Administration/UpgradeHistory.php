@@ -72,11 +72,26 @@ class UpgradeHistory extends SugarBean
         $this->db->query( "delete from " . $this->table_name . " where id = " . $this->db->quoted($this->id));
     }
 
-    function UpgradeHistory()
+    public function __construct()
     {
-        parent::SugarBean();
+        parent::__construct();
         $this->disable_row_level_security = true;
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function UpgradeHistory(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function getAllOrderBy($orderBy){
         $query = "SELECT id FROM " . $this->table_name . " ORDER BY ".$orderBy;

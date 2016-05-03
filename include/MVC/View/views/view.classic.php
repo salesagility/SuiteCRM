@@ -50,10 +50,10 @@ class ViewClassic extends SugarView
         $view_object_map = array()
         )
     {
- 		parent::SugarView();
+ 		parent::__construct();
  		$this->type = $this->action;
  	}
- 	
+
  	/**
  	 * @see SugarView::display()
  	 */

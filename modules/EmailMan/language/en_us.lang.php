@@ -104,7 +104,7 @@ $mod_strings = array (
 	'LBL_EXCHANGE_SMTPPORT'					=> 'Exchange Server Port',
 	'LBL_EXCHANGE_SMTPSERVER'				=> 'Exchange Server',
 	'LBL_EMAIL_LINK_TYPE'				=> 'Email Client',
-    'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>Sugar Mail Client:</b> Send emails using the email client in the Sugar application.<br><b>External Mail Client:</b> Send email using an email client outside of the Sugar application, such as Microsoft Outlook.',
+    'LBL_EMAIL_LINK_TYPE_HELP'			=> '<b>SuiteCRM Mail Client:</b> Send emails using the email client in the SuiteCRM application.<br><b>External Mail Client:</b> Send email using an email client outside of the SuiteCRM application, such as Microsoft Outlook.',
 	'LBL_MARKETING_ID'							=> 'Marketing Id',
     'LBL_MODULE_ID'                             => 'EmailMan',
 	'LBL_MODULE_NAME'							=> 'Email Settings',
@@ -161,6 +161,7 @@ $mod_strings = array (
 	'LBL_YAHOO_MAIL_LOGO' => 'Yahoo Mail' /*for 508 compliance fix*/,
 	'LBL_EXCHANGE_LOGO' => 'Exchange' /*for 508 compliance fix*/,
 	'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
+	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
 );
 
 ?>

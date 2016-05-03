@@ -215,7 +215,12 @@ function multiFiles( list_target){
 
                 //AJAX call begins
                 YAHOO.util.Connect.setForm(document.getElementById("upload_form"), true, true);
-                YAHOO.util.Connect.asyncRequest('POST', url, {upload: function() {}}, null);
+                YAHOO.util.Connect.asyncRequest('POST', url, {upload: function(e) {
+					if(mozaik && mozaik.uploadPathField) {
+						var resp = JSON.parse(e.responseText);
+						document.getElementById(mozaik.uploadPathField).value = resp[0];
+					}
+				}}, null);
                 //AJAX call ends
 
                 // New file input
@@ -884,7 +889,7 @@ function button_change_onclick(obj) {
 	var acct_name = '';
 
 	if(document.EditView.parent_type.value  == 'Accounts' && typeof(document.EditView.parent_name.value) != 'undefined' && document.EditView.parent_name.value != '') {
-		filter = "&form_submit=false&query=true&html=Email_picker&account_name=" + escape(document.EditView.parent_name.value);
+		filter = "&form_submit=false&query=true&html=Email_picker&account_name=" + escape(document.EditView.parent_name.value) + "&account_id=" + escape(document.EditView.parent_id.value);
 		acct_name = document.EditView.parent_name.value;
 	}
 

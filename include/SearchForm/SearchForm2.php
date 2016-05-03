@@ -44,7 +44,7 @@ require_once('include/TemplateHandler/TemplateHandler.php');
 require_once('include/EditView/EditView2.php');
 
 
- class SearchForm extends EditView{
+ class SearchForm{
  	var $seed = null;
  	var $module = '';
  	var $action = 'index';
@@ -81,7 +81,7 @@ require_once('include/EditView/EditView2.php');
      */
     protected $options;
 
-    public function SearchForm($seed, $module, $action = 'index', $options = array())
+    public function __construct($seed, $module, $action = 'index', $options = array())
     {
  		$this->th = new TemplateHandler();
  		$this->th->loadSmarty();
@@ -102,6 +102,21 @@ require_once('include/EditView/EditView2.php');
         $this->searchColumns = array () ;
         $this->setOptions($options);
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SearchForm($seed, $module, $action = 'index', $options = array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($seed, $module, $action, $options);
+    }
+
 
  	function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array()){
 		$this->searchdefs =  $searchdefs[$this->module];
@@ -743,8 +758,8 @@ require_once('include/EditView/EditView2.php');
                          $operator = 'custom_enum';
 			// Relationshipfields get their field name directly from the field name map,
 			// this alias-name is automatically replaced by the join table and rname through sugarbean::create_new_list_query
-			if (isset($this->seed->field_name_map[$field]) && 
-				isset($this->seed->field_name_map[$field]['source']) && 
+			if (isset($this->seed->field_name_map[$field]) &&
+				isset($this->seed->field_name_map[$field]['source']) &&
 				$this->seed->field_name_map[$field]['source'] == 'non-db')
 			{
 				$db_field = $this->seed->field_name_map[$field]['name'];
@@ -1044,10 +1059,10 @@ require_once('include/EditView/EditView2.php');
                                      if(isset($_REQUEST['action']) && $_REQUEST['action'] == 'UnifiedSearch'){
                                          $UnifiedSearch = true;
                                      }
-                                     
+
                                      // If it is a unified search and if the search contains more then 1 word (contains space)
                                      // and if it's the last element from db_field (so we do the concat only once, not for every db_field element)
-                                     // we concat the db_field array() (both original, and in reverse order) and search for the whole string in it  
+                                     // we concat the db_field array() (both original, and in reverse order) and search for the whole string in it
                                      if ( $UnifiedSearch && strpos($field_value, ' ') !== false && strpos($db_field, $parms['db_field'][count($parms['db_field']) - 1]) !== false )
                                      {
                                          // Get the table name used for concat
@@ -1055,7 +1070,7 @@ require_once('include/EditView/EditView2.php');
                                          $concat_table = $concat_table[0];
                                          // Get the fields for concatenating
                                          $concat_fields = $parms['db_field'];
-                                         
+
                                          // If db_fields (e.g. contacts.first_name) contain table name, need to remove it
                                          for ($i = 0; $i < count($concat_fields); $i++)
                                          {
@@ -1064,7 +1079,7 @@ require_once('include/EditView/EditView2.php');
                                          		$concat_fields[$i] = substr($concat_fields[$i], strlen($concat_table) + 1);
                                          	}
                                          }
-                                         
+
                                          // Concat the fields and search for the value
                                          $where .= $this->seed->db->concat($concat_table, $concat_fields) . " LIKE " . $this->seed->db->quoted($field_value . $like_char);
                                          $where .= ' OR ' . $this->seed->db->concat($concat_table, array_reverse($concat_fields)) . " LIKE " . $this->seed->db->quoted($field_value . $like_char);

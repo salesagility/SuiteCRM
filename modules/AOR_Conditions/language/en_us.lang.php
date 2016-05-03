@@ -52,6 +52,7 @@ $mod_strings = array (
   'LBL_HISTORY_SUBPANEL_TITLE' => 'View History',
   'LBL_ACTIVITIES_SUBPANEL_TITLE' => 'Activities',
   'LBL_NEW_FORM_TITLE' => 'New Conditions',
+    'LBL_LOGIC_OP' => 'Logic',
   'LBL_MODULE_PATH' => 'Module',
   'LBL_FIELD' => 'Field',
   'LBL_OPERATOR' => 'Operator',

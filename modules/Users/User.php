@@ -110,11 +110,26 @@ class User extends Person {
 
 	var $new_schema = true;
 
-	function User() {
-		parent::Person();
+	function __construct() {
+		parent::__construct();
 
 		$this->_loadUserPreferencesFocus();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function User(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	protected function _loadUserPreferencesFocus()
 	{
@@ -601,7 +616,7 @@ class User extends Person {
      * @return object User bean
      * @return null null if no User found
      */
-	function retrieve($id, $encode = true, $deleted = true) {
+	function retrieve($id = -1, $encode = true, $deleted = true) {
 		$ret = parent::retrieve($id, $encode, $deleted);
 		if ($ret) {
 			if (isset ($_SESSION)) {
@@ -677,26 +692,6 @@ EOQ;
 		$this->loadFromRow($row);
 		$this->loadPreferences();
 
-		require_once ('modules/Versions/CheckVersions.php');
-		$invalid_versions = get_invalid_versions();
-
-		if (!empty ($invalid_versions)) {
-			if (isset ($invalid_versions['Rebuild Relationships'])) {
-				unset ($invalid_versions['Rebuild Relationships']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_relationships'] = true;
-			}
-
-			if (isset ($invalid_versions['Rebuild Extensions'])) {
-				unset ($invalid_versions['Rebuild Extensions']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_extensions'] = true;
-			}
-
-			$_SESSION['invalid_versions'] = $invalid_versions;
-		}
 		if ($this->status != "Inactive")
 			$this->authenticated = true;
 
@@ -720,7 +715,7 @@ EOQ;
 	        // fall back to old md5
 	        return strtolower(md5($password));
 	    }
-	    return crypt(strtolower(md5($password)));
+	    return @crypt(strtolower(md5($password)));
 	}
 
 	/**
@@ -971,7 +966,7 @@ EOQ;
 		return $user_fields;
 	}
 
-	function list_view_parse_additional_sections(& $list_form, $xTemplateSection) {
+	function list_view_parse_additional_sections(&$list_form) {
 		return $list_form;
 	}
 
@@ -1010,7 +1005,7 @@ EOQ;
 
 
 
-	function create_export_query($order_by, $where) {
+	function create_export_query($order_by, $where, $relate_link_join = '') {
 		include('modules/Users/field_arrays.php');
 
 		$cols = '';
@@ -1586,9 +1581,9 @@ EOQ;
         }
 	}
 
-   function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false)
+   function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false,$ifListForExport = false)
    {	//call parent method, specifying for array to be returned
-   	$ret_array = parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, true,$parentbean, $singleSelect);
+   	$ret_array = parent::create_new_list_query($order_by, $where,$filter,$params, $show_deleted,$join_type, true,$parentbean, $singleSelect,$ifListForExport);
 
    	//if this is being called from webservices, then run additional code
    	if(!empty($GLOBALS['soap_server_object'])){
@@ -1846,7 +1841,7 @@ EOQ;
 
     /**
      * Checks if the passed email is primary.
-     * 
+     *
      * @param string $email
      * @return bool Returns TRUE if the passed email is primary.
      */

@@ -48,7 +48,7 @@ require_once('include/SubPanel/SubPanelTiles.php');
 class SubPanelTilesTabs extends SubPanelTiles
 {
 
-	function SubPanelTiles(&$focus, $layout_def_key='', $layout_def_override = '')
+	function __construct(&$focus, $layout_def_key='', $layout_def_override = '')
 	{
 
 		$this->focus = $focus;
@@ -104,7 +104,11 @@ class SubPanelTilesTabs extends SubPanelTiles
      * @param boolean $showTabs	Call the view code to display the generated tabs
      * @param string $selectedGroup	(Optional) Name of any selected tab (defaults to 'All')
      */
-	function getTabs($tabs, $showTabs = true, $selectedGroup='All')
+    function getTabs($showTabs = true, $selectedGroup='') {
+        $args = func_get_args();
+        return call_user_func_array(array($this, '_getTabs'), $args);
+    }
+    function _getTabs($tabs, $showTabs = true, $selectedGroup='All')
     {
         //WDong Bug: 12258 "All" tab in the middle of a record's detail view is not localized.
         if($selectedGroup=='All')

@@ -46,7 +46,8 @@ $vardefs = array(
 	    'type' => 'id',
 	    'required'=>true,
 	    'reportable'=>true,
-	    'comment' => 'Unique identifier'
+	    'comment' => 'Unique identifier',
+		'inline_edit' => false,
 	  ),
 	  'name'=>
 	    array(
@@ -73,6 +74,7 @@ $vardefs = array(
 	    'comment' => 'Date record created',
 	    'enable_range_search' => true,
 	  	'options' => 'date_range_search_dom',
+		'inline_edit' => false,
 	  ),
 	  'date_modified' =>
 	  array (
@@ -83,6 +85,7 @@ $vardefs = array(
 	    'comment' => 'Date record last modified',
 	    'enable_range_search' => true,
 	    'options' => 'date_range_search_dom',
+		'inline_edit' => false,
 	  ),
 		'modified_user_id' =>
 	  array (
@@ -98,6 +101,7 @@ $vardefs = array(
 	    'reportable'=>true,
 	    'comment' => 'User who last modified record',
         'massupdate' => false,
+		'inline_edit' => false,
 	  ),
 	  'modified_by_name' => 
 	  array (
@@ -113,6 +117,7 @@ $vardefs = array(
 	    'link'=>'modified_user_link',
 	    'duplicate_merge'=>'disabled',
         'massupdate' => false,
+		'inline_edit' => false,
 	  ),  
 	  'created_by' =>
 	  array (
@@ -127,8 +132,9 @@ $vardefs = array(
 	    'group'=>'created_by_name',
 	    'comment' => 'User who created record',
         'massupdate' => false,
+		'inline_edit' => false,
 	  ),
-	  	'created_by_name' => 
+	  'created_by_name' =>
 	  array (
 	    'name' => 'created_by_name',
 		'vname' => 'LBL_CREATED',
@@ -143,6 +149,7 @@ $vardefs = array(
 		'duplicate_merge'=>'disabled',
         'importable' => 'false',
         'massupdate' => false,
+		'inline_edit' => false,
 	),
 	  'description' =>
 	  array (

@@ -39,6 +39,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 require_once('include/phpmailer/class.phpmailer.php');
+require_once('include/phpmailer/class.smtp.php');
 require_once('include/OutboundEmail/OutboundEmail.php');
 
 /**
@@ -58,7 +59,8 @@ class SugarPHPMailer extends PHPMailer
 	/**
 	 * Sole constructor
 	 */
-	function SugarPHPMailer() {
+	public function __construct() {
+        parent::__construct();
 		global $locale;
 		global $current_user;
 		global $sugar_config;
@@ -88,6 +90,19 @@ class SugarPHPMailer extends PHPMailer
 
 	}
 
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function SugarPHPMailer(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
 
 	/**
 	 * Prefills outbound details
@@ -333,7 +348,7 @@ eoq;
 		// remove bad img line from outbound email
 		$this->Body = preg_replace('#<img[^>]+src[^=]*=\"\/([^>]*?[^>]*)>#sim', '', $this->Body);
 	}
-	
+
 	/**
 	 * @param notes	array of note beans
 	 */
@@ -392,7 +407,7 @@ eoq;
 		parent::SetError($msg);
 	}
 
-	function SmtpConnect() {
+	function SmtpConnect($options = array()) {
 		$connection = parent::SmtpConnect();
 		if (!$connection) {
 			global $app_strings;
@@ -408,7 +423,7 @@ eoq;
     /*
      * overloads PHPMailer::PreSend() to allow for empty messages to go out.
      */
-    protected function PreSend() {
+    public function PreSend() {
         //check to see if message body is empty
         if(empty($this->Body)){
             //PHPMailer will throw an error if the body is empty, so insert a blank space if body is empty

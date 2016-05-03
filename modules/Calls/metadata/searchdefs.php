@@ -57,7 +57,8 @@ array (
         'default' => true,
         'width' => '10%',
       ),
-      0 => 
+        'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+      0 =>
       array (
         'name' => 'open_only',
         'label' => 'LBL_OPEN_ITEMS',

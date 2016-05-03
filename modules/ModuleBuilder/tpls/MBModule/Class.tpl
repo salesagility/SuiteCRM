@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
@@ -54,11 +54,13 @@ class {{$class.name}}_sugar extends {{$class.extends}} {
 	var $table_name = '{{$class.table_name}}';
 	var $importable = {{if $class.importable}}true{{else}}false{{/if}};
 	var $disable_row_level_security = true ; // to ensure that modules created and deployed under CE will continue to function under team security if the instance is upgraded to PRO
+
 	{{foreach from=$class.fields key='field' item='def'}}
-	var ${{$field}};
+var ${{$field}};
 	{{/foreach}}
-	function {{$class.name}}_sugar(){	
-		parent::{{$class.extends}}();
+
+	function __construct(){
+		parent::__construct();
 	}
 	
 	{{if $class.acl}}
@@ -67,7 +69,7 @@ function bean_implements($interface){
 			case 'ACL': return true;
 		}
 		return false;
-}
+	}
 	{{/if}}
 	
 }

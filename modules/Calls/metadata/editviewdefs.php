@@ -43,6 +43,9 @@ array (
   array (
     'templateMeta' => 
     array (
+        'includes' => array(
+            array('file' => 'modules/Reminders/Reminders.js'),
+        ),
       'maxColumns' => '2',
       'form' => 
       array (
@@ -166,14 +169,22 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             'label' => 'LBL_DURATION',
             'customCode' => '{literal}<script type="text/javascript">function isValidDuration() { form = document.getElementById(\'EditView\'); if ( form.duration_hours.value + form.duration_minutes.value <= 0 ) { alert(\'{/literal}{$MOD.NOTICE_DURATION_TIME}{literal}\'); return false; } return true; }</script>{/literal}<input id="duration_hours" name="duration_hours" size="2" maxlength="2" type="text" value="{$fields.duration_hours.value}" onkeyup="SugarWidgetScheduler.update_time();"/>{$fields.duration_minutes.value}&nbsp;<span class="dateFormat">{$MOD.LBL_HOURS_MINUTES}</span>',
           ),
-          1 => 
-          array (
-            'name' => 'reminder_time',
-            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
-            'label' => 'LBL_REMINDER',
-          ),
+//          1 =>
+//          array (
+//            'name' => 'reminder_time',
+//            'customCode' => '{include file="modules/Meetings/tpls/reminders.tpl"}',
+//            'label' => 'LBL_REMINDER',
+//          ),
         ),
-        3 => 
+        3 => array(
+            0 =>
+                array (
+                    'name' => 'reminders',
+                    'customCode' => '{include file="modules/Reminders/tpls/reminders.tpl"}',
+                    'label' => 'LBL_REMINDERS',
+                ),
+        ),
+        4 =>
         array (
           0 => 
           array (
@@ -182,7 +193,7 @@ function formSubmitCheck(){ldelim}var duration=true;if(typeof(isValidDuration)!=
             'label' => 'LBL_DESCRIPTION',
           ),
         ),
-        4 => 
+        5 =>
         array (
           0 => 
           array (

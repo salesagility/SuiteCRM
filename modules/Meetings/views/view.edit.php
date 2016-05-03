@@ -69,16 +69,19 @@ class MeetingsViewEdit extends ViewEdit
         $json_config = new json_config();
 		if (isset($this->bean->json_id) && !empty ($this->bean->json_id)) {
 			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->json_id);
-
 		} else {
 			$this->bean->json_id = $this->bean->id;
 			$javascript = $json_config->get_static_json_server(false, true, 'Meetings', $this->bean->id);
-
 		}
  		$this->ss->assign('JSON_CONFIG_JAVASCRIPT', $javascript);
  		if($this->ev->isDuplicate){
 	        $this->bean->status = $this->bean->getDefaultStatus();
  		} //if
+
+		$this->ss->assign('remindersData', Reminder::loadRemindersData('Meetings', $this->bean->id, $this->ev->isDuplicate));
+		$this->ss->assign('remindersDataJson', Reminder::loadRemindersDataJson('Meetings', $this->bean->id, $this->ev->isDuplicate));
+		$this->ss->assign('remindersDefaultValuesDataJson', Reminder::loadRemindersDefaultValuesDataJson());
+		$this->ss->assign('remindersDisabled', json_encode(false));
 
  		parent::display();
  	}

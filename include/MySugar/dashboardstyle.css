@@ -1,0 +1,65 @@
+.dashboardTabList{
+    border:none 0px;
+    width:95%;
+    height:35px;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.dashboardTabList li{
+    float:left;
+    padding:6px 6px 6px 6px;
+    background-color: #f3f3f3;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #e8e8e8;
+    margin-top:6px;
+    font-size: 14px;
+}
+.dashboardTabList li.active{
+    float:left;
+    padding:8px 8px 8px 8px;
+    background-color: #ffffff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #e8e8e8;
+    font-weight: bold;
+    margin-top:2px;
+}
+
+.dashboardTabList li:hover{
+
+    background-color: #ffffff;
+
+}
+.dashboardTabList a:hover{
+    text-decoration: none;
+}
+
+
+.dashboardTabList img{
+    height:9px;
+    width:9px;
+
+}
+
+.dashboardTabList img:hover{
+    background-color: #a8a8a8;
+
+}
+
+.addButton{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height:10px;
+    line-height: 10px;
+    margin-top:9px !important;
+    float: right !important;
+}
+
+.addButton:hover{
+    background-color: #cccccc;
+}
+
+.addButton a:hover{
+    text-decoration: none;
+}

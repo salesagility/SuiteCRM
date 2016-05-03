@@ -1,11 +1,11 @@
 <?php
-if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
+if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
+ *
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -40,9 +40,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings;
 $module_menu = Array(
-	Array("index.php?module=ACLRoles&action=EditView", $mod_strings['LBL_CREATE_ROLE'],"CreateRoles"),
-	Array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'],"Roles"),
-	Array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'],"Roles"),
-	
-	);
+    Array("index.php?module=ACLRoles&action=EditView", $mod_strings['LBL_CREATE_ROLE'], "CreateRoles"),
+    Array("index.php?module=ACLRoles&action=index", $mod_strings['LIST_ROLES'], "Roles"),
+    Array("index.php?module=ACLRoles&action=ListUsers", $mod_strings['LIST_ROLES_BY_USER'], "Roles"),
+
+);
+
+global $current_language;
+$sg_mod_strings = return_module_language($current_language, 'SecurityGroups');
+$module_menu[] = Array("index.php?module=SecurityGroups&action=EditView&return_module=SecurityGroups&return_action=DetailView", $sg_mod_strings['LNK_NEW_RECORD'], "SecurityGroups");
+$module_menu[] = Array("index.php?module=SecurityGroups&action=ListView&return_module=SecurityGroups&return_action=ListView", $sg_mod_strings['LBL_LIST_FORM_TITLE'], "SecurityGroups");
+
+global $current_user;
+if (is_admin($current_user)) {
+    global $current_language;
+    $admin_mod_strings = return_module_language($current_language, 'Administration');
+    $module_menu[] = Array("index.php?module=Users&action=index&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_MANAGE_USERS_TITLE'], "Users");
+    $module_menu[] = Array("index.php?module=SecurityGroups&action=config&return_module=SecurityGroups&return_action=ListView", $admin_mod_strings['LBL_CONFIG_SECURITYGROUPS_TITLE'], "SecurityGroups");
+}
 ?>

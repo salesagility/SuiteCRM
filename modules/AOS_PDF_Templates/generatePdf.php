@@ -65,19 +65,20 @@
 	$object_arr['Contacts'] = $module->billing_contact_id;
 	$object_arr['Users'] = $module->assigned_user_id;
 	$object_arr['Currencies'] = $module->currency_id;
-	
-	$search = array ('@<script[^>]*?>.*?</script>@si', 		// Strip out javascript
-					'@<[\/\!]*?[^<>]*?>@si',		// Strip out HTML tags
-					'@([\r\n])[\s]+@',			// Strip out white space
-					'@&(quot|#34);@i',			// Replace HTML entities
-					'@&(amp|#38);@i',
-					'@&(lt|#60);@i',
-					'@&(gt|#62);@i',
-					'@&(nbsp|#160);@i',
-					'@&(iexcl|#161);@i',
-					'@&#(\d+);@e',
-					'@<address[^>]*?>@si'
-	);
+
+    $search = array ('/<script[^>]*?>.*?<\/script>/si',      // Strip out javascript
+                    '/<[\/\!]*?[^<>]*?>/si',        // Strip out HTML tags
+                    '/([\r\n])[\s]+/',          // Strip out white space
+                    '/&(quot|#34);/i',          // Replace HTML entities
+                    '/&(amp|#38);/i',
+                    '/&(lt|#60);/i',
+                    '/&(gt|#62);/i',
+                    '/&(nbsp|#160);/i',
+                    '/&(iexcl|#161);/i',
+                    '/<address[^>]*?>/si',
+                    '/&(apos|#0*39);/',
+                    '/&#(\d+);/'
+    );
 
 	$replace = array ('',
 					 '',
@@ -88,13 +89,15 @@
 					 '>',
 					 ' ',
 					 chr(161),
-					 'chr(\1)',
-					 '<br>'
+                     '<br>',
+                     "'",
+                     'chr(%1)'
 		);
-	
+
 	$header = preg_replace($search, $replace, $template->pdfheader);
 	$footer = preg_replace($search, $replace, $template->pdffooter);
 	$text = preg_replace($search, $replace, $template->description);
+	$text = str_replace("<p><pagebreak /></p>", "<pagebreak />", $text);
 	$text = preg_replace_callback('/\{DATE\s+(.*?)\}/',
 		function ($matches) { return date($matches[1]); },
 		$text );
@@ -114,8 +117,6 @@
 	$footer = templateParser::parse_template($footer, $object_arr);
 	
 	$printable = str_replace("\n","<br />",$converted);
-
-
 
 	if($task == 'pdf' || $task == 'emailpdf')
 		{
@@ -183,7 +184,11 @@ function populate_group_lines($text, $lineItemsGroups, $lineItems, $element = 't
         $parts = explode($firstValue,$text);
         $text = $parts[0];
         $parts = explode($lastValue,$parts[1]);
-        $groupPart = $firstValue . $parts[0] . $lastValue;
+        if($lastValue == $firstValue) {
+            $groupPart = $firstValue . $parts[0];
+        } else {
+            $groupPart = $firstValue . $parts[0] . $lastValue;
+        }
 
         if(count($lineItemsGroups) != 0){
             //Read line start <tr> value

@@ -52,32 +52,33 @@ function display_lines($focus, $field, $value, $view){
         }
         $html .= '<input type="hidden" name="vathidden" id="vathidden" value="'.get_select_options_with_id($app_list_strings['vat_list'], '').'">
 				  <input type="hidden" name="discounthidden" id="discounthidden" value="'.get_select_options_with_id($app_list_strings['discount_list'], '').'">';
+        if($focus->id != '') {
+            require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
+            require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
 
-        require_once('modules/AOS_Products_Quotes/AOS_Products_Quotes.php');
-        require_once('modules/AOS_Line_Item_Groups/AOS_Line_Item_Groups.php');
+            $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '" . $focus->object_name . "' AND pg.parent_id = '" . $focus->id . "' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
 
-        $sql = "SELECT pg.id, pg.group_id FROM aos_products_quotes pg LEFT JOIN aos_line_item_groups lig ON pg.group_id = lig.id WHERE pg.parent_type = '".$focus->object_name."' AND pg.parent_id = '".$focus->id."' AND pg.deleted = 0 ORDER BY lig.number ASC, pg.number ASC";
-
-        $result = $focus->db->query($sql);
-        $html .= "<script>
-			if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}
-			</script>";
-
-        while ($row = $focus->db->fetchByAssoc($result)) {
-            $line_item = new AOS_Products_Quotes();
-            $line_item->retrieve($row['id']);
-            $line_item = json_encode($line_item->toArray());
-
-            $group_item = 'null';
-            if($row['group_id'] != null){
-                $group_item = new AOS_Line_Item_Groups();
-                $group_item->retrieve($row['group_id']);
-                $group_item = json_encode($group_item->toArray());
-            }
+            $result = $focus->db->query($sql);
             $html .= "<script>
-					insertLineItems(".$line_item.",".$group_item.");
-				</script>";
+                if(typeof sqs_objects == 'undefined'){var sqs_objects = new Array;}
+                </script>";
 
+            while ($row = $focus->db->fetchByAssoc($result)) {
+                $line_item = new AOS_Products_Quotes();
+                $line_item->retrieve($row['id']);
+                $line_item = json_encode($line_item->toArray());
+
+                $group_item = 'null';
+                if ($row['group_id'] != null) {
+                    $group_item = new AOS_Line_Item_Groups();
+                    $group_item->retrieve($row['group_id']);
+                    $group_item = json_encode($group_item->toArray());
+                }
+                $html .= "<script>
+                        insertLineItems(" . $line_item . "," . $group_item . ");
+                    </script>";
+
+            }
         }
         if(!$enable_groups){
             $html .= '<script>insertGroup();</script>';
@@ -170,7 +171,8 @@ function display_lines($focus, $field, $value, $view){
                 $product .= "<tr>";
                 $product_note = wordwrap($line_item->description,40,"<br />\n");
                 $product .= "<td class='tabDetailViewDF' style='text-align: left; padding:2px;'>".++$productCount."</td>";
-                $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".rtrim(rtrim(format_number($line_item->product_qty), '0'),$sep[1])."</td>";
+                $product .= "<td class='tabDetailViewDF' style='padding:2px;'>".stripDecimalPointsAndTrailingZeroes(format_number($line_item->product_qty),$sep[1])."</td>";
+
                 $product .= "<td class='tabDetailViewDF' style='padding:2px;'><a href='index.php?module=AOS_Products&action=DetailView&record=".$line_item->product_id."' class='tabDetailViewDFLink'>".$line_item->name."</a><br />".$product_note."</td>";
                 $product .= "<td class='tabDetailViewDF' style='text-align: right; padding:2px;'>".currency_format_number($line_item->product_list_price,$params)."</td>";
 
@@ -220,6 +222,17 @@ function display_lines($focus, $field, $value, $view){
         $html .= "</table>";
     }
     return $html;
+}
+
+//Bug #598
+//The original approach to trimming the characters was rtrim(rtrim(format_number($line_item->product_qty), '0'),$sep[1])
+//This however had the unwanted side-effect of turning 1000 (or 10 or 100) into 1 when the Currency Significant Digits
+//field was 0.
+//The approach below will strip off the fractional part if it is only zeroes (and in this case the decimal separator
+//will also be stripped off) The custom decimal separator is passed in to the function from the locale settings
+function stripDecimalPointsAndTrailingZeroes($inputString,$decimalSeparator)
+{
+    return preg_replace('/'.preg_quote($decimalSeparator).'[0]+$/','',$inputString);
 }
 
 function get_discount_string($type, $amount, $params, $locale, $sep){

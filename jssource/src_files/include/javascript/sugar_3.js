@@ -260,15 +260,35 @@ function checkAlerts() {
 	for(mj = 0 ; mj < alertList.length; mj++) {
 		if(alertList[mj]['done'] == 0) {
 			if(alertList[mj]['time'] < secondsSinceLoad && alertList[mj]['time'] > -1 ) {
-				alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
-				alertList[mj]['done'] = 1;
-				if(alertList[mj]['redirect'] == '') {
-					alert(alertmsg);
-				}
-				else if(confirm(alertmsg)) {
-					window.location = alertList[mj]['redirect'];
-				}
-			}
+                alertList[mj]['done'] = 1;
+                if(typeof Alerts !== "undefined") {
+                    //
+                    // Use Alerts module
+                    Alerts.prototype.show(
+                        {
+                            title: alertList[mj]['type'] + ": " + alertList[mj]['name'],
+                            options: {
+                                body: alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n",
+                                url_redirect: alertList[mj]['redirect'],
+                                target_module: alertList[mj]['type']
+                            }
+                        }
+                    );
+                } else {
+                    //
+                    // Revert back to the legacy
+                    alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
+                    alertList[mj]['done'] = 1;
+                    alertmsg = alertList[mj]['type'] + ":" + alertList[mj]['name'] + "\n" +alertList[mj]['subtitle']+ "\n"+ alertList[mj]['description'] + "\n\n";
+                    alertList[mj]['done'] = 1;
+                    if(alertList[mj]['redirect'] == '') {
+                        alert(alertmsg);
+                    }
+                    else if(confirm(alertmsg)) {
+                        window.location = alertList[mj]['redirect'];
+                    }
+                }
+            }
 		}
 	}
 
@@ -2024,7 +2044,7 @@ sugarListView.prototype.use_external_mail_client_callback = function(o)
 }
 
 sugarListView.prototype.send_form_for_emails = function(select, currentModule, action, no_record_txt,action_module,totalCount, totalCountError) {
-	if ( typeof(SUGAR.config.email_sugarclient_listviewmaxselect) != 'undefined' ) {
+	if ( typeof(SUGAR.config.email_sugarclient_listviewmaxselect) === 'undefined' ) {
 	    maxCount = 10;
 	}
 	else {
@@ -3094,7 +3114,7 @@ SUGAR.util = function () {
 		    		if(typeof spans[wp].innerHTML != 'undefined' && spans[wp].innerHTML == ('wp_shortcut_fill_' + je)) {
 		    			if(typeof spans[wp].parentNode.parentNode == 'object') {
 		    				if(typeof spans[wp].parentNode.parentNode.onclick != 'undefined') {
-		    					spans[wp].parentNode.parentNode.onclick = null;
+		    					spans[wp].parentNode.parentNode.onclick = nulld;
 		    				}
 		    				// If the wp_shortcut span is contained by an A tag, replace the A with a DIV.
 		    				if(spans[wp].parentNode.tagName == 'A' && !isIE) {
@@ -4874,26 +4894,38 @@ closeActivityPanel: {
 	               text: closeText,
 	               constraintoviewport: true,
 	               buttons: [ { text:SUGAR.language.get("app_strings", "LBL_EMAIL_OK"), handler:function(){
+						//	alert("DELETE!");
+
 	                   if (SUGAR.util.closeActivityPanel.panel)
                             SUGAR.util.closeActivityPanel.panel.hide();
 
                         ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
                         var args = "action=save&id=" + id + "&record=" + id + "&status=" + new_status + "&module=" + module;
-                        // 20110307 Frank Steegmans: Fix for bug 42361, Any field with a default configured in any activity will be set to this default when closed using the close dialog
-                        // TODO: Take id out and regression test. Left id in for now to not create any other unexpected problems
-                        //var args = "action=save&id=" + id + "&status=" + new_status + "&module=" + module;
-                        var callback = {
-                            success:function(o)
-                            {
-                                // Bug 51984: We need to submit the form just incase we have a form already submitted
-                                // so we dont get a popup stating that the form needs to be resubmitted like it doesn,
-                                // when you do a reload/refresh
-                                window.setTimeout(function(){if(document.getElementById('search_form')) document.getElementById('search_form').submit(); else window.location.reload(true);}, 0);
-                            },
-                            argument:{'parentContainerId':parentContainerId}
-                        };
 
-                        YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, args);
+					   //SuiteCRM bug #618
+					   //The bug fix above (42361) has been taken out as the 'search_form' element it tries to find
+					   //is never found in the dashlet.  This means that the entire page was always reloaded whenever
+					   //a meeting or call was removed.  The callback below will only refresh the entire page if the
+					   //parent container cannot be found, else it will refresh just the dashlet panel to reflect the
+					   //updated data
+						var callback = {
+							success:function() {
+								//If the parent entry is not found, refresh the entire page
+								var parent = $('div[id^="dashlet_entire_"]').has($("#"+id));
+								if(parent.length === 0)
+								{
+									window.location.reload(true)
+								}
+								else
+								{
+									//else just refresh the parent panel using the SUGAR.mysugar.retrieveDashlet method
+									SUGAR.mySugar.retrieveDashlet(parent.attr('id').replace("dashlet_entire_",""));
+								}
+							}
+
+						}
+					   YAHOO.util.Connect.asyncRequest('POST', 'index.php', callback, args);
+
 
 	               }, isDefault:true },
 	                          { text:SUGAR.language.get("app_strings", "LBL_EMAIL_CANCEL"),  handler:function(){SUGAR.util.closeActivityPanel.panel.hide(); }} ]

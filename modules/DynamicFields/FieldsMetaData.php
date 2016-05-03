@@ -65,6 +65,7 @@ class FieldsMetaData extends SugarBean {
   	var $ext2;
   	var $ext3;
 	var $audited;
+	var $inline_edit;
     var $duplicate_merge;
     var $reportable;
 	var $required_fields =  array("name"=>1, "date_start"=>2, "time_start"=>3,);
@@ -86,6 +87,7 @@ class FieldsMetaData extends SugarBean {
 		'ext2',
 		'ext3',
 		'audited',
+		'inline_edit',
 		'massupdate',
         'duplicate_merge',
         'reportable',
@@ -100,6 +102,7 @@ class FieldsMetaData extends SugarBean {
 		'required',
 		'default_value',
 		'audited',
+        'inline_edit',
 		'massupdate',
         'duplicate_merge',
         'reportable',
@@ -112,12 +115,27 @@ class FieldsMetaData extends SugarBean {
 	// METHODS
 	//////////////////////////////////////////////////////////////////
 
-	function FieldsMetaData()
+    public function __construct()
 	{
-		parent::SugarBean();
+		parent::__construct();
 		$this->disable_row_level_security = true;
 	}
-	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function FieldsMetaData(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function mark_deleted($id)
 	{
 		$query = "DELETE FROM $this->table_name WHERE  id='$id'";
@@ -125,7 +143,7 @@ class FieldsMetaData extends SugarBean {
 		$this->mark_relationships_deleted($id);
 
 	}
-	
+
 	function get_list_view_data(){
 	    $data = parent::get_list_view_data();
 	    $data['VNAME'] = translate($this->vname, $this->custom_module);

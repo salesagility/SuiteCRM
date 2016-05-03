@@ -39,6 +39,6 @@ function header(header)
 function footer(footer)
 {this.footer=footer;}
 function display()
-{if(typeof(dialog)!='undefined')
+{if(typeof(dialog) != 'undefined' && dialog.destroy && typeof(dialog.destroy) == 'function')
 dialog.destroy();dialog=new YAHOO.widget.SimpleDialog(this.div_id,{width:this.width,visible:true,draggable:true,close:true,text:this.text,constraintoviewport:true,x:this.x,y:this.y});dialog.setHeader(this.header);dialog.setBody(this.text);dialog.setFooter(this.footer);dialog.render(document.body);dialog.show();}
 CompanyDetailsDialog.prototype.setHeader=header;CompanyDetailsDialog.prototype.setFooter=footer;CompanyDetailsDialog.prototype.display=display;

@@ -51,18 +51,18 @@ require_once 'modules/ModuleBuilder/parsers/relationships/ManyToManyRelationship
 
 class MBRelationship
 {
-    
+
     public $relatableModules = array ( ) ; // required by MBModule
     public $relationships = array ( ) ; // required by view.relationships.php; must be kept in sync with the implementation
 
-    
+
     /*
      * Constructor
      * @param string $name      The name of this module (not used)
      * @param string $path      The base path of the module directory within the ModuleBuilder package directory
      * @param string $key_name  The Fully Qualified Name for this module - that is, $packageName_$name
      */
-    function MBRelationship ($name , $path , $key_name)
+    function __construct ($name , $path , $key_name)
     {
         $this->implementation = new UndeployedRelationships ( $path ) ;
         $this->moduleName = $key_name ;
@@ -104,14 +104,14 @@ class MBRelationship
      * Add a relationship to this set
      * Original MBRelationships could only support one relationship between this module and any other
      */
-    /*    
+    /*
     function addRelationship ($name , $relatedTo , $relatedSubpanel = 'default' , $mysubpanel = 'default' , $type)
     {
         $this->implementation->add ( new ManyToManyRelationship ( $name, $this->moduleName, $relatedTo, $mysubpanel, $relatedSubpanel ) ) ;
         $this->updateRelationshipVariable () ;
     }
 */
-    
+
     /* Add a relationship to this set
      * Original MBRelationships could only support one relationship between this module and any other
      * @param array $rel    Relationship definition in the old format (defined by self::oldFormatKeys)
@@ -164,7 +164,7 @@ class MBRelationship
      * Transitional function to keep the public relationship variable in sync with the implementation master copy
      * We have to do this as various things refer directly to MBRelationship->relationships...
      */
-    
+
     private function updateRelationshipVariable ()
     {
         foreach ( $this->implementation->getRelationshipList () as $relationshipName )

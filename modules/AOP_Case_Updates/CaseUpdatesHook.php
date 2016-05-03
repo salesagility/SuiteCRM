@@ -315,7 +315,6 @@ class CaseUpdatesHook {
 
         $email_template = new EmailTemplate();
         $aop_config = $this->getAOPConfig();
-        $GLOBALS['log']->warn("CaseUpdatesHook: sendClosureEmail Config is ".print_r($aop_config,true));
         $email_template = $email_template->retrieve($aop_config['case_closure_email_template_id']);
 
         if(!$email_template){
@@ -369,7 +368,11 @@ class CaseUpdatesHook {
         if(!$bean->fetched_row){
             return;
         }
-        $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
+        if(!empty($arguments['related_bean'])){
+            $contact = $arguments['related_bean'];
+        }else{
+            $contact = BeanFactory::getBean("Contacts",$arguments['related_id']);
+        }
         $this->sendCreationEmail($bean, $contact);
     }
 
@@ -426,7 +429,9 @@ class CaseUpdatesHook {
         $mailer->From     = $emailSettings['from_address'];
         $mailer->FromName = $emailSettings['from_name'];
         $email = $contact->emailAddress->getPrimaryAddress($contact);
-
+        if(empty($email) && !empty($contact->email1)){
+            $email = $contact->email1;
+        }
         $mailer->AddAddress($email);
         if (!$mailer->Send()){
             $GLOBALS['log']->info("CaseUpdatesHook: Could not send email:  " . $mailer->ErrorInfo);
@@ -460,5 +465,47 @@ class CaseUpdatesHook {
 
     public function filterHTML($bean, $event, $arguments){
         $bean->description = SugarCleaner::cleanHtml($bean->description,true);
+    }
+
+    public function sendCaseUpdate(AOP_Case_Updates $caseUpdate){
+        global $current_user, $sugar_config;
+        $email_template = new EmailTemplate();
+        if($_REQUEST['module'] == 'Import'){
+            //Don't send email on import
+            return;
+        }
+        if(!isAOPEnabled()){
+            return;
+        }
+        if($caseUpdate->internal){
+            return;
+        }
+        $signature = array();
+        $addDelimiter = true;
+        $aop_config = $sugar_config['aop'];
+        if($caseUpdate->assigned_user_id){
+            if($aop_config['contact_email_template_id']){
+                $email_template = $email_template->retrieve($aop_config['contact_email_template_id']);
+                $signature = $current_user->getDefaultSignature();
+            }
+            if($email_template) {
+                foreach ($caseUpdate->getContacts() as $contact) {
+                    $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
+                    $emails = array();
+                    $emails[] = $contact->emailAddress->getPrimaryAddress($contact);
+                    $res = $caseUpdate->sendEmail($emails, $email_template, $signature, $caseUpdate->case_id, $addDelimiter, $contact->id);
+                }
+            }
+        }else{
+            $emails = $caseUpdate->getEmailForUser();
+            if($aop_config['user_email_template_id']){
+                $email_template = $email_template->retrieve($aop_config['user_email_template_id']);
+            }
+            $addDelimiter = false;
+            if($emails && $email_template){
+                $GLOBALS['log']->info("AOPCaseUpdates: Calling send email");
+                $res = $caseUpdate->sendEmail($emails, $email_template, $signature, $caseUpdate->case_id, $addDelimiter,$caseUpdate->contact_id);
+            }
+        }
     }
 }

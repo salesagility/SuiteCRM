@@ -92,7 +92,6 @@ $mod_strings = array (
 	'LNK_IMPORT_NOTES' => 'Import Notes',
 	'LNK_NEW_NOTE' => 'Create Note or Attachment',
 	'LNK_NOTE_LIST' => 'View Notes',
-	'LNK_IMPORT_NOTES' => 'Import Notes',
 	'LBL_MEMBER_OF' => 'Member of:',
 	'LBL_LIST_ASSIGNED_TO_NAME' => 'Assigned User',
     'LBL_REMOVING_ATTACHMENT'=>'Removing attachment...',

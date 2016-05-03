@@ -108,7 +108,7 @@ array (
           ),
           'customCode' => '<a href="index.php?module='.$module_name.'&action=map_display'.
                   '&relate_module={$fields.parent_type.value}&display_module={$fields.module_type.value}'.
-                  '&record={$fields.id.value}" >'.$GLOBALS['app_strings']['LBL_MAP'].' {$fields.module_type.value}</a>',
+                  '&record={$fields.id.value}" >'.$GLOBALS['app_strings']['LBL_MAP'].'</a>',
         ),
       ),
         

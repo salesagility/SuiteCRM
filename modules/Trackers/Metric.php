@@ -40,24 +40,39 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 class Metric {
-	
-    function Metric($type, $name) {
+
+    public function __construct($type, $name) {
         $this->_name = $name;
         $this->_type = $type;
         $this->_mutable = $name == 'monitor_id' ? false : true;
     }
-    
-    function type() {
-        return $this->_type;	
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Metric($type, $name){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($type, $name);
     }
-    
+
+
+    function type() {
+        return $this->_type;
+    }
+
     function name() {
         return $this->_name;
     }
-    
+
     function isMutable() {
-        return $this->_mutable;	
+        return $this->_mutable;
     }
-    
+
 }
 ?>

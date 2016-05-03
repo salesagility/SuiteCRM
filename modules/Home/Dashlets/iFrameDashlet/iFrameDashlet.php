@@ -49,8 +49,8 @@ class iFrameDashlet extends Dashlet {
     var $url;
     protected $allowed_schemes = array("http", "https");
 
-    function iFrameDashlet($id, $options = null) {
-        parent::Dashlet($id);
+    function __construct($id, $options = null) {
+        parent::__construct($id);
         $this->isConfigurable = true;
 
         if (empty($this->title)) {
@@ -66,7 +66,7 @@ class iFrameDashlet extends Dashlet {
 
         if(empty($options['url'])) {
             $this->url = $this->defaultURL;
-            $this->url = 'http://apps.sugarcrm.com/dashlet/go-pro.html?lang=@@LANG@@&edition=@@EDITION@@&ver=@@VER@@';
+            $this->url = 'https://suitecrm.com/';
         } else {
             $this->url = $options['url'];
         }
@@ -78,6 +78,20 @@ class iFrameDashlet extends Dashlet {
         }
 
         if(isset($options['autoRefresh'])) $this->autoRefresh = $options['autoRefresh'];
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function iFrameDashlet($id, $options = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $options);
     }
 
     protected function checkURL()

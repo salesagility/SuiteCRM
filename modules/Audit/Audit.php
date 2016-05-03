@@ -48,7 +48,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 
 require_once('modules/Audit/field_assoc.php');
-    	
+
 class Audit extends SugarBean {
 	var $module_dir = "Audit";
 	var $object_name = "Audit";
@@ -57,9 +57,24 @@ class Audit extends SugarBean {
 	// This is used to retrieve related fields from form posts.
 	var $additional_column_fields = Array();
 
-	function Audit() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Audit(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	var $new_schema = true;
 
@@ -68,7 +83,7 @@ class Audit extends SugarBean {
 		return $this->name;
 	}
 
-    function create_export_query(&$order_by, &$where)
+    function create_export_query($order_by, $where)
     {
     }
 
@@ -96,7 +111,7 @@ class Audit extends SugarBean {
    function get_audit_list()
     {
 
-        global $focus, $genericAssocFieldsArray, $moduleAssocFieldsArray, $current_user, $timedate, $app_strings;   
+        global $focus, $genericAssocFieldsArray, $moduleAssocFieldsArray, $current_user, $timedate, $app_strings;
         $audit_list = array();
         if(!empty($_REQUEST['record'])) {
    			$result = $focus->retrieve($_REQUEST['record']);
@@ -128,7 +143,7 @@ class Audit extends SugarBean {
                                 } else{
                                    $temp_list[$field['name']] = $row[$field['name']];
                                 }
-                                
+
                                 if ($field['name'] == 'date_created') {
                                    $date_created = '';
                                    if (!empty($temp_list[$field['name']])) {

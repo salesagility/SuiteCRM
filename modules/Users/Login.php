@@ -5,7 +5,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -71,6 +71,11 @@ if ( sugar_is_file('custom/include/images/sugar_md.png') ) {
 else {
     $login_image = '<IMG src="include/images/sugar_md_open.png" alt="Sugar" width="340" height="25" style="margin: 5px 0;">';
 }
+
+$login_image_url = SugarThemeRegistry::current()->getImageURL('company_logo.png');
+$login_image = '<IMG src="'.$login_image_url.'" alt="SuiteCRM" style="margin: 5px 0;">';
+
+
 $sugar_smarty->assign('LOGIN_IMAGE',$login_image);
 
 // See if any messages were passed along to display to the user.
@@ -211,4 +216,11 @@ if ( !empty($logindisplay) )
 		</script>";
 	}
 
-$sugar_smarty->display('modules/Users/login.tpl'); ?>
+if (file_exists('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl')) {
+	echo $sugar_smarty->display('themes/'.SugarThemeRegistry::current().'/tpls/login.tpl');
+} elseif (file_exists('custom/modules/Users/login.tpl')) {
+	echo $sugar_smarty->display('custom/modules/Users/login.tpl');
+} else {
+	echo $sugar_smarty->display('modules/Users/login.tpl');
+}
+

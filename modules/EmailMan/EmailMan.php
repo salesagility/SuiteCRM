@@ -74,14 +74,29 @@ class EmailMan extends SugarBean{
     // This is used to retrieve related fields from form posts.
 	var $additional_column_fields = array();
 
-	function EmailMan() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function EmailMan(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	var $new_schema = true;
 
-    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false) {
+    function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false) {
 		$query = array('select' => '', 'from' => '', 'where' => '', 'order_by' => '');
 
 
@@ -947,7 +962,7 @@ class EmailMan extends SugarBean{
 
      }
 
-    function create_export_query(&$order_by, &$where)
+    function create_export_query($order_by, $where)
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $query = "SELECT emailman.*";

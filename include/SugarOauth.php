@@ -118,7 +118,7 @@
          * @return array
          * @see Zend_Oauth_Consumer::getRequestToken()
          */
-        public function getRequestToken($url, $callback = null, $params = array())
+        public function getRequestTokenByUrl($url, $callback = null, $params = array())
         {
             if(!empty($callback)) {
                 $this->setCallbackUrl($callback);
@@ -144,7 +144,10 @@
          * @see Zend_Oauth_Consumer::getAccessToken()
          * @return array
          */
-        public function getAccessToken($url)
+        public function getAccessToken($url,
+                                       Zend_Oauth_Token_Request $token = null,
+                                       $httpMethod = null,
+                                       Zend_Oauth_Http_AccessToken $request = null)
         {
             $this->setAccessTokenUrl($url);
             $this->_last = $token = parent::getAccessToken($_REQUEST, $this->makeRequestToken());

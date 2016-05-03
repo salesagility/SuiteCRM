@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class SugarWidgetSubPanelTopSummaryButton extends SugarWidgetSubPanelTopButton
 {
-	function display($widget_data)
+	function display($widget_data, $additionalFormFields = NULL, $nonbutton = false)
 	{
 		
 		

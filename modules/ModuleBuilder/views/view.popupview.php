@@ -74,13 +74,13 @@ class ViewPopupview extends ViewListView
     	   );
     }
 
-    /*
-     * Pseudo-constructor to enable subclasses to call a parent's constructor without knowing the parent in PHP4
-     */
-    function init()
-    {
-
-    }
+//    /*
+//     * Pseudo-constructor to enable subclasses to call a parent's constructor without knowing the parent in PHP4
+//     */
+//    function init()
+//    {
+//
+//    }
 
     function preDisplay()
     {
@@ -94,6 +94,11 @@ class ViewPopupview extends ViewListView
         $parser = ParserFactory::getParser ( $this->editLayout, $this->editModule, $this->editPackage) ;
 
         $smarty = $this->constructSmarty ( $parser ) ;
+
+        if(isset($this->view_object_map['new_parser'])) {
+            $smarty = $this->constructSmarty($this->view_object_map['new_parser']);
+        }
+
         if ($preview)
         {
         	echo $smarty->fetch ( "modules/ModuleBuilder/tpls/Preview/listView.tpl" ) ;

@@ -111,8 +111,8 @@ class aCase extends Basic {
 									'meeting_id'=>'meetings', 'call_id'=>'calls', 'email_id'=>'emails',
 									);
 
-	function aCase() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 		global $sugar_config;
 		if(!$sugar_config['require_accounts']){
 			unset($this->required_fields['account_name']);
@@ -122,6 +122,20 @@ class aCase extends Basic {
         foreach ($this->field_defs as $name => $field) {
             $this->field_name_map[$name] = $field;
         }
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function aCase(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	var $new_schema = true;
@@ -138,14 +152,31 @@ class aCase extends Basic {
 	function listviewACLHelper(){
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->account_id)){
 
 			if(!empty($this->account_id_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->account_id_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Accounts',$this->account_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if(!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view', $is_owner)){
+			*/
+			if(!ACLController::moduleSupportsACL('Accounts') || ACLController::checkAccess('Accounts', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['ACCOUNT'] = 'a';
 			}else{
 				$array_assign['ACCOUNT'] = 'span';
@@ -154,9 +185,9 @@ class aCase extends Basic {
 		return $array_assign;
 	}
 
-	function save_relationship_changes($is_update)
+	function save_relationship_changes($is_update, $exclude = array())
 	{
-		parent::save_relationship_changes($is_update);
+		parent::save_relationship_changes($is_update, $exclude);
 
 		if (!empty($this->contact_id)) {
 			$this->set_case_contact_relationship($this->contact_id);

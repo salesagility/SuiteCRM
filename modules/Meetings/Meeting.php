@@ -114,8 +114,8 @@ class Meeting extends SugarBean {
 	/**
 	 * sole constructor
 	 */
-	function Meeting() {
-		parent::SugarBean();
+	public function __construct() {
+		parent::__construct();
 		$this->setupCustomFields('Meetings');
 		foreach($this->field_defs as $field) {
 			$this->field_name_map[$field['name']] = $field;
@@ -127,11 +127,25 @@ class Meeting extends SugarBean {
 	}
 
 	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Meeting(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
+	/**
 	 * Disable edit if meeting is recurring and source is not Sugar. It should be edited only from Outlook.
 	 * @param $view string
 	 * @param $is_owner bool
 	 */
-	function ACLAccess($view,$is_owner = 'not_set'){
+	function ACLAccess($view,$is_owner='not_set',$in_group='not_set'){
 		// don't check if meeting is being synced from Outlook
 		if($this->syncing == false){
 			$view = strtolower($view);
@@ -145,7 +159,7 @@ class Meeting extends SugarBean {
 					}
 			}
 		}
-		return parent::ACLAccess($view,$is_owner);
+		return parent::ACLAccess($view,$is_owner,$in_group);
 	}
 
 	/**
@@ -264,6 +278,9 @@ class Meeting extends SugarBean {
 			vCal::cache_sugar_vcal($current_user);
 		}
 
+		if(isset($_REQUEST['reminders_data'])) {
+			Reminder::saveRemindersDataJson('Meetings', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+		}
 
 
 		return $return_id;
@@ -273,8 +290,8 @@ class Meeting extends SugarBean {
 	function mark_deleted($id) {
 
 		require_once("modules/Calendar/CalendarUtils.php");
-		CalendarUtils::correctRecurrences($this, $id);		
-		
+		CalendarUtils::correctRecurrences($this, $id);
+
 		global $current_user;
 
 		parent::mark_deleted($id);
@@ -288,7 +305,7 @@ class Meeting extends SugarBean {
 		return "$this->name";
 	}
 
-    function create_export_query(&$order_by, &$where, $relate_link_join='')
+    function create_export_query($order_by, $where, $relate_link_join='')
     {
         $custom_join = $this->getCustomJoin(true, true, $where);
         $custom_join['join'] .= $relate_link_join;
@@ -418,7 +435,7 @@ class Meeting extends SugarBean {
         if(!empty($this->date_start))
         {
             $td = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$this->date_start);
-            if (!empty($td)) 
+            if (!empty($td))
             {
     	        if (!empty($this->duration_hours) && $this->duration_hours != '')
                 {
@@ -429,8 +446,8 @@ class Meeting extends SugarBean {
                     $td = $td->modify("+{$this->duration_minutes} mins");
                 }
                 $this->date_end = $td->format($GLOBALS['timedate']->get_date_time_format());
-            } 
-            else 
+            }
+            else
             {
                 $GLOBALS['log']->fatal("Meeting::save: Bad date {$this->date_start} for format ".$GLOBALS['timedate']->get_date_time_format());
             }
@@ -460,7 +477,7 @@ class Meeting extends SugarBean {
 		if (empty($this->email_reminder_time)) {
 			$this->email_reminder_time = -1;
 		}
-		if(empty($this->id)){ 
+		if(empty($this->id)){
 			$reminder_t = $GLOBALS['current_user']->getPreference('email_reminder_time');
 			if(isset($reminder_t))
 		    		$this->email_reminder_time = $reminder_t;
@@ -563,7 +580,7 @@ class Meeting extends SugarBean {
 		$startdate = $timedate->fromDb($meeting->date_start);
 		$xtpl->assign("MEETING_STARTDATE", $timedate->asUser($startdate, $notifyUser)." ".TimeDate::userTimezoneSuffix($startdate, $notifyUser));
 		$enddate = $timedate->fromDb($meeting->date_end);
-		$xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));		
+		$xtpl->assign("MEETING_ENDDATE", $timedate->asUser($enddate, $notifyUser)." ".TimeDate::userTimezoneSuffix($enddate, $notifyUser));
 		$xtpl->assign("MEETING_HOURS", $meeting->duration_hours);
 		$xtpl->assign("MEETING_MINUTES", $meeting->duration_minutes);
 		$xtpl->assign("MEETING_DESCRIPTION", $meeting->description);
@@ -574,7 +591,7 @@ class Meeting extends SugarBean {
 
 		return $xtpl;
 	}
-	
+
 	/**
 	 * Redefine method to attach ics file to notification email
 	 */
@@ -585,24 +602,24 @@ class Meeting extends SugarBean {
         }
 
 		$notify_mail = parent::create_notification_email($notify_user);
-						
+
 		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
 
 		require_once("modules/vCals/vCal.php");
 		$content = vCal::get_ical_event($this, $GLOBALS['current_user']);
-				
+
 		if(file_put_contents($path,$content)){
 			$notify_mail->AddAttachment($path, 'meeting.ics', 'base64', 'text/calendar');
 		}
-		return $notify_mail;		
+		return $notify_mail;
 	}
-	
+
 	/**
 	 * Redefine method to remove ics after email is sent
 	 */
 	public function send_assignment_notifications($notify_user, $admin){
 		parent::send_assignment_notifications($notify_user, $admin);
-		
+
 		$path = SugarConfig::getInstance()->get('upload_dir','upload/') . $this->id;
 		unlink($path);
 	}
@@ -744,30 +761,66 @@ class Meeting extends SugarBean {
 	function listviewACLHelper() {
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->parent_name)) {
 
 			if(!empty($this->parent_name_owner)) {
 				global $current_user;
 				$is_owner = $current_user->id == $this->parent_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//parent_name_owner not being set for whatever reason so we need to figure this out
+			else if(!empty($this->parent_type) && !empty($this->parent_id)) {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean($this->parent_type,$this->parent_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
 
+		/* BEGIN - SECURITY GROUPS */
+		/**
 		if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner)) {
+		*/
+		if(!ACLController::moduleSupportsACL($this->parent_type) || ACLController::checkAccess($this->parent_type, 'view', $is_owner, 'module', $in_group)){
+        /* END - SECURITY GROUPS */
 			$array_assign['PARENT'] = 'a';
 		} else {
 			$array_assign['PARENT'] = 'span';
 		}
 
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 
 		if(!empty($this->contact_name)) {
 			if(!empty($this->contact_name_owner)) {
 				global $current_user;
 				$is_owner = $current_user->id == $this->contact_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//contact_name_owner not being set for whatever reason so we need to figure this out
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
 
+		/* BEGIN - SECURITY GROUPS */
+		/**
 		if(ACLController::checkAccess('Contacts', 'view', $is_owner)) {
+		*/
+		if(ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)) {
+        /* END - SECURITY GROUPS */
 			$array_assign['CONTACT'] = 'a';
 		} else {
 			$array_assign['CONTACT'] = 'span';
@@ -776,8 +829,7 @@ class Meeting extends SugarBean {
 	}
 
 
-	function save_relationship_changes($is_update) {
-		$exclude = array();
+	function save_relationship_changes($is_update, $exclude = array()) {
 	    if(empty($this->in_workflow)) {
            if(empty($this->in_import)){//if a meeting is being imported then contact_id  should not be excluded
            //if the global soap_server_object variable is not empty (as in from a soap/OPI call), then process the assigned_user_id relationship, otherwise

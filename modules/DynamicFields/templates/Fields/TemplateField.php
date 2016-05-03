@@ -65,7 +65,8 @@ class TemplateField{
 	var $ext3 = '';
 	var $ext4 = '';
 	var $audited= 0;
-	var $massupdate = 0;
+    var $inline_edit = 1;
+    var $massupdate = 0;
 	var $importable = 'true' ;
 	var $duplicate_merge=0;
 	var $new_field_definition;
@@ -88,6 +89,7 @@ class TemplateField{
 		'required'=>'required',
 		'type'=>'type',
 		'audited'=>'audited',
+		'inline_edit'=>'inline_edit',
 		'massupdate'=>'massupdate',
 		'options'=>'ext1',
 		'help'=>'help',
@@ -107,6 +109,10 @@ class TemplateField{
     // Bug #48826
     // fields to decode from post request
     var $decode_from_request_fields_map = array('formula', 'dependency');
+
+    function __construct(){
+    }
+
 	/*
 		HTML FUNCTIONS
 		*/
@@ -343,7 +349,8 @@ class TemplateField{
 			'duplicate_merge'=>$this->duplicate_merge,
 			'duplicate_merge_dom_value'=> $this->getDupMergeDomValue(),
 			'audited'=>$this->convertBooleanValue($this->audited),
-			'reportable'=>$this->convertBooleanValue($this->reportable),
+            'inline_edit'=>$this->convertBooleanValue($this->inline_edit),
+            'reportable'=>$this->convertBooleanValue($this->reportable),
             'unified_search'=>$this->convertBooleanValue($this->unified_search),
             'merge_filter' => empty($this->merge_filter) ? "disabled" : $this->merge_filter
 		);
@@ -479,7 +486,7 @@ class TemplateField{
 	function populateFromPost(){
 		foreach($this->vardef_map as $vardef=>$field){
 
-			if(isset($_REQUEST[$vardef])){		    
+			if(isset($_REQUEST[$vardef])){
                 $this->$vardef = $_REQUEST[$vardef];
 
                 //  Bug #48826. Some fields are allowed to have special characters and must be decoded from the request
@@ -494,7 +501,10 @@ class TemplateField{
                 if($field == 'help' && !empty($this->$vardef))
                 {
                     $help = htmlspecialchars_decode($this->$vardef, ENT_QUOTES);
-                    $this->$vardef = htmlentities(remove_xss($help));
+
+					// Fix for issue #1170 - text in studio can't accept the special language characters.
+					//$this->$vardef = htmlentities(remove_xss($help));
+					$this->$vardef = htmlspecialchars(remove_xss($help));
                 }
 
 

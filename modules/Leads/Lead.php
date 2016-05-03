@@ -142,14 +142,29 @@ class Lead extends Person {
 	var $emailAddress;
 
 	var $importable = true;
-    
+
 	// This is used to retrieve related fields from form posts.
 	var $additional_column_fields = Array('assigned_user_name', 'task_id', 'note_id', 'meeting_id', 'call_id', 'email_id');
 	var $relationship_fields = Array('email_id'=>'emails','call_id'=>'calls','meeting_id'=>'meetings','task_id'=>'tasks',);
 
-	function Lead() {
-		parent::Person();
+	public function __construct() {
+		parent::__construct();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function Lead(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function get_account()
 	{
@@ -236,9 +251,9 @@ class Lead extends Person {
 		return $query;
 	}
 
-	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false, $parentbean = null, $singleSelect = false){
-		
-		$ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect);
+	function create_new_list_query($order_by, $where,$filter=array(),$params=array(), $show_deleted = 0,$join_type='', $return_array = false,$parentbean=null, $singleSelect = false, $ifListForExport = false){
+
+		$ret_array = parent::create_new_list_query($order_by, $where, $filter, $params, $show_deleted, $join_type, true, $parentbean, $singleSelect, $ifListForExport);
 		if(strpos($ret_array['select'],"leads.account_name") == false && strpos($ret_array['select'],"leads.*") == false)
 			$ret_array['select'] .= " ,leads.account_name";
     	if ( !$return_array )
@@ -278,12 +293,12 @@ class Lead extends Person {
 		$this->get_account();
 
 		if(!empty($this->campaign_id)){
-			
+
 			$camp = new Campaign();
 			$where = "campaigns.id='$this->campaign_id'";
 			$campaign_list = $camp->get_full_list("campaigns.name", $where, true);
 			if(!empty($campaign_list))
-				$this->campaign_name = $campaign_list[0]->name;	
+				$this->campaign_name = $campaign_list[0]->name;
 		}
 	}
 
@@ -293,9 +308,9 @@ class Lead extends Person {
 
 		$temp_array['ACC_NAME_FROM_ACCOUNTS'] = empty($temp_array['ACC_NAME_FROM_ACCOUNTS']) ? ($temp_array['ACCOUNT_NAME']) : ($temp_array['ACC_NAME_FROM_ACCOUNTS']);
 
-		return $temp_array;		
+		return $temp_array;
 	}
-	
+
     /**
      * Returns an array of fields that are of type link.
      *
@@ -336,7 +351,7 @@ class Lead extends Person {
 	array_push($where_clauses, "leads.account_name like '$the_query_string%'");
 	array_push($where_clauses, "leads.first_name like '$the_query_string%'");
 	array_push($where_clauses, "ea.email_address like '$the_query_string%'");
-	
+
 	if (is_numeric($the_query_string)) {
 		array_push($where_clauses, "leads.phone_home like '%$the_query_string%'");
 		array_push($where_clauses, "leads.phone_mobile like '%$the_query_string%'");
@@ -379,27 +394,61 @@ class Lead extends Person {
 	function listviewACLHelper(){
 		$array_assign = parent::listviewACLHelper();
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->account_name)){
 
 			if(!empty($this->account_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->account_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Accounts',$this->account_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if( ACLController::checkAccess('Accounts', 'view', $is_owner)){
+			*/
+			if( ACLController::checkAccess('Accounts', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['ACCOUNT'] = 'a';
 			}else{
 				$array_assign['ACCOUNT'] = 'span';
 			}
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->opportunity_name)){
 
 			if(!empty($this->opportunity_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->opportunity_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Opportunities',$this->opportunity_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Opportunities', $this->opportunity_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if( ACLController::checkAccess('Opportunities', 'view', $is_owner)){
+			*/
+			if( ACLController::checkAccess('Opportunities', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['OPPORTUNITY'] = 'a';
 			}else{
 				$array_assign['OPPORTUNITY'] = 'span';
@@ -407,14 +456,32 @@ class Lead extends Person {
 
 
 		$is_owner = false;
+		$in_group = false; //SECURITY GROUPS
 		if(!empty($this->contact_name)){
 
 			if(!empty($this->contact_name_owner)){
 				global $current_user;
 				$is_owner = $current_user->id == $this->contact_name_owner;
 			}
+			/* BEGIN - SECURITY GROUPS */
+			//contact_name_owner not being set for whatever reason so we need to figure this out
+			else {
+				global $current_user;
+                $parent_bean = BeanFactory::getBean('Contacts',$this->contact_id);
+                if($parent_bean !== false) {
+                	$is_owner = $current_user->id == $parent_bean->assigned_user_id;
+                }
+			}
+			require_once("modules/SecurityGroups/SecurityGroup.php");
+			$in_group = SecurityGroup::groupHasAccess('Contacts', $this->contact_id, 'view');
+        	/* END - SECURITY GROUPS */
 		}
+			/* BEGIN - SECURITY GROUPS */
+			/**
 			if( ACLController::checkAccess('Contacts', 'view', $is_owner)){
+			*/
+			if( ACLController::checkAccess('Contacts', 'view', $is_owner, 'module', $in_group)){
+        	/* END - SECURITY GROUPS */
 				$array_assign['CONTACT'] = 'a';
 			}else{
 				$array_assign['CONTACT'] = 'span';
@@ -495,10 +562,10 @@ class Lead extends Person {
 		return $value;
 	}
 	function get_unlinked_email_query($type=array()) {
-		
+
 		return get_unlinked_email_query($type, $this);
 	}
-    
+
     /**
      * Returns query to find the related calls created pre-5.1
      *
@@ -508,11 +575,11 @@ class Lead extends Person {
     {
         $return_array['select']='SELECT calls.id ';
         $return_array['from']='FROM calls ';
-        $return_array['where']=" WHERE calls.parent_id = '$this->id' 
+        $return_array['where']=" WHERE calls.parent_id = '$this->id'
             AND calls.parent_type = 'Leads' AND calls.id NOT IN ( SELECT call_id FROM calls_leads ) ";
         $return_array['join'] = "";
         $return_array['join_tables'][0] = '';
-        
+
         return $return_array;
     }
 
@@ -540,11 +607,11 @@ class Lead extends Person {
     {
         $return_array['select']='SELECT meetings.id ';
         $return_array['from']='FROM meetings ';
-        $return_array['where']=" WHERE meetings.parent_id = '$this->id' 
+        $return_array['where']=" WHERE meetings.parent_id = '$this->id'
             AND meetings.parent_type = 'Leads' AND meetings.id NOT IN ( SELECT meeting_id FROM meetings_leads ) ";
         $return_array['join'] = "";
         $return_array['join_tables'][0] = '';
-        
+
         return $return_array;
     }
 

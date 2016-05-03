@@ -69,10 +69,25 @@ class ListViewSmarty extends ListViewDisplay{
      * Constructor, Smarty object immediately available after
      *
      */
-	function ListViewSmarty() {
-		parent::ListViewDisplay();
+    public function __construct() {
+		parent::__construct();
 		$this->ss = new Sugar_Smarty();
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ListViewSmarty(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     /**
      * Processes the request. Calls ListViewData process. Also assigns all lang strings, export links,
@@ -85,7 +100,7 @@ class ListViewSmarty extends ListViewDisplay{
      */
 	function process($file, $data, $htmlVar) {
 		if(!$this->should_process)return;
-		global $odd_bg, $even_bg, $hilite_bg, $click_bg, $app_strings;
+		global $odd_bg, $even_bg, $hilite_bg, $click_bg, $app_strings, $sugar_config;
 		parent::process($file, $data, $htmlVar);
 
 		$this->tpl = $file;
@@ -104,6 +119,13 @@ class ListViewSmarty extends ListViewDisplay{
             if(!empty($params['contextMenu']['objectType']))
                 $contextMenuObjectsTypes[$params['contextMenu']['objectType']] = true;
         }
+
+        //Check if inline editing is enabled for list view.
+        if(!isset($sugar_config['enable_line_editing_list']) || $sugar_config['enable_line_editing_list']){
+            $this->ss->assign('inline_edit', true);
+        }
+
+		$this->ss->assign('sugarconfig', $this->displayColumns);
 		$this->ss->assign('displayColumns', $this->displayColumns);
 		$this->ss->assign('APP',$app_strings);
 
@@ -137,7 +159,7 @@ class ListViewSmarty extends ListViewDisplay{
             $menu_location = 'bottom';
             $this->ss->assign('actionsLinkBottom', $this->buildActionsLink('actions_link' ,$menu_location));
 		}
-		
+
 		$this->ss->assign('quickViewLinks', $this->quickViewLinks);
 
 		// handle save checks and stuff
@@ -209,7 +231,7 @@ class ListViewSmarty extends ListViewDisplay{
         $this->ss->assign('moduleList', $app_list_strings['moduleList']);
         $this->ss->assign('data', $this->data['data']);
         $this->ss->assign('query', $this->data['query']);
-        $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version, 
+        $this->ss->assign('sugar_info', array("sugar_version" => $sugar_version,
 											  "sugar_flavor" => $sugar_flavor));
 		$this->data['pageData']['offsets']['lastOffsetOnPage'] = $this->data['pageData']['offsets']['current'] + count($this->data['data']);
 		$this->ss->assign('pageData', $this->data['pageData']);
@@ -222,7 +244,7 @@ class ListViewSmarty extends ListViewDisplay{
         $this->ss->assign('navStrings', $navStrings);
 
         $displayEmptyDataMessages = TRUE;
-        //TODO: Cleanup, better logic for which modules are exempt from the new messaging. 
+        //TODO: Cleanup, better logic for which modules are exempt from the new messaging.
         $modulesExemptFromEmptyDataMessages = array('WorkFlow','ContractTypes', 'OAuthKeys', 'TimePeriods');
         if( (isset($GLOBALS['moduleTabMap'][$currentModule]) && $GLOBALS['moduleTabMap'][$currentModule] == 'Administration')
             || isset($GLOBALS['adminOnlyList'][$currentModule]) || in_array($currentModule, $modulesExemptFromEmptyDataMessages) )

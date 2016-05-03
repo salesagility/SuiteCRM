@@ -46,9 +46,23 @@ class DynamicField {
     var $use_existing_labels = false; // this value is set to true by install_custom_fields() in ModuleInstaller.php; everything else expects it to be false
     var $base_path = "";
 
-    function DynamicField($module = '') {
+    public function __construct($module = '') {
         $this->module = (! empty ( $module )) ? $module :( (isset($_REQUEST['module']) && ! empty($_REQUEST['module'])) ? $_REQUEST ['module'] : '');
         $this->base_path = "custom/Extension/modules/{$this->module}/Ext/Vardefs";
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function DynamicField($module = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($module);
     }
 
    function getModuleName()
@@ -563,6 +577,7 @@ class DynamicField {
         $fmd->importable = ( isset ( $field->importable ) ) ? $field->importable : null ;
         $fmd->duplicate_merge = $field->duplicate_merge;
         $fmd->audited =$field->audited;
+        $fmd->inline_edit = $field->inline_edit;
         $fmd->reportable = ($field->reportable ? 1 : 0);
         if(!$is_update){
             $fmd->new_with_id=true;
@@ -636,6 +651,7 @@ class DynamicField {
                 return ( $value === 'true' || $value === '1' || $value === true || $value === 1 ); break;
             case "required":
             case "audited":
+            case "inline_edit":
             case "massupdate":
                 return ( $value === 'false' || $value === '0' || $value === false || $value === 0); break;
             case "default_value":
@@ -709,6 +725,7 @@ class DynamicField {
      * @param unknown_type $ext2
      * @param unknown_type $ext3
      * @param unknown_type $audited
+     * @param unknown_type $inline_edit
      * @param unknown_type $mass_update
      * @param unknown_type $ext4
      * @param unknown_type $help
@@ -716,7 +733,7 @@ class DynamicField {
      * @param unknown_type $comment
      * @return boolean
      */
-    function addField($name,$label='', $type='Text',$max_size='255',$required_option='optional', $default_value='', $ext1='', $ext2='', $ext3='',$audited=0, $mass_update = 0 , $ext4='', $help='',$duplicate_merge=0, $comment=''){
+    function addField($name,$label='', $type='Text',$max_size='255',$required_option='optional', $default_value='', $ext1='', $ext2='', $ext3='',$audited=0, $inline_edit = 1, $mass_update = 0 , $ext4='', $help='',$duplicate_merge=0, $comment=''){
         require_once('modules/DynamicFields/templates/Fields/TemplateField.php');
         $field = new TemplateField();
         $field->label = $label;
@@ -737,6 +754,7 @@ class DynamicField {
         $field->massupdate = $mass_update;
         $field->duplicate_merge = $duplicate_merge;
         $field->audited = $audited;
+        $field->inline_edit = $inline_edit;
         $field->reportable = 1;
         return $this->addFieldObject($field);
     }

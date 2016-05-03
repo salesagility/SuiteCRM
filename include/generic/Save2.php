@@ -123,7 +123,7 @@ else {
  	if(!empty($_REQUEST['select_entire_list']) &&  $_REQUEST['select_entire_list'] != 'undefined' && isset($_REQUEST['current_query_by_page'])){
 		$order_by = '';
 		$current_query_by_page = $_REQUEST['current_query_by_page'];
- 		$current_query_by_page_array = unserialize(base64_decode($current_query_by_page));
+ 		$current_query_by_page_array = sugar_unserialize(base64_decode($current_query_by_page));
 
         $module = $current_query_by_page_array['module'];
         $seed = BeanFactory::getBean($module);
@@ -196,8 +196,9 @@ else {
  				$add_values[substr($key,14)]=$value;
  			}
  		}
- 		$focus->load_relationship($_REQUEST['subpanel_field_name']);
- 		$focus->$_REQUEST['subpanel_field_name']->add($_REQUEST['subpanel_id'],$add_values);
+		$relName = $_REQUEST['subpanel_field_name'];
+ 		$focus->load_relationship($relName);
+ 		$focus->$relName->add($_REQUEST['subpanel_id'],$add_values);
         $focus->save();
  	}
 }

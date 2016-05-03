@@ -61,6 +61,7 @@ class EmailMarketing extends SugarBean
 	var $all_prospect_lists;
 	var $status;
 	var $inbound_email_id;
+	var $outbound_email_id;
 
 	var $table_name = 'email_marketing';
 	var $object_name = 'EmailMarketing';
@@ -68,15 +69,30 @@ class EmailMarketing extends SugarBean
 
 	var $new_schema = true;
 
-	function EmailMarketing()
+    public function __construct()
 	{
-		parent::SugarBean();
+		parent::__construct();
 
 
 
 	}
 
-	function retrieve($id, $encode=true, $deleted=true) {
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function EmailMarketing(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
+	function retrieve($id = -1, $encode=true, $deleted=true) {
 	    parent::retrieve($id,$encode,$deleted);
 
         global $timedate;

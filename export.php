@@ -89,10 +89,10 @@ header("Content-transfer-encoding: binary");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
 header("Last-Modified: " . TimeDate::httpTime() );
 header("Cache-Control: post-check=0, pre-check=0", false );
-header("Content-Length: ".mb_strlen($transContent, '8bit'));
 if (!empty($sugar_config['export_excel_compatible'])) {
     $transContent=chr(255) . chr(254) . mb_convert_encoding($transContent, 'UTF-16LE', 'UTF-8');
 }
+header("Content-Length: ".mb_strlen($transContent, '8bit'));
 print $transContent;
 
 sugar_cleanup(true);

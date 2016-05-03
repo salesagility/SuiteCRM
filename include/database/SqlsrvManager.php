@@ -185,7 +185,7 @@ class SqlsrvManager extends MssqlManager
                     if(isset($GLOBALS['app_strings']['ERR_NO_DB'])) {
                         sugar_die($GLOBALS['app_strings']['ERR_NO_DB']);
                     } else {
-                        sugar_die("Could not connect to the database. Please refer to sugarcrm.log for details.");
+                        sugar_die("Could not connect to the database. Please refer to suitecrm.log for details.");
                     }
             } else {
                 return false;
@@ -300,7 +300,7 @@ class SqlsrvManager extends MssqlManager
      * @param  array  $fielddef2
      * @return bool   true if they match, false if they don't
      */
-    public function compareVarDefs($fielddef1,$fielddef2)
+    public function compareVarDefs($fielddef1,$fielddef2, $ignoreName = false)
     {
         if((isset($fielddef2['dbType']) && $fielddef2['dbType'] == 'id') || preg_match('/(_id$|^id$)/', $fielddef2['name'])){
             if(isset($fielddef1['type']) && isset($fielddef2['type'])){

@@ -90,13 +90,15 @@ class EmailReminder
 
         $admin = new Administration();
         $admin->retrieveSettings();
+
+        Reminder::sendEmailReminders($this, $admin);
         
         $meetings = $this->getMeetingsForRemind();
         foreach($meetings as $id ) {
             $recipients = $this->getRecipients($id,'Meetings');
             $bean = new Meeting();
-            $bean->retrieve($id);
-            if ( $this->sendReminders($bean, $admin, $recipients) ) {
+            $bean->retrieve($id);			
+			if ( $this->sendReminders($bean, $admin, $recipients) ) {
                 $bean->email_reminder_sent = 1;
                 $bean->save();
             }            
@@ -115,7 +117,7 @@ class EmailReminder
         
         return true;
     }
-    
+	
     /**
      * send reminders
      * @param SugarBean $bean
@@ -123,16 +125,16 @@ class EmailReminder
      * @param array $recipients
      * @return boolean
      */
-    protected function sendReminders(SugarBean $bean, Administration $admin, $recipients)
+    public function sendReminders(SugarBean $bean, Administration $admin, $recipients)
     {
-        
+
         if ( empty($_SESSION['authenticated_user_language']) ) {
             $current_language = $GLOBALS['sugar_config']['default_language'];
         }else{
             $current_language = $_SESSION['authenticated_user_language'];
         }            
-                
-                if ( !empty($bean->created_by) ) {
+
+        if ( !empty($bean->created_by) ) {
             $user_id = $bean->created_by;
         }else if ( !empty($bean->assigned_user_id) ) {
             $user_id = $bean->assigned_user_id;
@@ -169,15 +171,15 @@ class EmailReminder
         $xtpl->parse($template_name . "_Subject");
         
         $mail->Body = from_html(trim($xtpl->text($template_name)));
-               $mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
-               
-               $oe = new OutboundEmail();
+        $mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
+
+        $oe = new OutboundEmail();
         $oe = $oe->getSystemMailerSettings();
         if ( empty($oe->mail_smtpserver) ) {
             $GLOBALS['log']->fatal("Email Reminder: error sending email, system smtp server is not set");
             return;
         }
-
+				
         foreach($recipients as $r ) {
             $mail->ClearAddresses();
             $mail->AddAddress($r['email'],$GLOBALS['locale']->translateCharsetMIME(trim($r['name']), 'UTF-8', $OBCharset));    
@@ -186,7 +188,7 @@ class EmailReminder
                 $GLOBALS['log']->fatal("Email Reminder: error sending e-mail (method: {$mail->Mailer}), (error: {$mail->ErrorInfo})");
             }
         }
-    
+		
         return true;
     }
     
@@ -222,7 +224,7 @@ class EmailReminder
     {
         global $db;
         $query = "
-            SELECT id, date_start, email_reminder_time FROM meetings 
+            SELECT id, date_start, email_reminder_time FROM meetings
             WHERE email_reminder_time != -1
             AND deleted = 0
             AND email_reminder_sent = 0

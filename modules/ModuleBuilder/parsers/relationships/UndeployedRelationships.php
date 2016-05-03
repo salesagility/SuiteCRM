@@ -75,10 +75,10 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * Find all modules, deployed and undeployed, that can participate in a relationship
      * @return array    Array of [$module][$subpanel]
      */
-    static function findRelatableModules ()
+    static function findRelatableModules ($includeActivitiesSubmodules = true)
     {
         // first find all deployed modules that we might participate in a relationship
-        $relatableModules = parent::findRelatableModules ( ) ;
+        $relatableModules = parent::findRelatableModules ($includeActivitiesSubmodules ) ;
         
         // now add in the undeployed modules - those in custom/modulebuilder
         // note that if a module exists in both deployed and undeployed forms, the subpanels from the undeployed form are used...  
@@ -225,7 +225,7 @@ class UndeployedRelationships extends AbstractRelationships implements Relations
      * Translate the set of relationship objects into files that the Module Loader can work with
      * @param $basepath string Pathname of the directory to contain the build
      */
-    function build ($basepath)
+    function build ($basepath, $installDefPrefix, $relationships)
     {
         
         // first expand out any reference to Activities to its submodules

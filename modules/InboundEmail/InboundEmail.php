@@ -166,10 +166,10 @@ class InboundEmail extends SugarBean {
 	/**
 	 * Sole constructor
 	 */
-	function InboundEmail() {
+    public function __construct() {
 	    $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
 	    $this->EmailCachePath = sugar_cached('modules/Emails');
-	    parent::SugarBean();
+	    parent::__construct();
 		if(function_exists("imap_timeout")) {
 			/*
 			 * 1: Open
@@ -192,7 +192,7 @@ class InboundEmail extends SugarBean {
 	 * @param string id
 	 * @return object Bean
 	 */
-	function retrieve($id, $encode=true, $deleted=true) {
+	function retrieve($id = -1, $encode=true, $deleted=true) {
 		$ret = parent::retrieve($id,$encode,$deleted);
 		// if I-E bean exist
 		if (!is_null($ret)) {
@@ -548,7 +548,7 @@ class InboundEmail extends SugarBean {
 			return array();
 		}
 
-		$q = "SELECT * FROM email_cache WHERE ie_id = '{$this->id}' AND mbox = '{$mbox}' AND ";
+		$q = "SELECT * FROM email_cache WHERE ie_id = '{$this->db->quote($this->id)}' AND mbox = '{$this->db->quote($mbox)}' AND ";
 		$startIndex = 0;
 		$endIndex = 5;
 
@@ -643,12 +643,12 @@ class InboundEmail extends SugarBean {
         }
 
         if (!empty($this->hrSortLocal[$sort])) {
-            $order = " ORDER BY {$this->hrSortLocal[$sort]} {$direction}";
+            $order = " ORDER BY {$this->db->quote($this->hrSortLocal[$sort])} {$this->db->quote($direction)}";
         } else {
             $order = "";
         }
 
-		$q = "SELECT * FROM email_cache WHERE ie_id = '{$this->id}' AND mbox = '{$mbox}' {$order}";
+		$q = "SELECT * FROM email_cache WHERE ie_id = '{$this->db->quote($this->id)}' AND mbox = '{$this->db->quote($mbox)}' {$order}";
 
 		if(!empty($limit)) {
 			$start = ( $page - 1 ) * $limit;
@@ -727,8 +727,8 @@ class InboundEmail extends SugarBean {
 		// reset in-memory cache
 		$this->currentCache = null;
 
-		$table = 'email_cache';
-		$where = "WHERE ie_id = '{$this->id}' AND mbox = '{$mbox}'";
+		$table = $this->db->quote('email_cache');
+		$where = "WHERE ie_id = '{$this->db->quote($this->id)}' AND mbox = '{$this->db->quote($mbox)}'";
 
 		// handle removed rows
 		if(!empty($remove)) {
@@ -738,7 +738,7 @@ class InboundEmail extends SugarBean {
 					$removeIds .= ",";
 				}
 
-				$removeIds .= "'{$overview->imap_uid}'";
+				$removeIds .= "'{$this->db->quote($overview->imap_uid)}'";
 			}
 
 			$q = "DELETE FROM {$table} {$where} AND imap_uid IN ({$removeIds})";
@@ -796,19 +796,20 @@ class InboundEmail extends SugarBean {
 						$values .= ", ";
 					}
 
+					$fieldName = $colDef['name'];
 					// trim values for Oracle/MSSql
 					if(	isset($colDef['len']) && !empty($colDef['len']) &&
 						isset($colDef['type']) && !empty($colDef['type']) &&
 						$colDef['type'] == 'varchar'
 					)
                     {
-                        if (isset($overview->$colDef['name']))
+                        if (isset($overview->$fieldName))
                         {
-                            $overview->$colDef['name'] = substr($overview->$colDef['name'], 0, $colDef['len']);
+                            $overview->$fieldName = substr($overview->$fieldName, 0, $colDef['len']);
                         }
                     }
 
-					switch($colDef['name']) {
+					switch($fieldName) {
 						case "imap_uid":
 							if(isset($overview->uid) && !empty($overview->uid)) {
 								$this->imap_uid = $overview->uid;
@@ -850,8 +851,8 @@ class InboundEmail extends SugarBean {
 						break;
 
 						default:
-							$overview->$colDef['name'] = SugarCleaner::cleanHtml(from_html($overview->$colDef['name']));
-							$values .= $this->db->quoted($overview->$colDef['name']);
+							$overview->$fieldName = SugarCleaner::cleanHtml(from_html($overview->$fieldName));
+							$values .= $this->db->quoted($overview->$fieldName);
 						break;
 					}
 				}
@@ -878,7 +879,8 @@ class InboundEmail extends SugarBean {
 				$set = '';
 				foreach($this->overview->fieldDefs as $colDef) {
 
-					switch($colDef['name']) {
+					$fieldName = $colDef['name'];
+					switch($fieldName) {
 						case "toaddr":
 						case "fromaddr":
 						case "mailsize":
@@ -893,20 +895,20 @@ class InboundEmail extends SugarBean {
                                 $set .= ",";
                             }
                             $value = '';
-                            if (isset($overview->$colDef['name']))
+                            if (isset($overview->$fieldName))
                             {
-                                $value = $this->db->quoted($overview->$colDef['name']);
+                                $value = $this->db->quoted($overview->$fieldName);
                             }
                             else
                             {
                                 $value = $this->db->quoted($value);
                             }
-                            $set .= "{$colDef['name']} = " . $value;
+                            $set .= "{$fieldName} = " . $value;
 						break;
 					}
 				}
 
-				$q .= $set . " WHERE ie_id = '{$this->id}' AND mbox = '{$overview->mbox}' AND imap_uid = '{$overview->imap_uid}'";
+				$q .= $set . " WHERE ie_id = '{$this->db->quote($this->id)}' AND mbox = '{$this->db->quote($overview->mbox)}' AND imap_uid = '{$overview->imap_uid}'";
 				$GLOBALS['log']->info("INBOUNDEMAIL-CACHE: update query [ {$q} ]");
 				$r = $this->db->query($q, true, $q);
 			}
@@ -3566,7 +3568,7 @@ class InboundEmail extends SugarBean {
 				}
 			}
 		}
-		
+
 	   return $result;
 
     }
@@ -3580,10 +3582,15 @@ class InboundEmail extends SugarBean {
 	 */
 	function saveAttachmentBinaries($attach, $msgNo, $thisBc, $part, $forDisplay) {
 		// decide where to place the file temporarily
+
+		if(isset($attach->id) && strpos($attach->id, "..") !== false && isset($this->id) && strpos($this->id, "..") !== false){
+			die("Directory navigation attack denied.");
+		}
+
 		$uploadDir = ($forDisplay) ? "{$this->EmailCachePath}/{$this->id}/attachments/" : "upload://";
 
 		// decide what name to save file as
-		$fileName = $attach->id;
+		$fileName = htmlspecialchars($attach->id);
 
 		// download the attachment if we didn't do it yet
 		if(!file_exists($uploadDir.$fileName)) {
@@ -4522,6 +4529,10 @@ eoq;
 		if (empty($stored_options)) {
 			$stored_options=$this->stored_options;
 		}
+		return self::get_stored_options_static($option_name, $default_value, $stored_options);
+	}
+
+	public static function get_stored_options_static($option_name,$default_value=null,$stored_options=null) {
 		if(!empty($stored_options)) {
 			$storedOptions = unserialize(base64_decode($stored_options));
 			if (isset($storedOptions[$option_name])) {
@@ -4950,7 +4961,7 @@ eoq;
 	 * Override's SugarBean's
 	 */
 	function create_export_query($order_by, $where, $show_deleted = 0) {
-		return $this->create_new_list_query($order_by, $where, $show_deleted = 0);
+		return $this->create_new_list_query($order_by, $where,array(), array(), $show_deleted);
 	}
 
 	/**
@@ -5440,6 +5451,10 @@ eoq;
 			$cache = "{$this->EmailCachePath}/{$this->id}/messages/{$this->mailbox}{$cachedUIDL}.php";
 		} else {
 			$cache = "{$this->EmailCachePath}/{$this->id}/messages/{$this->mailbox}{$uid}.php";
+		}
+
+		if(isset($cache) && strpos($cache, "..") !== false){
+			die("Directory navigation attack denied.");
 		}
 
 		if(file_exists($cache) && !$forceRefresh) {
@@ -6611,7 +6626,7 @@ class Overview {
 			),
 		);
 	*/
-	function Overview() {
+	function __construct() {
 		global $dictionary;
 
 		if(!isset($dictionary['email_cache']) || empty($dictionary['email_cache'])) {

@@ -38,38 +38,53 @@
  ********************************************************************************/
 
  require_once('include/ListView/ListViewSmarty.php');
- 
+
 class ListViewPackages extends ListViewSmarty{
     var $secondaryDisplayColumns;
     /**
      * Constructor  Call ListViewSmarty
      */
+    function __construct(){
+        parent::__construct();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
     function ListViewPackages(){
-        parent::ListViewSmarty();   
-    } 
-    
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
     /**
      * Override the setup method in ListViewSmarty since we are not passing in a bean
-     * 
+     *
      * @param data  the data to display on the page
      * @param file  the template file to parse
      */
-    function setup($data, $file){
+    function setup($data, $file, $where, $params = Array(), $offset = 0, $limit = -1, $filter_fields = Array(), $id_field = 'id'){
         $this->data = $data;
-        $this->tpl = $file;       
+        $this->tpl = $file;
     }
-    
+
     /**
      * Override the display method
      */
-    function display(){
+    function display($end = true){
         global $odd_bg, $even_bg, $app_strings;
         $this->ss->assign('rowColor', array('oddListRow', 'evenListRow'));
         $this->ss->assign('bgColor', array($odd_bg, $even_bg));
         $this->ss->assign('displayColumns', $this->displayColumns);
         $this->ss->assign('secondaryDisplayColumns', $this->secondaryDisplayColumns);
-        $this->ss->assign('data', $this->data); 
-        return $this->ss->fetch($this->tpl);  
-    }  
+        $this->ss->assign('data', $this->data);
+        return $this->ss->fetch($this->tpl);
+    }
 }
 ?>

@@ -46,13 +46,15 @@
         elem1.style.display = 'none';
     }
 
-	/*
-	 * this function shows a div using the passed in value
-	 */
-    function show(div){
-        var elem1 = document.getElementById(div);
-        elem1.style.display = '';
-    }
+/*
+ * this function shows a div using the passed in value
+ */
+function show(div){
+  var elem1 = document.getElementById(div);
+  if(elem1) {
+    elem1.style.display = '';
+  }
+}
 	/*
 	 * this function calls the methods to hide all divs and show the passed in div
 	 */
@@ -99,13 +101,18 @@
 		var next_button_div = document.getElementById('next_button_div');	
 		var back_button_div = document.getElementById('back_button_div');			
 
+      if(typeof document.getElementById('wizform').direction != 'undefined') {
         save_button.disabled = true;
-		back_button_div.style.display = 'none';
-		save_button_div.style.display = 'none';		
-		next_button.focus();
-		if(wiz_mode == 'marketing'){
-			back_button_div.style.display = '';
-		}
+        back_button_div.style.display = 'none';
+        save_button_div.style.display = 'none';
+        next_button.focus();
+        if (wiz_mode == 'marketing') {
+          back_button_div.style.display = '';
+        }
+      }
+      else{
+        back_button_div.style.display = 'none';
+      }
         
         //set nav hi-lite
         hilite(current_step.value);
@@ -114,70 +121,138 @@
     }
 
 
-    
-    /*this function runs on each navigation in the wizard.  It will call the methods that:
-    *  1.hide the divs
-    *  2.show the div being navigated to
-    *  3.shows/hides the proper buttons
-    *  4.highlites the step title
-    *  5.adjusts the step location message
-    */
 
-    function navigate(direction){
-        //get the current step
-        var current_step = document.getElementById('wiz_current_step');
-        var currentValue = parseInt(current_step.value);
-    
-        //validation needed. (specialvalidation,  plus step number, plus submit button)
-        if(validate_wiz(current_step.value,direction)){
-            
-            //change current step value to that of the step being navigated to
-            if(direction == 'back'){
-                current_step.value = currentValue-1;
-            }
-            if(direction == 'next'){
-                current_step.value = currentValue+1;
-            }
-            if(direction == 'direct'){
-            //no need to modify current step, this is a direct navigation
-            }
-                
-            //show next step        
-            showdiv("step"+current_step.value);
-        
-            //set nav hi-lite
-            hilite(current_step.value);
+/*this function runs on each navigation in the wizard.  It will call the methods that:
+ *  1.hide the divs
+ *  2.show the div being navigated to
+ *  3.shows/hides the proper buttons
+ *  4.highlites the step title
+ *  5.adjusts the step location message
+ */
 
-            //enable save button if on last step
-            var total = document.getElementById('wiz_total_steps').value;
-            var save_button = document.getElementById('wiz_submit_button');
-			var back_button_div = document.getElementById('back_button_div');
-			var save_button_div = document.getElementById('save_button_div');		
-			var next_button_div = document.getElementById('next_button_div');		
-            if(current_step.value==total){
-                //save_button.display='';
-                save_button.disabled = false;
-				back_button_div.style.display = '';
-				save_button_div.style.display = '';		
-				next_button_div.style.display = 'none';
-                
-            }else{
-	            if(current_step.value<2){                
-		            back_button_div.style.display = 'none';	
-	            }else{
-		            back_button_div.style.display = '';		            	
-	            }
-				var next_button = document.getElementById('wiz_next_button');	            
-				next_button_div.style.display = '';
-				save_button_div.style.display = 'none';		
-				next_button.focus();                
-            }
+function navigate(direction, noValidation, noSave){
+  if(typeof noValidation == 'undefined') {
+    noValidation = false;
+  }
+  if(typeof noSave == 'undefined') {
+    noSave = false;
+  }
 
-        }else{
-         //error occurred, do nothing   
-        }    
-    
+  //get the current step
+  var current_step = document.getElementById('wiz_current_step');
+  var currentValue = parseInt(current_step.value);
+
+  var campaignId = $('input[name="record"]').val();
+  if(!campaignId) {
+    campaignId = $('input[name="campaign_id"]').val();
+  }
+
+  //validation needed. (specialvalidation,  plus step number, plus submit button)
+  var validationResult = validate_wiz(current_step.value,direction);
+  if(noValidation || validationResult){
+
+    //change current step value to that of the step being navigated to
+    if(direction == 'back'){
+      current_step.value = currentValue-1;
     }
+    if(direction == 'next'){
+      if(currentValue == 1) {
+        if(!campaignId) {
+          if(typeof document.getElementById('wizform').direction != 'undefined') {
+            if(!noSave) {
+              campaignCreateAndRefreshPage();
+            }
+          }
+        }
+        else {
+          if(!noSave) {
+            campaignUpdate();
+          }
+        }
+      }
+      current_step.value = currentValue+1;
+    }
+    if(direction == 'direct'){
+      //no need to modify current step, this is a direct navigation
+    }
+
+    //show next step
+    showdiv("step"+current_step.value);
+
+    //set nav hi-lite
+    hilite(current_step.value);
+
+    //enable save button if on last step
+    var total = document.getElementById('wiz_total_steps').value;
+    var save_button = document.getElementById('wiz_submit_button');
+    var finish_button = document.getElementById('wiz_submit_finish_button');
+    var back_button_div = document.getElementById('back_button_div');
+    var save_button_div = document.getElementById('save_button_div');
+    var next_button_div = document.getElementById('next_button_div');
+    if(current_step.value==total){
+      //save_button.display='';
+      save_button.disabled = false;
+      back_button_div.style.display = '';
+      save_button_div.style.display = '';
+      next_button_div.style.display = 'none';
+      if(finish_button) {
+        finish_button.style.display = 'none';
+      }
+      if(typeof campaignBudget != 'undefined' && campaignBudget) {
+        finish_button.style.display = '';
+      }
+    }else{
+      if(current_step.value<2){
+        back_button_div.style.display = 'none';
+      }else{
+        back_button_div.style.display = '';
+      }
+      var next_button = document.getElementById('wiz_next_button');
+
+      if(typeof campaignBudget != 'undefined' && campaignBudget) {
+        var targetListStep = 3;
+      }
+      else {
+        var targetListStep = 2;
+      }
+      if (current_step.value == targetListStep) {
+        if(typeof document.getElementById('wizform').direction != 'undefined') {
+          next_button_div.style.display = 'none';
+          save_button_div.style.display = '';
+          $('#wiz_submit_button').removeAttr('disabled');
+        }
+      }
+      else {
+        next_button_div.style.display = '';
+        save_button_div.style.display = 'none';
+      }
+      next_button.focus();
+    }
+
+  }else{
+    //error occurred, do nothing
+  }
+
+}
+
+
+function campaignCreateAndRefreshPage() {
+  var wizform = document.getElementById('wizform');
+  if(typeof wizform.direction != 'undefined') {
+    wizform.action.value = 'WizardNewsletterSave';
+    wizform.direction.value = 'continue_targetList';
+  }
+  wizform.submit();
+}
+
+function campaignUpdate() {
+  var wizform = document.getElementById('wizform');
+  wizform.action.value = 'WizardNewsletterSave';
+  wizform.direction.value='continue';
+  $.post($('#wizform').attr('action'), $('#wizform').serialize(), function(){
+
+  });
+}
 
     /*
      * This function highlites the right title on the navigation div.
@@ -292,3 +367,101 @@
         return true;        
     }
 
+var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, callback) {
+
+    var autoCheckUpdateCheckbox = function() {
+        if (!$('#template_id').val()) {
+            $('input[name="update_exists_template"]').prop('checked', false);
+            $('input[name="update_exists_template"]').prop('disabled', true);
+        }
+        else {
+            $('input[name="update_exists_template"]').prop('disabled', false);
+        }
+    }
+
+    autoCheckUpdateCheckbox();
+
+    if($('input[name="update_exists_template"]').prop('checked')) {
+        namePrefixCopyOf = '';
+    }
+
+    var emailTemplateId = $(elem).val() ? $(elem).val() : (typeof templateIdDefault != 'undefined' && templateIdDefault ? templateIdDefault : null);
+    if(emailTemplateId) {
+
+        $('#email_template_view_html').html('');
+        $('#email_template_view').html('');
+
+        $.post('index.php?entryPoint=emailTemplateData', {
+            'emailTemplateId': emailTemplateId
+        }, function (resp) {
+            var results = JSON.parse(resp);
+            if(!results.error) {
+                $('#email_template_view_html').html(results.data.body_html);
+                $('#email_template_view').html(results.data.body);
+
+                //document.getElementById("html_frame").contentWindow.document.write(results.data.body_from_html);
+                //document.getElementById("html_frame").contentWindow.document.close();
+
+                var htmlCode = $('<textarea />').html(results.data.body_html).text();
+                $('#email_template_editor').html(htmlCode);
+                $('#email_template_editor').mozaik(window.mozaikSettings.email_template_editor);
+
+                $('#template_id').val(results.data.id);
+                $('input[name="update_exists_template"]').prop('checked', true);
+                autoCheckUpdateCheckbox();
+
+                $('#template_name').val( ($('#update_exists_template').prop('checked') ? namePrefixCopyOf : '') + results.data.name);
+                $('#template_subject').val(results.data.subject);
+                if(typeof callback != 'undefined') {
+                    callback();
+                }
+            }
+            else {
+                console.log(results.error);
+            }
+
+        });
+    }
+
+    //show_edit_template_link(elem);
+};
+
+var onScheduleClick = function(e) {
+    $('input[name="action"]').val('WizardMarketingSave');
+    $('input[name="module"]').val('Campaigns');
+    $('#show_wizard_summary').val('1');
+    $('#sendMarketingEmailSchedule').val('1');
+    $('#sendMarketingEmailTest').val('0');
+
+    //var data = $('#wizform').serialize();
+    //$.post('index.php?'+data, data, function(resp){
+    //    console.log(resp);
+    //});
+    $('#wizform').submit();
+};
+
+
+var onSendAsTestClick = function(e, campaignId, marketingId) {
+    $('input[name="action"]').val('WizardMarketingSave');
+    $('input[name="module"]').val('Campaigns');
+    $('#show_wizard_summary').val('1');
+    $('#sendMarketingEmailSchedule').val('0');
+    $('#sendMarketingEmailTest').val('1');
+    $('#wizform').submit();
+};
+
+
+var addTargetListData = function(id) {
+  var result_data = {
+    "form_name": 'wizform',
+    "name_to_value_array": {
+      popup_target_list_id: id,
+      popup_target_list_name: targetListDataJSON[id].name,
+      popup_target_list_type: targetListDataJSON[id].type,
+      popup_target_list_count: targetListDataJSON[id].count,
+    },
+    "passthru_data": Object(),
+    "popupConfirm": 0
+  };
+  set_return_prospect_list(result_data);
+};

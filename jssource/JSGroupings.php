@@ -51,6 +51,7 @@
        $js_groupings = array(
            $sugar_grp1 = array(
                 //scripts loaded on first page
+                'include/javascript/alerts.js'          => 'include/javascript/sugar_grp1.js',
                 'include/javascript/sugar_3.js'         => 'include/javascript/sugar_grp1.js',
                 'include/javascript/ajaxUI.js'          => 'include/javascript/sugar_grp1.js',
                 'include/javascript/cookie.js'          => 'include/javascript/sugar_grp1.js',
@@ -88,7 +89,7 @@
                 'include/javascript/jquery/jquery.sugarMenu.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.highLight.js'              => 'include/javascript/sugar_grp1_jquery.js',
                 'include/javascript/jquery/jquery.showLoading.js'              => 'include/javascript/sugar_grp1_jquery.js',
-            
+
             
 			),
            $sugar_field_grp = array(

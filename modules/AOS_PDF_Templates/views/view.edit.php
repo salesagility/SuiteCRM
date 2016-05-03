@@ -4,9 +4,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 require_once('include/MVC/View/views/view.edit.php');
 
 class AOS_PDF_TemplatesViewEdit extends ViewEdit {
-    function AOS_PDF_TemplatesViewEdit(){
-        parent::ViewEdit();
+    function __construct(){
+        parent::__construct();
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOS_PDF_TemplatesViewEdit(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function display(){
         $this->setFields();
@@ -210,7 +225,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
         //Start of insert_fields
         $insert_fields = '';
         $insert_fields .= <<<HTML
-	
+
 		$insert_fields_js
 		$insert_fields_js2
 		<select name='module_name' id='module_name' tabindex="50" onchange="populateVariables(this.options[this.selectedIndex].value);">
@@ -222,7 +237,7 @@ class AOS_PDF_TemplatesViewEdit extends ViewEdit {
 		<script type="text/javascript">
 			populateModuleVariables("$type");
 	</script>
-		
+
 
 HTML;
 
@@ -240,7 +255,7 @@ HTML;
 		<script language="javascript" type="text/javascript">
 		$tinyMCE
 		var df = '{$locale->getPrecedentPreference('default_date_format')}';
- 		
+
  		tinyMCE.init({
     		theme : "advanced",
     		theme_advanced_toolbar_align : "left",
@@ -266,7 +281,7 @@ HTML;
 			extended_valid_elements : "textblock",
 			custom_elements: "textblock",
 		});
-		
+
 		tinyMCE.init({
     		theme : "advanced",
     		theme_advanced_toolbar_align : "left",

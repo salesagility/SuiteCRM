@@ -46,8 +46,8 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 class <module_name>ViewEdit extends ViewEdit{
- 	function <module_name>ViewEdit(){
- 		parent::ViewEdit();
+ 	function __construct(){
+ 		parent::__construct();
  	}
  	function display(){
 		if (isset($this->bean->id)) {

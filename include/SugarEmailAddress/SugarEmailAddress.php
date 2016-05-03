@@ -72,11 +72,26 @@ class SugarEmailAddress extends SugarBean {
     /**
      * Sole constructor
      */
-    function SugarEmailAddress() {
-        parent::SugarBean();
+    public function __construct() {
+        parent::__construct();
         $this->index = self::$count;
         self::$count++;
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarEmailAddress(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     /**
      * Legacy email address handling.  This is to allow support for SOAP or customizations
@@ -173,7 +188,11 @@ class SugarEmailAddress extends SugarBean {
      * @param string $replyTo GUID of reply-to address
      * @param string $invalid GUID of invalid address
      */
-    function save($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false) {
+    public function save($check_notify = FALSE) {
+        $args = func_get_args();
+        return call_user_func_array(array($this, '_save'), $args);
+    }
+    private function _save($id, $module, $new_addrs=array(), $primary='', $replyTo='', $invalid='', $optOut='', $in_workflow=false) {
         if(empty($this->addresses) || $in_workflow){
             $this->populateAddresses($id, $module, $new_addrs,$primary);
         }
@@ -726,7 +745,7 @@ class SugarEmailAddress extends SugarBean {
             return $guid;
         }
     }
- 
+
     /**
      * Returns Primary or newest email address
      * @param object $focus Object in focus

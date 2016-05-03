@@ -84,7 +84,11 @@ function sugar_mkdir($pathname, $mode=null, $recursive=false, $context='') {
 		}
 	}
 	else {
-	    $GLOBALS['log']->error("Cannot create directory $pathname cannot be touched");
+		$errorMessage = "Cannot create directory $pathname cannot be touched";
+		if(is_null($GLOBALS['log'])) {
+			throw new Exception("Error occurred but the system doesn't have logger. Error message: \"$errorMessage\"");
+		}
+		$GLOBALS['log']->error($errorMessage);
 	}
 
 	return $result;
@@ -111,6 +115,7 @@ function sugar_fopen($filename, $mode, $use_include_path=false, $context=null){
 	}
 
 	if(empty($context)) {
+
 		return fopen($filename, $mode, $use_include_path);
 	} else {
 		return fopen($filename, $mode, $use_include_path, $context);
@@ -187,13 +192,13 @@ function sugar_file_put_contents_atomic($filename, $data, $mode='wb', $use_inclu
         {
             // cleaning up temp file to avoid filling up temp dir
             @unlink($temp);
-            trigger_error("sugar_file_put_contents_atomic() : fatal rename failure '$temp' -> '$filename'", E_USER_ERROR);
+            trigger_error("sugar_file_put_contents_atomic() : fatal rename failure '$temp' -> '$filename'", E_USER_WARNING);
         }
     }
 
     if(file_exists($filename))
     {
-       return sugar_chmod($filename, 0655);
+       return sugar_chmod($filename, 0755);
     }
 
     return false;

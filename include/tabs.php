@@ -38,40 +38,55 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
- 
 
 
 
 
-class SugarWidgetTabs extends SugarWidget
+
+class SugarWidgetTabs
 {
  var $tabs;
  var $current_key;
 
- function SugarWidgetTabs(&$tabs,$current_key,$jscallback)
+ function __construct(&$tabs,$current_key,$jscallback)
  {
    $this->tabs = $tabs;
    $this->current_key = $current_key;
    $this->jscallback = $jscallback;
  }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarWidgetTabs(&$tabs,$current_key,$jscallback){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($tabs, $current_key, $jscallback);
+    }
+
+
  function display()
  {
 	ob_start();
 ?>
 <script>
-var keys = [ <?php 
+var keys = [ <?php
 $tabs_count = count($this->tabs);
-for($i=0; $i < $tabs_count;$i++) 
+for($i=0; $i < $tabs_count;$i++)
 {
  $tab = $this->tabs[$i];
- echo "\"".$tab['key']."\""; 
+ echo "\"".$tab['key']."\"";
  if ($tabs_count > ($i + 1))
  {
    echo ",";
  }
 }
-?>]; 
+?>];
 tabPreviousKey = '';
 
 function selectTabCSS(key)
@@ -98,7 +113,7 @@ function selectTabCSS(key)
 </script>
 
 <ul id="searchTabs" class="tablist">
-<?php 
+<?php
 	foreach ($this->tabs as $tab)
 	{
 		$TITLE = $tab['title'];
@@ -119,12 +134,12 @@ function selectTabCSS(key)
 		$LINK = "<li $LI_ID id=\"tab_li_".$tab['link']."\"><a $A_ID id=\"tab_link_".$tab['link']."\" href=\"javascript:selectTabCSS('{$tab['link']}');\">$TITLE</a></li>";
 
 ?>
-<?php echo $LINK; ?>	
+<?php echo $LINK; ?>
 <?php
 	}
 ?>
 </ul>
-<?php 
+<?php
 	$ob_contents = ob_get_contents();
         ob_end_clean();
         return $ob_contents;

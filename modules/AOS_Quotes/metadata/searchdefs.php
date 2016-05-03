@@ -46,7 +46,8 @@
 					        'default' => true,
 					        'width' => '10%',
 					      ),
-					      
+                            'favorites_only' => array ('name' => 'favorites_only','label' => 'LBL_FAVORITES_FILTER','type' => 'bool',),
+
 					    ),
 						'advanced_search' => array(
 							'name',

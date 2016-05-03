@@ -13,24 +13,24 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * to Section 15 as permitted in Section 7(a): FOR ANY PART OF THE COVERED WORK
  * IN WHICH THE COPYRIGHT IS OWNED BY SUGARCRM, SUGARCRM DISCLAIMS THE WARRANTY
  * OF NON INFRINGEMENT OF THIRD PARTY RIGHTS.
- * 
+ *
  * This program is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more
  * details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License along with
  * this program; if not, see http://www.gnu.org/licenses or write to the Free
  * Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
- * 
+ *
  * You can contact SugarCRM, Inc. headquarters at 10050 North Wolfe Road,
  * SW2-130, Cupertino, CA 95014, USA. or at email address contact@sugarcrm.com.
- * 
+ *
  * The interactive user interfaces in modified source and object code versions
  * of this program must display Appropriate Legal Notices, as required under
  * Section 5 of the GNU Affero General Public License version 3.
- * 
+ *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
@@ -786,6 +786,8 @@ function handleSugarConfig() {
     $sugar_config['disable_convert_lead']           = false;
     $sugar_config['log_dir']                        = $setup_site_log_dir;
     $sugar_config['log_file']                       = $setup_site_log_file;
+    $sugar_config['enable_line_editing_detail']     = true;
+    $sugar_config['enable_line_editing_list']       = true;
 
     // Setup FTS
     if (!empty($_SESSION['setup_fts_type'])) {
@@ -1413,10 +1415,8 @@ function validate_systemOptions() {
 
 
 function validate_dbConfig() {
-    global $mod_strings;
     require_once('install/checkDBSettings.php');
     return checkDBSettings(true);
-
 }
 
 function validate_siteConfig($type){
@@ -1510,7 +1510,7 @@ function pullSilentInstallVarsIntoSession() {
         'setup_db_sugarsales_password_retype'   => $config_subset['setup_db_sugarsales_password'],
     );
 
-    $needles = array('setup_db_create_database','setup_db_create_sugarsales_user','setup_license_key_users',
+    $needles = array('demoData','setup_db_create_database','setup_db_create_sugarsales_user','setup_license_key_users',
                      'setup_license_key_expire_date','setup_license_key', 'setup_num_lic_oc',
                      'default_currency_iso4217', 'default_currency_name', 'default_currency_significant_digits',
                      'default_currency_symbol',  'default_date_format', 'default_time_format', 'default_decimal_seperator',
@@ -2029,7 +2029,7 @@ function create_current_date_time()
 function create_time($hr=null,$min=null,$sec=null)
 {
     global $timedate;
-    $date = TimeDate::fromTimestamp(0);
+    $date = TimeDate::getInstance()->fromTimestamp(0);
     if ($hr==null) $hr=mt_rand(6,19);
     if ($min==null) $min=(mt_rand(0,3)*15);
     if ($sec==null) $sec=0;

@@ -1,0 +1,43 @@
+* {
+	font-family: Arial, Helvetica, sans-serif;
+	color: #444;
+	font-size: 14px;
+	line-height: 1.6em;
+	margin: 0;
+}
+h1 {font-size: 24px;}
+h2 {font-size: 18px;}
+h3 {font-size: 15px;}
+h4 {font-size: 12px;}
+h5 {font-size: 10px;}
+h6 {font-size: 8px;}
+
+.left {display: block; float: left;}
+
+.col2 {
+	max-width: 280px;
+	float: left;
+	margin-right: 20px;
+}
+
+.col3 {
+	max-width: 180px;
+	float: left;
+	margin-right: 20px;
+}
+
+.col4_1 {
+	max-width: 130px;
+	float: left;
+	margin-right: 20px;
+}
+.col4_3 {
+	max-width: 430px;
+	float: left;
+	margin-right: 20px;
+}
+
+.footer {
+	font-size: 10px;
+	padding: 20px;
+}

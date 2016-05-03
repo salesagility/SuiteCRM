@@ -594,10 +594,14 @@ class SugarTheme
         )
     {
         // include style.css file
-        $html = '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
+        $html = '
+            <!-- qtip & suggestion box -->
+            <link rel="stylesheet" type="text/css" href="include/javascript/qtip/jquery.qtip.min.css" />';
+        $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('yui.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="include/javascript/jquery/themes/base/jquery.ui.all.css" />';
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('deprecated.css').'" />';
         $html .= '<link rel="stylesheet" type="text/css" href="'.$this->getCSSURL('style.css').'" />';
+
 
 		// sprites
 		if(!empty($GLOBALS['sugar_config']['use_sprites']) && $GLOBALS['sugar_config']['use_sprites']) {
@@ -1265,8 +1269,8 @@ class SugarThemeRegistry
         if ( isset($GLOBALS['sugar_config']['default_theme']) && self::exists($GLOBALS['sugar_config']['default_theme']) ) {
             return self::get($GLOBALS['sugar_config']['default_theme']);
         }
-
-        return self::get(array_pop(array_keys(self::availableThemes())));
+        $array_keys = array_keys(self::availableThemes());
+        return self::get(array_pop($array_keys));
     }
 
     /**
@@ -1382,8 +1386,8 @@ class SugarThemeRegistry
                 return $key;
             }
         }
-
-        return array_pop(array_keys($availableThemes));
+        $array_keys = array_keys($availableThemes);
+        return array_pop($array_keys);
     }
 
 

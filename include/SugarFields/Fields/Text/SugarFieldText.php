@@ -41,7 +41,7 @@ require_once('include/SugarFields/Fields/Base/SugarFieldBase.php');
 require_once 'include/clean.php';
 class SugarFieldText extends SugarFieldBase {
 
-	function getDetailViewSmarty($parentFieldArray, &$vardef, $displayParams, $tabindex) {
+	function getDetailViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
         if(!isset($displayParams['nl2br'])){
             $displayParams['nl2br'] = true;
         }

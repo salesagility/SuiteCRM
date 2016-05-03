@@ -59,6 +59,10 @@ SUGAR.ajaxUI = {
             {
                 action_sugar_grp1 = r.action;
             }
+            if (r.menu.module)
+            {
+                module_sugar_grp1 = r.menu.module;
+            }
             if (r.favicon)
             {
                 SUGAR.ajaxUI.setFavicon(r.favicon);

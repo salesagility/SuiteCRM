@@ -47,7 +47,14 @@ function additionalDetailsLead($fields) {
 	}
 		
 	$overlib_string = '';
-	if(!empty($fields['PRIMARY_ADDRESS_STREET']) || !empty($fields['PRIMARY_ADDRESS_CITY']) ||
+    if(!empty($fields['ID'])) {
+        $overlib_string .= '<input type="hidden" value="'. $fields['ID'];
+        $overlib_string .= '">';
+    }
+
+    $overlib_string .= '<h2><img src="index.php?entryPoint=getImage&themeName=' . SugarThemeRegistry::current()->name .'&imageName=Leads.gif"/> '.$mod_strings['LBL_CONTACT'].'</h2>';
+
+    if(!empty($fields['PRIMARY_ADDRESS_STREET']) || !empty($fields['PRIMARY_ADDRESS_CITY']) ||
 		!empty($fields['PRIMARY_ADDRESS_STATE']) || !empty($fields['PRIMARY_ADDRESS_POSTALCODE']) ||
 		!empty($fields['PRIMARY_ADDRESS_COUNTRY']))
 			$overlib_string .= '<b>' . $mod_strings['LBL_PRIMARY_ADDRESS'] . '</b><br>';

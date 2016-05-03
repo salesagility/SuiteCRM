@@ -57,6 +57,13 @@ $focus = new Campaign();
 if(isset($_REQUEST['record']) &&  !empty($_REQUEST['record'])) {
     $focus->retrieve($_REQUEST['record']);
 
+    /*
+    $marketingLink = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome";
+    $marketingLink .= "&return_id=".$focus->id."&campaign_id=".$focus->id."&jump=3";
+    SugarApplication::redirect($marketingLink);
+    return;
+    */
+
 global $mod_strings;
 global $app_list_strings;
 global $app_strings;
@@ -149,6 +156,37 @@ global $currentModule;
             
     /********** FINAL END OF PAGE UI Stuff ********/
     $ss->display(file_exists('custom/modules/Campaigns/WizardHome.html') ? 'custom/modules/Campaigns/WizardHome.html' : 'modules/Campaigns/WizardHome.html');
+
+    function isWizardSummary() {
+        return $_REQUEST['action'] == 'WizardHome';
+    }
+
+    function getFirstMarketingId($campaignId) {
+        global $db;
+        $campaignId = $db->quote($campaignId);
+        $emailMarketings = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '$campaignId'");
+        $firstEmailMarketing = $emailMarketings[0];
+        $ret = $firstEmailMarketing->id;
+        return $ret;
+    }
+
+    function getMarketingId() {
+        $campaignId = isset($_REQUEST['campaign_id']) && $_REQUEST['campaign_id'] ? $_REQUEST['campaign_id'] : $_REQUEST['record'];
+        $ret = isset($_REQUEST['marketing_id']) && $_REQUEST['marketing_id'] ? $_REQUEST['marketing_id'] : getFirstMarketingId($campaignId);
+        return $ret;
+    }
+
+    if((isset($_REQUEST['WizardMarketingSave']) && $_REQUEST['WizardMarketingSave']) || isWizardSummary()) {
+        $campaign_id = $focus->id;
+        $marketing_id = getMarketingId();
+        if(!$marketing_id && $_SERVER['REQUEST_METHOD'] == 'POST' && $_POST['action'] == 'WizardHome') {
+            $header_URL = "Location: index.php?module=Campaigns&offset=1&return_module=Campaigns&action=DetailView&record=" . $campaign_id;
+        }
+        else {
+            $header_URL = "Location: index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=" . $campaign_id . "&campaign_id=" . $campaign_id . "&jump=3&show_wizard_marketing=1&marketing_id=" . $marketing_id . "&record=" . $marketing_id . '&campaign_type=' . $focus->campaign_type . (isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? '&template_id=' . $_REQUEST['template_id'] : '');
+        }
+        header($header_URL);
+    }
     
 }else{
     //there is no record to retrieve, so ask which type of campaign wizard to launch

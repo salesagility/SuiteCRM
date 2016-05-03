@@ -4,7 +4,7 @@
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * Copyright (C) 2011 - 2016 Salesagility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,17 +37,11 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-/*
- * Created on Apr 23, 2007
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
 $action_file_map['subpanelviewer'] = 'include/SubPanel/SubPanelViewer.php';
 $action_file_map['save2'] = 'include/generic/Save2.php';
 $action_file_map['targetlistupdate'] = 'modules/ProspectLists/TargetListUpdate.php';
 $action_file_map['deleterelationship'] = 'include/generic/DeleteRelationship.php';
 $action_file_map['import'] = 'modules/Import/index.php';
 $action_file_map['viewsugarfieldcollection'] = 'include/SugarFields/Fields/Collection/view.sugarfieldcollection.php';
-
+$action_file_map['subpanelsearch'] = 'include/SubPanel/SubPanelSearchDisplay.php';
 ?>

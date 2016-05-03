@@ -65,13 +65,28 @@ class UserDemoData {
 	/**
 	 * Constructor for creating user demo data
 	 */
-	function UserDemoData($seed_user, $large_scale_test = false)
+	function __construct($seed_user, $large_scale_test = false)
 	{
 		// use a seed user so it does not have to be known which file to
 		// include the User class from
 		$this->_user = $seed_user;
 		$this->_large_scale_test = $large_scale_test;
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function UserDemoData($seed_user, $large_scale_test = false){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($seed_user, $large_scale_test);
+    }
+
 
 	/**
 	 *
@@ -126,7 +141,7 @@ class UserDemoData {
 		$u->savePreferencesToDB();
 
 
-		$u->picture = $this->_copy_user_image($id);
+		$u->picture = self::_copy_user_image($id);
 
 		$u->save();
 	}
@@ -174,7 +189,7 @@ class UserDemoData {
 		}
 	}
 
-	function _copy_user_image($id) {
+	static function _copy_user_image($id) {
 		global $sugar_config;
 		$picture_file = create_guid();
 		$file = "include/images/".$id.".gif";

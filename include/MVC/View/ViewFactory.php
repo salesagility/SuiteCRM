@@ -55,7 +55,7 @@ class ViewFactory{
 	 * @param string $type View Type
 	 * @return valid view
 	 */
-	function loadView($type = 'default', $module, $bean = null, $view_object_map = array(), $target_module=''){
+	static function loadView($type = 'default', $module, $bean = null, $view_object_map = array(), $target_module=''){
 		$type = strtolower($type);
 
 		//first let's check if the module handles this view
@@ -99,7 +99,7 @@ class ViewFactory{
 	/**
 	 * Load the view_<view>_config.php file which holds options used by the view.
 	 */
-	function _loadConfig(&$view, $type){
+	static function _loadConfig(&$view, $type){
 		$view_config_custom = array();
 		$view_config_module = array();
 		$view_config_root_cstm = array();
@@ -201,7 +201,7 @@ class ViewFactory{
 	 *
 	 * @return a valid SugarView
 	 */
-	function _buildFromFile($file, &$bean, $view_object_map, $type, $module){
+	static function _buildFromFile($file, &$bean, $view_object_map, $type, $module){
 		require_once($file);
 		//try ModuleViewType first then try ViewType if that fails then use SugarView
 		$class = ucfirst($module).'View'.ucfirst($type);
@@ -245,7 +245,7 @@ class ViewFactory{
 	 *
 	 * @return SugarView
 	 */
-	function _buildClass($class, $bean, $view_object_map){
+	static function _buildClass($class, $bean, $view_object_map){
 		$view = new $class();
 		$view->init($bean, $view_object_map);
 		if($view instanceof SugarView){

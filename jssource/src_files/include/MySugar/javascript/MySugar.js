@@ -249,6 +249,8 @@ SUGAR.mySugar = function() {
 					var chartScriptObj = YAHOO.util.Connect.asyncRequest('GET', scriptUrl,
 													  {success: processChartScript, failure: processChartScript}, null);
 				}
+
+				$(window).resize();
 			}
 			
 			SUGAR.mySugar.currentDashlet = document.getElementById('dashlet_entire_' + id);
@@ -383,7 +385,9 @@ SUGAR.mySugar = function() {
 			}
 
 			var cObj = YAHOO.util.Connect.asyncRequest('GET','index.php?to_pdf=1&module='+module+'&action=DynamicAction&DynamicAction=addDashlet&activeTab=' + activeTab + '&id=' + id+'&type=' + type + '&type_module=' + encodeURIComponent(type_module), 
-													  {success: success, failure: success}, null);						  
+													  {success: success, failure: success}, null);
+
+			SUGAR.mySugar.sugarCharts.loadSugarCharts();
 
 			return false;
 		},

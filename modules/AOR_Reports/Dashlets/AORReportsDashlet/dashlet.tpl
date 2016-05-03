@@ -38,3 +38,5 @@
 <div style="padding: 10px">
     {$chartHTML}
 </div>
+
+<script src="modules/AOR_Reports/Dashlets/AORReportsDashlet/AORReportsDashlet.js"></script>

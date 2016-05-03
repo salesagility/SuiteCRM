@@ -756,8 +756,7 @@ class ModuleBuilderController extends SugarController
 
     function action_saveAndPublishLayout ()
     {
-            $parser = ParserFactory::getParser ( $_REQUEST [ 'view' ], $_REQUEST [ 'view_module' ], isset ( $_REQUEST [ 'view_package' ] ) ? $_REQUEST [ 'view_package' ] : null ) ;
-            $this->view = 'layoutview' ;
+        $parser = ParserFactory::getParser ( $_REQUEST [ 'view' ], $_REQUEST [ 'view_module' ], isset ( $_REQUEST [ 'view_package' ] ) ? $_REQUEST [ 'view_package' ] : null ) ;
         $parser->handleSave () ;
 
         if(!empty($_REQUEST [ 'sync_detail_and_edit' ]) && $_REQUEST['sync_detail_and_edit'] != false && $_REQUEST['sync_detail_and_edit'] != "false"){
@@ -767,6 +766,9 @@ class ModuleBuilderController extends SugarController
                 $parser2->handleSave () ;
 	        }
         }
+
+        $this->view_object_map['new_parser'] = $parser;
+        $this->view = 'layoutview';
     }
 
     function action_manageBackups ()
@@ -796,7 +798,6 @@ class ModuleBuilderController extends SugarController
     }
 
 	function action_popupSave(){
-		$this->view = 'popupview' ;
         $packageName = (isset ( $_REQUEST [ 'view_package' ] ) && (strtolower($_REQUEST['view_package']) != 'studio')) ? $_REQUEST [ 'view_package' ] : null ;
         require_once 'modules/ModuleBuilder/parsers/ParserFactory.php' ;
         $parser = ParserFactory::getParser ( $_REQUEST [ 'view' ], $_REQUEST [ 'view_module' ], $packageName ) ;
@@ -812,6 +813,8 @@ class ModuleBuilderController extends SugarController
 			$repair->clearTpls();
         }
 
+        $this->view_object_map['new_parser'] = $parser;
+        $this->view = 'popupview';
 	}
 
     function action_searchViewSave ()

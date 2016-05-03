@@ -50,23 +50,23 @@ class DashletsDialog {
         require_once($GLOBALS['sugar_config']['cache_dir'].'dashlets/dashlets.php');
 
         $categories = array( 'module' 	=> 'Module Views',
-        					 'portal' 	=> 'Portal',
-        					 'charts'	=> 'Charts',
-        					 'tools'	=> 'Tools',
-        					 'misc'		=> 'Miscellaneous',
-        					 'web'      => 'Web');
+            'portal' 	=> 'Portal',
+            'charts'	=> 'Charts',
+            'tools'	=> 'Tools',
+            'misc'		=> 'Miscellaneous',
+            'web'      => 'Web');
 
         $dashletStrings = array();
         $dashletsList = array();
 
         if (!empty($category)){
-			$dashletsList[$categories[$category]] = array();
+            $dashletsList[$categories[$category]] = array();
         }
         else{
-	        $dashletsList['Module Views'] = array();
-	        $dashletsList['Charts'] = array();
-	        $dashletsList['Tools'] = array();
-	        $dashletsList['Web'] = array();
+            $dashletsList['Module Views'] = array();
+            $dashletsList['Charts'] = array();
+            $dashletsList['Tools'] = array();
+            $dashletsList['Web'] = array();
         }
 
         asort($dashletsFiles);
@@ -93,7 +93,7 @@ class DashletsDialog {
                 else
                     $description = $dashletStrings[$files['class']][$dashletMeta[$files['class']]['description']];
 
-				// generate icon
+                // generate icon
                 if (!empty($dashletMeta[$files['class']]['icon'])) {
                     // here we'll support image inheritance if the supplied image has a path in it
                     // i.e. $dashletMeta[$files['class']]['icon'] = 'themes/default/images/dog.gif'
@@ -109,48 +109,48 @@ class DashletsDialog {
                     }
                 }
                 else{
-	                if (empty($dashletMeta[$files['class']]['module'])){
-                		$icon = get_dashlets_dialog_icon('default');
-                	}
-					else{
-						if((!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))){
-							unset($dashletMeta[$files['class']]);
-							continue;
-						}else{
-	                    	$icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
-						}
-                	}
+                    if (empty($dashletMeta[$files['class']]['module'])){
+                        $icon = get_dashlets_dialog_icon('default');
+                    }
+                    else{
+                        if((!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))){
+                            unset($dashletMeta[$files['class']]);
+                            continue;
+                        }else{
+                            $icon = get_dashlets_dialog_icon($dashletMeta[$files['class']]['module']);
+                        }
+                    }
                 }
 
                 // determine whether to display
                 if (!empty($dashletMeta[$files['class']]['hidden']) && $dashletMeta[$files['class']]['hidden'] === true){
-                	$displayDashlet = false;
+                    $displayDashlet = false;
                 }
-				//co: fixes 20398 to respect ACL permissions
-				elseif(!empty($dashletMeta[$files['class']]['module']) && (!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))){
-                	$displayDashlet = false;
+                //co: fixes 20398 to respect ACL permissions
+                elseif(!empty($dashletMeta[$files['class']]['module']) && (!in_array($dashletMeta[$files['class']]['module'], $GLOBALS['moduleList']) && !in_array($dashletMeta[$files['class']]['module'], $GLOBALS['modInvisList'])) && (!in_array('Activities', $GLOBALS['moduleList']))){
+                    $displayDashlet = false;
                 }
-				else{
-                	$displayDashlet = true;
-                	//check ACL ACCESS
-                	if(!empty($dashletMeta[$files['class']]['module']) && ACLController::moduleSupportsACL($dashletMeta[$files['class']]['module'])){
-                		$type = 'module';
-                		if($dashletMeta[$files['class']]['module'] == 'Trackers')
-                			$type = 'Tracker';
-                		if(!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'view', true, $type)){
-                			$displayDashlet = false;
-                		}
-                		if(!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'list', true, $type)){
-                			$displayDashlet = false;
-                		}
-                	}
+                else{
+                    $displayDashlet = true;
+                    //check ACL ACCESS
+                    if(!empty($dashletMeta[$files['class']]['module']) && ACLController::moduleSupportsACL($dashletMeta[$files['class']]['module'])){
+                        $type = 'module';
+                        if($dashletMeta[$files['class']]['module'] == 'Trackers')
+                            $type = 'Tracker';
+                        if(!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'view', true, $type)){
+                            $displayDashlet = false;
+                        }
+                        if(!ACLController::checkAccess($dashletMeta[$files['class']]['module'], 'list', true, $type)){
+                            $displayDashlet = false;
+                        }
+                    }
                 }
 
                 if ($dashletMeta[$files['class']]['category'] == 'Charts'){
-                	$type = 'predefined_chart';
+                    $type = 'predefined_chart';
                 }
                 else{
-                	$type = 'module';
+                    $type = 'module';
                 }
 
                 if ($displayDashlet && isset($dashletMeta[$files['class']]['dynamic_hide']) && $dashletMeta[$files['class']]['dynamic_hide']){
@@ -164,29 +164,29 @@ class DashletsDialog {
                 }
 
                 if ($displayDashlet){
-					$cell = array( 'title' => $title,
-								   'description' => $description,
-								   'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '' ) .'\');',
-                                   'icon' => $icon,
-                                   'id' => $files['class'] . '_select',
-                               );
+                    $cell = array( 'title' => $title,
+                        'description' => $description,
+                        'onclick' => 'return SUGAR.mySugar.addDashlet(\'' . $className . '\', \'' . $type . '\', \''.(!empty($dashletMeta[$files['class']]['module']) ? $dashletMeta[$files['class']]['module'] : '' ) .'\');',
+                        'icon' => $icon,
+                        'id' => $files['class'] . '_select',
+                    );
 
-	                if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]){
-	                	array_push($dashletsList[$categories[$category]], $cell);
-	                }
-	                else if (empty($category)){
-						array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
-	                }
+                    if (!empty($category) && $dashletMeta[$files['class']]['category'] == $categories[$category]){
+                        array_push($dashletsList[$categories[$category]], $cell);
+                    }
+                    else if (empty($category)){
+                        array_push($dashletsList[$dashletMeta[$files['class']]['category']], $cell);
+                    }
                 }
             }
         }
         if (!empty($category)){
-        	asort($dashletsList[$categories[$category]]);
+            asort($dashletsList[$categories[$category]]);
         }
         else{
-        	foreach($dashletsList as $key=>$value){
-        		asort($dashletsList[$key]);
-        	}
+            foreach($dashletsList as $key=>$value){
+                asort($dashletsList[$key]);
+            }
         }
         $this->dashlets = $dashletsList;
     }

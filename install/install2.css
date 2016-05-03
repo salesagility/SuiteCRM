@@ -1,0 +1,573 @@
+/* common */
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #333333;
+}
+
+body {
+    background-color: #f7f7f7;;
+}
+
+
+h3 {
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.5);
+}
+b, strong {
+    font-weight: bold;
+}
+
+a:link, a:visited {
+    font-size: 12px; color: #333333;
+    text-decoration: none;
+    font-family:  Arial, Verdana, Helvetica, sans-serif;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #EA1313;
+    text-decoration: none;
+    text-decoration: underline;
+}
+.clear {
+    clear: both;
+}
+
+/* buttons */
+#install_container .button,
+#install_container .acceptButton {
+    background-color:#B41C4F;
+    text-indent:0;
+    display:inline-block;
+    color:#ffffff;
+    font-size:14px;
+    font-style:normal;
+    height:30px;
+    line-height:15px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #810e05;
+    cursor:pointer;
+    padding: 0 10px 0 10px;
+    transition: all 0.5s ease;
+}
+
+#install_container .button:hover,
+#install_container .acceptButton:hover {
+    background:#565656;
+    transition: all 0.5s ease;
+}
+
+#install_container select[name="timezone"] {
+    max-width: 230px;
+}
+
+/* Sys env. msg */
+
+#syscred p {
+    margin: 0;
+    padding: 2px;
+    border: none;
+    width: 49%;
+    min-width: 330px;
+    float: left;
+}
+#syscred p b {
+    float: left;
+    margin-right: 10px;
+}
+#syscred p span.stop * {
+    color: red;
+    display: block;
+    float: left;
+}
+/* ----------------------------------------------- */
+
+/*
+#install_container * {
+    background-color: white;
+}
+*/
+
+/* header (logo & steps) */
+#install_header {
+    margin:10px auto;
+    border-bottom:1px solid #cccccc;
+    height:50px;
+}
+
+#install_header img {
+    float:left;
+    padding:0;
+    max-height:40px;
+}
+
+/* steps */
+#steps {
+    font-size:24px;
+    verticle-align:top;
+    float:right;
+    margin: 0 5px 0 0;
+    text-align: right;
+}
+
+#steps p {
+    font-size:14px;
+    margin:0 0 2px 5px;
+}
+
+#steps i {
+    font-size: 24px;
+}
+#complete {
+    color: green;
+}
+
+
+/* logo image */
+.install_img {
+    max-width:200px;
+}
+
+.install_img:hover {
+    transition: all 0.5s ease;
+    opacity:0.8;
+}
+
+
+#install_box {
+    line-height: 1.4em;
+    background:#ffffff;
+    border:1px solid #cccccc;
+    vertical-align:middle;
+    padding: 10px 20px;
+    margin: 20px;
+    /* min-height: 800px; */
+
+    -webkit-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
+    -moz-box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
+    box-shadow: 0px 14px 57px -14px rgba(0,0,0,0.46);
+}
+
+/* install controlls*/
+#installcontrols {
+    /*float:right;*/
+    text-align: right;
+    padding:10px;
+}
+
+/* footer & footer links */
+
+#install_footer {
+    margin:10px auto;
+    height:50px;
+}
+
+#footer_links a{
+    text-decoration:none;
+}
+
+p#footer_links {
+    text-align:center;
+    margin-top:10px;
+}
+
+/* configuration step */
+
+div.install_block{
+    /*overflow:hidden;*/
+}
+div.install_block label{
+    max-width:50% !important;
+    display:block;
+    float:left;
+    text-align:left;
+}
+
+div.install_block h3{
+    width:auto;
+    display:block;
+    float:left;
+    text-align:left;
+}
+div.install_block .input{
+    margin-left:4px;
+    float:left;
+}
+
+div.install_block .select{
+    margin-left:4px;
+    float:left;
+}
+.starhook div.install_block span {display: inline; float: left; width: 5px; padding-top:8px; padding-left:3px;}
+input {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
+
+select {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+    background-color: white;
+}
+
+input[type=text] {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
+
+input[type=password] {
+    padding:5px;
+    margin:5px;
+    border:1px solid #cccccc;
+    font-size:1em;
+}
+
+
+#errorheaders {
+    margin:0 0 50px 0;
+}
+
+#errormsg {
+    margin-top:100px;
+}
+
+.dbcred {
+    width: 45%;
+    float: left;
+    padding: 5px 15px;
+}
+
+.sitecred {
+    width: 45%; /* Account for margins + border values */
+    float: left;
+    padding: 5px 15px;
+    margin: 0px 5px 5px 5px;
+}
+
+
+
+
+
+
+.small {
+    font-size: 10px;
+}
+
+.stop {
+    color: #cc0000;
+    text-align: left;
+}
+
+.stop a:link, a:visited  {
+    color: #cc0000;
+    text-decoration: underline;
+    text-align: left;
+}
+
+.go {
+    color: #00cc00;
+}
+
+.required {
+    color: #ff2222;
+    font-weight: bold;
+}
+
+.error {
+    color: #ff2222;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+ul.tablist {
+    padding: 4px 0;
+    margin: 10px 0 0 0;
+    border-bottom: 1px solid #999;
+    font: 12px Arial, Verdana, Helvetica, sans-serif;
+}
+
+ul.tablist li {
+    list-style: none;
+    margin: 0;
+    display: inline;
+}
+
+ul.tablist li a {
+    padding: 4px 8px;
+    margin: 0px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    text-decoration: none;
+    color: #666666;
+}
+
+ul.tablist li a:link, ul.tablist li a:visited {
+    text-decoration: none;
+    color: #444444;
+}
+
+ul.tablist li a:hover
+{
+    border-color: #666;
+    color: #000;
+}
+
+ul.tablist li a.current, ul.tablist li a.current:hover {
+    padding: 4px 8px;
+    border-top: 1px solid #999;
+    border-right: 1px solid #999;
+    border-bottom: 1px solid #fff;
+    font-weight: bold;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+a.other{
+    color: #000000;
+}
+
+
+
+
+
+
+
+h2 {
+    color: #B41C4F;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.5);
+}
+
+
+.smtp_tab_toggler.selected {
+    border: 1px solid #B41C4F;
+}
+
+.form_section {
+    padding: 10px;
+}
+
+.form_section .clear {
+    display: block;
+    float: none;
+    clear: both;
+}
+
+.form_section .formrow {
+    display: block;
+    float: left;
+    width: 430px;
+}
+
+.form_section .formrow label, label {
+    display: block;
+    float: left;
+    width: 180px;
+    margin-top: 11px;
+}
+.form_section .formrow.big {
+    width: 580px;
+}
+.form_section .formrow.big label {
+    width: 250px;
+}
+.form_section .formrow input[type="checkbox"] {
+    margin-top: 11px;
+}
+
+.form_section .formrow label i,
+label i,
+.tooltip-toggle {
+    cursor: pointer;
+    /* border: 1px solid lightgrey; */
+    padding: 0 6px;
+    position: relative;
+    z-index: 1000;
+}
+.form_section .formrow label i .tooltip,
+label i .tooltip,
+.tooltip-toggle .tooltip {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 30px;
+    width: 500px;
+    border: 1px solid #B41C4F;
+    background: white;
+    padding: 10px 20px;
+    -webkit-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.75);
+    z-index: 1001;
+}
+.form_section .formrow label i:hover .tooltip,
+label i:hover .tooltip,
+.tooltip-toggle:hover .tooltip {
+    display: block;
+}
+
+div.tooltip-toggle {
+    display: inline;
+
+}
+
+.form_section .formrow img {
+    margin-top: 11px;
+}
+
+.text-right {
+    text-align: right;
+}
+
+
+#steps {
+    text-align: right;
+}
+
+.field-error {
+    background: lightcoral;
+}
+
+/* wellcome page */
+
+#welcomelink {
+    font-weight: normal;
+    color: #565656;
+}
+#welcomelink {
+    float: right;
+    margin: 10px 10px 0 0;
+    padding: 0;
+    font-weight: normal;
+    color: #565656;
+}
+h1 {
+    color: #EA1313;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 1px rgba(150, 150, 150, 0.5);
+}
+
+/* slider */
+form #wrapper {
+    min-height:400px !important;
+    border-bottom:1px solid #cccccc;
+    margin-bottom: 15px;
+}
+.sliderimg {
+
+    /* max-height:400px !important; */
+}
+
+.rslides {
+    position: relative;
+    list-style: none;
+    overflow: hidden;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    max-height: 500px;
+}
+
+.rslides li {
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    display: none;
+    width: 100%;
+    left: 0;
+    top: 0;
+}
+
+.rslides li:first-child {
+    position: relative;
+    display: block;
+    float: left;
+}
+
+.rslides img {
+    display: block;
+    height: auto;
+    float: left;
+    width: 100%;
+    border: 0;
+}
+
+/* license */
+#licenseDiv {
+    text-align: center;
+}
+
+#licenseaccept {
+    padding:10px;
+    float:none;
+    text-align: center;
+}
+
+#licenseDivToggler {
+    margin-bottom: 10px;
+}
+
+/* system check preloader */
+.preloading {
+	text-align: left;
+}
+
+
+/* install config step */
+.floatbox {
+    width:48%;
+    min-width: 400px;
+    display: block;
+    float: left;
+}
+.floatbox.full {
+    width: 98%;
+}
+
+
+.toggler {
+    cursor: pointer;
+}
+
+
+
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 1300px or less */
+@media screen and (max-width: 1300px) {
+   .formrow.big label {float: none;}
+}
+
+
+/* for 700px or less */
+@media screen and (max-width: 700px) {
+    #install_header {border: none;}
+}
+
+/* for 500px or less */
+@media screen and (max-width: 500px) {
+    .floatbox {float: none;}
+    .floatbox.full {min-width: initial;}
+    #install_box .formrow label {float: none;}
+    #install_box label {float: none;}
+    .install_block input {display: block; float: none; max-width: 40%;}
+    .ibmsg {width: 70%;}
+    #syscred p {width: initial; min-width: initial;}
+    .licensetext {width: 70%;}
+    #licenseaccept {width: initial; diaplay: block; float: none;}
+}

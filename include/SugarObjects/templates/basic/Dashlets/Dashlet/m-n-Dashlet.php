@@ -50,11 +50,11 @@ require_once('include/Dashlets/DashletGeneric.php');
 require_once('modules/<module_name>/<object_name>.php');
 
 class <module_name>Dashlet extends DashletGeneric { 
-    function <module_name>Dashlet($id, $def = null) {
+    function __construct($id, $def = null) {
 		global $current_user, $app_strings;
 		require('modules/<module_name>/metadata/dashletviewdefs.php');
 
-        parent::DashletGeneric($id, $def);
+        parent::__construct($id, $def);
 
         if(empty($def['title'])) $this->title = translate('LBL_HOMEPAGE_TITLE', '<module_name>');
 
