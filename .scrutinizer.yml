@@ -1,0 +1,48 @@
+filter:
+  excluded_paths:
+    - 'cache/*'
+    - 'examples/*'
+    - 'tests/*'
+    - 'upload/*'
+    - 'vendor/*'
+    - 'Zend/*'
+
+tools:
+  php_sim: true
+  php_analyzer: true
+  php_pdepend: true
+  sensiolabs_security_checker: true
+  php_changetracking: true
+  php_mess_detector: true
+  php_cs_fixer: true
+  php_code_sniffer: true
+  php_loc: true
+  php_cpd: true
+  php_code_coverage: false
+#  external_code_coverage:
+#      timeout: 1800
+#      runs: 2
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
+build:
+  environment:
+    php:
+      version: 7.0.0 #other versions: 5.4.41, 5.5.25, 5.6.9, 5.6.16, 7.0.0 and hhvm
+      ini:
+        'date.timezone': 'Europe/Rome'
+#  dependencies:
+#    before:
+#      - { command: 'sh tests/build_dependencies_before.sh', idle_timeout: 600 }
+#    override:
+#     - { command: 'composer install --no-interaction', idle_timeout: 600 }
+#    after:
+#  tests:
+#    override:
+#      - { command: 'true' }
+
+application:
+  type: none
