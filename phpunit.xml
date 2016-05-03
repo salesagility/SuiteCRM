@@ -21,7 +21,7 @@ bootstrap                       = "tests/bootstrap.php"
 
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory>./</directory>
+            <directory suffix=".php">./</directory>
             <exclude>
                 <directory>cache</directory>
                 <directory>custom</directory>
