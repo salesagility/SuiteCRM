@@ -40,9 +40,10 @@ build:
 #    override:
 #     - { command: 'composer install --no-interaction', idle_timeout: 600 }
 #    after:
-#  tests:
-#    override:
-#      - { command: 'true' }
+tests:
+  override:
+    - { command: 'cd tests' }
+    - { command: '../vendor/bin/phpunit' }
 
 application:
   type: none

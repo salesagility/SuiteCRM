@@ -24,3 +24,6 @@ branches:
     - hotfix
     - develop
     - scrutinizer-code-quality
+notifications:
+  on_success: never
+  on_failure: always
