@@ -13,7 +13,7 @@ before_script:
   - \[ -f "config_si.php" \] || cp tests/travis_config_si.php config_si.php
   - php tests/testinstall.php
 script:
-  - vendor/bin/phpunit -c tests/phpunit.xml --coverage-clover=coverage.clover.unit
+  - vendor/bin/phpunit -c phpunit.xml --coverage-clover=coverage.clover.unit
 after_script:
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover.unit
 services:
