@@ -14,8 +14,8 @@ before_script:
   - php tests/testinstall.php
 script:
   - cd tests
-  - ../vendor/bin/phpunit
-  - cat ../suitecrm.log
+  - ../vendor/bin/phpunit -c phpunit.xml --coverage-clover=coverage.clover.unit
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover.unit
 services:
   - mysql
 branches:

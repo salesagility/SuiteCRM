@@ -19,9 +19,9 @@ tools:
   php_loc: true
   php_cpd: true
   php_code_coverage: false
-#  external_code_coverage:
-#      timeout: 1800
-#      runs: 2
+  external_code_coverage:
+      timeout: 3600
+      runs: 3 #wait for all 3 tests from travis
 
 checks:
     php:
@@ -42,8 +42,6 @@ build:
 #    after:
   tests:
     override:
-      - { command: 'cd tests' }
-      - { command: '../vendor/bin/phpunit' }
-
+      - { command: 'true' } #we are doing phpunit tests on travis so not necessary to repeat here
 application:
   type: none
