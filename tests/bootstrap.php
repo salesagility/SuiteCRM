@@ -38,10 +38,9 @@
  */
 
 /* bootstrap composer's autoloader */
-require_once '../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 /* bootstrap sugarcrm */
-chdir('../');
 define('sugarEntry',TRUE);
 global $sugar_config, $db;
 require_once 'include/utils.php';
