@@ -189,7 +189,8 @@
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
 					var updateChecked = $('input[name="update_exists_template"]').prop('checked');
-					if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+					var confirmOverwrite = confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}');
+					if(!updateChecked || (updateChecked && confirmOverwrite)) {
 						// validate email template form before save
 						if (isValidEmailTemplateFormAndShowErrors()) {
 							onSaveCopyMarketingEmailTemplate(function () {
@@ -201,6 +202,9 @@
 								}
 							});
 						}
+					} else if(!confirmOverwrite) {
+						$('input[name="update_exists_template"]').attr('checked', false);
+						determine_back();
 					}
 					break;
 
@@ -216,13 +220,15 @@
 					break;
 
 			}
+			$('back_button_div').removeAttr('style');
 		}
 
 		function onNextClick() {
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
 						var updateChecked = $('input[name="update_exists_template"]').prop('checked');
-						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+						var confirmOverwrite = confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}');
+						if(!updateChecked || (updateChecked && confirmOverwrite)) {
 							// validate email template form before save
 							if (isValidEmailTemplateFormAndShowErrors()) {
 								onSaveCopyMarketingEmailTemplate(function () {
@@ -235,6 +241,10 @@
 									}
 								});
 							}
+						} else if(!confirmOverwrite) {
+							$('input[name="update_exists_template"]').attr('checked', false);
+							onNext();
+							refreshMarketingSelect();
 						}
 					break;
 
@@ -332,6 +342,145 @@
 			}
 		}
 
+		var $templateManagerDialogX = 0;
+		var $templateManagerDialogY = 0;
+		var $templateManagerDialog = null;
+		function createTemplateManagerDialog (parent) {
+			$('#templateManagerDialog').dialog({
+				width: '50%',
+				position: { my: "left top", at: "left bottom", of: parent }
+			});
+		}
+
+		function EmailTemplateController(action) {
+			var lastNameValue = $('#template_name').val();
+			var lastSubjectValue = $('#template_subject').val();
+			var revertValues = function() {
+				$('#template_name').val(lastNameValue);
+				$('#template_subject').val(lastSubjectValue);
+				window.parent.$('.ui-dialog-content:visible').dialog('close');
+			}
+
+			var save = function(update) {
+				window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+				var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+				$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
+					'func': func,
+					'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+					'body_html': $('#email_template_editor').getMozaikValue(),
+					'name': $('#template_name').val(),
+					'subject': $('#template_subject').val(),
+				}, function(resp){
+					// todo: hide preloader or loading message..
+					resp = JSON.parse(resp);
+					if(resp.error) {
+						// todo: show error
+						console.error(resp.error);
+					}
+					else {
+
+						if(!emailTemplateCopyId && func == 'createCopy') {
+							emailTemplateCopyId = resp.data.id;
+
+							$('option[value='+resp.data.id+']').html($('#template_name').val());
+
+							$('input[name="update_exists_template"]').prop('checked', true);
+						} else {
+							$('option[value='+resp.data.id+']').html($('#template_name').val());
+						}
+					}
+				});
+
+			}
+
+			var create = function() {
+				window.parent.$('.ui-dialog-content:visible').dialog('close');
+				$('input[name="update_exists_template"]').prop('checked', false);
+				var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+				$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
+					'func': func,
+					'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+					'body_html': $('#email_template_editor').getMozaikValue(),
+					'name': $('#template_name').val(),
+					'subject': $('#template_subject').val(),
+				}, function(resp){
+					// todo: hide preloader or loading message..
+					resp = JSON.parse(resp);
+					if(resp.error) {
+						// todo: show error
+						console.error(resp.error);
+					}
+					else {
+
+						if(!emailTemplateCopyId && func == 'createCopy') {
+							emailTemplateCopyId = resp.data.id;
+							$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
+							$('#template_id').val(resp.data.id);
+
+							$('input[name="update_exists_template"]').prop('checked', true);
+						}
+
+					}
+				});
+			}
+
+			switch (action) {
+				case "create":
+					createTemplateManagerDialog($('#LBL_CREATE_EMAIL_TEMPLATE_BTN'));
+					$('#templateManagerActionOK').val($('#LBL_CREATE_EMAIL_TEMPLATE_BTN').val());
+					$('#templateManagerDialog').children('div').addClass('hidden');
+					$('#emailTemplateDialog').removeClass('hidden');
+					$('#templateManagerDialogActions').removeClass('hidden');
+					$('#emplateManagerActionOK').unbind();
+					$('#emplateManagerActionCancel').unbind();
+					$('#templateManagerActionOK').click(create);
+					$('#templateManagerActionCancel').click(revertValues);
+					$('#templateManagerDialog').show();
+					break;
+				case "save":
+					createTemplateManagerDialog($('#LBL_SAVE_EMAIL_TEMPLATE_BTN'));
+					$('#templateManagerActionOK').val($('#LBL_SAVE_EMAIL_TEMPLATE_BTN').val());
+					$('#templateManagerDialog').children('div').addClass('hidden');
+					$('#emailTemplateDialog').removeClass('hidden');
+					$('#templateManagerDialogActions').removeClass('hidden');
+					$('#templateManagerActionOK').unbind();
+					$('#templateManagerActionCancel').unbind();
+					$('#templateManagerActionOK').click(save);
+					$('#templateManagerActionCancel').click(revertValues);
+					$('#templateManagerDialog').show();
+					break;
+				default:
+					break;
+			}
+			console.log('EmailTemplateController()', action)
+		}
+
+		function EmailTrackerController(action) {
+			switch (action) {
+				case "create":
+					createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));
+					$('#templateManagerDialog').children('div').addClass('hidden');
+					$('#emailTrackerDialog').removeClass('hidden');
+					$('#templateManagerDialog').show();
+					break;
+				case "insert":
+					break;
+				default:
+					break;
+			}
+
+			//insert_variable(document.wizform.variable_text.value, "email_template_editor")
+			//onCampaignTrackerSaveClick();
+			console.log('EmailTrackerController()', action)
+		}
+
+		$(document).on( "mousemove", function(event) {
+			$templateManagerDialogX = event.pageX;
+			$templateManagerDialogY = event.pageY;
+		});
 		{/literal}
 	</script>
 
@@ -357,11 +506,58 @@
 		{/literal}
 
 		<div id="templateManager" class="template-panel">
+			<div id="templateManagerDialog">
+
+				<div id="emailTemplateDialog" class="hidden">
+					<div class="template-container-full">
+						<h2>{$MOD.LBL_EMAIL_TEMPLATE_TITLE}</h2>
+						<div class="clear"></div>
+						<div class="form-group">
+							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
+						</div>
+						<div class="clear"></div>
+						<div class="form-group">
+							<label>{$MOD.LBL_SUBJECT}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+							<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
+						</div>
+
+					<span class="form-group hidden">
+						<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
+						<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
+					</span>
+					</div>
+				</div>
+
+				<div id="emailTrackerDialog" class="hidden">
+					<h2>{$MOD.LBL_TRACKER_TITLE}</h2>
+					<div class="clear"></div>
+					<div class="template-container-full">
+						<div id="insert_tracker_div" class="form-group">
+							<input type="text" size="30" id="url_text" name="url_text" value="{$DEFAULT_URL_TEXT}" />
+							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_URL_REF}'>
+						</div>
+						<div class="clear"></div>
+						<div id="create_tracker_div" class="form-group">
+							<input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable" placeholder="{$MOD.LBL_EDIT_TRACKER_NAME}"></slot><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span>
+							<input type="text" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable" placeholder="http://" title="{$MOD.LBL_EDIT_TRACKER_URL}"><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span>
+							<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
+						</div>
+					</div>
+
+				</div>
+
+				<div id="templateManagerDialogActions" class="form-group hidden">
+					<input type="button" id="templateManagerActionOK" value="OK">
+					<input type="button" id="templateManagerActionCancel" value="{$MOD.LBL_CANCEL}">
+				</div>
+			</div>
+
 			<div class="template-panel-container panel">
-				<div class="template-container ">
+				<div class="template-container-full ">
 					<h2>Email Template</h2>
 					<div class="clear"></div>
-					<div class="form-group">
+					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
 						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 					</div>
@@ -375,58 +571,47 @@
 					{/literal}
 					{/if}
 
-					<div class="form-group">
-						<input type="button" value="Save">
-						<input type="button" value="Create" class="">
-						<input type="button" value="Edit" class="">
-						<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
-						<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm">
+
+					<div class="button-group">
+						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
+
 					</div>
-				</div>
-				<div class="template-container">
+					<div class="button-group-seperator"></div>
+					<div class="button-group">
+						<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('create')" class="">
+					</div>
+
+
+
 					<div class="hidden">
-						<h2>Email Template Details</h2>
-						<div class="clear"></div>
-						<div class="form-group">
-							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}">
-						</div>
-						<div class="form-group">
-							<label>{$MOD.LBL_SUBJECT}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm">
-						</div>
+
 					</div>
 				</div>
+
 			</div>
 			<div class="template-panel-container panel-toolbar ">
 				<div class="template-container">
 					<h2>Email Trackers</h2>
 					<div class="clear"></div>
 
-					<div class="form-group">
-						<label>{$MOD.LBL_INSERT_TRACKER_URL|replace:' ':'&nbsp'}</label>
+					<div class="form-group clear-block">
 						<select class="form-control input-sm" tabindex='0' id="trackerUrlSelect" name='tracker_url' onchange='setTrackerUrlSelectVisibility(); this.form.url_text.value=this.value'>
 							<option value="-1">-- Create --</option>
 							{$TRACKER_KEY_OPTIONS}
 						</select>
 					</div>
 
-					<input type="button" value="Create">
-					<input type="button" value="{$MOD.LBL_INSERT_URL_REF}" onclick="onCampaignTrackerSaveClick();">
-
-					<div class="hidden">
-						<div id="insert_tracker_div" class="inline">
-							<input type="text" size="30" id="url_text" name="url_text" value="{$DEFAULT_URL_TEXT}" />
-							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_URL_REF}'>
-						</div>
-
-						<div id="create_tracker_div" class="inline">
-							<input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable" placeholder="{$MOD.LBL_EDIT_TRACKER_NAME}"></slot><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span>
-							<input type="text" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable" placeholder="http://" title="{$MOD.LBL_EDIT_TRACKER_URL}"><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span>
-							<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
-
-						</div>
+					<div class="button-group">
+						<input type="button" value="{$MOD.LBL_INSERT_TRACKER_BTN}" onclick="EmailTrackerController('insert');">
 					</div>
+					<div class="button-group-seperator"></div>
+					<div class="button-group">
+						<input type='button' id="LBL_CREATE_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_CREATE_TRACKER_BTN}' onclick="EmailTrackerController('create')">
+					</div>
+
+
+
+
 				</div>
 				<div class="template-container">
 					<h2>Email Variables</h2>
@@ -435,8 +620,7 @@
 					<script type="text/javascript">
 						{$FIELD_DEFS_JS}
 					</script>
-					<label>{$MOD.LBL_INSERT_VARIABLE|replace:' ':'&nbsp'}</label>
-					<div class="form-group hidden">
+					<div class="hidden">
 						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
 							{$DROPDOWN}
 						</select>
@@ -450,12 +634,12 @@
 					</script>
 					{/literal}
 
-					<div class="form-group">
+					<div class="form-group clear-block">
 						<select class="form-control input-sm" name='variable_name' tabindex="0" onchange="showVariable('wizform');">
 						</select>
 					</div>
 
-					<div class="form-group hidden">
+					<div class="hidden">
 						<span scope="row">
 							{$MOD.LBL_USE}
 						</span>
@@ -463,117 +647,158 @@
 					</div>
 
 					<!-- BEGIN: variable_button -->
-					<input type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT}'>
+					<div class="button-group">
+						<input type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_VARIABLE_BTN}'>
+					</div>
 					<!-- END: variable_button -->
 				</div>
 
 			</div>
 			<div class="template-panel-container">
-				<div>
-					{literal}
-					<script type="text/javascript">
+				<div class="">
+					<div>
+						{literal}
+						<script type="text/javascript">
 
-						var setTrackerUrlSelectVisibility = function(){
+							var setTrackerUrlSelectVisibility = function(){
 
-							if($('select[name="tracker_url"]').val()=='-1') {
-								$('#insert_tracker_div').hide();
-								$('#create_tracker_div').show();
-							}
-							else {
-								$('#insert_tracker_div').show();
-								$('#create_tracker_div').hide();
-							}
-						};
-						$(function(){
-							setTrackerUrlSelectVisibility();
-						});
-
-					</script>
-					<script type="text/javascript">
-						function toggle_tracker_url(isoptout) {
-							tracker_url = document.getElementById('tracker_url_add');
-							if (isoptout.checked) {
-								tracker_url.disabled=true;
-								tracker_url.value="index.php?entryPoint=removeme";
-							} else {
-								tracker_url.disabled=false;
-							}
-						}
-
-						var setFieldErrorMessage = function(field, message) {
-							$('#' + field).css('background-color', 'red');
-							$('#' + field).css({'background-color': 'white'}, 1500);
-							$('#' + field + '_error').html(message).show();
-						};
-
-						var hideFieldErrorMessages = function() {
-							$('.error_message').each(function(i,e){
-								$('#' + $(e).attr('for')).css('background-color', 'initial');
-								$(e).html('').hide();
+								if($('select[name="tracker_url"]').val()=='-1') {
+									$('#insert_tracker_div').hide();
+									$('#create_tracker_div').show();
+								}
+								else {
+									$('#insert_tracker_div').show();
+									$('#create_tracker_div').hide();
+								}
+							};
+							$(function(){
+								setTrackerUrlSelectVisibility();
 							});
-						};
 
-						var onCampaignTrackerSaveClick = function() {
-
-							var trackerName = $('#tracker_name').val();
-							var trackerURL = $('#tracker_url_add').val();
-
-							// validate elements fisrt
-
-							var errors = [];
-							if(!trackerName) {
-								errors.push({field: 'tracker_name', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_NAME}{literal}'});
-							}
-							if(!trackerURL) {
-								errors.push({field: 'tracker_url', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_URL}{literal}'});
-							}
-							hideFieldErrorMessages();
-							if(errors.length) {
-								for(var i=0; i<errors.length; i++) {
-									setFieldErrorMessage(errors[i].field, errors[i].message);
+						</script>
+						<script type="text/javascript">
+							function toggle_tracker_url(isoptout) {
+								tracker_url = document.getElementById('tracker_url_add');
+								if (isoptout.checked) {
+									tracker_url.disabled=true;
+									tracker_url.value="index.php?entryPoint=removeme";
+								} else {
+									tracker_url.disabled=false;
 								}
 							}
-							else {
 
-								$.post('index.php?entryPoint=campaignTrackerSave', {
-									module: 'CampaignTrackers',
-									record: '', // TODO .. campaign tracker ID on update
-									action: 'Save',
-									campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
-									tracker_name: trackerName,
-									tracker_url: trackerURL,
-									is_optout: $('#is_optout').prop('checked') ? 'on' : '',
-									response_json: true
-								}, function (resp) {
-									resp = JSON.parse(resp);
-									if (resp.data.id) {
-										// TODO do it only when user want to create a new one as "copy and save.." function
-										$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}">' + trackerName + ' : ' + trackerURL + '</option>');
-										$('select[name="tracker_url"]').val('{' + trackerName + '}');
-										$('#url_text').val('{' + trackerName + '}');
-									}
-									setTrackerUrlSelectVisibility();
-									insert_variable_html_link(document.wizform.tracker_url.value);
+							var setFieldErrorMessage = function(field, message) {
+								$('#' + field).css('background-color', 'red');
+								$('#' + field).css({'background-color': 'white'}, 1500);
+								$('#' + field + '_error').html(message).show();
+							};
+
+							var hideFieldErrorMessages = function() {
+								$('.error_message').each(function(i,e){
+									$('#' + $(e).attr('for')).css('background-color', 'initial');
+									$(e).html('').hide();
 								});
+							};
 
-							}
-						};
+							var onCampaignTrackerSaveClick = function() {
 
-						$(function(){
-							$('.errorable').focus(function(){
-								$(this).css('background-color', 'initial');
+								var trackerName = $('#tracker_name').val();
+								var trackerURL = $('#tracker_url_add').val();
+
+								// validate elements fisrt
+
+								var errors = [];
+								if(!trackerName) {
+									errors.push({field: 'tracker_name', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_NAME}{literal}'});
+								}
+								if(!trackerURL) {
+									errors.push({field: 'tracker_url', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_URL}{literal}'});
+								}
+								hideFieldErrorMessages();
+								if(errors.length) {
+									for(var i=0; i<errors.length; i++) {
+										setFieldErrorMessage(errors[i].field, errors[i].message);
+									}
+								}
+								else {
+
+									$.post('index.php?entryPoint=campaignTrackerSave', {
+										module: 'CampaignTrackers',
+										record: '', // TODO .. campaign tracker ID on update
+										action: 'Save',
+										campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
+										tracker_name: trackerName,
+										tracker_url: trackerURL,
+										is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+										response_json: true
+									}, function (resp) {
+										resp = JSON.parse(resp);
+										if (resp.data.id) {
+											// TODO do it only when user want to create a new one as "copy and save.." function
+											$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}">' + trackerName + ' : ' + trackerURL + '</option>');
+											$('select[name="tracker_url"]').val('{' + trackerName + '}');
+											$('#url_text').val('{' + trackerName + '}');
+										}
+										setTrackerUrlSelectVisibility();
+										insert_variable_html_link(document.wizform.tracker_url.value);
+									});
+
+								}
+							};
+
+							$(function(){
+								$('.errorable').focus(function(){
+									$(this).css('background-color', 'initial');
+								});
 							});
-						});
-					</script>
-					{/literal}
+						</script>
+						{/literal}
 
-					<div>
-						{$BODY_MOZAIK}
-						<!--
-                        <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
-                        <pre id="email_template_view"></pre>
-                        -->
+						<div>
+							{$BODY_MOZAIK}
+							<!--
+                            <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
+                            <pre id="email_template_view"></pre>
+                            -->
+						</div>
 					</div>
+				</div>
+			</div>
+			<div class="template-container-attachment panel">
+				<div id="step1_uploader" class="">
+
+					<table>
+						<!-- BEGIN: NoInbound2 -->
+						<tr>
+							<td valign="top" scope="row">
+								<h3>{$MOD.LBL_ATTACHMENTS}:</h3>
+							</td>
+							<td colspan="2" nowrap>
+								{$ATTACHMENTS_JAVASCRIPT} {$ATTACHMENTS}
+							</td>
+						</tr>
+						<!-- END: NoInbound2 -->
+					</table>
+
+					<!-- BEGIN: NoInbound3 -->
+					<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
+						<div id="upload_div">
+							<input type="file" id="my_file" name="file_1" size="40" />
+							<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
+							<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
+							<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
+							<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
+							<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUGAR_DOCUMENT}' class="button" />
+
+							<input type="hidden" name="attach_to_template_id" id="attach_to_template_id" value="{$TEMPLATE_ID}">
+							<input type="hidden" name="campaign_id" value="{$CAMPAIGN_ID}">
+							<!-- <input type="hidden" name="attach_to_marketing_id" id="attach_to_marketing_id" value="{$MRKT_ID}"> -->
+
+						</div>
+						<div id="attachments_div">
+						</div>
+					</form>
+					<!-- END: NoInbound3 -->
 				</div>
 			</div>
 
@@ -1195,41 +1420,7 @@ function determine_back(){
 {/literal}
 </form>
 
-	<div id="step1_uploader" style="display: none;">
 
-		<table>
-			<!-- BEGIN: NoInbound2 -->
-			<tr>
-				<td valign="top" scope="row">
-					{$MOD.LBL_ATTACHMENTS}:
-				</td>
-				<td colspan="2" nowrap>
-					{$ATTACHMENTS_JAVASCRIPT} {$ATTACHMENTS}
-				</td>
-			</tr>
-			<!-- END: NoInbound2 -->
-		</table>
-
-		<!-- BEGIN: NoInbound3 -->
-		<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
-			<div id="upload_div">
-				<input type="file" id="my_file" name="file_1" size="40" />
-				<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
-				<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
-				<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
-				<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
-				<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUGAR_DOCUMENT}' class="button" />
-
-				<input type="hidden" name="attach_to_template_id" id="attach_to_template_id" value="{$TEMPLATE_ID}">
-				<input type="hidden" name="campaign_id" value="{$CAMPAIGN_ID}">
-				<!-- <input type="hidden" name="attach_to_marketing_id" id="attach_to_marketing_id" value="{$MRKT_ID}"> -->
-
-			</div>
-			<div id="attachments_div">
-			</div>
-		</form>
-		<!-- END: NoInbound3 -->
-	</div>
 	<script type="text/javascript" src="modules/Emails/javascript/Email.js"></script>
 	{literal}
 	<script type="text/javascript">
@@ -1348,6 +1539,7 @@ $(function(){
 <style>
 {literal}
 
+
 	#templateManager {
 		background: #eee;
 	}
@@ -1376,11 +1568,29 @@ $(function(){
 	}
 
 	.template-container {
-		width: 45%;
+		width: 50%;
 		float: left;
 		position: relative;
 		min-height: 1px;
-		padding: 5px;
+		padding: 10px;
+	}
+
+	.template-container-full {
+		width: 100%;
+		float: left;
+		position: relative;
+		min-height: 1px;
+		padding: 10px;
+	}
+
+
+
+	.template-container-attachment {
+		width: 100%;
+		position: relative;
+		min-height: 1px;
+		padding: 10px;
+		margin-top: 10px;
 	}
 
 	.template-panel-container, .template-panel-container:after{clear:both}
@@ -1400,5 +1610,32 @@ $(function(){
 	.form-control {
 		border-radius: 0;
 	}
+
+	.form-group {
+		box-sizing: border-box;
+		border-collapse: collapse;
+		display: inline-block;
+		margin-bottom: 15px;
+	}
+
+	.button-group, .group {
+		display: inline-block;
+	}
+
+	.button-group-seperator {
+		padding-top: 4px;
+		margin-left: 4px;
+		margin-right: 6px;
+		border-right: 1px solid rgb(211, 211, 211);
+		display: inline;
+		content: '&nbsp;'
+	}
+
+	.clear-block {
+		display: block;
+	}
 {/literal}
 </style>
+<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>

@@ -3,6 +3,9 @@
     position: relative;
     overflow: hidden;
     border: 1px solid lightgray;
+    background: #fff;
+    padding: 0;
+    margin: 0;
 }
 
 .mozaik-inner {
@@ -15,6 +18,7 @@
     -moz-box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
     box-shadow: 0px 40px 40px -40px rgba(0,0,0,0.75);
 }
+
 .mozaik-clear {clear: both; height: 0;}
 
 /* thumbnails */
@@ -23,10 +27,9 @@ ul.mozaik-thumbs {
     list-style-type: none;
     padding: 10px;
     margin: 0;
-    display: block;
+    display: inline-block;
     float: left;
     overflow-y: scroll;
-    display: none;
 }
 ul.mozaik-thumbs li.mozaik-thumbnail {
     list-style-type: none;
@@ -54,16 +57,17 @@ span.mozaik-thumb-label {
 
 ul.mozaik-list {
     list-style-type: none;
-    padding: 64px 10px 128px 10px;
+    padding: 32px 10px 128px 10px;
     margin: 0;
-    display: block;
+    display: inline-block;
     float: left;
     min-width: 300px;
     min-height: 200px;
     background-color: #ddd;
     overflow-y: scroll;
+    height: 400px;
 }
-ul.mozaik-list li.mozaik-elem {
+ul.mozaik-listmozaik-list li.mozaik-elem {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -217,4 +221,13 @@ div.mozaik-preloader {
     width: 32px;
     background-position: center;
     background-repeat:  no-repeat;
+}
+
+.mozaik-list {
+    height: 400px;
+}
+
+.mozaik-thumbs {
+    background: #fff;
+    height: 400px;
 }
