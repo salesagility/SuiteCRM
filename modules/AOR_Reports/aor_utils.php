@@ -83,6 +83,22 @@ function requestToUserParameters()
                 'type' => $_REQUEST['parameter_type'][$key],
                 'value' => $_REQUEST['parameter_value'][$key],
             );
+
+            // Fix for issue #1272 - AOR_Report module cannot update Date type parameter.
+            if ($_REQUEST['parameter_type'][$key] === 'Date') {
+                $values = array();
+                $values[] = $_REQUEST['parameter_value'][0];
+                $values[] = $_REQUEST['parameter_value'][1];;
+                $values[] = $_REQUEST['parameter_value'][2];;
+                $values[] = $_REQUEST['parameter_value'][3];;
+
+                $params[$parameterId] = array(
+                    'id' => $parameterId,
+                    'operator' => $_REQUEST['parameter_operator'][$key],
+                    'type' => $_REQUEST['parameter_type'][$key],
+                    'value' => $values,
+                );
+            }
         }
     }
     return $params;
