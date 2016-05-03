@@ -459,21 +459,85 @@
 		}
 
 		function EmailTrackerController(action) {
+			var lastURLValue = $('#url_text').val();
+			var lastNameValue = $('#tracker_name').val();
+			var lastSubjectValue = $('#template_subject').val();
+			var revertValues = function() {
+				$('#url_text').val(lastURLValue);
+				$('#tracker_name').val(lastNameValue);
+				$('#template_subject').val(lastSubjectValue);
+				window.parent.$('.ui-dialog-content:visible').dialog('close');
+			}
+
+			var create = function () {
+
+				var trackerName = $('#tracker_name').val();
+				var trackerURL = $('#tracker_url_add').val();
+
+				// validate elements fisrt
+
+				var errors = [];
+				if(!trackerName) {
+					errors.push({field: 'tracker_name', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_NAME}{literal}'});
+				}
+				if(!trackerURL) {
+					errors.push({field: 'tracker_url', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_URL}{literal}'});
+				}
+				hideFieldErrorMessages();
+				if(errors.length) {
+					for(var i=0; i<errors.length; i++) {
+						setFieldErrorMessage(errors[i].field, errors[i].message);
+					}
+				}
+				else {
+					window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+					$.post('index.php?entryPoint=campaignTrackerSave', {
+						module: 'CampaignTrackers',
+						record: '', // TODO .. campaign tracker ID on update
+						action: 'Save',
+						campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
+						tracker_name: trackerName,
+						tracker_url: trackerURL,
+						is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+						response_json: true
+					}, function (resp) {
+						resp = JSON.parse(resp);
+						if (resp.data.id) {
+							// TODO do it only when user want to create a new one as "copy and save.." function
+							$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}">' + trackerName + ' : ' + trackerURL + '</option>');
+							$('select[name="tracker_url"]').val('{' + trackerName + '}');
+							$('#url_text').val('{' + trackerName + '}');
+						}
+						setTrackerUrlSelectVisibility();
+						insert_variable_html_link(document.wizform.tracker_url.value);
+					});
+
+				}
+			}
+
 			switch (action) {
 				case "create":
+					$('#url_text').val('');
+					$('#tracker_name').val('');
+					$('#template_subject').val('');
 					createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));
+					$('#templateManagerActionOK').val($('#LBL_CREATE_TRACKER_BTN').val());
 					$('#templateManagerDialog').children('div').addClass('hidden');
 					$('#emailTrackerDialog').removeClass('hidden');
+					$('#templateManagerDialogActions').removeClass('hidden');
+					$('#emplateManagerActionOK').unbind();
+					$('#emplateManagerActionCancel').unbind();
+					$('#templateManagerActionOK').click(create);
+					$('#templateManagerActionCancel').click(revertValues);
 					$('#templateManagerDialog').show();
 					break;
 				case "insert":
+					insert_variable_html_link(document.wizform.tracker_url.value);
 					break;
 				default:
 					break;
 			}
-
-			//insert_variable(document.wizform.variable_text.value, "email_template_editor")
-			//onCampaignTrackerSaveClick();
 			console.log('EmailTrackerController()', action)
 		}
 
@@ -533,20 +597,29 @@
 					<h2>{$MOD.LBL_TRACKER_TITLE}</h2>
 					<div class="clear"></div>
 					<div class="template-container-full">
-						<div id="insert_tracker_div" class="form-group">
-							<input type="text" size="30" id="url_text" name="url_text" value="{$DEFAULT_URL_TEXT}" />
-							<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_URL_REF}'>
-						</div>
+							<div class="form-group">
+								<label>{$MOD.LBL_TRACKER_KEY}</label>
+								<input type="text" size="100" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable form-control input-sm" placeholder="{$MOD.LBL_EDIT_TRACKER_NAME}">
+								<span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span>
+							</div>
+							<div class="clear"></div>
+							<div class="form-group">
+								<label>{$MOD.LBL_TRACKER_TEXT}</label>
+								<input type="text" size="100" maxlength="255" id="url_text" name="url_text" value="{$DEFAULT_URL_TEXT}" class="form-control input-sm" />
+							</div>
+							<div class="clear"></div>
+							<div class="form-group">
+								<label>{$MOD.LBL_TRACKER_URL}:</label>
+								<input type="text" maxlength='255' size="100" tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable form-control input-sm" placeholder="http://" title="{$MOD.LBL_EDIT_TRACKER_URL}">
+								<span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span>
+							</div>
 						<div class="clear"></div>
-						<div id="create_tracker_div" class="form-group">
-							<input type="text" size="30" tabindex='1' name="tracker_name" id="tracker_name" value="{$TRACKER_NAME}" class="errorable" placeholder="{$MOD.LBL_EDIT_TRACKER_NAME}"></slot><span id="tracker_name_error" style="display: none;" class="error_message" for="tracker_name"></span>
-							<input type="text" maxlength='255' tabindex='3' {$TRACKER_URL_DISABLED} name="tracker_url_add" id="tracker_url_add" value="{$TRACKER_URL}" class="errorable" placeholder="http://" title="{$MOD.LBL_EDIT_TRACKER_URL}"><span id="tracker_url_error" style="display: none;" class="error_message" for="tracker_url"></span>
-							<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
+						<div class="form-group">
+								<span>{$MOD.LBL_EDIT_OPT_OUT|replace:' ':'&nbsp'}</span><input onclick="toggle_tracker_url(this);" name="is_optout" id="is_optout" tabindex='2' type="checkbox" {$IS_OPTOUT_CHECKED}/>
+								<input type='button' tabindex="0" onclick='{$INSERT_URL_ONCLICK}' class='button hidden' value='{$MOD.LBL_INSERT_URL_REF}'>
+							</div>
 						</div>
 					</div>
-
-				</div>
-
 				<div id="templateManagerDialogActions" class="form-group hidden">
 					<input type="button" id="templateManagerActionOK" value="OK">
 					<input type="button" id="templateManagerActionCancel" value="{$MOD.LBL_CANCEL}">
