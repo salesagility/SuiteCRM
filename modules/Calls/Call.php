@@ -464,7 +464,14 @@ class Call extends SugarBean {
 		$mergeTime = $call_fields['DATE_START']; //$timedate->merge_date_time($call_fields['DATE_START'], $call_fields['TIME_START']);
 		$date_db = $timedate->to_db($mergeTime);
 		if( $date_db	< $today){
-			$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";
+			if($call_fields['STATUS']=='Held' || $call_fields['STATUS']=='Not Held')   
+			{    
+				$call_fields['DATE_START']= "<font>".$call_fields['DATE_START']."</font>";   
+			}   
+			else   
+			{    
+				$call_fields['DATE_START']= "<font class='overdueTask'>".$call_fields['DATE_START']."</font>";   
+			}
 		}else if($date_db < $nextday){
 			$call_fields['DATE_START'] = "<font class='todaysTask'>".$call_fields['DATE_START']."</font>";
 		}else{
