@@ -4403,8 +4403,8 @@ h3 span{
 
 @media(min-width:980px) {
     #dialog1_c {
-        margin-left: 40%;
-        margin-top:100px;
+        margin-left: 0%;
+        margin-top:20px;
     }
     #dlg {
         left:40%;;
