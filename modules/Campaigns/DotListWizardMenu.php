@@ -256,9 +256,9 @@ $(function(){
         wizardMenu();
     });
 
-    setInterval(function(){
+//    setInterval(function(){
         wizardMenu();
-    }, 300);
+//    }, 300);
 });
 </script>
 HTML;
