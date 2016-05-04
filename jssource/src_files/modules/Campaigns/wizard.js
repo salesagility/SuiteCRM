@@ -467,7 +467,6 @@ var addTargetListData = function(id) {
 };
 
 $(function() {
-    $('input').unbind();
    $('input').keydown(function(event) {
         if(event.keyCode == 13) {
             event.preventDefault();
