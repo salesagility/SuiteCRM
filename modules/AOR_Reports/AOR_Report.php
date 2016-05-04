@@ -686,7 +686,7 @@ class AOR_Report extends Basic {
                             $html .= $row[$name];
                             break;
                         default:
-
+							$att['params']['record_id'] = $row[$att['alias'].'_id'];
                             $html .= getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name],'',$currency_id, $att['params']);
                             break;
                     }
