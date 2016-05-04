@@ -31,10 +31,12 @@ class AM_ProjectTemplatesController extends SugarController {
         $template_id = $_POST['template_id'];
         $project_start = $_POST['start_date'];
         //Get project start date
-        $dateformat = $current_user->getPreference('datef');
-        $startdate = DateTime::createFromFormat($dateformat, $project_start);
-        $start = $startdate->format('Y-m-d');
-
+		if($project_start!='')
+		{
+			$dateformat = $current_user->getPreference('datef');
+			$startdate = DateTime::createFromFormat($dateformat, $project_start);
+			$start = $startdate->format('Y-m-d');
+		}
         $duration_unit = 'Days';
 
 
