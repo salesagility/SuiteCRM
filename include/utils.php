@@ -4363,11 +4363,11 @@ function html_entity_decode_utf8($string)
 
     $string = preg_replace_callback('~&#x0*([0-9a-f]+);~i',
         function($matches) {
-            code2utf(hexdec($matches[1]));
+            return code2utf(hexdec($matches[1]));
         }, $string);
     $string = preg_replace_callback('~&#0*([0-9]+);~',
         function($matches) {
-            code2utf($matches[1]);
+            return code2utf($matches[1]);
         }, $string);
 
     // replace literal entities
