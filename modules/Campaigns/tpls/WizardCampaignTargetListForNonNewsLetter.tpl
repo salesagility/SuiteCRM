@@ -66,7 +66,7 @@
 
 			<ul class="target-list">
 				<li>{$MOD.LBL_WIZARD_ADD_TARGET}</li>
-				<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" class="form-control"></li>
+				<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" class="form-control input-sm"></li>
 				{foreach from=$targetListData item=targetList}
 					<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}"><span class="targetListName">{$targetList.name}</span>&nbsp;-&nbsp;<span class="targetListType">{$targetList.type}</span>&nbsp;<span class="targetListCount">({$targetList.count})</span></a></li>
 				{/foreach}
@@ -103,12 +103,12 @@
 			<div class="target-list-create">
 
 				{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br>
-				<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}" class="form-control"><br>
+				<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}" class="form-control input-sm"><br>
 
 				<br>
 
 				{$MOD.LBL_TARGET_TYPE}<br>
-				<select id="target_list_type" name="target_list_type" class="form-control">{$TARGET_OPTIONS}</select>
+				<select id="target_list_type" name="target_list_type" class="form-control input-sm">{$TARGET_OPTIONS}</select>
 				<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
 				<br>
 
@@ -138,18 +138,16 @@
 						</div>
 						{literal}
 							<script type="text/javascript">
-								$(function(){
-									setInterval(function(){
-										if(!$('input[name="targetListSearch"]').val()) {
-											$('li.target-list-item').show();
-											$('#added_targets input[type="hidden"]').each(function (i, e) {
-												if ($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
-													var targetListId = $(e).val();
-													$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
-												}
-											});
-										}
-									}, 300);
+								$(function() {
+											if(!$('input[name="targetListSearch"]').val()) {
+												$('li.target-list-item').show();
+												$('#added_targets input[type="hidden"]').each(function (i, e) {
+													if ($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
+														var targetListId = $(e).val();
+														$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
+													}
+												});
+											}
 								});
 							</script>
 						{/literal}

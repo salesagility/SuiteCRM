@@ -140,6 +140,10 @@ foreach($marketing->additional_column_fields as $field)
     }
 }
 
+if(isset($_REQUEST['date_start_date']) && !empty($_REQUEST['date_start_date'])) {
+    $marketing->date_start = $_REQUEST['date_start_date'];
+}
+
 $marketing->campaign_id = $_REQUEST['campaign_id'];
 $marketing->save($check_notify);
 

@@ -42,13 +42,8 @@
  ********************************************************************************/
 -->
 {if $hideScreen}<div style="display:none;">{/if}
-{literal}
-<script type="text/javascript">
-	$(function(){
-		$('#wiz_stage').show();
-	});
-</script>
-{/literal}
+	{if $hideScreen}</div>{/if}
+
 <div id='wiz_stage' style="display:none;">
 <form  id="wizform" name="wizform" method="POST" action="index.php" enctype="multipart/form-data">
 	<input type="hidden" name="module" value="Campaigns">
@@ -559,19 +554,8 @@
 <div id=wizard>
 
 	<div id='step1' class="edit view" style="display:none;  margin-top: 8px;">
-
-		{literal}
-		<style type="text/css">
-			.error_message {color: red;}
-			#step1 .clear {height: 8px;}
-			#step1 label {font-weight: normal; width: 150px;}
-			.inline {display: inline; float: none;}
-		</style>
-		{/literal}
-
 		<div id="templateManager" class="template-panel">
 			<div id="templateManagerDialog">
-
 				<div id="emailTemplateDialog" class="hidden">
 					<div class="template-container-full">
 						<h2>{$MOD.LBL_EMAIL_TEMPLATE_TITLE}</h2>
@@ -634,16 +618,6 @@
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
 						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 					</div>
-					{if $email_template_already_selected}
-					{literal}
-					<script type="text/javascript">
-						$(function(){
-							onEmailTemplateChange(document.getElementById('template_id'), '{/literal}{$MOD.LBL_COPY_OF}{literal}', '{/literal}{$TEMPLATE_ID}{literal}');
-						});
-					</script>
-					{/literal}
-					{/if}
-
 
 					<div class="button-group">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
@@ -652,12 +626,6 @@
 					<div class="button-group-seperator"></div>
 					<div class="button-group">
 						<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('create')" class="">
-					</div>
-
-
-
-					<div class="hidden">
-
 					</div>
 				</div>
 
@@ -681,9 +649,6 @@
 					<div class="button-group">
 						<input type='button' id="LBL_CREATE_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_CREATE_TRACKER_BTN}' onclick="EmailTrackerController('create')">
 					</div>
-
-
-
 
 				</div>
 				<div class="template-container">
@@ -894,14 +859,6 @@
 					<slot>
 						<select  title='{$MOD.LBL_FROM_MAILBOX_TITLE}' id='inbound_email_id' name='wiz_step3_inbound_email_id' onchange='set_from_reply_info(this);'>{$MAILBOXES}</select>
 					</slot>
-					<!--
-					<br>
-					<a href="index.php?module=InboundEmail&action=index" title="{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
-					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
-					<br>
-					<a href="index.php?module=InboundEmail&action=EditView&mailbox_type=bounce" title="{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}">{$MOD.LBL_INBOUND_EMAIL_CREATE}</a>
-					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
-					-->
 				</td>
 
 				<td style="display: none;" scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_STATUS_TEXT} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
@@ -915,14 +872,6 @@
 					<slot>
 						<select  title='{$MOD.LBL_OUTBOUND_MAILBOX_NAME}' id='outbound_email_id' name='wiz_step3_outbound_email_id' onchange='// set_from_reply_info(this);'>{$OUTBOUND_MAILBOXES}</select>
 					</slot>
-					<!--
-					<br>
-					<a href="index.php?module=InboundEmail&action=index" title="{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}">{$MOD.LBL_INBOUND_EMAIL_SETTINGS}</a>
-					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_SETTINGS_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
-					<br>
-					<a href="index.php?module=InboundEmail&action=EditView&mailbox_type=bounce" title="{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}">{$MOD.LBL_INBOUND_EMAIL_CREATE}</a>
-					<img border="0" class="inlineHelpTip" onclick="return SUGAR.util.showHelpTips(this,'{$MOD.LBL_INBOUND_EMAIL_CREATE_TITLE}','','','dialogHelpPopup')" src="index.php?entryPoint=getImage&amp;themeName=SuiteR&amp;imageName=helpInline.gif">
-					-->
 				</td>
 
 			</tr>
@@ -936,47 +885,16 @@
 
 				<td>
 
-
-
-					<!-- ------------------------------ -->
-					<!-- ------------------------------ -->
-					<!-- DATE TIME COMBO FOR START DATE -->
-					<!-- ------------------------------ -->
-					<!-- ------------------------------ -->
-
 					<table border="0" cellpadding="0" cellspacing="0" class="dateTime">
 						<tr valign="middle">
 							<td nowrap class="datafield" style="width:150px;">
-								<input autocomplete="off" type="text" id="{$fields.date_start.name}_date" value="{$MRKT_DATE_START}" xxx="{$fields[$fields.date_start.name].value}" size="11" maxlength="10" title='' tabindex="0" onblur="combo_{$fields.date_start.name}.update(); parseDate(this, '{$CALENDAR_DATEFORMAT}');" onchange="combo_{$fields.date_start.name}.update();parseDate(this, '{$CALENDAR_DATEFORMAT}'); "    >
-								{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="{$fields.date_start.name}_trigger"{/capture}
+								<input autocomplete="off" type="text" id="date_start_date_date" value="{$MRKT_DATE_START}" xxx="{$fields[$fields.date_start.name].value}" size="11" maxlength="10" title='' tabindex="0" onblur="combo_date_start_date.update(); parseDate(this, '{$CALENDAR_DATEFORMAT}');" onchange="combo_date_start_date.update();parseDate(this, '{$CALENDAR_DATEFORMAT}'); "    >
+								{capture assign="other_attributes"}alt="{$APP.LBL_ENTER_DATE}" style="position:relative; top:6px" border="0" id="date_start_date_trigger"{/capture}
 								{sugar_getimage name="jscalendar" ext=".gif" other_attributes="$other_attributes"}&nbsp;
 							</td>
 							<td nowrap colspan="5" style="width:200px;">
-								{literal}
-								<script type="text/javascript">
-									setInterval(function(){
-										$('input[name="wiz_step3_date_start"]').val($('#date_start_date').val());
-										$('input[name="wiz_step3_time_start"]').val($('#date_start_hours').val() + ':' + $('#date_start_minutes').val());
-										$('select[name="meridiem"]').val($('#date_start_meridiem').val());
-										if(parseInt($('#date_start_hours').val())>12) {
-											$('#date_start_meridiem').val('PM');
-										}
-									},100);
-								</script>
-								{/literal}
-								<div id="{$fields.date_start.name}_time_section"></div>
-								<script type="text/javascript">
-									function set_{$fields.date_start.name}_values(form) {ldelim}
-									if(form.{$fields.date_start.name}_flag.checked)  {ldelim}
-									form.{$fields.date_start.name}_flag.value=1;
-									form.{$fields.date_start.name}.value="";
-									form.{$fields.date_start.name}.readOnly=true;
-									{rdelim} else  {ldelim}
-									form.{$fields.date_start.name}_flag.value=0;
-									form.{$fields.date_start.name}.readOnly=false;
-									{rdelim}
-									{rdelim}
-								</script>
+								<div id="date_start_date_time_section"></div>
+
 							</td>
 						</tr>
 						<tr valign="middle">
@@ -988,57 +906,7 @@
 							</td>
 						</tr>
 					</table>
-					<input type="hidden" class="DateTimeCombo" id="{$fields.date_start.name}" name="{$fields.date_start.name}" value="{$fields[$fields.date_start.name].value}">
-					<script type="text/javascript" src='{sugar_getjspath file="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"}'></script>
-					<script type="text/javascript">
-						var combo_{$fields.date_start.name} = new Datetimecombo("{$fields[$fields.date_start.name].value}", "{$fields.date_start.name}", "{$TIME_FORMAT}", "0", '1', false, true);
-						//Render the remaining widget fields
-						combo_{$fields.date_start.name}.timeseparator = ':';
-						text = combo_{$fields.date_start.name}.html('');
-						document.getElementById('{$fields.date_start.name}_time_section').innerHTML = text;
-
-						//Call eval on the update function to handle updates to calendar picker object
-						eval(combo_{$fields.date_start.name}.jsscript(''));
-
-						//bug 47718: this causes too many addToValidates to be called, resulting in the error messages being displayed multiple times
-						//    removing it here to mirror the Datetime SugarField, where the validation is not added at this level
-						//addToValidate('{$form_name}',"{$fields.date_start.name}_date",'date',false,"{$fields.date_start.name}");
-						addToValidateBinaryDependency('{$form_name}',"{$fields.date_start.name}_hours", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_HOURS}" ,"{$fields.date_start.name}_date");
-						addToValidateBinaryDependency('{$form_name}', "{$fields.date_start.name}_minutes", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MINUTES}" ,"{$fields.date_start.name}_date");
-						addToValidateBinaryDependency('{$form_name}', "{$fields.date_start.name}_meridiem", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MERIDIEM}","{$fields.date_start.name}_date");
-
-						YAHOO.util.Event.onDOMReady(function()
-						{ldelim}
-
-						Calendar.setup ({ldelim}
-						onClose : update_{$fields.date_start.name},
-						inputField : "{$fields.date_start.name}_date",
-								form : "{$form_name}",
-								ifFormat : "{$CALENDAR_DATEFORMAT}",
-								daFormat : "{$CALENDAR_DATEFORMAT}",
-								button : "{$fields.date_start.name}_trigger",
-								singleClick : true,
-								step : 1,
-								weekNumbers: false,
-								startWeekday: {$CALENDAR_FDOW|default:'0'},
-						comboObject: combo_{$fields.date_start.name},
-						form: '{$form_name}'
-						{rdelim});
-
-						//Call update for first time to round hours and minute values
-						combo_{$fields.date_start.name}.update(false);
-
-						{rdelim});
-					</script>
-
-					<!-- ------------------------------------- -->
-					<!-- ------------------------------------- -->
-					<!-- END OF DATE TIME COMBO FOR START DATE -->
-					<!-- ------------------------------------- -->
-					<!-- ------------------------------------- -->
-
-
-
+					<input type="hidden" class="DateTimeCombo" id="date_start_date" name="date_start_date" value="{$fields[$fields.date_start.name].value}">
 
 				</td>
 
@@ -1047,10 +915,6 @@
 
 
 		</table>
-
-
-
-
 
 
 		<div class="wizard-box">
@@ -1095,169 +959,6 @@
 				<td><slot>&nbsp;</slot></td>
 			</tr>
 		</table>
-
-
-		{literal}
-		<script type="text/javascript">
-/*
-			Calendar.setup ({{/literal}
-				inputField : "date_start", ifFormat : "{$CALENDAR_DATEFORMAT}", showsTime : false, button : "jscal_trigger", singleClick : true, step : 1
-			{literal}});
-*/
-
-//		function show_edit_template_link(field) {
-//
-//			var field1=document.getElementById('edit_template');
-//			if (field.selectedIndex == 0) {
-//				field1.style.visibility="hidden";
-//			}
-//			else {
-//				field1.style.visibility="visible";
-//			}
-//		}
-
-		function refresh_email_template_list(template_id, template_name) {
-			var field=document.getElementById('template_id');
-			var bfound=0;
-			for (var i=0; i < field.options.length; i++) {
-					if (field.options[i].value == template_id) {
-						if (field.options[i].selected==false) {
-							field.options[i].selected=true;
-						}
-						field.options[i].text = template_name;
-						bfound=1;
-					}
-			}
-			//add item to selection list.
-			if (bfound == 0) {
-				var newElement=document.createElement('option');
-				newElement.text=template_name;
-				newElement.value=template_id;
-				field.options.add(newElement);
-				newElement.selected=true;
-			}
-
-			//enable the edit button.
-			var field1=document.getElementById('edit_template');
-			field1.style.visibility="visible";
-		}
-
-		function open_email_template_form() {
-		{/literal}
-			URL="index.php?module=EmailTemplates&action=EditView&campaign_id={$CAMPAIGN_ID}";
-			URL+="&sugar_body_only=1";
-		{literal}
-			windowName = 'email_template';
-			windowFeatures = 'width=800' + ',height=600' 	+ ',resizable=1,scrollbars=1';
-
-			win = window.open(URL, windowName, windowFeatures);
-			if(window.focus)
-			{
-				// put the focus on the popup if the browser supports the focus() method
-				win.focus();
-			}
-		}
-		function edit_email_template_form() {
-		{/literal}
-			var field=document.getElementById('template_id');
-			URL="index.php?module=EmailTemplates&action=EditView&campaign_id={$CAMPAIGN_ID}";
-			URL+="&sugar_body_only=1";
-			{literal}
-			if (field.options[field.selectedIndex].value != 'undefined') {
-				URL+="&record="+field.options[field.selectedIndex].value;
-			}
-			windowName = 'email_template';
-			windowFeatures = 'width=800' + ',height=600' 	+ ',resizable=1,scrollbars=1';
-
-			win = window.open(URL, windowName, windowFeatures);
-			if(window.focus)
-			{
-				// put the focus on the popup if the browser supports the focus() method
-				win.focus();
-			}
-		}
-
-		function toggle_message_for(all_prospects_checkbox) {
-			message_for = document.getElementById('message_for');
-			if (all_prospects_checkbox.checked) {
-				message_for.disabled=true;
-			} else {
-				message_for.disabled=false;
-			}
-		}
-		{/literal}
-		var from_emails=new Array({$FROM_EMAILS});
-		{literal}
-		function set_from_email_and_name(mailbox) {
-			from_email_span = document.getElementById('from_email');
-			from_name = document.getElementById('from_name');
-			for (i=0; i<=from_emails.length; i++) {
-				if ((mailbox.value == '' &&  from_emails[i] =='EMPTY') || from_emails[i] == mailbox.value) {
-					var j=i+1;
-					from_email_span.innerHTML=from_emails[j+1];
-					if (from_name.value=='') {
-						from_name.value=from_emails[j];
-					}
-					return;
-				}
-			}
-		}
-
-		{/literal}
-		// cn: bug 12587 - allow setting of Reply-to X from campaigns
-		var ie_stored_options = {$IEStoredOptions};
-		{literal}
-
-		function set_from_reply_info(mailbox) {
-			var fn = document.getElementById('from_name');
-			var fa = document.getElementById('from_addr');
-			var rn = document.getElementById('reply_name');
-			var ra = document.getElementById('reply_addr');
-
-			if(mailbox.value != '') {
-				if(ie_stored_options[mailbox.value]) {
-					var focusIe = ie_stored_options[mailbox.value];
-					// from name
-					if(focusIe.from_name && focusIe.from_name != "")
-						fn.value = focusIe.from_name;
-					else
-						fn.value = '';
-
-					// from addr
-					if(focusIe.from_addr && focusIe.from_addr != "")
-						fa.value = focusIe.from_addr;
-					else
-						fa.value = '';
-
-					// reply name
-					if(focusIe.reply_to_name && focusIe.reply_to_name != "")
-						rn.value = focusIe.reply_to_name;
-					else
-						rn.value = '';
-
-					// reply add
-					if(focusIe.reply_to_addr && focusIe.reply_to_addr != "")
-						ra.value = focusIe.reply_to_addr;
-					else
-						ra.value = '';
-				}
-			} else {
-				fn.value = '';
-				fa.value = '';
-				rn.value = '';
-				ra.value = '';
-			}
-		}
-
-
-		</script>
-		{/literal}
-
-		{if $MAILBOXES_DEAULT}
-		<script type="text/javascript">
-			set_from_reply_info({ldelim}value:"{$MAILBOXES_DEAULT}"{rdelim});
-		</script>
-		{/if}
 
 		</div>
 	</div>
@@ -1461,45 +1162,157 @@
 	</td>
 </tr>
 </table>
-
-{literal}
-<script language="javascript">
-function determine_back(){
-{/literal}
-	var current_step = document.getElementById('wiz_current_step').value;
-    var total_steps = document.getElementById('wiz_total_steps').value;
-{literal}
-	if(current_step == 1){
-{/literal}
-		document.getElementById('action').value='WizardNewsletter';
-		document.getElementById('record').value='{$CAMPAIGN_ID}';
-		document.getElementById('return_id').value='{$CAMPAIGN_ID}';
-		document.getElementById('direct_step').value='4';
-		document.getElementById('wizform').submit();
-{literal}
-	}else{
-		if (current_step == 2) {
-			document.getElementById('wiz_current_step').value = 1;
-			navigate('direct');
-		}
-		else {
-			navigate('back');
-		}
-	}
-
-	changeNextBtnLabel();
-}
-</script>
-{/literal}
 </form>
 
+	{literal}
+	<script type="text/javascript">
 
+		function refresh_email_template_list(template_id, template_name) {
+			var field=document.getElementById('template_id');
+			var bfound=0;
+			for (var i=0; i < field.options.length; i++) {
+				if (field.options[i].value == template_id) {
+					if (field.options[i].selected==false) {
+						field.options[i].selected=true;
+					}
+					field.options[i].text = template_name;
+					bfound=1;
+				}
+			}
+			//add item to selection list.
+			if (bfound == 0) {
+				var newElement=document.createElement('option');
+				newElement.text=template_name;
+				newElement.value=template_id;
+				field.options.add(newElement);
+				newElement.selected=true;
+			}
+
+			//enable the edit button.
+			var field1=document.getElementById('edit_template');
+			field1.style.visibility="visible";
+		}
+
+		function open_email_template_form() {
+			{/literal}
+			URL="index.php?module=EmailTemplates&action=EditView&campaign_id={$CAMPAIGN_ID}";
+			URL+="&sugar_body_only=1";
+			{literal}
+			windowName = 'email_template';
+			windowFeatures = 'width=800' + ',height=600' 	+ ',resizable=1,scrollbars=1';
+
+			win = window.open(URL, windowName, windowFeatures);
+			if(window.focus)
+			{
+				// put the focus on the popup if the browser supports the focus() method
+				win.focus();
+			}
+		}
+		function edit_email_template_form() {
+			{/literal}
+			var field=document.getElementById('template_id');
+			URL="index.php?module=EmailTemplates&action=EditView&campaign_id={$CAMPAIGN_ID}";
+			URL+="&sugar_body_only=1";
+			{literal}
+			if (field.options[field.selectedIndex].value != 'undefined') {
+				URL+="&record="+field.options[field.selectedIndex].value;
+			}
+			windowName = 'email_template';
+			windowFeatures = 'width=800' + ',height=600' 	+ ',resizable=1,scrollbars=1';
+
+			win = window.open(URL, windowName, windowFeatures);
+			if(window.focus)
+			{
+				// put the focus on the popup if the browser supports the focus() method
+				win.focus();
+			}
+		}
+
+		function toggle_message_for(all_prospects_checkbox) {
+			message_for = document.getElementById('message_for');
+			if (all_prospects_checkbox.checked) {
+				message_for.disabled=true;
+			} else {
+				message_for.disabled=false;
+			}
+		}
+		{/literal}
+		var from_emails=new Array({$FROM_EMAILS});
+		{literal}
+		function set_from_email_and_name(mailbox) {
+			from_email_span = document.getElementById('from_email');
+			from_name = document.getElementById('from_name');
+			for (i=0; i<=from_emails.length; i++) {
+				if ((mailbox.value == '' &&  from_emails[i] =='EMPTY') || from_emails[i] == mailbox.value) {
+					var j=i+1;
+					from_email_span.innerHTML=from_emails[j+1];
+					if (from_name.value=='') {
+						from_name.value=from_emails[j];
+					}
+					return;
+				}
+			}
+		}
+
+		{/literal}
+		// cn: bug 12587 - allow setting of Reply-to X from campaigns
+		var ie_stored_options = {$IEStoredOptions};
+		{literal}
+
+		function set_from_reply_info(mailbox) {
+			var fn = document.getElementById('from_name');
+			var fa = document.getElementById('from_addr');
+			var rn = document.getElementById('reply_name');
+			var ra = document.getElementById('reply_addr');
+
+			if(mailbox.value != '') {
+				if(ie_stored_options[mailbox.value]) {
+					var focusIe = ie_stored_options[mailbox.value];
+					// from name
+					if(focusIe.from_name && focusIe.from_name != "")
+						fn.value = focusIe.from_name;
+					else
+						fn.value = '';
+
+					// from addr
+					if(focusIe.from_addr && focusIe.from_addr != "")
+						fa.value = focusIe.from_addr;
+					else
+						fa.value = '';
+
+					// reply name
+					if(focusIe.reply_to_name && focusIe.reply_to_name != "")
+						rn.value = focusIe.reply_to_name;
+					else
+						rn.value = '';
+
+					// reply add
+					if(focusIe.reply_to_addr && focusIe.reply_to_addr != "")
+						ra.value = focusIe.reply_to_addr;
+					else
+						ra.value = '';
+				}
+			} else {
+				fn.value = '';
+				fa.value = '';
+				rn.value = '';
+				ra.value = '';
+			}
+		}
+
+
+	</script>
+	{/literal}
+
+	{if $MAILBOXES_DEAULT}
+	<script type="text/javascript">
+		set_from_reply_info({ldelim}value:"{$MAILBOXES_DEAULT}"{rdelim});
+	</script>
+	{/if}
 	<script type="text/javascript" src="modules/Emails/javascript/Email.js"></script>
 	{literal}
 	<script type="text/javascript">
 		$(function(){
-			setInterval(function(){
-
 				// show uploader form below template form only
 
 				$('#step1_uploader').css('display', $('#step1').css('display'));
@@ -1508,8 +1321,6 @@ function determine_back(){
 
 				$('#wiz_cancel_button').css('display', $('#step3').css('display') == 'block' ? 'none' : 'block');
 				$('#wiz_submit_button').css('display', $('#step3').css('display') == 'block' ? 'none' : 'block');
-
-			}, 300);
 		});
 
 		var multi_selector = new multiFiles(document.getElementById('upload_div'));
@@ -1524,12 +1335,35 @@ function determine_back(){
 {$WIZ_JAVASCRIPT}
 {$DIV_JAVASCRIPT}
 {$JAVASCRIPT}
+{literal}
 <script language="javascript">
-//	link_navs();
-addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
-//addToValidate('wizform', 'date_start', 'alphanumeric', true,  document.getElementById('date_start').title);
-addToValidate('wizform', 'inbound_email_id', 'alphanumeric', true,  document.getElementById('inbound_email_id').title);
+	function determine_back(){
+		var current_step = document.getElementById('wiz_current_step').value;
+		var total_steps = document.getElementById('wiz_total_steps').value;
+		if(current_step == 1){
 
+			document.getElementById('action').value='WizardNewsletter';
+			document.getElementById('record').value='{$CAMPAIGN_ID}';
+			document.getElementById('return_id').value='{$CAMPAIGN_ID}';
+			document.getElementById('direct_step').value='4';
+			document.getElementById('wizform').submit();
+		}else{
+			if (current_step == 2) {
+				document.getElementById('wiz_current_step').value = 1;
+				navigate('direct');
+			}
+			else {
+				navigate('back');
+			}
+		}
+
+		changeNextBtnLabel();
+	}
+</script>
+{/literal}
+<script language="javascript">
+addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
+addToValidate('wizform', 'inbound_email_id', 'alphanumeric', true,  document.getElementById('inbound_email_id').title);
 {literal}
 function getParameterByName(name, url) {
 	if (!url) url = window.location.href;
@@ -1540,8 +1374,6 @@ function getParameterByName(name, url) {
 	if (!results[2]) return '';
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
-
-
 
 var jumpToPageByURL = function() {
 
@@ -1587,13 +1419,6 @@ var jumpToPageByURL = function() {
 				jumpToPage(jump);
 			}
 		}
-//		while (jump != document.getElementById('wiz_current_step').value && i<100) {
-//			if(document.getElementById('wiz_current_step').value > document.getElementById('wiz_total_steps').value) {
-//				break;
-//			}
-//			navigate('next');
-//			i++;
-//		}
 	}
 	else {
 		$('#step1').show();
@@ -1607,12 +1432,96 @@ $(function(){
 
 </script>
 
-{if $hideScreen}</div>{/if}
+<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+<script type="text/javascript" src='{sugar_getjspath file="include/SugarFields/Fields/Datetimecombo/Datetimecombo.js"}'></script>
+{literal}
+<script type="text/javascript">
+
+	function initialiseStartDate() {
+		$('input[name="wiz_step3_date_start"]').val($('#date_start_date').val());
+		$('input[name="wiz_step3_time_start"]').val($('#date_start_hours').val() + ':' + $('#date_start_minutes').val());
+		$('select[name="meridiem"]').val($('#date_start_meridiem').val());
+		if(parseInt($('#date_start_hours').val())>12) {
+			$('#date_start_meridiem').val('PM');
+		}
+	}
+
+	function set_date_start_date_values(form) {
+		if (form.date_start_date_flag.checked) {
+			form.date_start_date_flag.value = 1;
+			form.date_start_date.value = "";
+			form.date_start_date.readOnly = true;
+		} else {
+			form.date_start_date_flag.value = 0;
+			form.date_start_date.readOnly = false;
+		}
+	}
+
+	$(document).ready(initialiseStartDate);
+</script>
+{/literal}
+{if $email_template_already_selected}
+{literal}
+<script type="text/javascript">
+	$(function(){
+		onEmailTemplateChange(document.getElementById('template_id'), '{/literal}{$MOD.LBL_COPY_OF}{literal}', '{/literal}{$TEMPLATE_ID}{literal}');
+	});
+</script>
+{/literal}
+{/if}
+
+<script type="text/javascript">
+	var combo_date_start_date = new Datetimecombo("{$fields[$fields.date_start.name].value}", "date_start_date", "{$TIME_FORMAT}", "0", '1', false, true);
+	//Render the remaining widget fields
+	combo_date_start_date.timeseparator = ':';
+	text = combo_date_start_date.html('');
+	document.getElementById('date_start_date_time_section').innerHTML = text;
+
+	//Call eval on the update function to handle updates to calendar picker object
+	eval(combo_date_start_date.jsscript(''));
+
+	//bug 47718: this causes too many addToValidates to be called, resulting in the error messages being displayed multiple times
+	//    removing it here to mirror the Datetime SugarField, where the validation is not added at this level
+	//addToValidate('{$form_name}',"date_start_date_date",'date',false,"date_start_date");
+	addToValidateBinaryDependency('{$form_name}',"date_start_date_hours", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_HOURS}" ,"date_start_date_date");
+	addToValidateBinaryDependency('{$form_name}', "date_start_date_minutes", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MINUTES}" ,"date_start_date_date");
+	addToValidateBinaryDependency('{$form_name}', "date_start_date_meridiem", 'alpha', false, "{$APP.ERR_MISSING_REQUIRED_FIELDS} {$APP.LBL_MERIDIEM}","date_start_date_date");
+
+	YAHOO.util.Event.onDOMReady(function()
+	{ldelim}
+
+	Calendar.setup ({ldelim}
+	onClose : update_date_start_date,
+	inputField : "date_start_date_date",
+			form : "{$form_name}",
+			ifFormat : "{$CALENDAR_DATEFORMAT}",
+			daFormat : "{$CALENDAR_DATEFORMAT}",
+			button : "date_start_date_trigger",
+			singleClick : true,
+			step : 1,
+			weekNumbers: false,
+			startWeekday: {$CALENDAR_FDOW|default:'0'},
+	comboObject: combo_date_start_date,
+	form: '{$form_name}'
+	{rdelim});
+
+	//Call update for first time to round hours and minute values
+	combo_date_start_date.update(false);
+
+	{rdelim});
+</script>
+{literal}
+<script type="text/javascript">
+	$(function(){
+		$('#wiz_stage').show();
+	});
+</script>
+{/literal}
 
 <style>
-{literal}
-
-
+	{literal}
 	#templateManager {
 		background: #eee;
 	}
@@ -1707,8 +1616,13 @@ $(function(){
 	.clear-block {
 		display: block;
 	}
-{/literal}
+	{/literal}
 </style>
-<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
-<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+{literal}
+<style type="text/css">
+	.error_message {color: red;}
+	#step1 .clear {height: 8px;}
+	#step1 label {font-weight: normal; width: 150px;}
+	.inline {display: inline; float: none;}
+</style>
+{/literal}

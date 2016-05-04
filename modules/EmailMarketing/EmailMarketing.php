@@ -162,5 +162,12 @@ class EmailMarketing extends SugarBean
 
 		return $query;
 	}
+
+	function save () {
+		$break =1;
+		return parent::save();
+
+	}
+
 }
 ?>

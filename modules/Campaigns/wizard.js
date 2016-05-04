@@ -35,6 +35,7 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
+
 function hide(divname) {
     var elem1 = document.getElementById(divname);
     elem1.style.display = 'none';
@@ -79,6 +80,7 @@ function showfirst(wiz_mode) {
     }
     hilite(current_step.value);
 }
+
 function navigate(direction, noValidation, noSave) {
     if (typeof noValidation == 'undefined') {
         noValidation = false;
@@ -164,14 +166,37 @@ function navigate(direction, noValidation, noSave) {
     } else {
     }
 }
+
 function campaignCreateAndRefreshPage() {
+
+     this.GUID = function() {
+        var characters = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        var format = '0000000-0000-0000-0000-00000000000';
+        var z = Array.prototype.map.call(format, function($obj){
+            var min = 0;
+            var max = characters.length -1;
+
+            if($obj == '0') {
+                var index = Math.round(Math.random() * (max - min) + min);
+                $obj = characters[index];
+            }
+
+            return $obj;
+        }).toString().replace(/(,)/g,'');
+        return z
+    }
+    $('input[name="campaign_id"]').val(this.GUID());
     var wizform = document.getElementById('wizform');
     if (typeof wizform.direction != 'undefined') {
         wizform.action.value = 'WizardNewsletterSave';
         wizform.direction.value = 'continue_targetList';
+    } else {
+        wizform.action.value = 'WizardNewsletterSave';
+        wizform.direction.value = 'continue';
     }
-    wizform.submit();
+    $.post($('#wizform').attr('action'), $('#wizform').serialize(), function () {});
 }
+
 function campaignUpdate() {
     var wizform = document.getElementById('wizform');
     wizform.action.value = 'WizardNewsletterSave';
@@ -179,6 +204,7 @@ function campaignUpdate() {
     $.post($('#wizform').attr('action'), $('#wizform').serialize(), function () {
     });
 }
+
 var already_linked = '';
 function hilite(hilite) {
     var last = parseInt(document.getElementById('wiz_total_steps').value);
@@ -193,6 +219,7 @@ function hilite(hilite) {
         already_linked += ',hilite';
     }
 }
+
 function link_navs(beg, end) {
     if (beg == '') {
         beg = 1;
@@ -302,6 +329,7 @@ var onSendAsTestClick = function (e, campaignId, marketingId) {
     $('#sendMarketingEmailTest').val('1');
     $('#wizform').submit();
 };
+
 var addTargetListData = function (id) {
     var result_data = {
         "form_name": 'wizform',
@@ -316,12 +344,12 @@ var addTargetListData = function (id) {
     };
     set_return_prospect_list(result_data);
 };
+
 $(function () {
     $('input').keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault();
             return false;
         }
-
     });
 });
