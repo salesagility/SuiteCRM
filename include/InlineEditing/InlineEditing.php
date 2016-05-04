@@ -476,7 +476,10 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
             $value .= "</a>";
         }
     }
-
+	if($vardef['type'] == "url")
+	{
+		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
+	}
 
     return $value;
 }
