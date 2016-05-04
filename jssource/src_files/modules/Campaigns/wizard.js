@@ -202,7 +202,7 @@ function navigate(direction, noValidation, noSave){
         finish_button.style.display = '';
       }
     }else{
-      if(current_step.value<2){
+      if(current_step.value<1){
         back_button_div.style.display = 'none';
       }else{
         back_button_div.style.display = '';
@@ -465,3 +465,13 @@ var addTargetListData = function(id) {
   };
   set_return_prospect_list(result_data);
 };
+
+$(function() {
+   $('input').keydown(function(event) {
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+       return true;
+    });
+});
