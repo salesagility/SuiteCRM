@@ -865,10 +865,13 @@ class AOR_Report extends Basic {
             $csv .= "\r\n";
             foreach($fields as $name => $att){
                 if($att['display']){
-                    if($att['function'] != '' )
+                    if($att['function'] != '' ){
                         $csv .= $this->encloseForCSV($row[$name]);
-                    else
-                        $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
+                    }
+                    else{
+                        $module_field = getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name], '', '', '', true);
+                        $csv .= $this->encloseForCSV(trim(strip_tags($module_field)));
+                    }
                     $csv .= $delimiter;
                 }
             }
