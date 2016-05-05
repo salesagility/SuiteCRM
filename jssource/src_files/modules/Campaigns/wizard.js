@@ -237,12 +237,17 @@ function navigate(direction, noValidation, noSave){
 
 
 function campaignCreateAndRefreshPage() {
+    $('input[name="campaign_id"]').val(this.GUID());
     var wizform = document.getElementById('wizform');
-    if(typeof wizform.direction != 'undefined') {
+    if (typeof wizform.direction != 'undefined') {
         wizform.action.value = 'WizardNewsletterSave';
         wizform.direction.value = 'continue_targetList';
+    } else {
+        wizform.action.value = 'WizardNewsletterSave';
+        wizform.direction.value = 'continue';
     }
-    wizform.submit();
+    $.post($('#wizform').attr('action'), $('#wizform').serialize(), function () {});
+
 }
 
 function campaignUpdate() {
@@ -475,3 +480,20 @@ $(function() {
         return true;
     });
 });
+
+this.GUID = function() {
+    var characters = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    var format = '0000000-0000-0000-0000-00000000000';
+    var z = Array.prototype.map.call(format, function($obj){
+        var min = 0;
+        var max = characters.length -1;
+
+        if($obj == '0') {
+            var index = Math.round(Math.random() * (max - min) + min);
+            $obj = characters[index];
+        }
+
+        return $obj;
+    }).toString().replace(/(,)/g,'');
+    return z
+}
