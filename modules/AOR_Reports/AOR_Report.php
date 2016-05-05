@@ -54,6 +54,21 @@ class AOR_Report extends Basic {
         require_once('modules/AOR_Reports/aor_utils.php');
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function AOR_Report(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function bean_implements($interface){
 		switch($interface){
 			case 'ACL': return true;
@@ -718,8 +733,8 @@ class AOR_Report extends Basic {
     private function getModuleFieldByGroupValue($beanList, $group_value) {
         $moduleFieldByGroupValues = array();
 
-        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC LIMIT 1;";
-        $result = $this->db->query($sql);
+        $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND group_display = 1 AND deleted = 0 ORDER BY field_order ASC";
+        $result = $this->db->limitQuery($sql, 0, 1);
         while ($row = $this->db->fetchByAssoc($result)) {
 
             $field = new AOR_Field();

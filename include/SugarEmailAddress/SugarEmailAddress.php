@@ -79,6 +79,21 @@ class SugarEmailAddress extends SugarBean {
     }
 
     /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarEmailAddress(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
+    /**
      * Legacy email address handling.  This is to allow support for SOAP or customizations
      * @param string $id
      * @param string $module

@@ -50,6 +50,21 @@ class MySugar{
 		$this->type = $type;
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function MySugar($type){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($type);
+    }
+
+
     function checkDashletDisplay () {
 
 		if((!in_array($this->type, $GLOBALS['moduleList'])
