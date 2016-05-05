@@ -99,7 +99,6 @@ form
 -->
 </style>
 {/literal}
-
 <form action="index.php" method="post" name="ChangePasswordForm" id="ChangePasswordForm" onsubmit="return document.getElementById('cant_login').value == ''">
 <table cellpadding="0" align="center" width="100%" cellspacing="0" border="0">
 <tr>
@@ -150,7 +149,7 @@ form
 		</tr>
 		<tr>
 			<td scope="row">{$MOD.LBL_NEW_PASSWORD2}:</td>
-			<td width="30%"><input type="password" size="26" tabindex="2" id="confirm_pwd" name="confirm_pwd" value="" onkeyup="password_confirmation();" /> <div id="comfirm_pwd_match" class="error" style="display: none;">mis-match</div></td>
+			 <td width="30%"><input type="password" size="26" tabindex="2" id="confirm_pwd" name="confirm_pwd" value="" onkeyup="password_confirmation();" /> <div id="comfirm_pwd_match" class="error" style="display: none;">{$MOD.LBL_PASSWORD_MIS_MATCH}</div></td>
 		</tr>
 		<tr>
 			<td>{$CAPTCHA}</td>
