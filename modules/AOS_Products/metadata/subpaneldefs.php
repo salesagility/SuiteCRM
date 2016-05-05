@@ -47,6 +47,7 @@ $layout_defs['AOS_Products'] = array(
 			'order' => 100,
 			'module' => 'AOS_Quotes',
 			'subpanel_name' => 'ForProductPurchases',
+			'generate_select' => true,
 			'sort_order' => 'asc',
 			'sort_by' => 'id',
 			'title_key' => 'LBL_CUSTOMERS_PURCHASED_PRODUCTS_SUBPANEL_TITLE',
