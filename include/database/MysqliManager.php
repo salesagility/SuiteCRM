@@ -160,6 +160,14 @@ class MysqliManager extends MysqlManager
 
 		return $result;
 	}
+	
+	/**
+	 * Commits all uncommitted queries
+	 */
+	public function commit()
+	{
+		$this->database->commit();
+	}
 
 	/**
 	 * Returns the number of rows affected by the last query
