@@ -176,7 +176,7 @@ class MysqliManager extends MysqlManager
 	 */
 	public function getAffectedRowCount($result)
 	{
-		return mysqli_affected_rows($this->getDatabase());
+		return $this->database->affected_rows;
 	}
 
 	/**
