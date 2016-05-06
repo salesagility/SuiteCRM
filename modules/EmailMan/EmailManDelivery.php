@@ -187,8 +187,11 @@ do {
 		$lock_query.=" AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " .$db->convert($db->quoted($timedate->fromString("-1 day")->asDb()),"datetime")."))";
 
  		//if the query fails to execute.. terminate campaign email process.
- 		$lock_result=$db->query($lock_query,true,'Error acquiring a lock for emailman entry.');
+ 		$lock_result=$db->query($lock_query,true,'Error acquiring a lock for emailman entry.',false,false,false);
 		$lock_count=$db->getAffectedRowCount($lock_result);
+		if($db->dbtype == "mysql" && $db->variant == "mysqli") {
+			$db->commit();
+		}
 
 		//do not process the message if unable to acquire lock.
 		if (!$test && $lock_count!= 1) {

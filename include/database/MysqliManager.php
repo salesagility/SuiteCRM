@@ -119,12 +119,21 @@ class MysqliManager extends MysqlManager
 	/**
 	 * @see MysqlManager::query()
 	 */
-	public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false)
+	public function query($sql, $dieOnError = false, $msg = '', $suppress = false, $keepResult = false, $autoCommit = true)
 	{
 		if(is_array($sql)) {
 			return $this->queryArray($sql, $dieOnError, $msg, $suppress);
         }
-
+		
+		$this->database->autocommit($autoCommit);
+		
+		if($sugar_config['logger']['level'] == 'debug') {
+			$autoCommitResult = $this->database->query("SELECT @@AUTOCOMMIT");
+			$autoCommit = $autoCommitResult->fetch_row()[0];
+			$autoCommitResult->free();
+			$GLOBALS['log']->debug("Auto commit state:" . (($autoCommit) ? "on" : "off"));
+		}
+		
 		static $queryMD5 = array();
 
 		parent::countQuery($sql);
