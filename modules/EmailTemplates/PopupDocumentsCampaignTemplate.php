@@ -46,7 +46,32 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * Contributor(s): ______________________________________..
  ********************************************************************************/
 require_once('include/Popups/Popup_picker.php');
-$popup = new Popup_Picker();
+
+class DocumentPopupPicker extends Popup_Picker {
+
+	public function __construct()
+	{
+	}
+
+	public function _get_where_clause() {
+		$where = '';
+		if(isset($_REQUEST['query']))
+		{
+			$where_clauses = array();
+			append_where_clause($where_clauses, "document_name", "documents.document_name");
+			append_where_clause($where_clauses, "category_id", "documents.category_id");
+			append_where_clause($where_clauses, "subcategory_id", "documents.subcategory_id");
+			append_where_clause($where_clauses, "template_type", "documents.template_type");
+			append_where_clause($where_clauses, "is_template", "documents.is_template");
+
+			$where = generate_where_statement($where_clauses);
+		}
+		return $where;
+	}
+
+}
+
+$popup = new DocumentPopupPicker();
 
 global $theme;
 global $current_mod_strings;
