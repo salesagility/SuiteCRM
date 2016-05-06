@@ -221,6 +221,10 @@ function EmailTemplateController(action) {
 	}
 
 	var save = function(update) {
+		if($('#template_name').val() == '' || $('#template_subject').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return
+		}
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
@@ -255,8 +259,16 @@ function EmailTemplateController(action) {
 	}
 
 	var create = function() {
+
+		if($('#template_name').val() == '' || $('#template_subject').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return
+		}
+
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 		$('input[name="update_exists_template"]').prop('checked', false);
+
+
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
 		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
@@ -329,49 +341,43 @@ function EmailTrackerController(action) {
 	}
 
 	var create = function () {
-
 		var trackerName = $('#url_text').val();
 		var trackerURL = $('#tracker_url_add').val();
 
-		// validate elements fisrt
+		if($('#url_text').val() == '' || $('#tracker_url_add').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return;
+		}
 
-		var errors = [];
+
 		if(!trackerName) {
-			errors.push({field: 'tracker_name', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_NAME}{literal}'});
+			errors.push({field: 'tracker_name', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_NAME')});
 		}
 		if(!trackerURL) {
-			errors.push({field: 'tracker_url', message: '{/literal}{$MOD.ERR_REQUIRED_TRACKER_URL}{literal}'});
+			errors.push({field: 'tracker_url', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_URL')});
 		}
 		hideFieldErrorMessages();
-		if(errors.length) {
-			for(var i=0; i<errors.length; i++) {
-				setFieldErrorMessage(errors[i].field, errors[i].message);
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+		$.post('index.php?entryPoint=campaignTrackerSave', {
+			module: 'CampaignTrackers',
+			record: '', // TODO .. campaign tracker ID on update
+			action: 'Save',
+			campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
+			tracker_name: trackerName,
+			tracker_url: trackerURL,
+			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+			response_json: true
+		}, function (resp) {
+			resp = JSON.parse(resp);
+			if (resp.data.id) {
+				// TODO do it only when user want to create a new one as "copy and save.." function
+				$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}">' + trackerName + ' : ' + trackerURL + '</option>');
+				$('select[name="tracker_url"]').val('{' + trackerName + '}');
+				$('#url_text').val('{' + trackerName + '}');
 			}
-		}
-		else {
-			window.parent.$('.ui-dialog-content:visible').dialog('close');
-
-			$.post('index.php?entryPoint=campaignTrackerSave', {
-				module: 'CampaignTrackers',
-				record: '', // TODO .. campaign tracker ID on update
-				action: 'Save',
-				campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
-				tracker_name: trackerName,
-				tracker_url: trackerURL,
-				is_optout: $('#is_optout').prop('checked') ? 'on' : '',
-				response_json: true
-			}, function (resp) {
-				resp = JSON.parse(resp);
-				if (resp.data.id) {
-					// TODO do it only when user want to create a new one as "copy and save.." function
-					$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}">' + trackerName + ' : ' + trackerURL + '</option>');
-					$('select[name="tracker_url"]').val('{' + trackerName + '}');
-					$('#url_text').val('{' + trackerName + '}');
-				}
-				setTrackerUrlSelectVisibility();
-			});
-
-		}
+			setTrackerUrlSelectVisibility();
+		});
 	}
 
 	switch (action) {

@@ -400,6 +400,15 @@
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
 						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						<script>
+							{literal}
+							$(function(){
+								if(document.getElementById('template_id').value) {
+									onEmailTemplateChange(document.getElementById('template_id'), '{$MOD.LBL_COPY_OF}');
+								}
+							});
+							{/literal}
+						</script>
 					</div>
 
 					<div class="button-group">
