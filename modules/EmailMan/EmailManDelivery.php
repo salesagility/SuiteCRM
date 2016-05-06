@@ -186,9 +186,23 @@ do {
 		$lock_query="UPDATE emailman SET in_queue=1, in_queue_date=". $db->now()." WHERE id = ".intval($row['id']);
 		$lock_query.=" AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " .$db->convert($db->quoted($timedate->fromString("-1 day")->asDb()),"datetime")."))";
 
+		$select_query =	"SELECT COUNT(*) AS cnt FROM emailman WHERE id = ".intval($row['id'])." AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " .$db->convert($db->quoted($timedate->fromString("-1 day")->asDb()),"datetime").")) LIMIT 1";
+		$result = $db->query($select_query);
+		$before = $db->fetchByAssoc($result);
+
  		//if the query fails to execute.. terminate campaign email process.
  		$lock_result=$db->query($lock_query,true,'Error acquiring a lock for emailman entry.');
-		$lock_count=$db->getAffectedRowCount($lock_result);
+
+		$result = $db->query($select_query);
+		$after = $db->fetchByAssoc($result);
+
+		//$lock_count=$db->getAffectedRowCount($lock_result);
+		if($before['cnt'] == 0 || $before['cnt'] == $after['cnt']) {
+			$lock_count = -1;
+		}
+		else {
+			$lock_count = $before['cnt']-$after['cnt'];
+		}
 
 		//do not process the message if unable to acquire lock.
 		if ($lock_count!= 1) {
