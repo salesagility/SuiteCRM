@@ -1112,9 +1112,11 @@
 
 		<div class="wizard-summary-left">
 
+			<a href="{$link_to_campaign_header}">
 			<div class="box button ok">
-				<h2><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></h2>
+				<h2 style="color: #fff;">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</h2>
 			</div>
+			</a>
 
 			<div class="box button {if $error_on_target_list}fail{else}ok{/if}">
 				<h2>
@@ -1137,40 +1139,36 @@
 			<div class="box button {if $error_on_templates}fail{else}ok{/if}">
 				<h2><a href="{$link_to_choose_template}"{if $error_on_templates} title="{$error_on_templates}"{/if}>{$MOD.LBL_CHOOSE_TEMPLATES}</a></h2>
 			</div>
+			<a href="{$link_to_sender_details}">
+				<div class="box button ok">
+					<h2 style="color: #fff;">{$MOD.LBL_SENDER_DETAILS}</h2>
+				</div>
+			</a>
 
-			<div class="box button ok">
-				<h2><a href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></h2>
-			</div>
-
-
-			<div class="box small {if $error_on_scheduler2 || $error_on_mailbox2}fail{else}ok{/if}">
-
-				{if $error_on_scheduler2 || $error_on_mailbox2}
-				<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
-					{/if}
-
-					{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}
-
-					{if $error_on_scheduler2 || $error_on_mailbox2}
-				</a>
+			{if $error_on_scheduler2 || $error_on_mailbox2}
+			<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
 				{/if}
-
+			<div class="box small {if $error_on_scheduler2 || $error_on_mailbox2}fail{else}ok{/if}">
+					{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}
 			</div>
-
+			{if $error_on_scheduler2 || $error_on_mailbox2}
+			</a>
+			{/if}
 			<div class="space"></div>
-
+			{if $error_on_scheduler1 || $error_on_mailbox1}
+			<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
+				{/if}
 			<div class="box small right {if $error_on_scheduler1 || $error_on_mailbox1}fail{else}ok{/if}">
 
-				{if $error_on_scheduler1 || $error_on_mailbox1}
-				<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
-					{/if}
+
 
 					{$MOD.LBL_PROCESS_BOUNCED_EMAILS}
 
-					{if $error_on_scheduler2 || $error_on_mailbox1}
-				</a>
-				{/if}
+
 			</div>
+			{if $error_on_scheduler2 || $error_on_mailbox1}
+			</a>
+			{/if}
 			{/if}
 
 		</div>
