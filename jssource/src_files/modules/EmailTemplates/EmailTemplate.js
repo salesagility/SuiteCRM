@@ -167,7 +167,7 @@ function insert_variable_html(text) {
 
 function insert_variable_html_link(text) {
 
-	the_label = document.getElementById('url_text').value;
+	the_label = $('#trackerUrlSelect').val();
 	if(typeof(the_label) =='undefined'){
 		the_label = label;
 	}
@@ -293,8 +293,8 @@ function EmailTemplateController(action) {
 			$('#templateManagerDialog').children('div').addClass('hidden');
 			$('#emailTemplateDialog').removeClass('hidden');
 			$('#templateManagerDialogActions').removeClass('hidden');
-			$('#emplateManagerActionOK').unbind();
-			$('#emplateManagerActionCancel').unbind();
+			$('#templateManagerActionOK').unbind();
+			$('#templateManagerActionCancel').unbind();
 			$('#templateManagerActionOK').click(create);
 			$('#templateManagerActionCancel').click(revertValues);
 			$('#templateManagerDialog').show();
@@ -391,7 +391,8 @@ function EmailTrackerController(action) {
 			$('#templateManagerDialog').show();
 			break;
 		case "insert":
-			insert_variable_html_link(document.wizform.tracker_url.value);
+			console.log($('#trackerUrlSelect').val())
+			insert_variable_html_link($('#trackerUrlSelect').val());
 			break;
 		default:
 			break;
