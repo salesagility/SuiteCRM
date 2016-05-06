@@ -83,7 +83,27 @@
 						<td{if $campaign_type != 'NewsLetter' || $campaign_type=='Email'} style="display:none;"{/if}><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="{$APP.LBL_BACK}"></div></td>
 
 
-						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$CAMPAIGN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
+						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button"
+															   onclick="
+																	this.form.action.value='WizardHome';
+																	this.form.module.value='Campaigns';
+																	this.form.record.value='{$CAMPAIGN_ID}';
+
+																	// if mail box is not set up you can't cancel out of the wizard
+																	{if $campaign_type == 'NewsLetter' || $campaign_type=='Email'}
+																	{literal}
+																	var current = document.getElementById('wiz_current_step').value;
+																	if(current == 2) {
+																		var total = document.getElementById('wiz_total_steps').value;
+																		document.getElementById('wiz_current_step').value = document.getElementById('wiz_total_steps').value;
+																		$('#step' + current).hide();
+																		$('#step' + total).show();
+																		return false;
+																	}
+																	{/literal}
+																	{/if}
+																"
+															   type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
 
 						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns'; $('#show_wizard_summary').val('1'); " type="submit" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}" ></div>
 						</td>
@@ -541,7 +561,7 @@
 											$('#url_text').val('{' + trackerName + '}');
 										}
 										setTrackerUrlSelectVisibility();
-										insert_variable_html_link(document.wizform.tracker_url.value);
+										//insert_variable_html_link(document.wizform.tracker_url.value);
 									});
 
 								}
