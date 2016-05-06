@@ -329,7 +329,8 @@ function EmailTemplateController(action) {
 	console.log('EmailTemplateController()', action)
 }
 
-function EmailTrackerController(action) {
+function EmailTrackerController(action, campaignId) {
+	var _campaignId = campaignId;
 	var lastURLValue = $('#url_text').val();
 	var lastNameValue = $('#tracker_name').val();
 	var lastSubjectValue = $('#template_subject').val();
@@ -363,7 +364,7 @@ function EmailTrackerController(action) {
 			module: 'CampaignTrackers',
 			record: '', // TODO .. campaign tracker ID on update
 			action: 'Save',
-			campaign_id: '{/literal}{$CAMPAIGN_ID}{literal}',
+			campaign_id: _campaignId,
 			tracker_name: trackerName,
 			tracker_url: trackerURL,
 			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
