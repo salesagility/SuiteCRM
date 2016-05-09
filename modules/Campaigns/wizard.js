@@ -57,8 +57,8 @@ else{var targetListStep=2;}
 if(current_step.value==targetListStep){if(typeof document.getElementById('wizform').direction!='undefined'){next_button_div.style.display='none';save_button_div.style.display='';$('#wiz_submit_button').removeAttr('disabled');}}
 else{next_button_div.style.display='';save_button_div.style.display='none';}
 next_button.focus();}}else{}}
-function campaignCreateAndRefreshPage(){$('input[name="campaign_id"]').val(this.GUID());var wizform=document.getElementById('wizform');if(typeof wizform.direction!='undefined'){wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue_targetList';}else{wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue';}
-$.post($('#wizform').attr('action'),$('#wizform').serialize(),function(){});}
+function campaignCreateAndRefreshPage(){var wizform=document.getElementById('wizform');if(typeof wizform.direction!='undefined'){wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue_targetList';}else{wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue';}
+$.post($('#wizform').attr('action'),$('#wizform').serialize(),function(data){var re=/{"record":"\w{1,}-\w{1,}-\w{1,}-\w{1,}-\w{1,}"}/g;var found=data.match(re);if(found==null){console.log('Error getting record id');}else{var response=jQuery.parseJSON(found[0]);$('input[name="record"]').val(response.record);$('input[name="campaign_id"]').val(response.record);$('input[name="action"]').val('WizardTargetListSave');}});}
 function campaignUpdate(){var wizform=document.getElementById('wizform');wizform.action.value='WizardNewsletterSave';wizform.direction.value='continue';$.post($('#wizform').attr('action'),$('#wizform').serialize(),function(){});}
 var already_linked='';function hilite(hilite){var last=parseInt(document.getElementById('wiz_total_steps').value);for(i=1;i<=last;i++){var nav_step=document.getElementById('nav_step'+i);}
 var nav_step=document.getElementById('nav_step'+hilite);if(already_linked.indexOf(hilite)<0){$('#nav_step'+hilite).unbind();$('#nav_step'+hilite).click(function(){direct(hilite)});already_linked+=',hilite';}}
