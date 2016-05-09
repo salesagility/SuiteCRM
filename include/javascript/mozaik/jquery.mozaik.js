@@ -38,7 +38,7 @@ var mozaik = {
         var html = '';
         for(var i=0; i<toolPlugins.length; i++) {
             plugin = toolPlugins[i];
-            html += '<li class="mozaik-tool-btn mozaik-tool-'+plugin.name+'" style="background-image: url('+plugin.image+');"><a href="javascript:;" onclick="'+plugin.callback+'(this, \''+name+'\');" title="'+plugin.title+'"></a></li>';
+            html += '<li class="mozaik-tool-btn mozaik-tool-'+plugin.name+'" style="background-image: url('+plugin.image+');"><a href="javascript:;" onclick="'+plugin.callback+'(this, \''+name+'\');" title="'+plugin.title+'">&nbsp;</a></li>';
         }
         return html;
     },
