@@ -1380,7 +1380,7 @@ class AOR_Report extends Basic {
                                     break;
                             }
                         } else {
-                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                         }
                     }
                     $tiltLogicOp = false;
