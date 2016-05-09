@@ -44,5 +44,14 @@ class CampaignsController extends SugarController{
     function action_newsletterlist(){
         $this->view = 'newsletterlist';
     }
+
+    public function process() {
+        if($this->action == 'EditView' && empty($_REQUEST['record'])) {
+            $this->action = 'WizardHome';
+        }
+        parent::process();
+    }
+
+
 }
 ?>
