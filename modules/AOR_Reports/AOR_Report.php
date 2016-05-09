@@ -767,6 +767,10 @@ class AOR_Report extends Basic {
 
     function getTotalHTML($fields,$totals){
         global $app_list_strings;
+
+        $currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+
         $html = '';
         $html .= "<tbody>";
         $html .= "<tr>";
@@ -788,7 +792,38 @@ class AOR_Report extends Basic {
                 continue;
             }
             if($field['total'] && isset($totals[$label])){
-                $html .= "<td>".$this->calculateTotal($field['total'],$totals[$label])."</td>";
+                $type = $field['total'];
+                $total = $this->calculateTotal($type, $totals[$label]);
+                // Customise display based on the field type
+                $moduleBean = BeanFactory::newBean($field['module']);
+                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $fieldDefinitionType = $fieldDefinition['type'];
+                switch($fieldDefinitionType) {
+                    case "currency":
+                        // Customise based on type of function
+                        switch($type){
+                            case 'SUM':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            case 'COUNT':
+                                break;
+                            case 'AVG':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            default:
+                               break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                $html .= "<td>".$total."</td>";
             }else{
                 $html .= "<td></td>";
             }
@@ -1380,7 +1415,7 @@ class AOR_Report extends Basic {
                                     break;
                             }
                         } else {
-                            $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
                         }
                     }
                     $tiltLogicOp = false;

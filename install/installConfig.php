@@ -1395,6 +1395,13 @@ $out.= "</div>";
                      * Click to next button and start the installation.
                      */
                     var onNextClick = function(e) {
+
+                        if($('#dbUSRData').val() == 'provide') {
+                            $('#setup_db_admin_user_name').val($('input[name="setup_db_sugarsales_user"]').val());
+                            $('#setup_db_admin_password_entry').val($('input[name="setup_db_sugarsales_password_entry"]').val());
+                            $('#setup_db_admin_password').val($('input[name="setup_db_sugarsales_password_entry"]').val());
+                        }
+
                         var errors = getFormErrors();
                         if(!errors.length) {
                             var _e = e;
@@ -1456,6 +1463,18 @@ EOQ;
                     if(ouv == 'provide' || ouv == 'create'){
                         document.getElementById('connection_user_div').style.display = '';
                         //document.getElementById('sugarDBUs<br>er').style.display = 'none';
+
+                        if(ouv == 'provide') {
+                            $('#setup_db_admin_user_name').parent().prev().hide();
+                            $('#setup_db_admin_user_name').parent().hide();
+                            $('#setup_db_admin_password_entry').parent().hide();
+                        }
+                        else {
+                            $('#setup_db_admin_user_name').parent().prev().show();
+                            $('#setup_db_admin_user_name').parent().show();
+                            $('#setup_db_admin_password_entry').parent().show();
+                        }
+
                     }else{
                         document.getElementById('connection_user_div').style.display = 'none';
                         //document.getElementById('sugarDBUser').style.display = '';
