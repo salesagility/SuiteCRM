@@ -395,7 +395,21 @@ function validate_wiz(step, direction){
     return true;
 }
 
+var showEmailTemplateAttachments = function(attachments, lblLnkRemove) {
+    var html = '';
+    $(attachments).each(function(i, attachment){
+        if(attachment.filename) {
+            var secureLink = 'index.php?entryPoint=download&id=' + attachment.id + '&type=Notes';
+            html += '<input type="checkbox" name="remove_attachment[]" value="' + attachment.id + '"> ' + lblLnkRemove + '&nbsp;&nbsp;';
+            html += '<a href="' + secureLink + '" target="_blank">' + attachment.filename + '</a><br>';
+        }
+    });
+    $('#attachments_container').html(html);
+};
+
 var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, callback) {
+
+    var lblLnkRemove = 'Remove'; // todo: from lang file
 
     var autoCheckUpdateCheckbox = function() {
         if (!$('#template_id').val()) {
@@ -440,6 +454,9 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
 
                 $('#template_name').val( ($('#update_exists_template').prop('checked') ? namePrefixCopyOf : '') + results.data.name);
                 $('#template_subject').val(results.data.subject);
+
+                showEmailTemplateAttachments(results.data.attachments, lblLnkRemove);
+
                 if(typeof callback != 'undefined') {
                     callback();
                 }
