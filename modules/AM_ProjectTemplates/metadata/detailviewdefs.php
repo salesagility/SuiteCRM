@@ -18,6 +18,10 @@ array (
               array (
                     'customCode' => '<input title="{$APP.LBL_CREATE_PROJECT}" class="button" type="button" name="create_project" id="create_project" value="{$APP.LBL_CREATE_PROJECT}" onclick="confirmation(\'{$id}\')" />',
               ),
+          5 => 
+			  array (
+				'customCode' => '<input title="{$APP.LBL_VIEW_GANTT_TITLE}" class="button" type="button" name="view_gantt" id="view_gantt" value="{$APP.LBL_GANTT_BUTTON_LABEL}" onclick="javascript:window.location.href=\'index.php?module=AM_ProjectTemplates&action=view_GanttChart&record={$id}\'"/>',
+			  ),
         ),
       ),
       'maxColumns' => '2',
