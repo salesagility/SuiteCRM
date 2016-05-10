@@ -147,6 +147,12 @@ function navigate(direction, noValidation, noSave){
         campaignId = $('input[name="campaign_id"]').val();
     }
 
+    // when user clicks back on campaign (first) step
+    if(direction == 'back' && current_step.value == 1){
+            window.history.back();
+            return;
+    }
+
     //validation needed. (specialvalidation,  plus step number, plus submit button)
     var validationResult = validate_wiz(current_step.value,direction);
     if(noValidation || validationResult){

@@ -45,6 +45,7 @@ hilite(current_step.value);}
 function navigate(direction,noValidation,noSave){if(typeof noValidation=='undefined'){noValidation=false;}
 if(typeof noSave=='undefined'){noSave=false;}
 var current_step=document.getElementById('wiz_current_step');var currentValue=parseInt(current_step.value);var campaignId=$('input[name="record"]').val();if(!campaignId){campaignId=$('input[name="campaign_id"]').val();}
+if(direction=='back'&&current_step.value==1){window.history.back();return;}
 var validationResult=validate_wiz(current_step.value,direction);if(noValidation||validationResult){if(direction=='back'){current_step.value=currentValue-1;}
 if(direction=='next'){if(currentValue==1){if(!campaignId){if(typeof document.getElementById('wizform').direction!='undefined'){if(!noSave){campaignCreateAndRefreshPage();}}}
 else{if(!noSave){campaignUpdate();}}}
