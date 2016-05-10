@@ -41,6 +41,13 @@
 
  ********************************************************************************/
 *}
+<style>
+	{literal}
+	.form-control {
+		border-radius: 0;
+	}
+	{/literal}
+</style>
 
 	<input type="hidden" id="existing_target_count" name="existing_target_count" value={$TARGET_COUNT}>
 	<input type="hidden" id="added_target_count" name="added_target_count" value=''>
@@ -144,7 +151,7 @@
 				<br>
 
 				{$MOD.LBL_TARGET_TYPE}<br>
-				<select id="target_list_type" name="target_list_type" class="form-control">{$TARGET_OPTIONS}</select>
+				<select id="target_list_type" name="target_list_type" class="form-control input-sm">{$TARGET_OPTIONS}</select>
 				<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
 				<br>
 
