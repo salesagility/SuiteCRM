@@ -103,6 +103,21 @@ require_once('include/EditView/EditView2.php');
         $this->setOptions($options);
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SearchForm($seed, $module, $action = 'index', $options = array()){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($seed, $module, $action, $options);
+    }
+
+
  	function setup($searchdefs, $searchFields = array(), $tpl, $displayView = 'basic_search', $listViewDefs = array()){
 		$this->searchdefs =  $searchdefs[$this->module];
  		$this->tpl = $tpl;
