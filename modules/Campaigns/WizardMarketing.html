@@ -131,14 +131,36 @@
 	<script type="text/javascript">
 		{literal}
 
+
+		var uploadFormCallback = function() {
+			console.log('override this..');
+		};
+
+		$(function(){
+			$('#upload_form').submit(function(){
+				var formData = new FormData($(this)[0]);
+				$.post($(this).attr('action'), formData, function(data){
+					uploadFormCallback(data);
+				});
+				return false;
+			});
+		});
+
 		var hasNewAttachments = function() {
 			return $('#upload_form input[type=file]').length > 1;
 		};
 
-		var submitMarketingEmailAttachments = function() {
+		var submitMarketingEmailAttachments = function(callback) {
 			$('#attach_to_template_id').val($('#template_id').val());
 			///$('#attach_to_marketing_id').val($('#record').val());
+
+
+			if(typeof callback != 'undefined') {
+				uploadFormCallback = callback;
+			}
+
 			$('#upload_form').submit();
+
 		};
 
 		// validations
@@ -233,7 +255,10 @@
 							if (isValidEmailTemplateFormAndShowErrors()) {
 								onSaveCopyMarketingEmailTemplate(function () {
 									if (hasNewAttachments()) {
-										submitMarketingEmailAttachments();
+										submitMarketingEmailAttachments(function(){
+											onNext();
+											wizardMenuSetStepLink(4);
+										});
 									}
 									else {
 										onNext();
