@@ -210,6 +210,15 @@ $dictionary['AM_ProjectTemplates'] = array(
                 'bean_name' => 'Contact',
                 'vname' => 'LBL_AM_PROJECTTEMPLATES_CONTACTS_1_TITLE',
             ),
+        'override_business_hours' => array(
+            'name' => 'override_business_hours',
+            'vname' => 'LBL_OVERRIDE_BUSINESS_HOURS',
+            'type' => 'bool',
+            'required' => false,
+            'reportable' => false,
+            'default' => '0',
+            'comment' => ''
+        ),
 
     ),
     'relationships' => array(

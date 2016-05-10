@@ -122,4 +122,5 @@ $mod_strings = array(
     'LBL_PERCENT_COMPLETE' => '% Complete',
 	'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
 
+	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Override Business Hours',
 );

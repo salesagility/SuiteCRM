@@ -52,7 +52,7 @@ array (
         ),
         1 => 
         array (
-          0 => '',
+          0 => 'override_business_hours',
           1 => 
           array (
             'name' => 'priority',

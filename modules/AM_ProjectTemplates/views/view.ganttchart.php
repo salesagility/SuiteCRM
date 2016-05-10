@@ -85,7 +85,7 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 							<tr><td width="50%">
 						
 							<input type="hidden" name="project_template_id" id="project_template_id" value="<?php echo $project_template->id; ?>">
-							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php //echo $project_template->override_business_hours; ?>">
+							<input type="hidden" name="override_business_hours" id="override_business_hours" value="<?php echo $project_template->override_business_hours; ?>">
 							<input type="text" style="display: none;" name="task_id" id="task_id" value="">
 							<input type="radio" name="Milestone" value="Subtask" checked="checked" id="Subtask" />
 							<label id="Subtask_label" for="Subtask"><?php echo $mod_strings['LBL_SUBTASK'];?></label>
