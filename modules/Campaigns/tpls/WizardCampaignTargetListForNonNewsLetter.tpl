@@ -100,100 +100,101 @@
 
 	</table>
 -->
+`	<div class="row">
+		<div class="col-xs-12  col-sm-4">
 
-	<div style="float: left; max-width: 250px;">
-
-		{literal}
-		<script type="text/javascript">
-			var targetListDataJSON = {/literal}{$targetListDataJSON}{literal};
-		</script>
-		{/literal}
+			{literal}
+			<script type="text/javascript">
+				var targetListDataJSON = {/literal}{$targetListDataJSON}{literal};
+			</script>
+			{/literal}
 
 
-		<ul class="target-list">
-			<li>{$MOD.LBL_WIZARD_ADD_TARGET}</li>
-			<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" style="width: 100%;"></li>
-			{foreach from=$targetListData item=targetList}
-				<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}"><span class="targetListName">{$targetList.name}</span>&nbsp;-&nbsp;<span class="targetListType">{$targetList.type}</span>&nbsp;<span class="targetListCount">({$targetList.count})</span></a></li>
-			{/foreach}
-		</ul>
-		{literal}
-		<script type="text/javascript">
-			$(function(){
-				$('input[name="targetListSearch"]').keyup(function(event){
-					var keywords = $(this).val();
-					$('li.target-list-item').each(function(i,e){
-						targetListName = $(e).find('a').html();
-						if(targetListName.toLowerCase().indexOf(keywords.toLowerCase()) > -1) {
-							$(e).show();
-						}
-						else {
-							$(e).hide();
-						}
+			<ul class="target-list">
+				<li>{$MOD.LBL_WIZARD_ADD_TARGET}</li>
+				<li><input type="text" name="targetListSearch" value="" placeholder="{$MOD.LBL_SEARCH_TARGET_LIST}" style="width: 100%;"></li>
+				{foreach from=$targetListData item=targetList}
+					<li class="target-list-item" data-id="{$targetList.id}"><a href="javascript:;" onclick="addTargetListData('{$targetList.id}');" title="{$targetList.description}"><span class="targetListName">{$targetList.name}</span>&nbsp;-&nbsp;<span class="targetListType">{$targetList.type}</span>&nbsp;<span class="targetListCount">({$targetList.count})</span></a></li>
+				{/foreach}
+			</ul>
+			{literal}
+			<script type="text/javascript">
+				$(function(){
+					$('input[name="targetListSearch"]').keyup(function(event){
+						var keywords = $(this).val();
+						$('li.target-list-item').each(function(i,e){
+							targetListName = $(e).find('a').html();
+							if(targetListName.toLowerCase().indexOf(keywords.toLowerCase()) > -1) {
+								$(e).show();
+							}
+							else {
+								$(e).hide();
+							}
+						});
 					});
 				});
-			});
-		</script>
-		{/literal}
+			</script>
+			{/literal}
 
-		<div class="target-list-create">
+			<div class="target-list-create">
 
-			{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br>
-			<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}" style="width: 100%;"><br>
+				{$MOD.LBL_WIZARD_TARGET_MESSAGE2}<br>
+				<input id="target_list_name" name="target_list_name" type='text' size='35' placeholder="{$MOD.LBL_TARGET_NAME}" style="width: 100%;"><br>
 
-			<br>
+				<br>
 
-			{$MOD.LBL_TARGET_TYPE}<br>
-			<select id="target_list_type" name="target_list_type">{$TARGET_OPTIONS}</select>
-			<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
-			<br>
+				{$MOD.LBL_TARGET_TYPE}<br>
+				<select id="target_list_type" name="target_list_type" class="form-control">{$TARGET_OPTIONS}</select>
+				<input id='target_list_id' name='target_list_id' title='List ID' type="hidden" value=''>
+				<br>
 
-			<br>
+				<br>
 
-			<input id="target_list_count" name="target_list_count" type='hidden' size='35' value="0">
-			<input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');">
+				<input id="target_list_count" name="target_list_count" type='hidden' size='35' value="0">
+				<input type='button' value ='{$MOD.LBL_CREATE_TARGET}' class= 'button' onclick="add_target('false');">
+
+			</div>
+		</div>
+
+		<div class="target-list-table col-xs-12 col-sm-7">
+
+			<table width = '100%' class='detail view'>
+				<tr><td>{$MOD.LBL_TRACKERS_ADDED}</td></tr>
+				<tr><td>
+
+					<table border=1 width='100%'><tr class='detail view'>
+						<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_TARGET_NAME}</b></th>
+						<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_NUMBER_OF_TARGET}</b></th>
+						<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_TARGET_TYPE}</b></th><td>&nbsp;</td>
+						<td width='100' style="width:25%; text-align: left;"><b>&nbsp;</b></td>
+					</tr>
+					</table>
+					<div id='added_targets'>
+						{$EXISTING_TARGETS}
+					</div>
+						{literal}
+							<script type="text/javascript">
+								$(function(){
+									setInterval(function(){
+										if(!$('input[name="targetListSearch"]').val()) {
+											$('li.target-list-item').show();
+											$('#added_targets input[type="hidden"]').each(function (i, e) {
+												if ($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
+													var targetListId = $(e).val();
+													$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
+												}
+											});
+										}
+									}, 300);
+								});
+							</script>
+						{/literal}
+
+
+				</td></tr>
+			</table>
 
 		</div>
-	</div>
-
-	<div class="target-list-table" style="float: left; max-width: 600px;">
-
-		<table width = '100%' class='detail view'>
-			<tr><td>{$MOD.LBL_TRACKERS_ADDED}</td></tr>
-			<tr><td>
-
-				<table border=1 width='100%'><tr class='detail view'>
-					<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_TARGET_NAME}</b></th>
-					<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_NUMBER_OF_TARGET}</b></th>
-					<th scope='col' width='100' style="width:25%; text-align: left;"><b>{$MOD.LBL_TARGET_TYPE}</b></th><td>&nbsp;</td>
-					<td width='100' style="width:25%; text-align: left;"><b>&nbsp;</b></td>
-				</tr>
-				</table>
-				<div id='added_targets'>
-					{$EXISTING_TARGETS}
-				</div>
-					{literal}
-						<script type="text/javascript">
-							$(function(){
-								setInterval(function(){
-									if(!$('input[name="targetListSearch"]').val()) {
-										$('li.target-list-item').show();
-										$('#added_targets input[type="hidden"]').each(function (i, e) {
-											if ($(e).attr('id').match(/^added_target_id[0-9]+$/)) {
-												var targetListId = $(e).val();
-												$('li.target-list-item[data-id="' + targetListId + '"]').hide().attr('');
-											}
-										});
-									}
-								}, 300);
-							});
-						</script>
-					{/literal}
-
-
-			</td></tr>
-		</table>
-
 	</div>
 
 	<p>
