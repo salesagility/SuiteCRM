@@ -77,7 +77,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                 if($attachmentBeans) {
                     $attachments = array();
                     foreach($attachmentBeans as $attachmentBean) {
-                        $attachments = array(
+                        $attachments[] = array(
                             'id' => $attachmentBean->id,
                             'name' => $attachmentBean->name,
                             'file_mime_type' => $attachmentBean->file_mime_type,
