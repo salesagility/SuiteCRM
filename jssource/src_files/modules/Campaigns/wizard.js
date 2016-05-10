@@ -237,7 +237,6 @@ function navigate(direction, noValidation, noSave){
 
 
 function campaignCreateAndRefreshPage() {
-    $('input[name="campaign_id"]').val(this.GUID());
     var wizform = document.getElementById('wizform');
     if (typeof wizform.direction != 'undefined') {
         wizform.action.value = 'WizardNewsletterSave';
@@ -246,8 +245,25 @@ function campaignCreateAndRefreshPage() {
         wizform.action.value = 'WizardNewsletterSave';
         wizform.direction.value = 'continue';
     }
-    $.post($('#wizform').attr('action'), $('#wizform').serialize(), function () {});
 
+    $.post($('#wizform').attr('action'), $('#wizform').serialize(), function (data) {
+        var re = /{"record":"\w{1,}-\w{1,}-\w{1,}-\w{1,}-\w{1,}"}/g;
+        var found = data.match(re);
+        if(found == null) {
+          console.log('Error getting record id');
+        } else {
+            var response = jQuery.parseJSON(found[0]);
+            $('input[name="record"]').val(response.record);
+            $('input[name="campaign_id"]').val(response.record);
+            $('input[name="action"]').val('WizardTargetListSave');
+        }
+    });
+    //var wizform = document.getElementById('wizform');
+    //if(typeof wizform.direction != 'undefined') {
+    //    wizform.action.value = 'WizardNewsletterSave';
+    //    wizform.direction.value = 'continue_targetList';
+    //}
+    //wizform.submit();
 }
 
 function campaignUpdate() {
