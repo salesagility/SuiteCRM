@@ -847,6 +847,10 @@ class EmailTemplate extends SugarBean
         $this->body_html = str_replace('&lt;div class=&quot;mozaik-clear&quot;&gt;&nbsp;&lt;br&gt;&lt;/div&gt;', '&lt;div class=&quot;mozaik-clear&quot;&gt;&lt;/div&gt;', $this->body_html);
     }
 
+    public function getAttachments() {
+        return BeanFactory::getBean('Notes')->get_full_list('', "parent_id = '" . $this->id . "'");
+    }
+
 }
 
 ?>
