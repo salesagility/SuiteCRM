@@ -55,6 +55,21 @@ class XML_HTMLSax3_Trim {
         $this->orig_obj =& $orig_obj;
         $this->orig_method = $orig_method;
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function XML_HTMLSax3_Trim(&$orig_obj, $orig_method){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($orig_obj, $orig_method);
+    }
+
     /**
     * Trims the data
     * @param XML_HTMLSax3
