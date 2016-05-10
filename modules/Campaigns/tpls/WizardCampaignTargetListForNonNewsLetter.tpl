@@ -46,6 +46,22 @@
 	.form-control {
 		border-radius: 0;
 	}
+
+	.target-list {
+		background: #FFFFFF;
+	}
+
+	.target-list-create {
+		background: #FFFFFF;
+	}
+
+	.target-list-table{
+		background: #FFFFFF;
+	}
+
+	.row {
+		padding: 5px;
+	}
 	{/literal}
 </style>
 
