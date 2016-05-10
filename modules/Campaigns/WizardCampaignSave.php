@@ -42,7 +42,9 @@ global $db;
 
 $campaignId = $db->quote($_POST['campaignId']);
 $marketingId = $db->quote($_POST['marketingId']);
-$templateId = $db->quote($_POST['templateId']);
+if(!empty($_POST['templateId'])) {
+    $templateId = $db->quote($_POST['templateId']);
+}
 
 //$campaign = new Campaign();
 //$campaign->retrieve($campaignId);
@@ -50,7 +52,9 @@ $templateId = $db->quote($_POST['templateId']);
 $marketing = new EmailMarketing();
 $marketing->retrieve($marketingId);
 $marketing->campaign_id = $campaignId;
-$marketing->template_id = $templateId;
+if(!empty($_POST['templateId'])) {
+    $marketing->template_id = $templateId;
+}
 $marketing->save();
 
 echo json_encode($_POST);
