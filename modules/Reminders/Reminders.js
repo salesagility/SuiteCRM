@@ -74,12 +74,21 @@ var Reminders = {
 
     addAllInvitees: function(e) {
         var inviteesList = '';
+        var alreadyInvited = new Array();
 
         // add all default invitees
         $.each(Reminders.defaultInvitees, function(i,e){
             var dataModule = e.personModule;
             var dataId = e.personModuleId;
             var relatedValue = e.personName;
+
+            // Fix for issue #1161: dont add duplicate invitees
+            var associativeArray = new Array();
+            associativeArray['dataModule'] = dataModule;
+            associativeArray['dataId'] = dataId;
+            associativeArray['relatedValue'] = relatedValue;
+            alreadyInvited.push(associativeArray);
+
             inviteesList += Reminders.getInviteeView(false, dataModule, dataId, relatedValue);
         });
 
@@ -88,7 +97,23 @@ var Reminders = {
             var dataModule = $(e).attr('data-module');
             var dataId = $(e).attr('data-id');
             var relatedValue = $(e).find('td[scope="row"]').first().text();
-            inviteesList += Reminders.getInviteeView(false, dataModule, dataId, relatedValue);
+
+            // Fix for issue #1161: dont add duplicate invitees
+            var result = new Array();
+            for( var i = 0, len = alreadyInvited.length; i < len; i++ ) {
+                if(alreadyInvited[i]['dataModule'] === dataModule) {
+                    if(alreadyInvited[i]['dataId'] === dataId) {
+                        if(alreadyInvited[i]['relatedValue'].trim() === relatedValue.trim()) {
+                            result = alreadyInvited[i];
+                            break;
+                        }
+                    }
+                }
+            }
+            if(typeof result.dataModule == 'undefined') {
+                inviteesList += Reminders.getInviteeView(false, dataModule, dataId, relatedValue);
+            }
+            
         });
         $(e).find('.invitees_list').first().html(inviteesList);
     },

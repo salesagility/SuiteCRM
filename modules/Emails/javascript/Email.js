@@ -305,22 +305,29 @@ function multiFiles( list_target){
 		// Delete function
 		new_row_button_remove.onclick = function() {
 			var filePathComponents = this.parentNode.element.value.split("\\"),
-                fileName = (filePathComponents[filePathComponents.length - 1]),
+                fileName = (filePathComponents[filePathComponents.length - 1]);
 
                 // tinymce related
-                tiny = tinyMCE.getInstanceById('body_text'),
-                currValTiny = tiny.getContent();
+			//tiny = tinyMCE.getInstanceById('body_text'),
 
 			// Remove row element from form
 			this.parentNode.element.parentNode.removeChild(this.parentNode.element);
 
-            // find instances of the file and set it to ''
-            while (currValTiny.indexOf(fileName) !== -1) {
-                currValTiny = currValTiny.replace(fileName, 'QW%%^%%WQ');
-                currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/, '');
-            }
+			$(tinyMCE.editors).each(function(i, tiny){
 
-		    tiny.setContent(currValTiny);
+
+				var currValTiny = tiny.getContent({format: 'raw'});
+
+
+				// find instances of the file and set it to ''
+				while (currValTiny.indexOf(fileName) !== -1) {
+					currValTiny = currValTiny.replace(fileName, 'QW%%^%%WQ');
+					currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/, '');
+				}
+
+				tiny.setContent(currValTiny);
+
+			});
 
 			// Remove this row from the list
 			this.parentNode.parentNode.removeChild(this.parentNode);
@@ -471,13 +478,16 @@ function docUpload() {
     eai.onclick=function(){
     	var filename = this.parentNode.childNodes[4].value;
 	    	if(filename){
-                var tiny = tinyMCE.getInstanceById('body_text');
-				var currValTiny = tiny.getContent();
-	            while(currValTiny.indexOf(unescape(filename)) != -1){
-				   currValTiny = currValTiny.replace(unescape(filename),'QW%%^%%WQ');
-				   currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/,'&#32');
-				}
-				tiny.setContent(currValTiny);
+					$(tinyMCE.editors).each(function(i, tiny){
+						//var tiny = tinyMCE.getInstanceById('body_text');
+						var currValTiny = tiny.getContent();
+						while(currValTiny.indexOf(unescape(filename)) != -1){
+							currValTiny = currValTiny.replace(unescape(filename),'QW%%^%%WQ');
+							currValTiny = currValTiny.replace(/<img[^<]*QW%%\^%%WQ[^>]*>?/,'&#32');
+						}
+						tiny.setContent(currValTiny);
+					});
+
 	    	}
     	this.parentNode.parentNode.removeChild(this.parentNode);
     }

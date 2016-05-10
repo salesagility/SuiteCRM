@@ -77,7 +77,7 @@ class AlertsController extends SugarController
         if(isset($_POST['url_redirect'])) {
             $url_redirect = $_POST['url_redirect'];
         } else {
-            $url_redirect == null;
+            $url_redirect = null;
         }
 
         if($url_redirect == null) {
