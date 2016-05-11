@@ -235,7 +235,16 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                 echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
                 echo '</body></html>';
             } else {
-                header("Location: {$redirect_url}");
+                $header_URL = "Location: {$redirect_url}";
+
+                if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+                    $href = $matches[1];
+                    SugarApplication::redirect($href);
+                }
+                else {
+                    header($header_URL);
+                }
+
                 die();
             }
         } else {
@@ -262,7 +271,16 @@ if (!empty($_POST['redirect'])) {
         echo '</form><script language="javascript" type="text/javascript">document.redirect.submit();</script>';
         echo '</body></html>';
     } else {
-        header("Location: {$_POST['redirect']}");
+        $header_URL = "Location: {$_POST['redirect']}";
+
+        if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+            $href = $matches[1];
+            SugarApplication::redirect($href);
+        }
+        else {
+            header($header_URL);
+        }
+
         die();
     }
 }
