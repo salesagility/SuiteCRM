@@ -33,6 +33,10 @@
     padding: 10px;
 }
 
+div:nth-of-type(odd).template-container {
+    border-right: 1px solid rgb(211, 211, 211);
+}
+
 .template-container-full {
     width: 100%;
     float: left;

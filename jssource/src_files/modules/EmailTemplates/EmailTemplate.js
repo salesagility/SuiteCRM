@@ -221,10 +221,16 @@ function EmailTemplateController(action) {
 	}
 
 	var save = function(update) {
-		if($('#template_name').val() == '' || $('#template_subject').val() == '') {
+		if($('#template_name').val() == '') {
 			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
 			return
 		}
+		if($('#template_subject').val() == '') {
+			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+				return
+			}
+		}
+
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
@@ -260,9 +266,15 @@ function EmailTemplateController(action) {
 
 	var create = function() {
 
-		if($('#template_name').val() == '' || $('#template_subject').val() == '') {
+		if($('#template_name').val() == '') {
 			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
 			return
+		}
+
+		if($('#template_subject').val() == '') {
+			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+				return
+			}
 		}
 
 		window.parent.$('.ui-dialog-content:visible').dialog('close');

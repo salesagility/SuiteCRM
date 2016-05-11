@@ -398,10 +398,7 @@
 							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
 						</div>
 						<div class="clear"></div>
-						<div class="form-group">
-							<label>{$MOD.LBL_SUBJECT}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
-						</div>
+
 
 					<span class="form-group hidden">
 						<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
@@ -500,11 +497,7 @@
 					<script type="text/javascript">
 						{$FIELD_DEFS_JS}
 					</script>
-					<div class="hidden">
-						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
-							{$DROPDOWN}
-						</select>
-					</div>
+
 
 					{literal}
 					<script type="text/javascript">
@@ -515,6 +508,12 @@
 					{/literal}
 
 					<div class="form-group clear-block">
+
+						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
+							{$DROPDOWN}
+						</select>
+						<div class="pad">&nbsp;</div>
+
 						<select class="form-control input-sm" name='variable_name' tabindex="0" onchange="showVariable('wizform');">
 						</select>
 					</div>
@@ -633,9 +632,18 @@
 							});
 						</script>
 						{/literal}
-
-						<div>
-							{$BODY_MOZAIK}
+						<div class="template-panel panel-toolbar">
+							<div class="template-container-full">
+								<h2>{$MOD.LBL_SUBJECT}</h2>
+								<div class="form-group clear-block">
+									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
+								</div>
+							</div>
+						</div>
+						<div class="template-panel panel-toolbar">
+							<div class="template-container-full">
+								{$BODY_MOZAIK}
+							</div>
 							<!--
                             <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
                             <pre id="email_template_view"></pre>
