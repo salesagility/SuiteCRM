@@ -186,6 +186,11 @@ function insert_variable_html_link(text) {
  * will call the html (tinyMCE eidtor) insert function
  */
 function insert_variable(text, mozaikId) {
+	if(mozaikId == 'template_subject') {
+		// insert into the subject instead of the body
+		$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val())
+	}
+
 	if(!mozaikId) {
 		mozaikId = 'mozaik';
 	}

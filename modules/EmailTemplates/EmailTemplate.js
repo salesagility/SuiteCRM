@@ -59,7 +59,8 @@ function insert_variable_html(text){tinyMCE.activeEditor.execCommand('mceInsertR
 function insert_variable_html_link(text){the_label=$('#trackerUrlSelect').val();if(typeof(the_label)=='undefined'){the_label=label;}
 if(the_label[0]=='{'&&the_label[the_label.length-1]=='}'){the_label=the_label.substring(1,the_label.length-1);}
 var thelink="<a href='"+text+"' > "+the_label+" </a>";insert_variable_html(thelink);}
-function insert_variable(text,mozaikId){if(!mozaikId){mozaikId='mozaik';}
+function insert_variable(text,mozaikId){if(mozaikId=='template_subject'){$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val())}
+if(!mozaikId){mozaikId='mozaik';}
 if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length>0){if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){insert_variable_text(document.getElementById('body_text_plain'),text);}else{insert_variable_html(text);}}}
 var $templateManagerDialogX=0;var $templateManagerDialogY=0;var $templateManagerDialog=null;function createTemplateManagerDialog(parent){$('#templateManagerDialog').dialog({width:'50%',position:{my:"left top",at:"left bottom",of:parent}});}
 function EmailTemplateController(action){var lastNameValue=$('#template_name').val();var lastSubjectValue=$('#template_subject').val();var revertValues=function(){$('#template_name').val(lastNameValue);$('#template_subject').val(lastSubjectValue);window.parent.$('.ui-dialog-content:visible').dialog('close');}
