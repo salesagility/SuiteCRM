@@ -228,11 +228,19 @@ function EmailTemplateController(action) {
 	var save = function(update) {
 		if($('#template_name').val() == '') {
 			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
-			return
+			$('#template_name').focus();
+			return;
 		}
 		if($('#template_subject').val() == '') {
 			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
-				return
+				$('#template_subject').focus();
+				return;
+			}
+		}
+
+		if($('#template_id').val() != '') {
+			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
+				return;
 			}
 		}
 
@@ -317,28 +325,10 @@ function EmailTemplateController(action) {
 
 	switch (action) {
 		case "create":
-			createTemplateManagerDialog($('#LBL_CREATE_EMAIL_TEMPLATE_BTN'));
-			$('#templateManagerActionOK').val($('#LBL_CREATE_EMAIL_TEMPLATE_BTN').val());
-			$('#templateManagerDialog').children('div').addClass('hidden');
-			$('#emailTemplateDialog').removeClass('hidden');
-			$('#templateManagerDialogActions').removeClass('hidden');
-			$('#templateManagerActionOK').unbind();
-			$('#templateManagerActionCancel').unbind();
-			$('#templateManagerActionOK').click(create);
-			$('#templateManagerActionCancel').click(revertValues);
-			$('#templateManagerDialog').show();
+			create();
 			break;
 		case "save":
-			createTemplateManagerDialog($('#LBL_SAVE_EMAIL_TEMPLATE_BTN'));
-			$('#templateManagerActionOK').val($('#LBL_SAVE_EMAIL_TEMPLATE_BTN').val());
-			$('#templateManagerDialog').children('div').addClass('hidden');
-			$('#emailTemplateDialog').removeClass('hidden');
-			$('#templateManagerDialogActions').removeClass('hidden');
-			$('#templateManagerActionOK').unbind();
-			$('#templateManagerActionCancel').unbind();
-			$('#templateManagerActionOK').click(save);
-			$('#templateManagerActionCancel').click(revertValues);
-			$('#templateManagerDialog').show();
+			save();
 			break;
 		default:
 			break;

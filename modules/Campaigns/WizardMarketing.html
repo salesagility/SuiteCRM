@@ -390,21 +390,7 @@
 		<div id="templateManager" class="template-panel">
 			<div id="templateManagerDialog">
 				<div id="emailTemplateDialog" class="hidden">
-					<div class="template-container-full">
-						<h2>{$MOD.LBL_EMAIL_TEMPLATE_TITLE}</h2>
-						<div class="clear"></div>
-						<div class="form-group">
-							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
-						</div>
-						<div class="clear"></div>
 
-
-					<span class="form-group hidden">
-						<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
-						<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
-					</span>
-					</div>
 				</div>
 
 				<div id="emailTrackerDialog" class="hidden">
@@ -443,10 +429,20 @@
 			<div class="template-panel-container panel">
 				<div class="template-container-full ">
 					<h2>Email Template</h2>
-					<div class="clear"></div>
+					<div class="clear">&nbsp;</div>
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
 						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						<div class="clear">&nbsp;</div>
+						<div style="margin-top: 8px;">
+							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
+							<span class="form-group hidden">
+								<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
+								<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
+							</span>
+
+						</div>
 						<script>
 							{literal}
 							$(function(){
@@ -460,7 +456,6 @@
 
 					<div class="button-group">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
-
 					</div>
 					<div class="button-group-seperator"></div>
 					<div class="button-group">
