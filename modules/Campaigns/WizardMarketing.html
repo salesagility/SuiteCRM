@@ -500,11 +500,7 @@
 					<script type="text/javascript">
 						{$FIELD_DEFS_JS}
 					</script>
-					<div class="hidden">
-						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
-							{$DROPDOWN}
-						</select>
-					</div>
+
 
 					{literal}
 					<script type="text/javascript">
@@ -515,6 +511,12 @@
 					{/literal}
 
 					<div class="form-group clear-block">
+
+						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
+							{$DROPDOWN}
+						</select>
+						<div class="pad">&nbsp;</div>
+
 						<select class="form-control input-sm" name='variable_name' tabindex="0" onchange="showVariable('wizform');">
 						</select>
 					</div>
