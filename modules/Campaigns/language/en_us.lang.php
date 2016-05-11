@@ -497,6 +497,7 @@ $mod_strings = array (
 	'LBL_WIZARD_ADD_TARGET' => 'Add Existing Targets:',
 	'LBL_CLICK_TO_ADD' => 'Click to add...',
 	'LBL_CANCEL' => 'Cancel',
+	'LBL_EMPTY_SUBJECT' => 'The Email Subject is blank. Are you sure you wish to continue?'
 );
 
 
