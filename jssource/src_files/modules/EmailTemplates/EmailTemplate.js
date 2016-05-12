@@ -444,7 +444,7 @@ function EmailTrackerController(action, campaignId) {
 			var text = $('select[name="tracker_url"] option:selected').val();
 			text = text.replace('{','');
 			text = text.replace('}','');
-			insert_variable_html_link(text, $('select[name="tracker_url"] option:selected').attr('data-url'));
+			insert_variable_html_link(text, $('select[name="tracker_url"] option:selected').val());
 			break;
 		case "edit":
 			// if -- Create -- is selected
