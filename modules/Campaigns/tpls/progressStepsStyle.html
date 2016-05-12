@@ -288,6 +288,8 @@
     });
 
     function clickLink($obj) {
-        $($obj)[0].click();
+        var id = $($obj).attr('id');
+        $('#id a:first-of-type').click();
+        return true;
     }
 </script>
