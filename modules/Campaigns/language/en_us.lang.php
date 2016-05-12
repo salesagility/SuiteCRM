@@ -465,7 +465,7 @@ $mod_strings = array (
 	'LBL_INSERT_TRACKER_URL'	=> 'Insert Tracker URL:',
 	'LBL_CREATE_TRACKER_BTN'	=> 'Create Tracker',
 	'LBL_INSERT_TRACKER_BTN'	=> 'Insert Tracker',
-	'LBL_EDIT_TRACKER_BTN'	=> 'Edit',
+	'LBL_EDIT_TRACKER_BTN'	=> 'Edit Tracker',
 	'LBL_DELETE_TRACKER_BTN'	=> 'Delete',
 	'LBL_CREATE_TRACKER_URL'	=> '-- Create --',
 	'LBL_INSERT'				=> 'Insert',
@@ -499,7 +499,8 @@ $mod_strings = array (
 	'LBL_CLICK_TO_ADD' => 'Click to add...',
 	'LBL_CANCEL' => 'Cancel',
 	'LBL_EMPTY_SUBJECT' => 'The Email Subject is blank. Are you sure you wish to continue?',
-	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?'
+	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?',
+	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.'
 );
 
 
