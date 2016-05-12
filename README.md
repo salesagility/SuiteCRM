@@ -1,11 +1,11 @@
-##SuiteCRM 7.6 RC
+##SuiteCRM 7.6.2
 
-[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=develop)](https://travis-ci.org/salesagility/SuiteCRM)
+[![Build Status](https://travis-ci.org/salesagility/SuiteCRM.svg?branch=hotfix)](https://travis-ci.org/salesagility/SuiteCRM)
 
 
 ### What's in this repository ###
 
-This is the git repository for the SuiteCRM project, the fully open source & supercharged fork of SugarCRM Community Edition.
+This is the git repository for the SuiteCRM project, the award-winning, enterprise-class open source CRM.
 
 This repository has been created to allow community members to collaborate and contribute to the project, helping to develop the SuiteCRM ecosystem.
 
@@ -33,16 +33,16 @@ The following links offer various ways to view, contribute and collaborate to th
 + [SuiteCRM Extensions Directory - An extensions directory where community members can submit extensions built for SuiteCRM][suitecrm_ext]
 
 [suitecrm_demo]: https://suitecrm.com/demo
-[suitecrm_forums]: https://suitecrm.com/index.php?option=com_kunena&view=category&Itemid=1137&layout=list
+[suitecrm_forums]: https://suitecrm.com/forum/index
 [suitecrm_docs]: https://suitecrm.com/wiki
-[suitecrm_partners]: https://suitecrm.com/index.php?option=com_content&view=article&id=170&Itemid=1172
-[suitecrm_ext]: https://suitecrm.com/index.php?option=com_mtree&view=listcats&cat_id=76&Itemid=1225
+[suitecrm_partners]: https://suitecrm.com/community/partners
+[suitecrm_ext]: https://store.suitecrm.com/
 
 ### Development Roadmap ###
 
 [ View the Roadmap here and get involved][suitecrm_roadmap]
 
-[suitecrm_roadmap]: http://suitecrm.com/index.php?option=com_devroadmap&view=devroadmap&id=&Itemid=1389
+[suitecrm_roadmap]: https://suitecrm.com/community/roadmap
 
 ### Support & Licensing ###
 

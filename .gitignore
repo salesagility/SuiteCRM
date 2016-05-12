@@ -52,6 +52,7 @@ tramp
 *.ipr
 *.iws
 .idea/
+.phpstorm.meta.php
 # NetBeans
 nbproject/
 # Vim

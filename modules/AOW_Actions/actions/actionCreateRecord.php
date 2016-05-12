@@ -30,6 +30,21 @@ class actionCreateRecord extends actionBase {
         parent::__construct($id);
     }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionCreateRecord($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
+
     function loadJS(){
 
         return array('modules/AOW_Actions/actions/actionCreateRecord.js');
@@ -194,6 +209,8 @@ class actionCreateRecord extends actionBase {
                                     $date = gmdate($dformat);
                                 } else if($params['value'][$key][0] == 'field'){
                                     $date = $record->fetched_row[$params['field'][$key]];
+                                } else if ($params['value'][$key][0] == 'today') {
+                                    $date = $params['value'][$key][0];
                                 } else {
                                     $date = $bean->fetched_row[$params['value'][$key][0]];
                                 }

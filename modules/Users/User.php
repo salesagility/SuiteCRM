@@ -116,6 +116,21 @@ class User extends Person {
 		$this->_loadUserPreferencesFocus();
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function User(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	protected function _loadUserPreferencesFocus()
 	{
 	    $this->_userPreferenceFocus = new UserPreference($this);
@@ -677,26 +692,6 @@ EOQ;
 		$this->loadFromRow($row);
 		$this->loadPreferences();
 
-		require_once ('modules/Versions/CheckVersions.php');
-		$invalid_versions = get_invalid_versions();
-
-		if (!empty ($invalid_versions)) {
-			if (isset ($invalid_versions['Rebuild Relationships'])) {
-				unset ($invalid_versions['Rebuild Relationships']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_relationships'] = true;
-			}
-
-			if (isset ($invalid_versions['Rebuild Extensions'])) {
-				unset ($invalid_versions['Rebuild Extensions']);
-
-				// flag for pickup in DisplayWarnings.php
-				$_SESSION['rebuild_extensions'] = true;
-			}
-
-			$_SESSION['invalid_versions'] = $invalid_versions;
-		}
 		if ($this->status != "Inactive")
 			$this->authenticated = true;
 

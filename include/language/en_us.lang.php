@@ -620,8 +620,8 @@ $app_list_strings = array(
             'Active' => 'Active',
             'Inactive' => 'Inactive',
             'Complete' => 'Complete',
-            'In Queue' => 'In Queue',
-            'Sending' => 'Sending',
+            //'In Queue' => 'In Queue',
+            //'Sending' => 'Sending',
         ),
     'campaign_type_dom' => array(
             '' => '',
@@ -2095,7 +2095,14 @@ $app_strings = array(
     'LBL_REMOVE_FROM_FAVORITES' => 'Remove From My Favorites',
     //web to lead
     'LBL_GENERATE_WEB_TO_LEAD_FORM' => 'Generate Form',
-    'LBL_SAVE_WEB_TO_LEAD_FORM' => 'Save Web To Lead Form',
+    'LBL_SAVE_WEB_TO_LEAD_FORM' =>'Save Web Form',
+    'LBL_AVAILABLE_FIELDS'=>'Available Fields',
+    'LBL_FIRST_FORM_COLUMN'=>'First Form Column',
+    'LBL_SECOND_FORM_COLUMN'=>'Second Form Column',
+    'LBL_ASSIGNED_TO_REQUIRED'=>'Missing required field: Assigned to',
+    'LBL_RELATED_CAMPAIGN_REQUIRED'=>'Missing required field: Related campaign',
+    'LBL_TYPE_OF_PERSON_FOR_FORM'=>'Web form to create ',
+    'LBL_TYPE_OF_PERSON_FOR_FORM_DESC'=>'Submitting this form will create ',
 
     'LBL_PLEASE_SELECT' => 'Please Select',
     'LBL_REDIRECT_URL' => 'Redirect URL',
@@ -3867,6 +3874,8 @@ $app_strings['LBL_LOGIN_AS'] = 'Login as ';
 $app_strings['LBL_LOGOUT_AS'] = 'Logout as ';
 $app_strings['LBL_SECURITYGROUP'] = 'Security Group';
 
+$app_list_strings['moduleList']['OutboundEmailAccounts'] = 'Outbound Email Accounts';
+
 //social
 $app_strings['FACEBOOK_USER_C'] = 'Facebook';
 $app_strings['TWITTER_USER_C'] = 'Twitter';
@@ -3898,3 +3907,7 @@ $app_strings['LBL_RENAME_DASHBOARD_PAGE'] = 'Rename Dashboard Page';
 $app_strings['LBL_DISCOVER_SUITECRM'] = 'Discover SuiteCRM';
 
 $app_list_strings['collection_temp_list'] = array('Tasks' => 'Tasks', 'Meetings' => 'Meetings', 'Calls' => 'Calls', 'Notes' => 'Notes', 'Emails' => 'Emails');
+
+$app_list_strings['moduleList']['TemplateEditor'] = 'Template Part Editor';
+$app_strings['LBL_CONFIRM_CANCEL_INLINE_EDITING'] = "You have clicked away from the field you were editing without saving it. Click ok if you're happy to lose your change, or cancel if you would like to continue editing";
+$app_strings['LBL_LOADING_ERROR_INLINE_EDITING'] = "There was an error loading the field. Your session may have timed out. Please log in again to fix this";

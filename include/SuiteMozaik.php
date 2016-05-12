@@ -140,6 +140,7 @@ HTML;
 #{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {cursor: -webkit-grab;}
 #{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle.ui-draggable-dragging {cursor: -webkit-grabbing;}
 #{$elementId} .mozaik-thumbnail.ui-draggable.ui-draggable-handle.ui-draggable-dragging * {cursor: -webkit-grabbing;}
+#{$elementId} .mozaik-inner a {text-decoration: underline;}
 </style>
 <div id="{$elementId}">{$contents}</div>
 <script type="text/javascript">

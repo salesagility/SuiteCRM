@@ -54,6 +54,21 @@ class TemplateFloat extends TemplateRange
 		//$this->vardef_map['precision']='precision';
 	}
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function TemplateFloat(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
     function get_field_def(){
     	$def = parent::get_field_def();
 		$def['precision'] = isset($this->ext1) && $this->ext1 != '' ? $this->ext1 : $this->precision;

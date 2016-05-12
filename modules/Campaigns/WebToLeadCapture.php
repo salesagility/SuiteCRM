@@ -236,7 +236,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
 			    }
 			}
 			else{
-				echo $mod_strings['LBL_THANKS_FOR_SUBMITTING_LEAD'];
+				echo $mod_strings['LBL_THANKS_FOR_SUBMITTING'];
 			}
 			sugar_cleanup();
 			// die to keep code from running into redirect case below

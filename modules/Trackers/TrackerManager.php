@@ -61,6 +61,21 @@ private function __construct() {
     self::$monitor_id = create_guid();
 }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    private function TrackerManager(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 /**
  * setup
  * This is a private method used to load the configuration settings whereby
@@ -115,7 +130,7 @@ static function getInstance(){
 /**
  * getMonitor
  * This method returns a Monitor instance based on the monitor name.
- * @param $name The String value of the monitor's name to retrieve
+ * @param string $name value of the monitor's name to retrieve
  * @return Monitor instance corresponding to name or a BlankMonitor instance if one could not be found
  */
 public function getMonitor($name) {

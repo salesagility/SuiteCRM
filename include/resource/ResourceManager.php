@@ -83,7 +83,7 @@ public function setup($module) {
     if($module == 'Soap') {
       require_once('include/resource/Observers/SoapResourceObserver.php');
       $observer = new SoapResourceObserver('Soap');
-    } elseif(defined('WITHIN_TESTS')) {
+    } elseif(defined('SUITE_PHPUNIT_RUNNER')) {
         return;
     }else{
       require_once('include/resource/Observers/WebResourceObserver.php');

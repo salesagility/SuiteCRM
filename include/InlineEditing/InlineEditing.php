@@ -427,7 +427,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
     }
 
     //if field is of type radio.
-    if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum") {
+     if ($vardef['type'] == "radioenum" || $vardef['type'] == "enum" || $vardef['type'] == "dynamicenum") {
         $value = $app_list_strings[$vardef['options']][$value];
     }
 
@@ -449,7 +449,12 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
         $idName = $vardef['id_name'];
         $record = $bean->$idName;
 
-        $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
+        if($vardef['name'] != "assigned_user_name") {
+            $value = "<a class=\"listViewTdLinkS1\" href=\"index.php?action=DetailView&module=".$vardef['module']."&record=$record\">";
+        } else {
+            $value = "";
+        }
+
 
         //To fix github bug 880 (the rname was null and was causing a 500 error in the getFieldValueFromModule call to $fieldname
         $fieldName = 'name';//$vardef['name'];
@@ -458,16 +463,23 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
         if($vardef['ext2']){
 
-            $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record) . "</a>";
+            $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
 
         }else if(!empty($vardef['rname'])){
-            $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record) . "</a>";
+            $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
 
         } else {
-            $value .= $name . "</a>";
+            $value .= $name;
+        }
+
+        if($vardef['name'] != "assigned_user_name") {
+            $value .= "</a>";
         }
     }
-
+	if($vardef['type'] == "url")
+	{
+		$value = '<a href='.$value.' target="_blank">'.$value.'</a>';
+	}
 
     return $value;
 }

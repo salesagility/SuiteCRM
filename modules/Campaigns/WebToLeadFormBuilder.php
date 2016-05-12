@@ -42,11 +42,13 @@ HTML;
         return $html;
     }
 
-    private static function getFormFooterHTML($webFormFooter, $webFormSubmitLabel, $webFormCampaign, $webRedirectURL, $webAssignedUser, $booleanFields) {
+    private static function getFormFooterHTML($webFormFooter, $webFormSubmitLabel, $webFormCampaign, $webRedirectURL, $webAssignedUser, $booleanFields, $moduleDir) {
         $webFormCampaignInput = $webFormCampaign ? "<input type='hidden' id='campaign_id' name='campaign_id' value='$webFormCampaign'>" : '';
         $webRedirectURLInput = $webRedirectURL ? "<input type='hidden' id='redirect_url' name='redirect_url' value='$webRedirectURL'>" : '';
         $webAssignedUserInput = $webAssignedUser ? "<input type='hidden' id='assigned_user_id' name='assigned_user_id' value='$webAssignedUser'>" : '';
         $booleanFieldsInput = $booleanFields ? "<input type='hidden' id='bool_id' name='bool_id' value='$booleanFields'>" : '';
+        $moduleDirInput = "<input type='hidden' id='moduleDir' name='moduleDir' value='$moduleDir'>";
+
 
         $html = <<<HTML
 $webFormFooter
@@ -58,6 +60,7 @@ $webFormCampaignInput
 $webRedirectURLInput
 $webAssignedUserInput
 $booleanFieldsInput
+$moduleDirInput
 HTML;
         return $html;
     }
@@ -301,6 +304,7 @@ HTML;
 
     public static function generate($request,
                                     $lead,
+                                    $moduleDir,
                                     $siteURL,
                                     $webPostURL,
                                     $webFormHeader,
@@ -410,7 +414,8 @@ HTML;
             $webFormCampaign,
             $webRedirectURL,
             $webAssignedUser,
-            $booleanFields
+            $booleanFields,
+            $moduleDir
         );
 
         $Web_To_Lead_Form_html .= self::getFormFinishHTML($webFormRequiredFieldsMsg);

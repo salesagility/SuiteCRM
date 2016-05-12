@@ -176,7 +176,6 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'UserPreferences' => 'UserPreferences',
                 'Users' => 'Users',
                 'vCals' => 'vCals',
-                'Versions' => 'Versions',
                 );
 
         $actual = get_module_dir_list();

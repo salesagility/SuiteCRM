@@ -57,7 +57,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             $formBase = new EmailTemplateFormBase();
             $focus = BeanFactory::getBean('EmailTemplates', $_REQUEST['attach_to_template_id']);
             //$data = $formBase->handleAttachments($focus, false, null);
-            $data = $formBase->handleAttachmentsProcessImages($focus, false, true, 'download');
+            $data = $formBase->handleAttachmentsProcessImages($focus, false, true, 'download', true);
             $redirectUrl = 'index.php?module=Campaigns&action=WizardMarketing&campaign_id=' . $_REQUEST['campaign_id'] . "&jump=2&template_id=" . $_REQUEST['attach_to_template_id']; // . '&marketing_id=' . $_REQUEST['attach_to_marketing_id'] . '&record=' . $_REQUEST['attach_to_marketing_id'];
             header('Location: ' . $redirectUrl);
             die();
@@ -73,6 +73,22 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                 }
 
                 $data['body_from_html'] = from_html($bean->body_html);
+                $attachmentBeans = $bean->getAttachments();
+                if($attachmentBeans) {
+                    $attachments = array();
+                    foreach($attachmentBeans as $attachmentBean) {
+                        $attachments[] = array(
+                            'id' => $attachmentBean->id,
+                            'name' => $attachmentBean->name,
+                            'file_mime_type' => $attachmentBean->file_mime_type,
+                            'filename' => $attachmentBean->filename,
+                            'parent_type' => $attachmentBean->parent_type,
+                            'parent_id' => $attachmentBean->parent_id,
+                            'description' => $attachmentBean->description,
+                        );
+                    }
+                    $data['attachments'] = $attachments;
+                }
             }
             else {
                 $error = 'Email Template not found.';
@@ -91,4 +107,13 @@ $results = array(
     'data' => $data,
 );
 
-echo json_encode($results);
+$results = json_encode($results);
+if(!$results) {
+    if(json_last_error()) {
+        $results = array(
+            'error' => 'json_encode error: '.json_last_error_msg()
+        );
+        $results = json_encode($results);
+    }
+}
+echo $results;
