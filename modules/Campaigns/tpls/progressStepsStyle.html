@@ -288,6 +288,22 @@
     });
 
     function clickLink($obj) {
-        $($obj)[0].click();
+        var id = $($obj).attr('id');
+        var currentStep = document.getElementById('wiz_current_step');
+        var navStep = id.replace('nav_step', '');
+        var href = $('#'+id+' a:first-of-type').attr('href');
+        if(validate_wiz(currentStep.value)) {
+            campaignUpdate();
+            if(href == '#') {
+                eval($('#'+id+' a:first-of-type').attr('onclick'))
+            } else {
+                window.location = href;
+            }
+        } else {
+            alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+            return false;
+        }
+
+        return true;
     }
 </script>
