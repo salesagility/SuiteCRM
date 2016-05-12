@@ -89,7 +89,7 @@ class AOS_Products extends AOS_Products_sugar {
                 JOIN accounts ON
                      accounts.id = aos_quotes.billing_account_id   ";
 
-        $return_array['where'] = " aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_quotes.deleted=0 AND aos_products.id = '{$this->id}' AND aos_products.deleted = 0 AND aos_products_quotes.deleted = 0 ";
+        $return_array['where'] = " aos_quotes.stage = 'Closed Accepted' AND aos_quotes.deleted=0 AND aos_products.id = '{$this->id}' AND aos_products.deleted = 0 AND aos_products_quotes.deleted = 0 ";
         return $return_array;
     }
 
