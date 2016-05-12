@@ -289,7 +289,7 @@ $mod_strings = array (
 	'LBL_TEST_EMAILS_SENT' => 'Test Emails Sent',
 	'LBL_USERS_CANNOT_OPTOUT' => 'System Users cannot opt out of receiving emails.',
 	'LBL_ELECTED_TO_OPTOUT' => 'You have elected to opt out of receiving emails.',
-	'LBL_COPY_OF' => '',
+	'LBL_COPY_OF' => 'Copy of ',
 	'LBL_SAVED_SEARCH' => 'Saved Search & Layout',
 	//email setup wizard
 	'LBL_WIZ_FROM_NAME'                         => 'From Name:',

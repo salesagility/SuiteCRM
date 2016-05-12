@@ -57,4 +57,6 @@ if(!empty($_POST['templateId'])) {
 }
 $marketing->save();
 
+$_SESSION['campaignWizardSelectedMarketingId'] = $marketing->id;
+
 echo json_encode($_POST);

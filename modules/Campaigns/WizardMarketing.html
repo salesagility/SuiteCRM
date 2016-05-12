@@ -1126,6 +1126,9 @@
 						}
 						else {
 							$('#marketing_select').html('');
+							if(marketingSelectValue == '' && typeof resp.selectedId != 'undefined' && resp.selectedId) {
+								marketingSelectValue = resp.selectedId;
+							}
 							for(var i=0; i<resp.data.length; i++) {
 								var elem = resp.data[i];
 								var selected = '';

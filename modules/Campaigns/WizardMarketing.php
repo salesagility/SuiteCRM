@@ -102,6 +102,16 @@ $ss->assign("DEC_SEP", $seps[1]);
 
 $mrkt_focus = new EmailMarketing();
 
+//override marketing by session stored selection earlier..
+if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
+    if(!empty($_REQUEST['record'])) {
+        $_REQUEST['record'] = $_SESSION['campaignWizardSelectedMarketingId'];
+    }
+    if(!empty($_REQUEST['marketing_id'])) {
+        $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+    }
+}
+
 //if record param exists and it is not empty, then retrieve this bean
 if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
@@ -112,13 +122,31 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
         //check to see if this campaign has an email marketing already attached, and if so, create duplicate
         $campaign_focus->load_relationship('emailmarketing');
         $mrkt_lists = $campaign_focus->emailmarketing->get();
-        if(!empty($mrkt_lists)){
-            //reverse array so we always use the most recent one:
-            $mrkt_lists = array_reverse($mrkt_lists);
-            $mrkt_focus->retrieve($mrkt_lists[0]);
-            $mrkt_focus->id = '';
-            $mrkt_focus->name = $mod_strings['LBL_COPY_OF'] . ' '. $mrkt_focus->name;
+
+    if(!$mrkt_lists) {
+
+    }
+    else if(count($mrkt_lists) == 1){
+        $mrkt_focus->retrieve($mrkt_lists[0]);
+    }
+    else if(count($mrkt_lists) > 1) {
+        if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+            $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
         }
+        else {
+            unset($_SESSION['campaignWizardSelectedMarketingId']);
+        }
+//        if(!empty($mrkt_lists)){
+//            //reverse array so we always use the most recent one:
+//            $mrkt_lists = array_reverse($mrkt_lists);
+//            $mrkt_focus->retrieve($mrkt_lists[0]);
+//            $mrkt_focus->id = '';
+//            //$mrkt_focus->name = $mod_strings['LBL_COPY_OF'] . ' '. $mrkt_focus->name;
+//        }
+    }
+    else {
+        throw new Exception('illegal related marketing list');
+    }
 
 }
 
@@ -484,7 +512,11 @@ require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
 $ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
 
-if(isset($mrkt_lists[0])) {
+if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
+    $ss->assign('EmailMarketingId', $_SESSION['campaignWizardSelectedMarketingId']);
+}
+else if(isset($mrkt_lists[0])) {
+    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
     $ss->assign('EmailMarketingId', $mrkt_lists[0]);
 }
 
