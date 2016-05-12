@@ -161,7 +161,7 @@ class AOR_ReportsController extends SugarController {
     protected function action_export()
     {
         $this->bean->user_parameters = requestToUserParameters();
-        $this->bean->build_report_csv();
+        $this->bean->build_group_report_csv();
         die;
     }
 
