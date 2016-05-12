@@ -107,7 +107,7 @@ $mrkt_focus = new EmailMarketing();
 //check to see if this campaign has an email marketing already attached, and if so, create duplicate
 $campaign_focus->load_relationship('emailmarketing');
 $mrkt_lists = $campaign_focus->emailmarketing->get();
-if(!in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && !in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
     unset($_SESSION['campaignWizardSelectedMarketingId']);
 }
 
