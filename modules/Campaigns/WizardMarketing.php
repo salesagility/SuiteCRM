@@ -115,9 +115,11 @@ if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
 //if record param exists and it is not empty, then retrieve this bean
 if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
+    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
 }
 else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
     $mrkt_focus->retrieve($_REQUEST['marketing_id']);
+    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
 }else{
         //check to see if this campaign has an email marketing already attached, and if so, create duplicate
         $campaign_focus->load_relationship('emailmarketing');
