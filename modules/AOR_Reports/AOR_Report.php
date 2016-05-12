@@ -833,6 +833,74 @@ class AOR_Report extends Basic {
         return $html;
     }
 
+    function getTotalCSV($fields,$totals) {
+        global $app_list_strings;
+
+        $currency = new Currency();
+        $currency->retrieve($GLOBALS['current_user']->getPreference('currency'));
+
+        $csv = "";
+        $delimiter = getDelimiter();
+
+        foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
+            if($field['total']){
+                $totalLabel = $field['label'] ." ".$app_list_strings['aor_total_options'][$field['total']];
+                $csv .= $this->encloseForCSV($totalLabel);
+                $csv .= $delimiter;
+            }else{
+                $csv .= $delimiter;
+            }
+        }
+        $csv .= "\r\n";
+        foreach($fields as $label => $field){
+            if(!$field['display']){
+                continue;
+            }
+            if($field['total'] && isset($totals[$label])){
+                $type = $field['total'];
+                $total = $this->calculateTotal($type, $totals[$label]);
+                // Customise display based on the field type
+                $moduleBean = BeanFactory::newBean($field['module']);
+                $fieldDefinition = $moduleBean->field_defs[$field['field']];
+                $fieldDefinitionType = $fieldDefinition['type'];
+                switch($fieldDefinitionType) {
+                    case "currency":
+                        // Customise based on type of function
+                        switch($type){
+                            case 'SUM':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            case 'COUNT':
+                                break;
+                            case 'AVG':
+                                if($currency->id == -99) {
+                                    $total = $currency->symbol.format_number($total, null, null);
+                                } else {
+                                    $total = $currency->symbol.format_number($total, null, null, array('convert' => true));
+                                }
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                $csv .= $this->encloseForCSV($total);
+                $csv .= $delimiter;
+            }else{
+                $csv .= $delimiter;
+            }
+        }
+        $csv .= "\r\n";
+        return $csv;
+    }
+
     function calculateTotal($type, $totals){
         switch($type){
             case 'SUM':
@@ -884,6 +952,7 @@ class AOR_Report extends Basic {
             $fields[$label]['display'] = $field->display;
             $fields[$label]['function'] = $field->field_function;
             $fields[$label]['module'] = $field_module;
+            $fields[$label]['total'] = $field->total;
 
 
             if($field->display){
@@ -895,7 +964,7 @@ class AOR_Report extends Basic {
 
         $sql = $this->build_report_query();
         $result = $this->db->query($sql);
-
+        $totals = array();
         while ($row = $this->db->fetchByAssoc($result)) {
             $csv .= "\r\n";
             foreach($fields as $name => $att){
@@ -905,10 +974,14 @@ class AOR_Report extends Basic {
                     else
                         $csv .= $this->encloseForCSV(trim(strip_tags(getModuleField($att['module'], $att['field'], $att['field'], 'DetailView',$row[$name]))));
                     $csv .= $delimiter;
+                    if($att['total']){
+                        $totals[$name][] = $row[$name];
+                    }
                 }
             }
         }
-
+        $csv .= "\r\n";
+        $csv .= $this->getTotalCSV($fields,$totals);
         $csv= $GLOBALS['locale']->translateCharset($csv, 'UTF-8', $GLOBALS['locale']->getExportCharset());
 
         ob_clean();
