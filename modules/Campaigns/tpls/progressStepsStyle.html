@@ -289,7 +289,13 @@
 
     function clickLink($obj) {
         var id = $($obj).attr('id');
-        $('#id a:first-of-type').click();
+        var href = $('#'+id+' a:first-of-type').attr('href');
+        if(href == '#') {
+            eval($('#'+id+' a:first-of-type').attr('onclick'))
+        } else {
+            window.location = href;
+        }
+
         return true;
     }
 </script>
