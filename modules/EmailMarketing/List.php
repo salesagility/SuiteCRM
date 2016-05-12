@@ -57,7 +57,7 @@ else {
                 'id' => $elem->id,
                 'name' => $elem->name,
             );
-            if($elem->id == $_SESSION['campaignWizardSelectedMarketingId']) {
+            if(isset($_SESSION['campaignWizardSelectedMarketingId']) && $elem->id == $_SESSION['campaignWizardSelectedMarketingId']) {
                 $selectedId = $elem->id;
             }
         }

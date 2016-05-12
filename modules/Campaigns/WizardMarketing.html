@@ -1406,6 +1406,12 @@ var jumpToPageByURL = function() {
 
 	var jump = getParameterByName('jump');
 
+	var func = getParameterByName('func');
+
+	if(func == 'createEmailMarketing') {
+		jump = 2;
+	}
+
 
 	var jumpToPage = function(jump, noValidation) {
 		if(typeof noValidation == 'undefined') {
@@ -1431,7 +1437,10 @@ var jumpToPageByURL = function() {
 		var campaignType = getParameterByName('campaign_type');
 		var showWizardMarketing = getParameterByName('show_wizard_marketing');
 
-		if(jump == 3 && showWizardMarketing && campaignType != 'Email') {
+		if(jump == 2 && func == 'createEmailMarketing') {
+			jumpToPage(jump, true);
+		}
+		else if(jump == 3 && showWizardMarketing && campaignType != 'Email') {
 			jumpToPage(jump, true);
 		}
 		else {

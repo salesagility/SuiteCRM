@@ -104,9 +104,15 @@ $mrkt_focus = new EmailMarketing();
 
 //override marketing by session stored selection earlier..
 
-//check to see if this campaign has an email marketing already attached, and if so, create duplicate
-$campaign_focus->load_relationship('emailmarketing');
-$mrkt_lists = $campaign_focus->emailmarketing->get();
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing') {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+}
+else {
+    //check to see if this campaign has an email marketing already attached, and if so, create duplicate
+    $campaign_focus->load_relationship('emailmarketing');
+    $mrkt_lists = $campaign_focus->emailmarketing->get();
+}
+
 if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && !in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
     unset($_SESSION['campaignWizardSelectedMarketingId']);
 }
@@ -132,7 +138,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
 
 
 
-    if(!$mrkt_lists) {
+    if(!isset($mrkt_lists) || !$mrkt_lists) {
         unset($_SESSION['campaignWizardSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
