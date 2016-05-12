@@ -511,14 +511,62 @@ $ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
 if ($has_campaign || $inboundEmail) {
     //$ss->assign("INPOPUPWINDOW", 'true');
     $ss->assign("INSERT_URL_ONCLICK", "insert_variable_html_link(document.wizform.tracker_url.value)");
+
+    $get_campaign_urls = function ($campaign_id) {
+
+            $return_array=array();
+
+            if (!empty($campaign_id)) {
+
+                $db = DBManagerFactory::getInstance();
+
+                $campaign_id = $db->quote($campaign_id);
+
+                $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
+                $current=$db->query($query1);
+                while (($row=$db->fetchByAssoc($current)) != null) {
+                    $return_array['{'.$row['tracker_name'].'}'] = array(
+                        'text' => $row['tracker_name'] . ' : ' . $row['tracker_url'],
+                        'url' => $row['tracker_url'],
+                        'id' => $row['id']
+                    );
+                }
+            }
+        return $return_array;
+    };
     if ($has_campaign) {
-        $campaign_urls = get_campaign_urls($_REQUEST['campaign_id']);
+        $campaign_urls = $get_campaign_urls($_REQUEST['campaign_id']);
     }
     if (!empty($campaign_urls)) {
         $ss->assign("DEFAULT_URL_TEXT", key($campaign_urls));
     }
     if ($has_campaign) {
-        $ss->assign("TRACKER_KEY_OPTIONS", get_select_options_with_id($campaign_urls, null));
+
+        $get_tracker_options = function ($label_list, $key_list, $selected_key, $massupdate = false) {
+            global $app_strings;
+            $select_options = '';
+
+            //for setting null selection values to human readable --None--
+            $pattern = "/'0?'></";
+            $replacement = "''>".$app_strings['LBL_NONE'].'<';
+            if ($massupdate) {
+                $replacement .= "/OPTION>\n<OPTION value='__SugarMassUpdateClearField__'><"; // Giving the user the option to unset a drop down list. I.e. none means that it won't get updated
+            }
+
+            if (empty($key_list)) {
+                $key_list = array();
+            }
+            //create the type dropdown domain and set the selected value if $opp value already exists
+            foreach ($key_list as $option_key => $option_value) {
+
+                $select_options .= '<OPTION value="'.$option_key.'" data-id="'.$label_list[$option_key]['id'].'" data-url="'.$label_list[$option_key]['url'].'">'.$label_list[$option_key]['text'].'</OPTION>';
+            }
+            $select_options = preg_replace($pattern, $replacement, $select_options);
+
+            return $select_options;
+        };
+
+        $ss->assign("TRACKER_KEY_OPTIONS", $get_tracker_options($campaign_urls, $campaign_urls, null));
         //$ss->parse("main.NoInbound.tracker_url");
 
         // create tracker URL fields
