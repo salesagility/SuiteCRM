@@ -165,19 +165,8 @@ function insert_variable_html(text) {
 	//inst.execCommand('mceInsertRawHTML', false, text);
 }
 
-function insert_variable_html_link(text) {
-
-	the_label = $('#trackerUrlSelect').val();
-	if(typeof(the_label) =='undefined'){
-		the_label = label;
-	}
-
-	//remove surounding parenthesis around the label
-	if(the_label[0] == '{' && the_label[the_label.length-1] == '}'){
-		the_label = the_label.substring(1,the_label.length-1);
-	}
-
-	var thelink = "<a href='" + text + "' > "+the_label+" </a>";
+function insert_variable_html_link(text, url) {
+	var thelink = "<a href='" +url + "' > "+text+" </a>";
 	insert_variable_html(thelink);
 }
 /*
@@ -448,8 +437,14 @@ function EmailTrackerController(action, campaignId) {
 			$('#templateManagerDialog').show();
 			break;
 		case "insert":
-			console.log($('#trackerUrlSelect').val())
-			insert_variable_html_link($('#trackerUrlSelect').val());
+			if($('#trackerUrlSelect').val() == '-1') {
+				alert(SUGAR.language.translate('Campaigns', 'LBL_SELECT_EMAIL_TRACKER'));
+				return;
+			}
+			var text = $('select[name="tracker_url"] option:selected').val();
+			text = text.replace('{','');
+			text = text.replace('}','');
+			insert_variable_html_link(text, $('select[name="tracker_url"] option:selected').attr('data-url'));
 			break;
 		case "edit":
 			// if -- Create -- is selected
