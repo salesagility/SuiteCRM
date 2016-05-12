@@ -46,19 +46,32 @@ $results = array(
 );
 if(!isset($_REQUEST['campaign_id']) || !$_REQUEST['campaign_id']) {
     $results['error'] = 'campaign_id is not set';
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
 }
 else {
     $campaign_id = $db->quote($_REQUEST['campaign_id']);
     if($list = BeanFactory::getBean('EmailMarketing')->get_full_list("", "campaign_id = '{$campaign_id}'")) {
+        $selectedId = null;
         foreach ($list as $elem) {
             $results['data'][] = array(
                 'id' => $elem->id,
                 'name' => $elem->name,
             );
+            if($elem->id == $_SESSION['campaignWizardSelectedMarketingId']) {
+                $selectedId = $elem->id;
+            }
+        }
+        if(!$selectedId && !empty($results['data'][0]['id'])) {
+            $selectedId = $results['data'][0]['id'];
         }
     }
 }
 
-$results['selectedId'] = $_SESSION['campaignWizardSelectedMarketingId'];
+if($selectedId) {
+    $results['selectedId'] = $_SESSION['campaignWizardSelectedMarketingId'] = $selectedId;
+}
+else {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+}
 
 echo json_encode($results);

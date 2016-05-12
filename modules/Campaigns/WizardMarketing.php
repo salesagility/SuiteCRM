@@ -103,11 +103,19 @@ $ss->assign("DEC_SEP", $seps[1]);
 $mrkt_focus = new EmailMarketing();
 
 //override marketing by session stored selection earlier..
+
+//check to see if this campaign has an email marketing already attached, and if so, create duplicate
+$campaign_focus->load_relationship('emailmarketing');
+$mrkt_lists = $campaign_focus->emailmarketing->get();
+if(!in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+}
+
 if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
-    if(!empty($_REQUEST['record'])) {
+    if(!empty($_REQUEST['record']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
         $_REQUEST['record'] = $_SESSION['campaignWizardSelectedMarketingId'];
     }
-    if(!empty($_REQUEST['marketing_id'])) {
+    if(!empty($_REQUEST['marketing_id']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
         $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
     }
 }
@@ -121,15 +129,15 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     $mrkt_focus->retrieve($_REQUEST['marketing_id']);
     $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
 }else{
-        //check to see if this campaign has an email marketing already attached, and if so, create duplicate
-        $campaign_focus->load_relationship('emailmarketing');
-        $mrkt_lists = $campaign_focus->emailmarketing->get();
+
+
 
     if(!$mrkt_lists) {
-
+        unset($_SESSION['campaignWizardSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
         $mrkt_focus->retrieve($mrkt_lists[0]);
+        $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
     }
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
@@ -147,7 +155,8 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
 //        }
     }
     else {
-        throw new Exception('illegal related marketing list');
+        unset($_SESSION['campaignWizardSelectedMarketingId']);
+        //throw new Exception('illegal related marketing list');
     }
 
 }
