@@ -1983,7 +1983,6 @@ class InboundEmail extends SugarBean {
 			echo json_encode($status);
 			return true;
 		} else {
-			echo "NOOP: could not create folder";
 			$GLOBALS['log']->error("*** ERROR: EMAIL2.0 - could not create IMAP mailbox with path: [ {$connectString} ]");
 			return false;
 		}
