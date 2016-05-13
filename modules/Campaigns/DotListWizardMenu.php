@@ -29,8 +29,9 @@ class DotListWizardMenu
                 $link = false;
             }
         }
-        $label = $link ? ('<a href="' . $link . '">' . $label . '</a>')  : ('<a href="#">' . $label . '</a>');
-        $html = '<li id="nav_step'.$i.'" onclick="clickLink(this)">'.$label.'</li>';
+//        $label = $link ? ('<a data-link="' . $link . '">' . $label . '</a>')  : ('<a data-link="#">' . $label . '</a>');
+//        $html = '<li id="nav_step'.$i.'" onclick="clickLink(this)">'.$label.'</li>';
+        $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'"  onclick="gotoWizardStep(this)"><div>'.$label.'</div></li>';
         return $html;
     }
 
