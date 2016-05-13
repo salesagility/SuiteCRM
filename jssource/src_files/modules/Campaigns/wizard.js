@@ -238,7 +238,7 @@ function navigate(direction, noValidation, noSave){
     }else{
         //error occurred, do nothing
     }
-
+    return false;
 }
 
 

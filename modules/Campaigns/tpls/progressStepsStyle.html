@@ -314,6 +314,8 @@
                 navigate('direct');
             }
 
+        } else if($('.nav-steps.selected').attr('data-nav-step') == $('.nav-steps').last().attr('data-nav-step')) {
+            // if last step is the active step
         } else {
             // failed validation
             alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
