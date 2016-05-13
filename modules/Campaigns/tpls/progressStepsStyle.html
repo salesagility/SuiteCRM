@@ -285,6 +285,8 @@
     }
 
     function gotoWizardStep($obj) {
+        console.log("wtf");
+        console.log($obj)
         var direction = 'direct';
 
         if ($($obj).attr('data-nav-step') > $('.nav-steps.selected').attr('data-nav-step')) {
@@ -295,7 +297,7 @@
             return false;
         }
 
-        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction) && check_form('wizform')){
+        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)){
             // passed validation
             console.log("validation passed");
 
@@ -314,9 +316,7 @@
                 navigate('direct');
             }
 
-        } else if($('.nav-steps.selected').attr('data-nav-step') == $('.nav-steps').last().attr('data-nav-step')) {
-            // if last step is the active step
-        } else {
+        }  else {
             // failed validation
             alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
             console.log("validation failed")
@@ -332,7 +332,15 @@
         } else {
             $('#wiz_back_button').show();
         }
-
+        //$('.nav-steps').unbind();
+        $('.nav-steps').click(function(event) {
+            console.log(event);
+            console.log($(event.target).closest('li'));
+            var suc =  gotoWizardStep($(event.target).closest('li'));
+            if(!suc){
+                event.preventDefault;
+            }
+        });
     })
 
 </script>

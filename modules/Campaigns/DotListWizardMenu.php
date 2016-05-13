@@ -31,9 +31,9 @@ class DotListWizardMenu
         }
 
         if($link != false) {
-            $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'" data-nav-url="'.$link.'" onclick="gotoWizardStep(this)"><div>'.$label.'</div></li>';
+            $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'" data-nav-url="'.$link.'"><div>'.$label.'</div></li>';
         } else {
-            $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'"  data-nav-url="" onclick="gotoWizardStep(this)"><div>'.$label.'</div></li>';
+            $html = '<li id="nav_step'.$i.'" class="nav-steps" data-nav-step="'.$i.'"  data-nav-url=""><div>'.$label.'</div></li>';
         }
         return $html;
     }
