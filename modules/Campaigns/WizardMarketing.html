@@ -1240,37 +1240,23 @@
 			<!-- <div class="space"></div> -->
 
 			<input type="hidden" name="wiz_home_next_step" value="1" />
-
-			<div class="box button schedule {$PL_DISABLED}">
-
-				{if !$PL_DISABLED}
-				<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
-					{/if}
-
-					{$MOD.LBL_SEND_EMAIL}
-
-					{if !$PL_DISABLED}
-				</a>
-				{/if}
-
-
-			</div>
+			{if !$PL_DISABLED}
+			<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
+			{/if}
+			<div class="box button schedule {$PL_DISABLED}">{$MOD.LBL_SEND_EMAIL}</div>
+			{if !$PL_DISABLED}
+			</a>
+			{/if}
 
 			<div class="space"></div>
+			{if !$PL_DISABLED_TEST}
+			<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
+			{/if}
+			<div class="box button test {$PL_DISABLED}">{$MOD.LBL_SEND_AS_TEST}</div>
+			{if !$PL_DISABLED}
+			</a>
+			{/if}
 
-			<div class="box button test {$PL_DISABLED}">
-
-				{if !$PL_DISABLED_TEST}
-				<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
-					{/if}
-
-					{$MOD.LBL_SEND_AS_TEST}
-
-					{if !$PL_DISABLED}
-				</a>
-				{/if}
-
-			</div>
 
 		</div>
 		{/if}
