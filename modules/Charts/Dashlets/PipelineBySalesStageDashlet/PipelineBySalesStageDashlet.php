@@ -122,6 +122,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
 
         $jsonData = json_encode($chartReadyData['data']);
         $jsonLabels = json_encode($chartReadyData['labels']);
+        $jsonKeys = json_encode($chartReadyData['keys']);
         $jsonLabelsAndValues = json_encode($chartReadyData['labelsAndValues']);
 
         $total = $chartReadyData['total'];
@@ -162,6 +163,7 @@ class PipelineBySalesStageDashlet extends DashletGenericChart
         <input type='hidden' class='query' value='$query' />
         <input type='hidden' class='searchFormTab' value='$searchFormTab' />
         <script>
+        window["chartHBarKeys$canvasId"] = $jsonKeys;
 new RGraph.HBar({
                 id:'$canvasId',
                 data:$jsonData,
@@ -331,12 +333,14 @@ EOD;
         //return $data;
         $chart['labels']=array();
         $chart['data']=array();
+        $chart['keys']=array();
         $total = 0;
         foreach($data as $i)
         {
             //$chart['labelsAndValues'][]=$i['key'].' ('.$currency.(int)$i['total'].')';
             $chart['labelsAndValues'][]=$this->resizeLabel($i['value']).' ('.$currency_symbol.(int)$i['total'].$thousands_symbol.')';
             $chart['labels'][]=$i['value'];
+            $chart['keys'][]=$i['key'];
             $chart['data'][]=(int)$i['total'];
             $total+=(int)$i['total'];
         }
