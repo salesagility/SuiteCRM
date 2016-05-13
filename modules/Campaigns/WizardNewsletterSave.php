@@ -408,12 +408,12 @@ global $mod_strings;
             //require_once('modules/Campaigns/WizardMarketing.php');
             $header_URL = "Location: index.php?return_module=Campaigns&module=Campaigns&action=".$action.$redirectToTargetList."&campaign_id=".$campaign_focus->id."&record=".$campaign_focus->id;
             $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-            if(preg_match('/\s*Location:\s*(.*)$/', $headers, $matches)) {
+            if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
                 $href = $matches[1];
                 SugarApplication::redirect($href);
             }
             else {
-                header($headers, $replace, $http_response_code);
+                header($header_URL);
             }
 
 
