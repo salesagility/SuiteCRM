@@ -287,19 +287,33 @@
     function gotoWizardStep($obj) {
         var direction = 'direct';
 
-        if ($($obj).attr('data-nav-step') > $('#wiz_current_step').val()) {
+        if ($($obj).attr('data-nav-step') > $('.nav-steps.selected').attr('data-nav-step')) {
             direction = 'next';
-        } else if (($($obj).attr('data-nav-step') < $('#wiz_current_step').val())) {
+        } else if (($($obj).attr('data-nav-step') < $('.nav-steps.selected').attr('data-nav-step'))) {
             direction = 'back';
         } else {
             return false;
         }
 
-        if(validate_wiz($('#wiz_current_step').val(), direction)) {
+        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction) && check_form('wizform')){
             // passed validation
             console.log("validation passed");
+
             saveWizardState();
-            // navigate();
+
+            if($('.nav-steps.selected').attr('data-nav-step') == '1') {
+                $('#wiz_back_button').hide();
+            } else {
+                $('#wiz_back_button').show();
+            }
+
+            if($($obj).attr('data-nav-url') && $($obj).attr('data-nav-url') != '#') {
+                window.location = $($obj).attr('data-nav-url');
+            } else {
+                $('#wiz_current_step').val( $($obj).attr('data-nav-step') );
+                navigate('direct');
+            }
+
         } else {
             // failed validation
             alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
@@ -309,4 +323,14 @@
 
         return true;
     }
+
+    $(document).ready(function () {
+        if($('#wiz_current_step').val() == 1) {
+            $('#wiz_back_button').hide();
+        } else {
+            $('#wiz_back_button').show();
+        }
+
+    })
+
 </script>

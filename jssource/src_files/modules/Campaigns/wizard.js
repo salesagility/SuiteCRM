@@ -318,7 +318,7 @@ function link_navs(beg, end){
 
     for(i=beg; i<=end; i++){
         var nav_step = document.getElementById('nav_step'+ i);
-        nav_step.innerHTML= "<a href='#'  onclick=\"javascript:direct('"+i+"');\">" +nav_step.innerHTML+ "</a>";
+        //nav_step.innerHTML= "<a href='#'  onclick=\"javascript:direct('"+i+"');\">" +nav_step.innerHTML+ "</a>";
     }
 
 }
@@ -338,7 +338,7 @@ function direct(stepnumber){
         //lets set the current step to the selected step and invoke navigation
         current_step.value = stepnumber;
         navigate('direct');
-    }else{
+    } else{
         //do nothing, validation failed
     }
 }
