@@ -301,16 +301,16 @@ class Project extends SugarBean {
 
 	function save($check_notify = FALSE) {
 
-		$focus = new Project();
-		if(!empty($this->id))
-			$focus->retrieve($this->id);
+		$focus = $this; //new Project();
+		//if(!empty($this->id))
+		//	$focus->retrieve($this->id);
 
 		if( (isset($_POST['isSaveFromDetailView']) && $_POST['isSaveFromDetailView'] == 'true') ||
 			(isset($_POST['is_ajax_call']) && !empty($_POST['is_ajax_call']) && !empty($focus->id) ||
 			(isset($_POST['return_action']) && $_POST['return_action'] == 'SubPanelViewer') && !empty($focus->id))||
 			 !isset($_POST['user_invitees']) // we need to check that user_invitees exists before processing, it is ok to be empty
 		){
-			$focus->save(true);
+			parent::save(true) ; //$focus->save(true);
 			$return_id = $focus->id;
 		}else{
 
@@ -336,7 +336,7 @@ class Project extends SugarBean {
 
 			if(!empty($this->id)){
 
-				$focus->retrieve($this->id);
+				//$focus->retrieve($this->id);
 
 				////	REMOVE RESOURCE RELATIONSHIPS
 				// Calculate which users to flag as deleted and which to add
