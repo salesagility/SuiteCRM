@@ -195,10 +195,6 @@ EOQ;
 					} else {
 						if($useUploadFolder) {
 							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "upload/{$id}";
-							// create a copy with correct extension by mime type
-							if(copy($file_location, "upload/{$id}.{$mime_type}")) {
-								$secureLink .= ".{$mime_type}";
-							}
 						}
 						else {
 							$secureLink = ($useSiteURL ? $sugar_config['site_url'] . '/' : '') . "index.php?entryPoint=" . $entryPoint . "&type=Notes&id={$id}&filename=" . $match;
@@ -216,9 +212,7 @@ EOQ;
 		} else {
 			$check_notify = FALSE;
 		}
-		if($preProcessedImages) {
-			$focus->body_html = $emailTemplateBodyHtml;
-		}
+		$focus->body_html = $emailTemplateBodyHtml;
 		$return_id = $focus->save($check_notify);
 
 		return $this->handleAttachments($focus, $redirect, $return_id);
