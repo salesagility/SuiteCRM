@@ -36,7 +36,10 @@ class AM_ProjectTemplatesController extends SugarController {
         $project_name = $_POST['p_name'];
         $template_id = $_POST['template_id'];
         $project_start = $_POST['start_date'];
-        //Get project start date
+        $copy_all = isset($_POST['copy_all_tasks']) ? 1 : 0;
+		$copy_tasks = isset($_POST['tasks']) ? $_POST['tasks'] : array() ;
+			
+		//Get project start date
         $dateformat = $current_user->getPreference('datef');
         $startdate = DateTime::createFromFormat($dateformat, $project_start);
         $start = $startdate->format('Y-m-d');
@@ -48,16 +51,35 @@ class AM_ProjectTemplatesController extends SugarController {
         $template = new AM_ProjectTemplates();
         $template->retrieve($template_id);
 
-
+	
         //create project from template
         $project = new Project();
         $project->name = $project_name;
         $project->estimated_start_date = $start;
-        $project->status = $template->status;
-        $project->priority = $template->priority;
+		$project->status = $template->status;
+        $project->priority = strtolower($template->priority);
         $project->description = $template->description;
         $project->assigned_user_id = $template->assigned_user_id;
         $project->save();
+
+
+		//copy all resources from template to project
+		$template->load_relationship('am_projecttemplates_users_1');
+		$template_users = $template->get_linked_beans('am_projecttemplates_users_1','User');
+
+		$template->load_relationship('am_projecttemplates_contacts_1');
+		$template_contacts = $template->get_linked_beans('am_projecttemplates_contacts_1','Contact');
+		
+		$project->load_relationship('project_users_1');
+		foreach($template_users as $user){
+			$project->project_users_1->add($user->id);
+		}
+		
+		$project->load_relationship('project_contacts_1');
+		foreach($template_contacts as $contact){
+			$project->project_contacts_1->add($contact->id);
+		}
+
 
         $template->load_relationship('am_projecttemplates_project_1');
         $template->am_projecttemplates_project_1->add($project->id);
@@ -81,7 +103,7 @@ class AM_ProjectTemplatesController extends SugarController {
             $project_task = new ProjectTask();
             $project_task->name = $row['name'];
             $project_task->status = $row['status'];
-            $project_task->priority = $row['priority'];
+            $project_task->priority = strtolower($row['priority']);
             $project_task->percent_complete = $row['percent_complete'];
             $project_task->predecessors = $row['predecessors'];
             $project_task->milestone_flag = $row['milestone_flag'];
@@ -90,9 +112,15 @@ class AM_ProjectTemplatesController extends SugarController {
             $project_task->order_number = $row['order_number'];
             $project_task->estimated_effort = $row['estimated_effort'];
             $project_task->utilization = $row['utilization'];
-            $project_task->assigned_user_id = $row['assigned_user_id'];
-            $project_task->description = $row['description'];
+            
+			if($copy_all == 0 && !in_array( $row['id'],$copy_tasks))
+				$project_task->assigned_user_id = NULL;
+            else
+				$project_task->assigned_user_id = $row['assigned_user_id'];
+
+			$project_task->description = $row['description'];
             $project_task->duration = $row['duration'];
+			$project_task->duration_unit = $duration_unit;
             $project_task->project_task_id = $count;
             //Flag to prevent after save logichook running when project_tasks are created (see custom/modules/ProjectTask/updateProject.php)
             $project_task->set_project_end_date = 0;
@@ -121,13 +149,14 @@ class AM_ProjectTemplatesController extends SugarController {
             //link tasks to the newly created project
             $project_task->load_relationship('projects');
             $project_task->projects->add($project->id);
-            //Add assinged users from each task to the project resourses subpanel
-            $project->load_relationship('project_users_1');
-            $project->project_users_1->add($row['assigned_user_id']);
+
             $count++;
         }
+
+
         //set project end date to the same as end date of the last task
-        $project->estimated_end_date = $end;
+        $GLOBALS['log']->fatal("project end -- DATE:". $end);
+		$project->estimated_end_date = $end;
         $project->save();
 
 

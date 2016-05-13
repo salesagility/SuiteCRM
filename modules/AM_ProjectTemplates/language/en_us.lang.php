@@ -123,4 +123,9 @@ $mod_strings = array(
 	'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
 
 	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Override Business Hours',
+	'LBL_COPY_ALL_TASKS' => 'Copy All Tasks With Resources',
+	'LBL_COPY_SEL_TASKS' => 'Copy Selected Tasks With Resources',
+	'LBL_TOOLTIP_TITLE' => 'Hint',
+	'LBL_TOOLTIP_TEXT' => 'Copies All tasks with assigned users',
+	
 );
