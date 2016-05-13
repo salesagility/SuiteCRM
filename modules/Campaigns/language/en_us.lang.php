@@ -289,7 +289,7 @@ $mod_strings = array (
 	'LBL_TEST_EMAILS_SENT' => 'Test Emails Sent',
 	'LBL_USERS_CANNOT_OPTOUT' => 'System Users cannot opt out of receiving emails.',
 	'LBL_ELECTED_TO_OPTOUT' => 'You have elected to opt out of receiving emails.',
-	'LBL_COPY_OF' => '',
+	'LBL_COPY_OF' => 'Copy of ',
 	'LBL_SAVED_SEARCH' => 'Saved Search & Layout',
 	//email setup wizard
 	'LBL_WIZ_FROM_NAME'                         => 'From Name:',
@@ -384,7 +384,7 @@ $mod_strings = array (
 	'LBL_DESCRIPTION_TEXT_LEAD_FORM' => 'Submitting this form will create a lead and link with campaign',
 	'LBL_DOWNLOAD_TEXT_WEB_TO_LEAD_FORM' =>'Please download your Web To Lead form',
 	'LBL_DOWNLOAD_WEB_TO_LEAD_FORM' =>'Web To Person Form',
-	'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS' =>'Please provide all the required fields',
+	'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS' =>'Please provide all of the required fields',
 	'LBL_NOT_VALID_EMAIL_ADDRESS' =>'Not a valid email address',
 	'LBL_AVALAIBLE_FIELDS_HEADER' => 'Available Fields',
 	'LBL_LEAD_FORM_FIRST_HEADER' => 'Lead Form (First Column)',
@@ -463,14 +463,15 @@ $mod_strings = array (
 	'LBL_SEARCH_TARGET_LIST' => 'Target list filter',
 	'LBL_INSERT_URL_REF'		=> 'Insert URL Reference',
 	'LBL_INSERT_TRACKER_URL'	=> 'Insert Tracker URL:',
-	'LBL_CREATE_TRACKER_BTN'	=> 'Create',
-	'LBL_INSERT_TRACKER_BTN'	=> 'Insert',
-	'LBL_EDIT_TRACKER_BTN'	=> 'Edit',
+	'LBL_CREATE_TRACKER_BTN'	=> 'Create Tracker',
+	'LBL_INSERT_TRACKER_BTN'	=> 'Insert Tracker',
+	'LBL_EDIT_TRACKER_BTN'	=> 'Edit Tracker',
 	'LBL_DELETE_TRACKER_BTN'	=> 'Delete',
 	'LBL_CREATE_TRACKER_URL'	=> '-- Create --',
 	'LBL_INSERT'				=> 'Insert',
 	'LBL_INSERT_VARIABLE'		=> 'Insert:',
-	'LBL_INSERT_VARIABLE_BTN'	=> 'Insert',
+	'LBL_INSERT_VARIABLE_BTN'	=> 'Insert Variable',
+	'LBL_INSERT_VARIABLE_SUBJECT_BTN'	=> 'Insert Variable Into Subject',
 	'LBL_SAVE' => 'Save',
 	'LBL_EMAIL_TEMPLATE_TITLE' => 'Email Template Details',
 	'LBL_SAVE_TEMPLATE_BTN' => 'Save',
@@ -497,6 +498,9 @@ $mod_strings = array (
 	'LBL_WIZARD_ADD_TARGET' => 'Add Existing Targets:',
 	'LBL_CLICK_TO_ADD' => 'Click to add...',
 	'LBL_CANCEL' => 'Cancel',
+	'LBL_EMPTY_SUBJECT' => 'The Email Subject is blank. Are you sure you wish to continue?',
+	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?',
+	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.'
 );
 
 

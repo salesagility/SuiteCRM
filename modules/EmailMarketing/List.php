@@ -59,4 +59,6 @@ else {
     }
 }
 
+$results['selectedId'] = $_SESSION['campaignWizardSelectedMarketingId'];
+
 echo json_encode($results);
