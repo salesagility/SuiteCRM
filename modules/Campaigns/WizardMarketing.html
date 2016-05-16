@@ -377,6 +377,39 @@
 			}
 		}
 
+		//returns a js date
+
+		function toDate(datestr) {
+			var $format = "", $splitformat = ["","",""], $dbformat = ["","",""];
+			// Get user preferences date format
+			$format = cal_date_format
+			$format = $format.toUpperCase();
+			$format = $format.replace('%D', 'DD')
+			$format = $format.replace('%M', 'MM')
+			$format = $format.replace('%Y', 'YYYY')
+
+			// return js date
+			return moment(datestr, $format).toDate()
+		}
+
+		$(document).ready(function(){
+
+			YAHOO.util.Event.addListener(YAHOO.util.Selector.query('#date_start_date'), "change", function(){
+				var $date = toDate(YAHOO.util.Selector.query('#date_start_date')[0].value);
+				console.log($date);
+				if($date == 'Invalid Date') {
+					$('#date_start_date').val('')
+				}
+			});
+
+			$('#date_start_date').change(function() {
+				var $date = toDate(YAHOO.util.Selector.query('#date_start_date')[0].value);
+				console.log($date);
+				if($date == 'Invalid Date') {
+					$('#date_start_date').val('')
+				}
+			})
+		});
 		{/literal}
 	</script>
 
@@ -1487,3 +1520,4 @@ $(function(){
 
 {if $hideScreen}</div>{/if}
 <link rel="stylesheet" type="text/css" href="modules/EmailTemplates/EmailTemplate.css">
+<script src="include/javascript/moment.min.js"></script>
