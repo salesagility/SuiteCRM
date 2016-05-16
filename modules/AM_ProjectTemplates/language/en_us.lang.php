@@ -127,5 +127,23 @@ $mod_strings = array(
 	'LBL_COPY_SEL_TASKS' => 'Copy Selected Tasks With Resources',
 	'LBL_TOOLTIP_TITLE' => 'Hint',
 	'LBL_TOOLTIP_TEXT' => 'Copies All tasks with assigned users',
+
 	
+	'LBL_EMAIL' => 'Email',
+	'LBL_PHONE' => 'Phone Office:',
+	'LBL_ADD_BUTTON'=> 'Add',
+	'LBL_ADD_INVITEE' => 'Add Resource',
+	'LBL_FIRST_NAME' => 'First Name',
+	'LBL_LAST_NAME' => 'Last Name',
+	'LBL_SEARCH_BUTTON'=> 'Search',
+	'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
+	'LBL_CREATE_INVITEE' => 'Create an Resource',
+	'LBL_CREATE_CONTACT' => 'As Contact',
+	'LBL_CREATE_AND_ADD' => 'Create & Add',
+	'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
+	'LBL_NO_ACCESS' => 'You have no access to create $module',
+	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
+	'LBL_REMOVE' => 'rem',
+
+
 );

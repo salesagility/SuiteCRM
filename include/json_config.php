@@ -159,6 +159,12 @@ class json_config {
 			$focus->load_relationships('users');
 			$users=$focus->get_linked_beans('project_users_1','User');
 		}
+		else if ( $module == 'AM_ProjectTemplates') { 
+			$focus->load_relationships('users');
+			$users=$focus->get_linked_beans('am_projecttemplates_users_1','User');
+		}		
+		
+		
 		$module_arr['users_arr'] = array();
 
 		foreach($users as $user) {
@@ -177,6 +183,8 @@ class json_config {
 
 		if($module == 'Project')			
 			$contacts=$focus->get_linked_beans('project_contacts_1','Contact');
+		if($module == 'AM_ProjectTemplates')			
+			$contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
 		else
 			$contacts=$focus->get_linked_beans('contacts','Contact');
 
@@ -186,7 +194,7 @@ class json_config {
 
 		$module_arr['leads_arr'] = array();
 
-		if($module != 'Project'){
+		if($module != 'Project' && $module != 'AM_ProjectTemplates' ){
 			$focus->load_relationships('leads');
 			$leads=$focus->get_linked_beans('leads','Lead');
 			foreach($leads as $lead) {

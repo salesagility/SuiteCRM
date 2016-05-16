@@ -206,6 +206,11 @@
                 'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project.js',
 				'modules/Project/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project.js',
             ),
+			$sugar_grp_project_template = array(
+                'include/javascript/jsclass_base.js'    => 'include/javascript/sugar_grp_project_template.js',
+                'include/javascript/jsclass_async.js'   => 'include/javascript/sugar_grp_project_template.js',
+				'modules/AM_ProjectTemplates/jsclass_scheduler.js'   => 'include/javascript/sugar_grp_project_template.js',
+            ),
 
         );
 
