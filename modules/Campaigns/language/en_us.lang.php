@@ -501,7 +501,12 @@ $mod_strings = array (
 	'LBL_EMPTY_SUBJECT' => 'The Email Subject is blank. Are you sure you wish to continue?',
 	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?',
 	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.',
-	'LBL_STEP_UNAVAILABLE' => 'Please click next.'
+	'LBL_STEP_UNAVAILABLE' => 'Please click next.',
+	'LBL_STEP_INFO_CAMPAIGN_HEADER' => 'Please fill in the following details, in order for the campaign to be created.',
+	'LBL_STEP_INFO_TARGET_LIST' => 'Please select the lists.',
+	'LBL_STEP_INFO_TEMPLATE' => 'Please click next.',
+	'LBL_STEP_INFO_MARKETING' => 'Please click next.',
+	'LBL_STEP_INFO_BUDGET' => 'Please click next.',
 );
 
 
