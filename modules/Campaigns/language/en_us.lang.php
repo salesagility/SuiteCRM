@@ -500,7 +500,8 @@ $mod_strings = array (
 	'LBL_CANCEL' => 'Cancel',
 	'LBL_EMPTY_SUBJECT' => 'The Email Subject is blank. Are you sure you wish to continue?',
 	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?',
-	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.'
+	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.',
+	'LBL_STEP_UNAVAILABLE' => 'Please click next.'
 );
 
 

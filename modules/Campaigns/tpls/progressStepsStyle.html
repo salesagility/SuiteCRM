@@ -294,8 +294,6 @@
     }
 
     function gotoWizardStep($obj) {
-        console.log("wtf");
-        console.log($obj)
         var direction = 'direct';
 
         if ($($obj).attr('data-nav-step') > $('.nav-steps.selected').attr('data-nav-step')) {
@@ -306,7 +304,7 @@
             return false;
         }
 
-        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)){
+        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)) {
             // passed validation
             console.log("validation passed");
 
@@ -320,6 +318,9 @@
 
             if($($obj).attr('data-nav-url') && $($obj).attr('data-nav-url') != '#') {
                 window.location = $($obj).attr('data-nav-url');
+            } else if ($('#step'+$($obj).attr('data-nav-step')).length == 0) {
+                // if steps is not loaded
+                alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_UNAVAILABLE'));
             } else {
                 $('#wiz_current_step').val( $($obj).attr('data-nav-step') );
                 navigate('direct');
