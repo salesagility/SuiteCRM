@@ -280,6 +280,11 @@ else {
         $ss->assign("MESSAGE_FOR_DISABLED","disabled");
     };
 }
+
+// force to check all prospect list by default..
+$ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
+$ss->assign("MESSAGE_FOR_DISABLED","disabled");
+
 if (empty($prospectlists)) $prospectlists=array();
 if (empty($scope_options)) $scope_options=array();
 $ss->assign("SCOPE_OPTIONS", get_select_options_with_id($scope_options, $prospectlists));
