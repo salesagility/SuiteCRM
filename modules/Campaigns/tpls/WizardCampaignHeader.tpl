@@ -50,11 +50,10 @@
 			<div class="template-container-full">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td  colspan="3"><h2>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP1} </h2></div></td>
-			<td colspan="1">&nbsp;</td>
-			</tr>
+						<th  colspan="4"><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP1} </h4></div></th>
+					</tr>
 			<tr>
-				<td  colspan="3"><label>{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></div></td>
+				<td  colspan="3"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></div></td>
 		<td colspan="1">&nbsp;</td>
 		</tr>
 		<!--

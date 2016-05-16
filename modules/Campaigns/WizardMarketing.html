@@ -431,10 +431,12 @@
 
 			<div class="template-panel-container panel">
 				<div class="template-container-full ">
-					<h2>Email Template</h2>
+					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
 					<div class="clear">&nbsp;</div>
+					<div><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_EMAIL_TEMPLATE}</label></div>
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
+						<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
 						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 						<div class="clear">&nbsp;</div>
 						<div style="margin-top: 8px;">
@@ -469,7 +471,7 @@
 			</div>
 			<div class="template-panel-container panel-toolbar ">
 				<div class="template-container">
-					<h2>Email Trackers</h2>
+					<h2>{$MOD.LBL_TRACKED_URLS}</h2>
 					<div class="clear"></div>
 
 					<div class="form-group clear-block">
@@ -632,7 +634,7 @@
 							});
 						</script>
 						{/literal}
-						<div class="template-panel panel-toolbar">
+						<div class="panel-toolbar">
 							<div class="template-container-full">
 								<h2>{$MOD.LBL_SUBJECT}</h2>
 								<div class="form-group clear-block">
@@ -640,7 +642,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="template-panel panel-toolbar">
+						<div class="panel-toolbar">
 							<div class="template-container-full">
 								{$BODY_MOZAIK}
 							</div>
@@ -696,11 +698,25 @@
 		</div>
 	</div>
 	<div id="step2" style="display: none;">
+
+		<div class="template-panel">
+			<div class="template-panel-container panel">
+				<div class="template-container-full">
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
 
 			<tr>
+				<td colspan="4">
+					<h4>{$MOD.LBL_MRKT_NAME}</h4>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<label class="wizard-step-info">{$MOD.LBL_STEP_INFO_MARKETING}</label>
+				</td>
+			</tr>
+			<tr>
 
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME_FIELD} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 				<td ><slot><input id='name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
 			</tr>
 
@@ -910,6 +926,9 @@
 			<span class="helpmsg">{$MOD.LBL_REPLY_TO_ADDR_HELP}</span>
 		</div>
 
+				</div>
+			</div>
+		</div>
 
 
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>

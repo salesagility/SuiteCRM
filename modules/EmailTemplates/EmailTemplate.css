@@ -20,7 +20,8 @@
 }
 
 
-.template-panel{
+.template-panel {
+    margin-top: 8px;
     border: 1px solid rgb(211, 211, 211);
     padding: 5px;
     background: #eee;

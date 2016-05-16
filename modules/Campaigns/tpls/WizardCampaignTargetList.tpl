@@ -41,12 +41,15 @@
 
  ********************************************************************************/
 *}
+<div class="template-panel">
+	<div class="template-panel-container panel">
+		<div class="template-container-full">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 	<tr>
-	<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP4}</h4></th>
+	<th colspan="4" align="left" ><h4  style="border-bottom: solid 1px rgb(221, 221, 221);">{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP4}</h4></th>
 	</tr>
 	<tr>
-	<td colspan="4">{$MOD.LBL_WIZARD_SUBSCRIPTION_MESSAGE}<br></td>
+	<td colspan="4"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_TARGET_LIST}</label></td>
 	</tr>
 	<tr>
 	<td colspan="4">&nbsp;</td>
@@ -107,8 +110,10 @@
 	<td>&nbsp;</td>
 	</tr>
 	</table>
+			</div>
+	</div>
+</div>
 	<p>
-
 	{literal}
 	<script type="text/javascript" >
 	//this function will toggle the popup forms to be read only if "Default" is selected,
