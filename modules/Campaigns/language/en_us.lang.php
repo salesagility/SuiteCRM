@@ -507,7 +507,7 @@ $mod_strings = array (
 	'LBL_STEP_INFO_CAMPAIGN_HEADER' => 'Please fill in the following details, in order for the campaign to be created.',
 	'LBL_STEP_INFO_TARGET_LIST' => 'Each newsletter must have three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the newsletter.',
 	'LBL_STEP_INFO_EMAIL_TEMPLATE' => 'Please select an email template you wish to use or fill in the required fields and select create.',
-	'LBL_STEP_INFO_MARKETING' => 'Please define which email accounts you wish to use when send your campaign.',
+	'LBL_STEP_INFO_MARKETING' => 'Please define which email accounts you wish to use when sending your campaign.',
 	'LBL_STEP_INFO_BUDGET' => 'Enter the budget to calculate the Return On Investment (ROI).',
 	'LBL_EMAIL_TRACKERS' => 'Each campaign must have at least three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the campaign.',
 );

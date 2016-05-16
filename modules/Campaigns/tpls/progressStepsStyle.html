@@ -62,7 +62,7 @@
     .progression li:hover {
         background-color: #204d74;
         color: #fff;
-        cursor: pointer;
+        cursor: not-allowed;
     }
 
     .progression li:hover::after, .progression li.selected:hover::after {
@@ -346,15 +346,16 @@
         } else {
             $('#wiz_back_button').show();
         }
-        //$('.nav-steps').unbind();
+        $('.nav-steps').unbind();
         $('.nav-steps').click(function(event) {
             console.log(event);
             console.log($(event.target).closest('li'));
-            var suc =  gotoWizardStep($(event.target).closest('li'));
+//            var suc =  gotoWizardStep($(event.target).closest('li'));
             if(!suc){
                 event.preventDefault;
             }
         });
+
     })
 
 </script>
