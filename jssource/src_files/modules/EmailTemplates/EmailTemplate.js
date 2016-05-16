@@ -167,7 +167,7 @@ function insert_variable_html(text) {
 
 function insert_variable_html_link(text) {
 
-	the_label = document.getElementById('url_text').value;
+	the_label = $('#trackerUrlSelect').val();
 	if(typeof(the_label) =='undefined'){
 		the_label = label;
 	}
@@ -199,5 +199,215 @@ function insert_variable(text, mozaikId) {
 			insert_variable_html(text);
 		}
 	}
-}			
+}
 
+var $templateManagerDialogX = 0;
+var $templateManagerDialogY = 0;
+var $templateManagerDialog = null;
+function createTemplateManagerDialog (parent) {
+	$('#templateManagerDialog').dialog({
+		width: '50%',
+		position: { my: "left top", at: "left bottom", of: parent }
+	});
+}
+
+function EmailTemplateController(action) {
+	var lastNameValue = $('#template_name').val();
+	var lastSubjectValue = $('#template_subject').val();
+	var revertValues = function() {
+		$('#template_name').val(lastNameValue);
+		$('#template_subject').val(lastSubjectValue);
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+	}
+
+	var save = function(update) {
+		if($('#template_name').val() == '' || $('#template_subject').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return
+		}
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
+			'func': func,
+			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+			'body_html': $('#email_template_editor').getMozaikValue(),
+			'name': $('#template_name').val(),
+			'subject': $('#template_subject').val(),
+		}, function(resp){
+			// todo: hide preloader or loading message..
+			resp = JSON.parse(resp);
+			if(resp.error) {
+				// todo: show error
+				console.error(resp.error);
+			}
+			else {
+
+				if(!emailTemplateCopyId && func == 'createCopy') {
+					emailTemplateCopyId = resp.data.id;
+
+					$('option[value='+resp.data.id+']').html($('#template_name').val());
+
+					$('input[name="update_exists_template"]').prop('checked', true);
+				} else {
+					$('option[value='+resp.data.id+']').html($('#template_name').val());
+				}
+			}
+		});
+
+	}
+
+	var create = function() {
+
+		if($('#template_name').val() == '' || $('#template_subject').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return
+		}
+
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+		$('input[name="update_exists_template"]').prop('checked', false);
+
+
+		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
+
+		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
+			'func': func,
+			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
+			'body_html': $('#email_template_editor').getMozaikValue(),
+			'name': $('#template_name').val(),
+			'subject': $('#template_subject').val(),
+		}, function(resp){
+			// todo: hide preloader or loading message..
+			resp = JSON.parse(resp);
+			if(resp.error) {
+				// todo: show error
+				console.error(resp.error);
+			}
+			else {
+
+				if(!emailTemplateCopyId && func == 'createCopy') {
+					emailTemplateCopyId = resp.data.id;
+					$('#template_id').append('<option value="' + resp.data.id + '">' + resp.data.name + '</option>');
+					$('#template_id').val(resp.data.id);
+
+					$('input[name="update_exists_template"]').prop('checked', true);
+				}
+
+			}
+		});
+	}
+
+	switch (action) {
+		case "create":
+			createTemplateManagerDialog($('#LBL_CREATE_EMAIL_TEMPLATE_BTN'));
+			$('#templateManagerActionOK').val($('#LBL_CREATE_EMAIL_TEMPLATE_BTN').val());
+			$('#templateManagerDialog').children('div').addClass('hidden');
+			$('#emailTemplateDialog').removeClass('hidden');
+			$('#templateManagerDialogActions').removeClass('hidden');
+			$('#templateManagerActionOK').unbind();
+			$('#templateManagerActionCancel').unbind();
+			$('#templateManagerActionOK').click(create);
+			$('#templateManagerActionCancel').click(revertValues);
+			$('#templateManagerDialog').show();
+			break;
+		case "save":
+			createTemplateManagerDialog($('#LBL_SAVE_EMAIL_TEMPLATE_BTN'));
+			$('#templateManagerActionOK').val($('#LBL_SAVE_EMAIL_TEMPLATE_BTN').val());
+			$('#templateManagerDialog').children('div').addClass('hidden');
+			$('#emailTemplateDialog').removeClass('hidden');
+			$('#templateManagerDialogActions').removeClass('hidden');
+			$('#templateManagerActionOK').unbind();
+			$('#templateManagerActionCancel').unbind();
+			$('#templateManagerActionOK').click(save);
+			$('#templateManagerActionCancel').click(revertValues);
+			$('#templateManagerDialog').show();
+			break;
+		default:
+			break;
+	}
+	console.log('EmailTemplateController()', action)
+}
+
+function EmailTrackerController(action, campaignId) {
+	var _campaignId = campaignId;
+	var lastURLValue = $('#url_text').val();
+	var lastNameValue = $('#tracker_name').val();
+	var lastSubjectValue = $('#template_subject').val();
+	var revertValues = function() {
+		$('#url_text').val(lastURLValue);
+		$('#tracker_name').val(lastNameValue);
+		$('#template_subject').val(lastSubjectValue);
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+	}
+
+	var create = function () {
+		var trackerName = $('#url_text').val();
+		var trackerURL = $('#tracker_url_add').val();
+
+		if($('#url_text').val() == '' || $('#tracker_url_add').val() == '') {
+			alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+			return;
+		}
+
+
+		if(!trackerName) {
+			errors.push({field: 'tracker_name', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_NAME')});
+		}
+		if(!trackerURL) {
+			errors.push({field: 'tracker_url', message: SUGAR.language.translate('Campaigns', 'ERR_REQUIRED_TRACKER_URL')});
+		}
+		hideFieldErrorMessages();
+		window.parent.$('.ui-dialog-content:visible').dialog('close');
+
+		$.post('index.php?entryPoint=campaignTrackerSave', {
+			module: 'CampaignTrackers',
+			record: '', // TODO .. campaign tracker ID on update
+			action: 'Save',
+			campaign_id: _campaignId,
+			tracker_name: trackerName,
+			tracker_url: trackerURL,
+			is_optout: $('#is_optout').prop('checked') ? 'on' : '',
+			response_json: true
+		}, function (resp) {
+			resp = JSON.parse(resp);
+			if (resp.data.id) {
+				// TODO do it only when user want to create a new one as "copy and save.." function
+				$('select[name="tracker_url"]').append('<option value="{' + trackerName + '}">' + trackerName + ' : ' + trackerURL + '</option>');
+				$('select[name="tracker_url"]').val('{' + trackerName + '}');
+				$('#url_text').val('{' + trackerName + '}');
+			}
+			setTrackerUrlSelectVisibility();
+		});
+	}
+
+	switch (action) {
+		case "create":
+			$('#url_text').val('');
+			$('#tracker_name').val('');
+			$('#template_subject').val('');
+			createTemplateManagerDialog($('#LBL_CREATE_TRACKER_BTN'));
+			$('#templateManagerActionOK').val($('#LBL_CREATE_TRACKER_BTN').val());
+			$('#templateManagerDialog').children('div').addClass('hidden');
+			$('#emailTrackerDialog').removeClass('hidden');
+			$('#templateManagerDialogActions').removeClass('hidden');
+			$('#templateManagerActionOK').unbind();
+			$('#templateManagerActionCancel').unbind();
+			$('#templateManagerActionOK').click(create);
+			$('#templateManagerActionCancel').click(revertValues);
+			$('#templateManagerDialog').show();
+			break;
+		case "insert":
+			console.log($('#trackerUrlSelect').val())
+			insert_variable_html_link($('#trackerUrlSelect').val());
+			break;
+		default:
+			break;
+	}
+	console.log('EmailTrackerController()', action)
+}
+
+$(document).on( "mousemove", function(event) {
+	$templateManagerDialogX = event.pageX;
+	$templateManagerDialogY = event.pageY;
+});

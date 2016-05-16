@@ -208,9 +208,9 @@ $searchFields['Accounts'] = array (
   'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-            'subquery' => 'SELECT favorites.parent_id FROM favorites
+            'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
-			                        and favorites.parent_type = "'.$module_name.'"
-			                        and favorites.assigned_user_id = "' .$current_user->id . '") OR NOT ({0}',
+			                        and favorites.parent_type = '".$module_name."'
+			                        and favorites.assigned_user_id = '" .$current_user->id . "') OR NOT ({0}",
             'db_field'=>array('id')),
 );

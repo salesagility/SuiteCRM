@@ -266,6 +266,16 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
 //        else if(count($validation_errors = validate_siteConfig('b')) > 0) {
 //            $si_errors = true;
 //        }
+
+        if(!empty($sugar_config['dbconfig'])) {
+            try {
+                $db = DBManagerFactory::getInstance();
+                $db->disconnect();
+            } catch (\Exception $e) {
+                $validation_errors[] = $mod_strings['LBL_DB_CONN_ERR'] . ': ' . $e->getMessage();
+            }
+        }
+
         $errors = '';
         if( isset($validation_errors) && is_array($validation_errors)){
             if( count($validation_errors) > 0 ){
@@ -277,6 +287,7 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
                 $errors .= '</ul>'; //</div>';
             }
         }
+
         echo $errors;
         return;
     }
