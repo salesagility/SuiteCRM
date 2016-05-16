@@ -323,17 +323,27 @@ echo $javascript->getScript();
     if ($pl_count==0){
         if ($pl_lists==0){
             //print no target list warning
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
-            $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
+            if($campaign_focus->campaign_type != "Email" || $campaign_focus->campaign_type != "NewsLetter"){
+                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
+            }
+            else{
+                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
+            }
         }else{
             //print no entries warning
-            if($campaign_focus->campaign_type='NewsLetter'){
+            if($campaign_focus->campaign_type=='NewsLetter'){
                 $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
                 $pl_diabled_test_too = false;
-            }else{
+            }elseif($campaign_focus->campaign_type=='Email'){
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
+            }
+            else{
+                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
             }
         }
         //disable the send email options
