@@ -358,6 +358,11 @@
             }
         });
 
+        $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
+        $('#template_id').change(function() {
+            $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
+        });
+
     })
 
 </script>
