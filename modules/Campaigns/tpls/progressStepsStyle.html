@@ -62,7 +62,7 @@
     .progression li:hover {
         background-color: #204d74;
         color: #fff;
-        cursor: not-allowed;
+        cursor: pointer;
     }
 
     .progression li:hover::after, .progression li.selected:hover::after {
@@ -301,7 +301,9 @@
         var direction = 'direct';
 
         if ($($obj).attr('data-nav-step') > $('.nav-steps.selected').attr('data-nav-step')) {
-            direction = 'next';
+//            direction = 'next';
+            alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_UNAVAILABLE'));
+            return false;
         } else if (($($obj).attr('data-nav-step') < $('.nav-steps.selected').attr('data-nav-step'))) {
             direction = 'back';
         } else {
@@ -350,7 +352,7 @@
         $('.nav-steps').click(function(event) {
             console.log(event);
             console.log($(event.target).closest('li'));
-//            var suc =  gotoWizardStep($(event.target).closest('li'));
+            var suc =  gotoWizardStep($(event.target).closest('li'));
             if(!suc){
                 event.preventDefault;
             }
