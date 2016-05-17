@@ -63,7 +63,7 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
 
     public function testprocess()
     {
-        $this->markTestSkipped('Skipping testprocess Tests');
+
         $SugarController = new SugarController();
 
         //execute the method and check if it works and doesn't throws an exception
