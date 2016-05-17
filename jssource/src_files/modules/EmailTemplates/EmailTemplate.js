@@ -306,6 +306,8 @@ function EmailTemplateController(action) {
 					$('#template_id').val(resp.data.id);
 
 					$('input[name="update_exists_template"]').prop('checked', true);
+
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').removeAttr('disabled');
 				}
 
 			}
@@ -473,9 +475,7 @@ function EmailTrackerController(action, campaignId) {
 			break;
 		default:
 			break;
-	}
-	console.log('EmailTrackerController()', action)
-}
+	}}
 
 $(document).on( "mousemove", function(event) {
 	$templateManagerDialogX = event.pageX;
