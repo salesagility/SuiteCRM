@@ -88,6 +88,7 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
 
     public function testpreProcess()
     {
+        $this->markTestSkipped('Skipping preProcess Tests');
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
@@ -117,6 +118,7 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
 
     public function testhandleAccessControl()
     {
+        $this->markTestSkipped('Skipping testhandleAccessControl Tests');
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
 
