@@ -245,9 +245,10 @@
 			switch(document.getElementById('wiz_current_step').value) {
 				case '1':
 						var updateChecked = $('input[name="update_exists_template"]').prop('checked');
+
 						if($('#template_id').val() == '') {
-							onNext();
-							wizardMenuSetStepLink(4);
+							alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_INFO_EMAIL_TEMPLATE'));
+							return false;
 						}
 
 						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
@@ -266,6 +267,9 @@
 									}
 								});
 							}
+						} else {
+							onNext();
+							wizardMenuSetStepLink(4);
 						}
 					break;
 
@@ -373,6 +377,37 @@
 			}
 		}
 
+		//returns a js date
+
+		function toDate(datestr) {
+			var $format = "", $splitformat = ["","",""], $dbformat = ["","",""];
+			// Get user preferences date format
+			$format = cal_date_format
+			$format = $format.toUpperCase();
+			$format = $format.replace('%D', 'DD')
+			$format = $format.replace('%M', 'MM')
+			$format = $format.replace('%Y', 'YYYY')
+
+			// return js date
+			return moment(datestr, $format).toDate()
+		}
+
+		$(document).ready(function(){
+
+			YAHOO.util.Event.addListener(YAHOO.util.Selector.query('#date_start_date'), "change", function(){
+				var $date = toDate(YAHOO.util.Selector.query('#date_start_date')[0].value);
+				if($date == 'Invalid Date') {
+					$('#date_start_date').val('')
+				}
+			});
+
+			$('#date_start_date').change(function() {
+				var $date = toDate(YAHOO.util.Selector.query('#date_start_date')[0].value);
+				if($date == 'Invalid Date') {
+					$('#date_start_date').val('')
+				}
+			})
+		});
 		{/literal}
 	</script>
 
@@ -390,24 +425,7 @@
 		<div id="templateManager" class="template-panel">
 			<div id="templateManagerDialog">
 				<div id="emailTemplateDialog" class="hidden">
-					<div class="template-container-full">
-						<h2>{$MOD.LBL_EMAIL_TEMPLATE_TITLE}</h2>
-						<div class="clear"></div>
-						<div class="form-group">
-							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
-						</div>
-						<div class="clear"></div>
-						<div class="form-group">
-							<label>{$MOD.LBL_SUBJECT}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-							<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
-						</div>
 
-					<span class="form-group hidden">
-						<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
-						<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
-					</span>
-					</div>
 				</div>
 
 				<div id="emailTrackerDialog" class="hidden">
@@ -445,11 +463,23 @@
 
 			<div class="template-panel-container panel">
 				<div class="template-container-full ">
-					<h2>Email Template</h2>
-					<div class="clear"></div>
+					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
+					<div class="clear">&nbsp;</div>
+					<div><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_EMAIL_TEMPLATE}</label></div>
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
+						<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
 						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						<div class="clear">&nbsp;</div>
+						<div style="margin-top: 8px;">
+							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
+							<span class="form-group hidden">
+								<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
+								<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
+							</span>
+
+						</div>
 						<script>
 							{literal}
 							$(function(){
@@ -463,7 +493,6 @@
 
 					<div class="button-group">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
-
 					</div>
 					<div class="button-group-seperator"></div>
 					<div class="button-group">
@@ -474,7 +503,7 @@
 			</div>
 			<div class="template-panel-container panel-toolbar ">
 				<div class="template-container">
-					<h2>Email Trackers</h2>
+					<h2>{$MOD.LBL_TRACKED_URLS}</h2>
 					<div class="clear"></div>
 
 					<div class="form-group clear-block">
@@ -490,6 +519,7 @@
 					<div class="button-group-seperator"></div>
 					<div class="button-group">
 						<input type='button' id="LBL_CREATE_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_CREATE_TRACKER_BTN}' onclick="EmailTrackerController('create', '{$CAMPAIGN_ID}')">
+						<input type='button' id="LBL_EDIT_TRACKER_BTN" tabindex="0" class='button' value='{$MOD.LBL_EDIT_TRACKER_BTN}' onclick="EmailTrackerController('edit', '{$CAMPAIGN_ID}')">
 					</div>
 
 				</div>
@@ -500,11 +530,7 @@
 					<script type="text/javascript">
 						{$FIELD_DEFS_JS}
 					</script>
-					<div class="hidden">
-						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
-							{$DROPDOWN}
-						</select>
-					</div>
+
 
 					{literal}
 					<script type="text/javascript">
@@ -515,6 +541,12 @@
 					{/literal}
 
 					<div class="form-group clear-block">
+
+						<select class="form-control input-sm" name='variable_module' tabindex="0" onchange="addVariables(document.wizform.variable_name,this.options[this.selectedIndex].value, 'wizform');">
+							{$DROPDOWN}
+						</select>
+						<div class="pad">&nbsp;</div>
+
 						<select class="form-control input-sm" name='variable_name' tabindex="0" onchange="showVariable('wizform');">
 						</select>
 					</div>
@@ -529,6 +561,7 @@
 					<!-- BEGIN: variable_button -->
 					<div class="button-group">
 						<input type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_VARIABLE_BTN}'>
+						<input type='button' tabindex="0" onclick='insert_variable(document.wizform.variable_text.value, "template_subject")' class='button' value='{$MOD.LBL_INSERT_VARIABLE_SUBJECT_BTN}'>
 					</div>
 					<!-- END: variable_button -->
 				</div>
@@ -633,9 +666,18 @@
 							});
 						</script>
 						{/literal}
-
-						<div>
-							{$BODY_MOZAIK}
+						<div class="panel-toolbar">
+							<div class="template-container-full">
+								<h2>{$MOD.LBL_SUBJECT}</h2>
+								<div class="form-group clear-block">
+									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
+								</div>
+							</div>
+						</div>
+						<div class="panel-toolbar">
+							<div class="template-container-full">
+								{$BODY_MOZAIK}
+							</div>
 							<!--
                             <iframe id="html_frame" src="" style="width:100%; height:500px"></iframe>
                             <pre id="email_template_view"></pre>
@@ -688,11 +730,25 @@
 		</div>
 	</div>
 	<div id="step2" style="display: none;">
+
+		<div class="template-panel">
+			<div class="template-panel-container panel">
+				<div class="template-container-full">
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
 
 			<tr>
+				<td colspan="4">
+					<h4>{$MOD.LBL_MRKT_NAME}</h4>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">
+					<label class="wizard-step-info">{$MOD.LBL_STEP_INFO_MARKETING}</label>
+				</td>
+			</tr>
+			<tr>
 
-				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
+				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME_FIELD} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
 				<td ><slot><input id='name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
 			</tr>
 
@@ -902,6 +958,9 @@
 			<span class="helpmsg">{$MOD.LBL_REPLY_TO_ADDR_HELP}</span>
 		</div>
 
+				</div>
+			</div>
+		</div>
 
 
 		<table border="0" cellpadding="0" cellspacing="0" width="100%" class='edit view'>
@@ -1122,6 +1181,9 @@
 						}
 						else {
 							$('#marketing_select').html('');
+							if(marketingSelectValue == '' && typeof resp.selectedId != 'undefined' && resp.selectedId) {
+								marketingSelectValue = resp.selectedId;
+							}
 							for(var i=0; i<resp.data.length; i++) {
 								var elem = resp.data[i];
 								var selected = '';
@@ -1232,37 +1294,23 @@
 			<!-- <div class="space"></div> -->
 
 			<input type="hidden" name="wiz_home_next_step" value="1" />
-
-			<div class="box button schedule {$PL_DISABLED}">
-
-				{if !$PL_DISABLED}
-				<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
-					{/if}
-
-					{$MOD.LBL_SEND_EMAIL}
-
-					{if !$PL_DISABLED}
-				</a>
-				{/if}
-
-
-			</div>
+			{if !$PL_DISABLED}
+			<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
+			{/if}
+			<div class="box button schedule {$PL_DISABLED}">{$MOD.LBL_SEND_EMAIL}</div>
+			{if !$PL_DISABLED}
+			</a>
+			{/if}
 
 			<div class="space"></div>
+			{if !$PL_DISABLED_TEST}
+			<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
+			{/if}
+			<div class="box button test {$PL_DISABLED}">{$MOD.LBL_SEND_AS_TEST}</div>
+			{if !$PL_DISABLED}
+			</a>
+			{/if}
 
-			<div class="box button test {$PL_DISABLED}">
-
-				{if !$PL_DISABLED_TEST}
-				<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
-					{/if}
-
-					{$MOD.LBL_SEND_AS_TEST}
-
-					{if !$PL_DISABLED}
-				</a>
-				{/if}
-
-			</div>
 
 		</div>
 		{/if}
@@ -1398,6 +1446,12 @@ var jumpToPageByURL = function() {
 
 	var jump = getParameterByName('jump');
 
+	var func = getParameterByName('func');
+
+	if(func == 'createEmailMarketing') {
+		jump = 2;
+	}
+
 
 	var jumpToPage = function(jump, noValidation) {
 		if(typeof noValidation == 'undefined') {
@@ -1423,7 +1477,10 @@ var jumpToPageByURL = function() {
 		var campaignType = getParameterByName('campaign_type');
 		var showWizardMarketing = getParameterByName('show_wizard_marketing');
 
-		if(jump == 3 && showWizardMarketing && campaignType != 'Email') {
+		if(jump == 2 && func == 'createEmailMarketing') {
+			jumpToPage(jump, true);
+		}
+		else if(jump == 3 && showWizardMarketing && campaignType != 'Email') {
 			jumpToPage(jump, true);
 		}
 		else {
@@ -1461,3 +1518,4 @@ $(function(){
 
 {if $hideScreen}</div>{/if}
 <link rel="stylesheet" type="text/css" href="modules/EmailTemplates/EmailTemplate.css">
+<script src="include/javascript/moment.min.js"></script>

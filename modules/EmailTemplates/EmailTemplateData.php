@@ -27,6 +27,8 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                     $bean->$key = $_POST[$key];
                 }
             }
+            $formBase = new EmailTemplateFormBase();
+            $bean = $formBase->handleAttachmentsProcessImages($bean, false, true, 'download', true);
             $bean->save();
             //$formBase = new EmailTemplateFormBase();
             //$bean = $formBase->handleAttachmentsProcessImages($bean, false, true);
