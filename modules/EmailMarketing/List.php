@@ -44,8 +44,10 @@ $results = array(
     'error' => false,
     'data' => array(),
 );
+$selectedId = null;
 if(!isset($_REQUEST['campaign_id']) || !$_REQUEST['campaign_id']) {
     $results['error'] = 'campaign_id is not set';
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
 }
 else {
     $campaign_id = $db->quote($_REQUEST['campaign_id']);
@@ -55,8 +57,21 @@ else {
                 'id' => $elem->id,
                 'name' => $elem->name,
             );
+            if(isset($_SESSION['campaignWizardSelectedMarketingId']) && $elem->id == $_SESSION['campaignWizardSelectedMarketingId']) {
+                $selectedId = $elem->id;
+            }
+        }
+        if(!$selectedId && !empty($results['data'][0]['id'])) {
+            $selectedId = $results['data'][0]['id'];
         }
     }
+}
+
+if($selectedId) {
+    $results['selectedId'] = $_SESSION['campaignWizardSelectedMarketingId'] = $selectedId;
+}
+else {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
 }
 
 echo json_encode($results);

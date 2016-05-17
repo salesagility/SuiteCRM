@@ -627,6 +627,10 @@ if(isset($_REQUEST['wizardtype'])) {
 
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
+if(!$focus->id) {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+}
+
 
 function create_newsletter_steps(){
     global $mod_strings;
