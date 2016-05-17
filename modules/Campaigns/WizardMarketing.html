@@ -396,7 +396,6 @@
 
 			YAHOO.util.Event.addListener(YAHOO.util.Selector.query('#date_start_date'), "change", function(){
 				var $date = toDate(YAHOO.util.Selector.query('#date_start_date')[0].value);
-				console.log($date);
 				if($date == 'Invalid Date') {
 					$('#date_start_date').val('')
 				}
@@ -404,7 +403,6 @@
 
 			$('#date_start_date').change(function() {
 				var $date = toDate(YAHOO.util.Selector.query('#date_start_date')[0].value);
-				console.log($date);
 				if($date == 'Invalid Date') {
 					$('#date_start_date').val('')
 				}
