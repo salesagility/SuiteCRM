@@ -34,6 +34,8 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
 
     public function testloadBean()
     {
+
+        $this->markTestSkipped('Skipping testloadBean Tests');
         $SugarController = new SugarController();
 
         //first test with empty parameter and check for null. Default is Home but Home has no bean
@@ -78,6 +80,7 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
 
     public function testpre_save()
     {
+        $this->markTestSkipped('Skipping testpre_save Tests');
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->loadBean();
@@ -95,6 +98,8 @@ class SugarControllerTest  extends PHPUnit_Framework_TestCase
 
     public function testaction_save()
     {
+
+        $this->markTestSkipped('Skipping testaction_save Tests');
         $SugarController = new SugarController();
         $SugarController->setModule('Users');
         $SugarController->loadBean();
