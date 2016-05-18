@@ -186,7 +186,7 @@ function filterFieldsFromBeans($beans)
             }
 
 
-    $field_def['vname'] = preg_replace('/:$/','',translate($field_def['vname'],'Leads'));
+    $field_def['vname'] = preg_replace('/:$/','',translate($field_def['vname'], $b->module_dir));
 
      //$cols_name = "{'".$field_def['vname']."'}";
      $col_arr = array();
