@@ -931,7 +931,6 @@ class EmailMan extends SugarBean{
 
 		$pattern='/[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Za-z]{2,}$/i';
 		$ret=preg_match($pattern, $email_address);
-		echo $ret;
 		if ($ret===false or $ret==0) {
 			return false;
 		}
