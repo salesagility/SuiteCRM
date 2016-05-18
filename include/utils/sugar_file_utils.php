@@ -69,7 +69,7 @@ function sugar_mkdir($pathname, $mode=null, $recursive=false, $context='') {
 	}
 
 	if($result){
-		if(!sugar_chmod($pathname, $mode)){
+        if(!sugar_chmod($pathname, $mode) && !is_writable($pathname)){
 			return false;
 		}
 		if(!empty($GLOBALS['sugar_config']['default_permissions']['user'])){
