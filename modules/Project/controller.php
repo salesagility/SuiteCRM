@@ -291,6 +291,7 @@ class ProjectController extends SugarController {
 		$contacts = explode(',', $_POST['contacts']);
         $month = $_POST['month'];
         $flag = $_POST['flag'];
+		$chart_type = $_POST['chart_type'];
         //$type = $_POST['type'];
 
         $start = new DateTime($start);
@@ -312,7 +313,14 @@ class ProjectController extends SugarController {
         $start = $start->format('Y-m-d');
 
         $end = $first_day->add(new DateInterval('P66D'));
-        $end->modify('this week');
+		
+		if( $chart_type == "monthly" )
+			$end = $first_day->add(new DateInterval('P365D'));
+		else if( $chart_type == "quarterly" )
+			$end = $first_day->add(new DateInterval('P1460D'));
+
+			
+		$end->modify('this week');
         $end->add(new DateInterval('P1D'));
         $end = $end->format('Y-m-d');
 
@@ -382,7 +390,7 @@ class ProjectController extends SugarController {
         }
 
         //Generate the resource chart by passing in the start date, end date and the array of user objects
-        new chart($start, $end, $projects, $users, $contacts, $resource_list);
+        new chart($start, $end, $projects, $users, $contacts, $resource_list, $chart_type);
       /* echo '<pre>';
         print_r($resource_list);
         echo '</pre>';*/
@@ -396,19 +404,19 @@ class ProjectController extends SugarController {
         global $mod_strings;
 
         $start_date = $_REQUEST['start_date'];
+		$end_date = $_REQUEST['end_date']; 
         $resource_id = $_REQUEST['resource_id'];
         //$resource_type = $_REQUEST['type'];
 
         $Task = BeanFactory::getBean('ProjectTask');
-        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND project_task.date_start <= '".$start_date."' AND project_task.date_finish >= '".$start_date."'");
-
+        $tasks = $Task->get_full_list("date_start", "project_task.assigned_user_id = '".$resource_id."' AND project_task.date_start <= '".$start_date."' AND project_task.date_finish >= '".$end_date."'");
         echo '<table class="qtip_table">';
         echo '<tr><th>'.$mod_strings['LBL_TOOLTIP_PROJECT_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_NAME'].'</th><th>'.$mod_strings['LBL_TOOLTIP_TASK_DURATION'].'</th></tr>';
-
-        foreach($tasks as $task){
-
-            echo '<tr><td><a target="_blank" href="index.php?module=Project&action=DetailView&record='.$task->project_id.'">'.$task->project_name.'</a></td><td>'.$task->name.'</td><td>'.$task->duration.' '.$task->duration_unit.'</td></tr>';
-        }
+		if(is_array($tasks)){
+			foreach($tasks as $task){
+				echo '<tr><td><a target="_blank" href="index.php?module=Project&action=DetailView&record='.$task->project_id.'">'.$task->project_name.'</a></td><td>'.$task->name.'</td><td>'.$task->duration.' '.$task->duration_unit.'</td></tr>';
+			}
+		}
         echo '</table>';
 
         die();

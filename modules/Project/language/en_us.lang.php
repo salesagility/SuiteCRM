@@ -200,7 +200,13 @@ $mod_strings = array(
 	'LBL_CONTACTS_SEARCH' => 'Select  Contacts',
 	'LBL_RESOURCE_CHART_SEARCH_BUTTON' => 'Search',
 	
-	
+	'LBL_CHART_TYPE' => 'Type',
+	'LBL_CHART_WEEKLY' => 'Weekly',
+	'LBL_CHART_MONTHLY' => 'Monthly',	
+	'LBL_CHART_QUARTERLY' => 'Quarterly',
+
+	'LBL_RESOURCE_CHART_MONTH' => 'Month',
+	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
 
 );
 ?>

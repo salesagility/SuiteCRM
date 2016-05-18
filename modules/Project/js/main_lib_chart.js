@@ -92,6 +92,7 @@ $(function() {
 	var projects = $('#projects').val();
     var users = $('#users').val();
 	var contacts = $('#contacts').val();
+	var chart_type = $('#chart_type').val();
     //var type = 'all';
 
 
@@ -115,6 +116,9 @@ $(function() {
         contacts = '';
     }
 
+    if(!chart_type){
+        chart_type = '';
+    }
 
     if(flag){
         flag = '1';
@@ -124,7 +128,7 @@ $(function() {
     }
 
     //Put the properties into a string
-    var dataString = '&start=' + start + '&end=' + end +  '&projects=' + projects + '&users=' + users + '&contacts=' + contacts + '&month=' + month + '&flag=' + flag  ;
+    var dataString = '&start=' + start + '&end=' + end +  '&projects=' + projects + '&users=' + users + '&contacts=' + contacts + '&month=' + month + '&flag=' + flag  + '&chart_type=' + chart_type  ;
     
 	//Pass the properties to the controller function via ajax
     $.ajax({
@@ -154,7 +158,7 @@ $(function() {
 		//get start and end date of the task to pass via ajax to the tooltip controller function
         var rel = $(this).attr('rel');
         var dates = rel.split("|");
-        var dataString = 'start_date=' + dates[0] + '&resource_id=' + dates[1] + '&type=' + dates[2];
+        var dataString = 'start_date=' + dates[0] + '&end_date=' + dates[1] +'&resource_id=' + dates[2] + '&type=' + dates[3];
         var url = 'index.php?module=Project&action=Tooltips';
 
         $(this).qtip({
