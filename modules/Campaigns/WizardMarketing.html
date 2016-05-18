@@ -1449,7 +1449,7 @@ var jumpToPageByURL = function() {
 	var func = getParameterByName('func');
 
 	if(func == 'createEmailMarketing') {
-		jump = 2;
+		jump = 1;
 	}
 
 
@@ -1477,7 +1477,7 @@ var jumpToPageByURL = function() {
 		var campaignType = getParameterByName('campaign_type');
 		var showWizardMarketing = getParameterByName('show_wizard_marketing');
 
-		if(jump == 2 && func == 'createEmailMarketing') {
+		if(jump == 1 && func == 'createEmailMarketing') {
 			jumpToPage(jump, true);
 		}
 		else if(jump == 3 && showWizardMarketing && campaignType != 'Email') {
