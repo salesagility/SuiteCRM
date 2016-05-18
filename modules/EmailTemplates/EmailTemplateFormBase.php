@@ -166,6 +166,11 @@ EOQ;
 	}
 
 	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false) {
+		$return_id = $this->processImages($focus, $useSiteURL, $entryPoint, $useUploadFolder);
+		return $this->handleAttachments($focus, $redirect, $return_id);
+	}
+
+	public function processImages(&$focus, $useSiteURL, $entryPoint, $useUploadFolder) {
 		global $sugar_config;
 		$preProcessedImages = array();
 		$emailTemplateBodyHtml = from_html($focus->body_html);
@@ -223,8 +228,7 @@ EOQ;
 			$focus->body_html = $emailTemplateBodyHtml;
 		}
 		$return_id = $focus->save($check_notify);
-
-		return $this->handleAttachments($focus, $redirect, $return_id);
+		return $return_id;
 	}
 
 	public function handleAttachments($focus, $redirect, $return_id) {

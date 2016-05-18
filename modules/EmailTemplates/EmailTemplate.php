@@ -111,6 +111,8 @@ class EmailTemplate extends SugarBean
      */
     protected $storedVariables = array();
 
+    private $imageLinkReplaced = false;
+
     public function __construct()
     {
         parent::__construct();
@@ -839,12 +841,54 @@ class EmailTemplate extends SugarBean
     {
         $ret = parent::retrieve($id, $encode, $deleted);
         $this->repairMozaikClears();
+        $this->imageLinkReplaced = false;
+        $this->repairEntryPointImages();
+        if($this->imageLinkReplaced) {
+            $this->save();
+        }
         return $ret;
     }
 
     private function repairMozaikClears() {
         // repair tinymce auto correction in mozaik clears
         $this->body_html = str_replace('&lt;div class=&quot;mozaik-clear&quot;&gt;&nbsp;&lt;br&gt;&lt;/div&gt;', '&lt;div class=&quot;mozaik-clear&quot;&gt;&lt;/div&gt;', $this->body_html);
+    }
+
+
+
+    private function repairEntryPointImages() {
+        global $sugar_config;
+
+        // repair the images url at entry points, change to a public direct link for remote email clients..
+
+        $siteUrlQuoted = str_replace(array(':', '/'), array('\:', '\/'), $sugar_config['site_url']);
+        $regex = '/&lt;img src=&quot;(' . $siteUrlQuoted . '\/index\.php\?entryPoint=download&type=Notes&id=([a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12})&filename=[^&]+)&quot;/';
+
+        if(preg_match($regex, $this->body_html, $match)) {
+            $splits = explode('.', $match[1]);
+            $fileExtension = end($splits);
+            $this->makePublicImage($match[2]);
+            $directLink = '&lt;img src=&quot;' . $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension . '&quot;';
+            $this->body_html = str_replace($match[0], $directLink, $this->body_html);
+            $this->imageLinkReplaced = true;
+            $this->repairEntryPointImages();
+        }
+
+    }
+
+    private function makePublicImage($id) {
+        $toFile = 'public/' . $id . '.jpg';
+        if(file_exists($toFile)) {
+            return;
+        }
+        $fromFile = 'upload://' . $id;
+        if(!file_exists($fromFile)) {
+            throw new Exceptin('file not found');
+        }
+        $fdata = file_get_contents($fromFile);
+        if(!file_put_contents($toFile, $fdata)) {
+            throw new Exception('file write error');
+        }
     }
 
     public function getAttachments() {
