@@ -1510,6 +1510,23 @@ var jumpToPageByURL = function() {
 
 $(function(){
 	jumpToPageByURL();
+
+	if($('#ACTION_FROM_SUB_PANEL').val() == "true" && parseInt($('.nav-steps.selected').attr('data-nav-step')) == 3) {
+		setTimeout(function() {
+			onSaveCopyMarketingEmailTemplate(function () {
+				if (hasNewAttachments()) {
+					submitMarketingEmailAttachments(function(){
+						onNext();
+						wizardMenuSetStepLink(4);
+					});
+				}
+				else {
+					onNext();
+					wizardMenuSetStepLink(4);
+				}
+			});
+		}, 300);
+	};
 });
 
 {/literal}
