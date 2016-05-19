@@ -251,7 +251,7 @@
 							return false;
 						}
 
-						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+						if(!updateChecked || (updateChecked)) {
 							// validate email template form before save
 							if (isValidEmailTemplateFormAndShowErrors()) {
 								onSaveCopyMarketingEmailTemplate(function () {

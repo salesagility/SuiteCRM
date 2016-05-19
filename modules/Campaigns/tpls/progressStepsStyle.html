@@ -311,7 +311,6 @@
 
         if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)) {
             // passed validation
-            console.log("validation passed");
 
             saveWizardState();
 
@@ -349,8 +348,6 @@
         }
         $('.nav-steps').unbind();
         $('.nav-steps').click(function(event) {
-            console.log(event);
-            console.log($(event.target).closest('li'));
             var suc =  gotoWizardStep($(event.target).closest('li'));
             if(!suc){
                 event.preventDefault;
