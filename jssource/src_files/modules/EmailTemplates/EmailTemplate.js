@@ -220,12 +220,13 @@ function EmailTemplateController(action) {
 			$('#template_name').focus();
 			return;
 		}
-		if($('#template_subject').val() == '') {
-			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
-				$('#template_subject').focus();
-				return;
-			}
-		}
+
+		//if($('#template_subject').val() == '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+		//		$('#template_subject').focus();
+		//		return;
+		//	}
+		//}
 
 		if($('#template_id').val() != '') {
 			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
@@ -273,11 +274,11 @@ function EmailTemplateController(action) {
 			return
 		}
 
-		if($('#template_subject').val() == '') {
-			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
-				return
-			}
-		}
+		//if($('#template_subject').val() == '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+		//		return
+		//	}
+		//}
 
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 		$('input[name="update_exists_template"]').prop('checked', false);
