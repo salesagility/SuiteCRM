@@ -159,7 +159,7 @@
 				uploadFormCallback = callback;
 			}
 
-			$('#upload_form').submit();
+			$('#upload_form input[type="submit"]').click();
 
 		};
 
@@ -305,18 +305,24 @@
 //				// todo: !@#
 //			};
 //
-//			var getAttachmentsForRemove = function() {
-//				// todo: !@#
-//			};
+			var getAttachmentsForRemove = function() {
+				var attachmentsForRemove = [];
+				$('#step1_uploader input[type="checkbox"]').each(function(){
+					if($(this).attr('name') == 'remove_attachment[]' && $(this).prop('checked')) {
+						attachmentsForRemove.push($(this).val());
+					}
+				});
+				return attachmentsForRemove;
+			};
 
 			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 				'func': func,
 				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
 				'body_html': $('#email_template_editor').getMozaikValue(),
 				'name': $('#template_name').val(),
-				'subject': $('#template_subject').val() //,
+				'subject': $('#template_subject').val(),
 //				'attachmentsAdd': getAttachmentsForAdd(),
-//				'attachmentsRemove': getAttachmentsForRemove()
+				'attachmentsRemove': getAttachmentsForRemove()
 			}, function(resp){
 				// todo: hide preloader or loading message..
 				resp = JSON.parse(resp);
@@ -689,46 +695,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="template-container-attachment panel">
-				{*
-				<div id="step1_uploader" class="">
 
-					<table>
-						<!-- BEGIN: NoInbound2 -->
-						<tr>
-							<td valign="top" scope="row">
-								<h3>{$MOD.LBL_ATTACHMENTS}:</h3>
-							</td>
-							<td colspan="2" nowrap id="attachments_container">
-								{$ATTACHMENTS}
-							</td>
-						</tr>
-						<!-- END: NoInbound2 -->
-					</table>
-					{$ATTACHMENTS_JAVASCRIPT}
-
-					<!-- BEGIN: NoInbound3 -->
-					<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
-						<div id="upload_div">
-							<input type="file" id="my_file" name="file_1" size="40" />
-							<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
-							<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
-							<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
-							<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
-							<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUGAR_DOCUMENT}' class="button" />
-
-							<input type="hidden" name="attach_to_template_id" id="attach_to_template_id" value="{$TEMPLATE_ID}">
-							<input type="hidden" name="campaign_id" value="{$CAMPAIGN_ID}">
-							<!-- <input type="hidden" name="attach_to_marketing_id" id="attach_to_marketing_id" value="{$MRKT_ID}"> -->
-
-						</div>
-						<div id="attachments_div">
-						</div>
-					</form>
-					<!-- END: NoInbound3 -->
-				</div>
-				*}
-			</div>
 
 		</div>
 	</div>
@@ -1361,6 +1328,8 @@ function determine_back(){
 </form>
 
 	<div id="step1_uploader" style="display: none;">
+		<div class="template-container-attachment panel">
+
 
 		<table>
 			<!-- BEGIN: NoInbound2 -->
@@ -1378,6 +1347,7 @@ function determine_back(){
 
 		<!-- BEGIN: NoInbound3 -->
 		<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
+			<input type="submit" style="display:none;">
 			<div id="upload_div">
 				<input type="file" id="my_file" name="file_1" size="40" />
 				<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
@@ -1394,6 +1364,8 @@ function determine_back(){
 			<div id="attachments_div">
 			</div>
 		</form>
+
+		</div>
 		<!-- END: NoInbound3 -->
 	</div>
 	<script type="text/javascript" src="modules/Emails/javascript/Email.js"></script>
