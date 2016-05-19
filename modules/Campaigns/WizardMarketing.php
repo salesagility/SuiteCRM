@@ -122,7 +122,12 @@ if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
         $_REQUEST['record'] = $_SESSION['campaignWizardSelectedMarketingId'];
     }
     if(!empty($_REQUEST['marketing_id']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-        $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+        if(!empty($_REQUEST['func']) && $_REQUEST['func'] == 'editEmailMarketing') {
+            $_SESSION['campaignWizardSelectedMarketingId'] = $_REQUEST['marketing_id'];
+        }
+        else {
+            $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+        }
     }
 }
 
