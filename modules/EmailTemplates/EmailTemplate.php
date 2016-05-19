@@ -885,6 +885,9 @@ class EmailTemplate extends SugarBean
         if(!file_exists($fromFile)) {
             throw new Exceptin('file not found');
         }
+        if(!file_exists('public')) {
+            sugar_mkdir('public', 777);
+        }
         $fdata = file_get_contents($fromFile);
         if(!file_put_contents($toFile, $fdata)) {
             throw new Exception('file write error');
