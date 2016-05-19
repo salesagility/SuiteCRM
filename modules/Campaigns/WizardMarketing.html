@@ -560,8 +560,8 @@
 
 					<!-- BEGIN: variable_button -->
 					<div class="button-group">
-						<input type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_VARIABLE_BTN}'>
-						<input type='button' tabindex="0" onclick='insert_variable(document.wizform.variable_text.value, "template_subject")' class='button' value='{$MOD.LBL_INSERT_VARIABLE_SUBJECT_BTN}'>
+						<input id="insert_variable_to_body_btn" type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_VARIABLE_BTN}' style="display: none;">
+						<input id="insert_variable_to_subject_btn" type='button' tabindex="0" onclick='insert_variable(document.wizform.variable_text.value, "template_subject")' class='button' value='{$MOD.LBL_INSERT_VARIABLE_SUBJECT_BTN}'>
 					</div>
 					<!-- END: variable_button -->
 				</div>
@@ -670,7 +670,7 @@
 							<div class="template-container-full">
 								<h2>{$MOD.LBL_SUBJECT}</h2>
 								<div class="form-group clear-block">
-									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
+									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100" onclick="onClickTemplateSubject(this);">
 								</div>
 							</div>
 						</div>

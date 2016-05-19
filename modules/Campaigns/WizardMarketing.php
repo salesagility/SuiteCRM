@@ -542,7 +542,13 @@ $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=
 
 require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
-$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
+$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor', 'initial', '', "tinyMCE: {
+    setup: function(editor) {
+        editor.on('focus', function(e){
+            onClickTemplateBody();
+        });
+    }
+}"));
 
 if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
     $ss->assign('EmailMarketingId', $_SESSION['campaignWizardSelectedMarketingId']);

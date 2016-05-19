@@ -57,9 +57,14 @@ else if(myField.selectionStart||myField.selectionStart=='0'){var startPos=myFiel
 +myField.value.substring(endPos,myField.value.length);}else{myField.value+=myValue;}}
 function insert_variable_html(text){tinyMCE.activeEditor.execCommand('mceInsertRawHTML',false,text);}
 function insert_variable_html_link(text,url){var thelink="<a href='"+url+"' > "+text+" </a>";insert_variable_html(thelink);}
-function insert_variable(text,mozaikId){if(mozaikId=='template_subject'){$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val())}
+function insert_variable(text,mozaikId){if(mozaikId=='template_subject'){var value=$('#template_subject').val();var caret=parseInt($('#template_subject').attr('data-caret-position'));var before=value.substring(0,caret);var after=value.substring(caret);$('#template_subject').val(before+$('select[name=variable_name]').val()+after);return;}
 if(!mozaikId){mozaikId='mozaik';}
 if($('#'+mozaikId+' .mozaik-list .mozaik-elem').length>0){if(document.getElementById('toggle_textonly')&&document.getElementById('toggle_textonly').checked==true){insert_variable_text(document.getElementById('body_text_plain'),text);}else{insert_variable_html(text);}}}
+var doGetCaretPosition=function(oField){var iCaretPos=0;if(document.selection){oField.focus();var oSel=document.selection.createRange();oSel.moveStart('character',-oField.value.length);iCaretPos=oSel.text.length;}
+else if(oField.selectionStart||oField.selectionStart=='0')
+iCaretPos=oField.selectionStart;return iCaretPos;}
+var onClickTemplateSubject=function(elem){$(elem).attr('data-caret-position',doGetCaretPosition(elem));$('#insert_variable_to_subject_btn').show();$('#insert_variable_to_body_btn').hide();}
+var onClickTemplateBody=function(){$('#insert_variable_to_subject_btn').hide();$('#insert_variable_to_body_btn').show();}
 var $templateManagerDialogX=0;var $templateManagerDialogY=0;var $templateManagerDialog=null;function createTemplateManagerDialog(parent){$('#templateManagerDialog').dialog({width:'50%',position:{my:"left top",at:"left bottom",of:parent}});}
 function EmailTemplateController(action){var lastNameValue=$('#template_name').val();var lastSubjectValue=$('#template_subject').val();var revertValues=function(){$('#template_name').val(lastNameValue);$('#template_subject').val(lastSubjectValue);window.parent.$('.ui-dialog-content:visible').dialog('close');}
 var save=function(update){if($('#template_name').val()==''){alert(SUGAR.language.translate('Campaigns','LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));$('#template_name').focus();return;}

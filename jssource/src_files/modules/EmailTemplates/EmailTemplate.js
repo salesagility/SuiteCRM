@@ -177,7 +177,14 @@ function insert_variable_html_link(text, url) {
 function insert_variable(text, mozaikId) {
 	if(mozaikId == 'template_subject') {
 		// insert into the subject instead of the body
-		$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val())
+		//$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val());
+
+    var value = $('#template_subject').val();
+    var caret = parseInt($('#template_subject').attr('data-caret-position'));
+    var before = value.substring(0, caret);
+    var after = value.substring(caret);
+    $('#template_subject').val(before + $('select[name=variable_name]').val() + after);
+    return;
 	}
 
 	if(!mozaikId) {
@@ -194,6 +201,52 @@ function insert_variable(text, mozaikId) {
 		}
 	}
 }
+
+
+/*
+ ** Returns the caret (cursor) position of the specified text field.
+ ** Return value range is 0-oField.value.length.
+ */
+var doGetCaretPosition = function(oField) {
+
+  // Initialize
+  var iCaretPos = 0;
+
+  // IE Support
+  if (document.selection) {
+
+    // Set focus on the element
+    oField.focus();
+
+    // To get cursor position, get empty selection range
+    var oSel = document.selection.createRange();
+
+    // Move selection start to 0 position
+    oSel.moveStart('character', -oField.value.length);
+
+    // The caret position is selection length
+    iCaretPos = oSel.text.length;
+  }
+
+  // Firefox support
+  else if (oField.selectionStart || oField.selectionStart == '0')
+    iCaretPos = oField.selectionStart;
+
+  // Return results
+  return iCaretPos;
+}
+
+var onClickTemplateSubject = function(elem) {
+  $(elem).attr('data-caret-position', doGetCaretPosition(elem));
+  $('#insert_variable_to_subject_btn').show();
+  $('#insert_variable_to_body_btn').hide();
+}
+
+var onClickTemplateBody = function() {
+  $('#insert_variable_to_subject_btn').hide();
+  $('#insert_variable_to_body_btn').show();
+}
+
 
 var $templateManagerDialogX = 0;
 var $templateManagerDialogY = 0;
