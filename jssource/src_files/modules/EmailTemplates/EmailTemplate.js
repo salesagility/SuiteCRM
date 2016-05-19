@@ -228,11 +228,11 @@ function EmailTemplateController(action) {
 		//	}
 		//}
 
-		if($('#template_id').val() != '') {
-			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
-				return;
-			}
-		}
+		//if($('#template_id').val() != '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
+		//		return;
+		//	}
+		//}
 
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 
