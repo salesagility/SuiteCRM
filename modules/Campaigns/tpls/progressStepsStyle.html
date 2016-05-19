@@ -354,10 +354,19 @@
             }
         });
 
-        $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
-        $('#template_id').change(function() {
-            $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
-        });
+        var toggleEmailTemplateSaveButton = function() {
+            if( $('#template_id').val() == '') {
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().addClass('hidden');
+                // hid the button-group-seperator as well
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().addClass('hidden');
+            } else {
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+                // show the button-group-seperator as well
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
+            }
+        };
+        $('#template_id').change(toggleEmailTemplateSaveButton);
+        toggleEmailTemplateSaveButton();
 
     })
 
