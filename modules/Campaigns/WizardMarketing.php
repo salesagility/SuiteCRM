@@ -146,9 +146,10 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
             $mrkt_focus->retrieve($mrkt_lists[0]);
             $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
         } else {
-            // if user clickes create from the email marking sub panel
+            // if user clicks create from the email marking sub panel
             $mrkt_focus->retrieve($mrkt_lists[0]);
             $mrkt_focus->id = create_guid();
+            $mrkt_focus->name = '';
             // clone
             $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
         }
@@ -156,11 +157,26 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     }
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-            $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
+
+            if(empty($_REQUEST['actionFromSubPanel'])) {
+                $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
+
+            } else {
+                // if user clicks create from the email marking sub panel
+                $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
+                $mrkt_focus->id = create_guid();
+                $mrkt_focus->name = '';
+                // clone
+                $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
+            }
         }
         else {
             unset($_SESSION['campaignWizardSelectedMarketingId']);
         }
+
+
+
+
 //        if(!empty($mrkt_lists)){
 //            //reverse array so we always use the most recent one:
 //            $mrkt_lists = array_reverse($mrkt_lists);
