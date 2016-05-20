@@ -311,7 +311,6 @@
 
         if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)) {
             // passed validation
-            console.log("validation passed");
 
             saveWizardState();
 
@@ -349,18 +348,25 @@
         }
         $('.nav-steps').unbind();
         $('.nav-steps').click(function(event) {
-            console.log(event);
-            console.log($(event.target).closest('li'));
             var suc =  gotoWizardStep($(event.target).closest('li'));
             if(!suc){
                 event.preventDefault;
             }
         });
 
-        $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
-        $('#template_id').change(function() {
-            $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
-        });
+        var toggleEmailTemplateSaveButton = function() {
+            if( $('#template_id').val() == '') {
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().addClass('hidden');
+                // hid the button-group-seperator as well
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().addClass('hidden');
+            } else {
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+                // show the button-group-seperator as well
+                $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
+            }
+        };
+        $('#template_id').change(toggleEmailTemplateSaveButton);
+        toggleEmailTemplateSaveButton();
 
     })
 
