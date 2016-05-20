@@ -147,7 +147,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
         unset($_SESSION['campaignWizardSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
-        if(empty($_REQUEST['actionFromSubPanel'])) {
+        if(empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
             $mrkt_focus->retrieve($mrkt_lists[0]);
             $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
         } else {
@@ -162,18 +162,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     }
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-
-            if(empty($_REQUEST['actionFromSubPanel'])) {
-                $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
-
-            } else {
-                // if user clicks create from the email marking sub panel
-                $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
-                $mrkt_focus->id = create_guid();
-                $mrkt_focus->name = '';
-                // clone
-                $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
-            }
+            $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
         }
         else {
             unset($_SESSION['campaignWizardSelectedMarketingId']);
@@ -286,12 +275,6 @@ if($mrkt_focus->template_id) {
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $mrkt_focus->template_id));
     $ss->assign("EDIT_TEMPLATE","visibility:inline");
     $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
-
-    if(!empty($_REQUEST['actionFromSubPanel'])) {
-        echo '<input type="hidden" id="ACTION_FROM_SUB_PANEL" value="true">';
-    } else {
-        echo '<input type="hidden" id="ACTION_FROM_SUB_PANEL" value="false">';
-    }
 }
 else {
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : ""));
