@@ -514,6 +514,9 @@ $mod_strings = array (
 	'LBL_STEP_INFO_MARKETING' => 'Please define which email accounts you wish to use when sending your campaign.',
 	'LBL_STEP_INFO_BUDGET' => 'Enter the budget to calculate the Return On Investment (ROI).',
 	'LBL_EMAIL_TRACKERS' => 'Each campaign must have at least three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the campaign.',
+	'LBL_NO_SUBJECT' => 'The selected email template has not subject',
+	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template has not html body',
+	'LBL_NO_BODY_CONTENTS' => 'The selected email template has not body',
 );
 
 

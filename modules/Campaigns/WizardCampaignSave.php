@@ -40,6 +40,22 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $db;
 
+function getTemplateValidationMessages($templateId) {
+    $msgs = array();
+    $template = new EmailTemplate();
+    $template->retrieve($templateId);
+    if(!$template->subject) {
+        $msgs[] = 'LBL_NO_SUBJECT';
+    }
+    if(!$template->body_html) {
+        $msgs[] = 'LBL_NO_HTML_BODY_CONTENTS';
+    }
+    if(!$template->body) {
+        $msgs[] = 'LBL_NO_BODY_CONTENTS';
+    }
+    return $msgs;
+}
+
 $campaignId = $db->quote($_POST['campaignId']);
 $marketingId = $db->quote($_POST['marketingId']);
 if(!empty($_POST['templateId'])) {
@@ -59,4 +75,7 @@ $marketing->save();
 
 $_SESSION['campaignWizardSelectedMarketingId'] = $marketing->id;
 
-echo json_encode($_POST);
+$return = $_POST;
+$return['templateValidationMessages'] = getTemplateValidationMessages($marketing->template_id);
+
+echo json_encode($return);
