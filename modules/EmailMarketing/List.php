@@ -74,4 +74,9 @@ else {
     unset($_SESSION['campaignWizardSelectedMarketingId']);
 }
 
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing') {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+    $results['selectedId'] = null;
+}
+
 echo json_encode($results);

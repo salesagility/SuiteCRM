@@ -65,7 +65,7 @@ $layout_defs['Campaigns'] = array(
             'top_buttons' => array(
                 array(
                     'widget_class' => 'SubPanelTopCreateCampaignMarketingEmailButton',
-                    //'func' => 'createEmailMarketing'
+                    'func' => 'createEmailMarketing'
                 ),
             ),
             'order' => 20,

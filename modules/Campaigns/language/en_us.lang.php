@@ -358,7 +358,7 @@ $mod_strings = array (
 	'LBL_TO_WIZARD_TITLE' => 'Launch Wizard',
 	'LBL_EDIT_EXISTING' => 'Edit Campaign',
 	'LBL_EDIT_TARGET_LIST' => 'Edit Target List',
-	'LBL_SEND_EMAIL'  => 'Send Email on Schedule Time',
+	'LBL_SEND_EMAIL'  => 'Send Mail at Scheduled Time',
 	'LBL_USE_EXISTING'  => 'Use Existing',
 	'LBL_CREATE_NEW_MARKETING_EMAIL' => 'Create New Marketing Email',
 	'LBL_CHOOSE_NEXT_STEP'  => 'Choose your next step',
@@ -440,7 +440,7 @@ $mod_strings = array (
 	'LBL_IMPORT_PROSPECTS'=>'Import Targets',
 	'LBL_LEAD_FORM_WIZARD' => 'Lead Form Wizard',
 	'LBL_CAMPAIGN_INFORMATION' => 'Overview',
-
+	'LBL_EDIT_BUTTON' => 'Launch Wizard',
 	'LBL_MONTH' => "Month",
 	'LBL_YEAR' 	=> "Year",
 	'LBL_DAY' 	=> "Day",
@@ -448,7 +448,7 @@ $mod_strings = array (
 	'LBL_INVALID' => 'Invalid' /*for 508 compliance fix*/,
 	'LBL_VALID' => 'Valid' /*for 508 compliance fix*/,
 	'LBL_ALERT' => 'Alert' /*for 508 compliance fix*/,
-	'LBL_EDIT_INLINE' => 'Edit' /*for 508 compliance fix*/,
+	'LBL_EDIT_INLINE' => 'Launch Wizard' /*for 508 compliance fix*/,
 	'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
 	'LBL_DELETE' => 'Remove' /*for 508 compliance fix*/,
 	'LBL_VIEW_INLINE' => 'View',
@@ -460,7 +460,7 @@ $mod_strings = array (
 	'LBL_REPLY_TO_NAME_HELP' => 'This will be the name that your recipient will reply to',
 	'LBL_REPLY_TO_ADDR_HELP' => 'This will be the email that your recipients will reply to',
 	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
-	'LBL_CREATE_EMAIL_TEMPLATE_BTN'	=> 'Create',
+	'LBL_CREATE_EMAIL_TEMPLATE_BTN'	=> 'Save As',
 	'LBL_SAVE_EMAIL_TEMPLATE_BTN'	=> 'Save',
 	'LBL_EDIT_EMAIL_TEMPLATE_BTN'	=> 'Edit',
 	'LBL_DELETE_EMAIL_TEMPLATE_BTN'	=> 'Delete',
@@ -514,6 +514,9 @@ $mod_strings = array (
 	'LBL_STEP_INFO_MARKETING' => 'Please define which email accounts you wish to use when sending your campaign.',
 	'LBL_STEP_INFO_BUDGET' => 'Enter the budget to calculate the Return On Investment (ROI).',
 	'LBL_EMAIL_TRACKERS' => 'Each campaign must have at least three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the campaign.',
+	'LBL_NO_SUBJECT' => 'The selected email template has not subject',
+	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template has not html body',
+	'LBL_NO_BODY_CONTENTS' => 'The selected email template has not body',
 );
 
 

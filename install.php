@@ -731,6 +731,9 @@ EOQ;
         create_writable_dir(sugar_cached('include/javascript'));
         recursive_make_writable(sugar_cached('modules'));
 
+        // public dir
+        recursive_make_writable('./public');
+
         // check whether we're getting this request from a command line tool
         // we want to output brief messages if we're outputting to a command line tool
         $cli_mode = false;

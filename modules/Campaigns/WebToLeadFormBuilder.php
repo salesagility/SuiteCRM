@@ -267,7 +267,7 @@ HTML;
     }
 
     private static function getArrayOfFieldInfo($lead, $colsField, &$requiredFields) {
-        $field_vname= preg_replace('/:$/','',translate($lead->field_defs[$colsField]['vname'],'Leads'));
+        $field_vname= preg_replace('/:$/','',translate($lead->field_defs[$colsField]['vname'], $lead->module_dir));
         $field_name= $colsField;
         $field_label = $field_vname .": ";
         if(isset($lead->field_defs[$colsField]['custom_type']) && $lead->field_defs[$colsField]['custom_type'] != null){

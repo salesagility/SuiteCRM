@@ -1,7 +1,15 @@
 <?php
 if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
-
+function handleAttachmentForRemove() {
+    if(!empty($_REQUEST['attachmentsRemove'])) {
+        foreach($_REQUEST['attachmentsRemove'] as $attachmentIdForRemove) {
+            if($bean = BeanFactory::getBean('Notes', $attachmentIdForRemove)) {
+                $bean->mark_deleted($bean->id);
+            }
+        }
+    }
+}
 
 $error = false;
 $data = array();
@@ -34,6 +42,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             //$bean = $formBase->handleAttachmentsProcessImages($bean, false, true);
             $data['id'] = $bean->id;
             $data['name'] = $bean->name;
+            handleAttachmentForRemove();
             break;
 
         case 'createCopy':

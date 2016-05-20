@@ -156,7 +156,15 @@ class EmailMarketing extends SugarBean
 			}
 			$temp_array['PROSPECT_LIST_NAME'].=$row['name'];
 		}
+		$temp_array = $this->makeCampaignWizardEditLink($temp_array);
 		return $temp_array;
+	}
+
+	private function makeCampaignWizardEditLink($tempArray) {
+		$campaignId = $_REQUEST['record'];
+		$link = 'index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id='.$campaignId.'&campaign_id='.$campaignId.'&marketing_id='.$this->id.'&func=editEmailMarketing';
+		$tempArray['NAME'] = '<a href="'.$link.'">'.$tempArray['NAME'].'</a>';
+		return $tempArray;
 	}
 
 	function bean_implements($interface){

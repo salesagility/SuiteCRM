@@ -2395,8 +2395,8 @@ $app_strings = array(
 
     //508 used Access Keys
     'LBL_EDIT_BUTTON_KEY' => 'i',
-    'LBL_EDIT_BUTTON_LABEL' => 'Edit',
-    'LBL_EDIT_BUTTON_TITLE' => 'Edit',
+    'LBL_EDIT_BUTTON_LABEL' => 'Launch Wizard',
+    'LBL_EDIT_BUTTON_TITLE' => 'Launch Wizard',
     'LBL_DUPLICATE_BUTTON_KEY' => 'u',
     'LBL_DUPLICATE_BUTTON_LABEL' => 'Duplicate',
     'LBL_DUPLICATE_BUTTON_TITLE' => 'Duplicate',

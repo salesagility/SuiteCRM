@@ -122,7 +122,12 @@ if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
         $_REQUEST['record'] = $_SESSION['campaignWizardSelectedMarketingId'];
     }
     if(!empty($_REQUEST['marketing_id']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-        $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+        if(!empty($_REQUEST['func']) && $_REQUEST['func'] == 'editEmailMarketing') {
+            $_SESSION['campaignWizardSelectedMarketingId'] = $_REQUEST['marketing_id'];
+        }
+        else {
+            $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+        }
     }
 }
 
@@ -142,8 +147,18 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
         unset($_SESSION['campaignWizardSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
-        $mrkt_focus->retrieve($mrkt_lists[0]);
-        $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
+        if(empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
+            $mrkt_focus->retrieve($mrkt_lists[0]);
+            $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
+        } else {
+            // if user clicks create from the email marking sub panel
+            $mrkt_focus->retrieve($mrkt_lists[0]);
+            $mrkt_focus->id = create_guid();
+            $mrkt_focus->name = '';
+            // clone
+            $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
+        }
+
     }
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
@@ -152,6 +167,10 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
         else {
             unset($_SESSION['campaignWizardSelectedMarketingId']);
         }
+
+
+
+
 //        if(!empty($mrkt_lists)){
 //            //reverse array so we always use the most recent one:
 //            $mrkt_lists = array_reverse($mrkt_lists);
@@ -542,7 +561,13 @@ $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=
 
 require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
-$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
+$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor', 'initial', '', "tinyMCE: {
+    setup: function(editor) {
+        editor.on('focus', function(e){
+            onClickTemplateBody();
+        });
+    }
+}"));
 
 if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
     $ss->assign('EmailMarketingId', $_SESSION['campaignWizardSelectedMarketingId']);
