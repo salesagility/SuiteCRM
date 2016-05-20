@@ -147,7 +147,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
         unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
-        if(empty($_REQUEST['actionFromSubPanel'])) {
+        if(empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
             $mrkt_focus->retrieve($mrkt_lists[0]);
             $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
         } else {
@@ -163,7 +163,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
 
-            if(empty($_REQUEST['actionFromSubPanel'])) {
+            if (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
                 $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 
             } else {
@@ -290,12 +290,6 @@ if($mrkt_focus->template_id) {
     $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $templateId));
     $ss->assign("EDIT_TEMPLATE","visibility:inline");
     $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
-
-    if(!empty($_REQUEST['actionFromSubPanel'])) {
-        echo '<input type="hidden" id="ACTION_FROM_SUB_PANEL" value="true">';
-    } else {
-        echo '<input type="hidden" id="ACTION_FROM_SUB_PANEL" value="false">';
-    }
 }
 else {
     $templateId = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : "";
