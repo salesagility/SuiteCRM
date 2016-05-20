@@ -251,7 +251,7 @@
 							return false;
 						}
 
-						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+						if(!updateChecked || (updateChecked)) {
 							// validate email template form before save
 							if (isValidEmailTemplateFormAndShowErrors()) {
 								onSaveCopyMarketingEmailTemplate(function () {
@@ -1485,6 +1485,23 @@ var jumpToPageByURL = function() {
 
 $(function(){
 	jumpToPageByURL();
+
+	if($('#ACTION_FROM_SUB_PANEL').val() == "true" && parseInt($('.nav-steps.selected').attr('data-nav-step')) == 3) {
+		setTimeout(function() {
+			onSaveCopyMarketingEmailTemplate(function () {
+				if (hasNewAttachments()) {
+					submitMarketingEmailAttachments(function(){
+						onNext();
+						wizardMenuSetStepLink(4);
+					});
+				}
+				else {
+					onNext();
+					wizardMenuSetStepLink(4);
+				}
+			});
+		}, 300);
+	};
 });
 
 {/literal}

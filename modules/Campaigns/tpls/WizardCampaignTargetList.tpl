@@ -186,6 +186,13 @@
 	def_value = document.getElementById('name').value + ' ' + listname;}
 	document.getElementById(inputname).value = def_value;
 	}
-	
+
+		$(document).ready(function() {
+			// get the actual current step from the progression bar
+			var wizardCurrentStep = $('.nav-steps.selected').attr('data-nav-step');
+			if( $('div.moduleTitle h2').text().indexOf($('#name').val()) == -1) {
+				$('div.moduleTitle h2').text($('div.moduleTitle h2').text() + ' ' + $('#name').val());
+			}
+		})
 	</script>	
 	{/literal}
