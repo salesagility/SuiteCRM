@@ -90,6 +90,7 @@ array (
               ),
             ),
           ),
+            /*
           5 => 
           array (
             'customCode' => '<input title="{$APP.LBL_MAILMERGE}" class="button" onclick="this.form.return_module.value=\'Campaigns\'; this.form.return_action.value=\'TrackDetailView\';this.form.action.value=\'MailMerge\';SUGAR.ajaxUI.submitForm(this.form);" type="submit" name="button" id="mail_merge_button" value="{$APP.LBL_MAILMERGE}">',
@@ -107,7 +108,8 @@ array (
               ),
             ),
           ),
-          6 => 
+            */
+          5 =>
           array (
             'customCode' => '<input title="{$MOD.LBL_MARK_AS_SENT}" class="button" onclick="this.form.return_module.value=\'Campaigns\'; this.form.return_action.value=\'TrackDetailView\';this.form.action.value=\'DetailView\';this.form.mode.value=\'set_target\';SUGAR.ajaxUI.submitForm(this.form);" type="{$TARGET_BUTTON_STATE}" name="button" id="mark_as_sent_button" value="{$MOD.LBL_MARK_AS_SENT}">',
             'sugar_html' => 
@@ -125,7 +127,7 @@ array (
               ),
             ),
           ),
-          7 => 
+          6 =>
           array (
             'customCode' => '<script>{$MSG_SCRIPT}</script>',
           ),
