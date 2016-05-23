@@ -143,7 +143,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
 
 
 
-    if(!isset($mrkt_lists) || !$mrkt_lists) {
+    if(!isset($mrkt_lists) || !empty($mrkt_lists)) {
         unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
@@ -767,6 +767,10 @@ $ss->assign('fields', array(
 if(isset($_SESSION['msg']) && $_SESSION['msg']) {
     $ss->assign('msg', $mod_strings[$_SESSION['msg']]);
     unset($_SESSION['msg']);
+}
+
+if(!empty($_REQUEST['func'])) {
+    echo '<input type="hidden" id="func" value="'.$_REQUEST['func'].'">';
 }
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
