@@ -361,7 +361,8 @@ function EmailTemplateController(action) {
 
 					$('input[name="update_exists_template"]').prop('checked', true);
 
-					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').removeAttr('disabled');
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
 				}
 
 			}
