@@ -73,30 +73,65 @@
 <td width='5%'></td>
 </tr>
 </table>
-<div id ='buttons'>
-<table width="100%" border="0" cellspacing="0" cellpadding="0" >
-<tr>
-	<td>
-		<table><tr>
-			<td><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="javascript:navigate('back');"  name="back" value="{$APP.LBL_BACK}"></div></td>
-			<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardHome'; this.form.module.value='Campaigns'; this.form.record.value='{$RETURN_ID}';" type="submit" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}"></div></td>
-			<td nowrap="nowrap">
-				<div id="save_button_div">
-					<input id="wiz_submit_button" class="button" onclick="this.form.action.value='WizardNewsletterSave';this.form.direction.value='continue';gatherTrackers();"  accesKey="{$APP.LBL_SAVE_BUTTON_TITLE}" type="{$HIDE_CONTINUE}" name="button" value="{$MOD.LBL_SAVE_CONTINUE_BUTTON_LABEL}" >
-					<input id="wiz_submit_finish_button" class="button" onclick="this.form.action.value='WizardNewsletterSave';this.form.direction.value='exit';gatherTrackers();"  accesKey="{$APP.LBL_SAVE_BUTTON_TITLE}" type="submit" name="button" value="{$MOD.LBL_SAVE_EXIT_BUTTON_LABEL}" >
-				</div></td>
-			<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:navigate('next');" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
-		</tr></table>
-	</td>
-	<td>
-		<div id='nav' >
-			{$NAV_ITEMS}
+
+	<div id ='buttons' style="padding-left: 10px; min-width: 352px;">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+				<table border="0" cellspacing="0" cellpadding="0" style="padding-left: 10px;" >
+
+					<tr>
+						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="{$APP.LBL_BACK}"></div></td>
+
+						<td{if $campaign_type != 'NewsLetter' || $campaign_type=='Email'} style="display:none;"{/if}><div id="back_button_div"><input id="wiz_back_button" type='button' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="{$APP.LBL_BACK}"></div></td>
+
+
+						<td><div id="cancel_button_div"><input id="wiz_cancel_button" title="{$APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{$APP.LBL_CANCEL_BUTTON_KEY}" class="button"
+
+															   type="button" name="button" value="{$APP.LBL_CANCEL_BUTTON_LABEL}">
+
+							<script>
+								{literal}
+								$(function(){
+									$('#wiz_cancel_button').click(function(){
+										this.form.action.value='WizardHome';
+										this.form.module.value='Campaigns';
+										this.form.record.value='{/literal}{$CAMPAIGN_ID}{literal}';
+
+										// if mail box is not set up you can't cancel out of the wizard
+										{/literal}{if $campaign_type == 'NewsLetter' || $campaign_type=='Email'}{literal}
+										var current = document.getElementById('wiz_current_step').value;
+										if(current == 1 || current == 2) {
+											var total = document.getElementById('wiz_total_steps').value;
+											document.getElementById('wiz_current_step').value = document.getElementById('wiz_total_steps').value;
+											$('#step' + current).hide();
+											$('#step' + total).show();
+											return false;
+										}
+										{/literal}{/if}{literal}
+
+										$(this).closest('form').submit();
+									});
+								});
+								{/literal}
+							</script>
+
+						</div></td>
+
+						<td><div id="save_button_div"><input id="wiz_submit_button" title="{$APP.LBL_SAVE_BUTTON_TITLE}" accessKey="{$APP.LBL_SAVE_BUTTON_KEY}" class="button" onclick="this.form.action.value='WizardMarketingSave'; this.form.module.value='Campaigns'; $('#show_wizard_summary').val('1'); " type="submit" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}" ></div>
+						</td>
+
+						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:onNextClick();" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+				{$WIZMENU}
+			</div>
 		</div>
 		<div id='wiz_location_message'></div>
-	</td>
-</tr>
-</table>
-</div>
+	</div>
+
+
 </form>
 
 {sugar_getscript file="modules/Campaigns/wizard.js"}

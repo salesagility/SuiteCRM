@@ -71,12 +71,13 @@
 
 
 <p>
-<div id ='buttons'>
-
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
-		<tr>
-			<td width="auto">
-				<table border="0" cellspacing="0" cellpadding="0" ><tr>
+<div id ='buttons' style="min-width: 352px;">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10">
+			{$WIZMENU}
+		</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-2" align="right">
+				<table border="0" cellspacing="0" cellpadding="0" style="padding-left: 10px;" >
 
 					<tr>
 						<td><div id="back_button_div2"><input id="wiz_back_button" type='hidden' title="{$APP.LBL_BACK}" class="button" onclick="determine_back();"  name="back" value="{$APP.LBL_BACK}"></div></td>
@@ -122,10 +123,10 @@
 						<td><div id="next_button_div"><input id="wiz_next_button" type='button' title="{$APP.LBL_NEXT_BUTTON_LABEL}" class="button" onclick="javascript:onNextClick();" name="button" value="{$APP.LBL_NEXT_BUTTON_LABEL}"></div></td>
 					</tr>
 				</table>
-			</td>
-			<td>{$WIZMENU}<div id='wiz_location_message'></div></td>
-		</tr>
-	</table>
+			</div>
+
+	</div>
+	<div id='wiz_location_message'></div>
 </div>
 </p>
 
