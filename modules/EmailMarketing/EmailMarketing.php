@@ -156,10 +156,17 @@ class EmailMarketing extends SugarBean
 			}
 			$temp_array['PROSPECT_LIST_NAME'].=$row['name'];
 		}
-//		if(!empty($temp_array['NAME'])) {
-//			$temp_array = $this->makeCampaignWizardEditLink($temp_array);
-//		}
+		if(!empty($temp_array['NAME']) && $this->isCampaignDetailView()) {
+			$temp_array = $this->makeCampaignWizardEditLink($temp_array);
+		}
 		return $temp_array;
+	}
+
+	private function isCampaignDetailView() {
+		$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+		$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+		$isCampaignDetailView = $module = 'Campaigns' && $action == 'DetailView';
+		return $isCampaignDetailView;
 	}
 
 	private function makeCampaignWizardEditLink($tempArray) {
