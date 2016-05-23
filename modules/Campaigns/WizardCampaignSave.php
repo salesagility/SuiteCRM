@@ -77,5 +77,6 @@ $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'] = $market
 
 $return = $_POST;
 $return['templateValidationMessages'] = getTemplateValidationMessages($marketing->template_id);
+$return['marketingValidationMessages'] = $marketing->validate();
 
 echo json_encode($return);

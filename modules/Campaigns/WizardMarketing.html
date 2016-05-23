@@ -1185,6 +1185,26 @@
 						$.each(resp.templateValidationMessages, function(i, msg){
 							$('#alert_messages').append('<font color="red">' + SUGAR.language.translate('Campaigns', msg) + '</forn><br>');
 						});
+
+						$('#marketing_status_lnk').removeAttr('title');
+						$('#marketing_status_btn').removeClass('fail');
+						if(!$('#marketing_status_btn').hasClass('ok')) {
+							$('#marketing_status_btn').addClass('ok');
+						}
+
+						if(!$.isEmptyObject(resp.marketingValidationMessages)) {
+							$('#marketing_status_lnk').attr(SUGAR.language.translate('EmailMarketing', 'LBL_ERROR_ON_MARKETING'));
+							$('#marketing_status_btn').removeClass('ok');
+							if(!$('#marketing_status_btn').hasClass('fail')) {
+								$('#marketing_status_btn').addClass('fail');
+							}
+						}
+
+						$('#marketing_errors').html('');
+						$.each(resp.marketingValidationMessages, function(i, msg){
+							$('#marketing_errors').append(SUGAR.language.translate('Campaigns', msg) + '<br>');
+						});
+
 					});
 				};
 
@@ -1218,6 +1238,14 @@
 		<br>
 		{/if}
 
+		<div id="marketing_errors" class="error">
+			{if $error_on_marketing_name}{$error_on_marketing_name}<br>{/if}
+			{if $error_on_marketing_inbound_email_id}{$error_on_marketing_inbound_email_id}<br>{/if}
+			{if $error_on_marketing_date_start}{$error_on_marketing_date_start}<br>{/if}
+			{if $error_on_marketing_from_name}{$error_on_marketing_from_name}<br>{/if}
+			{if $error_on_marketing_from_addr}{$error_on_marketing_from_addr}<br>{/if}
+		</div>
+
 		<div class="wizard-summary-left">
 
 			<a href="{$link_to_campaign_header}">
@@ -1239,8 +1267,8 @@
 				<h2 style="color: #ffffff;">{$MOD.LBL_CHOOSE_TEMPLATES}</h2>
 			</div>
 			</a>
-			<a href="{$link_to_sender_details}">
-				<div class="box button ok">
+			<a id="marketing_status_lnk" href="{$link_to_sender_details}"{if $error_on_marketing} title="{$error_on_marketing}"{/if}>
+				<div id="marketing_status_btn" class="box button {if $error_on_marketing}fail{else}ok{/if}">
 					<h2 style="color: #fff;">{$MOD.LBL_SENDER_DETAILS}</h2>
 				</div>
 			</a>

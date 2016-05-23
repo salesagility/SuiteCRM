@@ -199,5 +199,26 @@ class EmailMarketing extends SugarBean
 
 		return $query;
 	}
+
+	public function validate() {
+		global $mod_strings;
+		$errors = array();
+		if(!$this->name) {
+			$errors['name'] = $mod_strings['LBL_NO_MARKETING_NAME'] ? $mod_strings['LBL_NO_MARKETING_NAME'] : 'LBL_NO_MARKETING_NAME';
+		}
+		if(!$this->inbound_email_id) {
+			$errors['inbound_email_id'] = $mod_strings['LBL_NO_INBOUND_EMAIL_SELECTED'] ? $mod_strings['LBL_NO_INBOUND_EMAIL_SELECTED'] : 'LBL_NO_INBOUND_EMAIL_SELECTED';
+		}
+		if(!$this->date_start) {
+			$errors['date_start'] = $mod_strings['LBL_NO_DATE_START'] ? $mod_strings['LBL_NO_DATE_START'] : 'LBL_NO_DATE_START';
+		}
+		if(!$this->from_name) {
+			$errors['from_name'] = $mod_strings['LBL_NO_FROM_NAME'] ? $mod_strings['LBL_NO_FROM_NAME'] : 'LBL_NO_FROM_NAME';
+		}
+		if(!$this->from_addr) { // TODO test for valid email address
+			$errors['from_addr'] = $mod_strings['LBL_NO_FROM_ADDR_OR_INVALID'] ? $mod_strings['LBL_NO_FROM_ADDR_OR_INVALID'] : 'LBL_NO_FROM_ADDR_OR_INVALID';
+		}
+		return $errors;
+	}
 }
 ?>

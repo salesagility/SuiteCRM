@@ -552,6 +552,14 @@ $diagnose = diagnose($errors, $links);
 
 $ss->assign('diagnose', $diagnose);
 
+// validate sender details
+if($mrkt_focus->id) {
+    foreach($marketingErrorResults = $mrkt_focus->validate() as $errorKey => $errorMsg) {
+        $errors['marketing'] = $mod_strings['LBL_ERROR_ON_MARKETING'];
+        $errors['marketing_' . $errorKey] = $errorMsg;
+    }
+}
+
 foreach($errors as $error => $msg) {
     if($msg) {
         $ss->assign('error_on_' . $error, $msg);
