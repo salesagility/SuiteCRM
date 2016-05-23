@@ -48,7 +48,7 @@ class SugarWidgetSubPanelTopCreateCampaignMarketingEmailButton extends SugarWidg
         $id = $layout_def['focus']->id;
         $module = $layout_def['focus']->module_name;
 
-        $href = "index.php?module=$module&actionFromSubPanel=true&action=WizardMarketing&campaign_id=$id&func=createEmailMarketing";
+        $href = "index.php?module=$module&actionFromSubPanel=true&action=WizardMarketing&campaign_id=$id" . (!empty($layout_def['func']) ? '&func=' . $layout_def['func'] : '');
 
         $label = $app_strings['LBL_CREATE_BUTTON_LABEL'];
 
