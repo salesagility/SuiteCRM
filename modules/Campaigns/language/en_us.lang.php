@@ -440,7 +440,7 @@ $mod_strings = array (
 	'LBL_IMPORT_PROSPECTS'=>'Import Targets',
 	'LBL_LEAD_FORM_WIZARD' => 'Lead Form Wizard',
 	'LBL_CAMPAIGN_INFORMATION' => 'Overview',
-
+	'LBL_EDIT_BUTTON' => 'Launch Wizard',
 	'LBL_MONTH' => "Month",
 	'LBL_YEAR' 	=> "Year",
 	'LBL_DAY' 	=> "Day",
@@ -448,7 +448,7 @@ $mod_strings = array (
 	'LBL_INVALID' => 'Invalid' /*for 508 compliance fix*/,
 	'LBL_VALID' => 'Valid' /*for 508 compliance fix*/,
 	'LBL_ALERT' => 'Alert' /*for 508 compliance fix*/,
-	'LBL_EDIT_INLINE' => 'Edit' /*for 508 compliance fix*/,
+	'LBL_EDIT_INLINE' => 'Launch Wizard' /*for 508 compliance fix*/,
 	'LBL_DELETE_INLINE' => 'Delete' /*for 508 compliance fix*/,
 	'LBL_DELETE' => 'Remove' /*for 508 compliance fix*/,
 	'LBL_VIEW_INLINE' => 'View',
