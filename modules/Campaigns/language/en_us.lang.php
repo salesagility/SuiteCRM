@@ -517,6 +517,13 @@ $mod_strings = array (
 	'LBL_NO_SUBJECT' => 'The selected email template has not subject',
 	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template has not html body',
 	'LBL_NO_BODY_CONTENTS' => 'The selected email template has not body',
+	'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
+
+	'LBL_NO_MARKETING_NAME' => 'Marketing record name is empty',
+	'LBL_NO_INBOUND_EMAIL_SELECTED' => 'Marketing inbound email account in not selected',
+	'LBL_NO_DATE_START' => 'Marketing record has not start date',
+	'LBL_NO_FROM_NAME' => 'Sender name is empty',
+	'LBL_NO_FROM_ADDR_OR_INVALID' => 'Sender address is empty or invalid',
 );
 
 
