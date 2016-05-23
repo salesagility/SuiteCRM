@@ -439,6 +439,7 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
         $('#email_template_view').html('');
 
         $.post('index.php?entryPoint=emailTemplateData', {
+            'campaignId': $('input[name="campaign_id"]').val(),
             'emailTemplateId': emailTemplateId
         }, function (resp) {
             var results = JSON.parse(resp);

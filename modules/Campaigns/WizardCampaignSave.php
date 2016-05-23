@@ -73,7 +73,7 @@ if(!empty($_POST['templateId'])) {
 }
 $marketing->save();
 
-$_SESSION['campaignWizardSelectedMarketingId'] = $marketing->id;
+$_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'] = $marketing->id;
 
 $return = $_POST;
 $return['templateValidationMessages'] = getTemplateValidationMessages($marketing->template_id);

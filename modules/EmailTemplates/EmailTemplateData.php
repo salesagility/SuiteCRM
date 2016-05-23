@@ -15,6 +15,7 @@ $error = false;
 $data = array();
 
 $emailTemplateId = isset($_REQUEST['emailTemplateId']) && $_REQUEST['emailTemplateId'] ? $_REQUEST['emailTemplateId'] : null;
+$_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedTemplateId'] = $emailTemplateId;
 
 if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/', $emailTemplateId) || !$emailTemplateId) {
 
@@ -43,6 +44,25 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             $data['id'] = $bean->id;
             $data['name'] = $bean->name;
             handleAttachmentForRemove();
+
+            // update marketing->template_id if we have a selected marketing..
+            if(!empty($_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedMarketingId']) && !empty($_REQUEST['campaignId'])) {
+                $marketingId = $_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedMarketingId'];
+
+                $campaign = BeanFactory::getBean('Campaigns', $_REQUEST['campaignId']);
+                $campaign->load_relationship('emailmarketing');
+                $marketings = $campaign->emailmarketing->get();
+                // just a double check for campaign->marketing relation correct is for e.g the user deleted the marketing record or something may could happened..
+                if(in_array($marketingId, $marketings)) {
+                    $marketing = BeanFactory::getBean('EmailMarketing', $marketingId);
+                    $marketing->template_id = $emailTemplateId;
+                    $marketing->save();
+                }
+                else {
+                    // TODO something is not OK, the selected campaign isn't related to this marketing!!
+                    $GLOBALS['log']->debug('Selected marketing not found!');
+                }
+            }
             break;
 
         case 'createCopy':
