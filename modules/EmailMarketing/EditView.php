@@ -53,6 +53,7 @@ global $current_user;
 
 $focus = new EmailMarketing();
 if(isset($_REQUEST['record'])) {
+	SugarApplication::redirect('');
     $focus->retrieve($_REQUEST['record']);
 }
 
