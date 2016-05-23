@@ -156,9 +156,9 @@ class EmailMarketing extends SugarBean
 			}
 			$temp_array['PROSPECT_LIST_NAME'].=$row['name'];
 		}
-		if(!empty($temp_array['NAME'])) {
-			$temp_array = $this->makeCampaignWizardEditLink($temp_array);
-		}
+//		if(!empty($temp_array['NAME'])) {
+//			$temp_array = $this->makeCampaignWizardEditLink($temp_array);
+//		}
 		return $temp_array;
 	}
 
