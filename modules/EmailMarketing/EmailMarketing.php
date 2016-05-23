@@ -156,7 +156,7 @@ class EmailMarketing extends SugarBean
 			}
 			$temp_array['PROSPECT_LIST_NAME'].=$row['name'];
 		}
-		if(!empty($temp_array['NAME']) && $this->isCampaignDetailView()) {
+		if($this->isCampaignDetailView()) {
 			$temp_array = $this->makeCampaignWizardEditLink($temp_array);
 		}
 		return $temp_array;
@@ -172,7 +172,12 @@ class EmailMarketing extends SugarBean
 	private function makeCampaignWizardEditLink($tempArray) {
 		$campaignId = $_REQUEST['record'];
 		$link = 'index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id='.$campaignId.'&campaign_id='.$campaignId.'&marketing_id='.$this->id.'&func=editEmailMarketing';
-		$tempArray['NAME'] = '<a href="'.$link.'">'.$tempArray['NAME'].'</a>';
+		if(!empty($tempArray['NAME'])) {
+			$tempArray['NAME'] = '<a href="' . $link . '">' . $tempArray['NAME'] . '</a>';
+		}
+		if(!empty($tempArray['TEMPLATE_NAME'])) {
+			$tempArray['TEMPLATE_NAME'] = '<a href="' . $link . '">' . $tempArray['TEMPLATE_NAME'] . '</a>';
+		}
 		return $tempArray;
 	}
 
