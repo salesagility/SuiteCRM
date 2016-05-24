@@ -143,7 +143,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
 
 
 
-    if(!isset($mrkt_lists) || !empty($mrkt_lists)) {
+    if(!isset($mrkt_lists) || empty($mrkt_lists)) {
         unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){

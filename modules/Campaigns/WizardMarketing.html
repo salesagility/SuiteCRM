@@ -516,7 +516,7 @@
 
 					<div class="form-group clear-block">
 						<select class="form-control input-sm" tabindex='0' id="trackerUrlSelect" name='tracker_url' onchange='setTrackerUrlSelectVisibility();'>
-							<option value="-1">-- Create --</option>
+							<option value="-1">{$MOD.LBL_CREATE_TRACKER_URL}</option>
 							{$TRACKER_KEY_OPTIONS}
 						</select>
 					</div>
@@ -532,7 +532,7 @@
 
 				</div>
 				<div class="template-container">
-					<h2>Email Variables</h2>
+					<h2>{$MOD.LBL_EMAIL_VARIABLES}</h2>
 					<div class="clear"></div>
 					<script src="modules/EmailTemplates/EmailTemplate.js"></script>
 					<script type="text/javascript">
