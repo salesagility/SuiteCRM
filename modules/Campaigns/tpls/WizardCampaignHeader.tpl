@@ -50,11 +50,11 @@
 			<div class="template-container-full">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<th  colspan="4"><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP1} </h4></div></th>
+						<th  colspan="4"><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP1} </h4></th>
 					</tr>
-			<tr>
-				<td  colspan="3"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></div></td>
-		<td colspan="1">&nbsp;</td>
+		<tr>
+			<td  colspan="3"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></td>
+			<td colspan="1">&nbsp;</td>
 		</tr>
 		<!--
 		<tr><td class="datalabel" colspan="3">{$MOD.LBL_WIZARD_HEADER_MESSAGE}<br></td><td>&nbsp;</td></tr>
@@ -111,6 +111,55 @@
 		</table><p>
 			</div>
 		</div>
+		<div class="template-panel-container panel">
+			{if $campaign_type != "general"}
+				<div class="template-panel-container-full">
+					<div class="template-container-full">
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
+							</tr>
+							<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td>&nbsp;</td></tr>
+							<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
+							<tr>
+								<td scope="col"><span sugar='slot14'>{$MOD.LBL_CAMPAIGN_BUDGET}</span sugar='slot'></td>
+								<td ><span sugar='slot14b'><input type="text" size="10" maxlength="15" id="budget" name="wiz_step2_budget" title="{$MOD.LBL_CAMPAIGN_BUDGET}" value="{$CAMP_BUDGET}"></span sugar='slot'></td>
+								<td scope="col"><span sugar='slot15'>{$MOD.LBL_CAMPAIGN_ACTUAL_COST}</span sugar='slot'></td>
+								<td ><span sugar='slot15b'><input type="text" size="10" maxlength="15" id="actual_cost" name="wiz_step2_actual_cost" title="{$MOD.LBL_CAMPAIGN_ACTUAL_COST}" value="{$CAMP_ACTUAL_COST}"></span sugar='slot'></td>
+							</tr>
+							<tr>
+								<td scope="col"><span sugar='slot16'>{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE}</span sugar='slot'></td>
+								<td ><span sugar='slot16b'><input type="text" size="10" maxlength="15" id="expected_revenue" name="wiz_step2_expected_revenue" title="{$MOD.LBL_CAMPAIGN_EXPECTED_REVENUE}" value="{$CAMP_EXPECTED_REVENUE}"></span sugar='slot'></td>
+								<td scope="col"><span sugar='slot17'>{$MOD.LBL_CAMPAIGN_EXPECTED_COST}</span sugar='slot'></td>
+								<td ><span sugar='slot17b'><input type="text" size="10" maxlength="15" id="expected_cost" name="wiz_step2_expected_cost" title="{$MOD.LBL_CAMPAIGN_EXPECTED_COST}" value="{$CAMP_EXPECTED_COST}"></span sugar='slot'></td>
+							</tr>
+							<tr>
+								<td scope="col"><span sugar='slot18'>{$MOD.LBL_CURRENCY}</span sugar='slot'></td>
+								<td><span sugar='slot18b'><select title='{$MOD.LBL_CURRENCY}' name='wiz_step2_currency_id' id='currency_id'   onchange='ConvertItems(this.options[selectedIndex].value);'>{$CURRENCY}</select></span sugar='slot'></td>
+								<td scope="col"><span sugar='slot17'>{$MOD.LBL_CAMPAIGN_IMPRESSIONS}</span sugar='slot'></td>
+								<td ><span sugar='slot17b'><input type="text" size="10" maxlength="15" id="impressions" name="wiz_step2_impressions" title="{$MOD.LBL_CAMPAIGN_IMPRESSIONS}" value="{$CAMP_IMPRESSIONS}"></span sugar='slot'></td></tr>
+							<tr>
+								<td scope="col"><span sugar='slot18'>&nbsp;</span sugar='slot'></td>
+								<td><span sugar='slot18b'>&nbsp;</td>
+								<td scope="col"><span sugar='slot19'>&nbsp;</span sugar='slot'></td>
+								<td><span sugar='slot19b'>&nbsp;</span sugar='slot'></td>
+							</tr>
+							<tr>
+								<td valign="top" scope="row"><span sugar='slot20'>{$MOD.LBL_CAMPAIGN_OBJECTIVE}</span sugar='slot'></td>
+								<td colspan="4"><span sugar='slot20b'><textarea id="objective" name="wiz_step2_objective" title='{$MOD.LBL_CAMPAIGN_OBJECTIVE}' cols="110" rows="5">{$OBJECTIVE}</textarea></span sugar='slot'></td>
+							</tr>
+							<tr>
+								<td >&nbsp;</td>
+								<td>&nbsp;</td>
+								<td >&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			{/if}
+		</div>
+
 	</div>
 
 
