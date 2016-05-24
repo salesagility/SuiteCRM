@@ -111,10 +111,10 @@
 		</table><p>
 			</div>
 		</div>
+
+		{if $campaign_type != "general"}
 		<div class="template-panel-container panel">
-			{if $campaign_type != "general"}
-				<div class="template-panel-container-full">
-					<div class="template-container-full">
+				<div class="template-container-full">
 						<table width="100%" border="0" cellspacing="0" cellpadding="0">
 							<tr>
 								<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
@@ -156,9 +156,8 @@
 							</tr>
 						</table>
 					</div>
-				</div>
-			{/if}
 		</div>
+		{/if}
 
 	</div>
 
