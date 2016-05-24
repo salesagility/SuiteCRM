@@ -476,6 +476,7 @@ $mod_strings = array (
 	'LBL_INSERT_VARIABLE'		=> 'Insert:',
 	'LBL_INSERT_VARIABLE_BTN'	=> 'Insert Variable',
 	'LBL_INSERT_VARIABLE_SUBJECT_BTN'	=> 'Insert Variable',
+	'LBL_EMAIL_VARIABLES'	=> 'Email Variables',
 	'LBL_SAVE' => 'Save',
 	'LBL_EMAIL_TEMPLATE_TITLE' => 'Email Template Details',
 	'LBL_SAVE_TEMPLATE_BTN' => 'Save',
@@ -506,9 +507,9 @@ $mod_strings = array (
 	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?',
 	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.',
 	'LBL_STEP_UNAVAILABLE' => 'To progress please click the Next button.',
-	'LBL_STEP_INFO_CAMPAIGN_HEADER' => 'Please fill in the following details, in order for the campaign to be created.',
+	'LBL_STEP_INFO_CAMPAIGN_HEADER' => 'Please enter in the name of the campaign and select the status of the campaign. The other fields are optional. Each field can be changed in the future.',
 		'LBL_STEP_INFO_TARGET_LIST_EMAIL' => 'Select your target lists for this campaign.  To send test emails you must include a target list of the type Test',
-		'LBL_STEP_INFO_TARGET_LIST_NEWSLETTER' => 'A Newsletter type campaign must have three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the newsletter.',
+		'LBL_STEP_INFO_TARGET_LIST_NEWSLETTER' => 'Each campaign requires target lists for subscription, unsubscription and test.  If no list is specified, an empty target list will be created on save.',
 		'LBL_STEP_INFO_TARGET_LIST_NON_NEWSLETTER' => 'Select your target lists for this campaign.',
 		'LBL_STEP_INFO_EMAIL_TEMPLATE' => 'Please select an email template you wish to use or fill in the required fields and select create.',
 	'LBL_STEP_INFO_MARKETING' => 'Please define which email accounts you wish to use when sending your campaign.',
@@ -524,6 +525,9 @@ $mod_strings = array (
 	'LBL_NO_DATE_START' => 'Marketing record has not start date',
 	'LBL_NO_FROM_NAME' => 'Sender name is empty',
 	'LBL_NO_FROM_ADDR_OR_INVALID' => 'Sender address is empty or invalid',
+	'LBL_NEWSLETTER_TITLE' => ' A newsletter campaign is a type of email campaign, which allows you to send an email to a single target list.',
+	'LBL_EMAIL_TITLE' => 'An email campaign is a type of email campaign, which allows you to send an email to multiple target lists.',
+	'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
 );
 
 
