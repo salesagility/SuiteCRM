@@ -224,6 +224,7 @@ $ss->assign("DEC_SEP", $seps[1]);
 
 
 //fill out the campaign type dropdown based on type of campaign being created
+$ss->assign("campaign_type", $campaign_type);
 if($campaign_type == 'general'){
     //get regular campaign dom object and strip out entries for email and newsletter
     $myTypeOptionsArr = array();
