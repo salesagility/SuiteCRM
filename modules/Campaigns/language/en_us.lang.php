@@ -41,7 +41,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 /*********************************************************************************
 
  * Description:  Defines the English language pack for the base application.
- * Portions created by SugarCRM are Copyright (C) SugarCRM, Inc.
+ * Portions aated by SugarCRM are Copyright (C) SugarCRM, Inc.
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
@@ -213,9 +213,9 @@ $mod_strings = array (
 	'LBL_EDIT_TRACKER_URL'=>'Tracker URL',
 	'LBL_EDIT_OPT_OUT_'=>'Opt-out Link?',
 	'LBL_EDIT_OPT_OUT'=>'Opt-out Link:',
-	'LBL_UNSUBSCRIPTION_LIST_NAME'=>'Unsubscription List Name:',
-	'LBL_SUBSCRIPTION_LIST_NAME'=>'Subscription List Name:',
-	'LBL_TEST_LIST_NAME'=>'Test List Name:',
+	'LBL_UNSUBSCRIPTION_LIST_NAME'=>'Unsubscription List:',
+	'LBL_SUBSCRIPTION_LIST_NAME'=>'Subscription List:',
+	'LBL_TEST_LIST_NAME'=>'Test List:',
 	'LBL_UNSUBSCRIPTION_TYPE_NAME'=>'Unsubscription',
 	'LBL_SUBSCRIPTION_TYPE_NAME'=>'Subscription',
 	'LBL_TEST_TYPE_NAME'=>'Test',
@@ -225,8 +225,8 @@ $mod_strings = array (
 	'LBL_MRKT_NAME_FIELD' => 'Marketing Email Name:',
 	'LBL_TEST_LIST'=>'Test List',
 	'LBL_WIZARD_HEADER_MESSAGE' => 'Fill out the required fields to help identify the campaign.',
-	'LBL_WIZARD_BUDGET_MESSAGE' => 'Enter the budget to calculate the ROI.',
-	'LBL_WIZARD_SUBSCRIPTION_MESSAGE' => 'Each newsletter must have three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the newsletter.',
+	'LBL_WIZARD_BUDGET_MESSAGE' => 'Enter the budget to calculate the return on investment (ROI).',
+	'LBL_WIZARD_SUBSCRIPTION_MESSAGE' => 'Each campaign requires target lists for subscription, unsubscription and test.  If you do not specify a target list, an empty target list will be created when you click next.',
 	'LBL_WIZARD_TARGET_MESSAGE1' => 'Select or create a target list for use with your campaign.  This list will be used while sending emails with your marketing messages.',
 	'LBL_WIZARD_TARGET_MESSAGE2' => 'Create New Target:',
 	'LBL_WIZARD_TRACKER_MESSAGE' => 'Define a tracker URL here to use with this campaign. You must enter both the name and the URL to create the tracker.',
@@ -507,11 +507,11 @@ $mod_strings = array (
 	'LBL_OVERWRITE_QUESTION' => 'Are you sure you wish to overwrite the email template?',
 	'LBL_SELECT_EMAIL_TRACKER' => 'Please selected an email tracker.',
 	'LBL_STEP_UNAVAILABLE' => 'To progress please click the Next button.',
-	'LBL_STEP_INFO_CAMPAIGN_HEADER' => 'Please enter in the name of the campaign and select the status of the campaign. The other fields are optional. Each field can be changed in the future.',
+	'LBL_STEP_INFO_CAMPAIGN_HEADER' => 'Please enter in the name of the campaign and select the status of the campaign.',
 		'LBL_STEP_INFO_TARGET_LIST_EMAIL' => 'Select your target lists for this campaign.  To send test emails you must include a target list of the type Test',
-		'LBL_STEP_INFO_TARGET_LIST_NEWSLETTER' => 'Each campaign requires target lists for subscription, unsubscription and test.  If no list is specified, an empty target list will be created on save.',
+		'LBL_STEP_INFO_TARGET_LIST_NEWSLETTER' => 'A campaign must have a target lists for a subscription list, a unsubscription list and test list. When you click next, an empty target list will be created for each target list which you have not specified.',
 		'LBL_STEP_INFO_TARGET_LIST_NON_NEWSLETTER' => 'Select your target lists for this campaign.',
-		'LBL_STEP_INFO_EMAIL_TEMPLATE' => 'Please select an email template you wish to use or fill in the required fields and select create.',
+		'LBL_STEP_INFO_EMAIL_TEMPLATE' => 'Select an existing email template or create a new template.',
 	'LBL_STEP_INFO_MARKETING' => 'Please define which email accounts you wish to use when sending your campaign.',
 	'LBL_STEP_INFO_BUDGET' => 'Enter the budget to calculate the Return On Investment (ROI).',
 	'LBL_EMAIL_TRACKERS' => 'Each campaign must have at least three target lists (Subscription, Unsubscription, and Test). You can assign an existing target list. If not, an empty target list will be created when you save the campaign.',
