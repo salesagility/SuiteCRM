@@ -163,6 +163,7 @@ EOQ;
 		if (!isset($_REQUEST['published'])) $focus->published = 'off';
 
 		$this->handleAttachmentsProcessImages($focus, $redirect, $useSiteURL, $entryPoint, $useUploadFolder);
+		return $focus;
 	}
 
 	public function handleAttachmentsProcessImages($focus, $redirect, $useSiteURL = false, $entryPoint = 'download', $useUploadFolder = false) {
