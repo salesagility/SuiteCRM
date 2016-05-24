@@ -5,7 +5,7 @@ if(mozaik || $.mozaik) {
 // mozaik helpers (private)
 var mozaik = {
     getThumbnailListHTML: function(id, thumbs, base) {
-        var html = '<ul class="mozaik-thumbs" id="' + id + '" title="Click to add..">';
+        var html = '<ul class="mozaik-thumbs" id="' + id + '" title="'+SUGAR.language.translate('Campaigns', 'LBL_CLICK_TO_ADD')+'">';
         for(var name in thumbs) {
             var e = thumbs[name];
             html += '<li class="mozaik-thumbnail" data-name="' + name + '">' + (e.thumbnail ? '<img src="' + base + e.thumbnail + '" alt="' + (e.label ? e.label : '') + '" title="' + (e.label ? e.label : '') + '">' : '<span class="mozaik-thumb-label">' + (e.label ? e.label : '') + '</span>') + '</li>';

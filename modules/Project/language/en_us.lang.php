@@ -176,5 +176,6 @@ $mod_strings = array(
     'LBL_LIST_ASSIGNED_USER' => 'Project Manager',
     'LBL_UNASSIGNED' => 'Unassigned',
     'LBL_PROJECT_USERS_1_FROM_USERS_TITLE' => 'Resources',
+    'LBL_ALL_RESOURCES' => 'All Resources',
 );
 ?>
