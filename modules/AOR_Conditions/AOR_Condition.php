@@ -94,9 +94,8 @@ class AOR_Condition extends Basic
 
         require_once('modules/AOW_WorkFlow/aow_utils.php');
 
-        $line_count = count($post_data[$key . 'field']);
         $j = 0;
-        for ($i = 0; $i < $line_count; ++$i) {
+        foreach ($post_data[$key . 'field'] as $i => $field) {
 
             if ($post_data[$key . 'deleted'][$i] == 1) {
                 $this->mark_deleted($post_data[$key . 'id'][$i]);
