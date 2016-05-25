@@ -58,8 +58,9 @@ function getTemplateValidationMessages($templateId) {
 
 $campaignId = $db->quote($_POST['campaignId']);
 $marketingId = $db->quote($_POST['marketingId']);
+$func = isset($_REQUEST['func']) ? $_REQUEST['func'] : null;
 if(!$marketingId) {
-    if(!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'])) {
+    if(!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
         $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
     }
     else {

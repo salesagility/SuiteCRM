@@ -1168,13 +1168,17 @@
 
 				};
 
-				var saveMarketingAndTemplate = function() {
+				var saveMarketingAndTemplate = function(func) {
+					if(typeof func == 'undefined') {
+						func = null;
+					}
 					var campaignId = '{/literal}{$CAMPAIGN_ID}{literal}';
 					var marketingId = $('#marketing_select').val();
 					//var templateId = $('#template_select').val();
 					$.post('index.php?entryPoint=setCampaignMarketingAndTemplate', {
 						'campaignId': campaignId,
-						'marketingId': marketingId //,
+						'marketingId': marketingId,
+						'func': func
 						//'templateId': templateId
 					}, function(resp){
 						resp = JSON.parse(resp);
@@ -1518,24 +1522,29 @@ var jumpToPageByURL = function() {
 	}
 };
 
+var createEmptyMarketing = function(){
+	saveMarketingAndTemplate('createEmailMarketing');
+};
+
 $(function(){
 	jumpToPageByURL();
 
 	if($('#func').val() == "createEmailMarketing" && parseInt($('.nav-steps.selected').attr('data-nav-step')) == 3) {
-		setTimeout(function() {
-			onSaveCopyMarketingEmailTemplate(function () {
-				if (hasNewAttachments()) {
-					submitMarketingEmailAttachments(function(){
-						onNext();
-						wizardMenuSetStepLink(4);
-					});
-				}
-//				else {
-//					onNext();
-//					wizardMenuSetStepLink(4);
+		createEmptyMarketing();
+//		setTimeout(function() {
+//			onSaveCopyMarketingEmailTemplate(function () {
+//				if (hasNewAttachments()) {
+//					submitMarketingEmailAttachments(function(){
+//						onNext();
+//						wizardMenuSetStepLink(4);
+//					});
 //				}
-			});
-		}, 300);
+////				else {
+////					onNext();
+////					wizardMenuSetStepLink(4);
+////				}
+//			});
+//		}, 300);
 	};
 });
 
