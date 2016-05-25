@@ -5,7 +5,6 @@ class iCalTest extends PHPUnit_Framework_TestCase
 {
     public function test__construct()
     {
-        $this->markTestSkipped('Skipping test__construct Tests');
         //execute the contructor and check for the Object type and  attributes
         $ical = new iCal();
         $this->assertInstanceOf('iCal', $ical);
@@ -15,7 +14,6 @@ class iCalTest extends PHPUnit_Framework_TestCase
 
     public function testgetVcalIcal()
     {
-
         error_reporting(E_ERROR | E_PARSE);
 
         $ical = new iCal();

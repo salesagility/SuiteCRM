@@ -1092,7 +1092,6 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     public function testafterImportSave()
     {
-		$this->markTestSkipped('Skipping testafterImportSave Tests');
     	error_reporting(E_ALL);
 
     	$user = new User();
@@ -1111,8 +1110,6 @@ class UserTest extends PHPUnit_Framework_TestCase {
 
     public function testisPrimaryEmail()
     {
-		$this->markTestSkipped('Skipping testisPrimaryEmail Tests');
-
     	$user = new User();
 
     	//test without user email
