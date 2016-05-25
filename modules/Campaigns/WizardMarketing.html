@@ -373,7 +373,7 @@
 				wizardMenuFillAll();
 			}
 			changeNextBtnLabel();
-			//saveMarketingAndTemplate();
+			saveMarketingAndTemplate('getTemplateValidation');
 		}
 
 		function changeNextBtnLabel() {
@@ -1162,7 +1162,7 @@
 								}
 								$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
 							}
-							//saveMarketingAndTemplate();
+							saveMarketingAndTemplate('getTemplateValidation');
 						}
 					});
 
@@ -1212,7 +1212,7 @@
 				$(function(){
 					refreshMarketingSelect();
 					$('#marketing_select').change(function(){
-						saveMarketingAndTemplate();
+						saveMarketingAndTemplate('getTemplateValidation');
 					});
 					/*
 					$('#template_select').change(function(){

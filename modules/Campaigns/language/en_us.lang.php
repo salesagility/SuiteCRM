@@ -518,6 +518,7 @@ $mod_strings = array (
 	'LBL_NO_SUBJECT' => 'The selected email template has not subject',
 	'LBL_NO_SUBJECT' => 'The selected email template has not subject',
 	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template has not html body',
+	'LBL_NO_SELECTED_TEMPLATE' => 'No selected template!',
 	'LBL_NO_BODY_CONTENTS' => 'The selected email template has not body',
 	'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
 
