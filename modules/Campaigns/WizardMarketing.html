@@ -255,16 +255,18 @@
 							// validate email template form before save
 							if (isValidEmailTemplateFormAndShowErrors()) {
 								onSaveCopyMarketingEmailTemplate(function () {
-									if (hasNewAttachments()) {
-										submitMarketingEmailAttachments(function(){
+									onSaveMarketingEmail(function(){
+										if (hasNewAttachments()) {
+											submitMarketingEmailAttachments(function(){
+												onNext();
+												wizardMenuSetStepLink(4);
+											});
+										}
+										else {
 											onNext();
 											wizardMenuSetStepLink(4);
-										});
-									}
-									else {
-										onNext();
-										wizardMenuSetStepLink(4);
-									}
+										}
+									});
 								});
 							}
 //						} else {
