@@ -132,6 +132,7 @@ var plgBackground = {
             ],
             toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
             toolbar2: 'print preview media | forecolor backcolor | image | emoticons | table | link | fontsizeselect',
+            table_toolbar: "",
             image_advtab: true,
             textcolor_map: [
                 "000000", "Black",
