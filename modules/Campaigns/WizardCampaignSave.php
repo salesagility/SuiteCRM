@@ -58,6 +58,16 @@ function getTemplateValidationMessages($templateId) {
 
 $campaignId = $db->quote($_POST['campaignId']);
 $marketingId = $db->quote($_POST['marketingId']);
+if(!$marketingId) {
+    if(!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'])) {
+        $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
+    }
+    else {
+        $marketing = new EmailMarketing();
+        $marketing->save();
+        $marketingId = $marketing->id;
+    }
+}
 if(!empty($_POST['templateId'])) {
     $templateId = $db->quote($_POST['templateId']);
 }
