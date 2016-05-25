@@ -112,6 +112,7 @@
 			</div>
 		</div>
 
+
 		{if $campaign_type != "general"}
 		<div class="template-panel-container panel">
 				<div class="template-container-full">
