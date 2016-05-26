@@ -834,7 +834,7 @@ class EmailTemplate extends SugarBean
     public function save($check_notify = FALSE)
     {
         $this->repairMozaikClears();
-       return parent::save($check_notify);
+        return parent::save($check_notify);
     }
 
     public function retrieve($id = -1, $encode = true, $deleted = true)
