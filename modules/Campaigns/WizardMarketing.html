@@ -1234,21 +1234,21 @@
 		<br>
 		{/if}
 
-		<div id="alert_messages" style="margin-bottom: 32px;"></div>
+		<div id="alert_messages" style="margin-bottom: 32px;">
 
-		{if $diagnose}
-		{$diagnose}
-		<br>
-		{/if}
+			{if $diagnose}
+			{$diagnose}
+			<br>
+			{/if}
 
-		<div id="marketing_errors" class="error">
-			{if $error_on_marketing_name}{$error_on_marketing_name}<br>{/if}
-			{if $error_on_marketing_inbound_email_id}{$error_on_marketing_inbound_email_id}<br>{/if}
-			{if $error_on_marketing_date_start}{$error_on_marketing_date_start}<br>{/if}
-			{if $error_on_marketing_from_name}{$error_on_marketing_from_name}<br>{/if}
-			{if $error_on_marketing_from_addr}{$error_on_marketing_from_addr}<br>{/if}
+			<div id="marketing_errors" class="error">
+				{if $error_on_marketing_name}{$error_on_marketing_name}<br>{/if}
+				{if $error_on_marketing_inbound_email_id}{$error_on_marketing_inbound_email_id}<br>{/if}
+				{if $error_on_marketing_date_start}{$error_on_marketing_date_start}<br>{/if}
+				{if $error_on_marketing_from_name}{$error_on_marketing_from_name}<br>{/if}
+				{if $error_on_marketing_from_addr}{$error_on_marketing_from_addr}<br>{/if}
+			</div>
 		</div>
-
 		<div class="wizard-summary-left">
 
 			<a href="{$link_to_campaign_header}">
