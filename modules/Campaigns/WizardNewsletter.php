@@ -158,6 +158,7 @@ $ss->assign("CAMP_ACTUAL_COST", $focus->actual_cost);
 $ss->assign("CAMP_EXPECTED_REVENUE", $focus->expected_revenue);
 $ss->assign("CAMP_EXPECTED_COST", $focus->expected_cost);
 $ss->assign("CAMP_OBJECTIVE", $focus->objective);
+$ss->assign("OBJECTIVE", $focus->objective);
 $ss->assign("CAMP_CONTENT", $focus->content);
 $ss->assign("CAMP_NAME", $focus->name);
 $ss->assign("CAMP_RECORD", $focus->id);
