@@ -530,6 +530,8 @@ $mod_strings = array (
 	'LBL_NEWSLETTER_TITLE' => ' A newsletter campaign is a type of email campaign, which allows you to send an email to a single target list.',
 	'LBL_EMAIL_TITLE' => 'An email campaign is a type of email campaign, which allows you to send an email to multiple target lists.',
 	'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
+	'LBL_TEMPLATE_SAVING' => 'Please wait, template saving..',
+	'LBL_TEMPLATE_SAVED' => 'Template successfully saved.'
 );
 
 

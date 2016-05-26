@@ -261,7 +261,7 @@ function createTemplateManagerDialog (parent) {
 var showTemplateSaveMessages = function(msgs){
 	$('#template_messages').html('');
 	$.each(msgs, function(i, msg){
-		$('#template_messages').append(msg + '<br>');
+		$('#template_messages').append(SUGAR.language.translate('Campaigns', msg) + '<br>');
 	});
 	setTimeout(function(){
 		$('#template_messages').hide(1000, function(){
@@ -304,7 +304,7 @@ function EmailTemplateController(action) {
 
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
-		$('#template_messages').html('Please wait, saving..');
+		$('#template_messages').html(SUGAR.language.translate('Campaigns', 'LBL_TEMPLATE_SAVING'));
 		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
@@ -330,6 +330,7 @@ function EmailTemplateController(action) {
 					$('option[value='+resp.data.id+']').html($('#template_name').val());
 				}
 
+        $('#template_messages').html('');
 				if(resp.msgs.length) {
 					showTemplateSaveMessages(resp.msgs);
 				}
@@ -358,7 +359,7 @@ function EmailTemplateController(action) {
 
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
-		$('#template_messages').html('Please wait, saving..');
+		$('#template_messages').html(SUGAR.language.translate('Campaigns', 'LBL_TEMPLATE_SAVING'));
 		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
@@ -385,6 +386,7 @@ function EmailTemplateController(action) {
 					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
 				}
 
+        $('#template_messages').html('');
 				if(resp.msgs.length) {
 					showTemplateSaveMessages(resp.msgs);
 				}

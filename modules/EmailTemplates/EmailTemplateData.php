@@ -40,7 +40,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             $formBase = new EmailTemplateFormBase();
             $bean = $formBase->handleAttachmentsProcessImages($bean, false, true, 'download', true);
             if($bean->save()) {
-                $msgs[] = 'Template successfully saved. (ADD THIS MESSAGE TO LANGUAGE FILE!!)';
+                $msgs[] = 'LBL_TEMPLATE_SAVED';
             }
             //$formBase = new EmailTemplateFormBase();
             //$bean = $formBase->handleAttachmentsProcessImages($bean, false, true);
@@ -80,7 +80,9 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                     $newBean->$key = $bean->$key;
                 }
             }
-            $newBean->save();
+            if($newBean->save()) {
+                $msgs[] = 'LBL_TEMPLATE_SAVED';
+            }
             //$formBase = new EmailTemplateFormBase();
             //$newBean = $formBase->handleAttachmentsProcessImages($newBean, false, true);
             $data['id'] = $newBean->id;
