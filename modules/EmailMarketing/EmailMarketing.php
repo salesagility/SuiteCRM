@@ -92,6 +92,17 @@ class EmailMarketing extends SugarBean
     }
 
 
+	public function save($check_notify = false)
+	{
+		$date_start = trim($this->date_start);
+		$time_start = trim($this->time_start);
+		if($time_start && strpos($date_start, $time_start) === false) {
+			$this->date_start = "$date_start $time_start";
+			$this->time_start = '';
+		}
+		return parent::save($check_notify);
+	}
+
 	function retrieve($id = -1, $encode=true, $deleted=true) {
 	    parent::retrieve($id,$encode,$deleted);
 
