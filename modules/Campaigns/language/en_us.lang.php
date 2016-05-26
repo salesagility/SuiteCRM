@@ -456,7 +456,7 @@ $mod_strings = array (
 	'ERR_REVIEW_EMAIL_SETTINGS' => 'Please review Inbound Email settings.',
 	'LBL_LEADS_DELETED_SINCE_CREATED' => '{0} leads that were created through this campaign have been deleted since creation.',
 	'LBL_FROM_NAME_HELP' => 'This will be the name that your recipient will see',
-	'LBL_FROM_ADDR_HELP' => 'This will be the from address that the recipient will see',
+	'LBL_FROM_ADDR_HELP' => 'This email address will the mail address that tells your recipient where the campaign came from',
 	'LBL_REPLY_TO_NAME_HELP' => 'This will be the name that your recipient will reply to',
 	'LBL_REPLY_TO_ADDR_HELP' => 'This will be the email that your recipients will reply to',
 	'LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW' => 'View Outbound Email Accounts',
@@ -530,7 +530,8 @@ $mod_strings = array (
 	'LBL_NEWSLETTER_TITLE' => ' A newsletter campaign is a type of email campaign, which allows you to send an email to a single target list.',
 	'LBL_EMAIL_TITLE' => 'An email campaign is a type of email campaign, which allows you to send an email to multiple target lists.',
 	'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
-	'LBL_BODY' => 'Body',
+	'LBL_TEMPLATE_SAVING' => 'Please wait, template saving..',
+	'LBL_TEMPLATE_SAVED' => 'Template successfully saved.'
 );
 
 
