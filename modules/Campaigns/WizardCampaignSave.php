@@ -88,7 +88,7 @@ else {
     if (!$marketingId) {
         if (!empty($_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId']) && $func != 'createEmailMarketing') {
             $marketingId = $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'];
-        } else {
+        } else if($func != 'createEmailMarketing') {
             $marketing = new EmailMarketing();
             $marketing->save();
             $marketingId = $marketing->id;
@@ -107,7 +107,9 @@ else {
     if (!empty($_POST['templateId'])) {
         $marketing->template_id = $templateId;
     }
-    $marketing->save();
+    if($func != 'createEmailMarketing') {
+        $marketing->save();
+    }
 
     $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'] = $marketing->id;
 

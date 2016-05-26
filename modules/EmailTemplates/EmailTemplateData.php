@@ -12,6 +12,7 @@ function handleAttachmentForRemove() {
 }
 
 $error = false;
+$msgs = array();
 $data = array();
 
 $emailTemplateId = isset($_REQUEST['emailTemplateId']) && $_REQUEST['emailTemplateId'] ? $_REQUEST['emailTemplateId'] : null;
@@ -38,7 +39,9 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             }
             $formBase = new EmailTemplateFormBase();
             $bean = $formBase->handleAttachmentsProcessImages($bean, false, true, 'download', true);
-            $bean->save();
+            if($bean->save()) {
+                $msgs[] = 'LBL_TEMPLATE_SAVED';
+            }
             //$formBase = new EmailTemplateFormBase();
             //$bean = $formBase->handleAttachmentsProcessImages($bean, false, true);
             $data['id'] = $bean->id;
@@ -77,7 +80,9 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
                     $newBean->$key = $bean->$key;
                 }
             }
-            $newBean->save();
+            if($newBean->save()) {
+                $msgs[] = 'LBL_TEMPLATE_SAVED';
+            }
             //$formBase = new EmailTemplateFormBase();
             //$newBean = $formBase->handleAttachmentsProcessImages($newBean, false, true);
             $data['id'] = $newBean->id;
@@ -135,6 +140,7 @@ else {
 
 $results = array(
     'error' => $error,
+    'msgs' => $msgs,
     'data' => $data,
 );
 

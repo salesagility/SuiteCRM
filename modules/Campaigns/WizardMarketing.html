@@ -170,7 +170,7 @@
 				return !$('input[name="update_exists_template"]').prop('checked');
 			}},
 			{id: 'template_name', rules: ['required']},
-			{id: 'template_subject', rules: ['required']},
+			//{id: 'template_subject', rules: ['required']},
 		];
 
 		var ruleMessages = {
@@ -500,7 +500,7 @@
 							{/literal}
 						</script>
 					</div>
-
+					<div id="template_messages"></div>
 					<div class="button-group">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
 					</div>
@@ -686,7 +686,7 @@
 						<div class="panel-toolbar">
 
 							<div class="template-container-full">
-								<label>Click to add:</label>
+								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
 								<br>
 								{$BODY_MOZAIK}
 							</div>
@@ -720,7 +720,7 @@
 			<tr>
 
 				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME_FIELD} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td ><slot><input id='name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
+				<td ><slot><input id='marketing_name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
 			</tr>
 
 
@@ -1234,7 +1234,7 @@
 		<br>
 		{/if}
 
-		<div id="alert_messages"></div>
+		<div id="alert_messages" style="margin-bottom: 32px;"></div>
 
 		{if $diagnose}
 		{$diagnose}
@@ -1441,9 +1441,11 @@ function determine_back(){
 {$JAVASCRIPT}
 <script language="javascript">
 //	link_navs();
-addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
+//addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
+addToValidate('wizform', 'marketing_name', 'alphanumeric', true,  document.getElementById('marketing_name').title);
 //addToValidate('wizform', 'date_start', 'alphanumeric', true,  document.getElementById('date_start').title);
 addToValidate('wizform', 'inbound_email_id', 'alphanumeric', true,  document.getElementById('inbound_email_id').title);
+
 
 {literal}
 function getParameterByName(name, url) {
