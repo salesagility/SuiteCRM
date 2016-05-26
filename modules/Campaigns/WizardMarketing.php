@@ -296,7 +296,7 @@ else {
     if(!$templateId && !empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'])) {
         $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
     }
-    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $templateId));
+    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing' ? null : $templateId));
     $ss->assign("EDIT_TEMPLATE","visibility:hidden");
 }
 
