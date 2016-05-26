@@ -120,7 +120,7 @@ if (isset($_POST['campaign_id']) && !empty($_POST['campaign_id'])) {
                     || $k === 'moduleDir' || $k === 'dup_checked') {
                     continue;
                 } else {
-                    if (array_key_exists($k, $person)) {
+                    if (array_key_exists($k, $person) || array_key_exists($k, $person->field_defs)) {
                         $person->$k = $v;
                     }
                 }
