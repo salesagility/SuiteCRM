@@ -12,6 +12,7 @@ function handleAttachmentForRemove() {
 }
 
 $error = false;
+$msgs = array();
 $data = array();
 
 $emailTemplateId = isset($_REQUEST['emailTemplateId']) && $_REQUEST['emailTemplateId'] ? $_REQUEST['emailTemplateId'] : null;
@@ -38,7 +39,9 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             }
             $formBase = new EmailTemplateFormBase();
             $bean = $formBase->handleAttachmentsProcessImages($bean, false, true, 'download', true);
-            $bean->save();
+            if($bean->save()) {
+                $msgs[] = 'Template successfully saved. (ADD THIS MESSAGE TO LANGUAGE FILE!!)';
+            }
             //$formBase = new EmailTemplateFormBase();
             //$bean = $formBase->handleAttachmentsProcessImages($bean, false, true);
             $data['id'] = $bean->id;
@@ -135,6 +138,7 @@ else {
 
 $results = array(
     'error' => $error,
+    'msgs' => $msgs,
     'data' => $data,
 );
 
