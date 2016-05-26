@@ -1,6 +1,6 @@
 <style>
     .progression-container {
-        margin: 0;
+        margin: 0 0 8px 0;
         padding:0;
     }
 
@@ -44,7 +44,7 @@
 
     .progression li::after {
         border-left-color: #3C8DBC;
-        border-width: 14px;
+        border-width: 13px;
         margin-top: -5px;
         margin-left: 20px;
     }
@@ -75,20 +75,25 @@
         border-left-color: transparent;
     }
 
-    .progression li a {
+    .progression li div, .progression li div *{
         color: white;
         text-decoration: none;
         padding-left: 8px;
+        display: inline;
     }
 
-    .progression li.selected a:hover {
-        color: white;
-        text-decoration: none;
+
+    .wizard-summary-right .test, .wizard-summary-right .schedule {
+        background-position: center center;
+        text-align: center;
+        vertical-align: bottom;
+        padding: 8px;
     }
 
-    .progression li a {
-        width: auto;
+    .wizard-step-info {
+        margin-bottom: 12px;
     }
+
 </style>
 
 <script type="text/javascript">
@@ -167,24 +172,24 @@
     };
 
     var wizardMenuSetStepLink = function(step, link, script) {
-        if(typeof link == 'undefined') {
-            link = '#';
-        }
-        if(typeof script == 'undefined') {
-            var onClick = false;
-        }
-        else {
-            var onClick = ' onclick="' + script + '"';
-        }
-        if($('#nav_step' + step + ' a').length == 0) {
-            $('#nav_step' + step).html('<a href="' + link + '"' + (onClick ? onClick : '') + '>' + $('#nav_step' + step).html() + '</a>');
-        }
-        else {
-            $('#nav_step' + step + ' a').attr('href', link);
-            if(onClick) {
-                $('#nav_step' + step + ' a').attr('onclick', script);
-            }
-        }
+//        if(typeof link == 'undefined') {
+//            link = '#';
+//        }
+//        if(typeof script == 'undefined') {
+//            var onClick = false;
+//        }
+//        else {
+//            var onClick = ' onclick="' + script + '"';
+//        }
+//        if($('#nav_step' + step + ' a').length == 0) {
+//            $('#nav_step' + step).html('<a href="' + link + '"' + (onClick ? onClick : '') + '>' + $('#nav_step' + step).html() + '</a>');
+//        }
+//        else {
+//            $('#nav_step' + step + ' a').attr('href', link);
+//            if(onClick) {
+//                $('#nav_step' + step + ' a').attr('onclick', script);
+//            }
+//        }
     };
 
     var wizardMenuGetCurrentPage = function() {
@@ -286,4 +291,77 @@
             wizardMenu();
         }, 300);
     });
+
+    function saveWizardState() {
+
+    }
+
+    function gotoWizardStep($obj) {
+        var direction = 'direct';
+
+        if ($($obj).attr('data-nav-step') > $('.nav-steps.selected').attr('data-nav-step')) {
+//            direction = 'next';
+            alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_UNAVAILABLE'));
+            return false;
+        } else if (($($obj).attr('data-nav-step') < $('.nav-steps.selected').attr('data-nav-step'))) {
+            direction = 'back';
+        } else {
+            return false;
+        }
+
+        if(validate_wiz($('.nav-steps.selected').attr('data-nav-step'), direction)) {
+            // passed validation
+            console.log("validation passed");
+
+            saveWizardState();
+
+            if($('.nav-steps.selected').attr('data-nav-step') == '1') {
+                $('#wiz_back_button').hide();
+            } else {
+                $('#wiz_back_button').show();
+            }
+
+            if($($obj).attr('data-nav-url') && $($obj).attr('data-nav-url') != '#') {
+                window.location = $($obj).attr('data-nav-url');
+            } else if ($('#step'+$($obj).attr('data-nav-step')).length == 0) {
+                // if steps is not loaded
+                alert(SUGAR.language.translate('Campaigns', 'LBL_STEP_UNAVAILABLE'));
+            } else {
+                $('#wiz_current_step').val( $($obj).attr('data-nav-step') );
+                navigate('direct');
+            }
+
+        }  else {
+            // failed validation
+            alert(SUGAR.language.translate('Campaigns', 'LBL_PROVIDE_WEB_TO_LEAD_FORM_FIELDS'));
+            console.log("validation failed")
+            return false;
+        }
+
+        return true;
+    }
+
+    $(document).ready(function () {
+        if($('#wiz_current_step').val() == 1) {
+            $('#wiz_back_button').hide();
+        } else {
+            $('#wiz_back_button').show();
+        }
+        $('.nav-steps').unbind();
+        $('.nav-steps').click(function(event) {
+            console.log(event);
+            console.log($(event.target).closest('li'));
+            var suc =  gotoWizardStep($(event.target).closest('li'));
+            if(!suc){
+                event.preventDefault;
+            }
+        });
+
+        $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
+        $('#template_id').change(function() {
+            $('#LBL_SAVE_EMAIL_TEMPLATE_BTN').attr('disabled', $('#template_id').val() == '')
+        });
+
+    })
+
 </script>

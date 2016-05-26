@@ -115,7 +115,7 @@ foreach($marketing->additional_column_fields as $field)
 
 $marketing->campaign_id = $_REQUEST['campaign_id'];
 
-if($_REQUEST['func'] == 'wizardUpdate') {
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
 	foreach ($_POST as $key => $value) {
 		if (preg_match('/^wiz_step3_(.*)$/', $key, $match)) {
 			$field = $match[1];
@@ -161,7 +161,7 @@ if($_REQUEST['action'] != 'WizardMarketingSave' && (!isset($_REQUEST['func']) ||
     header($header_URL);
 }
 
-if($_REQUEST['func'] == 'wizardUpdate') {
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
 	$resp = array();
 	$resp['error'] = false;
 	$resp['data'] = json_encode(array('id' => $marketing->id));

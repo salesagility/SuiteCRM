@@ -102,23 +102,68 @@ $ss->assign("DEC_SEP", $seps[1]);
 
 $mrkt_focus = new EmailMarketing();
 
+//override marketing by session stored selection earlier..
+
+if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing') {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+}
+else {
+    //check to see if this campaign has an email marketing already attached, and if so, create duplicate
+    $campaign_focus->load_relationship('emailmarketing');
+    $mrkt_lists = $campaign_focus->emailmarketing->get();
+}
+
+if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && !in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+    unset($_SESSION['campaignWizardSelectedMarketingId']);
+}
+
+if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
+    if(!empty($_REQUEST['record']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+        $_REQUEST['record'] = $_SESSION['campaignWizardSelectedMarketingId'];
+    }
+    if(!empty($_REQUEST['marketing_id']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+        $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+    }
+}
+
 //if record param exists and it is not empty, then retrieve this bean
 if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
+    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
 }
 else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
     $mrkt_focus->retrieve($_REQUEST['marketing_id']);
+    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
 }else{
-        //check to see if this campaign has an email marketing already attached, and if so, create duplicate
-        $campaign_focus->load_relationship('emailmarketing');
-        $mrkt_lists = $campaign_focus->emailmarketing->get();
-        if(!empty($mrkt_lists)){
-            //reverse array so we always use the most recent one:
-            $mrkt_lists = array_reverse($mrkt_lists);
-            $mrkt_focus->retrieve($mrkt_lists[0]);
-            $mrkt_focus->id = '';
-            $mrkt_focus->name = $mod_strings['LBL_COPY_OF'] . ' '. $mrkt_focus->name;
+
+
+
+    if(!isset($mrkt_lists) || !$mrkt_lists) {
+        unset($_SESSION['campaignWizardSelectedMarketingId']);
+    }
+    else if(count($mrkt_lists) == 1){
+        $mrkt_focus->retrieve($mrkt_lists[0]);
+        $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
+    }
+    else if(count($mrkt_lists) > 1) {
+        if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
+            $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
         }
+        else {
+            unset($_SESSION['campaignWizardSelectedMarketingId']);
+        }
+//        if(!empty($mrkt_lists)){
+//            //reverse array so we always use the most recent one:
+//            $mrkt_lists = array_reverse($mrkt_lists);
+//            $mrkt_focus->retrieve($mrkt_lists[0]);
+//            $mrkt_focus->id = '';
+//            //$mrkt_focus->name = $mod_strings['LBL_COPY_OF'] . ' '. $mrkt_focus->name;
+//        }
+    }
+    else {
+        unset($_SESSION['campaignWizardSelectedMarketingId']);
+        //throw new Exception('illegal related marketing list');
+    }
 
 }
 
@@ -235,6 +280,11 @@ else {
         $ss->assign("MESSAGE_FOR_DISABLED","disabled");
     };
 }
+
+// force to check all prospect list by default..
+$ss->assign("ALL_PROSPECT_LISTS_CHECKED","checked");
+$ss->assign("MESSAGE_FOR_DISABLED","disabled");
+
 if (empty($prospectlists)) $prospectlists=array();
 if (empty($scope_options)) $scope_options=array();
 $ss->assign("SCOPE_OPTIONS", get_select_options_with_id($scope_options, $prospectlists));
@@ -278,17 +328,27 @@ echo $javascript->getScript();
     if ($pl_count==0){
         if ($pl_lists==0){
             //print no target list warning
-            $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
-            $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
+            if($campaign_focus->campaign_type != "Email" || $campaign_focus->campaign_type != "NewsLetter"){
+                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING_NON_EMAIL']);
+            }
+            else{
+                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGETS_WARNING']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGETS_WARNING']);
+            }
         }else{
             //print no entries warning
-            if($campaign_focus->campaign_type='NewsLetter'){
+            if($campaign_focus->campaign_type=='NewsLetter'){
                 $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_SUBS_ENTRIES_WARNING']);
                 $pl_diabled_test_too = false;
-            }else{
+            }elseif($campaign_focus->campaign_type=='Email'){
                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
                 $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING']);
+            }
+            else{
+                $ss->assign("WARNING_MESSAGE", $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
+                $ss->assign('error_on_target_list', $mod_strings['LBL_NO_TARGET_ENTRIES_WARNING_NON_EMAIL']);
             }
         }
         //disable the send email options
@@ -484,7 +544,11 @@ require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
 $ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
 
-if(isset($mrkt_lists[0])) {
+if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
+    $ss->assign('EmailMarketingId', $_SESSION['campaignWizardSelectedMarketingId']);
+}
+else if(isset($mrkt_lists[0])) {
+    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
     $ss->assign('EmailMarketingId', $mrkt_lists[0]);
 }
 
@@ -511,14 +575,62 @@ $ss->assign("FIELD_DEFS_JS", generateFieldDefsJS2());
 if ($has_campaign || $inboundEmail) {
     //$ss->assign("INPOPUPWINDOW", 'true');
     $ss->assign("INSERT_URL_ONCLICK", "insert_variable_html_link(document.wizform.tracker_url.value)");
+
+    $get_campaign_urls = function ($campaign_id) {
+
+            $return_array=array();
+
+            if (!empty($campaign_id)) {
+
+                $db = DBManagerFactory::getInstance();
+
+                $campaign_id = $db->quote($campaign_id);
+
+                $query1="select * from campaign_trkrs where campaign_id='$campaign_id' and deleted=0";
+                $current=$db->query($query1);
+                while (($row=$db->fetchByAssoc($current)) != null) {
+                    $return_array['{'.$row['tracker_name'].'}'] = array(
+                        'text' => $row['tracker_name'] . ' : ' . $row['tracker_url'],
+                        'url' => $row['tracker_url'],
+                        'id' => $row['id']
+                    );
+                }
+            }
+        return $return_array;
+    };
     if ($has_campaign) {
-        $campaign_urls = get_campaign_urls($_REQUEST['campaign_id']);
+        $campaign_urls = $get_campaign_urls($_REQUEST['campaign_id']);
     }
     if (!empty($campaign_urls)) {
         $ss->assign("DEFAULT_URL_TEXT", key($campaign_urls));
     }
     if ($has_campaign) {
-        $ss->assign("TRACKER_KEY_OPTIONS", get_select_options_with_id($campaign_urls, null));
+
+        $get_tracker_options = function ($label_list, $key_list, $selected_key, $massupdate = false) {
+            global $app_strings;
+            $select_options = '';
+
+            //for setting null selection values to human readable --None--
+            $pattern = "/'0?'></";
+            $replacement = "''>".$app_strings['LBL_NONE'].'<';
+            if ($massupdate) {
+                $replacement .= "/OPTION>\n<OPTION value='__SugarMassUpdateClearField__'><"; // Giving the user the option to unset a drop down list. I.e. none means that it won't get updated
+            }
+
+            if (empty($key_list)) {
+                $key_list = array();
+            }
+            //create the type dropdown domain and set the selected value if $opp value already exists
+            foreach ($key_list as $option_key => $option_value) {
+
+                $select_options .= '<OPTION value="'.$option_key.'" data-id="'.$label_list[$option_key]['id'].'" data-url="'.$label_list[$option_key]['url'].'">'.$label_list[$option_key]['text'].'</OPTION>';
+            }
+            $select_options = preg_replace($pattern, $replacement, $select_options);
+
+            return $select_options;
+        };
+
+        $ss->assign("TRACKER_KEY_OPTIONS", $get_tracker_options($campaign_urls, $campaign_urls, null));
         //$ss->parse("main.NoInbound.tracker_url");
 
         // create tracker URL fields
