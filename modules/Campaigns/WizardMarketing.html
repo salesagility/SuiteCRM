@@ -1201,7 +1201,7 @@
 	<div id='step3' data="summary-page" class="template-panel">
 		<div class="template-panel-container panel">
 			<div class="template-container-full">
-				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">Summary </h4>
+				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
 				<div class="clear">&nbsp;</div>
 				{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 					<div class="form-group">
@@ -1306,7 +1306,7 @@
 		</div>
 		<div class="template-panel-container panel-toolbar ">
 			<div class="template-container-full">
-				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">Campaign Checklist </h4>
+				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
 				<div class="clear">&nbsp;</div>
 				<div>
 					{if $WARNING_MESSAGE}
@@ -1351,11 +1351,12 @@
 						<img src="themes/default/images/cmpwzrd/email167.png" style="height: 18px; width: auto;"> {$MOD.LBL_SEND_AS_TEST}
 					</a>
 				</div>
-				{if !$PL_DISABLED}
 				<div class="button-group-seperator"></div>
 				<div class="button-group">
-
 					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TODETAIL_BUTTON_TITLE}</a>
+				</div>
+				{if !$PL_DISABLED}
+				<div class="button-group">
 					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=TrackDetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TRACK_BUTTON_LABEL}</a>
 					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=RoiDetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TRACK_ROI_BUTTON_LABEL}</a>
 
