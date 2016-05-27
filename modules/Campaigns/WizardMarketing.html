@@ -66,8 +66,6 @@
 		$('#wiz_stage').show();
 	});
 </script>
-
-
 {/literal}
 <div id='wiz_stage' style="display:none;">
 <form  id="wizform" name="wizform" method="POST" action="index.php" enctype="multipart/form-data">
@@ -1308,7 +1306,7 @@
 			<div class="template-container-full">
 				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
 				<div class="clear">&nbsp;</div>
-				<div>
+				<div style="margin-bottom: 16px;">
 					{if $WARNING_MESSAGE}
 					<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
 					<br>
@@ -1330,8 +1328,8 @@
 					<li class="li-tick"><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></li>
 					<li class="{if $error_on_target_list}li-cross{else}li-tick{/if}"><a href="{$link_to_target_list}">{$MOD.LBL_CHOOSE_TARGETS}</a></li>
 					{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-					<li class="{if $link_to_choose_template}li-cross{else}li-tick{/if}"><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
-					<li class="{if $link_to_scheduler}li-cross{else}li-tick{/if}"><a href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
+					<li class="{if $error_on_templates}li-cross{else}li-tick{/if}"><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
+					<li class="{if $link_to_scheduler}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
 					<li class="{if $error_on_scheduler2 || $error_on_mailbox2}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}</a></li>
 					<li class="{if $error_on_scheduler1 || $error_on_mailbox1}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_BOUNCED_EMAILS}</a></li>
 					{/if}
