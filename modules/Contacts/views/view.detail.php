@@ -53,6 +53,17 @@ class ContactsViewDetail extends ViewDetail
 	public function display(){
 		global $sugar_config;
 
+		// Fix for issue 1506: removed picture is still cached in the Detail View.
+		$js=<<<EOQ
+		<script type='text/javascript'>
+			if(!window.location.hash) {
+				window.location = window.location + '#loaded';
+				window.location.reload();
+			}
+		</script>
+EOQ;
+		echo $js;
+
 		$aop_portal_enabled = !empty($sugar_config['aop']['enable_portal']) && !empty($sugar_config['aop']['enable_aop']);
 
 		$this->ss->assign("AOP_PORTAL_ENABLED", $aop_portal_enabled);
