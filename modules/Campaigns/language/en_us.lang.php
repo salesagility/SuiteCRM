@@ -531,7 +531,11 @@ $mod_strings = array (
 	'LBL_EMAIL_TITLE' => 'An email campaign is a type of email campaign, which allows you to send an email to multiple target lists.',
 	'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
 	'LBL_TEMPLATE_SAVING' => 'Please wait, template saving..',
-	'LBL_TEMPLATE_SAVED' => 'Template successfully saved.'
+	'LBL_TEMPLATE_SAVED' => 'Template successfully saved.',
+	'LBL_PLEASE_SELECT' => 'Please select which option you prefer',
+	'LBL_SELECT_TEMPLATE' => 'Select an existing template',
+	'LBL_CREATE_TEMPLATE' => 'Create a brand new template',
+	'LBL_COPY_TEMPLATE' => 'Copy an existing template',
 );
 
 

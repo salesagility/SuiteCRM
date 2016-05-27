@@ -475,7 +475,21 @@
 				<div class="template-container-full ">
 					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
 					<div class="clear">&nbsp;</div>
-					<div><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_EMAIL_TEMPLATE}</label></div>
+					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT}</label></div>
+					<ul class="template_option_list">
+						<li><input type="radio" name="template_option_radio" id="template_option_select"> <label for="template_option_select">{$MOD.LBL_SELECT_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_create"> <label for="template_option_create">{$MOD.LBL_CREATE_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_copy"  > <label for="template_option_copy"  >{$MOD.LBL_COPY_TEMPLATE}</label></li>
+					</ul>
+					<script>
+						{literal}
+//						$(function(){
+//							if($('#template_id').val()) {
+//								$('#template_option_select').click();
+//							}
+//						});
+						{/literal}
+					</script>
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
 						<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
