@@ -496,6 +496,7 @@
 								alert('select one');
 								$('#template_id_select_frm').show();
 								$('#template_name_input_frm').hide();
+								$('#template_id_name_space_separator').hide();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').show();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
 							});
@@ -504,6 +505,7 @@
 								alert('create new');
 								$('#template_id_select_frm').hide();
 								$('#template_name_input_frm').show();
+								$('#template_id_name_space_separator').hide();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
 							});
@@ -512,6 +514,7 @@
 								alert('copy of');
 								$('#template_id_select_frm').show();
 								$('#template_name_input_frm').show();
+								$('#template_id_name_space_separator').show();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
 							});
@@ -519,6 +522,7 @@
 
 							$('#template_id_select_frm').hide();
 							$('#template_name_input_frm').hide();
+							$('#template_id_name_space_separator').hide();
 							$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 							$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
 
@@ -538,6 +542,7 @@
 							<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
 						</div>
 						<div class="clear">&nbsp;</div>
+						<br style="disply:none;" id="template_id_name_space_separator">
 						<div id="template_name_input_frm">
 							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
 							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
