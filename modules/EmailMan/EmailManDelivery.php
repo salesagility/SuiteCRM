@@ -180,40 +180,6 @@ do {
 
 		}
 
-		//acquire a lock.
-		//if the database does not support repeatable read isolation by default, we might get data that does not meet
-		//the criteria in the original query, and we care most about the in_queue_date and process_date_time,
-		//if they are null or in past(older than 24 horus) then we are okay.
-
-		$where = " WHERE id = ".intval($row['id']).
-			" AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " .$db->convert($db->quoted($timedate->fromString("-1 day")->asDb()),"datetime")."))";
-
-		$lock_query="UPDATE emailman SET in_queue=1, in_queue_date=". $db->now().$where;
-
-		$select_query =	"SELECT COUNT(*) AS cnt FROM emailman ".$where." LIMIT 1";
-		$resultBefore = $db->query($select_query);
-		$before = $db->fetchByAssoc($resultBefore);
-
-		//if the query fails to execute.. terminate campaign email process.
-		$lock_result=$db->query($lock_query,true,'Error acquiring a lock for emailman entry.');
-
-		$resultAfter = $db->query($select_query);
-		$after = $db->fetchByAssoc($resultAfter);
-
-		//$lock_count=$db->getAffectedRowCount($lock_result);
-		if($before['cnt'] == 0 || $before['cnt'] == $after['cnt']) {
-			$lock_count = -1;
-		}
-		else {
-			$lock_count = $before['cnt']-$after['cnt'];
-		}
-
-		//do not process the message if unable to acquire lock.
-//		if ($lock_count!= 1) {
-//			$GLOBALS['log']->fatal("Error acquiring lock for the emailman entry, skipping email delivery. lock status=$lock_count " . print_r($row,true));
-//			continue;  //do not process this row we will examine it after 24 hrs. the email address based dupe check is in place too.
-//		}
-
 		$no_items_in_queue=false;
 
 
