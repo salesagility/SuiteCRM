@@ -1325,7 +1325,7 @@
 					<li class="{if $error_on_target_list}li-cross{else}li-tick{/if}"><a href="{$link_to_target_list}">{$MOD.LBL_CHOOSE_TARGETS}</a></li>
 					{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
 					<li class="{if $error_on_templates}li-cross{else}li-tick{/if}"><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
-					<li class="{if link_to_sender_details}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
+					<li class="{if $link_to_sender_details}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
 					<li class="{if $error_on_scheduler2 || $error_on_mailbox2}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}</a></li>
 					<li class="{if $error_on_scheduler1 || $error_on_mailbox1}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_BOUNCED_EMAILS}</a></li>
 					{/if}
