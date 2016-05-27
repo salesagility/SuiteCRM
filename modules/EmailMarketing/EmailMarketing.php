@@ -94,12 +94,21 @@ class EmailMarketing extends SugarBean
 
 	public function save($check_notify = false)
 	{
+		global $current_user;
+
 		$date_start = trim($this->date_start);
 		$time_start = trim($this->time_start);
 		if($time_start && strpos($date_start, $time_start) === false) {
 			$this->date_start = "$date_start $time_start";
 			$this->time_start = '';
 		}
+
+		$timedate = TimeDate::getInstance();
+		$timedate->setUser($current_user);
+		$dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start);
+		$dateStart = $timedate->asDb($dateTime);
+		$this->date_start = $dateStart;
+
 		return parent::save($check_notify);
 	}
 
