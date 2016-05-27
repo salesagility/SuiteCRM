@@ -516,9 +516,9 @@ $mod_strings = array (
 	'LBL_STEP_INFO_BUDGET' => 'Enter the budget to calculate the return on investment (ROI).',
 	'LBL_EMAIL_TRACKERS' => 'Each campaign must have at least three target lists (Subscription, Unsubscription, and Test). If a list is not specified, an empty target list will be created when you click next.',
 	'LBL_NO_SUBJECT' => 'The selected email template does\'t have a subject',
-	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template has not html body',
+	'LBL_NO_HTML_BODY_CONTENTS' => 'The selected email template does not have a html body',
 	'LBL_NO_SELECTED_TEMPLATE' => 'No selected template!',
-	'LBL_NO_BODY_CONTENTS' => 'The selected email template has not body',
+	'LBL_NO_BODY_CONTENTS' => 'The selected email template does not have a body',
 	'LBL_ERROR_ON_MARKETING' => 'Missing required field(s)',
 
 	'LBL_NO_MARKETING_NAME' => 'Marketing record name is empty',
