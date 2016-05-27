@@ -71,11 +71,12 @@ class AOR_Chart extends Basic {
     }
 
 
-    function save_lines(array $post,AOR_Report $bean,$postKey){
+    function save_lines(array $post,AOR_Report $bean,$postKey,$duplicate){
         $seenIds = array();
         if(isset($post[$postKey.'id'])) {
             foreach ($post[$postKey . 'id'] as $key => $id) {
-                if ($id) {
+                // if we're duplicating a report we need to create a new chart as a chart can only be related to one report
+                if ($id && !$duplicate) {
                     $aorChart = BeanFactory::getBean('AOR_Charts', $id);
                 } else {
                     $aorChart = BeanFactory::newBean('AOR_Charts');
