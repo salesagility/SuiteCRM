@@ -498,6 +498,7 @@
 								$('#template_id_name_space_separator').hide();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').show();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
+								$('input[name="update_exists_template"]').prop('checked', true);
 							});
 
 							$('#template_option_create').click(function(){
@@ -506,6 +507,8 @@
 								$('#template_id_name_space_separator').hide();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+								$('input[name="update_exists_template"]').prop('checked', false);
+								emailTemplateCopyId = null;
 							});
 
 							$('#template_option_copy').click(function(){
@@ -514,6 +517,7 @@
 								$('#template_id_name_space_separator').show();
 								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
 								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+								$('input[name="update_exists_template"]').prop('checked', false);
 							});
 
 
