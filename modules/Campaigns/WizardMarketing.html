@@ -529,6 +529,10 @@
 							else {
 								$('#template_option_create').click();
 							}
+
+							// fix lost buttons
+							$('#show_buttons_frm').removeClass('hidden');
+
 						});
 						{/literal}
 					</script>
@@ -559,11 +563,11 @@
 						</script>
 					</div>
 					<div id="template_messages"></div>
-					<div class="button-group">
+					<div class="button-group" id="show_buttons_frm">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
-					</div>
+					<!-- </div> -->
 					<!-- <div class="button-group-seperator"></div> -->
-					<div class="button-group">
+					<!-- <div class="button-group"> -->
 						<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('create')" class="">
 					</div>
 				</div>
