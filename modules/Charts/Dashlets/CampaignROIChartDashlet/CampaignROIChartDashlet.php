@@ -220,7 +220,6 @@ EOD;
         //global $app_strings,$mod_strings, $current_module_strings, $charset, $lang, $app_list_strings, $current_language,$sugar_config;
         global $mod_strings;
 
-        $campaign_id = (int) $campaign_id;
         if(!$campaign_id) {
             $GLOBALS['log']->debug('roi chart need a campaign id');
             return false;
