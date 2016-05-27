@@ -391,6 +391,8 @@ function EmailTemplateController(action) {
 					showTemplateSaveMessages(resp.msgs);
 				}
 
+				$('#template_option_select').click();
+
 			}
 		});
 	}

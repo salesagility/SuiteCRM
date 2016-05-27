@@ -475,27 +475,63 @@
 				<div class="template-container-full ">
 					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
 					<div class="clear">&nbsp;</div>
-					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT}</label></div>
+					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT_OPTION}</label></div>
 					<ul class="template_option_list">
-						<li><input type="radio" name="template_option_radio" id="template_option_select"> <label for="template_option_select">{$MOD.LBL_SELECT_TEMPLATE}</label></li>
-						<li><input type="radio" name="template_option_radio" id="template_option_create"> <label for="template_option_create">{$MOD.LBL_CREATE_TEMPLATE}</label></li>
-						<li><input type="radio" name="template_option_radio" id="template_option_copy"  > <label for="template_option_copy"  >{$MOD.LBL_COPY_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_select"> <label for="template_option_select">{$MOD.LBL_OPTION_SELECT_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_create"> <label for="template_option_create">{$MOD.LBL_OPTION_CREATE_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_copy"  > <label for="template_option_copy"  >{$MOD.LBL_OPTION_COPY_TEMPLATE}</label></li>
 					</ul>
 					<script>
 						{literal}
-//						$(function(){
-//							if($('#template_id').val()) {
-//								$('#template_option_select').click();
-//							}
-//						});
+						$(function(){
+
+							$('#template_option_select').click(function(){
+								alert('select one');
+								$('#template_id_select_frm').show();
+								$('#template_name_input_frm').hide();
+								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').show();
+								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
+							});
+
+							$('#template_option_create').click(function(){
+								alert('create new');
+								$('#template_id_select_frm').hide();
+								$('#template_name_input_frm').show();
+								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+							});
+
+							$('#template_option_copy').click(function(){
+								alert('copy of');
+								$('#template_id_select_frm').show();
+								$('#template_name_input_frm').show();
+								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+							});
+
+
+							$('#template_id_select_frm').hide();
+							$('#template_name_input_frm').hide();
+							$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+							$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
+
+							if($('#template_id').val()) {
+								$('#template_option_select').click();
+							}
+							else {
+								$('#template_option_create').click();
+							}
+						});
 						{/literal}
 					</script>
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
-						<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						<div id="template_id_select_frm">
+							<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+							<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						</div>
 						<div class="clear">&nbsp;</div>
-						<div style="margin-top: 8px;">
+						<div style="margin-top: 8px;" id="template_name_input_frm">
 							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
 							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
 							<span class="form-group hidden">

@@ -532,10 +532,10 @@ $mod_strings = array (
 	'LBL_NON_EMAIL_TITLE' => 'A non email campaign is a campaign that does not send an email.',
 	'LBL_TEMPLATE_SAVING' => 'Please wait, template saving..',
 	'LBL_TEMPLATE_SAVED' => 'Template successfully saved.',
-	'LBL_PLEASE_SELECT' => 'Please select which option you prefer',
-	'LBL_SELECT_TEMPLATE' => 'Select an existing template',
-	'LBL_CREATE_TEMPLATE' => 'Create a brand new template',
-	'LBL_COPY_TEMPLATE' => 'Copy an existing template',
+	'LBL_PLEASE_SELECT_OPTION' => 'Please select which option you prefer',
+	'LBL_OPTION_SELECT_TEMPLATE' => 'Select an existing template',
+	'LBL_OPTION_CREATE_TEMPLATE' => 'Create a brand new template',
+	'LBL_OPTION_COPY_TEMPLATE' => 'Copy an existing template',
 );
 
 
