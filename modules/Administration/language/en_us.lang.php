@@ -1242,6 +1242,8 @@ $mod_strings = array(
     'LBL_AOS_EDIT' => 'edit',
     'LBL_AOS_DAYS' => 'days',
     'LBL_CHANGE_SETTINGS' => 'Change settings for Advanced OpenSales',
+    'LBL_CHANGE_SETTINGS_AOD' => 'Change settings for Advanced OpenDiscovery',
+    'LBL_CHANGE_SETTINGS_AOP' => 'Change settings for Advanced OpenPortal',
 
     'LBL_MANAGE_SECURITYGROUPS_TITLE' => 'Security Suite Group Management',
     'LBL_MANAGE_SECURITYGROUPS' => 'Security Suite Group Editor',

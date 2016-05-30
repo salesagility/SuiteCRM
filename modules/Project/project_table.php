@@ -145,10 +145,10 @@ class ProjectTable {
                             <span id="exportToPDFSpan">';
 
                                 if(ACLController::checkAccess('Project', 'delete', true)) {
-                                   echo '<button style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
+                                   echo '<button style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > '.$mod_strings["LBL_DELETE_TASK"].' </button >';
                                 }
                                 else{
-                                   echo '<button disabled="disabled" style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > Delete Task </button >';
+                                   echo '<button disabled="disabled" style = "height:20px;width:20px;" class="remove_button" value = "'.$task->id.'" class="gantt_button" > '.$mod_strings["LBL_DELETE_TASK"].' </button >';
                                 }
                         echo '</span>
                          </td>

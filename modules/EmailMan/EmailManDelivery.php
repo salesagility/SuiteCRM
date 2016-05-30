@@ -136,80 +136,48 @@ do {
 	$current_user = new User();
 	$startTime = microtime(true);
 
-	while(($row = $db->fetchByAssoc($result))!= null){
 
-        //verify the queue item before further processing.
-        //we have found cases where users have taken away access to email templates while them message is in queue.
-        if (empty($row['campaign_id'])) {
-            $GLOBALS['log']->fatal('Skipping emailman entry with empty campaign id' . print_r($row,true));
-            continue;
-        }
-        if (empty($row['marketing_id'])) {
-            $GLOBALS['log']->fatal('Skipping emailman entry with empty marketing id' . print_r($row,true));
-            continue;  //do not process this row .
-        }
-
-        //fetch user that scheduled the campaign.
-        if(empty($current_user) or $row['user_id'] != $current_user->id){
-            $current_user->retrieve($row['user_id']);
-        }
-
-        if (!$emailman->verify_campaign($row['marketing_id'])) {
-            $GLOBALS['log']->fatal('Error verifying templates for the campaign, exiting');
-            continue;
-        }
-
-
-        //verify the email template too..
-        //find the template associated with marketing message. make sure that template has a subject and
-        //a non-empty body
-        if (!isset($template_status[$row['marketing_id']])) {
-            if (!class_exists('EmailMarketing')) {
-
-            }
-            $current_emailmarketing=new EmailMarketing();
-            $current_emailmarketing->retrieve($row['marketing_id']);
-
-            if (!class_exists('EmailTemplate')) {
-
-            }
-            $current_emailtemplate= new EmailTemplate();
-            $current_emailtemplate->retrieve($current_emailmarketing->template_id);
-
-        }
-
-		//acquire a lock.
-		//if the database does not support repeatable read isolation by default, we might get data that does not meet
-        //the criteria in the original query, and we care most about the in_queue_date and process_date_time,
-        //if they are null or in past(older than 24 horus) then we are okay.
-
-		$where = " WHERE id = ".intval($row['id']).
-				" AND (in_queue ='0' OR in_queue IS NULL OR ( in_queue ='1' AND in_queue_date <= " .$db->convert($db->quoted($timedate->fromString("-1 day")->asDb()),"datetime")."))";
-
-		$lock_query="UPDATE emailman SET in_queue=1, in_queue_date=". $db->now().$where;
-
-		$select_query =	"SELECT COUNT(*) AS cnt FROM emailman ".$where." LIMIT 1";
-		$result = $db->query($select_query);
-		$before = $db->fetchByAssoc($result);
-
- 		//if the query fails to execute.. terminate campaign email process.
- 		$lock_result=$db->query($lock_query,true,'Error acquiring a lock for emailman entry.');
-
-		$result = $db->query($select_query);
-		$after = $db->fetchByAssoc($result);
-
-		//$lock_count=$db->getAffectedRowCount($lock_result);
-		if($before['cnt'] == 0 || $before['cnt'] == $after['cnt']) {
-			$lock_count = -1;
+	// for testing
+	$count = 0;
+	while($row = $db->fetchByAssoc($result)){
+		//verify the queue item before further processing.
+		//we have found cases where users have taken away access to email templates while them message is in queue.
+		if (empty($row['campaign_id'])) {
+			$GLOBALS['log']->fatal('Skipping emailman entry with empty campaign id' . print_r($row,true));
+			continue;
 		}
-		else {
-			$lock_count = $before['cnt']-$after['cnt'];
+		if (empty($row['marketing_id'])) {
+			$GLOBALS['log']->fatal('Skipping emailman entry with empty marketing id' . print_r($row,true));
+			continue;  //do not process this row .
 		}
 
-		//do not process the message if unable to acquire lock.
-		if ($lock_count!= 1) {
-			$GLOBALS['log']->fatal("Error acquiring lock for the emailman entry, skipping email delivery. lock status=$lock_count " . print_r($row,true));
-			continue;  //do not process this row we will examine it after 24 hrs. the email address based dupe check is in place too.
+		//fetch user that scheduled the campaign.
+		if(empty($current_user) or $row['user_id'] != $current_user->id){
+			$current_user->retrieve($row['user_id']);
+		}
+
+		if (!$emailman->verify_campaign($row['marketing_id'])) {
+			$GLOBALS['log']->fatal('Error verifying templates for the campaign, exiting');
+			continue;
+		}
+
+
+		//verify the email template too..
+		//find the template associated with marketing message. make sure that template has a subject and
+		//a non-empty body
+		if (!isset($template_status[$row['marketing_id']])) {
+			if (!class_exists('EmailMarketing')) {
+
+			}
+			$current_emailmarketing=new EmailMarketing();
+			$current_emailmarketing->retrieve($row['marketing_id']);
+
+			if (!class_exists('EmailTemplate')) {
+
+			}
+			$current_emailtemplate= new EmailTemplate();
+			$current_emailtemplate->retrieve($current_emailmarketing->template_id);
+
 		}
 
 		$no_items_in_queue=false;
@@ -240,14 +208,14 @@ do {
 				if ($row1['list_type']=='exempt_domain') {
 					$emailman->restricted_domains[strtolower($row1['domain_name'])]=1;
 				} else {
-	   			    //find email address of targets in this prospect list.
+					//find email address of targets in this prospect list.
 					$email_query = "SELECT email_address FROM email_addresses ea JOIN email_addr_bean_rel eabr ON ea.id = eabr.email_address_id JOIN prospect_lists_prospects plp ON eabr.bean_id = plp.related_id AND eabr.bean_module = plp.related_type AND plp.prospect_list_id = '{$row1['prospect_list_id']}' and plp.deleted = 0";
 					$email_query_result=$db->query($email_query);
 
 					while($email_address = $db->fetchByAssoc($email_query_result)){
 						//ignore empty email addresses;
 						if (!empty($email_address['email_address'])) {
-                            $emailman->restricted_addresses[strtolower($email_address['email_address'])]=1;
+							$emailman->restricted_addresses[strtolower($email_address['email_address'])]=1;
 						}
 					}
 				}
@@ -271,15 +239,15 @@ do {
 			$mail->oe->mail_smtpssl = $outboundEmailAccount->mail_smtpssl;
 		}
 
-
 		if(!$emailman->sendEmail($mail,$massemailer_email_copy,$test)){
 			$GLOBALS['log']->fatal("Email delivery FAILURE:" . print_r($row,true));
 		} else {
 			$GLOBALS['log']->debug("Email delivery SUCCESS:" . print_r($row,true));
-	 	}
+		}
 		if($mail->isError()){
 			$GLOBALS['log']->fatal("Email delivery error:" . print_r($row,true). $mail->ErrorInfo);
 		}
+		$count++;
 	}
 
 	$send_all=$send_all?!$no_items_in_queue:$send_all;

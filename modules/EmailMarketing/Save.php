@@ -60,8 +60,8 @@ if(!empty($_POST['meridiem'])){
 
 if(empty($_REQUEST['time_start'])) {
 	if(!empty($_REQUEST['date_start'])) {
-		$_REQUEST['date_start'] = $_REQUEST['date_start'] . ' 00:00';
-		$_POST['date_start'] = $_POST['date_start'] . ' 00:00';
+		$_REQUEST['date_start'] = $_REQUEST['date_start'];// . ' 00:00';
+		$_POST['date_start'] = $_POST['date_start'];// . ' 00:00';
 	}
 } else {
 	if(!empty($_REQUEST['date_start'])) {
@@ -121,7 +121,7 @@ if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'wizardUpdate') {
 			$field = $match[1];
 			$marketing->$field = $value;
 			if($field=='time_start') {
-				$marketing->date_start .= ' ' . $value;
+				$marketing->date_start .= ' ' . $value . (isset($_REQUEST['meridiem']) ? $_REQUEST['meridiem'] : '');
 			}
 		}
 	}

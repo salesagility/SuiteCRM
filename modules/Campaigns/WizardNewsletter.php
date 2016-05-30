@@ -158,6 +158,7 @@ $ss->assign("CAMP_ACTUAL_COST", $focus->actual_cost);
 $ss->assign("CAMP_EXPECTED_REVENUE", $focus->expected_revenue);
 $ss->assign("CAMP_EXPECTED_COST", $focus->expected_cost);
 $ss->assign("CAMP_OBJECTIVE", $focus->objective);
+$ss->assign("OBJECTIVE", $focus->objective);
 $ss->assign("CAMP_CONTENT", $focus->content);
 $ss->assign("CAMP_NAME", $focus->name);
 $ss->assign("CAMP_RECORD", $focus->id);
@@ -224,6 +225,7 @@ $ss->assign("DEC_SEP", $seps[1]);
 
 
 //fill out the campaign type dropdown based on type of campaign being created
+$ss->assign("campaign_type", $campaign_type);
 if($campaign_type == 'general'){
     //get regular campaign dom object and strip out entries for email and newsletter
     $myTypeOptionsArr = array();
@@ -628,7 +630,7 @@ if(isset($_REQUEST['wizardtype'])) {
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
 
 if(!$focus->id) {
-    unset($_SESSION['campaignWizardSelectedMarketingId']);
+    unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
 }
 
 

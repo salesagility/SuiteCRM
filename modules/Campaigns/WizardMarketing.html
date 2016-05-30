@@ -41,6 +41,24 @@
 
  ********************************************************************************/
 -->
+{literal}
+<style>
+	.li-tick {
+		list-style-image: url("themes/default/images/cmpwzrd/ic_check_circle_black_24px.svg");
+		height: 24px;
+		margin-top: 8px;
+	}
+	.li-cross {
+		list-style-image: url("themes/default/images/cmpwzrd/ic_cancel_black_24px.svg");
+		height: 24px;
+		margin-top: 8px;
+	}
+	.li-tick *, .li-cross * {
+		position: absolute;
+		line-height: 24px;
+	}
+</style>
+{/literal}
 {if $hideScreen}<div style="display:none;">{/if}
 {literal}
 <script type="text/javascript">
@@ -71,7 +89,7 @@
 	{$WIZMENU}
 
 <p>
-<div id ='buttons' >
+<div id ='buttons'>
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" >
 		<tr>
 			<td align="left" width='30%'>
@@ -159,7 +177,7 @@
 				uploadFormCallback = callback;
 			}
 
-			$('#upload_form').submit();
+			$('#upload_form input[type="submit"]').click();
 
 		};
 
@@ -170,7 +188,7 @@
 				return !$('input[name="update_exists_template"]').prop('checked');
 			}},
 			{id: 'template_name', rules: ['required']},
-			{id: 'template_subject', rules: ['required']},
+			//{id: 'template_subject', rules: ['required']},
 		];
 
 		var ruleMessages = {
@@ -251,26 +269,28 @@
 							return false;
 						}
 
-						if(!updateChecked || (updateChecked && confirm('{/literal}{$MOD.LBL_OVERWRITE_TEMPLATE_CONFIRM_DIALOG}{literal}'))) {
+//						if(!updateChecked) {
 							// validate email template form before save
 							if (isValidEmailTemplateFormAndShowErrors()) {
 								onSaveCopyMarketingEmailTemplate(function () {
-									if (hasNewAttachments()) {
-										submitMarketingEmailAttachments(function(){
+									onSaveMarketingEmail(function(){
+										if (hasNewAttachments()) {
+											submitMarketingEmailAttachments(function(){
+												onNext();
+												wizardMenuSetStepLink(4);
+											});
+										}
+										else {
 											onNext();
 											wizardMenuSetStepLink(4);
-										});
-									}
-									else {
-										onNext();
-										wizardMenuSetStepLink(4);
-									}
+										}
+									});
 								});
 							}
-						} else {
-							onNext();
-							wizardMenuSetStepLink(4);
-						}
+//						} else {
+//							onNext();
+//							wizardMenuSetStepLink(4);
+//						}
 					break;
 
 				case '2':
@@ -305,18 +325,25 @@
 //				// todo: !@#
 //			};
 //
-//			var getAttachmentsForRemove = function() {
-//				// todo: !@#
-//			};
+			var getAttachmentsForRemove = function() {
+				var attachmentsForRemove = [];
+				$('#step1_uploader input[type="checkbox"]').each(function(){
+					if($(this).attr('name') == 'remove_attachment[]' && $(this).prop('checked')) {
+						attachmentsForRemove.push($(this).val());
+					}
+				});
+				return attachmentsForRemove;
+			};
 
 			$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 				'func': func,
+				'campaignId': $('input[name="campaign_id"]').val(),
 				'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
 				'body_html': $('#email_template_editor').getMozaikValue(),
 				'name': $('#template_name').val(),
-				'subject': $('#template_subject').val() //,
+				'subject': $('#template_subject').val(),
 //				'attachmentsAdd': getAttachmentsForAdd(),
-//				'attachmentsRemove': getAttachmentsForRemove()
+				'attachmentsRemove': getAttachmentsForRemove()
 			}, function(resp){
 				// todo: hide preloader or loading message..
 				resp = JSON.parse(resp);
@@ -366,6 +393,7 @@
 				wizardMenuFillAll();
 			}
 			changeNextBtnLabel();
+			saveMarketingAndTemplate('getTemplateValidation');
 		}
 
 		function changeNextBtnLabel() {
@@ -420,7 +448,6 @@
 <div id="wiz_message"></div>
 	{$msg}
 <div id=wizard>
-
 	<div id='step1' class="edit view" style="display:none;  margin-top: 8px;">
 		<div id="templateManager" class="template-panel">
 			<div id="templateManagerDialog">
@@ -465,20 +492,86 @@
 				<div class="template-container-full ">
 					<h4 style="border-bottom: solid 1px #eee;">{$MOD.LBL_TEMPLATE}</h4>
 					<div class="clear">&nbsp;</div>
-					<div><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_EMAIL_TEMPLATE}</label></div>
+					<div><label class="wizard-step-info">{$MOD.LBL_PLEASE_SELECT_OPTION}</label></div>
+					<style>
+						{literal}
+						ul.template_option_list {list-style-type: none; padding-left: 0; margin-bottom: 8px;}
+						ul.template_option_list input {position: relative; top: -6px;}
+						ul.template_option_list label {font-weight: normal;}
+						{/literal}
+					</style>
+					<ul class="template_option_list">
+						<li><input type="radio" name="template_option_radio" id="template_option_select"> <label for="template_option_select">{$MOD.LBL_OPTION_SELECT_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_create"> <label for="template_option_create">{$MOD.LBL_OPTION_CREATE_TEMPLATE}</label></li>
+						<li><input type="radio" name="template_option_radio" id="template_option_copy"  > <label for="template_option_copy"  >{$MOD.LBL_OPTION_COPY_TEMPLATE}</label></li>
+					</ul>
+					<script>
+						{literal}
+						$(function(){
+
+							$('#template_option_select').click(function(){
+								$('#template_id_select_frm').show();
+								$('#template_name_input_frm').hide();
+								$('#template_id_name_space_separator').hide();
+								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').show();
+								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
+								$('input[name="update_exists_template"]').prop('checked', true);
+							});
+
+							$('#template_option_create').click(function(){
+								$('#template_id_select_frm').hide();
+								$('#template_name_input_frm').show();
+								$('#template_id_name_space_separator').hide();
+								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+								$('input[name="update_exists_template"]').prop('checked', false);
+								emailTemplateCopyId = null;
+							});
+
+							$('#template_option_copy').click(function(){
+								$('#template_id_select_frm').show();
+								$('#template_name_input_frm').show();
+								$('#template_id_name_space_separator').show();
+								$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+								$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').show();
+								$('input[name="update_exists_template"]').prop('checked', false);
+							});
+
+
+							$('#template_id_select_frm').hide();
+							$('#template_name_input_frm').hide();
+							$('#template_id_name_space_separator').hide();
+							$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').hide();
+							$('#LBL_CREATE_EMAIL_TEMPLATE_BTN').hide();
+
+							if($('#template_id').val()) {
+								$('#template_option_select').click();
+							}
+							else {
+								$('#template_option_select').click();
+							}
+
+							// fix lost buttons
+							$('#show_buttons_frm').removeClass('hidden');
+
+						});
+						{/literal}
+					</script>
 					<div class="form-group clear-block">
 						<!--<label>{$MOD.LBL_TEMPLATE|replace:' ':'&nbsp'}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>-->
-						<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
-						<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						<div id="template_id_select_frm">
+							<label>{$MOD.LBL_TEMPLATE_FIELD}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
+							<select  class="form-control input-sm" id="template_id" name='template_id' tabindex='2' onchange="onEmailTemplateChange(this, '{$MOD.LBL_COPY_OF}');" title='{$MOD.LBL_TEMPLATE}'>{$EMAIL_TEMPLATE_OPTIONS}</select>
+						</div>
 						<div class="clear">&nbsp;</div>
-						<div style="margin-top: 8px;">
+						<br style="disply:none;" id="template_id_name_space_separator">
+						<div id="template_name_input_frm">
 							<label>{$MOD.LBL_NAME}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></label>
 							<input type="text" class="form-control input-sm" id="template_name" name="template_name" value="{$template_name}" maxlength="255" size="100">
 							<span class="form-group hidden">
 								<label>{$MOD.LBL_UPDATE_TEMPLATE|replace:' ':'&nbsp'}</label>
 								<input type="checkbox" name="update_exists_template" class="form-checkbox input-sm hidden">
 							</span>
-
 						</div>
 						<script>
 							{literal}
@@ -490,16 +583,15 @@
 							{/literal}
 						</script>
 					</div>
-
-					<div class="button-group">
+					<div id="template_messages"></div>
+					<div class="button-group" id="show_buttons_frm">
 						<input type="button" id="LBL_SAVE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_SAVE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('save')">
-					</div>
-					<div class="button-group-seperator"></div>
-					<div class="button-group">
+					<!-- </div> -->
+					<!-- <div class="button-group-seperator"></div> -->
+					<!-- <div class="button-group"> -->
 						<input type="button" id="LBL_CREATE_EMAIL_TEMPLATE_BTN" value="{$MOD.LBL_CREATE_EMAIL_TEMPLATE_BTN}" onclick="EmailTemplateController('create')" class="">
 					</div>
 				</div>
-
 			</div>
 			<div class="template-panel-container panel-toolbar ">
 				<div class="template-container">
@@ -508,7 +600,7 @@
 
 					<div class="form-group clear-block">
 						<select class="form-control input-sm" tabindex='0' id="trackerUrlSelect" name='tracker_url' onchange='setTrackerUrlSelectVisibility();'>
-							<option value="-1">-- Create --</option>
+							<option value="-1">{$MOD.LBL_CREATE_TRACKER_URL}</option>
 							{$TRACKER_KEY_OPTIONS}
 						</select>
 					</div>
@@ -524,7 +616,7 @@
 
 				</div>
 				<div class="template-container">
-					<h2>Email Variables</h2>
+					<h2>{$MOD.LBL_EMAIL_VARIABLES}</h2>
 					<div class="clear"></div>
 					<script src="modules/EmailTemplates/EmailTemplate.js"></script>
 					<script type="text/javascript">
@@ -560,8 +652,8 @@
 
 					<!-- BEGIN: variable_button -->
 					<div class="button-group">
-						<input type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_VARIABLE_BTN}'>
-						<input type='button' tabindex="0" onclick='insert_variable(document.wizform.variable_text.value, "template_subject")' class='button' value='{$MOD.LBL_INSERT_VARIABLE_SUBJECT_BTN}'>
+						<input id="insert_variable_to_body_btn" type='button' tabindex="0" onclick='{$INSERT_VARIABLE_ONCLICK}' class='button' value='{$MOD.LBL_INSERT_VARIABLE_BTN}' style="display: none;">
+						<input id="insert_variable_to_subject_btn" type='button' tabindex="0" onclick='insert_variable(document.wizform.variable_text.value, "template_subject")' class='button' value='{$MOD.LBL_INSERT_VARIABLE_SUBJECT_BTN}'>
 					</div>
 					<!-- END: variable_button -->
 				</div>
@@ -670,12 +762,15 @@
 							<div class="template-container-full">
 								<h2>{$MOD.LBL_SUBJECT}</h2>
 								<div class="form-group clear-block">
-									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100">
+									<input type="text" id="template_subject" name="template_subject" value="{$template_subject}" class="form-control input-sm"  maxlength="255" size="100" onclick="onClickTemplateSubject(this);">
 								</div>
 							</div>
 						</div>
 						<div class="panel-toolbar">
+
 							<div class="template-container-full">
+								<label>{$MOD.LBL_CLICK_TO_ADD}</label>
+								<br>
 								{$BODY_MOZAIK}
 							</div>
 							<!--
@@ -686,47 +781,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="template-container-attachment panel">
-				{*
-				<div id="step1_uploader" class="">
-
-					<table>
-						<!-- BEGIN: NoInbound2 -->
-						<tr>
-							<td valign="top" scope="row">
-								<h3>{$MOD.LBL_ATTACHMENTS}:</h3>
-							</td>
-							<td colspan="2" nowrap id="attachments_container">
-								{$ATTACHMENTS}
-							</td>
-						</tr>
-						<!-- END: NoInbound2 -->
-					</table>
-					{$ATTACHMENTS_JAVASCRIPT}
-
-					<!-- BEGIN: NoInbound3 -->
-					<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
-						<div id="upload_div">
-							<input type="file" id="my_file" name="file_1" size="40" />
-							<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
-							<input type="hidden" id="documentId" name="seldoc" tabindex="0" />
-							<input type="hidden" id="docRevId" name="seldoc" tabindex="0" />
-							<input type="hidden" id="documentType" name="seldoc" tabindex="0" />
-							<input type="button" name="add_doc" id="add_doc" onclick="selectDoc();" value='{$MOD.LBL_SUGAR_DOCUMENT}' class="button" />
-
-							<input type="hidden" name="attach_to_template_id" id="attach_to_template_id" value="{$TEMPLATE_ID}">
-							<input type="hidden" name="campaign_id" value="{$CAMPAIGN_ID}">
-							<!-- <input type="hidden" name="attach_to_marketing_id" id="attach_to_marketing_id" value="{$MRKT_ID}"> -->
-
-						</div>
-						<div id="attachments_div">
-						</div>
-					</form>
-					<!-- END: NoInbound3 -->
-				</div>
-				*}
-			</div>
-
 		</div>
 	</div>
 	<div id="step2" style="display: none;">
@@ -749,7 +803,7 @@
 			<tr>
 
 				<td scope="col" NOWRAP valign="top"><slot>{$MOD.LBL_MRKT_NAME_FIELD} <span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></slot></td>
-				<td ><slot><input id='name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
+				<td ><slot><input id='marketing_name' name='wiz_step3_name' title='{$MOD.LBL_MRKT_NAME}' size='25' maxlength='255' type="text" value="{$MRKT_NAME}"></slot></td>
 			</tr>
 
 
@@ -1142,187 +1196,176 @@
 		{/if}
 
 		</div>
-	</div>
+	<div id='step3' data="summary-page" class="template-panel">
+		<div class="template-panel-container panel">
+			<div class="template-container-full">
+				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_SUMMARY}</h4>
+				<div class="clear">&nbsp;</div>
+				{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
+					<div class="form-group">
+						<label>{$MOD.LBL_WIZ_SENDMAIL_TITLE}</label>
+							<select id="marketing_select" class="form-control input-sm"></select>
+							{*
+							{$MOD.LBL_WIZ_EMAILTPL_TITLE}
+							<select id="template_select">
+								{$EMAIL_TEMPLATE_OPTIONS}
+							</select>
+							*}
+							{literal}
+							<script type="text/javascript">
+								var refreshMarketingSelect = function() {
+									var marketingSelectValue = '{/literal}{$EmailMarketingId}{literal}';
+									if($('#marketing_select').val()){
+										marketingSelectValue = $('#marketing_select').val();
+									}
+									$.get('index.php?entryPoint=emailMarketingList&campaign_id={/literal}{$CAMPAIGN_ID}{literal}', function(resp){
+										resp = JSON.parse(resp);
+										if(resp.error) {
+											// todo: show error
+											console.log(error);
+										}
+										else {
+											$('#marketing_select').html('');
+											if(marketingSelectValue == '' && typeof resp.selectedId != 'undefined' && resp.selectedId) {
+												marketingSelectValue = resp.selectedId;
+											}
+											for(var i=0; i<resp.data.length; i++) {
+												var elem = resp.data[i];
+												var selected = '';
+												if(elem.id == marketingSelectValue) {
+													selected = ' selected="selected"';
 
+												}
+												$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
+											}
+											saveMarketingAndTemplate('getTemplateValidation');
+										}
+									});
 
-	<div id='step3' data="summary-page">
+								};
 
-		<br>
+								var saveMarketingAndTemplate = function(func) {
+									if(typeof func == 'undefined') {
+										func = null;
+									}
+									var campaignId = '{/literal}{$CAMPAIGN_ID}{literal}';
+									var marketingId = $('#marketing_select').val();
+									//var templateId = $('#template_select').val();
+									$.post('index.php?entryPoint=setCampaignMarketingAndTemplate', {
+										'campaignId': campaignId,
+										'marketingId': marketingId,
+										'func': func
+										//'templateId': templateId
+									}, function(resp){
+										resp = JSON.parse(resp);
+										$('#alert_messages').html('');
+										$.each(resp.templateValidationMessages, function(i, msg){
+											$('#alert_messages').append('<font color="red">' + SUGAR.language.translate('Campaigns', msg) + '</forn><br>');
+										});
 
-		{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-		<h3>
-			{$MOD.LBL_WIZ_SENDMAIL_TITLE} <!-- {$MRKT_NAME}
-			{$MOD.LBL_WIZ_MARKETING_TITLE} -->
-			<select id="marketing_select">
+										$('#marketing_status_lnk').removeAttr('title');
+										$('#marketing_status_btn').removeClass('fail');
+										if(!$('#marketing_status_btn').hasClass('ok')) {
+											$('#marketing_status_btn').addClass('ok');
+										}
 
-			</select>
+										if(!$.isEmptyObject(resp.marketingValidationMessages)) {
+											$('#marketing_status_lnk').attr(SUGAR.language.translate('EmailMarketing', 'LBL_ERROR_ON_MARKETING'));
+											$('#marketing_status_btn').removeClass('ok');
+											if(!$('#marketing_status_btn').hasClass('fail')) {
+												$('#marketing_status_btn').addClass('fail');
+											}
+										}
 
-			&nbsp;
+										$('#marketing_errors').html('');
+										$.each(resp.marketingValidationMessages, function(i, msg){
+											$('#marketing_errors').append(SUGAR.language.translate('Campaigns', msg) + '<br>');
+										});
 
-			{*
-			{$MOD.LBL_WIZ_EMAILTPL_TITLE}
-			<select id="template_select">
-				{$EMAIL_TEMPLATE_OPTIONS}
-			</select>
-			*}
+									});
+								};
 
-			{literal}
-			<script type="text/javascript">
-				var refreshMarketingSelect = function() {
-					var marketingSelectValue = '{/literal}{$EmailMarketingId}{literal}';
-					if($('#marketing_select').val()){
-						marketingSelectValue = $('#marketing_select').val();
-					}
-					$.get('index.php?entryPoint=emailMarketingList&campaign_id={/literal}{$CAMPAIGN_ID}{literal}', function(resp){
-						resp = JSON.parse(resp);
-						if(resp.error) {
-							// todo: show error
-							console.log(error);
-						}
-						else {
-							$('#marketing_select').html('');
-							if(marketingSelectValue == '' && typeof resp.selectedId != 'undefined' && resp.selectedId) {
-								marketingSelectValue = resp.selectedId;
-							}
-							for(var i=0; i<resp.data.length; i++) {
-								var elem = resp.data[i];
-								var selected = '';
-								if(elem.id == marketingSelectValue) {
-									selected = ' selected="selected"';
-								}
-								$('#marketing_select').append('<option value="' + elem.id + '"' + selected + '>' + elem.name + '</option>');
-							}
-						}
-					});
-
-				};
-
-				var saveMarketingAndTemplate = function() {
-					var campaignId = '{/literal}{$CAMPAIGN_ID}{literal}';
-					var marketingId = $('#marketing_select').val();
-					//var templateId = $('#template_select').val();
-					$.post('index.php?entryPoint=setCampaignMarketingAndTemplate', {
-						'campaignId': campaignId,
-						'marketingId': marketingId //,
-						//'templateId': templateId
-					}, function(resp){
-						console.log(resp);
-					});
-				};
-
-				$(function(){
-					refreshMarketingSelect();
-					$('#marketing_select').change(function(){
-						saveMarketingAndTemplate();
-					});
-					/*
-					$('#template_select').change(function(){
-						saveMarketingAndTemplate();
-					});
-					*/
-				});
-			</script>
-			{/literal}
-
-		</h3>
-		<br>
-		{/if}
-
-		{if $WARNING_MESSAGE}
-		<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
-		<br>
-		{/if}
-
-		{if $diagnose}
-		{$diagnose}
-		<br>
-		{/if}
-
-		<div class="wizard-summary-left">
-
-			<a href="{$link_to_campaign_header}">
-				<div class="box button ok">
-					<h2 style="color: #fff;">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</h2>
-				</div>
-			</a>
-			{if $error_on_target_list}{/if}
-			<a href="{$link_to_target_list}" title="{$error_on_target_list}">
-				<div class="box button {if $error_on_target_list}fail{else}ok{/if}">
-				<h2 style="color: #fff;">{$MOD.LBL_CHOOSE_TARGETS}</h2>
-				</div>
-				{if $error_on_target_list}{/if}
-			</a>
-
-			{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-			<a href="{$link_to_choose_template}"{if $error_on_templates} title="{$error_on_templates}"{/if}>
-			<div class="box button {if $error_on_templates}fail{else}ok{/if}">
-				<h2 style="color: #ffffff;">{$MOD.LBL_CHOOSE_TEMPLATES}</h2>
-			</div>
-			</a>
-			<a href="{$link_to_sender_details}">
-				<div class="box button ok">
-					<h2 style="color: #fff;">{$MOD.LBL_SENDER_DETAILS}</h2>
-				</div>
-			</a>
-
-			{if $error_on_scheduler2 || $error_on_mailbox2}
-			<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
+								$(function(){
+									refreshMarketingSelect();
+									$('#marketing_select').change(function(){
+										saveMarketingAndTemplate('getTemplateValidation');
+									});
+									/*
+									 $('#template_select').change(function(){
+									 saveMarketingAndTemplate();
+									 });
+									 */
+								});
+							</script>
+							{/literal}
+					</div>
 				{/if}
-			<div class="box small {if $error_on_scheduler2 || $error_on_mailbox2}fail{else}ok{/if}">
-					{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}
 			</div>
-			{if $error_on_scheduler2 || $error_on_mailbox2}
-			</a>
-			{/if}
-			<div class="space"></div>
-			{if $error_on_scheduler1 || $error_on_mailbox1}
-			<a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">
-			{/if}
-				<div class="box small right {if $error_on_scheduler1 || $error_on_mailbox1}fail{else}ok{/if}">
-						{$MOD.LBL_PROCESS_BOUNCED_EMAILS}
+		</div>
+		<div class="template-panel-container panel-toolbar ">
+			<div class="template-container-full">
+				<h4 style="border-bottom: solid 1px #eee;padding-bottom: 8px">{$MOD.LBL_CAMPAIGN_CHECKLIST}</h4>
+				<div class="clear">&nbsp;</div>
+				<div style="margin-bottom: 16px;">
+					{if $WARNING_MESSAGE}
+					<div id='target_message'><font color='red'><b>{$WARNING_MESSAGE}</b></font></div>
+					<br>
+					{/if}
+					<div id="alert_messages"></div>
+					{if $diagnose}
+					{$diagnose}
+					<br>
+					{/if}
+					<div id="marketing_errors" class="error">
+						{if $error_on_marketing_name}{$error_on_marketing_name}<br>{/if}
+						{if $error_on_marketing_inbound_email_id}{$error_on_marketing_inbound_email_id}<br>{/if}
+						{if $error_on_marketing_date_start}{$error_on_marketing_date_start}<br>{/if}
+						{if $error_on_marketing_from_name}{$error_on_marketing_from_name}<br>{/if}
+						{if $error_on_marketing_from_addr}{$error_on_marketing_from_addr}<br>{/if}
+					</div>
 				</div>
-				{if $error_on_scheduler2 || $error_on_mailbox1}
-				</a>
+				<ul>
+					<li class="li-tick"><a href="{$link_to_campaign_header}">{$MOD.LBL_CAMPAIGN_DETAILS_AND_CONDITIONS}</a></li>
+					<li class="{if $error_on_target_list}li-cross{else}li-tick{/if}"><a href="{$link_to_target_list}">{$MOD.LBL_CHOOSE_TARGETS}</a></li>
+					{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
+					<li class="{if $error_on_templates}li-cross{else}li-tick{/if}"><a href="{$link_to_choose_template}">{$MOD.LBL_CHOOSE_TEMPLATES}</a></li>
+					<li class="{if $error_on_marketing}li-cross{else}li-tick{/if}"><a id="marketing_status_lnk" href="{$link_to_sender_details}">{$MOD.LBL_SENDER_DETAILS}</a></li>
+					<li class="{if $error_on_scheduler2 || $error_on_mailbox2}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_CAMPAIGN_EMAILS}</a></li>
+					<li class="{if $error_on_scheduler1 || $error_on_mailbox1}li-cross{else}li-tick{/if}"><a href="{$link_to_scheduler}{if !$link_to_scheduler}{$link_to_email}{/if}">{$MOD.LBL_PROCESS_BOUNCED_EMAILS}</a></li>
+					{/if}
+				</ul>
+			</div>
+		</div>
+		<div class="template-panel-container panel-toolbar ">
+			<div class="template-container-full">
+				<div class="button-group">
+					<input type="hidden" name="wiz_home_next_step" value="1" />
+
+					<a class="btn {if $PL_DISABLED}btn-default{else}btn-primary{/if} btn-sm" style="border-radius: 0px;" {if $PL_DISABLED} {else}href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());"{/if}>
+						<img src="themes/default/images/cmpwzrd/wallclock.png" style="height: 18px; width: auto;"> {$MOD.LBL_SEND_EMAIL}
+					</a>
+
+					<a class="btn {if $PL_DISABLED_TEST}btn-default{else}btn-primary{/if} btn-sm" style="border-radius: 0px;" {if $PL_DISABLED_TEST} {else}href="javascript:;"  onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());"{/if}>
+						<img src="themes/default/images/cmpwzrd/email167.png" style="height: 18px; width: auto;"> {$MOD.LBL_SEND_AS_TEST}
+					</a>
+				</div>
+				<div class="button-group-seperator"></div>
+				<div class="button-group">
+					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=DetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TODETAIL_BUTTON_TITLE}</a>
+				</div>
+				{if !$PL_DISABLED}
+				<div class="button-group">
+					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=TrackDetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TRACK_BUTTON_LABEL}</a>
+					<a class="btn btn-primary btn-sm" href="index.php?module=Campaigns&action=RoiDetailView&record={$CAMPAIGN_ID}" style="border-radius: 0px;">{$MOD.LBL_TRACK_ROI_BUTTON_LABEL}</a>
+
+				</div>
 				{/if}
-			{/if}
-
+			</div>
 		</div>
-
-		{if $campaign_type=='NewsLetter' || $campaign_type=='Email'}
-		<div class="wizard-summary-right">
-
-			<!-- <div class="space"></div> -->
-
-			<input type="hidden" name="wiz_home_next_step" value="1" />
-			{if !$PL_DISABLED}
-			<a href="javascript:;" onclick="onScheduleClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
-			{/if}
-			<div class="box button schedule {$PL_DISABLED}">{$MOD.LBL_SEND_EMAIL}</div>
-			{if !$PL_DISABLED}
-			</a>
-			{/if}
-
-			<div class="space"></div>
-			{if !$PL_DISABLED_TEST}
-			<a href="javascript:;" onclick="onSendAsTestClick(this, '{$CAMPAIGN_ID}', $('#marketing_select').val());">
-			{/if}
-			<div class="box button test {$PL_DISABLED}">{$MOD.LBL_SEND_AS_TEST}</div>
-			{if !$PL_DISABLED}
-			</a>
-			{/if}
-
-
-		</div>
-		{/if}
-
-
-
 	</div>
+</div>
 
-
-
-
-	</td>
+</td>
 </tr>
 </table>
 
@@ -1358,6 +1401,8 @@ function determine_back(){
 </form>
 
 	<div id="step1_uploader" style="display: none;">
+		<div class="template-container-attachment panel">
+
 
 		<table>
 			<!-- BEGIN: NoInbound2 -->
@@ -1375,6 +1420,7 @@ function determine_back(){
 
 		<!-- BEGIN: NoInbound3 -->
 		<form id="upload_form" name="upload_form" method="POST" action="index.php?entryPoint=emailTemplateData&func=uploadAttachments" enctype="multipart/form-data"> <!-- action='AttachDocuments.php' -->
+			<input type="submit" style="display:none;">
 			<div id="upload_div">
 				<input type="file" id="my_file" name="file_1" size="40" />
 				<input type="hidden" id="documentName" name="uploaddoc" onchange="docUpload(); form_reset_doc();" size="1" />
@@ -1391,6 +1437,8 @@ function determine_back(){
 			<div id="attachments_div">
 			</div>
 		</form>
+
+		</div>
 		<!-- END: NoInbound3 -->
 	</div>
 	<script type="text/javascript" src="modules/Emails/javascript/Email.js"></script>
@@ -1425,9 +1473,11 @@ function determine_back(){
 {$JAVASCRIPT}
 <script language="javascript">
 //	link_navs();
-addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
+//addToValidate('wizform', 'name', 'alphanumeric', true,  document.getElementById('name').title);
+addToValidate('wizform', 'marketing_name', 'alphanumeric', true,  document.getElementById('marketing_name').title);
 //addToValidate('wizform', 'date_start', 'alphanumeric', true,  document.getElementById('date_start').title);
 addToValidate('wizform', 'inbound_email_id', 'alphanumeric', true,  document.getElementById('inbound_email_id').title);
+
 
 {literal}
 function getParameterByName(name, url) {
@@ -1449,7 +1499,7 @@ var jumpToPageByURL = function() {
 	var func = getParameterByName('func');
 
 	if(func == 'createEmailMarketing') {
-		jump = 2;
+		jump = 1;
 	}
 
 
@@ -1477,7 +1527,7 @@ var jumpToPageByURL = function() {
 		var campaignType = getParameterByName('campaign_type');
 		var showWizardMarketing = getParameterByName('show_wizard_marketing');
 
-		if(jump == 2 && func == 'createEmailMarketing') {
+		if(jump == 1 && func == 'createEmailMarketing') {
 			jumpToPage(jump, true);
 		}
 		else if(jump == 3 && showWizardMarketing && campaignType != 'Email') {
@@ -1508,8 +1558,30 @@ var jumpToPageByURL = function() {
 	}
 };
 
+var createEmptyMarketing = function(){
+	saveMarketingAndTemplate('createEmailMarketing');
+};
+
 $(function(){
 	jumpToPageByURL();
+
+	if($('#func').val() == "createEmailMarketing" && parseInt($('.nav-steps.selected').attr('data-nav-step')) == 3) {
+		createEmptyMarketing();
+//		setTimeout(function() {
+//			onSaveCopyMarketingEmailTemplate(function () {
+//				if (hasNewAttachments()) {
+//					submitMarketingEmailAttachments(function(){
+//						onNext();
+//						wizardMenuSetStepLink(4);
+//					});
+//				}
+////				else {
+////					onNext();
+////					wizardMenuSetStepLink(4);
+////				}
+//			});
+//		}, 300);
+	};
 });
 
 {/literal}
