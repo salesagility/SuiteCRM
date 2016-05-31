@@ -177,7 +177,14 @@ function insert_variable_html_link(text, url) {
 function insert_variable(text, mozaikId) {
 	if(mozaikId == 'template_subject') {
 		// insert into the subject instead of the body
-		$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val())
+		//$('#template_subject').val($('#template_subject').val()+$('select[name=variable_name]').val());
+
+    var value = $('#template_subject').val();
+    var caret = parseInt($('#template_subject').attr('data-caret-position'));
+    var before = value.substring(0, caret);
+    var after = value.substring(caret);
+    $('#template_subject').val(before + $('select[name=variable_name]').val() + after);
+    return;
 	}
 
 	if(!mozaikId) {
@@ -195,6 +202,52 @@ function insert_variable(text, mozaikId) {
 	}
 }
 
+
+/*
+ ** Returns the caret (cursor) position of the specified text field.
+ ** Return value range is 0-oField.value.length.
+ */
+var doGetCaretPosition = function(oField) {
+
+  // Initialize
+  var iCaretPos = 0;
+
+  // IE Support
+  if (document.selection) {
+
+    // Set focus on the element
+    oField.focus();
+
+    // To get cursor position, get empty selection range
+    var oSel = document.selection.createRange();
+
+    // Move selection start to 0 position
+    oSel.moveStart('character', -oField.value.length);
+
+    // The caret position is selection length
+    iCaretPos = oSel.text.length;
+  }
+
+  // Firefox support
+  else if (oField.selectionStart || oField.selectionStart == '0')
+    iCaretPos = oField.selectionStart;
+
+  // Return results
+  return iCaretPos;
+}
+
+var onClickTemplateSubject = function(elem) {
+  $(elem).attr('data-caret-position', doGetCaretPosition(elem));
+  $('#insert_variable_to_subject_btn').show();
+  $('#insert_variable_to_body_btn').hide();
+}
+
+var onClickTemplateBody = function() {
+  $('#insert_variable_to_subject_btn').hide();
+  $('#insert_variable_to_body_btn').show();
+}
+
+
 var $templateManagerDialogX = 0;
 var $templateManagerDialogY = 0;
 var $templateManagerDialog = null;
@@ -204,6 +257,19 @@ function createTemplateManagerDialog (parent) {
 		position: { my: "left top", at: "left bottom", of: parent }
 	});
 }
+
+var showTemplateSaveMessages = function(msgs){
+	$('#template_messages').html('');
+	$.each(msgs, function(i, msg){
+		$('#template_messages').append(SUGAR.language.translate('Campaigns', msg) + '<br>');
+	});
+	setTimeout(function(){
+		$('#template_messages').hide(1000, function(){
+			$('#template_messages').html('');
+			$('#template_messages').show();
+		});
+	}, 3000);
+};
 
 function EmailTemplateController(action) {
 	var lastNameValue = $('#template_name').val();
@@ -220,23 +286,25 @@ function EmailTemplateController(action) {
 			$('#template_name').focus();
 			return;
 		}
-		if($('#template_subject').val() == '') {
-			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
-				$('#template_subject').focus();
-				return;
-			}
-		}
 
-		if($('#template_id').val() != '') {
-			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
-				return;
-			}
-		}
+		//if($('#template_subject').val() == '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+		//		$('#template_subject').focus();
+		//		return;
+		//	}
+		//}
+
+		//if($('#template_id').val() != '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_OVERWRITE_QUESTION'))) {
+		//		return;
+		//	}
+		//}
 
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
+		$('#template_messages').html(SUGAR.language.translate('Campaigns', 'LBL_TEMPLATE_SAVING'));
 		$.post('index.php?entryPoint=emailTemplateData&func=wizardUpdate&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
@@ -261,6 +329,12 @@ function EmailTemplateController(action) {
 				} else {
 					$('option[value='+resp.data.id+']').html($('#template_name').val());
 				}
+
+        $('#template_messages').html('');
+				if(resp.msgs.length) {
+					showTemplateSaveMessages(resp.msgs);
+				}
+
 			}
 		});
 
@@ -273,11 +347,11 @@ function EmailTemplateController(action) {
 			return
 		}
 
-		if($('#template_subject').val() == '') {
-			if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
-				return
-			}
-		}
+		//if($('#template_subject').val() == '') {
+		//	if(!confirm(SUGAR.language.translate('Campaigns', 'LBL_EMPTY_SUBJECT'))) {
+		//		return
+		//	}
+		//}
 
 		window.parent.$('.ui-dialog-content:visible').dialog('close');
 		$('input[name="update_exists_template"]').prop('checked', false);
@@ -285,6 +359,7 @@ function EmailTemplateController(action) {
 
 		var func = emailTemplateCopyId || $('input[name="update_exists_template"]').prop('checked') ? 'update': 'createCopy';
 
+		$('#template_messages').html(SUGAR.language.translate('Campaigns', 'LBL_TEMPLATE_SAVING'));
 		$.post('index.php?entryPoint=emailTemplateData&rand='+Math.random(), {
 			'func': func,
 			'emailTemplateId' : emailTemplateCopyId ? emailTemplateCopyId : $('#template_id').val(),
@@ -307,8 +382,16 @@ function EmailTemplateController(action) {
 
 					$('input[name="update_exists_template"]').prop('checked', true);
 
-					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').removeAttr('disabled');
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().removeClass('hidden');
+					$('#LBL_SAVE_EMAIL_TEMPLATE_BTN').parent().next().removeClass('hidden');
 				}
+
+        $('#template_messages').html('');
+				if(resp.msgs.length) {
+					showTemplateSaveMessages(resp.msgs);
+				}
+
+				$('#template_option_select').click();
 
 			}
 		});

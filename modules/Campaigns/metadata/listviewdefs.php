@@ -80,15 +80,6 @@ $listViewDefs['Campaigns'] = array(
 		'studio' => false,
 		'nowrap' => true,
 		'sortable' => false),
-	'LAUNCH_WIZARD' => array(
-		'width' => '0.01',
-		'label' => '&nbsp;',
-		'link' => true,
-		'customCode' => ' <a title="{$LAUNCH_WIZARD_TITLE}" href="index.php?action=WizardHome&module=Campaigns&record={$ID}"><!--not_in_theme!--><img border="0" src="{$LAUNCH_WIZARD_IMAGE}"  alt="{$LAUNCH_WIZ_ALT_TEXT}" width="16px" height="16px"></a>  ',
-		'default' => true,
-		'studio' => false,
-		'nowrap' => true,
-		'sortable' => false),
 
 );
 ?>

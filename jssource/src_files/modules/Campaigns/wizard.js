@@ -167,6 +167,11 @@ function navigate(direction, noValidation, noSave){
                     if(typeof document.getElementById('wizform').direction != 'undefined') {
                         if(!noSave) {
                             campaignCreateAndRefreshPage();
+                            // get the actual current step from the progression bar
+                            var wizardCurrentStep = $('.nav-steps.selected').attr('data-nav-step');
+                            if( $('div.moduleTitle h2').text().indexOf($('#name').val()) == -1) {
+                                $('div.moduleTitle h2').text($('div.moduleTitle h2').text() + ' ' + $('#name').val());
+                            }
                         }
                     }
                 }
@@ -328,13 +333,13 @@ function link_navs(beg, end){
  * to show a link.  It is a direct navigation link
  */
 function direct(stepnumber){
+
     //get the current step
     var current_step = document.getElementById('wiz_current_step');
     var currentValue = parseInt(current_step.value);
 
     //validation needed. (specialvalidation,  plus step number, plus submit button)
     if(validate_wiz(current_step.value,'direct')){
-
         //lets set the current step to the selected step and invoke navigation
         current_step.value = stepnumber;
         navigate('direct');
@@ -434,6 +439,7 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
         $('#email_template_view').html('');
 
         $.post('index.php?entryPoint=emailTemplateData', {
+            'campaignId': $('input[name="campaign_id"]').val(),
             'emailTemplateId': emailTemplateId
         }, function (resp) {
             var results = JSON.parse(resp);

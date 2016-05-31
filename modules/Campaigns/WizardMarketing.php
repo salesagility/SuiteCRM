@@ -105,7 +105,7 @@ $mrkt_focus = new EmailMarketing();
 //override marketing by session stored selection earlier..
 
 if(isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing') {
-    unset($_SESSION['campaignWizardSelectedMarketingId']);
+    unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 }
 else {
     //check to see if this campaign has an email marketing already attached, and if so, create duplicate
@@ -113,45 +113,75 @@ else {
     $mrkt_lists = $campaign_focus->emailmarketing->get();
 }
 
-if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && !in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-    unset($_SESSION['campaignWizardSelectedMarketingId']);
+if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && !in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
+    unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 }
 
-if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
-    if(!empty($_REQUEST['record']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-        $_REQUEST['record'] = $_SESSION['campaignWizardSelectedMarketingId'];
+if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'])) {
+    if(!empty($_REQUEST['record']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
+        $_REQUEST['record'] = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'];
     }
-    if(!empty($_REQUEST['marketing_id']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-        $_REQUEST['marketing_id'] = $_SESSION['campaignWizardSelectedMarketingId'];
+    if(!empty($_REQUEST['marketing_id']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
+        if(!empty($_REQUEST['func']) && $_REQUEST['func'] == 'editEmailMarketing') {
+            $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $_REQUEST['marketing_id'];
+        }
+        else {
+            $_REQUEST['marketing_id'] = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'];
+        }
     }
 }
 
 //if record param exists and it is not empty, then retrieve this bean
 if(isset($_REQUEST['record']) and !empty($_REQUEST['record'])){
     $mrkt_focus->retrieve($_REQUEST['record']);
-    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
+    $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
 }
 else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) {
     $mrkt_focus->retrieve($_REQUEST['marketing_id']);
-    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_focus->id;
+    $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
 }else{
 
 
 
     if(!isset($mrkt_lists) || !$mrkt_lists) {
-        unset($_SESSION['campaignWizardSelectedMarketingId']);
+        unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
     }
     else if(count($mrkt_lists) == 1){
-        $mrkt_focus->retrieve($mrkt_lists[0]);
-        $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
+        if(empty($_REQUEST['func']) && isset($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
+            $mrkt_focus->retrieve($mrkt_lists[0]);
+            $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
+        } else {
+            // if user clicks create from the email marking sub panel
+            $mrkt_focus->retrieve($mrkt_lists[0]);
+            $mrkt_focus->id = create_guid();
+            $mrkt_focus->name = '';
+            // clone
+            $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
+        }
+
     }
     else if(count($mrkt_lists) > 1) {
-        if(!empty($_SESSION['campaignWizardSelectedMarketingId']) && in_array($_SESSION['campaignWizardSelectedMarketingId'], $mrkt_lists)) {
-            $mrkt_focus->retrieve($_SESSION['campaignWizardSelectedMarketingId']);
+        if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
+
+            if (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
+                $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
+
+            } else {
+                // if user clicks create from the email marking sub panel
+                $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
+                $mrkt_focus->id = create_guid();
+                $mrkt_focus->name = '';
+                // clone
+                $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_focus->id;
+            }
         }
         else {
-            unset($_SESSION['campaignWizardSelectedMarketingId']);
+            unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
         }
+
+
+
+
 //        if(!empty($mrkt_lists)){
 //            //reverse array so we always use the most recent one:
 //            $mrkt_lists = array_reverse($mrkt_lists);
@@ -161,7 +191,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
 //        }
     }
     else {
-        unset($_SESSION['campaignWizardSelectedMarketingId']);
+        unset($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
         //throw new Exception('illegal related marketing list');
     }
 
@@ -253,12 +283,20 @@ $ss->assign("TIME_FORMAT", '('. $timedate->get_user_time_format().')');
 $email_templates_arr = get_bean_select_array(true, 'EmailTemplate','name','','name');
 if($mrkt_focus->template_id) {
     $ss->assign("TEMPLATE_ID", $mrkt_focus->template_id);
-    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $mrkt_focus->template_id));
+    $templateId = $mrkt_focus->template_id;
+    if(!$templateId && !empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'])) {
+        $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
+    }
+    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, $templateId));
     $ss->assign("EDIT_TEMPLATE","visibility:inline");
     $ss->assign('email_template_already_selected', $mrkt_focus->template_id);
 }
 else {
-    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : ""));
+    $templateId = isset($_REQUEST['template_id']) && $_REQUEST['template_id'] ? $_REQUEST['template_id'] : "";
+    if(!$templateId && !empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'])) {
+        $templateId = $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedTemplateId'];
+    }
+    $ss->assign("EMAIL_TEMPLATE_OPTIONS", get_select_options_with_id($email_templates_arr, isset($_REQUEST['func']) && $_REQUEST['func'] == 'createEmailMarketing' ? null : $templateId));
     $ss->assign("EDIT_TEMPLATE","visibility:hidden");
 }
 
@@ -435,7 +473,8 @@ $ss->assign("DIV_JAVASCRIPT", $divScript);
 
 
 if($campaign_focus->campaign_type != 'Telesales' && (!isset($_REQUEST['campaign_type']) || $_REQUEST['campaign_type'] != 'Telesales')) {
-    $templateURLForProgressBar = '#';
+    //$templateURLForProgressBar = '#';
+    $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=1&campaign_type=Email";
     if (isset($campaign_focus->id) && $campaign_focus->id && isset($mrkt_focus->id) && $mrkt_focus->id && isset($mrkt_focus->template_id) && $mrkt_focus->template_id) {
         $templateURLForProgressBar = "index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id={$campaign_focus->id}&campaign_id={$campaign_focus->id}&jump=1&marketing_id={$mrkt_focus->id}&record={$mrkt_focus->id}&campaign_type=Email&template_id={$mrkt_focus->template_id}";
     }
@@ -514,6 +553,14 @@ $diagnose = diagnose($errors, $links);
 
 $ss->assign('diagnose', $diagnose);
 
+// validate sender details
+if($mrkt_focus->id) {
+    foreach($marketingErrorResults = $mrkt_focus->validate() as $errorKey => $errorMsg) {
+        $errors['marketing'] = $mod_strings['LBL_ERROR_ON_MARKETING'];
+        $errors['marketing_' . $errorKey] = $errorMsg;
+    }
+}
+
 foreach($errors as $error => $msg) {
     if($msg) {
         $ss->assign('error_on_' . $error, $msg);
@@ -542,13 +589,19 @@ $ss->assign('link_to_sender_details', 'index.php?return_module=Campaigns&module=
 
 require_once('include/SuiteMozaik.php');
 $mozaik = new SuiteMozaik();
-$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor'));
+$ss->assign('BODY_MOZAIK', $mozaik->getAllHTML(isset($focus->body_html) ? html_entity_decode($focus->body_html) : '', 'body_html', 'email_template_editor', 'initial', '', "tinyMCE: {
+    setup: function(editor) {
+        editor.on('focus', function(e){
+            onClickTemplateBody();
+        });
+    }
+}"));
 
-if(!empty($_SESSION['campaignWizardSelectedMarketingId'])) {
-    $ss->assign('EmailMarketingId', $_SESSION['campaignWizardSelectedMarketingId']);
+if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'])) {
+    $ss->assign('EmailMarketingId', $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 }
 else if(isset($mrkt_lists[0])) {
-    $_SESSION['campaignWizardSelectedMarketingId'] = $mrkt_lists[0];
+    $_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'] = $mrkt_lists[0];
     $ss->assign('EmailMarketingId', $mrkt_lists[0]);
 }
 
@@ -723,6 +776,10 @@ $ss->assign('fields', array(
 if(isset($_SESSION['msg']) && $_SESSION['msg']) {
     $ss->assign('msg', $mod_strings[$_SESSION['msg']]);
     unset($_SESSION['msg']);
+}
+
+if(!empty($_REQUEST['func'])) {
+    echo '<input type="hidden" id="func" value="'.$_REQUEST['func'].'">';
 }
       $ss->display('modules/Campaigns/WizardMarketing.html');
 ?>
