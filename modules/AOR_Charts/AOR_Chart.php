@@ -409,6 +409,16 @@ EOF;
         {
             return "<h3>$this->noDataMessage</h3>";
         }
+        $labels=json_decode($chartLabelValues);
+        foreach($labels AS $onelabel){
+                $hash = md5($onelabel);
+                $color[]= "#" . substr($hash,0,6);
+        }
+        if(!empty($color)){
+            $colorstring="['" . implode($color,"','") . "']";
+        }else{
+            $colorstring=$this->colours;	
+        }
         $html = '';
         $html .= "<canvas id='$chartId' width='$chartWidth' height='$chartHeight' class='resizableCanvas'></canvas>";
         $html .= <<<EOF
@@ -433,7 +443,7 @@ EOF;
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours,
+                colors: $colorstring,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
