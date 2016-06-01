@@ -358,6 +358,7 @@ function export($type, $records = null, $members = false, $sample=false) {
 /**
  * Parse custom related fields
  * @param $line string CSV line
+ * @param $record array of current line
  * @return mixed string CSV line
  */
 function parseRelateFields($line, $record) {
