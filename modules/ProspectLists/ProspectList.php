@@ -190,7 +190,11 @@ class ProspectList extends SugarBean {
 
 		// query all custom fields in the fields_meta_data table for the modules which are being exported
 		$db = DBManagerFactory::getInstance();
-		$result = $db->query("select name, custom_module, `type`, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
+		$typeField = '`type`';
+		if($db->dbType=='mssql') {
+			$typeField = '[type]';
+		}
+		$result = $db->query("select name, custom_module, $typeField, ext1, ext2, ext3, ext4 from fields_meta_data where custom_module in ('" .
 			implode("', '", array_keys($members)) . "')",
 			true,
 			"ProspectList::create_export_members_query() : error querying custom fields");
@@ -220,7 +224,7 @@ class ProspectList extends SugarBean {
 				// else, only if for this module no entry exists for this field, query an empty string
 				else if (!isset($memberarr['fields'][$val['name']]))
 				{
-					$memberarr['fields'][$fieldname] = "'' AS " . $fieldname;
+					$memberarr['fields'][$fieldname] = "null AS " . $fieldname;
 				}
 			}
 		}
