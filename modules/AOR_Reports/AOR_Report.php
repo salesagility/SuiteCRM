@@ -989,11 +989,6 @@ class AOR_Report extends Basic {
             foreach ($query_array['group_by'] as $group_by){
                 $query_group_by .=  ($query_group_by == '' ? 'GROUP BY ' : ', ').$group_by;
             }
-            if($query_group_by != '') {
-                foreach ($query_array['second_group_by'] as $group_by) {
-                    $query_group_by .= ', ' . $group_by;
-                }
-            }
             $query .= ' '.$query_group_by;
         }
 
