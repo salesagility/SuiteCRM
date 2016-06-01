@@ -361,9 +361,7 @@ function export($type, $records = null, $members = false, $sample=false) {
  * @return mixed string CSV line
  */
 function parseRelateFields($line, $record) {
-    var_dump($line);
     while(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $line, $matches)) {
-        var_dump($matches);
 
         $marker = $matches[0];
         $relatedValue = '';
