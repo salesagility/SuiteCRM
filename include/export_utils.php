@@ -345,6 +345,7 @@ function export($type, $records = null, $members = false, $sample=false) {
             $line = implode("\"" . getDelimiter() . "\"", $record);
             $line = "\"" . $line;
             $line .= "\"\r\n";
+            $line = parseRelateFields($line, $record);
             $content .= $line;
         }
 
@@ -354,6 +355,43 @@ function export($type, $records = null, $members = false, $sample=false) {
 
 }
 
+/**
+ * Parse custom related fields
+ * @param $line string CSV line
+ * @return mixed string CSV line
+ */
+function parseRelateFields($line, $record) {
+    var_dump($line);
+    while(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $line, $matches)) {
+        var_dump($matches);
+
+        $marker = $matches[0];
+        $relatedValue = '';
+
+        $splits = explode('.', $matches[1]);
+        $currentModule = $splits[0];
+        $currentField = $splits[1];
+
+        $splits = explode('.', $matches[2]);
+        $relatedModule = $splits[0];
+        $relatedField = $splits[1];
+
+        if($currentModule != $record['related_type']) {
+            $GLOBALS['log']->debug('incorrect related type in export');
+        }
+        else {
+            if($currentBean = BeanFactory::getBean($currentModule, $record['id'])) {
+                $relatedValue = $currentBean->$currentField;
+            }
+            else {
+                $GLOBALS['log']->debug('incorrect record in export');
+            }
+        }
+
+        $line = str_replace($marker, $relatedValue, $line);
+    }
+    return $line;
+}
 
 function generateSearchWhere($module, $query) {//this function is similar with function prepareSearchForm() in view.list.php
     $seed = loadBean($module);
