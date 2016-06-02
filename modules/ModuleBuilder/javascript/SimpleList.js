@@ -203,6 +203,12 @@ if(typeof(SimpleList) == 'undefined'){
         reverse ( YAHOO.util.Dom.get("ul1").getElementsByTagName("li") ) ;
     },
     handleSave:function(){
+        // This is to hande a special use case where user creates a new field with a dropdown list
+       if(ModuleBuilder.newFieldtoSave == true && ModuleBuilder.contentURL.match(/&action=dropdown/)) {
+           ModuleBuilder.newFieldtoSave = false;
+           ModuleBuilder.submitForm("popup_form_id");
+       }
+
          var parseList = function(ul, title) {
             var items = ul.getElementsByTagName("li");
             var out = [];
