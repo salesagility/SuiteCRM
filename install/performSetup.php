@@ -468,6 +468,7 @@ FP;
     $enabled_tabs[] = 'AOW_WorkFlow';
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+    $enabled_tabs[] = 'Spots';
 
     installerHook('pre_setSystemTabs');
     require_once('modules/MySettings/TabController.php');
