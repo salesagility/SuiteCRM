@@ -53,6 +53,8 @@ global $current_user;
 
 $focus = new EmailMarketing();
 if(isset($_REQUEST['record'])) {
+	SugarApplication::redirect('index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id=' . $_REQUEST['parent_id'] . '&campaign_id=' . $_REQUEST['parent_id'] . '&marketing_id=' . $_REQUEST['record'] . '&func=editEmailMarketing');
+	return;
     $focus->retrieve($_REQUEST['record']);
 }
 
