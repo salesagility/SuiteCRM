@@ -85,7 +85,16 @@ if(preg_match('/^[0-9A-Za-z\-]*$/', $track))
 
 	$redirect_URL = $row['tracker_url'];
 	sugar_cleanup();
-	header("Location: $redirect_URL");
+	$header_URL = "Location: $redirect_URL";
+
+	if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+		$href = $matches[1];
+		SugarApplication::redirect($href);
+	}
+	else {
+		header($header_URL);
+	}
+
 }
 else
 {
