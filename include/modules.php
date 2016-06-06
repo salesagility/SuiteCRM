@@ -312,12 +312,14 @@ $moduleList[] = 'AOK_KnowledgeBase';
 
 $beanList['Reminders'] = 'Reminder';
 $beanFiles['Reminder'] = 'modules/Reminders/Reminder.php';
-$moduleList[] = 'Reminders';
+// Issue #1249 - Reminders should be hidden from the navigation
+//$moduleList[] = 'Reminders';
 $modInvisList[] = 'Reminders';
 
 $beanList['Reminders_Invitees'] = 'Reminder_Invitee';
 $beanFiles['Reminder_Invitee'] = 'modules/Reminders_Invitees/Reminder_Invitee.php';
-$moduleList[] = 'Reminders_Invitees';
+// Issue #1249 - Reminders should be hidden from the navigation
+//$moduleList[] = 'Reminders_Invitees';
 $modInvisList[] = 'Reminders_Invitees';
 
 $beanList['FP_events'] = 'FP_events';
