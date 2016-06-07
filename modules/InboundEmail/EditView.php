@@ -38,12 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 require_once 'modules/AOP_Case_Updates/util.php';
-if(!isAOPEnabled()){
-    //Use the default
-    require 'modules/InboundEmail/EditView.php';
-    exit();
-}
-
 
 $_REQUEST['edit']='true';
 

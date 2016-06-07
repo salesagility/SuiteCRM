@@ -1,6 +1,4 @@
 <?php
-// created: 2013-05-07 12:48:58
-global $current_user;
 $searchFields['AOS_Products'] = array (
   'name' => 
   array (
@@ -86,9 +84,10 @@ $searchFields['AOS_Products'] = array (
     'favorites_only' => array(
         'query_type'=>'format',
         'operator' => 'subquery',
-        'subquery' => 'SELECT favorites.parent_id FROM favorites
+        'checked_only' => true,
+        'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
-			                        and favorites.parent_type = "'.$module_name.'"
-			                        and favorites.assigned_user_id = "' .$current_user->id . '") OR NOT ({0}',
+			                        and favorites.parent_type = 'AOS_Products'
+			                        and favorites.assigned_user_id = '{1}'",
         'db_field'=>array('id')),
 );

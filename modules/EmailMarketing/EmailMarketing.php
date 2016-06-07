@@ -92,6 +92,27 @@ class EmailMarketing extends SugarBean
     }
 
 
+	public function save($check_notify = false)
+	{
+		global $current_user;
+
+		$date_start = trim($this->date_start);
+		$time_start = trim($this->time_start);
+		if($time_start && strpos($date_start, $time_start) === false) {
+			$this->date_start = "$date_start $time_start";
+			$this->time_start = '';
+		}
+
+		$timedate = TimeDate::getInstance();
+		$timedate->setUser($current_user);
+		if($dateTime = DateTime::createFromFormat($current_user->getPreference('datef') . ' ' . $current_user->getPreference('timef'), $this->date_start)) {
+			$dateStart = $timedate->asDb($dateTime);
+			$this->date_start = $dateStart;
+		}
+
+		return parent::save($check_notify);
+	}
+
 	function retrieve($id = -1, $encode=true, $deleted=true) {
 	    parent::retrieve($id,$encode,$deleted);
 
@@ -156,7 +177,29 @@ class EmailMarketing extends SugarBean
 			}
 			$temp_array['PROSPECT_LIST_NAME'].=$row['name'];
 		}
+		if($this->isCampaignDetailView()) {
+			$temp_array = $this->makeCampaignWizardEditLink($temp_array);
+		}
 		return $temp_array;
+	}
+
+	private function isCampaignDetailView() {
+		$module = isset($_REQUEST['module']) ? $_REQUEST['module'] : null;
+		$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : null;
+		$isCampaignDetailView = $module = 'Campaigns' && $action == 'DetailView';
+		return $isCampaignDetailView;
+	}
+
+	private function makeCampaignWizardEditLink($tempArray) {
+		$campaignId = $_REQUEST['record'];
+		$link = 'index.php?action=WizardMarketing&module=Campaigns&return_module=Campaigns&return_action=WizardHome&return_id='.$campaignId.'&campaign_id='.$campaignId.'&marketing_id='.$this->id.'&func=editEmailMarketing';
+		if(!empty($tempArray['NAME'])) {
+			$tempArray['NAME'] = '<a href="' . $link . '">' . $tempArray['NAME'] . '</a>';
+		}
+		if(!empty($tempArray['TEMPLATE_NAME'])) {
+			$tempArray['TEMPLATE_NAME'] = '<a href="' . $link . '">' . $tempArray['TEMPLATE_NAME'] . '</a>';
+		}
+		return $tempArray;
 	}
 
 	function bean_implements($interface){
@@ -176,6 +219,27 @@ class EmailMarketing extends SugarBean
 		$query.=" and prospect_lists.list_type not like 'exempt%'";
 
 		return $query;
+	}
+
+	public function validate() {
+		global $mod_strings;
+		$errors = array();
+		if(!$this->name) {
+			$errors['name'] = isset($mod_strings['LBL_NO_MARKETING_NAME']) ? $mod_strings['LBL_NO_MARKETING_NAME'] : 'LBL_NO_MARKETING_NAME';
+		}
+		if(!$this->inbound_email_id) {
+			$errors['inbound_email_id'] = isset($mod_strings['LBL_NO_INBOUND_EMAIL_SELECTED']) ? $mod_strings['LBL_NO_INBOUND_EMAIL_SELECTED'] : 'LBL_NO_INBOUND_EMAIL_SELECTED';
+		}
+		if(!$this->date_start) {
+			$errors['date_start'] = isset($mod_strings['LBL_NO_DATE_START']) ? $mod_strings['LBL_NO_DATE_START'] : 'LBL_NO_DATE_START';
+		}
+		if(!$this->from_name) {
+			$errors['from_name'] = isset($mod_strings['LBL_NO_FROM_NAME']) ? $mod_strings['LBL_NO_FROM_NAME'] : 'LBL_NO_FROM_NAME';
+		}
+		if(!$this->from_addr) { // TODO test for valid email address
+			$errors['from_addr'] = isset($mod_strings['LBL_NO_FROM_ADDR_OR_INVALID']) ? $mod_strings['LBL_NO_FROM_ADDR_OR_INVALID'] : 'LBL_NO_FROM_ADDR_OR_INVALID';
+		}
+		return $errors;
 	}
 }
 ?>

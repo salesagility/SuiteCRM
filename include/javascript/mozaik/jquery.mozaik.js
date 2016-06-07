@@ -5,7 +5,7 @@ if(mozaik || $.mozaik) {
 // mozaik helpers (private)
 var mozaik = {
     getThumbnailListHTML: function(id, thumbs, base) {
-        var html = '<ul class="mozaik-thumbs" id="' + id + '" title="Click to add..">';
+        var html = '<ul class="mozaik-thumbs" id="' + id + '" title="'+SUGAR.language.translate('Campaigns', 'LBL_CLICK_TO_ADD')+'">';
         for(var name in thumbs) {
             var e = thumbs[name];
             html += '<li class="mozaik-thumbnail" data-name="' + name + '">' + (e.thumbnail ? '<img src="' + base + e.thumbnail + '" alt="' + (e.label ? e.label : '') + '" title="' + (e.label ? e.label : '') + '">' : '<span class="mozaik-thumb-label">' + (e.label ? e.label : '') + '</span>') + '</li>';
@@ -123,6 +123,78 @@ var plgBackground = {
 (function($){
     $.fn.mozaik = function(options) {
 
+        var tinyMCESettings = {
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools'
+            ],
+            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
+            toolbar2: 'print preview media | forecolor backcolor | image | emoticons | table | link | fontsizeselect',
+            table_toolbar: "",
+            image_advtab: true,
+            textcolor_map: [
+                "000000", "Black",
+                "993300", "Burnt orange",
+                "333300", "Dark olive",
+                "003300", "Dark green",
+                "003366", "Dark azure",
+                "000080", "Navy Blue",
+                "333399", "Indigo",
+                "333333", "Very dark gray",
+                "800000", "Maroon",
+                "FF6600", "Orange",
+                "808000", "Olive",
+                "008000", "Green",
+                "008080", "Teal",
+                "0000FF", "Blue",
+                "666699", "Grayish blue",
+                "808080", "Gray",
+                "FF0000", "Red",
+                "FF9900", "Amber",
+                "99CC00", "Yellow green",
+                "339966", "Sea green",
+                "33CCCC", "Turquoise",
+                "3366FF", "Royal blue",
+                "800080", "Purple",
+                "999999", "Medium gray",
+                "FF00FF", "Magenta",
+                "FFCC00", "Gold",
+                "FFFF00", "Yellow",
+                "00FF00", "Lime",
+                "00FFFF", "Aqua",
+                "00CCFF", "Sky blue",
+                "993366", "Red violet",
+                "FFFFFF", "White",
+                "FF99CC", "Pink",
+                "FFCC99", "Peach",
+                "FFFF99", "Light yellow",
+                "CCFFCC", "Pale green",
+                "CCFFFF", "Pale cyan",
+                "99CCFF", "Light sky blue",
+                "CC99FF", "Plum"
+            ],
+            //setup: function(editor) {
+            //    var _editor = editor;
+            //    editor.on('focus', function(event){
+            //        mozaik.lastUsedEditor = _editor;
+            //    });
+            //}
+
+            file_browser_callback: function(field_name, url, type, win, e) {
+                mozaik.uploadPathField = field_name;
+                if(type=='image') {
+                    // $('#mozaik_upload_form input').click();
+                    $('form#upload_form input[type="file"]').each(function(i,e){
+                        if($(e).css('display') != 'none') {
+                            $(e).click();
+                        }
+                    });
+                }
+            }
+        };
+
         var settings = $.extend({
             base: '',
             thumbs: {
@@ -139,81 +211,18 @@ var plgBackground = {
             editables: 'editable',
             style: 'tpls/default/styles/default.css',
             namespace: false,
-            tinyMCE: {
-                plugins: [
-                    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
-                    'searchreplace wordcount visualblocks visualchars code fullscreen',
-                    'insertdatetime media nonbreaking save table contextmenu directionality',
-                    'emoticons template paste textcolor colorpicker textpattern imagetools'
-                ],
-                toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',
-                toolbar2: 'print preview media | forecolor backcolor | image | emoticons | table | link | fontsizeselect',
-                image_advtab: true,
-                textcolor_map: [
-                    "000000", "Black",
-                    "993300", "Burnt orange",
-                    "333300", "Dark olive",
-                    "003300", "Dark green",
-                    "003366", "Dark azure",
-                    "000080", "Navy Blue",
-                    "333399", "Indigo",
-                    "333333", "Very dark gray",
-                    "800000", "Maroon",
-                    "FF6600", "Orange",
-                    "808000", "Olive",
-                    "008000", "Green",
-                    "008080", "Teal",
-                    "0000FF", "Blue",
-                    "666699", "Grayish blue",
-                    "808080", "Gray",
-                    "FF0000", "Red",
-                    "FF9900", "Amber",
-                    "99CC00", "Yellow green",
-                    "339966", "Sea green",
-                    "33CCCC", "Turquoise",
-                    "3366FF", "Royal blue",
-                    "800080", "Purple",
-                    "999999", "Medium gray",
-                    "FF00FF", "Magenta",
-                    "FFCC00", "Gold",
-                    "FFFF00", "Yellow",
-                    "00FF00", "Lime",
-                    "00FFFF", "Aqua",
-                    "00CCFF", "Sky blue",
-                    "993366", "Red violet",
-                    "FFFFFF", "White",
-                    "FF99CC", "Pink",
-                    "FFCC99", "Peach",
-                    "FFFF99", "Light yellow",
-                    "CCFFCC", "Pale green",
-                    "CCFFFF", "Pale cyan",
-                    "99CCFF", "Light sky blue",
-                    "CC99FF", "Plum"
-                ],
-                //setup: function(editor) {
-                //    var _editor = editor;
-                //    editor.on('focus', function(event){
-                //        mozaik.lastUsedEditor = _editor;
-                //    });
-                //}
-
-                file_browser_callback: function(field_name, url, type, win, e) {
-                    mozaik.uploadPathField = field_name;
-                    if(type=='image') {
-                       // $('#mozaik_upload_form input').click();
-                        $('form#upload_form input[type="file"]').each(function(i,e){
-                            if($(e).css('display') != 'none') {
-                                $(e).click();
-                            }
-                        });
-                    }
-                }
-            },
             ace: true,
             width: '600px',
             toolPlugins: [plgBackground],
             uploadPathField: null
         }, options);
+
+        if(typeof settings.tinyMCE == 'undefined') {
+            settings.tinyMCE = tinyMCESettings;
+        }
+        else {
+            settings.tinyMCE = $.extend(settings.tinyMCE, tinyMCESettings);
+        }
 
         // add ace editor
         if($('#mozaik-ace').length == 0) {

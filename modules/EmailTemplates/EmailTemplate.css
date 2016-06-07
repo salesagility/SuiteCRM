@@ -21,8 +21,13 @@
 
 
 .template-panel {
+    margin-top: 8px;
     border: 1px solid rgb(211, 211, 211);
     padding: 5px;
+    background: #eee;
+}
+#wizform > table > tbody > tr > td  {
+    background: #fff;
 }
 
 .template-container {
@@ -31,6 +36,10 @@
     position: relative;
     min-height: 1px;
     padding: 10px;
+}
+
+div:nth-of-type(odd).template-container {
+    border-right: 1px solid rgb(211, 211, 211);
 }
 
 .template-container-full {
