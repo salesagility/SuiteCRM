@@ -253,7 +253,7 @@ $admin_option_defs = array();
 $admin_option_defs['Administration']['aod'] = array(
     'edit',
     'LBL_AOD_SETTINGS',
-    'Change settings for Advanced OpenDiscovery',
+    'LBL_CHANGE_SETTINGS_AOD',
     './index.php?module=Administration&action=AODAdmin'
 );
 if (isset($admin_group_header['sagility'])) $admin_option_defs['Administration'] = array_merge((array)$admin_option_defs['Administration'], (array)$admin_group_header['sagility'][3]['Administration']);
@@ -270,7 +270,7 @@ $admin_option_defs = array();
 $admin_option_defs['Administration']['aop'] = array(
     'edit',
     'LBL_AOP_SETTINGS',
-    'Change settings for Advanced OpenPortal',
+    'LBL_CHANGE_SETTINGS_AOP',
     './index.php?module=Administration&action=AOPAdmin'
 );
 if (isset($admin_group_header['sagility'])) $admin_option_defs['Administration'] = array_merge((array)$admin_option_defs['Administration'], (array)$admin_group_header['sagility'][3]['Administration']);

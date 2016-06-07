@@ -91,7 +91,7 @@ class ProjectTask extends SugarBean {
      * @var bool skip updating parent percent complete
      */
     protected $_skipParentUpdate = false;
-	
+
 	//////////////////////////////////////////////////////////////////
 	// METHODS
 	//////////////////////////////////////////////////////////////////
@@ -99,9 +99,9 @@ class ProjectTask extends SugarBean {
 	/*
 	 *
 	 */
-	function ProjectTask($init=true)
+    public function __construct($init=true)
 	{
-		parent::SugarBean();
+		parent::__construct();
 		if ($init) {
 			// default value for a clean instantiation
 			$this->utilization = 100;
@@ -122,6 +122,21 @@ class ProjectTask extends SugarBean {
 
 		}
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ProjectTask($init=true){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($init);
+    }
+
     /**
      * @param bool $skip updating parent percent complete
      */
@@ -137,7 +152,7 @@ class ProjectTask extends SugarBean {
         {
             $this->project_task_id = $this->getNumberOfTasksInProject($this->project_id) + 1;
         }
-        
+
         $id = parent::save($check_notify);
         if($this->_skipParentUpdate == false)
         {
@@ -325,7 +340,7 @@ class ProjectTask extends SugarBean {
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess($this->parent_type, $this->parent_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 			/* BEGIN - SECURITY GROUPS */
@@ -562,15 +577,15 @@ class ProjectTask extends SugarBean {
 
 		return $projectTasksBeans;
 	}
-	
-	
+
+
 	/**
 	 * getNumberOfTasksInProject
-	 * 
+	 *
 	 * Returns the count of project_tasks for the given project_id
-	 * 
+	 *
 	 * This is a private helper function to get the number of project tasks for a given project_id.
-	 * 
+	 *
 	 * @param $project_id integer value of the project_id associated with this ProjectTask instance
 	 * @return total integer value of the count of project tasks, 0 if none found
 	 */
@@ -590,7 +605,7 @@ class ProjectTask extends SugarBean {
 	        }
     	}
         return 0;
-    }	
+    }
 
     /**
      * Update percent complete for project tasks with children tasks based on children's values

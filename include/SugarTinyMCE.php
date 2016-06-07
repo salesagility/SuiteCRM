@@ -103,7 +103,7 @@ class SugarTinyMCE {
 	/**
 	 * Sole constructor
 	 */
-	function SugarTinyMCE() {
+	function __construct() {
 
 		$this->overloadButtonConfigs();
 		$this->overloadDefaultConfigs();
@@ -230,34 +230,34 @@ eoq;
             }
         }
     }
-    
+
     /**
-     * Reload the default tinyMCE config, preserving our default extended 
+     * Reload the default tinyMCE config, preserving our default extended
      * allowable tag set.
      *
      */
-    private function overloadDefaultConfigs() 
+    private function overloadDefaultConfigs()
     {
-        if( file_exists( $this->customDefaultConfigFile ) )    
+        if( file_exists( $this->customDefaultConfigFile ) )
         {
             require_once($this->customDefaultConfigFile);
-            
+
             if(!isset($defaultConfig))
                 return;
-            
+
             foreach ($defaultConfig as $k => $v)
             {
                 if( isset($this->defaultConfig[$k]) ){
-                	
+
                 	if($k == "extended_valid_elements"){
                 		$this->defaultConfig[$k] .= "," . $v;
                 	}
                 	else{
                 		$this->defaultConfig[$k] = $v;
                 	}
-                }  	
+                }
             }
         }
     }
-    
+
 } // end class def

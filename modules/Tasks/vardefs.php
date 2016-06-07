@@ -268,6 +268,14 @@ $dictionary['Task'] = array('table' => 'tasks',
                 'source' => 'non-db',
                 'vname' => 'LBL_PROJECT_TASKS',
             ),
+        'aos_contracts' =>
+            array(
+                'name' => 'aos_contracts',
+                'type' => 'link',
+                'relationship' => 'aos_contracts_tasks',
+                'source' => 'non-db',
+                'vname' => 'LBL_CONTRACT',
+            ),
         'notes' =>
             array(
                 'name' => 'notes',

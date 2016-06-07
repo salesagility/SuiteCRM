@@ -207,6 +207,7 @@ $mod_strings = array(
 
 	'LBL_RESOURCE_CHART_MONTH' => 'Month',
 	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
+ 	'LBL_ALL_RESOURCES' => 'All Resources',
 
 );
 ?>

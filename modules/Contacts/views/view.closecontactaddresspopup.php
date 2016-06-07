@@ -43,7 +43,7 @@ require_once('include/MVC/View/views/view.list.php');
 class ContactsViewCloseContactAddressPopup extends ViewList {
 	
  	function CloseContactAddressPopup(){
- 		parent::ViewList();
+ 		parent::__construct();
  	}
 
  	function display() {

@@ -57,8 +57,23 @@ class SugarApplication
  	var $default_module = 'Home';
  	var $default_action = 'index';
 
- 	function SugarApplication()
+ 	public function __construct()
  	{}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarApplication(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
  	/**
  	 * Perform execution of the application. This method is called from index2.php
@@ -102,7 +117,7 @@ class SugarApplication
 		$allowed_actions = (!empty($this->controller->allowed_actions)) ? $this->controller->allowed_actions : $allowed_actions = array('Authenticate', 'Login', 'LoggedOut');
 
         $authController = new AuthenticationController();
-        
+
 		if(($user_unique_key != $server_unique_key) && (!in_array($this->controller->action, $allowed_actions)) &&
 		   (!isset($_SESSION['login_error'])))
 		   {
@@ -121,7 +136,7 @@ class SugarApplication
 			        $this->controller->action = 'index';
 			    elseif($this->isModifyAction())
 			        $this->controller->action = 'index';
-                elseif ($this->controller->action == $this->default_action 
+                elseif ($this->controller->action == $this->default_action
                     && $this->controller->module == $this->default_module) {
                     $this->controller->action = '';
                     $this->controller->module = '';

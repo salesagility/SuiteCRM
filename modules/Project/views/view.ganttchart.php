@@ -233,6 +233,7 @@ class ProjectViewGanttChart extends SugarView {
             <input id="project_id" type="hidden" name="project_id" value="<?php echo $_REQUEST["project_id"];?>" />
             <div id="project_wrapper">
 
+
             </div>
         </div>
         <!--Main body end-->

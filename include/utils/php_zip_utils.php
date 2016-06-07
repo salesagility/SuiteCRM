@@ -49,7 +49,7 @@ function unzip( $zip_archive, $zip_dir)
 function unzip_file( $zip_archive, $archive_file, $zip_dir)
 {
     if( !is_dir( $zip_dir ) ) {
-        if (defined('SUGAR_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
+        if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
         {
         	$GLOBALS['log']->fatal("Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist.");
         	return false;
@@ -63,7 +63,7 @@ function unzip_file( $zip_archive, $archive_file, $zip_dir)
     $res = $zip->open(UploadFile::realpath($zip_archive)); // we need realpath here for PHP streams support
 
     if($res !== TRUE) {
-        if (defined('SUGAR_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
+        if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
         {
         	$GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status, $zip_archive, $zip_dir));
             return false;
@@ -80,7 +80,7 @@ function unzip_file( $zip_archive, $archive_file, $zip_dir)
     }
     
     if($res !== TRUE) {
-        if (defined('SUGAR_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
+        if (defined('SUITE_PHPUNIT_RUNNER') || defined('SUGARCRM_INSTALL'))
         {
         	$GLOBALS['log']->fatal(sprintf("ZIP Error(%d): Status(%s): Arhive(%s): Directory(%s)", $res, $zip->status, $zip_archive, $zip_dir));
             return false;
@@ -94,7 +94,7 @@ function unzip_file( $zip_archive, $archive_file, $zip_dir)
 function zip_dir( $zip_dir, $zip_archive )
 {
     if( !is_dir( $zip_dir ) ){
-        if (!defined('SUGAR_PHPUNIT_RUNNER'))
+        if (!defined('SUITE_PHPUNIT_RUNNER'))
             die( "Specified directory '$zip_dir' for zip file '$zip_archive' extraction does not exist." );
         return false;
     }

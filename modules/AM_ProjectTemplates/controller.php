@@ -40,18 +40,19 @@ class AM_ProjectTemplatesController extends SugarController {
 		$copy_tasks = isset($_POST['tasks']) ? $_POST['tasks'] : array() ;
 			
 		//Get project start date
-        $dateformat = $current_user->getPreference('datef');
-        $startdate = DateTime::createFromFormat($dateformat, $project_start);
-        $start = $startdate->format('Y-m-d');
+        if($project_start!='')
+		{
+			$dateformat = $current_user->getPreference('datef');
+			$startdate = DateTime::createFromFormat($dateformat, $project_start);
+			$start = $startdate->format('Y-m-d');
+		}
 
         $duration_unit = 'Days';
-
 
         //Get the project template
         $template = new AM_ProjectTemplates();
         $template->retrieve($template_id);
 
-	
         //create project from template
         $project = new Project();
         $project->name = $project_name;
@@ -149,10 +150,11 @@ class AM_ProjectTemplatesController extends SugarController {
             //link tasks to the newly created project
             $project_task->load_relationship('projects');
             $project_task->projects->add($project->id);
-
+            //Add assinged users from each task to the project resourses subpanel
+            $project->load_relationship('project_users_1');
+            $project->project_users_1->add($row['assigned_user_id']);
             $count++;
         }
-
 
         //set project end date to the same as end date of the last task
         $GLOBALS['log']->fatal("project end -- DATE:". $end);

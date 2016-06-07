@@ -109,6 +109,10 @@ class TemplateField{
     // Bug #48826
     // fields to decode from post request
     var $decode_from_request_fields_map = array('formula', 'dependency');
+
+    function __construct(){
+    }
+
 	/*
 		HTML FUNCTIONS
 		*/
@@ -482,7 +486,7 @@ class TemplateField{
 	function populateFromPost(){
 		foreach($this->vardef_map as $vardef=>$field){
 
-			if(isset($_REQUEST[$vardef])){		    
+			if(isset($_REQUEST[$vardef])){
                 $this->$vardef = $_REQUEST[$vardef];
 
                 //  Bug #48826. Some fields are allowed to have special characters and must be decoded from the request
@@ -497,7 +501,10 @@ class TemplateField{
                 if($field == 'help' && !empty($this->$vardef))
                 {
                     $help = htmlspecialchars_decode($this->$vardef, ENT_QUOTES);
-                    $this->$vardef = htmlentities(remove_xss($help));
+
+					// Fix for issue #1170 - text in studio can't accept the special language characters.
+					//$this->$vardef = htmlentities(remove_xss($help));
+					$this->$vardef = htmlspecialchars(remove_xss($help));
                 }
 
 

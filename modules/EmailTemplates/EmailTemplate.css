@@ -1,0 +1,103 @@
+#templateManager {
+    background: #eee;
+}
+
+.panel {
+    border: 1px solid rgb(211, 211, 211);
+    border-radius: 0;
+    display: flex;
+    margin-bottom: 10px;
+    background: #fff;
+}
+
+.panel-toolbar {
+    border-top: 1px solid rgb(211, 211, 211);
+    border-left: 1px solid rgb(211, 211, 211);
+    border-right: 1px solid rgb(211, 211, 211);
+    border-radius: 0;
+    display: flex;
+    background: #fff;
+}
+
+
+.template-panel {
+    margin-top: 8px;
+    border: 1px solid rgb(211, 211, 211);
+    padding: 5px;
+    background: #eee;
+}
+#wizform > table > tbody > tr > td  {
+    background: #fff;
+}
+
+.template-container {
+    width: 50%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding: 10px;
+}
+
+div:nth-of-type(odd).template-container {
+    border-right: 1px solid rgb(211, 211, 211);
+}
+
+.template-container-full {
+    width: 100%;
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding: 10px;
+}
+
+
+
+.template-container-attachment {
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.template-panel-container, .template-panel-container:after{clear:both}
+.template-panel-container {
+    background: #fff;
+}
+
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.form-group {
+    box-sizing: border-box;
+    border-collapse: collapse;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.button-group, .group {
+    display: inline-block;
+}
+
+.button-group-seperator {
+    padding-top: 4px;
+    margin-left: 4px;
+    margin-right: 6px;
+    border-right: 1px solid rgb(211, 211, 211);
+    display: inline;
+    content: '&nbsp;'
+}
+
+.clear-block {
+    display: block;
+}

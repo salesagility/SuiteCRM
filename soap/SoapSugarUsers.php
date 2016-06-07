@@ -594,7 +594,7 @@ function set_entry($session,$module_name, $name_value_list){
 	}
 	foreach($name_value_list as $value){
         $GLOBALS['log']->debug($value['name']." : ".$value['value']);
-		$seed->$value['name'] = $value['value'];
+		$seed->{$value['name']} = $value['value'];
 	}
 	if(! $seed->ACLAccess('Save') || ($seed->deleted == 1  &&  !$seed->ACLAccess('Delete')))
 	{
@@ -2235,7 +2235,7 @@ function handle_set_entries($module_name, $name_value_lists, $select_fields = FA
             //allow string or int of 0 to be updated if set.
             if(!empty($val) || ($val==='0' || $val===0))
             {
-                $seed->$value['name'] = $val;
+                $seed->{$value['name']} = $val;
             }
             //Store all the values in dataValues Array to apply later
             $dataValues[$value['name']] = $val;

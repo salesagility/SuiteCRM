@@ -62,6 +62,12 @@ $layout_defs['Campaigns'] = array(
             'title_key' => 'LBL_TRACKED_URLS_SUBPANEL_TITLE',
         ),
         'emailmarketing' => array(
+            'top_buttons' => array(
+                array(
+                    'widget_class' => 'SubPanelTopCreateCampaignMarketingEmailButton',
+                    'func' => 'createEmailMarketing'
+                ),
+            ),
             'order' => 20,
             'sort_order' => 'desc',
             'sort_by' => 'date_start',

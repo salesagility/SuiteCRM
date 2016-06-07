@@ -37,9 +37,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-global $current_user;
-$module_name = "Notes";
-
 $searchFields['Notes'] = 
 	array (
 		'name' => array( 'query_type'=>'default'),
@@ -47,10 +44,11 @@ $searchFields['Notes'] =
         'favorites_only' => array(
             'query_type'=>'format',
             'operator' => 'subquery',
-            'subquery' => 'SELECT favorites.parent_id FROM favorites
+			'checked_only' => true,
+			'subquery' => "SELECT favorites.parent_id FROM favorites
 			                    WHERE favorites.deleted = 0
-			                        and favorites.parent_type = "'.$module_name.'"
-			                        and favorites.assigned_user_id = "' .$current_user->id . '") OR NOT ({0}',
+			                        and favorites.parent_type = 'Notes'
+			                        and favorites.assigned_user_id = '{1}'",
             'db_field'=>array('id')),
 		
 	   //Range Search Support 

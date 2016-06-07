@@ -72,7 +72,7 @@ class ContactOpportunityRelationship extends SugarBean {
 		);
 
 	var $new_schema = true;
-	
+
 	var $additional_column_fields = Array();
 		var $field_defs = array (
        'id'=>array('name' =>'id', 'type' =>'char', 'len'=>'36', 'default'=>'')
@@ -82,13 +82,29 @@ class ContactOpportunityRelationship extends SugarBean {
       , 'date_modified'=>array ('name' => 'date_modified','type' => 'datetime')
       , 'deleted'=>array('name' =>'deleted', 'type' =>'bool', 'len'=>'1', 'default'=>'0', 'required'=>true)
       );
-	function ContactOpportunityRelationship() {
+	function __construct() {
+        parent::__construct();
 		$this->db = DBManagerFactory::getInstance();
         $this->dbManager = DBManagerFactory::getInstance();
 
 		$this->disable_row_level_security =true;
 
 		}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ContactOpportunityRelationship(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	function fill_in_additional_detail_fields()
 	{

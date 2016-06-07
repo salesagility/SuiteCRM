@@ -109,12 +109,26 @@ class Opportunity extends SugarBean {
 									'currency_id' => 'currencies',
 									);
 
-	function Opportunity() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 		global $sugar_config;
 		if(!$sugar_config['require_accounts']){
 			unset($this->required_fields['account_name']);
 		}
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function Opportunity(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
 	}
 
 	var $new_schema = true;
@@ -375,7 +389,7 @@ $query .= 			"LEFT JOIN users
 		}
 		// Bug 38529 & 40938 - exclude currency_id
 		parent::save_relationship_changes($is_update, array('currency_id'));
-		
+
 		if (!empty($this->contact_id)) {
 			$this->set_opportunity_contact_relationship($this->contact_id);
 		}
@@ -427,7 +441,7 @@ $query .= 			"LEFT JOIN users
                 }
 			}
 			require_once("modules/SecurityGroups/SecurityGroup.php");
-			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view'); 
+			$in_group = SecurityGroup::groupHasAccess('Accounts', $this->account_id, 'view');
         	/* END - SECURITY GROUPS */
 		}
 			/* BEGIN - SECURITY GROUPS */

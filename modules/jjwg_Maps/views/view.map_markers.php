@@ -4,16 +4,31 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 class Jjwg_MapsViewMap_Markers extends SugarView {
 
-  function Jjwg_MapsViewMap_Markers() {
-    parent::SugarView();
+  function __construct() {
+    parent::__construct();
   }
 
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function Jjwg_MapsViewMap_Markers(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
   function display() {
-    
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
- 
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-  <head> 
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
   <title><?php echo $GLOBALS['mod_strings']['LBL_MAP_DISPLAY']; ?></title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <link rel="stylesheet" type="text/css" href="cache/themes/<?php echo $GLOBALS['theme']; ?>/css/style.css" />
@@ -62,7 +77,7 @@ class Jjwg_MapsViewMap_Markers extends SugarView {
       margin: 1px;
       border: none;
     }
-    
+
     b {
       font-size: 12px;
       line-height: 16px;
@@ -123,7 +138,7 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
         }
     }
     // Define Dir of Group Icons
-    $icons_dir_base = 'custom/themes/default/images/jjwg_Maps/';
+    $icons_dir_base = 'themes/default/images/jjwg_Maps/';
     if ($num_groups <= 10) {
       $icons_dir = $icons_dir_base.'0-10/';
     } elseif ($num_groups <= 25) {
@@ -135,7 +150,7 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
     } else {
       $icons_dir = $icons_dir_base.'0-10/'; // Demo Version
     }
-    
+
     // Define Custom Markers Dir and Common Icons
     $custom_markers_dir = 'custom/themes/default/images/jjwg_Markers/';
     $custom_markers_icons = array();
@@ -150,7 +165,7 @@ var custom_areas = <?php echo (!empty($this->bean->custom_areas)) ? json_encode(
 var num_markers = <?php echo (!empty($num_markers)) ? json_encode($num_markers) : '0'; ?>;
 var num_groups = <?php echo (!empty($num_groups)) ? json_encode($num_groups) : '0'; ?>;
 var group_name_to_num = <?php echo (!empty($group_name_to_num)) ? json_encode($group_name_to_num) : '[]'; ?>;
-var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir) : "'custom/themes/default/images/jjwg_Maps/0-10/'"; ?>;
+var icons_dir = <?php echo (!empty($icons_dir)) ? json_encode($icons_dir) : "'themes/default/images/jjwg_Maps/0-10/'"; ?>;
 var num_custom_markers = <?php echo (!empty($num_custom_markers)) ? json_encode($num_custom_markers) : '0'; ?>;
 var custom_markers_dir = <?php echo (!empty($custom_markers_dir)) ? json_encode($custom_markers_dir) : "'custom/themes/default/images/jjwg_Markers/'"; ?>;
 var custom_markers_icons = <?php echo (!empty($custom_markers_icons)) ? json_encode($custom_markers_icons) : '[]'; ?>;
@@ -201,7 +216,7 @@ var oDataTableShownIds = null;
 
 
 function setCenterMarker() {
-  
+
     // Center Marker - marker[0]
     if (map_center !== null) {
         loc[0] = map_center;
@@ -229,7 +244,7 @@ function setCenterMarker() {
 
 
 function setMarkers() {
-  
+
     // Markers and InfoWindows
     for (var i=1, mLen=map_markers.length; i<=mLen; i++) {
         loc[i] = map_markers[i-1];
@@ -265,10 +280,10 @@ function setMarkers() {
 
 
 function toggleMarkerGroupVisibility(group_num) {
-    
+
     // Check markerGroupVisible
     visibility = markerGroupVisible[group_num];
-    
+
     if (typeof group_num !== 'undefined' && group_num !== '') {
         // Markers
         var toggled = false;
@@ -286,14 +301,14 @@ function toggleMarkerGroupVisibility(group_num) {
             markerClusterer.repaint();
         }
     }
-    
+
     return markerGroupVisible[group_num];
-    
+
 }
 
 
 function clickMarkerById(id) {
-    
+
     for (var i=0, mLen=marker.length; i<mLen; i++) {
         if (typeof marker[i] === 'object') {
             if (marker[i].id == id) {
@@ -307,7 +322,7 @@ function clickMarkerById(id) {
 
 
 function panToMarkerById(id) {
-    
+
     for (var i=0, mLen=marker.length; i<mLen; i++) {
         if (typeof marker[i] === 'object') {
             if (marker[i].id == id) {
@@ -320,7 +335,7 @@ function panToMarkerById(id) {
 }
 
 function panToLocation(lat, lng){
-    
+
     var center = new google.maps.LatLng(lat, lng);
     map.panTo(center);
 }
@@ -345,7 +360,7 @@ function setClusterControl() {
     controlUI.style.textAlign = 'center';
     controlUI.title = 'Click to Toggle Clustering';
     clusterControlDiv.appendChild(controlUI);
-    
+
     // Set CSS for the control interior
     var controlText = document.createElement('div');
     controlText.style.fontFamily = 'Arial,Verdana,Helvetica,sans-serif';
@@ -373,10 +388,10 @@ function setClusterControl() {
     });
 
 }
-    
-    
+
+
 function setDrawingControls() {
-    
+
     // Drawing Controls
     var overlayOptions = { strokeColor: "#000099", strokeOpacity: 0.8, strokeWeight: 1, fillColor: "#000099", fillOpacity: 0.20, clickable: true, draggable: true, editable: true, zIndex: 5 };
     drawingManager = new google.maps.drawing.DrawingManager({
@@ -390,12 +405,12 @@ function setDrawingControls() {
                 google.maps.drawing.OverlayType.POLYGON
             ]
         },
-        rectangleOptions: overlayOptions, 
-        circleOptions: overlayOptions, 
+        rectangleOptions: overlayOptions,
+        circleOptions: overlayOptions,
         polygonOptions: overlayOptions
     });
     drawingManager.setMap(map);
-    
+
     google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
         // Switch back to non-drawing mode after drawing a shape
         drawingManager.setDrawingMode(null);
@@ -418,12 +433,12 @@ function setDrawingControls() {
         }
         setSelection(newShape);
     });
-    
+
     // Clear the current selection when the drawing mode is changed, or when the map is clicked.
     google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
     google.maps.event.addListener(map, 'click', clearSelection);
-    
-    
+
+
     // "Delete Selected" Shape Button
     deleteSelectedDiv = document.createElement('div');
     // Set CSS styles for the DIV containing the control
@@ -441,7 +456,7 @@ function setDrawingControls() {
     controlUI.style.textAlign = 'center';
     controlUI.title = 'Click to Remove Selected Shape';
     deleteSelectedDiv.appendChild(controlUI);
-    
+
     // Set CSS for the control interior
     var controlText = document.createElement('div');
     controlText.style.fontFamily = 'Arial,Verdana,Helvetica,sans-serif';
@@ -455,10 +470,10 @@ function setDrawingControls() {
 
     deleteSelectedDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(deleteSelectedDiv);
-    
+
     // Clear the current selection when the remove shape button is clicked
     google.maps.event.addDomListener(deleteSelectedDiv, 'click', deleteSelectedShape);
-    
+
 }
 
 function listSelectedShape() {
@@ -521,7 +536,7 @@ function deleteSelectedShape() {
 
 
 function setCustomMarkers() {
-    
+
     // Define the Custom Marker Images (jjwg_Markers Module)
     var customImage = [];
     for (var i=0, cLen=custom_markers_icons.length; i<cLen; i++) {
@@ -535,7 +550,7 @@ function setCustomMarkers() {
     var custom_shape = {coord: [1, 1, 1, 37, 32, 37, 32, 1],type: 'poly'};
 
     for (var i=num_markers+1, numTot=num_markers+num_custom_markers; i<=numTot; i++) {
-        
+
         loc[i] = custom_markers[i-num_markers-1];
         myLatLng[i] = new google.maps.LatLng(loc[i].lat, loc[i].lng);
         marker[i] = new google.maps.Marker({
@@ -558,9 +573,9 @@ function setCustomMarkers() {
         });
         bounds.extend(myLatLng[i]);
         markers.push(marker[i]);
-        
+
     } // end for
-    
+
 }
 
 function setCustomAreas() {
@@ -569,9 +584,9 @@ function setCustomAreas() {
     var polygon = [];
     var p = [];
     myAreaPolygon = [];
-    
+
     for (var i=0, cLen=custom_areas.length; i<cLen; i++) {
-        
+
         // coordinates: space separated lng,lat,elv points
         myCoords = [];
         polygon = custom_areas[i].coordinates.replace(/^[\s\n\r]+|[\s\n\r]+$/g,"").split(/[\n\r ]+/);
@@ -622,9 +637,9 @@ function initialize() {
         ),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-    
+
     bounds = new google.maps.LatLngBounds();
-    
+
     // Define the Marker Images
     for (var i=0, gLen=map_markers_groups.length; i<=gLen; i++) {
         markerImage[i] = new google.maps.MarkerImage(icons_dir+'/marker_'+i+'.png',
@@ -634,22 +649,22 @@ function initialize() {
         //markerGroupVisible[i] = true;
     }
     shape = {coord: [1, 1, 1, 34, 20, 34, 20, 1],type: 'poly'};
-    
+
     setCenterMarker();
     setMarkers();
     setCustomMarkers();
     setCustomAreas();
-    
+
     // Position Legend
     legend = document.getElementById('legend');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
-    
+
     // Set a maximum zoom Level only on initial zoom
     map.fitBounds(bounds);
-    google.maps.event.addListenerOnce(map, "idle", function() { 
+    google.maps.event.addListenerOnce(map, "idle", function() {
         if (map.getZoom() > 15) map.setZoom(15);
     });
-    
+
     // Now using MarkerClustererPlus v2.1.1
     markerClusterer = new MarkerClusterer(map, markers, {
         maxZoom: (typeof jjwg_config['map_clusterer_max_zoom'] === 'undefined') ? jjwg_config_defaults['map_clusterer_max_zoom'] : jjwg_config['map_clusterer_max_zoom'],
@@ -667,7 +682,7 @@ function initialize() {
 
 // Define DataTable Data
 function setODataTable() {
-    
+
     if (num_markers > 0) {
 
         //console.log(map_markers);
@@ -689,17 +704,17 @@ function setODataTable() {
             "aaData": map_markers,
             "aoColumns": [
                 {
-                    "sWidth": "1%", 
+                    "sWidth": "1%",
                     "mDataProp": "id",
                     "bSearchable": false
                 },
                 {
-                    "sWidth": "25%", 
+                    "sWidth": "25%",
                     "mDataProp": "name",
                     "mRender": function (data, type, row) {
                         if (type == 'display') {
-                            return '<a target="_blank" href="./index.php?module=' + row.module + 
-                                '&amp;action=DetailView&amp;record=' + row.id + 
+                            return '<a target="_blank" href="./index.php?module=' + row.module +
+                                '&amp;action=DetailView&amp;record=' + row.id +
                                 '" class="link target_blank">' + data + '</a>';
                         } else {
                             return data;
@@ -707,11 +722,11 @@ function setODataTable() {
                     }
                 },
                 {
-                    "sWidth": "35%", 
+                    "sWidth": "35%",
                     "mDataProp": "address"
                 },
                 {
-                    "sWidth": "10%", 
+                    "sWidth": "10%",
                     "mDataProp": "phone"
                 },
                 {
@@ -746,8 +761,8 @@ function setODataTable() {
                     "bSearchable": false,
                     "mRender": function (data, type, row) {
                         if (type == 'display') {
-                            return '<a href="#" onclick="clickMarkerById(\'' + row.id + '\')" class="link">' + 
-                                '<img src="custom/themes/default/images/jjwg_Address_Cache.gif" /></a>';
+                            return '<a href="#" onclick="clickMarkerById(\'' + row.id + '\')" class="link">' +
+                                '<img src="themes/default/images/jjwg_Address_Cache.gif" /></a>';
                         } else {
                             return '';
                         }
@@ -757,11 +772,11 @@ function setODataTable() {
         });
         // Force Visibility of ID Column
         oDataTable.fnSetColumnVis(0, false);
-        
+
         // Filter by Legend Toggle
         $.fn.dataTableExt.afnFiltering.push(
             function( oSettings, aData, iDataIndex ) {
-                
+
                 var shown = true;
                 // Check Shape Selection: Limit by selectedShape and selectedShapeMarkerById
                 if (selectedShapeMarkerById) {
@@ -773,7 +788,7 @@ function setODataTable() {
                         }
                     }
                 }
-                
+
                 // Check the marker group visibility
                 var group_name = aData[3];
                 if (group_name == "{"+mod_strings['LBL_MAP_NULL_GROUP_NAME']+"}") {
@@ -784,17 +799,17 @@ function setODataTable() {
                 if (markerGroupVisible[group_num] !== true) {
                     shown = false;
                 }
-                
+
                 return shown;
             }
         );
-        
+
     }
 }
-    
+
 function setODataTableShown() {
 
-    // Set the shown oDataTable based on the above filtering 
+    // Set the shown oDataTable based on the above filtering
     // Triggered by fnDrawCallback
     oDataTableShown = oDataTable._('tr', {"filter":"applied"});
     //console.log(oDataTableShown);
@@ -808,13 +823,13 @@ function setODataTableShown() {
 
 
 $(document).ready(function(){
-    
+
     // Call Google Map initialize()
     initialize();
 
     // Set DataTables Data
     setODataTable();
-    
+
     // Tabs Loading Bug - Hidden IFrame Map
     $('div.detailview_tabs ul li a', parent.document).on('click', function (){
         // Allow 1/4 sec for Tabs JavaScript to execute
@@ -825,7 +840,7 @@ $(document).ready(function(){
             markerClusterer.repaint();
         },250);
     });
-    
+
     // Toogle Marker Group Visibility on Click of Image
     $('#legend img').click(function(){
         var rel_group_num = $(this).attr('rel');
@@ -839,16 +854,16 @@ $(document).ready(function(){
         if (num_markers > 0) {
             oDataTable.fnDraw();
         }
-        
+
     });
-    
+
     // Target List Form Submit
     $('#tagetList').on("submit", function(event) {
-        
+
         event.preventDefault();
-        
+
         if (confirm('<?php echo $GLOBALS['mod_strings']['LBL_ADD_TO_TARGET_LIST']; ?>')) {
-            
+
             $('#tagetListResult').html('<?php echo $GLOBALS['mod_strings']['LBL_ADD_TO_TARGET_LIST_PROCESSING']; ?>');
             var formData = $(this).serializeArray();
             var formUrl = $(this).attr("action");
@@ -857,25 +872,25 @@ $(document).ready(function(){
                 var valId = oDataTableShownIds[i];
                 formData.push({ name: "selected_ids[]", value: valId });
             }
-            
+
             $.ajax({
                 url: formUrl,
                 type: "post",
                 data: formData
             }).done(function(response) {
                 //console.log(response);
-                $('#tagetListResult').html(response.message + 
+                $('#tagetListResult').html(response.message +
                     ' (' + response.list.name + ')');
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 response = jQuery.parseJSON(jqXHR.responseText);
                 //console.log(response);
-                $('#tagetListResult').html('#' + errorThrown + ' ' + 
-                    textStatus + '. ' + response.message + 
+                $('#tagetListResult').html('#' + errorThrown + ' ' +
+                    textStatus + '. ' + response.message +
                     ' (' + response.list.name + ')');
             });
         }
     });
-    
+
 });
 
 
@@ -884,11 +899,11 @@ $(document).ready(function(){
 </head>
 
 <body>
-  
+
   <div id="map_canvas"></div>
-  
+
   <br clear="all" />
-  
+
 <?php
   if (!empty($this->bean->map_center) || $num_markers > 0) {
 ?>
@@ -906,7 +921,7 @@ $(document).ready(function(){
 <?php
   foreach($group_name_to_num as $group_name => $group_number) {
 ?>
-    <img src="<?php echo './'.$icons_dir.'/marker_'.$group_number.'.png'; ?>" 
+    <img src="<?php echo './'.$icons_dir.'/marker_'.$group_number.'.png'; ?>"
          rel="<?php echo $group_number; ?>" align="middle" />
 <?php
     if (empty($group_name)) {
@@ -917,12 +932,12 @@ $(document).ready(function(){
     ?><br/>
 <?php
   }
-?>   
+?>
   </div>
 <?php
   }
 ?>
-  
+
 <?php
   if ($num_markers > 0) {
 ?>
@@ -952,7 +967,7 @@ $(document).ready(function(){
 
 <?php
   if (in_array($this->bean->display_object->module_name, array('Accounts', 'Contacts', 'Leads', 'Prospects', 'Users')) &&
-          ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) && 
+          ($GLOBALS['current_user']->isAdmin() || $this->bean->ACLAccess('list')) &&
           empty($_REQUEST['list_id']) && !empty($this->bean->list_array)) {
 ?>
 <br clear="all" />
@@ -987,8 +1002,8 @@ $(document).ready(function(){
 //var_dump($GLOBALS['mod_strings']);
 //echo "</pre>";
 ?>
-  
-</body> 
+
+</body>
 </html>
 <?php
 

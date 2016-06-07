@@ -42,9 +42,24 @@ require_once('include/SugarFields/Parsers/Rules/BaseRule.php');
 
 class CampaignsParseRule extends BaseRule {
 
-function CampaignsParseRule() {
-	
+function __construct() {
+
 }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function CampaignsParseRule(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 function preParse($panels, $view) {
 	if($view == 'EditView') {
@@ -62,17 +77,17 @@ function preParse($panels, $view) {
 		   	  	 	 	//We will just remove the field since you shouldn't be able to edit this information anyway
 		   	  	 	 	$panels[$name][$rowCount][$key] = '';
 		   	  	 	 }
-		   	  	 } //foreach 
+		   	  	 } //foreach
 		   	} //foreach
 		} //foreach
-		
+
 		//If all the row/columns were taken up, then add frequency as a last row
 		if(!$frequencyAdded) {
 		   $panels['default'][][] = 'frequency';
 		}
 	}
-	return $panels;	
+	return $panels;
 }
-	
+
 }
 ?>

@@ -103,7 +103,7 @@ abstract class DashletGenericChart extends Dashlet
         array $options = null
         )
     {
-        parent::Dashlet($id);
+        parent::__construct($id);
 
         if ( isset($options) ) {
             foreach ( $options as $key => $value ) {
@@ -270,7 +270,7 @@ abstract class DashletGenericChart extends Dashlet
         $this->getConfigureSmartyInstance()->assign('dashletType', 'predefined_chart');
         $this->getConfigureSmartyInstance()->assign('module', $_REQUEST['module']);
         $this->getConfigureSmartyInstance()->assign('showClearButton', $this->isConfigPanelClearShown);
-        
+
         if($this->isAutoRefreshable()) {
        		$this->getConfigureSmartyInstance()->assign('isRefreshable', true);
 			$this->getConfigureSmartyInstance()->assign('autoRefresh', $GLOBALS['app_strings']['LBL_DASHLET_CONFIGURE_AUTOREFRESH']);

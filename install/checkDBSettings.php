@@ -146,7 +146,7 @@ function checkDBSettings($silent=false) {
         }
 
         // privileged account tests
-        if( empty($_SESSION['setup_db_admin_user_name']) ){
+        else if( empty($_SESSION['setup_db_admin_user_name']) ){
             $errors['ERR_DB_PRIV_USER'] = $mod_strings['ERR_DB_PRIV_USER'];
             installLog("ERROR:: {$errors['ERR_DB_PRIV_USER']}");
         } else {
