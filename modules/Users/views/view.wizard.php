@@ -259,6 +259,24 @@ eoq;
 
         $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default);
         $this->ss->assign('langHeader', get_language_header());
+
+        require_once('install/suite_install/scenarios.php');
+        if(isset($installation_scenarios))
+        {
+
+            for($i = 0; $i < count($installation_scenarios); $i++)
+            {
+                $installation_scenarios[$i]['moduleOverview']='( '.implode(', ',$installation_scenarios[$i]['modules']).')';
+            }
+
+            $this->ss->assign('scenarios', $installation_scenarios);
+        }
+        else
+        {
+            $this->ss->assign('scenarios', []);
+        }
+
+
 		$this->ss->display($this->getCustomFilePathIfExists('modules/Users/tpls/wizard.tpl'));
 	}
 
