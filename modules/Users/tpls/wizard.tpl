@@ -266,10 +266,12 @@
                onclick="SugarWizard.changeScreen('personalinfo',true);" id="previous_tab_personalinfo" />&nbsp;
         <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
+        {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
                onclick="SugarWizard.changeScreen('smtp',false);" id="next_tab_smtp" />
+        {elseif $IS_ADMIN}
+               onclick="SugarWizard.changeScreen('scenarios',false);" id="next_tab_scenarios" />
         {else}
-        onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
+              onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
         {/if}
     </div>
 </div>
@@ -322,12 +324,117 @@
             <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                    class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
                    onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-            <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
-                   class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
+            {if $IS_ADMIN}
+                <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
+                       class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
+                       onclick="SugarWizard.changeScreen('scenarios',false);" id="next_tab_scenarios" />
+            {else}
+                <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
+                       class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
+                       onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
+            {/if}
+
         </div>
     </div>
 {/if}
+
+
+<div id="scenarios" class="screen">
+    <h1>SCENARIOS</h1>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <div class="edit view">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th width="100%" align="left" scope="row" colspan="4">
+                                <h2><slot>{$MOD.LBL_WIZARD_SCENARIOS}</slot></h2></th>
+                        </tr>
+                        <tr>
+                            <td align="left" scope="row" colspan="4"><i>{$MOD.LBL_WIZARD_LOCALE_DESC}</i></td>
+                        </tr>
+                        <tr>
+                            <td scope="row" nowrap="nowrap"><slot>{$MOD.LBL_TIMEZONE}:</slot>&nbsp;{sugar_help text=$MOD.LBL_TIMEZONE_TEXT }</td>
+                            <td colspan="3"><slot><select tabindex='14' name='timezone'>{html_options options=$TIMEZONEOPTIONS selected=$TIMEZONE_CURRENT}</select></slot></td>
+                        </tr>
+                        <tr>
+                            <td width="17%" scope="row" nowrap="nowrap"><slot>{$MOD.LBL_DATE_FORMAT}:</slot>&nbsp;{sugar_help text=$MOD.LBL_DATE_FORMAT_TEXT }</td>
+                            <td width="33%"><slot><select tabindex='14' name='dateformat'>{$DATEOPTIONS}</select></slot></td>
+                            <td scope="row" nowrap="nowrap"><slot>{$MOD.LBL_TIME_FORMAT}:</slot>&nbsp;{sugar_help text=$MOD.LBL_TIME_FORMAT_TEXT }</td>
+                            <td ><slot><select tabindex='14' name='timeformat'>{$TIMEOPTIONS}</select></slot></td>
+
+                        </tr>
+                        <tr>
+                            <td colspan="4"><hr /></td>
+                        </tr>
+                        <tr>
+                            <td width="17%" scope="row" nowrap="nowrap"><slot>{$MOD.LBL_CURRENCY}:</slot>&nbsp;{sugar_help text=$MOD.LBL_CURRENCY_TEXT }</td>
+                            <td ><slot>
+                                    <select tabindex='14' id='currency_select' name='currency' onchange='setSymbolValue(this.selectedIndex);setSigDigits();'>{$CURRENCY}</select>
+                                    <input type="hidden" id="symbol" value="">
+                                </slot></td>
+                            <td width="17%" scope="row" nowrap="nowrap"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td width="17%" scope="row" nowrap="nowrap"><slot>
+                                    {$MOD.LBL_CURRENCY_SIG_DIGITS}:
+                                </slot></td>
+                            <td ><slot>
+                                    <select id='sigDigits' onchange='setSigDigits(this.value);' name='default_currency_significant_digits'>{$sigDigits}</select>
+                                </slot></td>
+                            <td width="17%" scope="row" nowrap="nowrap"><slot>
+                                    <i>{$MOD.LBL_LOCALE_EXAMPLE_NAME_FORMAT}:</i>
+                                </slot></td>
+                            <td ><slot>
+                                    <input type="text" disabled id="sigDigitsExample" name="sigDigitsExample">
+                                </slot></td>
+                        </tr>
+                        <tr>
+                            <td width="17%" scope="row" nowrap="nowrap"><slot>{$MOD.LBL_DECIMAL_SEP}:</slot>&nbsp;{sugar_help text=$MOD.LBL_DECIMAL_SEP_TEXT }</td>
+                            <td ><slot>
+                                    <input tabindex='14' name='dec_sep' id='default_decimal_seperator'
+                                           type='text' maxlength='1' size='1' value='{$DEC_SEP}'
+                                           onkeydown='setSigDigits();' onkeyup='setSigDigits();'>
+                                </slot></td>
+                            <td width="17%" scope="row" nowrap="nowrap"><slot>{$MOD.LBL_NUMBER_GROUPING_SEP}:</slot>&nbsp;{sugar_help text=$MOD.LBL_NUMBER_GROUPING_SEP_TEXT }</td>
+                            <td><input tabindex='14' name='num_grp_sep' id='default_number_grouping_seperator'
+                                       type='text' maxlength='1' size='1' value='{$NUM_GRP_SEP}'
+                                       onkeydown='setSigDigits();' onkeyup='setSigDigits();'></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"><hr /></td>
+                        </tr>
+                        <tr>
+                            {capture name=SMARTY_LOCALE_NAME_FORMAT_DESC}&nbsp;{$MOD.LBL_LOCALE_NAME_FORMAT_DESC}{/capture}
+                            <td nowrap="nowrap" scope="row" valign="top">{$MOD.LBL_LOCALE_DEFAULT_NAME_FORMAT}:&nbsp;{sugar_help text=$smarty.capture.SMARTY_LOCALE_NAME_FORMAT_DESC }</td>
+                            <td><slot><select id="default_locale_name_format" tabindex='14' name="default_locale_name_format" selected="{$default_locale_name_format}">{$NAMEOPTIONS}</select></slot></td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="nav-buttons">
+
+        {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
+            <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
+                   class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
+                   onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
+        {else}
+            <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
+                   class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
+                   onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
+        {/if}
+
+        <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
+               class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
+               onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
+    </div>
+</div>
+
+
+
 <div id="finish" class="screen">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -374,10 +481,12 @@
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
+         {if $IS_ADMIN}
+               onclick="SugarWizard.changeScreen('scenarios',true);" id="previous_tab_scenarios" />&nbsp;
+        {elseif !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
                onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
         {else}
-        onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
+            onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
         {/if}
         <input title="{$MOD.LBL_WIZARD_FINISH_BUTTON}" class="button primary"
                type="submit" name="save" value="  {$MOD.LBL_WIZARD_FINISH_BUTTON}  " />&nbsp;
