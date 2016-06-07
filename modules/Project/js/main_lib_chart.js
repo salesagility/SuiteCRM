@@ -23,6 +23,7 @@ $(document).ajaxStop($.unblockUI);
 var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
 
 $(function() {
+   
    //generate the chart on page load
     gen_chart('0');
 
@@ -30,7 +31,7 @@ $(function() {
     var msg = '<div><br />' +
         '<h1><img align="absmiddle" src="themes/'+SUGAR.themes.theme_name+'/images/img_loading.gif"> ' + loading + '</h1>' + '</div>';
     //on button click re-generate the chart
-    $(document.body).on('change','#resources', function(e) {
+    $(document.body).on('click','#create_link', function(e) {
         $(".qtip").remove(); //Clear all tooltips before re-generating the chart
 
         $.blockUI({//ajax loading screen
@@ -84,19 +85,41 @@ $(function() {
 * */
 
  function gen_chart(month, flag){
+
     //Get the chart properties
     var start = $('#date_start').val();
     var end = $('#date_end').val();
-    var resources = $('#resources').val();
-    var type = 'all';
+	var projects = $('#projects').val();
+    var users = $('#users').val();
+	var contacts = $('#contacts').val();
+	var chart_type = $('#chart_type').val();
+    //var type = 'all';
 
-    if(!resources){
-        resources = 'all';
+
+    if(!start){
+        start = '';
     }
-    else {
-        var selected = $('#resources').find('option:selected');
-        type = selected.data('type');
+
+	if(!end){
+        end = '';
     }
+
+    if(!projects){
+        projects = '';
+    }
+
+    if(!users){
+        users = '';
+    }
+
+    if(!contacts){
+        contacts = '';
+    }
+
+    if(!chart_type){
+        chart_type = '';
+    }
+
     if(flag){
         flag = '1';
     }
@@ -105,8 +128,9 @@ $(function() {
     }
 
     //Put the properties into a string
-    var dataString = '&start=' + start + '&end=' + end + '&resources=' + resources + '&month=' + month + '&flag=' + flag + '&type=' + type ;
-    //Pass the properties to the controller function via ajax
+    var dataString = '&start=' + start + '&end=' + end +  '&projects=' + projects + '&users=' + users + '&contacts=' + contacts + '&month=' + month + '&flag=' + flag  + '&chart_type=' + chart_type  ;
+    
+	//Pass the properties to the controller function via ajax
     $.ajax({
         type: "POST",
         url: "index.php?module=Project&action=update_chart",
@@ -126,14 +150,15 @@ $(function() {
 
  function add_tooltips(){
     //loop through each task and add tooltips
-    $('.h').each(function(event) {
+    $('.h,.d').each(function(event) {
 
         //set tooltip title
         var title = SUGAR.language.get('Project', 'LBL_TOOLTIP_TITLE');
-        //get start and end date of the task to pass via ajax to the tooltip controller function
+        //console.log(title);
+		//get start and end date of the task to pass via ajax to the tooltip controller function
         var rel = $(this).attr('rel');
         var dates = rel.split("|");
-        var dataString = 'start_date=' + dates[0] + '&resource_id=' + dates[1] + '&type=' + dates[2];
+        var dataString = 'start_date=' + dates[0] + '&end_date=' + dates[1] +'&resource_id=' + dates[2] + '&type=' + dates[3];
         var url = 'index.php?module=Project&action=Tooltips';
 
         $(this).qtip({
@@ -154,7 +179,7 @@ $(function() {
                     return 'Loading...'; // Set some initial text
                 },
                 title: {
-                    button: true,
+                    //button: true,
                     text: title
                 }
             },
@@ -169,10 +194,11 @@ $(function() {
                 }
             },
             show: {
-                event: 'click'
-
+                event: 'mouseover'
             },
-            hide: false,
+            hide: {
+                event: 'mouseout'
+            },
             style: {
                 classes : 'qtip-green qtip-shadow qtip_box', //qtip-rounded'
                 tip: {
