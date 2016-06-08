@@ -229,6 +229,8 @@ $adminOnlyList = array(
     'UpgradeWizard' => array('all' => 1),
     'Studio' => array('all' => 1),
     'Schedulers' => array('all' => 1),
+    'Reminders' => array('all' => '1'),
+    'Reminders_Invitees' => array('all' => '1'),
 );
 
 $modInvisList[] = 'ACL';
@@ -312,11 +314,13 @@ $moduleList[] = 'AOK_KnowledgeBase';
 
 $beanList['Reminders'] = 'Reminder';
 $beanFiles['Reminder'] = 'modules/Reminders/Reminder.php';
+// Issue #1249 - Reminders should be hidden from the navigation
 $moduleList[] = 'Reminders';
 $modInvisList[] = 'Reminders';
 
 $beanList['Reminders_Invitees'] = 'Reminder_Invitee';
 $beanFiles['Reminder_Invitee'] = 'modules/Reminders_Invitees/Reminder_Invitee.php';
+// Issue #1249 - Reminders should be hidden from the navigation
 $moduleList[] = 'Reminders_Invitees';
 $modInvisList[] = 'Reminders_Invitees';
 
