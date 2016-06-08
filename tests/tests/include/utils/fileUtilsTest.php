@@ -161,6 +161,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'Relationships' => 'Relationships',
                 'Reminders' => 'Reminders',
                 'Reminders_Invitees' => 'Reminders_Invitees',
+                'ResourceCalendar' => 'ResourceCalendar',
                 'Releases' => 'Releases',
                 'Roles' => 'Roles',
                 'SavedSearch' => 'SavedSearch',
