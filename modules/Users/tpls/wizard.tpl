@@ -268,8 +268,6 @@
                class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
         {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
                onclick="SugarWizard.changeScreen('smtp',false);" id="next_tab_smtp" />
-        {elseif $IS_ADMIN}
-               onclick="SugarWizard.changeScreen('scenarios',false);" id="next_tab_scenarios" />
         {else}
               onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
         {/if}
@@ -324,70 +322,12 @@
             <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                    class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
                    onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-            {if $IS_ADMIN}
-                <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
-                       class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-                       onclick="SugarWizard.changeScreen('scenarios',false);" id="next_tab_scenarios" />
-            {else}
                 <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                        class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
                        onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
-            {/if}
-
         </div>
     </div>
 {/if}
-
-
-<div id="scenarios" class="screen">
-    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td>
-                <div class="edit view">
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                            <th width="100%" align="left" scope="row" colspan="4">
-                                <h2><slot>{$MOD.LBL_WIZARD_SCENARIOS}</slot></h2>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td align="left" scope="row" colspan="4"><i>{$MOD.LBL_WIZARD_SCENARIOS_DESC}</i></td>
-                        </tr>
-                        {if $scenarios|@count > 0}
-                            {foreach from=$scenarios item=item key=key}
-                                <tr>
-                                    <td scope="row" nowrap="nowrap"><slot>{$item.title}:</slot>&nbsp;{sugar_help text=$item.description}</td>
-                                    <td colspan="3"><slot><input type='checkbox' name='scenarios[]' value={$item.key} checked>  {$item.moduleOverview}</slot></td>
-                                </tr>
-                            {/foreach}
-                        {else}
-                            <h3>$LBL_WIZARD_SCENARIOS_EMPTY_LIST</h3>
-                        {/if}
-                    </table>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <div class="nav-buttons">
-
-        {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
-            <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
-                   class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
-        {else}
-            <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
-                   class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-                   onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
-        {/if}
-
-        <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
-               class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-               onclick="SugarWizard.changeScreen('finish',false);" id="next_tab_finish" />
-    </div>
-</div>
-
-
-
 <div id="finish" class="screen">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
@@ -434,9 +374,7 @@
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
                class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-         {if $IS_ADMIN}
-               onclick="SugarWizard.changeScreen('scenarios',true);" id="previous_tab_scenarios" />&nbsp;
-        {elseif !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
+                {if !$HIDE_IF_CAN_USE_DEFAULT_OUTBOUND}
                onclick="SugarWizard.changeScreen('smtp',true);" id="previous_tab_smtp" />&nbsp;
         {else}
             onclick="SugarWizard.changeScreen('locale',true);" id="previous_tab_locale" />&nbsp;
