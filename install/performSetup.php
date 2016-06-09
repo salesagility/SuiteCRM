@@ -716,7 +716,13 @@ $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
 
 $current_user->setPreference('silentInstall', $silentInstall);
-if($silentInstall)
+//Check if the user has chosen in config_si not to see the wizard post silent install (skip_post_silent_install_admin_wizard)
+$skip_post_silent_install_admin_wizard = false;
+if(isset($_SESSION['skip_post_silent_install_admin_wizard']) && $_SESSION['skip_post_silent_install_admin_wizard'] === true)
+{
+    $skip_post_silent_install_admin_wizard = true;
+}
+if($silentInstall && !$skip_post_silent_install_admin_wizard)
 {
     $current_user->setPreference('postSilentInstallAdminWizardCompleted', false);
 }
