@@ -716,6 +716,10 @@ $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
 
 $current_user->setPreference('silentInstall', $silentInstall);
+if($silentInstall)
+{
+    $current_user->setPreference('postSilentInstallAdminWizardCompleted', false);
+}
 
 // set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
 if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {

@@ -147,7 +147,7 @@ function disableReturnSubmission(e) {
                 onclick="SugarWizard.changeScreen('welcome',true);" id="previous_tab_welcome" />&nbsp;
             <input title="{$MOD.LBL_WIZARD_NEXT_BUTTON}"
                 class="button primary" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_NEXT_BUTTON}  "
-            {if !$silentInstall}
+            {if $silentInstall}
                 onclick="SugarWizard.changeScreen('scenarios',false);" id="next_tab_scenarios" />
             {else}
                 onclick="SugarWizard.changeScreen('locale',false);" id="next_tab_locale" />
@@ -273,7 +273,7 @@ function disableReturnSubmission(e) {
     <div class="nav-buttons">
         <input title="{$MOD.LBL_WIZARD_BACK_BUTTON}"
             class="button" type="button" name="next_tab1" value="  {$MOD.LBL_WIZARD_BACK_BUTTON}  "
-        {if !$silentInstall}
+        {if $silentInstall}
             onclick="SugarWizard.changeScreen('scenarios',true);" id="previous_tab_scenarios" />&nbsp;
         {else}
             onclick="SugarWizard.changeScreen('system',true);" id="previous_tab_system" />&nbsp;

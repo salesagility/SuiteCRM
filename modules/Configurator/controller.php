@@ -146,6 +146,13 @@ class ConfiguratorController extends SugarController
         $configurator->parseLoggerSettings();
         $configurator->saveConfig();
 
+        //The save of the admin wizard stops the post silent install from re-showing the admin wizard on each login
+        $postSilentInstallAdminWizardCompleted = $current_user->getPreference('postSilentInstallAdminWizardCompleted');
+        if(isset($postSilentInstallAdminWizardCompleted) && !$postSilentInstallAdminWizardCompleted)
+        {
+            $current_user->setPreference('postSilentInstallAdminWizardCompleted',true);
+        }
+
         // Bug 37310 - Delete any existing currency that matches the one we've just set the default to during the admin wizard
         $currency = new Currency;
         $currency->retrieve($currency->retrieve_id_by_name($_REQUEST['default_currency_name']));
