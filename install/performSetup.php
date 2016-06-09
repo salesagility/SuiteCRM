@@ -414,7 +414,7 @@ if(isset($_SESSION['INSTALLED_LANG_PACKS']) && is_array($_SESSION['INSTALLED_LAN
 
 ///////////////////////////////////////////////////////////////////////////
 ////    HANDLE SUGAR VERSIONS
-require_once('modules/Versions/InstallDefaultVersions.php');
+//require_once('modules/Versions/InstallDefaultVersions.php');
 
 
 
@@ -714,6 +714,8 @@ $current_user = new User();
 $current_user->retrieve(1);
 $current_user->is_admin = '1';
 $sugar_config = get_sugar_config_defaults();
+
+$current_user->setPreference('silentInstall', $silentInstall);
 
 // set local settings -  if neccessary you can set here more fields as named in User module / EditView form...
 if(isset($_REQUEST['timezone']) && $_REQUEST['timezone']) {
