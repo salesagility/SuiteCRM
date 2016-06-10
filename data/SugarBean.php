@@ -687,8 +687,7 @@ class SugarBean
                         email_addr_bean_rel.primary_address = 1 AND
                         email_addr_bean_rel.deleted = 0 AND
                         email_addr_bean_rel.bean_id = $relatedBeanTable.id AND
-                        email_addr_bean_rel.bean_module = '$relatedBeanModule'
-                     LIMIT 1) as $order_by";
+                        email_addr_bean_rel.bean_module = '$relatedBeanModule') as $order_by";
                 }
 
                 //Put the query into the final_query
