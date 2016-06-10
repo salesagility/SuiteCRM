@@ -1,5 +1,10 @@
 <?php
 global $app_strings;
+if($app_strings === NULL)
+{
+        $app_strings = return_application_language($current_language);
+}
+
 $installation_scenarios = array(
     0 =>
         array(
