@@ -1938,6 +1938,13 @@ $app_strings = array(
 
     'LBL_SUGAR_COPYRIGHT_SUB' => '&copy; 2004-2013 <a href="http://www.sugarcrm.com" target="_blank" class="copyRightLink">SugarCRM Inc.</a> All Rights Reserved.<br />SugarCRM is a trademark of SugarCRM, Inc. All other company and product names may be trademarks of the respective companies with which they are associated.',
 
+
+    'LBL_SCENARIO_SALES_DESCRIPTION'=>'SALESSALESSALESSALESSALESSALES',
+    'LBL_SCENARIO_MAKETING_DESCRIPTION'=>'MARKETINGMARKETING',
+    'LBL_SCENARIO_FINANCE_DESCRIPTION'=>'FINANCEFINANCE',
+    'LBL_SCENARIO_SERVICE_DESCRIPTION'=>'SERVICESERVICESERVICE',
+    'LBL_SCENARIO_PROJECT_DESCRIPTION'=>'PROJECTPROJECT',
+
     'LBL_SYNC' => 'Sync',
     'LBL_TABGROUP_ALL' => 'All',
     'LBL_TABGROUP_ACTIVITIES' => 'Activities',

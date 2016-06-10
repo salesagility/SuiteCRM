@@ -4,7 +4,7 @@ $installation_scenarios = array(
         array(
             'key' => 'Sales',
             'title' => 'Sales',
-            'description' => 'The sales scenario allows for ...',
+            'description' => $app_strings['LBL_SCENARIO_SALES_DESCRIPTION'],
             'groupedTabs'=> 'LBL_TABGROUP_SALES',
             'modules' =>
                 array(
@@ -26,7 +26,7 @@ $installation_scenarios = array(
         array(
             'key' => 'Marketing',
             'title' => 'Marketing',
-            'description' => 'The marketing scenario allows for ...',
+            'description' => $app_strings['LBL_SCENARIO_MAKETING_DESCRIPTION'],
             'groupedTabs'=> 'LBL_TABGROUP_MARKETING',
             'modules' =>
                 array(
@@ -50,7 +50,7 @@ $installation_scenarios = array(
         array(
             'key' => 'Finance',
             'title' => 'Finance',
-            'description' => 'The finance scenario allows for ...',
+            'description' => $app_strings['LBL_SCENARIO_FINANCE_DESCRIPTION'],
             'groupedTabs'=> '',
             'modules' =>
                 array(
@@ -74,7 +74,7 @@ $installation_scenarios = array(
         array(
             'key' => 'ServiceManagement',
             'title' => 'Service Management',
-            'description' => 'The service management scenario allows for ...',
+            'description' => $app_strings['LBL_SCENARIO_SERVICE_DESCRIPTION'],
             'groupedTabs'=> 'LBL_TABGROUP_SUPPORT',
             'modules' =>
                 array(
@@ -94,7 +94,7 @@ $installation_scenarios = array(
         array(
             'key' => 'ProjectManagement',
             'title' => 'Project Management',
-            'description' => 'The project management scenario allows for ...',
+            'description' => $app_strings['LBL_SCENARIO_PROJECT_DESCRIPTION'],
             'groupedTabs'=> '',
             'modules' =>
                 array(
