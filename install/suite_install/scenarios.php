@@ -1,4 +1,5 @@
 <?php
+global $app_strings;
 $installation_scenarios = array(
     0 =>
         array(
