@@ -321,7 +321,14 @@ function saveField($field, $id, $module, $value)
             $bean->$field = $value;
         }
 
-        $bean->save();
+        if (($bean->fetched_row['assigned_user_id'] != $value) && ($bean->isOwner($bean->created_by))) {
+            $check_notify = TRUE;
+        }
+        else {
+            $check_notify = FALSE;
+        }
+
+        $bean->save($check_notify);
         return getDisplayValue($bean, $field);
     } else {
         return false;
