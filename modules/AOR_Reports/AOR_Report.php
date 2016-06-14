@@ -358,7 +358,7 @@ class AOR_Report extends Basic {
     }
 
 
-    function build_group_report($offset = -1, $links = true, $extra = array()){
+    function build_group_report($offset = -1, $links = true, $extra = array(), $tableIdentifier){
         global $beanList;
 
         $html = '';
@@ -494,12 +494,12 @@ class AOR_Report extends Basic {
             while ($row = $this->db->fetchByAssoc($result)) {
                 if($html != '') $html .= '<br />';
 
-               $html .= $this->build_report_html($offset, $links, $row[$field_label], '', $extra);
+               $html .= $this->build_report_html($offset, $links, $row[$field_label], $tableIdentifier, $extra);
 
             }
         }
 
-        if($html == '') $html = $this->build_report_html($offset, $links);
+        if($html == '') $html = $this->build_report_html($offset, $links, '', $tableIdentifier);
         return $html;
 
     }

@@ -76,7 +76,7 @@ class AOR_ReportsController extends SugarController {
         if(!empty($this->bean->id)){
             $this->bean->user_parameters = requestToUserParameters();
             //echo $this->bean->build_report_html($offset, true,$group,$tableId);
-            echo $this->bean->build_group_report($offset, true);
+            echo $this->bean->build_group_report($offset, true, '', $tableId);
         }
 
         die();
