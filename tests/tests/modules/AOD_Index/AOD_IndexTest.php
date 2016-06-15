@@ -187,7 +187,8 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'ProspectLists' => 'ProspectList',
                 'Prospects' => 'Prospect',
                 'Tasks' => 'Task',
-                'TemplateSectionLine' => 'TemplateSectionLine'
+                'TemplateSectionLine' => 'TemplateSectionLine',
+                'Spots' => 'Spots',
         );
 
         $aod_index = new AOD_Index();
