@@ -45,8 +45,11 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
+require_once('include/Trait/RemoveUnInvitedFromReminders.php');
+
 
 class Call extends SugarBean {
+	use RemoveUnInvitedFromReminders;
 	var $field_name_map;
 	// Stored fields
 	var $id;
@@ -231,7 +234,10 @@ class Call extends SugarBean {
         }
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Calls', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Calls', $return_id, $reminderData);
 		}
 
         return $return_id;
