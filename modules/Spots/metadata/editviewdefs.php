@@ -1,9 +1,10 @@
-/*********************************************************************************
+<?php
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,50 +35,36 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
+$module_name = 'Spots';
+$viewdefs[$module_name]['EditView'] = array(
+    'templateMeta' => array(
 
+                            'form' => array(
+                                    'hidden' => array(
+                                            0 => '<input type="hidden" name="config" value="{$fields.config.value}">',
+                                        ),
+                                ),
 
-#welcome
-{
-    border-right: none !important;
-}
+                            'maxColumns' => '2',
+                            'widths' => array(
+                                array('label' => '10', 'field' => '30'),
+                                array('label' => '10', 'field' => '30'),
+                            ),
+                        ),
 
-div.screen div.edit.view
-{
-    border-bottom: none !important;
-}
+ 'panels' => array(
+  'default' => array(
 
-div.screen div.edit.view td,
-div.screen div.edit.view th
-{
-    background: transparent;
-}
+    array(
+      'name', 'type',
+    ),
 
-div.nav-buttons
-{
-    background-color: #F6F6F6;
-    padding: 1em;
-    margin-top: 0;
-}
+    array(
+    'configurationGUI',
+    ),
+  ),
 
-#welcome, #personalinfo, #locale, #finish, #scenarios{
-    border:1px solid #cccccc !important;
-    margin:0 auto;
-}
+),
 
-#UserWizard{
-    font-size:12px;
-    width:100%;
-}
-
-#UserWizard input{
-    border-radius:0;
-    border: 1px solid #CCC;
-    padding: 4px;
-
-}
-
-#welcome input[type=button]{
-    font-size:12px;
-    cursor:pointer;
-}
+);
