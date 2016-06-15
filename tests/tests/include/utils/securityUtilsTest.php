@@ -19,6 +19,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
                 'Calendar' => 'Calendar',
                 'Documents' => 'Documents',
                 'Emails' => 'Emails',
+                'Spots' => 'Spots',
                 'Campaigns' => 'Campaigns',
                 'Calls' => 'Calls',
                 'Meetings' => 'Meetings',
@@ -44,7 +45,6 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
                 'AOW_WorkFlow' => 'AOW_WorkFlow',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
                 'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
-                'Spots' => 'Spots',
         );
 
         $actual = query_module_access_list($user);

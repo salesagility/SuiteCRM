@@ -1,9 +1,10 @@
-/*********************************************************************************
+<?php
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,50 +35,41 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-#welcome
-{
-    border-right: none !important;
+ */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
 
-div.screen div.edit.view
-{
-    border-bottom: none !important;
-}
+$module_name = 'Spots';
+$subpanel_layout = array(
+    'top_buttons' => array(
+        array('widget_class' => 'SubPanelTopCreateButton'),
+        array('widget_class' => 'SubPanelTopSelectButton', 'popup_module' => $module_name),
+    ),
 
-div.screen div.edit.view td,
-div.screen div.edit.view th
-{
-    background: transparent;
-}
+    'where' => '',
 
-div.nav-buttons
-{
-    background-color: #F6F6F6;
-    padding: 1em;
-    margin-top: 0;
-}
-
-#welcome, #personalinfo, #locale, #finish, #scenarios{
-    border:1px solid #cccccc !important;
-    margin:0 auto;
-}
-
-#UserWizard{
-    font-size:12px;
-    width:100%;
-}
-
-#UserWizard input{
-    border-radius:0;
-    border: 1px solid #CCC;
-    padding: 4px;
-
-}
-
-#welcome input[type=button]{
-    font-size:12px;
-    cursor:pointer;
-}
+    'list_fields' => array(
+        'name' => array(
+            'vname' => 'LBL_NAME',
+            'widget_class' => 'SubPanelDetailViewLink',
+            'width' => '45%',
+        ),
+        'date_modified' => array(
+            'vname' => 'LBL_DATE_MODIFIED',
+            'width' => '45%',
+        ),
+        'edit_button' => array(
+            'vname' => 'LBL_EDIT_BUTTON',
+            'widget_class' => 'SubPanelEditButton',
+            'module' => $module_name,
+            'width' => '4%',
+        ),
+        'remove_button' => array(
+            'vname' => 'LBL_REMOVE',
+            'widget_class' => 'SubPanelRemoveButton',
+            'module' => $module_name,
+            'width' => '5%',
+        ),
+    ),
+);

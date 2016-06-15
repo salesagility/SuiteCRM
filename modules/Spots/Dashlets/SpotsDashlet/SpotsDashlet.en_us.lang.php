@@ -1,7 +1,7 @@
+<?php
 /*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
  * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
  * Copyright (C) 2011 - 2014 Salesagility Ltd.
  *
@@ -35,49 +35,18 @@
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
-
-#welcome
-{
-    border-right: none !important;
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
-
-div.screen div.edit.view
-{
-    border-bottom: none !important;
-}
-
-div.screen div.edit.view td,
-div.screen div.edit.view th
-{
-    background: transparent;
-}
-
-div.nav-buttons
-{
-    background-color: #F6F6F6;
-    padding: 1em;
-    margin-top: 0;
-}
-
-#welcome, #personalinfo, #locale, #finish, #scenarios{
-    border:1px solid #cccccc !important;
-    margin:0 auto;
-}
-
-#UserWizard{
-    font-size:12px;
-    width:100%;
-}
-
-#UserWizard input{
-    border-radius:0;
-    border: 1px solid #CCC;
-    padding: 4px;
-
-}
-
-#welcome input[type=button]{
-    font-size:12px;
-    cursor:pointer;
-}
+$dashletStrings['SpotsDashlet'] = array(
+    'LBL_TITLE' => 'Spots',
+    'LBL_DESCRIPTION' => 'Spots report of your data',
+    'LBL_SAVING' => 'Saving Spots ...',
+    'LBL_SAVED' => 'Saved',
+    'LBL_CONFIGURE_TITLE' => 'Title',
+    'LBL_SPOTS_TO_LOAD' => 'Spots to Load',
+    'LBL_NO_SPOTS_SELECTED' => 'No spots selected for display',
+    'LBL_SPOTS_POINTED_DELETED' => 'This spot has been deleted',
+    'LBL_SHOW_UI' => 'Show UI',
+    'LBL_NAME' => 'Name',
+);

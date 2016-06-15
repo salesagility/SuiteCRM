@@ -1,9 +1,11 @@
-/*********************************************************************************
+<?php
+
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,50 +36,23 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-#welcome
-{
-    border-right: none !important;
+ */
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
 }
+$module_name = 'Spots';
+$searchFields[$module_name] =
+    array(
+        'name' => array('query_type' => 'default'),
+        'current_user_only' => array('query_type' => 'default', 'db_field' => array('assigned_user_id'), 'my_items' => true, 'vname' => 'LBL_CURRENT_USER_FILTER', 'type' => 'bool'),
+        'assigned_user_id' => array('query_type' => 'default'),
 
-div.screen div.edit.view
-{
-    border-bottom: none !important;
-}
-
-div.screen div.edit.view td,
-div.screen div.edit.view th
-{
-    background: transparent;
-}
-
-div.nav-buttons
-{
-    background-color: #F6F6F6;
-    padding: 1em;
-    margin-top: 0;
-}
-
-#welcome, #personalinfo, #locale, #finish, #scenarios{
-    border:1px solid #cccccc !important;
-    margin:0 auto;
-}
-
-#UserWizard{
-    font-size:12px;
-    width:100%;
-}
-
-#UserWizard input{
-    border-radius:0;
-    border: 1px solid #CCC;
-    padding: 4px;
-
-}
-
-#welcome input[type=button]{
-    font-size:12px;
-    cursor:pointer;
-}
+        //Range Search Support 
+       'range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'start_range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_entered' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'start_range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+       'end_range_date_modified' => array('query_type' => 'default', 'enable_range_search' => true, 'is_date_field' => true),
+        //Range Search Support 		
+    );
