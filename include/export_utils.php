@@ -340,11 +340,87 @@ function export($type, $records = null, $members = false, $sample=false) {
             }
         }
 
+        $customRelateFields = array();
+        $selects = array();
+        foreach($records as $record) {
+            foreach($record as $recordKey => $recordValue) {
+                if(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $recordValue, $matches)) {
+                    $marker = $matches[0];
+                    $relatedValue = '';
+
+                    $splits = explode('.', $matches[1]);
+                    $currentModule = $splits[0];
+                    $currentField = $splits[1];
+                    $currentBean = BeanFactory::getBean($currentModule);
+                    $currentTable = $currentBean->table_name;
+
+                    $splits = explode('.', $matches[2]);
+                    $relatedModule = $splits[0];
+                    $relatedField = $splits[1];
+                    $relatedBean = BeanFactory::getBean($relatedModule);
+                    $relatedTable = $relatedBean->table_name;
+
+                    $relatedLabel = "$relatedTable.name AS related_label, NULL AS related_label1";
+                    if(isset($relatedBean->field_defs['name']['source']) && $relatedBean->field_defs['name']['source'] == 'non-db') {
+                        //$relatedLabel = 'NULL AS related_label, NULL AS related_label1';
+                        if(
+                            !isset($relatedBean->field_defs['first_name']['source']) || $relatedBean->field_defs['first_name']['source'] != 'non-db' &&
+                            !isset($relatedBean->field_defs['last_name']['source']) || $relatedBean->field_defs['last_name']['source'] != 'non-db'
+                        ) {
+                            $relatedLabel = "$relatedTable.last_name AS related_label, $relatedTable.first_name AS related_label1";
+                        }
+                    }
+
+                    $relatedTableCustomJoin = '';
+                    $relatedFieldSelect = "NULL AS related_value";
+                    if(!isset($existsTables["{$relatedTable}_cstm"])) {
+                        $existsTables["{$relatedTable}_cstm"] = $db->tableExists("{$relatedTable}_cstm");
+                    }
+                    if($existsTables["{$relatedTable}_cstm"]) {
+                        $relatedTableCustomJoin = "
+                        JOIN {$relatedTable}_cstm ON {$relatedTable}_cstm.id_c = {$currentTable}_cstm.$relatedField
+                        ";
+                        $relatedFieldSelect = "{$currentTable}_cstm.$relatedField AS related_value";
+                    }
+
+                    $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.id_c";
+                    if(isset($currentBean->field_defs[$relatedField])) {
+                        $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.$relatedField";
+                    }
+
+                    $selects[] = "
+                        (SELECT
+                          $currentTable.id AS current_id,
+                          -- $relatedTable.id AS related_id,
+                          -- {$currentTable}_cstm.id_c AS current_id_c,
+                          -- {$relatedTable}_cstm.id_c AS related_id_c,
+                          '$currentModule' AS current_module,
+                          '$currentField' AS current_field,
+                          '$relatedModule' AS related_module,
+                          '$relatedField' AS related_field,
+                          $relatedFieldSelect,
+                          $relatedLabel
+                        FROM $currentTable
+                        JOIN {$currentTable}_cstm ON {$currentTable}_cstm.id_c = $currentTable.id
+                        $relatedTableCustomJoin
+                        $relatedTableJoin
+                        WHERE $currentTable.id = '{$record['id']}')";
+                }
+            }
+        }
+
+        $query = implode("\nUNION\n", $selects);
+        $result = $db->query($query, 'export error on custom related type: ' . $query);
+        while ($val = $db->fetchByAssoc($result, false)) {
+            $customRelateFields[$val['current_module']][$val['current_id']][$val['related_module']][$val['related_field']] = trim($val['related_label']. ' ' .$val['related_label1']);
+        }
+
         foreach($records as $record)
         {
             $line = implode("\"" . getDelimiter() . "\"", $record);
             $line = "\"" . $line;
             $line .= "\"\r\n";
+            $line = parseRelateFields($line, $record, $customRelateFields);
             $content .= $line;
         }
 
@@ -354,6 +430,43 @@ function export($type, $records = null, $members = false, $sample=false) {
 
 }
 
+/**
+ * Parse custom related fields
+ * @param $line string CSV line
+ * @param $record array of current line
+ * @return mixed string CSV line
+ */
+function parseRelateFields($line, $record, $customRelateFields) {
+    while(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $line, $matches)) {
+
+        $marker = $matches[0];
+        $relatedValue = '';
+
+        $splits = explode('.', $matches[1]);
+        $currentModule = $splits[0];
+        $currentField = $splits[1];
+
+        $splits = explode('.', $matches[2]);
+        $relatedModule = $splits[0];
+        $relatedField = $splits[1];
+
+        if($currentModule != $record['related_type']) {
+            $GLOBALS['log']->debug('incorrect related type in export');
+        }
+        else {
+//            if($currentBean = BeanFactory::getBean($currentModule, $record['id'])) {
+//                $relatedValue = $currentBean->$currentField;
+//            }
+//            else {
+//                $GLOBALS['log']->debug('incorrect record in export');
+//            }
+            $relatedValue = $customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField];
+        }
+
+        $line = str_replace($marker, $relatedValue, $line);
+    }
+    return $line;
+}
 
 function generateSearchWhere($module, $query) {//this function is similar with function prepareSearchForm() in view.list.php
     $seed = loadBean($module);
