@@ -3220,12 +3220,6 @@ $app_list_strings['aok_status_list']['In_Review'] = 'In Review';
 $app_list_strings['aok_status_list']['published_private'] = 'Private';
 $app_list_strings['aok_status_list']['published_public'] = 'Public';
 
-$app_list_strings['moduleList']['Reminders'] = 'Reminders';
-$app_list_strings['moduleListSingular']['Reminders'] = 'Reminder';
-
-$app_list_strings['moduleList']['Reminders_Invitees'] = 'Reminders_Invitees';
-$app_list_strings['moduleListSingular']['Reminders_Invitees'] = 'Reminder_Invitee';
-
 $app_list_strings['moduleList']['FP_events'] = 'Events';
 $app_list_strings['moduleList']['FP_Event_Locations'] = 'Locations';
 $app_list_strings['invite_template_list'][''] = '';
