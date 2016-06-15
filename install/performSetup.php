@@ -442,6 +442,7 @@ FP;
     $enabled_tabs[] = 'Calendar';
     $enabled_tabs[] = 'Documents';
     $enabled_tabs[] = 'Emails';
+    $enabled_tabs[] = 'Spots';
     $enabled_tabs[] = 'Campaigns';
     $enabled_tabs[] = 'Calls';
     $enabled_tabs[] = 'Meetings';
@@ -468,6 +469,7 @@ FP;
     $enabled_tabs[] = 'AOW_WorkFlow';
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
+
 
     installerHook('pre_setSystemTabs');
     require_once('modules/MySettings/TabController.php');
