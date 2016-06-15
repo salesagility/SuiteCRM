@@ -1,9 +1,15 @@
-/*********************************************************************************
+<?php
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/*
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -34,50 +40,11 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
 
+global $mod_strings, $app_strings, $sugar_config;
 
-#welcome
-{
-    border-right: none !important;
-}
+if(ACLController::checkAccess('Spots', 'edit', true))$module_menu[]=Array("index.php?module=Spots&action=EditView", $mod_strings['LNK_SPOT_CREATE'],"Spots", 'Spots');
+if(ACLController::checkAccess('Spots', 'list', true))$module_menu[]=Array("index.php?module=Spots&action=index", $mod_strings['LNK_SPOT_LIST'],"Spots", 'Spots');
 
-div.screen div.edit.view
-{
-    border-bottom: none !important;
-}
-
-div.screen div.edit.view td,
-div.screen div.edit.view th
-{
-    background: transparent;
-}
-
-div.nav-buttons
-{
-    background-color: #F6F6F6;
-    padding: 1em;
-    margin-top: 0;
-}
-
-#welcome, #personalinfo, #locale, #finish, #scenarios{
-    border:1px solid #cccccc !important;
-    margin:0 auto;
-}
-
-#UserWizard{
-    font-size:12px;
-    width:100%;
-}
-
-#UserWizard input{
-    border-radius:0;
-    border: 1px solid #CCC;
-    padding: 4px;
-
-}
-
-#welcome input[type=button]{
-    font-size:12px;
-    cursor:pointer;
-}
+;
