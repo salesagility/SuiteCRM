@@ -388,32 +388,47 @@ function export($type, $records = null, $members = false, $sample=false) {
                         $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.$relatedField";
                     }
 
-                    $selects[] = "
-                        (SELECT
-                          $currentTable.id AS current_id,
-                          -- $relatedTable.id AS related_id,
-                          -- {$currentTable}_cstm.id_c AS current_id_c,
-                          -- {$relatedTable}_cstm.id_c AS related_id_c,
-                          '$currentModule' AS current_module,
-                          '$currentField' AS current_field,
-                          '$relatedModule' AS related_module,
-                          '$relatedField' AS related_field,
-                          $relatedFieldSelect,
-                          $relatedLabel
-                        FROM $currentTable
-                        JOIN {$currentTable}_cstm ON {$currentTable}_cstm.id_c = $currentTable.id
-                        $relatedTableCustomJoin
-                        $relatedTableJoin
-                        WHERE $currentTable.id = '{$record['id']}')";
+                    $selects[] = "(SELECT
+  $currentTable.id AS current_id,
+  -- $relatedTable.id AS related_id,
+  -- {$currentTable}_cstm.id_c AS current_id_c,
+  -- {$relatedTable}_cstm.id_c AS related_id_c,
+  '$currentModule' AS current_module,
+  '$currentField' AS current_field,
+  '$relatedModule' AS related_module,
+  '$relatedField' AS related_field,
+  $relatedFieldSelect,
+  $relatedLabel
+FROM $currentTable
+JOIN {$currentTable}_cstm ON {$currentTable}_cstm.id_c = $currentTable.id
+$relatedTableCustomJoin
+$relatedTableJoin
+WHERE $currentTable.id = '{$record['id']}')";
                 }
             }
         }
 
-        $query = implode("\nUNION\n", $selects);
-        $result = $db->query($query, 'export error on custom related type: ' . $query);
-        while ($val = $db->fetchByAssoc($result, false)) {
-            $customRelateFields[$val['current_module']][$val['current_id']][$val['related_module']][$val['related_field']] = trim($val['related_label']. ' ' .$val['related_label1']);
+        $selects = array_unique($selects);
+
+        $maxUnions = 25;
+
+        do {
+            if (count($selects) > $maxUnions) {
+                $subUnionSelects = array();
+                for ($i = 0; $i < $maxUnions; $i++) {
+                    $subUnionSelects[] = array_shift($selects);
+                }
+            } else {
+                $subUnionSelects = $selects;
+            }
+
+            $query = implode("\nUNION\n", $subUnionSelects);
+            $result = $db->query($query, 'export error on custom related type: ' . $query);
+            while ($val = $db->fetchByAssoc($result, false)) {
+                $customRelateFields[$val['current_module']][$val['current_id']][$val['related_module']][$val['related_field']] = trim($val['related_label'] . ' ' . $val['related_label1']);
+            }
         }
+        while(count($selects) > $maxUnions);
 
         foreach($records as $record)
         {
