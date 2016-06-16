@@ -475,7 +475,12 @@ function parseRelateFields($line, $record, $customRelateFields) {
 //            else {
 //                $GLOBALS['log']->debug('incorrect record in export');
 //            }
-            $relatedValue = $customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField];
+            if(isset($customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField])) {
+                $relatedValue = $customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField];
+            }
+            else {
+                $relatedValue = '';
+            }
         }
 
         $line = str_replace($marker, $relatedValue, $line);
