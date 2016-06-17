@@ -693,7 +693,17 @@ class AOR_Report extends Basic {
                 if($att['display']){
                     $html .= "<td class='' valign='top' align='left'>";
                     if($att['link'] && $links){
-                        $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        if(
+                            !empty(array_key_exists($att['field'], $field_bean->field_name_map)) AND
+                            !empty($field_bean->field_name_map[$field->field]['type']) AND
+                            $field_bean->field_name_map[$att['field']]['type'] == 'relate' AND
+                            $field_bean->field_name_map[$att['field']]['source'] == 'non-db'
+                        ) {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$name]."'>";
+                        }
+                        else {
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
+                        }
                     }
 
                     $currency_id = isset($row[$att['alias'].'_currency_id']) ? $row[$att['alias'].'_currency_id'] : '';
@@ -1033,6 +1043,8 @@ class AOR_Report extends Basic {
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
 
+            $query['select'][] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
+
             $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
 
             $result = $this->db->query($sql);
@@ -1056,6 +1068,8 @@ class AOR_Report extends Basic {
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
 
+                        $query['select'][] = $this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id AS '".$module->table_name.':'.implode(':', $path)."_id'";
+
                         $field_module = $new_field_module;
                     }
                 }
@@ -1070,6 +1084,7 @@ class AOR_Report extends Basic {
                         $data_new['relationship'] = $data['link'];
                     }
                     $data = $data_new;
+//                    $query['select'][] = $this->db->quoteIdentifier($module->table_name.':'.$path[0]).".id AS '".$module->table_name.':'.$path[0]."_id'";
                 }
 
                 if($data['type'] == 'link' && $data['source'] == 'non-db') {
@@ -1115,6 +1130,7 @@ class AOR_Report extends Basic {
 
                 if($field->group_display == 1 && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
                     ++$i;
+
             }
         }
         return $query;
