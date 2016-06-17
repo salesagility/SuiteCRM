@@ -1040,10 +1040,10 @@ class AOR_Report extends Basic {
     function build_report_query_select($query = array(), $group_value =''){
         global $beanList;
 
+        $has_group_by = false;
+
         if($beanList[$this->report_module]){
             $module = new $beanList[$this->report_module]();
-
-            $query['select'][] = $this->db->quoteIdentifier($module->table_name).".id AS '".$module->table_name."_id'";
 
             $sql = "SELECT id FROM aor_fields WHERE aor_report_id = '".$this->id."' AND deleted = 0 ORDER BY field_order ASC";
 
@@ -1067,12 +1067,17 @@ class AOR_Report extends Basic {
                         $oldAlias = $table_alias;
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
-
-                        // Add the id field to the select query
                         $_id_query = $this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id AS '".$module->table_name.':'.implode(':', $path)."_id'";
+                        // Add the id field to the select query if field is a link
                         // Run  a duplicate check - prevents SQL errors
                         if(array_search($_id_query, $query['select']) === FALSE) {
-                            $query['select'][] = $_id_query;
+                            if($field->link == '1') {
+                                $query['select'][] = $_id_query;
+                                $query['select_id'][] = array(
+                                    "field" =>$this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id",
+                                    "alias" => $module->table_name.':'.implode(':', $path)."_id"
+                                );
+                            }
                         }
 
                         $field_module = $new_field_module;
@@ -1117,6 +1122,7 @@ class AOR_Report extends Basic {
                 }
 
                 if($field->group_by == 1){
+                    $has_group_by = true;
                     $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
                 } else {
                     $query['second_group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
@@ -1130,11 +1136,20 @@ class AOR_Report extends Basic {
                     $query['sort_by'][] = $select_field." ".$field->sort_by;
                 }
 
+
+
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
                 if($field->group_display == 1 && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
                     ++$i;
 
+            }
+        }
+
+        if($has_group_by) {
+            // add fields to the group by MS SQL Requirement
+            foreach($query['select_id'] as $s => $select) {
+                $query['group_by'][] = $select['field'];
             }
         }
         return $query;
