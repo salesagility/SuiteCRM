@@ -28,14 +28,12 @@ $chart = <<<EOD
                 function calculateMaxYForSmallNumbers(dataPoints)
                 {
                     var largest = null;
-                    if(dataPoints !== undefined && dataPoints.length > 0){
+                    if(dataPoints !== undefined && dataPoints.length > 0)
                         largest = Math.max.apply(Math,dataPoints);//http://stackoverflow.com/a/14693622/3894683
-                        largest=maxYForSmallNumbers-(largest%maxYForSmallNumbers) + largest; // Fix for https://github.com/salesagility/SuiteCRM/issues/1563
-                    }
 
                     if(largest === null || largest < maxYForSmallNumbers)
-                        largest = maxYForSmallNumbers;
-                    return(largest);
+                        return maxYForSmallNumbers;
+                    return(null);
                 }
 
             function resizeGraph(graph)
