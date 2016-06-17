@@ -1068,7 +1068,12 @@ class AOR_Report extends Basic {
                         $table_alias = $table_alias.":".$rel;
                         $query = $this->build_report_query_join($rel, $table_alias, $oldAlias, $field_module, 'relationship', $query, $new_field_module);
 
-                        $query['select'][] = $this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id AS '".$module->table_name.':'.implode(':', $path)."_id'";
+                        // Add the id field to the select query
+                        $_id_query = $this->db->quoteIdentifier($module->table_name.':'.implode(':', $path)).".id AS '".$module->table_name.':'.implode(':', $path)."_id'";
+                        // Run  a duplicate check - prevents SQL errors
+                        if(array_search($_id_query, $query['select']) === FALSE) {
+                            $query['select'][] = $_id_query;
+                        }
 
                         $field_module = $new_field_module;
                     }
@@ -1084,7 +1089,6 @@ class AOR_Report extends Basic {
                         $data_new['relationship'] = $data['link'];
                     }
                     $data = $data_new;
-//                    $query['select'][] = $this->db->quoteIdentifier($module->table_name.':'.$path[0]).".id AS '".$module->table_name.':'.$path[0]."_id'";
                 }
 
                 if($data['type'] == 'link' && $data['source'] == 'non-db') {
