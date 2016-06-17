@@ -699,7 +699,7 @@ class AOR_Report extends Basic {
                             $field_bean->field_name_map[$att['field']]['type'] == 'relate' AND
                             $field_bean->field_name_map[$att['field']]['source'] == 'non-db'
                         ) {
-                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$name]."'>";
+                            $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$field_bean->field_name_map[$field->field]['module']."&action=DetailView&record=".$row[$name]."'>";
                         }
                         else {
                             $html .= "<a href='" . $sugar_config['site_url'] . "/index.php?module=".$att['module']."&action=DetailView&record=".$row[$att['alias'].'_id']."'>";
