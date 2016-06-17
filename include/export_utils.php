@@ -388,47 +388,38 @@ function export($type, $records = null, $members = false, $sample=false) {
                         $relatedTableJoin = "LEFT JOIN $relatedTable ON $relatedTable.id = {$currentTable}_cstm.$relatedField";
                     }
 
-                    $selects[] = "(SELECT
-  $currentTable.id AS current_id,
-  -- $relatedTable.id AS related_id,
-  -- {$currentTable}_cstm.id_c AS current_id_c,
-  -- {$relatedTable}_cstm.id_c AS related_id_c,
-  '$currentModule' AS current_module,
-  '$currentField' AS current_field,
-  '$relatedModule' AS related_module,
-  '$relatedField' AS related_field,
-  $relatedFieldSelect,
-  $relatedLabel
-FROM $currentTable
-JOIN {$currentTable}_cstm ON {$currentTable}_cstm.id_c = $currentTable.id
-$relatedTableCustomJoin
-$relatedTableJoin
-WHERE $currentTable.id = '{$record['id']}')";
+                    //-- $relatedTable.id AS related_id,
+                    //-- {$currentTable}_cstm.id_c AS current_id_c,
+                    //-- {$relatedTable}_cstm.id_c AS related_id_c,
+                    $selects[] = "(SELECT $currentTable.id AS current_id,'$currentModule' AS current_module,'$currentField' AS current_field,'$relatedModule' AS related_module,'$relatedField' AS related_field,$relatedFieldSelect,$relatedLabel FROM $currentTable JOIN {$currentTable}_cstm ON {$currentTable}_cstm.id_c=$currentTable.id $relatedTableCustomJoin $relatedTableJoin WHERE $currentTable.id='{$record['id']}')";
                 }
             }
         }
 
         $selects = array_unique($selects);
 
-        $maxUnions = 25;
 
-        do {
-            if (count($selects) > $maxUnions) {
-                $subUnionSelects = array();
-                for ($i = 0; $i < $maxUnions; $i++) {
-                    $subUnionSelects[] = array_shift($selects);
+        // grab custom related fields information
+
+        // query max length optimization, measured by mssql FreeTDS connection too
+        $queryMaxLength = 620000;
+        $query = '';
+        $i = 0;
+        $selectsCount = count($selects)-1;
+        foreach ($selects as $select) {
+            $queryTemp = $query.($i==0 ? $select : " UNION $select");
+            if ($i==$selectsCount || strlen($queryTemp) > $queryMaxLength) {
+                $result = $db->query($query, 'export error on custom related type: '.$query);
+                while ($val = $db->fetchByAssoc($result, false)) {
+                    $customRelateFields[$val['current_module']][$val['current_id']][$val['related_module']][$val['related_field']] = trim($val['related_label'].' '.$val['related_label1']);
                 }
+                $query = $select;
             } else {
-                $subUnionSelects = $selects;
+                $query = $queryTemp;
             }
-
-            $query = implode("\nUNION\n", $subUnionSelects);
-            $result = $db->query($query, 'export error on custom related type: ' . $query);
-            while ($val = $db->fetchByAssoc($result, false)) {
-                $customRelateFields[$val['current_module']][$val['current_id']][$val['related_module']][$val['related_field']] = trim($val['related_label'] . ' ' . $val['related_label1']);
-            }
+            $i++;
         }
-        while(count($selects) > $maxUnions);
+
 
         foreach($records as $record)
         {
@@ -451,9 +442,9 @@ WHERE $currentTable.id = '{$record['id']}')";
  * @param $record array of current line
  * @return mixed string CSV line
  */
-function parseRelateFields($line, $record, $customRelateFields) {
-    while(preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $line, $matches)) {
-
+function parseRelateFields($line, $record, $customRelateFields)
+{
+    while (preg_match('/{relate\s+from=""([^"]+)""\s+to=""([^"]+)""}/', $line, $matches)) {
         $marker = $matches[0];
         $relatedValue = '';
 
@@ -465,20 +456,12 @@ function parseRelateFields($line, $record, $customRelateFields) {
         $relatedModule = $splits[0];
         $relatedField = $splits[1];
 
-        if($currentModule != $record['related_type']) {
+        if ($currentModule != $record['related_type']) {
             $GLOBALS['log']->debug('incorrect related type in export');
-        }
-        else {
-//            if($currentBean = BeanFactory::getBean($currentModule, $record['id'])) {
-//                $relatedValue = $currentBean->$currentField;
-//            }
-//            else {
-//                $GLOBALS['log']->debug('incorrect record in export');
-//            }
-            if(isset($customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField])) {
+        } else {
+            if (isset($customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField])) {
                 $relatedValue = $customRelateFields[$currentModule][$record['id']][$relatedModule][$relatedField];
-            }
-            else {
+            } else {
                 $relatedValue = '';
             }
         }
