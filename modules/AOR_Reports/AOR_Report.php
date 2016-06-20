@@ -1121,12 +1121,13 @@ class AOR_Report extends Basic {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
 
-                if($field->group_by == 1){
+                if($field->group_by == 1) {
                     $has_group_by = true;
                     $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
-                } else {
-                    $query['second_group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
                 }
+//                else {
+//                    $query['second_group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
+//                }
 
                 if($field->field_function != null){
                     $select_field = $field->field_function.'('.$select_field.')';
@@ -1140,9 +1141,11 @@ class AOR_Report extends Basic {
 
                 $query['select'][] = $select_field ." AS '".$field->label."'";
 
-                if($field->group_display == 1 && $group_value) $query['where'][] = $select_field." = '".$group_value."' AND ";
-                    ++$i;
+                if($field->group_display == 1 && $group_value) {
+                    $query['where'][] = $select_field." = '".$group_value."' AND ";
+                }
 
+                ++$i;
             }
         }
 
