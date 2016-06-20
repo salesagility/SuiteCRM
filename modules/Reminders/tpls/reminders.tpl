@@ -41,6 +41,7 @@
 
 *}
 
+{* REMINDERS_DISABLED - prevents duplicate display on the detail view *}
 {if $remindersDisabled == 'false' || !$remindersDisabled}
 	{assign var=REMINDERS_DISABLED value=false}
 {else}

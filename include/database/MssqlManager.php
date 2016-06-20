@@ -500,6 +500,7 @@ class MssqlManager extends DBManager
                     //for paging, AFTER the distinct clause
                     $grpByStr = '';
                     $hasDistinct = strpos(strtolower($matches[0]), "distinct");
+                    $hasGroupBy = strpos(strtolower($matches[0]), "group by");
 
                     require_once('include/php-sql-parser.php');
                     $parser = new PHPSQLParser();
@@ -542,6 +543,10 @@ class MssqlManager extends DBManager
                             $grpByStr[] = trim($record['base_expr']);
                         }
                         $grpByStr = implode(', ', $grpByStr);
+                    } elseif ($hasGroupBy) {
+                        $groupBy = explode("group by", strtolower($matches[0]));
+                        $groupByVars = explode(',', $groupBy[1]);
+                        $grpByStr = $groupByVars[0];
                     }
 
                     if (!empty($orderByMatch[3])) {
@@ -556,32 +561,37 @@ class MssqlManager extends DBManager
                                                 group by " . $grpByStr . "
                                         ) AS a
                                         WHERE row_number > $start";
-                        }
-                        else {
-                        $newSQL = "SELECT TOP $count * FROM
+                        } else {
+                            $newSQL = "SELECT TOP $count * FROM
                                     (
                                         " . $matches[1] . " ROW_NUMBER()
                                         OVER (ORDER BY " . $this->returnOrderBy($sql, $orderByMatch[3]) . ") AS row_number,
-                                        " . $matches[2] . $orderByMatch[1]. "
+                                        " . $matches[2] . $orderByMatch[1] . "
                                     ) AS a
                                     WHERE row_number > $start";
                         }
-                    }else{
+                    } else {
                         //if there is a distinct clause, form query with rownumber after distinct
                         if ($hasDistinct) {
-                             $newSQL = "SELECT TOP $count * FROM
+                            $newSQL = "SELECT TOP $count * FROM
                                             (
-                            SELECT ROW_NUMBER() OVER (ORDER BY ".$grpByStr.") AS row_number, count(*) counter, " . $distinctSQLARRAY[0] . "
+                            SELECT ROW_NUMBER() OVER (ORDER BY " . $grpByStr . ") AS row_number, count(*) counter, " . $distinctSQLARRAY[0] . "
                                                         " . $distinctSQLARRAY[1] . "
                                                     group by " . $grpByStr . "
                                             )
                                             AS a
                                             WHERE row_number > $start";
-                        }
-                        else {
-                             $newSQL = "SELECT TOP $count * FROM
+                        } elseif ($hasGroupBy) {
+                            $newSQL = "SELECT TOP $count * FROM
                                            (
-                                  " . $matches[1] . " ROW_NUMBER() OVER (ORDER BY " . $sqlArray['FROM'][0]['alias'] . ".id) AS row_number, " . $matches[2] . $matches[3]. "
+                                  " . $matches[1] . " ROW_NUMBER() OVER (ORDER BY " . $grpByStr . ") AS row_number, " . $matches[2] . $matches[3] . "
+                                           )
+                                           AS a
+                                           WHERE row_number > $start";
+                        } else {
+                            $newSQL = "SELECT TOP $count * FROM
+                                           (
+                                  " . $matches[1] . " ROW_NUMBER() OVER (ORDER BY " . $sqlArray['FROM'][0]['alias'] . ".id) AS row_number, " . $matches[2] . $matches[3] . "
                                            )
                                            AS a
                                            WHERE row_number > $start";
