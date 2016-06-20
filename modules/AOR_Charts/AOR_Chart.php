@@ -24,8 +24,33 @@
 
 class AOR_Chart extends Basic {
 
-    var $colours = "['#1f78b4','#a6cee3','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928','#144c73','#6caed1','#8acf4e','#20641c','#f8514f','#9e1214','#fc9d24','#b35900','#a880bb','#442763','#ffff4d','#733a1a']";
-	var $new_schema = true;
+    var $colours = [
+        '#1f78b4',
+        '#6a3d9a',
+        '#b35900',
+        '#20641c',
+        '#b2df8a',
+        '#fb9a99',
+        '#8acf4e',
+        '#a880bb',
+        '#33a02c',
+        '#fdbf6f',
+        '#9e1214',
+        '#ff7f00',
+        '#733a1a',
+        '#6caed1',
+        '#fc9d24',
+        '#a6cee3',
+        '#cab2d6',
+        '#e31a1c',
+        '#b15928',
+        '#ffff4d',
+        '#442763',
+        '#ffff99',
+        '#144c73',
+        '#f8514f'
+    ];
+    var $new_schema = true;
 	var $module_dir = 'AOR_Charts';
 	var $object_name = 'AOR_Chart';
 	var $table_name = 'aor_charts';
@@ -321,6 +346,7 @@ class AOR_Chart extends Basic {
     private function getRGraphRoseChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
+        $colors = json_encode($this->colours);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>$this->noDataMessage</h3>";
@@ -340,7 +366,7 @@ class AOR_Chart extends Basic {
                  tooltips:$chartTooltips,
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
-                colors: $this->colours,
+                colors: $colors
                 colorsSequential:true
             },
             data: $chartDataValues
@@ -358,6 +384,7 @@ EOF;
     private function getRGraphGroupedBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400, $grouped = false)
     {
         $dataArray = json_decode($chartDataValues);
+        $colors = json_encode($this->colours);
         $grouping = 'grouped'; //$mainGroupField->label; //'grouped';
         if(!$grouped)
             $grouping='stacked';
@@ -391,7 +418,7 @@ EOF;
                 labels: $chartLabelValues,
                 textSize:10,
                 textAngle: 90,
-                colors: $this->colours,
+                colors: $colours,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
@@ -405,6 +432,7 @@ EOF;
     private function getRGraphBarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
+        $colors = json_encode($this->colours);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>$this->noDataMessage</h3>";
@@ -433,7 +461,7 @@ EOF;
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 tooltipsEvent:'onmousemove',
 
-                colors: $this->colours,
+                colors: $colors,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
@@ -445,6 +473,7 @@ EOF;
     private function getRGraphRadarChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
+        $colors = json_encode($this->colours);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>$this->noDataMessage</h3>";
@@ -466,7 +495,7 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
 
-                colors: $this->colours,
+                colors: $colors,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues)
             }
         }).draw();
@@ -478,6 +507,7 @@ EOF;
     private function getRGraphPieChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
+        $colors = json_encode($this->colours);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>$this->noDataMessage</h3>";
@@ -503,7 +533,7 @@ EOF;
                 tooltipsEvent:'onmousemove',
                 tooltipsCssClass: 'rgraph_chart_tooltips_css',
                 labels: $chartLabelValues,
-                colors: $this->colours
+                colors: $colors
             }
         }).draw();
         </script>
@@ -514,6 +544,7 @@ EOF;
     private function getRGraphLineChart($chartDataValues, $chartLabelValues,$chartTooltips, $chartName, $chartId, $chartHeight = 400, $chartWidth = 400)
     {
         $dataArray = json_decode($chartDataValues);
+        $colors = json_encode($this->colours);
         if(!is_array($dataArray)||count($dataArray) < 1)
         {
             return "<h3>$this->noDataMessage</h3>";
@@ -545,7 +576,7 @@ EOF;
                 textAngle: 90,
                 //titleSize:10,
                 backgroundGrid:false,
-                colors: $this->colours,
+                colors: $colors,
                 ymax:calculateMaxYForSmallNumbers($chartDataValues),
             }
         }).draw();
