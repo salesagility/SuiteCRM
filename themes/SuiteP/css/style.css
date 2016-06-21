@@ -423,7 +423,6 @@ textarea {font-family: 'Lato', Lato, Arial, sans-serif;}
     vertical-align: middle;
     visibility: visible;
     border: 1px solid #a1b1be;
-    border-radius: 1px;
     padding: 8px;
 }
 
@@ -437,7 +436,6 @@ textarea {font-family: 'Lato', Lato, Arial, sans-serif;}
     vertical-align: middle;
     visibility: visible;
     border: 1px solid #e2e7eb;
-    border-radius: 1em;
     padding: 8px;
 }
 
@@ -461,7 +459,7 @@ input[type=radio]:checked {
     color: white;
 }
 input[type=radio]:checked:disabled {
-    background: url('../../../../themes/SuiteP/images/forms/radio_disabled.png') center center no-repeat;
+    background: url('../../../../themes/SuiteP/images/forms/checkbox_disabled.png') center center no-repeat;
 }
 
 td.nowrap input[type=checkbox] {margin-top:3px;}
