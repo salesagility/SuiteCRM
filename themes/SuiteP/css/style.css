@@ -459,8 +459,12 @@ input[type=radio]:checked {
     background: url('../../../../themes/SuiteP/images/forms/radio_checked.png') center center no-repeat;
     color: white;
 }
-input[type=radio]:checked:disabled {
+input[type=checkbox]:checked:disabled {
     background: url('../../../../themes/SuiteP/images/forms/checkbox_disabled.png') center center no-repeat;
+}
+
+input[type=radio]:checked:disabled {
+    background: url('../../../../themes/SuiteP/images/forms/radio_disabled.png') center center no-repeat;
 }
 
 td.nowrap input[type=checkbox] {margin-top:3px;}
