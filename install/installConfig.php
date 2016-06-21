@@ -561,18 +561,15 @@ EOQ3;
 
         $out .= <<<EOQ
 
-            <!-- Scenario Selection -->
-            </div>
-        </div>
+        <!-- Scenario Selection -->
         <div class="floatbox full" id="fb3">
             <h3 onclick="$(this).next().toggle();" class="toggler">&raquo; {$mod_strings['LBL_WIZARD_SCENARIO_TITLE']}</h3>
-
             <div class="form_section" style="display: none;">
-
                 <p class="ibmsg">{$mod_strings['LBL_WIZARD_SCENARIO_DESC']}</p>
                 <div class="formrow">$scenarioSelection</div>
                 <div class="clear"></div>
             </div>
+        </div>
 
 EOQ;
 
