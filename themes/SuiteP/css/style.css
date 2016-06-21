@@ -417,14 +417,60 @@ form {margin: 0;}
 
 textarea {font-family: 'Lato', Lato, Arial, sans-serif;}
 
-input[type=checkbox], input[type=radio] {
-    border: 0;
-    background-color: transparent;
+.checkbox, input[type=checkbox] {
+    display: inline-block;
     margin: 0;
-    vertical-align: bottom;
+    vertical-align: middle;
+    visibility: visible;
+    border: 1px solid #a1b1be;
+    border-radius: 1px;
+    padding: 8px;
+}
+
+.checkbox:focus, input[type=checkbox]:focus, input[type=radio]:focus {
+    outline: 0;
+}
+
+.checkbox:disabled, input[type=checkbox]:disabled, input[type=radio]:disabled {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    visibility: visible;
+    border: 1px solid #e2e7eb;
+    border-radius: 1em;
+    padding: 8px;
+}
+
+input[type=radio] {
+    display: inline-block;
+    margin: 0;
+    vertical-align: middle;
+    visibility: visible;
+    border: 1px solid #a1b1be;
+    border-radius: 1em;
+    padding: 8px;
+}
+
+input[type=checkbox]:checked, .checkbox:checked {
+    background: url('../../../../themes/SuiteP/images/forms/checkbox_checked.png') center center no-repeat;
+    color: white;
+}
+
+input[type=radio]:checked {
+    background: url('../../../../themes/SuiteP/images/forms/radio_checked.png') center center no-repeat;
+    color: white;
+}
+input[type=radio]:checked:disabled {
+    background: url('../../../../themes/SuiteP/images/forms/radio_disabled.png') center center no-repeat;
 }
 
 td.nowrap input[type=checkbox] {margin-top:3px;}
+
+
+input[type=text]:disabled {
+    border: 1px solid #e2e7eb;
+    background: #f8f8f8;
+}
 
 div.clear {
     height: 0;
@@ -521,10 +567,8 @@ th, td {
 
 #Accountsbasic_searchSearchForm tr td input[type=checkbox] {
     vertical-align: middle;
-    background-color:red;
-    height:40px;
-    line-height:40px;
 }
+
 
 .collapsed .panelContainer, .collapsed .collapseLink, .expanded .expandLink {
     display: none;
