@@ -428,6 +428,7 @@ textarea {font-family: 'Lato', Lato, Arial, sans-serif;}
 
 .checkbox:focus, input[type=checkbox]:focus, input[type=radio]:focus {
     outline: 0;
+    border: 1px solid #a1b1be;
 }
 
 .checkbox:disabled, input[type=checkbox]:disabled, input[type=radio]:disabled {
@@ -452,7 +453,6 @@ input[type=radio] {
 
 input[type=checkbox]:checked, .checkbox:checked {
     background: url('../../../../themes/SuiteP/images/forms/checkbox_checked.png') center center no-repeat;
-    color: white;
 }
 
 input[type=radio]:checked {
@@ -467,6 +467,9 @@ input[type=radio]:checked:disabled {
     background: url('../../../../themes/SuiteP/images/forms/radio_disabled.png') center center no-repeat;
 }
 
+.massall {
+    background: white;
+}
 td.nowrap input[type=checkbox] {margin-top:3px;}
 
 
