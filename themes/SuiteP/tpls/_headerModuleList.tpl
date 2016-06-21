@@ -79,6 +79,7 @@
                            name="query_string">
                 </span>
                 </form>
+                
                 <div id="mobilegloballinks">
                     <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><span
                                 class="glyphicon glyphicon-option-vertical"></span></a>
@@ -109,7 +110,7 @@
                                 {if $name != 'Home'}
                                     <span class="currentTabLeft">&nbsp;</span>
                                     <span class="currentTab"
-                                          style="color:#ffffff !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
+                                          style="color:#F08377 !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
                                     <span>&nbsp;</span>
                                 {/if}
                                 <ul class="dropdown-menu" role="menu">
@@ -330,16 +331,16 @@
             <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
                 <li id="usermenu" class="dropdown-toggle" aria-expanded="true">
                     <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'><span
-                                class="glyphicon glyphicon-user"> </span> {$CURRENT_USER}
+                                class="user_icon"> </span> {$CURRENT_USER}
                         <span class="caret"></span>
                     </a>
                 </li>
                 <button id="usermenucollapsed" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
                         aria-expanded="true">
-                    <span class="glyphicon glyphicon-user"> </span>
-                    <span class="caret"></span>
+                    <!--<span class="glyphicon glyphicon-user"> </span>
+                    <span class="caret"></span>-->
                 </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">
                     {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                         <li role="presentation">
                             <a id="{$gcl_key}_link"
@@ -350,11 +351,30 @@
                                                class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                 </ul>
             </div>
+            
+            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
+                <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
+                        aria-expanded="false">
+                   <span class="alert_count">0</span>
+                   
+                </button>
+                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
             <div id="search" class="dropdown nav navbar-nav navbar-right">
                 <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
                         aria-expanded="true">
-                    <span class="glyphicon glyphicon-search"> </span>
+                    <!--<span class="glyphicon glyphicon-search"> </span>-->Search
                 </button>
                 <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                     <form id="searchformdropdown" name='UnifiedSearch' action='index.php'
@@ -367,8 +387,8 @@
                             <input type="text" class="form-control" name="query_string" id="query_string"
                                    placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"
-                                                                                    aria-hidden="true"></span></button>
+                                <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                                                                                    aria-hidden="true"></span>-->Search</button>
                             </span>
                         </div>
                     </form>
@@ -384,14 +404,14 @@
                     <input type="text" class="form-control" name="query_string" id="query_string"
                            placeholder="{$APP.LBL_SEARCH}..." value="{$SEARCH}"/>
                     <span class="input-group-btn">
-                        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"
-                                                                            aria-hidden="true"></span></button>
+                        <button type="submit" class="btn btn-default"><!--<span class="glyphicon glyphicon-search"
+                                                                            aria-hidden="true"></span>-->Search</button>
                     </span>
                 </div>
             </form>
-            <div id="quickcreatetop" class="dropdown nav navbar-nav navbar-right">
+            <div id="quickcreatetop" class="create dropdown nav navbar-nav navbar-right">
                 <a class="dropdown-toggle" aria-expanded="false">
-                    <span class="glyphicon glyphicon-plus"></span>
+                    Create
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li>
@@ -412,21 +432,14 @@
                     <li>
                         <a href="index.php?module=Calls&action=EditView&return_module=Calls&return_action=DetailView">{$APP.LBL_QUICK_CALL}</a>
                     </li>
-                    <li>
+                    <li class="last">
                         <a href="index.php?module=Tasks&action=EditView&return_module=Tasks&return_action=DetailView">{$APP.LBL_QUICK_TASK}</a>
                     </li>
                 </ul>
             </div>
-            <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
-                <button class="alertsButton dropdown-toggle btn btn-success" data-toggle="dropdown"
-                        aria-expanded="false">
-                   <span class="badge"><span class="alert_count">0</span> <span
-                               class="glyphicon glyphicon-comment"></span>
-                </button>
-                <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
-            </div>
+            
         </div>
-
+        
         <div class="collapse navbar-collapse hidden-lg hidden-md" id="mobile_menu">
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {if $smarty.foreach.groupList.last}
@@ -453,21 +466,27 @@
                         </li>
                     {/foreach}
                 {/if}
-            {/foreach}
+            {/foreach}            
         </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
 {if $THEME_CONFIG.display_sidebar}
     <!--Start Page Container and Responsive Sidebar -->
     <div id='sidebar_container' class="container-fluid">
-        <a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>
-        <div class="row">
-            <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
-                 class="col-sm-3 col-md-2 sidebar">
+        <!--<a href="javascript:void(0)" id="buttontoggle"><span class="glyphicon glyphicon-th-list"></span></a>-->
+        
+        <a href="javascript:void(0)" id="buttontoggle"><span>&nbsp;</span></a>
+                
+        <!--<div class="row">-->
+            <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
+                 class="col-sm-3 col-md-2 sidebar">-->
+             <div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
+             class="sidebar">
+                
                 <div id="actionMenuSidebar">
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
-                            <ul class="nav nav-pills nav-stacked">
+                            <ul>
                                 {if count($shortcutTopMenu.$name) > 0}
                                     <h2 class="recent_h3">{$APP.LBL_LINK_ACTIONS}</h2>
                                     {foreach from=$shortcutTopMenu.$name item=item}
@@ -478,21 +497,21 @@
                                                         href="{$item.URL}"><span>{$item.LABEL}</span></a></li>
                                         {/if}
                                     {/foreach}
-                                    <br>
                                 {/if}
                             </ul>
                         {/if}
                     {/foreach}
                 </div>
+                
                 <div id="recentlyViewedSidebar">
                     <h2 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h2>
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$recentRecords item=item name=lastViewed}
                             <div class="recently_viewed_link_container_sidebar">
-                                <li class="recentlinks_edit"><a
+                                <!--<li class="recentlinks_edit"><a
                                             href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
                                             style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil"
-                                                                            aria-hidden="true"></a></li>
+                                                                            aria-hidden="true"></a></li>-->
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
@@ -504,16 +523,16 @@
                         {/foreach}
                     </ul>
                 </div>
-                <br />
+     
                 <div id="favoritesSidebar">
                     <h2 class="recent_h3">{$APP.LBL_FAVORITES}</h2>
                     <ul class="nav nav-pills nav-stacked">
                         {foreach from=$favoriteRecords item=item name=lastViewed}
                             <div class="recently_viewed_link_container_sidebar" id="{$item.id}_favorite">
-                                <li class="recentlinks_edit"><a
+                                <!--<li class="recentlinks_edit"><a
                                             href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
                                             style="margin-left:10px;"><span class=" glyphicon glyphicon-pencil"
-                                                                            aria-hidden="true"></a></li>
+                                                                            aria-hidden="true"></a></li>-->
                                 <li class="recentlinks" role="presentation">
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
@@ -525,8 +544,11 @@
                         {/foreach}
                     </ul>
                 </div>
+                
+                
+                
             </div>
-        </div>
+        <!--</div>-->
     </div>
     <!--End Responsive Sidebar -->
 {/if}
