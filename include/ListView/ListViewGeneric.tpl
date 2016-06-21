@@ -186,9 +186,9 @@
 				{if $prerow}
 				<td>
 				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
-						<input type='checkbox' disabled="disabled" class='checkbox' value='{$rowData.ID}'>
+						<input type='checkbox' disabled="disabled" class='' value='{$rowData.ID}'>
 				 {else}
-	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='form-control' name='mass[]' value='{$rowData.ID}'>
+	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='' name='mass[]' value='{$rowData.ID}'>
 				 {/if}
 				</td>
 				{/if}
