@@ -437,6 +437,7 @@ textarea {font-family: 'Lato', Lato, Arial, sans-serif;}
     visibility: visible;
     border: 1px solid #e2e7eb;
     padding: 8px;
+    background: #f8f8f8;
 }
 
 input[type=radio] {
