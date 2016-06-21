@@ -340,6 +340,7 @@ function loadSidebar() {
     }
 }
 
+
 update_screen_resolution();
 
     $(window).resize(function () {
