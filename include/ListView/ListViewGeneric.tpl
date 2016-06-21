@@ -184,18 +184,18 @@
 			{/if}
 			<tr height='20' class='{$_rowColor}S1'>
 				{if $prerow}
-				<th width='1%' class='nowrap'>
+				<td>
 				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
 						<input type='checkbox' disabled="disabled" class='checkbox' value='{$rowData.ID}'>
 				 {else}
-	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='checkbox' name='mass[]' value='{$rowData.ID}'>
+	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='form-control' name='mass[]' value='{$rowData.ID}'>
 				 {/if}
-				</th>
+				</td>
 				{/if}
 				{if !empty($quickViewLinks)}
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
-				<td width='2%' nowrap>
+				<td>
                     {if $pageData.rowAccess[$id].edit}
                         <a title='{$editLinkString}' id="edit-{$rowData.ID}"
                            href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
