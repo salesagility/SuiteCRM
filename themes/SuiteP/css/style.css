@@ -752,7 +752,29 @@ button#listViewEndButton_top, button#listViewEndButton_bottom {
 
 button#listViewEndButton_top img, button#listViewEndButton_bottom img {display:none;}
 
-li.sugar_action_button {background-color:red;font-size:13px!important;}
+#selectLinkTop {
+    min-height: 16px;
+    line-height: 16px;
+    position: relative;
+    padding: 1px;
+}
+
+#actionLinkTop {
+    font-size:14px !important;
+    min-height: 16px !important;
+    line-height: 16px !important;
+    position: relative;
+    padding: 2px 5px 2px 5px !important;
+
+}
+
+#select_actions_disabled_top {
+    font-size:14px !important;
+    min-height: 16px;
+    line-height: 16px;
+    position: relative;
+    padding: 6px 5px 6px 5px !important;
+}
 
 .list tr.pagination td table td {padding: 3px 7px 3px 5px !important;}
 
@@ -2717,9 +2739,10 @@ ul#detailViewActions.clickMenu {
     display: block;
     text-decoration: none !important;
     color: #C9D2DA !important;
-    padding: 1px 0 0 0 !important;
+    padding: 2px !important;
+    padding: 1px !important;
     font-weight: normal;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 #quickCreate {
@@ -2990,6 +3013,7 @@ select:focus {
 
 a#delete_listview_top:hover {
     color: #ffffff;
+    font-size: 14px;
 }
 
 #add_dashlets {
