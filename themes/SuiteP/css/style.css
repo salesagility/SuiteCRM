@@ -253,7 +253,23 @@ div#pageContainer td.dashletcontainer div.hd .icon {fill:#fff;}
 
 
 
-.button-toggle-expanded, .button-toggle-collapsed {
+.button-toggle-collapsed {
+    position: fixed;
+    /*left: 0;
+    left:12%!important;*/
+    top: 100px;
+    background:#778591;
+    z-index: 1000;
+    height:30px;
+    width:30px;
+    background-image: none, url("../../../../themes/SuiteP/images/p_show_sidebar.svg"), url("../../../../themes/SuiteP/images/p_show_sidebar.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.button-toggle-expanded {
     position: fixed;
     /*left: 0;
     left:12%!important;*/
