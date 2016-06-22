@@ -420,56 +420,64 @@ textarea {font-family: 'Lato', Lato, Arial, sans-serif;}
 .checkbox, input[type=checkbox] {
     display: inline-block;
     margin: 0;
+    padding: 0;
     vertical-align: middle;
     visibility: visible;
-    border: 1px solid #a1b1be;
-    padding: 8px;
+    height: 16px;
+    width: 16px;
+    background:  url('../../../../themes/SuiteP/images/forms/check.png') no-repeat;
+    overflow: hidden;
 }
 
-.checkbox:focus, input[type=checkbox]:focus, input[type=radio]:focus {
-    outline: 0;
-    border: 1px solid #a1b1be;
-}
-
-.checkbox:disabled, input[type=checkbox]:disabled, input[type=radio]:disabled {
-    display: inline-block;
-    margin: 0;
-    vertical-align: middle;
-    visibility: visible;
-    border: 1px solid #e2e7eb;
-    padding: 8px;
-    background: #f8f8f8;
-}
 
 input[type=radio] {
     display: inline-block;
     margin: 0;
+    padding: 0;
     vertical-align: middle;
     visibility: visible;
-    border: 1px solid #a1b1be;
-    border-radius: 1em;
-    padding: 8px;
+    height: 16px;
+    width: 16px;
+    background:  url('../../../../themes/SuiteP/images/forms/radio.png') no-repeat;
 }
 
-input[type=checkbox]:checked, .checkbox:checked {
-    background: url('../../../../themes/SuiteP/images/forms/checkbox_checked.png') center center no-repeat;
+input[type=checkbox]:focus, input[type=radio]:focus {
+    outline: 0;
+}
+
+
+input[type=checkbox] {
+    background-position: 0px 0px;
+}
+
+input[type=checkbox]:checked {
+    background-position: -18px 0px;
+}
+
+input[type=checkbox]:disabled {
+    background-position: -36px 0px;
+}
+
+input[type=checkbox]:disabled:checked, input[type=checkbox]:checked:disabled {
+    background-position: -54px 0px;
+}
+
+input[type=radio] {
+    background-position: 0px 0px;
 }
 
 input[type=radio]:checked {
-    background: url('../../../../themes/SuiteP/images/forms/radio_checked.png') center center no-repeat;
-    color: white;
-}
-input[type=checkbox]:checked:disabled {
-    background: url('../../../../themes/SuiteP/images/forms/checkbox_disabled.png') center center no-repeat;
+    background-position: -18px 0px;
 }
 
-input[type=radio]:checked:disabled {
-    background: url('../../../../themes/SuiteP/images/forms/radio_disabled.png') center center no-repeat;
+input[type=radio]:disabled {
+    background-position: -36px 0px;
 }
 
-.massall {
-    background: white;
+input[type=radio]:disabled:checked, input[type=radio]:checked:disabled {
+    background-position: -54px 0px;
 }
+
 td.nowrap input[type=checkbox] {margin-top:3px;}
 
 
