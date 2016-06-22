@@ -1959,7 +1959,7 @@ a:link, a:visited, a:hover {
     text-transform: uppercase;
     letter-spacing: 2px;
     margin:0px 0 40px 0;
-    font-weight:200;
+    font-weight: 300;
 }
 
 .moduleTitle > h2 > img {display: none;}
