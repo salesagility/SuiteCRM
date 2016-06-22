@@ -1557,10 +1557,11 @@ div#content p.error {margin:0 0 20px 0;border-radius:3px;}
 }
 
 .pageNumbers {
-    padding-right: 7px;
-    padding-left: 7px;
-    position:relative;
-    top:5px;
+    color: white;
+    font-weight: bold;
+    margin: 0 8px 0 8px;
+    padding:  0 8px 0 8px;
+    position: static;
 }
 
 .contentBox {
