@@ -332,7 +332,7 @@ class EmailMan extends SugarBean{
      */
     function create_ref_email($marketing_id,$subject,$body_text,$body_html,$campagin_name,$from_address,$sender_id,$notes,$macro_nv,$newmessage,$from_address_name) {
 
-       global $mod_Strings, $timedate;
+       global $mod_strings, $timedate;
        $upd_ref_email=false;
        if ($newmessage or empty($this->ref_email->id)) {
            $this->ref_email = new Email();
