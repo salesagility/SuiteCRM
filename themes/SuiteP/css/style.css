@@ -251,7 +251,9 @@ div#pageContainer td.dashletcontainer div.hd .icon {fill:#fff;}
 
 .moremenu ul, ul.dropdown-menu {max-height: 525px !important;overflow: auto;}
 
-#buttontoggle {
+
+
+.button-toggle-expanded, .button-toggle-collapsed {
     position: fixed;
     /*left: 0;
     left:12%!important;*/
@@ -4764,7 +4766,8 @@ div.target-list-table {
 	.sidebar {width:9%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:9%;}
 	.col-md-10 {width:91%;}
-	#buttontoggle {left:9%!important;}
+	.button-toggle-expanded {left:9%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 
@@ -4774,7 +4777,8 @@ div.target-list-table {
 	.sidebar {width:10%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:10%;}
 	.col-md-10 {width:90%;}
-	#buttontoggle {left:10%!important;}
+	.button-toggle-expanded {left:10%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 
@@ -4782,7 +4786,8 @@ div.target-list-table {
 	.sidebar {width:11%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:11%;}
 	.col-md-10 {width:89%;}
-	#buttontoggle {left:11%!important;}
+	.button-toggle-expanded {left:11%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 
@@ -4790,7 +4795,8 @@ div.target-list-table {
 	.sidebar {width:12%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:12%;}
 	.col-md-10 {width:88%;}
-	#buttontoggle {left:12%!important;}
+	.button-toggle-expanded {left:12%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 
@@ -4798,7 +4804,8 @@ div.target-list-table {
 	.sidebar {width:13%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:13%;}
 	.col-md-10 {width:87%;}
-	#buttontoggle {left:13%!important;}
+	.button-toggle-expanded {left:13%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 
@@ -4872,7 +4879,8 @@ div.target-list-table {
 	.sidebar {width:14%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:14%;}
 	.col-md-10 {width:86%;}
-	#buttontoggle {left:14%!important;}
+	.button-toggle-expanded {left:14%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 
@@ -4881,35 +4889,40 @@ div.target-list-table {
 	.sidebar {width:15%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:15%;}
 	.col-md-10 {width:85%;}
-	#buttontoggle {left:15%!important;}
+	.button-toggle-expanded {left:15%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 @media (max-width: 1300px) {
 	.sidebar {width:16%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:16%;}
 	.col-md-10 {width:84%;}
-	#buttontoggle {left:16%!important;}
+	.button-toggle-expanded {left:16%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 @media (max-width: 1200px) {
 	.sidebar {width:17%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:17%;}
 	.col-md-10 {width:83%;}
-	#buttontoggle {left:17%!important;}
+	.button-toggle-expanded {left:17%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 @media (max-width: 1100px) {
 	.sidebar {width:18%;}
 	#bootstrap-container.col-md-offset-2 {margin-left:18%;}
 	.col-md-10 {width:82%;}
-	#buttontoggle {left:18%!important;}
+	.button-toggle-expanded {left:18%!important;}
+    .button-toggle-collapsed {  left: 0%;}
 }
 
 @media (max-width: 1000px) {
 	.sidebar {display:none;}
 	#bootstrap-container.col-md-offset-2 {margin-left:0;}
 	.col-md-10 {width:100%;}
-	#buttontoggle {display:none;}
+	.button-toggle-expanded {display:none;}
+    .button-toggle-collapsed {display:none;}
 }
 
 
