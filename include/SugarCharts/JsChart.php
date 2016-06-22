@@ -726,14 +726,6 @@ class JsChart extends SugarChart {
 		* Replacement regex $pattern applied
 		*/
 
-		// /e is deprecated so we replaced it for preg_replace_callback()
-
-		//$pattern[] = '/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/e';
-		//$replacement[] = "'<link>'.urlencode(\"$1\").'</link>'";
-//		$pattern[] = '/NULL/e';
-//		$replacement[] = "";
-		//return = preg_replace($pattern,$replacement, $content);
-
 		$return = preg_replace_callback('/\<link\>([a-zA-Z0-9#?&%.;\[\]\/=+\s\-\_]+)\<\/link\>/', function($m) { return '<link>'.urlencode($m[1]).'</link>'; }, $content);
 		return $return;
 	}
