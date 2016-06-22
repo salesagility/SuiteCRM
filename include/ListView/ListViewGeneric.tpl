@@ -112,7 +112,7 @@
 		{assign var="actionsLink" value=$actionsLinkTop}
 		{assign var="selectLink" value=$selectLinkTop}
 		{assign var="action_menu_location" value="top"}
-		{include file='include/ListView/ListViewPagination.tpl'}
+
 		<tr height='20'>
 			{if $prerow}
 				<th class="td_alt">&nbsp;</th>
@@ -171,6 +171,7 @@
 			{* add extra column for icons*}
 			<th>{$pageData.additionalDetails.$id}</th>
 		</tr>
+		{include file='include/ListView/ListViewPagination.tpl'}
 	</thead>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
