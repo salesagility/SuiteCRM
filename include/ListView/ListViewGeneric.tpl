@@ -107,71 +107,68 @@
 {if $hideTable == false}
 	<table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
 	<thead>
-		{assign var="link_select_id" value="selectLinkTop"}
-		{assign var="link_action_id" value="actionLinkTop"}
-		{assign var="actionsLink" value=$actionsLinkTop}
-		{assign var="selectLink" value=$selectLinkTop}
-		{assign var="action_menu_location" value="top"}
-
-		<tr height='20'>
+	{assign var="link_select_id" value="selectLinkTop"}
+    {assign var="link_action_id" value="actionLinkTop"}
+    {assign var="actionsLink" value=$actionsLinkTop}
+    {assign var="selectLink" value=$selectLinkTop}
+    {assign var="action_menu_location" value="top"}
+	{include file='include/ListView/ListViewPagination.tpl'}
+	<tr height='20'>
 			{if $prerow}
-				<th class="td_alt">&nbsp;</th>
+				<td width='1%' class="td_alt">
+					&nbsp;
+				</td>
 			{/if}
 			{if !empty($quickViewLinks)}
-				<th class='td_alt quick_view_links'>&nbsp;</th>
+			<td class='td_alt' width='1%' style="padding: 0px;">&nbsp;</td>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
             {assign var='datahide' value="phone"}
 			{foreach from=$displayColumns key=colHeader item=params}
                 {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
                 {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
-                {if $colHeader == 'NAME' || $params.bold}
-					<th scope='col' data-toggle="true">
-				{else}
-					<th scope='col' data-hide="{$datahide}">
-				{/if}
-						<div>
-						{if $params.sortable|default:true}
-							{if $params.url_sort}
-								<a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1'>
+                {if $colHeader == 'NAME' || $params.bold}<th scope='col' data-toggle="true">
+				{else}<th scope='col' data-hide="{$datahide}">{/if}
+					<div style='white-space: normal;'width='100%' align='{$params.align|default:'left'}'>
+	                {if $params.sortable|default:true}
+	                    {if $params.url_sort}
+	                        <a href='{$pageData.urls.orderBy}{$params.orderBy|default:$colHeader|lower}' class='listViewThLinkS1'>
+	                    {else}
+	                        {if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
+	                            <a href='javascript:sListView.order_checks("{$pageData.ordering.sortOrder|default:ASCerror}", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
+	                        {else}
+	                            <a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
+	                        {/if}
+	                    {/if}
+	                    {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+						&nbsp;&nbsp;
+						{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
+							{if $pageData.ordering.sortOrder == 'ASC'}
+								{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
+	                            {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
+								{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
 							{else}
-								{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
-									<a href='javascript:sListView.order_checks("{$pageData.ordering.sortOrder|default:ASCerror}", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
-								{else}
-									<a href='javascript:sListView.order_checks("ASC", "{$params.orderBy|default:$colHeader|lower}" , "{$pageData.bean.moduleDir}{"2_"}{$pageData.bean.objectName|upper}{"_ORDER_BY"}")' class='listViewThLinkS1'>
-								{/if}
-							{/if}
-							{sugar_translate label=$params.label module=$pageData.bean.moduleDir}
-							&nbsp;&nbsp;
-							{if $params.orderBy|default:$colHeader|lower == $pageData.ordering.orderBy}
-								{if $pageData.ordering.sortOrder == 'ASC'}
-									{capture assign="imageName"}arrow_down.{$arrowExt}{/capture}
-									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_DESC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
-								{else}
-									{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
-									{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
-									{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
-								{/if}
-							{else}
-								{capture assign="imageName"}arrow.{$arrowExt}{/capture}
-								{capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
+								{capture assign="imageName"}arrow_up.{$arrowExt}{/capture}
+	                            {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT_ASC'}{/capture}
 								{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
 							{/if}
-							</a>
 						{else}
-							{if !isset($params.noHeader) || $params.noHeader == false}
-							  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
-							{/if}
+							{capture assign="imageName"}arrow.{$arrowExt}{/capture}
+	                        {capture assign="alt_sort"}{sugar_translate label='LBL_ALT_SORT'}{/capture}
+							{sugar_getimage name=$imageName attr='align="absmiddle" border="0" ' alt="$alt_sort"}
 						{/if}
-						</div>
-					</th>
+	                    </a>
+					{else}
+	                    {if !isset($params.noHeader) || $params.noHeader == false}
+						  {sugar_translate label=$params.label module=$pageData.bean.moduleDir}
+	                    {/if}
+					{/if}
+					</div>
+				</th>
 				{counter name="colCounter"}
 			{/foreach}
-			{* add extra column for icons*}
-			<th>{$pageData.additionalDetails.$id}</th>
+
 		</tr>
-		{include file='include/ListView/ListViewPagination.tpl'}
 	</thead>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
@@ -185,18 +182,18 @@
 			{/if}
 			<tr height='20' class='{$_rowColor}S1'>
 				{if $prerow}
-				<td>
+				<td width='1%' class='nowrap'>
 				 {if !$is_admin && is_admin_for_user && $rowData.IS_ADMIN==1}
-						<input type='checkbox' disabled="disabled" class='' value='{$rowData.ID}'>
+						<input type='checkbox' disabled="disabled" class='checkbox' value='{$rowData.ID}'>
 				 {else}
-	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='' name='mass[]' value='{$rowData.ID}'>
+	                    <input title="{sugar_translate label='LBL_SELECT_THIS_ROW_TITLE'}" onclick='sListView.check_item(this, document.MassUpdate)' type='checkbox' class='checkbox' name='mass[]' value='{$rowData.ID}'>
 				 {/if}
 				</td>
 				{/if}
 				{if !empty($quickViewLinks)}
 	            {capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$pageData.bean.moduleDir}{/if}{/capture}
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
-				<td>
+				<td width='2%' nowrap>
                     {if $pageData.rowAccess[$id].edit}
                         <a title='{$editLinkString}' id="edit-{$rowData.ID}"
                            href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
