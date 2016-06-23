@@ -103,7 +103,7 @@
     <tr>
 	<td colspan="{$searchTableColumnCount}">
     {else}
-	<td class="sumbitButtons">
+	<td class="submitButtons">
     {/if}
         {{sugar_button module="$module" id="search" view="searchView"}}
 	    <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
