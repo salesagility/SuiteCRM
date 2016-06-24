@@ -123,6 +123,15 @@
 
 	</table>
 -->
+<div class="template-panel">
+	<div class="template-panel-container panel">
+		<div class="template-container-full">
+			<div class="row">
+				<div class="col-xs-12"><h4>{$MOD.LBL_TARGET_LISTS}</h4></div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12"><label>{$MOD.LBL_STEP_INFO_TARGET_LIST_NON_NEWSLETTER}</label></div>
+			</div>
 	<div class="row">
 		<div class="col-xs-12  col-sm-4">
 
@@ -219,6 +228,9 @@
 
 		</div>
 	</div>
+			</div>
+	</div>
+
 
 	<p>
 
@@ -273,11 +285,19 @@
 					{/literal}
 					//display the html
 					{capture assign='alt_remove' }{sugar_translate label='LBL_DELETE' module='CAMPAIGNS'}{/capture}
+					{literal}
+					if(trgt_id.value) {
+						var targetListName = "<a href=\"index.php?module=ProspectLists&action=DetailView&record=" + trgt_id.value + "\" target=\"_blank\" title=\"{$MOD.LBL_OPEN_IN_NEW_WINDOW}\">" + trgt_name_html + "</a>"
+					}
+					else {
+						var targetListName = trgt_name_html;
+					}
+					{/literal}
                     var trgt_html =
 							"<div id='trgt_added_"+targets_added+"'> " +
 							"	<table width='100%' class='tabDetailViewDL2'>" +
 							"		<tr class='tabDetailViewDL2' >" +
-							"			<td width='100' style=\"width:25%\"><a href=\"index.php?module=ProspectLists&action=DetailView&record=" + trgt_id.value + "\" target=\"_blank\" title=\"{$MOD.LBL_OPEN_IN_NEW_WINDOW}\">"+trgt_name_html+"</a></td>" +
+							"			<td width='100' style=\"width:25%\">" + targetListName + "</td>" +
 							"			<td width='100' style=\"width:25%\">"+trgt_count_html+"</td>" +
 							"			<td width='100' style=\"width:25%\">"+trgt_type_html+"</td>" +
 							"			<td width='100' style=\"width:25%\">"+trgt_id_html+

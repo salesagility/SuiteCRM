@@ -1,12 +1,14 @@
 <?php
-if (! defined ( 'sugarEntry' ) || ! sugarEntry)
-    die ( 'Not A Valid Entry Point' ) ;
-/*********************************************************************************
+
+if (!defined('sugarEntry') || !sugarEntry) {
+    die('Not A Valid Entry Point');
+}
+/**
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -37,30 +39,28 @@ if (! defined ( 'sugarEntry' ) || ! sugarEntry)
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
+require_once 'modules/ModuleBuilder/parsers/ModuleBuilderParser.php';
 
-
-require_once ('modules/ModuleBuilder/parsers/ModuleBuilderParser.php') ;
-
-class ParserLabel //extends ModuleBuilderParser
+class ParserLabel
 {
-
-    public function __construct ($moduleName, $packageName = '' )
+    public function __construct($moduleName, $packageName = '')
     {
         $this->moduleName = $moduleName;
-        if (!empty($packageName))
-            $this->packageName = $packageName ;
+        if (!empty($packageName)) {
+            $this->packageName = $packageName;
+        }
     }
 
     /**
      * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
      */
-    public function ParserLabel($moduleName, $packageName = '' ){
+    public function ParserLabel($moduleName, $packageName = '')
+    {
         $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
-        if(isset($GLOBALS['log'])) {
+        if (isset($GLOBALS['log'])) {
             $GLOBALS['log']->deprecated($deprecatedMessage);
-        }
-        else {
+        } else {
             trigger_error($deprecatedMessage, E_USER_DEPRECATED);
         }
         self::__construct($moduleName, $packageName);
@@ -69,25 +69,26 @@ class ParserLabel //extends ModuleBuilderParser
     /**
      * Takes in the request params from a save request and processes
      * them for the save.
-     * @param REQUEST $params       Labels as "label_".System label => Display label pairs
-     * @param string $language      Language key, for example 'en_us'
+     *
+     * @param array  $params   Labels as "label_".System label => Display label pairs
+     * @param string $language Language key, for example 'en_us'
+     *
+     * @return bool
      */
-    function handleSave ($params , $language)
+    public function handleSave($params, $language)
     {
-        $labels = array ( ) ;
-        foreach ( $params as $key => $value )
-        {
-            if (preg_match ( '/^label_/', $key ) && strcmp ( $value, 'no_change' ) != 0)
-            {
-                $labels [ strtoupper(substr ( $key, 6 )) ] = SugarCleaner::cleanHtml(from_html($value),false);
+        $labels = array();
+        foreach ($params as $key => $value) {
+            if (preg_match('/^label_/', $key) && strcmp($value, 'no_change') != 0) {
+                $labels [ strtoupper(substr($key, 6)) ] = SugarCleaner::cleanHtml(from_html($value), false);
             }
         }
-        if (!empty($this->packageName)) //we are in Module builder
-        {
-            return self::addLabels ( $language, $labels, $this->moduleName, "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/language" ) ;
-        } else
-        {
-            return self::addLabels ( $language, $labels, $this->moduleName ) ;
+        if (!empty($this->packageName)) {
+            //we are in Module builder
+
+            return self::addLabels($language, $labels, $this->moduleName, "custom/modulebuilder/packages/{$this->packageName}/modules/{$this->moduleName}/language");
+        } else {
+            return self::addLabels($language, $labels, $this->moduleName);
         }
     }
 
@@ -100,69 +101,68 @@ class ParserLabel //extends ModuleBuilderParser
      * @param string $basepath      base path of the language file
      * @param string $forRelationshipLabel      whether this is a relationship label
      */
-    static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false) {
-        $GLOBALS [ 'log' ]->debug ( "ParserLabel->removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );" ) ;
-        if (is_null ( $basepath ))
-        {
-            $deployedModule = true ;
-            $basepath = "custom/modules/$moduleName/language" ;
-            if($forRelationshipLabel){
-            	$basepath = "custom/modules/$moduleName/Ext/Language" ;
+    public static function removeLabel($language, $label, $labelvalue, $moduleName, $basepath = null, $forRelationshipLabel = false)
+    {
+        $GLOBALS [ 'log' ]->debug("ParserLabel->removeLabels($language, \$label, \$labelvalue, $moduleName, $basepath );");
+        if (is_null($basepath)) {
+            $deployedModule = true;
+            $basepath = "custom/modules/$moduleName/language";
+            if ($forRelationshipLabel) {
+                $basepath = "custom/modules/$moduleName/Ext/Language";
             }
-            if (! is_dir ( $basepath ))
-            {
+            if (!is_dir($basepath)) {
                 $GLOBALS ['log']->debug("$basepath is not a directory.");
+
                 return false;
             }
         }
 
-        $filename = "$basepath/$language.lang.php" ;
-        if($forRelationshipLabel){
-        	$filename = "$basepath/$language.lang.ext.php" ;
-     	}
+        $filename = "$basepath/$language.lang.php";
+        if ($forRelationshipLabel) {
+            $filename = "$basepath/$language.lang.ext.php";
+        }
 
-        $dir_exists = is_dir ( $basepath ) ;
+        $dir_exists = is_dir($basepath);
 
-        $mod_strings = array ( ) ;
+        $mod_strings = array();
 
-        if ($dir_exists)
-        {
-            if (file_exists ($filename))
-            {
+        if ($dir_exists) {
+            if (file_exists($filename)) {
                 // obtain $mod_strings
-                include ($filename) ;
+                include $filename;
             } else {
                 $GLOBALS ['log']->debug("file $filename does not exist.");
+
                 return false;
             }
         } else {
             $GLOBALS ['log']->debug("directory $basepath does not exist.");
-            return false ;
+
+            return false;
         }
 
-        $changed = false ;
+        $changed = false;
 
-        if (isset($mod_strings[$label]) && $mod_strings[$label]==$labelvalue) {
+        if (isset($mod_strings[$label]) && $mod_strings[$label] == $labelvalue) {
             unset($mod_strings[$label]);
             $changed = true;
         }
 
-        if ($changed)
-        {
-            if (! write_array_to_file ( "mod_strings", $mod_strings, $filename )) {
-                $GLOBALS [ 'log' ]->fatal ( "Could not write $filename" ) ;
+        if ($changed) {
+            if (!write_array_to_file('mod_strings', $mod_strings, $filename)) {
+                $GLOBALS [ 'log' ]->fatal("Could not write $filename");
             } else {
                 // if we have a cache to worry about, then clear it now
                 if ($deployedModule) {
-                    $GLOBALS ['log']->debug ( "PaserLabel->addLabels: clearing language cache" ) ;
-                    $cache_key = "module_language." . $language . $moduleName ;
-                    sugar_cache_clear ( $cache_key ) ;
-                    LanguageManager::clearLanguageCache ( $moduleName, $language ) ;
+                    $GLOBALS ['log']->debug('PaserLabel->addLabels: clearing language cache');
+                    $cache_key = 'module_language.'.$language.$moduleName;
+                    sugar_cache_clear($cache_key);
+                    LanguageManager::clearLanguageCache($moduleName, $language);
                 }
             }
         }
 
-        return true ;
+        return true;
     }
 
     /*
@@ -172,82 +172,70 @@ class ParserLabel //extends ModuleBuilderParser
      * @param string $moduleName    Name of the module to which to add these labels
      * @param string $packageName   If module is undeployed, name of the package to which it belongs
      */
-    static function addLabels ($language , $labels , $moduleName , $basepath = null, $forRelationshipLabel = false)
+    public static function addLabels($language, $labels, $moduleName, $basepath = null, $forRelationshipLabel = false)
     {
+        $GLOBALS [ 'log' ]->debug("ParserLabel->addLabels($language, \$labels, $moduleName, $basepath );");
+        $GLOBALS [ 'log' ]->debug('$labels:'.print_r($labels, true));
 
-        $GLOBALS [ 'log' ]->debug ( "ParserLabel->addLabels($language, \$labels, $moduleName, $basepath );" ) ;
-        $GLOBALS [ 'log' ]->debug ( "\$labels:" . print_r ( $labels, true ) ) ;
-
-        $deployedModule = false ;
-        if (is_null ( $basepath ))
-        {
-            $deployedModule = true ;
-            $basepath = "custom/modules/$moduleName/language" ;
-            if($forRelationshipLabel){
-            	$basepath = "custom/modules/$moduleName/Ext/Language" ;
+        $deployedModule = false;
+        if (is_null($basepath)) {
+            $deployedModule = true;
+            $basepath = "custom/modules/$moduleName/language";
+            if ($forRelationshipLabel) {
+                $basepath = "custom/modules/$moduleName/Ext/Language";
             }
-            if (! is_dir ( $basepath ))
-            {
+            if (!is_dir($basepath)) {
                 mkdir_recursive($basepath);
             }
         }
 
-        $filename = "$basepath/$language.lang.php" ;
-        if($forRelationshipLabel){
-        	$filename = "$basepath/$language.lang.ext.php" ;
-     	}
-        $dir_exists = is_dir ( $basepath ) ;
+        $filename = "$basepath/$language.lang.php";
+        if ($forRelationshipLabel) {
+            $filename = "$basepath/$language.lang.ext.php";
+        }
+        $dir_exists = is_dir($basepath);
 
-        $mod_strings = array ( ) ;
+        $mod_strings = array();
 
-        if ($dir_exists)
-        {
-            if (file_exists ( $filename ))
-            {
+        if ($dir_exists) {
+            if (file_exists($filename)) {
                 // obtain $mod_strings
-                include ($filename) ;
-            }else if($forRelationshipLabel){
-            	$fh = fopen ($filename, 'a');
-            	fclose($fh);
+                include $filename;
+            } elseif ($forRelationshipLabel) {
+                $fh = fopen($filename, 'a');
+                fclose($fh);
             }
-        } else
-        {
-            return false ;
+        } else {
+            return false;
         }
 
-        	$changed = false ;
+        $changed = false;
 
         //$charset = (isset($app_strings['LBL_CHARSET'])) ? $app_strings['LBL_CHARSET'] : $GLOBALS['sugar_config']['default_charset'] ;
 
-	        foreach ( $labels as $key => $value )
-	        {
-            if (! isset ( $mod_strings [ $key ] ) || strcmp ( $value, $mod_strings [ $key ] ) != 0)
-	            {
+            foreach ($labels as $key => $value) {
+                if (!isset($mod_strings [ $key ]) || strcmp($value, $mod_strings [ $key ]) != 0) {
                     $mod_strings [$key] = to_html(strip_tags(from_html($value))); // must match encoding used in view.labels.php
-	                $changed = true ;
-	            }
-	        }
+                    $changed = true;
+                }
+            }
 
-	        if ($changed)
-	        {
-            $GLOBALS [ 'log' ]->debug ( "ParserLabel->addLabels: writing new mod_strings to $filename" ) ;
-	            $GLOBALS [ 'log' ]->debug ( "ParserLabel->addLabels: mod_strings=".print_r($mod_strings,true) ) ;
-            if (! write_array_to_file ( "mod_strings", $mod_strings, $filename ))
-	            {
-                $GLOBALS [ 'log' ]->fatal ( "Could not write $filename" ) ;
-	            } else
-	            {
-	                // if we have a cache to worry about, then clear it now
-                if ($deployedModule)
-	                {
-                            SugarCache::cleanOpcodes();
-	                    $GLOBALS [ 'log' ]->debug ( "PaserLabel->addLabels: clearing language cache" ) ;
-	                    $cache_key = "module_language." . $language . $moduleName ;
-	                    sugar_cache_clear ( $cache_key ) ;
-	                    LanguageManager::clearLanguageCache ( $moduleName, $language ) ;
-	                }
-	            }
-	        }
+        if ($changed) {
+            $GLOBALS [ 'log' ]->debug("ParserLabel->addLabels: writing new mod_strings to $filename");
+            $GLOBALS [ 'log' ]->debug('ParserLabel->addLabels: mod_strings='.print_r($mod_strings, true));
+            if (!write_array_to_file('mod_strings', $mod_strings, $filename)) {
+                $GLOBALS [ 'log' ]->fatal("Could not write $filename");
+            } else {
+                // if we have a cache to worry about, then clear it now
+                if ($deployedModule) {
+                    SugarCache::cleanOpcodes();
+                    $GLOBALS [ 'log' ]->debug('PaserLabel->addLabels: clearing language cache');
+                    $cache_key = 'module_language.'.$language.$moduleName;
+                    sugar_cache_clear($cache_key);
+                    LanguageManager::clearLanguageCache($moduleName, $language);
+                }
+            }
+        }
 
         // Fix for bug #51
         // when the label is recreated it defaults back to the original value (In this case its "User").
@@ -258,64 +246,60 @@ class ParserLabel //extends ModuleBuilderParser
         // The changes from custom/Extension/modules/{ModuleName}/Ext/Language
         // will overwrite stuff in custom/modules/{ModuleName}/Ext/Language/en_us.lang.ext.php after
         //  Quick Repair and Rebuild is applied.
-        if($forRelationshipLabel) {
-            if(!empty($_POST[view_module]) && !empty($_POST[relationship_name]) && !empty($_POST[rhs_label]) && !empty($_POST[lhs_module])) {
+        if ($forRelationshipLabel) {
+            if (!empty($_POST[view_module]) && !empty($_POST[relationship_name]) && !empty($_POST[rhs_label]) && !empty($_POST[lhs_module])) {
                 // 1. Overwrite custom/Extension/modules/{ModuleName}/Ext/Language
-                $extension_basepath = "custom/Extension/modules/" . $_POST[view_module] . "/Ext/Language";
+                $extension_basepath = 'custom/Extension/modules/'.$_POST[view_module].'/Ext/Language';
                 mkdir_recursive($extension_basepath);
 
                 $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n";
                 $out = $headerString;
 
-                $extension_filename = "$extension_basepath/$language.custom" . $_POST[relationship_name] . ".php";
+                $extension_filename = "$extension_basepath/$language.custom".$_POST[relationship_name].'.php';
 
                 $mod_strings = array();
                 if (file_exists($extension_filename)) {
                     // obtain $mod_strings
-                    include($extension_filename);
+                    include $extension_filename;
                 }
 
-                $changed_mod_strings = false;
                 foreach ($labels as $key => $value) {
                     foreach ($mod_strings as $key_mod_string => $value_mod_string) {
                         if (strpos($key_mod_string, strtoupper($_POST[relationship_name])) !== false) {
                             $mod_strings[$key_mod_string] = to_html(strip_tags(from_html($_POST[rhs_label]))); // must match encoding used in view.labels.php
-                            $changed_mod_strings = true;
                         }
                     }
                 }
 
-                foreach ($mod_strings as $key => $val)
+                foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+                }
 
-                $failed_to_write = false;
                 try {
                     $file_contents = fopen($extension_filename, 'w');
                     fputs($file_contents, $out, strlen($out));
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");
-                    $GLOBALS ['log']->fatal("Exception " . $e->getMessage());
-                    $failed_to_write = true;
+                    $GLOBALS ['log']->fatal('Exception '.$e->getMessage());
                 }
 
                 //2. Overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
                 // Also need to overwrite custom/Extension/modules/relationships/language/{ModuleName}.php
                 // because whenever new relationship is created this place is checked by the system to get
                 // all the label names
-                $relationships_basepath = "custom/Extension/modules/relationships/language";
+                $relationships_basepath = 'custom/Extension/modules/relationships/language';
                 mkdir_recursive($relationships_basepath);
 
                 $headerString = "<?php\n//THIS FILE IS AUTO GENERATED, DO NOT MODIFY\n";
                 $out = $headerString;
 
-                $relationships_filename = "$relationships_basepath/" . $_POST[lhs_module] . ".php";
-
+                $relationships_filename = "$relationships_basepath/".$_POST[lhs_module].'.php';
 
                 $mod_strings = array();
                 if (file_exists($relationships_filename)) {
                     // obtain $mod_strings
-                    include($relationships_filename);
+                    include $relationships_filename;
                 }
 
                 $changed_mod_strings = false;
@@ -328,8 +312,9 @@ class ParserLabel //extends ModuleBuilderParser
                     }
                 }
 
-                foreach ($mod_strings as $key => $val)
+                foreach ($mod_strings as $key => $val) {
                     $out .= override_value_to_string_recursive2('mod_strings', $key, $val);
+                }
 
                 $failed_to_write = false;
                 try {
@@ -338,7 +323,7 @@ class ParserLabel //extends ModuleBuilderParser
                     fclose($file_contents);
                 } catch (Exception $e) {
                     $GLOBALS ['log']->fatal("Could not write $filename");
-                    $GLOBALS ['log']->fatal("Exception " . $e->getMessage());
+                    $GLOBALS ['log']->fatal('Exception '.$e->getMessage());
                     $failed_to_write = true;
                 }
 
@@ -347,8 +332,8 @@ class ParserLabel //extends ModuleBuilderParser
                         // if we have a cache to worry about, then clear it now
                         if ($deployedModule) {
                             SugarCache::cleanOpcodes();
-                            $GLOBALS ['log']->debug("PaserLabel->addLabels: clearing language cache");
-                            $cache_key = "module_language." . $language . $moduleName;
+                            $GLOBALS ['log']->debug('PaserLabel->addLabels: clearing language cache');
+                            $cache_key = 'module_language.'.$language.$moduleName;
                             sugar_cache_clear($cache_key);
                             LanguageManager::clearLanguageCache($moduleName, $language);
                         }
@@ -357,33 +342,30 @@ class ParserLabel //extends ModuleBuilderParser
             }
         }
 
-        return true ;
+        return true;
     }
 
     /**
      * Takes in the request params from a save request and processes
      * them for the save.
+     *
      * @param $metadata
-     * @param string $language      Language key, for example 'en_us'
+     * @param string $language Language key, for example 'en_us'
      */
-    function handleSaveRelationshipLabels ($metadata , $language)
-        {
-        foreach ( $metadata as $definition )
-            {
-        	$labels = array();
-        	$labels[$definition [ 'system_label' ]] = $definition [ 'display_label' ];
-        	self::addLabels ( $language, $labels, $definition [ 'module' ],null,true );
-            }
+    public function handleSaveRelationshipLabels($metadata, $language)
+    {
+        foreach ($metadata as $definition) {
+            $labels = array();
+            $labels[$definition [ 'system_label' ]] = $definition [ 'display_label' ];
+            self::addLabels($language, $labels, $definition [ 'module' ], null, true);
         }
+    }
 
-    function addLabelsToAllLanguages($labels)
-            {
-    	$langs = get_languages();
-    	foreach($langs as $lang_key => $lang_display)
-        {
-    		$this->addLabels($lang_key, $labels, $this->moduleName);
+    public function addLabelsToAllLanguages($labels)
+    {
+        $langs = get_languages();
+        foreach ($langs as $lang_key => $lang_display) {
+            $this->addLabels($lang_key, $labels, $this->moduleName);
         }
     }
 }
-
-?>

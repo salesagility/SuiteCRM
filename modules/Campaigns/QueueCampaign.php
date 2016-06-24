@@ -198,5 +198,13 @@ if($action=='WizardMarketingSave') {
 	$header_URL .= '&WizardMarketingSave=1&marketing_id=' . $_REQUEST['wiz_mass'];
 }
 $GLOBALS['log']->debug("about to post header URL of: $header_URL");
-header($header_URL);
+
+if(preg_match('/\s*Location:\s*(.*)$/', $header_URL, $matches)) {
+	$href = $matches[1];
+	SugarApplication::redirect($href);
+}
+else {
+	header($header_URL);
+}
+
 ?>

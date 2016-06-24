@@ -79,7 +79,7 @@
 
 								<ul class="icon-btn-lst">
 									<li class="icon-btn">
-										<a href="javascript:" onclick="$('#wizardtype_nl').click(); $(this).closest('form').submit();">
+										<a href="javascript:" onclick="$('#wizardtype_nl').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NEWSLETTER_TITLE}">
 											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-newsletter.png"}" />
 											<br />
 											<span>{$MOD.LBL_NEWSLETTER}</span>
@@ -87,7 +87,7 @@
 									</li>
 
 									<li class="icon-btn">
-										<a href="javascript:" onclick="$('#wizardtype_em').click(); $(this).closest('form').submit();">
+										<a href="javascript:" onclick="$('#wizardtype_em').click(); $(this).closest('form').submit();" title="{$MOD.LBL_EMAIL_TITLE}">
 											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-email.png"}" />
 											<br />
 											<span>{$MOD.LBL_EMAIL}</span>
@@ -95,7 +95,7 @@
 									</li>
 
 									<li class="icon-btn">
-										<a href="javascript:" onclick="$('#wizardtype_ot').click(); $(this).closest('form').submit();">
+										<a href="javascript:" onclick="$('#wizardtype_ot').click(); $(this).closest('form').submit();" title="{$MOD.LBL_NON_EMAIL_TITLE}">
 											<img src="{sugar_getimagepath file="cmpwzrd/cmpwzrd-nonemail.png"}" />
 											<br />
 											<span>{$MOD.LBL_OTHER_TYPE_CAMPAIGN}</span>
