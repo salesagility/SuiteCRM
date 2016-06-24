@@ -163,7 +163,7 @@ else if(isset($_REQUEST['marketing_id']) and !empty($_REQUEST['marketing_id'])) 
     else if(count($mrkt_lists) > 1) {
         if(!empty($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']) && in_array($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId'], $mrkt_lists)) {
 
-            if (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing') {
+            if (!isset($_REQUEST['func']) || (empty($_REQUEST['func']) && $_REQUEST['func'] != 'createEmailMarketing')) {
                 $mrkt_focus->retrieve($_SESSION['campaignWizard'][$campaign_focus->id]['defaultSelectedMarketingId']);
 
             } else {
