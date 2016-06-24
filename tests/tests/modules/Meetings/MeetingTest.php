@@ -155,6 +155,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         $meeting = new Meeting();
+        $current_theme = SugarThemeRegistry::current();
 
         //preset required attribute values
         $meeting->status == 'Planned';
@@ -177,7 +178,7 @@ class MeetingTest extends PHPUnit_Framework_TestCase
                       'CONTACT_ID' => 1,
                       'REPEAT_INTERVAL' => '1',
                       'PARENT_MODULE' => 'Accounts',
-                      'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/SuiteR/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
+                      'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
                       'DATE_START' => '<font class=\'overdueTask\'></font>',
                       'REMINDER_CHECKED' => false,
                       'EMAIL_REMINDER_CHECKED' => false,
