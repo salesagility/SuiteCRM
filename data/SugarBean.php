@@ -2783,7 +2783,7 @@ class SugarBean
         $xtpl->parse($template_name . "_Subject");
 
         $notify_mail->Body = from_html(trim($xtpl->text($template_name)));
-        $notify_mail->Subject = from_html($xtpl->text($template_name . "_Subject"));
+        $notify_mail->Subject = strip_tags(from_html($xtpl->text($template_name . "_Subject")));
 
         // cn: bug 8568 encode notify email in User's outbound email encoding
         $notify_mail->prepForOutbound();
