@@ -904,7 +904,7 @@ class EmailMan extends SugarBean{
             $this->target_tracker_key=create_guid();
 
 			if (isset($module->email_opt_out) && ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)) {
-				$this->set_as_sent($module->email1,true,null,null,'removed');
+				$this->set_as_sent($module->email1,true,null,null,'blocked');
 			} else {
 				if (isset($module->invalid_email) && ($module->invalid_email == 1 || $module->invalid_email == '1')) {
 					$this->set_as_sent($module->email1,true,null,null,'invalid email');
