@@ -105,7 +105,8 @@
 {/if}
 {$multiSelectData}
 {if $hideTable == false}
-	<div style="border: 1px solid transparent; border-radius: 5px; overflow:hidden;"><table cellpadding='0' cellspacing='0' width='100%' border='0' class='list view table'>
+	<div style="border: 1px solid transparent; border-radius: 5px;">
+		<table cellpadding='0' cellspacing='0' border='0' class='list view table'>
 	<thead>
 		{assign var="link_select_id" value="selectLinkTop"}
 		{assign var="link_action_id" value="actionLinkTop"}
