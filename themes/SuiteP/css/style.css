@@ -3575,14 +3575,20 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
-button {
-    padding: 5px;
+.edit button {
     min-height: 32px !important;
     min-width: 32px !important;
     margin-right: 4px;
+    vertical-align: middle;
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
+
+}
+
+.edit input, .edit textarea {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .dropdown-menu {
@@ -3822,12 +3828,16 @@ input[type=text], textarea {
     padding: 5px;
 }
 
+.search_form input[type=text], .search_form textarea {
+    background: #ffffff;
+}
+
 :disabled {
     border: 1px solid #e2e7eb;
     background: #f8f8f8;
 }
 
-select, select:focus {
+select:not([multiple="1"]), select:focus:not([multiple="1"]), .saved_search_select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -6756,5 +6766,4 @@ div.target-list-table {
             display: none;
         }
     }
-
 
