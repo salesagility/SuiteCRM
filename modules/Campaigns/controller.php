@@ -48,6 +48,11 @@ class CampaignsController extends SugarController{
     public function process() {
         if($this->action == 'EditView' && empty($_REQUEST['record'])) {
             $this->action = 'WizardHome';
+        } else if($this->action == 'EditView' && !empty($_REQUEST['record'])) {
+            // Show Send Email and Summary
+            $this->action = 'WizardHome';
+            // modules/Campaigns/WizardHome.php isWizardSummary
+            $_REQUEST['action'] = 'WizardHome';
         }
         parent::process();
     }

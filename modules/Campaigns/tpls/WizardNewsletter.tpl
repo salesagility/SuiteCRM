@@ -118,7 +118,7 @@
 			if(getParameterByName('show_target_list')) {
 				//navigate('next');
 				direct('3');
-				wizardMenuSetStepLink(3, '#', "javascript:direct('3');")
+//				wizardMenuSetStepLink(3, '#', "javascript:direct('3');")
 			}
 		});
 	</script>
