@@ -850,10 +850,37 @@ class EmailTemplate extends SugarBean
         return $ret;
     }
 
+    /**
+     * add site url to relative images src attribute
+     * @return string body html
+     */
     public function addDomainToRelativeImagesSrc() {
+
         global $sugar_config;
+
         $domain = $sugar_config['site_url'] . '/';
-        $ret = $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
+        $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
+
+        // add site url for all relative src of image
+
+        $this->body_html = preg_replace_callback('/(&lt;img\b.*\bsrc\s*=\s*&quot;)(.*)(&quot;.*&gt;)/', function($matches){
+
+            global $sugar_config;
+
+            if(!preg_match('/(^http)/', $matches[3])) {
+                if(isset($link[0]) && $link[0] != '/') {
+                    $matches[3] = $sugar_config['site_url'] . '/' . $matches[3];
+                } else {
+                    $matches[3] = $sugar_config['site_url'] . $matches[3];
+                }
+            }
+
+            return implode('', $matches);
+
+        }, $this->body_html);
+
+
+        $ret = $this->body_html;
         return $ret;
     }
 

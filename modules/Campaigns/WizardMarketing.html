@@ -1263,6 +1263,13 @@
 											$('#alert_messages').append('<font color="red">' + SUGAR.language.translate('Campaigns', msg) + '</forn><br>');
 										});
 
+
+
+										$('#alert_messages').append('<b>' + SUGAR.language.translate('Campaigns', 'LBL_REL_IMG_LINKS') + '</b><br>');
+										$.each(resp.templateValidationMessages_relativeImages, function(i, rel){
+											$('#alert_messages').append(rel + '<br>');
+										});
+
 										$('#marketing_status_lnk').removeAttr('title');
 										$('#marketing_status_btn').removeClass('fail');
 										if(!$('#marketing_status_btn').hasClass('ok')) {

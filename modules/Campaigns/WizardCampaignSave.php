@@ -40,8 +40,35 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $db;
 
+/**
+ * validate email template's html body for relative image links
+ * @param EmailTemplate $emailTemplate
+ * @return array|bool relative links or false
+ */
+function validateEmailTemplateForRelativeImageSrc(EmailTemplate $emailTemplate) {
+
+    $html = $emailTemplate->body_html;
+
+    $relatives = array();
+    if(preg_match_all('/&lt;img\b((?!src).)*\bsrc\s*=\s*&quot;(((?!&quot;).)*)&quot;/i', $html, $matches)) {
+        foreach($matches[2] as $key => $link) {
+            if(!preg_match('/^http[s]{0,1}:\/\//i', $link)) {
+                $relatives[$link] = $matches[0][$key];
+            }
+        }
+    }
+
+    // $relatives contains the all found relative link in the template
+    if($relatives) {
+        return $relatives;
+    }
+
+    return false;
+}
+
 function getTemplateValidationMessages($templateId) {
     $msgs = array();
+    $rels = array();
     if(!$templateId) {
         $msgs[] = 'LBL_NO_SELECTED_TEMPLATE';
     }
@@ -53,12 +80,20 @@ function getTemplateValidationMessages($templateId) {
         }
         if (!$template->body_html) {
             $msgs[] = 'LBL_NO_HTML_BODY_CONTENTS';
+        } else {
+            if ($rels = validateEmailTemplateForRelativeImageSrc($template)) {
+                $msgs[] = 'LBL_RELATIVE_IMG_SRC_IN_TPL';
+            }
         }
         if (!$template->body) {
             $msgs[] = 'LBL_NO_BODY_CONTENTS';
         }
+
     }
-    return $msgs;
+    return array(
+        'messages' => $msgs,
+        'relativeImages' => $rels,
+    );
 }
 
 $campaignId = $db->quote($_POST['campaignId']);
@@ -79,7 +114,9 @@ if($func == 'getTemplateValidation') {
         $templateId = $marketing->template_id;
     }
     $return = $_POST;
-    $return['templateValidationMessages'] = getTemplateValidationMessages($templateId);
+    $templateValidationMessages = getTemplateValidationMessages($templateId);
+    $return['templateValidationMessages'] = $templateValidationMessages['messages'];
+    $return['templateValidationMessages_relativeImages'] = array_keys($templateValidationMessages['relativeImages']);
     $return['marketingValidationMessages'] = $marketing->validate();
 
     echo json_encode($return);
@@ -114,7 +151,9 @@ else {
     $_SESSION['campaignWizard'][$campaignId]['defaultSelectedMarketingId'] = $marketing->id;
 
     $return = $_POST;
-    $return['templateValidationMessages'] = getTemplateValidationMessages($marketing->template_id);
+    $templateValidationMessages = getTemplateValidationMessages($marketing->template_id);
+    $return['templateValidationMessages'] = $templateValidationMessages['messages'];
+    $return['templateValidationMessages_relativeImages'] = array_keys($templateValidationMessages['relativeImages']);
     $return['marketingValidationMessages'] = $marketing->validate();
 
     echo json_encode($return);
