@@ -141,6 +141,7 @@ $admin_option_defs['Emails']['mass_Email_config']= array('EmailMan','LBL_MASS_EM
 $admin_option_defs['Campaigns']['campaignconfig']= array('Campaigns','LBL_CAMPAIGN_CONFIG_TITLE','LBL_CAMPAIGN_CONFIG_DESC','./index.php?module=EmailMan&action=campaignconfig');
 
 $admin_option_defs['Emails']['mailboxes']= array('InboundEmail','LBL_MANAGE_MAILBOX','LBL_MAILBOX_DESC','./index.php?module=InboundEmail&action=index');
+$admin_option_defs['Emails']['mailboxes_outbound']= array('EmailMan','LBL_MANAGE_MAILBOX_OUTBOUND','LBL_MAILBOX_OUTBOUND_DESC','./index.php?module=OutboundEmailAccounts&action=index');
 $admin_option_defs['Campaigns']['mass_Email']= array('EmailMan','LBL_MASS_EMAIL_MANAGER_TITLE','LBL_MASS_EMAIL_MANAGER_DESC','./index.php?module=EmailMan&action=index');
 
 
