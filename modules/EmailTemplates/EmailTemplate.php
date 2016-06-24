@@ -863,7 +863,7 @@ class EmailTemplate extends SugarBean
 
         // add site url for all relative src of image
 
-        $this->body_html = preg_replace_callback('/(&lt;img\b.*\bsrc\s*=\s*&quot;)(.*)(&quot;.*&gt;)/', function($matches){
+        $this->body_html = preg_replace_callback('/&lt;img\b((?!src).)*\bsrc\s*=\s*&quot;(((?!&quot;).)*)&quot;/i', function($matches){
 
             global $sugar_config;
 
