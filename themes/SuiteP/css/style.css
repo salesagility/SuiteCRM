@@ -4887,7 +4887,9 @@ div.target-list-table {
 	}
 	
 	#usermenucollapsed:hover {background-position: 0 -99px;}
-	
+	.list-vew-rounded-corners {
+       ;
+    }
 }
 
 
@@ -5380,6 +5382,29 @@ div.target-list-table {
     }
 }
 
+
+@media  (min-width: 640px) and (max-width: 1300px) {
+    #Accountsadvanced_searchSearchForm table,
+    #Accountsadvanced_searchSearchForm tr,
+    #Accountsadvanced_searchSearchForm thead,
+    #Accountsadvanced_searchSearchForm th,
+    #Accountsadvanced_searchSearchForm tbody,
+    #Accountsadvanced_searchSearchForm td
+    {
+        background: none;
+    }
+
+    #Accountsadvanced_searchSearchForm tr td[scope="col"] {font-weight: bold;}
+    td textarea {width: 95%;}
+    #Accountsadvanced_searchSearchForm > table {border: none;}
+    #Accountsadvanced_searchSearchForm tr {border-bottom: none;}
+    #Accountsadvanced_searchSearchForm tr:last-child {border: none;}
+    #Accountsadvanced_searchSearchForm input[type=text] {font-size: 1em;}
+
+    .advanced.search td {
+       display: block;
+    }
+}
 
 
 @media (max-width: 670px) {
