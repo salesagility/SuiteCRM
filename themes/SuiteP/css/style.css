@@ -3579,6 +3579,10 @@ button {
     padding: 5px;
     min-height: 32px !important;
     min-width: 32px !important;
+    margin-right: 4px;
+    background-color: #F08377;
+    border: 1px solid #F08377;
+    border-radius: 4px;
 }
 
 .dropdown-menu {
