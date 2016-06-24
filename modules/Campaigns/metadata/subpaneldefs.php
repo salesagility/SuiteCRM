@@ -179,6 +179,16 @@ $layout_defs['Campaigns'] = array(
             'sort_order' => 'desc',
             'sort_by' => 'campaign_log.id'
         ),
+        'opted' => array(
+            'order' => 185,
+            'module' => 'CampaignLog',
+            'get_subpanel_data' => "function:track_log_entries",
+            'function_parameters' => array(0 => 'opted', 'EMAIL_MARKETING_ID_VALUE' => '',/*'group_by'=>'campaign_log.target_id','distinct'=>'campaign_log.target_id'*/),
+            'subpanel_name' => 'default',
+            'title_key' => 'LBL_LOG_ENTRIES_OPTED_TITLE',
+            'sort_order' => 'desc',
+            'sort_by' => 'campaign_log.id'
+        ),
         'accounts' => array(
             'order' => 190,
             'sort_order' => 'desc',

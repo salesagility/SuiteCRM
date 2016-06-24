@@ -910,6 +910,7 @@ $app_list_strings = array(
             'lead' => 'Leads Created',
             'contact' => 'Contacts Created',
             'blocked' => 'Suppressed by address or domain',
+            'opted' => 'Already Opted Out'
         ),
 
     'campainglog_target_type_dom' => array(
