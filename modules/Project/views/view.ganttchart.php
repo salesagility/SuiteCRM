@@ -158,8 +158,9 @@ class ProjectViewGanttChart extends SugarView {
 							<input type="text" name="Complete" id="Complete" value="0" class="text ui-widget-content ui-corner-all" />
 							<label for="Actual_duration"><?php echo $mod_strings['LBL_ACTUAL_DURATION'];?></label>
 							<input type="text" name="Actual_duration" id="Actual_duration" value="" class="text ui-widget-content ui-corner-all" />
-							<label for="Notes"><?php echo $mod_strings['LBL_DESCRIPTION'];?></label>
-							<textarea id="Notes" cols="34" name="Notes" class="text ui-widget-content ui-corner-all"></textarea>
+							<input type="hidden" name="Notes" id="Notes" />
+							<!-- label for="Notes"><?php echo $mod_strings['LBL_DESCRIPTION'];?></label>
+							<textarea id="Notes" cols="34" name="Notes" class="text ui-widget-content ui-corner-all"></textarea -->
 						</td>
 						</tr>
 						</table>
@@ -211,9 +212,15 @@ class ProjectViewGanttChart extends SugarView {
 							<td class="" width="37.5%"><?php echo $app_list_strings['projects_priority_options'][$project->priority];?></td>
 							</tr>
 							<tr>
+							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_AM_PROJECTTEMPLATES_PROJECT_1_FROM_AM_PROJECTTEMPLATES_TITLE'];?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo $project->am_projecttemplates_project_1_name;?></td>
+							<td scope="col" width="12.5%"><?php echo ""; ?></td>
+							<td class="inlineEdit" width="37.5%"><?php echo ""; ?></td>
+							</tr>
+							<!--tr >
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
 							<td class="inlineEdit" type="text" colspan="3" width="87.5%"><?php echo $project->description;?></td>
-							</tr>
+							</tr -->
 							</tbody></table>
 						</div>
 					</div>

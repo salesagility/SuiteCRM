@@ -131,8 +131,9 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 							?>
 							<label for="%Complete"><?php echo $mod_strings['LBL_PERCENT_COMPLETE'];?></label>
 							<input type="text" name="Complete" id="Complete" value="0" class="text ui-widget-content ui-corner-all" />
-							<label for="Notes"><?php echo $mod_strings['LBL_DESCRIPTION'];?></label>
-							<textarea id="Notes" cols="34" name="Notes" class="text ui-widget-content ui-corner-all"></textarea>
+							<input type="hidden" name="Notes" id="Notes" />
+							<!--label for="Notes"><?php echo $mod_strings['LBL_DESCRIPTION'];?></label>
+							<textarea id="Notes" cols="34" name="Notes" class="text ui-widget-content ui-corner-all"></textarea-->
 						</td>
 						</tr>
 						</table>
@@ -177,10 +178,10 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_PRIORITY'];?></td>
 							<td class="" width="37.5%"><?php echo $project_template->priority ;?></td>
 							</tr>
-							<tr>
+							<!--tr>
 							<td scope="col" width="12.5%"><?php echo $mod_strings['LBL_DESCRIPTION'];?></td>
 							<td class="inlineEdit" type="text" colspan="3" width="87.5%"><?php echo $project_template->description;?></td>
-							</tr>
+							</tr-->
 							</tbody></table>
 						</div>
 					</div>

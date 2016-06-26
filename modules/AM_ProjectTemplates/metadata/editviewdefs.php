@@ -89,19 +89,15 @@ array (
             'label' => 'LBL_PRIORITY',
           ),
         ),
-        2 => 
-        array (
-          0 => 'description',
-        ),
-      ),
-      'LBL_PANEL_ASSIGNMENT' =>
-      array (
-        0 => 
+
+		2 => 
         array (
           0 => 'assigned_user_name',
-          1 => '',
+   
         ),
+
       ),
+
     ),
   ),
 );
