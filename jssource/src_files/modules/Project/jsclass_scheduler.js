@@ -909,8 +909,8 @@ SugarWidgetSchedulerAttendees.prototype.display = function() {
 
 	var dtstart = GLOBAL_REGISTRY.focus.fields.datetime_start;
 	var top_date = SugarDateTime.getFormattedDate(dtstart);
-	var html = '<h3>'+GLOBAL_REGISTRY['meeting_strings']['LBL_SCHEDULING_FORM_TITLE']+'</h3><table id ="schedulerTable">';
-	html += '<tr class="schedulerTopRow">';
+	var html = '<h2>'+GLOBAL_REGISTRY['meeting_strings']['LBL_SCHEDULING_FORM_TITLE']+'</h2><table id ="schedulerTable">';
+	/*html += '<tr class="schedulerTopRow">';
 	html += '<th colspan="'+((this.hours*this.segments)+2)+'"><h4>'+ top_date +'</h4></th>';
 	html += '</tr>';
 	html += '<tr class="schedulerTimeRow">';
@@ -948,7 +948,7 @@ SugarWidgetSchedulerAttendees.prototype.display = function() {
 	}
 
 	html += '<td>&nbsp;</td>';
-	html += '</tr>';
+	html += '</tr>';*/
 	html += '</table>';
     if ( this.parentNode.childNodes.length < 1 )
         this.parentNode.innerHTML += '<div class="schedulerDiv">' + html + '</div>';
@@ -1156,13 +1156,16 @@ SugarWidgetScheduleRow.prototype.add_freebusy_nodes = function(tr, attendee) {
 		tr.appendChild(td);
 		//var td = tr.insertCell(tr.cells.length);
         td.innerHTML = '&nbsp;';
+		td.style.borderLeft = "0px solid #dddddd";
+		td.style.borderRight = "0px solid #dddddd";
+		td.style.backgroundColor="transparent";
 
 		if(typeof(this.timeslots[i]['is_start']) != 'undefined') {
-			td.className = 'schedulerSlotCellStartTime';
+			td.className = 'schedulerSlotCellStartTime1';
 		}
 
         if(typeof(this.timeslots[i]['is_end']) != 'undefined') {
-            td.className = 'schedulerSlotCellEndTime';
+            td.className = 'schedulerSlotCellEndTime1';
         }
 
 		if(is_loaded) {
@@ -1198,7 +1201,7 @@ SugarWidgetScheduleRow.prototype.add_freebusy_nodes = function(tr, attendee) {
                     // On hover in
                     var domElement = $(this);
                     // Only add hover logic to the fields that need it.
-                    if(domElement.css( "background-color" ) || domElement.hasClass('schedulerSlotCellStartTime')) {
+                    if(domElement.css( "background-color" ) || domElement.hasClass('schedulerSlotCellStartTime1')) {
                         //
                         // If the id is in the td:
                         if (domElement.attr('data-id') != null) {
