@@ -151,12 +151,12 @@ $(function() {
             $( "#dialog" ).dialog({
                 autoOpen: true,
                 show: {
-                    effect: "drop",
-                    duration: 500
+                    effect: "none",
+                    duration: 0
                 },
                 hide: {
-                    effect: "drop",
-                    duration: 500
+                    effect: "none",
+                    duration: 0
                 },
                 width: 700,
                 modal: false,
@@ -287,12 +287,12 @@ function remove_button(){
         $( "#delete_dialog" ).dialog({
             autoOpen: true,
             show: {
-                effect: "drop",
-                duration: 500
+                effect: "none",
+                duration: 0
             },
             hide: {
-                effect: "drop",
-                duration: 500
+                effect: "none",
+                duration: 0
             },
             width: 700,
             modal: true,
@@ -449,12 +449,12 @@ function edit_task(task){
     $( "#dialog" ).dialog({
         autoOpen: true,
         show: {
-            effect: "drop",
-            duration: 500
+            effect: "none",
+            duration: 0
         },
         hide: {
-            effect: "drop",
-            duration: 500
+            effect: "none",
+            duration: 0
         },
         width: 700,
         modal: true,
