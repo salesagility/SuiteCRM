@@ -28,7 +28,11 @@ $(document).ajaxStop(function(){
     setTimeout($.unblockUI, 1000);
 });
 //Get the default sugar page loading message
-var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+try{
+	var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+}catch(err){
+	var loading = ""; 
+}
 
 $(function() {
 
