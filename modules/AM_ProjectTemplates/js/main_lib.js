@@ -34,7 +34,7 @@ try{
 	var loading = ""; 
 }
 
-$(function() {
+$(document).ready(function() {
 
     var project_id = $('#project_template_id').val();
 
