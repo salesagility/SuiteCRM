@@ -256,7 +256,7 @@ CAL.create_item = function (params) {
         el.style.width = ((params.days) * 100) + "%";
         el.style.top = parseInt(params.position * CAL.slot_height - params.slot.childNodes.length * (CAL.slot_height + 1)) + "px";
     } else {
-        el.style.height = parseInt((CAL.slot_height + 1) * params.duration_coef - 1) + "px";
+        el.style.height = parseInt((CAL.slot_height + 1) * params.duration_coef - 13) + "px";
         el.setAttribute("duration_coef", params.duration_coef);
     }
     YAHOO.util.Event.on(el, "mouseover", function () {
@@ -723,9 +723,12 @@ CAL.cut_record = function (id) {
         s = s.previousSibling;
     }
     celpos = celpos + 1;
-    if (real_celcount - celpos - duration_coef < 0)
+    if (real_celcount - celpos - duration_coef < 0) {
         duration_coef = real_celcount - celpos + 1;
-    el.style.height = parseInt((CAL.slot_height + 1) * duration_coef - 1) + "px";
+        el.style.height = parseInt((CAL.slot_height + 1) * duration_coef - 1) + "px";
+    } else {
+        el.style.height = parseInt((CAL.slot_height + 1) * duration_coef - (duration_coef - 1)) + "px";
+    }
 }
 CAL.init_edit_dialog = function (params) {
     CAL.editDialog = false;
