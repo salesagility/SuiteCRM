@@ -5495,27 +5495,36 @@ class SugarBean
         return $this->create_new_list_query($order_by, $where, array(), array(), 0, '', false, $this, true, true);
     }
 
-
     /**
+     * Checks auditing is enables and then carrys out an audit on the current bean.
+     *
      * @param $isUpdate
      */
-    public function auditBean($isUpdate){
-        if ($this->is_AuditEnabled() && $isUpdate && isset($this->fetched_row))
-        {
+    public function auditBean($isUpdate)
+    {
+        if ($this->is_AuditEnabled() && $isUpdate) {
+
             $auditDataChanges = $this->db->getAuditDataChanges($this);
 
-            if (!empty($auditDataChanges) && is_array($auditDataChanges))
-            {
-                foreach ($auditDataChanges as $change)
-                {
-                    $this->db->save_audit_records($this, $change);
-                    $this->fetched_row[$change['field_name']] = $change['after'];
-                }
+            if (!empty($auditDataChanges)) {
+                $this->createAuditRecord($auditDataChanges);
+            } else {
+                $GLOBALS['log']->debug('Auditing: createAuditRecord was not called, audit record will not be created.');
             }
         }
-        else
-        {
-            $GLOBALS['log']->debug('Auditing: Retrieve was not called, audit record will not be created.');
+    }
+
+    /**
+     * Takes the audit changes array and creates entries in audit table.
+     * Reset's the bean fetched row so changes are not duplicated.
+     *
+     * @param array $auditDataChanges
+     */
+    protected function createAuditRecord(array $auditDataChanges)
+    {
+        foreach ($auditDataChanges as $change) {
+            $this->db->save_audit_records($this, $change);
+            $this->fetched_row[$change['field_name']] = $change['after'];
         }
     }
 }
