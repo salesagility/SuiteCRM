@@ -154,8 +154,10 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
         
 			<div class="moduleTitle">
 				<h2> <?php echo $project_template->name;?> </h2>
-				<span class="utils">&nbsp; 
+				<div class="clear"></div><br>
 				<a class="utilsLink" href="index.php?module=AM_ProjectTemplates&action=DetailView&record=<?php echo $_REQUEST["record"];?>&return_module=AM_ProjectTemplates&return_action=view_GanttChart" id="create_link"><?php echo $mod_strings['LBL_VIEW_DETAIL'];?></a></span>
+				<span class="utils">&nbsp; 
+				
 				<div class="clear"></div>
 			</div>
 
