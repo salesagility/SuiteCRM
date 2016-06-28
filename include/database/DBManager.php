@@ -514,7 +514,7 @@ protected function checkQuery($sql, $object_name = false)
 			//custom fields handle there save seperatley
 			if(!empty($field_map) && !empty($field_map[$field]['custom_type'])) continue;
 
-			if(isset($data[$field])) {
+			if(isset($data[$field]) && strlen($data[$field])>0) {
 				// clean the incoming value..
 				$val = from_html($data[$field]);
 			} else {
