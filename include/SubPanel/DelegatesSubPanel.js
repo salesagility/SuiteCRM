@@ -7,7 +7,7 @@
 
 function showSearchPanel(subpanel,id){
 
-    //console.log("Test1 " + subpanel + " " + id);
+    //console.log("Test11111111111 " + subpanel + " " + id);
         buildSearchPanel(subpanel,id);
 
     if(document.getElementById(subpanel+'_search').style.display == 'none'){
@@ -15,11 +15,12 @@ function showSearchPanel(subpanel,id){
     } else {
         document.getElementById(subpanel+'_search').style.display = 'none';
     }
-    //console.log("Test2");
+    //console.log("Test2222222222222");
 
 }
 
 function buildSearchPanel(subpanel, id){
+    //console.log("Test2222222222222");
     var tables = document.getElementById("list_subpanel_"+subpanel).getElementsByTagName("table");
 
     var row = tables[0].insertRow(1);
@@ -34,13 +35,17 @@ function buildSearchPanel(subpanel, id){
 
     var table = document.createElement('table');
     table.width = "100%";
+
+
     var label = SUGAR.language.get('FP_events', 'LBL_NAME');
     table.innerHTML += "<form><label>&ensp;" + label
-        + "&ensp;<input type='text' id='filter_param_delegates' name='search_params' value=''></label>"
-        + "<label>&ensp;<input type='submit' onclick='submitSearch(\"" + subpanel + "\", \"" + id + "\");return false;'  href='' value='submit'></label>"
-                     + "<input type='submit' onclick='clearSearch(subpanel, \"" + id + "\");return false;' href='javascript:void(0)' value='clear'>"
+            + "&ensp;<input type='text' id='filter_param_delegates' name='search_params' value=''></label>"
+            + "<label>&ensp;<input type='submit' onclick='submitSearch(\"" + subpanel + "\", \"" + id + "\");return false;'  href='' value='submit'></label>"
+            + "<input type='submit' onclick='clearSearch(\"" + subpanel + "\", \"" + id + "\");return false;' href='' value='clear'>"
         + "</form>";
+    //console.log("Test2 " + subpanel + " " + id);
     SUGAR.util.evalScript(table.innerHTML);
+
     col.appendChild(table);
 
 }
@@ -53,14 +58,16 @@ function submitSearch(subpanel, id){
 
     url='index.php?sugar_body_only=1&module=FP_events&subpanel=' + subpanel + '&entryPoint=filter_subpanel&inline=1&record=' + id + '&layout_def_key=FP_events&search_params=' + escape(document.getElementById('filter_param_' + current_child_field).value) ;
     // console.log(url);
-    showSubPanel(subpanel,url,true, 'FP_events');
+
     document.getElementById('show_link_' + subpanel).style.display='none';
     document.getElementById('hide_link_' + subpanel).style.display='';
+
+    showSubPanel(subpanel,url,true, 'FP_events');
+    showSearchPanel(subpanel,url,true, 'FP_events');
 }
 
 
 function clearSearch(subpanel, id) {
-
     $('#' + subpanel + '_search input').each(function () {
         var type = $(this).attr("type");
 
