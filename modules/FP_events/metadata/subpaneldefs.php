@@ -59,8 +59,9 @@ $layout_defs['FP_events'] = array(
 				//array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
 				array('widget_class' => 'SubPanelManageDelegatesButton'),
 				array('widget_class' => 'SubPanelManageAcceptancesButton'),
-                                array('widget_class' => 'SubPanelSendInvitesButton'),
+				array('widget_class' => 'SubPanelSendInvitesButton'),
    				array('widget_class' => 'SubPanelCheck'),
+				array('widget_class' => 'SubPanelTopEventsFilterInputButton'),
 			),
 
 			'collection_list' => array(
@@ -80,6 +81,41 @@ $layout_defs['FP_events'] = array(
                     'get_subpanel_data' => 'fp_events_leads_1',
                 ),
 			),
+
+			///////// Start
+			'searchdefs' => array(
+				'collection' =>
+					array(
+						'name' => 'collection',
+						'label' => 'LBL_COLLECTION_TYPE',
+						'type' => 'enum',
+						'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+						'default' => true,
+						'width' => '10%',
+					),
+				'name' =>
+					array(
+						'name' => 'name',
+						'default' => true,
+						'width' => '10%',
+					),
+				'current_user_only' =>
+					array(
+						'name' => 'current_user_only',
+						'label' => 'LBL_CURRENT_USER_FILTER',
+						'type' => 'bool',
+						'default' => true,
+						'width' => '10%',
+					),
+				'date_modified' =>
+					array(
+						'name' => 'date_modified',
+						'default' => true,
+						'width' => '10%',
+					),
+			),
+
+			/////// End
 		),
 	),
 );

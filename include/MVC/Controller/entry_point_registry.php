@@ -86,6 +86,7 @@ $entry_point_registry = array(
 	'campaignTrackerSave' => array('file' => 'modules/CampaignTrackers/Save.php', 'auth' => true),
 	'emailMarketingList' => array('file' => 'modules/EmailMarketing/List.php', 'auth' => true),
 	'setCampaignMarketingAndTemplate' => array('file' => 'modules/Campaigns/WizardCampaignSave.php', 'auth' => true),
+	'filter_subpanel' => array('file' => 'modules/FP_events/filter_subpanel.php','auth' => true),
 );
 
 ?>

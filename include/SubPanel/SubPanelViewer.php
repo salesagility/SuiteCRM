@@ -92,8 +92,8 @@ if(!empty($_REQUEST['layout_def_key'])){
 }
 
 $subpanel_object = new SubPanel($module, $record, $subpanel,null, $layout_def_key, $collection);
-
 $subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
+
 echo (empty($_REQUEST['inline']))?$subpanel_object->get_buttons():'' ;  
 
 $subpanel_object->display();
