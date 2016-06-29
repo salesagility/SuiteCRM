@@ -560,6 +560,7 @@ $mod_strings = array (
     'LBL_WIZARD_LOCALE_DESC' => 'Specify your time zone and how you would like dates, currencies and names to appear in SuiteCRM.',
     'LBL_WIZARD_SMTP_DESC' => 'Provide your email account username and password for the default outbound email server.',
     'LBL_EAPM_SUBPANEL_TITLE' => 'External Accounts',
+	'LBL_USER_EMAIL_ACCOUNT_SETTINGS' => 'Email (Account) Settings',
 
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_HELP' => 'Help' /*for 508 compliance fix*/,

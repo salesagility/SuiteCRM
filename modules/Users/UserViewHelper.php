@@ -96,7 +96,7 @@ class UserViewHelper {
         $this->setupEmailSettings();
         $this->setupThemeTab();
         $this->setupAdvancedTab();
-
+        $this->setupEmailAccountSettings();
     }
 
     protected function assignUserTypes() {
@@ -755,6 +755,17 @@ class UserViewHelper {
 
     }
 
+    protected function setupEmailAccountSettings() {
+        global $current_user;
+        $echo = '';
+        $focus = new Email();
+        $focus->email2init();
+        $focus->et->preflightUser($current_user);
+        $out = $focus->et->displayEmailFrame(true);
+        $echo .= $out;
+        $echo .= "<script>var composePackage = null;</script>";
+        $this->ss->assign('emailAccountSettingsTabContents', $echo);
+    }
 
     /**
      * setUserType

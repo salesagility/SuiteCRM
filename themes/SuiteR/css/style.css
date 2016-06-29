@@ -4692,6 +4692,16 @@ td.inlineEditActive{
     overflow:scroll;
 }
 
+#email_account_settings #settingsDialog_c, #settingsDialog{
+    width:100% !important;
+}
+#email_account_settings #formEmailSettingsGeneral {
+    overflow: initial;
+}
+#email_account_settings #settingsDialog table.view {
+    border-bottom: none;
+}
+
 /* Fix to ensure navigation elements are not included in print process */
 
 @media print {

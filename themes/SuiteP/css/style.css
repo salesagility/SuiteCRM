@@ -5354,6 +5354,17 @@ div.target-list-table {
     padding: 10px;
 }
 
+
+#email_account_settings #settingsDialog_c, #settingsDialog{
+    width:100% !important;
+}
+#email_account_settings #formEmailSettingsGeneral {
+    overflow: initial;
+}
+#email_account_settings #settingsDialog table.view {
+    border-bottom: none;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 
 @media (max-width: 3000px) {

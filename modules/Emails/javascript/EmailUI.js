@@ -3461,6 +3461,46 @@ SE.settings = {
         SE.accounts.lazyLoad();
     },
 
+  /**
+   * Shows settings container screen
+   */
+  showSettingsInline : function() {
+    if(!SE.settings.settingsDialog) {
+      var dlg = SE.settings.settingsDialog = new YAHOO.widget.Dialog("settingsDialog", {});
+      dlg.setBody('<div id="settingsTabDiv"/>');
+      dlg.render();
+
+      var tp = SE.settings.settingsTabs = new YAHOO.widget.TabView("settingsTabDiv");
+
+      var tabContentGeneral = Dom.get("tab_general");
+      var tabContentAccounts = Dom.get("tab_accounts");
+
+
+      tp.addTab(new YAHOO.widget.Tab({
+        content :  tabContentGeneral.innerHTML+tabContentAccounts.innerHTML,
+        id : "generalAndAccountSettings",
+        active : true
+      }));
+
+      tabContentGeneral.parentNode.removeChild(tabContentGeneral);
+      tabContentAccounts.parentNode.removeChild(tabContentAccounts);
+
+      tp.appendTo(dlg.body);
+    }
+
+    SE.settings.settingsDialog.show();
+    SE.folders.lazyLoadSettings();
+    SE.accounts.lazyLoad();
+
+
+    // transform yui dialog to simple panel
+    $('#settingsTabDiv .yui-nav').remove();
+    //$('#settingsDialog a.container-close').remove();
+    $('#settingsDialog_h').remove();
+    $('#settingsDialog_c').removeClass('yui-panel-container');
+    $('#settingsDialog').removeAttr('class');
+  },
+
 
     lazyLoadRules : function() {
         if(false) {

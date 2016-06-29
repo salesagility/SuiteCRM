@@ -411,6 +411,12 @@
         <div style="text-align:center; width: 100%">{sugar_image name="loading"}</div>
     </div>
     {/if}
+    <div id="email_account_settings" style='display:{$HIDE_FOR_GROUP_AND_PORTAL};'>
+        <!-- emailAccountSettingsTabContents BEGIN -->
+        {$emailAccountSettingsTabContents}
+        <!-- emailAccountSettingsTabContents END -->
+    </div>
+
 </div>
 
 <script type="text/javascript">
