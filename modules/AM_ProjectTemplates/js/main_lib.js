@@ -28,9 +28,13 @@ $(document).ajaxStop(function(){
     setTimeout($.unblockUI, 1000);
 });
 //Get the default sugar page loading message
-var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+try{
+	var loading = SUGAR.language.languages.app_strings['LBL_LOADING_PAGE'];
+}catch(err){
+	var loading = ""; 
+}
 
-$(function() {
+$(document).ready(function() {
 
     var project_id = $('#project_template_id').val();
 
@@ -147,12 +151,12 @@ $(function() {
             $( "#dialog" ).dialog({
                 autoOpen: true,
                 show: {
-                    effect: "drop",
-                    duration: 500
+                    effect: "none",
+                    duration: 0
                 },
                 hide: {
-                    effect: "drop",
-                    duration: 500
+                    effect: "none",
+                    duration: 0
                 },
                 width: 700,
                 modal: false,
@@ -283,12 +287,12 @@ function remove_button(){
         $( "#delete_dialog" ).dialog({
             autoOpen: true,
             show: {
-                effect: "drop",
-                duration: 500
+                effect: "none",
+                duration: 0
             },
             hide: {
-                effect: "drop",
-                duration: 500
+                effect: "none",
+                duration: 0
             },
             width: 700,
             modal: true,
@@ -447,12 +451,12 @@ function edit_task(task){
     $( "#dialog" ).dialog({
         autoOpen: true,
         show: {
-            effect: "drop",
-            duration: 500
+            effect: "none",
+            duration: 0
         },
         hide: {
-            effect: "drop",
-            duration: 500
+            effect: "none",
+            duration: 0
         },
         width: 700,
         modal: true,

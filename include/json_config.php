@@ -183,7 +183,7 @@ class json_config {
 
 		if($module == 'Project')			
 			$contacts=$focus->get_linked_beans('project_contacts_1','Contact');
-		if($module == 'AM_ProjectTemplates')			
+		else if($module == 'AM_ProjectTemplates')			
 			$contacts=$focus->get_linked_beans('am_projecttemplates_contacts_1','Contact');
 		else
 			$contacts=$focus->get_linked_beans('contacts','Contact');

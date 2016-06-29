@@ -46,7 +46,7 @@ class Gantt {
         foreach($time_span as $months) {
 
             foreach($months as $month => $days){
-                echo '<td class="months">'.$month.'</td>';
+                echo '<td class="months">'. '&nbsp;' .'</td>'; //$month
             }
         }
 
@@ -56,19 +56,23 @@ class Gantt {
         $month_count = 0;//start month count
         foreach($time_span as $months) {
             $m=0;
+			$day_num = 0;
             foreach($months as $days){
 
                 echo '<td class="inner_container">';
                 //Generate a table containing the days in each month
                 echo '<table class="table_inner"><tr>';
 
+				
                 foreach($days as $day => $d){
-                    echo '<td class="inner_td"><div class="cell_width">'.$day.'</div></td>';//day number shown
+                    echo '<td class="inner_td"><div class="cell_width">'.'&nbsp;'.'</div></td>';//day number shown $day
                 }
                 echo '</tr><tr>';
 
+				
                 foreach($days as $d){
-                    echo '<td class="inner_td"><div class="cell_width">'.$this->substr_unicode($d,0,1).'</div></td>';//First letter of the days name shown
+                    $day_num ++;
+					echo '<td class="inner_td"><div class="cell_width">'.$day_num.'</div></td>';//First letter of the days name shown //$this->substr_unicode($d,0,1)
                 }
                 echo '</tr></table></td>';//end table containing the days in each month
                 $m++;

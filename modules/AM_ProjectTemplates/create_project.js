@@ -103,5 +103,5 @@ function confirmation(id){
 
 
 
- html =  '<a id="create_link" onclick="' + $("#view_gantt").attr('onclick') + '" class="utilsLink">' + $("#view_gantt").attr('value') + '</a>&nbsp;&nbsp;' + $(".moduleTitle .utils").html();
- $(".moduleTitle .utils").html(html);
+ //html =  '<a id="create_link" onclick="' + $("#view_gantt").attr('onclick') + '" class="utilsLink">' + $("#view_gantt").attr('value') + '</a>&nbsp;&nbsp;' + $(".moduleTitle .utils").html();
+ //$(".moduleTitle .utils").html(html);
