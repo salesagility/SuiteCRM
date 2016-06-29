@@ -5173,6 +5173,9 @@ div.target-list-table {
     padding: 10px;
 }
 
+table tr#delegates_search {
+    background:#FAFAFA !important;
+}
 
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
