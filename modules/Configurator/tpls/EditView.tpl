@@ -221,6 +221,43 @@
 <table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
 
 	<tr>
+	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_BUSINESS_HOURS_TITLE}</h4></th>
+	</tr>
+	<tr>
+	<td colspan="4">
+	<div id="business_hours_config_display" >
+		<table width="100%" cellpadding="0" cellspacing="1">
+		<tr>
+		<td width="15%" scope="row">{$MOD.LBL_MON}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_mon" name="businessHours_mon" size="25"  value="{$businessHours.mon}" tabindex='1' ></td>
+		<td width="15%" scope="row">{$MOD.LBL_TUE}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_tue" name="businessHours_tue" size="6"  value="{$businessHours.tue}" tabindex='2' ></td>
+		</tr><tr>
+		<td width="15%" scope="row">{$MOD.LBL_WED}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_wed" name="businessHours_wed" size="25"  value="{$businessHours.wed}" tabindex='3' ></td>
+		<td width="15%" scope="row">{$MOD.LBL_THU}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_thu" name="businessHours_thu" size="6"  value="{$businessHours.thu}" tabindex='4' ></td>
+		</tr><tr>
+		<td width="15%" scope="row">{$MOD.LBL_FRI}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_fri" name="businessHours_fri" size="25"  value="{$businessHours.fri}" tabindex='5' ></td>
+		<td width="15%" scope="row">{$MOD.LBL_SAT}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_sat" name="businessHours_sat" size="6"  value="{$businessHours.sat}" tabindex='6' ></td>
+		</tr><tr>
+		<td width="15%" scope="row">{$MOD.LBL_SUN}<span class="required">{$APP.LBL_REQUIRED_SYMBOL}</span></td>
+		<td width="35%" ><input type="text" id="businessHours_sun" name="businessHours_sun" size="25"  value="{$businessHours.sun}" tabindex='7' ></td>
+		<td width="15%" scope="row">&nbsp;</td>
+		<td width="35%" >&nbsp;</td>
+		</tr></table>
+		</div>
+	</div>
+  </td>
+  </tr>
+ </table>
+
+
+<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+
+	<tr>
 	<th align="left" scope="row" colspan="4"><h4>{$MOD.LBL_PROXY_TITLE}</h4></th>
 	</tr>
 	<tr>

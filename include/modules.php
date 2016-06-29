@@ -65,6 +65,8 @@ $moduleList[] = 'Documents';
 $moduleList[] = 'Cases';
 $moduleList[] = 'Project';
 $moduleList[] = 'Bugs';
+$moduleList[] = 'ResourceCalendar';
+
 
 $moduleList[] = 'Spots';
 
@@ -114,11 +116,11 @@ $beanList['vCals'] = 'vCal';
 $beanList['CustomFields'] = 'CustomFields';
 $beanList['Alerts'] = 'Alert';
 
-$beanList['Documents'] = 'Document';
-$beanList['DocumentRevisions'] = 'DocumentRevision';
-$beanList['Roles'] = 'Role';
+$beanList['Documents']  = 'Document';
+$beanList['DocumentRevisions']  = 'DocumentRevision';
+$beanList['Roles']  = 'Role';
 
-$beanList['Audit'] = 'Audit';
+$beanList['Audit']  = 'Audit';
 
 // deferred
 //$beanList['Queues'] = 'Queue';
@@ -212,13 +214,14 @@ $modInvisList = array('Administration', 'Currencies', 'CustomFields', 'Connector
     'Users', 'Versions', 'LabelEditor', 'Roles', 'EmailMarketing', 'OptimisticLock', 'TeamMemberships', 'TeamSets', 'TeamSetModule', 'Audit', 'MailMerge', 'MergeRecords', 'EmailAddresses', 'EmailText',
     'Schedulers', 'Schedulers_jobs', /*'Queues', 'EmailTemplates',*/
     'CampaignTrackers', 'CampaignLog', 'EmailMan', 'Prospects', 'ProspectLists',
-    'Groups', 'InboundEmail',
+    'Groups','InboundEmail',
     'ACLActions', 'ACLRoles',
     'DocumentRevisions',
     'ProjectTask',
     'ModuleBuilder',
     'Alert',
-);
+	'ResourceCalendar'
+    );
 $adminOnlyList = array(
     //module => list of actions  (all says all actions are admin only)
     //'Administration'=>array('all'=>1, 'SupportPortal'=>'allow'),
@@ -464,5 +467,6 @@ if (file_exists('include/modules_override.php')) {
     include 'include/modules_override.php';
 }
 if (file_exists('custom/application/Ext/Include/modules.ext.php')) {
-    include 'custom/application/Ext/Include/modules.ext.php';
+    include('custom/application/Ext/Include/modules.ext.php');
 }
+?>

@@ -437,6 +437,15 @@ $dictionary['Project'] = array(
                 'relationship' => 'aos_quotes_project',
                 'source' => 'non-db',
             ),
+        'override_business_hours' => array(
+            'name' => 'override_business_hours',
+            'vname' => 'LBL_OVERRIDE_BUSINESS_HOURS',
+            'type' => 'bool',
+            'required' => false,
+            'reportable' => false,
+            'default' => '0',
+            'comment' => ''
+        ),
     ),
     'indices' => array(
         array('name' => 'projects_primary_key_index',

@@ -23,42 +23,85 @@ class chart {
     private $start_date;
     private $end_date;
     private $tasks;
+	private $projects; 
+	private $users; 
+	private $contacts;
+	private $chart_type;
 
-    public function __construct($start_date, $end_date, $tasks)
+    public function __construct($start_date, $end_date, $projects, $users, $contacts, $tasks, $chart_type)
     {
         $this->start_date = $start_date;
         $this->end_date = $end_date;
         $this->tasks = $tasks;
+		$this->projects = $projects;
+		$this->users = $users;
+		$this->contacts = $contacts;
+		$this->chart_type = $chart_type;
+
         //draw the grid
-        $this->draw($this->start_date, $this->end_date, $this->tasks);
+        $this->draw($this->start_date, $this->end_date, $this->projects, $this->users, $this->contacts, $this->tasks, $this->chart_type );
     }
 
-    public function draw($start_date, $end_date, $resources){
+    public function draw($start_date, $end_date, $sel_projects ,$sel_users, $sel_contacts, $resources, $chart_type){
         global $current_user, $db, $mod_strings;
 
-        $time_span = $this->year_month($start_date, $end_date);
-        $day_count = $this->count_days($start_date, $end_date) + 1;
+		if( $chart_type == "monthly" ){
+			list($time_span,$day_count) = $this->year_week($start_date, $end_date);
+		}
+		else if($chart_type == "quarterly"){
+			list($time_span,$day_count) = $this->year_quarter($start_date, $end_date);
+		}
+		else{	
+			$time_span = $this->year_month($start_date, $end_date);
+			$day_count = $this->count_days($start_date, $end_date) + 1;
+		}
+
+        
+
         $weeks = $this->get_weeks($start_date, $end_date);
 
+
+        //Get projects. This is for the Select box values
+        $projects_query = "SELECT DISTINCT id, name FROM project WHERE deleted =0";
+        $projects_list = $db->query($projects_query);
+        
+		$project_list = array();
+        while($row = $db->fetchByAssoc($projects_list))
+        {
+            //create array of user objects
+            $project_list[] = (object)$row;
+        }
+
         //Get users that are associated to any project. This is for the Select box values
-        $resource_query = "SELECT project_users_1users_idb AS id, first_name, last_name, 'project_users_1_c' AS
+        $users_query = "SELECT DISTINCT project_users_1users_idb AS id, first_name, last_name, 'project_users_1_c' AS
                                     type
                                     FROM project_users_1_c
                                     JOIN users ON users.id = project_users_1users_idb
-                                    WHERE project_users_1_c.deleted =0
-                                    UNION
-                                    SELECT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS
+                                    WHERE project_users_1_c.deleted =0";
+        $users_list = $db->query($users_query);
+
+        $user_list = array();
+        while($row = $db->fetchByAssoc($users_list))
+        {
+            //create array of user objects
+            $user_list[] = (object)$row;
+        }
+
+        //Get contacts that are associated to any project. This is for the Select box values
+        $contacts_query = "SELECT DISTINCT project_contacts_1contacts_idb AS id, first_name, last_name, 'project_contacts_1_c' AS
                                     type
                                     FROM project_contacts_1_c
                                     JOIN contacts ON contacts.id = project_contacts_1contacts_idb
                                     WHERE project_contacts_1_c.deleted =0";
-        $resources_list = $db->query($resource_query);
+        $contacts_list = $db->query($contacts_query);
 
-        $resource_list = array();
-        while($row = $db->fetchByAssoc($resources_list))
+
+
+        $contact_list = array();
+        while($row = $db->fetchByAssoc($contacts_list))
         {
             //create array of user objects
-            $resource_list[] = (object)$row;
+            $contact_list[] = (object)$row;
         }
 
         //Generate main table and the first row containing the months
@@ -67,48 +110,122 @@ class chart {
                     <td colspan="100%">
                         <table id="header_table_chart">
                         <tr>
-                            <td class="heading_chart">'.$mod_strings["LBL_RESOURCES"].'</td>
+							<td class="heading_chart">'.$mod_strings["LBL_PROJECTS_SEARCH"].'</td>
+                            <td class="heading_chart">'.$mod_strings["LBL_USERS_SEARCH"].'</td>
+							<td class="heading_chart">'.$mod_strings["LBL_CONTACTS_SEARCH"].'</td>
+							<td class="heading_chart">'.$mod_strings["LBL_CHART_TYPE"].'</td>	
+							<td class="heading_chart">'.$mod_strings["LBL_DATE_START"].'</td>						
                         </tr>
                         <tr>
                             <td class="field_chart">
-                                <input id="date_start" type="hidden" name="date_start" value="'.$start_date.'" />
-                                <input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" />
-                                <select id="resources" name="resources">
-                                <option value="all">'.$mod_strings["LBL_ALL_RESOURCES"].'</option>';
-                                $re_id ='';
-                                $re=0;
-                                //get resources passed in to the draw function
-                                foreach($resources as $resource){
-                                    $re_id = $resource->id;
-                                    $re++;
-                                }
+                                <select id="projects" name="projects" multiple>
+                                <option value="">All Projects</option>';
 
                                 //From the query above, populates the select box
-                                foreach( $resource_list as $resource)
+                                foreach( $project_list as $project)
                                 {
-                                    if($re == 1){//Make sure its a single selected resource
-                                        if($re_id == $resource->id){//Check if the select box option matches the resource passed in.
-                                            $selected = "selected='selected'"; //if so set it to selected
-                                        }
-                                        else {
-                                            $selected = "";
-                                        }
-                                    }
-                                    echo '<option '.$selected.' data-type="'.$resource->type.'" value="'.$resource->id.'">'.$resource->last_name.'</option>';
+									if( in_array($project->id, $sel_projects) ){//Check if the select box option matches the resource passed in.
+										$selected = "selected='selected'"; //if so set it to selected
+									}
+									else {
+										$selected = "";
+									}
+
+                                    echo '<option '.$selected.'  value="'.$project->id.'">'.$project->name.'</option>';
                                 }
 
                            echo '</select><br /><br />';
 
-                            if(empty($resource_list)){
+                            if(empty($project_list)){
                                 echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
                             }
 
                           echo '</td>
-                        </tr>
+                            <td class="field_chart">
+                                <select id="users" name="users" multiple>
+                                <option value="">All Users</option>';
+
+                                //From the query above, populates the select box
+                                foreach( $user_list as $user)
+                                {
+									if( in_array($user->id, $sel_users) ){//Check if the select box option matches the resource passed in.
+										$selected = "selected='selected'"; //if so set it to selected
+									}
+									else {
+										$selected = "";
+									}
+                                    echo '<option '.$selected.' data-type="'.$user->type.'" value="'.$user->id.'">'.$user->last_name.'</option>';
+                                }
+
+                           echo '</select><br /><br />';
+
+                            if(empty($user_list)){
+                                echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
+                            }
+
+                          echo '</td>
+						  <td class="field_chart">
+                                <select id="contacts" name="contacts" multiple>
+                                <option value="">All Contacts</option>';
+
+                                //From the query above, populates the select box
+                                foreach( $contact_list as $contact)
+                                {
+									if( in_array($contact->id, $sel_contacts) ){//Check if the select box option matches the resource passed in.
+										$selected = "selected='selected'"; //if so set it to selected
+									}
+									else {
+										$selected = "";
+									}
+
+                                    echo '<option '.$selected.' data-type="'.$contact->type.'" value="'.$contact->id.'">'.$contact->last_name.'</option>';
+                                }
+
+                           echo '</select><br /><br />';
+
+                            if(empty($contact_list)){
+                                echo '<span style="color: red;">'.$mod_strings['LBL_RESOURCE_CHART_WARNING'].'</span><br /><br />';
+                            }
+
+ 
+                          echo '</td>
+						  <td class="field_chart">
+                                <select id="chart_type" name="chart_type" >';
+                                    echo '<option '. ( $chart_type == "weekly" ? "selected" : "" ) .'  value="weekly">'.$mod_strings['LBL_CHART_WEEKLY'].'</option>';
+                                    echo '<option '. ( $chart_type == "monthly" ? "selected" : "") .'  value="monthly">'.$mod_strings['LBL_CHART_MONTHLY'].'</option>';
+                                    echo '<option '. ($chart_type == "quarterly" ? "selected" : "") .'  value="quarterly">'.$mod_strings['LBL_CHART_QUARTERLY'].'</option>';
+                          echo '</select><br /><br />';
+                          echo '</td>';
+ 						  
+						  echo '<td class="field_chart"><input id="date_start" type="text" name="date_start" value="'.$start_date.'" size=8 readonly/></td>
+								<td class="field_chart"><input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" /></td>';
+							
+						  echo
+							'<script type="text/javascript">
+								var now = new Date();
+								Calendar.setup ({
+									inputField : "date_start",
+									ifFormat : cal_date_format,
+									daFormat : "%m/%d/%Y %I:%M%P",
+									button : "date_start",
+									singleClick : true,
+									step : 1,
+									weekNumbers: false,
+									startWeekday: 0
+								});
+								
+							</script>';
+
+						 echo	'<td class="field_chart">							 
+									&nbsp;<a class="utilsLink" href="#" id="create_link">'.$mod_strings['LBL_RESOURCE_CHART_SEARCH_BUTTON'].'</a>
+								</td>
+
+							</tr>
+						
                         </table>
                     </td>
-                </tr>
-                <tr>
+                </tr>	
+				<tr>
                     <td colspan="100%">
                         <table style="border: none;" class="main_table" width="100%" cellspacing="0" cellpadding="0" border="0">
                             <tr>
@@ -120,99 +237,342 @@ class chart {
                     </td>
              </tr>';
         echo '<tr>';
-        echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_WEEK'].'</td>';
-        foreach($weeks as $week){
-            echo '<td class="main_table weeks" colspan="7">'.$week.'</td>';
-        }
+        
+		//weekly view
+		if( $chart_type == "weekly" || $chart_type == "" ){	
 
-        echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_DAY'].'</td>';
-        foreach($time_span as $year => $months) {
-            foreach($months as $month => $days){//count the number of days in each month
-                $daycount=0;
-                foreach($days as $day){
-                    $daycount++;
-                }
-                $width = $daycount * 26; //used to set width on years row. width needed for css text clipping
-                echo '<td colspan="'.$daycount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">'.$month.', '.$year.'</div></td>';
-            }
-        }
-        echo '</tr><tr class="days_row">';
+			echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_WEEK'].'</td>';
+			foreach($weeks as $week){
+				echo '<td class="main_table weeks" colspan="7">'.$week.'</td>';
+			}
 
-        $month_count = 0;//start month count
-        foreach($time_span as $year => $months) {
+			echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_DAY'].'</td>';
+			foreach($time_span as $year => $months) {
+				foreach($months as $month => $days){//count the number of days in each month
+					$daycount=0;
+					foreach($days as $day){
+						$daycount++;
+					}
+					$width = $daycount * 26; //used to set width on years row. width needed for css text clipping
+					echo '<td colspan="'.$daycount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">'.$month.', '.$year.'</div></td>';
+				}
+			}
+			echo '</tr><tr class="days_row">';
 
-            foreach($months as $days){
+			$month_count = 0;//start month count
+			foreach($time_span as $year => $months) {
 
-                foreach($days as $day => $d){
-                    echo '<td class="inner_td"><div class="cell_width">'.$day.'</div></td>';//day number shown
-                }
-            }
-        }
-        echo '</tr><tr class="days_row">';
+				foreach($months as $days){
 
-        foreach($time_span as $year => $months) {
+					foreach($days as $day => $d){
+						echo '<td class="inner_td"><div class="cell_width">'.$day.'</div></td>';//day number shown
+					}
+				}
+			}
+			echo '</tr><tr class="days_row">';
 
-            foreach($months as $days){
+			foreach($time_span as $year => $months) {
 
-                foreach($days as $day => $d){
-                    echo '<td class="inner_td"><div class="cell_width">'.$d[0].'</div></td>';//First letter of the days name shown
-                }
-            }
-        }
+				foreach($months as $days){
 
-        echo '</tr>';
+					foreach($days as $day => $d){
+						echo '<td class="inner_td"><div class="cell_width">'.$d[0].'</div></td>';//First letter of the days name shown
+					}
+				}
+			}
 
-        foreach($resources as $resource){
+			echo '</tr>';
 
-            $count = $resource->task_count;
+			foreach($resources as $resource){
 
-            if($resource->type == 'project_users_1_c'){
-                echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
-            }
-            else if($resource->type == 'project_contacts_1_c') {
-                echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
-            }
+				$count = $resource->task_count;
 
-            $i=0;
-            for ($x=0; $x< $day_count; $x++)
-            {
-                //Get date for each day
-                $dateq = $this->get_date($start_date, $i);
+				if($resource->type == 'project_users_1_c'){
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+				}
+				else if($resource->type == 'project_contacts_1_c') {
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+				}
 
-                $class = '';
+				$i=0;
+				for ($x=0; $x< $day_count; $x++)
+				{
+					//Get date for each day
+					$dateq = $this->get_date($start_date, $i);
 
-                if($this->check_weekend($dateq) == 'today'){
-                    $class = 'today';
-                }
-                elseif($this->check_weekend($dateq) == 'weekend'){
-                    $class = 'weekend';
-                }
-                elseif($this->check_weekend($dateq) == 'weekend-today'){
-                    $class = 'weekend-today';
-                }
+					$class = '';
 
-                $square = '';
-                for($c=0; $c < $count; $c++){
+					if($this->check_weekend($dateq) == 'today'){
+						$class = 'today';
+					}
+					elseif($this->check_weekend($dateq) == 'weekend'){
+						$class = 'weekend';
+					}
+					elseif($this->check_weekend($dateq) == 'weekend-today'){
+						$class = 'weekend-today';
+					}
 
-                    if($x == $resource->tasks[$c]['start_day']){
+					$square = '';
+					$dup = 0;
 
-                        $square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' h"></div></td>';
+					for($c=0; $c < $count; $c++){
 
-                    }
-                    else if($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']){
-                        $square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' h"></div></td>';
-                    }
+						if($x == $resource->tasks[$c]['start_day']){
+							$dup++;
+							$square =  '<td class="inner_td"><div style="color: #ffffff;" rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
 
-                }
+						}
+						else if($x > $resource->tasks[$c]['start_day'] && $x <= $resource->tasks[$c]['end_day']){
+							$dup++;
+							$square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+						}
 
-                if($square == ''){
-                    $square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
-                }
-                echo $square;
-            $i++;
-            }
-        }
+					}
+
+					if($square == ''){
+						$square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+					}
+					echo $square;
+				$i++;
+				}
+			}
+
+		}//end weekly view
+
+		else if( $chart_type == "monthly" ){	
+
+			echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
+			/*foreach($weeks as $week){
+				echo '<td class="main_table weeks" colspan="7">'.$week.'</td>';
+			}*/
+
+			foreach($time_span as $year => $months) {
+				foreach($months as $month => $weeks){//count the number of days in each month
+					
+					echo '<td class="main_table weeks" colspan="' . count($weeks) . '">'.$month .'</td>';
+				}
+			}
+
+			echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_WEEK'].'</td>';
+			foreach($time_span as $year => $months) {
+				$wcount= 0;
+				foreach($months as $month => $weeks){//count the number of weeks in each month		
+					/*foreach($weeks as $week){
+						$wcount++;
+					}*/
+					$wcount+= count($weeks);
+				}
+				$width = $wcount * 26; //used to set width on years row. width needed for css text clipping
+				echo '<td colspan="'.$wcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
+			}
+			echo '</tr><tr class="days_row">';
+
+			$month_count = 0;//start month count
+			foreach($time_span as $year => $months) {
+
+				foreach($months as $weeks){
+
+					foreach($weeks as $week => $w){
+						echo '<td class="inner_td"><div class="cell_width">'.$w.'</div></td>';//day number shown
+					}
+				}
+			}
+
+			echo '</tr><tr class="days_row">';
+
+			foreach($time_span as $year => $months) {
+				foreach($months as $weeks){
+					foreach($weeks as $week => $d){
+						echo '<td class="inner_td"><div class="cell_width">'. ($week + 1) .'</div></td>';//First letter of the days name shown
+					}
+
+				}
+			}
+
+			echo '</tr>';
+
+			foreach($resources as $resource){
+
+				$count = $resource->task_count;
+
+				if($resource->type == 'project_users_1_c'){
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+				}
+				else if($resource->type == 'project_contacts_1_c') {
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+				}
+
+				$i=0;
+				for ($x=0; $x< $day_count; $x++)
+				{
+					//Get dates for each week
+					$dateq = $this->get_week_dates($start_date, $x);
+
+					$class = '';
+
+					$square = '';
+					$dup = 0;
+
+					for($c=0; $c < $count; $c++){
+
+						if($x == floor( $resource->tasks[$c]['start_day'] /7 ) && ( $resource->tasks[$c]['start_day'] /7 ) > 0 ){
+							$dup++;
+							$square =  '<td class="inner_td"><div style="color: #ffffff;"  rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+
+						}
+						else if($x > floor( $resource->tasks[$c]['start_day']/7 ) && $x <= floor($resource->tasks[$c]['end_day']/7 )){
+							$dup++;
+							$square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+						}
+
+					}
+
+					if($square == ''){
+						$square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+					}
+					echo $square;
+				$i++;
+				}
+			}
+
+		}
+		//end monthly view
+
+		else if( $chart_type == "quarterly" ){	
+
+			echo '<td class="main_table week">'.$mod_strings['LBL_RESOURCE_CHART_QUARTER'].'</td>';
+			foreach($time_span as $year => $quarters) {	
+				foreach($quarters as $quarter => $months){//count the number of days in each month
+					echo '<td class="main_table weeks" colspan="' . count($months) . '">'.$quarter .'</td>';
+					
+				}
+			}
+
+			echo '</tr><tr><td rowspan="3" class="main_table day">'.$mod_strings['LBL_RESOURCE_CHART_MONTH'].'</td>';
+			foreach($time_span as $year => $quarters) {
+				$qcount= 0;
+				foreach($quarters as $quarter => $months){//count the number of months in each quarter		
+					$qcount+= count($months);
+				}
+				$width = $qcount * 26; //used to set width on years row. width needed for css text clipping
+				echo '<td colspan="'.$qcount.'" class="main_table years"><div style="width: '.$width.'px;" class="year_div">' . $year.'</div></td>';
+			}
+			echo '</tr><tr class="days_row">';
+
+			$month_count = 0;//start month count
+			foreach($time_span as $year => $quarters) {
+
+				foreach($quarters as $quarter){
+
+					foreach($quarter as $month => $m){
+						echo '<td class="inner_td"><div class="cell_width">'.$month.'</div></td>';//day number shown
+					}
+				}
+			}
+
+			echo '</tr><tr class="days_row">';
+
+			foreach($time_span as $year => $quarters) {
+				foreach($quarters as $quarter){
+					foreach($quarter as $month => $m){
+						echo '<td class="inner_td"><div class="cell_width">'. $m .'</div></td>';//First letter of the days name shown
+					}
+				}
+			}
+
+			echo '</tr>';
+
+			foreach($resources as $resource){
+
+				$count = $resource->task_count;
+
+				if($resource->type == 'project_users_1_c'){
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_USER"].'" href="index.php?module=Users&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+				}
+				else if($resource->type == 'project_contacts_1_c') {
+					echo '<tr id="'.$resource->id.'" class="task_row"><td no class="main_table no_wrap"><a title="'.$mod_strings["LBL_RESOURCE_TYPE_TITLE_CONTACT"].'" href="index.php?module=Contacts&action=DetailView&record='.$resource->id.'">'.$resource->last_name.'</a></td>';
+				}
+
+
+				$i=0;
+				for ($x=0; $x< $day_count; $x++)
+				{
+					//Get date for each day
+					$dateq = $this->get_month_dates($start_date,$x);
+
+					$class = '';
+
+					$square = '';
+					$dup = 0;
+					
+					for($c=0; $c < $count; $c++){
+						$ds_month = $this->count_months($start_date, $resource->tasks[$c]['start_day'],$x);
+						$de_month = $this->count_months($start_date, $resource->tasks[$c]['end_day'],$x);
+
+						if( ( $ds_month == 0 || $de_month == 0 ) && $resource->tasks[$c]['start_day'] <= $resource->tasks[$c]['end_day'] && $resource->tasks[$c]['start_day'] >=0 && $resource->tasks[$c]['end_day']>=0 ){
+							$dup++;
+							$square =  '<td class="inner_td"><div rel="'.$dateq.'|'.$resource->id.'|'.$resource->type.'" class="cell_width day_block '.$class.' ' . $this->get_cell_class($dup) .'"></div></td>';
+						}
+
+					}
+
+					if($square == ''){
+						$square = '<td class="inner_td"><div class="cell_width day_block"><div class="'.$class.'"></div></div></td>';
+					}
+					echo $square;
+				$i++;
+				}
+			}
+
+		}
+		//end quarterly view
+
         echo '</table>';
+
+		
+    }
+
+
+
+//Returns an array containing the years, months and weeks between two dates
+    public function year_quarter($start_date, $end_date)
+    {
+        $begin = new DateTime( $start_date );
+        $end = new DateTime( $end_date);
+        $end->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
+        $interval = new DateInterval('P1M'); // 1 week interval
+        $period = new DatePeriod($begin, $interval, $end);
+        $aResult = array();
+		
+		$count = 0;
+        foreach ( $period as $dt )
+        {
+			$count++;
+            $aResult[$dt->format('Y')][ceil($dt->format('m')/3)][$count] = $dt->format('M');
+        }
+
+        return array($aResult, $count);
+    }
+
+
+//Returns an array containing the years, months and weeks between two dates
+    public function year_week($start_date, $end_date)
+    {
+        $begin = new DateTime( $start_date );
+        $end = new DateTime( $end_date);
+        $end->add(new DateInterval('P1D')); //Add 1 day to include the end date as a day
+        $interval = new DateInterval('P1W'); // 1 week interval
+        $period = new DatePeriod($begin, $interval, $end);
+        $aResult = array();
+		
+		$count = 0;
+        foreach ( $period as $dt )
+        {
+			$count++;
+            $aResult[$dt->format('Y')][$dt->format('M')][] = $dt->format('W');
+        }
+		
+        return array($aResult, $count);
     }
 
 
@@ -252,6 +612,27 @@ class chart {
     }
 
 
+    //count number of months between task start day and chart current month 
+    function count_months($start, $day,$x){
+        $sdate = DateTime::createFromFormat('Y-m-d', $start);
+		$edate = DateTime::createFromFormat('Y-m-d', $start);
+        // $date->setTimezone(new DateTimeZone("Europe/London"));
+        $sdate->modify('+'.$day.' days');
+		$edate->modify('+'.$x.' months');
+
+		if($sdate->format('Y') != $edate->format('Y') )
+			return -1;
+
+		if($sdate->format('m') != $edate->format('m') ){
+			return -1;	
+		}
+		else{
+			return 0;
+        }
+		
+    }
+
+
     //Returns the total number of days between two dates
     function count_days($start_date, $end_date){
         $d1 = new DateTime($start_date);
@@ -267,6 +648,28 @@ class chart {
         $difference = $d1->diff($d2);
         return $difference->days;
     }
+
+
+    //returns first and last date of a week
+    function get_week_dates($start, $weeks){
+        $date = DateTime::createFromFormat('Y-m-d', $start);
+        
+		$date->modify('+'.($weeks + 1).' weeks');
+
+		$ts = strtotime($date->format('Y-m-d') );
+		$start = (date('w', $ts) == 0) ? $ts : strtotime('last monday', $ts);
+		return date('Y-m-d', $start) . "|" . date('Y-m-d', strtotime('next sunday', $start));
+    }
+
+    //returns first and last date of a month
+    function get_month_dates($start, $months){
+        $date = DateTime::createFromFormat('Y-m-d', $start);
+        
+		$date->modify('+'.($months).' months');
+
+		return $date->format('Y-m-01') . "|" . $date->format('Y-m-t');
+    }
+
 
     //get date of passed in day in relation to the charts start date
     function get_date($start, $day){
@@ -321,5 +724,17 @@ class chart {
         $interval = $datetime1->diff($datetime2);
         echo $interval->format('%y years %m months and %d days');
     }
+
+	//returns the css class for cell color/ h => non duplicate, d =>duplicate
+    public function get_cell_class($days){
+	
+		if($days > 1)
+			return " d";
+		else
+			return " h";
+	
+	}
+
+
 
 }
