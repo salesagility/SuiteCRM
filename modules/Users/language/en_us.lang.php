@@ -564,6 +564,7 @@ $mod_strings = array (
 
 	'LBL_ADD_INBOUND_ACCOUNT' => 'Add',
 	'LBL_ADD_OUTBOUND_ACCOUNT' => 'Add',
+	'LBL_EMAIL_SETTINGS_INBOUND' => 'Incoming Email',
 
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
