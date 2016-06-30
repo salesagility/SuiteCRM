@@ -98,9 +98,9 @@
 
     <div id="emailContextMenu"></div>
     <div id="folderContextMenu"></div>
-{*
-    <div id="container" class="email" style="position:relative; height:550px; overflow:hidden;"></div>
-*}
+
+    <div id="container" class="email" style="position:relative; height:550px; overflow:hidden; display:none;"></div>
+
     <div id="innerLayout" class="yui-hidden"></div>
     <div id="listViewLayout" class="yui-hidden"></div>
     <div id="settingsDialog"></div>
