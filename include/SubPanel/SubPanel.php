@@ -400,9 +400,15 @@ class SubPanel
 	{
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		$module = 'Meetings';
+		if($this->subpanel_id == "history"){
+			$module = 'Meetings';
+			$seed = new Meeting();
+		}else{
+			$module = 'Contacts';
+			$seed = new Contact();
+		}
 
-		$seed = new Meeting();
+
 
 		$_REQUEST['searchFormTab'] = 'basic_search';
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);
@@ -438,9 +444,15 @@ class SubPanel
 	{
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		$module = 'Meetings';
+		if($this->subpanel_id == "history"){
+			$module = 'Meetings';
+			$seed = new Meeting();
+		}else{
+			$module = 'Contacts';
+			$seed = new Contact();
+		}
 
-		$seed = new Meeting();
+
 
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);
 
