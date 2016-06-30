@@ -63,10 +63,12 @@
 </script>
 <div class="email">
     <form id="emailUIForm" name="emailUIForm">
+        {*
         <input type="hidden" id="module" name="module" value="Emails">
         <input type="hidden" id="action" name="action" value="EmailUIAjax">
         <input type="hidden" id="to_pdf" name="to_pdf" value="true">
         <input type="hidden" id="emailUIAction" name="emailUIAction">
+        *}
         <input type="hidden" id="mbox" name="mbox">
         <input type="hidden" id="uid" name="uid">
         <input type="hidden" id="ieId" name="ieId">
