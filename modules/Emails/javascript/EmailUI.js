@@ -3495,7 +3495,7 @@ SE.settings = {
 
     // transform yui dialog to simple panel
     $('#settingsTabDiv .yui-nav').remove();
-    //$('#settingsDialog a.container-close').remove();
+    $('#settingsDialog a.container-close').remove();
     $('#settingsDialog_h').remove();
     $('#settingsDialog_c').removeClass('yui-panel-container');
     $('#settingsDialog').removeAttr('class');
