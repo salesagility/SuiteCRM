@@ -8,7 +8,7 @@
 ## Motivation and Context
 <!--- Why is this change required? What problem does it solve? -->
 
-## How To Test This?
+## How To Test This
 <!--- Please describe in detail how to test your changes. -->
 
 ## Types of changes
