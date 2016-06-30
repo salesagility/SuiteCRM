@@ -562,6 +562,9 @@ $mod_strings = array (
     'LBL_EAPM_SUBPANEL_TITLE' => 'External Accounts',
 	'LBL_USER_EMAIL_ACCOUNT_SETTINGS' => 'Email (Account) Settings',
 
+	'LBL_ADD_INBOUND_ACCOUNT' => 'Add',
+	'LBL_ADD_OUTBOUND_ACCOUNT' => 'Add',
+
     'LBL_EDITLAYOUT' => 'Edit Layout' /*for 508 compliance fix*/,
     'LBL_HELP' => 'Help' /*for 508 compliance fix*/,
     'LBL_CHECKMARK' => 'Checkmark' /*for 508 compliance fix*/,
