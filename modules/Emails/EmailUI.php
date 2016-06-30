@@ -441,12 +441,8 @@ eoq;
 		$lang = "var app_strings = new Object();\n";
 		foreach($app_strings as $k => $v) {
 			if(strpos($k, 'LBL_EMAIL_') !== false) {
-				if(is_array($v) || is_object($v)) {
-					$vJS = json_encode($v);
-				} else {
-					$vJS = "'$v'";
-				}
-				$lang .= "app_strings.{$k} = $vJS;\n";
+				$vJS = json_encode($v);
+				$lang .= "app_strings.{$k} = {$vJS};\n";
 			}
 		}
 		//Get the email mod strings but don't use the global variable as this may be overridden by
