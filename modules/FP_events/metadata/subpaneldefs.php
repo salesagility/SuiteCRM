@@ -61,7 +61,7 @@ $layout_defs['FP_events'] = array(
 				array('widget_class' => 'SubPanelManageAcceptancesButton'),
 				array('widget_class' => 'SubPanelSendInvitesButton'),
    				array('widget_class' => 'SubPanelCheck'),
-				array('widget_class' => 'SubPanelTopEventsFilterInputButton'),
+				array('widget_class' => 'SubPanelTopFilterButton'),
 			),
 
 			'collection_list' => array(
@@ -84,32 +84,15 @@ $layout_defs['FP_events'] = array(
 
 			///////// Start
 			'searchdefs' => array(
-				'collection' =>
+				'first_name' =>
 					array(
-						'name' => 'collection',
-						'label' => 'LBL_COLLECTION_TYPE',
-						'type' => 'enum',
-						'options' => $GLOBALS['app_list_strings']['collection_temp_list'],
+						'name' => 'first_name',
 						'default' => true,
 						'width' => '10%',
 					),
-				'name' =>
+				'last_name' =>
 					array(
-						'name' => 'name',
-						'default' => true,
-						'width' => '10%',
-					),
-				'current_user_only' =>
-					array(
-						'name' => 'current_user_only',
-						'label' => 'LBL_CURRENT_USER_FILTER',
-						'type' => 'bool',
-						'default' => true,
-						'width' => '10%',
-					),
-				'date_modified' =>
-					array(
-						'name' => 'date_modified',
+						'name' => 'last_name',
 						'default' => true,
 						'width' => '10%',
 					),
