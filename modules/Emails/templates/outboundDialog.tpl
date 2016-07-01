@@ -45,6 +45,50 @@
 		<input type="hidden" id="mail_sendtype" name="mail_sendtype" value="SMTP">
 
 		<table width="100%" border="0" cellspacing="1" cellpadding="0" class="edit view">
+            <tr>
+                <td scope="row">
+                    {$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
+					<span class="required">
+						{$app_strings.LBL_REQUIRED_SYMBOL}
+					</span>
+                </td>
+                <td >
+                    <input type="text" id="oe_from_name" name="from_name" size="30" maxlength="64" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td scope="row">
+                    {$app_strings.LBL_EMAIL_SETTINGS_FROM_ADDR}:
+					<span class="required">
+						{$app_strings.LBL_REQUIRED_SYMBOL}
+					</span>
+                </td>
+                <td >
+                    <input type="text" id="oe_from_addr" name="from_addr" size="30" maxlength="64" value="">
+                </td>
+            </tr>
+
+            <tr>
+                <td scope="row">
+                    {$app_strings.LBL_EMAIL_SETTINGS_REPLY_TO_ADDR}:
+                </td>
+                <td >
+                    <input type="text" id="reply_to_addr" name="reply_to_addr" size="30" maxlength="64" value="">
+                </td>
+            </tr>
+            <!-- temporally removed, is provide and fill the current form?  -->
+            <!--
+            <tr>
+                <td scope="row">
+                    {$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND_ACCOUNT}:
+                    <span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
+                </td>
+                <td >
+                    <select name='outbound_email' id='outbound_email' onchange="SUGAR.email2.accounts.checkOutBoundSelection()"></select>
+                </td>
+            </tr>
+            -->
 		    <tr>
 				<td scope="row" width="15%" NOWRAP>
 					{$app_strings.LBL_EMAIL_ACCOUNTS_NAME}:
@@ -137,7 +181,13 @@
 			<tr>
 				<td colspan="2">
 				    <input type="button" class="button" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   " onclick="javascript:SUGAR.email2.accounts.saveOutboundSettings();">&nbsp;
-				    <input type="button" class="button" value="   {$app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}   " onclick="javascript:SUGAR.email2.accounts.testOutboundSettingsDialog();">&nbsp;
+                    <input title="{$app_strings.LBL_EMAIL_SETTINGS_ADD_ACCOUNT}"
+                           type='button'
+                           class="button"
+                           onClick='SUGAR.email2.accounts.clearOutboundSettingsEditScreen();SE.accounts.setPortDefault();'
+                           name="button" id="clearButton" value="  {$app_strings.LBL_EMAIL_SETTINGS_ADD_ACCOUNT}  ">
+                    &nbsp;
+                    <input type="button" class="button" value="   {$app_strings.LBL_EMAIL_TEST_OUTBOUND_SETTINGS}   " onclick="javascript:SUGAR.email2.accounts.testOutboundSettingsDialog();">&nbsp;
 				</td>
 			</tr>
 		</table>

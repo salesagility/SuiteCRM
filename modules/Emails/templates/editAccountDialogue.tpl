@@ -162,54 +162,6 @@
 					<h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND}</h4>
 					</td>
 				</tr>
-
-				<!--
-				//TODO: gymad: From Name, From Address, Reply to Address, Outbound Email select aren't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
-      			//TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
-        		-->
-				<!--
-			<tr>
-				<td scope="row">
-					{$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
-					<span class="required">
-						{$app_strings.LBL_REQUIRED_SYMBOL}
-					</span>
-				</td>
-				<td >
-					<input type="text" id="ie_from_name" name="from_name" size="30" maxlength="64" value="">
-				</td>
-			</tr>
-
-			<tr>
-				<td scope="row">
-					{$app_strings.LBL_EMAIL_SETTINGS_FROM_ADDR}:
-					<span class="required">
-						{$app_strings.LBL_REQUIRED_SYMBOL}
-					</span>
-				</td>
-				<td >
-					<input type="text" id="ie_from_addr" name="from_addr" size="30" maxlength="64" value="">
-				</td>
-			</tr>
-
-			<tr>
-				<td scope="row">
-					{$app_strings.LBL_EMAIL_SETTINGS_REPLY_TO_ADDR}:
-				</td>
-				<td >
-					<input type="text" id="reply_to_addr" name="reply_to_addr" size="30" maxlength="64" value="">
-				</td>
-			</tr>
-			<tr>
-				<td scope="row">
-					{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND_ACCOUNT}:
-						<span class="required">{$app_strings.LBL_REQUIRED_SYMBOL}</span>
-				</td>
-				<td >
-					<select name='outbound_email' id='outbound_email' onchange="SUGAR.email2.accounts.checkOutBoundSelection()"></select>
-				</td>
-			</tr>
-			-->
 			<tr class="yui-hidden" id="inboundAccountRequiredUsername">
 				<td scope="row">
 					{$app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER}:
