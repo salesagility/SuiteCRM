@@ -114,6 +114,16 @@ function change_state(radiobutton)
 						{$MOD.LBL_YES}&nbsp;<input type='radio' {$no_checked} name='massemailer_email_copy' value="2">{$MOD.LBL_NO} 
 					</td>
 				</tr>
+
+				<tr>
+					<td scope="row">
+						<div id="rollover">
+							<a href="index.php?module=OutboundEmailAccounts&action=index">{$MOD.LBL_OUTBOUND_EMAIL_ACCOUNT_VIEW}</a>
+						</div>
+					</td>
+					<td >&nbsp;</td>
+				</tr>
+
 			</table>
 		</td>
 	</tr>

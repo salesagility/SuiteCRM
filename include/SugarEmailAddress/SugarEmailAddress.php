@@ -72,11 +72,26 @@ class SugarEmailAddress extends SugarBean {
     /**
      * Sole constructor
      */
-    function SugarEmailAddress() {
-        parent::SugarBean();
+    public function __construct() {
+        parent::__construct();
         $this->index = self::$count;
         self::$count++;
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function SugarEmailAddress(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     /**
      * Legacy email address handling.  This is to allow support for SOAP or customizations
@@ -730,7 +745,7 @@ class SugarEmailAddress extends SugarBean {
             return $guid;
         }
     }
- 
+
     /**
      * Returns Primary or newest email address
      * @param object $focus Object in focus
@@ -896,7 +911,14 @@ class SugarEmailAddress extends SugarBean {
 
         //determine if this should be a quickcreate form, or a quick create form under subpanels
         if ($this->view == "QuickCreate"){
-            $form = 'form_DC'.$this->view .'_'.$module;
+            // Fixed #1120 - fixed email validation for: Accounts -> Contacts subpanel -> Select -> Create Contact -> Save.
+            // If email is required it should highlight this field and show an error message.
+            // It didnt because the the form was named form_DCSubpanelQuickCreate_Contacts instead of expected form_SubpanelQuickCreate_Contacts
+            if($this->object_name = 'EmailAddress' && $saveModule == 'Contacts') {
+                $form = 'form_'.$this->view .'_'.$module;
+            } else {
+                $form = 'form_DC'.$this->view .'_'.$module;
+            }
             if(isset($_REQUEST['action']) && $_REQUEST['action']=='SubpanelCreates' ||  $_REQUEST['action']=='SubpanelEdits'){
                 $form = 'form_Subpanel'.$this->view .'_'.$module;
             }

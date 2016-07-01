@@ -598,7 +598,7 @@ $mod_strings = array (
     'LBL_ENABLE_NOTIFICATIONS' => 'Enable Desktop Notifications',
     'LBL_LIST_NONINHERITABLE' => "Not Inheritable",
     'LBL_PRIMARY_GROUP' => "Primary Group",
-
+	'LBL_PASSWORD_MIS_MATCH' => 'mis-match',
 ); // END STRINGS DEFS
 
 ?>

@@ -45,7 +45,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * All Rights Reserved.
  * Contributor(s): ______________________________________..
  ********************************************************************************/
-if (!defined('SUGAR_PHPUNIT_RUNNER')) {
+if (!defined('SUITE_PHPUNIT_RUNNER')) {
     session_regenerate_id(false);
 }
 global $mod_strings;
@@ -110,7 +110,7 @@ $url = 'Location: '.$url;
 if(!empty($GLOBALS['app'])) {
     $GLOBALS['app']->headerDisplayed = true;
 }
-if (!defined('SUGAR_PHPUNIT_RUNNER')) {
+if (!defined('SUITE_PHPUNIT_RUNNER')) {
     sugar_cleanup();
     header($url);
 }

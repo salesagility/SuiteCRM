@@ -28,9 +28,24 @@ class actionSendEmail extends actionBase {
 
     private $emailableModules = array();
 
-    function actionSendEmail($id = ''){
-        parent::actionBase($id);
+    function __construct($id = ''){
+        parent::__construct($id);
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function actionSendEmail($id = ''){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id);
+    }
+
 
     function loadJS(){
         return array('modules/AOW_Actions/actions/actionSendEmail.js');
@@ -276,7 +291,15 @@ class actionSendEmail extends actionBase {
 
         } else {
             $this->parse_template($bean, $emailTemp);
-            return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+			if($emailTemp->text_only=='1')
+			{
+				$email_body_html = $emailTemp->body;
+			}
+			else 
+			{
+				$email_body_html = $emailTemp->body_html;
+			}
+            return $this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);            
         }
         return true;
     }

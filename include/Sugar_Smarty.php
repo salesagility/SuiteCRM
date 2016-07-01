@@ -52,8 +52,9 @@ if(!defined('SUGAR_SMARTY_DIR'))
  */
 class Sugar_Smarty extends Smarty
 {
-	function Sugar_Smarty()
+	public function __construct()
 	{
+        parent::__construct();
 		if(!file_exists(SUGAR_SMARTY_DIR))mkdir_recursive(SUGAR_SMARTY_DIR, true);
 		if(!file_exists(SUGAR_SMARTY_DIR . 'templates_c'))mkdir_recursive(SUGAR_SMARTY_DIR . 'templates_c', true);
 		if(!file_exists(SUGAR_SMARTY_DIR . 'configs'))mkdir_recursive(SUGAR_SMARTY_DIR . 'configs', true);
@@ -76,6 +77,20 @@ class Sugar_Smarty extends Smarty
 	}
 
 	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	public function Sugar_Smarty(){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct();
+	}
+
+	/**
 	 * Override default _unlink method call to fix Bug 53010
 	 *
 	 * @param string $resource
@@ -86,7 +101,7 @@ class Sugar_Smarty extends Smarty
         if(file_exists($resource)) {
             return parent::_unlink($resource, $exp_time);
         }
-        
+
         // file wasn't found, so it must be gone.
         return true;
     }

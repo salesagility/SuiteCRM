@@ -74,10 +74,25 @@ class EmailMan extends SugarBean{
     // This is used to retrieve related fields from form posts.
 	var $additional_column_fields = array();
 
-	function EmailMan() {
-		parent::SugarBean();
+    public function __construct() {
+		parent::__construct();
 
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function EmailMan(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
 	var $new_schema = true;
 
@@ -317,7 +332,7 @@ class EmailMan extends SugarBean{
      */
     function create_ref_email($marketing_id,$subject,$body_text,$body_html,$campagin_name,$from_address,$sender_id,$notes,$macro_nv,$newmessage,$from_address_name) {
 
-       global $mod_Strings, $timedate;
+       global $mod_strings, $timedate;
        $upd_ref_email=false;
        if ($newmessage or empty($this->ref_email->id)) {
            $this->ref_email = new Email();
@@ -889,7 +904,7 @@ class EmailMan extends SugarBean{
             $this->target_tracker_key=create_guid();
 
 			if (isset($module->email_opt_out) && ($module->email_opt_out === 'on' || $module->email_opt_out == '1' || $module->email_opt_out == 1)) {
-				$this->set_as_sent($module->email1,true,null,null,'removed');
+				$this->set_as_sent($module->email1,true,null,null,'blocked');
 			} else {
 				if (isset($module->invalid_email) && ($module->invalid_email == 1 || $module->invalid_email == '1')) {
 					$this->set_as_sent($module->email1,true,null,null,'invalid email');
@@ -916,7 +931,6 @@ class EmailMan extends SugarBean{
 
 		$pattern='/[A-Z0-9\._%-]+@[A-Z0-9\.-]+\.[A-Za-z]{2,}$/i';
 		$ret=preg_match($pattern, $email_address);
-		echo $ret;
 		if ($ret===false or $ret==0) {
 			return false;
 		}

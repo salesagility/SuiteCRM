@@ -81,7 +81,7 @@ class aSubPanel
 	var $search_query;
 	var $base_collection_list = array();
 
-	function aSubPanel ($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
+	function __construct ($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
 
 		$this->_instance_properties = $instance_properties ;
 
@@ -159,6 +159,20 @@ class aSubPanel
 			}
 		}
 
+	}
+
+	/**
+	 * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+	 */
+	function aSubPanel($name , $instance_properties , $parent_bean , $reload = false , $original_only = false, $search_query = '', $collections = array() ){
+		$deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+		if(isset($GLOBALS['log'])) {
+			$GLOBALS['log']->deprecated($deprecatedMessage);
+		}
+		else {
+			trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+		}
+		self::__construct($name, $instance_properties, $parent_bean, $reload, $original_only, $search_query, $collections);
 	}
 
     /**
@@ -595,7 +609,7 @@ class SubPanelDefinitions
 	 * @param ARRAY $layout_def_override - if you wish to override the default loaded layout defs you pass them in here.
 	 * @return SubPanelDefinitions
 	 */
-	function SubPanelDefinitions ( $focus , $layout_def_key = '' , $layout_def_override = '' )
+	function __construct ( $focus , $layout_def_key = '' , $layout_def_override = '' )
 	{
 		$this->_focus = $focus ;
 		if (! empty ( $layout_def_override ))

@@ -61,11 +61,27 @@ class CampaignLog extends SugarBean {
     var $hits;
     var $more_information;
     var $marketing_id;
-    function CampaignLog() {
+
+    public function __construct() {
         global $sugar_config;
-        parent::SugarBean();
+        parent::__construct();
 
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function CampaignLog(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function get_list_view_data(){
         global $locale;
@@ -136,7 +152,7 @@ class CampaignLog extends SugarBean {
 
 
     //this function is called statically by the campaign_log subpanel.
-    function get_related_name($related_id, $related_type) {
+    static function get_related_name($related_id, $related_type) {
         global $locale;
         $db= DBManagerFactory::getInstance();
         if ($related_type == 'Emails') {

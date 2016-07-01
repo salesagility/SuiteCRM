@@ -166,10 +166,10 @@ class InboundEmail extends SugarBean {
 	/**
 	 * Sole constructor
 	 */
-	function InboundEmail() {
+    public function __construct() {
 	    $this->InboundEmailCachePath = sugar_cached('modules/InboundEmail');
 	    $this->EmailCachePath = sugar_cached('modules/Emails');
-	    parent::SugarBean();
+	    parent::__construct();
 		if(function_exists("imap_timeout")) {
 			/*
 			 * 1: Open
@@ -1983,7 +1983,6 @@ class InboundEmail extends SugarBean {
 			echo json_encode($status);
 			return true;
 		} else {
-			echo "NOOP: could not create folder";
 			$GLOBALS['log']->error("*** ERROR: EMAIL2.0 - could not create IMAP mailbox with path: [ {$connectString} ]");
 			return false;
 		}
@@ -3568,7 +3567,7 @@ class InboundEmail extends SugarBean {
 				}
 			}
 		}
-		
+
 	   return $result;
 
     }
@@ -4526,9 +4525,13 @@ eoq;
     }
 
 	function get_stored_options($option_name,$default_value=null,$stored_options=null) {
-		if (empty($stored_options) && isset($this)) {
+		if (empty($stored_options)) {
 			$stored_options=$this->stored_options;
 		}
+		return self::get_stored_options_static($option_name, $default_value, $stored_options);
+	}
+
+	public static function get_stored_options_static($option_name,$default_value=null,$stored_options=null) {
 		if(!empty($stored_options)) {
 			$storedOptions = unserialize(base64_decode($stored_options));
 			if (isset($storedOptions[$option_name])) {
@@ -6622,7 +6625,7 @@ class Overview {
 			),
 		);
 	*/
-	function Overview() {
+	function __construct() {
 		global $dictionary;
 
 		if(!isset($dictionary['email_cache']) || empty($dictionary['email_cache'])) {

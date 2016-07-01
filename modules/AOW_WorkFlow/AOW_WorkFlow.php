@@ -51,13 +51,27 @@ class AOW_WorkFlow extends Basic {
 	var $status;
 	var $run_when;
 
-	function AOW_WorkFlow($init=true){
-		parent::Basic();
+	public function __construct($init=true){
+		parent::__construct();
         if($init){
             $this->load_flow_beans();
             require_once('modules/AOW_WorkFlow/aow_utils.php');
         }
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function AOW_WorkFlow($init=true){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($init);
+    }
 
 	function bean_implements($interface){
 		switch($interface){
@@ -443,7 +457,7 @@ class AOW_WorkFlow extends Basic {
 
         if($this->flow_run_on){
 
-            // database time correction with the user's time-zoneqq 
+            // database time correction with the user's time-zoneqq
             $beanDateEnteredTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_entered))));
             $beanDateModifiedTimestamp = strtotime($timedate->asUser(new DateTime($timedate->fromDb($bean->date_modified))));
             $thisDateEnteredTimestamp = strtotime($this->date_entered);

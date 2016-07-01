@@ -56,20 +56,9 @@ class Reminder_Invitee extends Basic {
     var $related_invitee_module;
     var $related_invitee_module_id;
 
-    public function __construct() {
-        parent::Basic();
-    }
-
-    public function bean_implements($interface){
-        switch($interface){
-            case 'ACL': return true;
-        }
-        return false;
-    }
-
 	/**
 	 * Save multiple reminders invitees data.
-	 * 
+	 *
 	 * @param string $reminderId Related Reminder GUID
 	 * @param array $inviteesData Invitees Data
 	 */
@@ -97,10 +86,10 @@ class Reminder_Invitee extends Basic {
         }
         self::deleteRemindersInviteesMultiple($reminderId, $savedInviteeIds);
     }
-	
+
 	/**
 	 * Load reminders invitees data.
-	 * 
+	 *
 	 * @param string $reminderId Related Reminder GUID
 	 * @return array Invitees data
 	 */
@@ -149,7 +138,7 @@ class Reminder_Invitee extends Basic {
 
 	/**
 	 * Delete reminders invitees multiple.
-	 * 
+	 *
 	 * @param string $reminderId Related Reminder GUID
 	 * @param array $inviteeIds (optional) Exluded Invitees GUIDs, the invitee will not deleted if this argument contains that. Default is empty array.
 	 */

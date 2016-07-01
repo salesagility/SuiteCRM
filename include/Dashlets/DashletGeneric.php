@@ -114,8 +114,8 @@ class DashletGeneric extends Dashlet {
     var $lvs;
     var $layoutManager;
 
-    function DashletGeneric($id, $options = null) {
-        parent::Dashlet($id);
+    function __construct($id, $options = null) {
+        parent::__construct($id);
         $this->isConfigurable = true;
         if(isset($options)) {
             if(!empty($options['filters'])) $this->filters = $options['filters'];
@@ -133,6 +133,20 @@ class DashletGeneric extends Dashlet {
         $temp = (object) array('db' => &$GLOBALS['db'], 'report_def_str' => '');
         $this->layoutManager->setAttributePtr('reporter', $temp);
         $this->lvs = new ListViewSmarty();
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function DashletGeneric($id, $options = null){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($id, $options);
     }
 
     /**

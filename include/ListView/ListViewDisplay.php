@@ -69,12 +69,27 @@ class ListViewDisplay {
 
 	/**
 	 * Constructor
-	 * @return null
 	 */
-	function ListViewDisplay() {
+	public function __construct() {
 		$this->lvd = new ListViewData();
 		$this->searchColumns = array () ;
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function ListViewDisplay(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
 	function shouldProcess($moduleDir){
 		$searching = false;
 		$sessionSearchQuery = "{$moduleDir}2_QUERY_QUERY";
@@ -82,9 +97,9 @@ class ListViewDisplay {
 			$searching = true;
 		}
 		if(!empty($GLOBALS['sugar_config']['save_query']) && $GLOBALS['sugar_config']['save_query'] == 'populate_only'){
-		    if(empty($GLOBALS['displayListView']) 
-		            && (!empty($_REQUEST['clear_query']) 
-		                || $_REQUEST['module'] == $moduleDir 
+		    if(empty($GLOBALS['displayListView'])
+		            && (!empty($_REQUEST['clear_query'])
+		                || $_REQUEST['module'] == $moduleDir
 		                    && ((empty($_REQUEST['query']) || $_REQUEST['query'] == 'MSI' )
 		                        && (!$searching)))) {
 				$_SESSION['last_search_mod'] = $_REQUEST['module'] ;
@@ -201,17 +216,17 @@ class ListViewDisplay {
 	 * Display the listview
 	 * @return string ListView contents
 	 */
-	public function display() 
+	public function display()
 	{
 		if (!$this->should_process) {
 		    return '';
 		}
-		
+
 		$str = '';
 		if ($this->show_mass_update_form) {
 			$str = $this->mass->getDisplayMassUpdateForm(true, $this->multi_select_popup).$this->mass->getMassUpdateFormHeader($this->multi_select_popup);
 		}
-        
+
 		return $str;
 	}
 	/**
@@ -441,7 +456,7 @@ class ListViewDisplay {
         $user_merge = $current_user->getPreference('mailmerge_on');
         $module_dir = (!empty($this->seed->module_dir) ? $this->seed->module_dir : '');
         $str = '';
-        
+
         if ($user_merge == 'on' && isset($admin->settings['system_mailmerge_on']) && $admin->settings['system_mailmerge_on'] && !empty($modules_array[$module_dir])) {
             return "<a href='javascript:void(0)'  " .
                     "id='merge_listview_". $loc ."'"  .
@@ -536,7 +551,7 @@ EOF;
 	 * Display the bottom of the ListView (ie MassUpdate
 	 * @return string contents
 	 */
-	public function displayEnd() 
+	public function displayEnd()
 	{
 		$str = '';
 		if($this->show_mass_update_form) {
@@ -551,7 +566,7 @@ EOF;
      * Display the multi select data box etc.
      * @return string contents
      */
-	public function getMultiSelectData() 
+	public function getMultiSelectData()
 	{
 		$str = "<script>YAHOO.util.Event.addListener(window, \"load\", sListView.check_boxes);</script>\n";
 

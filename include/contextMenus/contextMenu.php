@@ -41,25 +41,40 @@
 class contextMenu {
     var $menuItems;
     var $objectName;
-    
-    function contextMenu() {
+
+    public function __construct() {
         $this->menuItems = array();
-    } 
+    }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function contextMenu(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function getScript() {
         $json = getJSONobj();
         return "SUGAR.contextMenu.registerObjectType('{$this->objectName}', " . $json->encode($this->menuItems) . ");\n";
     }
-    
+
     /**
      * adds a menu item to the current contextMenu
-     * 
+     *
      * @param string $text text of the item
      * @param string $action function or pointer to the javascript function to call
      * @param array $params other parameters includes:
      *      url - The URL for the MenuItem's anchor's "href" attribute.
      *      target - The value to be used for the MenuItem's anchor's "target" attribute.
-     *      helptext - Additional instructional text to accompany the text for a MenuItem. Example: If the text is 
+     *      helptext - Additional instructional text to accompany the text for a MenuItem. Example: If the text is
      *                 "Copy" you might want to add the help text "Ctrl + C" to inform the user there is a keyboard
      *                 shortcut for the item.
      *      emphasis - If set to true the text for the MenuItem will be rendered with emphasis (using <em>).
@@ -80,7 +95,7 @@ class contextMenu {
             array_push($this->menuItems, $item);
         }
     }
-    
+
     /**
      * Loads up menu items from files located in include/contextMenus/menuDefs
      * @param string $name name of the object
@@ -91,7 +106,7 @@ class contextMenu {
         require_once('include/contextMenus/menuDefs/' . $name . '.php');
         $this->loadFromDef($name, $menuDef[$name]);
     }
-    
+
     /**
      * Loads up menu items from def
      * @param string $name name of the object type
@@ -100,9 +115,9 @@ class contextMenu {
     function loadFromDef($name, $defs) {
         $this->objectName = $name;
         foreach($defs as $def) {
-            $this->addMenuItem($def['text'], $def['action'], 
-                               (empty($def['module']) ? null : $def['module']), 
-                               (empty($def['aclAction']) ? null : $def['aclAction']), 
+            $this->addMenuItem($def['text'], $def['action'],
+                               (empty($def['module']) ? null : $def['module']),
+                               (empty($def['aclAction']) ? null : $def['aclAction']),
                                (empty($def['params']) ? null : $def['params']));
         }
     }

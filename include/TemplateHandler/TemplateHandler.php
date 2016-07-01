@@ -49,9 +49,25 @@ class TemplateHandler {
     var $cacheDir;
     var $templateDir = 'modules/';
     var $ss;
-    function TemplateHandler() {
+
+    public function __construct() {
       $this->cacheDir = sugar_cached('');
     }
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    public function TemplateHandler(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
 
     function loadSmarty(){
         if(empty($this->ss)){
@@ -521,7 +537,7 @@ class TemplateHandler {
        return '';
     }
 
-    
+
     /**
      * Get lookup array for QuickSearchDefaults custom class
      * @return array

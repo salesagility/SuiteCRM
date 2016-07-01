@@ -45,11 +45,26 @@ require_once('include/EditView/SubpanelQuickCreate.php');
  */
 class PopupQuickCreate extends SubpanelQuickCreate{
 
-	function PopupQuickCreate($module, $view='QuickCreate'){
+	function __construct($module, $view='QuickCreate'){
 		$this->defaultProcess = false;
-		parent::SubpanelQuickCreate($module, $view, true);
+		parent::__construct($module, $view, true);
 		$this->ev->defs['templateMeta']['form']['buttons'] = array('POPUPSAVE', 'POPUPCANCEL');
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function PopupQuickCreate($module, $view='QuickCreate'){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($module, $view);
+    }
+
 
 	function process($module){
         $form_name = 'form_QuickCreate_' . $module;

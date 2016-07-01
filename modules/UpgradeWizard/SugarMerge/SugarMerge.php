@@ -64,9 +64,9 @@ class SugarMerge {
 	private $original_path = '';
 	private $merged = array();
 	private $fp = NULL;
-	
-	function SugarMerge($new_path='', $original_path='', $custom_path='custom') {
-		
+
+	function __construct($new_path='', $original_path='', $custom_path='custom') {
+
 		$this->new_path = empty($new_path) || preg_match('/[\/]$/', $new_path) ? $new_path : $new_path . '/';
 		$this->original_path = empty($original_path) || preg_match('/[\/]$/', $original_path) ? $original_path : $original_path . '/';
 		$this->custom_path = empty($custom_path) || preg_match('/[\/]$/', $custom_path) ? $custom_path : $custom_path . '/';
@@ -77,8 +77,23 @@ class SugarMerge {
 			'listviewdefs.php'=>new ListViewMerge(),
 			'searchdefs.php'=>new SearchMerge(),
 			'quickcreatedefs.php'=>new QuickCreateMerge(),
-		);		
+		);
 	}
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function SugarMerge($new_path='', $original_path='', $custom_path='custom'){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct($new_path, $original_path, $custom_path);
+    }
+
 
 	function setLogFilePointer($fp){
 		$this->fp = $fp;
@@ -123,7 +138,7 @@ class SugarMerge {
 
 					    if( is_array($merge) )
 					    {
-					        if ( in_array($e,$merge) ) 
+					        if ( in_array($e,$merge) )
 					        	$this->merged[$e] = $this->mergeModule($e, TRUE, $save,$logHistory );
 					        else
 					        {
@@ -140,8 +155,8 @@ class SugarMerge {
 		return $this->merged;
 	}
 
-	
-	
+
+
 
 	/**
 	 * This will merge any files that need merging for a given module
@@ -160,7 +175,7 @@ class SugarMerge {
 		$custom_path = $this->custom_path . 'modules/' . $module . '/metadata/';
 		$new_path = $this->new_path . 'modules/' . $module . '/metadata/';
 		foreach($this->mergeMapping as $file=>&$object){
-			if(file_exists("{$custom_path}{$file}") && file_exists("{$new_path}{$file}")){  
+			if(file_exists("{$custom_path}{$file}") && file_exists("{$new_path}{$file}")){
 				if($merge){
 					$merged[$file] = $this->mergeFile($module, $file, $save, $logHistory);
 				}else{
@@ -196,7 +211,7 @@ class SugarMerge {
 		return false;
 
 	}
-	
+
     /**
 	 * Create a history copy of the custom file that will be merged so that it can be access through
 	 * studio if admins wish to revert at a later date.
@@ -209,10 +224,10 @@ class SugarMerge {
 	{
 	    $historyPath = 'custom/' . MB_HISTORYMETADATALOCATION . "/modules/$module/metadata/$file";
 	    $history = new History($historyPath);
-	    $timeStamp = $history->append($customFile);	    
+	    $timeStamp = $history->append($customFile);
 	    $GLOBALS['log']->debug("Created history file after merge with new file: " . $historyPath .'_'.$timeStamp);
 	}
-	
+
 	/**
 	 * Return the custom modules path
 	 *
@@ -221,8 +236,8 @@ class SugarMerge {
 	function getCustomPath() {
 		return $this->custom_path;
 	}
-	
-	
+
+
 	/**
 	 * Return the new upgrade modules path
 	 *
@@ -230,7 +245,7 @@ class SugarMerge {
 	 */
 	function getNewPath() {
 		return $this->new_path;
-	}	
+	}
 
 
 	/**
@@ -240,7 +255,7 @@ class SugarMerge {
 	 */
 	function getOriginalPath() {
 		return $this->original_path;
-	}		
-	
+	}
+
 }
 ?>

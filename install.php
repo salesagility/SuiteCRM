@@ -266,6 +266,16 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
 //        else if(count($validation_errors = validate_siteConfig('b')) > 0) {
 //            $si_errors = true;
 //        }
+
+        if(!empty($sugar_config['dbconfig'])) {
+            try {
+                $db = DBManagerFactory::getInstance();
+                $db->disconnect();
+            } catch (\Exception $e) {
+                $validation_errors[] = $mod_strings['LBL_DB_CONN_ERR'] . ': ' . $e->getMessage();
+            }
+        }
+
         $errors = '';
         if( isset($validation_errors) && is_array($validation_errors)){
             if( count($validation_errors) > 0 ){
@@ -277,6 +287,7 @@ if(isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only'] == "1") {
                 $errors .= '</ul>'; //</div>';
             }
         }
+
         echo $errors;
         return;
     }
@@ -719,6 +730,9 @@ EOQ;
         create_writable_dir(sugar_cached('xml'));
         create_writable_dir(sugar_cached('include/javascript'));
         recursive_make_writable(sugar_cached('modules'));
+
+        // public dir
+        recursive_make_writable('./public');
 
         // check whether we're getting this request from a command line tool
         // we want to output brief messages if we're outputting to a command line tool

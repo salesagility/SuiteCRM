@@ -42,26 +42,41 @@ require_once ('include/MVC/View/SugarView.php');
 require_once ('modules/ModuleBuilder/parsers/ParserFactory.php');
 
 class ViewProperty extends SugarView
-{   
-    function ViewProperty()
+{
+    function __construct()
     {
         $this->init();
     }
-    
+
+    /**
+     * @deprecated deprecated since version 7.6, PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code, use __construct instead
+     */
+    function ViewProperty(){
+        $deprecatedMessage = 'PHP4 Style Constructors are deprecated and will be remove in 7.8, please update your code';
+        if(isset($GLOBALS['log'])) {
+            $GLOBALS['log']->deprecated($deprecatedMessage);
+        }
+        else {
+            trigger_error($deprecatedMessage, E_USER_DEPRECATED);
+        }
+        self::__construct();
+    }
+
+
     /**
 	 * @see SugarView::_getModuleTitleParams()
 	 */
 	protected function _getModuleTitleParams($browserTitle = false)
 	{
 	    global $mod_strings;
-	    
+
     	return array(
     	   translate('LBL_MODULE_NAME','Administration'),
     	   ModuleBuilderController::getModuleTitle(),
     	   );
     }
 
-	
+
     function init () // pseduo-constuctor - given a well-known name to allow subclasses to call this classes constructor
     {
         $this->editModule = (! empty($_REQUEST['view_module'])) ? $_REQUEST['view_module'] : null;
@@ -116,18 +131,18 @@ class ViewProperty extends SugarView
 		}
 		$smarty->assign('available_languages', get_languages());
 		$smarty->assign('selected_lang', $selected_lang);
-		
+
         ksort($this->properties);
 
         $smarty->assign("properties",$this->properties);
 //        $smarty->assign("id",$this->id);
-        
+
         $smarty->assign("mod_strings",$mod_strings);
         $smarty->assign('APP', $GLOBALS['app_strings']);
         $smarty->assign("view_module", $this->editModule);
         $smarty->assign("subpanel", $this->subpanel);
         if (isset($this->editPackage))
-            $smarty->assign("view_package", $this->editPackage);       
+            $smarty->assign("view_package", $this->editPackage);
 
         $ajax->addSection('east', translate('LBL_SECTION_PROPERTIES', 'ModuleBuilder'), $smarty->fetch('modules/ModuleBuilder/tpls/editProperty.tpl'));
         echo $ajax->getJavascript();

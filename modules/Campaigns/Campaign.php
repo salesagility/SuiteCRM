@@ -104,7 +104,12 @@ class Campaign extends SugarBean {
 
 		//_ppd($user);
 		if(!empty($user)) {
-			$fullName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
+			if(is_array($user)) {
+				$fullName = $locale->getLocaleFormattedName($user['first_name'], $user['last_name']);
+			}
+			else /*if(is_object($user))*/ {
+				$fullName = $locale->getLocaleFormattedName($user->first_name, $user->last_name);
+			}
 			$listTmpl->assign('ASSIGNED_USER_NAME', $fullName);
 		}
 	}
@@ -231,7 +236,6 @@ class Campaign extends SugarBean {
 
 			}
 
-		$this->unformat_all_fields();
 
 		// Bug53301
 		if($this->campaign_type != 'NewsLetter') {

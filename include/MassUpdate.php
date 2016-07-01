@@ -324,6 +324,26 @@ eoq;
 							} // if
 	                    } // if
 
+						// Fix for issue 1549: mass update the cases, and change the state value from open to close,
+						// Status value can still display New, Assigned, Pending Input (even though it should not)
+						foreach ($newbean->field_name_map as $field_name) {
+							if( isset($field_name['type']) && $field_name['type'] == 'dynamicenum' )  {
+								if( isset($field_name['parentenum']) && $field_name['parentenum'] != '' ) {
+									$parentenum_name = $field_name['parentenum'];
+									// Updated parent field value.
+									$parentenum_value = $newbean->$parentenum_name;
+
+									$dynamic_field_name = $field_name['name'];
+									// Dynamic field set value.
+									list($dynamic_field_value) = explode('_', $newbean->$dynamic_field_name);
+
+									if($parentenum_value != $dynamic_field_value) {
+										// Change to the default value of the correct value set.
+										$newbean->$dynamic_field_name = $parentenum_value . '_' . $parentenum_value;
+									}
+								}
+							}
+						}
 
 						$newbean->save($check_notify);
 						if (!empty($email_address_id)) {
