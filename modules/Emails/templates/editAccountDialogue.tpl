@@ -163,6 +163,11 @@
 					</td>
 				</tr>
 
+				<!--
+				//TODO: gymad: From Name, From Address, Reply to Address, Outbound Email select aren't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      			//TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+        		-->
+				<!--
 			<tr>
 				<td scope="row">
 					{$app_strings.LBL_EMAIL_SETTINGS_FROM_NAME}:
@@ -204,6 +209,7 @@
 					<select name='outbound_email' id='outbound_email' onchange="SUGAR.email2.accounts.checkOutBoundSelection()"></select>
 				</td>
 			</tr>
+			-->
 			<tr class="yui-hidden" id="inboundAccountRequiredUsername">
 				<td scope="row">
 					{$app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER}:

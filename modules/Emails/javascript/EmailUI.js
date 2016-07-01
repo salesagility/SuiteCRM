@@ -685,9 +685,11 @@ SE.accounts = {
 
         document.getElementById('ie_id').value = '';
         document.getElementById('ie_name').value = '';
-        document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
-        document.getElementById('ie_from_addr').value = this.getReplyAddress();
-        document.getElementById('reply_to_addr').value = '';
+      //TODO: gymad: From Name, From Address, Reply to Address, Outbound Email select aren't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+      //document.getElementById('ie_from_name').value = SE.userPrefs.current_user.full_name;
+      //document.getElementById('ie_from_addr').value = this.getReplyAddress();
+        //document.getElementById('reply_to_addr').value = '';
         document.getElementById('server_url').value = '';
         document.getElementById('email_user').value = '';
         document.getElementById('email_password').value = '';
@@ -709,9 +711,11 @@ SE.accounts = {
         document.getElementById('ie_id').value = o.id;
         document.getElementById('ie_name').value = o.name;
         if (o.stored_options != null) {
-        	document.getElementById('ie_from_name').value = o.stored_options.from_name == 'undefined' ? '' : o.stored_options.from_name;
-        	document.getElementById('ie_from_addr').value = o.stored_options.from_addr == 'undefined' ? '' : o.stored_options.from_addr;
-        	document.getElementById('reply_to_addr').value = typeof(o.stored_options.reply_to_addr) == 'undefined' ? '' : o.stored_options.reply_to_addr;
+            //TODO: gymad: From Name, From Address, Reply to Address, Outbound Email select aren't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+            //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+        	//document.getElementById('ie_from_name').value = o.stored_options.from_name == 'undefined' ? '' : o.stored_options.from_name;
+        	//document.getElementById('ie_from_addr').value = o.stored_options.from_addr == 'undefined' ? '' : o.stored_options.from_addr;
+        	//document.getElementById('reply_to_addr').value = typeof(o.stored_options.reply_to_addr) == 'undefined' ? '' : o.stored_options.reply_to_addr;
         	if (o.stored_options.trashFolder != null) {
         		document.getElementById('trashFolder').value = o.stored_options.trashFolder;
         	}
@@ -744,14 +748,16 @@ SE.accounts = {
             }
         }
  // handle SMTP selection
-        if(o.stored_options != null && typeof(o.stored_options.outbound_email) != 'undefined') {
-            var opts = document.getElementById('outbound_email').options;
-            for(i=0; i<opts.length; i++) {
-                if(opts[i].value == o.stored_options.outbound_email) {
-                    opts[i].selected = true;
-                }
-            }
-        }
+      //TODO: gymad: From Name, From Address, Reply to Address, Outbound Email select aren't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+      //       if(o.stored_options != null && typeof(o.stored_options.outbound_email) != 'undefined') {
+ //           var opts = document.getElementById('outbound_email').options;
+ //           for(i=0; i<opts.length; i++) {
+ //               if(opts[i].value == o.stored_options.outbound_email) {
+ //                   opts[i].selected = true;
+ //               }
+ //           }
+ //       }
     },
 
     deleteIeAccount : function(IeAccountID,IeGroupID) {
@@ -874,8 +880,10 @@ SE.accounts = {
 
     saveIeAccount : function() {
 
-        //Before saving check if there are any error messages associated with the outbound account.
-        var outboundID = document.getElementById('outbound_email').value;
+      //TODO: gymad: From Name, From Address, Reply to Address, Outbound Email select aren't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+      //Before saving check if there are any error messages associated with the outbound account.
+        //var outboundID = document.getElementById('outbound_email').value;
 
         if( SE.accounts.checkIeCreds({'valiateTrash': true,'validateFromAddr': true,'validateOutbound' :true,
             'validateSMTPCreds':true}) )
@@ -921,7 +929,9 @@ SE.accounts = {
         var out = new String();
 
         var ie_name = Dom.get('ie_name').value;
-        var fromAddress = Dom.get('ie_from_addr').value;
+      //TODO: gymad: From Name and From Address isn't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+      //var fromAddress = Dom.get('ie_from_addr').value;
         var server_url = Dom.get('server_url').value;
         var email_user = Dom.get('email_user').value;
         var email_password = Dom.get('email_password').value;
@@ -932,7 +942,9 @@ SE.accounts = {
         // Bug 44392: IE9 and possibly previous versions have a quirk where selectedIndex is -1 if you have nothing selected vs 0 for
         // other browsers. And if you check options[-1] it returns "unknown" instead of undefined. Also other options out of index
         // return null instead of undefined for other browsers, thus we need to check for all the possible outcomes.
-        var oe_value = (typeof(oe.options[oe.selectedIndex]) === 'undefined' || typeof(oe.options[oe.selectedIndex]) === 'unknown' || typeof(oe.options[oe.selectedIndex]) === null) ? "" : oe.options[oe.selectedIndex].value;
+      //TODO: gymad: From Address isn't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+      //var oe_value = (typeof(oe.options[oe.selectedIndex]) === 'undefined' || typeof(oe.options[oe.selectedIndex]) === 'unknown' || typeof(oe.options[oe.selectedIndex]) === null) ? "" : oe.options[oe.selectedIndex].value;
 
         var outboundUserName = Dom.get('inbound_mail_smtpuser').value;
         var outboundPass = Dom.get('inbound_mail_smtppass').value;
@@ -946,33 +958,37 @@ SE.accounts = {
 
         var validateSMTPCreds = (typeof(validateRules.validateSMTPCreds) != 'undefined' && validateRules.validateSMTPCreds);
 
-        if ( SE.composeLayout.outboundAccountErrors != null && SE.composeLayout.outboundAccountErrors[oe_value] != null
-             && validateSMTPCreds)
-        {
-            if(trim(outboundUserName) == "") {
-                errors.push(app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER);
-            }
-            if(trim(outboundPass) == "") {
-                errors.push(app_strings.LBL_EMAIL_ACCOUNTS_SMTPPASS);
-            }
-        }
+      //TODO: gymad: From Address isn't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+      //if ( SE.composeLayout.outboundAccountErrors != null && SE.composeLayout.outboundAccountErrors[oe_value] != null
+        //     && validateSMTPCreds)
+        //{
+        //    if(trim(outboundUserName) == "") {
+        //        errors.push(app_strings.LBL_EMAIL_ACCOUNTS_SMTPUSER);
+        //    }
+        //    if(trim(outboundPass) == "") {
+        //        errors.push(app_strings.LBL_EMAIL_ACCOUNTS_SMTPPASS);
+        //    }
+        //}
 
         if(trim(ie_name) == "") {
             errors.push(app_strings.LBL_EMAIL_ERROR_NAME);
         }
 
-        if ( typeof(validateRules.validateFromAddr) != 'undefined' && validateRules.validateFromAddr)
-        {
-            if(trim(fromAddress) == "" || !isValidEmail(fromAddress) ) {
-                errors.push(app_strings.LBL_EMAIL_ERROR_FROM_ADDRESS);
-            }
-        }
+      //TODO: gymad: From Address isn't required because it will be removed from the Incoming Email Settings and will be added to the Outgoing settings on the User Settings Page
+      //TODO: gymad: but this change remove from the Email UI also so apply same validation therefor and check the functionality then remove this part of the source code!
+        //if ( typeof(validateRules.validateFromAddr) != 'undefined' && validateRules.validateFromAddr)
+        //{
+        //    if(trim(fromAddress) == "" || !isValidEmail(fromAddress) ) {
+        //        errors.push(app_strings.LBL_EMAIL_ERROR_FROM_ADDRESS);
+        //    }
+        //}
 
 
-        if( (typeof(validateRules.validateOutbound) != 'undefined' && validateRules.validateOutbound) && ( trim(oe_value) == ""
-             || trim(oe_value) == "SYSTEM_ADD") ) {
-            errors.push(app_strings.LBL_EMAIL_ERROR_NO_OUTBOUND);
-        }
+        //if( (typeof(validateRules.validateOutbound) != 'undefined' && validateRules.validateOutbound) && ( trim(oe_value) == ""
+        //     || trim(oe_value) == "SYSTEM_ADD") ) {
+        //    errors.push(app_strings.LBL_EMAIL_ERROR_NO_OUTBOUND);
+        //}
         if(trim(server_url) == "") {
             errors.push(app_strings.LBL_EMAIL_ERROR_SERVER);
         }
