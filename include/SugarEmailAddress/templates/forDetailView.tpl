@@ -51,6 +51,7 @@
 							<i>
 						{/if}
 
+						<a href='https://www.gravatar.com/avatar/{$address.hash}?s=200' target='_blank'><img src='https://www.gravatar.com/avatar/{$address.hash}?s=25' /></a>
 						{$address.address}
 
 						{if $address.key === 'primary'}
