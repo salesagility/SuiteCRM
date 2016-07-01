@@ -52,6 +52,9 @@ class OutboundEmail {
 		'name',
 		'type',
 		'user_id',
+		'from_name',
+		'from_addr',
+		'reply_to_addr',
 		'mail_sendtype',
 		'mail_smtptype',
 		'mail_smtpserver',
@@ -69,6 +72,9 @@ class OutboundEmail {
 	var $name;
 	var $type; // user or system
 	var $user_id; // owner
+	var $from_name;
+	var $from_addr;
+	var $reply_to_addr;
 	var $mail_sendtype; // smtp
 	var $mail_smtptype;
 	var $mail_smtpserver;
