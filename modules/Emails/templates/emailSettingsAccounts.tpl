@@ -46,7 +46,7 @@
 	</tr>
     	<tr>
                                 	<td align="right">
-                                	   <input type="button" class="button" style="margin-left:5px;" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   " onclick="javascript:SUGAR.email2.settings.saveOptionsGeneral(true);">
+                                	   <input type="button" class="button" style="margin-left:5px;" value="   {$app_strings.LBL_EMAIL_DONE_BUTTON_LABEL}   " onclick="javascript:SUGAR.email2.settings.saveOptionsGeneral({if $disableDisplayMessage}{else}true{/if});">
                                     </td>
                             	</tr>
 	

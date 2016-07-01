@@ -1479,6 +1479,7 @@ $app_strings = array(
     'LBL_EMAIL_SETTINGS_RETRIEVING_ACCOUNT' => 'Retrieving Mail Account',
     'LBL_EMAIL_SETTINGS_RULES' => 'Rules',
     'LBL_EMAIL_SETTINGS_SAVED' => 'The settings have been saved.\n\nYou must reload the page for the new settings to take effect.',
+    'LBL_EMAIL_SETTINGS_SAVED_NO_REFRESH' => 'The settings have been saved.',
     'LBL_EMAIL_SETTINGS_SEND_EMAIL_AS' => 'Send Plain Text Emails Only',
     'LBL_EMAIL_SETTINGS_SHOW_IN_FOLDERS' => 'Active',
     'LBL_EMAIL_SETTINGS_SHOW_NUM_IN_LIST' => 'Emails per Page',

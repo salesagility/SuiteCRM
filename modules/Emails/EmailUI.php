@@ -270,6 +270,8 @@ class EmailUI {
 		////	END FOLDERS
 		///////////////////////////////////////////////////////////////////////
 
+		$this->smarty->assign('disableDisplayMessage', $emailAccountSettingsOnly);
+
 		$out = "";
 		$out .= $this->smarty->fetch("modules/Emails/templates/_baseEmail" .($emailAccountSettingsOnly ? 'AccountSettings' : '').".tpl");
 		$out .= $tree->generate_header();

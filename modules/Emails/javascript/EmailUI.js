@@ -3406,10 +3406,12 @@ SE.settings = {
         AjaxObject.target = 'frameFlex';
         AjaxObject.startRequest(callbackSettings, urlStandard + '&emailUIAction=saveSettingsGeneral');
 
-        if(displayMessage)
-            alert(app_strings.LBL_EMAIL_SETTINGS_SAVED);
-
-        SE.settings.settingsDialog.hide();
+        if(displayMessage) {
+          alert(app_strings.LBL_EMAIL_SETTINGS_SAVED);
+          SE.settings.settingsDialog.hide();
+        } else {
+          alert(app_strings.LBL_EMAIL_SETTINGS_SAVED_NO_REFRESH);
+        }
     },
 
     /**
