@@ -246,6 +246,50 @@ $dictionary['FP_events'] = array(
                 'source' => 'non-db',
                 'vname' => 'LBL_FP_EVENTS_CONTACTS_FROM_CONTACTS_TITLE',
             ),
+        'e_invite_status_fields' =>
+            array (
+                'name' => 'e_invite_status_fields',
+                'rname' => 'id',
+                'relationship_fields'=>array('id' => 'event_invite_id', 'invite_status' => 'event_status_name', 'accept_status' => 'event_accept_status'),
+                'vname' => 'LBL_CONT_INVITE_STATUS',
+                'type' => 'relate',
+                'link' => 'fp_events_contacts',
+                'link_type' => 'relationship_info',
+                'join_link_name' => 'fp_events_contacts_c',
+                'source' => 'non-db',
+                'importable' => 'false',
+                'duplicate_merge'=> 'disabled',
+                'studio' => false,
+                'join_primary' => false,
+            ),
+        'event_status_name' =>
+            array(
+                'name' => 'event_status_name',
+                'type' => 'enum',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_INVITE_STATUS_EVENT',
+                'options' => 'fp_event_invite_status_dom',
+            ),
+        'event_invite_id' =>
+            array(
+                'name' => 'event_invite_id',
+                'type' => 'varchar',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_INVITE_STATUS',
+                'studio' => array('listview' => false),
+            ),
+
+        'event_accept_status' =>
+            array(
+                'massupdate' => false,
+                'name' => 'event_accept_status',
+                'type' => 'enum',
+                'studio' => 'false',
+                'source' => 'non-db',
+                'vname' => 'LBL_LIST_ACCEPT_STATUS_EVENT',
+                'options' => 'fp_event_status_dom',
+                'importable' => 'false',
+            ),
         'fp_events_prospects_1' =>
             array(
                 'name' => 'fp_events_prospects_1',
