@@ -108,7 +108,7 @@ class MassUpdate
 		unset($_REQUEST['current_query_by_page']);
 		unset($_REQUEST[session_name()]);
 		unset($_REQUEST['PHPSESSID']);
-		$query = base64_encode(serialize($_REQUEST));
+		$query = json_encode($_REQUEST);
 
         $bean = loadBean($_REQUEST['module']);
        $order_by_name = $bean->module_dir.'2_'.strtoupper($bean->object_name).'_ORDER_BY' ;
@@ -1238,7 +1238,7 @@ EOQ;
         }
 	/* bug 31271: using false to not add all bean fields since some beans - like SavedReports
 	   can have fields named 'module' etc. which may break the query */
-        $query = sugar_unserialize(base64_decode($query));
+		$query = json_decode(html_entity_decode($query),true);
         $searchForm->populateFromArray($query, null, true);
         $this->searchFields = $searchForm->searchFields;
         $where_clauses = $searchForm->generateSearchWhere(true, $module);
