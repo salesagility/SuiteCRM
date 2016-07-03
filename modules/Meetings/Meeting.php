@@ -39,7 +39,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 class Meeting extends SugarBean {
-	use RemoveUnInvitedFromReminders;
 	// Stored fields
 	var $id;
 	var $date_entered;
