@@ -37,7 +37,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-require_once('include/Trait/RemoveUnInvitedFromReminders.php');
 
 class Meeting extends SugarBean {
 	use RemoveUnInvitedFromReminders;
@@ -288,6 +287,47 @@ class Meeting extends SugarBean {
 
 
 		return $return_id;
+	}
+
+	/**
+	 * @param array $reminders
+	 * @return array
+	 */
+	public function removeUnInvitedFromReminders($reminders) {
+
+		$reminderData = $reminders;
+		$uninvited = array();
+		foreach($reminders as $r => $reminder) {
+			foreach($reminder['invitees'] as $i => $invitee) {
+				switch($invitee['module']) {
+					case "Users":
+						if(in_array($invitee['module_id'], $this->users_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove user
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Contacts":
+						if(in_array($invitee['module_id'], $this->contacts_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove contact
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+					case "Leads":
+						if(in_array($invitee['module_id'], $this->leads_arr) === false) {
+							// add to uninvited
+							$uninvited[] = $reminderData[$r]['invitees'][$i];
+							// remove lead
+							unset($reminderData[$r]['invitees'][$i]);
+						}
+						break;
+				}
+			}
+		}
+		return $reminderData;
 	}
 
 	// this is for calendar
