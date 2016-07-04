@@ -19,10 +19,10 @@
 {/literal}
 </script>
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr>
 {{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
 {{foreach name=colIteration from=$formData key=col item=colData}}
-    {{math assign="accesskeycount" equation="$accesskeycount + 1"}}
+	<tr>
+	{{math assign="accesskeycount" equation="$accesskeycount + 1"}}
     {{if $accesskeycount==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_SEARCH_KEY}} {{else}} {{assign var='ACCKEY' value=''}} {{/if}}
 
 	
@@ -32,17 +32,6 @@
           right=$templateMeta.maxColumns
           assign=modVal
     }
-	{if ($index % $templateMeta.maxColumns == 1 && $index != 1)}
-        {if $isHelperShown==0}
-            {assign var="isHelperShown" value="1"}
-            <td class="helpIcon" width="*">
-                <img alt="{$APP.LBL_SEARCH_HELP_TITLE}" id="helper_popup_image" border="0" src='{sugar_getimagepath file="help-dashlet.gif"}' class="help-search">
-            </td>
-        {else}
-            <td>&nbsp;</td>
-        {/if}
-		</tr><tr>
-	{/if}
 	
 	<td scope="row" nowrap="nowrap" width='{{$templateMeta.widths.label}}%' >
 	{{if isset($colData.field.label)}}	
@@ -56,8 +45,9 @@
 		{{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
    	{{/if}}
    	</td>
+</tr>
 {{/foreach}}
-	</tr>
+
 <tr>
 	<td colspan='20'>
 		&nbsp;
