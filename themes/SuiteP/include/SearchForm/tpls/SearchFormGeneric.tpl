@@ -3,8 +3,8 @@
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
 
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ldiv.
+ * Copyright (C) 2011 - 2014 Salesagility Ldiv.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -66,8 +66,7 @@
 {/literal}
 </script>
 
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
-<tr>
+<div class="row">
 {{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
 {{foreach name=colIteration from=$formData key=col item=colData}}
     {{math assign="accesskeycount" equation="$accesskeycount + 1"}}
@@ -79,41 +78,32 @@
           right=$basicMaxColumns
           assign=modVal
     }
-	{if ($index % $basicMaxColumns == 1 && $index != 1)}
-		</tr><tr>
-	{/if}
 	
-	<td scope="row" nowrap="nowrap" width='1%' >
+	{*<div>*}
 	{{if isset($colData.field.label)}}	
 		<label for='{{$colData.field.name}}' >{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
     {{elseif isset($fields[$colData.field.name])}}
 		<label for='{{$fields[$colData.field.name].name}}'> {sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}
 	{{/if}}
-	</td>
+	{*</div>*}
 
-	
-	<td  nowrap="nowrap" width='1%'>
+	{*<div>*}
 	{{if $fields[$colData.field.name]}}
 		{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] accesskey=$ACCKEY displayType='searchView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
    	{{/if}}
-   	</td>
+   	{*</div>*}
 {{/foreach}}
-    {if $formData|@count >= $basicMaxColumns+1}
-    </tr>
-    <tr>
-	<td colspan="{$searchTableColumnCount}">
-    {else}
-	<td class="submitButtons">
-    {/if}
-        {{sugar_button module="$module" id="search" view="searchView"}}
-	    <input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
-        {if $HAS_ADVANCED_SEARCH}
-	    &nbsp;&nbsp;<a id="advanced_search_link" href="javascript:void(0);" accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}" >{$APP.LNK_ADVANCED_SEARCH}</a>
-	    {/if}
-    </td>
-	<td class="helpIcon" width="*"><img alt="Help" border='0' id="filterHelp" src='{sugar_getimagepath file="help-dashlet.gif"}'></td>
-	</tr>
-</table>
+</div>
+<div class="row">
+		<div class="submitButtons">
+			{{sugar_button module="$module" id="search" view="searchView"}}
+			<input tabindex='2' title='{$APP.LBL_CLEAR_BUTTON_TITLE}' onclick='SUGAR.searchForm.clear_form(this.form); return false;' class='button' type='button' name='clear' id='search_form_clear' value='{$APP.LBL_CLEAR_BUTTON_LABEL}'/>
+			{if $HAS_ADVANCED_SEARCH}
+			&nbsp;&nbsp;<a id="advanced_search_link" href="javascript:void(0);" accesskey="{$APP.LBL_ADV_SEARCH_LNK_KEY}" >{$APP.LNK_ADVANCED_SEARCH}</a>
+			{/if}
+		</div>
+		<div class="helpIcon" width="*"><img alt="Help" border='0' id="filterHelp" src='{sugar_getimagepath file="help-dashlet.gif"}'></div>
+</div>
 <script>
 	{literal}
 	$(document).ready(function () {
