@@ -150,8 +150,6 @@ class AccountTest extends SuiteCRMUnitTest
         $actual = $Account->create_export_query('name', 'name not null');
     
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
-    
-        //$this->assertSame($expected, $actual);
     }
 
     public function testset_notification_body()
