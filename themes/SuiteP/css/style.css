@@ -3826,11 +3826,108 @@ input[type=text], textarea {
     border: 1px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px;
+    line-height: 40px;
 }
 
 .search_form input[type=text], .search_form textarea {
     background: #ffffff;
 }
+
+div.search_fields_basic {
+    line-height: 48px;
+}
+
+div.search_fields_basic label {
+    margin: 0 8px 0 4px;
+}
+
+
+/*xs-col-*/
+@media (max-width: 769px) {
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+    div.search_name_basic input {
+        width: 85% !important;
+    }
+    div.search_fields_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_buttons_basic {
+        margin: 0 8px 0 42px;
+    }
+}
+/*sm-col-*/
+@media (min-width: 768px) and (max-width: 991px) {
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+    div.search_name_basic input {
+        width: 80% !important;
+    }
+
+    div.search_fields_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_buttons_basic {
+        margin: 0 8px 0 42px;
+    }
+}
+/*md-col-*/
+@media (min-width: 992px) and (max-width: 1199px) {
+    div.search_fields_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_buttons_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+    div.search_name_basic input {
+        width: 90%;
+    }
+
+    div.search_fields_basic {
+        width: 100%;
+    }
+
+    div.search_buttons_basic {
+        position: absolute;
+        right: 0;
+    }
+
+}
+/*md-fixes*/
+@media (min-width: 1180px) and (max-width: 1199px) {
+    div.search_buttons_basic {
+        width: auto;
+    }
+}
+/*lg-col-*/
+@media (min-width: 1200px) {
+    div.search_name_basic, div.search_fields_basic, div.search_buttons_basic {
+        width: auto;
+    }
+
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+
+    div.search_fields_basic {
+        margin: 4px 8px 0 8px;
+    }
+
+    div.search_buttons_basic {
+        margin: 4px 8px 0 8px;
+    }
+
+}
+
 
 :disabled {
     border: 1px solid #e2e7eb;
@@ -4026,6 +4123,11 @@ table legend {
     margin-right: 15px;
 }
 
+#search_form label {
+    font-weight: normal;
+    color: #817D8D;
+}
+
 form#MassAssign_SecurityGroups {
     background-color: #e6e6e6 !important;
     border-radius: 3px;
@@ -4090,7 +4192,7 @@ a#advanced_search_link {
     color: #fff;
     cursor: pointer;
     font-size: 13px !important;
-    margin: 0 0 0 0;
+    margin: 4px 0px 4px 0px;
     padding: 0 40px 0 20px;
     border-radius: 3px;
     text-transform: uppercase;
