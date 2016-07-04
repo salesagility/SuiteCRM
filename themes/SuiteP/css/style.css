@@ -3842,6 +3842,7 @@ div.search_fields_basic label {
 }
 
 
+
 /*xs-col-*/
 @media (max-width: 769px) {
     div.search_name_basic img {
@@ -4149,13 +4150,14 @@ form#MassAssign_SecurityGroups {
     background-color: #65697A;
     float: left;
     border: none;
-    padding: 12px 12px 12px 12px;
+    padding: 14px 12px 14px 12px;
     color: #A2A5AF;
     font-size: 14px;
     letter-spacing: 1px;
     width: 200px;
     border-radius: 3px;
     height: auto;
+    line-height: normal;
 }
 
 #searchform button {
@@ -4164,6 +4166,7 @@ form#MassAssign_SecurityGroups {
     border: none;
     float: left;
     width: 50px;
+    height: auto;
     display: block;
     border-radius: 0px 3px 3px 0px;
     margin-left: -50px;
