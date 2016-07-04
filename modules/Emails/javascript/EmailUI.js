@@ -283,7 +283,7 @@ SE.accounts = {
      * Displays a modal diaglogue to edit outbound account settings
      */
     showEditInboundAccountDialogue : function(clear) {
-
+      var bodyScrollTop = document.body.scrollTop;
         if(!this.inboundAccountEditDialog) {
         	var EAD = this.inboundAccountEditDialog = new YAHOO.widget.Dialog("editAccountDialogue", {
                 modal:true,
@@ -301,6 +301,7 @@ SE.accounts = {
 					body.style.overflow = "hidden";
                     body.style.height = "100%";
                 }
+        document.body.scrollTop = bodyScrollTop;
             }, EAD);
             EAD.setHeader(mod_strings.LBL_EMAIL_ACCOUNTS_INBOUND);
 			Dom.removeClass("editAccountDialogue", "yui-hidden");
