@@ -3605,22 +3605,22 @@ fieldset[disabled] .btn-primary.active {
 
 
 
-.id-ff-remove, .edit [type="radio"]  {
+#EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
     margin-top: 16px;
 }
 
-.edit [type="radio"], .edit [type="checkbox"]  {
+#EditView_tabs .edit [type="radio"], #EditView_tabs .edit [type="checkbox"]  {
     margin-top: 20px;
 }
 
-.id-ff-remove img, .edit [type="button"] img {
+#EditView_tabs .id-ff-remove img, #EditView_tabs .edit [type="button"] img {
     position: relative;
     top: -4px;
     left: 0;
     height: 16px;
     width: 16px;
 }
-.edit input, .edit textarea {
+#EditView_tabs .edit input, #EditView_tabs .edit textarea {
     margin-top: 5px;
     margin-bottom: 5px;
 }
