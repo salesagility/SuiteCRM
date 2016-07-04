@@ -234,6 +234,12 @@ class Employee extends Person {
         $this->full_name = $full_name;
 	}
 	*/
+    
+    function preprocess_fields_on_save()
+    {
+        parent::preprocess_fields_on_save();
+        
+    }
 
 
     /**
