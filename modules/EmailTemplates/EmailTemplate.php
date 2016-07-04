@@ -846,6 +846,14 @@ class EmailTemplate extends SugarBean
         if($this->imageLinkReplaced) {
             $this->save();
         }
+        $this->addDomainToRelativeImagesSrc();
+        return $ret;
+    }
+
+    public function addDomainToRelativeImagesSrc() {
+        global $sugar_config;
+        $domain = $sugar_config['site_url'] . '/';
+        $ret = $this->body_html = preg_replace('/(&lt;img src=&quot;)(public\/[^.]*.(jpg|jpeg|png|gif|bmp))(&quot;)/', "$1" . $domain . "$2$4", $this->body_html);
         return $ret;
     }
 
@@ -867,7 +875,7 @@ class EmailTemplate extends SugarBean
         if(preg_match($regex, $this->body_html, $match)) {
             $splits = explode('.', $match[1]);
             $fileExtension = end($splits);
-            $this->makePublicImage($match[2]);
+            $this->makePublicImage($match[2], $fileExtension);
             $directLink = '&lt;img src=&quot;' . $sugar_config['site_url'] . '/public/' . $match[2] . '.' . $fileExtension . '&quot;';
             $this->body_html = str_replace($match[0], $directLink, $this->body_html);
             $this->imageLinkReplaced = true;
@@ -876,8 +884,8 @@ class EmailTemplate extends SugarBean
 
     }
 
-    private function makePublicImage($id) {
-        $toFile = 'public/' . $id . '.jpg';
+    private function makePublicImage($id, $ext = 'jpg') {
+        $toFile = 'public/' . $id . '.' . $ext;
         if(file_exists($toFile)) {
             return;
         }

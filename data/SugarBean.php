@@ -672,6 +672,24 @@ class SugarBean
                     }
                 }
                 $subquery['select'] = substr($subquery['select'], 0, strlen($subquery['select']) - 1);
+
+                // Find related email address for sub panel ordering
+                if( $order_by && isset($subpanel_def->panel_definition['list_fields'][$order_by]['widget_class']) &&
+                    $subpanel_def->panel_definition['list_fields'][$order_by]['widget_class'] == 'SubPanelEmailLink' &&
+                    !in_array($order_by, array_keys($subquery['query_fields']))) {
+                    $relatedBeanTable = $subpanel_def->table_name;
+                    $relatedBeanModule = $subpanel_def->get_module_name();
+                    $subquery['select'] .= ",
+                    (SELECT email_addresses.email_address
+                     FROM email_addr_bean_rel
+                     JOIN email_addresses ON email_addresses.id = email_addr_bean_rel.email_address_id
+                     WHERE
+                        email_addr_bean_rel.primary_address = 1 AND
+                        email_addr_bean_rel.deleted = 0 AND
+                        email_addr_bean_rel.bean_id = $relatedBeanTable.id AND
+                        email_addr_bean_rel.bean_module = '$relatedBeanModule') as $order_by";
+                }
+
                 //Put the query into the final_query
                 $query = $subquery['select'] . " " . $subquery['from'] . " " . $subquery['where'];
                 if (!$first) {

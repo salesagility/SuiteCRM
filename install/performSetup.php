@@ -128,8 +128,8 @@ $out =<<<EOQ
    <script type="text/javascript" src="install/installCommon.js"></script>
    <script type="text/javascript" src="install/siteConfig.js"></script>
 <link rel='stylesheet' type='text/css' href='include/javascript/yui/build/container/assets/container.css' />
-<link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
+<link rel="stylesheet" href="themes/SuiteP/css/fontello.css">
+    <link rel="stylesheet" href="themes/SuiteP/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
 </head>
 <body onload="javascript:document.getElementById('button_next2').focus();">
 <!--SuiteCRM installer-->
@@ -156,9 +156,9 @@ $server_software = $_SERVER["SERVER_SOFTWARE"];
 if(strpos($server_software,'Microsoft-IIS') !== false)
 {
     installLog("calling handleWebConfig()");
-	handleWebConfig();
+    handleWebConfig();
 } else {
-	installLog("calling handleHtaccess()");
+    installLog("calling handleHtaccess()");
     handleHtaccess();
 }
 
@@ -442,6 +442,7 @@ FP;
     $enabled_tabs[] = 'Calendar';
     $enabled_tabs[] = 'Documents';
     $enabled_tabs[] = 'Emails';
+    $enabled_tabs[] = 'Spots';
     $enabled_tabs[] = 'Campaigns';
     $enabled_tabs[] = 'Calls';
     $enabled_tabs[] = 'Meetings';
@@ -469,12 +470,90 @@ FP;
     $enabled_tabs[] = 'AOK_KnowledgeBase';
     $enabled_tabs[] = 'AOK_Knowledge_Base_Categories';
 
-    installerHook('pre_setSystemTabs');
-    require_once('modules/MySettings/TabController.php');
-    $tabs = new TabController();
-    $tabs->set_system_tabs($enabled_tabs);
-    installerHook('post_setSystemTabs');
-    include_once('install/suite_install/suite_install.php');
+//Beginning of the scenario implementations
+//We need to load the tabs so that we can remove those which are scenario based and un-selected
+//Remove the custom tabConfig as this overwrites the complete list containined in the include/tabConfig.php
+if(file_exists('custom/include/tabConfig.php')){
+    unlink('custom/include/tabConfig.php');
+}
+require_once('include/tabConfig.php');
+
+//Remove the custom dashlet so that we can use the complete list of defaults to filter by category
+if(file_exists('custom/modules/Home/dashlets.php')){
+    unlink('custom/modules/Home/dashlets.php');
+}
+//Check if the folder is in place
+if(!file_exists('custom/modules/Home')){
+    sugar_mkdir('custom/modules/Home', 0775);
+}
+//Check if the folder is in place
+if(!file_exists('custom/include')){
+    sugar_mkdir('custom/include', 0775);
+}
+
+
+require_once('modules/Home/dashlets.php');
+
+foreach($_SESSION['installation_scenarios'] as $scenario)
+{
+    //If the item is not in $_SESSION['scenarios'], then unset them as they are not required
+    if(!in_array($scenario['key'],$_SESSION['scenarios']))
+    {
+        foreach($scenario['modules'] as $module)
+        {
+            if (($removeKey = array_search($module, $enabled_tabs)) !== false) {
+                unset($enabled_tabs[$removeKey]);
+            }
+        }
+
+        //Loop through the dashlets to remove from the default home page based on this scenario
+        foreach($scenario['dashlets'] as $dashlet)
+        {
+            //if (($removeKey = array_search($dashlet, $defaultDashlets)) !== false) {
+            //    unset($defaultDashlets[$removeKey]);
+            // }
+            if(isset($defaultDashlets[$dashlet]))
+                unset($defaultDashlets[$dashlet]);
+        }
+
+        //If the scenario has an associated group tab, remove accordingly (by not adding to the custom tabconfig.php
+        if(isset($scenario['groupedTabs']))
+        {
+            unset($GLOBALS['tabStructure'][$scenario['groupedTabs']]);
+        }
+
+    }
+}
+
+//Have a 'core' options, with accounts / contacts if no other scenario is selected
+if(!is_null($_SESSION['scenarios']))
+{
+    unset($GLOBALS['tabStructure']['LBL_TABGROUP_DEFAULT']);
+}
+
+
+//Write the tabstructure to custom so that the grouping are not shown for the un-selected scenarios
+$fp = sugar_fopen('custom/include/tabConfig.php', 'w');
+$fileContents = "<?php \n" .'$GLOBALS["tabStructure"] ='.var_export($GLOBALS['tabStructure'],true).';';
+fwrite($fp, $fileContents);
+fclose($fp);
+
+//Write the dashlets to custom so that the dashlets are not shown for the un-selected scenarios
+$fp = sugar_fopen('custom/modules/Home/dashlets.php', 'w');
+$fileContents = "<?php \n" .'$defaultDashlets ='.var_export($defaultDashlets,true).';';
+fwrite($fp, $fileContents);
+fclose($fp);
+
+
+// End of the scenario implementations
+
+
+installerHook('pre_setSystemTabs');
+require_once('modules/MySettings/TabController.php');
+$tabs = new TabController();
+$tabs->set_system_tabs($enabled_tabs);
+installerHook('post_setSystemTabs');
+include_once('install/suite_install/suite_install.php');
 
 post_install_modules();
 

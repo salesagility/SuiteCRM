@@ -1097,14 +1097,17 @@ class AOR_Report extends Basic {
                     $select_field= $this->db->quoteIdentifier($table_alias).'.'.$field->field;
                 }
 
-                if($field->group_by == 1){
-                    $query['group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
+                if ($field->group_by == 1) {
+                    if ($field->format) {
+                        $query['group_by'][] = str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format))));
+                        $query['second_group_by'][] = $select_field;
+                    } else {
+                        $query['group_by'][] = $select_field;
+                    }
+                } elseif ($field->field_function != null) {
+                    $select_field = $field->field_function . '(' . $select_field . ')';
                 } else {
-                    $query['second_group_by'][] = $field->format ? str_replace('(%1)', '(' . $select_field . ')', preg_replace(array('/\s+/', '/Y/', '/m/', '/d/'), array(', ', 'YEAR(%1)', 'MONTH(%1)', 'DAY(%1)'), trim(preg_replace('/[^Ymd]/', ' ', $field->format)))) : $select_field;
-                }
-
-                if($field->field_function != null){
-                    $select_field = $field->field_function.'('.$select_field.')';
+                    $query['second_group_by'][] = $select_field;
                 }
 
                 if($field->sort_by != ''){

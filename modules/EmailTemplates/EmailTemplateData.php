@@ -16,7 +16,9 @@ $msgs = array();
 $data = array();
 
 $emailTemplateId = isset($_REQUEST['emailTemplateId']) && $_REQUEST['emailTemplateId'] ? $_REQUEST['emailTemplateId'] : null;
-$_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedTemplateId'] = $emailTemplateId;
+if(isset($_REQUEST['campaignId'])) {
+    $_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedTemplateId'] = $emailTemplateId;
+}
 
 if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/', $emailTemplateId) || !$emailTemplateId) {
 
@@ -49,7 +51,7 @@ if(preg_match('/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/'
             handleAttachmentForRemove();
 
             // update marketing->template_id if we have a selected marketing..
-            if(!empty($_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedMarketingId']) && !empty($_REQUEST['campaignId'])) {
+            if(!empty($_REQUEST['campaignId']) && !empty($_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedMarketingId'])) {
                 $marketingId = $_SESSION['campaignWizard'][$_REQUEST['campaignId']]['defaultSelectedMarketingId'];
 
                 $campaign = BeanFactory::getBean('Campaigns', $_REQUEST['campaignId']);
