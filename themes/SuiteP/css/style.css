@@ -715,7 +715,7 @@ th, td {
     vertical-align: middle;
 }
 
-#Accountsbasic_searchSearchForm tr td input[type=checkbox] {
+#search_form > div  tr td input[type=checkbox] {
     vertical-align: middle;
 }
 
@@ -4510,7 +4510,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 /*.dashletPanel {
     border: 1px solid #eeeeee!important;
-    
+
 }*/
 
 .dashletPanel .h3Row h3 {
@@ -6057,7 +6057,7 @@ div.target-list-table {
         width: 99%;
     }
 
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(4) {
+    #search_form > div  > table > tbody > tr > td:nth-child(4) {
         display: block;
     }
 }
@@ -6398,43 +6398,43 @@ div.target-list-table {
 
 @media (min-width: 830px) and (max-width: 999px) {
     /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(1) {
+    #search_form > div  > table > tbody > tr > td:nth-child(1) {
         clear: both;
         display: table-cell;
     }
 
     /*name*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(2) {
+    #search_form > div  > table > tbody > tr > td:nth-child(2) {
         display: table-cell;
         clear: both;
     }
 
     /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(3) {
+    #search_form > div  > table > tbody > tr > td:nth-child(3) {
         display: table-cell;
         clear: both;
     }
 
     /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(4) {
+    #search_form > div  > table > tbody > tr > td:nth-child(4) {
         display: table-cell;
         clear: both;
     }
 
     /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(5) {
+    #search_form > div  > table > tbody > tr > td:nth-child(5) {
         display: table-cell;
         clear: both;
     }
 
     /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(6) {
+    #search_form > div  > table > tbody > tr > td:nth-child(6) {
         display: table-cell;
         clear: both;
     }
 
     /*buttons*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(7) {
+    #search_form > div  > table > tbody > tr > td:nth-child(7) {
         clear: both;
         position: static;
         display: table;
@@ -6443,7 +6443,7 @@ div.target-list-table {
     }
 
     /*help*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(8) {
+    #search_form > div  > table > tbody > tr > td:nth-child(8) {
         display: none;
         visibility: collapse;
         clear: both;
@@ -6452,50 +6452,50 @@ div.target-list-table {
 
 @media (max-width: 830px) {
     /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(1) {
+    #search_form > div  > table > tbody > tr > td:nth-child(1) {
         display: table-cell;
     }
 
     /*name*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(2) {
+    #search_form > div  > table > tbody > tr > td:nth-child(2) {
         display: table-row;
     }
 
     /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(3) {
+    #search_form > div  > table > tbody > tr > td:nth-child(3) {
         display: inline;
     }
 
     /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(4) {
+    #search_form > div  > table > tbody > tr > td:nth-child(4) {
         display: inline;
     }
 
     /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(5) {
+    #search_form > div  > table > tbody > tr > td:nth-child(5) {
         display: inline;
         clear: both;
     }
 
     /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(6) {
+    #search_form > div  > table > tbody > tr > td:nth-child(6) {
         display: inline;
         clear: both;
     }
 
     /*buttons*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(7) {
+    #search_form > div  > table > tbody > tr > td:nth-child(7) {
         display: table-row;
         clear: both;
     }
 
     /*help*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(8) {
+    #search_form > div  > table > tbody > tr > td:nth-child(8) {
         display: none;
         visibility: collapse;
     }
 
-    #Accountsbasic_searchSearchForm > table {
+    #search_form > div  > table {
         border: none;
     }
 
