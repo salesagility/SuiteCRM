@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class jjwg_AreasTest extends PHPUnit_Framework_TestCase
+class jjwg_AreasTest extends SuiteCRMUnitTest
 {
     public function testjjwg_Areas()
     {

@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class AOR_FieldTest extends PHPUnit_Framework_TestCase
+class AOR_FieldTest extends SuiteCRMUnitTest
 {
     public function testAOR_Field()
     {

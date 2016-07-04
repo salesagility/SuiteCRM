@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AOR_ConditionTest extends PHPUnit_Framework_TestCase
+
+class AOR_ConditionTest extends SuiteCRMUnitTest
 {
     public function testAOR_Condition()
     {

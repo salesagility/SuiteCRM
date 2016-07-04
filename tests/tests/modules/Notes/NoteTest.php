@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class NoteTest extends PHPUnit_Framework_TestCase
+
+class NoteTest extends SuiteCRMUnitTest
 {
     public function testNote()
     {

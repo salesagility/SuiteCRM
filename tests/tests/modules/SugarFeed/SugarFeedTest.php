@@ -1,6 +1,8 @@
 <?PHP
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class SugarFeedTest extends PHPUnit_Framework_TestCase
+
+class SugarFeedTest extends SuiteCRMUnitTest
 {
     public function testSugarFeed()
     {

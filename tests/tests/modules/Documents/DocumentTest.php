@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class DocumentTest extends PHPUnit_Framework_TestCase
+class DocumentTest extends SuiteCRMUnitTest
 {
     public function testDocument()
     {

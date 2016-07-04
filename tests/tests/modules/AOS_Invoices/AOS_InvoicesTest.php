@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class AOS_InvoicesTest extends PHPUnit_Framework_TestCase
+
+class AOS_InvoicesTest extends SuiteCRMUnitTest
 {
     public function testAOS_Invoices()
     {

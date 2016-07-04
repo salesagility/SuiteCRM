@@ -1,7 +1,10 @@
 <?php
 
+use SuiteCRM\Tests\SuiteCRMUnitTest;
+
+
 //require_once 'modules/AOR_Charts/lib/pChart/pChart.php';
-class AOR_ChartTest extends PHPUnit_Framework_TestCase
+class AOR_ChartTest extends SuiteCRMUnitTest
 {
     public function testAOR_Chart()
     {

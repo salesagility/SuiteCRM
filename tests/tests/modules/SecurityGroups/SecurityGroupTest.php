@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class SecurityGroupTest extends PHPUnit_Framework_TestCase
+class SecurityGroupTest extends SuiteCRMUnitTest
 {
     public function testSecurityGroup()
     {

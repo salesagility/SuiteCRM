@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class OAuthTokenTest extends PHPUnit_Framework_TestCase
+
+class OAuthTokenTest extends SuiteCRMUnitTest
 {
     public function test__construct()
     {

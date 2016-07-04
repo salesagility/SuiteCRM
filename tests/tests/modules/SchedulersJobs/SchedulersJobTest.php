@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class SchedulersJobTest extends PHPUnit_Framework_TestCase
+
+class SchedulersJobTest extends SuiteCRMUnitTest
 {
     public function testSchedulersJob()
     {

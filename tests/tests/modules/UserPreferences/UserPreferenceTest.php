@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class UserPreferenceTest extends PHPUnit_Framework_TestCase
+
+class UserPreferenceTest extends SuiteCRMUnitTest
 {
     public function test__construct()
     {

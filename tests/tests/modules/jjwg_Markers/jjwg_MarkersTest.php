@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class jjwg_MarkersTest extends PHPUnit_Framework_TestCase
+class jjwg_MarkersTest extends SuiteCRMUnitTest
 {
     public function testjjwg_Markers()
     {

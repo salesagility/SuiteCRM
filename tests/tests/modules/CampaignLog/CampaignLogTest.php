@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class CampaignLogTest extends PHPUnit_Framework_TestCase
+class CampaignLogTest extends SuiteCRMUnitTest
 {
     public function testCampaignLog()
     {

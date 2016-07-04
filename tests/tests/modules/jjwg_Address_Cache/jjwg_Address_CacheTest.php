@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class jjwg_Address_CacheTest extends PHPUnit_Framework_TestCase
+class jjwg_Address_CacheTest extends SuiteCRMUnitTest
 {
     public function testjjwg_Address_Cache()
     {

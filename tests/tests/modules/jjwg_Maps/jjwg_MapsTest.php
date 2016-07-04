@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class jjwg_MapsTest extends PHPUnit_Framework_TestCase
+
+class jjwg_MapsTest extends SuiteCRMUnitTest
 {
     public function testjjwg_Maps()
     {
@@ -76,8 +78,8 @@ class jjwg_MapsTest extends PHPUnit_Framework_TestCase
     {
         $jjwgMaps = new jjwg_Maps();
         $bean = new Account();
-
-        //test without setting bean attributes 
+    
+        //test without setting bean attributes
         $result = $jjwgMaps->updateRelatedMeetingsGeocodeInfo($bean);
         $this->assertEquals(false, $result);
 
@@ -225,8 +227,8 @@ class jjwg_MapsTest extends PHPUnit_Framework_TestCase
     public function testdefineMapsAddress()
     {
         $jjwgMaps = new jjwg_Maps();
-
-        //test for Account Object type 
+    
+        //test for Account Object type
         $address = array('id' => 1, 'billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
         $result = $jjwgMaps->defineMapsAddress('Account', $address);
         //var_dump($result);
@@ -269,13 +271,13 @@ class jjwg_MapsTest extends PHPUnit_Framework_TestCase
 
         $result = $jjwgMaps->defineMapsFormattedAddress(array());
         $this->assertEquals(false, $result);
-
-        //test for type billing  
+    
+        //test for type billing
         $address = array('billing_address_street' => 'addr 1', 'billing_address_city' => 'addr 2', 'billing_address_state' => 'addr 3', 'billing_address_postalcode' => 'addr 4', 'billing_address_country' => 'addr 5');
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'billing');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4, addr 5', $result);
-
-        //test for type shipping    	
+    
+        //test for type shipping
         $address = array('shipping_address_street' => 'addr 1', 'shipping_address_city' => 'addr 2', 'shipping_address_state' => 'addr 3', 'shipping_address_postalcode' => 'addr 4', 'shipping_address_country' => 'addr 5');
         $result = $jjwgMaps->defineMapsFormattedAddress($address, 'shipping');
         $this->assertEquals('addr 1, addr 2, addr 3, addr 4, addr 5', $result);

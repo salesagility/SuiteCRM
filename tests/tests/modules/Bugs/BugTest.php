@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class BugTest extends PHPUnit_Framework_TestCase
+class BugTest extends SuiteCRMUnitTest
 {
     public function testBug()
     {

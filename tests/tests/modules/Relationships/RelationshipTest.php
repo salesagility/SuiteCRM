@@ -1,6 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
-class RelationshipTest extends PHPUnit_Framework_TestCase
+
+class RelationshipTest extends SuiteCRMUnitTest
 {
     public function testRelationship()
     {

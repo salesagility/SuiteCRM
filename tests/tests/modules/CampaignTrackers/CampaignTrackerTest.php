@@ -1,7 +1,8 @@
 <?php
+use SuiteCRM\Tests\SuiteCRMUnitTest;
 
 
-class CampaignTrackerTest extends PHPUnit_Framework_TestCase
+class CampaignTrackerTest extends SuiteCRMUnitTest
 {
     public function testCampaignTracker()
     {
