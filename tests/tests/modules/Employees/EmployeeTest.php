@@ -142,6 +142,23 @@ class EmployeeTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($expected,$actual);
 
 	}
+    
+    public function testpreprocess_fields_on_save()
+    {
+        
+        $employee = new Employee();
+        
+        //execute the method and test if it works and does not throws an exception.
+        try
+        {
+            $employee->preprocess_fields_on_save();
+            $this->assertTrue(TRUE);
+        } catch(Exception $e)
+        {
+            $this->fail();
+        }
+        
+    }
 
     /**
      * @todo: NEEDS FIXING!
