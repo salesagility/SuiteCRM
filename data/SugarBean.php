@@ -1884,6 +1884,9 @@ class SugarBean
             $this->custom_fields->bean = $this;
             $this->custom_fields->save($isUpdate);
         }
+    
+        // use the db independent query generator
+        $this->preprocess_fields_on_save();
 
         //construct the SQL to create the audit record if auditing is enabled.
         $auditDataChanges = array();
@@ -2574,6 +2577,15 @@ class SugarBean
         } else {
             return false;
         }
+    }
+    
+    /**
+     * This function processes the fields before save.
+     * Internal function, do not override.
+     */
+    public function preprocess_fields_on_save()
+    {
+        $GLOBALS['log']->deprecated('SugarBean.php: preprocess_fields_on_save() is deprecated');
     }
 
     /**
