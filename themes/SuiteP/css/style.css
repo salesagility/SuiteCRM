@@ -753,9 +753,27 @@ th, td {
     margin-left: 1.5em;
 }
 
+#EditView .action_buttons {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
 #EditView > table {
     overflow: auto;
     margin-bottom: 2px;
+}
+
+#EditView_tabs {
+    padding: 8px;
+    background: #fff;
+}
+
+#EditView .edit tr td {
+    font-weight: 700;
+}
+
+#EditView .edit tr td input, #EditView .edit tr td textarea, #EditView .edit tr td select {
+    font-weight: normal;
 }
 
 .edit {
@@ -3575,17 +3593,33 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
-.edit button {
-    min-height: 32px !important;
-    min-width: 32px !important;
+#EditView_tabs .edit .button, #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="button"] {
     margin-right: 4px;
-    vertical-align: middle;
+    padding: 0px;
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
-
+    height: 32px;
+    width: 32px;
 }
 
+
+
+.id-ff-remove, .edit [type="radio"]  {
+    margin-top: 16px;
+}
+
+.edit [type="radio"], .edit [type="checkbox"]  {
+    margin-top: 20px;
+}
+
+.id-ff-remove img, .edit [type="button"] img {
+    position: relative;
+    top: -4px;
+    left: 0;
+    height: 16px;
+    width: 16px;
+}
 .edit input, .edit textarea {
     margin-top: 5px;
     margin-bottom: 5px;
