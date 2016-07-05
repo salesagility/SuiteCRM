@@ -4809,7 +4809,7 @@ h3 span {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    display: block;
+    display: inline-block;
     float: left;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     background-repeat: no-repeat;
@@ -5626,12 +5626,12 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #globalLinks {
         border: none;
-        margin: 10px 000;
+        margin: 10px 0 0 0;
         padding: 0;
     }
 
     .navbar-form .form-control {
-        margin: 8px 000;
+        margin: 8px 0 0 0;
     }
 
     #usermenucollapsed, #searchbutton {
@@ -5643,7 +5643,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .moremenu ul, ul.dropdown-menu {
-        left: -140px;
+
     }
 
     li.topnav ul.dropdown-menu {
