@@ -299,7 +299,7 @@ SE.accounts = {
                 if (this.header && el && viewH - 50 < el.clientHeight) {
                     var body = this.header.nextElementSibling;
 					body.style.overflow = "hidden";
-                    body.style.height = "100%";
+                    //body.style.height = "100%";
                 }
         document.body.scrollTop = bodyScrollTop;
             }, EAD);
