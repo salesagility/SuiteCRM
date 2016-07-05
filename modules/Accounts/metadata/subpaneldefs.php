@@ -125,6 +125,8 @@ $layout_defs['Accounts'] = array(
                     'get_distinct_data' => true,
                 ),
             ),
+            
+            // suspicious thing
             'searchdefs' => array(
                 'collection' =>
                     array(
@@ -156,6 +158,7 @@ $layout_defs['Accounts'] = array(
                         'width' => '10%',
                     ),
             ),
+            // //end of suspicious
         ),
         'documents' => array(
             'order' => 25,

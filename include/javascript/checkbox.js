@@ -206,7 +206,7 @@ function select_targets(){
 
     htmltext = "<table style='width: 100%;text-align:left;'>";
 
-    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><b><a href='#' onclick='handle_targetlists();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGET_LIST')+"</a></b><td></tr>";
+    htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_targetlists();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGET_LIST')+"</a></strong><td></tr>";
     htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_targets();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_TARGETS')+"</a></strong><td></tr>";
     htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_contacts();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_CONTACTS')+"</a></strong><td></tr>";
     htmltext += "<tr><td style='padding: 2px;text-align:right;'><img src='custom/themes/default/images/view-process-own.png'></td><td style='padding: 2px;font-size: 110%;'><strong><a href='#' onclick='handle_leads();return false;'>"+SUGAR.language.get('FP_events', 'LBL_SELECT_DELEGATES_LEADS')+"</a></strong><td></tr>";
