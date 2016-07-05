@@ -5528,7 +5528,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 @media (max-width: 2000px) {
     .sidebar {
-        width: 12%;
+        width: 11%;
     }
 
     #bootstrap-container.col-md-offset-2 {
@@ -5540,7 +5540,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .button-toggle-expanded {
-        left: 12% !important;
+        left: 11% !important;
     }
 
     .button-toggle-collapsed {
