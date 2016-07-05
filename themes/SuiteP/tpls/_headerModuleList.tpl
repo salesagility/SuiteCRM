@@ -357,7 +357,7 @@
         </div>
 
         <!-- Right side of the main navigation -->
-        <div class="hidden-xs" id="bs-example-navbar-collapse-1">
+        <div class="" id="bs-example-navbar-collapse-1">
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
