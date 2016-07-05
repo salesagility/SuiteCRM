@@ -115,4 +115,4 @@ $mod_strings = array(
 	'LBL_HOURS_ABBREV' => 'h',
 	'LBL_MINSS_ABBREV' => 'm',
 );
-//LBL_ERROR_MSG_4 Begins with a number(controller.php line 581) for example 10 emails have failed to send. 
+//LBL_ERROR_MSG_4 Begins with a number (controller.php line 581) for example 10 emails have failed to send. 
