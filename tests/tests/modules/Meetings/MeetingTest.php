@@ -116,12 +116,18 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $meeting = new Meeting();
 
         //test with empty string params
-        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name , meetings_cstm.jjwg_maps_address_c, meetings_cstm.jjwg_maps_geocode_status_c, meetings_cstm.jjwg_maps_lat_c, meetings_cstm.jjwg_maps_lng_c FROM meetings LEFT JOIN users ON meetings.assigned_user_id=users.id LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c where meetings.deleted=0';
+        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name , meetings_cstm.jjwg_maps_address_c, 
+        meetings_cstm.jjwg_maps_geocode_status_c, meetings_cstm.jjwg_maps_lat_c, meetings_cstm.jjwg_maps_lng_c 
+        FROM meetings LEFT JOIN users ON meetings.assigned_user_id=users.id 
+        LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c where meetings.deleted=0';
         $actual = $meeting->create_export_query('', '');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //test with valid string params
-        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name , meetings_cstm.jjwg_maps_address_c, meetings_cstm.jjwg_maps_geocode_status_c, meetings_cstm.jjwg_maps_lat_c, meetings_cstm.jjwg_maps_lng_c FROM meetings LEFT JOIN users ON meetings.assigned_user_id=users.id LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c where users.user_name="" AND meetings.deleted=0';
+        $expected = 'SELECT meetings.*, users.user_name as assigned_user_name , meetings_cstm.jjwg_maps_address_c, 
+        meetings_cstm.jjwg_maps_geocode_status_c, meetings_cstm.jjwg_maps_lat_c, meetings_cstm.jjwg_maps_lng_c 
+        FROM meetings LEFT JOIN users ON meetings.assigned_user_id=users.id 
+        LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c where users.user_name="" AND meetings.deleted=0';
         $actual = $meeting->create_export_query('meetings.id', 'users.user_name=""');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
@@ -168,24 +174,26 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $meeting->parent_name = 'Account';
 
         $expected = array(
-                      'DELETED' => 0,
-                      'PARENT_TYPE' => 'Accounts',
-                      'STATUS' => 'Planned',
-                      'TYPE' => 'Sugar',
-                      'REMINDER_TIME' => '-1',
-                      'EMAIL_REMINDER_TIME' => '-1',
-                      'EMAIL_REMINDER_SENT' => '0',
-                      'SEQUENCE' => '0',
-                      'CONTACT_NAME' => 'test',
-                      'PARENT_NAME' => '',
-                      'CONTACT_ID' => 1,
-                      'REPEAT_INTERVAL' => '1',
-                      'PARENT_MODULE' => 'Accounts',
-                      'SET_COMPLETE' => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/'.$current_theme.'/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
-                      'DATE_START' => '<font class=\'overdueTask\'></font>',
-                      'REMINDER_CHECKED' => false,
-                      'EMAIL_REMINDER_CHECKED' => false,
-                    );
+            'DELETED'                => 0,
+            'PARENT_TYPE'            => 'Accounts',
+            'STATUS'                 => 'Planned',
+            'TYPE'                   => 'Sugar',
+            'REMINDER_TIME'          => '-1',
+            'EMAIL_REMINDER_TIME'    => '-1',
+            'EMAIL_REMINDER_SENT'    => '0',
+            'SEQUENCE'               => '0',
+            'CONTACT_NAME'           => 'test',
+            'PARENT_NAME'            => '',
+            'CONTACT_ID'             => 1,
+            'REPEAT_INTERVAL'        => '1',
+            'PARENT_MODULE'          => 'Accounts',
+            'SET_COMPLETE'           => '<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Meetings","","Held","listview","1");\'><img src="themes/'
+                . $current_theme
+                . '/images/close_inline.png?v=fqXdFZ_r6FC1K7P_Fy3mVw"     border=\'0\' alt="Close" /></a>',
+            'DATE_START'             => '<font class=\'overdueTask\'></font>',
+            'REMINDER_CHECKED'       => false,
+            'EMAIL_REMINDER_CHECKED' => false,
+        );
 
         $actual = $meeting->get_list_view_data();
 
@@ -259,10 +267,13 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $notify_user = new User(1);
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $meeting->send_assignment_notifications($notify_user, $admin);
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -320,10 +331,13 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $meeting = new Meeting();
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $meeting->save_relationship_changes();
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -336,7 +350,8 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         require_once 'data/Link.php';
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $meeting = new Meeting();
             //test without parent_type
             $meeting->afterImportSave();
@@ -350,7 +365,9 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $meeting->afterImportSave();
 
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }

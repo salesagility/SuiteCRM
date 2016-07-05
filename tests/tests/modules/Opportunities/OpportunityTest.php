@@ -43,12 +43,32 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $opportunity = new Opportunity();
 
         //test with empty string params
-        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY opportunities.name";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, 
+        accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , 
+        opportunities_cstm.* ,opportunities.* 
+        FROM opportunities 
+        LEFT JOIN users ON opportunities.assigned_user_id=users.id 
+        LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id 
+        LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id 
+        LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c 
+        where (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) 
+        AND (accounts.deleted is null OR accounts.deleted=0) 
+        AND opportunities.deleted=0 ORDER BY opportunities.name";
         $actual = $opportunity->create_list_query('', '');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY accounts.id";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, 
+        accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name ,
+        opportunities_cstm.* ,opportunities.* FROM opportunities 
+        LEFT JOIN users ON opportunities.assigned_user_id=users.id 
+        LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id 
+        LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id 
+        LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c 
+        where (accounts.name=\"\") AND 
+        (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) 
+        AND (accounts.deleted is null OR accounts.deleted=0) 
+        AND opportunities.deleted=0 ORDER BY accounts.id";
         $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
@@ -58,12 +78,32 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $opportunity = new Opportunity();
 
         //test with empty string params
-        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY opportunities.name";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, 
+        accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name ,
+        opportunities_cstm.* ,opportunities.* 
+        FROM opportunities 
+        LEFT JOIN users ON opportunities.assigned_user_id=users.id 
+        LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id 
+        LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id 
+        LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c 
+        where (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) 
+        AND (accounts.deleted is null OR accounts.deleted=0) 
+        AND opportunities.deleted=0 ORDER BY opportunities.name";
         $actual = $opportunity->create_list_query('', '');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY accounts.id";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, 
+        accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name ,
+        opportunities_cstm.* ,opportunities.* 
+        FROM opportunities 
+        LEFT JOIN users ON opportunities.assigned_user_id=users.id 
+        LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id 
+        LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id 
+        LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c 
+        where (accounts.name=\"\") AND (accounts_opportunities.deleted is null 
+        OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) 
+        AND opportunities.deleted=0 ORDER BY accounts.id";
         $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
@@ -73,7 +113,8 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
 
             //test without force_load_details
             $opportunity->fill_in_additional_list_fields();
@@ -83,7 +124,9 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $opportunity->fill_in_additional_list_fields();
 
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -93,10 +136,13 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $opportunity->fill_in_additional_detail_fields();
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -114,10 +160,13 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $opportunity = new Opportunity();
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $opportunity->update_currency_id(array('GBP', 'EUR'), 'USD');
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -129,11 +178,11 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $opportunity->name = 'test';
 
         $expected = array(
-                'NAME' => 'test',
-                'DELETED' => 0,
-                'SALES_STAGE' => '',
-                'ENCODED_NAME' => 'test',
-                );
+            'NAME'         => 'test',
+            'DELETED'      => 0,
+            'SALES_STAGE'  => '',
+            'ENCODED_NAME' => 'test',
+        );
 
         $actual = $opportunity->get_list_view_data();
         //$this->assertSame($expected, $actual);
@@ -191,11 +240,14 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
     {
         $opportunity = new Opportunity();
         $opportunity->account_id = 1;
-
-        try {
+    
+        try
+        {
             $opportunity->save_relationship_changes(true);
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -203,11 +255,14 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
     public function testset_opportunity_contact_relationship()
     {
         $opportunity = new Opportunity();
-
-        try {
+    
+        try
+        {
             $opportunity->set_opportunity_contact_relationship('1');
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
@@ -263,10 +318,13 @@ class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
     {
 
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             getCurrencyType();
             $this->assertTrue(true);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
 
