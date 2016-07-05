@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="hidden-xs hidden-sm hidden-md" id="bs-example-navbar-collapse-1">
+        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg" id="bs-example-navbar-collapse-1">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
@@ -351,26 +351,21 @@
                                                class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                 </ul>
             </div>
+
+
             
+        </div>
+
+        <!-- Right side of the main navigation -->
+        <div class="hidden-xs" id="bs-example-navbar-collapse-1">
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
-                   <span class="alert_count">0</span>
-                   
+                    <span class="alert_count">0</span>
+
                 </button>
                 <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
             <div id="search" class="dropdown nav navbar-nav navbar-right">
                 <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
                         aria-expanded="true">
@@ -437,10 +432,10 @@
                     </li>
                 </ul>
             </div>
-            
         </div>
-        
-        <div class="collapse navbar-collapse hidden-lg hidden-md" id="mobile_menu">
+
+
+        <div class="collapse navbar-collapse hidden-mdlg" id="mobile_menu">
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {if $smarty.foreach.groupList.last}
                     {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}

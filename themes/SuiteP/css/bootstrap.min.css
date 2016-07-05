@@ -6661,10 +6661,15 @@ td.visible-lg, th.visible-lg {
     }
 }
 
-@media (min-width:1201px) {
-    .hidden-lg {
-        display: none!important;
-    }
+@media (min-width:1201px) and (max-width:1250px) {
+    .hidden-mdlg {
+        display: none !important;
+}
+
+@media (min-width:1200px) {
+.hidden-lg {
+    display: none!important;
+}
 }
 
 .visible-print {
