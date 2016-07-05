@@ -1,16 +1,19 @@
-<?PHP
+<?php
 
-class AOK_KnowledgeBaseTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AOK_KnowledgeBaseTest
+ */
+class AOK_KnowledgeBaseTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAOK_KnowledgeBase()
     {
-
+    
         //execute the contructor and check for the Object type and type attribute
         $aok_KnowledgeBase = new AOK_KnowledgeBase();
         $this->assertInstanceOf('AOK_KnowledgeBase', $aok_KnowledgeBase);
         $this->assertInstanceOf('Basic', $aok_KnowledgeBase);
         $this->assertInstanceOf('SugarBean', $aok_KnowledgeBase);
-
+    
         $this->assertAttributeEquals('AOK_KnowledgeBase', 'module_dir', $aok_KnowledgeBase);
         $this->assertAttributeEquals('AOK_KnowledgeBase', 'object_name', $aok_KnowledgeBase);
         $this->assertAttributeEquals('aok_knowledgebase', 'table_name', $aok_KnowledgeBase);

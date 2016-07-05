@@ -1,6 +1,9 @@
 <?php
 
-class ViewDetailTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ViewDetailTest
+ */
+class ViewDetailTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testViewDetail()
     {
@@ -10,7 +13,7 @@ class ViewDetailTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('detail', 'type', $view);
     }
-
+    
     public function testpreDisplay()
     {
         //execute the method with required attributes preset, it will initialize the dv(detail view) attribute. 
@@ -21,7 +24,7 @@ class ViewDetailTest extends PHPUnit_Framework_TestCase
         $view->preDisplay();
         $this->assertInstanceOf('DetailView2', $view->dv);
         $this->asserttrue(is_array($view->dv->defs));
-
+    
         //execute the method again for a different module with required attributes preset, it will initialize the dv(detail view) attribute.
         $view = new ViewDetail();
         $view->module = 'Meetings';
@@ -31,11 +34,11 @@ class ViewDetailTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('DetailView2', $view->dv);
         $this->asserttrue(is_array($view->dv->defs));
     }
-
+    
     public function testdisplay()
     {
         error_reporting(E_ERROR | E_PARSE);
-
+    
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewDetail();
         $view->module = 'Users';
@@ -43,7 +46,7 @@ class ViewDetailTest extends PHPUnit_Framework_TestCase
         $view->bean->id = 1;
         $view->ss = new Sugar_Smarty();
         $view->preDisplay();
-
+    
         ob_start();
         $view->display();
         $renderedContent = ob_get_contents();

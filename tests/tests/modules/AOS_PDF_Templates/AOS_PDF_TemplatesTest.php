@@ -1,16 +1,19 @@
-<?PHP
+<?php
 
-class AOS_PDF_TemplatesTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AOS_PDF_TemplatesTest
+ */
+class AOS_PDF_TemplatesTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAOS_PDF_Templates()
     {
-
+    
         //execute the contructor and check for the Object type and  attributes
         $aosPdfTemplates = new AOS_PDF_Templates();
         $this->assertInstanceOf('AOS_PDF_Templates', $aosPdfTemplates);
         $this->assertInstanceOf('Basic', $aosPdfTemplates);
         $this->assertInstanceOf('SugarBean', $aosPdfTemplates);
-
+    
         $this->assertAttributeEquals('AOS_PDF_Templates', 'module_dir', $aosPdfTemplates);
         $this->assertAttributeEquals('AOS_PDF_Templates', 'object_name', $aosPdfTemplates);
         $this->assertAttributeEquals('aos_pdf_templates', 'table_name', $aosPdfTemplates);

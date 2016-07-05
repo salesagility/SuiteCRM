@@ -1,16 +1,19 @@
-<?PHP
+<?php
 
-class AM_TaskTemplatesTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AM_TaskTemplatesTest
+ */
+class AM_TaskTemplatesTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAM_TaskTemplates()
     {
-
+    
         //execute the contructor and check for the Object type and type attribute
         $am_taskTemplates = new AM_TaskTemplates();
         $this->assertInstanceOf('AM_TaskTemplates', $am_taskTemplates);
         $this->assertInstanceOf('Basic', $am_taskTemplates);
         $this->assertInstanceOf('SugarBean', $am_taskTemplates);
-
+    
         $this->assertAttributeEquals('AM_TaskTemplates', 'module_dir', $am_taskTemplates);
         $this->assertAttributeEquals('AM_TaskTemplates', 'object_name', $am_taskTemplates);
         $this->assertAttributeEquals('am_tasktemplates', 'table_name', $am_taskTemplates);

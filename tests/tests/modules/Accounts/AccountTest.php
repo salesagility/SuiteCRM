@@ -7,7 +7,7 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAccount()
     {
-
+    
         //execute the contructor and check for the Object type and type attribute
         $Account = new Account();
         $this->assertInstanceOf('Account', $Account);
@@ -16,45 +16,45 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertTrue(is_array($Account->field_name_map));
         $this->assertTrue(is_array($Account->field_defs));
     }
-
+    
     public function testget_summary_text()
     {
         error_reporting(E_ERROR | E_PARSE);
-
+    
         //test without name setting attribute
         $Account = new Account();
         $name = $Account->get_summary_text();
         $this->assertEquals(null, $name);
-
+    
         //test with  name attribute set
         $Account->name = 'test account';
         $name = $Account->get_summary_text();
         $this->assertEquals('test account', $name);
     }
-
+    
     public function testget_contacts()
     {
         $Account = new Account('');
-
+    
         //execute the method and verify that it returns an array
         $contacts = $Account->get_contacts();
         $this->assertTrue(is_array($contacts));
     }
-
+    
     public function testclear_account_case_relationship()
     {
         //This method cannot be tested because Query has a wrong column name which makes the function to die.
-
+    
         /*$Account = new Account();
         $Account->clear_account_case_relationship('','');*/
-
+    
         $this->markTestIncomplete('Can Not be implemented - Query has a wrong column name which makes the function to die');
     }
-
+    
     public function testremove_redundant_http()
     {
         $Account = new Account();
-
+    
         //this method has no implementation. so test for exceptions only.
         try
         {
@@ -66,11 +66,11 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $this->fail();
         }
     }
-
+    
     public function testfill_in_additional_list_fields()
     {
         $Account = new Account('');
-
+    
         //execute the method and test if it works and does not throws an exception.
         try
         {
@@ -82,11 +82,11 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $this->fail();
         }
     }
-
+    
     public function testfill_in_additional_detail_fields()
     {
         $Account = new Account('');
-
+    
         //execute the method and test if it works and does not throws an exception.
         try
         {
@@ -98,7 +98,7 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $this->fail();
         }
     }
-
+    
     public function testget_list_view_data()
     {
         $expected = array(
@@ -112,25 +112,25 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             'BILLING_ADDRESS_STREET'  => null,
             'SHIPPING_ADDRESS_STREET' => null,
         );
-
+    
         $account = new Account();
         $actual = $account->get_list_view_data();
-
+    
         ksort($expected);
         ksort($actual);
-
+    
         $this->assertSame($expected, $actual);
     }
-
+    
     public function testbuild_generic_where_clause()
     {
         $Account = new Account();
-
+    
         //execute the method with a string as parameter and verify that it retunrs expected results
         $expected = "accounts.name like 'value%'";
         $actual = $Account->build_generic_where_clause('value');
         $this->assertSame($expected, $actual);
-
+    
         //execute the method with number as parameter and verify that it retunrs expected results
         $expected =
             "accounts.name like '1234%' 
@@ -140,11 +140,11 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $actual = $Account->build_generic_where_clause('1234');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
-
+    
     public function testcreate_export_query()
     {
         $Account = new Account();
-
+    
         //execute the method with empty strings and verify that it retunrs expected results
         $expected = "SELECT
                                 accounts.*,
@@ -166,7 +166,7 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
                                 where ( accounts.deleted IS NULL OR accounts.deleted=0 )";
         $actual = $Account->create_export_query('', '');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
-
+    
         //execute the method with valid parameter values and verify that it retunrs expected results
         $expected = "SELECT
                                 accounts.*,
@@ -177,30 +177,30 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $actual = $Account->create_export_query('name', 'name not null');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
-
+    
     public function testset_notification_body()
     {
         $Account = new Account();
-
+    
         //execute the method and test if populates provided sugar_smarty
         $result = $Account->set_notification_body(new Sugar_Smarty(), new Account());
         $this->assertInstanceOf('Sugar_Smarty', $result);
         $this->assertNotEquals(new Sugar_Smarty(), $result);
     }
-
+    
     public function testbean_implements()
     {
         $Account = new Account();
-
+    
         $this->assertTrue($Account->bean_implements('ACL')); //test with valid value
         $this->assertFalse($Account->bean_implements('')); //test with empty value
         $this->assertFalse($Account->bean_implements('Basic'));//test with invalid value
     }
-
+    
     public function testget_unlinked_email_query()
     {
         $Account = new Account();
-
+    
         //without setting type parameter
         $expected =
             "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear
@@ -211,7 +211,7 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             ) derivedemails on derivedemails.email_id = emails.id";
         $actual = $Account->get_unlinked_email_query();
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
-
+    
         //with type parameter set
         $expected = array('select'      => 'SELECT emails.id ',
                           'from'        => 'FROM emails ',
@@ -224,15 +224,15 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
                                                 ) derivedemails on derivedemails.email_id = emails.id",
                           'join_tables' => array(''),
         );
-
+    
         $actual = $Account->get_unlinked_email_query(array('return_as_array' => 'true'));
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
-
+    
     public function testgetProductsServicesPurchasedQuery()
     {
         $Account = new Account();
-
+    
         //without account id
         $expected = "SELECT	aos_products_quotes.* FROM	aos_products_quotes 
         JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id
@@ -241,7 +241,7 @@ class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = ''";
         $actual = $Account->getProductsServicesPurchasedQuery();
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
-
+    
         //with account id
         $expected = "SELECT	aos_products_quotes.* FROM aos_products_quotes 
         JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id 

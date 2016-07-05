@@ -1,16 +1,19 @@
 <?php
 
-class AOS_ProductsTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AOS_ProductsTest
+ */
+class AOS_ProductsTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAOS_Products()
     {
-
+    
         //execute the contructor and check for the Object type and  attributes
         $aosProducts = new AOS_Products();
         $this->assertInstanceOf('AOS_Products', $aosProducts);
         $this->assertInstanceOf('Basic', $aosProducts);
         $this->assertInstanceOf('SugarBean', $aosProducts);
-
+    
         $this->assertAttributeEquals('AOS_Products', 'module_dir', $aosProducts);
         $this->assertAttributeEquals('AOS_Products', 'object_name', $aosProducts);
         $this->assertAttributeEquals('aos_products', 'table_name', $aosProducts);
@@ -18,36 +21,36 @@ class AOS_ProductsTest extends PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(true, 'disable_row_level_security', $aosProducts);
         $this->assertAttributeEquals(true, 'importable', $aosProducts);
     }
-
+    
     public function testsave()
     {
         error_reporting(E_ERROR | E_PARSE);
-
+    
         $aosProducts = new AOS_Products();
-
+    
         $aosProducts->name = 'test';
         $aosProducts->category = 1;
         $aosProducts->product_image = 'test img';
         $_POST['deleteAttachment'] = '1';
-
+    
         $aosProducts->save();
-
+    
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($aosProducts->id));
         $this->assertEquals(36, strlen($aosProducts->id));
         $this->assertEquals('', $aosProducts->product_image);
-
+    
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $aosProducts->mark_deleted($aosProducts->id);
         $result = $aosProducts->retrieve($aosProducts->id);
         $this->assertEquals(null, $result);
     }
-
+    
     public function testgetCustomersPurchasedProductsQuery()
     {
         $aosProducts = new AOS_Products();
         $aosProducts->id = 1;
-
+    
         //execute the method and verify that it returns expected results
         $expected = "SELECT * FROM (
  				SELECT

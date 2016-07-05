@@ -1,16 +1,19 @@
-<?PHP
+<?php
 
-class AOP_Case_EventsTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AOP_Case_EventsTest
+ */
+class AOP_Case_EventsTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAOP_Case_Events()
     {
-
+    
         //execute the contructor and check for the Object type and type attribute
         $aopCaseEvents = new AOP_Case_Events();
         $this->assertInstanceOf('AOP_Case_Events', $aopCaseEvents);
         $this->assertInstanceOf('Basic', $aopCaseEvents);
         $this->assertInstanceOf('SugarBean', $aopCaseEvents);
-
+    
         $this->assertAttributeEquals('AOP_Case_Events', 'module_dir', $aopCaseEvents);
         $this->assertAttributeEquals('AOP_Case_Events', 'object_name', $aopCaseEvents);
         $this->assertAttributeEquals('aop_case_events', 'table_name', $aopCaseEvents);

@@ -1,6 +1,9 @@
 <?php
 
-class ViewAjaxTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ViewAjaxTest
+ */
+class ViewAjaxTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testViewAjax()
     {

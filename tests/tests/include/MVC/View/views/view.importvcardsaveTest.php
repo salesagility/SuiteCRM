@@ -1,6 +1,9 @@
 <?php
 
-class ViewImportvcardsaveTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ViewImportvcardsaveTest
+ */
+class ViewImportvcardsaveTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function test__construct()
     {
@@ -10,14 +13,14 @@ class ViewImportvcardsaveTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('save', 'type', $view);
     }
-
+    
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
         error_reporting(E_ERROR | E_PARSE);
-
+    
         $view = new ViewImportvcardsave();
-
+    
         //execute without any parameters set. it should return some html/JS
         //this method uses exit() which causes PHP unit to quit a well. so this method cannot be tested.
         /*
@@ -27,7 +30,7 @@ class ViewImportvcardsaveTest extends PHPUnit_Framework_TestCase
         ob_end_clean();
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
-
+    
         $this->markTestIncomplete('Can Not be implemented');
     }
 }

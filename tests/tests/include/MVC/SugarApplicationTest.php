@@ -1,23 +1,28 @@
 <?php
 
-
-class SugarApplicationTest extends PHPUnit_Framework_TestCase
+/**
+ * Class SugarApplicationTest
+ */
+class SugarApplicationTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testexecute()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception other than headers output exception.
-        try {
+        try
+        {
             $SugarApplication->execute();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->assertStringStartsWith('Cannot modify header information', $e->getMessage());
         }
     }
-
+    
     public function testloadUser()
     {
-
+    
         //cannot test this method as it uses die which stops execution of php unit as well
         /*  
         error_reporting(E_ERROR | E_PARSE);
@@ -36,223 +41,262 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
         */
         $this->markTestIncomplete('Can Not be implemented');
     }
-
+    
     public function testACLFilter()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->ACLFilter();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testsetupResourceManagement()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method with invalid input and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->setupResourceManagement('');
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         //execute the method with valid input and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->setupResourceManagement('Users');
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testsetupPrint()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->setupPrint();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testpreProcess()
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->preProcess();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testhandleOfflineClient()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->handleOfflineClient();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testhandleAccessControl()
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
+    
         $result = $SugarApplication->handleAccessControl();
-
+    
         //check that it returns Null
         $this->assertEquals(null, $result);
-
+    
         //check that controller->hasAccess is true i-e default setting.
         $this->assertEquals(true, $SugarApplication->controller->hasAccess);
     }
-
+    
     public function testpreLoadLanguages()
     {
-        try {
+        try
+        {
             SugarApplication::preLoadLanguages();
-
+        
             //check that method call got the current_language global variable set.
             $this->assertTrue(isset($GLOBALS['current_language']));
-
+        
             //check that method call got the app_strings global variable set.
             $this->assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
-
+    
     public function testloadLanguages()
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
-        try {
+    
+        try
+        {
             $SugarApplication->loadLanguages();
-
+        
             //check that method call got the current_language global variable set.
             $this->assertTrue(isset($GLOBALS['current_language']));
-
+        
             //check that method call got the app_strings global variable set.
             $this->assertTrue(is_array($GLOBALS['app_strings']) && count($GLOBALS['app_strings']) > 0);
-
+        
             //check that method call got the app_list_strings global variable set.
             $this->assertTrue(is_array($GLOBALS['app_list_strings']) && count($GLOBALS['app_list_strings']) > 0);
-
+        
             //check that method call got the mod_strings global variable set.
             $this->assertTrue(is_array($GLOBALS['mod_strings']) && count($GLOBALS['mod_strings']) > 0);
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
     }
-
+    
     public function testcheckDatabaseVersion()
     {
         error_reporting(E_ERROR | E_PARSE);
-
+    
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method with false parameter and check for false returned as it cannot connect to DB.
         //testing with true will allow it to use die() which stops phpunit execution as well.
         $result = $SugarApplication->checkDatabaseVersion(false);
         $this->assertFalse($result);
     }
-
+    
     public function testloadDisplaySettings()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->loadDisplaySettings();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testloadLicense()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->loadLicense();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testloadGlobals()
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->loadGlobals();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function teststartSession()
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->startSession();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testendSession()
     {
         $SugarApplication = new SugarApplication();
         $SugarApplication->controller = new SugarController();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $SugarApplication->endSession();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testredirect()
     {
         //this method uses exit() which stops execution of phpunit as well so it cannot be tested without additional --process-isolation commandline parameter.
@@ -275,7 +319,7 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
         */
         $this->markTestIncomplete('Can Not be implemented');
     }
-
+    
     public function testappendErrorMessage()
     {
         //execute the method and check that the method adds the message to user_error_message array.
@@ -284,48 +328,51 @@ class SugarApplicationTest extends PHPUnit_Framework_TestCase
         SugarApplication::appendErrorMessage('some error');
         $this->assertGreaterThan($user_error_message_count, count($_SESSION['user_error_message']));
     }
-
+    
     public function testgetErrorMessages()
     {
         //execute the method and check if it returns a array. 
         $errorMessages = SugarApplication::getErrorMessages();
         $this->assertTrue(is_array($errorMessages));
     }
-
+    
     public function testsetCookie()
     {
         //execute the method and check that the method adds the key value pair to cookies array.
         SugarApplication::setCookie('key', 'value');
         $this->assertEquals('value', $_COOKIE['key']);
     }
-
+    
     public function testcreateLoginVars()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test if it works and does not throws an exception.
-        try {
+        try
+        {
             $vars = $SugarApplication->createLoginVars();
-        } catch (Exception $e) {
+        }
+        catch(Exception $e)
+        {
             $this->fail();
         }
-
+    
         $this->assertTrue(true);
     }
-
+    
     public function testgetLoginVars()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test that it returns a array.
         $vars = $SugarApplication->getLoginVars();
         $this->assertTrue(is_array($vars));
     }
-
+    
     public function testgetLoginRedirect()
     {
         $SugarApplication = new SugarApplication();
-
+    
         //execute the method and test that it returns a plus length string
         $redirect = $SugarApplication->getLoginRedirect();
         $this->assertGreaterThan(0, strlen($redirect));

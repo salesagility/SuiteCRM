@@ -1,20 +1,23 @@
 <?php
 
-class ViewSerializedTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ViewSerializedTest
+ */
+class ViewSerializedTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testViewSerialized()
     {
-
+    
         //execute the contructor and check for the Object type
         $view = new ViewSerialized();
         $this->assertInstanceOf('ViewSerialized', $view);
         $this->assertInstanceOf('SugarView', $view);
     }
-
+    
     //Incomplete Test. method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-
+    
         /* //this method call uses exit() so it cannot be tested as it forces the PHP unit to quite as well
         $view = new ViewSerialized();
         $view->bean = new User();
@@ -28,7 +31,7 @@ class ViewSerializedTest extends PHPUnit_Framework_TestCase
         
         $this->assertGreaterThan(0,strlen($renderedContent));
         */
-
+    
         $this->markTestIncomplete('Can Not be implemented');
     }
 }

@@ -1,16 +1,19 @@
-<?PHP
+<?php
 
-class FP_Event_LocationsTest extends PHPUnit_Framework_TestCase
+/**
+ * Class FP_Event_LocationsTest
+ */
+class FP_Event_LocationsTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testFP_Event_Locations()
     {
-
+    
         //execute the contructor and check for the Object type and  attributes
         $fpEventLoc = new FP_Event_Locations();
         $this->assertInstanceOf('FP_Event_Locations', $fpEventLoc);
         $this->assertInstanceOf('Basic', $fpEventLoc);
         $this->assertInstanceOf('SugarBean', $fpEventLoc);
-
+    
         $this->assertAttributeEquals('FP_Event_Locations', 'module_dir', $fpEventLoc);
         $this->assertAttributeEquals('FP_Event_Locations', 'object_name', $fpEventLoc);
         $this->assertAttributeEquals('fp_event_locations', 'table_name', $fpEventLoc);

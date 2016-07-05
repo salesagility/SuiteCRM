@@ -8,40 +8,40 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
     public function testMeeting()
     {
         error_reporting(E_ERROR | E_PARSE);
-
+    
         //execute the contructor and check for the Object type and  attributes
         $meeting = new Meeting();
-
+    
         $this->assertInstanceOf('Meeting', $meeting);
         $this->assertInstanceOf('SugarBean', $meeting);
-
+    
         $this->assertAttributeEquals('Meetings', 'module_dir', $meeting);
         $this->assertAttributeEquals('Meeting', 'object_name', $meeting);
         $this->assertAttributeEquals('meetings', 'table_name', $meeting);
-
+    
         $this->assertAttributeEquals(true, 'new_schema', $meeting);
         $this->assertAttributeEquals(true, 'importable', $meeting);
         $this->assertAttributeEquals(false, 'syncing', $meeting);
         $this->assertAttributeEquals(true, 'update_vcal', $meeting);
-
+    
         $this->assertAttributeEquals('meetings_users', 'rel_users_table', $meeting);
         $this->assertAttributeEquals('meetings_contacts', 'rel_contacts_table', $meeting);
         $this->assertAttributeEquals('meetings_leads', 'rel_leads_table', $meeting);
-
+    
         $this->assertAttributeEquals(null, 'cached_get_users', $meeting);
         $this->assertAttributeEquals(false, 'date_changed', $meeting);
     }
-
+    
     public function testACLAccess()
     {
         $meeting = new Meeting();
-
+    
         //test without recurring_source
         $this->assertEquals(true, $meeting->ACLAccess('edit'));
         $this->assertEquals(true, $meeting->ACLAccess('save'));
         $this->assertEquals(true, $meeting->ACLAccess('editview'));
         $this->assertEquals(true, $meeting->ACLAccess('delete'));
-
+    
         //test with recurring_source
         $meeting->recurring_source = 'test';
         $this->assertEquals(false, $meeting->ACLAccess('edit'));
@@ -49,18 +49,18 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertEquals(false, $meeting->ACLAccess('editview'));
         $this->assertEquals(false, $meeting->ACLAccess('delete'));
     }
-
+    
     public function testhasIntegratedMeeting()
     {
         $meeting = new Meeting();
         $result = $meeting->hasIntegratedMeeting();
         $this->assertEquals(false, $result);
     }
-
+    
     public function testSaveAndMarkdeletedAndSetAcceptStatus()
     {
         $meeting = new Meeting();
-
+    
         $meeting->name = 'test';
         $meeting->status = 'Not Held';
         $meeting->type = 'Sugar';
@@ -69,52 +69,52 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $meeting->duration_minutes = 1;
         $meeting->date_start = '2016-02-11 17:30:00';
         $meeting->date_end = '2016-02-11 17:30:00';
-
+    
         $meeting->save();
-
+    
         //test for record ID to verify that record is saved
         $this->assertTrue(isset($meeting->id));
         $this->assertEquals(36, strlen($meeting->id));
-
+    
         /* Test set_accept_status method */
-
+    
         //test set_accept_status with User object
         $user = new User();
         $meeting->set_accept_status($user, 'accept');
-
+    
         //test set_accept_status with contact object
         $contact = new Contact();
         $meeting->set_accept_status($contact, 'accept');
-
+    
         //test set_accept_status with Lead object
         $lead = new Lead();
         $meeting->set_accept_status($lead, 'accept');
-
+    
         //mark all created relationships as deleted
         $meeting->mark_relationships_deleted($meeting->id);
-
+    
         //mark the record as deleted and verify that this record cannot be retrieved anymore.
         $meeting->mark_deleted($meeting->id);
         $result = $meeting->retrieve($meeting->id);
         $this->assertEquals(null, $result);
     }
-
+    
     public function testget_summary_text()
     {
         $meeting = new Meeting();
-
+    
         //test without setting name
         $this->assertEquals(null, $meeting->get_summary_text());
-
+    
         //test with name set
         $meeting->name = 'test';
         $this->assertEquals('test', $meeting->get_summary_text());
     }
-
+    
     public function testcreate_export_query()
     {
         $meeting = new Meeting();
-
+    
         //test with empty string params
         $expected = 'SELECT meetings.*, users.user_name as assigned_user_name , meetings_cstm.jjwg_maps_address_c, 
         meetings_cstm.jjwg_maps_geocode_status_c, meetings_cstm.jjwg_maps_lat_c, meetings_cstm.jjwg_maps_lng_c 
@@ -122,7 +122,7 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         LEFT JOIN meetings_cstm ON meetings.id = meetings_cstm.id_c where meetings.deleted=0';
         $actual = $meeting->create_export_query('', '');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
-
+    
         //test with valid string params
         $expected = 'SELECT meetings.*, users.user_name as assigned_user_name , meetings_cstm.jjwg_maps_address_c, 
         meetings_cstm.jjwg_maps_geocode_status_c, meetings_cstm.jjwg_maps_lat_c, meetings_cstm.jjwg_maps_lng_c 
@@ -131,19 +131,19 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $actual = $meeting->create_export_query('meetings.id', 'users.user_name=""');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
-
+    
     public function testfill_in_additional_detail_fields()
     {
         $meeting = new Meeting();
-
+    
         //preset required attributes
         $meeting->assigned_user_id = 1;
         $meeting->modified_user_id = 1;
         $meeting->created_by = 1;
         $meeting->contact_id = 1;
-
+    
         $meeting->fill_in_additional_detail_fields();
-
+    
         //verify effected atributes
         $this->assertEquals('Administrator', $meeting->assigned_user_name);
         $this->assertEquals('Administrator', $meeting->created_by_name);
@@ -160,19 +160,19 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertEquals(false, $meeting->email_reminder_checked);
         $this->assertEquals('Accounts', $meeting->parent_type);
     }
-
+    
     public function testget_list_view_data()
     {
         $meeting = new Meeting();
         $current_theme = SugarThemeRegistry::current();
-
+    
         //preset required attribute values
         $meeting->status == 'Planned';
         $meeting->parent_type = 'Accounts';
         $meeting->contact_id = 1;
         $meeting->contact_name = 'test';
         $meeting->parent_name = 'Account';
-
+    
         $expected = array(
             'DELETED'                => 0,
             'PARENT_TYPE'            => 'Accounts',
@@ -194,9 +194,9 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             'REMINDER_CHECKED'       => false,
             'EMAIL_REMINDER_CHECKED' => false,
         );
-
+    
         $actual = $meeting->get_list_view_data();
-
+    
         //$this->assertSame($expected, $actual);
         $this->assertEquals($expected['PARENT_TYPE'], $actual['PARENT_TYPE']);
         $this->assertEquals($expected['STATUS'], $actual['STATUS']);
@@ -209,14 +209,14 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertEquals($expected['REPEAT_INTERVAL'], $actual['REPEAT_INTERVAL']);
         $this->assertEquals($expected['PARENT_MODULE'], $actual['PARENT_MODULE']);
     }
-
+    
     public function testset_notification_body()
     {
         global $current_user;
         $current_user = new User(1);
-
+    
         $meeting = new Meeting();
-
+    
         //test with attributes preset and verify template variables are set accordingly
         $meeting->name = 'test';
         $meeting->status = 'Not Held';
@@ -226,9 +226,9 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $meeting->duration_minutes = 1;
         $meeting->date_start = '2016-02-11 17:30:00';
         $meeting->date_end = '2016-02-11 17:30:00';
-
+    
         $result = $meeting->set_notification_body(new Sugar_Smarty(), $meeting);
-
+    
         $this->assertEquals($meeting->name, $result->_tpl_vars['MEETING_SUBJECT']);
         $this->assertEquals($meeting->status, $result->_tpl_vars['MEETING_STATUS']);
         $this->assertEquals('SuiteCRM', $result->_tpl_vars['MEETING_TYPE']);
@@ -236,36 +236,36 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertEquals($meeting->duration_minutes, $result->_tpl_vars['MEETING_MINUTES']);
         $this->assertEquals($meeting->description, $result->_tpl_vars['MEETING_DESCRIPTION']);
     }
-
+    
     public function testcreate_notification_email()
     {
         $meeting = new Meeting();
-
+    
         $meeting->date_start = '2016-02-11 17:30:00';
         $meeting->date_end = '2016-02-11 17:30:00';
-
+    
         //test without setting user
         $result = $meeting->create_notification_email(new User());
         $this->assertInstanceOf('SugarPHPMailer', $result);
-
+    
         //test with valid user
         $result = $meeting->create_notification_email(new User(1));
         $this->assertInstanceOf('SugarPHPMailer', $result);
     }
-
+    
     public function testsend_assignment_notifications()
     {
         $meeting = new Meeting();
-
+    
         $meeting->date_start = '2016-02-11 17:30:00';
         $meeting->date_end = '2016-02-11 17:30:00';
-
+    
         $admin = new Administration();
         $admin->retrieveSettings();
         $sendNotifications = false;
-
+    
         $notify_user = new User(1);
-
+    
         //execute the method and test if it works and does not throws an exception.
         try
         {
@@ -277,59 +277,59 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $this->fail();
         }
     }
-
+    
     public function testget_meeting_users()
     {
         $meeting = new Meeting();
-
+    
         $result = $meeting->get_meeting_users();
         $this->assertTrue(is_array($result));
     }
-
+    
     public function testget_invite_meetings()
     {
         $meeting = new Meeting();
-
+    
         $result = $meeting->get_invite_meetings(new User());
         $this->assertTrue(is_array($result));
     }
-
+    
     public function testget_notification_recipients()
     {
         $meeting = new Meeting();
-
+    
         //test without special_notification
         $result = $meeting->get_notification_recipients();
         $this->assertTrue(is_array($result));
-
+    
         //test with special_notification
         $meeting->special_notification = 1;
         $result = $meeting->get_notification_recipients();
         $this->assertTrue(is_array($result));
     }
-
+    
     public function testbean_implements()
     {
         $meeting = new Meeting();
-
+    
         $this->assertEquals(false, $meeting->bean_implements('')); //test with blank value
         $this->assertEquals(false, $meeting->bean_implements('test')); //test with invalid value
         $this->assertEquals(true, $meeting->bean_implements('ACL')); //test with valid value
     }
-
+    
     public function testlistviewACLHelper()
     {
         $meeting = new Meeting();
-
+    
         $expected = array('MAIN' => 'a', 'PARENT' => 'a', 'CONTACT' => 'a');
         $actual = $meeting->listviewACLHelper();
         $this->assertSame($expected, $actual);
     }
-
+    
     public function testsave_relationship_changes()
     {
         $meeting = new Meeting();
-
+    
         //execute the method and test if it works and does not throws an exception.
         try
         {
@@ -341,29 +341,29 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $this->fail();
         }
     }
-
+    
     /**
      * This will throw FATAL error on php7
      */
     public function testafterImportSave()
     {
         require_once 'data/Link.php';
-
+    
         //execute the method and test if it works and does not throws an exception.
         try
         {
             $meeting = new Meeting();
             //test without parent_type
             $meeting->afterImportSave();
-
+    
             //test with parent_type Contacts
             $meeting->parent_type = 'Contacts';
             $meeting->afterImportSave();
-
+    
             //test with parent_type Leads
             $meeting->parent_type = 'Leads';
             $meeting->afterImportSave();
-
+    
             $this->assertTrue(true);
         }
         catch(Exception $e)
@@ -371,25 +371,25 @@ class MeetingTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
             $this->fail();
         }
     }
-
+    
     public function testgetDefaultStatus()
     {
         $meeting = new Meeting();
         $result = $meeting->getDefaultStatus();
         $this->assertEquals('Planned', $result);
     }
-
+    
     public function testgetMeetingsExternalApiDropDown()
     {
         $actual = getMeetingsExternalApiDropDown();
         $expected = array('Sugar' => 'SuiteCRM');
         $this->assertSame($expected, $actual);
     }
-
+    
     public function testgetMeetingTypeOptions()
     {
         global $dictionary, $app_list_strings;
-
+    
         $result = getMeetingTypeOptions($dictionary, $app_list_strings);
         $this->assertTrue(is_array($result));
     }

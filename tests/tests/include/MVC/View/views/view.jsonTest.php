@@ -1,26 +1,29 @@
 <?php
 
-class ViewJsonTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ViewJsonTest
+ */
+class ViewJsonTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testViewJson()
     {
-
+    
         //execute the contructor and check for the Object type and type attribute
         $view = new ViewJson();
         $this->assertInstanceOf('ViewJson', $view);
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('detail', 'type', $view);
     }
-
+    
     //incomplete test. this method uses exit() so it cannot be tested.
     public function testdisplay()
     {
-
+    
         /*
         setup required paramerers and execute the method. 
         it uses die/exit which stops the execution of PHP unit as well so this method cannot be tested.
         */
-
+    
         /*
         $view = new ViewJson();
         $GLOBALS['module'] = "Users" ;

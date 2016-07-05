@@ -1,6 +1,9 @@
 <?php
 
-class ViewImportvcardTest extends PHPUnit_Framework_TestCase
+/**
+ * Class ViewImportvcardTest
+ */
+class ViewImportvcardTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function test__construct()
     {
@@ -10,15 +13,15 @@ class ViewImportvcardTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SugarView', $view);
         $this->assertAttributeEquals('edit', 'type', $view);
     }
-
+    
     public function testdisplay()
     {
-
+    
         //execute the method with essential parameters set. it should return some html.
         $view = new ViewImportvcard();
         $_REQUEST['module'] = 'Users';
         $view->ss = new Sugar_Smarty();
-
+    
         ob_start();
         $view->display();
         $renderedContent = ob_get_contents();

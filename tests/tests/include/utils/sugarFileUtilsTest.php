@@ -1,15 +1,20 @@
 <?php
 
 require_once 'include/utils/sugar_file_utils.php';
-class sugar_file_utilsTest extends PHPUnit_Framework_TestCase
+
+/**
+ * Class sugar_file_utilsTest
+ */
+class sugar_file_utilsTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
-
+    
     //@todo: check this - vfs does not seem to be working...
-
-    public function testsugar_dosomething() {
+    
+    public function testsugar_dosomething()
+    {
         $this->assertTrue(true, "Needs checking!");
     }
-
+    
     /*
     public function setUp() {
         $rootFs = org\bovigo\vfs\vfsStream::setup('root');
@@ -171,5 +176,5 @@ class sugar_file_utilsTest extends PHPUnit_Framework_TestCase
 
 	}
     */
-
+    
 }

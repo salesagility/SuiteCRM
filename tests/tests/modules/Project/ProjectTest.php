@@ -53,7 +53,7 @@ class ProjectTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertEquals("Administrator", $project->assigned_user_name);
         
     }
-
+    
     public function testsave_relationship_changes()
     {
     
@@ -73,7 +73,7 @@ class ProjectTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         {
             $this->fail();
         }
-
+    
     }
     
     public function test_get_total_estimated_effort()
@@ -124,7 +124,7 @@ class ProjectTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertSame($expected, $actual);
         
     }
-
+    
     /**
      * @todo: NEEDS FIXING!
      */
@@ -159,7 +159,7 @@ class ProjectTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertEquals(true, $project->bean_implements('ACL')); //test with valid value
         
     }
-
+    
     public function testcreate_export_query()
     {
         $project = new Project();
@@ -180,7 +180,7 @@ class ProjectTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         AND project.deleted=0 ORDER BY project.id";
         $actual = $project->create_export_query('project.id', 'users.user_name');
         $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
-
+    
     }
     
     public function testgetAllProjectTasks()
@@ -193,5 +193,5 @@ class ProjectTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
         $this->assertTrue(is_array($result));
         
     }
-
+    
 }
