@@ -742,30 +742,31 @@ class SugarView
     {
         global $sugar_config, $timedate;
 
+        $template = new Sugar_Smarty();
+
         if(isset($this->bean->module_dir)){
-            echo "<script>var module_sugar_grp1 = '{$this->bean->module_dir}';</script>";
+            $template->assign('MODULE_SUGAR_GRP1', $this->bean->module_dir);
         }
         if(isset($_REQUEST['action'])){
-            echo "<script>var action_sugar_grp1 = '{$_REQUEST['action']}';</script>";
+            $template->assign('ACTION_SUGAR_GRP1', $_REQUEST['action']);
         }
+
+
         echo '<script>jscal_today = 1000*' . $timedate->asUserTs($timedate->getNow()) . '; if(typeof app_strings == "undefined") app_strings = new Array();</script>';
         if (!is_file(sugar_cached("include/javascript/sugar_grp1.js"))) {
             $_REQUEST['root_directory'] = ".";
             require_once("jssource/minify_utils.php");
             ConcatenateFiles(".");
         }
-        echo getVersionedScript('cache/include/javascript/sugar_grp1_jquery.js');
-        echo getVersionedScript('cache/include/javascript/sugar_grp1_yui.js');
-        echo getVersionedScript('cache/include/javascript/sugar_grp1.js');
-        echo getVersionedScript('include/javascript/calendar.js');
-        echo <<<EOQ
-        <script>
-            if ( typeof(SUGAR) == 'undefined' ) {SUGAR = {}};
-            if ( typeof(SUGAR.themes) == 'undefined' ) SUGAR.themes = {};
-        </script>
-EOQ;
-        if(isset( $sugar_config['disc_client']) && $sugar_config['disc_client'])
-            echo getVersionedScript('modules/Sync/headersync.js');
+        $template->assign('SUGAR_GRP1_JQUERY', getVersionedPath('cache/include/javascript/sugar_grp1_jquery.js'));
+        $template->assign('SUGAR_GRP1_YUI', getVersionedPath('cache/include/javascript/sugar_grp1_yui.js'));
+        $template->assign('SUGAR_GRP1', getVersionedPath('cache/include/javascript/sugar_grp1.js'));
+        $template->assign('CALENDAR', getVersionedPath('include/javascript/calendar.js'));
+
+        if(isset( $sugar_config['disc_client']) && $sugar_config['disc_client']) {
+            $template->assign('HEADERSYNC', getVersionedPath('modules/Sync/headersync.js'));
+        }
+        echo $template->fetch('include/MVC/View/tpls/displayLoginJS.tpl');
     }
 
     /**
