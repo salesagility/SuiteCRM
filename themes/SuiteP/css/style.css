@@ -4138,7 +4138,7 @@ table legend {
     border: 1px solid #dddddd;
 }
 
-#usermenucollapsed {
+#usermenucollapsed, #usermenucollapsed-mobile {
     margin: 0 0 0 5px;
     display: none;
 }
@@ -4939,6 +4939,12 @@ h3 span {
     text-align: center;
 }
 
+.mobile-bar ul.dropdown-menu.user-dropdown{
+    left: -140px !important;
+    height: 180px !important;
+    overflow-y: scroll !important;
+}
+
 .navbar-collapse.collapse {
     overflow: scroll !important;
 }
@@ -5636,7 +5642,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         margin: 8px 0 0 0;
     }
 
-    #usermenucollapsed, #searchbutton {
+    #usermenucollapsed, #usermenucollapsed-mobile, #searchbutton {
         display: inline;
     }
 
@@ -5695,7 +5701,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         height: auto;
     }
 
-    #usermenucollapsed {
+    #usermenucollapsed, #usermenucollapsed-mobile {
         background-color: transparent;
         height: 42px;
         width: 42px;
@@ -5707,7 +5713,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         margin-left: 0px;
     }
 
-    #usermenucollapsed:hover {
+    #usermenucollapsed, #usermenucollapsed-mobile:hover {
         background-position: 0 -99px;
     }
 }
@@ -5938,7 +5944,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0px;
     }
 
-    #usermenucollapsed {
+    #usermenucollapsed, #usermenucollapsed-mobile {
         height: 28px;
         margin-top: 0px;
         width: 28px;
@@ -5947,7 +5953,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 0 0;
     }
 
-    #usermenucollapsed:hover {
+    #usermenucollapsed, #usermenucollapsed-mobile:hover {
         background-position: 0 -70px;
     }
 
@@ -6007,7 +6013,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         left: 0px;
     }
 
-    #usermenucollapsed {
+    #usermenucollapsed, #usermenucollapsed-mobile {
         background-color: transparent;
         height: 42px;
         width: 42px;
@@ -6019,7 +6025,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         margin-left: 0px;
     }
 
-    #usermenucollapsed:hover {
+    #usermenucollapsed, #usermenucollapsed-mobile:hover {
         background-position: 0 -100px;
     }
 
@@ -6792,7 +6798,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         margin: 8px 0 0 0;
     }
 
-    #usermenucollapsed, #searchbutton {
+    #usermenucollapsed, #usermenucollapsed-mobile, #searchbutton {
         display: inline;
     }
 

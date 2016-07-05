@@ -330,17 +330,18 @@
             {/if}
             <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
                 <li id="usermenu" class="dropdown-toggle" aria-expanded="true">
-                    <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'><span
-                                class="user_icon"> </span> {$CURRENT_USER}
+                    <a>
+                        <span class="user_icon"> </span> {$CURRENT_USER}
                         <span class="caret"></span>
                     </a>
                 </li>
-                <button id="usermenucollapsed" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
-                        aria-expanded="true">
-                    <!--<span class="glyphicon glyphicon-user"> </span>
-                    <span class="caret"></span>-->
-                </button>
+
                 <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation">
+                        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                            {$APP.LBL_PROFILE}
+                        </a>
+                    </li>
                     {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                         <li role="presentation">
                             <a id="{$gcl_key}_link"
@@ -357,7 +358,28 @@
         </div>
 
         <!-- Right side of the main navigation -->
-        <div class="" id="bs-example-navbar-collapse-1">
+        <div class="mobile-bar" id="bs-example-navbar-collapse-1">
+            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
+
+                <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
+                        aria-expanded="true">
+                </button>
+                <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <li role="presentation">
+                        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                            {$APP.LBL_PROFILE}
+                        </a>
+                    </li>
+                    {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                        <li role="presentation">
+                            <a id="{$gcl_key}_link"
+                               href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                        </li>
+                    {/foreach}
+                    <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
+                                               class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+                </ul>
+            </div>
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
@@ -432,6 +454,7 @@
                     </li>
                 </ul>
             </div>
+
         </div>
 
 
