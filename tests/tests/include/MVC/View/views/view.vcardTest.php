@@ -40,7 +40,7 @@
 /**
  * Class ViewVcardTest
  */
-class ViewVcardTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
+class ViewVcardTest extends \SuiteCRM\Tests\SuiteCRMFunctionalTest
 {
     public function testdisplay()
     {
