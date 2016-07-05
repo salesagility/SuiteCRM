@@ -1399,9 +1399,7 @@ class AOR_Report extends Basic {
                             break;
                     }
 
-                    // Dealing with language translations
-
-                    //handle like conditions
+                    //handle like conditions and dealing with language translations
                     Switch($condition->operator) {
                         case 'Contains':
                             $value = "CONCAT('%', ".$value." ,'%')";
