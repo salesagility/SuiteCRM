@@ -8,7 +8,7 @@
         function update_selectedRecordsTopValue() {
             $('#selectedRecordsTopValue').html(sugarListView.get_num_selected())
         }
-        setInterval(update_selectedRecordsTopValue, 600);
+        setInterval(update_selectedRecordsTopValue, 100);
     });
 {/literal}
 </script>
