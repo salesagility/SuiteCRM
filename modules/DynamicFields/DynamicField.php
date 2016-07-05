@@ -262,9 +262,6 @@ class DynamicField
             if (!empty($GLOBALS ['dictionary'] [$object])) {
                 if (!empty($result)) {
                     // First loop to add
-    
-                    echo "<pre>saveToVardef($module): " . json_encode($result, JSON_PRETTY_PRINT) . "</pre>";
-
                     foreach ($result as $field) {
                         foreach ($field as $k => $v) {
                             //allows values for custom fields to be defined outside of the scope of studio
@@ -323,7 +320,7 @@ class DynamicField
             'select' => array(),
             'join'   => array(),
         );
-    
+
         if ($this->bean->hasCustomFields())
         {
             if (empty($expandedList))
@@ -377,6 +374,7 @@ class DynamicField
             }
         }
     
+        sort($answer['select']);
         $answer['select'] = "" . (count($answer['select']) ? ", " : "") . implode(", ", $answer['select']);
         $answer['join'] = "" . implode(" ", $answer['join']);
     
