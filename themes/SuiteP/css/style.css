@@ -5482,7 +5482,7 @@ div.target-list-table {
 
 @media (max-width: 2000px) {
     .sidebar {
-        width: 10%;
+        width: 12%;
     }
 
     #bootstrap-container.col-md-offset-2 {
@@ -5494,7 +5494,7 @@ div.target-list-table {
     }
 
     .button-toggle-expanded {
-        left: 10% !important;
+        left: 12% !important;
     }
 
     .button-toggle-collapsed {
