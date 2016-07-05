@@ -991,6 +991,10 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
     width: 5em;
 }
 
+#selectedRecordsTopLabel, #selectedRecordsTopValue {
+    color: white;
+}
+
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
     font-weight: 800;
     text-align: left;
