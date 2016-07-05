@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
+        <div class="hidden-xs hidden-sm hidden-md" id="bs-example-navbar-collapse-1">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
