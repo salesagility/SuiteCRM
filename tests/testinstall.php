@@ -20,10 +20,10 @@ try {
     if(is_file("config.php")) {
         unlink("config.php");
     }
-
-    ob_start();
+    
+    //ob_start();
     require_once 'install.php';
-    ob_end_clean();
+    //ob_end_clean();
 } catch(\Exception $e) {
     echo "\nINSTALLATION FAILED! file: " . $e->getFile() . " - line: " . $e->getLine()
          . "\n" . $e->getMessage()

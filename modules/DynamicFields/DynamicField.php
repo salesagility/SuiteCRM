@@ -262,6 +262,8 @@ class DynamicField
             if (!empty($GLOBALS ['dictionary'] [$object])) {
                 if (!empty($result)) {
                     // First loop to add
+    
+                    echo "<pre>saveToVardef($module): " . json_encode($result, JSON_PRETTY_PRINT) . "</pre>";
 
                     foreach ($result as $field) {
                         foreach ($field as $k => $v) {
@@ -349,7 +351,7 @@ class DynamicField
             }
             $answer["join"][] = ' LEFT JOIN ' . $this->bean->table_name . '_cstm ON ' . $this->bean->table_name
                                 . '.id = ' . $this->bean->table_name . '_cstm.id_c ';
-        
+    
             if ($includeRelates)
             {
                 $jtAlias = 'relJoin';
@@ -361,7 +363,7 @@ class DynamicField
                         $relateJoinInfo = $this->getRelateJoin($field, $jtAlias . $jtCount);
                         $answer["select"][] = $relateJoinInfo['select'];
                         $answer["join"][] = $relateJoinInfo['from'];
-                    
+    
                         //bug 27654 martin
                         if ($where)
                         {
