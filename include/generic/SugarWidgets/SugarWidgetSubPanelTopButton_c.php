@@ -255,7 +255,6 @@ class SugarWidgetSubPanelTopButton_c extends SugarWidget
                     $button .= "<input type='hidden' name='" . $key . "' value='" . $value . "' />\n";
                 }
             }
-            
             // fill in additional form fields for all but action
             foreach($additionalFormFields as $key => $value) {
                 if($key != 'action') {
