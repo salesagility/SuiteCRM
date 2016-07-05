@@ -169,7 +169,7 @@ class DynamicField
         }
 
         $GLOBALS['log']->debug('rebuilding cache for ' . $module);
-        $query = "SELECT * FROM fields_meta_data WHERE $where deleted = 0";
+        $query = "SELECT * FROM fields_meta_data WHERE $where deleted = 0 ORDER BY id ASC";
 
         $result = $this->db->query($query);
         require_once 'modules/DynamicFields/FieldCases.php';
@@ -302,62 +302,83 @@ class DynamicField
     }
 
     /**
-     * returns either false or an array containing the select and join parameter for a query using custom fields.
+     * Returns either false or an array containing the select and join parameter for a query using custom fields.
      *
-     * @param $expandedList boolean    If true, return a list of all fields with source=custom_fields in the select instead of the standard _cstm.*
-     *     This is required for any downstream construction of a SQL statement where we need to manipulate the select list,
-     *     for example, listViews with custom relate fields where the value comes from join rather than from the custom table
+     * @param bool $expandedList
+     *      If true, return a list of all fields with source=custom_fields in the
+     *      select instead of the standard _cstm.*
+     *      This is required for any downstream construction of a SQL statement where we need to manipulate the select list,
+     *      for example, listViews with custom relate fields where the value comes from join rather than from the custom table
      * @param bool $includeRelates
      * @param bool $where
      *
-     * @return array select=>select columns, join=>prebuilt join statement
+     * @return array
+     *      [select=>select columns, join=>prebuilt join statement]
      */
     public function getJOIN($expandedList = false, $includeRelates = false, $where = false)
     {
-        if (!$this->bean->hasCustomFields()) {
-            return array(
-                'select' => '',
-                'join' => '',
-            );
-        }
-
-        if (empty($expandedList)) {
-            $select = ",{$this->bean->table_name}_cstm.*";
-        } else {
-            $select = '';
-            $isList = is_array($expandedList);
-            foreach ($this->bean->field_defs as $name => $field) {
-                if (!empty($field['source']) && $field['source'] == 'custom_fields' && (!$isList || !empty($expandedList[$name]))) {
-                    // assumption: that the column name in _cstm is the same as the field name. Currently true.
-                    // however, two types of dynamic fields do not have columns in the custom table - html fields (they're readonly) and flex relates (parent_name doesn't exist)
-                    if ($field['type'] != 'html' && $name != 'parent_name') {
-                        $select .= ",{$this->bean->table_name}_cstm.{$name}";
+        $answer = array(
+            'select' => array(),
+            'join'   => array(),
+        );
+    
+        if ($this->bean->hasCustomFields())
+        {
+            if (empty($expandedList))
+            {
+                $answer["select"][] = "{$this->bean->table_name}_cstm.*";
+            }
+            else
+            {
+                $isList = is_array($expandedList);
+                foreach ($this->bean->field_defs as $name => $field)
+                {
+                    if (!empty($field['source']) && $field['source'] == 'custom_fields'
+                        && (!$isList
+                            || !empty($expandedList[$name]))
+                    )
+                    {
+                        // assumption: that the column name in _cstm is the same as the field name. Currently true.
+                        // however, two types of dynamic fields do not have columns in the custom table - html fields (they're readonly) and flex relates (parent_name doesn't exist)
+                        if ($field['type'] != 'html' && $name != 'parent_name')
+                        {
+                            $answer["select"][] = "{$this->bean->table_name}_cstm.{$name}";
+                        }
+                    }
+                }
+            }
+            $answer["join"][] = ' LEFT JOIN ' . $this->bean->table_name . '_cstm ON ' . $this->bean->table_name
+                                . '.id = ' . $this->bean->table_name . '_cstm.id_c ';
+        
+            if ($includeRelates)
+            {
+                $jtAlias = 'relJoin';
+                $jtCount = 1;
+                foreach ($this->bean->field_defs as $name => $field)
+                {
+                    if ($field['type'] == 'relate' && isset($field['custom_module']))
+                    {
+                        $relateJoinInfo = $this->getRelateJoin($field, $jtAlias . $jtCount);
+                        $answer["select"][] = $relateJoinInfo['select'];
+                        $answer["join"][] = $relateJoinInfo['from'];
+                    
+                        //bug 27654 martin
+                        if ($where)
+                        {
+                            $pattern = '/' . $field['name'] . '\slike/i';
+                            $replacement = $relateJoinInfo['name_field'] . ' like';
+                            $where = preg_replace($pattern, $replacement, $where);
+                        }
+                        ++$jtCount;
                     }
                 }
             }
         }
-        $join = ' LEFT JOIN ' . $this->bean->table_name . '_cstm ON ' . $this->bean->table_name . '.id = ' . $this->bean->table_name . '_cstm.id_c ';
-
-        if ($includeRelates) {
-            $jtAlias = 'relJoin';
-            $jtCount = 1;
-            foreach ($this->bean->field_defs as $name => $field) {
-                if ($field['type'] == 'relate' && isset($field['custom_module'])) {
-                    $relateJoinInfo = $this->getRelateJoin($field, $jtAlias . $jtCount);
-                    $select .= $relateJoinInfo['select'];
-                    $join .= $relateJoinInfo['from'];
-                    //bug 27654 martin
-                    if ($where) {
-                        $pattern = '/' . $field['name'] . '\slike/i';
-                        $replacement = $relateJoinInfo['name_field'] . ' like';
-                        $where = preg_replace($pattern, $replacement, $where);
-                    }
-                    ++$jtCount;
-                }
-            }
-        }
-
-        return array('select' => $select, 'join' => $join);
+    
+        $answer['select'] = "" . (count($answer['select']) ? ", " : "") . implode(", ", $answer['select']);
+        $answer['join'] = "" . implode(" ", $answer['join']);
+    
+        return $answer;
     }
 
     /**
