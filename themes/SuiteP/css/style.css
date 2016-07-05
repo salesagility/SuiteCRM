@@ -422,6 +422,8 @@ footer {
     background-color: #E6E6E6;
     float: left;
     width: 100%;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 .footer_left {
