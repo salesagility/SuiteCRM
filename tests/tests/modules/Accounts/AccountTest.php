@@ -1,7 +1,9 @@
 <?php
 
-
-class AccountTest extends PHPUnit_Framework_TestCase
+/**
+ * Class AccountTest
+ */
+class AccountTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testAccount()
     {
@@ -101,10 +103,10 @@ class AccountTest extends PHPUnit_Framework_TestCase
             'BILLING_ADDRESS_STREET' => null,
             'SHIPPING_ADDRESS_STREET' => null,
         );
-    
+
         $account = new Account();
         $actual = $account->get_list_view_data();
-    
+
         ksort($expected);
         ksort($actual);
 
@@ -138,7 +140,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
                                 users.user_name as assigned_user_name , accounts_cstm.jjwg_maps_address_c, accounts_cstm.jjwg_maps_geocode_status_c, accounts_cstm.jjwg_maps_lat_c, accounts_cstm.jjwg_maps_lng_c FROM accounts LEFT JOIN users
 	                                ON accounts.assigned_user_id=users.id  LEFT JOIN  email_addr_bean_rel on accounts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module='Accounts' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1  LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id  LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c where ( accounts.deleted IS NULL OR accounts.deleted=0 )";
         $actual = $Account->create_export_query('', '');
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //execute the method with valid parameter values and verify that it retunrs expected results
         $expected = "SELECT
@@ -148,7 +150,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
                                 users.user_name as assigned_user_name , accounts_cstm.jjwg_maps_address_c, accounts_cstm.jjwg_maps_geocode_status_c, accounts_cstm.jjwg_maps_lat_c, accounts_cstm.jjwg_maps_lng_c FROM accounts LEFT JOIN users
 	                                ON accounts.assigned_user_id=users.id  LEFT JOIN  email_addr_bean_rel on accounts.id = email_addr_bean_rel.bean_id and email_addr_bean_rel.bean_module='Accounts' and email_addr_bean_rel.deleted=0 and email_addr_bean_rel.primary_address=1  LEFT JOIN email_addresses on email_addresses.id = email_addr_bean_rel.email_address_id  LEFT JOIN accounts_cstm ON accounts.id = accounts_cstm.id_c where (name not null) AND ( accounts.deleted IS NULL OR accounts.deleted=0 ) ORDER BY accounts.name";
         $actual = $Account->create_export_query('name', 'name not null');
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
 
     public function testset_notification_body()
@@ -177,7 +179,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
         //without setting type parameter
         $expected = "SELECT emails.id FROM emails  JOIN (select DISTINCT email_id from emails_email_addr_rel eear\n\n	join email_addr_bean_rel eabr on eabr.bean_id ='' and eabr.bean_module = 'Accounts' and\n	eabr.email_address_id = eear.email_address_id and eabr.deleted=0\n	where eear.deleted=0 and eear.email_id not in\n	(select eb.email_id from emails_beans eb where eb.bean_module ='Accounts' and eb.bean_id = '')\n	) derivedemails on derivedemails.email_id = emails.id";
         $actual = $Account->get_unlinked_email_query();
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //with type parameter set
         $expected = array('select' => 'SELECT emails.id ',
@@ -188,7 +190,7 @@ class AccountTest extends PHPUnit_Framework_TestCase
                     );
 
         $actual = $Account->get_unlinked_email_query(array('return_as_array' => 'true'));
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
 
     public function testgetProductsServicesPurchasedQuery()
@@ -198,12 +200,12 @@ class AccountTest extends PHPUnit_Framework_TestCase
         //without account id
         $expected = "\n			SELECT\n				aos_products_quotes.*\n			FROM\n				aos_products_quotes\n			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0\n			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = ''\n\n			";
         $actual = $Account->getProductsServicesPurchasedQuery();
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //with account id
         $expected = "\n			SELECT\n				aos_products_quotes.*\n			FROM\n				aos_products_quotes\n			JOIN aos_quotes ON aos_quotes.id = aos_products_quotes.parent_id AND aos_quotes.stage LIKE 'Closed Accepted' AND aos_quotes.deleted = 0 AND aos_products_quotes.deleted = 0\n			JOIN accounts ON accounts.id = aos_quotes.billing_account_id AND accounts.id = '1234'\n\n			";
         $Account->id = '1234';
         $actual = $Account->getProductsServicesPurchasedQuery();
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
 }

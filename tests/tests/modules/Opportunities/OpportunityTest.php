@@ -1,6 +1,9 @@
 <?php
 
-class OpportunityTest extends PHPUnit_Framework_TestCase
+/**
+ * Class OpportunityTest
+ */
+class OpportunityTest extends \SuiteCRM\Tests\SuiteCRMUnitTest
 {
     public function testOpportunity()
     {
@@ -40,14 +43,14 @@ class OpportunityTest extends PHPUnit_Framework_TestCase
         $opportunity = new Opportunity();
 
         //test with empty string params
-        $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY opportunities.name";
         $actual = $opportunity->create_list_query('', '');
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY accounts.id";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY accounts.id";
         $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
 
     public function testcreate_export_query()
@@ -55,14 +58,14 @@ class OpportunityTest extends PHPUnit_Framework_TestCase
         $opportunity = new Opportunity();
 
         //test with empty string params
-        $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY opportunities.name";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY opportunities.name";
         $actual = $opportunity->create_list_query('', '');
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
 
         //test with valid string params
-        $expected = "SELECT \n                            accounts.id as account_id,\n                            accounts.name as account_name,\n                            accounts.assigned_user_id account_id_owner,\n                            users.user_name as assigned_user_name ,opportunities_cstm.* ,opportunities.*\n                            FROM opportunities LEFT JOIN users\n                            ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities\n                            ON opportunities.id=accounts_opportunities.opportunity_id\n                            LEFT JOIN accounts\n                            ON accounts_opportunities.account_id=accounts.id  LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND \n			(accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0)\n			AND (accounts.deleted is null OR accounts.deleted=0)\n			AND opportunities.deleted=0 ORDER BY accounts.id";
+        $expected = "SELECT accounts.id as account_id, accounts.name as account_name, accounts.assigned_user_id account_id_owner, users.user_name as assigned_user_name , opportunities_cstm.* ,opportunities.* FROM opportunities LEFT JOIN users ON opportunities.assigned_user_id=users.id LEFT JOIN accounts_opportunities ON opportunities.id=accounts_opportunities.opportunity_id LEFT JOIN accounts ON accounts_opportunities.account_id=accounts.id LEFT JOIN opportunities_cstm ON opportunities.id = opportunities_cstm.id_c where (accounts.name=\"\") AND (accounts_opportunities.deleted is null OR accounts_opportunities.deleted=0) AND (accounts.deleted is null OR accounts.deleted=0) AND opportunities.deleted=0 ORDER BY accounts.id";
         $actual = $opportunity->create_list_query('accounts.id', 'accounts.name=""');
-        $this->assertSame($expected, $actual);
+        $this->assertSameStringWhiteSpaceIgnore($expected, $actual);
     }
 
     public function testfill_in_additional_list_fields()
