@@ -4830,6 +4830,8 @@ h3 span {
     border-radius: 3px;
     border-top-right-radius: 0px;
     padding: 4px 10px 4px 10px;
+    height: 180px;
+    max-height: 180px !important;
 }
 
 #quickcreatetop ul li {
