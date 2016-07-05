@@ -64,7 +64,7 @@ ie_id=(typeof document.getElementById(formName).ie_id!='undefined')?document.get
 +'&personal='+isPersonal;var SI=SUGAR.inboundEmail;if(!SI.testDlg){SI.testDlg=new YAHOO.widget.SimpleDialog("testSettingsDiv",{width:width+"px",draggable:true,dragOnly:true,close:true,constraintoviewport:true,modal:true,loadingText:SUGAR.language.get("app_strings","LBL_EMAIL_LOADING")});SI.testDlg._updateContent=function(o){var w=this.cfg.config.width.value+"px";this.setBody(o.responseText);if(this.evalJS)
 SUGAR.util.evalScript(o.responseText);if(!SUGAR.isIE)
 this.body.style.width=w}}
-var title=SUGAR.language.get('Emails','LBL_TEST_SETTINGS');if(typeof(title)=="undefined"||title=="undefined")
+var title=SUGAR.language.get('app_strings','LBL_TEST_SETTINGS');if(typeof(title)=="undefined"||title=="undefined")
 title=SUGAR.language.get('InboundEmail','LBL_TEST_SETTINGS');SI.testDlg.setHeader(title);SI.testDlg.setBody(SUGAR.language.get("app_strings","LBL_EMAIL_LOADING"));SI.testDlg.render(document.body);var Connect=YAHOO.util.Connect;if(Connect.url)URL=Connect.url+"&"+url;Connect.asyncRequest("POST",URL,{success:SI.testDlg._updateContent,failure:SI.testDlg.hide,scope:SI.testDlg});SI.testDlg.show();moveCenter("#testSettingsDiv_c");}
 function isDataValid(formName,validateMonitoredFolder){var formObject=document.getElementById(formName);var errors=new Array();var out=new String();if(trim(formObject.server_url.value)==""){errors.push(SUGAR.language.get('app_strings','LBL_EMAIL_ERROR_SERVER'));}
 if(trim(formObject.email_user.value)==""){errors.push(SUGAR.language.get('app_strings','LBL_EMAIL_ERROR_USER'));}

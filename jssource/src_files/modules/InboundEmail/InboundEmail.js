@@ -170,7 +170,7 @@ function ie_test_open_popup_with_submit(module_name, action, pageTarget, width, 
 	            this.body.style.width = w
 	    }
 	}
-	var title = SUGAR.language.get('Emails', 'LBL_TEST_SETTINGS');
+	var title = SUGAR.language.get('app_strings', 'LBL_TEST_SETTINGS');
 	if (typeof(title) == "undefined" || title == "undefined")
 	   title = SUGAR.language.get('InboundEmail', 'LBL_TEST_SETTINGS');
 	SI.testDlg.setHeader(title);

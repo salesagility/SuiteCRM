@@ -1054,6 +1054,7 @@ $app_list_strings = array(
 );
 
 $app_strings = array(
+    'LBL_TEST_SETTINGS'     => 'Test Settings',
     'LBL_TOUR_NEXT' => 'Next',
     'LBL_TOUR_SKIP' => 'Skip',
     'LBL_TOUR_BACK' => 'Back',
