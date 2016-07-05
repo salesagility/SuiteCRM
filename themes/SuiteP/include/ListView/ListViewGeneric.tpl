@@ -172,7 +172,7 @@
 			{* add extra column for icons*}
 			<th>{$pageData.additionalDetails.$id}</th>
 		</tr>
-		{include file='include/ListView/ListViewPagination.tpl'}
+		{include file='themes/SuiteP/include/ListView/ListViewPaginationTop.tpl'}
 	</thead>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
@@ -253,7 +253,7 @@
     {assign var="selectLink" value=$selectLinkBottom}
     {assign var="actionsLink" value=$actionsLinkBottom}
     {assign var="action_menu_location" value="bottom"}
-    {include file='include/ListView/ListViewPagination.tpl'}
+    {include file='themes/SuiteP/include/ListView/ListViewPaginationBottom.tpl'}
 	</table></div>
 {/if}
 {if $contextMenus}
