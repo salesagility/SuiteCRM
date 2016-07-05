@@ -328,8 +328,8 @@
                     {/if}
                 </ul>
             {/if}
-            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
-                <li id="usermenu" class="dropdown-toggle" aria-expanded="true">
+            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right globalLinks-desktop">
+                <li id="usermenu" class="user-dropdown" aria-expanded="false">
                     <a>
                         <span class="user_icon"> </span> {$CURRENT_USER}
                         <span class="caret"></span>

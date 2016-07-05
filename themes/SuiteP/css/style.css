@@ -220,7 +220,7 @@ li#usermenu a span.user_icon {
 }
 
 li#usermenu a:hover span.user_icon {
-    background-position: 0 -100px;
+    background-position: 0 -99px;
 }
 
 div#pageContainer {
@@ -3165,6 +3165,13 @@ iframe.teamNoticeBox {
     text-decoration: none;
 }
 
+.globalLinks-desktop ul{
+    top: 90px !important;
+}
+
+.globalLinks-desktop #usermenu {
+    height: 90px;
+}
 .iconed {
     padding: 5px 5px 2px 0;
     margin-left: 5px;
@@ -4791,7 +4798,7 @@ h3 span {
 }
 
 #mobileheader #modulelinks ul li a {
-    font-size: 1.3em;
+    font-size: 14px;
 }
 
 #quickcreatetop {
@@ -4941,8 +4948,43 @@ h3 span {
 
 .mobile-bar ul.dropdown-menu.user-dropdown{
     left: -140px !important;
-    height: 180px !important;
-    overflow-y: scroll !important;
+}
+
+@media (max-height: 380px) {
+
+    .mobile-bar ul.dropdown-menu.user-dropdown{
+        top: 78px !important;
+        left: -140px !important;
+        height: 200px !important;
+        overflow-y: scroll !important;
+    }
+    #modulelinks > ul,
+    .mobileheader ul,
+    #mobile_menu {
+        overflow-y: scroll !important;
+        height: 180px;
+        max-height: 200px;
+    }
+}
+
+@media (min-width: 768px) and (min-height: 381px) {
+    .mobile-bar #globalLinks {
+        height: 90px;
+    }
+    .mobile-bar ul.dropdown-menu.user-dropdown{
+        top: 78px !important;
+        left: -140px !important;
+    }
+}
+
+@media (min-width: 768px) and (min-height: 381px) {
+    .mobile-bar #globalLinks {
+        height: 90px;
+    }
+    .mobile-bar ul.dropdown-menu.user-dropdown{
+        top: 78px !important;
+        left: -140px !important;
+    }
 }
 
 .navbar-collapse.collapse {
