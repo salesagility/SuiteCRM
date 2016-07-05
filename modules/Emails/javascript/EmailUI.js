@@ -321,6 +321,7 @@ SE.accounts = {
 
         this.inboundAccountEditDialog.render();
         this.inboundAccountEditDialog.show();
+      moveCenter('#editAccountDialogue_c');
         SUGAR.util.setEmailPasswordDisplay('email_password', clear == false);
     },
 
