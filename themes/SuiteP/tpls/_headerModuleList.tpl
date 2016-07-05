@@ -435,7 +435,7 @@
         </div>
 
 
-        <div class="collapse navbar-collapse hidden-mdlg" id="mobile_menu">
+        <div class="collapse navbar-collapse" id="mobile_menu">
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {if $smarty.foreach.groupList.last}
                     {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
@@ -462,32 +462,6 @@
                     {/foreach}
                 {/if}
             {/foreach}            
-        </div>
-        <div class="collapse navbar-collapse hidden-md hidden-mdlg hidden-lg" id="mobile_menu">
-            {foreach from=$groupTabs item=modules key=group name=groupList}
-                {if $smarty.foreach.groupList.last}
-                    {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
-                    {foreach from=$modules.modules item=module key=modulekey}
-                        {if $modulekey !='Home' && $modulekey !='Calendar'}
-                            <li style="float:right;">
-                                <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
-                            </li>
-                        {/if}
-                        <li>
-                            {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                            {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
-                        </li>
-                    {/foreach}
-                    {foreach from=$modules.extra item=submodulename key=submodule}
-                        <li style="float:right;">
-                            <a href="{sugar_link module=$modulekey action='EditView' link_only=1}"><span class="glyphicon glyphicon-plus"></span></a>
-                        </li>
-                        <li>
-                            <a href="{sugar_link module=$submodule link_only=1 extraparams=$extraparams}">{$submodulename}</a>
-                        </li>
-                    {/foreach}
-                {/if}
-            {/foreach}
         </div>
 </nav>
 <!--End Responsive Top Navigation Menu -->
