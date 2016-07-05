@@ -533,6 +533,7 @@ class SugarView
                 require_once('include/GroupedTabs/GroupedTabStructure.php');
                 $groupedTabsClass = new GroupedTabStructure();
                 $modules = query_module_access_list($current_user);
+
                 //handle with submoremodules
                 $max_tabs = $current_user->getPreference('max_tabs');
                 // If the max_tabs isn't set incorrectly, set it within the range, to the default max sub tabs size
@@ -572,7 +573,6 @@ class SugarView
                 $ss->assign('currentGroupTab',$app_strings['LBL_TABGROUP_ALL']);
 
                 $usingGroupTabs = false;
-
                 $groupTabs[$app_strings['LBL_TABGROUP_ALL']]['modules'] = $fullModuleList;
 
             }

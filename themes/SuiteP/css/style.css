@@ -6068,6 +6068,27 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
+@media (min-width: 1251px) {
+    #mobile_menu {
+        position: absolute;
+        /*top: 90px;*/
+        /*left: 10px;*/
+        overflow-y: scroll;
+        overflow-x: hidden !important;
+        float: left;
+        width: 200px !important;
+        margin: 0;
+        padding: 0;
+        background: #5d5670 !important;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+
+    }
+
+    #mobile_menu li {
+        display: none;
+    }
+}
 @media (max-width: 1250px) {
     #usermenu {
         display: none;
@@ -6080,11 +6101,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     #mobileheader {
         display: block;
     }
-
-    .navbar-header {
-        float: none;
-    }
-
     .modulename {
         visibility: visible;
         font-size: 14px;
@@ -6136,6 +6152,11 @@ div.list-view-rounded-corners > table th:last-of-type {
         -o-transition: all 0.3s ease-out;
         transition: all 0.3s ease-out;
     }
+
+    .navbar-header {
+        float: none;
+    }
+
 
     #globalLinks {
         display: inline-block !important;
@@ -6482,33 +6503,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-/*@media (min-width: 681px) and (max-width: 999px) {*/
-    /*#searchmobile {*/
-        /*float: left;*/
-        /*z-index: 50 !important;*/
-        /*position: absolute;*/
-        /*left: 60px;*/
-        /*width: 85% !important;*/
-    /*}*/
-
-    /*#searchmobile #query_string {*/
-        /*width: 85% !important;*/
-        /*outline: 0 !important;*/
-        /*background: #3C8DBC !important;*/
-        /*border: none !important;*/
-        /*border-radius: 0 !important;*/
-        /*border-bottom: 1px solid #cccccc !important;*/
-        /*color: #f7f7f7 !important;*/
-        /*-webkit-appearance: none !important;*/
-        /*box-shadow: none !important;*/
-        /*float: left;*/
-    /*}*/
-
-    /*#mobilegloballinks {*/
-        /*display: inline;*/
-    /*}*/
-/*}*/
-
 @media (min-width: 768px) and (max-width: 1000px) {
     a#advanced_search_link {
         min-width: 200px;
@@ -6526,97 +6520,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     /*help*/
 
 }
-
-/*@media (max-width: 830px) {*/
-    /*!*label*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(1) {*/
-        /*display: table-cell;*/
-    /*}*/
-
-    /*!*name*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(2) {*/
-        /*display: table-row;*/
-    /*}*/
-
-    /*!*label*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(3) {*/
-        /*display: inline;*/
-    /*}*/
-
-    /*!*checkbox*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(4) {*/
-        /*display: inline;*/
-    /*}*/
-
-    /*!*label*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(5) {*/
-        /*display: inline;*/
-        /*clear: both;*/
-    /*}*/
-
-    /*!*checkbox*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(6) {*/
-        /*display: inline;*/
-        /*clear: both;*/
-    /*}*/
-
-    /*!*buttons*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(7) {*/
-        /*display: table-row;*/
-        /*clear: both;*/
-    /*}*/
-
-    /*!*help*!*/
-    /*#search_form > div.basic  > table > tbody > tr > td:nth-child(8) {*/
-        /*display: none;*/
-        /*visibility: collapse;*/
-    /*}*/
-
-    /*#search_form > div.basic  > table {*/
-        /*border: none;*/
-    /*}*/
-
-/*}*/
-
-
-/*@media  (max-width: 1599px) {*/
-    /*#search_form > div.advanced table,*/
-    /*#search_form > div.advanced tr,*/
-    /*#search_form > div.advanced thead,*/
-    /*#search_form > div.advanced th,*/
-    /*#search_form > div.advanced tbody,*/
-    /*#search_form > div.advanced td {*/
-        /*background: none;*/
-    /*}*/
-
-    /*#search_form > div.advanced tr td[scope="col"] {*/
-        /*font-weight: bold;*/
-    /*}*/
-
-    /*td textarea {*/
-        /*width: 95%;*/
-    /*}*/
-
-    /*#search_form > div.advanced > table {*/
-        /*border: none;*/
-    /*}*/
-
-    /*#search_form > div.advanced tr {*/
-        /*border-bottom: none;*/
-    /*}*/
-
-    /*#search_form > div.advanced tr:last-child {*/
-        /*border: none;*/
-    /*}*/
-
-    /*#search_form > div.advanced input[type=text] {*/
-        /*font-size: 1em;*/
-    /*}*/
-
-    /*.advanced.search td {*/
-        /*display: block;*/
-    /*}*/
-/*}*/
 
 @media (max-width: 980px) {
     ul.navbar-nav li a, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
