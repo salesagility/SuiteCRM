@@ -474,7 +474,7 @@
     <!--Start Page Container and Responsive Sidebar -->
     <div id='sidebar_container' class="container-fluid">
 
-        <a id="buttontoggle"><span>&nbsp;</span></a>
+        <a id="buttontoggle"><span></span></a>
                 
         <!--<div class="row">-->
             <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}
