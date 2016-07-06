@@ -2700,6 +2700,7 @@ ul.yui-nav li.selected {
 
 ul.nav-tabs {
     border: hidden;
+    margin: 16px 0 16px 0;
 }
 
 ul.nav-tabs > li > a {
