@@ -48,7 +48,12 @@
 						<h4>{$mod_strings.LBL_EMAIL_SETTINGS_OUTBOUND_ACCOUNTS}</h4>
 					</th>
 				</tr>
-				<tr><td colspan="2"  style="text-align:left;" scope="row">{$app_strings.LBL_EMAIL_ACCOUNTS_OUTBOUND_SUBTITLE}</td></tr>
+				<tr>
+					<td colspan="2"  style="text-align:left;" scope="row">
+						<h4>{$app_strings.LBL_OUTGOING_EMAIL}</h4>
+						{$app_strings.LBL_EMAIL_ACCOUNTS_OUTBOUND_SUBTITLE}
+					</td>
+				</tr>
 				<tr>
 					<td>&nbsp;</td></tr>
 				<tr>
@@ -83,7 +88,7 @@
 					</th>
 			</tr>
 			<tr>
-                <td colspan="4" scope="row" >{$app_strings.LBL_EMAIL_ACCOUNTS_SUBTITLE}</td>
+                <td colspan="4" scope="row" ><h4>{$app_strings.LBL_INCOMING_EMAIL}</h4>{$app_strings.LBL_EMAIL_ACCOUNTS_SUBTITLE}</td>
             </tr>
             <tr><td>&nbsp;</td></tr>            
 			<tr>
