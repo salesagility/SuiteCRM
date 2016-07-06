@@ -2765,6 +2765,10 @@ li#tab-actions > a:hover {
 div.tab-content {
     background-color: #ffffff;
     padding: 24px;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 #basic_search_link {
@@ -4303,7 +4307,6 @@ form#MassAssign_SecurityGroups {
 #mobilegloballinks {
     display: none !important;
     display: inline;
-    background-color: yellow;
 }
 
 a#advanced_search_link {
