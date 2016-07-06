@@ -3980,7 +3980,7 @@ div.search_fields_basic label {
     background: #f8f8f8;
 }
 
-select:not([multiple="1"]), select:focus:not([multiple="1"]), .saved_search_select {
+select, .saved_search_select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -3995,6 +3995,10 @@ select:not([multiple="1"]), select:focus:not([multiple="1"]), .saved_search_sele
     width: auto;
     line-height: 40px;
     outline: 0;
+}
+
+select[multiple] {
+    background-image: none !important;
 }
 
 .list tr th {
