@@ -2711,7 +2711,7 @@ ul.nav-tabs > li > a {
     background-color: #BFCAD3;
     margin: 0 2px 0 2px;
     color: #ffffff;
-    line-height: 40px;
+    line-height: 32px;
 }
 
 ul.nav-tabs > li:first-of-type > a {
@@ -2743,10 +2743,10 @@ ul.nav-tabs > li.active > a {
 li#tab-actions > a {
     cursor: pointer;
     background-color: #F08377;
-    padding-right: 30px;
+    padding-right: 42px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     background-repeat: no-repeat;
-    background-position: 90% 140%;
+    background-position: 80% 120%;
     background-origin: border-box;
     background-size: 10px 95px;
 }
@@ -2754,12 +2754,7 @@ li#tab-actions > a {
 li#tab-actions > a:hover {
     cursor: pointer;
     background-color: #F08377;
-    padding-right: 30px;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
-    background-repeat: no-repeat;
-    background-position: 90% 140%;
-    background-origin: border-box;
-    background-size: 10px 95px;
     color: #ffffff;
 }
 
