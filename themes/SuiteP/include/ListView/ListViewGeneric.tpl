@@ -129,6 +129,8 @@
 
 				{if $colCounter == '0'}
 					{assign var='hide' value=""}
+				{elseif $colHeader  == 'NAME' }
+					{assign var='hide' value=""}
 				{elseif $colCounter  > '10' }
 					{assign var='hide' value="hidden-xs hidden-sm hidden-md"}
 				{elseif $colCounter > '4' }
@@ -136,7 +138,7 @@
 				{elseif $colCounter > '0' }
 					{assign var='hide' value="hidden-xs"}
 				{else}
-					{assign var='hide' value=""}}
+					{assign var='hide' value=""}
 				{/if}
                 {if $colHeader == 'NAME' || $params.bold}
 					<th scope='col' data-toggle="true" class="{$hide}">
@@ -225,6 +227,8 @@
 				{foreach from=$displayColumns key=col item=params}
 					{if $colCounter == '0'}
 						{assign var='hide' value=""}
+					{elseif $col  == 'NAME' }
+						{assign var='hide' value=""}
 					{elseif $colCounter  > '10' }
 						{assign var='hide' value="hidden-xs hidden-sm hidden-md"}
 					{elseif $colCounter > '4' }
@@ -232,7 +236,7 @@
 					{elseif $colCounter > '0' }
 						{assign var='hide' value="hidden-xs"}
 					{else}
-						{assign var='hide' value=""}}
+						{assign var='hide' value=""}
 					{/if}
                     {$displayColumns[type]}
 				    {strip}
