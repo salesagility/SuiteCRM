@@ -59,6 +59,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
             $modulePathDisplay[] = $currentBean->module_name;
         }
     }
+    $fieldType = $currentBean->field_name_map[$field]['type'];
     $fieldDisplay = $currentBean->field_name_map[$field]['vname'];
     $fieldDisplay = translate($fieldDisplay, $currentBean->module_dir);
     $fieldDisplay = trim($fieldDisplay, ':');
@@ -67,7 +68,7 @@ function getDisplayForField($modulePath, $field, $reportModule)
             isset($app_list_strings['moduleList'][$module]) ? $app_list_strings['moduleList'][$module] : $module
         );
     }
-    return array('field' => $fieldDisplay, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
+    return array('field' => $fieldDisplay, 'type'=>$fieldType, 'module' => str_replace(' ', '&nbsp;', implode(' : ', $modulePathDisplay)));
 }
 
 function requestToUserParameters()
