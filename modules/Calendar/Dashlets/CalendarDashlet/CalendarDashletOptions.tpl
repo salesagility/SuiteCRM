@@ -60,8 +60,8 @@
     <td valign='top' nowrap class='dataLabel'>{$MOD.LBL_CONFIGURE_VIEW}</td>
     <td valign='top' class='dataField'>
     <select name="view">
-    		<option value="day" {if $view == "day"} selected {/if}>{$MOD.LBL_VIEW_DAY}</option>
-    		<option value="week" {if $view == "week"} selected {/if}>{$MOD.LBL_VIEW_WEEK}</option>
+    		<option value="agendaDay" {if $view == "agendaDay"} selected {/if}>{$MOD.LBL_VIEW_DAY}</option>
+    		<option value="agendaWeek" {if $view == "agendaWeek"} selected {/if}>{$MOD.LBL_VIEW_WEEK}</option>
     </select>
     </td>
 </tr>
