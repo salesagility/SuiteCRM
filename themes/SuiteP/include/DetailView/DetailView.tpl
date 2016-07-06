@@ -60,10 +60,13 @@
         {{/if}}
         {{/if}}
         {{/foreach}}
-        <li id="tab-actions">
-            <a>
-                {{$APP.LBL_LINK_ACTIONS}}
-            </a>
+        <li id="tab-actions" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Submenu 1-1</a></li>
+                <li><a href="#">Submenu 1-2</a></li>
+                <li><a href="#">Submenu 1-3</a></li>
+            </ul>
         </li>
     </ul>
     <div class="clearfix"></div>
