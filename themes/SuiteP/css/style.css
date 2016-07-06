@@ -367,8 +367,7 @@ li.recentlinks_edit {
 }
 
 li.recentlinks {
-    width: 100%;
-}
+    width: 100%;}
 
 li.recentlinks img {
     margin-right: 5px;
@@ -2699,6 +2698,75 @@ ul.yui-nav li.selected {
     background: #3C8DBC;
 }
 
+ul.nav-tabs {
+    border: hidden;
+}
+
+ul.nav-tabs > li > a {
+    font-weight: 400;
+    letter-spacing: 2px;
+    font-size: 13px;
+    text-transform: uppercase;
+    background-color: #BFCAD3;
+    margin: 0 2px 0 2px;
+    color: #ffffff;
+    line-height: 40px;
+}
+
+ul.nav-tabs > li:first-of-type > a {
+    background-color: #BFCAD3;
+    margin: 0 2px 0 0;
+    color: #ffffff;
+}
+
+ul.nav-tabs > li:first-of-type > a:hover {
+    background-color: #ffffff;
+    margin: 0 2px 0 0;
+    color: #000000;
+}
+
+ul.nav-tabs > li > a:hover {
+    background-color: #ffffff;
+    margin: 0 2px 0 2px;
+    color: #000000;
+    border-bottom-color: #fff;
+}
+
+
+ul.nav-tabs > li.active > a {
+    background-color: #778591;
+    color: #ffffff;
+
+}
+
+li#tab-actions > a {
+    cursor: pointer;
+    background-color: #F08377;
+    padding-right: 30px;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-repeat: no-repeat;
+    background-position: 90% 140%;
+    background-origin: border-box;
+    background-size: 10px 95px;
+}
+
+li#tab-actions > a:hover {
+    cursor: pointer;
+    background-color: #F08377;
+    padding-right: 30px;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-repeat: no-repeat;
+    background-position: 90% 140%;
+    background-origin: border-box;
+    background-size: 10px 95px;
+    color: #ffffff;
+}
+
+div.tab-content {
+    background-color: #ffffff;
+    padding: 24px;
+}
+
 #basic_search_link {
     margin-left: 6px !important;
 }
@@ -4418,9 +4486,7 @@ span#quickcreateplus {
     border-radius: 50%;
 }
 
-.nav > li > a {
-    padding: 8px 0 8px 0;
-}
+
 
 li.moremenu {
     padding: 8px 10px 8px 10px;
@@ -6474,7 +6540,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     td textarea {
         width: 95%;
     }
-    
+
 
     .edit tr {
         border-bottom: 1px solid #cccccc;
@@ -6945,4 +7011,3 @@ div.list-view-rounded-corners > table th:last-of-type {
             border-top-color: rgba(20,20,20,0.92);
         }
     }
-
