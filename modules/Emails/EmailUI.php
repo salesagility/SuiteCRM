@@ -276,6 +276,7 @@ class EmailUI {
 
 		if($emailAccountSettingsOnly && $extendedTemplateVars) {
 			$this->smarty->assign((array) $extendedTemplateVars);
+			$this->smarty->assign('userEmailSettings', true);
 		}
 
 		$out .= $this->smarty->fetch("modules/Emails/templates/_baseEmail" .($emailAccountSettingsOnly ? 'AccountSettings' : '').".tpl");

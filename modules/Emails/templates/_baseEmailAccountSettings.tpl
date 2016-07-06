@@ -113,7 +113,11 @@
             {include file="modules/Emails/templates/advancedSearch.tpl"}
         </div>
         <div id="settings">
-            {include file="modules/Emails/templates/emailSettings.tpl"}
+            {if $userEmailSettings}
+                {include file="modules/Users/UserEmailSettings.tpl"}
+            {else}
+                {include file="modules/Emails/templates/emailSettings.tpl"}
+            {/if}
         </div>
 
         <div id="footerLinks" class="yui-hidden"></div>
