@@ -3980,7 +3980,7 @@ div.search_fields_basic label {
     background: #f8f8f8;
 }
 
-select, .saved_search_select {
+select, select:focus, select::selection, .saved_search_select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -3991,8 +3991,7 @@ select, .saved_search_select {
     border: 3px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px 50px 5px 5px;
-    min-width: 212px;
-    width: auto;
+
     line-height: 40px;
     outline: 0;
 }
