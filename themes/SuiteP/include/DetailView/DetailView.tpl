@@ -79,11 +79,11 @@
         {{counter name="tabCount" print=false}}
 
         {{if $tabCount == '0'}}
-        <div class="tab-pane active" id='tab-content-{{$tabCount}}'>
+        <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
             test{{$tabCount}}
         </div>
         {{else}}
-        <div class="tab-pane" id='tab-content-{{$tabCount}}'>
+        <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
             test{{$tabCount}}
         </div>
         {{/if}}
