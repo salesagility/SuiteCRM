@@ -38,6 +38,11 @@
  ********************************************************************************/
 
 *}
+
+{if $showEmailOptionsOnEmailSettingsTab}
+	{include file="modules/Emails/templates/emailOptions.tpl"}
+{/if}
+
 <form name="formEmailSettingsGeneral" id="formEmailSettingsGeneral">
 <table cellpadding="4" cellspacing="0" border="0" width="100%" class="view">
 	<tr>

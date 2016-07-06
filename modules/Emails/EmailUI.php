@@ -107,7 +107,7 @@ class EmailUI {
 	/**
 	 * Renders the frame for emails
 	 */
-	function displayEmailFrame($emailAccountSettingsOnly = false) {
+	function displayEmailFrame($emailAccountSettingsOnly = false, $extendedTemplateVars = null) {
 
 		require_once("include/OutboundEmail/OutboundEmail.php");
 
@@ -273,6 +273,11 @@ class EmailUI {
 		$this->smarty->assign('disableDisplayMessage', $emailAccountSettingsOnly);
 
 		$out = "";
+
+		if($emailAccountSettingsOnly && $extendedTemplateVars) {
+			$this->smarty->assign((array) $extendedTemplateVars);
+		}
+
 		$out .= $this->smarty->fetch("modules/Emails/templates/_baseEmail" .($emailAccountSettingsOnly ? 'AccountSettings' : '').".tpl");
 		$out .= $tree->generate_header();
 		$out .= $tree->generateNodesNoInit(true, 'email2treeinit');

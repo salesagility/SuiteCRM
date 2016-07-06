@@ -752,7 +752,7 @@ class UserViewHelper {
             $this->ss->assign('MAIL_SMTPSSL',$mail_smtpssl);
         }
         $this->ss->assign('HIDE_IF_CAN_USE_DEFAULT_OUTBOUND',$hide_if_can_use_default );
-
+        $this->ss->assign('hideEmailOptionsOnUserProfileTab', true);
     }
 
     protected function setupEmailAccountSettings() {
@@ -761,7 +761,8 @@ class UserViewHelper {
         $focus = new Email();
         $focus->email2init();
         $focus->et->preflightUser($current_user);
-        $out = $focus->et->displayEmailFrame(true);
+        $this->ss->assign('showEmailOptionsOnEmailSettingsTab', true);
+        $out = $focus->et->displayEmailFrame(true, $this->ss->get_template_vars());
         $echo .= $out;
         $echo .= "<script>var composePackage = null;</script>";
         $this->ss->assign('emailAccountSettingsTabContents', $echo);
