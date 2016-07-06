@@ -268,33 +268,48 @@ $(function() {
     });
 });
 
-var checkContents = setInterval(function(){
-    if ($(".list.view").length > 0 || $(".list.View").length > 0){ // Check if element has been found
-
-        if($(".list.view").length > 0){
-            element = $(".list.view");
+jQuery(function($){
+    $('table.footable').footable({
+        "breakpoints": {
+            "x-small": 480,
+            "small": 768,
+            "medium": 992,
+            "large": 1200,
+            "x-large": 1400
         }
+    });
+})
 
-        if($(".list.View").length > 0){
-            element = $(".list.View");
-        }
-
-        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        $(element).footable();
-        //$(".footable").find("th:first").attr("data-toggle","true");
-
-        // Button to toggle list view search
-        $('.showsearch').click(function() {
-            $('.search_form').toggle();
-        });
-        $('#userlinks_togglemobilesearch').click(function() {
-            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
-        });
-
-        clearInterval(checkContents);
-    }
-},1);
+//var checkContents = setInterval(function(){
+//    if ($(".list.view").length > 0 || $(".list.View").length > 0){ // Check if element has been found
+//
+//        if($(".list.view").length > 0){
+//            element = $(".list.view");
+//        }
+//
+//        if($(".list.View").length > 0){
+//            element = $(".list.View");
+//        }
+//
+//
+//        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+//        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
+//        //$(".footable").find("th:first").attr("data-toggle","true");
+//
+//        $(element).footable();
+//
+//
+//        // Button to toggle list view search
+//        $('.showsearch').click(function() {
+//            $('.search_form').toggle();
+//        });
+//        $('#userlinks_togglemobilesearch').click(function() {
+//            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
+//        });
+//
+//        clearInterval(checkContents);
+//    }
+//},1);
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {

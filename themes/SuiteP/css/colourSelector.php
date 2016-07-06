@@ -37,6 +37,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+    header('Content-Type: text/css');
 // config|_override.php
 if (is_file('../../../config.php')) {
     require_once '../../../config.php';

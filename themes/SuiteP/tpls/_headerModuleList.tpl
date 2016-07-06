@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="hidden-xs hidden-sm" id="bs-example-navbar-collapse-1">
+        <div class="hidden-xs hidden-sm hidden-md hidden-mdlg" id="bs-example-navbar-collapse-1">
             {if $USE_GROUP_TABS}
                 <ul class="nav navbar-nav">
                     {assign var="groupSelected" value=false}
@@ -328,19 +328,20 @@
                     {/if}
                 </ul>
             {/if}
-            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
-                <li id="usermenu" class="dropdown-toggle" aria-expanded="true">
-                    <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'><span
-                                class="user_icon"> </span> {$CURRENT_USER}
+            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right globalLinks-desktop">
+                <li id="usermenu" class="user-dropdown" aria-expanded="false">
+                    <a>
+                        <span class="user_icon"> </span> {$CURRENT_USER}
                         <span class="caret"></span>
                     </a>
                 </li>
-                <button id="usermenucollapsed" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
-                        aria-expanded="true">
-                    <!--<span class="glyphicon glyphicon-user"> </span>
-                    <span class="caret"></span>-->
-                </button>
+
                 <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation">
+                        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                            {$APP.LBL_PROFILE}
+                        </a>
+                    </li>
                     {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
                         <li role="presentation">
                             <a id="{$gcl_key}_link"
@@ -351,26 +352,42 @@
                                                class='utilsLink'>{$LOGOUT_LABEL}</a></li>
                 </ul>
             </div>
+
+
             
+        </div>
+
+        <!-- Right side of the main navigation -->
+        <div class="mobile-bar" id="bs-example-navbar-collapse-1">
+            <div id="globalLinks" class="dropdown nav navbar-nav navbar-right">
+
+                <button id="usermenucollapsed" class="dropdown-toggle btn btn-default " data-toggle="dropdown"
+                        aria-expanded="true">
+                </button>
+                <ul class="dropdown-menu user-dropdown" role="menu" aria-labelledby="dropdownMenu2">
+                    <li role="presentation">
+                        <a href='index.php?module=Users&action=EditView&record={$CURRENT_USER_ID}'>
+                            {$APP.LBL_PROFILE}
+                        </a>
+                    </li>
+                    {foreach from=$GCLS item=GCL name=gcl key=gcl_key}
+                        <li role="presentation">
+                            <a id="{$gcl_key}_link"
+                               href="{$GCL.URL}"{if !empty($GCL.ONCLICK)} onclick="{$GCL.ONCLICK}"{/if}>{$GCL.LABEL}</a>
+                        </li>
+                    {/foreach}
+                    <li role="presentation"><a role="menuitem" id="logout_link" href='{$LOGOUT_LINK}'
+                                               class='utilsLink'>{$LOGOUT_LABEL}</a></li>
+                </ul>
+            </div>
             <div id="desktop_notifications" class="dropdown nav navbar-nav navbar-right">
                 <button class="alertsButton dropdown-toggle" data-toggle="dropdown"
                         aria-expanded="false">
-                   <span class="alert_count">0</span>
-                   
+                    <span class="alert_count">0</span>
+
                 </button>
                 <div id="alerts" class="dropdown-menu" role="menu">{$APP.LBL_EMAIL_ERROR_VIEW_RAW_SOURCE}</div>
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
             <div id="search" class="dropdown nav navbar-nav navbar-right">
                 <button id="searchbutton" class="dropdown-toggle btn btn-default" data-toggle="dropdown"
                         aria-expanded="true">
@@ -437,10 +454,11 @@
                     </li>
                 </ul>
             </div>
-            
+
         </div>
-        
-        <div class="collapse navbar-collapse hidden-lg hidden-md" id="mobile_menu">
+
+
+        <div class="collapse navbar-collapse" id="mobile_menu">
             {foreach from=$groupTabs item=modules key=group name=groupList}
                 {if $smarty.foreach.groupList.last}
                     {capture name=extraparams assign=extraparams}parentTab={$group}{/capture}
@@ -474,7 +492,7 @@
     <!--Start Page Container and Responsive Sidebar -->
     <div id='sidebar_container' class="container-fluid">
 
-        <a id="buttontoggle"><span>&nbsp;</span></a>
+        <a id="buttontoggle"><span></span></a>
                 
         <!--<div class="row">-->
             <!--<div {if $smarty.cookies.sidebartoggle == 'collapsed'}style="display:none"{/if}

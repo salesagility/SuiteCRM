@@ -220,7 +220,7 @@ li#usermenu a span.user_icon {
 }
 
 li#usermenu a:hover span.user_icon {
-    background-position: 0 -100px;
+    background-position: 0 -99px;
 }
 
 div#pageContainer {
@@ -422,6 +422,8 @@ footer {
     background-color: #E6E6E6;
     float: left;
     width: 100%;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 .footer_left {
@@ -715,7 +717,7 @@ th, td {
     vertical-align: middle;
 }
 
-#Accountsbasic_searchSearchForm tr td input[type=checkbox] {
+#search_form > div  tr td input[type=checkbox] {
     vertical-align: middle;
 }
 
@@ -753,9 +755,27 @@ th, td {
     margin-left: 1.5em;
 }
 
+#EditView .action_buttons {
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
 #EditView > table {
     overflow: auto;
     margin-bottom: 2px;
+}
+
+#EditView_tabs {
+    padding: 8px;
+    background: #fff;
+}
+
+#EditView .edit tr td {
+    font-weight: 700;
+}
+
+#EditView .edit tr td input, #EditView .edit tr td textarea, #EditView .edit tr td select {
+    font-weight: normal;
 }
 
 .edit {
@@ -971,6 +991,10 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
 
 .list tr.pagination #selectCountTop {
     width: 5em;
+}
+
+#selectedRecordsTopLabel, #selectedRecordsTopValue {
+    color: white;
 }
 
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
@@ -2206,7 +2230,6 @@ a:link, a:visited, a:hover {
 .td_alt, .list tr th, .list tr td[scope=col], .edit .list tr th, .edit .list tr td[scope=col] {
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid #cccccc;
 }
 
 /*// MODULE TITLE */
@@ -3010,7 +3033,7 @@ ul#detailViewActions.clickMenu {
 
 .selectActionsDisabled a, #selectActionsDisabled a:hover {
     float: left;
-    display: block;
+    display: inline-block;
     text-decoration: none !important;
     color: #C9D2DA !important;
     padding: 2px !important;
@@ -3142,6 +3165,13 @@ iframe.teamNoticeBox {
     text-decoration: none;
 }
 
+.globalLinks-desktop ul{
+    top: 90px !important;
+}
+
+.globalLinks-desktop #usermenu {
+    height: 90px;
+}
 .iconed {
     padding: 5px 5px 2px 0;
     margin-left: 5px;
@@ -3575,18 +3605,33 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
-.edit button {
-    min-height: 32px !important;
-    min-width: 32px !important;
+#EditView_tabs .edit .button, #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="button"] {
     margin-right: 4px;
-    vertical-align: middle;
+    padding: 0px;
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
-
+    height: 32px;
+    width: 32px;
 }
 
-.edit input, .edit textarea {
+#EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
+    margin-top: 16px;
+}
+
+#EditView_tabs .edit [type="radio"], #EditView_tabs .edit [type="checkbox"]  {
+    margin-top: 20px;
+}
+
+#EditView_tabs .id-ff-remove img, #EditView_tabs .edit [type="button"] img {
+    position: relative;
+    top: -4px;
+    left: 0;
+    height: 16px;
+    width: 16px;
+}
+
+#EditView_tabs .edit input, #EditView_tabs .edit textarea {
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -3826,18 +3871,116 @@ input[type=text], textarea {
     border: 1px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px;
+    line-height: 40px;
 }
 
 .search_form input[type=text], .search_form textarea {
     background: #ffffff;
 }
 
+div.search_fields_basic {
+    line-height: 48px;
+}
+
+div.search_fields_basic label {
+    margin: 0 8px 0 4px;
+}
+
+
+
+/*xs-col-*/
+@media (max-width: 769px) {
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+    div.search_name_basic input {
+        width: 85% !important;
+    }
+    div.search_fields_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_buttons_basic {
+        margin: 0 8px 0 42px;
+    }
+}
+/*sm-col-*/
+@media (min-width: 768px) and (max-width: 991px) {
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+    div.search_name_basic input {
+        width: 80% !important;
+    }
+
+    div.search_fields_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_buttons_basic {
+        margin: 0 8px 0 42px;
+    }
+}
+/*md-col-*/
+@media (min-width: 992px) and (max-width: 1199px) {
+    div.search_fields_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_buttons_basic {
+        margin: 0 8px 0 42px;
+    }
+
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+    div.search_name_basic input {
+        width: 90%;
+    }
+
+    div.search_fields_basic {
+        width: 100%;
+    }
+
+    div.search_buttons_basic {
+        position: absolute;
+        right: 0;
+    }
+
+}
+/*md-fixes*/
+@media (min-width: 1180px) and (max-width: 1199px) {
+    div.search_buttons_basic {
+        width: auto;
+    }
+}
+/*lg-col-*/
+@media (min-width: 1200px) {
+    div.search_name_basic, div.search_fields_basic, div.search_buttons_basic {
+        width: auto;
+    }
+
+    div.search_name_basic img {
+        margin: 0 8px 0 8px;
+    }
+
+    div.search_fields_basic {
+        margin: 4px 8px 0 8px;
+    }
+
+    div.search_buttons_basic {
+        margin: 4px 8px 0 8px;
+    }
+
+}
+
+
 :disabled {
     border: 1px solid #e2e7eb;
     background: #f8f8f8;
 }
 
-select:not([multiple="1"]), select:focus:not([multiple="1"]), .saved_search_select {
+select, select:focus, select::selection, .saved_search_select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -3848,10 +3991,14 @@ select:not([multiple="1"]), select:focus:not([multiple="1"]), .saved_search_sele
     border: 3px solid #a5e8d6;
     border-radius: 4px;
     padding: 5px 50px 5px 5px;
-    min-width: 212px;
-    width: auto;
+
     line-height: 40px;
     outline: 0;
+}
+
+select[multiple] {
+    background-image: none !important;
+    overflow: auto !important;
 }
 
 .list tr th {
@@ -4002,7 +4149,7 @@ table legend {
     border: 1px solid #dddddd;
 }
 
-#usermenucollapsed {
+#usermenucollapsed, #usermenucollapsed-mobile {
     margin: 0 0 0 5px;
     display: none;
 }
@@ -4026,6 +4173,11 @@ table legend {
     margin-right: 15px;
 }
 
+#search_form label {
+    font-weight: normal;
+    color: #817D8D;
+}
+
 form#MassAssign_SecurityGroups {
     background-color: #e6e6e6 !important;
     border-radius: 3px;
@@ -4047,13 +4199,14 @@ form#MassAssign_SecurityGroups {
     background-color: #65697A;
     float: left;
     border: none;
-    padding: 12px 12px 12px 12px;
+    padding: 14px 12px 14px 12px;
     color: #A2A5AF;
     font-size: 14px;
     letter-spacing: 1px;
     width: 200px;
     border-radius: 3px;
     height: auto;
+    line-height: normal;
 }
 
 #searchform button {
@@ -4062,6 +4215,7 @@ form#MassAssign_SecurityGroups {
     border: none;
     float: left;
     width: 50px;
+    height: auto;
     display: block;
     border-radius: 0px 3px 3px 0px;
     margin-left: -50px;
@@ -4090,7 +4244,7 @@ a#advanced_search_link {
     color: #fff;
     cursor: pointer;
     font-size: 13px !important;
-    margin: 0 0 0 0;
+    margin: 4px 0px 4px 0px;
     padding: 0 40px 0 20px;
     border-radius: 3px;
     text-transform: uppercase;
@@ -4132,48 +4286,12 @@ a#basic_search_link:hover {
     background-color: #9589B3;
 }
 
-div#Accountsadvanced_searchSearchForm input.button {
+div#search_form > div.advanced input.button {
     background-color: #f08377;
     color: #fff;
 }
 
-div#Accountsadvanced_searchSearchForm input.button:hover {
-    background-color: #d66c60;
-}
-
-div#Leadsadvanced_searchSearchForm input.button {
-    background-color: #f08377;
-    color: #fff;
-}
-
-div#Leadsadvanced_searchSearchForm input.button:hover {
-    background-color: #d66c60;
-}
-
-div#Contactsadvanced_searchSearchForm input.button {
-    background-color: #f08377;
-    color: #fff;
-}
-
-div#Contactsadvanced_searchSearchForm input.button:hover {
-    background-color: #d66c60;
-}
-
-div#Opportunitiesadvanced_searchSearchForm input.button {
-    background-color: #f08377;
-    color: #fff;
-}
-
-div#Opportunitiesadvanced_searchSearchForm input.button:hover {
-    background-color: #d66c60;
-}
-
-div#AOK_Knowledge_Base_Categoriesadvanced_searchSearchForm input.button {
-    background-color: #f08377;
-    color: #fff;
-}
-
-div#AOK_Knowledge_Base_Categoriesadvanced_searchSearchForm input.button:hover {
+div#search_form > div.advanced input.button:hover {
     background-color: #d66c60;
 }
 
@@ -4190,12 +4308,6 @@ span.id-ff button {
 
 span.id-ff button:hover {
     background-color: #d66c60;
-}
-
-div#Leadsadvanced_searchSearchForm td {
-    height: 40px;
-    line-height: 40px;
-    vertical-align: middle;
 }
 
 a.tabFormAdvLink {
@@ -4510,7 +4622,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 
 /*.dashletPanel {
     border: 1px solid #eeeeee!important;
-    
+
 }*/
 
 .dashletPanel .h3Row h3 {
@@ -4690,7 +4802,7 @@ h3 span {
 }
 
 #mobileheader #modulelinks ul li a {
-    font-size: 1.3em;
+    font-size: 14px;
 }
 
 #quickcreatetop {
@@ -4708,7 +4820,7 @@ h3 span {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    display: block;
+    display: inline-block;
     float: left;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     background-repeat: no-repeat;
@@ -4729,6 +4841,8 @@ h3 span {
     border-radius: 3px;
     border-top-right-radius: 0px;
     padding: 4px 10px 4px 10px;
+    height: 180px;
+    max-height: 180px !important;
 }
 
 #quickcreatetop ul li {
@@ -4834,6 +4948,47 @@ h3 span {
     font-size: 12px;
     border-radius: 0px;
     text-align: center;
+}
+
+.mobile-bar ul.dropdown-menu.user-dropdown{
+    left: -140px !important;
+}
+
+@media (max-height: 380px) {
+
+    .mobile-bar ul.dropdown-menu.user-dropdown{
+        top: 78px !important;
+        left: -140px !important;
+        height: 200px !important;
+        overflow-y: scroll !important;
+    }
+    #modulelinks > ul,
+    .mobileheader ul,
+    #mobile_menu {
+        overflow-y: scroll !important;
+        height: 180px;
+        max-height: 200px;
+    }
+}
+
+@media (min-width: 768px) and (min-height: 381px) {
+    .mobile-bar #globalLinks {
+        height: 90px;
+    }
+    .mobile-bar ul.dropdown-menu.user-dropdown{
+        top: 78px !important;
+        left: -140px !important;
+    }
+}
+
+@media (min-width: 768px) and (min-height: 381px) {
+    .mobile-bar #globalLinks {
+        height: 90px;
+    }
+    .mobile-bar ul.dropdown-menu.user-dropdown{
+        top: 78px !important;
+        left: -140px !important;
+    }
 }
 
 .navbar-collapse.collapse {
@@ -5263,6 +5418,8 @@ object {
 }
 
 td.paginationActionButtons {
+    height: 40px;
+    max-height: 40px;
 }
 
 td.paginationChangeButtons {
@@ -5354,6 +5511,52 @@ div.target-list-table {
     padding: 10px;
 }
 
+div.list-view-rounded-corners {
+    margin: 16px 0 16px 0;
+}
+
+div.list-view-rounded-corners > table,
+tr#pagination:nth-of-type(2) {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+/*div.list-view-rounded-corners > table {*/
+    /*border: 2px solid #778591;*/
+    /*border-radius-top: 4px;*/
+    /*overflow: hidden;*/
+
+/*}*/
+
+div.list-view-rounded-corners > table,
+tr#pagination {
+    background: #f5f5f5;
+}
+
+div.list-view-rounded-corners > table > thead > th,
+.pagination-bottom {
+    /*border: 2px solid #778591;*/
+    border: 2px solid transparent !important;
+    border: 2px solid transparent !important;
+    overflow: hidden;
+}
+
+div.list-view-rounded-corners > table th:first-of-type {
+    border-top-left-radius: 4px;
+}
+
+div.list-view-rounded-corners > table th:last-of-type {
+    border-top-right-radius: 4px;
+}
+
+.pagination-bottom .paginationTable td:first-of-type {
+    border-bottom-left-radius: 4px;
+}
+
+.pagination-bottom .paginationTable td:last-of-type {
+    border-bottom-right-radius: 4px;
+}
+
 /*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 
 @media (max-width: 3000px) {
@@ -5380,7 +5583,7 @@ div.target-list-table {
 
 @media (max-width: 2000px) {
     .sidebar {
-        width: 10%;
+        width: 11%;
     }
 
     #bootstrap-container.col-md-offset-2 {
@@ -5392,7 +5595,7 @@ div.target-list-table {
     }
 
     .button-toggle-expanded {
-        left: 10% !important;
+        left: 11% !important;
     }
 
     .button-toggle-collapsed {
@@ -5477,15 +5680,15 @@ div.target-list-table {
 
     #globalLinks {
         border: none;
-        margin: 10px 000;
+        margin: 10px 0 0 0;
         padding: 0;
     }
 
     .navbar-form .form-control {
-        margin: 8px 000;
+        margin: 8px 0 0 0;
     }
 
-    #usermenucollapsed, #searchbutton {
+    #usermenucollapsed, #usermenucollapsed-mobile, #searchbutton {
         display: inline;
     }
 
@@ -5494,7 +5697,7 @@ div.target-list-table {
     }
 
     .moremenu ul, ul.dropdown-menu {
-        left: -140px;
+
     }
 
     li.topnav ul.dropdown-menu {
@@ -5544,7 +5747,7 @@ div.target-list-table {
         height: auto;
     }
 
-    #usermenucollapsed {
+    #usermenucollapsed, #usermenucollapsed-mobile {
         background-color: transparent;
         height: 42px;
         width: 42px;
@@ -5556,11 +5759,8 @@ div.target-list-table {
         margin-left: 0px;
     }
 
-    #usermenucollapsed:hover {
+    #usermenucollapsed, #usermenucollapsed-mobile:hover {
         background-position: 0 -99px;
-    }
-
-    .list-vew-rounded-corners {;
     }
 }
 
@@ -5790,7 +5990,7 @@ div.target-list-table {
         left: 0px;
     }
 
-    #usermenucollapsed {
+    #usermenucollapsed, #usermenucollapsed-mobile {
         height: 28px;
         margin-top: 0px;
         width: 28px;
@@ -5799,7 +5999,7 @@ div.target-list-table {
         background-position: 0 0;
     }
 
-    #usermenucollapsed:hover {
+    #usermenucollapsed, #usermenucollapsed-mobile:hover {
         background-position: 0 -70px;
     }
 
@@ -5859,7 +6059,7 @@ div.target-list-table {
         left: 0px;
     }
 
-    #usermenucollapsed {
+    #usermenucollapsed, #usermenucollapsed-mobile {
         background-color: transparent;
         height: 42px;
         width: 42px;
@@ -5871,7 +6071,7 @@ div.target-list-table {
         margin-left: 0px;
     }
 
-    #usermenucollapsed:hover {
+    #usermenucollapsed, #usermenucollapsed-mobile:hover {
         background-position: 0 -100px;
     }
 
@@ -5914,6 +6114,27 @@ div.target-list-table {
     }
 }
 
+@media (min-width: 1251px) {
+    #mobile_menu {
+        position: absolute;
+        /*top: 90px;*/
+        /*left: 10px;*/
+        overflow-y: scroll;
+        overflow-x: hidden !important;
+        float: left;
+        width: 200px !important;
+        margin: 0;
+        padding: 0;
+        background: #5d5670 !important;
+        border-bottom-left-radius: 3px;
+        border-bottom-right-radius: 3px;
+
+    }
+
+    #mobile_menu li {
+        display: none;
+    }
+}
 @media (max-width: 1250px) {
     #usermenu {
         display: none;
@@ -5926,11 +6147,6 @@ div.target-list-table {
     #mobileheader {
         display: block;
     }
-
-    .navbar-header {
-        float: none;
-    }
-
     .modulename {
         visibility: visible;
         font-size: 14px;
@@ -5982,6 +6198,11 @@ div.target-list-table {
         -o-transition: all 0.3s ease-out;
         transition: all 0.3s ease-out;
     }
+
+    .navbar-header {
+        float: none;
+    }
+
 
     #globalLinks {
         display: inline-block !important;
@@ -6057,9 +6278,9 @@ div.target-list-table {
         width: 99%;
     }
 
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(4) {
-        display: block;
-    }
+    /*#search_form > div  > table > tbody > tr > td:nth-child(4) {*/
+        /*display: block;*/
+    /*}*/
 }
 
 }
@@ -6253,10 +6474,7 @@ div.target-list-table {
     td textarea {
         width: 95%;
     }
-
-    .edit > table {
-        border: 1px solid #cccccc;
-    }
+    
 
     .edit tr {
         border-bottom: 1px solid #cccccc;
@@ -6316,44 +6534,6 @@ div.target-list-table {
     }
 }
 
-@media (min-width: 640px) and (max-width: 1300px) {
-    #Accountsadvanced_searchSearchForm table,
-    #Accountsadvanced_searchSearchForm tr,
-    #Accountsadvanced_searchSearchForm thead,
-    #Accountsadvanced_searchSearchForm th,
-    #Accountsadvanced_searchSearchForm tbody,
-    #Accountsadvanced_searchSearchForm td {
-        background: none;
-    }
-
-    #Accountsadvanced_searchSearchForm tr td[scope="col"] {
-        font-weight: bold;
-    }
-
-    td textarea {
-        width: 95%;
-    }
-
-    #Accountsadvanced_searchSearchForm > table {
-        border: none;
-    }
-
-    #Accountsadvanced_searchSearchForm tr {
-        border-bottom: none;
-    }
-
-    #Accountsadvanced_searchSearchForm tr:last-child {
-        border: none;
-    }
-
-    #Accountsadvanced_searchSearchForm input[type=text] {
-        font-size: 1em;
-    }
-
-    .advanced.search td {
-        display: block;
-    }
-}
 
 @media (max-width: 670px) {
     .footer_left {
@@ -6369,135 +6549,21 @@ div.target-list-table {
     }
 }
 
-@media (min-width: 681px) and (max-width: 999px) {
-    #searchmobile {
-        float: left;
-        z-index: 50 !important;
-        position: absolute;
-        left: 60px;
-        width: 85% !important;
-    }
-
-    #searchmobile #query_string {
-        width: 85% !important;
-        outline: 0 !important;
-        background: #3C8DBC !important;
-        border: none !important;
-        border-radius: 0 !important;
-        border-bottom: 1px solid #cccccc !important;
-        color: #f7f7f7 !important;
-        -webkit-appearance: none !important;
-        box-shadow: none !important;
-        float: left;
-    }
-
-    #mobilegloballinks {
-        display: inline;
-    }
-}
-
-@media (min-width: 830px) and (max-width: 999px) {
-    /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(1) {
-        clear: both;
-        display: table-cell;
-    }
-
-    /*name*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(2) {
-        display: table-cell;
-        clear: both;
-    }
-
-    /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(3) {
-        display: table-cell;
-        clear: both;
-    }
-
-    /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(4) {
-        display: table-cell;
-        clear: both;
-    }
-
-    /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(5) {
-        display: table-cell;
-        clear: both;
-    }
-
-    /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(6) {
-        display: table-cell;
-        clear: both;
+@media (min-width: 768px) and (max-width: 1000px) {
+    a#advanced_search_link {
+        min-width: 200px;
+        width: auto;
     }
 
     /*buttons*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(7) {
-        clear: both;
-        position: static;
-        display: table;
-        width: 200px;
-        margin: 0 0 0 16px;
-    }
-
-    /*help*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(8) {
-        display: none;
-        visibility: collapse;
-        clear: both;
-    }
-}
-
-@media (max-width: 830px) {
-    /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(1) {
+    #search_form > div.basic  > table > tbody > tr > td.submitButtons {
+        min-width: 200px;
+        width: auto;
+        background-color: red;
         display: table-cell;
     }
 
-    /*name*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(2) {
-        display: table-row;
-    }
-
-    /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(3) {
-        display: inline;
-    }
-
-    /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(4) {
-        display: inline;
-    }
-
-    /*label*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(5) {
-        display: inline;
-        clear: both;
-    }
-
-    /*checkbox*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(6) {
-        display: inline;
-        clear: both;
-    }
-
-    /*buttons*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(7) {
-        display: table-row;
-        clear: both;
-    }
-
     /*help*/
-    #Accountsbasic_searchSearchForm > table > tbody > tr > td:nth-child(8) {
-        display: none;
-        visibility: collapse;
-    }
-
-    #Accountsbasic_searchSearchForm > table {
-        border: none;
-    }
 
 }
 
@@ -6681,7 +6747,7 @@ div.target-list-table {
         margin: 8px 0 0 0;
     }
 
-    #usermenucollapsed, #searchbutton {
+    #usermenucollapsed, #usermenucollapsed-mobile, #searchbutton {
         display: inline;
     }
 
@@ -6764,6 +6830,119 @@ div.target-list-table {
     @media print {
         .navbar-inverse, .sidebar {
             display: none;
+        }
+    }
+    /* TipTip CSS - Version 1.2 */
+
+    #tiptip_holder {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99999;
+    }
+
+    #tiptip_holder.tip_top {
+        padding-bottom: 5px;
+    }
+
+    #tiptip_holder.tip_bottom {
+        padding-top: 5px;
+    }
+
+    #tiptip_holder.tip_right {
+        padding-left: 5px;
+    }
+
+    #tiptip_holder.tip_left {
+        padding-right: 5px;
+    }
+
+    #tiptip_content {
+        font-size: 11px;
+        color: #fff;
+        text-shadow: 0 0 2px #000;
+        padding: 4px 8px;
+        border: 1px solid rgba(255,255,255,0.25);
+        background-color: rgb(25,25,25);
+        background-color: rgba(25,25,25,0.92);
+        background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(transparent), to(#000));
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        box-shadow: 0 0 3px #555;
+        -webkit-box-shadow: 0 0 3px #555;
+        -moz-box-shadow: 0 0 3px #555;
+    }
+
+    #tiptip_arrow, #tiptip_arrow_inner {
+        position: absolute;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 6px;
+        height: 0;
+        width: 0;
+    }
+
+    #tiptip_holder.tip_top #tiptip_arrow {
+        border-top-color: #fff;
+        border-top-color: rgba(255,255,255,0.35);
+    }
+
+    #tiptip_holder.tip_bottom #tiptip_arrow {
+        border-bottom-color: #fff;
+        border-bottom-color: rgba(255,255,255,0.35);
+    }
+
+    #tiptip_holder.tip_right #tiptip_arrow {
+        border-right-color: #fff;
+        border-right-color: rgba(255,255,255,0.35);
+    }
+
+    #tiptip_holder.tip_left #tiptip_arrow {
+        border-left-color: #fff;
+        border-left-color: rgba(255,255,255,0.35);
+    }
+
+    #tiptip_holder.tip_top #tiptip_arrow_inner {
+        margin-top: -7px;
+        margin-left: -6px;
+        border-top-color: rgb(25,25,25);
+        border-top-color: rgba(25,25,25,0.92);
+    }
+
+    #tiptip_holder.tip_bottom #tiptip_arrow_inner {
+        margin-top: -5px;
+        margin-left: -6px;
+        border-bottom-color: rgb(25,25,25);
+        border-bottom-color: rgba(25,25,25,0.92);
+    }
+
+    #tiptip_holder.tip_right #tiptip_arrow_inner {
+        margin-top: -6px;
+        margin-left: -5px;
+        border-right-color: rgb(25,25,25);
+        border-right-color: rgba(25,25,25,0.92);
+    }
+
+    #tiptip_holder.tip_left #tiptip_arrow_inner {
+        margin-top: -6px;
+        margin-left: -7px;
+        border-left-color: rgb(25,25,25);
+        border-left-color: rgba(25,25,25,0.92);
+    }
+
+    /* Webkit Hacks  */
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+        #tiptip_content {
+            padding: 4px 8px 5px 8px;
+            background-color: rgba(45,45,45,0.88);
+        }
+        #tiptip_holder.tip_bottom #tiptip_arrow_inner {
+            border-bottom-color: rgba(45,45,45,0.88);
+        }
+        #tiptip_holder.tip_top #tiptip_arrow_inner {
+            border-top-color: rgba(20,20,20,0.92);
         }
     }
 
