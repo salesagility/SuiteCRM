@@ -95,13 +95,8 @@ class aSubPanel
 			}
 		}
 		if (!$this->isCollection()){
-			if($parent_bean->module_name == "FP_events"){
-				$table = strtolower($instance_properties['module']);
-				$search_query = str_replace('contacts', $table, $search_query);
-			}else {
-				$table = strtolower($instance_properties['module']);
-				$search_query = str_replace('meetings', $table, $search_query);
-			}
+			$table = strtolower($instance_properties['module']);
+			$search_query = str_replace('contacts', $table, $search_query);
 		}
 
 		$this->search_query = $search_query;

@@ -125,8 +125,6 @@ $layout_defs['Accounts'] = array(
                     'get_distinct_data' => true,
                 ),
             ),
-            
-            // suspicious thing
             'searchdefs' => array(
                 'collection' =>
                     array(
@@ -158,7 +156,6 @@ $layout_defs['Accounts'] = array(
                         'width' => '10%',
                     ),
             ),
-            // //end of suspicious
         ),
         'documents' => array(
             'order' => 25,
@@ -194,7 +191,6 @@ $layout_defs['Accounts'] = array(
                 array('widget_class' => 'SubPanelTopCreateAccountNameButton'),
                 array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect')
             ),
-
         ),
         'opportunities' => array(
             'order' => 40,

@@ -6767,3 +6767,6 @@ div.target-list-table {
         }
     }
 
+    table tr#delegates_search {
+        background:#FAFAFA !important;
+    }
