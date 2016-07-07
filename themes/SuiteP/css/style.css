@@ -6438,9 +6438,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         float: left;
         /*line-height: 90px;*/
         text-align: left !important;
-        margin: 0 auto !important;
+        margin: 0 0 0 30px !important;
         width: 84%;
-        padding-left: 30px;
+
     }
 
     #mobile_menu {
