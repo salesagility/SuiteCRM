@@ -113,28 +113,23 @@
     </ul>
     <div class="clearfix"></div>
     <div class="tab-content">
-        {{* Loop through all top level panels first *}}
-        {{counter name="panelCount" print=false start=0 assign="panelCount"}}
-        {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
+        {* Loop through all top level panels first *}
+        {{counter name="tabCount" start=0 print=false assign="tabCount"}}
         {{foreach name=section from=$sectionPanels key=label item=panel}}
-            {{assign var='panel_id' value=$panelCount}}
-            {{capture name=label_upper assign=label_upper}}
-            {{$label|upper}}
-            {{/capture}}
-            {{counter name="tabCount" print=false}}
+
             {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
 
                 {{if $tabCount == '0'}}
                     <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
-                        test{{$tabCount}}
+                        TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </div>
                 {{else}}
                     <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
-                        test {{$tabCount}}
+                        TODO: Tab  {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </div>
                 {{/if}}
             {{/if}}
-
+        {{counter name="tabCount" print=false}}
         {{/foreach}}
     </div>
     {*display panels*}
@@ -172,7 +167,7 @@
 
             </div>
             <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
-                Panel Body {{$panelCount}}
+                TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
             </div>
         </div>
 
