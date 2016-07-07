@@ -62,6 +62,8 @@
                                                 <li><a href="{$item.URL}">{$item.LABEL}</a></li>
                                             {/if}
                                         {/foreach}
+                                    {else}
+                                        <li><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}
                                 </ul>
                             {/if}
