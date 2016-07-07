@@ -5131,6 +5131,13 @@ h3 span {
     left: -140px !important;
 }
 
+#modulelinks > ul,
+.mobileheader ul,
+#mobile_menu {
+    overflow-y: scroll !important;
+    height: 400px;
+}
+
 @media (min-width: 0px) and (max-height: 320px) {
 
     .mobile-bar ul.dropdown-menu.user-dropdown{

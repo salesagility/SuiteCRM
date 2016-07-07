@@ -65,6 +65,34 @@
                                     {else}
                                         <li><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}
+                                    <li role="presentation">
+                                        <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
+                                    </li>
+                                    {if count($recentRecords) > 0}
+                                    {foreach from=$recentRecords item=item name=lastViewed}
+                                            <li class="recentlinks" role="presentation">
+                                                <a title="{$item.module_name}"
+                                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
+                                                    {$item.image}&nbsp;<span aria-hidden="true">{$item.item_summary_short}</span>
+                                                </a>
+                                            </li>
+                                    {/foreach}
+                                    {/if}
+                                    <li role="presentation">
+                                        <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_FAVORITES}</strong></a>
+                                    </li>
+                                    {if count($favoriteRecords) > 0}
+                                    {foreach from=$favoriteRecords item=item name=lastViewed}
+                                            <li class="recentlinks" role="presentation">
+                                                <a title="{$item.module_name}"
+                                                   accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                   href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
+                                                    {$item.image}&nbsp;<span aria-hidden="true">{$item.item_summary_short}</span>
+                                                </a>
+                                            </li>
+                                    {/foreach}
+                                    {/if}
                                 </ul>
                             {/if}
                         {/if}
