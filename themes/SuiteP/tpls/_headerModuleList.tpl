@@ -140,64 +140,65 @@
                     {assign var="groupSelected" value=false}
                     {foreach from=$moduleTopMenu item=module key=name name=moduleList}
                         {if $name == $MODULE_TAB}
-                            <li class="topnav">
-                                {if $name != 'Home'}
+                            {if $name != 'Home'}
+                                <li class="topnav">
                                     <span class="currentTabLeft">&nbsp;</span>
                                     <span class="currentTab"
                                           style="color:#F08377 !important;">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
                                     <span>&nbsp;</span>
-                                {/if}
-                                <ul class="dropdown-menu" role="menu">
-                                    {if count($shortcutTopMenu.$name) > 0}
-                                        <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
-                                        {foreach from=$shortcutTopMenu.$name item=item}
-                                            {if $item.URL == "-"}
-                                                <li><a></a><span>&nbsp;</span></li>
-                                            {else}
-                                                <li><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                    <ul class="dropdown-menu" role="menu">
+                                        {if count($shortcutTopMenu.$name) > 0}
+                                            <h3 class="home_h3">{$APP.LBL_LINK_ACTIONS}</h3>
+                                            {foreach from=$shortcutTopMenu.$name item=item}
+                                                {if $item.URL == "-"}
+                                                    <li><a></a><span>&nbsp;</span></li>
+                                                {else}
+                                                    <li><a href="{$item.URL}">{$item.LABEL}</a></li>
+                                                {/if}
+                                            {/foreach}
+                                        {/if}
+                                        <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
+                                        {foreach from=$recentRecords item=item name=lastViewed}
+                                            {if $item.module_name == $name}
+                                                <div class="recently_viewed_link_container">
+                                                    <li class="recentlinks_topedit">
+                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
+                                                           style="margin-left:10px;"><span
+                                                                    class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                    </li>
+                                                    <li class="recentlinks_top" role="presentation">
+                                                        <a title="{$item.module_name}"
+                                                           accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">{$item.item_summary_short}</a>
+                                                    </li>
+                                                </div>
                                             {/if}
+                                            {foreachelse}
+                                            {$APP.NTC_NO_ITEMS_DISPLAY}
                                         {/foreach}
-                                    {/if}
-                                    <h3 class="recent_h3">{$APP.LBL_LAST_VIEWED}</h3>
-                                    {foreach from=$recentRecords item=item name=lastViewed}
-                                        {if $item.module_name == $name}
-                                            <div class="recently_viewed_link_container">
-                                                <li class="recentlinks_topedit">
-                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.item_id link_only=1}"
-                                                       style="margin-left:10px;"><span
-                                                                class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">{$item.item_summary_short}</a>
-                                                </li>
-                                            </div>
-                                        {/if}
-                                        {foreachelse}
-                                        {$APP.NTC_NO_ITEMS_DISPLAY}
-                                    {/foreach}
-                                    <h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>
-                                    {foreach from=$favoriteRecords item=item name=lastViewed}
-                                        {if $item.module_name == $name}
-                                            <div class="recently_viewed_link_container">
-                                                <li class="recentlinks_topedit">
-                                                    <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
-                                                       style="margin-left:10px;"><span
-                                                                class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
-                                                </li>
-                                                <li class="recentlinks_top" role="presentation">
-                                                    <a title="{$item.module_name}"
-                                                       accessKey="{$smarty.foreach.lastViewed.iteration}"
-                                                       href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">{$item.item_summary_short}</a>
-                                                </li>
-                                            </div>
-                                        {/if}
-                                        {foreachelse}
-                                        {$APP.NTC_NO_ITEMS_DISPLAY}
-                                    {/foreach}
-                                </ul>
-                            </li>
+                                        <h3 class="recent_h3">{$APP.LBL_FAVORITES}</h3>
+                                        {foreach from=$favoriteRecords item=item name=lastViewed}
+                                            {if $item.module_name == $name}
+                                                <div class="recently_viewed_link_container">
+                                                    <li class="recentlinks_topedit">
+                                                        <a href="{sugar_link module=$item.module_name action='EditView' record=$item.id link_only=1}"
+                                                           style="margin-left:10px;"><span
+                                                                    class=" glyphicon glyphicon-pencil" aria-hidden="true"></a>
+                                                    </li>
+                                                    <li class="recentlinks_top" role="presentation">
+                                                        <a title="{$item.module_name}"
+                                                           accessKey="{$smarty.foreach.lastViewed.iteration}"
+                                                           href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">{$item.item_summary_short}</a>
+                                                    </li>
+                                                </div>
+                                            {/if}
+                                            {foreachelse}
+                                            {$APP.NTC_NO_ITEMS_DISPLAY}
+                                        {/foreach}
+                                    </ul>
+                                 </li>
+                            {/if}
+
                         {/if}
                     {/foreach}
                     {foreach from=$groupTabs item=modules key=group name=groupList}
