@@ -116,7 +116,6 @@
         {* Loop through all top level panels first *}
         {{counter name="tabCount" start=0 print=false assign="tabCount"}}
         {{foreach name=section from=$sectionPanels key=label item=panel}}
-
             {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
 
                 {{if $tabCount == '0'}}
