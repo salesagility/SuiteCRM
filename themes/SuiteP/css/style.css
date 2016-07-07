@@ -2764,9 +2764,9 @@ ul.nav-tabs > li:first-of-type > a:hover {
     margin: 0 2px 0 0;
 }
 
-/*ul.nav-tabs > li:last-of-type {*/
-    /*float: right;*/
-/*}*/
+ul.nav-tabs > li:last-of-type {
+    float: right;
+}
 
 ul.nav-tabs > li > a:hover {
     background-color: #BFCAD3;
@@ -6347,7 +6347,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         overflow-y: scroll;
         overflow-x: hidden !important;
         float: left;
-        width: 200px !important;
+        width: 300px !important;
         margin: 0;
         padding: 0;
         background: #5d5670 !important;
@@ -6359,9 +6359,9 @@ div.list-view-rounded-corners > table th:last-of-type {
     #mobile_menu li {
         list-style: none;
         height: 50px;
-        line-height: 50px;
         margin: 0;
         border-bottom: 1px solid #757083;
+        line-height: 50px;
     }
 
     #mobile_menu a {
