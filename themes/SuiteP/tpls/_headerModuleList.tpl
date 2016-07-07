@@ -52,8 +52,9 @@
                         {if $name == $MODULE_TAB}
                             <span class="modulename" data-toggle="dropdown"
                                   aria-expanded="false">{sugar_link id="moduleTab_$name" module=$name data=$module}</span>
-                            {if $name !='Home'}
+
                                 <ul class="dropdown-menu" role="menu">
+                                {if $name !='Home'}
                                     {if count($shortcutTopMenu.$name) > 0}
                                         {foreach from=$shortcutTopMenu.$name item=item}
                                             {if $item.URL == "-"}
@@ -65,10 +66,12 @@
                                     {else}
                                         <li><a>{$APP.LBL_NO_SHORTCUT_MENU}</a></li>
                                     {/if}
-                                    <li role="presentation">
-                                        <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
-                                    </li>
+                            {/if}
+
                                     {if count($recentRecords) > 0}
+                                        <li role="presentation">
+                                            <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_LAST_VIEWED}</strong></a>
+                                        </li>
                                     {foreach from=$recentRecords item=item name=lastViewed}
                                             <li class="recentlinks" role="presentation">
                                                 <a title="{$item.module_name}"
@@ -79,10 +82,11 @@
                                             </li>
                                     {/foreach}
                                     {/if}
-                                    <li role="presentation">
-                                        <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_FAVORITES}</strong></a>
-                                    </li>
+
                                     {if count($favoriteRecords) > 0}
+                                        <li role="presentation">
+                                            <a style="padding-top: 32px !important; border-bottom: none"><strong>{$APP.LBL_FAVORITES}</strong></a>
+                                        </li>
                                     {foreach from=$favoriteRecords item=item name=lastViewed}
                                             <li class="recentlinks" role="presentation">
                                                 <a title="{$item.module_name}"
@@ -94,7 +98,7 @@
                                     {/foreach}
                                     {/if}
                                 </ul>
-                            {/if}
+
                         {/if}
                     {/foreach}
                 </div>
