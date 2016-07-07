@@ -6430,16 +6430,37 @@ div.list-view-rounded-corners > table th:last-of-type {
     #mobileheader {
         display: block;
     }
-    .modulename {
-        visibility: visible;
-        font-size: 14px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        float: left;
-        /*line-height: 90px;*/
-        text-align: left !important;
-        margin: 0 0 0 30px !important;
-        width: 84%;
+
+
+    
+    @media (max-width: 320px) {
+        .modulename {
+            visibility: visible;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            float: left;
+            /*line-height: 90px;*/
+            text-align: left !important;
+            margin: 0 auto 0 15px !important;
+            width: 84%;
+
+        }
+        
+    }
+
+    @media (min-width: 321px) {
+        .modulename {
+            visibility: visible;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            /*line-height: 90px;*/
+            text-align: left !important;
+            margin: 0 auto 0 30px !important;
+            width: 84%;
+
+        }
 
     }
 
