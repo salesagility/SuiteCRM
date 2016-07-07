@@ -5488,6 +5488,11 @@ object {
     background-color: #66727D;
      padding: 15px 10px 0 10px;
 }
+
+.panel-default > .panel-body {
+    padding: 0 0 0 0;
+}
+
 div.panel-heading a.collapsed {
     background-color: #BFCAD3;
 }

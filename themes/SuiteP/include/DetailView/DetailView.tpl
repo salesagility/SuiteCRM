@@ -176,7 +176,9 @@
 
             </div>
             <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
-                TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
+                <div class="tab-content">
+                    TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
+                </div>
             </div>
         </div>
 
