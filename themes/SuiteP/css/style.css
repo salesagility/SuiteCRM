@@ -4906,8 +4906,6 @@ h3 span {
     border-radius: 3px;
     border-top-right-radius: 0px;
     padding: 4px 10px 4px 10px;
-    height: 180px;
-    max-height: 180px !important;
 }
 
 #quickcreatetop ul li {
@@ -5033,6 +5031,14 @@ h3 span {
         overflow-y: scroll !important;
         height: 180px;
         max-height: 200px;
+    }
+}
+
+@media (max-width: 480px) and (max-height: 320px) {
+     #quickcreatetop ul.dropdown-menu {
+        height: 180px !important;
+        max-height: 180px !important;
+        overflow-y: scroll !important;
     }
 }
 
