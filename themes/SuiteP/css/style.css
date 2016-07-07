@@ -5466,7 +5466,7 @@ object {
     font-weight: 300px;
 }
 
-.panel-default > .panel-heading a:after.collapsed {
+.panel-default > .panel-heading a.collapsed:after {
     content: "\2b";
 }
 
