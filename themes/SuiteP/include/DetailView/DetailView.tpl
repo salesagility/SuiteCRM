@@ -164,9 +164,10 @@
         <div class="panel panel-default">
             <div class="panel-heading {{$panelHeadingCollapse}}">
                 <a class="" role="button" data-toggle="collapse" href="#top-panel-{{$panelCount}}" aria-expanded="false">
-                    {sugar_translate label='{{$label}}' module='{{$module}}'}
+                    <span>{sugar_translate label='{{$label}}' module='{{$module}}'}</span>
+                    <div></div>
                 </a>
-                <span></span>
+
             </div>
             <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
                 Panel Body {{$panelCount}}

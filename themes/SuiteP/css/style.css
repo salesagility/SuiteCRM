@@ -5455,19 +5455,25 @@ object {
 
 .panel-default > .panel-heading > a {
     color: #ffffff;
-    display: block;
+    display: inline-block;
     height: 48px;
     padding: 8px 0 0 0;
     font-weight: 500;
 }
 
-.panel-default > .panel-heading a:after {
+div.panel-heading a > div {
+    font-family: 'Glyphicons Halflings';
+    display: inline-block;
+    position: static;
+}
+
+div.panel-heading a:before {
     font-family: 'Glyphicons Halflings';
     content: "\2212";
     font-weight: 700;
 }
 
-.panel-default > .panel-heading a.collapsed:after {
+div.panel-heading a.collapsed:before {
     content: "\2b";
 }
 
