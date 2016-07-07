@@ -938,7 +938,7 @@ EOQ;
 
         // TODO--low: 1000s sep, Decimal Symb, Name Format
 
-        $defaultDateFormatSelect = self::getSelect('default_date_format', $sugarConfigDefaults['date_formats'], empty($_SESSION['default_date_format']) ? $sugarConfigDefaults['datef'] : $_SESSION['default_date_format']);
+        $defaultDateFormatSelect = self::getSelect('default_date_format', $sugarConfigDefaults['date_formats'], empty($_SESSION['default_date_format']) ? $sugarConfigDefaults['default_date_format'] : $_SESSION['default_date_format']);
         $defaultTimeFormatSelect = self::getSelect('default_time_format', $sugarConfigDefaults['time_formats'], empty($_SESSION['default_time_format']) ? 'h:ia' : $_SESSION['default_time_format'] /* $sugarConfigDefaults['timef'] */);
 
         $timezoneSelect = self::getSelect('timezone', array_merge(array(TimeDate::guessTimezone() => TimeDate::guessTimezone()), TimeDate::getTimezoneList()), TimeDate::guessTimezone());
