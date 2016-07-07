@@ -122,7 +122,7 @@ div.p_login #loginform .input-group input {
     border-radius: 3px;
 }
 
-div.p_login #loginform .input-group input#user_name, div.p_login #loginform .input-group input#user_password {
+div.p_login #loginform .input-group input#user_name, #user_name:-webkit-autofill, div.p_login #loginform .input-group input#user_password {
     background-repeat: no-repeat;
     background-image: none, url("../../../../themes/SuiteP/images/login_bg.svg"), url("../../../../themes/SuiteP/images/login_bg.png");
 }
@@ -2703,7 +2703,7 @@ ul.nav-tabs {
     margin: 16px 0 16px 0;
 }
 
-ul.nav-tabs > li > a {
+ul.nav-tabs > li > a, ul.nav-tabs > li.active > a:focus {
     font-weight: 400;
     letter-spacing: 2px;
     font-size: 13px;
@@ -2712,6 +2712,7 @@ ul.nav-tabs > li > a {
     margin: 0 2px 0 2px;
     color: #ffffff;
     line-height: 32px;
+    border-color: #eee #eee #fff;
 }
 
 ul.nav-tabs > li:first-of-type > a {
@@ -2721,23 +2722,30 @@ ul.nav-tabs > li:first-of-type > a {
 }
 
 ul.nav-tabs > li:first-of-type > a:hover {
-    background-color: #ffffff;
+    background-color: #BFCAD3;
+    color: #ffffff;
+    border-color: #eee #eee #fff;
     margin: 0 2px 0 0;
-    color: #000000;
 }
 
 ul.nav-tabs > li > a:hover {
-    background-color: #ffffff;
-    margin: 0 2px 0 2px;
-    color: #000000;
-    border-bottom-color: #fff;
+    background-color: #BFCAD3;
+    color: #ffffff;
+    border-color: #eee #eee #fff;
 }
 
 
-ul.nav-tabs > li.active > a {
+ul.nav-tabs > li.active > a,  ul.nav-tabs > li.active > a:focus {
     background-color: #778591;
     color: #ffffff;
+    border-color: #eee #eee #fff;
+    margin-left: 0px;
+}
 
+ul.nav-tabs > li.active > a:hover{
+    background-color: #778591;
+    color: #ffffff;
+    border-color: #eee #eee #fff;
 }
 
 li#tab-actions > a {
@@ -2749,6 +2757,7 @@ li#tab-actions > a {
     background-position: 80% 120%;
     background-origin: border-box;
     background-size: 10px 95px;
+    border-color: #F08377;
 }
 
 li#tab-actions > a:hover {
@@ -2756,6 +2765,33 @@ li#tab-actions > a:hover {
     background-color: #F08377;
     background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
     color: #ffffff;
+}
+
+li#tab-actions > ul.dropdown-menu {
+    background-color: #F08377;
+    margin-left: 2px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+li#tab-actions > ul.dropdown-menu li {
+    background-color: #F08377;
+    border-bottom: 1px solid #FA988D;
+}
+
+li#tab-actions > ul.dropdown-menu a,
+li#tab-actions > ul.dropdown-menu .button:hover,
+li#tab-actions > ul.dropdown-menu .button:focus,
+li#tab-actions > ul.dropdown-menu .button:active,
+li#tab-actions > ul.dropdown-menu .open > .dropdown-toggle.btn-primary {
+    background-color: #F08377;
+}
+
+li#tab-actions > ul.dropdown-menu li:last-of-type a {
+    background-color: #F08377;
+    border: none;
 }
 
 div.tab-content {
@@ -5034,7 +5070,7 @@ h3 span {
     }
 }
 
-@media (max-width: 480px) and (max-height: 320px) {
+@media (max-width: 640px) and (max-height: 320px) {
      #quickcreatetop ul.dropdown-menu {
         height: 180px !important;
         max-height: 180px !important;
@@ -5042,7 +5078,7 @@ h3 span {
     }
 }
 
-@media (min-width: 480px) and (max-height: 320px) {
+@media (min-width: 480px) and (max-height: 321px) {
 
     .mobile-bar ul.dropdown-menu.user-dropdown{
         top: 25px !important;

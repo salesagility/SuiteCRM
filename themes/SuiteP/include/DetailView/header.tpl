@@ -55,30 +55,6 @@
     <tr>
         <td class="buttons" align="left" NOWRAP width="80%">
             <div class="actionsContainer">
-                {{if !isset($form.buttons)}}
-                    {{sugar_button module="$module" id="EDIT" view="$view" form_id="formDetailView" appendTo="detail_header_buttons"}}
-                    {{sugar_button module="$module" id="DUPLICATE" view="EditView" form_id="formDetailView" appendTo="detail_header_buttons"}}
-                    {{sugar_button module="$module" id="DELETE" view="$view" form_id="formDetailView" appendTo="detail_header_buttons"}}
-                {{else}}
-                        {{counter assign="num_buttons" start=0 print=false}}
-                        {{foreach from=$form.buttons key=val item=button}}
-                            {{if !is_array($button) && in_array($button, $built_in_buttons)}}
-                                {{counter print=false}}
-                                {{sugar_button module="$module" id="$button" view="EditView" form_id="formDetailView" appendTo="detail_header_buttons"}}
-                            {{/if}}
-                        {{/foreach}}
-                        {{if count($form.buttons) > $num_buttons}}
-                            {{foreach from=$form.buttons key=val item=button}}
-                                {{if is_array($button) && $button.customCode}}
-                                 {{sugar_button module="$module" id="$button" view="EditView" form_id="formDetailView" appendTo="detail_header_buttons"}}
-                                {{/if}}
-                            {{/foreach}}
-                        {{/if}}
-                        {{if empty($form.hideAudit) || !$form.hideAudit}}
-                            {{sugar_button module="$module" id="Audit" view="EditView" form_id="formDetailView" appendTo="detail_header_buttons"}}
-                        {{/if}}
-                {{/if}}
-
                 <form action="index.php" method="post" name="DetailView" id="formDetailView">
                     <input type="hidden" name="module" value="{$module}">
                     <input type="hidden" name="record" value="{$fields.id.value}">
