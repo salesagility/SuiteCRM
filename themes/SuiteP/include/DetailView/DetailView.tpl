@@ -45,43 +45,45 @@
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
-        {{foreach name=section from=$sectionPanels key=label item=panel}}
-            {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
-            {* if tab *}
-            {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
-            {*if tab display*}
-                {{counter name="tabCount" print=false}}
-                {{if $tabCount == '0'}}
-                    <li role="presentation" class="active">
-                        <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab" class="hidden-xs">
-                            {sugar_translate label='{{$label}}' module='{{$module}}'}
-                        </a>
-                        <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
-                            {sugar_translate label='{{$label}}' module='{{$module}}'}
-                        </a>
-                        <ul id="first-tab-menu-xs" class="dropdown-menu">
-                            {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
-                            {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
-                            {{counter name="tabCountXS" print=false}}
-                            <li role="presentation">
-                                <a id="tab{{$tabCountXS}}" href="#tab-content-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
-                                    {sugar_translate label='{{$label}}' module='{{$module}}'}
-                                </a>
-                            </li>
-                            {{/foreach}}
-                        </ul>
-                    </li>
+        {{if $useTabs}}
+            {{foreach name=section from=$sectionPanels key=label item=panel}}
+                {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                {* if tab *}
+                {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
+                {*if tab display*}
+                    {{counter name="tabCount" print=false}}
+                    {{if $tabCount == '0'}}
+                        <li role="presentation" class="active">
+                            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                            <ul id="first-tab-menu-xs" class="dropdown-menu">
+                                {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
+                                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                                {{counter name="tabCountXS" print=false}}
+                                <li role="presentation">
+                                    <a id="tab{{$tabCountXS}}" href="#tab-content-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                                        {sugar_translate label='{{$label}}' module='{{$module}}'}
+                                    </a>
+                                </li>
+                                {{/foreach}}
+                            </ul>
+                        </li>
+                    {{else}}
+                        <li role="presentation" class="hidden-xs">
+                            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
+                                {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            </a>
+                        </li>
+                    {{/if}}
                 {{else}}
-                    <li role="presentation" class="hidden-xs">
-                        <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
-                            {sugar_translate label='{{$label}}' module='{{$module}}'}
-                        </a>
-                    </li>
+                    {* if panel skip*}
                 {{/if}}
-            {{else}}
-                {* if panel skip*}
-            {{/if}}
-        {{/foreach}}
+            {{/foreach}}
+        {{/if}}
         <li id="tab-actions" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
             <ul class="dropdown-menu">
@@ -111,25 +113,33 @@
             </ul>
         </li>
     </ul>
+
     <div class="clearfix"></div>
-    <div class="tab-content">
+    {{if $useTabs}}
+        <div class="tab-content">
+    {{else}}
+        <div class="tab-content" style="padding: 0; border: 0;">
+    {{/if}}
         {* Loop through all top level panels first *}
         {{counter name="tabCount" start=0 print=false assign="tabCount"}}
-        {{foreach name=section from=$sectionPanels key=label item=panel}}
-            {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
-
-                {{if $tabCount == '0'}}
-                    <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
-                        TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
-                    </div>
-                {{else}}
-                    <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
-                        TODO: Tab  {sugar_translate label='{{$label}}' module='{{$module}}'}
-                    </div>
+        {{if $useTabs}}
+            {{foreach name=section from=$sectionPanels key=label item=panel}}
+                {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
+                    {{if $tabCount == '0'}}
+                        <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
+                            TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
+                        </div>
+                    {{else}}
+                        <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
+                            TODO: Tab  {sugar_translate label='{{$label}}' module='{{$module}}'}
+                        </div>
+                    {{/if}}
                 {{/if}}
-            {{/if}}
-        {{counter name="tabCount" print=false}}
-        {{/foreach}}
+                {{counter name="tabCount" print=false}}
+            {{/foreach}}
+        {{else}}
+            <div class="tab-pane panel-collapse"></div>
+        {{/if}}
     </div>
     {*display panels*}
     <div class="panel-content">
@@ -138,7 +148,7 @@
         {{foreach name=section from=$sectionPanels key=label item=panel}}
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
         {* if tab *}
-        {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
+        {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true && $useTabs)}}
         {*if tab skip*}
         {{else}}
         {* if panel display*}
