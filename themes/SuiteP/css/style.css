@@ -5465,8 +5465,17 @@ div.panel-heading a.collapsed {
     background-color: #BFCAD3;
 }
 
-div.panel-heading a div {
-    width: 97.66%;
+@media (max-width: 767px) {
+    div.panel-heading a div {
+        width: 94.66%;
+    }
+}
+
+
+@media (min-width: 768px) {
+    div.panel-heading a div{
+        width: 97.66%;
+    }
 }
 
 div.panel-heading a.collapsed:before {
