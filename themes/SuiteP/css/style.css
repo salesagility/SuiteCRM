@@ -4146,13 +4146,14 @@ select, select:focus, select::selection, .saved_search_select {
 
     line-height: 40px;
     outline: 0;
+    scrollbar-base-color: #A5E8D6;
+    scrollbar-arrow-color: #A5E8D6;
 }
 
 select[multiple] {
     background-image: none !important;
     overflow: auto !important;
 }
-
 
 ::-webkit-scrollbar              { /* 1 */
     width: 12px;
@@ -4164,12 +4165,20 @@ select[multiple] {
 }
 ::-webkit-scrollbar-track-piece  { /* 4 */ }
 ::-webkit-scrollbar-thumb        { /* 5 */
-    background: #A5E8D6;
+    background: rgba(165, 232, 214, 1);
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
 }
 ::-webkit-scrollbar-corner       { /* 6 */ }
 ::-webkit-resizer                { /* 7 */ }
+
+
+.sidebar::-webkit-scrollbar-thumb        { /* 5 */
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+}
+
 
 .list tr th {
     font-weight: normal;
