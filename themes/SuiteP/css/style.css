@@ -5429,6 +5429,47 @@ object {
     margin-right: 20px;
 }
 
+.panel-default > .panel-heading {
+    background: #66727D;
+    color: white;
+    padding: 10px 15px 0 15px;
+    vertical-align: middle;
+    height: 48px;
+
+}
+
+.panel-default > .panel-heading-collapse {
+    background: #BFCAD3;
+}
+
+.collapse, .collapsing, .collapse.in {
+    -webkit-transition: none;
+    transition: none;
+}
+
+.panel-default > .panel-heading {
+    display: block;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.panel-default > .panel-heading > a {
+    color: #ffffff;
+    display: block;
+    height: 48px;
+    padding: 8px 0 0 0;
+}
+
+.panel-default > .panel-heading a:after {
+    font-family: 'Glyphicons Halflings';
+    content: "\2212";
+    font-weight: 300px;
+}
+
+.panel-default > .panel-heading a:after.collapsed {
+    content: "\2b";
+}
+
 .aor_dragbox {
     height: 250px;
     overflow: scroll;
