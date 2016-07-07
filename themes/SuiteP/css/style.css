@@ -5455,26 +5455,24 @@ object {
 
 .panel-default > .panel-heading > a {
     color: #ffffff;
-    display: inline-block;
+    display: block;
     height: 48px;
     padding: 8px 0 0 0;
     font-weight: 500;
 }
-
-div.panel-heading a > div {
-    font-family: 'Glyphicons Halflings';
-    display: inline-block;
-    position: static;
-}
-
-div.panel-heading a:before {
-    font-family: 'Glyphicons Halflings';
-    content: "\2212";
-    font-weight: 700;
+div.panel-heading a div {
+    width: 97.66%;
 }
 
 div.panel-heading a.collapsed:before {
-    content: "\2b";
+    content: "\2b" !important;
+}
+
+div.panel-heading a:before
+{
+    font-family: 'Glyphicons Halflings';
+    content: "\2212";
+    font-weight: 700;
 }
 
 .aor_dragbox {

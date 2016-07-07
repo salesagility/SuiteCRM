@@ -152,6 +152,7 @@
         {{if (isset($tabDefs[$label_upper].panelDefault) && $tabDefs[$label_upper].panelDefault == "collapsed") }}
         {*collapse panel*}
             {{assign var='collapse' value="panel-collapse collapse"}}
+            {{assign var='collapsed' value="collapsed"}}
             {{assign var='collapseIcon' value="glyphicon glyphicon-plus"}}
             {{assign var='panelHeadingCollapse' value="panel-heading-collapse"}}
         {{else}}
@@ -163,9 +164,8 @@
 
         <div class="panel panel-default">
             <div class="panel-heading {{$panelHeadingCollapse}}">
-                <a class="" role="button" data-toggle="collapse" href="#top-panel-{{$panelCount}}" aria-expanded="false">
-                    <span>{sugar_translate label='{{$label}}' module='{{$module}}'}</span>
-                    <div></div>
+                <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#top-panel-{{$panelCount}}" aria-expanded="false">
+                    <div class="col-xs-11"><span class="glyphicon glyphicon-home"> </span>  {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                 </a>
 
             </div>
