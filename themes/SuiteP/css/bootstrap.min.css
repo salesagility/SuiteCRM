@@ -6493,7 +6493,7 @@ button.close {
     display: none!important;
 }
 
-@media (max-width:767px) {
+@media (max-width:768px) {
     .visible-xs {
     display: block!important;
 }

@@ -50,12 +50,30 @@
         {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
         {{counter name="tabCount" print=false}}
         {{if $tabCount == '0'}}
-        <li role="presentation" class="active"><a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}</a>
+        <li role="presentation" class="active">
+            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
+            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
+            <ul id="first-tab-menu-xs" class="dropdown-menu">
+                {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
+                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                {{counter name="tabCountXS" print=false}}
+                <li role="presentation">
+                    <a id="tab{{$tabCountXS}}" href="#tab-content-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                        {sugar_translate label='{{$label}}' module='{{$module}}'}
+                    </a>
+                </li>
+                {{/foreach}}
+            </ul>
         </li>
         {{else}}
-        <li role="presentation" class=""><a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
-                {sugar_translate label='{{$label}}' module='{{$module}}'}</a>
+        <li role="presentation" class="hidden-xs">
+            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
         </li>
         {{/if}}
         {{/if}}
@@ -114,5 +132,5 @@
         {{/foreach}}
     </div>
 </div>
-{{include file=$footerTpl}}
+{{include file=''}}
 <script type="text/javascript" src="modules/Favorites/favorites.js"></script>

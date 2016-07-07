@@ -377,4 +377,11 @@ $(document).ready(function() {
     });
 });
 
+
+function changeFirstTab(src) {
+    var selected = $(src);
+    var selectedHtml = $(selected.context).html();
+    $('#xstab0').html(selectedHtml);
+    return true;
+}
 // End of custom jQuery

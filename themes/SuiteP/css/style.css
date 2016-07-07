@@ -2721,6 +2721,27 @@ ul.nav-tabs > li:first-of-type > a {
     color: #ffffff;
 }
 
+a.first-tab-xs {
+    background-color: #778591 !important;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-repeat: no-repeat;
+    background-position: 50% 80%;
+    background-origin: border-box;
+    background-size: 10px 95px;
+    border-bottom: none !important;
+}
+
+#first-tab-menu-xs.dropdown-menu {
+    padding: 0 0 0 0px !important;
+    margin: 0 0 0 1px !important;
+}
+
+#first-tab-menu-xs.dropdown-menu,
+#first-tab-menu-xs.dropdown-menu > li,
+#first-tab-menu-xs.dropdown-menu > li > a {
+    background-color: #778591 !important;
+}
+
 ul.nav-tabs > li:first-of-type > a:hover {
     background-color: #BFCAD3;
     color: #ffffff;
@@ -5072,6 +5093,12 @@ h3 span {
 
 @media (max-width: 640px) and (max-height: 320px) {
      #quickcreatetop ul.dropdown-menu {
+        height: 180px !important;
+        max-height: 180px !important;
+        overflow-y: scroll !important;
+    }
+
+    li#tab-actions > ul{
         height: 180px !important;
         max-height: 180px !important;
         overflow-y: scroll !important;
