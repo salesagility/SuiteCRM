@@ -4155,22 +4155,60 @@ select[multiple] {
     overflow: auto !important;
 }
 
-::-webkit-scrollbar              { /* 1 */
+div::-webkit-scrollbar,
+select::-webkit-scrollbar,
+input::-webkit-scrollbar,
+textarea::-webkit-scrollbar,
+ul::-webkit-scrollbar
+{ /* 1 */
     width: 12px;
+    height: 12px;
 }
-::-webkit-scrollbar-button       { /* 2 */ }
-::-webkit-scrollbar-track        { /* 3 */
+div::-webkit-scrollbar-button,
+select::-webkit-scrollbar-button,
+input::-webkit-scrollbar-button,
+textarea::-webkit-scrollbar-button,
+ul::-webkit-scrollbar-button
+{ /* 2 */ }
+div::-webkit-scrollbar-track,
+select::-webkit-scrollbar-track,
+input::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track,
+ul::-webkit-scrollbar-track
+{ /* 3 */
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     border-radius: 10px;
 }
-::-webkit-scrollbar-track-piece  { /* 4 */ }
-::-webkit-scrollbar-thumb        { /* 5 */
+
+div::-webkit-scrollbar-track-piece,
+select::-webkit-scrollbar-track-piece,
+input::-webkit-scrollbar-track-piece,
+textarea::-webkit-scrollbar-track-piece,
+ul::-webkit-scrollbar-track-piece
+{ /* 4 */ }
+div::-webkit-scrollbar-thumb,
+select::-webkit-scrollbar-thumb,
+input::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb,
+ul::-webkit-scrollbar-thumb
+{ /* 5 */
     background: rgba(165, 232, 214, 1);
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
 }
-::-webkit-scrollbar-corner       { /* 6 */ }
-::-webkit-resizer                { /* 7 */ }
+
+div::-webkit-scrollbar-corner,
+select::-webkit-scrollbar-corner,
+input::-webkit-scrollbar-corner,
+textarea::-webkit-scrollbar-corner,
+ul::-webkit-scrollbar-corner
+{ /* 6 */ }
+div::-webkit-resizer
+select::-webkit-resizer
+input::-webkit-resizer
+textarea::-webkit-resizer
+ul::-webkit-resizer
+{ /* 7 */ }
 
 
 .sidebar::-webkit-scrollbar-thumb        { /* 5 */
@@ -6443,8 +6481,7 @@ div.list-view-rounded-corners > table th:last-of-type {
             /*line-height: 90px;*/
             text-align: left !important;
             margin: 0 auto 0 15px !important;
-            width: 84%;
-
+            width: 8sc
         }
         
     }
