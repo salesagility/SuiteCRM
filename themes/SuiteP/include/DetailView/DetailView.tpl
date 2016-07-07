@@ -82,9 +82,9 @@
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
             <ul class="dropdown-menu">
                 {{if !isset($form.buttons)}}
-                    <li><a>{{sugar_button module="$module" id="EDIT" view="$view" form_id="formDetailView"}}<a></li>
-                    <li><a>{{sugar_button module="$module" id="DUPLICATE" view="EditView" form_id="formDetailView"}}<a></li>
-                    <li><a>{{sugar_button module="$module" id="DELETE" view="$view" form_id="formDetailView"}}<a></li>
+                    <li>{{sugar_button module="$module" id="EDIT" view="$view" form_id="formDetailView"}}</li>
+                    <li>{{sugar_button module="$module" id="DUPLICATE" view="EditView" form_id="formDetailView"}}</li>
+                    <li>{{sugar_button module="$module" id="DELETE" view="$view" form_id="formDetailView"}}</li>
                 {{else}}
                     {{counter assign="num_buttons" start=0 print=false}}
                     {{foreach from=$form.buttons key=val item=button}}
