@@ -165,7 +165,9 @@
         <div class="panel panel-default">
             <div class="panel-heading {{$panelHeadingCollapse}}">
                 <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#top-panel-{{$panelCount}}" aria-expanded="false">
-                    <div class="col-xs-11"><span class="glyphicon glyphicon-home"> </span>  {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
+                    <div class="col-xs-11">
+                        <div><span class="glyphicon glyphicon-home"> </span>  {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
+                    </div>
                 </a>
 
             </div>

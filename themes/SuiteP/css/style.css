@@ -5432,7 +5432,7 @@ object {
 .panel-default > .panel-heading {
     background: #66727D;
     color: white;
-    padding: 10px 15px 0 15px;
+    padding: 0px;
     vertical-align: middle;
     height: 48px;
 
@@ -5457,9 +5457,14 @@ object {
     color: #ffffff;
     display: block;
     height: 48px;
-    padding: 8px 0 0 0;
     font-weight: 500;
+    background-color: #66727D;
+     padding: 15px 10px 0 10px;
 }
+div.panel-heading a.collapsed {
+    background-color: #BFCAD3;
+}
+
 div.panel-heading a div {
     width: 97.66%;
 }
