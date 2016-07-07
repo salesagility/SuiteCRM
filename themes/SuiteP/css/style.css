@@ -4179,6 +4179,9 @@ select[multiple] {
     -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
 }
 
+#tab-actions .dropdown-menu::-webkit-scrollbar-thumb  {
+    background: rgba(0,0,0,0.25);
+}
 
 .list tr th {
     font-weight: normal;
