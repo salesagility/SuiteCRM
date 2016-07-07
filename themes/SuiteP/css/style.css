@@ -5458,12 +5458,13 @@ object {
     display: block;
     height: 48px;
     padding: 8px 0 0 0;
+    font-weight: 500;
 }
 
 .panel-default > .panel-heading a:after {
     font-family: 'Glyphicons Halflings';
     content: "\2212";
-    font-weight: 300px;
+    font-weight: 700;
 }
 
 .panel-default > .panel-heading a.collapsed:after {
