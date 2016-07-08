@@ -124,21 +124,22 @@
         {{counter name="tabCount" start=0 print=false assign="tabCount"}}
         {{if $useTabs}}
             {{foreach name=section from=$sectionPanels key=label item=panel}}
-                {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
+            {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+                {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
                     {{if $tabCount == '0'}}
                         <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
-                            TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                         </div>
                     {{else}}
                         <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
-                            TODO: Tab  {sugar_translate label='{{$label}}' module='{{$module}}'}
+                            {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                         </div>
                     {{/if}}
                 {{/if}}
                 {{counter name="tabCount" print=false}}
             {{/foreach}}
         {{else}}
-            <div class="tab-pane panel-collapse"></div>
+            <div class="tab-pane panel-collapse">test</div>
         {{/if}}
     </div>
     {*display panels*}
@@ -177,7 +178,7 @@
             </div>
             <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
                 <div class="tab-content">
-                    TODO: Tab {sugar_translate label='{{$label}}' module='{{$module}}'}
+                    {{include file='themes/SuiteP/include/DetailView/tab_panel_content.tpl'}}
                 </div>
             </div>
         </div>
@@ -187,4 +188,31 @@
         {{/foreach}}
     </div>
 </div>
+
+{{include file=$footerTpl}}
+{*{{if $useTabs}}*}
+    {*<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>*}
+    {*<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>*}
+    {*<script type="text/javascript">*}
+        {*var {{$module}}_detailview_tabs = new YAHOO.widget.TabView("{{$module}}_detailview_tabs");*}
+        {*{{$module}}_detailview_tabs.selectTab(0);*}
+    {*</script>*}
+{*{{/if}}*}
+<script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
+
+{*<div>*}
+    {*tabDefs*}
+    {*{{$tabDefs|var_dump}}*}
+    {*<hr>*}
+    {*useTabs*}
+    {*{{$useTabs|var_dump}}*}
+    {*<hr>*}
+    {*sectionPanels*}
+    {*{{$sectionPanels|var_dump}}*}
+    {*<hr>*}
+    {*sectionPanels*}
+    {*{{foreach name=section from=$sectionPanels key=label item=panel}}*}
+        {*{{$panel|var_dump}}*}
+    {*{{/foreach}}*}
+{*</div>*}
