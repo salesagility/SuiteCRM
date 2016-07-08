@@ -1826,6 +1826,10 @@ li.noBullet {
     margin-bottom: 20px;
 }
 
+div#generate_success.error{
+    padding: 0px;
+}
+
 p.error {
     margin: 0;
 }
