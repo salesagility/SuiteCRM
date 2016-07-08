@@ -50,7 +50,7 @@
     		
     		<a onclick="SUGAR.util.top();" href="javascript:void(0)">Back to top</a>
     	</div>
-        <!--<div id="copyright_data">
+        <div id="copyright_data">
             <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
                 <p>{$MOD.LBL_SUITE_DESC1}</p>
                 <br>
@@ -62,7 +62,7 @@
             <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
                 <p>{$COPYRIGHT}</p>
             </div>
-        </div>-->
+        </div>
     </footer>
     <!-- END Generic Footer -->
 {/if}
