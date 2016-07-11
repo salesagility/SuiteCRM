@@ -84,6 +84,7 @@
                 {{/if}}
             {{/foreach}}
         {{/if}}
+        {if $MOD.LBL_ENABLE_ACTION_MENU}
         <li id="tab-actions" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
             <ul class="dropdown-menu">
@@ -112,6 +113,7 @@
                 {{/if}}
             </ul>
         </li>
+        {/if}
     </ul>
 
     <div class="clearfix"></div>
