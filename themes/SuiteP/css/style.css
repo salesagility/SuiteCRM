@@ -1876,8 +1876,13 @@ p.error {
     margin: 0;
 }
 
+
 .error {
     border: none;
+}
+
+.error:empty{
+    padding:0px;
 }
 
 div#content p.error {
