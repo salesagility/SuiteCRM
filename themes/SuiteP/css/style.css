@@ -735,12 +735,12 @@ th, td {
     padding-left: 0;
 }
 
-.detail-view-row, .detail-view-row-item {
+.detail-view-row, .detail-view-row-item, .edit-view-row, .edit-view-row-item {
     margin: 0 0 16px 0;
     min-width: 48px;
 }
 
-.detail-view-row .label {
+.detail-view-row .label, .edit-view-row .label {
     color: #534D64;
     display: inline;
     padding: 0 0 0 8px;

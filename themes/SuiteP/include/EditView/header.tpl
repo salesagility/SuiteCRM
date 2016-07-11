@@ -38,6 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+
 <script>
     {literal}
     $(document).ready(function(){
@@ -78,6 +79,9 @@
 {{$field}}   
 {{/foreach}}
 {{/if}}
+
+{{if !$config.enable_action_menu}}
+
 {{if empty($form.button_location) || $form.button_location == 'top'}}
 {{if !empty($form) && !empty($form.buttons)}}
    {{foreach from=$form.buttons key=val item=button}}
@@ -92,8 +96,11 @@
 {{/if}}
 {{/if}}
 {{sugar_action_menu buttons=$header_buttons class="fancymenu" flat=true}}
+
+{{/if}}
 </td>
-<td align='right'>{{$ADMIN_EDIT}}
+<td align='right'>
+{{$ADMIN_EDIT}}
 {{if $panelCount == 0}}
     {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
 	{{if $SHOW_VCR_CONTROL}}
