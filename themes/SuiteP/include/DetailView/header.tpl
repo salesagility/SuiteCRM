@@ -38,6 +38,8 @@
  ********************************************************************************/
 
 *}
+
+
 {{* Add the preForm code if it is defined (used for vcards) *}}
 {{if $preForm}}
 {{$preForm}}
@@ -50,7 +52,7 @@
     {/literal}
 </script>
 
-{if !$MOD.LBL_ENABLE_ACTION_MENU}
+{if !$config.enable_action_menu}
 <div id="no-tab-actions">
     <ul class="nav nav-pills">
         {{if !isset($form.buttons)}}
