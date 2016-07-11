@@ -735,6 +735,48 @@ th, td {
     padding-left: 0;
 }
 
+.detail-view-row, .detail-view-row-item {
+    margin: 0 0 16px 0;
+    min-width: 48px;
+}
+
+.detail-view-row .label {
+    color: #534D64;
+    display: inline;
+    padding: 0 0 0 8px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 48px;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: baseline;
+}
+
+.dataField {
+    min-height: 48px;
+    line-height: 48px;
+}
+
+.detail-view-field {
+    color: #534D64;
+    display: inline;
+    padding:  0px 16px 0px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    min-height: 48px;
+    line-height: 48px;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #F5F5F5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+#no-tab-actions > ul > li {
+    margin: 8px 8px 8px 0px;
+}
+
 .detail tr td {
     border: none;
     vertical-align: top;
