@@ -128,6 +128,7 @@ class CampaignTest extends PHPUnit_Framework_TestCase
     {
         $campaign = new Campaign();
 
+        $current_theme = SugarThemeRegistry::current();
         //execute the method and verify that it retunrs expected results
 
         $expected = array(
@@ -137,9 +138,9 @@ class CampaignTest extends PHPUnit_Framework_TestCase
                 'IMPRESSIONS' => '0',
                 'OPTIONAL_LINK' => 'display:none',
                 'TRACK_CAMPAIGN_TITLE' => 'View Status',
-                'TRACK_CAMPAIGN_IMAGE' => '~'.preg_quote('themes/SuiteR/images/view_status.gif?v=').'[\w-]+~',
+                'TRACK_CAMPAIGN_IMAGE' => '~'.preg_quote('themes/'.$current_theme.'/images/view_status.gif?v=').'[\w-]+~',
                 'LAUNCH_WIZARD_TITLE' => 'Launch Wizard',
-                'LAUNCH_WIZARD_IMAGE' => '~'.preg_quote('themes/SuiteR/images/edit_wizard.gif?v=').'[\w-]+~',
+                'LAUNCH_WIZARD_IMAGE' => '~'.preg_quote('themes/'.$current_theme.'/images/edit_wizard.gif?v=').'[\w-]+~',
                 'TRACK_VIEW_ALT_TEXT' => 'View Status',
                 'LAUNCH_WIZ_ALT_TEXT' => 'Launch Wizard',
         );

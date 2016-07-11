@@ -129,6 +129,8 @@ class CallTest extends PHPUnit_Framework_TestCase
     {
         $call = new Call();
 
+        $current_theme = SugarThemeRegistry::current();
+
         $call->assigned_user_id = 1;
         $call->created_by = 1;
         $call->modified_user_id = 1;
@@ -145,7 +147,9 @@ class CallTest extends PHPUnit_Framework_TestCase
                 'EMAIL_REMINDER_SENT' => '0',
                 'REPEAT_INTERVAL' => '1',
                 'SET_COMPLETE' => '~'
-                                  .preg_quote('<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><img src="themes/SuiteR/images/close_inline.png?v=')
+                                  .preg_quote('<a id=\'\' onclick=\'SUGAR.util.closeActivityPanel.show("Calls","","Held","listview","1");\'><img src="themes/'
+                                    .$current_theme
+                                    .'/images/close_inline.png?v=')
                                   .'[\w-]+'
                                   .preg_quote('"     border=\'0\' alt="Close" /></a>').'~',
                 'DATE_START' => '<font class=\'overdueTask\'></font>',
