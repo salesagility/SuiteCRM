@@ -280,36 +280,6 @@ jQuery(function($){
     });
 })
 
-//var checkContents = setInterval(function(){
-//    if ($(".list.view").length > 0 || $(".list.View").length > 0){ // Check if element has been found
-//
-//        if($(".list.view").length > 0){
-//            element = $(".list.view");
-//        }
-//
-//        if($(".list.View").length > 0){
-//            element = $(".list.View");
-//        }
-//
-//
-//        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-//        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-//        //$(".footable").find("th:first").attr("data-toggle","true");
-//
-//        $(element).footable();
-//
-//
-//        // Button to toggle list view search
-//        $('.showsearch').click(function() {
-//            $('.search_form').toggle();
-//        });
-//        $('#userlinks_togglemobilesearch').click(function() {
-//            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
-//        });
-//
-//        clearInterval(checkContents);
-//    }
-//},1);
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
