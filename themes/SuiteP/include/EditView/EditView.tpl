@@ -40,7 +40,7 @@
 
 
 *}
-{{include file="themes/SuiteP/include/EditView/header.tpl"}}
+{{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 <div id="EditView_tabs">
     {*display tabs*}
@@ -162,8 +162,9 @@
             {{/foreach}}
         </div>
     </div>
+{{sugar_include type='smarty' file=$footerTpl}}
 
-{{include file='themes/SuiteP/include/EditView/footer.tpl'}}
+
 {{if $useTabs}}
 {sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
 <script type="text/javascript">

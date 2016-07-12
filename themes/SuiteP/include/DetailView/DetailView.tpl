@@ -39,7 +39,7 @@
  */
 *}
 
-{{include file='themes/SuiteP/include/DetailView/header.tpl'}}
+{{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 <div>
     {*display tabs*}
