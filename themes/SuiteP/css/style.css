@@ -1908,6 +1908,8 @@ li.noBullet {
     color: #fff;
     padding: 10px;
     margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 div#generate_success.error{
