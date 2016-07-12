@@ -18,7 +18,13 @@
                         {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
                         {*hide label*}
                         {{else}}
+
+                        {{if $smarty.foreach.colIteration.total > 1}}
                             <div class="col-xs-12 col-sm-4 label">
+                        {{else}}
+                             <div class="col-xs-12 col-sm-2 label">
+                        {{/if}}
+
                                 {*label*}
                                 {{if isset($colData.field.customLabel)}}
                                 <label for="{{$fields[$colData.field.name].name}}">{{$colData.field.customLabel}}</label>
@@ -56,7 +62,7 @@
                             {{assign name="fieldClasses" value="col-xs-12 col-sm-8"}}
                         {{/if}}
 
-                        <div class="{{$fieldClasses}} edit-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+                        <div class="{{$fieldClasses}} test edit-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
                             {{if !empty($def.templateMeta.labelsOnTop)}}
                                 {{if isset($colData.field.label)}}
                                     {{if !empty($colData.field.label)}}

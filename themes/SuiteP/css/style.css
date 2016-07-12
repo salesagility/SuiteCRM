@@ -2108,6 +2108,11 @@ td.edit.view td[align=right] {
     padding-right: 0;
 }
 
+.emailaddresses > tbody > tr > td {
+    padding-top: 8px;
+    line-height: 40px;
+}
+
 .emailaddresses tr td[scope=row] {
     padding-left: 0 !important;
     padding-top: 0 !important;
@@ -3848,7 +3853,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
-    margin-top: 16px;
+    margin-top: 8px;
 }
 
 #EditView_tabs .edit [type="radio"], #EditView_tabs .edit [type="checkbox"]  {
