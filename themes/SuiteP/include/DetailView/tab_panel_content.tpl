@@ -82,40 +82,37 @@
                     </div>
                     <div class="col-xs-12 col-sm-8 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
 
-                        {{if !empty($colData.field.name)}}
-        {if !$fields.{{$colData.field.name}}.hidden}
-                        {{/if}}
-				{{$colData.field.prefix}}
-				{{if ($colData.field.customCode && !$colData.field.customCodeRenderField) || $colData.field.assign}}
-					{counter name="panelFieldCount" print=false}
-					<span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
-				{{elseif $fields[$colData.field.name] && !empty($colData.field.fields) }}
-				    {{foreach from=$colData.field.fields item=subField}}
-				        {{if $fields[$subField]}}
-				        	{counter name="panelFieldCount" print=false}
-				            {{sugar_field parentFieldArray='fields' tabindex=$tabIndex vardef=$fields[$subField] displayType='DetailView'}}&nbsp;
+                    {{if !empty($colData.field.name)}}
+                        {if !$fields.{{$colData.field.name}}.hidden}
+                    {{/if}}
+                    {{$colData.field.prefix}}
+                    {{if ($colData.field.customCode && !$colData.field.customCodeRenderField) || $colData.field.assign}}
+                        {counter name="panelFieldCount" print=false}
+                        <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
+                    {{elseif $fields[$colData.field.name] && !empty($colData.field.fields) }}
+                        {{foreach from=$colData.field.fields item=subField}}
+                            {{if $fields[$subField]}}
+                                {counter name="panelFieldCount" print=false}
+                                {{sugar_field parentFieldArray='fields' tabindex=$tabIndex vardef=$fields[$subField] displayType='DetailView'}}&nbsp;
 
-				        {{else}}
-				        	{counter name="panelFieldCount" print=false}
-				            {{$subField}}
-				        {{/if}}
-				    {{/foreach}}
-				{{elseif $fields[$colData.field.name]}}
-					{counter name="panelFieldCount" print=false}
-					{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
-				{{/if}}
-				{{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
-				    {counter name="panelFieldCount" print=false}
-				    <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
-                {{/if}}
+                            {{else}}
+                                {counter name="panelFieldCount" print=false}
+                                {{$subField}}
+                            {{/if}}
+                        {{/foreach}}
+                    {{elseif $fields[$colData.field.name]}}
+                        {counter name="panelFieldCount" print=false}
+                        {{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
+                    {{/if}}
+                    {{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
+                        {counter name="panelFieldCount" print=false}
+                        <span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
+                    {{/if}}
 				    {{$colData.field.suffix}}
 				    {{if !empty($colData.field.name)}}
             {/if}
-                    {{else}}
                     {{/if}}
                 </div>
-                {{else}}
-
                 {{/if}}
                     {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}<div class="inlineEditIcon col-xs-1"> {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}</div>{{/if}}
                     {{counter name="fieldCount" print=false}}
