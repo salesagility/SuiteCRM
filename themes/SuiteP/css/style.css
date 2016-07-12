@@ -3471,6 +3471,14 @@ iframe.teamNoticeBox {
     margin: 10px;
 }
 
+.buttons input#btn_view_change_log {
+    background-color: #AA9DCC;
+}
+
+.buttons input#btn_view_change_log:hover {
+    background-color: #9589b3;
+}
+
 .detail h4 {
     font-weight: bold;
     margin: 10px;
