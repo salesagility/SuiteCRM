@@ -855,6 +855,10 @@ th, td {
     padding: 5px 5px 5px 7px !important;
 }
 
+#EditView input[type="button"] {
+    margin: 4px;
+}
+
 table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPagination.detail.view {
     border-bottom: none;
     margin-bottom: 0;
