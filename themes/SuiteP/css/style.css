@@ -846,8 +846,6 @@ th, td {
 .edit tr td {
     font-weight: normal;
     vertical-align: top;
-    height: 40px;
-    line-height: 40px;
     /*padding: 3px !important;*/
 }
 
@@ -867,6 +865,10 @@ th, td {
     margin: 4px;
 }
 
+fieldset {
+    margin-top: 32px;
+}
+
 fieldset legend {
     border: none;
     font-size: 16px;
@@ -879,10 +881,12 @@ fieldset table {
 }
 
 fieldset > table tr > td:first-of-type {
-
     width: 33.33333333%;
 }
 
+fieldset tr, fieldset td {
+    border: none !important;
+}
 
 fieldset label {
     border: none;
