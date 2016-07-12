@@ -41,9 +41,20 @@
     var LBL_SHOWOPTIONS = '{sugar_translate module="Users" label="LBL_SHOWOPTIONS"}';
     var LBL_HIDEOPTIONS = '{sugar_translate module="Users" label="LBL_HIDEOPTIONS"}';
 </script>
+
 <!-- Start login container -->
-<div class="container">
+
+<div class="p_login">
+
+	<div class="p_login_top">
+		
+		<a title="SuiteCRM" href="http://www.suitecrm.com">SuiteCRM</a>
+		
+	</div>
+    
+    <div class="p_login_middle">
     <div id="loginform">
+        
         <form class="form-signin" role="form" action="index.php" method="post" name="DetailView" id="form"
               onsubmit="return document.getElementById('cant_login').value == ''">
             <div class="companylogo">{$LOGIN_IMAGE}</div>
@@ -69,22 +80,20 @@
             {foreach from=$LOGIN_VARS key=key item=var}
                 <input type="hidden" name="{$key}" value="{$var}">
             {/foreach}
-            <br>
             {if !empty($SELECT_LANGUAGE)}
                 {sugar_translate module="Users" label="LBL_LANGUAGE"}:
                 <select name='login_language' onchange="switchLanguage(this.value)">{$SELECT_LANGUAGE}</select>
             {/if}
             <br>
-            <br>
             <div class="input-group">
-                <span class="input-group-addon logininput glyphicon glyphicon-user"></span>
+                <!--<span class="input-group-addon logininput glyphicon glyphicon-user"></span>-->
                 <input type="text" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_USER_NAME"}" required autofocus
                        tabindex="1" id="user_name" name="user_name" value='{$LOGIN_USER_NAME}'/>
             </div>
             <br>
             <div class="input-group">
-                <span class="input-group-addon logininput glyphicon glyphicon-lock"></span>
+                <!--<span class="input-group-addon logininput glyphicon glyphicon-lock"></span>-->
                 <input type="password" class="form-control"
                        placeholder="{sugar_translate module="Users" label="LBL_PASSWORD"}" tabindex="2"
                        id="user_password" name="user_password" value='{$LOGIN_PASSWORD}'/>
@@ -98,6 +107,7 @@
                 <a href='javascript:void(0)'>{sugar_translate module="Users" label="LBL_LOGIN_FORGOT_PASSWORD"}</a>
             </div>
         </form>
+        
         <form class="form-signin passform" role="form" action="index.php" method="post" name="DetailView" id="form"
               name="fp_form" id="fp_form">
             <div id="forgot_password_dialog" style="display:none">
@@ -125,6 +135,19 @@
                        value="{sugar_translate module="Users" label="LBL_LOGIN_SUBMIT"}">
             </div>
         </form>
+        
     </div>
+    </div>
+    
+    <div class="p_login_bottom">
+
+    		<a id="admin_options">&copy; Supercharged by SuiteCRM</a>
+            <a id="powered_by">&copy; Powered By SugarCRM</a>
+    	
+	</div>
+    
 </div>
 <!-- End login container -->
+
+
+

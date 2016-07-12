@@ -38,7 +38,7 @@
  */
 
 .chartTitle {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 14px;
 	font-weight: bold;
@@ -47,7 +47,7 @@
 }
 
 .units {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 12px;
 	font-weight: normal;
@@ -55,7 +55,7 @@
 }
 
 .groupName {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 12px;
 	font-weight: bold;
@@ -63,7 +63,7 @@
 }
 
 .noData {
-    font-family: Arial;
+    font-family: "Lato",Arial;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
@@ -71,7 +71,7 @@
 }
 
 .data {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 12px;
 	font-weight: bold;
@@ -80,7 +80,7 @@
 }
 
 .drillTip {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 10px;
 	font-weight: normal;
@@ -88,7 +88,7 @@
 }
 
 .toolTips {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 12px;
 	font-weight: bold;
@@ -96,7 +96,7 @@
 }
 
 .flyOutTitle{
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 11px;
 	font-weight: normal;
@@ -104,7 +104,7 @@
 }
 
 .flyOutText{
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 12px;
 	font-weight: normal;
@@ -112,7 +112,7 @@
 }
 
 .flyOutSelected{
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 12px;
 	font-weight: bold;
@@ -120,7 +120,7 @@
 }
 
 .flyOutDisabled{
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 12px;
 	font-style: italic;
@@ -128,7 +128,7 @@
 }
 
 .wedgeLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 10px;
 	font-weight: normal;
@@ -136,7 +136,7 @@
 }
 
 .barValueLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 10px;
 	font-weight: normal;
@@ -144,7 +144,7 @@
 }
 
 .barValueLabelsOver {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 10px;
 	font-weight: normal;
@@ -152,7 +152,7 @@
 }
 
 .horizontalBarValueLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 10px;
 	font-weight: normal;
@@ -160,7 +160,7 @@
 }
 
 .horizontalBarValueLabelsOver {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 10px;
 	font-weight: normal;
@@ -168,7 +168,7 @@
 }
 
 .horizontalBarGroupLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 10px;
 	font-weight: normal;
@@ -176,7 +176,7 @@
 }
 
 .barGroupLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 10px;
 	font-weight: normal;
@@ -184,7 +184,7 @@
 }
 
 .yAxisLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: center;
 	font-size: 10px;
 	font-weight: normal;
@@ -192,7 +192,7 @@
 }
 
 .funnelLeftLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: right;
 	font-size: 10px;
 	font-weight: normal;
@@ -200,7 +200,7 @@
 }
 
 .funnelRightLabels {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 10px;
 	font-weight: normal;
@@ -208,7 +208,7 @@
 }
 
 .funnelLeftLabelsOver {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: right;
 	font-size: 10px;
 	font-weight: bold;
@@ -216,14 +216,14 @@
 }
 
 .funnelRightLabelsOver {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 10px;
 	font-weight: bold;
 	color: #000000;
 }
 .gaugeLabels {
-    font-family: Arial;
+    font-family: "Lato",Arial;
     text-align: center;
     font-size: 10px;
     font-weight: bold;
@@ -231,7 +231,7 @@
 }
 
 .gaugeNumber {
-    font-family: Arial;
+    font-family: "Lato",Arial;
     text-align: center;
     font-size: 20px;
     font-weight: bold;
@@ -239,14 +239,14 @@
 }
 
 .legendEntry {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 11px;
 	font-weight: normal;
 	color: #000000;
 }
 .legendEntryOver {
-	font-family: Arial;
+	font-family: "Lato",Arial;
 	text-align: left;
 	font-size: 11px;
 	font-weight: bold;
@@ -254,7 +254,7 @@
 }
 
 .squeezedWedgeLabels {
-    font-family: Arial;
+    font-family: "Lato",Arial;
     text-align: center;
     font-size: 10px;
     font-weight: normal;
