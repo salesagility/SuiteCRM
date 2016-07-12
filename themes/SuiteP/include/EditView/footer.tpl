@@ -50,55 +50,7 @@
 {assign var='place' value="_FOOTER"} <!-- to be used for id for buttons with custom code in def files-->
 {{if empty($form.button_location) || $form.button_location == 'bottom'}}
 
-
-{{if !$config.enable_action_menu}}
-<div class="buttons">
-{{if !empty($form) && !empty($form.buttons)}}
-   {{foreach from=$form.buttons key=val item=button}}
-      {{sugar_button module="$module" id="$button" form_id="$form_id" view="$view" appendTo="footer_buttons" location="FOOTER"}}
-   {{/foreach}}
-{{else}}
-{{sugar_button module="$module" id="SAVE" view="$view" form_id="$form_id" location="FOOTER" appendTo="footer_buttons"}}
-{{sugar_button module="$module" id="CANCEL" view="$view" form_id="$form_id" location="FOOTER" appendTo="footer_buttons"}}
-{{/if}}
-{{if empty($form.hideAudit) || !$form.hideAudit}}
-{{sugar_button module="$module" id="Audit" view="$view" form_id="$form_id" appendTo="footer_buttons"}}
-{{/if}}
-{{sugar_action_menu buttons=$footer_buttons class="fancymenu" flat=true}}
-</div>
-{{else}}
-<ul class="nav nav-tabs">
-    <li id="tab-actions" class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
-        <ul class="dropdown-menu">
-            {{if !isset($form.buttons)}}
-            <li>{{sugar_button module="$module" id="EDIT" view="$view" form_id="formEditView"}}</li>
-            <li>{{sugar_button module="$module" id="DUPLICATE" view="EditView" form_id="formEditView"}}</li>
-            <li>{{sugar_button module="$module" id="DELETE" view="$view" form_id="formEditView"}}</li>
-            {{else}}
-            {{counter assign="num_buttons" start=0 print=false}}
-            {{foreach from=$form.buttons key=val item=button}}
-            {{if !is_array($button) && in_array($button, $built_in_buttons)}}
-            {{counter print=false}}
-            <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formEditView"}}</li>
-            {{/if}}
-            {{/foreach}}
-            {{if count($form.buttons) > $num_buttons}}
-            {{foreach from=$form.buttons key=val item=button}}
-            {{if is_array($button) && $button.customCode}}
-            <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formEditView"}}</li>
-            {{/if}}
-            {{/foreach}}
-            {{/if}}
-            {{if empty($form.hideAudit) || !$form.hideAudit}}
-            {{sugar_button module="$module" id="Audit" view="EditView" form_id="formEditView"}}
-            {{/if}}
-            {{/if}}
-        </ul>
-    </li>
-</ul>
-{{/if}}
-
+{{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
 
 {{/if}}
 </form>

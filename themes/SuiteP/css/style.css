@@ -806,16 +806,16 @@ th, td {
     margin-bottom: 2px;
 }
 
-#EditView_tabs {
-    padding: 8px;
-    background: #fff;
-}
+/*#EditView_tabs {*/
+    /*padding: 0px;*/
+    /*background: #fff;*/
+/*}*/
 
 #EditView .edit tr td {
     font-weight: 700;
 }
 
-#EditView .edit tr td input, #EditView .edit tr td textarea, #EditView .edit tr td select {
+#EditView .edit input, #EditView .edit textarea, #EditView .edit select {
     font-weight: normal;
 }
 

@@ -38,11 +38,11 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
+
 *}
 {{include file="themes/SuiteP/include/EditView/header.tpl"}}
 {sugar_include include=$includes}
-
-<div>
+<div id="EditView_tabs">
     {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
     <ul class="nav nav-tabs">
@@ -55,7 +55,7 @@
         {{counter name="tabCount" print=false}}
         {{if $tabCount == '0'}}
         <li role="presentation" class="active">
-            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab" class="hidden-xs">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
             <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
@@ -66,7 +66,7 @@
                 {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
                 {{counter name="tabCountXS" print=false}}
                 <li role="presentation">
-                    <a id="tab{{$tabCountXS}}" href="#tab-content-{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                    <a id="tab{{$tabCountXS}}" href="#detailpanel_{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
                         {sugar_translate label='{{$label}}' module='{{$module}}'}
                     </a>
                 </li>
@@ -75,7 +75,7 @@
         </li>
         {{else}}
         <li role="presentation" class="hidden-xs">
-            <a id="tab{{$tabCount}}" href="#tab-content-{{$tabCount}}" data-toggle="tab">
+            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab">
                 {sugar_translate label='{{$label}}' module='{{$module}}'}
             </a>
         </li>
@@ -85,36 +85,7 @@
         {{/if}}
         {{/foreach}}
         {{/if}}
-        {if $config.enable_action_menu}
-        <li id="tab-actions" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
-            <ul class="dropdown-menu">
-                {{if !isset($form.buttons)}}
-                <li>{{sugar_button module="$module" id="EDIT" view="$view" form_id="formEditView"}}</li>
-                <li>{{sugar_button module="$module" id="DUPLICATE" view="EditView" form_id="formEditView"}}</li>
-                <li>{{sugar_button module="$module" id="DELETE" view="$view" form_id="formEditView"}}</li>
-                {{else}}
-                {{counter assign="num_buttons" start=0 print=false}}
-                {{foreach from=$form.buttons key=val item=button}}
-                {{if !is_array($button) && in_array($button, $built_in_buttons)}}
-                {{counter print=false}}
-                <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formEditView"}}</li>
-                {{/if}}
-                {{/foreach}}
-                {{if count($form.buttons) > $num_buttons}}
-                {{foreach from=$form.buttons key=val item=button}}
-                {{if is_array($button) && $button.customCode}}
-                <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formEditView"}}</li>
-                {{/if}}
-                {{/foreach}}
-                {{/if}}
-                {{if empty($form.hideAudit) || !$form.hideAudit}}
-                {{sugar_button module="$module" id="Audit" view="EditView" form_id="formEditView"}}
-                {{/if}}
-                {{/if}}
-            </ul>
-        </li>
-        {/if}
+
     </ul>
 
     <div class="clearfix"></div>
@@ -130,11 +101,11 @@
             {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
             {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
             {{if $tabCount == '0'}}
-            <div class="tab-pane active fade in" id='tab-content-{{$tabCount}}'>
+            <div class="tab-pane active fade in" id='detailpanel_{{$tabCount}}'>
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{else}}
-            <div class="tab-pane fade" id='tab-content-{{$tabCount}}'>
+            <div class="tab-pane fade" id='detailpanel_{{$tabCount}}'>
                 {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
             </div>
             {{/if}}
@@ -172,14 +143,14 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading {{$panelHeadingCollapse}}">
-                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#top-panel-{{$panelCount}}" aria-expanded="false">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#detailpanel_{{$panelCount}}" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
                             <div><span class="glyphicon glyphicon-home"> </span>  {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                         </div>
                     </a>
 
                 </div>
-                <div class="panel-body {{$collapse}}" id="top-panel-{{$panelCount}}">
+                <div class="panel-body {{$collapse}}" id="detailpanel_{{$panelCount}}">
                     <div class="tab-content">
                         {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
                     </div>
@@ -193,7 +164,7 @@
     </div>
 
 {{include file='themes/SuiteP/include/EditView/footer.tpl'}}
-    {{if $useTabs}}
+{{if $useTabs}}
 {sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
 <script type="text/javascript">
 var {{$form_name}}_tabs = new YAHOO.widget.TabView("{{$form_name}}_tabs");
