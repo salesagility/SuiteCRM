@@ -2922,6 +2922,11 @@ li#tab-actions > ul.dropdown-menu li {
     border-bottom: 1px solid #FA988D;
 }
 
+li#tab-actions > ul.dropdown-menu input {
+    width: 100%;
+    text-align: left;
+}
+
 li#tab-actions > ul.dropdown-menu a,
 li#tab-actions > ul.dropdown-menu .button,
 li#tab-actions > ul.dropdown-menu .button:hover,
