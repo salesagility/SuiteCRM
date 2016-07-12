@@ -891,7 +891,11 @@ fieldset label {
     color: #534D64;
 }
 
-
+.validation-message {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 4px;
+}
 
 table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPagination.detail.view {
     border-bottom: none;
