@@ -871,12 +871,18 @@ fieldset legend {
     border: none;
     font-size: 16px;
     font-weight: 700;
-    padding-left: 25%;
+    padding-left: 33.33333333%;
 }
 
 fieldset table {
     background: none !important;
 }
+
+fieldset > table tr > td:first-of-type {
+
+    width: 33.33333333%;
+}
+
 
 fieldset label {
     border: none;
