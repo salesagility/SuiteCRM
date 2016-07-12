@@ -2,10 +2,8 @@
         {{foreach name=rowIteration from=$panel key=row item=rowData}}
             {*row*}
             {{counter name="columnCount" start=0 print=false assign="columnCount"}}
-
             {{foreach name=colIteration from=$rowData key=col item=colData}}
                 {*column*}
-
                 {{if $smarty.foreach.colIteration.total > 1}}
                     <div class="col-xs-12 col-sm-6 edit-view-row-item">
                 {{else}}
@@ -13,16 +11,10 @@
                 {{/if}}
 
                 {{counter name="fieldCount" start=0 print=false assign="fieldCount"}}
+                {{counter name="addressCount" start=0 print=false assign="addressCount"}}
                 {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
-                    {*Field Exceptions*}
-                    {{if !empty($colData.field.type)}}
-                        {{if $colData.field.type == 'address'}}
-
-                        {{/if}}
-                    {{/if}}
-
-                    {{if $fieldCount < $smarty.foreach.colIteration.total && !empty($colData.field.name) && empty($colData.field.hideIf)}}
+                    {{if $fieldCount < $smarty.foreach.colIteration.total && $addressCount < 1 && !empty($colData.field.name) && empty($colData.field.hideIf)}}
                         {{if !empty($colData.field.hideLabel) && $colData.field.hideLabel == true}}
                         {*hide label*}
                         {{else}}
@@ -116,6 +108,14 @@
                         {sugar_getimage name="inline_edit_icon.svg" attr='border="0" ' alt="$alt_edit"}
                         </div>
                     {{/if}}
+
+                    {*Field Exceptions*}
+                    {{if !empty($colData.field.type)}}
+                        {{if $colData.field.type == 'address'}}
+                             {{counter name="addressCount" print=false}}
+                        {{/if}}
+                    {{/if}}
+
                     {{counter name="fieldCount" print=false}}
                 {{/foreach}}
                 </div>

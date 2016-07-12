@@ -744,12 +744,13 @@ th, td {
     color: #534D64;
     display: inline;
     padding: 0 0 0 8px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 48px;
     text-align: left;
     white-space: nowrap;
     vertical-align: baseline;
+
 }
 
 .dataField {
@@ -813,14 +814,21 @@ th, td {
 
 #EditView .edit tr td {
     font-weight: 700;
+    color: #534D64;
 }
 
 #EditView .edit input, #EditView .edit textarea, #EditView .edit select {
     font-weight: normal;
+    color: #534D64
 }
 
 .edit {
     padding: 0 6px 12px 10px !important;
+}
+
+.label {
+    font-size: 14px;
+    color: #534D64;
 }
 
 .edit > table {
@@ -858,6 +866,26 @@ th, td {
 #EditView input[type="button"] {
     margin: 4px;
 }
+
+fieldset legend {
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding-left: 25%;
+}
+
+fieldset table {
+    background: none !important;
+}
+
+fieldset label {
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #534D64;
+}
+
+
 
 table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPagination.detail.view {
     border-bottom: none;
