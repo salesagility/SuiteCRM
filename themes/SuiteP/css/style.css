@@ -3877,8 +3877,6 @@ fieldset[disabled] .btn-primary.active {
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
-    height: 32px;
-    width: 32px;
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
@@ -3890,16 +3888,90 @@ fieldset[disabled] .btn-primary.active {
 }
 
 #EditView_tabs .id-ff-remove img, #EditView_tabs .edit [type="button"] img {
-    position: relative;
-    top: -4px;
-    left: 0;
-    height: 16px;
-    width: 16px;
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    height: 32px;
+    width: 32px;
+}
+
+.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    height: 32px;
+    width: 32px;
+}
+
+
+.emailaddresses button {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    height: 34px;
+    width: 34px;
+    line-height: 0;
+}
+
+
+.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #F08377;
+}
+
+
+.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button:hover {
+    background-color: #D66C60;
 }
 
 #EditView_tabs .edit input, #EditView_tabs .edit textarea {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.col-sm-6 .edit-view-field input[type="text"] {
+    width: 60% !important;
+}
+
+ .col-sm-12 .edit-view-field input[type="text"] {
+    width: 30% !important;
+}
+
+#email1_span,
+#email1_span > table,
+#email1_span table,
+#email1_span table > tbody,
+#email1_span tbody,
+#email1_span table > tbody > tr,
+#email1_span tr,
+#email1_span td {
+    width: 100%;
+    display: block;
+}
+
+
+
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td:first-of-type {
+    width: 35% !important;
+    display: table-cell;
+}
+
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td {
+    width: 20%;
+    display: table-cell;
+    background: none;
+}
+
+#email1_span table.emailaddresses > tbody > tr > td {
+   background: #00AA00;
+    display: table-cell;
+}
+
+input.sqsEnabled {
+    width: 100% !important;
+}
+
+textarea#billing_address_street, textarea#shipping_address_street {
+    width: 230px;
+}
+
+textarea#description {
+    width: 100%;
 }
 
 .dropdown-menu {
@@ -4636,14 +4708,30 @@ div.listViewEmpty {
 }
 
 span.id-ff button {
-    height: 20px;
-    line-height: 20px;
-    padding: 0 5px 0 5px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     margin: 5px 5px 5px 0;
+    line-height: 0;
 }
 
 span.id-ff button:hover {
     background-color: #d66c60;
+}
+
+span.id-ff button img {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+}
+
+span.id-ff button:first-of-type img {
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-select.png');
+
+}
+span.id-ff button:last-of-type img {
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-select.png');
 }
 
 a.tabFormAdvLink {
@@ -5647,7 +5735,6 @@ object {
 .panel-default > .panel-heading {
     display: block;
     text-transform: uppercase;
-    font-size: 12px;
 }
 
 .panel-default > .panel-heading > a {
@@ -5655,8 +5742,9 @@ object {
     display: block;
     height: 48px;
     font-weight: 500;
+    font-size: 14px !important;
     background-color: #66727D;
-     padding: 15px 10px 0 10px;
+    padding: 15px 10px 0 10px;
 }
 
 .panel-default > .panel-body {
