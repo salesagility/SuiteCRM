@@ -3957,9 +3957,22 @@ fieldset[disabled] .btn-primary.active {
     background: none;
 }
 
-#email1_span table.emailaddresses > tbody > tr > td {
-   background: #00AA00;
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td {
+    width: 20%;
     display: table-cell;
+    background: none;
+}
+
+#email1_span table.emailaddresses > tbody > tr > td[nowrap] {
+
+}
+
+#email1_span table.emailaddresses > tbody > tr > td:first-of-type {
+    background: #0000A0;
+}
+
+#email1_span table.emailaddresses > tbody > tr > td:first-of-type + td {
+   background: #00AA00;
 }
 
 input.sqsEnabled {
