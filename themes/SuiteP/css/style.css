@@ -3936,18 +3936,14 @@ fieldset[disabled] .btn-primary.active {
 #email1_span > table,
 #email1_span table,
 #email1_span table > tbody,
-#email1_span tbody,
 #email1_span table > tbody > tr,
-#email1_span tr,
 #email1_span td {
     width: 100%;
     display: block;
 }
 
-
-
 #email1_span table.emailaddresses > tbody:first-of-type > tr > td:first-of-type {
-    width: 35% !important;
+    width: 40% !important;
     display: table-cell;
 }
 
@@ -3957,23 +3953,35 @@ fieldset[disabled] .btn-primary.active {
     background: none;
 }
 
-#email1_span table.emailaddresses > tbody:first-of-type > tr > td {
-    width: 20%;
-    display: table-cell;
-    background: none;
+.emailaddresses td[nowrap="NOWRAP"] {
+    width: 30% !important;
+    display: inline-block;
+    float:left;
 }
 
-#email1_span table.emailaddresses > tbody > tr > td[nowrap] {
-
+.emailaddresses td:nth-of-type(2) {
+    display: inline-block !important;
+    width: 0% !important;
 }
 
-#email1_span table.emailaddresses > tbody > tr > td:first-of-type {
-    background: #0000A0;
+.emailaddresses td[align="center"] {
+    display: inline-block !important;
+    width: 20% !important;
 }
 
-#email1_span table.emailaddresses > tbody > tr > td:first-of-type + td {
-   background: #00AA00;
+.emailaddresses td[nowrap="NOWRAP"] input[type="text"]{
+    width: 100% !important;
 }
+
+
+
+/*#email1_span table.emailaddresses > tbody > tr > td:first-of-type {*/
+    /*background: #0000A0;*/
+/*}*/
+
+/*#email1_span table.emailaddresses > tbody > tr > td:first-of-type + td {*/
+   /*background: #00AA00;*/
+/*}*/
 
 input.sqsEnabled {
     width: 100% !important;
