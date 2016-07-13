@@ -3937,27 +3937,35 @@ fieldset[disabled] .btn-primary.active {
 #email1_span table,
 #email1_span table > tbody,
 #email1_span table > tbody > tr,
-#email1_span td {
+#email1_span table > tbody > tr > td {
     width: 100%;
     display: block;
 }
 
 #email1_span table.emailaddresses > tbody:first-of-type > tr > td:first-of-type {
-    width: 40% !important;
-    display: table-cell;
+    width: 32px !important;
+    display: inline-block;
 }
 
 #email1_span table.emailaddresses > tbody:first-of-type > tr > td {
-    width: 20%;
-    display: table-cell;
-    background: none;
+    width: 64px !important;
+    display: inline-block;
 }
 
-.emailaddresses td[nowrap="NOWRAP"] {
-    width: 30% !important;
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td:nth-of-type(2) {
+    width: 0% !important;
     display: inline-block;
-    float:left;
 }
+
+.emailaddresses td[nowrap="NOWRAP"]  {
+    display: block !important;
+}
+
+.emailaddresses td[scope="row"]  {
+    text-align: center;
+}
+
+
 
 .emailaddresses td:nth-of-type(2) {
     display: inline-block !important;
@@ -3966,22 +3974,76 @@ fieldset[disabled] .btn-primary.active {
 
 .emailaddresses td[align="center"] {
     display: inline-block !important;
-    width: 20% !important;
+    width: 128px !important;
+
 }
 
 .emailaddresses td[nowrap="NOWRAP"] input[type="text"]{
     width: 100% !important;
 }
 
+.emailaddresses td:nth-of-type(2) {
+    width: 38px !important;
+}
+
+.emailaddresses td:nth-of-type(3) {
+    width: 64px !important;
+}
+
+.emailaddresses td:nth-of-type(4) {
+    width: 64px !important;
+}
+
+.emailaddresses td:nth-of-type(5) {
+    width: 64px !important;
+}
 
 
-/*#email1_span table.emailaddresses > tbody > tr > td:first-of-type {*/
-    /*background: #0000A0;*/
-/*}*/
+.emailaddresses td:nth-of-type(6), .emailaddresses td:nth-of-type(7) {
+    display: inline-block !important;
+    width: 0% !important;
+}
 
-/*#email1_span table.emailaddresses > tbody > tr > td:first-of-type + td {*/
-   /*background: #00AA00;*/
-/*}*/
+.emailaddresses tr {
+    clear: both;
+}
+
+
+
+@media (min-width: 922px) {
+    #email1_span table.emailaddresses > tbody:first-of-type > tr > td:nth-of-type(2) {
+        width: 30% !important;
+        display: inline-block;
+    }
+
+    .emailaddresses tr {
+        margin-left: 16.66666666%;
+    }
+    .emailaddresses td[nowrap="NOWRAP"] {
+        width: 30% !important;
+        display: inline-block;
+        float:left;
+    }
+
+    #email1_span table.emailaddresses > tbody:first-of-type > tr > td {
+        width: 128px !important;
+        display: inline-block;
+    }
+
+
+    .emailaddresses td:nth-of-type(3) {
+        width: 128px !important;
+    }
+
+    .emailaddresses td:nth-of-type(4) {
+        width: 128px !important;
+    }
+
+    .emailaddresses td:nth-of-type(5) {
+        width: 128px !important;
+    }
+
+}
 
 input.sqsEnabled {
     width: 100% !important;
