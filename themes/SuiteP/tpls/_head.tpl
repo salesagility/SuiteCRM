@@ -1,4 +1,6 @@
 {*
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -34,6 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 <!DOCTYPE html>
 <html {$langHeader}>
@@ -42,15 +45,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
     <!-- Bootstrap -->
+    <link href="themes/SuiteP/css/normalize.css" rel="stylesheet" type="text/css"/>
     <link href="themes/SuiteP/css/bootstrap.min.css" rel="stylesheet">
+    <link href='themes/SuiteP/css/fonts.css' rel='stylesheet' type='text/css'>
+    <link href="themes/SuiteP/css/grid.css" rel="stylesheet" type="text/css"/>
     <link href="themes/SuiteP/css/footable.core.css" rel="stylesheet" type="text/css"/>
+
+    <title>{$APP.LBL_BROWSER_TITLE}</title>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <title>{$APP.LBL_BROWSER_TITLE}</title>
     {$SUGAR_JS}
     {literal}
     <script type="text/javascript">
@@ -67,7 +77,7 @@
     </script>
     {/literal}
     {$SUGAR_CSS}
-    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">
+    <link rel="stylesheet" type="text/css" href="themes/SuiteP/css/colourSelector.php">    
     <script type="text/javascript" src='{sugar_getjspath file="themes/SuiteP/js/jscolor.js"}'></script>
     <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
 </head>

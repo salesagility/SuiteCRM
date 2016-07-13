@@ -89,7 +89,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     public function testfill_in_additional_detail_fields()
     {
         $document = new Document();
-
+        $current_theme = SugarThemeRegistry::current();
         $document->id = 'abcde-12345';
 
         //execute the method with attributes preset and verify attributes are set accordingly
@@ -97,7 +97,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
 
         $this->assertRegExp(
             '~'
-            .preg_quote("<a href='index.php?entryPoint=download&id=&type=Documents' target='_blank'><img src=\"themes/SuiteR/images/def_image_inline.gif?v=")
+            .preg_quote("<a href='index.php?entryPoint=download&id=&type=Documents' target='_blank'><img src=\"themes/$current_theme/images/def_image_inline.gif?v=")
             .'[\w-]+'
             .preg_quote('"    border="0" alt="View" /></a>')
             .'~',
@@ -136,7 +136,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
     public function testget_list_view_data()
     {
         $document = new Document();
-
+        $current_theme = SugarThemeRegistry::current();
         //execute the method and verify that it retunrs expected results
 
         $document->filename = 'test';
@@ -159,7 +159,7 @@ class DocumentTest extends PHPUnit_Framework_TestCase
                 'LAST_REV_CREATED_NAME' => 'test',
                 'IS_TEMPLATE' => '0',
                 'FILE_URL' => '~'
-                                .preg_quote('<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/SuiteR/images/def_image_inline.gif?v=')
+                                .preg_quote('<a href=\'index.php?entryPoint=download&id=&type=Documents\' target=\'_blank\'><img src="themes/'.$current_theme.'/images/def_image_inline.gif?v=')
                                 .'[\w-]+'
                                 .preg_quote('"    border="0" alt="View" /></a>')
                                 .'~',

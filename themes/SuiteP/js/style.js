@@ -1,6 +1,10 @@
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -28,10 +32,10 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo. If the display of the logo is not reasonably feasible for
- * technical reasons, the Appropriate Legal Notices must display the words
- * "Powered by SugarCRM".
- ********************************************************************************/
+ * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
+ * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
+ * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 $(document).ready(function () {
     loadSidebar();
     $("ul.clickMenu").each(function (index, node) {
@@ -268,33 +272,18 @@ $(function() {
     });
 });
 
-var checkContents = setInterval(function(){
-    if ($(".list.view").length > 0 || $(".list.View").length > 0){ // Check if element has been found
-
-        if($(".list.view").length > 0){
-            element = $(".list.view");
+jQuery(function($){
+    $('table.footable').footable({
+        "breakpoints": {
+            "x-small": 480,
+            "small": 768,
+            "medium": 992,
+            "large": 1200,
+            "x-large": 1400
         }
+    });
+})
 
-        if($(".list.View").length > 0){
-            element = $(".list.View");
-        }
-
-        //$('#dashletPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        //$('#subPanel th:not(:first-child)').attr("data-hide","phone, tablet");
-        $(element).footable();
-        //$(".footable").find("th:first").attr("data-toggle","true");
-
-        // Button to toggle list view search
-        $('.showsearch').click(function() {
-            $('.search_form').toggle();
-        });
-        $('#userlinks_togglemobilesearch').click(function() {
-            $('#searchmobile').toggle('slide', {direction: 'left'}, '350');
-        });
-
-        clearInterval(checkContents);
-    }
-},1);
 
 // JavaScript fix to remove unrequired classes on smaller screens where sidebar is obsolete
 $(window).resize(function () {
@@ -313,32 +302,33 @@ function loadSidebar() {
             $('.sidebar').toggle();
             if ($('.sidebar').is(':visible')) {
                 $.cookie('sidebartoggle', 'expanded');
+                $('#buttontoggle').removeClass('button-toggle-collapsed');
+                $('#buttontoggle').addClass('button-toggle-expanded');
                 $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
-                $('#buttontoggle').css({
-                    'left': "+=215px"
-                });
             }
             if ($('.sidebar').is(':hidden')) {
                 $.cookie('sidebartoggle', 'collapsed');
+                $('#buttontoggle').removeClass('button-toggle-expanded');
+                $('#buttontoggle').addClass('button-toggle-collapsed');
                 $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
-                $('#buttontoggle').css({
-                    'left': "-=215px"
-                });
             }
         });
+
         var sidebartoggle = $.cookie('sidebartoggle');
         if (sidebartoggle == 'collapsed') {
             $('.sidebar').hide();
+            $('#buttontoggle').removeClass('button-toggle-expanded');
+            $('#buttontoggle').addClass('button-toggle-collapsed');
             $('#bootstrap-container').removeClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 col-sm-3 col-md-2 sidebar');
         }
         else {
             $('#bootstrap-container').addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2');
-            $('#buttontoggle').css({
-                'left': "+=215px"
-            });
+            $('#buttontoggle').removeClass('button-toggle-collapsed');
+            $('#buttontoggle').addClass('button-toggle-expanded');
         }
     }
 }
+
 
 update_screen_resolution();
 
@@ -361,4 +351,11 @@ $(document).ready(function() {
     });
 });
 
+
+function changeFirstTab(src) {
+    var selected = $(src);
+    var selectedHtml = $(selected.context).html();
+    $('#xstab0').html(selectedHtml);
+    return true;
+}
 // End of custom jQuery

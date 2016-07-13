@@ -688,7 +688,7 @@ is to other properties or values in creating the effect */
 }
 
 /* display of quote author (alternatively use a class on the element following the blockquote) */
-.example-twitter + p {padding-left:15px; font:14px Arial, sans-serif;}
+.example-twitter + p {padding-left:15px; font:14px "Lato", Arial, sans-serif;}
 
 
 /* ============================================================================================================================
@@ -701,7 +701,7 @@ is to other properties or values in creating the effect */
     height:200px;
     margin:50px 0 200px;
     text-align:center;
-    font:140px/200px Arial, sans-serif;
+    font:140px/200px "Lato", Arial, sans-serif;
     color:#fff;
     background:#C91F2C;
 }
