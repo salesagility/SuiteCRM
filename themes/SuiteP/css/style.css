@@ -4031,7 +4031,7 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     font-size: 13px !important;
 }
 
-.paginationTable .button, .paginationTable input[type=submit], .paginationTable input[type=button] {
+.paginationTable .button, .paginationTable input[type=submit], .paginationTable input[type=button], .paginationChangeButtons button[type=submit]  {
     background-color: #94A6B5;
     color: #fff;
     height: 26px;
@@ -4039,7 +4039,7 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
     padding: 0 10px 0 10px;
 }
 
-.paginationTable button[disabled], .paginationTable input[type="submit"][disabled], .paginationTable input[type="reset"][disabled], .paginationTable input[type="button"][disabled] {
+.paginationTable button[disabled], .paginationTable input[type="submit"][disabled], .paginationTable input[type="reset"][disabled], .paginationTable input[type="button"][disabled],.paginationChangeButtons button[type=submit][disabled]  {
     background-color: #94A6B5;
     color: #c4c4c4;
     height: 26px;
