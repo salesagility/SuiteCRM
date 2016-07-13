@@ -4871,6 +4871,11 @@ select#sales_stage_advanced {
     height: auto;
 }
 
+
+input[type="text"]#first_name {
+    width: 48.5% !important;
+}
+
 .sub-header {
     padding-bottom: 10px;
     border-bottom: 1px solid #eee;
