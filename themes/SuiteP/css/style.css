@@ -3929,12 +3929,17 @@ fieldset[disabled] .btn-primary.active {
 }
 
 
-#billing_address_street, #shipping_address_street {
+#billing_address_street, #shipping_address_street, #primary_address_street, #alt_address_street {
     height: 54px;
 }
 
+#primary_address_street, #alt_address_street {
+    width: 60% !important;
+}
+
+
 .col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
-.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"]{
+.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"] {
     width: 88% !important;
 }
 
