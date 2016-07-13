@@ -1868,6 +1868,11 @@ li.noBullet {
     margin-bottom: 20px;
 }
 
+/*The nonPaddedError class is to remove the padding from interal error messages during the upgrade wizard*/
+span.error.nonPaddedError{
+    padding:0px;
+}
+
 div#generate_success.error{
     padding: 0px;
 }
