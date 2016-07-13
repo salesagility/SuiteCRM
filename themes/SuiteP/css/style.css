@@ -3938,7 +3938,7 @@ fieldset[disabled] .btn-primary.active {
     width: 88% !important;
 }
 
- .col-sm-12 .edit-view-field input[type="text"] {
+ .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
     width: 100% !important;
 }
 
@@ -4052,8 +4052,8 @@ fieldset[disabled] .btn-primary.active {
 
 }
 
-input.sqsEnabled {
-    width: 60% !important;
+input[type="text"].sqsEnabled {
+    width: 30% !important;
 }
 
 textarea#billing_address_street, textarea#shipping_address_street {
