@@ -98,7 +98,7 @@ $mod_strings = array(
 	'ERR_DB_ADMIN'						=> 'The provided database administrator username and/or password is invalid, and a connection to the database could not be established.  Please enter a valid user name and password.  (Error: ',
 	'ERR_DB_ADMIN_MSSQL'                => 'The provided database administrator username and/or password is invalid, and a connection to the database could not be established.  Please enter a valid user name and password.',
 	'ERR_DB_EXISTS_NOT'					=> 'The specified database does not exist.',
-	'ERR_DB_EXISTS_WITH_CONFIG'			=> 'Database already exists with config data.  To run an install with the chosen database, please re-run the install and choose: "Drop and recreate existing SuiteCRM tables?"  To upgrade, use the Upgrade Wizard in the Admin Console.  Please read the upgrade documentation located <a href="http://www.suitecrm.com target="_new">here</a>.',
+	'ERR_DB_EXISTS_WITH_CONFIG'			=> 'Database already exists with config data.  To run an install with the chosen database, please re-run the install and choose: "Drop and recreate existing SuiteCRM tables?"  To upgrade, use the Upgrade Wizard in the Admin Console.  Please read the upgrade documentation located <a href="http://www.suitecrm.com" target="_new">here</a>.',
 	'ERR_DB_EXISTS'						=> 'The provided Database Name already exists -- cannot create another one with the same name.',
 	'ERR_DB_EXISTS_PROCEED'             => 'The provided Database Name already exists.  You can<br>1.  hit the back button and choose a new database name <br>2.  click next and continue but all existing tables on this database will be dropped.  <strong>This means your tables and data will be blown away.</strong>',
 	'ERR_DB_HOSTNAME'					=> 'Host name cannot be blank.',
@@ -151,7 +151,7 @@ $mod_strings = array(
 	'LBL_UPLOAD_MAX_FILESIZE_TITLE'     => 'Upload File Size',
 	'ERR_URL_BLANK'						=> 'Provide the base URL for the SuiteCRM instance.',
 	'ERR_UW_NO_UPDATE_RECORD'			=> 'Could not locate installation record of',
-	'ERROR_FLAVOR_INCOMPATIBLE'			=> 'The uploaded file is not compatible with this flavor (Community Edition, Professional, or Enterprise) of SuiteCRM: ',
+	'ERROR_FLAVOR_INCOMPATIBLE'			=> 'The uploaded file is not compatible with this flavor of SuiteCRM: ',
 	'ERROR_LICENSE_EXPIRED'				=> "Error: Your license expired ",
 	'ERROR_LICENSE_EXPIRED2'			=> " day(s) ago.   Please go to the <a href='index.php?action=LicenseSettings&module=Administration'>'\"License Management\"</a>  in the Admin screen to enter your new license key.  If you do not enter a new license key within 30 days of your license key expiration, you will no longer be able to log in to this application.",
 	'ERROR_MANIFEST_TYPE'				=> 'Manifest file must specify the package type.',
@@ -439,13 +439,12 @@ $mod_strings = array(
 	'LBL_STEP'							=> 'Step',
 	'LBL_TITLE_WELCOME'					=> 'Welcome to the SuiteCRM ',
 	'LBL_WELCOME_1'						=> 'This installer creates the SuiteCRM database tables and sets the configuration variables that you need to start. The entire process should take about ten minutes.',
-	'LBL_WELCOME_2'						=> 'For installation documentation, please visit the <a href="http://www.SuiteCRM.com/" target="_blank">SuiteCRM</a>.  <BR><BR> You can also find help from the SuiteCRM Community in the <a href="http://www.SuiteCRM.com/" target="_blank">SuiteCRM Forums</a>.',
+	'LBL_WELCOME_2'						=> 'For installation documentation, please visit the <a href="http://www.suitecrm.com/" target="_blank">SuiteCRM</a>.  <BR><BR> You can also find help from the SuiteCRM Community in the <a href="http://www.suitecrm.com/" target="_blank">SuiteCRM Forums</a>.',
 	//welcome page variables
 	'LBL_TITLE_ARE_YOU_READY'            => 'Are you ready to install?',
 	'REQUIRED_SYS_COMP' => 'Required System Components',
 	'REQUIRED_SYS_COMP_MSG' =>
-		'Before you begin, please be sure that you have the supported versions of the following system
-                      components:<br>
+		'Before you begin, please be sure that you have the supported versions of the following system components:<br>
                       <ul>
                       <li> Database/Database Management System (Examples: MariaDB, MySQL or SQL Server)</li>
                       <li> Web Server (Apache, IIS)</li>
@@ -459,23 +458,23 @@ $mod_strings = array(
                       to successfully complete the installation. <br><br>
                       The system checks all of the following:<br>
                       <ul>
-                      <li><b>PHP version</b> &#8211; must be compatible
-                      with the application</li>
-                                        <li><b>Session Variables</b> &#8211; must be working properly</li>
-                                            <li> <b>MB Strings</b> &#8211; must be installed and enabled in php.ini</li>
+                      <li><b>PHP version</b> &#8211; must be compatible with the application</li>
+                      <li><b>Session Variables</b> &#8211; must be working properly</li>
+                      <li><b>MB Strings</b> &#8211; must be installed and enabled in php.ini</li>
+                      <li><b>Database Support</b> &#8211; must exist for MariaDB, MySQL or SQL Server</li>
+                      <li><b>Config.php</b> &#8211; must exist and must have the appropriate permissions to make it writeable</li>
+                      <li>The following SuiteCRM files must be writeable:<ul><li><b>/custom</li>
+                      <li>/cache</li>
+                      <li>/modules</li>
+                      <li>/upload</b></li></ul></li></ul>
+                                  If the check fails, you will not be able to proceed with the installation. 
+                                  An error message will be displayed, explaining why your system did not pass the check.
+                                  After making any necessary changes, you can undergo the system check again to continue the installation.<br>',
 
-                      <li> <b>Database Support</b> &#8211; must exist for MariaDB, MySQL or SQL Server</li>
 
-                      <li> <b>Config.php</b> &#8211; must exist and must have the appropriate
-                                  permissions to make it writeable</li>
-					  <li>The following SuiteCRM files must be writeable:<ul><li><b>/custom</li>
-<li>/cache</li>
-<li>/modules</li>
-<li>/upload</b></li></ul></li></ul>
-                                  If the check fails, you will not be able to proceed with the installation. An error message will be displayed, explaining why your system
-                                  did not pass the check.
-                                  After making any necessary changes, you can undergo the system
-                                  check again to continue the installation.<br>',
+
+
+
 	'REQUIRED_INSTALLTYPE' => 'Typical or Custom install',
 	'REQUIRED_INSTALLTYPE_MSG' =>
 		'After the system check is performed, you can choose either

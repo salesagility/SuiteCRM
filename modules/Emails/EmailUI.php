@@ -441,6 +441,7 @@ eoq;
 		$lang = "var app_strings = new Object();\n";
 		foreach($app_strings as $k => $v) {
 			if(strpos($k, 'LBL_EMAIL_') !== false) {
+				$v = str_replace("'", "\'", $v);
 				$lang .= "app_strings.{$k} = '{$v}';\n";
 			}
 		}
