@@ -3871,7 +3871,11 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
-#EditView_tabs .edit .button, #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="button"] {
+#EditView_tabs .edit .button,
+#EditView_tabs .id-ff-remove,
+#EditView_tabs .edit [type="button"],
+#conditionLines [type="button"],
+#actionLines [type="button"] {
     margin-right: 4px;
     padding: 0px;
     background-color: #F08377;
@@ -3887,7 +3891,10 @@ fieldset[disabled] .btn-primary.active {
     margin-top: 20px;
 }
 
-#EditView_tabs .id-ff-remove img, #EditView_tabs .edit [type="button"] img {
+#EditView_tabs .id-ff-remove img,
+#EditView_tabs .edit [type="button"] img,
+#conditionLines [type="button"] img,
+#actionLines [type="button"] img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     height: 32px;
     width: 32px;
@@ -4876,9 +4883,24 @@ select#sales_stage_advanced {
     height: auto;
 }
 
+@media (max-width: 768px) {
+    .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
+        width: 48.5% !important;
+    }
 
-input[type="text"]#first_name {
-    width: 48.5% !important;
+    .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
+        width: 38.40% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
+        width: 48.5% !important;
+    }
+
+    .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
+        width: 21.5% !important;
+    }
 }
 
 .sub-header {
@@ -4942,7 +4964,39 @@ span#quickcreateplus {
     border-radius: 50%;
 }
 
+#conditionLines_head, #fieldLines_head {
+    background: none !important;
+}
 
+#actionLines, #actionLines table, #actionLines tr, #actionLines td {
+    border: 1px solid transparent !important;
+}
+
+#actionLines, #actionLines table {
+    clear: both;
+    border-radius: 4px;
+    width: 100%;
+}
+
+table#actionLines > tr > td > table td {
+    padding: 4px;
+}
+
+table#actionLines > tr > td > table td:first-of-type {
+    padding-left: 16px;
+}
+
+
+table#actionLines > tr > td > table {
+    background: #F5F5F5;
+    margin: 16px 0 0 0 !important;
+    clear: both;
+    display: block;
+}
+
+#conditionLines td,  #fieldLines td {
+    padding: 8px;
+}
 
 li.moremenu {
     padding: 8px 10px 8px 10px;
