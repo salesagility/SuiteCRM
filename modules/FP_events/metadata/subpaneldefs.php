@@ -54,9 +54,7 @@ $layout_defs['FP_events'] = array(
 			'module'=>'Delegates',
 
 			'top_buttons' => array(
-				//array('widget_class' => 'SubPanelTopButton_c'),
 				array('widget_class' => 'SubPanelDelegatesSelectButton'),
-				//array('widget_class' => 'SubPanelTopSelectButton', 'mode' => 'MultiSelect'),
 				array('widget_class' => 'SubPanelManageDelegatesButton'),
 				array('widget_class' => 'SubPanelManageAcceptancesButton'),
 				array('widget_class' => 'SubPanelSendInvitesButton'),
