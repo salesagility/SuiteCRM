@@ -67,7 +67,21 @@ function get_form_header(
     $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
     $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
 
+    $keywords = array("/class=\"button\"/","/class='button'/","/class=button/","/<\/form>/");
+    $match = false;
+    foreach ($keywords as $left) {
+        if (preg_match($left,$other_text)) {
+            $match = true;
+        }
+    }
+
+    $other_text_and_match = false;
+    if ($other_text && $match) {
+        $other_text_and_match = true;
+    }
+
     $template = new Sugar_Smarty();
+
     $template->assign('sugar_version', $sugar_version);
     $template->assign('sugar_flavor', $sugar_flavor);
     $template->assign('server_unique_key', $server_unique_key);
@@ -76,6 +90,8 @@ function get_form_header(
     $template->assign('current_action', $current_action);
     $template->assign('app_strings', $app_strings);
 
+    $template->assign('match', $match);
+    $template->assign('other_text_and_match', other_text_and_match);
     $template->assign('blankImageURL', $blankImageURL);
     $template->assign('printImageURL', $printImageURL);
     $template->assign('helpImageURL', $helpImageURL);
