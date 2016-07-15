@@ -20,7 +20,7 @@
         {/foreach}
 
         {if $other_text && $match}
-                <td colspan="10" width="100%"><IMG height="1" width="1" src="$blankImageURL" alt=""></td>
+                <td colspan="10" width="100%"><IMG height="1" width="1" src="{$blankImageURL}" alt=""></td>
             </tr>
                 <tr>
                     <td width="100%" align="left" valign="middle" nowrap style="padding-bottom: 2px;">$other_text</td>

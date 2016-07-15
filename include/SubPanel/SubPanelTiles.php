@@ -327,20 +327,18 @@ class SubPanelTiles
                 // If defaultSubPanelExpandCollapse is set, ignore the cookie that remembers whether the panel is expanded or collapsed.
                 // To be used with the above 'collapsed' metadata setting so they will always be set the same when the page is loaded.
                 if(!isset($sugar_config['defaultSubPanelExpandCollapse']) || $sugar_config['defaultSubPanelExpandCollapse'] == false)
+                {
                     $div_display = 	$div_cookies[$cookie_name];
+                }
             }
 
-            if(!empty($sugar_config['hide_subpanels'])){
-                $div_display = 'none';
-            }
-
-            if($thisPanel->isDefaultHidden()) {
+            if(!empty($sugar_config['hide_subpanels']) or $thisPanel->isDefaultHidden()) {
                 $div_display = 'none';
             }
 
             if($div_display == 'none'){
                 $opp_display  = 'inline';
-            }else{
+            } else{
                 $opp_display  = 'none';
             }
 
@@ -372,18 +370,34 @@ class SubPanelTiles
             $tabs_properties[$t]['div_display'] = $div_display;
             $tabs_properties[$t]['opp_display'] = $opp_display;
 
-            $display_spd = '';
-            if($div_display != 'none') {
-                include_once('include/SubPanel/SubPanel.php');
-                $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
-                $subpanel_data = $subpanel_object->fetch('include/SubPanel/SubPanelDynamic.html');
-
-                echo $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+            $tabs_properties[$t]['subpanel_body'] = '';
+            $tabs_properties[$t]['buttons'] = '';
+//            if($div_display != 'none') {
+                ob_start();
+                    include_once('include/SubPanel/SubPanel.php');
+                    $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
+                    $subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
+                    $subpanel_object->display();
+                    $subpanel_data = ob_get_contents();
+                @ob_end_clean();
+                ob_start();
+                    $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+                    $tabs_properties[$t]['buttons'] = ob_get_contents();
+                @ob_end_clean();
 
                 $tabs_properties[$t]['subpanel_body'] = $subpanel_data;
-            }
+//            }
             array_push($tab_names, $tab);
         }
+
+        $tab_names = '["' . join($tab_names, '","') . '"]';
+
+        if(empty($sugar_config['lock_subpanels']) || $sugar_config['lock_subpanels'] == false) {
+
+        }
+
+        $module_sub_panels = array_map('array_keys', $module_sub_panels);
+        $module_sub_panels = json_encode($module_sub_panels);
 
         $template->assign('layout_def_key', $this->layout_def_key);
         $template->assign('show_subpanel_tabs', $this->show_tabs);
@@ -393,6 +407,10 @@ class SubPanelTiles
         $template->assign('sugar_config', $sugar_config);
         $template->assign('REQUEST', $_REQUEST);
         $template->assign('GLOBALS', $GLOBALS);
+        $template->assign('selected_group', $selected_group);
+        $template->assign('tab_names', $tab_names);
+        $template->assign('module_sub_panels', $module_sub_panels);
+        $template->assign('module', $this->module);
 
         $template_body = $template->fetch('include/SubPanel/tpls/SubPanelTiles.tpl');
 
