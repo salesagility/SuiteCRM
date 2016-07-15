@@ -770,6 +770,9 @@ class SugarBean
 
     protected static function build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {
+
+        //$subpanel_def->search_query = "(contacts.first_name like '11111111111%' ) AND ( contacts.last_name like '22222222222%')";
+
         global $beanList;
         $subqueries = array();
         foreach ($subpanel_list as $this_subpanel) {

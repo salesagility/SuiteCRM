@@ -94,7 +94,24 @@ class aSubPanel
 				}
 			}
 		}
-		if (!$this->isCollection()){
+
+		///////
+//		$thisPanel =& $this->subpanel_defs;
+//		$subpanel_defs = $thisPanel->_instance_properties;
+//
+//		require_once('include/SubPanel/SubPanelSearchForm.php');
+//
+//		if ($subpanel_defs['type'] == 'collection') {
+//			$collection = array_shift(array_values($subpanel_defs['collection_list']));
+//			$module = $collection['module'];
+//		} else {
+//			$module = $subpanel_defs['module'];
+//		}
+//		$seed = BeanFactory::getBean($module);
+		////////// bellow if replace by something like above
+		
+		
+		if ($subpanel_defs['type'] == 'collection'){
 			$table = strtolower($instance_properties['module']);
 			$search_query = str_replace('contacts', $table, $search_query);
 		}

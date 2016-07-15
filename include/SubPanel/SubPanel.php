@@ -90,11 +90,8 @@ class SubPanel
 			sugar_die($app_strings['ERROR_NO_RECORD']);
 		}
 		$this->buildSearchQuery();
-		if (empty($subpanelDef)) {
+		if (!empty($subpanelDef)) {
 			//load the subpanel by name.
-			if (!class_exists('MyClass')) {
-				require_once 'include/SubPanel/SubPanelDefinitions.php' ;
-			}
 			$panelsdef=new SubPanelDefinitions($result,$layout_def_key);
 			$subpanelDef=$panelsdef->load_subpanel($subpanel_id, false, false, $this->search_query,$collections);
 			$this->subpanel_defs=$subpanelDef;
@@ -398,16 +395,18 @@ class SubPanel
 
 	function buildSearchQuery()
 	{
+		$thisPanel =& $this->subpanel_defs;
+		$subpanel_defs = $thisPanel->_instance_properties;
+
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		if($this->subpanel_id == "history"){
-			$module = 'Meetings';
-			$seed = new Meeting();
-		}else{
-			$module = 'Contacts';
-			$seed = new Contact();
+		if ($subpanel_defs['type'] == 'collection') {
+			$collection = array_shift(array_values($subpanel_defs['collection_list']));
+			$module = $collection['module'];
+		} else {
+			$module = $subpanel_defs['module'];
 		}
-
+		$seed = BeanFactory::getBean($module);
 
 
 		$_REQUEST['searchFormTab'] = 'basic_search';
@@ -420,10 +419,11 @@ class SubPanel
 
 		$where_clauses = $searchForm->generateSearchWhere(true, $seed->module_dir);
 
-		if (count($where_clauses) > 0 )$this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
+		if (count($where_clauses) > 0 ) {
+			$this->search_query = '('. implode(' ) AND ( ', $where_clauses) . ')';
+		}
 		$GLOBALS['log']->info("Subpanel Where Clause: $this->search_query");
 
-		return print_r($where_clauses,true);
 	}
 
 	function get_searchdefs($module)
@@ -445,8 +445,8 @@ class SubPanel
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
 		if($this->subpanel_id == "history"){
-			$module = 'Meetings';
-			$seed = new Meeting();
+			$module = 'Tasks';
+			$seed = new Task();
 		}else{
 			$module = 'Contacts';
 			$seed = new Contact();
