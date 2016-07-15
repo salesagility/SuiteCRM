@@ -322,8 +322,6 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .button-toggle-collapsed {
     position: fixed;
-    /*left: 0;
-    left:12%!important;*/
     top: 100px;
     background: #778591;
     z-index: 1000;
@@ -338,8 +336,6 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .button-toggle-expanded {
     position: fixed;
-    /*left: 0;
-    left:12%!important;*/
     top: 100px;
     background: #778591;
     z-index: 1000;
@@ -408,15 +404,13 @@ li.recentlinks img {
     width: 100%;
     padding: 30px 3% 40px 3%;
     float: left;
-    /*background-color:pink;*/
 }
 
-#bootstrap-container.col-md-offset-2 { /*margin-left:12%;*/
+#bootstrap-container.col-md-offset-2 {
 }
 
 footer {
     bottom: 0;
-    /*margin: 60px 0 0 0;*/
     margin: 0 0 0 0;
     background-color: #E6E6E6;
     float: left;
@@ -735,21 +729,22 @@ th, td {
     padding-left: 0;
 }
 
-.detail-view-row, .detail-view-row-item {
+.detail-view-row, .detail-view-row-item, .edit-view-row, .edit-view-row-item {
     margin: 0 0 16px 0;
     min-width: 48px;
 }
 
-.detail-view-row .label {
+.detail-view-row .label, .edit-view-row .label {
     color: #534D64;
     display: inline;
     padding: 0 0 0 8px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     line-height: 48px;
     text-align: left;
     white-space: nowrap;
     vertical-align: baseline;
+
 }
 
 .dataField {
@@ -806,21 +801,23 @@ th, td {
     margin-bottom: 2px;
 }
 
-#EditView_tabs {
-    padding: 8px;
-    background: #fff;
-}
-
 #EditView .edit tr td {
     font-weight: 700;
+    color: #534D64;
 }
 
-#EditView .edit tr td input, #EditView .edit tr td textarea, #EditView .edit tr td select {
+#EditView .edit input, #EditView .edit textarea, #EditView .edit select {
     font-weight: normal;
+    color: #534D64
 }
 
 .edit {
     padding: 0 6px 12px 10px !important;
+}
+
+.label {
+    font-size: 14px;
+    color: #534D64;
 }
 
 .edit > table {
@@ -838,9 +835,6 @@ th, td {
 .edit tr td {
     font-weight: normal;
     vertical-align: top;
-    height: 40px;
-    line-height: 40px;
-    /*padding: 3px !important;*/
 }
 
 .edit tr td[scope=row] {
@@ -853,6 +847,46 @@ th, td {
 
 .edit tr th {
     padding: 5px 5px 5px 7px !important;
+}
+
+#EditView input[type="button"] {
+    margin: 4px;
+}
+
+fieldset {
+    margin-top: 32px;
+}
+
+fieldset legend {
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 33.33333333%;
+}
+
+fieldset table {
+    background: none !important;
+}
+
+fieldset > table tr > td:first-of-type {
+    width: 33.33333333%;
+}
+
+fieldset tr, fieldset td {
+    border: none !important;
+}
+
+fieldset label {
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: #534D64;
+}
+
+.validation-message {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 4px;
 }
 
 table#tabFormPagination td, #tabFormPagination, #EditView > table#tabFormPagination.detail.view {
@@ -1866,6 +1900,8 @@ li.noBullet {
     color: #fff;
     padding: 10px;
     margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 div#generate_success.error{
@@ -2076,6 +2112,11 @@ td.edit.view td[align=right] {
     padding-right: 0;
 }
 
+.emailaddresses > tbody > tr > td {
+    padding-top: 8px;
+    line-height: 40px;
+}
+
 .emailaddresses tr td[scope=row] {
     padding-left: 0 !important;
     padding-top: 0 !important;
@@ -2219,7 +2260,6 @@ div.confirmTable {
 }
 
 .h3Row td {
-    /*padding: 4px 5px 3px 3px;*/
     padding: 0px;
 }
 
@@ -2776,12 +2816,12 @@ a.first-tab-xs {
     /*TODO: fix long tabs*/
     background-color: #778591 !important;
     border-bottom: none !important;
-    /*padding-right: 30px !important;*/
-    /*background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: 95% 120%;*/
-    /*background-origin: border-box;*/
-    /*background-size: 10px 95px;*/
+    padding-right: 30px !important;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-repeat: no-repeat;
+    background-position: 90% 120%;
+    background-origin: border-box;
+    background-size: 10px 95px;
 }
 
 #first-tab-menu-xs.dropdown-menu {
@@ -2875,6 +2915,11 @@ li#tab-actions > ul.dropdown-menu li {
     border-bottom: 1px solid #FA988D;
 }
 
+li#tab-actions > ul.dropdown-menu input {
+    width: 100%;
+    text-align: left;
+}
+
 li#tab-actions > ul.dropdown-menu a,
 li#tab-actions > ul.dropdown-menu .button,
 li#tab-actions > ul.dropdown-menu .button:hover,
@@ -2956,16 +3001,7 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-
     color: #3C8DBC;
-}
-
-ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
-ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
-}
-
-ul.clickMenu li span.ab:hover {
-    /*background-position: 6px 0;*/
 }
 
 ul.clickMenu > li, ul.SugarActionMenuIESub li {
@@ -3417,6 +3453,14 @@ iframe.teamNoticeBox {
     margin: 10px;
 }
 
+.buttons input#btn_view_change_log {
+    background-color: #AA9DCC;
+}
+
+.buttons input#btn_view_change_log:hover {
+    background-color: #9589b3;
+}
+
 .detail h4 {
     font-weight: bold;
     margin: 10px;
@@ -3728,7 +3772,6 @@ input[type=text].cstm_code {
 
 .navbar-inverse {
     background: #534D64 !important;
-    /*max-height: 90px !important;*/
 }
 
 .nav-pills li {
@@ -3805,35 +3848,209 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
-#EditView_tabs .edit .button, #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="button"] {
+#EditView_tabs .edit .button,
+#EditView_tabs .id-ff-remove,
+#EditView_tabs .edit [type="button"],
+#conditionLines [type="button"],
+#actionLines [type="button"] {
     margin-right: 4px;
     padding: 0px;
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
-    height: 32px;
-    width: 32px;
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
-    margin-top: 16px;
+    margin-top: 8px;
 }
 
 #EditView_tabs .edit [type="radio"], #EditView_tabs .edit [type="checkbox"]  {
     margin-top: 20px;
 }
 
-#EditView_tabs .id-ff-remove img, #EditView_tabs .edit [type="button"] img {
-    position: relative;
-    top: -4px;
-    left: 0;
-    height: 16px;
-    width: 16px;
+#EditView_tabs .id-ff-remove img,
+#EditView_tabs .edit [type="button"] img,
+#conditionLines [type="button"] img,
+#actionLines [type="button"] img {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    height: 32px;
+    width: 32px;
+}
+
+.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    height: 32px;
+    width: 32px;
+}
+
+
+.emailaddresses button {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
+    height: 34px;
+    width: 34px;
+    line-height: 0;
+}
+
+
+.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #F08377;
+}
+
+
+.emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button:hover {
+    background-color: #D66C60;
 }
 
 #EditView_tabs .edit input, #EditView_tabs .edit textarea {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.col-sm-6 .edit-view-field input[type="text"] {
+    width: 60% !important;
+}
+
+
+#billing_address_street, #shipping_address_street, #primary_address_street, #alt_address_street {
+    height: 54px;
+}
+
+#primary_address_street, #alt_address_street {
+    width: 60% !important;
+}
+
+
+.col-sm-6 .edit-view-field[field="billing_address_street"] input[type="text"],
+.col-sm-6 .edit-view-field[field="shipping_address_street"] input[type="text"] {
+    width: 88% !important;
+}
+
+ .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
+    width: 100% !important;
+}
+
+#email1_span,
+#email1_span > table,
+#email1_span table,
+#email1_span table > tbody,
+#email1_span table > tbody > tr,
+#email1_span table > tbody > tr > td {
+    width: 100%;
+    display: block;
+}
+
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td:first-of-type {
+    width: 32px !important;
+    display: inline-block;
+}
+
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td {
+    width: 64px !important;
+    display: inline-block;
+}
+
+#email1_span table.emailaddresses > tbody:first-of-type > tr > td:nth-of-type(2) {
+    width: 0% !important;
+    display: inline-block;
+}
+
+.emailaddresses td[nowrap="NOWRAP"]  {
+    display: block !important;
+}
+
+.emailaddresses td[scope="row"]  {
+    text-align: center;
+}
+
+.emailaddresses td:nth-of-type(2) {
+    display: inline-block !important;
+    width: 0% !important;
+}
+
+.emailaddresses td[align="center"] {
+    display: inline-block !important;
+    width: 128px !important;
+}
+
+.emailaddresses td[nowrap="NOWRAP"] input[type="text"]{
+    width: 100% !important;
+}
+
+.emailaddresses td:nth-of-type(2) {
+    width: 38px !important;
+}
+
+.emailaddresses td:nth-of-type(3) {
+    width: 64px !important;
+}
+
+.emailaddresses td:nth-of-type(4) {
+    width: 64px !important;
+}
+
+.emailaddresses td:nth-of-type(5) {
+    width: 64px !important;
+}
+
+
+.emailaddresses td:nth-of-type(6), .emailaddresses td:nth-of-type(7) {
+    display: inline-block !important;
+    width: 0% !important;
+}
+
+.emailaddresses tr {
+    clear: both;
+}
+
+
+
+@media (min-width: 922px) {
+    #email1_span table.emailaddresses > tbody:first-of-type > tr > td:nth-of-type(2) {
+        width: 30% !important;
+        display: inline-block;
+    }
+
+    .emailaddresses tr {
+        margin-left: 16.66666666%;
+    }
+    .emailaddresses td[nowrap="NOWRAP"] {
+        width: 30% !important;
+        display: inline-block;
+        float:left;
+    }
+
+    #email1_span table.emailaddresses > tbody:first-of-type > tr > td {
+        width: 128px !important;
+        display: inline-block;
+    }
+
+
+    .emailaddresses td:nth-of-type(3) {
+        width: 128px !important;
+    }
+
+    .emailaddresses td:nth-of-type(4) {
+        width: 128px !important;
+    }
+
+    .emailaddresses td:nth-of-type(5) {
+        width: 128px !important;
+    }
+
+}
+
+input[type="text"].sqsEnabled {
+    width: 30% !important;
+}
+
+textarea#billing_address_street, textarea#shipping_address_street {
+    width: 88%;
+}
+
+textarea#description {
+    width: 100%;
 }
 
 .dropdown-menu {
@@ -4107,6 +4324,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 42px;
     }
 }
+
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
     div.search_name_basic img {
@@ -4124,6 +4342,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 42px;
     }
 }
+
 /*md-col-*/
 @media (min-width: 992px) and (max-width: 1199px) {
     div.search_fields_basic {
@@ -4306,11 +4525,6 @@ ul::-webkit-resizer
 .dashboardTbList {
     max-width: 90% !important;
 }
-
-/*ul.dashboardTabList li {
-    list-style: none;
-    margin: 0 0 10px 0;
-}*/
 
 #addbuttons {
     float: right;
@@ -4570,14 +4784,30 @@ div.listViewEmpty {
 }
 
 span.id-ff button {
-    height: 20px;
-    line-height: 20px;
-    padding: 0 5px 0 5px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     margin: 5px 5px 5px 0;
+    line-height: 0;
 }
 
 span.id-ff button:hover {
     background-color: #d66c60;
+}
+
+span.id-ff button img {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+}
+
+span.id-ff button:first-of-type img {
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-select.png');
+
+}
+span.id-ff button:last-of-type img {
+    content: src('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-select.png');
 }
 
 a.tabFormAdvLink {
@@ -4625,6 +4855,26 @@ select#lead_source_advanced {
 
 select#sales_stage_advanced {
     height: auto;
+}
+
+@media (max-width: 768px) {
+    .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
+        width: 48.5% !important;
+    }
+
+    .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
+        width: 38.40% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .col-xs-6 input[type="text"]#first_name, .col-sm-6 input[type="text"]#first_name {
+        width: 48.5% !important;
+    }
+
+    .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
+        width: 21.5% !important;
+    }
 }
 
 .sub-header {
@@ -4688,7 +4938,39 @@ span#quickcreateplus {
     border-radius: 50%;
 }
 
+#conditionLines_head, #fieldLines_head {
+    background: none !important;
+}
 
+#actionLines, #actionLines table, #actionLines tr, #actionLines td {
+    border: 1px solid transparent !important;
+}
+
+#actionLines, #actionLines table {
+    clear: both;
+    border-radius: 4px;
+    width: 100%;
+}
+
+table#actionLines > tr > td > table td {
+    padding: 4px;
+}
+
+table#actionLines > tr > td > table td:first-of-type {
+    padding-left: 16px;
+}
+
+
+table#actionLines > tr > td > table {
+    background: #F5F5F5;
+    margin: 16px 0 0 0 !important;
+    clear: both;
+    display: block;
+}
+
+#conditionLines td,  #fieldLines td {
+    padding: 8px;
+}
 
 li.moremenu {
     padding: 8px 10px 8px 10px;
@@ -4888,11 +5170,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     margin: 5px 0 5px 0;
 }
 
-/*.dashletPanel {
-    border: 1px solid #eeeeee!important;
-
-}*/
-
 .dashletPanel .h3Row h3 {
     color: #ffffff;
     font-size: 13px;
@@ -4929,12 +5206,6 @@ ul#selectLinkBottom {
 
 ul#actionLinkBottom {
     background-color: green;
-}
-
-.oddListRowS1, .evenListRowS1 {
-    /*background: #f7f7f7 !important;
-    border-top: 1px solid #dddddd;
-    border-bottom: 1px solid #dddddd;*/
 }
 
 .list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
@@ -5117,7 +5388,6 @@ h3 span {
 }
 
 #quickcreatetop ul li a {
-    /*color: #BFCDD9 !important;*/
     padding: 12px 15px 12px 15px !important;
     margin: 0 !important;
     background-image: none;
@@ -5148,7 +5418,6 @@ h3 span {
     float: left;
     width: 44px;
     height: 48px;
-    /*margin-top:22px;*/
     margin-right: 15px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -5309,8 +5578,6 @@ h3 span {
 #themePreview {
     width: 250px;
 }
-
-/*.modulename {visibility: hidden;}*/
 
 .icon {
     fill: #F08377;
@@ -5581,7 +5848,6 @@ object {
 .panel-default > .panel-heading {
     display: block;
     text-transform: uppercase;
-    font-size: 12px;
 }
 
 .panel-default > .panel-heading > a {
@@ -5589,8 +5855,9 @@ object {
     display: block;
     height: 48px;
     font-weight: 500;
+    font-size: 14px !important;
     background-color: #66727D;
-     padding: 15px 10px 0 10px;
+    padding: 15px 10px 0 10px;
 }
 
 .panel-default > .panel-body {
@@ -5897,13 +6164,6 @@ tr#pagination:nth-of-type(2) {
     border-spacing: 0;
 }
 
-/*div.list-view-rounded-corners > table {*/
-    /*border: 2px solid #778591;*/
-    /*border-radius-top: 4px;*/
-    /*overflow: hidden;*/
-
-/*}*/
-
 div.list-view-rounded-corners > table,
 tr#pagination {
     background: #f5f5f5;
@@ -5911,8 +6171,6 @@ tr#pagination {
 
 div.list-view-rounded-corners > table > thead > th,
 .pagination-bottom {
-    /*border: 2px solid #778591;*/
-    border: 2px solid transparent !important;
     border: 2px solid transparent !important;
     overflow: hidden;
 }
@@ -6401,7 +6659,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         line-height: 90px;
     }
 
-    /*#bootstrap-container {margin-top:160px!important;}*/
     .navbar-toggle {
         height: 90px;
     }
@@ -6442,7 +6699,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
         background-repeat: no-repeat;
         background-position: 0 0;
-        /*(margin-top:14px;*/
         border: none;
         margin-left: 0px;
     }
@@ -6493,8 +6749,6 @@ div.list-view-rounded-corners > table th:last-of-type {
 @media (min-width: 1251px) {
     #mobile_menu {
         position: absolute;
-        /*top: 90px;*/
-        /*left: 10px;*/
         overflow-y: scroll;
         overflow-x: hidden !important;
         float: left;
@@ -6525,7 +6779,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
 
-    
+
     @media (max-width: 320px) {
         .modulename {
             visibility: visible;
@@ -6533,12 +6787,11 @@ div.list-view-rounded-corners > table th:last-of-type {
             letter-spacing: 2px;
             text-transform: uppercase;
             float: left;
-            /*line-height: 90px;*/
             text-align: left !important;
             margin: 0 auto 0 15px !important;
             width: 8sc
         }
-        
+
     }
 
     @media (min-width: 321px) {
@@ -6547,7 +6800,6 @@ div.list-view-rounded-corners > table th:last-of-type {
             font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            /*line-height: 90px;*/
             text-align: left !important;
             margin: 0 auto 0 30px !important;
             width: 84%;
@@ -6558,8 +6810,6 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #mobile_menu {
         position: absolute;
-        /*top: 90px;*/
-        /*left: 10px;*/
         overflow-y: scroll;
         overflow-x: hidden !important;
         float: left;
@@ -6673,10 +6923,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     .col-sm-9 {
         width: 99%;
     }
-
-    /*#search_form > div  > table > tbody > tr > td:nth-child(4) {*/
-        /*display: block;*/
-    /*}*/
 }
 
 }
@@ -6903,7 +7149,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     /*#bootstrap-container, .col-sm-9, .col-sm-offset-3, .col-md-10, .col-md-offset-2, .main {margin: 0;padding: 0;}*/
     #content, #pageContainer {
-        width: 100%; /*margin: 0 0 50px 0;*/
+        width: 100%;
         margin: 0 0 0 0;
     }
 
@@ -7062,9 +7308,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 980px) {
-    /*.search_form {display: none;}*/
-}
 
 @media (max-width: 999px) and (max-height: 1024px) {
     #dashletsDialog_c {
@@ -7182,7 +7425,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 200px;
         border: none;
         border-radius: 3px;
-        /*padding:12px 12px 12px 12px;*/
         height: auto;
     }
 
