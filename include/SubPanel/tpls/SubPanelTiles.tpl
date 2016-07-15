@@ -10,7 +10,7 @@ SubPanelTiles.tpl:<br>
     }
         {/literal}
     </script>
-    {if $show_subpanel_tabs}
+    {*{if $show_subpanel_tabs}*}
         <ul class="noBullet" id="subpanel_list">
             {foreach from=$sub_panel_tabs item=subpanel_tab}
                 <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
@@ -41,6 +41,6 @@ SubPanelTiles.tpl:<br>
                 </li>
             {/foreach}
         </ul>
-    {/if}
+    {*{/if}*}
 
 /SubPanelTiles.tpl:
