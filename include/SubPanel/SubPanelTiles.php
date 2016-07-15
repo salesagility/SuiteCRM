@@ -206,6 +206,7 @@ class SubPanelTiles
         $template_footer = "";
 
         $tabs = array();
+        $tabs_properties = array();
         $tab_names = array();
 
         $default_div_display = 'inline';
@@ -238,8 +239,9 @@ class SubPanelTiles
             {
                 $availableTabs = $tabs ;
                 $tabs = array_intersect ( $usersLayout , $availableTabs ) ; // remove any tabs that have been removed since the user's layout was saved
-                foreach (array_diff ( $availableTabs , $usersLayout ) as $tab)
-                    $tabs [] = $tab ;
+                foreach (array_diff ( $availableTabs , $usersLayout ) as $tab) {
+                    $tabs [] = $tab;
+                }
             }
         }
         else
@@ -350,33 +352,35 @@ class SubPanelTiles
 
             if (empty($this->show_tabs))
             {
+                ///
+                /// Legacy Support for subpanels
                 $show_icon_html = SugarThemeRegistry::current()->getImage('advanced_search', 'border="0" align="absmiddle"', null, null, '.gif', translate('LBL_SHOW'));
                 $hide_icon_html = SugarThemeRegistry::current()->getImage('basic_search', 'border="0" align="absmiddle"', null, null, '.gif', translate('LBL_HIDE'));
 
-                $tabs[$t]['show_icon_html'] = $show_icon_html;
-                $tabs[$t]['hide_icon_html'] = $hide_icon_html;
+                $tabs_properties[$t]['show_icon_html'] = $show_icon_html;
+                $tabs_properties[$t]['hide_icon_html'] = $hide_icon_html;
 
                 $max_min = "<a name=\"$tab\"> </a><span id=\"show_link_".$tab."\" style=\"display: $opp_display\"><a href='#' class='utilsLink' onclick=\"current_child_field = '".$tab."';showSubPanel('".$tab."',null,null,'".$layout_def_key."');document.getElementById('show_link_".$tab."').style.display='none';document.getElementById('hide_link_".$tab."').style.display='';return false;\">"
                     . "" . $show_icon_html . "</a></span>";
                 $max_min .= "<span id=\"hide_link_".$tab."\" style=\"display: $div_display\"><a href='#' class='utilsLink' onclick=\"hideSubPanel('".$tab."');document.getElementById('hide_link_".$tab."').style.display='none';document.getElementById('show_link_".$tab."').style.display='';return false;\">"
                     . "" . $hide_icon_html . "</a></span>";
-                $tabs[$t]['title'] = $thisPanel->get_title();
-                $tabs[$t]['get_form_header']  = get_form_header( $thisPanel->get_title(), $max_min, false, false);
+                $tabs_properties[$t]['title'] = $thisPanel->get_title();
+                $tabs_properties[$t]['get_form_header']  = get_form_header( $thisPanel->get_title(), $max_min, false, false);
             }
 
-            $tabs[$t]['cookie_name'] = $cookie_name;
-            $tabs[$t]['div_display'] = $div_display;
-            $tabs[$t]['opp_display'] = $opp_display;
+            $tabs_properties[$t]['cookie_name'] = $cookie_name;
+            $tabs_properties[$t]['div_display'] = $div_display;
+            $tabs_properties[$t]['opp_display'] = $opp_display;
 
             $display_spd = '';
             if($div_display != 'none') {
-//                include_once('include/SubPanel/SubPanel.php');
-//                $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
-////                $subpanel_data = $subpanel_object->fetch('include/SubPanel/SubPanelDynamic.html');
-//
-////                echo $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
-//
-//                $tabs[$t]['display_spd'] = $subpanel_data;
+                include_once('include/SubPanel/SubPanel.php');
+                $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
+                $subpanel_data = $subpanel_object->fetch('include/SubPanel/SubPanelDynamic.html');
+
+                echo $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+
+                $tabs_properties[$t]['subpanel_body'] = $subpanel_data;
             }
             array_push($tab_names, $tab);
         }
@@ -384,6 +388,7 @@ class SubPanelTiles
         $template->assign('layout_def_key', $this->layout_def_key);
         $template->assign('show_subpanel_tabs', $this->show_tabs);
         $template->assign('subpanel_tabs', $tabs);
+        $template->assign('subpanel_tabs_properties', $tabs_properties);
         $template->assign('module_sub_panels', $module_sub_panels);
         $template->assign('sugar_config', $sugar_config);
         $template->assign('REQUEST', $_REQUEST);
