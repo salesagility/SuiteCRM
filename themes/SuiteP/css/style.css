@@ -322,8 +322,6 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .button-toggle-collapsed {
     position: fixed;
-    /*left: 0;
-    left:12%!important;*/
     top: 100px;
     background: #778591;
     z-index: 1000;
@@ -338,8 +336,6 @@ div#pageContainer td.dashletcontainer div.hd .icon {
 
 .button-toggle-expanded {
     position: fixed;
-    /*left: 0;
-    left:12%!important;*/
     top: 100px;
     background: #778591;
     z-index: 1000;
@@ -408,15 +404,13 @@ li.recentlinks img {
     width: 100%;
     padding: 30px 3% 40px 3%;
     float: left;
-    /*background-color:pink;*/
 }
 
-#bootstrap-container.col-md-offset-2 { /*margin-left:12%;*/
+#bootstrap-container.col-md-offset-2 {
 }
 
 footer {
     bottom: 0;
-    /*margin: 60px 0 0 0;*/
     margin: 0 0 0 0;
     background-color: #E6E6E6;
     float: left;
@@ -807,11 +801,6 @@ th, td {
     margin-bottom: 2px;
 }
 
-/*#EditView_tabs {*/
-    /*padding: 0px;*/
-    /*background: #fff;*/
-/*}*/
-
 #EditView .edit tr td {
     font-weight: 700;
     color: #534D64;
@@ -846,7 +835,6 @@ th, td {
 .edit tr td {
     font-weight: normal;
     vertical-align: top;
-    /*padding: 3px !important;*/
 }
 
 .edit tr td[scope=row] {
@@ -2272,7 +2260,6 @@ div.confirmTable {
 }
 
 .h3Row td {
-    /*padding: 4px 5px 3px 3px;*/
     padding: 0px;
 }
 
@@ -2829,12 +2816,12 @@ a.first-tab-xs {
     /*TODO: fix long tabs*/
     background-color: #778591 !important;
     border-bottom: none !important;
-    /*padding-right: 30px !important;*/
-    /*background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");*/
-    /*background-repeat: no-repeat;*/
-    /*background-position: 95% 120%;*/
-    /*background-origin: border-box;*/
-    /*background-size: 10px 95px;*/
+    padding-right: 30px !important;
+    background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_create_arrow.png");
+    background-repeat: no-repeat;
+    background-position: 90% 120%;
+    background-origin: border-box;
+    background-size: 10px 95px;
 }
 
 #first-tab-menu-xs.dropdown-menu {
@@ -3014,16 +3001,7 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-
     color: #3C8DBC;
-}
-
-ul#globalLinksSubnav.SugarActionMenuIESub li a:hover, ul#quickCreateULSubnav.SugarActionMenuIESub li a:hover,
-ul.clickMenu:hover > li > span > a, ul.clickMenu:hover > li > a {
-}
-
-ul.clickMenu li span.ab:hover {
-    /*background-position: 6px 0;*/
 }
 
 ul.clickMenu > li, ul.SugarActionMenuIESub li {
@@ -3794,7 +3772,6 @@ input[type=text].cstm_code {
 
 .navbar-inverse {
     background: #534D64 !important;
-    /*max-height: 90px !important;*/
 }
 
 .nav-pills li {
@@ -4347,6 +4324,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 42px;
     }
 }
+
 /*sm-col-*/
 @media (min-width: 768px) and (max-width: 991px) {
     div.search_name_basic img {
@@ -4364,6 +4342,7 @@ div.search_fields_basic label {
         margin: 0 8px 0 42px;
     }
 }
+
 /*md-col-*/
 @media (min-width: 992px) and (max-width: 1199px) {
     div.search_fields_basic {
@@ -4546,11 +4525,6 @@ ul::-webkit-resizer
 .dashboardTbList {
     max-width: 90% !important;
 }
-
-/*ul.dashboardTabList li {
-    list-style: none;
-    margin: 0 0 10px 0;
-}*/
 
 #addbuttons {
     float: right;
@@ -5196,11 +5170,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     margin: 5px 0 5px 0;
 }
 
-/*.dashletPanel {
-    border: 1px solid #eeeeee!important;
-
-}*/
-
 .dashletPanel .h3Row h3 {
     color: #ffffff;
     font-size: 13px;
@@ -5237,12 +5206,6 @@ ul#selectLinkBottom {
 
 ul#actionLinkBottom {
     background-color: green;
-}
-
-.oddListRowS1, .evenListRowS1 {
-    /*background: #f7f7f7 !important;
-    border-top: 1px solid #dddddd;
-    border-bottom: 1px solid #dddddd;*/
 }
 
 .list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
@@ -5425,7 +5388,6 @@ h3 span {
 }
 
 #quickcreatetop ul li a {
-    /*color: #BFCDD9 !important;*/
     padding: 12px 15px 12px 15px !important;
     margin: 0 !important;
     background-image: none;
@@ -5456,7 +5418,6 @@ h3 span {
     float: left;
     width: 44px;
     height: 48px;
-    /*margin-top:22px;*/
     margin-right: 15px;
     background-image: none, url("../../../../themes/SuiteP/images/p_icon_alert.svg"), url("../../../../themes/SuiteP/images/p_icon_alert.png");
     background-repeat: no-repeat;
@@ -5617,8 +5578,6 @@ h3 span {
 #themePreview {
     width: 250px;
 }
-
-/*.modulename {visibility: hidden;}*/
 
 .icon {
     fill: #F08377;
@@ -6205,13 +6164,6 @@ tr#pagination:nth-of-type(2) {
     border-spacing: 0;
 }
 
-/*div.list-view-rounded-corners > table {*/
-    /*border: 2px solid #778591;*/
-    /*border-radius-top: 4px;*/
-    /*overflow: hidden;*/
-
-/*}*/
-
 div.list-view-rounded-corners > table,
 tr#pagination {
     background: #f5f5f5;
@@ -6219,8 +6171,6 @@ tr#pagination {
 
 div.list-view-rounded-corners > table > thead > th,
 .pagination-bottom {
-    /*border: 2px solid #778591;*/
-    border: 2px solid transparent !important;
     border: 2px solid transparent !important;
     overflow: hidden;
 }
@@ -6709,7 +6659,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         line-height: 90px;
     }
 
-    /*#bootstrap-container {margin-top:160px!important;}*/
     .navbar-toggle {
         height: 90px;
     }
@@ -6750,7 +6699,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-image: none, url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.svg"), url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=p_user_icon.png");
         background-repeat: no-repeat;
         background-position: 0 0;
-        /*(margin-top:14px;*/
         border: none;
         margin-left: 0px;
     }
@@ -6801,8 +6749,6 @@ div.list-view-rounded-corners > table th:last-of-type {
 @media (min-width: 1251px) {
     #mobile_menu {
         position: absolute;
-        /*top: 90px;*/
-        /*left: 10px;*/
         overflow-y: scroll;
         overflow-x: hidden !important;
         float: left;
@@ -6833,7 +6779,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
 
-    
+
     @media (max-width: 320px) {
         .modulename {
             visibility: visible;
@@ -6841,12 +6787,11 @@ div.list-view-rounded-corners > table th:last-of-type {
             letter-spacing: 2px;
             text-transform: uppercase;
             float: left;
-            /*line-height: 90px;*/
             text-align: left !important;
             margin: 0 auto 0 15px !important;
             width: 8sc
         }
-        
+
     }
 
     @media (min-width: 321px) {
@@ -6855,7 +6800,6 @@ div.list-view-rounded-corners > table th:last-of-type {
             font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            /*line-height: 90px;*/
             text-align: left !important;
             margin: 0 auto 0 30px !important;
             width: 84%;
@@ -6866,8 +6810,6 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #mobile_menu {
         position: absolute;
-        /*top: 90px;*/
-        /*left: 10px;*/
         overflow-y: scroll;
         overflow-x: hidden !important;
         float: left;
@@ -6981,10 +6923,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     .col-sm-9 {
         width: 99%;
     }
-
-    /*#search_form > div  > table > tbody > tr > td:nth-child(4) {*/
-        /*display: block;*/
-    /*}*/
 }
 
 }
@@ -7211,7 +7149,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     /*#bootstrap-container, .col-sm-9, .col-sm-offset-3, .col-md-10, .col-md-offset-2, .main {margin: 0;padding: 0;}*/
     #content, #pageContainer {
-        width: 100%; /*margin: 0 0 50px 0;*/
+        width: 100%;
         margin: 0 0 0 0;
     }
 
@@ -7370,9 +7308,6 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
-@media (max-width: 980px) {
-    /*.search_form {display: none;}*/
-}
 
 @media (max-width: 999px) and (max-height: 1024px) {
     #dashletsDialog_c {
@@ -7490,7 +7425,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 200px;
         border: none;
         border-radius: 3px;
-        /*padding:12px 12px 12px 12px;*/
         height: auto;
     }
 
