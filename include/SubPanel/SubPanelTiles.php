@@ -370,31 +370,21 @@ class SubPanelTiles
             $tabs_properties[$t]['div_display'] = $div_display;
             $tabs_properties[$t]['opp_display'] = $opp_display;
 
-            $tabs_properties[$t]['subpanel_body'] = '';
-            $tabs_properties[$t]['buttons'] = '';
-//            if($div_display != 'none') {
-                ob_start();
-                    include_once('include/SubPanel/SubPanel.php');
-                    $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
-                    $subpanel_object->setTemplateFile('include/SubPanel/SubPanelDynamic.html');
-                    $subpanel_object->display();
-                    $subpanel_data = ob_get_contents();
-                @ob_end_clean();
-                ob_start();
-                    $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
-                    $tabs_properties[$t]['buttons'] = ob_get_contents();
-                @ob_end_clean();
+            // Get Subpanel
+            include_once('include/SubPanel/SubPanel.php');
+            $subpanel_object = new SubPanel($this->module, $_REQUEST['record'], $tab, $thisPanel, $layout_def_key);
 
-                $tabs_properties[$t]['subpanel_body'] = $subpanel_data;
-//            }
+            $arr = array();
+            // TODO: Remove x-template:
+            $tabs_properties[$t]['subpanel_body'] = $subpanel_object->ProcessSubPanelListView('include/SubPanel/SubPanelDynamic.html', $arr);
+
+            // Get subpanel buttons
+            $tabs_properties[$t]['buttons'] = $this->get_buttons($thisPanel,$subpanel_object->subpanel_query);
+
             array_push($tab_names, $tab);
         }
 
         $tab_names = '["' . join($tab_names, '","') . '"]';
-
-        if(empty($sugar_config['lock_subpanels']) || $sugar_config['lock_subpanels'] == false) {
-
-        }
 
         $module_sub_panels = array_map('array_keys', $module_sub_panels);
         $module_sub_panels = json_encode($module_sub_panels);

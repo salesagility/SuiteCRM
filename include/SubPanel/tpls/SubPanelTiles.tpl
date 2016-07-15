@@ -26,9 +26,8 @@
 
                         {if $tabs_properties.$i.div_display != 'none'}
                             <script>SUGAR.util.doWhen("typeof(markSubPanelLoaded) != 'undefined'", function() {literal}{ markSubPanelLoaded('{/literal}{$subpanel_tab}{literal}');}{/literal});</script>
+                            {*{$subpanel_tabs_properties.$i.buttons}*}
                         {/if}
-
-                        {$subpanel_tabs_properties.$i.get_buttons}
 
                         <div id="list_subpanel_{$subpanel_tab}">{$subpanel_tabs_properties.$i.subpanel_body}</div>
                     </div>
