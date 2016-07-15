@@ -719,6 +719,7 @@ $mod_strings = array(
         'url' => 'URL',
         'iframe' => 'IFrame',
         'datetimecombo' => 'Datetime',
+        'encrypt'=>'Encrypt',
         'decimal' => 'Decimal',
         'image' => 'Image',
     ),
