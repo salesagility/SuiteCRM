@@ -442,17 +442,18 @@ class SubPanel
 
 	function getSearchForm()
 	{
+
+		$thisPanel =& $this->subpanel_defs;
+		$subpanel_defs = $thisPanel->_instance_properties;
 		require_once('include/SubPanel/SubPanelSearchForm.php');
 
-		if($this->subpanel_id == "history"){
-			$module = 'Tasks';
-			$seed = new Task();
-		}else{
-			$module = 'Contacts';
-			$seed = new Contact();
+		if ($subpanel_defs['type'] == 'collection') {
+			$collection = array_shift(array_values($subpanel_defs['collection_list']));
+			$module = $collection['module'];
+		} else {
+			$module = $subpanel_defs['module'];
 		}
-
-
+		$seed = BeanFactory::getBean($module);
 
 		$searchForm = new SubPanelSearchForm($seed, $module, $this);
 
