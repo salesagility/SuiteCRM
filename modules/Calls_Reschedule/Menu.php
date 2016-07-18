@@ -41,6 +41,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
  
-if(ACLController::checkAccess('Calls_Reschedule', 'edit', true))$module_menu[]=Array("index.php?module=Calls_Reschedule&action=EditView&return_module=Calls_Reschedule&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"CreateCalls_Reschedule", 'Calls_Reschedule');
-if(ACLController::checkAccess('Calls_Reschedule', 'list', true))$module_menu[]=Array("index.php?module=Calls_Reschedule&action=index&return_module=Calls_Reschedule&return_action=DetailView", $mod_strings['LNK_LIST'],"Calls_Reschedule", 'Calls_Reschedule');
+if(ACLController::checkAccess('Calls_Reschedule', 'edit', true))$module_menu[]=Array("index.php?module=Calls_Reschedule&action=EditView&return_module=Calls_Reschedule&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'],"Schedule_Call", 'Calls_Reschedule');
+if(ACLController::checkAccess('Calls_Reschedule', 'list', true))$module_menu[]=Array("index.php?module=Calls_Reschedule&action=index&return_module=Calls_Reschedule&return_action=DetailView", $mod_strings['LNK_LIST'],"List", 'Calls_Reschedule');
 if(ACLController::checkAccess('Calls_Reschedule', 'import', true))$module_menu[]=Array("index.php?module=Import&action=Step1&import_module=Calls_Reschedule&return_module=Calls_Reschedule&return_action=index", $app_strings['LBL_IMPORT'],"Import", 'Calls_Reschedule');

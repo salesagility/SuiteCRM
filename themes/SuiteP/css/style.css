@@ -300,9 +300,9 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Add.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Create_Contact_VCard {
-    background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_VCard.png");
-    background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_VCard.svg");
+#actionMenuSidebar li a.side-bar-Create_Contact_Vcard, #actionMenuSidebar li a.side-bar-Create_Lead_Vcard {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_Vcard.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Create_Contact_Vcard.svg");
 }
 
 #actionMenuSidebar li a.side-bar-Create_Group_User {
@@ -345,7 +345,7 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Resource_Chart.svg");
 }
 
-#actionMenuSidebar li a.side-bar-Role-Management {
+#actionMenuSidebar li a.side-bar-Role_Management {
     background-image: url("../../../../themes/SuiteP/images/sidebar/Role_Management.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/Role_Management.svg");
 }

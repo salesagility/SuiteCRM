@@ -40,6 +40,6 @@ if (!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
 
 global $mod_strings, $app_strings, $sugar_config;
 
-if (ACLController::checkAccess('Favorites', 'edit', true)) $module_menu[] = Array("index.php?module=Favorites&action=EditView&return_module=Favorites&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'], "CreateFavorites", 'Favorites');
-if (ACLController::checkAccess('Favorites', 'list', true)) $module_menu[] = Array("index.php?module=Favorites&action=index&return_module=Favorites&return_action=DetailView", $mod_strings['LNK_LIST'], "Favorites", 'Favorites');
+if (ACLController::checkAccess('Favorites', 'edit', true)) $module_menu[] = Array("index.php?module=Favorites&action=EditView&return_module=Favorites&return_action=DetailView", $mod_strings['LNK_NEW_RECORD'], "Create", 'Favorites');
+if (ACLController::checkAccess('Favorites', 'list', true)) $module_menu[] = Array("index.php?module=Favorites&action=index&return_module=Favorites&return_action=DetailView", $mod_strings['LNK_LIST'], "List", 'Favorites');
 if (ACLController::checkAccess('Favorites', 'import', true)) $module_menu[] = Array("index.php?module=Import&action=Step1&import_module=Favorites&return_module=Favorites&return_action=index", $app_strings['LBL_IMPORT'], "Import", 'Favorites');
