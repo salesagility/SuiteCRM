@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,9 +36,9 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
+ */
 *}
+
 <script>
     {literal}
     $(document).ready(function(){
@@ -78,22 +79,12 @@
 {{$field}}   
 {{/foreach}}
 {{/if}}
-{{if empty($form.button_location) || $form.button_location == 'top'}}
-{{if !empty($form) && !empty($form.buttons)}}
-   {{foreach from=$form.buttons key=val item=button}}
-      {{sugar_button module="$module" id="$button" form_id="$form_id" view="$view" appendTo="header_buttons" location="HEADER"}}
-   {{/foreach}}
-{{else}}
-{{sugar_button module="$module" id="SAVE" view="$view" form_id="$form_id" location="HEADER" appendTo="header_buttons"}}
-{{sugar_button module="$module" id="CANCEL" view="$view" form_id="$form_id" location="HEADER" appendTo="header_buttons"}}
-{{/if}}
-{{if empty($form.hideAudit) || !$form.hideAudit}}
-{{sugar_button module="$module" id="Audit" view="$view" form_id="$form_id" appendTo="header_buttons"}}
-{{/if}}
-{{/if}}
-{{sugar_action_menu buttons=$header_buttons class="fancymenu" flat=true}}
+
+{{include file='themes/SuiteP/include/EditView/actions_buttons.tpl'}}
+
 </td>
-<td align='right'>{{$ADMIN_EDIT}}
+<td align='right'>
+{{$ADMIN_EDIT}}
 {{if $panelCount == 0}}
     {{* Render tag for VCR control if SHOW_VCR_CONTROL is true *}}
 	{{if $SHOW_VCR_CONTROL}}

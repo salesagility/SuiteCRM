@@ -1,11 +1,11 @@
 {*
-
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -36,11 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
-
-
-
-
+ */
 *}
 
 <script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
@@ -105,8 +101,8 @@
 {/if}
 {$multiSelectData}
 {if $hideTable == false}
-	<div style="border: 1px solid transparent; border-radius: 5px;">
-		<table cellpadding='0' cellspacing='0' border='0' class='list view table'>
+	<div class="list-view-rounded-corners">
+		<table cellpadding='0' cellspacing='0' border='0' class='list view table-responsive'>
 	<thead>
 		{assign var="link_select_id" value="selectLinkTop"}
 		{assign var="link_action_id" value="actionLinkTop"}
@@ -122,14 +118,28 @@
 				<th class='td_alt quick_view_links'>&nbsp;</th>
 			{/if}
 			{counter start=0 name="colCounter" print=false assign="colCounter"}
-            {assign var='datahide' value="phone"}
+            {assign var='datahide' value="xs sm"}
 			{foreach from=$displayColumns key=colHeader item=params}
-                {if $colCounter == '3'}{assign var='datahide' value="phone,phonelandscape"}{/if}
-                {if $colCounter == '5'}{assign var='datahide' value="phone,phonelandscape,tablet"}{/if}
-                {if $colHeader == 'NAME' || $params.bold}
-					<th scope='col' data-toggle="true">
+                {if $colCounter == '3'}{assign var='datahide' value="xs sm"}{/if}
+                {if $colCounter == '5'}{assign var='datahide' value="md"}{/if}
+
+				{if $colCounter == '0'}
+					{assign var='hide' value=""}
+				{elseif $colHeader  == 'NAME' }
+					{assign var='hide' value=""}
+				{elseif $colCounter  > '10' }
+					{assign var='hide' value="hidden-xs hidden-sm hidden-md"}
+				{elseif $colCounter > '4' }
+					{assign var='hide' value="hidden-xs hidden-sm"}
+				{elseif $colCounter > '0' }
+					{assign var='hide' value="hidden-xs"}
 				{else}
-					<th scope='col' data-hide="{$datahide}">
+					{assign var='hide' value=""}
+				{/if}
+                {if $colHeader == 'NAME' || $params.bold}
+					<th scope='col' data-toggle="true" class="{$hide}">
+				{else}
+					<th scope='col' data-breakpoints="{$datahide}" class="{$hide}">
 				{/if}
 						<div>
 						{if $params.sortable|default:true}
@@ -172,7 +182,7 @@
 			{* add extra column for icons*}
 			<th>{$pageData.additionalDetails.$id}</th>
 		</tr>
-		{include file='include/ListView/ListViewPagination.tpl'}
+		{include file='themes/SuiteP/include/ListView/ListViewPaginationTop.tpl'}
 	</thead>
 		{counter start=$pageData.offsets.current print=false assign="offset" name="offset"}
 		{foreach name=rowIteration from=$data key=id item=rowData}
@@ -199,6 +209,7 @@
 	            {capture assign=action}{if $act}{$act}{else}EditView{/if}{/capture}
 				<td>
                     {if $pageData.rowAccess[$id].edit}
+
                         <a title='{$editLinkString}' id="edit-{$rowData.ID}"
                            href="index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$rowData.ID}"
                                 >
@@ -210,16 +221,29 @@
 				{/if}
 				{counter start=0 name="colCounter" print=false assign="colCounter"}
 				{foreach from=$displayColumns key=col item=params}
+					{if $colCounter == '0'}
+						{assign var='hide' value=""}
+					{elseif $col  == 'NAME' }
+						{assign var='hide' value=""}
+					{elseif $colCounter  > '10' }
+						{assign var='hide' value="hidden-xs hidden-sm hidden-md"}
+					{elseif $colCounter > '4' }
+						{assign var='hide' value="hidden-xs hidden-sm"}
+					{elseif $colCounter > '0' }
+						{assign var='hide' value="hidden-xs"}
+					{else}
+						{assign var='hide' value=""}
+					{/if}
                     {$displayColumns[type]}
 				    {strip}
-					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" type="{$displayColumns.$col.type}" field="{$col|lower}" class="{if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}inlineEdit{/if}{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
+					<td {if $scope_row} scope='row' {/if} align='{$params.align|default:'left'}' valign="top" type="{$displayColumns.$col.type}" field="{$col|lower}" class="{$hide} {if $inline_edit && ($displayColumns.$col.inline_edit == 1 || !isset($displayColumns.$col.inline_edit))}inlineEdit{/if}{if ($params.type == 'teamset')}nowrap{/if}{if preg_match('/PHONE/', $col)} phone{/if}">
 						{if $col == 'NAME' || $params.bold}<b>{/if}
 					    {if $params.link && !$params.customCode}
-	{capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}{/capture}
-	{capture assign=action}{if $act}{$act}{else}DetailView{/if}{/capture}
-	{capture assign=record}{$rowData[$params.id]|default:$rowData.ID}{/capture}
-	{capture assign=url}index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$record}{/capture}
-	                        <{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href="{sugar_ajax_url url=$url}">
+							{capture assign=linkModule}{if $params.dynamic_module}{$rowData[$params.dynamic_module]}{else}{$params.module|default:$pageData.bean.moduleDir}{/if}{/capture}
+							{capture assign=action}{if $act}{$act}{else}DetailView{/if}{/capture}
+							{capture assign=record}{$rowData[$params.id]|default:$rowData.ID}{/capture}
+							{capture assign=url}index.php?module={$linkModule}&offset={$offset}&stamp={$pageData.stamp}&return_module={$linkModule}&action={$action}&record={$record}{/capture}
+													<{$pageData.tag.$id[$params.ACLTag]|default:$pageData.tag.$id.MAIN} href="{sugar_ajax_url url=$url}">
 						{/if}
 
 						{if $params.customCode}
@@ -253,7 +277,7 @@
     {assign var="selectLink" value=$selectLinkBottom}
     {assign var="actionsLink" value=$actionsLinkBottom}
     {assign var="action_menu_location" value="bottom"}
-    {include file='include/ListView/ListViewPagination.tpl'}
+    {include file='themes/SuiteP/include/ListView/ListViewPaginationBottom.tpl'}
 	</table></div>
 {/if}
 {if $contextMenus}

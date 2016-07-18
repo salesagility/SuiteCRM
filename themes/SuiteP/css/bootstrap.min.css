@@ -1907,8 +1907,8 @@ pre code {
     width: 91.66666667%}
 
 .col-md-10 {
-    /*width: 83.33333333%;
-    width: 88%;*/
+    width: 83.33333333%;
+    width: 88%;
     }
 
 .col-md-9 {
@@ -6493,7 +6493,7 @@ button.close {
     display: none!important;
 }
 
-@media (max-width:767px) {
+@media (max-width:768px) {
     .visible-xs {
     display: block!important;
 }
@@ -6637,26 +6637,37 @@ td.visible-lg, th.visible-lg {
 }
 }
 
-@media (max-width:1250px) {
-    .hidden-xs {}
-    /*display: none!important;*/
-    .navbar-nav {display:none!important;}
+/*@media (max-width:1250px) {*/
+
+    /*.navbar-nav {display:none!important;}*/
+/*}*/
+
+@media (max-width: 768px) {
+    .hidden-xs {
+        display: none!important;
+    }
 }
 
-@media (max-width:1250px) {
-    .hidden-sm {}
-    /*display: none!important;*/
+@media (max-width:991px) {
+    .hidden-sm {
+        display: none!important;
+    }
 
 }
 
-@media (min-width:1251px) {
+@media (max-width:1200px) {
     .hidden-md {
-    display: none!important;
+        display: none!important;
+    }
 }
+
+@media (min-width:1201px) and (max-width:1250px) {
+    .hidden-mdlg {
+        display: none !important;
 }
 
 @media (min-width:1200px) {
-    .hidden-lg {
+.hidden-lg {
     display: none!important;
 }
 }
