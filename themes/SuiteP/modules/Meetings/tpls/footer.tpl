@@ -39,6 +39,7 @@
  */
 *}
 
+<div class="h3Row" id="scheduler"></div>
 <script language="javascript">
     var _form_id = '{$form_id}';
     {literal}
@@ -67,5 +68,63 @@
 <!-- End Meta-Data Javascript -->
 {{/if}}
 <script>SUGAR.util.doWhen("document.getElementById('EditView') != null",
-        function(){ldelim}SUGAR.util.buildAccessKeyLabels();{rdelim});
+            function(){ldelim}SUGAR.util.buildAccessKeyLabels();{rdelim});
 </script>
+
+
+<script type='text/javascript' src='{sugar_getjspath file='include/javascript/popup_helper.js'}'></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui2.js'}"></script>
+<script type="text/javascript" src="{sugar_getjspath file='cache/include/javascript/sugar_grp_yui_widgets.js'}"></script>
+
+<script type="text/javascript">
+    {literal}
+    SUGAR.meetings = {};
+    var meetingsLoader = new YAHOO.util.YUILoader({
+        require : ["sugar_grp_jsolait"],
+        // Bug #48940 Skin always must be blank
+        skin: {
+            base: 'blank',
+            defaultSkin: ''
+        },
+        onSuccess: function(){
+            SUGAR.meetings.fill_invitees = function() {
+                if (typeof(GLOBAL_REGISTRY) != 'undefined')  {
+                    SugarWidgetScheduler.fill_invitees(document.EditView);
+                }
+            }
+            var root_div = document.getElementById('scheduler');
+            var sugarContainer_instance = new SugarContainer(document.getElementById('scheduler'));
+            sugarContainer_instance.start(SugarWidgetScheduler);
+            if ( document.getElementById('save_and_continue') ) {
+                var oldclick = document.getElementById('save_and_continue').attributes['onclick'].nodeValue;
+                document.getElementById('save_and_continue').onclick = function(){
+                    SUGAR.meetings.fill_invitees();
+                    eval(oldclick);
+                }
+            }
+        }
+    });
+    meetingsLoader.addModule({
+        name :"sugar_grp_jsolait",
+        type : "js",
+        fullpath: "cache/include/javascript/sugar_grp_jsolait.js",
+        varName: "global_rpcClient",
+        requires: []
+    });
+    meetingsLoader.insert();
+    YAHOO.util.Event.onContentReady("{/literal}{{$form_name}}{literal}",function() {
+        var durationHours = document.getElementById('duration_hours');
+        if (durationHours) {
+            document.getElementById('duration_minutes').tabIndex = durationHours.tabIndex;
+        }
+
+        var reminderChecked = document.getElementsByName('reminder_checked');
+        for(i=0;i<reminderChecked.length;i++) {
+            if (reminderChecked[i].type == 'checkbox' && document.getElementById('reminder_list')) {
+                YAHOO.util.Dom.getFirstChild('reminder_list').tabIndex = reminderChecked[i].tabIndex;
+            }
+        }
+    });
+    {/literal}
+</script>
+</form>

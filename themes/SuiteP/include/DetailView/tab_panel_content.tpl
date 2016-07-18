@@ -55,7 +55,11 @@
                 {{foreach name=fieldIteration from=$colData key=field item=subField}}
 
                     {{if $fieldCount < $smarty.foreach.colIteration.total && !empty($colData.field.name)}}
-                        <div class="col-xs-12 col-sm-4 label">
+                        {{if $smarty.foreach.colIteration.total > 1}}
+                            <div class="col-xs-12 col-sm-4 label">
+                        {{else}}
+                            <div class="col-xs-12 col-sm-2 label">
+                        {{/if}}
                             {*label*}
                             {{if isset($colData.field.customLabel)}}
                                 {{$colData.field.customLabel}}
@@ -80,7 +84,11 @@
                             {sugar_help text=$popupText WIDTH=400}
                         {{/if}}
                     </div>
-                    <div class="col-xs-12 col-sm-8 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+                     {{if $smarty.foreach.colIteration.total > 1}}
+                        <div class="col-xs-12 col-sm-8 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+                    {{else}}
+                        <div class="col-xs-12 col-sm-10 detail-view-field {{if $inline_edit && !empty($colData.field.name) && ($fields[$colData.field.name].inline_edit == 1 || !isset($fields[$colData.field.name].inline_edit))}}inlineEdit{{/if}}" type="{{$fields[$colData.field.name].type}}" field="{{$fields[$colData.field.name].name}}" {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}} {{if isset($fields[$colData.field.name].type) && $fields[$colData.field.name].type == 'phone'}}class="phone"{{/if}}>
+                    {{/if}}
 
                     {{if !empty($colData.field.name)}}
                         {if !$fields.{{$colData.field.name}}.hidden}

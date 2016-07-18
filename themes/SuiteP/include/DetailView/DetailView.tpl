@@ -39,7 +39,7 @@
  */
 *}
 
-{{include file='themes/SuiteP/include/DetailView/header.tpl'}}
+{{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
 <div>
     {*display tabs*}
@@ -87,31 +87,7 @@
         {if $config.enable_action_menu}
         <li id="tab-actions" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{$APP.LBL_LINK_ACTIONS}}</a>
-            <ul class="dropdown-menu">
-                {{if !isset($form.buttons)}}
-                    <li>{{sugar_button module="$module" id="EDIT" view="$view" form_id="formDetailView"}}</li>
-                    <li>{{sugar_button module="$module" id="DUPLICATE" view="EditView" form_id="formDetailView"}}</li>
-                    <li>{{sugar_button module="$module" id="DELETE" view="$view" form_id="formDetailView"}}</li>
-                {{else}}
-                    {{counter assign="num_buttons" start=0 print=false}}
-                    {{foreach from=$form.buttons key=val item=button}}
-                        {{if !is_array($button) && in_array($button, $built_in_buttons)}}
-                            {{counter print=false}}
-                            <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formDetailView"}}</li>
-                        {{/if}}
-                    {{/foreach}}
-                    {{if count($form.buttons) > $num_buttons}}
-                        {{foreach from=$form.buttons key=val item=button}}
-                            {{if is_array($button) && $button.customCode}}
-                               <li>{{sugar_button module="$module" id="$button" view="EditView" form_id="formDetailView"}}</li>
-                            {{/if}}
-                        {{/foreach}}
-                    {{/if}}
-                    {{if empty($form.hideAudit) || !$form.hideAudit}}
-                        {{sugar_button module="$module" id="Audit" view="EditView" form_id="formDetailView"}}
-                    {{/if}}
-                {{/if}}
-            </ul>
+            {{include file="themes/SuiteP/include/DetailView/actions_menu.tpl"}}
         </li>
         {/if}
     </ul>
@@ -203,18 +179,3 @@
 <script type="text/javascript" src="include/InlineEditing/inlineEditing.js"></script>
 <script type="text/javascript" src="modules/Favorites/favorites.js"></script>
 
-{*<div>*}
-    {*tabDefs*}
-    {*{{$tabDefs|var_dump}}*}
-    {*<hr>*}
-    {*useTabs*}
-    {*{{$useTabs|var_dump}}*}
-    {*<hr>*}
-    {*sectionPanels*}
-    {*{{$sectionPanels|var_dump}}*}
-    {*<hr>*}
-    {*sectionPanels*}
-    {*{{foreach name=section from=$sectionPanels key=label item=panel}}*}
-        {*{{$panel|var_dump}}*}
-    {*{{/foreach}}*}
-{*</div>*}
