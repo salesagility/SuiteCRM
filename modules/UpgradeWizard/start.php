@@ -89,7 +89,7 @@ $uwMain =<<<eoq
 			</p>
 			<BR>
 			<p>
-			<span class="error">
+			<span class="error nonPaddedError">
 			{$mod_strings['LBL_UW_START_DESC2']}
 			</span>
 			</p>
