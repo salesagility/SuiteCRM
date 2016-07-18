@@ -1313,8 +1313,8 @@ ul.tablist li a:link, ul.tablist li a:visited, ul.subpanelTablist li a:link, ul.
     text-decoration: none;
 }
 
-.subpanelTabForm {
-    padding: 15px 0 0 0;
+.subpanelTabForm td {
+    padding: 15px;
 }
 
 table.subpanelTabForm td {
