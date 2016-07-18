@@ -5896,7 +5896,7 @@ object {
     color: white;
     padding: 0px;
     vertical-align: middle;
-    height: 48px;
+    height: 52px;
 
 }
 
@@ -5917,11 +5917,15 @@ object {
 .panel-default > .panel-heading > a {
     color: #ffffff;
     display: block;
-    height: 48px;
+    height: 52px;
     font-weight: 500;
     font-size: 14px !important;
     background-color: #66727D;
-    padding: 15px 10px 0 10px;
+    padding: 10px 10px 0 10px;
+}
+
+.panel-default > .panel-heading > a img {
+    margin-right: 15px;
 }
 
 .panel-default > .panel-body {
@@ -5947,6 +5951,14 @@ div.panel-heading a.collapsed {
 
 div.panel-heading a.collapsed:before {
     content: "\2b" !important;
+}
+
+div.panel-heading a:before
+{
+    font-family: 'Glyphicons Halflings';
+    content: "\2212";
+    font-weight: 100;
+    line-height: 26px;
 }
 
 div.sub-panel {
