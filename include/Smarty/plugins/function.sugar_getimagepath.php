@@ -56,9 +56,14 @@ function smarty_function_sugar_getimagepath($params, &$smarty)
 {
 	/**
 	 * Get icon by specifying the file_name and file extension separately
+	 * You can also specify the subdirectory to look in
 	 */
 	if(isset($params['file_name']) && isset($params['file_extension'])) {
-		$imageUrl = SugarThemeRegistry::current()->getImageURL($params['label'].'.'.$params['file_extension']);
+		$params['file'] = $params['file_name'].'.'.$params['file_extension'];
+		if(isset($params['directory'])) {
+			$params['file'] = $params['directory'].DIRECTORY_SEPARATOR.$params['file'];
+		}
+		$imageUrl = SugarThemeRegistry::current()->getImageURL($params['file'], false);
 		return $imageUrl;
 	}
 
