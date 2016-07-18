@@ -5956,6 +5956,10 @@ div.panel-heading a:before
     font-weight: 700;
 }
 
+div.sub-panel {
+    margin-bottom: 4px;
+}
+
 .aor_dragbox {
     height: 250px;
     overflow: scroll;
