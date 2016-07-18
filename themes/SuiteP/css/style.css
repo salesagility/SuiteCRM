@@ -294,21 +294,137 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     display: none;
 }
 
+
+#actionMenuSidebar li a.side-bar-Create, #actionMenuSidebar li a.side-bar-Add {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Add.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/Add.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Create_Contact_VCard {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Contact_VCard.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Contact_VCard.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Create_Group_User {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Group_User.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Group_User.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Create_Person_Form {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Person_Form.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Person_Form.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Create_Security_Group {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Security_Group.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Create_Security_Group.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Import {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Import.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Import.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Import_Line_Item {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Import_Line_Item.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Import_Line_Item.svg");
+}
+
+#actionMenuSidebar li a.side-bar-List_Maps {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-List_Maps.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-List_Maps.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Quick_Radius_Maps {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Quick_Radius_Maps.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Quick_Radius_Maps.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Resource_Chart {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Resource_Chart.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Resource_Chart.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Role-Management {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Role_Management.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Role_Management.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Schedule_Call {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Schedule_Call.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Schedule_Call.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Schedule_Meeting {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Schedule_Meeting.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Schedule_Meeting.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Security_Groups {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Security_Groups.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Security_Groups.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Security_Suite_Settings {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Security_Groups.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Security_Groups.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Setup_Email {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Setup_Email.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Setup_Email.svg");
+}
+
+#actionMenuSidebar li a.side-bar-Today {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Today.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-Today.svg");
+}
+
+
+#actionMenuSidebar li a.side-bar-View, #actionMenuSidebar li a.side-bar-List {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View.svg");
+}
+
+
+#actionMenuSidebar li a.side-bar-View_Diagnostics {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Diagnostics.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Diagnostics.svg");
+}
+
+#actionMenuSidebar li a.side-bar-View_Email_Templates {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Email_Templates.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Email_Templates.svg");
+}
+
+#actionMenuSidebar li a.side-bar-View_Process_Audit {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Process_Audit.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Process_Audit.svg");
+}
+
+#actionMenuSidebar li a.side-bar-View_Process_Tasks {
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Process_Tasks.png");
+    background-image: url("../../../../themes/SuiteP/images/sidebar/side-bar-View_Process_Tasks.svg");
+}
+
+
 #actionMenuSidebar li a {
-    background-image: none, url("../../../../themes/SuiteP/images/p_shortcut_action.svg"), url("../../../../themes/SuiteP/images/p_shortcut_action.png");
     background-repeat: no-repeat;
-    background-position: 17px center;
+    background-position: 17px 8px;
+    background-size: 32px;
     background-color: #94A6B5;
     color: #f5f5f5;
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     margin: 0 0 1px 0;
-    padding: 20px 20px 20px 70px;
+    line-height: 48px;
+    padding-left: 55px;
 }
 
 #actionMenuSidebar ul li a:hover {
     color: #fff;
     background-color: #8499AB;
+    background-position: 17px -72px;
 }
 
 .sidebar_top {
