@@ -5949,13 +5949,6 @@ div.panel-heading a.collapsed:before {
     content: "\2b" !important;
 }
 
-div.panel-heading a:before
-{
-    font-family: 'Glyphicons Halflings';
-    content: "\2212";
-    font-weight: 700;
-}
-
 div.sub-panel {
     margin-bottom: 4px;
 }
