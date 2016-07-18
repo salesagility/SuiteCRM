@@ -4213,7 +4213,7 @@ li.topnav ul.dropdown-menu li:last-child a {
     background: #3C8DBC !important;
 }
 
-.button, input[type=submit], input[type=button] {
+.button, input[type=submit], input[type=button], input[type=reset] {
     background-color: #F08377;
     border: none;
     color: #fff;
