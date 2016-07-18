@@ -54,9 +54,22 @@ r32836 - 2008-03-14 16:48:48 -0700 (Fri, 14 Mar 2008) - majed - adds smarty func
  */
 function smarty_function_sugar_getimagepath($params, &$smarty)
 {
+	/**
+	 * Get icon by specifying the file_name and file extension separately
+	 */
+	if(isset($params['file_name']) && isset($params['file_extension'])) {
+		$imageUrl = SugarThemeRegistry::current()->getImageURL($params['label'].'.'.$params['file_extension']);
+		return $imageUrl;
+	}
+
+	/**
+	 * Get icon by specifying the file_name and file extension combined.
+	 */
+
 	if(!isset($params['file'])) {
 		   $smarty->trigger_error($GLOBALS['app_strings']['ERR_MISSING_REQUIRED_FIELDS'] . 'file');
 	}
+
  	return SugarThemeRegistry::current()->getImageURL($params['file']);
 }
 ?>

@@ -5,7 +5,8 @@
         <div class="panel-heading panel-heading-collapse">
             <a class="collapsed" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
                 <div class="col-xs-10 col-sm-11 col-md-11">
-                    <div><span class="glyphicon glyphicon-home"> </span>
+                    <div>
+                        <span class="glyphicon"> <img src="{sugar_getimagepath file_name=$subpanel_tabs_properties.$i.module_name file_extension='png'}"> </span>
                         {$subpanel_tabs_properties.$i.title}
                     </div>
                 </div>
