@@ -95,21 +95,6 @@ class aSubPanel
 			}
 		}
 
-
-//		$thisPanel =& $this->subpanel_defs;
-//		$subpanel_defs = $thisPanel->_instance_properties;
-//
-//		require_once('include/SubPanel/SubPanelSearchForm.php');
-//
-//		if ($subpanel_defs['type'] == 'collection') {
-//			$collection = array_shift(array_values($subpanel_defs['collection_list']));
-//			$module = $collection['module'];
-//		} else {
-//			$module = $subpanel_defs['module'];
-//		}
-//		$seed = BeanFactory::getBean($module);
-
-
 		if ($instance_properties['type'] != 'collection' && !empty($collections)) {
 			$instance = $this->_instance_properties;
 			$BreakDownCollections = $collections;
@@ -119,12 +104,6 @@ class aSubPanel
 			$table = strtolower($collection['module']); //tasks or contacts.
 			$search_query = str_replace($table, $newTable, $search_query);
 		}
-
-		// bellow if replace by something like above
-//		if (!$this->isCollection()){
-//			$table = strtolower($instance_properties['module']);
-//			$search_query = str_replace('contacts', $table, $search_query);
-//		}
 
 		$this->search_query = $search_query;
 		$this->name = $name ;
