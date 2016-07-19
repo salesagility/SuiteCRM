@@ -75,6 +75,8 @@
                     <a id="tab{$tabNum}" href="#tab-content-{$tabNum}" data-toggle="tab">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
+
+
                 </li>
             {else}
                 <li role="presentation">
@@ -85,10 +87,12 @@
             {/if}
         {/foreach}
 
-        <li id="tab-actions" class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actions{$APP.LBL_LINK_ACTIONS}</a>
-            {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
-        </li>
+        {if !$lock_homepage}
+            <li id="tab-actions" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Actions{$APP.LBL_LINK_ACTIONS}</a>
+                {include file='themes/SuiteP/include/MySugar/tpls/actions_menu.tpl'}
+            </li>
+        {/if}
     </ul>
     <div class="clearfix"></div>
     <div class="tab-content">
