@@ -6472,19 +6472,32 @@ table.subpanel-table ul.subpanel {
 
 
 table.subpanel-table ul.subpanel a,
-#subpanel_securitygroups .pagination .sugar_action_button,
-#subpanel_securitygroups .pagination li.sugar_action_button > form > a,
-#subpanel_securitygroups .pagination .sugar_action_button > form > a,
-#subpanel_securitygroups .pagination a {
+table.subpanel-table .pagination .sugar_action_button,
+table.subpanel-table .pagination li.sugar_action_button > form > a,
+table.subpanel-table .pagination .sugar_action_button > form > a,
+table.subpanel-table .pagination .sugar_action_button > form > a,
+table.subpanel-table .pagination a {
     padding: 4px !important;
     background-color: #94A6B5;
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff !important;
+    text-transform: uppercase;
 }
 
-#subpanel_securitygroups .sugar_action_button > span {
-  background-position-y: center;
+
+table.subpanel-table .pagination ul.clickMenu > li > form > a {
+    color: #fff !important;
+}
+
+table.subpanel-table .pagination ul.clickMenu ul > li > a {
+    color: #534D64 !important;
+}
+
+
+table.subpanel-table .pagination ul.clickMenu li span {
+   float: right;
+    margin-top: 8px
 }
 
 table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span,
@@ -6492,6 +6505,8 @@ table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > 
     color: #534D64 !important;
     font-weight: 700;
 }
+
+ul.SugarActionMenuIESub li a, ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a
 
 
 
