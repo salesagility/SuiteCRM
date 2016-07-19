@@ -715,7 +715,6 @@ EOHTML;
         $alt = ''
     )
     {
-
         static $cached_results = array();
 
 		// trap deprecated use of image extension

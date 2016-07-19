@@ -363,6 +363,7 @@ class SubPanelTiles
                 $max_min .= "<span id=\"hide_link_".$tab."\" style=\"display: $div_display\"><a href='#' class='utilsLink' onclick=\"hideSubPanel('".$tab."');document.getElementById('hide_link_".$tab."').style.display='none';document.getElementById('show_link_".$tab."').style.display='';return false;\">"
                     . "" . $hide_icon_html . "</a></span>";
                 $tabs_properties[$t]['title'] = $thisPanel->get_title();
+                $tabs_properties[$t]['module_name'] = $thisPanel->get_module_name();
                 $tabs_properties[$t]['get_form_header']  = get_form_header( $thisPanel->get_title(), $max_min, false, false);
             }
 
