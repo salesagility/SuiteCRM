@@ -39,6 +39,7 @@
 
 
 *}
+
 {literal}
 <style>
 .menu{
@@ -78,6 +79,8 @@ var moduleName = 'Home';
 
 
 <div id="pageContainer">
+	cheese
+
 	<div id="pageNum_{$activePage}_div">
 <table width="100%" cellspacing="0" cellpadding="0" border="0" class="subpanelTabForm" style="border-top: 0px none; margin-bottom: 4px;">
  	<tr>
