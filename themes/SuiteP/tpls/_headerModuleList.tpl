@@ -80,7 +80,7 @@
                                                 <a title="{$item.module_name}"
                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                    href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                                    <img src="{sugar_getimagepath file_name=$item.module_name file_extension='svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                    <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
                                                 </a>
                                             </li>
                                     {/foreach}
@@ -95,7 +95,7 @@
                                                 <a title="{$item.module_name}"
                                                    accessKey="{$smarty.foreach.lastViewed.iteration}"
                                                    href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
-                                                    <img src="{sugar_getimagepath file_name=$item.module_name file_extension='svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
+                                                    <img src="{sugar_getimagepath directory='sidebar/modules' file_name=$item.module_name file_extension='svg'}"><span aria-hidden="true">{$item.item_summary_short}</span>
                                                 </a>
                                             </li>
                                     {/foreach}
@@ -576,7 +576,7 @@
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.item_id link_only=1}">
-                                        <img src="{sugar_getimagepath file_name=$item.module_name file_extension="svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                        <img src="{sugar_getimagepath directory='sidebar/modules'  file_name=$item.module_name file_extension="svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
@@ -597,7 +597,7 @@
                                     <a title="{$item.module_name}"
                                        accessKey="{$smarty.foreach.lastViewed.iteration}"
                                        href="{sugar_link module=$item.module_name action='DetailView' record=$item.id link_only=1}">
-                                        <img src="{sugar_getimagepath file_name=$item.module_name file_extension="svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
+                                        <img src="{sugar_getimagepath  directory='sidebar/modules' file_name=$item.module_name file_extension="svg"}"/><span aria-hidden="true">{$item.item_summary_short}</span>
                                     </a>
                                 </li>
                             </div>
