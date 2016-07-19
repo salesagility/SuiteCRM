@@ -3887,6 +3887,11 @@ fieldset[disabled] .btn-primary.active {
     content: none;
 }
 
+input#btn_ConditionLine.button[type="button"],
+input#btn_ActionLine.button[type="button"] {
+    padding: 0 10px;
+    color: white;
+}
 
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
