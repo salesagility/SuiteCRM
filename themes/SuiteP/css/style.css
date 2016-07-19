@@ -2731,19 +2731,6 @@ ul.subpanelTablist li a.activeSubTab:hover {
     color: #ffffff;
 }
 
-.subpanel_list tr.pagination td table td a:link,
-.subpanel_list tr.pagination td table td a:visited,
-.subpanel_list .reportGroupByDataChildTablelistViewThS1 a:link,
-.subpanel_list .reportGroupByDataChildTablelistViewThS1 a:visited,
-.subpanel_list  tr th,
-.subpanel_list  tr th a:link,
-.subpanel_list  tr th a:visited,
-.subpanel_list  tr td[scope=col],
-.subpanel_list  tr td[scope=col] a:link,
-.subpanel_list  tr td[scope=col] a:visited,
-.subpanel_list  tr.pagination td table td span.pageNumbers {
-    color: #000 !important;
-}
 
 .evenListRowS1 td, .oddListRowS1 td {
     color: #534D64;
@@ -6146,7 +6133,7 @@ object {
 }
 
 div.panel-heading a.collapsed {
-    background-color: #BFCAD3;
+    background-color: #BFCAD3 !important;
 }
 
 @media (max-width: 767px) {
