@@ -6449,6 +6449,52 @@ tr#pagination {
     background: #f5f5f5;
 }
 
+table.subpanel-table,
+table.subpanel-table a:link,
+table.subpanel-table td,
+table.subpanel-table th,
+table.subpanel-table tr {
+    color: #534D64 !important;
+}
+
+table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
+    background: none;
+    padding: 0;
+    line-height: 24px;
+}
+
+table.subpanel-table ul.subpanel {
+    background: none;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    border: none;
+}
+
+
+table.subpanel-table ul.subpanel a,
+#subpanel_securitygroups .pagination .sugar_action_button,
+#subpanel_securitygroups .pagination li.sugar_action_button > form > a,
+#subpanel_securitygroups .pagination .sugar_action_button > form > a,
+#subpanel_securitygroups .pagination a {
+    padding: 4px !important;
+    background-color: #94A6B5;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff !important;
+}
+
+#subpanel_securitygroups .sugar_action_button > span {
+  background-position-y: center;
+}
+
+table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span,
+table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span a{
+    color: #534D64 !important;
+    font-weight: 700;
+}
+
+
+
 div.list-view-rounded-corners > table > thead > th,
 .pagination-bottom {
     /*border: 2px solid #778591;*/
