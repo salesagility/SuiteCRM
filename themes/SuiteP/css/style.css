@@ -48,7 +48,7 @@ body {
     background: #e6e6e6;
     background: #f5f5f5;
     font-family: 'Lato', Lato, Arial, sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     margin: 0;
     overflow: auto;
     color: #534D64;
@@ -419,7 +419,6 @@ div#pageContainer td.dashletcontainer div.hd .icon {
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Tasks.png");
     background-image: url("../../../../themes/SuiteP/images/sidebar/View_Process_Tasks.svg");
 }
-
 
 #actionMenuSidebar li a {
     background-repeat: no-repeat;
@@ -1310,24 +1309,40 @@ table#dashletPanel thead {
 }
 
 
-
-.other.view tr {
-    background-color: #000;
-}
-
 .other.view td {
     height: 48px;
+    line-height: 48px;
+}
+
+.other.view img, .other.view svg {
+    font-weight: 700;
+    margin: 5px 0 0 5px;
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    float: left;
+}
+
+.other.view a {
+    position: relative;
+    font-weight: 700;
+    margin: 0 0 0 10px;
+    display: inline-block;
 }
 
 .other.view td:nth-of-type(1) {
     display: block;
     float: left;
     width: 20%;
+    background-color: #fff;
+
 }
 .other.view td:nth-of-type(2) {
     display: block;
     float: right;
     width: 80%;
+    background-color: #fff;
+
 }
 .other.view td:nth-of-type(2):after {
     clear: both;
@@ -1336,13 +1351,13 @@ table#dashletPanel thead {
     display: block;
     float: left;
     width: 20%;
-
-
+    background-color: #f5f5f5;
 }
 .other.view td:nth-of-type(4) {
     display: block;
     float: right;
     width: 80%;
+    background-color: #f5f5f5;
 
 
 }
@@ -2714,6 +2729,20 @@ ul.subpanelTablist li a.activeSubTab:hover {
 .list tr td[scope=col] a:visited,
 .list tr.pagination td table td span.pageNumbers {
     color: #ffffff;
+}
+
+.subpanel_list tr.pagination td table td a:link,
+.subpanel_list tr.pagination td table td a:visited,
+.subpanel_list .reportGroupByDataChildTablelistViewThS1 a:link,
+.subpanel_list .reportGroupByDataChildTablelistViewThS1 a:visited,
+.subpanel_list  tr th,
+.subpanel_list  tr th a:link,
+.subpanel_list  tr th a:visited,
+.subpanel_list  tr td[scope=col],
+.subpanel_list  tr td[scope=col] a:link,
+.subpanel_list  tr td[scope=col] a:visited,
+.subpanel_list  tr.pagination td table td span.pageNumbers {
+    color: #000 !important;
 }
 
 .evenListRowS1 td, .oddListRowS1 td {
