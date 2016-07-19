@@ -3882,6 +3882,12 @@ fieldset[disabled] .btn-primary.active {
     width: 32px;
 }
 
+#EditView_tabs span.id-ff.multiple [type="button"] img,
+#conditionLines span.id-ff.multiple [type="button"] img {
+    content: none;
+}
+
+
 .emailaddresses > tbody:nth-child(1) > tr > td:nth-child(1) button img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-add.png');
     height: 32px;
