@@ -321,11 +321,11 @@ function saveField($field, $id, $module, $value)
             $bean->$field = $value;
         }
 
-        if (($bean->fetched_row['assigned_user_id'] != $value) && ($bean->isOwner($bean->created_by))) {
-            $check_notify = TRUE;
+        if (($bean->fetched_row['assigned_user_id'] != $value) && (!$bean->isOwner($bean->modified_user_id))) {
+            $check_notify = FALSE;
         }
         else {
-            $check_notify = FALSE;
+            $check_notify = TRUE;
         }
 
         $bean->save($check_notify);
