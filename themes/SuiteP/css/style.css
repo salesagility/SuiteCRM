@@ -3857,7 +3857,8 @@ fieldset[disabled] .btn-primary.active {
 #EditView_tabs .id-ff-remove,
 #EditView_tabs .edit [type="button"],
 #conditionLines [type="button"],
-#actionLines [type="button"] {
+#actionLines [type="button"],
+#deleteGroup img {
     margin-right: 4px;
     padding: 0px;
     background-color: #F08377;
@@ -3878,6 +3879,12 @@ fieldset[disabled] .btn-primary.active {
 #conditionLines [type="button"] img,
 #actionLines [type="button"] img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+    height: 32px;
+    width: 32px;
+}
+
+#deleteGroup img {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
     height: 32px;
     width: 32px;
 }
@@ -4943,15 +4950,26 @@ span#quickcreateplus {
     border-radius: 50%;
 }
 
-#conditionLines_head, #fieldLines_head {
+#conditionLines_head,
+#fieldLines_head, #lineItems,
+table#lineItems,
+#lineItems table,
+#lineItems thead,
+#lineItems tr,
+#lineItems td {
     background: none !important;
 }
 
-#actionLines, #actionLines table, #actionLines tr, #actionLines td {
+#actionLines,
+#actionLines table,
+#actionLines tr,
+#actionLines td {
     border: 1px solid transparent !important;
 }
 
-#actionLines, #actionLines table {
+#actionLines,
+#actionLines table,
+#line_items table {
     clear: both;
     border-radius: 4px;
     width: 100%;
@@ -4966,7 +4984,7 @@ table#actionLines > tr > td > table td:first-of-type {
 }
 
 
-table#actionLines > tr > td > table {
+table#actionLines > tr > td > table, #line_items table > tr > td > table {
     background: #F5F5F5;
     margin: 16px 0 0 0 !important;
     clear: both;
@@ -4975,6 +4993,11 @@ table#actionLines > tr > td > table {
 
 #conditionLines td,  #fieldLines td {
     padding: 8px;
+}
+
+
+#lineItems table > thead:nth-child(1) > tr > td:nth-child(1) [type="text"] {
+    width: 50% !important;
 }
 
 li.moremenu {
