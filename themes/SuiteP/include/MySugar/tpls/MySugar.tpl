@@ -97,7 +97,11 @@
     <div class="clearfix"></div>
     <div class="tab-content">
         {foreach from=$dashboardPages key=tabNum item=tab}
+            {if $tabNum == 0}
             <div class="tab-pane active fade in" id='tab-content-{$tabNum}'>
+            {else}
+            <div class="tab-pane fade" id='tab-content-{$tabNum}'>
+            {/if}
                 <div class="row">
                     {counter assign=hiddenCounter start=0 print=false}
                     {foreach from=$columns key=colNum item=data}
@@ -122,10 +126,10 @@
                         </div>
                         {counter}
                     {/foreach}
+                </div>
             </div>
         {/foreach}
 
-        </div>
         {*display panels*}
     </div>
 </div>
