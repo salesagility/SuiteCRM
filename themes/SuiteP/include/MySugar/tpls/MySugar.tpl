@@ -115,7 +115,7 @@
                     <h4 class="modal-title">{$lblAddDashlets}</h4>
                 </div>
                 <div class="modal-body" id="dashletsList">
-                    <p>{$lblAddDashlets}</p>
+                    <p><img src="themes/SuiteP/images/loading.gif?v=m0aQpzN09t15c9vxCb3xQQ" width="48" height="48" align="baseline" border="0" alt=""></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
@@ -132,7 +132,7 @@
                     <h4 class="modal-title">{$lblAddTab}</h4>
                 </div>
                 <div class="modal-body" id="dashboardDialog">
-                    <p>{$lblAddTab}</p>
+                    <p><img src="themes/SuiteP/images/loading.gif?v=m0aQpzN09t15c9vxCb3xQQ" width="48" height="48" align="baseline" border="0" alt=""></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CANCEL_BUTTON_LABEL}</button>
