@@ -419,6 +419,10 @@
             ui.helper.css('margin-top', 0 );
         });
 
+        $('div.panel-heading a div').css({
+            width: $('#EditView_tabs').width()
+        });
+
         var reportToggler = function(elem) {
             var marker = 'toggle-';
             var classes = $(elem).attr('class').split(' ');
