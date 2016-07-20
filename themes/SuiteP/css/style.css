@@ -1471,22 +1471,67 @@ table#mass_update_table td select {
 
 ul.tablist, ul.subpanelTablist {
     list-style: none;
-    padding: 3px 0;
+    padding: 0;
     margin: 0;
 }
 
-ul.tablist li, ul.subpanelTablist li {
+#moduleDashlets h3,
+#chartDashlets h3,
+#webDashlets h3,
+#toolsDashlets h3,
+#searchDashlets h3 {
+    display: none;
+    visibility: collapse;
+}
+
+ul.subpanelTablist li {
     list-style: none;
-    margin: 0;
-    display: inline;
+    margin: 0 0 0 3px;
+    padding:0;
 }
 
-ul.tablist li a, ul.subpanelTablist li a {
-    padding: 3px 8px;
-    margin: 0;
-    border-bottom: none;
-    text-decoration: none;
+
+
+ul#dashletCategories {
+    display: block;
+    font-size: 13px;
+    height: 28px;
+    border-bottom-color: #ffffff !important;
+
 }
+
+ul#dashletCategories > li {
+    display: inline-block;
+    font-size: 13px;
+}
+
+
+ul#dashletCategories > li a,
+ul#dashletCategories > li a:link,
+ul#dashletCategories > li a:hover,
+ul#dashletCategories > li a:visited,
+ul#dashletCategories > li a:active,
+ul#dashletCategories > li a:focus {
+    font-weight: 400;
+    border: 1px solid transparent;
+    background-color: #BFCAD3;
+    padding: 10px 20px 10px 10px;
+    color: #ffffff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    text-transform: uppercase;
+}
+
+ul#dashletCategories > li.active a,
+ul#dashletCategories > li.active a:link,
+ul#dashletCategories > li.active a:hover,
+ul#dashletCategories > li.active a:visited,
+ul#dashletCategories > li.active a:active,
+ul#dashletCategories > li.active a:focus {
+    background-color: #778591;
+    color: #ffffff;
+}
+
 
 ul.subpanelTablist #addPageItem a, ul.subpanelTablist #addPageItem a:hover {
     border: none;
@@ -2191,18 +2236,6 @@ div#content p.error {
     float: right;
 }
 
-ul#dashletCategories li a:link, ul#dashletCategories li a:visited {
-    background: #eee;
-}
-
-ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover {
-    color: #444;
-    background: transparent;
-}
-
-ul#dashletCategories li a:link:hover {
-    border: 1px solid #ccc;
-}
 
 #moduleDashlets h3, #chartDashlets h3, #toolsDashlets h3 {
     margin-top: 13px;
