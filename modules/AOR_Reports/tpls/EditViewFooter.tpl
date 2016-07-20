@@ -412,6 +412,13 @@
 
     $(function(){
 
+        $( '#aor_condition_parenthesis_btn' ).bind( "sortstart", function (event, ui) {
+            ui.helper.css('margin-top', $(window).scrollTop() );
+        });
+        $( '#aor_condition_parenthesis_btn' ).bind( "sortbeforestop", function (event, ui) {
+            ui.helper.css('margin-top', 0 );
+        });
+
         var reportToggler = function(elem) {
             var marker = 'toggle-';
             var classes = $(elem).attr('class').split(' ');
