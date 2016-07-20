@@ -305,23 +305,24 @@ $mySugarResources = $sugarChart->getMySugarChartResources();
 $sugar_smarty->assign('chartResources', $resources);
 $sugar_smarty->assign('mySugarChartResources', $mySugarResources);
 
-echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
-//
-//if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
-//    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
-//}
-//else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
-//    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
-//}
-//elseif (file_exists("themes/" . $theme ."/tpls/MySugar.tpl")) {
-//    echo $sugar_smarty->fetch("themes/" . $theme ."/tpls/MySugar.tpl");
-//}
-//else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
-//    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
-//}
-//else {
-//    $GLOBALS['log']->fatal('MySugar.tpl not found');
-//}
+if (file_exists("custom/themes/" . $theme ."/tpls/MySugar.tpl")) {
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+}
+else if(file_exists('custom/include/MySugar/tpls/MySugar.tpl')) {
+    echo $sugar_smarty->fetch('custom/include/MySugar/tpls/MySugar.tpl');
+}
+elseif (file_exists("themes/" . $theme ."/tpls/MySugar.tpl")) {
+    echo $sugar_smarty->fetch("themes/" . $theme ."/tpls/MySugar.tpl");
+}
+else if(file_exists('include/MySugar/tpls/MySugar.tpl')) {
+    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+}
+else if(file_exists("custom/themes/" . $theme .'include/MySugar/tpls/MySugar.tpl')) {
+    echo $sugar_smarty->fetch('include/MySugar/tpls/MySugar.tpl');
+}
+else {
+    $GLOBALS['log']->fatal('MySugar.tpl not found');
+}
 
 
 //init the quickEdit listeners after the dashlets have loaded on home page the first time
