@@ -1491,6 +1491,10 @@ ul.subpanelTablist li {
 }
 
 
+#dashName {
+    margin-bottom: 4px;
+}
+
 
 ul#dashletCategories {
     display: block;
