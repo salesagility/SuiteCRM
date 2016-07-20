@@ -1,10 +1,10 @@
-<ul class="dropdown-menu">
+<ul class="dropdown-menu tab-actions">
     {if !$lock_homepage}
-        <li class="addButton">
-            <a onclick="return SUGAR.mySugar.showDashletsDialog();">{$lblAddDashlets}</a>
+        <li>
+            <a class="button addDashlets"  data-toggle="modal" data-target=".modal-add-dashlet">{$lblAddDashlets}</a>
         </li>
-        <li class="addButton">
-            <a onclick="addDashboardForm({$tabNum});">
+        <li>
+            <a class="button addDashboard"  data-toggle="modal" data-target=".modal-add-dashboard">
                 <span>{$lblAddTab}</span>
             </a>
         </li>

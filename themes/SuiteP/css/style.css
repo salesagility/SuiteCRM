@@ -226,6 +226,9 @@ li#usermenu a:hover span.user_icon {
 div#pageContainer {
 }
 
+.dashletcontainer, .drop-location {
+    min-height: 32px;
+}
 div#pageContainer td.dashletcontainer {
     width: auto !important;
     padding-right: 1%;
@@ -3111,6 +3114,10 @@ li#tab-actions > ul.dropdown-menu li {
     border-bottom: 1px solid #FA988D;
 }
 
+ul.tab-actions li a {
+    border-bottom: 1px solid #FA988D !important;
+}
+
 li#tab-actions > ul.dropdown-menu input {
     width: 100%;
     text-align: left;
@@ -4065,6 +4072,51 @@ fieldset[disabled] .btn-primary.active {
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
+}
+.btn .btn:hover {
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 20px 0 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.btn-default, .btn-default:hover, .btn-default:active, .btn-default:focus {
+    color: #ffffff;
+    background-color: #94A6B5;
+    background-color: #94A6B5;
+    border: 1px solid #94A6B5;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    color: #ffffff;
+    background-color: #778591;
+    background-color: #778591;
+    border: 1px solid #778591;
+}
+
+.btn-info, .btn-info:hover, .btn-info:active, .btn-info:focus {
+    color: #ffffff;
+    background-color: #AA9DCC;
+    background-color: #AA9DCC;
+    border: 1px solid #AA9DCC;
+}
+
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus {
+    color: #ffffff;
+    background-color: #66996B;
+    background-color: #66996B;
+    border: 1px solid #66996B;
+}
+
+.btn-danger, .btn-danger:hover, .btn-danger:active, .btn-danger:focus {
+    background-color: #F08377;
+    background-color: #F08377;
+    border: 1px solid #F08377;
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {

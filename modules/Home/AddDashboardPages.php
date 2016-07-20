@@ -48,7 +48,7 @@ if(!isset($_POST['dashName'])){
     $html .= "<table>";
     $html .= "<tr>";
     $html .= "<td><label for='dashName'>".$GLOBALS['app_strings']['LBL_ENTER_DASHBOARD_NAME']."</label></td>";
-    $html .= "<td><input name='dashName' id='dashName'/></td>";
+    $html .= "<td><input type=\"text\" name='dashName' id='dashName'/></td>";
     $html .= "</tr>";
     $html .= "<tr>";
     $html .= "<td><label for='numColumns'>".$GLOBALS['app_strings']['LBL_NUMBER_OF_COLUMNS']." </label></td>";

@@ -67,12 +67,12 @@
 {$mySugarChartResources}
 <div>
     {*display tabs*}
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-tabs nav-dashboard">
 
         {foreach from=$dashboardPages key=tabNum item=tab}
             {if $tabNum == 0}
                 <li role="presentation" class="active">
-                    <a id="tab{$tabNum}" href="#tab-content-{$tabNum}" data-toggle="tab">
+                    <a id="tab{$tabNum}" href="#tab_content_{$tabNum}" data-toggle="tab" {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
 
@@ -80,7 +80,7 @@
                 </li>
             {else}
                 <li role="presentation">
-                    <a id="tab{$tabNum}" href="#tab-content-{$tabNum}" data-toggle="tab">
+                    <a id="tab{$tabNum}" href="#tab_content_{$tabNum}"  data-toggle="tab"  {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick="retrievePage({$tabNum});">
                         {$dashboardPages.$tabNum.pageTitle}
                     </a>
                 </li>
@@ -98,46 +98,52 @@
     <div class="tab-content">
         {foreach from=$dashboardPages key=tabNum item=tab}
             {if $tabNum == 0}
-            <div class="tab-pane active fade in" id='tab-content-{$tabNum}'>
+            <div class="tab-pane active fade in" id='tab_content_{$tabNum}'>
             {else}
-            <div class="tab-pane fade" id='tab-content-{$tabNum}'>
+            <div class="tab-pane fade" id='tab_content_{$tabNum}'>
             {/if}
-                <div class="row">
-                    {counter assign=hiddenCounter start=0 print=false}
-                    {foreach from=$columns key=colNum item=data}
-                        <div class="dashletcontainer col-xs-12 col-sm-12 col-md-6" valign='top' width='{$data.width}'>
-                            <ul class='noBullet' id='col_{$activePage}_{$colNum}'>
-                                <li id='page_{$activePage}_hidden{$hiddenCounter}b'
-                                    style='height: 5px; margin-top:12px;' class='noBullet'>
-                                    &nbsp;&nbsp;&nbsp;</li>
-                                {foreach from=$data.dashlets key=id item=dashlet}
-                                    <li class='noBullet' id='dashlet_{$id}'>
-                                        <div id='dashlet_entire_{$id}' class='dashletPanel'>
-                                            {$dashlet.script}
-                                            {$dashlet.displayHeader}
-                                            {$dashlet.display}
-                                            {$dashlet.displayFooter}
-                                        </div>
-                                    </li>
-                                {/foreach}
-                                <li id='page_{$activePage}_hidden{$hiddenCounter}' style='height: 5px'
-                                    class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
-                            </ul>
-                        </div>
-                        {counter}
-                    {/foreach}
-                </div>
+
             </div>
         {/foreach}
-
-        {*display panels*}
     </div>
 </div>
+    <div class="modal fade modal-add-dashlet" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{$lblAddDashlets}</h4>
+                </div>
+                <div class="modal-body" id="dashletsList">
+                    <p>{$lblAddDashlets}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
+    <div class="modal fade modal-add-dashboard" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{$lblAddTab}</h4>
+                </div>
+                <div class="modal-body" id="dashboardDialog">
+                    <p>{$lblAddTab}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CANCEL_BUTTON_LABEL}</button>
+                    <button type="button" class="btn btn-danger btn-add-dashboard" data-dismiss="modal">{$lblAddTab}</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-<script type="text/javascript" src="include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
-<script type="text/javascript" src="include/MySugar/javascript/retrievePage.js"></script>
-<link rel="stylesheet" type="text/css" href="themes/SuiteP/css/dashboardstyle.css">
+<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
+<script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
 <script type="text/javascript">
 
     var activePage = {$activePage};
