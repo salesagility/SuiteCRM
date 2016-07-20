@@ -257,10 +257,7 @@ class Dashlet
      */
     public function getFooter()
     {
-
         global $sugar_config, $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $current_module, $current_action, $app_strings;
-
-
 
         $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
         $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
