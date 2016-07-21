@@ -19,6 +19,7 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
                 'Calendar' => 'Calendar',
                 'Documents' => 'Documents',
                 'Emails' => 'Emails',
+                'Spots' => 'Spots',
                 'Campaigns' => 'Campaigns',
                 'Calls' => 'Calls',
                 'Meetings' => 'Meetings',

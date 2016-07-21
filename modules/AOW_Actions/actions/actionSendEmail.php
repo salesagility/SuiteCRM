@@ -291,7 +291,15 @@ class actionSendEmail extends actionBase {
 
         } else {
             $this->parse_template($bean, $emailTemp);
-            return $this->sendEmail($emails['to'], $emailTemp->subject, $emailTemp->body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);
+			if($emailTemp->text_only=='1')
+			{
+				$email_body_html = $emailTemp->body;
+			}
+			else 
+			{
+				$email_body_html = $emailTemp->body_html;
+			}
+            return $this->sendEmail($emails['to'], $emailTemp->subject, $email_body_html, $emailTemp->body, $bean, $emails['cc'],$emails['bcc'],$attachments);            
         }
         return true;
     }

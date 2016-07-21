@@ -41,12 +41,14 @@
 
  ********************************************************************************/
 *}
-
+<div class="template-panel">
+	<div class="template-panel-container panel">
+		<div class="template-container-full">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
 		</tr>
-		<tr><td class="datalabel" colspan="3">{$MOD.LBL_WIZARD_BUDGET_MESSAGE}<br></td><td>&nbsp;</td></tr>
+		<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td>&nbsp;</td></tr>
 		<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
 		<tr>
 		<td scope="col"><span sugar='slot14'>{$MOD.LBL_CAMPAIGN_BUDGET}</span sugar='slot'></td>
@@ -82,6 +84,9 @@
 		<td>&nbsp;</td>
 		</tr>
 	</table>
+			</div>
+		</div>
+	</div>
 	<p>
 	
 	<script>
