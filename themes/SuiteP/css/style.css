@@ -4147,7 +4147,22 @@ table#lineItems tr td table tfoot tr td span input[type="text"] {
 table#lineItems tr td table thead tr td table tbody tr td input,
 table#lineItems tr td table thead tr td table tbody tr td select,
 table#lineItems tr td table thead tr td table tbody tr td textarea {
+    display: block;
+    min-width: 80px;
+}
+
+table#lineItems tr td table thead tr td table tbody tr td {
+    white-space: nowrap;
     padding: 10px;
+}
+
+#total_amt,
+#discount_amount,
+#subtotal_amount,
+#shipping_amount,
+#shipping_tax_amt,
+#tax_amount {
+    max-width: 40%;
 }
 
 #email1_span,
