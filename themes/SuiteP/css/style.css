@@ -241,6 +241,10 @@ div#pageContainer td.dashletcontainer div.hd {
     border-top-right-radius: 3px;
 }
 
+.yui-module .hd, .yui-panel .hd {
+    background: #66727d;
+}
+
 div#pageContainer td.dashletcontainer tr.pagination td {
     background-color: #BFCAD3;
 }

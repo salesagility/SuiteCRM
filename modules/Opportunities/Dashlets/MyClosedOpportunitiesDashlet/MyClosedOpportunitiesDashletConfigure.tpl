@@ -52,7 +52,7 @@
 <tr>
     <td scope='row'>{$titleLBL}</td>
     <td>
-    	<input class="text" name="title" size='20' maxlength='80' value='{$title}'>
+    	<input type="text" class="text" name="title" size='20' maxlength='80' value='{$title}'>
     </td>
 </tr>
 {if $isRefreshable}
