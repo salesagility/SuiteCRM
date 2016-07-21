@@ -4098,6 +4098,16 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
+#dashletsDialog_mask {
+    display: none !important;
+    visibility: collapse !important;
+}
+
+#dashletsDialog {
+    display: none !important;
+    visibility: collapse !important;
+}
+
 #EditView_tabs .edit .button,
 #EditView_tabs .id-ff-remove,
 #EditView_tabs .edit [type="button"],

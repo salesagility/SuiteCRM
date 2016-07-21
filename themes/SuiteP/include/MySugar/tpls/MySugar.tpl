@@ -142,6 +142,13 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+    <!-- fix errors in mysugar.js -->
+    <div style="visibility: collapse">
+        <div id="dashletsDialog"></div>
+        <div id="dashletsDialog_c"></div>
+    </div>
+
 <script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
 <script type="text/javascript" src="themes/SuiteP/include/MySugar/javascript/retrievePage.js"></script>
 <script type="text/javascript">
