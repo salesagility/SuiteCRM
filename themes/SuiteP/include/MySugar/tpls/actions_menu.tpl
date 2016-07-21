@@ -8,5 +8,10 @@
                 <span>{$lblAddTab}</span>
             </a>
         </li>
+        <li>
+            <a class="button addDashboard"  data-toggle="modal" data-target=".modal-edit-dashboard">
+                <span>{$app.LBL_EDIT_TAB}</span>
+            </a>
+        </li>
     {/if}
 </ul>

@@ -53,10 +53,9 @@
 
     {foreach from=$columns key=colNum item=data}
         <div class="dashletcontainer drop-location col-xs-12 col-sm-12 col-md-{$columnWidth}" valign='top'>
-            <ul class='noBullet' id='col_{$activePage}_{$colNum}' class="drop-location">
-                <li id='page_{$activePage}_hidden{$hiddenCounter}'
-                    class='noBullet'>
-                    &nbsp;&nbsp;&nbsp;</li>
+            <ul class='noBullet' id='col_{$activePage}_{$colNum}' >
+                <li id='page_{$activePage}_hidden{$hiddenCounter}' class='noBullet'>
+                </li>
                 {foreach from=$data.dashlets key=id item=dashlet}
                     <li class='noBullet' id='dashlet_{$id}'>
                         <div id='dashlet_entire_{$id}' class='dashletPanel'>
@@ -67,8 +66,7 @@
                         </div>
                     </li>
                 {/foreach}
-                <li id='page_{$activePage}_hidden{$hiddenCounter}' style=''
-                    class='noBullet'>&nbsp;&nbsp;&nbsp;</li>
+
             </ul>
         </div>
         {counter}

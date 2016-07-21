@@ -242,6 +242,7 @@ class Dashlet
         $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
         $template->assign('REFRESH_ICON', $this->setRefreshIcon());
         $template->assign('DELETE_ICON',$this->setDeleteIcon());
+        $template->assign('DASHLET_MODULE',$this->seedBean->module_name);
 
 
         $template->assign('GET_FORM_HEADER', get_form_header($this->title, $title, false));

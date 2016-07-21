@@ -2548,7 +2548,7 @@ a:link, a:visited, a:hover {
 }
 
 .list tr.pagination td table td {
-    background: #FAFAFA none repeat scroll 0 0;
+    background: #BFCAD3 none repeat scroll 0 0;
     color: #666666;
 }
 
@@ -3748,6 +3748,11 @@ iframe.teamNoticeBox {
 #dashletsDialog_c {
     margin-left: -125px;
     margin-top: -50px;
+}
+
+td.dashlet-title {
+    height: 52px;
+    line-height: 48px;
 }
 
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover {
@@ -6173,7 +6178,9 @@ object {
     margin-right: 20px;
 }
 
-
+.panel-template {
+    visibility: collapse;
+}
 
 .panel-default > .panel-heading {
     background: #66727D;
@@ -6181,7 +6188,15 @@ object {
     padding: 0px;
     vertical-align: middle;
     height: 52px;
+}
 
+.panel-default > .panel-heading > div {
+    color: #ffffff;
+    height: 52px;
+    line-height: 52px;
+    font-weight: 500;
+    font-size: 14px !important;
+    background-color: #66727D;
 }
 
 .panel-default > .panel-body {

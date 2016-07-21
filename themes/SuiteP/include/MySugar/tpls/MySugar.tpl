@@ -102,7 +102,7 @@
             {else}
             <div class="tab-pane fade" id='tab_content_{$tabNum}'>
             {/if}
-
+                <img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt="">
             </div>
         {/foreach}
     </div>
@@ -115,7 +115,7 @@
                     <h4 class="modal-title">{$lblAddDashlets}</h4>
                 </div>
                 <div class="modal-body" id="dashletsList">
-                    <p><img src="themes/SuiteP/images/loading.gif?v=m0aQpzN09t15c9vxCb3xQQ" width="48" height="48" align="baseline" border="0" alt=""></p>
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button>
@@ -132,7 +132,7 @@
                     <h4 class="modal-title">{$lblAddTab}</h4>
                 </div>
                 <div class="modal-body" id="dashboardDialog">
-                    <p><img src="themes/SuiteP/images/loading.gif?v=m0aQpzN09t15c9vxCb3xQQ" width="48" height="48" align="baseline" border="0" alt=""></p>
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CANCEL_BUTTON_LABEL}</button>
@@ -142,6 +142,35 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
+
+    <div class="modal fade modal-edit-dashboard" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{$app.LBL_EDIT_TAB}</h4>
+                </div>
+                <div class="modal-body">
+                    <p><img src="themes/SuiteP/images/loading.gif" width="48" height="48" align="baseline" border="0" alt=""></p>                </div>
+                    <div class="container-fluid">
+                        <div class="panel panel-default panel-template">
+                            <div class="panel-heading">
+                                <div>
+                                    <div class="col-xs-10 col-sm-11 col-md-11">
+                                        <div>
+                                            <img src="themes/SuiteP/images/sub_panel/Tab.svg">
+                                            <span class="panel-title">Untitled</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{$app.LBL_CLOSE_BUTTON_TITLE}</button></div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <!-- fix errors in mysugar.js -->
     <div style="visibility: collapse">

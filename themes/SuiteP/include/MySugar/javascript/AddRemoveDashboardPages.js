@@ -22,7 +22,7 @@ function removeDashboardForm(page_id) {
             },
 
             success: function (data) {
-
+                console.log(data)
                 var titleval = SUGAR.language.get('app_strings', 'LBL_DELETE_DASHBOARD_PAGE');
                 var myButtons = [
                     { text: SUGAR.language.get('app_strings', 'LBL_SEARCH_DROPDOWN_YES'), handler: handleSubmit, isDefault: true },
@@ -36,9 +36,11 @@ function removeDashboardForm(page_id) {
             }
         })
     }else{
-        alert('Cannot Delete My Sugar');
+        alert('Cannot Delete first tab');
     }
 }
+
+function get_form(data,titleval,myButtons){}
 
 function addDashboardForm(page_id){
 
@@ -57,9 +59,9 @@ function addDashboardForm(page_id){
             var titleval = SUGAR.language.get('app_strings', 'LBL_ADD_DASHBOARD_PAGE');
             var myButtons = [{ text: SUGAR.language.get('app_strings', 'LBL_SAVE_BUTTON_LABEL'), handler: handleSubmit, isDefault: true },
                 { text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_TITLE'), handler:handleCancel }];
-            get_form(
-              data
-              ,titleval,myButtons)
+            $("#dashName").attr('type', 'text');
+            $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-header .modal-title').html(titleval);
+            $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-body').html(data);
 
         },
         error : function(request,error)
@@ -68,14 +70,6 @@ function addDashboardForm(page_id){
         }
     })
 }
-
-
-function get_form(data,titleval,myButtons) {
-    $("#dashName").attr('type', 'text');
-    $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-header .modal-title').html(titleval);
-    $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-body').html(data);
-}
-
 
 
 function renameTab(page_id){
@@ -92,7 +86,9 @@ function renameTab(page_id){
             var titleval = SUGAR.language.get('app_strings', 'LBL_RENAME_DASHBOARD_PAGE');
             var myButtons = [{ text: SUGAR.language.get('app_strings', 'LBL_SAVE_BUTTON_LABEL'), handler: renameTabSubmit, isDefault: true },
                 { text: SUGAR.language.get('app_strings', 'LBL_CANCEL_BUTTON_LABEL'), handler:handleCancel }];
-            get_form(data,titleval,myButtons)
+            $("#dashName").attr('type', 'text');
+            $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-header .modal-title').html(titleval);
+            $('.modal-add-dashboard > .modal-dialog > .modal-content > .modal-body').html(data);
 
         },
         error : function(request,error)
