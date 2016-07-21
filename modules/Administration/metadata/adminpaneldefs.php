@@ -291,7 +291,21 @@ $admin_group_header[]= array('LBL_BUG_TITLE','',false,$admin_option_defs, 'LBL_B
 
 
 
-
+//Business Hours
+$admin_option_defs = array();
+$admin_option_defs['Administration']['business_hours'] = array(
+    'edit',
+    'Business Hours',
+    'Change the business hours',
+    './index.php?module=Administration&action=BusinessHours'
+);
+$admin_group_header[] = array(
+    'Business Hours',
+    '',
+    false,
+    $admin_option_defs,
+    'Change the business hours'
+);
 
 
 if(file_exists('custom/modules/Administration/Ext/Administration/administration.ext.php')){
