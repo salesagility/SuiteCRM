@@ -50,6 +50,8 @@ class Calendar {
 
 	public $activityList = array("FP_events" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
 								 "Meeting" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Call" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
+								 "Task" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_due"),
 								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
 	//							 "Project" => array("showCompleted" => true,"start" =>  "estimated_start_date", "end" => "estimated_end_date")
 								 );
