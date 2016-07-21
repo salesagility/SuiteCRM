@@ -197,15 +197,7 @@ class CalendarDisplay {
 			$ss->assign("dow",$dow);
 
 		}
-
-
-
 		echo $ss->fetch($main);
-
-		// grid
-		//$grid = new CalendarGrid($cal);
-		//echo $grid->display();
-		// end grid
 	}
 
 	function checkActivity($activity = ""){
