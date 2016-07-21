@@ -4115,7 +4115,7 @@ input#btn_ActionLine.button[type="button"] {
 }
 
 .col-sm-6 .edit-view-field input[type="text"] {
-    width: 60% !important;
+    width: 50% !important;
 }
 
 
@@ -4135,6 +4135,19 @@ input#btn_ActionLine.button[type="button"] {
 
  .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
     width: 100% !important;
+}
+
+table#lineItems tr td table tfoot tr td span {
+    width: 20%;
+}
+table#lineItems tr td table tfoot tr td span input[type="text"] {
+    display: block;
+    float: none;
+}
+table#lineItems tr td table thead tr td table tbody tr td input,
+table#lineItems tr td table thead tr td table tbody tr td select,
+table#lineItems tr td table thead tr td table tbody tr td textarea {
+    padding: 10px;
 }
 
 #email1_span,

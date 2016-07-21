@@ -125,6 +125,9 @@
                     {{counter name="fieldCount" print=false}}
                 {{/foreach}}
                 </div>
+                {{if $col%2==1}}
+                <div class="clear"></div>
+                {{/if}}
             {{/foreach}}
             {{counter name="columnCount" print=false}}
         {{/foreach}}
