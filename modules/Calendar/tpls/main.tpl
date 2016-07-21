@@ -283,7 +283,4 @@ YAHOO.util.Event.onDOMReady(function(){
 
 <div class='monthCalBody'><h5 class='calSharedUser' id='user_name1'></h5></div>
 <div id='calendar1'></div>
-{foreach from=$custom_views item=location}
-	{sugar_getscript file=$location.location}
-{/foreach}
 {sugar_getscript file="modules/Calendar/Cal.js"}
