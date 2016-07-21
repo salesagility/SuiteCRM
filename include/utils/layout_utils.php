@@ -91,7 +91,7 @@ function get_form_header(
     $template->assign('app_strings', $app_strings);
 
     $template->assign('match', $match);
-    $template->assign('other_text_and_match', other_text_and_match);
+    $template->assign('other_text_and_match', $other_text_and_match);
     $template->assign('blankImageURL', $blankImageURL);
     $template->assign('printImageURL', $printImageURL);
     $template->assign('helpImageURL', $helpImageURL);
