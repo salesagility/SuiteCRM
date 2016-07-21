@@ -6171,6 +6171,7 @@ div.sub-panel {
 #report-editview-footer .tab-toggler {
     display: block;
     float: left;
+    padding: 0 4px;
 }
 
 #report-editview-footer .tab-toggler.active .button {
@@ -6194,6 +6195,10 @@ div.sub-panel {
 
 #report-editview-footer .drop-area.highlighted {
     background-color: #f7f7f7;
+}
+
+#report-editview-footer .tab-panels {
+    width: 110%;
 }
 
 .noGraphDataPoints {

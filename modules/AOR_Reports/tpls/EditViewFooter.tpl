@@ -412,6 +412,9 @@
 
     $(function(){
 
+        $('#EditView_tabs .clear').remove();
+        $('#EditView_tabs').attr('style', 'width: 78%;');
+
         $( '#aor_condition_parenthesis_btn' ).bind( "sortstart", function (event, ui) {
             ui.helper.css('margin-top', $(window).scrollTop() );
         });
