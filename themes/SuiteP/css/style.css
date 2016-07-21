@@ -1500,7 +1500,7 @@ ul#dashletCategories {
     display: block;
     font-size: 13px;
     height: 28px;
-    border-bottom-color: #ffffff !important;
+    border-bottom-color: #778591  !important;
 
 }
 
@@ -3736,6 +3736,11 @@ iframe.teamNoticeBox {
     display: none;
 }
 
+.module_icon {
+    width: 32px;
+    height: auto;
+}
+
 #moduleDashletsList {
     height: auto;
 }
@@ -3893,8 +3898,30 @@ input[type=text].cstm_code {
     height: 200px;
 }
 
-#moduleDashletsList {
+#moduleDashletsList > table > tbody > tr > td,
+#basicChartDashletsList > table > tbody  > tr > td,
+#toolsDashletsList > table > tbody  > tr > td,
+#webDashletsList > table > tbody  > tr > td {
+    padding: 10px;
+}
+
+#moduleDashletsList a, #basicChartDashletsList a, #toolsDashletsList a, #webDashletsList a {
+    color: #ffffff;
+    margin: 5px;
+}
+
+#moduleDashletsList a span, #basicChartDashletsList a span, #toolsDashletsList a span, #webDashletsList a span {
+    margin-left: 10px;
+}
+
+
+#moduleDashletsList, #basicChartDashletsList, #toolsDashletsList, #webDashletsList {
+    padding: 10px;
     max-height: 375px !important;
+    background: #778591;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 #caseStyleUser {
