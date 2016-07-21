@@ -161,7 +161,7 @@
             {{counter name="panelCount" print=false}}
             {{/foreach}}
         </div>
-    </div>
+    <!-- </div> -->
 {{sugar_include type='smarty' file=$footerTpl}}
 
 
