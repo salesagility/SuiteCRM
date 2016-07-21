@@ -873,7 +873,6 @@ var cal_loaded = true;
 /** new items **/
 $(document).ready(function() {
     var i = 1;
-    console.log(global_view);
     if(calendar_items != ""){
         $.each(calendar_items, function(index, user_list) {
             var all_events = [];
@@ -903,11 +902,17 @@ $(document).ready(function() {
                 if(element.module_name != "Meetings" && element.module_name != "Calls"){
                     valueToPush['editable'] = false;
                 }
-                if(undefined !== global_colorList[element.module_name]){
+                if(global_colorList[element.module_name] !== undefined) {
 
-                    valueToPush["backgroundColor"] = '#' + global_colorList[element.module_name].body;
-                    valueToPush["borderColor"] = '#' + global_colorList[element.module_name].border;
-                    valueToPush["textColor"] = '#' + global_colorList[element.module_name].text;
+                    if(global_colorList[element.module_name].body !== undefined) {
+                        valueToPush["backgroundColor"] = '#' + global_colorList[element.module_name].body;
+                    }
+                    if(global_colorList[element.module_name].border !== undefined) {
+                        valueToPush["borderColor"] = '#' + global_colorList[element.module_name].border;
+                    }
+                    if(global_colorList[element.module_name].text !== undefined) {
+                        valueToPush["textColor"] = '#' + global_colorList[element.module_name].text;
+                    }
                 }
                 if ((element['duration_hours'] % 24 === 0) && (element['time_start'] == "12:00am" || element['time_start'] == "00:00")) {
                     valueToPush['allDay'] = true;
