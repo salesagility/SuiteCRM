@@ -654,8 +654,6 @@ CAL.dialog_save = function () {
                 if ((res['duration_hours'] % 24 === 0) && (res['time_start'] == "12:00am")) {
                     newEvent.allDay = "true";
                 }
-                console.log("CALENDAR ADD EVENT");
-                console.log(res);
                 $('#calendar' + res.user_id).fullCalendar('renderEvent', newEvent);
 
                 if(res['repeat']) {
@@ -873,7 +871,6 @@ var cal_loaded = true;
 /** new items **/
 $(document).ready(function() {
     var i = 1;
-    console.log(global_view);
     if(calendar_items != ""){
         $.each(calendar_items, function(index, user_list) {
             var all_events = [];
@@ -956,24 +953,6 @@ $(document).ready(function() {
             firstDay: global_start_week_day,
             height: global_basic_min_height,
             columnFormat: 'dddd D',
-            //aspectRatio: 3,
-            //contentHeight: 'auto',
-            //eventRender: function(event, element) {
-            //    element.qtip({
-            //        content: event.description
-            //    });
-            //},
-            // dayClick: function (date, jsEvent, view) {
-            //     if (global_edit == true) {
-            //         console.log(global_datetime_format);
-            //         var date_start = date.format(global_datetime_format);
-            //         var date_end = "";
-            //         if (date.hasTime() == false) {
-            //             var date_end = date.add(1, 'days').format(global_datetime_format);
-            //         }
-            //         CAL.dialog_create(date_start, date_end);
-            //     }
-            // },
             select: function(date, jsEvent, view) {
                 if (global_edit == true) {
                     var date_start = date.format(global_datetime_format);
@@ -1037,35 +1016,38 @@ $(document).ready(function() {
             },
             events: all_events,
             eventRender: function(event, element) {
-                element.qtip({
-                    content: {
-                        title: { text: event.title },
-                        text: '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) ) + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') +': </span>' + ( (event.title) ? event.title : '')
-                    },
-                    position:{
-                        my:'bottom left',
-                        at:'top right'
-                    },
-                    show: { solo: true },
-                    hide: { when: 'inactive', delay: 50 },
-                    style: {
-                        width: 250,
-                        padding: 5,
-                        color: 'black',
-                        textAlign: 'left',
-                        border: {
-                            width: 1,
-                            radius: 3
+
+                if($('#cal_module').val() != "Home") {
+                    element.qtip({
+                        content: {
+                            title: {text: event.title},
+                            text: '<span class="title">' + SUGAR.language.get('Calendar', 'LBL_DATE') + '</span>: ' + (event.start.format(global_datetime_format) ) + '<br><span class="title">' + SUGAR.language.get('Calendar', 'LBL_SUBJECT') + ': </span>' + ( (event.title) ? event.title : '')
                         },
-                        tip: 'bottomLeft',
-                        classes: {
-                            tooltip: 'ui-widget',
-                            tip: 'ui-widget',
-                            title: 'ui-widget-header',
-                            content: 'ui-widget-content'
+                        position: {
+                            my: 'bottom left',
+                            at: 'top right'
+                        },
+                        show: {solo: true},
+                        hide: {when: 'inactive', delay: 50},
+                        style: {
+                            width: 250,
+                            padding: 5,
+                            color: 'black',
+                            textAlign: 'left',
+                            border: {
+                                width: 1,
+                                radius: 3
+                            },
+                            tip: 'bottomLeft',
+                            classes: {
+                                tooltip: 'ui-widget',
+                                tip: 'ui-widget',
+                                title: 'ui-widget-header',
+                                content: 'ui-widget-content'
+                            }
                         }
-                    }
-                });
+                    });
+                }
             },
         });
     }
