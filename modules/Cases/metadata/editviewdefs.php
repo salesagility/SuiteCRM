@@ -155,14 +155,15 @@ array (
             'studio' => 'visible',
             'label' => 'LBL_UPDATE_TEXT',
           ),
-          1 => 
-          array (
-            'name' => 'internal',
-            'studio' => 'visible',
-            'label' => 'LBL_INTERNAL',
-          ),
         ),
-        7 =>
+          7 => array(
+              0 => array (
+                  'name' => 'internal',
+                  'studio' => 'visible',
+                  'label' => 'LBL_INTERNAL',
+              ),
+          ),
+        8 =>
         array (
           0 => 
           array (
@@ -170,7 +171,7 @@ array (
             'studio' => 'visible',
           ),
         ),
-        8 =>
+        9 =>
         array (
           0 => 'assigned_user_name',
         ),

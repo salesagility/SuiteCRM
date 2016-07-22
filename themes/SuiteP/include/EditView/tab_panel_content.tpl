@@ -129,6 +129,9 @@
                 <div class="clear"></div>
                 {{/if}}
             {{/foreach}}
+            {{if $columnCount==0}}
+            <div class="clear"></div>
+            {{/if}}
             {{counter name="columnCount" print=false}}
         {{/foreach}}
     </div>
