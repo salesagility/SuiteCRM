@@ -123,7 +123,7 @@
 							</a>
 						</div>
 						<div id="subpanel_settings_user_list" class="panel-body panel-collapse collapse in">
-							<form name="shared_cal" action="index.php" method="post">
+							<form id="shared_cal" name="shared_cal" action="index.php" method="post">
 								<input type="hidden" name="module" value="Calendar">
 								<input type="hidden" name="action" value="index">
 								<input type="hidden" name="edit_shared" value="">
@@ -154,8 +154,8 @@
 				<!--->
 			</div>
 			<div class="modal-footer">
-				<button data-dismiss="modal" class="btn btn-default" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>
-				<button id="btn-save-settings" class="btn btn-danger" type="button">{$MOD.LBL_APPLY_BUTTON}</button>
+				<button id="sharedCalUsersSelectBtn" data-dismiss="modal" class="btn btn-default" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>
+				<button id="sharedCalUsersSelectBtn" onclick="$('#shared_cal').submit();" class="btn btn-danger" type="button">{$MOD.LBL_APPLY_BUTTON}</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
