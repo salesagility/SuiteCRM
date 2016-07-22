@@ -37,10 +37,11 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
 
         echo '<link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/css/style.css" />';
         echo '<link rel="stylesheet" type="text/css" href="modules/AM_ProjectTemplates/qtip/jquery.qtip.min.css" />';
-        echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/splitter.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.blockUI.js"></script>';
         echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/jquery.validate.min.js"></script>';
+		echo '<script type="text/javascript" src="modules/AM_ProjectTemplates/js/main_lib.js"></script>';
+
 
         $project_template = new AM_ProjectTemplates();
 
