@@ -858,7 +858,7 @@ th, td {
 }
 
 .detail-view-row, .detail-view-row-item, .edit-view-row, .edit-view-row-item {
-    margin: 0 0 16px 40px;
+    margin: 0 0 16px 0;
     min-width: 48px;
 }
 
