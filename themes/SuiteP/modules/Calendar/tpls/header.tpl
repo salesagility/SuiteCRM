@@ -51,7 +51,7 @@
 
 <div style="float:left; text-align: right; width: 50%; font-size: 12px;">
 	{if $view == "sharedWeek" || $view == "sharedMonth"}
-		<button id="userListButtonId" type="button" class="button" onclick="javascript: CAL.toggle_shared_edit('shared_cal_edit');">{$MOD.LBL_EDIT_USERLIST}</button>
+		<button id="userListButtonId" type="button" class="btn btn-info" data-toggle="modal" data-target=".modal-calendar-user-list">{$MOD.LBL_EDIT_USERLIST}</button>
 	{/if}
 	{if $view != 'year' && !$print}
 	<span class="dateTime">
