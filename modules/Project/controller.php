@@ -172,7 +172,7 @@ class ProjectController extends SugarController {
 				$h += $bhours[$day];	
 				$enddate = $enddate->modify('+1 Days');
 			} 
-			//$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+			
 			$enddate = $enddate->format('Y-m-d');
 
 		}
@@ -189,8 +189,6 @@ class ProjectController extends SugarController {
 			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
 			$enddate = $enddate->format('Y-m-d');			
 			
-			//$enddate = $startdate->modify('+'.$duration.' '.$duration_unit);
-			//$enddate = $enddate->format('Y-m-d');
 		}
 
 		//----------------------------------
