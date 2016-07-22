@@ -5028,6 +5028,10 @@ table legend {
     border: 1px solid #dddddd;
 }
 
+.table-responsive > tbody > tr > td {
+    padding: 4px;
+}
+
 #usermenucollapsed, #usermenucollapsed-mobile {
     margin: 0 0 0 5px;
     display: none;
