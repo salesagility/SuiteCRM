@@ -58,7 +58,7 @@
 	global_basic_min_height = {$basic_min_height};
 	global_timeslots = 30;
 	global_start_week_day = "{$start_weekday}";
-	global_datetime_format = "{$datetime_user_format}";
+    global_datetime_format = "{$datetime_user_format}";
 	global_year = "{$year}";
 	global_month = "{$month}";
 	global_day = "{$day}";
@@ -167,10 +167,10 @@
 		});
 		YAHOO.util.Event.on("btn-cancel","click",function(){
 			document.schedulerwidget.reset();
-			if(document.getElementById('empty-search-message')) {
-				document.getElementById('empty-search-message').style.display = 'none';
-			}
-			CAL.editDialog.cancel();
+            if(document.getElementById('empty-search-message')) {
+                document.getElementById('empty-search-message').style.display = 'none';
+            }
+            CAL.editDialog.cancel();
 		});
 		YAHOO.util.Event.on("btn-full-form","click",function(){
 			CAL.full_form();
@@ -190,9 +190,9 @@
 		cal_loaded = null;
 	});
 </script>
-
+			
 <div id="cal-edit" style="display: none;">
-
+	
 	<div class="hd"><span id="title-cal-edit"></span></div>
 	<div class="bd" id="edit-dialog-content">
 		<div id="cal-tabs" class="yui-navset yui-navset-top yui-content" style="height: auto; padding: 0 2px;">
@@ -200,22 +200,22 @@
 				<li id="tab_general"><a tabname="cal-tab-1" id="cal-tab-1-link"><em>{$MOD.LBL_GENERAL_TAB}</em></a></li>
 				<li id="tab_invitees"><a tabname="cal-tab-2" id="cal-tab-2-link"><em>{$MOD.LBL_PARTICIPANTS_TAB}</em></a></li>
 				{if $enable_repeat}
-					<li id="tab_repeat"><a tabname="cal-tab-3" id="cal-tab-3-link"><em>{$MOD.LBL_REPEAT_TAB}</em></a></li>
+				<li id="tab_repeat"><a tabname="cal-tab-3" id="cal-tab-3-link"><em>{$MOD.LBL_REPEAT_TAB}</em></a></li>
 				{/if}
 			</ul>
 			<div id="cal-tab-1" class="yui-content">
-				{include file=$form}
-			</div>
+				{sugar_include type="smarty" file=$form}
+			</div>				
 			<div id="cal-tab-2" class="yui-content">
 				<div class="h3Row" id="scheduler"></div>
 			</div>
 			{if $enable_repeat}
-				<div id="cal-tab-3" class="yui-content">
-					{include file=$repeat}
-				</div>
+			<div id="cal-tab-3" class="yui-content">
+				{sugar_include type="smarty" file=$repeat}
+			</div>
 			{/if}
 		</div>
-	</div>
+	</div>	
 	<div id="cal-edit-buttons" class="ft">
 		<button id="btn-save" class="button" type="button">{$MOD.LBL_SAVE_BUTTON}</button>
 		<button id="btn-cancel" class="button" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>
@@ -226,50 +226,50 @@
 </div>
 
 {if $settings}
-	{include file=$settings}
+{sugar_include type="smarty" file=$settings}
 {/if}
-
-<script type="text/javascript">
-	{$GRjavascript}
+	
+<script type="text/javascript">	
+{$GRjavascript}
 </script>
-
-<script type="text/javascript">
-	{literal}
-	YAHOO.util.Event.onDOMReady(function(){
-		var schedulerLoader = new YAHOO.util.YUILoader({
-			require : ["jsclass_scheduler"],
-			skin: { base: 'blank', defaultSkin: '' },
-			onSuccess: function(){
-				var root_div = document.getElementById('scheduler');
-				var sugarContainer_instance = new SugarContainer(document.getElementById('scheduler'));
-				sugarContainer_instance.start(SugarWidgetScheduler);
-			}
-		});
-		schedulerLoader.addModule({
-			name :"jsclass_scheduler",
-			type : "js",
-			fullpath: "modules/Meetings/jsclass_scheduler.js",
-			varName: "global_rpcClient",
-			requires: []
-		});
-		schedulerLoader.insert();
+	
+<script type="text/javascript">	
+{literal}
+YAHOO.util.Event.onDOMReady(function(){	
+	var schedulerLoader = new YAHOO.util.YUILoader({
+		require : ["jsclass_scheduler"],
+        skin: { base: 'blank', defaultSkin: '' },
+		onSuccess: function(){
+			var root_div = document.getElementById('scheduler');
+			var sugarContainer_instance = new SugarContainer(document.getElementById('scheduler'));
+			sugarContainer_instance.start(SugarWidgetScheduler);
+		}
 	});
-	{/literal}
+	schedulerLoader.addModule({
+		name :"jsclass_scheduler",
+		type : "js",
+		fullpath: "modules/Meetings/jsclass_scheduler.js",
+		varName: "global_rpcClient",
+		requires: []
+	});
+	schedulerLoader.insert();
+});	
+{/literal}	
 </script>
-
+	
 <script type="text/javascript" src="include/javascript/jsclass_base.js"></script>
-<script type="text/javascript" src="include/javascript/jsclass_async.js"></script>
-
+<script type="text/javascript" src="include/javascript/jsclass_async.js"></script>	
+	
 <style type="text/css">
-	{literal}
+{literal}
 	.schedulerDiv h3{
 		display: none;
 	}
 	.schedulerDiv{
 		width: auto !important;
 	}
-	{/literal}
-</style>
+{/literal}
+</style>	
 
 
 
