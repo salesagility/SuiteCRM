@@ -6580,7 +6580,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 
     .col-md-10 {
-        width: 80%;
+        /* width: 80%; */
     }
 
     .button-toggle-expanded {
