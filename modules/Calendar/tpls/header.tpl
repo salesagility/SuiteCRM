@@ -45,12 +45,12 @@
 
 <div style='float:left; width: 50%;'>
 {foreach name=tabs from=$tabs key=k item=tab}
-	<input type="button" class="button" {if $view == $tab} selected {/if} id="{$tabs_params[$tab].id}" title="{$tabs_params[$tab].title}" value="{$tabs_params[$tab].title}" onclick="{$tabs_params[$tab].link}">
+	<input type="button" class="button" {if $view == $k} selected {/if} id="{$tabs_params[$k].id}" title="{$tabs_params[$k].title}" value="{$tabs_params[$k].title}" onclick="{$tabs_params[$k].link}">
 {/foreach}
 </div>
 
 <div style="float:left; text-align: right; width: 50%; font-size: 12px;">
-	{if $view == "shared"}
+	{if $view == "sharedWeek" || $view == "sharedMonth"}
 		<button id="userListButtonId" type="button" class="button" onclick="javascript: CAL.toggle_shared_edit('shared_cal_edit');">{$MOD.LBL_EDIT_USERLIST}</button>
 	{/if}
 	{if $view != 'year' && !$print}

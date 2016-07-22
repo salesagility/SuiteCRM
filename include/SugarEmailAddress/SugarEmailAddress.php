@@ -911,7 +911,14 @@ class SugarEmailAddress extends SugarBean {
 
         //determine if this should be a quickcreate form, or a quick create form under subpanels
         if ($this->view == "QuickCreate"){
-            $form = 'form_DC'.$this->view .'_'.$module;
+            // Fixed #1120 - fixed email validation for: Accounts -> Contacts subpanel -> Select -> Create Contact -> Save.
+            // If email is required it should highlight this field and show an error message.
+            // It didnt because the the form was named form_DCSubpanelQuickCreate_Contacts instead of expected form_SubpanelQuickCreate_Contacts
+            if($this->object_name = 'EmailAddress' && $saveModule == 'Contacts') {
+                $form = 'form_'.$this->view .'_'.$module;
+            } else {
+                $form = 'form_DC'.$this->view .'_'.$module;
+            }
             if(isset($_REQUEST['action']) && $_REQUEST['action']=='SubpanelCreates' ||  $_REQUEST['action']=='SubpanelEdits'){
                 $form = 'form_Subpanel'.$this->view .'_'.$module;
             }

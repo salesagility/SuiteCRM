@@ -59,94 +59,150 @@ $(function() {
 <div id="settings_dialog" style="width: 450px; display: none;">
 	<div class="hd">{$MOD.LBL_SETTINGS_TITLE}</div>
 	<div class="bd">
-	<form name="settings" id="form_settings" method="POST" action="index.php?module=Calendar&action=SaveSettings">
-		<input type="hidden" name="view" value="{$view}">
-		<input type="hidden" name="day" value="{$day}">
-		<input type="hidden" name="month" value="{$month}">
-		<input type="hidden" name="year" value="{$year}">
-		
-		<table class='edit view tabForm'>
-				<tr>
-					<td scope="row" valign="top" width="55%">
-						{$MOD.LBL_SETTINGS_DISPLAY_TIMESLOTS}
-					</td>
-					<td width="45%">	
-						<input type="hidden" name="display_timeslots" value="">
-						<input type="checkbox" id="display_timeslots" name="display_timeslots" {if $display_timeslots}checked{/if} value="1" tabindex="102" onchange="toggleDisplayTimeslots();">
-					</td>
-				</tr>
-				<tr class="time_range_options_row">
-					<td scope="row" valign="top">
-						{$MOD.LBL_SETTINGS_TIME_STARTS}
-					</td>
-					<td>
-						<div id="d_start_time_section">
-							<select size="1" id="day_start_hours" name="day_start_hours" tabindex="102">
-								{$TIME_START_HOUR_OPTIONS}
-							</select>&nbsp;:
-							
-							<select size="1" id="day_start_minutes" name="day_start_minutes"  tabindex="102">
-								{$TIME_START_MINUTES_OPTIONS}
-							</select>
-								&nbsp;
-							{$TIME_START_MERIDIEM}
-						</div>
-					</td>
-				</tr>
-				<tr class="time_range_options_row">
-					<td scope="row" valign="top">
-						{$MOD.LBL_SETTINGS_TIME_ENDS}
-					</td>
-					<td>
-						<div id="d_end_time_section">
-							<select size="1" id="day_end_hours" name="day_end_hours" tabindex="102">
-								{$TIME_END_HOUR_OPTIONS}
-							</select>&nbsp;:
-							
-							<select size="1" id="day_end_minutes" name="day_end_minutes"  tabindex="102">
-								{$TIME_END_MINUTES_OPTIONS}
-							</select>
-								&nbsp;
-							{$TIME_END_MERIDIEM}
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td scope="row" valign="top">
-						{$MOD.LBL_SETTINGS_CALLS_SHOW}
-					</td>
-					<td>	
-						<select size="1" name="show_calls" tabindex="102">
-							<option value='' {if !$show_calls}selected{/if}>{$MOD.LBL_NO}</option>
-							<option value='true' {if $show_calls}selected{/if}>{$MOD.LBL_YES}</option>								
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td scope="row" valign="top">
-						{$MOD.LBL_SETTINGS_TASKS_SHOW}
-					</td>
-					<td>	
-						<select size="1" name="show_tasks" tabindex="102">
-							<option value='' {if !$show_tasks}selected{/if}>{$MOD.LBL_NO}</option>
-							<option value='true' {if $show_tasks}selected{/if}>{$MOD.LBL_YES}</option>								
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td scope="row" valign="top">
-						{$MOD.LBL_SETTINGS_COMPLETED_SHOW}
-					</td>
-					<td>	
-						<select size="1" name="show_completed" tabindex="102">
-							<option value='' {if !$show_completed}selected{/if}>{$MOD.LBL_NO}</option>
-							<option value='true' {if $show_completed}selected{/if}>{$MOD.LBL_YES}</option>								
-						</select>
-					</td>
-				</tr>
-		</table>
+		<div id="accordion" role="tablist" aria-multiselectable="true">
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingOne">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            {$MOD.LBL_GENERAL_SETTINGS}
+						</a>
+
+					</h4>
+				</div>
+				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+					<form name="settings" id="form_settings" method="POST" action="index.php?module=Calendar&action=SaveSettings">
+						<input type="hidden" name="view" value="{$view}">
+						<input type="hidden" name="day" value="{$day}">
+						<input type="hidden" name="month" value="{$month}">
+						<input type="hidden" name="year" value="{$year}">
+
+						<table class='edit view tabForm'>
+							<tr>
+								<td scope="row" valign="top" width="55%">
+									{$MOD.LBL_SETTINGS_DISPLAY_TIMESLOTS}
+								</td>
+								<td width="45%">
+									<input type="hidden" name="display_timeslots" value="">
+									<input type="checkbox" id="display_timeslots" name="display_timeslots" {if $display_timeslots}checked{/if} value="1" tabindex="102" onchange="toggleDisplayTimeslots();">
+								</td>
+							</tr>
+							<tr>
+								<td scope="row" valign="top" width="55%">
+									{$MOD.LBL_SETTINGS_DISPLAY_SHARED_CALENDAR_SEPARATE}
+								</td>
+								<td width="45%">
+									<input type="hidden" name="shared_calendar_separate" value="">
+									<input type="checkbox" id="shared_calendar_separate" name="shared_calendar_separate" {if $shared_calendar_separate}checked{/if} value="1" tabindex="102" >
+								</td>
+							</tr>
+							<tr class="time_range_options_row">
+								<td scope="row" valign="top">
+									{$MOD.LBL_SETTINGS_TIME_STARTS}
+								</td>
+								<td>
+									<div id="d_start_time_section">
+										<select size="1" id="day_start_hours" name="day_start_hours" tabindex="102">
+											{$TIME_START_HOUR_OPTIONS}
+										</select>&nbsp;:
+
+										<select size="1" id="day_start_minutes" name="day_start_minutes"  tabindex="102">
+											{$TIME_START_MINUTES_OPTIONS}
+										</select>
+										&nbsp;
+										{$TIME_START_MERIDIEM}
+									</div>
+								</td>
+							</tr>
+							<tr class="time_range_options_row">
+								<td scope="row" valign="top">
+									{$MOD.LBL_SETTINGS_TIME_ENDS}
+								</td>
+								<td>
+									<div id="d_end_time_section">
+										<select size="1" id="day_end_hours" name="day_end_hours" tabindex="102">
+											{$TIME_END_HOUR_OPTIONS}
+										</select>&nbsp;:
+
+										<select size="1" id="day_end_minutes" name="day_end_minutes"  tabindex="102">
+											{$TIME_END_MINUTES_OPTIONS}
+										</select>
+										&nbsp;
+										{$TIME_END_MERIDIEM}
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td scope="row" valign="top">
+									{$MOD.LBL_SETTINGS_CALLS_SHOW}
+								</td>
+								<td>
+									<select size="1" name="show_calls" tabindex="102">
+										<option value='' {if !$show_calls}selected{/if}>{$MOD.LBL_NO}</option>
+										<option value='true' {if $show_calls}selected{/if}>{$MOD.LBL_YES}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td scope="row" valign="top">
+									{$MOD.LBL_SETTINGS_TASKS_SHOW}
+								</td>
+								<td>
+									<select size="1" name="show_tasks" tabindex="102">
+										<option value='' {if !$show_tasks}selected{/if}>{$MOD.LBL_NO}</option>
+										<option value='true' {if $show_tasks}selected{/if}>{$MOD.LBL_YES}</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td scope="row" valign="top">
+									{$MOD.LBL_SETTINGS_COMPLETED_SHOW}
+								</td>
+								<td>
+									<select size="1" name="show_completed" tabindex="102">
+										<option value='' {if !$show_completed}selected{/if}>{$MOD.LBL_NO}</option>
+										<option value='true' {if $show_completed}selected{/if}>{$MOD.LBL_YES}</option>
+									</select>
+								</td>
+							</tr>
+
+
+
+						</table>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading" role="tab" id="headingTwo">
+					<h4 class="panel-title">
+						<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            {$MOD.LBL_COLOR_SETTINGS}
+						</a>
+					</h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+					<table class="yui3-skin-sam edit view panelContainer">
+                        <tr>
+                            <th>Module</th><th>Body</th><th>Border</th><th>Text</th>
+                        </tr>
+						{foreach from=$activity key=name item=def}
+							<tr>
+								<td>{$def.label}</td>
+								<td>
+									<input type="text" id="{$name}" name="activity[{$name}][body]" class="color" value="{$def.body}" size="8" />
+                                 </td>
+                                 <td>
+									<input type="text" id="{$name}" name="activity[{$name}][border]" class="color" value="{$def.border}" size="8" />
+								</td>
+                                <td>
+                                        <input type="text" id="{$name}" name="activity[{$name}][text]" class="color" value="{$def.text}" size="8" />
+								</td>
+							</tr>
+						{/foreach}
+					</table>
+				</div>
+			</div>
 	</form>
-	
+		</div>
+
 	
 	<div style="text-align: right;">
 		<button id="btn-save-settings" class="button" type="button">{$MOD.LBL_APPLY_BUTTON}</button>&nbsp;

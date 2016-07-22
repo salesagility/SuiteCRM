@@ -167,6 +167,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'Schedulers' => 'Schedulers',
                 'SchedulersJobs' => 'SchedulersJobs',
                 'SecurityGroups' => 'SecurityGroups',
+                'Spots' => 'Spots',
                 'Studio' => 'Studio',
                 'SugarFeed' => 'SugarFeed',
                 'Tasks' => 'Tasks',
