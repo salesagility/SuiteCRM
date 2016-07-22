@@ -204,14 +204,14 @@
 				{/if}
 			</ul>
 			<div id="cal-tab-1" class="yui-content">
-				{include file=$form}
+				{sugar_include type="smarty" file=$form}
 			</div>				
 			<div id="cal-tab-2" class="yui-content">
 				<div class="h3Row" id="scheduler"></div>
 			</div>
 			{if $enable_repeat}
 			<div id="cal-tab-3" class="yui-content">
-				{include file=$repeat}
+				{sugar_include type="smarty" file=$repeat}
 			</div>
 			{/if}
 		</div>
@@ -226,7 +226,7 @@
 </div>
 
 {if $settings}
-{include file=$settings}
+{sugar_include type="smarty" file=$settings}
 {/if}
 	
 <script type="text/javascript">	
