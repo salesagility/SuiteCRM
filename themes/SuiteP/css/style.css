@@ -979,6 +979,7 @@ th, td {
 
 #EditView input[type="button"] {
     margin: 4px;
+    padding: 0 10px;
 }
 
 fieldset {
@@ -4064,6 +4065,12 @@ fieldset[disabled] .btn-primary.active {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
     height: 32px;
     width: 32px;
+}
+#actionLines tr td table tbody tr td div table tbody tr td button[type="button"] img {
+    content: none;
+}
+#actionLines tr td table tbody tr td div table tbody tr td table tbody tr td button[type="button"] img {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
 }
 
 #EditView_tabs span.id-ff.multiple [type="button"] img,
