@@ -81,7 +81,7 @@ class AM_ProjectTemplatesViewGanttChart extends SugarView {
                 </p>
                 <form id="popup_form">
                     <fieldset>
-						<table>
+						<table width="100%">
 							<tr><td width="50%">
 						
 							<input type="hidden" name="project_template_id" id="project_template_id" value="<?php echo $project_template->id; ?>">
