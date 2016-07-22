@@ -1732,9 +1732,14 @@ div#responseTime {
 .monthHeader {
     padding: 6px 5px 4px 3px;
     margin-top: 10px;
+    border: none;
+    background: #BFCAD3;
+    color: #ffffff;
     vertical-align: middle;
-    background-repeat: repeat-x;
-    background-position: top;
+    border: 1px solid transparent;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    line-height: 42px;
 }
 
 .monthHeader td {
@@ -1836,6 +1841,30 @@ div#responseTime {
     border-top: 1px;
 }
 
+#calendar1 > div.fc-toolbar {
+    visibility: collapse;
+    display: none;
+    height: 0 ;
+}
+
+.monthCalBody > .calSharedUser {
+    display: none;
+    height: 0;
+    visibility: collapse;
+}
+
+thead.fc-head {
+    background: #778591;
+    color: #ffffff;
+}
+
+thead.fc-head tr td {
+    padding: 8px;
+}
+
+.fc-day-number {
+    color: #ffffff;
+}
 .calendar {
     border: 1px solid #999;
 }
@@ -2940,13 +2969,6 @@ h5.calSharedUser {
     color: #444444;
 }
 
-.monthHeader {
-    color: #444;
-    background-color: #fff;
-    border-color: #abc3d7;
-    background-image: url('../../../../index.php?entryPoint=getImage&imageName=bg.gif');
-}
-
 .subpanelTabForm {
     border-color: #3C8DBC;
     color: #000000;
@@ -3678,12 +3700,6 @@ iframe.teamNoticeBox {
 
 .evenListRowS1 {
     background: #efefef;
-}
-
-.monthHeader {
-    border: none;
-    background: #efefef;
-    padding: 5px;
 }
 
 .toggler {
