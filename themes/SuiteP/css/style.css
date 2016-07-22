@@ -226,6 +226,9 @@ li#usermenu a:hover span.user_icon {
 div#pageContainer {
 }
 
+.dashletcontainer, .drop-location {
+    min-height: 32px;
+}
 div#pageContainer td.dashletcontainer {
     width: auto !important;
     padding-right: 1%;
@@ -236,6 +239,10 @@ div#pageContainer td.dashletcontainer div.hd {
     padding: 10px;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+}
+
+.yui-module .hd, .yui-panel .hd {
+    background: #66727d;
 }
 
 div#pageContainer td.dashletcontainer tr.pagination td {
@@ -1456,22 +1463,71 @@ table#mass_update_table td select {
 
 ul.tablist, ul.subpanelTablist {
     list-style: none;
-    padding: 3px 0;
+    padding: 0;
     margin: 0;
 }
 
-ul.tablist li, ul.subpanelTablist li {
+#moduleDashlets h3,
+#chartDashlets h3,
+#webDashlets h3,
+#toolsDashlets h3,
+#searchDashlets h3 {
+    display: none;
+    visibility: collapse;
+}
+
+ul.subpanelTablist li {
     list-style: none;
-    margin: 0;
-    display: inline;
+    margin: 0 0 0 3px;
+    padding:0;
 }
 
-ul.tablist li a, ul.subpanelTablist li a {
-    padding: 3px 8px;
-    margin: 0;
-    border-bottom: none;
-    text-decoration: none;
+
+#dashName {
+    margin-bottom: 4px;
 }
+
+
+ul#dashletCategories {
+    display: block;
+    font-size: 13px;
+    height: 28px;
+    border-bottom-color: #778591  !important;
+
+}
+
+ul#dashletCategories > li {
+    display: inline-block;
+    font-size: 13px;
+}
+
+
+ul#dashletCategories > li a,
+ul#dashletCategories > li a:link,
+ul#dashletCategories > li a:hover,
+ul#dashletCategories > li a:visited,
+ul#dashletCategories > li a:active,
+ul#dashletCategories > li a:focus {
+    font-weight: 400;
+    border: 1px solid transparent;
+    background-color: #BFCAD3;
+    padding: 10px 20px 10px 10px;
+    color: #ffffff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    text-transform: uppercase;
+}
+
+ul#dashletCategories > li.active a,
+ul#dashletCategories > li.active a:link,
+ul#dashletCategories > li.active a:hover,
+ul#dashletCategories > li.active a:visited,
+ul#dashletCategories > li.active a:active,
+ul#dashletCategories > li.active a:focus {
+    background-color: #778591;
+    color: #ffffff;
+}
+
 
 ul.subpanelTablist #addPageItem a, ul.subpanelTablist #addPageItem a:hover {
     border: none;
@@ -2181,18 +2237,6 @@ div#content p.error {
     float: right;
 }
 
-ul#dashletCategories li a:link, ul#dashletCategories li a:visited {
-    background: #eee;
-}
-
-ul#dashletCategories li a.current, ul#dashletCategories li a.current:hover {
-    color: #444;
-    background: transparent;
-}
-
-ul#dashletCategories li a:link:hover {
-    border: 1px solid #ccc;
-}
 
 #moduleDashlets h3, #chartDashlets h3, #toolsDashlets h3 {
     margin-top: 13px;
@@ -2500,7 +2544,7 @@ a:link, a:visited, a:hover {
 }
 
 .list tr.pagination td table td {
-    background: #FAFAFA none repeat scroll 0 0;
+    background: #BFCAD3 none repeat scroll 0 0;
     color: #666666;
 }
 
@@ -3103,6 +3147,10 @@ li#tab-actions > ul.dropdown-menu li {
     border-bottom: 1px solid #FA988D;
 }
 
+ul.tab-actions li a {
+    border-bottom: 1px solid #FA988D !important;
+}
+
 li#tab-actions > ul.dropdown-menu input {
     width: 100%;
     text-align: left;
@@ -3675,6 +3723,11 @@ iframe.teamNoticeBox {
     display: none;
 }
 
+.module_icon {
+    width: 32px;
+    height: auto;
+}
+
 #moduleDashletsList {
     height: auto;
 }
@@ -3687,6 +3740,11 @@ iframe.teamNoticeBox {
 #dashletsDialog_c {
     margin-left: -125px;
     margin-top: -50px;
+}
+
+td.dashlet-title {
+    height: 52px;
+    line-height: 48px;
 }
 
 button[disabled]:hover, input[type=submit][disabled]:hover, input[type=reset][disabled]:hover, input[type=button][disabled]:hover {
@@ -3827,8 +3885,30 @@ input[type=text].cstm_code {
     height: 200px;
 }
 
-#moduleDashletsList {
+#moduleDashletsList > table > tbody > tr > td,
+#basicChartDashletsList > table > tbody  > tr > td,
+#toolsDashletsList > table > tbody  > tr > td,
+#webDashletsList > table > tbody  > tr > td {
+    padding: 10px;
+}
+
+#moduleDashletsList a, #basicChartDashletsList a, #toolsDashletsList a, #webDashletsList a {
+    color: #ffffff;
+    margin: 5px;
+}
+
+#moduleDashletsList a span, #basicChartDashletsList a span, #toolsDashletsList a span, #webDashletsList a span {
+    margin-left: 10px;
+}
+
+
+#moduleDashletsList, #basicChartDashletsList, #toolsDashletsList, #webDashletsList {
+    padding: 10px;
     max-height: 375px !important;
+    background: #778591;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 
 #caseStyleUser {
@@ -4036,6 +4116,16 @@ fieldset[disabled] .btn-primary.active {
     padding: 5px;
 }
 
+#dashletsDialog_mask {
+    display: none !important;
+    visibility: collapse !important;
+}
+
+#dashletsDialog {
+    display: none !important;
+    visibility: collapse !important;
+}
+
 #EditView_tabs .edit .button,
 #EditView_tabs .id-ff-remove,
 #EditView_tabs .edit [type="button"],
@@ -4047,6 +4137,51 @@ fieldset[disabled] .btn-primary.active {
     background-color: #F08377;
     border: 1px solid #F08377;
     border-radius: 4px;
+}
+.btn .btn:hover {
+    cursor: pointer;
+    font-size: 13px;
+    padding: 0 20px 0 20px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 1px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.btn-default, .btn-default:hover, .btn-default:active, .btn-default:focus {
+    color: #ffffff;
+    background-color: #94A6B5;
+    background-color: #94A6B5;
+    border: 1px solid #94A6B5;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    color: #ffffff;
+    background-color: #778591;
+    background-color: #778591;
+    border: 1px solid #778591;
+}
+
+.btn-info, .btn-info:hover, .btn-info:active, .btn-info:focus {
+    color: #ffffff;
+    background-color: #AA9DCC;
+    background-color: #AA9DCC;
+    border: 1px solid #AA9DCC;
+}
+
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus {
+    color: #ffffff;
+    background-color: #66996B;
+    background-color: #66996B;
+    border: 1px solid #66996B;
+}
+
+.btn-danger, .btn-danger:hover, .btn-danger:active, .btn-danger:focus {
+    background-color: #F08377;
+    background-color: #F08377;
+    border: 1px solid #F08377;
 }
 
 #EditView_tabs .id-ff-remove, #EditView_tabs .edit [type="radio"]  {
@@ -6038,7 +6173,9 @@ object {
     margin-right: 20px;
 }
 
-
+.panel-template {
+    visibility: collapse;
+}
 
 .panel-default > .panel-heading {
     background: #66727D;
@@ -6046,7 +6183,15 @@ object {
     padding: 0px;
     vertical-align: middle;
     height: 52px;
+}
 
+.panel-default > .panel-heading > div {
+    color: #ffffff;
+    height: 52px;
+    line-height: 52px;
+    font-weight: 500;
+    font-size: 14px !important;
+    background-color: #66727D;
 }
 
 .panel-default > .panel-body {

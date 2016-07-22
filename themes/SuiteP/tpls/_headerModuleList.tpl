@@ -509,9 +509,7 @@
                         {/if}
                         <li>
                             {capture name=moduleTabId assign=moduleTabId}moduleTab_{$smarty.foreach.moduleList.index}_{$module}{/capture}
-                            <a href="{$item.URL}">
-                                <div class="actionmenulinkimg"><img src="{sugar_getimagepath directory="sidebar" file_name=$item.MODULE_NAME file_extension='svg'}"></div>
-                                <div class="actionmenulink">{$item.LABEL}</div></a>
+                            {sugar_link id=$moduleTabId module=$modulekey data=$module extraparams=$extraparams}
                         </li>
                     {/foreach}
                     {foreach from=$modules.extra item=submodulename key=submodule}
