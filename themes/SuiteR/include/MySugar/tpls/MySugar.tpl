@@ -1,11 +1,8 @@
 {*
-/**
- *
+
+/*********************************************************************************
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
- *
- * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
- * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -33,10 +30,14 @@
  *
  * In accordance with Section 7(b) of the GNU Affero General Public License version 3,
  * these Appropriate Legal Notices must retain the display of the "Powered by
- * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
- * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
- * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- */
+ * SugarCRM" logo. If the display of the logo is not reasonably feasible for
+ * technical reasons, the Appropriate Legal Notices must display the words
+ * "Powered by SugarCRM".
+ ********************************************************************************/
+
+
+
+
 *}
 {literal}
     <style>
@@ -67,21 +68,17 @@
 
     {* Foreach of the pages generate a tab in the tab section *}
     {foreach from=$dashboardPages key=tabNum item=tab}
-        {if $tabNum == 0}
-            <li id="pageNum_{$tabNum}">
-                <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' onClick=retrievePage({$tabNum});>
-                    <span>{$tab.pageTitle}</span>
-                </a>
+        {if $tabNum == 0} <li id="pageNum_{$tabNum}">
+            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;'  onClick=retrievePage({$tabNum});>
+                <span>{$tab.pageTitle}</span>
+            </a>
 
-            </li>
-        {else}
-        <li id="pageNum_{$tabNum}">
-            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;'
-               {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick=retrievePage({$tabNum});>
+        </li>
+        {else} <li id="pageNum_{$tabNum}">
+            <a id="pageNum_{$tabNum}_anchor" style='cursor: pointer;' {if !$lock_homepage}ondblclick="renameTab({$tabNum})"{/if} onClick=retrievePage({$tabNum});>
                 <span id="name_{$tabNum}">{$tab.pageTitle}</span>
             </a>
-            {if !$lock_homepage}<a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><span
-                        class="glyphicon glyphicon-remove"></span></a>{/if}
+            {if !$lock_homepage}<a id="removeTab_anchor"  onClick=removeDashboardForm({$tabNum});><span class="glyphicon glyphicon-remove"></span></a>{/if}
 
             </li>{/if}
     {/foreach}
@@ -89,6 +86,7 @@
         <li class="addButton">
             <a style='cursor: pointer;' onclick="return SUGAR.mySugar.showDashletsDialog();">{$lblAddDashlets}</a>
         </li>
+
         <li class="addButton">
             <a style='cursor: pointer;' onclick="addDashboardForm({$tabNum});">
                 <span>{$lblAddTab}</span>
@@ -156,7 +154,7 @@
 </div>
 <script type="text/javascript" src="include/MySugar/javascript/AddRemoveDashboardPages.js"></script>
 <script type="text/javascript" src="include/MySugar/javascript/retrievePage.js"></script>
-<link rel="stylesheet" type="text/css" href="themes/SuiteP/css/dashboardstyle.css">
+<link rel="stylesheet" type="text/css" href="themes/SuiteR/css/dashboardstyle.css">
 <script type="text/javascript">
 
     var activePage = {$activePage};
