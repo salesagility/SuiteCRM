@@ -47,6 +47,7 @@
  */
 class TemplateHandler {
     var $cacheDir;
+    var $themeDir = 'themes/';
     var $templateDir = 'modules/';
     var $ss;
 
@@ -122,7 +123,7 @@ class TemplateHandler {
         global $theme;
 
         $this->loadSmarty();
-        $cacheDir = create_cache_directory('themes/'.$theme.'/'.$this->templateDir. $module . '/');
+        $cacheDir = create_cache_directory($this->themeDir.$theme.'/'.$this->templateDir. $module . '/');
         $file = $cacheDir . $view . '.tpl';
         $string = '{* Create Date: ' . date('Y-m-d H:i:s') . "*}\n";
         $this->ss->left_delimiter = '{{';
@@ -274,7 +275,7 @@ class TemplateHandler {
             return false;
         }
         $view = $checkFormName ? $formName : $view;
-        return file_exists($this->cacheDir.'themes/'.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
+        return file_exists($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
     }
 
     /**
@@ -292,7 +293,7 @@ class TemplateHandler {
         if(!$this->checkTemplate($module, $view)) {
             $this->buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs);
         }
-        $file = $this->cacheDir.'themes/'.$theme.'/'.$this->templateDir . $module . '/' . $view . '.tpl';
+        $file = $this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' . $view . '.tpl';
         if(file_exists($file)) {
            return $this->ss->fetch($file);
         } else {
@@ -310,16 +311,16 @@ class TemplateHandler {
      */
     function deleteTemplate($module, $view) {
         global $theme;
-        if(is_file($this->cacheDir.'themes/'.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl')) {
+        if(is_file($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl')) {
             // Bug #54634 : RTC 18144 : Cannot add more than 1 user to role but popup is multi-selectable
             if ( !isset($this->ss) )
             {
                 $this->loadSmarty();
             }
-            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir.'themes/'.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
+            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
             SugarCache::cleanFile($cache_file_name);
 
-            return unlink($this->cacheDir.'themes/'.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
+            return unlink($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
         }
         return false;
     }
