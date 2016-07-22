@@ -88,13 +88,11 @@ class CalendarDashlet extends Dashlet {
 		$display->display_calendar_header(false);
 
 		$display->display();
-		$string =  "<script> global_view = '{$this->view}' ;</script>";
-		$string .=  "<script> console.log('{$this->view}') ;</script>";
 
 		$str = ob_get_contents();
 		ob_end_clean();
 		
-		return parent::display() . $str . $string;
+		return parent::display() . $str;
     }
     
 

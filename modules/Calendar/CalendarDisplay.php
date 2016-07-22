@@ -68,7 +68,9 @@ class CalendarDisplay {
 	 */
 	function __construct(Calendar $cal,$dashlet_id = "", $views = array()){
 		global $sugar_config;
-		$this->activity_colors = $sugar_config['CalendarColors'];
+		if(isset($sugar_config['CalendarColors']) && is_array($sugar_config['CalendarColors'])){
+			$this->activity_colors = array_merge($this->activity_colors, $sugar_config['CalendarColors']);
+		}
 		$this->cal = $cal;
 		$this->dashlet_id = $dashlet_id;
 		$this->views = $views;
@@ -195,15 +197,7 @@ class CalendarDisplay {
 			$ss->assign("dow",$dow);
 
 		}
-
-
-
 		echo $ss->fetch($main);
-
-		// grid
-		//$grid = new CalendarGrid($cal);
-		//echo $grid->display();
-		// end grid
 	}
 
 	function checkActivity($activity = ""){
@@ -225,8 +219,8 @@ class CalendarDisplay {
 		if(!empty($this->cal->activityList)){
 			foreach($this->cal->activityList as $key=>$value ){
 				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $GLOBALS['beanList'][$key] ])){
-					$this->activity_colors[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors']['Meetings'];
-					$activity[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors']['Meetings'];
+					$this->activity_colors[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+					$activity[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
 				}
 			}
 		}

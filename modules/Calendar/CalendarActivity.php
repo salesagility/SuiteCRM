@@ -38,9 +38,6 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
 
-
-
-
 require_once('include/utils/activity_utils.php');
 
 class CalendarActivity {
@@ -176,7 +173,7 @@ class CalendarActivity {
 		}
 
 		foreach($acivitites as $key => $activity){
-			if(ACLController::checkAccess($key, 'list', true)) {
+			if(ACLController::checkAccess($key, 'list', true)  ) {
 				/* END - SECURITY GROUPS */
 				$bean = new $key();
 
@@ -188,6 +185,16 @@ class CalendarActivity {
 
 				if($key == "Meeting"){
 					$where .= $completedMeetings;
+				}elseif($key == "Call"){
+					$where .= $completedCalls;
+					if(!$show_calls){
+						continue;
+					}
+				}elseif($key == "Task"){
+					$where .= $completedTasks;
+					if(!$show_tasks){
+						continue;
+					}
 				}
 
 				$focus_list = build_related_list_by_user_id($bean, $user_id, $where);
@@ -214,79 +221,6 @@ class CalendarActivity {
 			}
 		}
 
-		//historic needs refactored.
-		if($show_calls){
-			/* BEGIN - SECURITY GROUPS */
-			/**
-			if(ACLController::checkAccess('Calls', 'list',$current_user->id  == $user_id)) {
-			 */
-			if(ACLController::checkAccess('Calls', 'list',true)) {
-				/* END - SECURITY GROUPS */
-				$call = new Call();
-
-				if($current_user->id  == $user_id) {
-					$call->disable_row_level_security = true;
-				}
-
-				$where = CalendarActivity::get_occurs_within_where_clause($call->table_name, $call->rel_users_table, $view_start_time, $view_end_time, 'date_start', "date_end", $view);
-				$where .= $completedCalls;
-				$focus_calls_list = build_related_list_by_user_id($call, $user_id, $where);
-
-				foreach($focus_calls_list as $call) {
-					if(isset($seen_ids[$call->id])) {
-						continue;
-					}
-
-					/* BEGIN - SECURITY GROUPS */
-					require_once("modules/SecurityGroups/SecurityGroup.php");
-					$in_group = SecurityGroup::groupHasAccess('Calls',$call->id,'list');
-					$show_as_busy = !(ACLController::checkAccess('Calls', 'list', $current_user->id == $user_id,'module', $in_group));
-					$call->show_as_busy = $show_as_busy;
-					/* END - SECURITY GROUPS */
-					$seen_ids[$call->id] = 1;
-
-					$act = new CalendarActivity($call);
-					if(!empty($act)) {
-						$act_list[] = $act;
-					}
-				}
-			}
-		}
-
-
-		if($show_tasks){
-			/* BEGIN - SECURITY GROUPS */
-			/**
-			if(ACLController::checkAccess('Tasks', 'list',$current_user->id == $user_id)) {
-			 */
-			if(ACLController::checkAccess('Tasks', 'list',true)) {
-				/* END - SECURITY GROUPS */
-				$task = new Task();
-
-				$where = CalendarActivity::get_occurs_within_where_clause('tasks', '', $view_start_time, $view_end_time, 'date_due', '', $view);
-				$where .= " AND tasks.assigned_user_id='$user_id' ";
-				$where .= $completedTasks;
-
-				$focus_tasks_list = $task->get_full_list("", $where, true);
-
-				if(!isset($focus_tasks_list)) {
-					$focus_tasks_list = array();
-				}
-
-				foreach($focus_tasks_list as $task) {
-					/* BEGIN - SECURITY GROUPS */
-					require_once("modules/SecurityGroups/SecurityGroup.php");
-					$in_group = SecurityGroup::groupHasAccess('Tasks',$task->id,'list');
-					$show_as_busy = !(ACLController::checkAccess('Tasks', 'list', $current_user->id == $user_id,'module', $in_group));
-					$task->show_as_busy = $show_as_busy;
-					/* END - SECURITY GROUPS */
-					$act = new CalendarActivity($task);
-					if(!empty($act)) {
-						$act_list[] = $act;
-					}
-				}
-			}
-		}
 		return $act_list;
 	}
 
