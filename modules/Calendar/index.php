@@ -48,10 +48,6 @@ require_once('modules/Calendar/Calendar.php');
 require_once('modules/Calendar/CalendarDisplay.php');
 
 $views = array("agendaDay" => array(),"basicDay" => array(), "basicWeek" => array(), "agendaWeek" => array(),"month" => array(), "sharedMonth" => array(), "sharedWeek" => array());
-$custom_views = "custom/modules/Calendar/Ext/custom_views/custom_views.ext.php";
-if(file_exists($custom_views)){
-	require_once($custom_views);
-}
 
 global $cal_strings, $current_language;
 $cal_strings = return_module_language($current_language, 'Calendar');
