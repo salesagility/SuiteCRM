@@ -170,7 +170,7 @@
             if(document.getElementById('empty-search-message')) {
                 document.getElementById('empty-search-message').style.display = 'none';
             }
-            CAL.editDialog.cancel();
+//            CAL.editDialog.cancel();
 		});
 		YAHOO.util.Event.on("btn-full-form","click",function(){
 			CAL.full_form();
@@ -212,7 +212,7 @@
 						{sugar_include type="smarty" file=$form}
 					</div>
 					<div id="cal-tab-2" class="tab-pane fade">
-						<div class="h3Row" id="scheduler"></div>
+						<div id="scheduler"></div>
 					</div>
 					{if $enable_repeat}
 						<div id="cal-tab-3" class="tab-pane fade">
