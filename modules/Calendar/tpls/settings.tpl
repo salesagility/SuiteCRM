@@ -55,7 +55,6 @@ $(function() {
 
 {/literal}
 </script>
-
 <div id="settings_dialog" style="width: 450px; display: none;">
 	<div class="hd">{$MOD.LBL_SETTINGS_TITLE}</div>
 	<div class="bd">
@@ -66,7 +65,6 @@ $(function() {
 						<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             {$MOD.LBL_GENERAL_SETTINGS}
 						</a>
-
 					</h4>
 				</div>
 				<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
@@ -168,39 +166,39 @@ $(function() {
 
 
 						</table>
-				</div>
-			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading" role="tab" id="headingTwo">
-					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            {$MOD.LBL_COLOR_SETTINGS}
-						</a>
-					</h4>
-				</div>
-				<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-					<table class="yui3-skin-sam edit view panelContainer">
-                        <tr>
-                            <th>Module</th><th>Body</th><th>Border</th><th>Text</th>
-                        </tr>
-						{foreach from=$activity key=name item=def}
-							<tr>
-								<td>{$def.label}</td>
-								<td>
-									<input type="text" id="{$name}" name="activity[{$name}][body]" class="color" value="{$def.body}" size="8" />
-                                 </td>
-                                 <td>
-									<input type="text" id="{$name}" name="activity[{$name}][border]" class="color" value="{$def.border}" size="8" />
-								</td>
-                                <td>
-                                        <input type="text" id="{$name}" name="activity[{$name}][text]" class="color" value="{$def.text}" size="8" />
-								</td>
-							</tr>
-						{/foreach}
-					</table>
-				</div>
-			</div>
-	</form>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading" role="tab" id="headingTwo">
+							<h4 class="panel-title">
+								<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+									{$MOD.LBL_COLOR_SETTINGS}
+								</a>
+							</h4>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+							<table class="yui3-skin-sam edit view panelContainer">
+								<tr>
+									<th>Module</th><th>Body</th><th>Border</th><th>Text</th>
+								</tr>
+								{foreach from=$activity key=name item=def}
+									<tr>
+										<td>{$def.label}</td>
+										<td>
+											<input type="text" id="{$name}" name="activity[{$name}][body]" class="color" value="{$def.body}" size="8" />
+										 </td>
+										 <td>
+											<input type="text" id="{$name}" name="activity[{$name}][border]" class="color" value="{$def.border}" size="8" />
+										</td>
+										<td>
+												<input type="text" id="{$name}" name="activity[{$name}][text]" class="color" value="{$def.text}" size="8" />
+										</td>
+									</tr>
+								{/foreach}
+							</table>
+						</div>
+					</div>
+			</form>
 		</div>
 
 	
