@@ -111,33 +111,87 @@ class ProjectController extends SugarController {
             $duration = 0;
         }
 
+			
+		//------ build business hours array
+		$days = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+		$businessHours = BeanFactory::getBean("AOBH_BusinessHours");
+		$bhours = array();
+		foreach($days as $day){
+			$bh = $businessHours->getBusinessHoursForDay($day);
+			
+			if($bh){
+				$bh = $bh[0];
+				if($bh->open){
+					$open_h = $bh ? $bh->opening_hours : 9;
+					$close_h = $bh ? $bh->closing_hours : 17;							
+					//$GLOBALS['log']->fatal($open_h . '--' . $close_h );
+					
+					$start_time = DateTime::createFromFormat($dateformat, $_POST['start']);
+					$start_time = $start_time->modify('+'.$open_h.' Hours');
+
+					$end_time = DateTime::createFromFormat($dateformat, $_POST['start']);
+					$end_time = $end_time->modify('+'.$close_h.' Hours');
+
+					$hours = ($end_time->getTimestamp() - $start_time->getTimestamp())/(60*60);
+					if($hours < 0)
+						$hours = 0 - $hours ;
+
+					//$hours = $bh->diffBusinessHours($start_time, $end_time);
+					$bhours[$day] = $hours; 	
+					//$GLOBALS['log']->fatal( $hours );
+
+				}
+				else{
+					$bhours[$day] = 0;
+				}
+			}
+		}
+		//-----------------------------------
+		
+
+		//default business hours array
+		if( $override_business_hours != 1){	
+			$bhours = array ('Monday' => 8,'Tuesday' => 8,'Wednesday' => 8, 'Thursday' => 8, 'Friday' => 8, 'Saturday' => 0, 'Sunday' => 0);
+		}
+		//---------------------------
+		
+		
 		//
 		//code block to calculate end date based on user's business hours
 		//
+	
+		$enddate = $startdate;
 
-		$configurator = new Configurator;
-		
-		if( $duration_unit == 'Hours' && isset($configurator->config['businessHours']) && $override_business_hours == 1){
-			$bhours = $configurator->config['businessHours'];
-			
-			$enddate = $startdate;
-			$h = 0;		
-			$d = 0;
-			
+		$h = 0;		
+		$d = 0;
+		if( $duration_unit == 'Hours' ){
+
 			while($duration > $h){
-				$day = strtolower($enddate->format('D'));	
+				$day = $enddate->format('l');
+				//$GLOBALS['log']->fatal( $day . '--' . $bhours[$day] );
 				$h += $bhours[$day];	
 				$enddate = $enddate->modify('+1 Days');
 			} 
-			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+			
 			$enddate = $enddate->format('Y-m-d');
 
 		}
 		else{
-			$enddate = $startdate->modify('+'.$duration.' '.$duration_unit);
-			$enddate = $enddate->format('Y-m-d');
+			
+			while($duration >= $d){
+				$day = $enddate->format('l');
+				//$GLOBALS['log']->fatal( $day . '--' . $bhours[$day] );
+				if($bhours[$day] != 0 ){
+					$d += 1;	
+				}
+				$enddate = $enddate->modify('+1 Days');
+			} 
+			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+			$enddate = $enddate->format('Y-m-d');			
+			
 		}
-		//---------------
+
+		//----------------------------------
 
         if($percent > 0){
 

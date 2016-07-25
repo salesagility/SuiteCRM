@@ -193,7 +193,7 @@ $mod_strings = array(
 	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
 	'LBL_REMOVE' => 'rem',
 	'LBL_VIEW_DETAIL' => 'View Details',
-	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Override Business Hours',
+	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
 
 	'LBL_PROJECTS_SEARCH' => 'Search Projects',
 	'LBL_USERS_SEARCH' => 'Search Users',

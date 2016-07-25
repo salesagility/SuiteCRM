@@ -78,6 +78,7 @@ class file_utilsTest extends PHPUnit_Framework_TestCase
                 'Alerts' => 'Alerts',
                 'AM_ProjectTemplates' => 'AM_ProjectTemplates',
                 'AM_TaskTemplates' => 'AM_TaskTemplates',
+				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOD_Index' => 'AOD_Index',
                 'AOD_IndexEvent' => 'AOD_IndexEvent',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',

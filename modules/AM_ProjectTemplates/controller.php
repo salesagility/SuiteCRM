@@ -264,29 +264,10 @@ class AM_ProjectTemplatesController extends SugarController {
 		//
 		//code block to calculate end date based on user's business hours
 		//
-
-		$configurator = new Configurator;
+		$enddate = $startdate->modify('+'.$duration.' '.$duration_unit);
+		$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
+		$enddate = $enddate->format('Y-m-d');
 		
-		if( $duration_unit == 'Hours' && isset($configurator->config['businessHours']) && $override_business_hours == 1){
-			$bhours = $configurator->config['businessHours'];
-			
-			$enddate = $startdate;
-			$h = 0;		
-			$d = 0;
-			
-			while($duration > $h){
-				$day = strtolower($enddate->format('D'));	
-				$h += $bhours[$day];	
-				$enddate = $enddate->modify('+1 Days');
-			} 
-			$enddate = $enddate->modify('-1 Days');//readjust it back to remove 1 additional day added
-			$enddate = $enddate->format('Y-m-d');
-
-		}
-		else{
-			$enddate = $startdate->modify('+'.$duration.' '.$duration_unit);
-			$enddate = $enddate->format('Y-m-d');
-		}
 		//---------------
 
         if($percent > 0){

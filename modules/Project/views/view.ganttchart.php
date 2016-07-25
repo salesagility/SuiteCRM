@@ -83,7 +83,7 @@ class ProjectViewGanttChart extends SugarView {
                 </p>
                 <form id="popup_form">
                     <fieldset>
-						<table>
+						<table width="100%">
 							<tr><td>
 						
 							<input type="hidden" name="project_id" id="project_id" value="<?php echo $project->id; ?>">
