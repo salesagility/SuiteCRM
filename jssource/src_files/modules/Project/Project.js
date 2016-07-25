@@ -98,3 +98,6 @@ function prep_export_to_project(the_form)
 	the_form.action.value='Export';
 	the_form.sugar_body_only.value='1';
 }
+
+ //html =  '<a id="create_link" onclick="' + $("#view_gantt").attr('onclick') + '" class="utilsLink">' + $("#view_gantt").attr('value') + '</a>&nbsp;&nbsp;' + $(".moduleTitle .utils").html();
+ //$(".moduleTitle .utils").html(html);

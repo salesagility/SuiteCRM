@@ -77,6 +77,8 @@ class security_utilsTest extends PHPUnit_Framework_TestCase
 
         $expected = array(
                 'Bugs' => 'Bugs',
+                'ResourceCalendar' => 'ResourceCalendar',
+				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOR_Scheduled_Reports' => 'AOR_Scheduled_Reports',
                 'SecurityGroups' => 'SecurityGroups',
         );
