@@ -47,6 +47,7 @@
  */
 class TemplateHandler {
     var $cacheDir;
+    var $themeDir = 'themes/';
     var $templateDir = 'modules/';
     var $ss;
 
@@ -119,9 +120,10 @@ class TemplateHandler {
      * @param metaDataDefs metadata definition as Array
      **/
     function buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs) {
-        $this->loadSmarty();
+        global $theme;
 
-        $cacheDir = create_cache_directory($this->templateDir. $module . '/');
+        $this->loadSmarty();
+        $cacheDir = create_cache_directory($this->themeDir.$theme.'/'.$this->templateDir. $module . '/');
         $file = $cacheDir . $view . '.tpl';
         $string = '{* Create Date: ' . date('Y-m-d H:i:s') . "*}\n";
         $this->ss->left_delimiter = '{{';
@@ -268,11 +270,12 @@ class TemplateHandler {
      * @param view string view need (eg DetailView, EditView, etc)
      */
     function checkTemplate($module, $view, $checkFormName = false, $formName='') {
+        global $theme;
         if(inDeveloperMode() || !empty($_SESSION['developerMode'])){
             return false;
         }
         $view = $checkFormName ? $formName : $view;
-        return file_exists($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl');
+        return file_exists($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
     }
 
     /**
@@ -285,11 +288,12 @@ class TemplateHandler {
      * @param metaData Optional metadata definition Array
      */
     function displayTemplate($module, $view, $tpl, $ajaxSave = false, $metaDataDefs = null) {
+        global $theme;
         $this->loadSmarty();
         if(!$this->checkTemplate($module, $view)) {
             $this->buildTemplate($module, $view, $tpl, $ajaxSave, $metaDataDefs);
         }
-        $file = $this->cacheDir . $this->templateDir . $module . '/' . $view . '.tpl';
+        $file = $this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' . $view . '.tpl';
         if(file_exists($file)) {
            return $this->ss->fetch($file);
         } else {
@@ -306,16 +310,17 @@ class TemplateHandler {
      * @param view string view need (eg DetailView, EditView, etc)
      */
     function deleteTemplate($module, $view) {
-        if(is_file($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl')) {
+        global $theme;
+        if(is_file($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl')) {
             // Bug #54634 : RTC 18144 : Cannot add more than 1 user to role but popup is multi-selectable
             if ( !isset($this->ss) )
             {
                 $this->loadSmarty();
             }
-            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl');
+            $cache_file_name = $this->ss->_get_compile_path($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
             SugarCache::cleanFile($cache_file_name);
 
-            return unlink($this->cacheDir . $this->templateDir . $module . '/' .$view . '.tpl');
+            return unlink($this->cacheDir.$this->themeDir.$theme.'/'.$this->templateDir . $module . '/' .$view . '.tpl');
         }
         return false;
     }
