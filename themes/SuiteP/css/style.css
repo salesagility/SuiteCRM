@@ -1720,6 +1720,20 @@ div#responseTime {
     margin-bottom: 0;
 }
 
+div.row.monthHeader {
+    margin-left: 0;
+    margin-right: 0;
+    border-bottom: none;
+}
+
+td.fc-widget-header,
+td.fc-widget-header table > thead,
+td.fc-widget-header table > thead > tr > th {
+    padding: 0;
+    border: none !important;
+    background-color: #BFCAD3;
+}
+
 .monthFooter td {
     padding-left: 7px;
     padding-right: 7px;
@@ -1733,7 +1747,7 @@ div#responseTime {
     padding: 6px 5px 4px 3px;
     margin-top: 10px;
     border: none;
-    background: #BFCAD3;
+    background: #778591;
     color: #ffffff;
     vertical-align: middle;
     border: 1px solid transparent;
@@ -2894,10 +2908,9 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
     background-color: #abc3d7;
 }
 
-.monthFooter td {
-    border-top-color: #abc3d7;
-    border-bottom-color: #abc3d7;
-    background-color: #ffffff;
+div.monthFooter {
+    background-color: #BFCAD3;
+    line-height: 32px;
 }
 
 .monthHeader a:hover, .monthViewDayHeight a:hover {
