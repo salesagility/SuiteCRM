@@ -986,6 +986,7 @@ th, td {
 
 #EditView input[type="button"] {
     margin: 4px;
+    padding: 0 10px;
 }
 
 fieldset {
@@ -4200,6 +4201,23 @@ fieldset[disabled] .btn-primary.active {
     height: 32px;
     width: 32px;
 }
+#actionLines tr td table tbody tr td div table tbody tr td button[type="button"] img {
+    content: none;
+}
+#actionLines tr td table tbody tr td div table tbody tr td table tbody tr td button[type="button"] img {
+    content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&themeName=SuiteP&imageName=id-ff-remove-nobg.png');
+}
+
+#EditView_tabs span.id-ff.multiple [type="button"] img,
+#conditionLines span.id-ff.multiple [type="button"] img {
+    content: none;
+}
+
+input#btn_ConditionLine.button[type="button"],
+input#btn_ActionLine.button[type="button"] {
+    padding: 0 10px;
+    color: white;
+}
 
 #deleteGroup img {
     content: url('../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=id-ff-clear.png');
@@ -4239,7 +4257,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .col-sm-6 .edit-view-field input[type="text"] {
-    width: 60% !important;
+    width: 50% !important;
 }
 
 
@@ -4259,6 +4277,34 @@ fieldset[disabled] .btn-primary.active {
 
  .col-sm-12 .edit-view-field input[type="text"]:not(.sqsEnabled) {
     width: 100% !important;
+}
+
+table#lineItems tr td table tfoot tr td span {
+    width: 20%;
+}
+table#lineItems tr td table tfoot tr td span input[type="text"] {
+    display: block;
+    float: none;
+}
+table#lineItems tr td table thead tr td table tbody tr td input,
+table#lineItems tr td table thead tr td table tbody tr td select,
+table#lineItems tr td table thead tr td table tbody tr td textarea {
+    display: block;
+    min-width: 80px;
+}
+
+table#lineItems tr td table thead tr td table tbody tr td {
+    white-space: nowrap;
+    padding: 10px;
+}
+
+#total_amt,
+#discount_amount,
+#subtotal_amount,
+#shipping_amount,
+#shipping_tax_amt,
+#tax_amount {
+    max-width: 40%;
 }
 
 #email1_span,
@@ -6165,6 +6211,12 @@ object {
     float: left;
 }
 
+#detailpanel_fields,
+#detailpanel_conditions,
+#detailpanel_charts {
+    border-top: 1px solid lightgray;
+}
+
 #detailpanel_fields_select {
     float: left;
     width: 20%;
@@ -6286,6 +6338,7 @@ div.sub-panel {
 #report-editview-footer .tab-toggler {
     display: block;
     float: left;
+    padding: 0 4px;
 }
 
 #report-editview-footer .tab-toggler.active .button {
@@ -6309,6 +6362,10 @@ div.sub-panel {
 
 #report-editview-footer .drop-area.highlighted {
     background-color: #f7f7f7;
+}
+
+#report-editview-footer .tab-panels {
+    width: 110%;
 }
 
 .noGraphDataPoints {
