@@ -50,32 +50,32 @@ class CalendarDisplay {
 		'Meetings' => array(
 			'border' => '#87719C',
 			'body' => '#6B5171',
-			'text' => '#ffffff'
+			'text' => '#E5E5E5'
 		),
 		'Calls' => array(
 			'border' => '#487166',
 			'body' => '#72B3A1',
-			'text' => '#ffffff'
+			'text' => '#E5E5E5'
 		),
 		'Tasks' => array(
 			'border' => '#515A71',
 			'body' => '#707C9C',
-			'text' => '#ffffff'
+			'text' => '#E5E5E5'
 		),
 		'FP_events' => array(
 			'border' => '#C29B8A',
 			'body' => '#7D6459',
-			'text' => '#ffffff'
+			'text' => '#E5E5E5'
 		),
 		'Project' => array(
 			'border' => '#699DC9',
 			'body' => '#557FA3',
-			'text' => '#ffffff'
+			'text' => '#E5E5E5'
 		),
 		'ProjectTask' => array(
 			'border' => '#83C489',
 			'body' => '#659769',
-			'text' => '#ffffff'
+			'text' => '#E5E5E5'
 		),
 	);
 	/**
