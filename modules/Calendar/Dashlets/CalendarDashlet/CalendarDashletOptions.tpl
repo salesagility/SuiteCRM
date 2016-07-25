@@ -53,7 +53,7 @@
 <tr>
     <td valign='top' nowrap class='dataLabel'>{$MOD.LBL_CONFIGURE_TITLE}</td>
     <td valign='top' class='dataField'>
-    <input class="text" name="title" size='20' value='{$title}'>
+    <input type="text" class="text" name="title" size='20' value='{$title}'>
     </td>
 </tr>
 <tr>

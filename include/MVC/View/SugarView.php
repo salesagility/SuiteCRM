@@ -735,7 +735,7 @@ class SugarView
         global $timedate, $login_error; // cn: bug 13855 - timedate not available to classic views.
         if (!empty($this->module))
             $currentModule = $this->module;
-        require_once ($file);
+        include_once ($file);
     }
 
     protected function _displayLoginJS()

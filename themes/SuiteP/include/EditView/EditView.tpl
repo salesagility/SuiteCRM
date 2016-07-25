@@ -145,7 +145,7 @@
                 <div class="panel-heading {{$panelHeadingCollapse}}">
                     <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#detailpanel_{{$panelCount}}" aria-expanded="false">
                         <div class="col-xs-10 col-sm-11 col-md-11">
-                            <div><span class="glyphicon glyphicon-home"> </span>  {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
+                            {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
                         </div>
                     </a>
 
@@ -161,7 +161,6 @@
             {{counter name="panelCount" print=false}}
             {{/foreach}}
         </div>
-    </div>
 {{sugar_include type='smarty' file=$footerTpl}}
 
 

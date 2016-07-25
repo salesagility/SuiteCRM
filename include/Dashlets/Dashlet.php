@@ -189,7 +189,7 @@ class Dashlet
      */
     public function getHeader($text = '')
     {
-        global $sugar_config;
+        global $sugar_config, $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $current_module, $current_action, $app_strings;
 
         $title = '<table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td width="99%">' . $text . '</td>';
         $title .= $this->setConfigureIcon();
@@ -200,7 +200,55 @@ class Dashlet
         if(empty($sugar_config['lock_homepage']) || $sugar_config['lock_homepage'] == false) $str .= 'onmouseover="this.style.cursor = \'move\';" ';
         $str .= 'id="dashlet_header_' . $this->id . '" class="hd"><div class="tl"></div><div class="hd-center">' . get_form_header($this->title, $title, false) . '</div><div class="tr"></div></div><div class="bd"><div class="ml"></div><div class="bd-center">';
 
-        return $str;
+
+        $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
+        $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
+        $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
+
+        $keywords = array("/class=\"button\"/","/class='button'/","/class=button/","/<\/form>/");
+        $match = false;
+        foreach ($keywords as $left) {
+            if (preg_match($left, $title)) {
+                $match = true;
+            }
+        }
+
+        $other_text_and_match = false;
+        if ($title && $match) {
+            $other_text_and_match = true;
+        }
+
+        $template = new Sugar_Smarty();
+
+        $template->assign('sugar_version', $sugar_version);
+        $template->assign('sugar_flavor', $sugar_flavor);
+        $template->assign('server_unique_key', $server_unique_key);
+        $template->assign('current_language', $current_language);
+        $template->assign('current_module', $current_module);
+        $template->assign('current_action', $current_action);
+        $template->assign('app_strings', $app_strings);
+
+        $template->assign('match', $match);
+        $template->assign('other_text_and_match', $other_text_and_match);
+        $template->assign('blankImageURL', $blankImageURL);
+        $template->assign('printImageURL', $printImageURL);
+        $template->assign('helpImageURL', $helpImageURL);
+//        $template->assign('show_help', $show_help);
+        $template->assign('other_text', $title);
+        $template->assign('form_title', $this->title);
+        $template->assign('SUGAR_CONFIG',$sugar_config);
+        $template->assign('DASHLET_TITLE', $this->title);
+        $template->assign('DASHLET_ID', $this->id);
+        $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
+        $template->assign('REFRESH_ICON', $this->setRefreshIcon());
+        $template->assign('DELETE_ICON',$this->setDeleteIcon());
+        $template->assign('DASHLET_MODULE',$this->seedBean->module_name);
+
+
+        $template->assign('GET_FORM_HEADER', get_form_header($this->title, $title, false));
+        $template->assign('HEADER', $str);
+
+        return $template->fetch('include/Dashlets/DashletHeader.tpl');
     }
 
     /**
@@ -210,9 +258,34 @@ class Dashlet
      */
     public function getFooter()
     {
-        $footer = '</div><div class="mr"></div></div><div class="ft"><div class="bl"></div><div class="ft-center"></div><div class="br"></div></div>';
+        global $sugar_config, $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $current_module, $current_action, $app_strings;
 
-        return $footer;
+        $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
+        $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
+        $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
+
+        $template = new Sugar_Smarty();
+
+        $template->assign('sugar_version', $sugar_version);
+        $template->assign('sugar_flavor', $sugar_flavor);
+        $template->assign('server_unique_key', $server_unique_key);
+        $template->assign('current_language', $current_language);
+        $template->assign('current_module', $current_module);
+        $template->assign('current_action', $current_action);
+        $template->assign('app_strings', $app_strings);
+        $template->assign('blankImageURL', $blankImageURL);
+        $template->assign('printImageURL', $printImageURL);
+        $template->assign('helpImageURL', $helpImageURL);
+        //        $template->assign('show_help', $show_help);
+        $template->assign('form_title', $this->title);
+        $template->assign('SUGAR_CONFIG',$sugar_config);
+        $template->assign('DASHLET_TITLE', $this->title);
+        $template->assign('DASHLET_ID', $this->id);
+        $template->assign('CONFIGURE_ICON', $this->setConfigureIcon());
+        $template->assign('REFRESH_ICON', $this->setRefreshIcon());
+        $template->assign('DELETE_ICON',$this->setDeleteIcon());
+
+        return $template->fetch('include/Dashlets/DashletFooter.tpl');
     }
 
     /**

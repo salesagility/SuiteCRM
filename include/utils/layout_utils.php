@@ -51,113 +51,60 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * @param  $form_title string to display as the title in the header
  * @param  $other_text string to next to the title.  Typically used for form buttons.
  * @param  $show_help  boolean which determines if the print and help links are shown.
+ * @param  $print_out  boolean which determines if the print/echo out code
  * @return string HTML
  */
 function get_form_header(
     $form_title,
     $other_text,
-    $show_help
+    $show_help,
+    $print_out = false
     )
 {
-    global $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $current_module, $current_action;
-    global $app_strings;
+    global $sugar_version, $sugar_flavor, $server_unique_key, $current_language, $current_module, $current_action, $app_strings;
 
     $blankImageURL = SugarThemeRegistry::current()->getImageURL('blank.gif');
     $printImageURL = SugarThemeRegistry::current()->getImageURL("print.gif");
     $helpImageURL  = SugarThemeRegistry::current()->getImageURL("help.gif");
 
-    $is_min_max = strpos($other_text,"_search.gif");
-    if($is_min_max !== false)
-        $form_title = "{$other_text}&nbsp;{$form_title}";
-
-    $the_form = <<<EOHTML
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="formHeader h3Row">
-<tr>
-<td nowrap><h3><span>{$form_title}</span></h3></td>
-EOHTML;
-
     $keywords = array("/class=\"button\"/","/class='button'/","/class=button/","/<\/form>/");
-    $match="";
-    foreach ($keywords as $left)
-        if (preg_match($left,$other_text))
+    $match = false;
+    foreach ($keywords as $left) {
+        if (preg_match($left,$other_text)) {
             $match = true;
-
-    if ($other_text && $match) {
-        $the_form .= <<<EOHTML
-<td colspan='10' width='100%'><IMG height='1' width='1' src='$blankImageURL' alt=''></td>
-</tr>
-<tr>
-<td width='100%' align='left' valign='middle' nowrap style='padding-bottom: 2px;'>$other_text</td>
-EOHTML;
-        if ($show_help) {
-            $the_form .= "<td align='right' nowrap>";
-            if ($_REQUEST['action'] != "EditView") {
-                $the_form .= <<<EOHTML
-    <a href='index.php?{$GLOBALS['request_string']}' class='utilsLink'>
-    <img src='{$printImageURL}' alt='{$app_strings["LBL_PRINT"]}' border='0' align='absmiddle'>
-    </a>&nbsp;
-    <a href='index.php?{$GLOBALS['request_string']}' class='utilsLink'>
-    {$app_strings['LNK_PRINT']}
-    </a>
-EOHTML;
-            }
-            $the_form .= <<<EOHTML
-&nbsp;
-    <a href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module={$current_module}&help_action={$current_action}&key={$server_unique_key}'
-       class='utilsLink' target='_blank'>
-    <img src='{$helpImageURL}' alt='Help' border='0' align='absmiddle'>
-    </a>&nbsp;
-    <a href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module={$current_module}&help_action={$current_action}&key={$server_unique_key}'
-        class='utilsLink' target='_blank'>
-    {$app_strings['LNK_HELP']}
-    </a>
-</td>
-EOHTML;
-        }
-    } 
-    else {
-        if ($other_text && $is_min_max === false) {
-            $the_form .= <<<EOHTML
-<td width='20'><img height='1' width='20' src='$blankImageURL' alt=''></td>
-<td valign='middle' nowrap width='100%'>$other_text</td>
-EOHTML;
-        }
-        else {
-            $the_form .= <<<EOHTML
-<td width='100%'><IMG height='1' width='1' src='$blankImageURL' alt=''></td>
-EOHTML;
-        }
-
-        if ($show_help) {
-            $the_form .= "<td align='right' nowrap>";
-            if ($_REQUEST['action'] != "EditView") {
-                $the_form .= <<<EOHTML
-    <a href='index.php?{$GLOBALS['request_string']}' class='utilsLink'>
-    <img src='{$printImageURL}' alt='{$app_strings['LBL_PRINT']}' border='0' align='absmiddle'>
-    </a>&nbsp;
-    <a href='index.php?{$GLOBALS['request_string']}' class='utilsLink'>
-    {$app_strings['LNK_PRINT']}</a>
-EOHTML;
-            }
-            $the_form .= <<<EOHTML
-    &nbsp;
-    <a href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module={$current_module}&help_action={$current_action}&key={$server_unique_key}'
-       class='utilsLink' target='_blank'>
-    <img src='{$helpImageURL}' alt='{$app_strings['LBL_HELP']}' border='0' align='absmiddle'>
-    </a>&nbsp;
-    <a href='index.php?module=Administration&action=SupportPortal&view=documentation&version={$sugar_version}&edition={$sugar_flavor}&lang={$current_language}&help_module={$current_module}&help_action={$current_action}&key={$server_unique_key}'
-        class='utilsLink' target='_blank'>{$app_strings['LNK_HELP']}</a>
-</td>
-EOHTML;
         }
     }
 
-    $the_form .= <<<EOHTML
-</tr>
-</table>
-EOHTML;
+    $other_text_and_match = false;
+    if ($other_text && $match) {
+        $other_text_and_match = true;
+    }
 
-    return $the_form;
+    $template = new Sugar_Smarty();
+
+    $template->assign('sugar_version', $sugar_version);
+    $template->assign('sugar_flavor', $sugar_flavor);
+    $template->assign('server_unique_key', $server_unique_key);
+    $template->assign('current_language', $current_language);
+    $template->assign('current_module', $current_module);
+    $template->assign('current_action', $current_action);
+    $template->assign('app_strings', $app_strings);
+
+    $template->assign('match', $match);
+    $template->assign('other_text_and_match', $other_text_and_match);
+    $template->assign('blankImageURL', $blankImageURL);
+    $template->assign('printImageURL', $printImageURL);
+    $template->assign('helpImageURL', $helpImageURL);
+    $template->assign('show_help', $show_help);
+    $template->assign('other_text', $other_text);
+    $template->assign('form_title', $form_title);
+
+    $template_output = $template->fetch('include/get_form_header.tpl');
+    if($print_out) {
+        echo $template_output;
+    }
+
+    return $template_output;
 }
 
 /**
