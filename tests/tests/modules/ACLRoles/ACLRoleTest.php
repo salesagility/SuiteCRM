@@ -109,7 +109,7 @@ class ACLRoleTest extends PHPUnit_Framework_TestCase
         //test with non empty but non existing role id value, initially no roles exist.
         $result = $aclRole->getRoleActions('1');
         $this->assertTrue(is_array($result));
-        $this->assertEquals(54, count($result));
+        $this->assertEquals(53, count($result));
     }
 
     public function testtoArray()
