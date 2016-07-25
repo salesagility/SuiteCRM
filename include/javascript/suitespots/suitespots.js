@@ -379,22 +379,27 @@
         return $(pivotTableRenderer(pvtData, opts)).heatmap("colheatmap");
       }
     };
+
+    localeStringsTranslations = {};
+
+    localeStringsTranslations.renderError = getTranslation('LOCALE_STRINGS','RENDER_ERROR');
+    localeStringsTranslations.computeError = getTranslation('LOCALE_STRINGS','COMPUTING_ERROR');
+    localeStringsTranslations.uiRenderError = getTranslation('LOCALE_STRINGS','UI_RENDER_ERROR');
+    localeStringsTranslations.selectAll = getTranslation('LOCALE_STRINGS','SELECT_ALL');
+    localeStringsTranslations.selectNone = getTranslation('LOCALE_STRINGS','SELECT_NONE');
+    localeStringsTranslations.tooMany = getTranslation('LOCALE_STRINGS','TOO_MANY');
+    localeStringsTranslations.filterResults = getTranslation('LOCALE_STRINGS','FILTER_RESULTS');
+    localeStringsTranslations.totals = getTranslation('LOCALE_STRINGS','TOTALS');
+    localeStringsTranslations.vs = getTranslation('LOCALE_STRINGS','VS');
+    localeStringsTranslations.by = getTranslation('LOCALE_STRINGS','BY');
+
+    console.log(localeStringsTranslations);
+
     locales = {
       en: {
         aggregators: aggregators,
         renderers: renderers,
-        localeStrings: {
-          renderError: "An error occurred rendering the PivotTable results.",
-          computeError: "An error occurred computing the PivotTable results.",
-          uiRenderError: "An error occurred rendering the PivotTable UI.",
-          selectAll: "Select All",
-          selectNone: "Select None",
-          tooMany: "(too many to list)",
-          filterResults: "Filter results",
-          totals: "Totals",
-          vs: "vs",
-          by: "by"
-        }
+        localeStrings: localeStringsTranslations
       }
     };
     mthNamesEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -964,6 +969,15 @@
       return this.append(result);
     };
 
+    //PG this is to allow for the pivot to save in english keys, but conver to the appropriate translation for the UI
+    //type is whether the translation is for the RENDERER or the AGGREGATOR
+    function getTranslation(type,value)
+    {
+      var lookup = value.replace(/ /g,'_').toUpperCase();
+      lookup = 'LBL_'+type.toUpperCase()+'_'+lookup;
+      return SUGAR.language.translate('Spots', lookup);
+    }
+
     /*
     Pivot Table UI: calls Pivot Table core above with options set by user
      */
@@ -1060,7 +1074,7 @@
         ref1 = opts.renderers;
         for (x in ref1) {
           if (!hasProp.call(ref1, x)) continue;
-          $("<option>").val(x).html(x).appendTo(renderer);
+          $("<option>").val(x).html(getTranslation('RENDERERS',x)).appendTo(renderer);
         }
         colList = $("<td>").addClass('pvtAxisContainer pvtUnused');
         shownAttributes = (function() {
@@ -1204,7 +1218,7 @@
         ref2 = opts.aggregators;
         for (x in ref2) {
           if (!hasProp.call(ref2, x)) continue;
-          aggregator.append($("<option>").val(x).html(x));
+          aggregator.append($("<option>").val(x).html(getTranslation('AGGREGATORS',x)));
         }
         $("<td>").addClass('pvtVals').appendTo(tr1).append(aggregator).append($("<br>"));
         $("<td>").addClass('pvtAxisContainer pvtHorizList pvtCols').appendTo(tr1);
