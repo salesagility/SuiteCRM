@@ -305,7 +305,6 @@
 <div class="tab-panels">
 
     <div class="edit view edit508 " id="detailpanel_fields">
-        {* <h4><!-- {$MOD.LBL_AOR_FIELDS_SUBPANEL_TITLE} -->&nbsp;</h4> *}
         <table id="group_display_table" style="display: none;">
             <tbody>
                 <tr>
@@ -347,7 +346,6 @@
                 </div>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_conditions">
-        {* <h4><!-- {$MOD.LBL_AOR_CONDITIONS_SUBPANEL_TITLE} -->&nbsp;</h4> *}
         <div class="drop-area" id="conditionLines"  style="min-height: 450px;">
         </div>
         <hr>
@@ -358,7 +356,6 @@
         </table>
     </div>
     <div class="edit view edit508 hidden" id="detailpanel_charts">
-        {* <h4><!-- {$MOD.LBL_AOR_CHARTS_SUBPANEL_TITLE} -->&nbsp;</h4> *}
         <div id="chartLines">
             <table>
                 <thead id="chartHead" style="display: none;">
