@@ -770,6 +770,7 @@ class SugarBean
 
     protected static function build_sub_queries_for_union($subpanel_list, $subpanel_def, $parentbean, $order_by)
     {
+
         global $beanList;
         $subqueries = array();
         foreach ($subpanel_list as $this_subpanel) {

@@ -450,6 +450,11 @@ $app_list_strings = array(
         'Hours' => 'Hours',
     ),
 
+    'activity_status_type_dom' => array(''=>'--None--',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+    ),
+
     'project_priority_options' => array(
         'High' => 'High',
         'Medium' => 'Medium',

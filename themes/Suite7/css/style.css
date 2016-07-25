@@ -5778,3 +5778,6 @@ div.target-list-table {
     height: 100%;
     padding: 10px;
 }
+table tr#delegates_search {
+    background:#FAFAFA !important;
+}
