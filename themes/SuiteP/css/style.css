@@ -1734,6 +1734,12 @@ td.fc-widget-header table > thead > tr > th {
     background-color: #BFCAD3;
 }
 
+
+.fc-title {
+    font-size: 13px;
+    line-height: 24px;
+}
+
 .monthFooter td {
     padding-left: 7px;
     padding-right: 7px;

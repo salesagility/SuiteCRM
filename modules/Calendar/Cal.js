@@ -49,63 +49,67 @@ CAL.basic.add = function (item) {
 CAL.init_edit_dialog = function (params) {
     CAL.editDialog = false;
     var rd = CAL.get("cal-edit");
-    var content = CAL.get("edit-dialog-content");
-    if (CAL.dashlet && rd) {
-        document.getElementById("content").appendChild(rd);
-    }
-    rd.style.width = params.width + "px";
-    content.style.height = params.height + "px";
-    content.style.overflow = "auto";
-    content.style.padding = "0";
-    CAL.editDialog = new YAHOO.widget.Dialog("cal-edit", {
-        draggable: true,
-        visible: false,
-        modal: true,
-        close: true,
-        y: 1,
-        zIndex: 10
-    });
-    var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-        fn: function () {
-            CAL.editDialog.cancel();
-        }
-    });
-    CAL.editDialog.cfg.queueProperty("keylisteners", listeners);
-    CAL.editDialog.cancelEvent.subscribe(function (e, a, o) {
-        CAL.close_edit_dialog();
-    });
-    rd.style.display = "block";
-    CAL.editDialog.render();
-    rd.style.overflow = "auto";
-    rd.style.overflowX = "hidden";
-    rd.style.outline = "0 none";
-    rd.style.height = "auto";
+    //var content = CAL.get("edit-dialog-content");
+    //if (CAL.dashlet && rd) {
+    //    document.getElementById("content").appendChild(rd);
+    //}
+    //rd.style.width = params.width + "px";
+    //content.style.height = params.height + "px";
+    //content.style.overflow = "auto";
+    //content.style.padding = "0";
+    //CAL.editDialog = new YAHOO.widget.Dialog("cal-edit", {
+    //    draggable: true,
+    //    visible: false,
+    //    modal: true,
+    //    close: true,
+    //    y: 1,
+    //    zIndex: 10
+    //});
+    //
+    //var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
+    //    fn: function () {
+    //        CAL.editDialog.cancel();
+    //    }
+    //});
+    //CAL.editDialog.cfg.queueProperty("keylisteners", listeners);
+    //CAL.editDialog.cancelEvent.subscribe(function (e, a, o) {
+    //    CAL.close_edit_dialog();
+    //});
+    //rd.style.display = "block";
+    //CAL.editDialog.render();
+    //rd.style.overflow = "auto";
+    //rd.style.overflowX = "hidden";
+    //rd.style.outline = "0 none";
+    //rd.style.height = "auto";
 }
 CAL.open_edit_dialog = function (params) {
-    document.getElementById("form_content").innerHTML = "";
-    CAL.editDialog.center();
-    CAL.editDialog.show();
-    var nodes = CAL.query("#cal-tabs li a");
-    CAL.each(nodes, function (i, v) {
-        YAHOO.util.Event.on(nodes[i], 'click', function () {
-            CAL.select_tab(this.getAttribute("tabname"));
-        });
-    });
-    stay_on_tab = false
-    if (typeof params != "undefined" && typeof params.stay_on_tab != "undefined" && params.stay_on_tab)
-        stay_on_tab = true;
-    if (!stay_on_tab) {
-        var nodes_li = CAL.query("#cal-tabs li");
-        CAL.each(nodes_li, function (j, v) {
-            CAL.dom.removeClass(nodes_li[j], "selected");
-            if (j == 0)
-                CAL.dom.addClass(nodes_li[j], "selected");
-        });
-        var nodes = CAL.query(".yui-nav");
-        CAL.each(nodes, function (i, v) {
-            nodes[i].style.overflowX = "visible";
-        });
-    }
+    // Open modal dialog
+    $('.modal-cal-edit').modal('toggle');
+
+    //document.getElementById("form_content").innerHTML = "";
+    //CAL.editDialog.center();
+    //CAL.editDialog.show();
+    //var nodes = CAL.query("#cal-tabs li a");
+    //CAL.each(nodes, function (i, v) {
+    //    YAHOO.util.Event.on(nodes[i], 'click', function () {
+    //        CAL.select_tab(this.getAttribute("tabname"));
+    //    });
+    //});
+    //stay_on_tab = false
+    //if (typeof params != "undefined" && typeof params.stay_on_tab != "undefined" && params.stay_on_tab)
+    //    stay_on_tab = true;
+    //if (!stay_on_tab) {
+    //    var nodes_li = CAL.query("#cal-tabs li");
+    //    CAL.each(nodes_li, function (j, v) {
+    //        CAL.dom.removeClass(nodes_li[j], "selected");
+    //        if (j == 0)
+    //            CAL.dom.addClass(nodes_li[j], "selected");
+    //    });
+    //    var nodes = CAL.query(".yui-nav");
+    //    CAL.each(nodes, function (i, v) {
+    //        nodes[i].style.overflowX = "visible";
+    //    });
+    //}
 }
 CAL.close_edit_dialog = function () {
     CAL.reset_edit_dialog();
