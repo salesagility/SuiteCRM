@@ -4645,7 +4645,7 @@ td.submitButtons .button:hover {
 button[disabled], input[type="submit"][disabled], input[type="reset"][disabled], input[type="button"][disabled] {
     background-color: #777777;
     border: none;
-    color: #ffffff;
+    color: #d5d5d5;
     cursor: pointer;
     font-size: 13px !important;
     margin: 0 0 0 0;
