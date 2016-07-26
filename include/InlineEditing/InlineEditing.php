@@ -304,6 +304,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 function saveField($field, $id, $module, $value)
 {
 
+    global $current_user;
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
@@ -321,11 +322,13 @@ function saveField($field, $id, $module, $value)
             $bean->$field = $value;
         }
 
-        if (($bean->fetched_row['assigned_user_id'] != $value) && (!$bean->isOwner($bean->modified_user_id))) {
-            $check_notify = FALSE;
-        }
-        else {
-            $check_notify = TRUE;
+        $check_notify = FALSE;
+
+        if (isset( $bean->fetched_row['assigned_user_id'])) {
+            $old_assigned_user_id = $bean->fetched_row['assigned_user_id'];
+            if (!empty($value) && ($old_assigned_user_id != $value) && ($value != $current_user->id)) {
+                $check_notify = TRUE;
+            }
         }
 
         $bean->save($check_notify);
