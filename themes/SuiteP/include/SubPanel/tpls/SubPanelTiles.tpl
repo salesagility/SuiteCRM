@@ -8,7 +8,7 @@
     <li class="noBullet" id="whole_subpanel_{$subpanel_tab}">
         <div class="panel panel-default sub-panel">
             <div class="panel-heading panel-heading-collapse">
-                <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse" href="#list_subpanel_{$subpanel_tab}" aria-expanded="false">
+                <a id="subpanel_title_{$subpanel_tab}" class="collapsed" role="button" data-toggle="collapse" href="#subpanel_{$subpanel_tab}" aria-expanded="false">
                     <div class="col-xs-10 col-sm-11 col-md-11">
                         <div>
                            <img src="{sugar_getimagepath directory='sub_panel' file_name=$subpanel_tabs_properties.$i.module_name file_extension='svg'}">
@@ -18,10 +18,12 @@
                 </a>
 
             </div>
-            <div class="panel-body panel-collapse collapse" id="list_subpanel_{$subpanel_tab}">
-                <div class="tab-content">
-                    {$subpanel_tabs_properties.$i.subpanel_body}
-                </div>
+            <div class="panel-body panel-collapse collapse" id="subpanel_{$subpanel_tab}">
+                    <div class="tab-content">
+                        <div id="list_subpanel_{$subpanel_tab}">
+                            {$subpanel_tabs_properties.$i.subpanel_body}
+                        </div>
+                    </div>
             </div>
         </div>
     </li>
