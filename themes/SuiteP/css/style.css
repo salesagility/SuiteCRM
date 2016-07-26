@@ -2553,7 +2553,7 @@ table#goto_date_trigger_div_t thead {
 
 .yui-calendar a.calnavleft, .yui-calendar a.calnavright {
     color: #ffffff;
-    background-image: none;
+
     background-color: #AA9DCC;
     border: 1px solid #AA9DCC;
     padding: 0;
@@ -2564,6 +2564,8 @@ table#goto_date_trigger_div_t thead {
     width: 32px;
     display: inline-block;
     margin-top: 10px;
+    background-origin: padding-box;
+    background-position: 0 0;
 }
 
 .yui-calendar .calheader {
@@ -2574,10 +2576,12 @@ table#goto_date_trigger_div_t thead {
 
 .yui-calendar .calnavleft {
     left: 0px;
+    background-image: url("../../../../themes/SuiteP/images/p_left.svg");
 }
 
 .yui-calendar .calnavright {
     right: 0px;
+    background-image: url("../../../../themes/SuiteP/images/p_right.svg");
 }
 .yui-module .hd {
     border-top-left-radius: 4px;
@@ -2603,6 +2607,7 @@ table#goto_date_trigger_div_t thead {
     line-height: 32px;
 }
 
+.yui-calendar td.calcell.selected,
 .yui-calendar td.calcell.selected a,
 .yui-calendar td.calcell a:hover,
 .yui-calendar td.calcell.calcellhover,
