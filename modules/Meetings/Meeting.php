@@ -37,9 +37,10 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  ********************************************************************************/
-
+require_once('include/Trait/RemoveUnInvitedFromReminders.php');
 
 class Meeting extends SugarBean {
+	use RemoveUnInvitedFromReminders;
 	// Stored fields
 	var $id;
 	var $date_entered;
@@ -279,7 +280,10 @@ class Meeting extends SugarBean {
 		}
 
 		if(isset($_REQUEST['reminders_data'])) {
-			Reminder::saveRemindersDataJson('Meetings', $return_id, html_entity_decode($_REQUEST['reminders_data']));
+			$reminderData = json_encode(
+				$this->removeUnInvitedFromReminders(json_decode(html_entity_decode($_REQUEST['reminders_data']), true))
+			);
+			Reminder::saveRemindersDataJson('Meetings', $return_id, $reminderData);
 		}
 
 

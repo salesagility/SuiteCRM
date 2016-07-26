@@ -158,6 +158,7 @@ $ss->assign("CAMP_ACTUAL_COST", $focus->actual_cost);
 $ss->assign("CAMP_EXPECTED_REVENUE", $focus->expected_revenue);
 $ss->assign("CAMP_EXPECTED_COST", $focus->expected_cost);
 $ss->assign("CAMP_OBJECTIVE", $focus->objective);
+$ss->assign("OBJECTIVE", $focus->objective);
 $ss->assign("CAMP_CONTENT", $focus->content);
 $ss->assign("CAMP_NAME", $focus->name);
 $ss->assign("CAMP_RECORD", $focus->id);
@@ -224,6 +225,7 @@ $ss->assign("DEC_SEP", $seps[1]);
 
 
 //fill out the campaign type dropdown based on type of campaign being created
+$ss->assign("campaign_type", $campaign_type);
 if($campaign_type == 'general'){
     //get regular campaign dom object and strip out entries for email and newsletter
     $myTypeOptionsArr = array();
@@ -474,8 +476,8 @@ if(count($prospect_lists)>0){
             $pl = new ProspectList();
             $pl_focus = $pl->retrieve($pl_id);
             $trgt_html .= "<div id='existing_trgt".$trgt_count."'> <table class='tabDetailViewDL2' width='100%'>" ;
-            $trgt_html .= "<td width='100' style=\"width:25%\"> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". $pl_focus->name."' ><a href=\"index.php?module=ProspectLists&action=DetailView&record=" . $pl_focus->id . "\" target=\"_blank\" title=\"" . $mod_strings['LBL_OPEN_IN_NEW_WINDOW'] . "\">". $pl_focus->name."</a></td>";
-            $trgt_html .= "<td width='100' style=\"width:25%\">".$pl_focus->get_entry_count()."</td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\"> <input id='existing_target_name". $trgt_count ."' type='hidden' type='text' size='60' maxlength='255' name='existing_target_name". $trgt_count ."'  value='". ($pl_focus?$pl_focus->name:'-')."' ><a href=\"index.php?module=ProspectLists&action=DetailView&record=" . $pl_focus->id . "\" target=\"_blank\" title=\"" . $mod_strings['LBL_OPEN_IN_NEW_WINDOW'] . "\">". ($pl_focus?$pl_focus->name:'-')."</a></td>";
+            $trgt_html .= "<td width='100' style=\"width:25%\">".($pl_focus?$pl_focus->get_entry_count():'-')."</td>";
             $trgt_html .= "<td width='100' style=\"width:25%\"><input type='hidden' size='60' maxlength='255' name='existing_tracker_list_type". $trgt_count ."'   id='existing_tracker_list_type". $trgt_count ."' value='".$pl_focus->list_type."' >".$app_list_strings['prospect_list_type_dom'][$pl_focus->list_type];
             $trgt_html .= "<input type='hidden' name='added_target_id". $trgt_count ."' id='added_target_id". $trgt_count ."' value='". $pl_focus->id ."' ></td>";
             $trgt_html .= "<td width='100' style=\"width:25%\"><a href='#' onclick=\"javascript:remove_existing_target('existing_trgt".$trgt_count."','".$pl_focus->id."'); \" >  ";
@@ -626,6 +628,10 @@ if(isset($_REQUEST['wizardtype'])) {
 }
 
 $ss->display(file_exists('custom/modules/Campaigns/tpls/WizardNewsletter.tpl') ? 'custom/modules/Campaigns/tpls/WizardNewsletter.tpl' : 'modules/Campaigns/tpls/WizardNewsletter.tpl');
+
+if(!$focus->id) {
+    unset($_SESSION['campaignWizard'][$campaign_id]['defaultSelectedMarketingId']);
+}
 
 
 function create_newsletter_steps(){

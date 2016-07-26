@@ -170,7 +170,12 @@ else {
             $doQuery = false;
         }
 
-        $mime_type = 'application/octet-stream';
+        // Fix for issue 1506 and issue 1304 : IE11 and Microsoft Edge cannot display generic 'application/octet-stream' (which is defined as "arbitrary binary data" in RFC 2046).
+        $mime_type = mime_content_type($local_location);
+        if($mime_type == null || $mime_type == '') {
+            $mime_type = 'application/octet-stream';
+        }
+        
         if($doQuery && isset($query)) {
             $rs = $GLOBALS['db']->query($query);
             $row = $GLOBALS['db']->fetchByAssoc($rs);

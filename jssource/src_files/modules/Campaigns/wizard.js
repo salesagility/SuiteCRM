@@ -167,6 +167,11 @@ function navigate(direction, noValidation, noSave){
                     if(typeof document.getElementById('wizform').direction != 'undefined') {
                         if(!noSave) {
                             campaignCreateAndRefreshPage();
+                            // get the actual current step from the progression bar
+                            var wizardCurrentStep = $('.nav-steps.selected').attr('data-nav-step');
+                            if( $('div.moduleTitle h2').text().indexOf($('#name').val()) == -1) {
+                                $('div.moduleTitle h2').text($('div.moduleTitle h2').text() + ' ' + $('#name').val());
+                            }
                         }
                     }
                 }
@@ -238,7 +243,7 @@ function navigate(direction, noValidation, noSave){
     }else{
         //error occurred, do nothing
     }
-
+    return false;
 }
 
 
@@ -287,18 +292,18 @@ function campaignUpdate() {
  * */
 var already_linked ='';
 function hilite(hilite){
-    var last = parseInt(document.getElementById('wiz_total_steps').value);
-    for(i=1; i<=last; i++){
-        var nav_step = document.getElementById('nav_step'+i);
-    }
-    var nav_step = document.getElementById('nav_step'+hilite);
-
-    if(already_linked.indexOf(hilite) < 0){
-        $('#nav_step'+hilite).unbind();
-        $('#nav_step'+hilite).click(function(){direct(hilite)});
-        //nav_step.innerHTML= "<a href='#'  onclick=\"javascript:direct('"+hilite+"');\">" +nav_step.innerHTML+ "</a>";
-        already_linked +=',hilite';
-    }
+    //var last = parseInt(document.getElementById('wiz_total_steps').value);
+    //for(i=1; i<=last; i++){
+    //    var nav_step = document.getElementById('nav_step'+i);
+    //}
+    //var nav_step = document.getElementById('nav_step'+hilite);
+    //
+    //if(already_linked.indexOf(hilite) < 0){
+    //  //  $('#nav_step'+hilite).unbind();
+    //    //$('#nav_step'+hilite).click(function(){direct(hilite)});
+    //    //nav_step.innerHTML= "<a href='#'  onclick=\"javascript:direct('"+hilite+"');\">" +nav_step.innerHTML+ "</a>";
+    //    already_linked +=',hilite';
+    //}
 }
 
 /*
@@ -318,7 +323,7 @@ function link_navs(beg, end){
 
     for(i=beg; i<=end; i++){
         var nav_step = document.getElementById('nav_step'+ i);
-        nav_step.innerHTML= "<a href='#'  onclick=\"javascript:direct('"+i+"');\">" +nav_step.innerHTML+ "</a>";
+        //nav_step.innerHTML= "<a href='#'  onclick=\"javascript:direct('"+i+"');\">" +nav_step.innerHTML+ "</a>";
     }
 
 }
@@ -328,17 +333,17 @@ function link_navs(beg, end){
  * to show a link.  It is a direct navigation link
  */
 function direct(stepnumber){
+
     //get the current step
     var current_step = document.getElementById('wiz_current_step');
     var currentValue = parseInt(current_step.value);
 
     //validation needed. (specialvalidation,  plus step number, plus submit button)
     if(validate_wiz(current_step.value,'direct')){
-
         //lets set the current step to the selected step and invoke navigation
         current_step.value = stepnumber;
         navigate('direct');
-    }else{
+    } else{
         //do nothing, validation failed
     }
 }
@@ -434,6 +439,7 @@ var onEmailTemplateChange = function(elem, namePrefixCopyOf, templateIdDefault, 
         $('#email_template_view').html('');
 
         $.post('index.php?entryPoint=emailTemplateData', {
+            'campaignId': $('input[name="campaign_id"]').val(),
             'emailTemplateId': emailTemplateId
         }, function (resp) {
             var results = JSON.parse(resp);

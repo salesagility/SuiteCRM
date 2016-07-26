@@ -761,6 +761,7 @@ class TimeDate
         } catch (Exception $e) {
             $GLOBALS['log']->error("fromUser: Conversion of $date exception: {$e->getMessage()}");
         }
+
         if(!($res instanceof DateTime)) {
             $uf = $this->get_date_time_format($user);
             $GLOBALS['log']->error("fromUser: Conversion of $date from user format $uf failed");

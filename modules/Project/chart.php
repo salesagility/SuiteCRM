@@ -74,7 +74,7 @@ class chart {
                                 <input id="date_start" type="hidden" name="date_start" value="'.$start_date.'" />
                                 <input id="date_end" class="date_chart" type="hidden" name="date_end" value="'.$end_date.'" />
                                 <select id="resources" name="resources">
-                                <option value="all">All Resources</option>';
+                                <option value="all">'.$mod_strings["LBL_ALL_RESOURCES"].'</option>';
                                 $re_id ='';
                                 $re=0;
                                 //get resources passed in to the draw function
