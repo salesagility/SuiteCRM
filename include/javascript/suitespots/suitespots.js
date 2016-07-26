@@ -380,28 +380,25 @@
       }
     };
 
-    localeStringsTranslations = {};
-
-    localeStringsTranslations.renderError = getTranslation('LOCALE_STRINGS','RENDER_ERROR');
-    localeStringsTranslations.computeError = getTranslation('LOCALE_STRINGS','COMPUTING_ERROR');
-    localeStringsTranslations.uiRenderError = getTranslation('LOCALE_STRINGS','UI_RENDER_ERROR');
-    localeStringsTranslations.selectAll = getTranslation('LOCALE_STRINGS','SELECT_ALL');
-    localeStringsTranslations.selectNone = getTranslation('LOCALE_STRINGS','SELECT_NONE');
-    localeStringsTranslations.tooMany = getTranslation('LOCALE_STRINGS','TOO_MANY');
-    localeStringsTranslations.filterResults = getTranslation('LOCALE_STRINGS','FILTER_RESULTS');
-    localeStringsTranslations.totals = getTranslation('LOCALE_STRINGS','TOTALS');
-    localeStringsTranslations.vs = getTranslation('LOCALE_STRINGS','VS');
-    localeStringsTranslations.by = getTranslation('LOCALE_STRINGS','BY');
-
-    console.log(localeStringsTranslations);
-
     locales = {
       en: {
         aggregators: aggregators,
         renderers: renderers,
-        localeStrings: localeStringsTranslations
+        localeStrings: {
+          renderError: "An error occurred rendering the PivotTable results.",
+          computeError: "An error occurred computing the PivotTable results.",
+          uiRenderError: "An error occurred rendering the PivotTable UI.",
+          selectAll: "Select All",
+          selectNone: "Select None",
+          tooMany: "(too many to list)",
+          filterResults: "Filter results",
+          totals: "Totals",
+          vs: "vs",
+          by: "by"
+        }
       }
     };
+
     mthNamesEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     dayNamesEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     zeroPad = function(number) {
@@ -827,7 +824,7 @@
         if (parseInt(j) === 0) {
           th = document.createElement("th");
           th.className = "pvtTotalLabel";
-          th.innerHTML = opts.localeStrings.totals;
+          th.innerHTML = getTranslation('LOCALE_STRINGS','TOTALS')
           th.setAttribute("rowspan", colAttrs.length + (rowAttrs.length === 0 ? 0 : 1));
           tr.appendChild(th);
         }
@@ -846,7 +843,7 @@
         th = document.createElement("th");
         if (colAttrs.length === 0) {
           th.className = "pvtTotalLabel";
-          th.innerHTML = opts.localeStrings.totals;
+          th.innerHTML = getTranslation('LOCALE_STRINGS','TOTALS')
         }
         tr.appendChild(th);
         result.appendChild(tr);
@@ -894,7 +891,7 @@
       tr = document.createElement("tr");
       th = document.createElement("th");
       th.className = "pvtTotalLabel";
-      th.innerHTML = opts.localeStrings.totals;
+      th.innerHTML = getTranslation('LOCALE_STRINGS','TOTALS')
       th.setAttribute("colspan", rowAttrs.length + (colAttrs.length === 0 ? 0 : 1));
       tr.appendChild(th);
       for (j in colKeys) {
@@ -953,14 +950,14 @@
           if (typeof console !== "undefined" && console !== null) {
             console.error(e.stack);
           }
-          result = $("<span>").html(opts.localeStrings.renderError);
+          result = $("<span>").html(getTranslation('LOCALE_STRINGS','RENDER_ERROR'));
         }
       } catch (error1) {
         e = error1;
         if (typeof console !== "undefined" && console !== null) {
           console.error(e.stack);
         }
-        result = $("<span>").html(opts.localeStrings.computeError);
+        result = $("<span>").html(getTranslation('LOCALE_STRINGS','COMPUTING_ERROR'));
       }
       x = this[0];
       while (x.hasChildNodes()) {
@@ -1121,23 +1118,23 @@
           valueList = $("<div>").addClass('pvtFilterBox').hide();
           valueList.append($("<h4>").text(c + " (" + keys.length + ")"));
           if (keys.length > opts.menuLimit) {
-            valueList.append($("<p>").html(opts.localeStrings.tooMany));
+            valueList.append($("<p>").html(getTranslation('LOCALE_STRINGS','TOO_MANY')));
           } else {
             btns = $("<p>").appendTo(valueList);
             btns.append($("<button>", {
               type: "button"
-            }).html(opts.localeStrings.selectAll).bind("click", function() {
+            }).html(getTranslation('LOCALE_STRINGS','SELECT_ALL')).bind("click", function() {
               return valueList.find("input:visible").prop("checked", true);
             }));
             btns.append($("<button>", {
               type: "button"
-            }).html(opts.localeStrings.selectNone).bind("click", function() {
+            }).html(getTranslation('LOCALE_STRINGS','SELECT_NONE')).bind("click", function() {
               return valueList.find("input:visible").prop("checked", false);
             }));
             btns.append($("<br>"));
             btns.append($("<input>", {
               type: "text",
-              placeholder: opts.localeStrings.filterResults,
+              placeholder: getTranslation('LOCALE_STRINGS','FILTER_RESULTS'),//opts.localeStrings.filterResults,
               "class": "pvtSearch"
             }).bind("keyup", function() {
               var filter;
@@ -1187,7 +1184,7 @@
           };
           $("<p>").appendTo(valueList).append($("<button>", {
             type: "button"
-          }).text("OK").bind("click", updateFilter));
+          }).text(getTranslation('LOCALE_STRINGS','OK')).bind("click", updateFilter));
           showFilterList = function(e) {
             var clickLeft, clickTop, ref3;
             ref3 = $(e.currentTarget).position(), clickLeft = ref3.left, clickTop = ref3.top;
@@ -1385,7 +1382,7 @@
         if (typeof console !== "undefined" && console !== null) {
           console.error(e.stack);
         }
-        this.html(opts.localeStrings.uiRenderError);
+        this.html(getTranslation('LOCALE_STRINGS','RENDER_ERROR'));
       }
       return this;
     };
@@ -1549,6 +1546,16 @@
     }
   };
 
+
+  //PG this is to allow for the pivot to save in english keys, but conver to the appropriate translation for the UI
+  //type is whether the translation is for the RENDERER or the AGGREGATOR
+  function getTranslation(type,value)
+  {
+    var lookup = value.replace(/ /g,'_').toUpperCase();
+    lookup = 'LBL_'+type.toUpperCase()+'_'+lookup;
+    return SUGAR.language.translate('Spots', lookup);
+  }
+
   callWithJQuery(function($, c3) {
     var makeC3Chart;
     makeC3Chart = function(chartOpts) {
@@ -1611,10 +1618,10 @@
           groupByTitle = attrs.slice(2).join("-");
           titleText = vAxisTitle;
           if (hAxisTitle !== "") {
-            titleText += " " + opts.localeStrings.vs + " " + hAxisTitle;
+            titleText += " " + getTranslation('LOCALE_STRINGS','VS'); + " " + hAxisTitle;
           }
           if (groupByTitle !== "") {
-            titleText += " " + opts.localeStrings.by + " " + groupByTitle;
+            titleText += " " + getTranslation('LOCALE_STRINGS','BY'); + " " + groupByTitle;
           }
           for (i = 0, len = rowKeys.length; i < len; i++) {
             rowKey = rowKeys[i];
@@ -1675,11 +1682,12 @@
           hAxisTitle = pivotData.colAttrs.join("-");
           titleText = fullAggName;
           if (hAxisTitle !== "") {
-            titleText += " " + opts.localeStrings.vs + " " + hAxisTitle;
+            titleText += " " + getTranslation('LOCALE_STRINGS','VS');+ " " + hAxisTitle;
           }
           groupByTitle = pivotData.rowAttrs.join("-");
           if (groupByTitle !== "") {
-            titleText += " " + opts.localeStrings.by + " " + groupByTitle;
+            titleText += " " + getTranslation('LOCALE_STRINGS','BY'); + " " + groupByTitle;
+
           }
         }
         title = $("<p>", {
@@ -1788,6 +1796,8 @@
       })
     };
   });
+
+
 
 }).call(this);
 

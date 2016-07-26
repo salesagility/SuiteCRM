@@ -110,6 +110,13 @@ class SpotsDashlet extends Dashlet
                 return parent::display('').'<span style="margin-left:10px;" class="dashletAnalyticMessage">'.$this->dashletStrings['LBL_SPOTS_POINTED_DELETED'].'</span><br />'; // return parent::display for title and such
             }
 
+            //https://developer.sugarcrm.com/2012/06/11/how-to-force-a-view-to-load-other-modules-languages-into-sugar-language/
+            if (!is_file($GLOBALS['sugar_config']['cache_dir'] . 'jsLanguage/Spots/' . $GLOBALS['current_language'] . '.js')) {
+                require_once 'include/language/jsLanguage.php';
+                jsLanguage::createModuleStringsCache('Spots', $GLOBALS['current_language']);
+            }
+            echo '<script type="text/javascript" src="' . $GLOBALS['sugar_config']['cache_dir'] . 'jsLanguage/Spots/' . $GLOBALS['current_language'] . '.js?s=' . $GLOBALS['js_version_key'] . '&c=' . $GLOBALS['sugar_config']['js_custom_version'] . '&j=' . $GLOBALS['sugar_config']['js_lang_version'] . '"></script>';
+
             $ss = new Sugar_Smarty();
             $ss->assign('id', $this->id);
             $ss->assign('showUI', $this->showGui);
