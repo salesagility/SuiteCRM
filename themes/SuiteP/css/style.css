@@ -5529,8 +5529,28 @@ li.recentlinks_top {
     width: 75%;
     overflow: hidden;
     margin-left: 2px;
+    line-height: 32px;
+    height: auto;
 }
 
+
+li.recentlinks_topedit, li.recentlinks_topedit > a {
+    line-height: 32px;
+    height: auto;
+
+}
+
+li.recentlinks_topedit > a {
+    padding: 0 15px 0 15px !important;
+}
+
+li.recentlinks_top > a {
+    padding: 0 15px 0 15px !important;
+    width: auto;
+    height: auto;
+    line-height: 32px;
+
+}
 li.recentlinks_topedit {
     float: right;
     width: 20%;
@@ -5853,6 +5873,7 @@ div.action_buttons form {
     width: 100%;
     float: left;
     overflow: hidden;
+    margin-bottom: 16px;
 }
 
 h3 span {
