@@ -2603,10 +2603,15 @@ table#goto_date_trigger_div_t thead {
     line-height: 32px;
 }
 
+.yui-calendar td.calcell.selected a,
 .yui-calendar td.calcell a:hover,
 .yui-calendar td.calcell.calcellhover,
 .yui-calendar td.calcell.calcellhover a {
     background: #F08377;
+    color: #ffffff;
+}
+
+.yui-calendar .calweekdaycell {
     color: #ffffff;
 }
 
