@@ -48,27 +48,50 @@ class CalendarDisplay {
 	 */
 	public $activity_colors = array(
 		'Meetings' => array(
-			'border' => '#1C5FBD',
-			'body' => '#D2E5FC',
+			'border' => '#87719C',
+			'body' => '#6B5171',
+			'text' => '#E5E5E5'
 		),
 		'Calls' => array(
-			'border' => '#DE4040',
-			'body' => '#FCDCDC',
+			'border' => '#487166',
+			'body' => '#72B3A1',
+			'text' => '#E5E5E5'
 		),
 		'Tasks' => array(
-			'border' => '#015900',
-			'body' => '#B1F5AE',
+			'border' => '#515A71',
+			'body' => '#707C9C',
+			'text' => '#E5E5E5'
+		),
+		'FP_events' => array(
+			'border' => '#C29B8A',
+			'body' => '#7D6459',
+			'text' => '#E5E5E5'
+		),
+		'Project' => array(
+			'border' => '#699DC9',
+			'body' => '#557FA3',
+			'text' => '#E5E5E5'
+		),
+		'ProjectTask' => array(
+			'border' => '#83C489',
+			'body' => '#659769',
+			'text' => '#E5E5E5'
 		),
 	);
-
 	/**
 	 * constructor
 	 * @param Calendar $cal
 	 * @param string $dashlet_id for dashlet mode
+	 * @param array $views
 	 */
-	function __construct(Calendar $cal,$dashlet_id = ""){
+	function __construct(Calendar $cal,$dashlet_id = "", $views = array()){
+		global $sugar_config;
+		if(isset($sugar_config['CalendarColors']) && is_array($sugar_config['CalendarColors'])){
+			$this->activity_colors = array_merge($this->activity_colors, $sugar_config['CalendarColors']);
+		}
 		$this->cal = $cal;
 		$this->dashlet_id = $dashlet_id;
+		$this->views = $views;
 	}
 
 	/**
@@ -76,7 +99,7 @@ class CalendarDisplay {
 	 */
 	public function display(){
 
-		global $timedate;
+		global $timedate, $current_user;
 
 		$cal = &$this->cal;
 		$ss = new Sugar_Smarty();
@@ -95,7 +118,7 @@ class CalendarDisplay {
 		$ss->assign('items_draggable',SugarConfig::getInstance()->get('calendar.items_draggable',true));
 		$ss->assign('items_resizable',SugarConfig::getInstance()->get('calendar.items_resizable',true));
 		$ss->assign('cells_per_day',$cal->cells_per_day);
-
+		$ss->assign('activityColors',json_encode($this->checkActivity($this->activity_colors) ) );
 		$ss->assign('dashlet',$cal->dashlet);
 		$ss->assign('grid_start_ts',intval($cal->grid_start_ts));
 		
@@ -107,22 +130,15 @@ class CalendarDisplay {
 		$ss->assign('CALENDAR_FDOW',$GLOBALS['current_user']->get_first_day_of_week());
 
 
-		if($cal->style == "basic"){
 			switch($cal->view){
-				case "day":
-					$height = 250; break;
-				case "mobile":
-					$height = 250; break;
-				case "week":
-					$height = 250; break;
-				case "shared":
-					$height = 100; break;
+				case "agendaDay":
+				case "agendaWeek":
+				case "sharedMonth":
+				case "sharedWeek":
+					$height = 650; break;
 				default:
-					$height = 80; break;
+					$height = 650; break;
 			}
-		}else{
-			$height = 20;
-		}
 		$ss->assign('basic_min_height',$height);
 		
 		$ss->assign('isPrint', $this->cal->isPrint() ? 'true': 'false');
@@ -132,14 +148,21 @@ class CalendarDisplay {
 			$ss->assign('shared_ids',$cal->shared_ids);
 			$ss->assign('shared_users_count',count($cal->shared_ids));
 		}
-		$ss->assign('activity_colors',$this->activity_colors);
 
+
+		$ss->assign('start_weekday',$GLOBALS['current_user']->get_first_day_of_week());
 		$ss->assign('scroll_slot',$this->cal->scroll_slot);
 
 		$ss->assign('editview_width',SugarConfig::getInstance()->get('calendar.editview_width',800));
 		$ss->assign('editview_height',SugarConfig::getInstance()->get('calendar.editview_height',600));
 
 		$ss->assign('a_str',json_encode($cal->items));
+
+		$start = $current_user->getPreference('day_start_time');
+		$ss->assign('day_start_time',$start);
+
+		$end = $current_user->getPreference('day_end_time');
+		$ss->assign('day_end_time',$end);
 
 		$ss->assign('sugar_body_only',(isset($_REQUEST['to_pdf']) && $_REQUEST['to_pdf'] || isset($_REQUEST['sugar_body_only']) && $_REQUEST['sugar_body_only']));
 		require_once('include/json_config.php');
@@ -152,28 +175,29 @@ class CalendarDisplay {
 		$user_default_date_start  = $timedate->asUser($timedate->getNow());
 		$ss->assign('user_default_date_start',$user_default_date_start);
 		// end form
+		$location_array = "";
+		foreach($this->views as $view){
+			$location_array[] = $view;
+		}
+		$ss->assign("langprefix", explode("_",$GLOBALS['current_language'])[0] );
 
+		$ss->assign('custom_views',$location_array);
 		if($_REQUEST['module'] == "Calendar"){
 			$this->load_settings_template($ss);
-			$settings = "custom/modules/Calendar/tpls/settings.tpl";
-			if(!file_exists($settings))
-				$settings = "modules/Calendar/tpls/settings.tpl";
+			$settings = get_custom_file_if_exists("modules/Calendar/tpls/settings.tpl");
 			$ss->assign("settings",$settings);
 		}
+		//mark date format for user.
+		$date_format = $this->convertPHPToMomentFormat($GLOBALS['current_user']->getPreference('datef') . " " . $GLOBALS['current_user']->getPreference('timef'));
+		$ss->assign('datetime_user_format', $date_format);
 
-		$main = "custom/modules/Calendar/tpls/main.tpl";
-		if(!file_exists($main))
-			$main = "modules/Calendar/tpls/main.tpl";
+		$main = get_custom_file_if_exists("modules/Calendar/tpls/main.tpl");
+		$form_tpl = get_custom_file_if_exists("modules/Calendar/tpls/form.tpl");
 
-		$form_tpl = "custom/modules/Calendar/tpls/form.tpl";
-		if(!file_exists($form_tpl))
-			$form_tpl = "modules/Calendar/tpls/form.tpl";
 		$ss->assign("form",$form_tpl);
 
 		if($this->cal->enable_repeat){
-			$repeat_tpl = "custom/modules/Calendar/tpls/repeat.tpl";
-			if(!file_exists($repeat_tpl))
-				$repeat_tpl = "modules/Calendar/tpls/repeat.tpl";
+			$repeat_tpl = get_custom_file_if_exists("modules/Calendar/tpls/repeat.tpl");
 			$ss->assign("repeat",$repeat_tpl);
 
 			$repeat_intervals = array();
@@ -191,17 +215,36 @@ class CalendarDisplay {
 			$ss->assign("dow",$dow);
 
 		}
-
-
-
 		echo $ss->fetch($main);
-
-		// grid
-		$grid = new CalendarGrid($cal);
-		echo $grid->display();
-		// end grid
 	}
 
+	function checkActivity($activity = ""){
+		global $current_user;
+		if(empty($activity)){
+			$activity = $this->activity_colors;
+		}
+		$newActivities = unserialize( base64_decode($current_user->getPreference("CalendarActivities") ) );
+		if($newActivities){
+			$activity = array_merge($activity,$newActivities );
+
+		}
+		foreach($activity as $key => $activityItem){
+			$activity[ $key ]['label'] = $GLOBALS['app_list_strings']['moduleList'][ $key ];
+		}
+		if(isset($activity) && !empty($activity)){
+			$this->activity_colors = $activity;
+		}
+		if(!empty($this->cal->activityList)){
+			foreach($this->cal->activityList as $key=>$value ){
+				if(isset($GLOBALS['beanList'][$key]) && !empty($GLOBALS['beanList'][$key]) && !isset($this->activity_colors[ $GLOBALS['beanList'][$key] ])){
+					$this->activity_colors[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+					$activity[ $GLOBALS['beanList'][$key] ] = $GLOBALS['sugar_config']['CalendarColors'][$key];
+				}
+			}
+		}
+
+		return $activity;
+	}
 	/**
 	 * load settings popup template
 	 */
@@ -287,8 +330,14 @@ class CalendarDisplay {
 			$displayTimeslots = SugarConfig::getInstance()->get('calendar.display_timeslots', true);
 		}
 
+		$shared_calendar_separate = $GLOBALS['current_user']->getPreference('calendar_display_shared_separate');
+		if(is_null($shared_calendar_separate)) {
+			$shared_calendar_separate = SugarConfig::getInstance()->get('calendar.calendar_display_shared_separate', true);
+		}
 		$ss->assign('week',$_REQUEST['week']);
+		$ss->assign('activity', $this->checkActivity($this->activity_colors) );
 		$ss->assign('display_timeslots', $displayTimeslots);
+		$ss->assign('shared_calendar_separate', $shared_calendar_separate);
 		$ss->assign('show_calls',$this->cal->show_calls);
 		$ss->assign('show_tasks',$this->cal->show_tasks);
 		$ss->assign('show_completed', $this->cal->show_completed);
@@ -310,7 +359,7 @@ class CalendarDisplay {
 		global $current_user;
 		$dateFormat = $current_user->getUserDateTimePreferences();
 
-		if($view == 'month'){
+		if($view == 'month' || $view == 'sharedMonth' ){
 			for($i=0; $i<strlen($dateFormat['date']); $i++){
 				switch($dateFormat['date']{$i}){
 					case "Y":
@@ -322,7 +371,7 @@ class CalendarDisplay {
 				}
 			}
 		}else
-			if($view == 'week' || $view == 'shared') {
+			if($view == 'agendaWeek' || $view == 'sharedWeek') {
 				$first_day = $date_time;
 
 				$first_day = CalendarUtils::get_first_day_of_week($date_time);
@@ -355,7 +404,7 @@ class CalendarDisplay {
 							break;
 					}
 				}
-			}else if($view == 'day'){
+			}else if($view == 'agendaDay'){
 					$str .= $date_time->get_day_of_week()." ";
 
 					for($i=0; $i<strlen($dateFormat['date']); $i++){
@@ -390,7 +439,39 @@ class CalendarDisplay {
 			}else if($view == 'year') {
 				$str .= $date_time->year;
 			}else{
-				sugar_die("echo_date_info: date not supported");
+				//could be a custom view.
+				$first_day = $date_time;
+
+				$first_day = CalendarUtils::get_first_day_of_week($date_time);
+				$last_day = $first_day->get("+6 days");
+
+				for($i=0; $i<strlen($dateFormat['date']); $i++) {
+					switch($dateFormat['date']{$i}){
+						case "Y":
+							$str .= " ".$first_day->year;
+							break;
+						case "m":
+							$str .= " ".$first_day->get_month_name();
+							break;
+						case "d":
+							$str .= " ".$first_day->get_day();
+							break;
+					}
+				}
+				$str .= " - ";
+				for($i=0; $i<strlen($dateFormat['date']); $i++) {
+					switch($dateFormat['date']{$i}) {
+						case "Y":
+							$str .= " ".$last_day->year;
+							break;
+						case "m":
+							$str .= " ".$last_day->get_month_name();
+							break;
+						case "d":
+							$str .= " ".$last_day->get_day();
+							break;
+					}
+				}
 			}
 		return $str;
 	}
@@ -447,12 +528,17 @@ class CalendarDisplay {
 		if($controls){
 			$current_date = str_pad($this->cal->date_time->month,2,'0',STR_PAD_LEFT)."/".str_pad($this->cal->date_time->day,2,'0',STR_PAD_LEFT)."/".$this->cal->date_time->year;
 
-			$tabs = array('day', 'week', 'month', 'year', 'shared');
+			$tabs = $this->views;
 			$tabs_params = array();
-			foreach($tabs as $tab){
-				$tabs_params[$tab]['title'] = $cal_strings["LBL_".strtoupper($tab)];
-				$tabs_params[$tab]['id'] = $tab . "-tab";
-				$tabs_params[$tab]['link'] = "window.location.href='".ajaxLink("index.php?module=Calendar&action=index&view=". $tab . $this->cal->date_time->get_date_str())."'";
+			foreach($tabs as $key => $tab){
+				if( ($key != "basicDay") AND ($key != "basicWeek") ) {
+					$tabs_params[$key]['title'] = $cal_strings["LBL_" . strtoupper($key)];
+					$tabs_params[$key]['id'] = $key . "-tab";
+					$tabs_params[$key]['link'] = "window.location.href='" . ajaxLink("index.php?module=Calendar&action=index&view=" . $key . $this->cal->date_time->get_date_str()) . "'";
+
+				}else{
+					unset($tabs[$key]);
+				}
 			}
 			$ss->assign('controls',$controls);
 			$ss->assign('tabs',$tabs);
@@ -467,9 +553,7 @@ class CalendarDisplay {
 
 		$ss->assign('date_info',$this->get_date_info($this->cal->view,$this->cal->date_time));
 
-		$header = "custom/modules/Calendar/tpls/header.tpl";
-		if(!file_exists($header))
-			$header = "modules/Calendar/tpls/header.tpl";
+		$header = get_custom_file_if_exists("modules/Calendar/tpls/header.tpl");
 		echo $ss->fetch($header);
 	}
 
@@ -486,12 +570,54 @@ class CalendarDisplay {
 		$ss->assign('previous',$this->get_previous_calendar());
 		$ss->assign('next',$this->get_next_calendar());
 
-		$footer = "custom/modules/Calendar/tpls/footer.tpl";
-		if(!file_exists($footer))
-			$footer = "modules/Calendar/tpls/footer.tpl";
+		$footer = get_custom_file_if_exists("modules/Calendar/tpls/footer.tpl");
 		echo $ss->fetch($footer);
 	}
 
+	public function convertPHPToMomentFormat($format)
+	{
+		$replacements = [
+			'd' => 'DD',
+			'D' => 'ddd',
+			'j' => 'D',
+			'l' => 'dddd',
+			'N' => 'E',
+			'S' => 'o',
+			'w' => 'e',
+			'z' => 'DDD',
+			'W' => 'W',
+			'F' => 'MMMM',
+			'm' => 'MM',
+			'M' => 'MMM',
+			'n' => 'M',
+			't' => '', // no equivalent
+			'L' => '', // no equivalent
+			'o' => 'YYYY',
+			'Y' => 'YYYY',
+			'y' => 'YY',
+			'a' => 'a',
+			'A' => 'A',
+			'B' => '', // no equivalent
+			'g' => 'h',
+			'G' => 'H',
+			'h' => 'hh',
+			'H' => 'HH',
+			'i' => 'mm',
+			's' => 'ss',
+			'u' => 'SSS',
+			'e' => 'zz', // deprecated since version 1.6.0 of moment.js
+			'I' => '', // no equivalent
+			'O' => '', // no equivalent
+			'P' => '', // no equivalent
+			'T' => '', // no equivalent
+			'Z' => '', // no equivalent
+			'c' => '', // no equivalent
+			'r' => '', // no equivalent
+			'U' => 'X',
+		];
+		$momentFormat = strtr($format, $replacements);
+		return $momentFormat;
+	}
 	/**
 	 * display title
 	 */
@@ -506,15 +632,15 @@ class CalendarDisplay {
 			echo "<div class='custom_module_title moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
 			echo "<div style='float:right;' class='moduleTitle'>";
 
-			echo '<div class="btn-group">
-                    <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">'.$mod_strings["LBL_ADD_ITEM"].'<span class="caret"></span></button>
+            echo '<div class="btn-group">
+                    <button type="button" class="btn button dropdown-toggle" data-toggle="dropdown">Add Item <span class="caret"></span></button>
                        <ul class="dropdown-menu pull-left" style="right: 0; left: auto;">';
 
-			foreach($buttons as $module){
-				echo '<li><a href="index.php?return_module=Calendar&return_action=index&module=' . $module .'s&action=EditView">'.$mod_strings["LBL_ADD_".strtoupper($module)].'</a></li>';
-			}
+                        foreach($buttons as $module){
+                            echo '<li><a href="index.php?return_module=Calendar&return_action=index&module=' . $module .'s&action=EditView">Add ' . $module .'</a></li>';
+                        }
 
-			echo '</ul></div></div>';
+            echo '</ul></div></div>';
 
 		}else{
 			echo "<div class='moduleTitle'><h2>". $mod_strings['LBL_MODULE_TITLE'] ."</h2></div>";
@@ -526,23 +652,21 @@ class CalendarDisplay {
 	/**
 	 * display html used in shared view
 	 */
-	public function display_shared_html(){
+	public function display_shared_html($view){
 			global $app_strings,$cal_strings,$action;
 
 			$ss = new Sugar_Smarty();
 			$ss->assign("APP",$app_strings);
 			$ss->assign("MOD",$cal_strings);
+			$ss->assign("view",$view);
 			$ss->assign("UP",SugarThemeRegistry::current()->getImage('uparrow_big', 'border="0" style="margin-bottom: 1px;"', null, null, '.gif', $app_strings['LBL_SORT']));
 			$ss->assign("DOWN",SugarThemeRegistry::current()->getImage('downarrow_big', 'border="0" style="margin-top: 1px;"', null, null, '.gif', $app_strings['LBL_SORT']));
-
+			//hide by default.
 			if(!empty($_REQUEST['edit_shared'])){
 				$ss->assign("edit_shared",true);
 			}
-
-
 			$ss->assign("users_options",get_select_options_with_id(get_user_array(false), $this->cal->shared_ids));
-
-			$tpl = "modules/Calendar/tpls/shared_users.tpl";
+			$tpl = get_custom_file_if_exists("modules/Calendar/tpls/shared_users.tpl");
 			echo $ss->fetch($tpl);
 	}
 
