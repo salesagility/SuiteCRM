@@ -38,34 +38,4 @@
  ********************************************************************************/
 
 *}
-<!doctype html>
-<html {$langHeader}>
-<head>
-    <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
-    <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-    <title>{$SYSTEM_NAME}</title>
-    {$SUGAR_JS}
-    {literal}
-    <script type="text/javascript">
-        <!--
-        SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
-        SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-        SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-        SUGAR.themes.loading_image   = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-        if ( YAHOO.env.ua )
-            UA = YAHOO.env.ua;
-        -->
-    </script>
-    {/literal}
-    <link rel="stylesheet" href="themes/Suite7/css/bootstrap.min.css">
-    {$SUGAR_CSS}
-    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
-    <link rel="stylesheet" type="text/css" href="themes/Suite7/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/Suite7/js/jscolor.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-</head>
+

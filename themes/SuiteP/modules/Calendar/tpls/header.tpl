@@ -38,34 +38,60 @@
  ********************************************************************************/
 
 *}
-<!doctype html>
-<html {$langHeader}>
-<head>
-    <link rel="SHORTCUT ICON" href="{$FAVICON_URL}">
-    <meta http-equiv="Content-Type" content="text/html; charset={$APP.LBL_CHARSET}">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-    <title>{$SYSTEM_NAME}</title>
-    {$SUGAR_JS}
-    {literal}
-    <script type="text/javascript">
-        <!--
-        SUGAR.themes.theme_name      = '{/literal}{$THEME}{literal}';
-        SUGAR.themes.theme_ie6compat = '{/literal}{$THEME_IE6COMPAT}{literal}';
-        SUGAR.themes.hide_image      = '{/literal}{sugar_getimagepath file="hide.gif"}{literal}';
-        SUGAR.themes.show_image      = '{/literal}{sugar_getimagepath file="show.gif"}{literal}';
-        SUGAR.themes.loading_image   = '{/literal}{sugar_getimagepath file="img_loading.gif"}{literal}';
-        SUGAR.themes.allThemes       = eval({/literal}{$allThemes}{literal});
-        if ( YAHOO.env.ua )
-            UA = YAHOO.env.ua;
-        -->
-    </script>
-    {/literal}
-    <link rel="stylesheet" href="themes/Suite7/css/bootstrap.min.css">
-    {$SUGAR_CSS}
-    <link rel="stylesheet" href="themes/Suite7/css/fontello.css">
-    <link rel="stylesheet" href="themes/Suite7/css/animation.css"><!--[if IE 7]><link rel="stylesheet" href="css/fontello-ie7.css"><![endif]-->
-    <link rel="stylesheet" type="text/css" href="themes/Suite7/css/colourSelector.php">
-    <script type="text/javascript" src='{sugar_getjspath file="themes/Suite7/js/jscolor.js"}'></script>
-    <script type="text/javascript" src='{sugar_getjspath file="cache/include/javascript/sugar_field_grp.js"}'></script>
-</head>
+
+{if $controls}
+
+<div class="clear"></div>
+
+<div style='float:left; width: 50%;'>
+{foreach name=tabs from=$tabs key=k item=tab}
+	<input type="button" class="button" {if $view == $k} selected {/if} id="{$tabs_params[$k].id}" title="{$tabs_params[$k].title}" value="{$tabs_params[$k].title}" onclick="{$tabs_params[$k].link}">
+{/foreach}
+</div>
+
+<div style="float:left; text-align: right; width: 50%; font-size: 12px;">
+	{if $view == "sharedWeek" || $view == "sharedMonth"}
+		<button id="userListButtonId" type="button" class="btn btn-info" data-toggle="modal" data-target=".modal-calendar-user-list">{$MOD.LBL_EDIT_USERLIST}</button>
+	{/if}
+	{if $view != 'year' && !$print}
+	<span class="dateTime">
+					<img border="0" src="{$cal_img}" alt="{$APP.LBL_ENTER_DATE}" id="goto_date_trigger" align="absmiddle">
+					<input type="hidden" id="goto_date" name="goto_date" value="{$current_date}">
+					<script type="text/javascript">
+					Calendar.setup ({literal}{{/literal}
+						inputField : "goto_date",
+						ifFormat : "%m/%d/%Y",
+						daFormat : "%m/%d/%Y",
+						button : "goto_date_trigger",
+						singleClick : true,
+						dateStr : "{$current_date}",
+						step : 1,
+						onUpdate: goto_date_call,
+						startWeekday: {$start_weekday},
+						weekNumbers:false
+					{literal}}{/literal});
+					{literal}
+					YAHOO.util.Event.onDOMReady(function(){
+						YAHOO.util.Event.addListener("goto_date","change",goto_date_call);
+					});
+					function goto_date_call(){
+						CAL.goto_date_call();
+					}
+					{/literal}
+					</script>
+	</span>
+	{/if}
+	<input type="button" id="" class="button" data-toggle="modal" data-target=".modal-calendar-settings" value="{$MOD.LBL_SETTINGS}">
+</div>
+
+<div style='clear: both;'></div>
+
+{/if}
+
+
+<div class="row {if $controls}monthHeader{/if}">
+	<div class="col-xs-1">{$previous}</div>
+	<div class="col-xs-10 text-center"><h3>{$date_info}</h3></div>
+	<div class="col-xs-1 text-right">{$next}</div>
+	<br>
+</div>
