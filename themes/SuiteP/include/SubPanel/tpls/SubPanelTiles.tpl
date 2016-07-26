@@ -19,9 +19,11 @@
 
             </div>
             <div class="panel-body panel-collapse collapse" id="subpanel_{$subpanel_tab}">
-                <div class="tab-content">
-                    {$subpanel_tabs_properties.$i.subpanel_body}
-                </div>
+                    <div class="tab-content">
+                        <div id="list_subpanel_{$subpanel_tab}">
+                            {$subpanel_tabs_properties.$i.subpanel_body}
+                        </div>
+                    </div>
             </div>
         </div>
     </li>
