@@ -49,7 +49,7 @@
 			{*</div>*}
 			{*<div class="modal-body">*}
 				<!--->
-				<div class="container-fluid">
+				{*<div class="container-fluid">*}
 					<form id="CalendarEditView" name="CalendarEditView" method="POST">
 
 						<input type="hidden" name="current_module" id="current_module" value="Meetings">
@@ -88,7 +88,7 @@
 							<input type="hidden" name="duration_minutes" id="duration_minutes">
 						</div>
 					</form>
-				</div>
+				{*</div>*}
 				{*<!--->*}
 			{*</div>*}
 			{*<div class="modal-footer">*}
