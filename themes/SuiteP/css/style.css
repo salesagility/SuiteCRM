@@ -8223,3 +8223,8 @@ div.list-view-rounded-corners > table th:last-of-type {
 #wizform div.target-list-create input[type="button"] {
     margin-top: 16px;
 }
+
+/* TODO: add itt to the @media queries for differents screen size */
+#wizform #wizard {
+    width: 1022px;
+}
