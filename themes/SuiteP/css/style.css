@@ -4813,6 +4813,9 @@ div.search_fields_basic label {
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
     }
+    .tab-content {
+        overflow-x: scroll;
+    }
 }
 
 /*sm-col-*/
@@ -4830,6 +4833,9 @@ div.search_fields_basic label {
 
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
+    }
+    .tab-content {
+        overflow-x: scroll;
     }
 }
 
