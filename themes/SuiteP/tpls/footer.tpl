@@ -120,6 +120,18 @@
         SUGAR._ajax_hist_loaded = true;
         if (SUGAR.ajaxUI)
             YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
+
+        $(function(){
+            if($('#wizard').length) {
+                var bodyHeight = $('body').height();
+                var contentHeight = $('#pagecontent').height() + $('#wizard').height();
+                var height = bodyHeight < contentHeight ? contentHeight : bodyHeight;
+                $('#content').css({
+                    'min-height': height + 'px'
+                });
+            }
+        });
+
     </script>
 {/literal}
 </div>
