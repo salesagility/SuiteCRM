@@ -70,6 +70,13 @@
             </td>
 
         </tr>
+	<tr id="meeting_response_url_row">
+	    <td  scope="row" width="200">{$MOD.LBL_AOP_MEETING_RESPONSE_URL}: </td>
+	    <td  >
+	        <input type='text' id='meeting_response_url' name='meeting_response_url' value='{$config.meeting_response_url}' />
+	    </td>
+	</tr>
+
         <!--<tr>
             <td  scope="row" width="200">{$MOD.LBL_AOP_JOOMLA_ACCESS_KEY}: </td>
             <td  >
