@@ -8112,6 +8112,9 @@ div.list-view-rounded-corners > table th:last-of-type {
     }
 }
 
+
+/* campaign wizard backgrounds and commons */
+
 #wizform .other.view {
     background: none;
 }
@@ -8120,3 +8123,35 @@ div.list-view-rounded-corners > table th:last-of-type {
     width: initial;
     background: none;
 }
+
+/* campaign wizard home start page */
+
+#wizform fieldset legend {
+    padding: 0;
+}
+
+#wizform .icon-btn-lst .icon-btn {
+    background-color: #F08377;
+    border-radius: 3px;
+}
+
+#wizform .icon-btn-lst .icon-btn:hover {
+    background-color: #808f9c;
+}
+
+#wizform .icon-btn-lst .icon-btn a {
+    text-align: center;
+    line-height: 20px;
+    margin: 0;
+}
+
+#wizform .icon-btn-lst .icon-btn a img {
+    float: none;
+}
+
+#wizform .icon-btn-lst .icon-btn a br {
+    display: block;
+    float: none;
+    clear: both;
+}
+

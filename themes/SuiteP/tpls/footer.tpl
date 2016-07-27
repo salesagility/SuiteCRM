@@ -125,7 +125,12 @@
             if($('#wizard').length) {
                 var bodyHeight = $('body').height();
                 var contentHeight = $('#pagecontent').height() + $('#wizard').height();
+                var fieldsetHeight = $('#pagecontent').height() + $('#wizard fieldset').height();
                 var height = bodyHeight < contentHeight ? contentHeight : bodyHeight;
+                if(fieldsetHeight > height) {
+                    height = fieldsetHeight;
+                }
+                height += 50;
                 $('#content').css({
                     'min-height': height + 'px'
                 });
