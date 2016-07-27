@@ -121,9 +121,13 @@
         if (SUGAR.ajaxUI)
             YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
 
-        // fix for campaign wizard footer:
         $(function(){
+
+            // fix for campaign wizard
+
             if($('#wizard').length) {
+
+                // footer fix
                 var bodyHeight = $('body').height();
                 var contentHeight = $('#pagecontent').height() + $('#wizard').height();
                 var fieldsetHeight = $('#pagecontent').height() + $('#wizard fieldset').height();
@@ -135,6 +139,13 @@
                 $('#content').css({
                     'min-height': height + 'px'
                 });
+
+                // uploader fix
+                $('#step1_uploader').css({
+                    position: 'relative',
+                    top: ($('#wizard').height() - 90) + 'px'
+                });
+
             }
         });
 
