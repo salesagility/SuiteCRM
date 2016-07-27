@@ -1218,6 +1218,8 @@ $mod_strings = array(
     'LBL_AOP_CASE_REMINDER_EMAIL_TEMPLATE' => 'Case Reminder Email Template',
     'LBL_AOP_JOOMLA_ACCOUNT_CREATION_EMAIL_TEMPLATE' => 'Joomla Support Portal Account Creation Template',
 
+    'LBL_AOP_MEETING_RESPONSE_URL' => 'Meeting Response URL',
+
     'LBL_AOP_BUSINESS_HOURS_SETTINGS' => 'Business Hours',
     'LBL_AOP_BUSINESS_HOURS_DESC' => 'Change the business hours',
     'LBL_AOP_OPENING_DAYS' => 'Opening Days',
