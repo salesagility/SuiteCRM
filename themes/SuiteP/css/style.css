@@ -8208,3 +8208,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     height: initial;
     margin: 17px 5px 5px 5px;
 }
+
+#wizform select.input-sm {
+    height: 42px;
+}
