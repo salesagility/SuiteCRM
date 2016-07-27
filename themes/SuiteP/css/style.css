@@ -8226,7 +8226,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 /* TODO: add it to the @media queries for differents screen size */
 #wizform #wizard {
-    width: 1022px;
+    width: 1122px;
 }
 
 #email_template_editor .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {
