@@ -8155,3 +8155,24 @@ div.list-view-rounded-corners > table th:last-of-type {
     clear: both;
 }
 
+/* campaign wizard progress bar stuff */
+
+#wizform .progression-container .progression .nav-steps {
+    background-color: #F08377;
+}
+#wizform .progression-container
+.progression .nav-steps:hover,
+#wizform .progression-container .progression .nav-steps.selected {
+    background-color: #808f9c;
+}
+
+#wizform .progression li:hover::after,
+#wizform .progression li.selected::after {
+    border-left-color: #808f9c;
+}
+
+#wizform .progression li::after {
+    border-left-color: #F08377;
+}
+
+
