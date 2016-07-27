@@ -8202,3 +8202,9 @@ div.list-view-rounded-corners > table th:last-of-type {
 #wizform div.template-container-full div.row {
     padding: 5px 20px;
 }
+
+#wizform .other.view img, .other.view svg {
+    width: initial;
+    height: initial;
+    margin: 17px 5px 5px 5px;
+}
