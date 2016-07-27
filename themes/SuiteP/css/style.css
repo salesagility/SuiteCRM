@@ -1259,6 +1259,10 @@ table#dashletPanel thead {
     word-wrap: normal;
 }
 
+a.listViewTdToolsS1 {
+    padding: 4px;
+}
+
 .list td a.listViewTdToolsS1, .list tr td.nowrap {
     white-space: nowrap;
     word-wrap: normal;
@@ -2200,12 +2204,12 @@ div#content p.error {
     font-style: italic;
 }
 
-.pageNumbers {
-    color: white;
+.pageNumbers, .subpanel-table .pageNumbers{
     font-weight: bold;
     margin: 0 8px 0 8px;
     padding: 0 8px 0 8px;
     position: static;
+    color: #ffffff;
 }
 
 .contentBox {
@@ -2802,7 +2806,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited, a.tabFormAdvLink:hover {
 
 #globalLinks ul li a {
     max-width: 150px !important;
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 #globalLinks ul li a:hover {
@@ -3073,7 +3077,7 @@ a.tabFormAdvLink:link, a.tabFormAdvLink:visited {
 
 .yearCalBodyMonth {
     background-color: #efefef !important;
-    border-top: 2px solid #3C8DBC;
+    border-top: 2px solid #F08377;
     border-bottom: 2px solid #fff;
 }
 
@@ -3105,18 +3109,18 @@ h5.calSharedUser {
 }
 
 .subpanelTabForm {
-    border-color: #3C8DBC;
+    border-color: #F08377;
     color: #000000;
     background-color: #ffffff;
 }
 
 ul.tablist, ul.subpanelTablist {
-    border-bottom-color: #3C8DBC;
+    border-bottom-color: #F08377;
 }
 
 ul.tablist li a:hover, ul.subpanelTablist li a:hover {
     background: #fafafa;
-    border-color: #3C8DBC;
+    border-color: #F08377;
 }
 
 ul.tablist li a, ul.subpanelTablist li a {
@@ -3176,7 +3180,7 @@ a.sugar-tab-close, .yui-navset .yui-nav a.sugar-tab-close, .yui-navset .yui-nav 
 }
 
 ul.yui-nav li.selected {
-    background: #3C8DBC;
+    background: #F08377;
 }
 
 ul.nav-tabs {
@@ -3382,7 +3386,6 @@ ul.clickMenu {
     color: #ffffff;
     display: inline-block;
     border-radius: 3px;
-    background: #94A6B5;
 }
 
 ul.clickMenu form {
@@ -3395,11 +3398,10 @@ ul.clickMenu form {
 ul.SugarActionMenuIESub li a:hover, ul.clickMenu.SugarActionMenu li a:hover, ul.clickMenu.SugarActionMenu li span.subhover:hover,
 ul#globalLinksSubnav li a:hover, ul#quickCreateULSubnav li a:hover,
 ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 ul.clickMenu > li, ul.SugarActionMenuIESub li {
-    background-color: #94A6B5;
     float: left;
     margin: 0;
     list-style: none;
@@ -3435,40 +3437,48 @@ ul.clickMenu li a:hover {
     text-decoration: none !important;
 }
 
-ul.clickMenu li span {
-    width: 20px;
+ul.clickMenu > li > span {
+    margin-top: 12px;
+
+    width: 16px;
     height: 16px;
-    float: left;
+    display: inline-block;
+
     background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
     background-repeat: no-repeat;
-    background-position: 9px 5px;
+    background-position: 0% 0%;
+    background-size: 16px auto;
 
     cursor: pointer;
-}
-
-ul.clickMenu li span.ab {
-
 }
 
 ul.clickMenu li span.subhover {
     cursor: pointer;
 }
 
-ul.clickMenu li ul.subnav, ul.clickMenu ul.subnav-sub, ul.SugarActionMenuIESub {
+
+ul.clickMenu li ul.subnav,
+ul.clickMenu ul.subnav-sub,
+ul.SugarActionMenuIESub {
     list-style: none;
     position: absolute;
-    left: 0;
-    top: 28px;
-    background: #fff;
+    right: 0;
+    top: 20px;
     margin: 0;
     display: none;
     float: left;
     width: auto;
-    border: 1px solid #ccc;
-
+    border: 1px solid transparent;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
     padding: 8px 0;
     z-index: 10;
     overflow: hidden;
+}
+
+ul.clickMenu li ul.subnav {
+    margin-top: 12px;
+    min-width: 128px;
 }
 
 ul.clickMenu li ul.subnav li, ul.clickMenu ul.subnav-sub li, ul.SugarActionMenuIESub li {
@@ -3486,21 +3496,8 @@ ul.clickMenu.subpanel.records {
     background-image: none;
 }
 
-ul.clickMenu.subpanel.records li a {
-    color: #aaa;
-}
 
-ul.clickMenu.subpanel.records > li div:hover a {
-    color: #fff !important;
-}
 
-ul.clickMenu.subpanel.records li > span {
-    opacity: .5;
-    height: 16px;
-    width: 17px;
-    padding: 0 5px 0 0 !important;
-    background-position: 50% -28px;
-}
 
 ul.clickMenu.subpanel.records:hover li > span {
 
@@ -3514,17 +3511,6 @@ ul.clickMenu.subpanel.records li ul.subnav li a span {
 
 ul.clickMenu.button li span.ab:hover {
     background-position: 50% 0;
-
-}
-
-ul.clickMenu.button li > span {
-    width: auto;
-    background-position: 50% -20px;
-    padding: 3px 15px 3px 10px !important;
-    height: auto;
-}
-
-ul.clickMenu.button:hover li > span {
 
 }
 
@@ -3545,45 +3531,9 @@ ul.clickMenu li a.disabled {
     cursor: default !important;
 }
 
-.oddListRowS1:hover td ul.clickMenu.subpanel.records, .evenListRowS1:hover td ul.clickMenu.subpanel.records {
-    background: #dddddd;
-    border: 1px solid #AAAAAA;
-}
-
-.oddListRowS1:hover td ul.clickMenu.subpanel.records li a, .evenListRowS1:hover td ul.clickMenu.subpanel.records li a {
-    color: #000;
-}
 
 .oddListRowS1:hover td ul.clickMenu.subpanel.records li span, .evenListRowS1:hover td ul.clickMenu.subpanel.records li span {
     opacity: 1;
-}
-
-ul.clickMenu li ul.subnav li a, ul.clickMenu li ul.subnav li input, ul.subnav-sub li a, ul.SugarActionMenuIESub li a {
-    float: left;
-    background: #fff;
-    padding: 1px 10px !important;
-    border: 0 !important;
-    width: 100%;
-    text-align: left;
-    font-size: 12px !important;
-    color: #000;
-
-}
-
-ul.clickMenu li ul.subnav li input {
-    padding: 2px 10px !important;
-    width: 100%
-}
-
-ul.SugarActionMenuIESub li a:hover,
-ul.clickMenu li ul.subnav li a:hover, ul.clickMenu li ul.subnav li input:hover, ul.clickMenu.subpanel.records li ul.subnav li a:hover, ul.clickMenu ul.subnav-sub li a:hover {
-    background-color: #3C8DBC;
-    color: #fff;
-    font-weight: normal !important;
-    font-size: 12px !important;
-    cursor: pointer;
-    text-shadow: none;
-
 }
 
 td.paginationActionButtons ul.clickMenu .massall,
@@ -3603,7 +3553,8 @@ ul.clickMenu.showLess .moreOverflow, ul.clickMenu.showLess .moduleMenuOverFlowLe
 ul#selectLink.clickMenu {
     height: 17px;
     min-width: 20px;
-    background-image: none;
+    background-image:
+            none;
 }
 
 td.paginationActionButtons ul.clickMenu #massall,
@@ -3672,6 +3623,13 @@ ul#detailViewActions.clickMenu {
     font-size: 14px;
 }
 
+.quickcreate {
+    margin: 5px;
+    padding: 5px 7px 5px 7px;
+    border: 1px solid #ddd;
+}
+
+
 #quickCreate {
     float: right;
 }
@@ -3719,9 +3677,9 @@ ul#globalLinksSubnav, ul#quickCreateULSubnav,
 
 #globalLinksSubnav li a, #quickCreateULSubnav li a,
 #quickCreate ul.clickMenu li ul.subnav li a, #globalLinksModule ul.clickMenu li ul.subnav li a {
-    padding: 4px 10px !important;
-    font-size: 13px !important;
-    color: #666666 !important;
+    padding: 4px 10px;
+    font-size: 13px;
+    color: #666666;
     line-height: 1.45;
 }
 
@@ -3760,7 +3718,7 @@ ul.clickMenu li ul.subnav li a:hover .showLessArrow, ul.clickMenu li ul.subnav l
 
 a#create_link.utilsLink {
     color: #fff;
-    background-color: #3C8DBC;
+    background-color: #F08377;
     border: none;
     padding: 5px 8px 5px 8px;
     -webkit-transition: all 0.2s ease-out;
@@ -3948,7 +3906,7 @@ select, textarea {
 }
 
 select:focus {
-    border: 1px solid #3C8DBC;
+    border: 1px solid #F08377;
     padding: 4px;
 }
 
@@ -4269,7 +4227,7 @@ fieldset[disabled] .btn-primary.active {
 }
 
 .button-primary .badge {
-    color: #3C8DBC;
+    color: #F08377;
     background-color: #fff;
     padding: 5px;
 }
@@ -4605,7 +4563,7 @@ textarea#description {
 }
 
 .dropdown-menu em a {
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 .dropdown-menu em a:hover {
@@ -4721,7 +4679,7 @@ li.topnav ul.dropdown-menu li:last-child a {
 }
 
 .moremenu ul li a {
-    color: #3C8DBC !important;
+    color: #F08377 !important;
     cursor: pointer;
     padding: 5px;
     font-size: 1.2em;
@@ -4737,10 +4695,10 @@ li.topnav ul.dropdown-menu li:last-child a {
     background: none !important;
     cursor: pointer;
     padding: 5px;
-    background: #3C8DBC !important;
+    background: #F08377 !important;
 }
 
-.button, input[type=submit], input[type=button] {
+.button, input[type=submit], input[type=button], input[type=reset] {
     background-color: #F08377;
     border: none;
     color: #fff;
@@ -4814,7 +4772,7 @@ button[disabled], input[type="submit"][disabled], input[type="reset"][disabled],
 }
 
 .button .badge {
-    color: #3C8DBC;
+    color: #F08377;
     background-color: #fff;
 }
 
@@ -5082,7 +5040,7 @@ ul::-webkit-resizer
 }
 
 .btn-success {
-    background: #3C8DBC;
+    background: #F08377;
     border: none;
 }
 
@@ -5138,7 +5096,7 @@ table legend {
 }
 
 .ui-widget-content a {
-    color: #3C8DBC;
+    color: #F08377;
 }
 
 .ui-widget-content a:hover {
@@ -5604,7 +5562,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     width: 95%;
 }
 
-.popupBody .list .view {
+.popupBody .list.view {
     overflow: scroll;
     width: 95%;
 }
@@ -5612,6 +5570,21 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 .navbar-inverse .navbar-toggle {
     border: none;
 }
+
+.popupBody .list.view > thead > tr > th {
+    border: 1px solid transparent;
+    border-bottom-color: #778591;
+}
+
+.popupBody .list.view > thead > tr > th:first-of-type {
+    border-top-left-radius: 4px;
+}
+
+.popupBody .list.view > thead > tr > th:last-of-type {
+    border-top-right-radius: 4px;
+}
+
+
 
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
     background: none;
@@ -5752,7 +5725,7 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
 }
 
 #dashletbuttons {
-    color: #3C8DBC;
+    color: #F08377;
     margin: 0 2px 0 2px;
 }
 
@@ -6162,13 +6135,13 @@ h3 span {
 .inlineEditIcon {
     float: right;
     height: 10px;
-    color: #3c8dbc;
+    color: #F08377;
     width: 15px;
     padding-left: 3px;
 }
 
 .inlineEditIcon svg {
-    fill: #3c8dbc;
+    fill: #F08377;
     display: none;
 }
 
@@ -6187,11 +6160,11 @@ td.inlineEditActive {
 }
 
 #inlineEditSaveButton svg {
-    fill: #3c8dbc;
+    fill: #F08377;
 }
 
 #inlineEditSaveButton svg:hover {
-    fill: #3c8dbc;
+    fill: #F08377;
 }
 
 #inline_edit_field {
@@ -6299,10 +6272,10 @@ object {
 }
 
 .qtip-tipped .qtip-titlebar {
-    background-color: #3c8dbc;
+    background-color: #F08377;
     padding: 10px 40px 10px 10px;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#3c8dbc), to(#4286AD));
-    background-image: -webkit-linear-gradient(top, #3c8dbc, #4286AD);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#F08377), to(#4286AD));
+    background-image: -webkit-linear-gradient(top, #F08377, #4286AD);
 }
 
 #reminders .clear {
@@ -6402,6 +6375,14 @@ object {
     margin-right: 20px;
 }
 
+.panel {
+    margin-bottom: 0;
+}
+
+.panel-body {
+    padding: 0;
+}
+
 .panel-template {
     visibility: collapse;
 }
@@ -6459,6 +6440,11 @@ object {
     font-size: 14px !important;
     background-color: #66727D;
     padding: 10px 10px 0 10px;
+}
+
+.sub-panel  div.tab-content {
+    padding: 0 !important;
+    border: none;
 }
 
 
@@ -6744,7 +6730,7 @@ div.target-list-table {
 .icon-btn-lst .icon-btn {
     margin: 10px;
     list-style-type: none;
-    background-color: #3C8DBC;
+    background-color: #F08377;
     display: block;
     float: left;
     width: 150px;
@@ -6785,16 +6771,35 @@ tr#pagination {
     background: #f5f5f5;
 }
 
-table.subpanel-table,
-table.subpanel-table a:link,
-table.subpanel-table td,
+table.subpanel-table tr:last-of-type td {
+    border-bottom: 1px solid transparent;
+}
+
+
+table.subpanel-table {
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/*table.subpanel-table tr:last-of-type td:first-of-type {*/
+    /*border-bottom-left-radius: 4px;*/
+/*}*/
+
+/*table.subpanel-table tr:last-of-type td:last-of-type {*/
+    /*border-bottom-right-radius: 4px;*/
+/*}*/
+
+table.subpanel-table th {
+    border-bottom: 1px solid #ddd;
+}
+
 table.subpanel-table th,
-table.subpanel-table tr {
-    color: #534D64 !important;
+table.subpanel-table th a:link {
+    color: #000000;
+    font-weight: bold;
 }
 
 table.subpanel-table ul.clickMenu > li, ul.SugarActionMenuIESub li {
-    background: none;
     padding: 0;
     line-height: 24px;
 }
@@ -6807,40 +6812,60 @@ table.subpanel-table ul.subpanel {
 }
 
 
-table.subpanel-table ul.subpanel a,
+.sugar_action_button {
+    min-width: 132px;
+}
+
+
+.sugar_action_button a {
+    color: #fff;
+}
+
+.sugar_action_button a:hover {
+    color: #F08377;
+}
+
+table.subpanel-table .pagination li.sugar_action_button > form > a {
+    width: 100%;
+}
+
+table.subpanel-table ul.subpanel > a,
+table.subpanel-table li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
-table.subpanel-table .pagination .sugar_action_button > form > a,
-table.subpanel-table .pagination a {
+table.subpanel-table .pagination .sugar_action_button > form > a {
     padding: 4px !important;
     background-color: #94A6B5;
     border: 1px solid transparent;
     border-radius: 4px;
-    color: #fff !important;
     text-transform: uppercase;
+
 }
 
 
-table.subpanel-table .pagination ul.clickMenu > li > form > a {
-    color: #fff !important;
+table.subpanel-table ul.subpanel a:hover,
+table.subpanel-table li.sugar_action_button:hover,
+table.subpanel-table .pagination .sugar_action_button:hover,
+table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination a,
+.subpanel-table ul.subnav {
+    background-color: #7b8a96;
+
 }
 
-table.subpanel-table .pagination ul.clickMenu ul > li > a {
-    color: #534D64 !important;
+table.subpanel-table .pagination a {
+    padding-left: 8px;
+    padding-right: 8px;
 }
-
 
 table.subpanel-table .pagination ul.clickMenu li span {
    float: right;
     margin-top: 8px
 }
 
-table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span,
-table.subpanel-table > tbody > tr:nth-child(1) > td > table > tbody > tr > td > span a{
-    color: #534D64 !important;
-    font-weight: 700;
-}
 
 ul.SugarActionMenuIESub li a, ul.clickMenu li a, .list tr.pagination td.buttons ul.clickMenu > li > a:link, .list tr.pagination td.buttons ul.clickMenu > li > a
 
@@ -7724,7 +7749,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     #searchmobile #query_string {
         width: 75% !important;
         outline: 0 !important;
-        background: #3C8DBC !important;
+        background: #F08377 !important;
         border: none !important;
         border-radius: 0 !important;
         border-bottom: 1px solid #cccccc !important;
@@ -7753,14 +7778,6 @@ div.list-view-rounded-corners > table th:last-of-type {
         max-width: 100px;
         float: left;
     }
-
-    ul.clickMenu li span {
-        width: 16px;
-        height: 16px;
-        float: left;
-        background: url("../../../../index.php?entryPoint=getImage&themeName=SuiteP&imageName=actionMenuArrow.png") no-repeat scroll 6px -28px transparent;
-        cursor: pointer;
-    }
 }
 
 @media (min-width: 480px) and (max-width: 680px) {
@@ -7775,7 +7792,7 @@ div.list-view-rounded-corners > table th:last-of-type {
     #searchmobile #query_string {
         width: 80% !important;
         outline: 0 !important;
-        background: #3C8DBC !important;
+        background: #F08377 !important;
         border: none !important;
         border-radius: 0 !important;
         border-bottom: 1px solid #cccccc !important;
