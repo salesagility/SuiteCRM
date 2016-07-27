@@ -8181,12 +8181,14 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 /* campaign wizard (top) buttons */
 
-#wizform input[type="button"] {
+#wizform input[type="button"],
+#wizform input[type="submit"]{
     margin-left: 10px;
     margin-right: 10px;
 }
 
 /* campaign wizard forms */
+
 #wizform td {
     margin-bottom: 24px;
 }
@@ -8198,6 +8200,8 @@ div.list-view-rounded-corners > table th:last-of-type {
 #wizform tr.emptyRow {
     display: none;
 }
+
+/* target list page */
 
 #wizform div.template-container-full div.row {
     padding: 5px 20px;
@@ -8211,4 +8215,11 @@ div.list-view-rounded-corners > table th:last-of-type {
 
 #wizform select.input-sm {
     height: 42px;
+}
+
+#wizform div.target-list-create br {
+    display: none;
+}
+#wizform div.target-list-create input[type="button"] {
+    margin-top: 16px;
 }
