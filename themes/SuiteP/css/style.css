@@ -8119,6 +8119,10 @@ div.list-view-rounded-corners > table th:last-of-type {
     background: none;
 }
 
+#wizform .other.view .edit.view {
+    width: 100%;
+}
+
 #wizform .other.view td:nth-of-type(1) {
     width: initial;
     background: none;
@@ -8182,4 +8186,8 @@ div.list-view-rounded-corners > table th:last-of-type {
     margin-right: 10px;
 }
 
+/* campaign wizard forms */
+#wizform td {
+    margin-bottom: 24px;
+}
 
