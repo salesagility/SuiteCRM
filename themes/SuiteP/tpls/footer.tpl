@@ -149,13 +149,7 @@
                     position: 'relative',
                     top: ($('#wizard').height() - 90) + 'px'
                 });
-
-
-                // mozaik dragging fix - it's related to SuiteMozaik::getElementHTML() function in file SuiteMozaik.php at change revision hash 2c24e5995d0c6262edebd85cf2a52649060debc4
-
-                $(window).mousemove(function() {
-                    $('.mozaik-thumbnail.ui-draggable-dragging').css('margin-left', '0px');
-                });
+                
 
             }
         });

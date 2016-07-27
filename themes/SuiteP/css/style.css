@@ -8224,7 +8224,18 @@ div.list-view-rounded-corners > table th:last-of-type {
     margin-top: 16px;
 }
 
-/* TODO: add itt to the @media queries for differents screen size */
+/* TODO: add it to the @media queries for differents screen size */
 #wizform #wizard {
     width: 1022px;
+}
+
+#email_template_editor .mozaik-thumbnail.ui-draggable.ui-draggable-handle * {
+    float: none;
+}
+#email_template_editor ul.mozaik-thumbs li.mozaik-thumbnail {
+    padding: 0px;
+}
+#email_template_editor .mozaik-thumbnail.ui-draggable.ui-draggable-handle *
+/* #wizform .other.view #email_template_editor .mozaik-thumb-label img */ {
+    margin: 5px;
 }
