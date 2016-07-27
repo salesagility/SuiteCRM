@@ -1168,30 +1168,6 @@ button#listViewEndButton_top img, button#listViewEndButton_bottom img {
     display: none;
 }
 
-#selectLinkTop {
-    min-height: 16px;
-    line-height: 16px;
-    position: relative;
-    padding: 1px;
-}
-
-#actionLinkTop {
-    font-size: 14px !important;
-    min-height: 16px !important;
-    line-height: 16px !important;
-    position: relative;
-    padding: 2px 5px 2px 5px !important;
-
-}
-
-#select_actions_disabled_top {
-    font-size: 14px !important;
-    min-height: 16px;
-    line-height: 16px;
-    position: relative;
-    padding: 6px 5px 6px 5px !important;
-}
-
 .list tr.pagination td table td {
     padding: 3px 7px 3px 5px !important;
 }
@@ -1433,6 +1409,98 @@ table#mass_update_table td select {
         line-height: 30px;
     }
 
+}
+
+
+#selectLinkTop,
+#actionLinkBottom {
+    min-height: 16px;
+    line-height: 16px;
+    position: relative;
+    padding: 1px;
+}
+#selectLinkTop input[type=checkbox],
+#actionLinkBottom input[type=checkbox] {
+    margin-top: 10px;
+}
+
+#actionLinkTop,
+#actionLinkBottom {
+    font-size: 14px;
+    min-height: 16px;
+    line-height: 16px;
+    position: relative;
+
+}
+
+#actionLinkTop li.sugar_action_button  a,
+#actionLinkBottom li.sugar_action_button  a{
+    margin-top: 5px;
+}
+
+#actionLinkTop li.sugar_action_button,
+#actionLinkBottom li.sugar_action_button {
+    min-width: 32px;
+    padding: 11px 10px 12px 10px;
+}
+
+#select_actions_disabled_top,
+#select_actions_disabled_bottom {
+    padding: 11px 10px 12px 10px;
+    text-transform: uppercase;
+}
+
+#selectLinkTop > .sugar_action_button > ul.subnav,
+#selectLinkBottom > .sugar_action_button > ul.subnav {
+    left: 0;
+    right: auto;
+}
+
+#selectLinkTop > .sugar_action_button > ul.subnav,
+#selectLinkTop > .sugar_action_button > ul.subnav li,
+#selectLinkTop > .sugar_action_button > ul.subnav a,
+#actionLinkTop ul.clickMenu li ul.subnav,
+#actionLinkTop > .sugar_action_button > ul.subnav,
+#actionLinkTop > .sugar_action_button > ul.subnav li,
+#actionLinkTop > .sugar_action_button > ul.subnav a
+#selectLinkBottom > .sugar_action_button > ul.subnav,
+#selectLinkBottom > .sugar_action_button > ul.subnav li,
+#selectLinkBottom > .sugar_action_button > ul.subnav a,
+#actionLinkBottom ul.clickMenu li ul.subnav,
+#actionLinkBottom > .sugar_action_button > ul.subnav,
+#actionLinkBottom > .sugar_action_button > ul.subnav li,
+#actionLinkBottom > .sugar_action_button > ul.subnav a ,
+#actionLinkTop .menuItem,
+#actionLinkBottom .menuItem {
+    background-color: #7b8a96;
+    width: auto;
+    line-height: 24px;
+    color: #ffffff;
+    padding: 0 5px 0 7px;
+}
+
+#actionLinkTop .menuItem,
+#actionLinkBottom .menuItem {
+    padding: 0;
+}
+
+#actionLinkTop li.sugar_action_button,
+#selectLinkTop > .sugar_action_button > ul.subnav a:hover,
+#actionLinkBottom > .sugar_action_button > ul.subnav a:hover,
+#actionLinkTop .menuItemHilite,
+#actionLinkBottom .menuItemHilite {
+    background-color: #7b8a96 !important;
+
+}
+
+#selectLinkTop > .sugar_action_button > ul.subnav a,
+#actionLinkBottom > .sugar_action_button > ul.subnav a {
+    color: #ffffff;
+}
+
+#map_listview_top, #export_listview_top {
+    float: none;
+    clear: both;
 }
 
 #wizard td {
@@ -3466,6 +3534,11 @@ ul.clickMenu > li > span {
     cursor: pointer;
 }
 
+
+#selectLinkTop, #selectLinkTop .sugar_action_button,
+#selectLinkTop, #selectLinkTop .selectActionsDisabled {
+    min-width: 32px;
+}
 ul.clickMenu li span.subhover {
     cursor: pointer;
 }
@@ -3618,6 +3691,7 @@ ul#detailViewActions.clickMenu {
     float: left;
     background-image: none, url("../../../../themes/SuiteP/images/p_pag_tools.svg"), url("../../../../themes/SuiteP/images/p_pag_tools.png");
     background-repeat: no-repeat;
+    background-size: 16px auto;
     background-position: 9px 7px;
     opacity: .4;
 }
@@ -5774,14 +5848,6 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border: none;
 }
 
-ul#selectLinkBottom {
-    background-color: red;
-}
-
-ul#actionLinkBottom {
-    background-color: green;
-}
-
 .list tr.oddListRowS1 td, .list tr.evenListRowS1 td {
     padding-top: 15px !important;
     padding-bottom: 12px !important;
@@ -6869,7 +6935,9 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
 table.subpanel-table ul.subpanel > a,
 .single,
 .single > a,
+#actionLinkTop li.sugar_action_button,
 table.subpanel-table li.sugar_action_button,
+#selectLinkTop li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
 table.subpanel-table .pagination .sugar_action_button > form > a,
@@ -6879,7 +6947,6 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
     border: 1px solid transparent;
     border-radius: 4px;
     text-transform: uppercase;
-
 }
 
 li.sugar_action_button  > ul {
