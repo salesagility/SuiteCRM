@@ -71,3 +71,4 @@ SuiteCRM.kdev4
 
 #Ignore composer vendor folder
 vendor/
+public/
