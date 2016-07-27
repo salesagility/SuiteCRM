@@ -121,13 +121,15 @@
         if (SUGAR.ajaxUI)
             YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
 
+
+        // fix for campaign wizard
+
         $(function(){
-
-            // fix for campaign wizard
-
             if($('#wizard').length) {
 
+
                 // footer fix
+
                 var bodyHeight = $('body').height();
                 var contentHeight = $('#pagecontent').height() + $('#wizard').height();
                 var fieldsetHeight = $('#pagecontent').height() + $('#wizard fieldset').height();
@@ -140,10 +142,19 @@
                     'min-height': height + 'px'
                 });
 
+
                 // uploader fix
+
                 $('#step1_uploader').css({
                     position: 'relative',
                     top: ($('#wizard').height() - 90) + 'px'
+                });
+
+
+                // mozaik dragging fix - it's related to SuiteMozaik::getElementHTML() function in file SuiteMozaik.php at change revision hash 2c24e5995d0c6262edebd85cf2a52649060debc4
+
+                $(window).mousemove(function() {
+                    $('.mozaik-thumbnail.ui-draggable-dragging').css('margin-left', '0px');
                 });
 
             }
