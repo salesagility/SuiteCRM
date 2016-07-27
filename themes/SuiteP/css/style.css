@@ -6882,6 +6882,10 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
 
 }
 
+li.sugar_action_button  > ul {
+    text-transform: capitalize;
+}
+
 
 table.subpanel-table ul.subpanel a:hover,
 table.subpanel-table li.sugar_action_button:hover,
