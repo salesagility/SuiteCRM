@@ -84,15 +84,20 @@ div.p_login .p_login_middle {
     float: left;
     width: 100%;
 }
-
 div.p_login .p_login_bottom {
     background-color: #E6E6E6;
-    position: absolute;
     float: left;
     width: 100%;
     left: 0;
     bottom: 0;
     padding: 20px 2% 20px 2%;
+}
+
+@media (min-height: 400px) {
+
+    div.p_login .p_login_bottom {
+        position: absolute;
+    }
 }
 
 div.p_login .p_login_bottom a#powered_by {
@@ -538,26 +543,36 @@ li.recentlinks img {
 #content {
     width: 100%;
     padding: 30px 3% 40px 3%;
-    float: left;
 }
 
 #bootstrap-container.col-md-offset-2 {
+}
+
+#pagecontent:after {
+    clear:both;
+}
+
+footer * {
+    box-sizing: content-box;
 }
 
 footer {
     bottom: 0;
     margin: 0 0 0 0;
     background-color: #E6E6E6;
-    float: left;
+    clear: both;
     width: 100%;
+    height: 48px;
     border: 1px solid transparent;
     border-radius: 4px;
+    box-sizing: content-box;
+    line-height: 48px;
+    padding: 0 3% 0 3%;
 }
 
 .footer_left {
     float: left;
     width: 48%;
-    padding: 20px 0 20px 2%;
 }
 
 a#powered_by {
@@ -580,7 +595,6 @@ a#admin_options:hover, a#powered_by:hover {
     width: 48%;
     text-align: right;
     text-transform: uppercase;
-    padding: 20px 2% 20px 0;
 
 }
 
@@ -7726,11 +7740,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         padding-bottom: 10px;
     }
 
-    .footer_left {
-        padding: 20px 0 10px 0;
-    }
 }
-
 @media only screen and (max-width: 480px) {
     .detail table, .detail thead, .detail tbody, .detail th, .detail td, .detail tr {
         display: block;
@@ -7941,13 +7951,11 @@ div.list-view-rounded-corners > table th:last-of-type {
     .footer_left {
         width: 100%;
         text-align: center;
-        padding: 20px 0 20px 0;
     }
 
     .footer_right {
         width: 100%;
         text-align: center;
-        padding: 20px 0 20px 0;
     }
 }
 
