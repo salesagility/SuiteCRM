@@ -53,7 +53,7 @@ class CaseEventsHook {
     }
 
     public function saveUpdate($bean, $event, $arguments){
-        if(!$bean->id){
+        if(!$bean->id || ( !isset($bean->fetched_row['id']) || $bean->fetched_row['id'] == null) ){
             //New case so do nothing.
             return;
         }
