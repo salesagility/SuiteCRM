@@ -4797,6 +4797,19 @@ div.search_fields_basic label {
 }
 
 
+.converted_account {
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.converted_account td {
+    background-color: #BFCAD3;
+}
+
+.converted_account > tbody > tr > td  {
+    border-radius: 4px;
+    padding: 10px;
+}
+
 
 /*xs-col-*/
 @media (max-width: 769px) {
