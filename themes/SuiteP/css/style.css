@@ -6830,6 +6830,8 @@ table.subpanel-table .pagination li.sugar_action_button > form > a {
 }
 
 table.subpanel-table ul.subpanel > a,
+.single,
+.single > a,
 table.subpanel-table li.sugar_action_button,
 table.subpanel-table .pagination .sugar_action_button,
 table.subpanel-table .pagination li.sugar_action_button > form > a,
@@ -6850,7 +6852,6 @@ table.subpanel-table .pagination .sugar_action_button:hover,
 table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
-table.subpanel-table .pagination a,
 .subpanel-table ul.subnav {
     background-color: #7b8a96;
 
