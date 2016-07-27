@@ -8246,3 +8246,7 @@ div.list-view-rounded-corners > table th:last-of-type {
 #step2 table tr td, #step2 table th td {
     width: 80%;
 }
+
+#wizform .other.view #step2 table.edit.view tr:first-child td:first-child {
+    width: 100%;
+}
