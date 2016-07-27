@@ -6861,9 +6861,11 @@ table.subpanel-table .pagination a {
     padding-right: 8px;
 }
 
+table.subpanel-table .pagination .sugar_action_button,
+
 table.subpanel-table .pagination ul.clickMenu li span {
-   float: right;
-    margin-top: 8px
+    float: right;
+    margin-top: 12px;
 }
 
 
