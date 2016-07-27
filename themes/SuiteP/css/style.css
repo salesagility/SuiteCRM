@@ -8190,4 +8190,10 @@ div.list-view-rounded-corners > table th:last-of-type {
 #wizform td {
     margin-bottom: 24px;
 }
+#wizform td.emptyField {
+    display: none;
+}
+#wizform tr.emptyRow {
+    display: none;
+}
 

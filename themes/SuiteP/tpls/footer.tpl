@@ -121,6 +121,7 @@
         if (SUGAR.ajaxUI)
             YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
 
+        // fix for campaign wizard footer:
         $(function(){
             if($('#wizard').length) {
                 var bodyHeight = $('body').height();
