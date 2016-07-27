@@ -6393,6 +6393,8 @@ object {
     padding: 0px;
     vertical-align: middle;
     height: 52px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .panel-default > .panel-heading > div {
@@ -6440,6 +6442,8 @@ object {
     font-size: 14px !important;
     background-color: #66727D;
     padding: 10px 10px 0 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
 }
 
 .sub-panel  div.tab-content {
@@ -6852,6 +6856,7 @@ table.subpanel-table .pagination .sugar_action_button:hover,
 table.subpanel-table .pagination li.sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
 table.subpanel-table .pagination .sugar_action_button:hover > form > a,
+table.subpanel-table .pagination a,
 .subpanel-table ul.subnav {
     background-color: #7b8a96;
 
