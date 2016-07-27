@@ -6861,8 +6861,6 @@ table.subpanel-table .pagination a {
     padding-right: 8px;
 }
 
-table.subpanel-table .pagination .sugar_action_button,
-
 table.subpanel-table .pagination ul.clickMenu li span {
     float: right;
     margin-top: 12px;
@@ -6896,6 +6894,19 @@ div.list-view-rounded-corners > table th:last-of-type {
     border-bottom-right-radius: 4px;
 }
 
+
+#history_search table td {
+    width: auto !important;
+}
+
+#history_search table td:nth-of-type(2) select[multiple],
+#history_search table td:nth-of-type(2) select[size] {
+    height: 48px;
+}
+
+#history_search table td:nth-of-type(8) div {
+    display: inline-block;
+}
 /*////////////////////////////////////////////////////////////////////////////////////////// MEDIA QUERIES //////////*/
 
 @media (max-width: 3000px) {
