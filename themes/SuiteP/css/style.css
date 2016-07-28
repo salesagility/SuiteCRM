@@ -8253,3 +8253,23 @@ table tr#delegates_search {
 #wizform .other.view #step2 table.edit.view tr:first-child td:first-child {
     width: 100%;
 }
+
+/* summary page */
+
+#wizform #target_message br,
+#wizform #alert_messages br {
+    display: none;
+}
+#wizform table.diagnose_messages td {
+    margin-bottom: 0px;
+}
+#wizform br.emptyRow {
+    display: none;
+}
+
+#wizform #step3 ul li {
+    margin-left: 50px;
+}
+#wizform #step3 .button-group a.btn img {
+    margin-top: 0px;
+}
