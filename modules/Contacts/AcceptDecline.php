@@ -95,7 +95,9 @@ if (!empty($responseUrl)) {
         $description = $result->description;
         $name = $result->name;
         $location = $result->location;
-        $start = preg_replace('/[0-9][0-9]:[0-9][0-9]/', $result->time_start, $result->date_start).' '.date('T');
+	$datetime = new DateTime($result->date_start.' UTC');
+        $datetime->setTimezone(new DateTimeZone(date('T')));
+        $start = $datetime->format('l m/d/Y - g:i A T');
 
         $append = "meeting_accept_status=".urlencode($status);
         $append .= "&meeting_name=".urlencode($name);
@@ -104,10 +106,11 @@ if (!empty($responseUrl)) {
         $append .= "&meeting_start=".urlencode($start);
 
 
-        if (strpos($responseUrl, '?') === false)
+        if (strpos($responseUrl, '?') === false) {
                 $responseUrl .= '?';
-        else
+	} else {
                 $responseUrl .= '&';
+	}
 
         $responseUrl .= $append;
 
