@@ -109,7 +109,7 @@
 	<input type="hidden" name="module" value="Calendar">
 	<input type="hidden" name="action" value="index">
 	<input type="hidden" name="edit_shared" value="">
-	<input type="hidden" name="view" value="shared">
+	<input type="hidden" name="view" value="{$view}">
 	
 	
 	<table cellpadding="0" cellspacing="3" border="0" align="center" width="100%">
