@@ -4415,6 +4415,9 @@ table#lineItems tr td table thead tr td table tbody tr td {
         width: 128px !important;
     }
 
+    #wizform #wizard {
+        width: 900px;
+    }
 }
 
 input[type="text"].sqsEnabled {
@@ -4717,6 +4720,10 @@ div.search_fields_basic label {
     div.search_buttons_basic {
         margin: 0 8px 0 42px;
     }
+
+    #wizform #wizard {
+        width: 700px;
+    }
 }
 
 /*md-col-*/
@@ -4745,11 +4752,19 @@ div.search_fields_basic label {
         right: 0;
     }
 
+    #wizform #wizard {
+        width: 900px;
+    }
+
 }
 /*md-fixes*/
 @media (min-width: 1180px) and (max-width: 1199px) {
     div.search_buttons_basic {
         width: auto;
+    }
+
+    #wizform #wizard {
+        width: 1000px;
     }
 }
 /*lg-col-*/
@@ -4770,6 +4785,9 @@ div.search_fields_basic label {
         margin: 4px 8px 0 8px;
     }
 
+    #wizform #wizard {
+        width: 1100px;
+    }
 }
 
 
@@ -5251,6 +5269,10 @@ select#sales_stage_advanced {
     .col-xs-12 input[type="text"]#first_name, .col-sm-12 input[type="text"]#first_name {
         width: 21.5% !important;
     }
+
+    #wizform #wizard {
+        width: 700px;
+    }
 }
 
 .sub-header {
@@ -5514,6 +5536,10 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         overflow: scroll;
         margin: 0 0 0 50px;
     }
+
+    #wizform #wizard {
+        width: 600px;
+    }
 }
 
 @media (min-width: 999px) and (max-width: 1279px) {
@@ -5522,6 +5548,10 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
         max-width: 55% !important;
         overflow: scroll;
         margin: 0 0 0 250px;
+    }
+
+    #wizform #wizard {
+        width: 900px;
     }
 }
 
@@ -5901,6 +5931,10 @@ h3 span {
         height: 180px;
         max-height: 200px;
     }
+
+    #wizform #wizard {
+        min-width: 300px;
+    }
 }
 
 @media (max-width: 640px) and (max-height: 320px) {
@@ -5932,6 +5966,10 @@ h3 span {
         height: 180px;
         max-height: 200px;
     }
+
+    #wizform #wizard {
+        width: 400px;
+    }
 }
 
 
@@ -5952,6 +5990,10 @@ h3 span {
         height: 400px;
         max-height: 400px;
     }
+
+    #wizform #wizard {
+        width: 700px;
+    }
 }
 
 @media (min-width: 768px) and (min-height: 381px) {
@@ -5961,6 +6003,10 @@ h3 span {
     .mobile-bar ul.dropdown-menu.user-dropdown{
         top: 78px !important;
         left: -140px !important;
+    }
+
+    #wizform #wizard {
+        width: 700px;
     }
 }
 
@@ -6301,12 +6347,20 @@ div.panel-heading a.collapsed {
     div.panel-heading a div {
         width: 94.66%;
     }
+
+    #wizform #wizard {
+        width: 700px;
+    }
 }
 
 
 @media (min-width: 768px) {
     div.panel-heading a div{
         width: 97.66%;
+    }
+
+    #wizform #wizard {
+        width: 700px;
     }
 }
 
@@ -7271,6 +7325,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         background-position: 0px 10px;
         background-color: transparent;
     }
+
+    #wizform #wizard {
+        width: 500px;
+    }
 }
 
 @media (min-width: 1251px) {
@@ -7290,6 +7348,10 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #mobile_menu li {
         display: none;
+    }
+
+    #wizform #wizard {
+        width: 1200px;
     }
 }
 @media (max-width: 1250px) {
@@ -7331,6 +7393,10 @@ div.list-view-rounded-corners > table th:last-of-type {
             margin: 0 auto 0 30px !important;
             width: 84%;
 
+        }
+
+        #wizform #wizard {
+            width: 300px;
         }
 
     }
@@ -7451,6 +7517,9 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: 99%;
     }
 
+    #wizform #wizard {
+        width: 300px;
+    }
 }
 
 @media (max-width: 340px) {
@@ -7610,6 +7679,10 @@ div.list-view-rounded-corners > table th:last-of-type {
     #mobilegloballinks {
         display: inline;
     }
+
+    #wizform #wizard {
+        width: 400px;
+    }
 }
 
 @media (max-width: 640px) {
@@ -7733,6 +7806,10 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     /*help*/
 
+
+    #wizform #wizard {
+        width: 700px;
+    }
 }
 
 @media (max-width: 980px) {
@@ -7817,6 +7894,10 @@ div.list-view-rounded-corners > table th:last-of-type {
         width: auto;
         min-width: 35%;
     }
+
+    #wizform #wizard {
+        width: 400px;
+    }
 }
 
 @media (min-width: 980px) {
@@ -7831,6 +7912,10 @@ div.list-view-rounded-corners > table th:last-of-type {
 
     #dlg_c {
         left: 50%;
+    }
+
+    #wizform #wizard {
+        width: 900px;
     }
 }
 
@@ -7857,6 +7942,10 @@ div.list-view-rounded-corners > table th:last-of-type {
     .col-sm-9 {
         width: 88%;
     }
+
+    #wizform #wizard {
+        width: 900px;
+    }
 }
 
 @media (max-width: 1023px) {
@@ -7878,11 +7967,19 @@ div.list-view-rounded-corners > table th:last-of-type {
     a.menu:after, .dropdown-toggle:after {
         content: none;
     }
+
+    #wizform #wizard {
+        width: 1000px;
+    }
 }
 
 @media (min-width: 1280px) {
     #cal-edit {
         margin: 0 0 0 200px;
+    }
+
+    #wizform #wizard {
+        width: 1200px;
     }
 }
 
@@ -8227,10 +8324,6 @@ table tr#delegates_search {
     margin-top: 16px;
 }
 
-/* TODO: add it to the @media queries for differents screen size */
-#wizform #wizard {
-    width: 1122px;
-}
 
 /* Template editor */
 
