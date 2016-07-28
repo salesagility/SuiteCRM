@@ -303,7 +303,6 @@ class Calendar {
 
 				if($GLOBALS['current_user']->getPreference('calendar_display_shared_separate')){
 					$this->items[ $item['user_id'] ][] = $item;
-					//$temp[ $item['user_id'] ][] = $item;
 				}else{
 					$this->items[ $GLOBALS['current_user']->id ][] = $item;
 				}
