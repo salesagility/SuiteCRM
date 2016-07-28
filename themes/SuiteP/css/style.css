@@ -8387,3 +8387,103 @@ table tr#delegates_search {
     display: table-cell;
     float: none;
 }
+
+/* desktop / tablet / mobile fix */
+
+@media (max-width: 1024px) {
+
+    #wizform table.other.view tr td.edit.view table tr td input,
+    #wizform table.other.view tr td.edit.view table tr td textarea {
+        max-width: 355px;
+    }
+
+    @media (max-width: 980px) {
+
+        #wizform table.other.view tr td.edit.view table tr td {
+            display: block;
+            float: left;
+        }
+        #wizform table.other.view tr td.edit.view table tr td:nth-of-type(odd) {
+            min-width: 300px;
+            max-width: 300px;
+            width: 300px;
+        }
+        #wizform table.other.view tr td.edit.view table tr td:nth-of-type(even) {
+            min-width: 500px;
+            max-width: 500px;
+            width: 500px;
+        }
+
+        /* a common fix */
+
+        #wizform .edit tr {
+            border-bottom: none;
+        }
+
+        /* Subscriptions fix */
+
+        #wizform #wizard #step2 table tr td {
+            float: left;
+        }
+
+        #wizform #wizard #step2 table tr th h4,
+        #wizform #wizard #step2 table tr td h4{
+            max-width: 255px;
+        }
+
+        /* marketing fix */
+
+        #wizform table.other.view tr td #wizard #step2 table {
+            background: none;
+        }
+        #wizform table.other.view tr td #wizard #step2 table.edit.view tr td {
+            display: block;
+            float: left;
+        }
+        #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(odd) {
+            min-width: 300px;
+            max-width: 300px;
+            width: 300px;
+        }
+        #wizform table.other.view tr td #wizard #step2 table.edit.view tr td:nth-of-type(even) {
+            min-width: 500px;
+            max-width: 500px;
+            width: 500px;
+        }
+
+        /* Target List fix */
+
+        #wizform table.other.view tr td.edit.view #wizard #step2 .row .col-xs-12.col-sm-4 {
+            width: auto;
+        }
+
+        #wizform table.other.view tr td.edit.view #wizard #step2 table.detail.view tr td table tr.detail.view td,
+        #wizform table.other.view tr td.edit.view #wizard #step2 table.detail.view tr td table tr.detail.view th {
+            float: left;
+        }
+        #wizform table.other.view tr td.edit.view #wizard #step2 .target-list-table {
+            min-width: 335px;
+        }
+
+        @media (max-width: 480px) {
+            #wizform table.other.view tr td.edit.view table tr td input,
+            #wizform table.other.view tr td.edit.view table tr td textarea {
+                max-width: 255px;
+            }
+
+            #wizform .wizard-box {
+                width: auto;
+                min-width: 0px;
+            }
+
+            /* target-list fix */
+
+            #wizform table.other.view tr td.edit.view #wizard #step2 .target-list-table {
+                min-width: 255px;
+            }
+
+        }
+
+    }
+
+}
