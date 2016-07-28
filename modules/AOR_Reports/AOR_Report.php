@@ -1412,7 +1412,8 @@ class AOR_Report extends Basic {
                     }
 
                     if($condition->value_type == 'Value' && !$condition->value && $condition->operator == 'Equal_To') {
-                        $value = "{$value} OR {$field} IS NULL";
+                        $value = "{$value} OR {$field} IS NULL)";
+                        $parenthesisForNull = true;
                     }
 
                     if(!$where_set) {
@@ -1443,7 +1444,10 @@ class AOR_Report extends Basic {
                                     break;
                             }
                         } else {
-                            if (!$where_set) $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                            if (!$where_set) {
+                                $query['where'][] = ($tiltLogicOp ? '' : ($condition->logic_op ? $condition->logic_op . ' ': 'AND ')) . ($parenthesisForNull ? ' (' : '') . $field . ' ' . $app_list_strings['aor_sql_operator_list'][$condition->operator] . ' ' . $value;
+                                $parenthesisForNull = false;
+                            }
                         }
                     }
                     $tiltLogicOp = false;
