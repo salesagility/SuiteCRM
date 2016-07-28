@@ -4330,8 +4330,14 @@ fieldset[disabled] .btn-primary.active {
     visibility: collapse !important;
 }
 
+#ConvertLead .label {
+    text-align: left;
+}
+
 #EditView_tabs .edit .button,
+#ConvertLead .edit .button,
 #EditView_tabs .id-ff-remove,
+#ConvertLead .id-ff-remove,
 #EditView_tabs .edit [type="button"],
 #conditionLines [type="button"],
 #actionLines [type="button"],
@@ -4582,6 +4588,10 @@ table#lineItems tr td table thead tr td table tbody tr td {
     clear: both;
 }
 
+
+.row {
+    margin-bottom: 8px;
+}
 
 
 @media (min-width: 922px) {
