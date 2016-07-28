@@ -6884,14 +6884,6 @@ table.subpanel-table {
     border-bottom-right-radius: 4px;
 }
 
-/*table.subpanel-table tr:last-of-type td:first-of-type {*/
-    /*border-bottom-left-radius: 4px;*/
-/*}*/
-
-/*table.subpanel-table tr:last-of-type td:last-of-type {*/
-    /*border-bottom-right-radius: 4px;*/
-/*}*/
-
 table.subpanel-table th {
     border-bottom: 1px solid #ddd;
 }
