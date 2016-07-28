@@ -52,7 +52,7 @@ class Calendar {
 								 "Meeting" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
 								 "Call" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_end"),
 								 "Task" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_due"),
-//								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
+								 "ProjectTask" => array("showCompleted" => true,"start" =>  "date_start", "end" => "date_finish"),
 	//							 "Project" => array("showCompleted" => true,"start" =>  "estimated_start_date", "end" => "estimated_end_date")
 								 );
 	public $views = array("agendaDay" => array(),"basicDay" => array(), "basicWeek" => array(), "agendaWeek" => array(),"month" => array(), "sharedMonth" => array(), "sharedWeek" => array());
@@ -220,8 +220,6 @@ class Calendar {
 	 * Load activities data to array
 	 */		
 	public function load_activities(){
-
-
 		$field_list = CalendarUtils::get_fields();
 
 		$i = 0;
@@ -302,8 +300,7 @@ class Calendar {
 
 
 				if($GLOBALS['current_user']->getPreference('calendar_display_shared_separate')){
-					//$this->items[ $item['user_id'] ][] = $item;
-					$temp[ $item['user_id'] ][] = $item;
+					$this->items[ $item['user_id'] ][] = $item;
 				}else{
 					$this->items[ $GLOBALS['current_user']->id ][] = $item;
 				}
