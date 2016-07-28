@@ -8366,3 +8366,16 @@ table tr#delegates_search {
 #wizform #step3 .button-group a.btn img {
     margin-top: 0px;
 }
+
+/* non-email campaign / budget page */
+
+#wizform #wizard #step2 .other.view td:nth-of-type(1),
+#wizform #wizard #step2 .other.view td:nth-of-type(2) {
+    display: table-cell;
+    float: none;
+}
+#wizform #wizard #step2 table tr td {
+    width: auto;
+    display: table-cell;
+    float: none;
+}
