@@ -38,6 +38,7 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 *}
+
 <script>
 {literal}
 	$(function() {
@@ -57,41 +58,43 @@
 	});
 {/literal}
 </script>
-<table width="100%" cellspacing="0" cellpadding="0" border="0">
+<div class="row">
 {{assign var='accesskeycount' value=0}}  {{assign var='ACCKEY' value=''}}
 {{foreach name=colIteration from=$formData key=col item=colData}}
-	<tr>
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 col-advanced-search">
+	<div class="">
 	{{math assign="accesskeycount" equation="$accesskeycount + 1"}}
     {{if $accesskeycount==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_SEARCH_KEY}} {{else}} {{assign var='ACCKEY' value=''}} {{/if}}
 
-	
+
 	{counter assign=index}
 	{math equation="left % right"
    		  left=$index
           right=$templateMeta.maxColumns
           assign=modVal
     }
-	
-	<td scope="row" nowrap="nowrap" width='{{$templateMeta.widths.label}}%' >
-	{{if isset($colData.field.label)}}	
+
+	<div class="col-xs-12">
+	{{if isset($colData.field.label)}}
 		<label for='{{$colData.field.name}}'>{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}</label>
     {{elseif isset($fields[$colData.field.name])}}
 		<label for='{{$fields[$colData.field.name].name}}'>{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}</label>
 	{{/if}}
-	</td>
-	<td  nowrap="nowrap" width='{{$templateMeta.widths.field}}%'>
+	</div>
+	<div clas="col-xs-12">
 	{{if $fields[$colData.field.name]}}
 		{{sugar_field parentFieldArray='fields' accesskey=$ACCKEY vardef=$fields[$colData.field.name] displayType=$displayType displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
    	{{/if}}
-   	</td>
-</tr>
+   	</div>
+</div>
+</div>
 {{/foreach}}
 
 <tr>
 	<td colspan='20'>
 		&nbsp;
 	</td>
-</tr>	
+</tr>
 {if $DISPLAY_SAVED_SEARCH}
 <tr>
 	<td colspan='2'>
@@ -151,7 +154,7 @@
     </td>
 </tr>
 {/if}
-</table>
+</div>
 
 <script>
 {literal}
