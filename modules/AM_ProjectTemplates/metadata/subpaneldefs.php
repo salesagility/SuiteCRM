@@ -61,7 +61,70 @@ $layout_defs["AM_ProjectTemplates"] = array(
                                 'mode' => 'MultiSelect',
                             ),
                     ),
+            ),
+        /*
+		'am_projecttemplates_contacts_1' =>
+            array(
+                'order' => 101,
+                'module' => 'Contacts',
+                'subpanel_name' => 'default',
+                'sort_order' => 'asc',
+                'sort_by' => 'id',
+                'title_key' => 'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE',
+                'get_subpanel_data' => 'am_projecttemplates_contacts_1',
+                'top_buttons' =>
+                    array(
+                        0 =>
+                            array(
+                                'widget_class' => 'SubPanelTopButtonQuickCreate',
+                            ),
+                        1 =>
+                            array(
+                                'widget_class' => 'SubPanelTopSelectButton',
+                                'mode' => 'MultiSelect',
+                            ),
+                    ),
+            ),
+		*/
+        'am_projecttemplates_resources' => array(
+            'order' => 101,
+            'module' => 'AM_ProjectTemplates',
+            'subpanel_name' => 'AM_ProjectTemplates',
+            'type' => 'collection',
+            'sort_order' => 'asc',
+            'sort_by' => 'id',
+            'title_key' => 'LBL_AM_PROJECTTEMPLATES_RESOURCES_TITLE',
+            'top_buttons' =>
+                array(
+                    0 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectUsersButton', 'mode' => 'MultiSelect',
+                        ),
+                    1 =>
+                        array(
+                            'widget_class' => 'SubPanelTopSelectContactsButton', 'mode' => 'MultiSelect',
+                        ),
+                ),
+            'collection_list' => array(
+                'users' => array(
+                    'module' => 'Users',
+                    'subpanel_name' => 'ForProject',
+                    'get_subpanel_data' => 'am_projecttemplates_users_1',
+                ),
+				'contacts' => array(
+                    'module' => 'Contacts',
+                    'subpanel_name' => 'ForProject',
+                    'get_subpanel_data' => 'am_projecttemplates_contacts_1',
+                ),
+
             )
-    )
+        ),
+		
+
+
+
+    ),
+
+
 );
 ?>

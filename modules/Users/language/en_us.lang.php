@@ -548,6 +548,13 @@ $mod_strings = array (
     'LBL_WIZARD_FINISH2DESC' => 'Go directly to the application Home page.',
     'LBL_WIZARD_PERSONALINFO' => 'Your Information',
     'LBL_WIZARD_LOCALE' => 'Your Locale',
+
+	//Wizard Scenarios
+	'LBL_WIZARD_SCENARIOS' => 'Your Scenarios',
+	'LBL_WIZARD_SCENARIOS_EMPTY_LIST' => 'No scenarios have been configured',
+	'LBL_WIZARD_LOCALE_DESC' => 'Specify how you would like data in SuiteCRM to be displayed, based on your geographical location. The settings you provide here will be the default settings. Users will be able set their own preferences.',
+	'LBL_WIZARD_SCENARIOS_DESC' => 'Choose which scenarios are appropriate for your installation.  These options can be changed post-install.',
+
     'LBL_WIZARD_SMTP' => 'Your Email Account',
     'LBL_WIZARD_PERSONALINFO_DESC' => 'Provide information about yourself. The information you provide about yourself will be visible to other SuiteCRM users.<br />Fields marked with <span class="required">*</span> are required.',
     'LBL_WIZARD_LOCALE_DESC' => 'Specify your time zone and how you would like dates, currencies and names to appear in SuiteCRM.',

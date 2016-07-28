@@ -2377,9 +2377,9 @@ class Email extends SugarBean {
 		//if ($this->parent_type == 'Contacts') {
 			$query  = "SELECT contacts.first_name, contacts.last_name, contacts.phone_work, contacts.id, contacts.assigned_user_id contact_name_owner, 'Contacts' contact_name_mod FROM contacts, emails_beans ";
 			$query .= "WHERE emails_beans.email_id='$this->id' AND emails_beans.bean_id=contacts.id AND emails_beans.bean_module = 'Contacts' AND emails_beans.deleted=0 AND contacts.deleted=0";
-			if(!empty($this->parent_id)){
+			if(!empty($this->parent_id) && $this->parent_type == 'Contacts'){
 				$query .= " AND contacts.id= '".$this->parent_id."' ";
-			}else if(!empty($_REQUEST['record'])){
+			}else if(!empty($_REQUEST['record']) && !empty($_REQUEST['module']) && $_REQUEST['module'] == 'Contacts'){
 				$query .= " AND contacts.id= '".$_REQUEST['record']."' ";
 			}
 			$result =$this->db->query($query,true," Error filling in additional detail fields: ");
