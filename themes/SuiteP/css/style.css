@@ -8360,7 +8360,8 @@ table tr#delegates_search {
     display: none;
 }
 
-#wizform #step3 ul li {
+#wizform #step3 ul li.li-tick,
+#wizform #step3 ul li.li-cross {
     margin-left: 50px;
 }
 #wizform #step3 .button-group a.btn img {
