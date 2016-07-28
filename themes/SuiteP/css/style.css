@@ -8223,9 +8223,16 @@ table tr#delegates_search {
     width: 100%;
 }
 
-#wizform .other.view td:nth-of-type(1) {
-    width: initial;
+#wizform .other.view td:nth-of-type(1),
+#wizform .other.view td:nth-of-type(2),
+#wizform .other.view td {
+    display: table-cell;
+    float: none;
+    width: auto;
     background: none;
+}
+#wizform .other.view td {
+    height: auto;
 }
 
 /* campaign wizard home start page */
