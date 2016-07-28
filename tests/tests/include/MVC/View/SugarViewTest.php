@@ -20,7 +20,6 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
     public function testprocess()
     {
-        $this->markTestSkipped('Skipping testprocess Tests');
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -86,7 +85,6 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
     public function testdisplayHeader()
     {
-        $this->markTestSkipped('Skipping testdisplayHeader Tests');
         $SugarView = new SugarView();
         $SugarView->module = 'Users';
         $GLOBALS['app'] = new SugarApplication();
@@ -145,7 +143,6 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
 
     public function testdisplayFooter()
     {
-        $this->markTestSkipped('Skipping testdisplayFooter Tests');
         $SugarView = new SugarView();
 
         //execute the method and check if it works and doesn't throws an exception
@@ -188,7 +185,6 @@ class SugarViewTest extends PHPUnit_Framework_TestCase
     {
 
         //error_reporting(E_ALL);
-        $this->markTestSkipped('Skipping testgetMenu Tests');
 
         $SugarView = new SugarView();
 

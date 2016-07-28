@@ -720,7 +720,7 @@ EOF;
         $chart['tooltips']=array();
         foreach($reportData as $row){
             $chart['labels'][] = $this->getShortenedLabel($row[$xName]);
-            $chart['tooltips'][] = $row[$xName];
+            $chart['tooltips'][] = $row[$xName].': '.$row[$yName];
             $chart['data'][] = (float)$row[$yName];
 
         }

@@ -415,6 +415,7 @@ $mod_strings = array(
     'LBL_LOGIN_SUGAR_SERVER_DESC' => '- The User Name of the person who will operate this offline client',
     'LBL_LOGIN_SUGAR_SERVER' => 'End User Name:',
     'LBL_MAILBOX_DESC' => 'Set up group mail accounts for monitoring inbound email and manage personal inbound mail account information for users',
+    'LBL_MAILBOX_OUTBOUND_DESC' => 'Configure outbound email settings',
     'LBL_MANAGE_CONTRACTEMPLATES_TITLE' => 'Contract Types',
     'LBL_MANAGE_CURRENCIES' => 'Currencies',
     'LBL_MANAGE_GROUPS_TITLE' => 'Manage Groups',
@@ -425,6 +426,7 @@ $mod_strings = array(
     'LBL_MANAGE_LICENSE' => 'Manage license properties',
     'LBL_MANAGE_LOCALE' => 'Locale',
     'LBL_MANAGE_MAILBOX' => 'Inbound Email',
+    'LBL_MANAGE_MAILBOX_OUTBOUND' => 'Outbound Email',
     'LBL_MANAGE_OFFLINE_CLIENT' => 'View Offline Clients',
     'LBL_MANAGE_OPPORTUNITIES' => 'Opportunities',
     'LBL_MANAGE_PASSWORD_TITLE' => 'Password Management',
@@ -1260,5 +1262,9 @@ $mod_strings = array(
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS_TITLE' => "SugarOutfitters",
     'LBL_SECURITYGROUPS_SUGAROUTFITTERS' => "Grab the latest version of SecuritySuite and find other SuiteCRM modules, themes, and integrations along with reviews, docs, support, and community verified versions.",
 
+	'LBL_AOBH_BUSINESS_HOURS_FROM' => 'From',
+	'LBL_AOBH_BUSINESS_HOURS_TO' => 'To',
+	'LBL_AOBH_MANAGE_HOURS' => "Change business hours",
+	'LBL_AOBH_OPEN' => "Open",
 );
 

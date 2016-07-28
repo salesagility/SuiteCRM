@@ -82,13 +82,13 @@ class LeadTest extends PHPUnit_Framework_TestCase {
 		$lead = new Lead();
 
 		//test with empty string params
-		$expected = "SELECT leads.*, users.user_name assigned_user_name FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) where  leads.deleted=0 ";
+		$expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where  leads.deleted=0 ";
 		$actual = $lead->create_list_query('','');
 		$this->assertSame($expected,$actual);
 
 
 		//test with valid string params
-		$expected = "SELECT leads.*, users.user_name assigned_user_name FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id) where (users.user_name=\"\") AND  leads.deleted=0  ORDER BY leads.id";
+		$expected = "SELECT leads.*, users.user_name assigned_user_name,leads_cstm.* FROM leads 			LEFT JOIN users\n                                ON leads.assigned_user_id=users.id LEFT JOIN email_addr_bean_rel eabl  ON eabl.bean_id = leads.id AND eabl.bean_module = 'Leads' and eabl.primary_address = 1 and eabl.deleted=0 LEFT JOIN email_addresses ea ON (ea.id = eabl.email_address_id)  LEFT JOIN leads_cstm ON leads.id = leads_cstm.id_c where (users.user_name=\"\") AND  leads.deleted=0  ORDER BY leads.id";
 		$actual = $lead->create_list_query('leads.id','users.user_name=""');
 		$this->assertSame($expected,$actual);
 

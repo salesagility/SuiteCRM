@@ -112,7 +112,8 @@ class ConfiguratorViewEdit extends ViewEdit
         if(!empty($_POST['restore'])){
             $configurator->restoreConfig();
         }
-        
+
+
         $this->ss->assign('MOD', $mod_strings);
         $this->ss->assign('APP', $app_strings);
         $this->ss->assign('APP_LIST', $app_list_strings);

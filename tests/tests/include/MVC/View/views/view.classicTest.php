@@ -5,7 +5,7 @@ class ViewClassicTest extends PHPUnit_Framework_TestCase
     public function test__construct()
     {
         //execute the contructor and check for the Object type and type attribute
-        $this->markTestSkipped('Skipping test__construct Tests');
+
         //test with no paramerters
         $view = new ViewClassic();
         $this->assertInstanceOf('ViewClassic', $view);

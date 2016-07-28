@@ -94,9 +94,15 @@ class aSubPanel
 				}
 			}
 		}
-		if (!$this->isCollection()){
-			$table = strtolower($instance_properties['module']);
-			$search_query = str_replace('meetings',$table,$search_query);
+
+		if ($instance_properties['type'] != 'collection' && !empty($collections)) {
+			$instance = $this->_instance_properties;
+			$BreakDownCollections = $collections;
+			$newTable = strtolower($instance['module']);
+			$collection = array_shift(array_values($BreakDownCollections));
+
+			$table = strtolower($collection['module']); //tasks or contacts.
+			$search_query = str_replace($table, $newTable, $search_query);
 		}
 
 		$this->search_query = $search_query;
@@ -287,7 +293,7 @@ class aSubPanel
 			{
 				if (array_key_exists ( $properties [ 'module' ], $modListHeader ) or array_key_exists ( $properties [ 'module' ], $modules_exempt_from_availability_check ))
 				{
-					$this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query ) ;
+					$this->sub_subpanels [ $panel ] = new aSubPanel ( $panel, $properties, $this->parent_bean, false, false, $this->search_query, $this->base_collection_list ) ;
 				}
 			}
 			// if it's empty just dump out as there is nothing to process.

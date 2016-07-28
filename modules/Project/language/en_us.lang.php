@@ -149,7 +149,7 @@ $mod_strings = array(
     'LBL_DELETE_TASK' => 'Delete Task',
     'LBL_EDIT_TASK_PROPERTIES' => 'Edit task properties.',
     'LBL_PARENT_TASK_ID' => 'Parent Task Id',
-    'LBL_RESOURCE_CHART' => 'Resource Chart',
+    'LBL_RESOURCE_CHART' => 'Resource Calendar',
     'LBL_RESOURCE_CHART_START' => 'Date Start:',
     'LBL_RESOURCE_CHART_END' => 'Date End:',
     'LBL_RESOURCES' => 'Select Resources:',
@@ -176,6 +176,38 @@ $mod_strings = array(
     'LBL_LIST_ASSIGNED_USER' => 'Project Manager',
     'LBL_UNASSIGNED' => 'Unassigned',
     'LBL_PROJECT_USERS_1_FROM_USERS_TITLE' => 'Resources',
-    'LBL_ALL_RESOURCES' => 'All Resources',
+
+	'LBL_EMAIL' => 'Email',
+	'LBL_PHONE' => 'Phone Office:',
+	'LBL_ADD_BUTTON'=> 'Add',
+	'LBL_ADD_INVITEE' => 'Add Resource',
+	'LBL_FIRST_NAME' => 'First Name',
+	'LBL_LAST_NAME' => 'Last Name',
+	'LBL_SEARCH_BUTTON'=> 'Search',
+	'LBL_EMPTY_SEARCH_RESULT' => 'Sorry, no results were found. Please create an invitee below.',
+	'LBL_CREATE_INVITEE' => 'Create an Resource',
+	'LBL_CREATE_CONTACT' => 'As Contact',
+	'LBL_CREATE_AND_ADD' => 'Create & Add',
+	'LBL_CANCEL_CREATE_INVITEE' => 'Cancel',
+	'LBL_NO_ACCESS' => 'You have no access to create $module',
+	'LBL_SCHEDULING_FORM_TITLE' => 'Resource List',
+	'LBL_REMOVE' => 'rem',
+	'LBL_VIEW_DETAIL' => 'View Details',
+	'LBL_OVERRIDE_BUSINESS_HOURS' => 'Consider Working days',
+
+	'LBL_PROJECTS_SEARCH' => 'Search Projects',
+	'LBL_USERS_SEARCH' => 'Search Users',
+	'LBL_CONTACTS_SEARCH' => 'Select  Contacts',
+	'LBL_RESOURCE_CHART_SEARCH_BUTTON' => 'Search',
+	
+	'LBL_CHART_TYPE' => 'Type',
+	'LBL_CHART_WEEKLY' => 'Weekly',
+	'LBL_CHART_MONTHLY' => 'Monthly',	
+	'LBL_CHART_QUARTERLY' => 'Quarterly',
+
+	'LBL_RESOURCE_CHART_MONTH' => 'Month',
+	'LBL_RESOURCE_CHART_QUARTER' => 'Quarter',
+ 	'LBL_ALL_RESOURCES' => 'All Resources',
+
 );
 ?>
