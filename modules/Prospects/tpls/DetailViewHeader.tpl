@@ -58,4 +58,4 @@
 <br>
 {/if}
 
-{{include file='include/DetailView/header.tpl'}}
+{{sugar_include type="smarty" file='include/DetailView/header.tpl'}}
