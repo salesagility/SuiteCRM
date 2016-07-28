@@ -6949,6 +6949,11 @@ table.subpanel-table .pagination .sugar_action_button > form > a {
     text-transform: uppercase;
 }
 
+/*calendar popup fix*/
+.calcell > a {
+    background-color: #fff;
+}
+
 li.sugar_action_button  > ul {
     text-transform: capitalize;
 }
