@@ -8354,6 +8354,10 @@ table tr#delegates_search {
     width: 100%;
 }
 
+#wizform .wizard-box span.helpmsg {
+    bottom: -36px;
+}
+
 /* summary page */
 
 #wizform #target_message br,
