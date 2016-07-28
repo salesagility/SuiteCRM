@@ -120,6 +120,40 @@
         SUGAR._ajax_hist_loaded = true;
         if (SUGAR.ajaxUI)
             YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
+
+
+        // fix for campaign wizard
+
+        $(function(){
+            if($('#wizard').length) {
+
+
+                // footer fix
+
+                var bodyHeight = $('body').height();
+                var contentHeight = $('#pagecontent').height() + $('#wizard').height();
+                var fieldsetHeight = $('#pagecontent').height() + $('#wizard fieldset').height();
+                var height = bodyHeight < contentHeight ? contentHeight : bodyHeight;
+                if(fieldsetHeight > height) {
+                    height = fieldsetHeight;
+                }
+                height += 50;
+                $('#content').css({
+                    'min-height': height + 'px'
+                });
+
+
+                // uploader fix
+
+                $('#step1_uploader').css({
+                    position: 'relative',
+                    top: ($('#wizard').height() - 90) + 'px'
+                });
+                
+
+            }
+        });
+
     </script>
 {/literal}
 </div>
