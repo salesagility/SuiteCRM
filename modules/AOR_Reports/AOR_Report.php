@@ -1401,6 +1401,7 @@ class AOR_Report extends Basic {
                     //handle like conditions
                     Switch($condition->operator) {
                         case 'Contains':
+                        case 'Not_Contains':
                             $value = "CONCAT('%', ".$value." ,'%')";
                             break;
                         case 'Starts_With':
