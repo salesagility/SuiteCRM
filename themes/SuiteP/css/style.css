@@ -1861,16 +1861,16 @@ td.fc-widget-header table > thead > tr > th {
     border-top: 1px;
 }
 
-#calendar1 > div.fc-toolbar {
+div.fc-toolbar {
     visibility: collapse;
     display: none;
     height: 0 ;
 }
 
 .monthCalBody > .calSharedUser {
-    display: none;
-    height: 0;
-    visibility: collapse;
+    padding: 20px 0 20px 0;
+    text-align: center;
+    color: #ffffff;
 }
 
 thead.fc-head {
