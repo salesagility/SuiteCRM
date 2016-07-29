@@ -8491,3 +8491,27 @@ table tr#delegates_search {
     }
 
 }
+
+/* align quote lines */
+
+@media (max-width: 1700px) {
+
+    #product_head {
+        display: none;
+    }
+    #service_head {
+        display: none;
+    }
+
+    table#lineItems table tr td table tbody tr td span.hidden.alignedLabel {
+        display: inline!important;
+    }
+
+    table#lineItems tr td table thead tr td table tbody tr td {
+        display: block;
+        float: left;
+    }
+
+
+
+}
