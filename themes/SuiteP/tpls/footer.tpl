@@ -1,4 +1,6 @@
 {*
+ /**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
  *
@@ -34,6 +36,7 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
+ */
 *}
 </div>
 </div>
@@ -50,7 +53,7 @@
     		
     		<a onclick="SUGAR.util.top();" href="javascript:void(0)">Back to top</a>
     	</div>
-        <!--<div id="copyright_data">
+        <div id="copyright_data">
             <div id="dialog2" title="{$MOD.LBL_SUITE_SUPERCHARGED}">
                 <p>{$MOD.LBL_SUITE_DESC1}</p>
                 <br>
@@ -62,7 +65,7 @@
             <div id="dialog" title="&copy; {$MOD.LBL_SUITE_POWERED_BY}">
                 <p>{$COPYRIGHT}</p>
             </div>
-        </div>-->
+        </div>
     </footer>
     <!-- END Generic Footer -->
 {/if}
@@ -117,6 +120,40 @@
         SUGAR._ajax_hist_loaded = true;
         if (SUGAR.ajaxUI)
             YAHOO.util.Event.onContentReady('ajaxUI-history-field', SUGAR.ajaxUI.firstLoad);
+
+
+        // fix for campaign wizard
+
+        $(function(){
+            if($('#wizard').length) {
+
+
+                // footer fix
+
+                var bodyHeight = $('body').height();
+                var contentHeight = $('#pagecontent').height() + $('#wizard').height();
+                var fieldsetHeight = $('#pagecontent').height() + $('#wizard fieldset').height();
+                var height = bodyHeight < contentHeight ? contentHeight : bodyHeight;
+                if(fieldsetHeight > height) {
+                    height = fieldsetHeight;
+                }
+                height += 50;
+                $('#content').css({
+                    'min-height': height + 'px'
+                });
+
+
+                // uploader fix
+
+                $('#step1_uploader').css({
+                    position: 'relative',
+                    top: ($('#wizard').height() - 90) + 'px'
+                });
+                
+
+            }
+        });
+
     </script>
 {/literal}
 </div>

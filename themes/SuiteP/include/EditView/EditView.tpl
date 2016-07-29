@@ -1,10 +1,11 @@
 {*
-/*********************************************************************************
+/**
+ *
  * SugarCRM Community Edition is a customer relationship management program developed by
  * SugarCRM, Inc. Copyright (C) 2004-2013 SugarCRM Inc.
-
- * SuiteCRM is an extension to SugarCRM Community Edition developed by Salesagility Ltd.
- * Copyright (C) 2011 - 2014 Salesagility Ltd.
+ *
+ * SuiteCRM is an extension to SugarCRM Community Edition developed by SalesAgility Ltd.
+ * Copyright (C) 2011 - 2016 SalesAgility Ltd.
  *
  * This program is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Affero General Public License version 3 as published by the
@@ -35,227 +36,134 @@
  * SugarCRM" logo and "Supercharged by SuiteCRM" logo. If the display of the logos is not
  * reasonably feasible for  technical reasons, the Appropriate Legal Notices must
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
- ********************************************************************************/
+ */
+
 
 *}
-{{include file=$headerTpl}}
+{{sugar_include type="smarty" file=$headerTpl}}
 {sugar_include include=$includes}
-
-<span id='tabcounterJS'><script>SUGAR.TabFields=new Array();//this will be used to track tabindexes for references</script></span>
-
-<div id="{{$form_name}}_tabs"
-{{if $useTabs}}
-class="yui-navset"
-{{/if}}
->
-    {{if $useTabs}}
-    {* Generate the Tab headers *}
+<div id="EditView_tabs">
+    {*display tabs*}
     {{counter name="tabCount" start=-1 print=false assign="tabCount"}}
-    <ul class="yui-nav">
-    {{foreach name=section from=$sectionPanels key=label item=panel}}
-        {{counter name="tabCount" print=false}}
+    <ul class="nav nav-tabs">
+        {{if $useTabs}}
+        {{foreach name=section from=$sectionPanels key=label item=panel}}
         {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+        {* if tab *}
         {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
-        <li class="selected"><a id="tab{{$tabCount}}" href="javascript:void({{$tabCount}})"><em>{sugar_translate label='{{$label}}' module='{{$module}}'}</em></a></li>
+        {*if tab display*}
+        {{counter name="tabCount" print=false}}
+        {{if $tabCount == '0'}}
+        <li role="presentation" class="active">
+            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab" class="hidden-xs">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
+            <a id="xstab{{$tabCount}}" href="#" class="visible-xs first-tab-xs dropdown-toggle" data-toggle="dropdown">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
+            <ul id="first-tab-menu-xs" class="dropdown-menu">
+                {{counter name="tabCountXS" start=-1 print=false assign="tabCountXS"}}
+                {{foreach name=sectionXS from=$sectionPanels key=label item=panelXS}}
+                {{counter name="tabCountXS" print=false}}
+                <li role="presentation">
+                    <a id="tab{{$tabCountXS}}" href="#detailpanel_{{$tabCountXS}}" data-toggle="tab" onclick="changeFirstTab(this, 'tab-content-{{$tabCountXS}}');">
+                        {sugar_translate label='{{$label}}' module='{{$module}}'}
+                    </a>
+                </li>
+                {{/foreach}}
+            </ul>
+        </li>
+        {{else}}
+        <li role="presentation" class="hidden-xs">
+            <a id="tab{{$tabCount}}" href="#detailpanel_{{$tabCount}}" data-toggle="tab">
+                {sugar_translate label='{{$label}}' module='{{$module}}'}
+            </a>
+        </li>
         {{/if}}
-    {{/foreach}}
+        {{else}}
+        {* if panel skip*}
+        {{/if}}
+        {{/foreach}}
+        {{/if}}
+
     </ul>
-    {{/if}}
-    <div {{if $useTabs}}class="yui-content"{{/if}}>
 
-{{assign var='tabIndexVal' value=0}}
-{{* Loop through all top level panels first *}}
-{{counter name="panelCount" start=-1 print=false assign="panelCount"}}
-{{counter name="tabCount" start=-1 print=false assign="tabCount"}}
-{{foreach name=section from=$sectionPanels key=label item=panel}}
-{{counter name="panelCount" print=false}}
-{{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
-  {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true)}}
-    {{counter name="tabCount" print=false}}
-    {{if $tabCount != 0}}</div>{{/if}}
-    <div id='tabcontent{{$tabCount}}'>
-  {{/if}}
-
-{{* Print out the table data *}}
-{{if $label == 'DEFAULT'}}
-  <div id="detailpanel_{{$smarty.foreach.section.iteration}}" >
-{{else}}
-  <div id="detailpanel_{{$smarty.foreach.section.iteration}}" class="{$def.templateMeta.panelClass|default:'edit view edit508'}">
-{{/if}}
-
-{counter name="panelFieldCount" start=0 print=false assign="panelFieldCount"}
-{{* Check to see if the panel variable is an array, if not, we'll attempt an include with type param php *}}
-{{* See function.sugar_include.php *}}
-{{if !is_array($panel)}}
-    {sugar_include type='php' file='{{$panel}}'}
-{{else}}
-
-{{* Only show header if it is not default or an int value *}}
-{{if !empty($label) && !is_int($label) && $label != 'DEFAULT' && $showSectionPanelsTitles && (!isset($tabDefs[$label_upper].newTab) || (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == false)) && $view != "QuickCreate"}}
-<h4>&nbsp;&nbsp;
-  <a href="javascript:void(0)" class="collapseLink" onclick="collapsePanel({{$smarty.foreach.section.iteration}});">
-  <img border="0" id="detailpanel_{{$smarty.foreach.section.iteration}}_img_hide" src="{sugar_getimagepath file="basic_search.gif"}"></a>
-  <a href="javascript:void(0)" class="expandLink" onclick="expandPanel({{$smarty.foreach.section.iteration}});">
-  <img border="0" id="detailpanel_{{$smarty.foreach.section.iteration}}_img_show" src="{sugar_getimagepath file="advanced_search.gif"}"></a>
-  {sugar_translate label='{{$label}}' module='{{$module}}'}
-  {{if ( isset($tabDefs[$label_upper].panelDefault) && $tabDefs[$label_upper].panelDefault == "collapsed" && isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == false) }}
-    {{assign var='panelState' value=$tabDefs[$label_upper].panelDefault}}
-  {{else}}
-    {{assign var='panelState' value="expanded"}}
-  {{/if}}
-  {{if isset($panelState) && $panelState == 'collapsed'}}
-    <script>
-      document.getElementById('detailpanel_{{$smarty.foreach.section.iteration}}').className += ' collapsed';
-    </script>
-    {{else}}
-    <script>
-      document.getElementById('detailpanel_{{$smarty.foreach.section.iteration}}').className += ' expanded';
-    </script>
-  {{/if}}
-</h4>
- {{/if}}
-<table width="100%" border="0" cellspacing="1" cellpadding="0" {{if $label == 'DEFAULT'}} id='Default_{$module}_Subpanel' {{else}} id='{{$label}}' {{/if}} class="yui3-skin-sam edit view panelContainer">
-
-
-{{assign var='rowCount' value=0}}
-{{assign var='ACCKEY' value=''}}
-{{foreach name=rowIteration from=$panel key=row item=rowData}}
-{counter name="fieldsUsed" start=0 print=false assign="fieldsUsed"}
-{capture name="tr" assign="tableRow"}
-<tr>
-
-	{{math assign="rowCount" equation="$rowCount + 1"}}
-	
-	{{assign var='columnsInRow' value=$rowData|@count}}
-	{{assign var='columnsUsed' value=0}}
-
-    {{* Loop through each column and display *}}
-    {{counter name="colCount" start=0 print=false assign="colCount"}}
-
-	{{foreach name=colIteration from=$rowData key=col item=colData}}
-
-	{{counter name="colCount" print=false}}
-
-	{{if count($rowData) == $colCount}}
-		{{assign var="colCount" value=0}}
-	{{/if}}
-
-    {{if !empty($colData.field.hideIf)}}
-    	{if !({{$colData.field.hideIf}}) }
-    {{/if}}
-
-		{{if empty($def.templateMeta.labelsOnTop) && empty($colData.field.hideLabel)}}
-		<td valign="top" id='{{$colData.field.name}}_label' width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].label}}%' scope="col">
-			{{if isset($colData.field.customLabel)}}
-			   <label for="{{$fields[$colData.field.name].name}}">{{$colData.field.customLabel}}</label>
-			{{elseif isset($colData.field.label)}}
-			   {capture name="label" assign="label"}{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}{/capture}
-			   {$label|strip_semicolon}:
-			{{elseif isset($fields[$colData.field.name])}}
-			   {capture name="label" assign="label"}{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}{/capture}
-			   {$label|strip_semicolon}:
-			{{else}}
-			    &nbsp;
-			{{/if}}
-			{{* Show the required symbol if field is required, but override not set.  Or show if override is set *}}
-				{{if ($fields[$colData.field.name].required && (!isset($colData.field.displayParams.required) || $colData.field.displayParams.required)) ||
-				     (isset($colData.field.displayParams.required) && $colData.field.displayParams.required)}}
-			    <span class="required">{{$APP.LBL_REQUIRED_SYMBOL}}</span>
-			{{/if}}
-            {{if isset($colData.field.popupHelp) || isset($fields[$colData.field.name]) && isset($fields[$colData.field.name].popupHelp) }}
-              {{if isset($colData.field.popupHelp) }}
-                {capture name="popupText" assign="popupText"}{sugar_translate label="{{$colData.field.popupHelp}}" module='{{$module}}'}{/capture}
-              {{elseif isset($fields[$colData.field.name].popupHelp)}}
-                {capture name="popupText" assign="popupText"}{sugar_translate label="{{$fields[$colData.field.name].popupHelp}}" module='{{$module}}'}{/capture}
-              {{/if}}
-              {sugar_help text=$popupText WIDTH=-1}
+    <div class="clearfix"></div>
+    {{if $useTabs}}
+    <div class="tab-content">
+        {{else}}
+        <div class="tab-content" style="padding: 0; border: 0;">
+            {{/if}}
+            {* Loop through all top level panels first *}
+            {{counter name="tabCount" start=0 print=false assign="tabCount"}}
+            {{if $useTabs}}
+            {{foreach name=section from=$sectionPanels key=label item=panel}}
+            {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+            {{if isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true}}
+            {{if $tabCount == '0'}}
+            <div class="tab-pane active fade in" id='detailpanel_{{$tabCount}}'>
+                {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
+            </div>
+            {{else}}
+            <div class="tab-pane fade" id='detailpanel_{{$tabCount}}'>
+                {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
+            </div>
+            {{/if}}
+            {{/if}}
+            {{counter name="tabCount" print=false}}
+            {{/foreach}}
+            {{else}}
+            <div class="tab-pane panel-collapse">test</div>
+            {{/if}}
+        </div>
+        {*display panels*}
+        <div class="panel-content">
+            <div>&nbsp;</div>
+            {{counter name="panelCount" start=-1 print=false assign="panelCount"}}
+            {{foreach name=section from=$sectionPanels key=label item=panel}}
+            {{capture name=label_upper assign=label_upper}}{{$label|upper}}{{/capture}}
+            {* if tab *}
+            {{if (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == true && $useTabs)}}
+            {*if tab skip*}
+            {{else}}
+            {* if panel display*}
+            {*if panel collasped*}
+            {{if (isset($tabDefs[$label_upper].panelDefault) && $tabDefs[$label_upper].panelDefault == "collapsed") }}
+            {*collapse panel*}
+            {{assign var='collapse' value="panel-collapse collapse"}}
+            {{assign var='collapsed' value="collapsed"}}
+            {{assign var='collapseIcon' value="glyphicon glyphicon-plus"}}
+            {{assign var='panelHeadingCollapse' value="panel-heading-collapse"}}
+            {{else}}
+            {*expand panel*}
+            {{assign var='collapse' value="panel-collapse collapse in"}}
+            {{assign var='collapseIcon' value="glyphicon glyphicon-minus"}}
+            {{assign var='panelHeadingCollapse' value=""}}
             {{/if}}
 
-		</td>
-		{{/if}}
-		{counter name="fieldsUsed"}
-		{{math assign="tabIndexVal" equation="$tabIndexVal + 1"}}
-		{{if $tabIndexVal==1}} {{assign var='ACCKEY' value=$APP.LBL_FIRST_INPUT_EDIT_VIEW_KEY}}{{else}}{{assign var='ACCKEY' value=''}}{{/if}}
-		{{if !empty($colData.field.tabindex)  && $colData.field.tabindex !=0}}
-		    {{assign var='tabindex' value=$colData.field.tabindex}}
-            {{** instead of tracking tabindex values for all fields, just track for email as email does not get created directly from
-                a tpl that has access to smarty values.  Email gets created through addEmailAddress() function in SugarEmailAddress.js
-                which will use the value in tabFields array
-             **}}
-            {{if $colData.field.name == 'email1'}}<script>SUGAR.TabFields['{{$colData.field.name}}'] = '{{$tabindex}}';</script>{{/if}}
-		{{else}}
-		    {** if not explicitly assigned, we will default to 0 for 508 compliance reasons, instead of the calculated tabIndexVal value **}
-		    {{assign var='tabindex' value=0}}
-		{{/if}}
-		<td valign="top" width='{{$def.templateMeta.widths[$smarty.foreach.colIteration.index].field}}%' {{if $colData.colspan}}colspan='{{$colData.colspan}}'{{/if}}>
-			{{if !empty($def.templateMeta.labelsOnTop)}}
-				{{if isset($colData.field.label)}}
-				    {{if !empty($colData.field.label)}}
-			   		    <label for="{{$fields[$colData.field.name].name}}">{sugar_translate label='{{$colData.field.label}}' module='{{$module}}'}:</label>
-				    {{/if}}
-				{{elseif isset($fields[$colData.field.name])}}
-			  		<label for="{{$fields[$colData.field.name].name}}">{sugar_translate label='{{$fields[$colData.field.name].vname}}' module='{{$module}}'}:</label>
-				{{/if}}
+            <div class="panel panel-default">
+                <div class="panel-heading {{$panelHeadingCollapse}}">
+                    <a class="{{$collapsed}}" role="button" data-toggle="collapse" href="#detailpanel_{{$panelCount}}" aria-expanded="false">
+                        <div class="col-xs-10 col-sm-11 col-md-11">
+                            {sugar_translate label='{{$label}}' module='{{$module}}'}</div>
+                        </div>
+                    </a>
 
-				{{* Show the required symbol if field is required, but override not set.  Or show if override is set *}}
-				{{if ($fields[$colData.field.name].required && (!isset($colData.field.displayParams.required) || $colData.field.displayParams.required)) ||
-				     (isset($colData.field.displayParams.required) && $colData.field.displayParams.required)}}
-				    <span class="required" title="{{$APP.LBL_REQUIRED_TITLE}}">{{$APP.LBL_REQUIRED_SYMBOL}}</span>
-				{{/if}}
-				{{if !isset($colData.field.label) || !empty($colData.field.label)}}
-				<br>
-				{{/if}}
-			{{/if}}
+                </div>
+                <div class="panel-body {{$collapse}}" id="detailpanel_{{$panelCount}}">
+                    <div class="tab-content">
+                        {{include file='themes/SuiteP/include/EditView/tab_panel_content.tpl'}}
+                    </div>
+                </div>
+            </div>
 
-		{{$colData.field.prefix}}
+            {{/if}}
+            {{counter name="panelCount" print=false}}
+            {{/foreach}}
+        </div>
+{{sugar_include type='smarty' file=$footerTpl}}
 
-			{{if $fields[$colData.field.name] && !empty($colData.field.fields) }}
-			    {{foreach from=$colData.field.fields item=subField}}
-			        {{if $fields[$subField.name]}}
-			        	{counter name="panelFieldCount"}
-			            {{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$tabindex vardef=$fields[$subField.name] displayType='EditView' displayParams=$subField.displayParams formName=$form_name module=$module}}&nbsp;
-			        {{/if}}
-			    {{/foreach}}
-			{{elseif !empty($colData.field.customCode) && empty($colData.field.customCodeRenderField)}}
-				{counter name="panelFieldCount"}
-				{{sugar_evalcolumn var=$colData.field.customCode colData=$colData  accesskey=$ACCKEY tabindex=$tabindex}}
-			{{elseif $fields[$colData.field.name]}}
-				{counter name="panelFieldCount"}
-			    {{$colData.displayParams}}
-				{{sugar_field parentFieldArray='fields'  accesskey=$ACCKEY tabindex=$tabindex vardef=$fields[$colData.field.name] displayType='EditView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name module=$module}}
-			{{/if}}
-	{{if !empty($colData.field.customCode) && !empty($colData.field.customCodeRenderField)}}
-	    {counter name="panelFieldCount"}
-	    {{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$tabindex}}
-    {{/if}}
-    {{if !empty($colData.field.hideIf)}}
-		{else}
-		<td></td><td></td>
-		{/if}
-    {{/if}}
 
-	{{/foreach}}
-</tr>
-{/capture}
-{if $fieldsUsed > 0 }
-{$tableRow}
-{/if}
-{{/foreach}}
-</table>
-{{if !empty($label) && !is_int($label) && $label != 'DEFAULT' && $showSectionPanelsTitles && (!isset($tabDefs[$label_upper].newTab) || (isset($tabDefs[$label_upper].newTab) && $tabDefs[$label_upper].newTab == false)) && $view != "QuickCreate"}}
-<script type="text/javascript">SUGAR.util.doWhen("typeof initPanel == 'function'", function() {ldelim} initPanel({{$smarty.foreach.section.iteration}}, '{{$panelState}}'); {rdelim}); </script>
-{{/if}}
-
-{{/if}}
-
-</div>
-{if $panelFieldCount == 0}
-
-<script>document.getElementById("{{$label}}").style.display='none';</script>
-{/if}
-{{/foreach}}
-</div></div>
-{{include file=$footerTpl}}
 {{if $useTabs}}
 {sugar_getscript file="cache/include/javascript/sugar_grp_yui_widgets.js"}
 <script type="text/javascript">

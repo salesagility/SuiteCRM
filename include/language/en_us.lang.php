@@ -55,6 +55,8 @@ $app_list_strings = array(
     'language_pack_name' => 'US English',
     'moduleList' => array(
             'Home' => 'Home',
+			'ResourceCalendar' => 'Resource Calendar',
+			'AOBH_BusinessHours' => 'BusinessHours',
             'Contacts' => 'Contacts',
             'Accounts' => 'Accounts',
             'Opportunities' => 'Opportunities',
@@ -256,11 +258,11 @@ $app_list_strings = array(
             'Net 15' => 'Net 15',
             'Net 30' => 'Net 30',
         ),
-    'sales_stage_default_key' => 'Prospecting',
     'fts_type' => array(
         '' => '',
         'Elastic' => 'elasticsearch',
     ),
+    'sales_stage_default_key' => 'Prospecting',
     'sales_stage_dom' => array(
             'Prospecting' => 'Prospecting',
             'Qualification' => 'Qualification',
@@ -446,6 +448,11 @@ $app_list_strings = array(
     'project_duration_units_dom' => array(
         'Days' => 'Days',
         'Hours' => 'Hours',
+    ),
+
+    'activity_status_type_dom' => array(''=>'--None--',
+        'active' => 'Active',
+        'inactive' => 'Inactive',
     ),
 
     'project_priority_options' => array(
@@ -1101,6 +1108,7 @@ $app_strings = array(
     'LBL_OUTBOUND_EMAIL_ADD_SERVER' => 'Add Server...',
     'LBL_EMAIL_SMTP_SSL_OR_TLS' => 'Enable SMTP over SSL or TLS?',
     'LBL_NO_ACTION' => 'There is no action by that name.',
+    'LBL_NO_SHORTCUT_MENU' => 'There are no actions available.',
     'LBL_NO_DATA' => 'No Data',
     'LBL_ROUTING_ADD_RULE' => 'Add Rule',
     'LBL_ROUTING_ALL' => 'At Least',
@@ -3257,12 +3265,12 @@ $app_list_strings['moduleList']['AOP_Case_Updates'] = 'Case Updates';
 $app_strings['LBL_AOP_EMAIL_REPLY_DELIMITER'] = '========== Please reply above this line ==========';
 
 //aop
+$app_list_strings['case_state_default_key'] = 'Open';
 $app_list_strings['case_state_dom'] =
     array(
         'Open' => 'Open',
         'Closed' => 'Closed',
     );
-$app_list_strings['case_state_default_key'] = 'Open';
 $app_list_strings['case_status_default_key'] = 'Open_New';
 $app_list_strings['case_status_dom'] =
     array(
@@ -3896,6 +3904,7 @@ $app_strings['LBL_QUICK_TASK'] = 'Create Task';
 $app_strings['LBL_COLLECTION_TYPE'] = 'Type';
 
 $app_strings['LBL_ADD_TAB'] = 'Add Tab';
+$app_strings['LBL_EDIT_TAB'] = 'Edit Tabs';
 $app_strings['LBL_SUITE_DASHBOARD'] = 'SuiteCRM Dashboard';
 $app_strings['LBL_ENTER_DASHBOARD_NAME'] = 'Enter Dashboard Name:';
 $app_strings['LBL_NUMBER_OF_COLUMNS'] = 'Number of Columns:';
@@ -3926,3 +3935,36 @@ $app_list_strings['spots_areas'] = array(
 );
 
 $app_list_strings['moduleList']['Spots'] = 'Spots';
+
+$app_list_strings['moduleList']['AOBH_BusinessHours'] = 'Business Hours';
+$app_list_strings['business_hours_list']['0'] = '12am';
+$app_list_strings['business_hours_list']['1'] = '1am';
+$app_list_strings['business_hours_list']['2'] = '2am';
+$app_list_strings['business_hours_list']['3'] = '3am';
+$app_list_strings['business_hours_list']['4'] = '4am';
+$app_list_strings['business_hours_list']['5'] = '5am';
+$app_list_strings['business_hours_list']['6'] = '6am';
+$app_list_strings['business_hours_list']['7'] = '7am';
+$app_list_strings['business_hours_list']['8'] = '8am';
+$app_list_strings['business_hours_list']['9'] = '9am';
+$app_list_strings['business_hours_list']['10'] = '10am';
+$app_list_strings['business_hours_list']['11'] = '11am';
+$app_list_strings['business_hours_list']['12'] = '12pm';
+$app_list_strings['business_hours_list']['13'] = '1pm';
+$app_list_strings['business_hours_list']['14'] = '2pm';
+$app_list_strings['business_hours_list']['15'] = '3pm';
+$app_list_strings['business_hours_list']['16'] = '4pm';
+$app_list_strings['business_hours_list']['17'] = '5pm';
+$app_list_strings['business_hours_list']['18'] = '6pm';
+$app_list_strings['business_hours_list']['19'] = '7pm';
+$app_list_strings['business_hours_list']['20'] = '8pm';
+$app_list_strings['business_hours_list']['21'] = '9pm';
+$app_list_strings['business_hours_list']['22'] = '10pm';
+$app_list_strings['business_hours_list']['23'] = '11pm';
+$app_list_strings['day_list']['Monday'] = 'Monday';
+$app_list_strings['day_list']['Tuesday'] = 'Tuesday';
+$app_list_strings['day_list']['Wednesday'] = 'Wednesday';
+$app_list_strings['day_list']['Thursday'] = 'Thursday';
+$app_list_strings['day_list']['Friday'] = 'Friday';
+$app_list_strings['day_list']['Saturday'] = 'Saturday';
+$app_list_strings['day_list']['Sunday'] = 'Sunday';

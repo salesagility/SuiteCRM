@@ -99,13 +99,16 @@ ul#trash
 	padding: 10;
 }
 
+span.error:empty{
+    padding:0;
+}
 </style>
 {/literal}
 <h2 >{$title}</h2>
 <p>{$MOD.LBL_GROUP_TAB_WELCOME}</p>
 <br/>
 <table cellspacing=2>
-<button style='cursor:default' onmousedown='this.className="buttonOn";return false;'
+<button class='button' style='cursor:default' onmousedown='this.className="buttonOn";return false;'
             onmouseup='this.className="button"' onmouseout='this.className="button"'
             onclick='studiotabs.generateForm("edittabs");document.edittabs.submit()'>
             {$MOD.LBL_BTN_SAVEPUBLISH}</button>

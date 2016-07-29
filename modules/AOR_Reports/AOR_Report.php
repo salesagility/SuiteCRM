@@ -1276,7 +1276,7 @@ class AOR_Report extends Basic {
                     }
                     if ((isset($data['source']) && $data['source'] == 'custom_fields')) {
                         $field = $this->db->quoteIdentifier($table_alias . '_cstm') . '.' . $condition->field;
-                        $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm', $oldAlias, $condition_module, 'custom', $query);
+                        $query = $this->build_report_query_join($table_alias . '_cstm', $table_alias . '_cstm', $table_alias, $condition_module, 'custom', $query);
                     } else {
                         $field = $this->db->quoteIdentifier($table_alias) . '.' . $condition->field;
                     }

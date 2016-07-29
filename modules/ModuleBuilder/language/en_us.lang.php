@@ -212,7 +212,7 @@ $mod_strings = array(
             'portalLayoutHelp' => 'The modules within the SuiteCRM Portal appear in this area.<br><br>Select a module to edit the <b>Layouts</b>.',
             'relationshipsHelp' => 'All of the <b>Relationships</b> that exist between the module and other deployed modules appear here.<br><br>The relationship <b>Name</b> is the system-generated name for the relationship.<br><br>The <b>Primary Module</b> is the module that owns the relationships.  For example, all of the properties of the relationships for which the Accounts module is the primary module are stored in the Accounts database tables.<br><br>The <b>Type</b> is the type of relationship exists between the Primary module and the <b>Related Module</b>.<br><br>Click a column title to sort by the column.<br><br>Click a row in the relationship table to view the properties associated with the relationship.<br><br>Click <b>Add Relationship</b> to create a new relationship.<br><br>Relationships can be created between any two deployed modules.',
             'relationshipHelp' => '<b>Relationships</b> can be created between the module and another deployed module.<br><br> Relationships are visually expressed through subpanels and relate fields in the module records.<br><br>Select one of the following relationship <b>Types</b> for the module:<br><br> <b>One-to-One</b> - Both modules\' records will contain relate fields.<br><br> <b>One-to-Many</b> - The Primary Module\'s record will contain a subpanel, and the Related Module\'s record will contain a relate field.<br><br> <b>Many-to-Many</b> - Both modules\' records will display subpanels.<br><br> Select the <b>Related Module</b> for the relationship. <br><br>If the relationship type involves subpanels, select the subpanel view for the appropriate modules.<br><br> Click <b>Save</b> to create the relationship.',
-            'convertLeadHelp' => "Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
+            'convertLeadHelp' => 'Here you can add modules to the convert layout screen and modify the layouts of existing ones.<br/>
 		You can re-order the modules by dragging their rows in the table.<br/><br/>
 
 		<b>Module:</b> The name of the module.<br/><br/>
@@ -220,8 +220,9 @@ $mod_strings = array(
 		<b>Copy Data:</b> If checked, fields from the lead will be copied to fields with the same name in the newly created records.<br/><br/>
 		<b>Allow Selection:</b> Modules with a relate field in Contacts can be selected rather than created during the convert lead process.<br/><br/>
 		<b>Edit:</b> Modify the convert layout for this module.<br/><br/>
-		<b>Delete:</b> Remove this module from the convert layout.<br/><br/>
-		",
+		<b>Delete:</b> Remove this module from the convert layout.<br/><br/>',
+
+
             'editDropDownBtn' => 'Edit a global Dropdown',
             'addDropDownBtn' => 'Add a new global Dropdown',
         ),
@@ -320,11 +321,11 @@ $mod_strings = array(
             'layoutsHelp' => 'Select a <b>Layout to edit</b>.<br/<br/>To change the layout that contains data fields for entering data, click <b>Edit View</b>.<br/><br/>To change the layout that displays the data entered into the fields in the Edit View, click <b>Detail View</b>.<br/><br/>To change the columns which appear in the default list, click <b>List View</b>.<br/><br/>To change the Basic and Advanced search form layouts, click <b>Search</b>.',
             'subpanelHelp' => 'Select a <b>Subpanel</b> to edit.',
             'searchHelp' => 'Select a <b>Search</b> layout to edit.',
-            'labelsBtn' => 'Edit the <b>Labels</b> to display for values in this module.',
             'newPackage' => 'Click <b>New Package</b> to create a new package.',
             'mbHelp' => '<b>Welcome to Module Builder.</b><br/><br/>Use <b>Module Builder</b> to create packages containing custom modules based on standard or custom objects. <br/><br/>To begin, click <b>New Package</b> to create a new package, or select a package to edit.<br/><br/> A <b>package</b> acts as a container for custom modules, all of which are part of one project. The package can contain one or more custom modules that can be related to each other or to modules in the application. <br/><br/>Examples: You might want to create a package containing one custom module that is related to the standard Accounts module. Or, you might want to create a package containing several new modules that work together as a project and that are related to each other and to modules in the application.',
             'exportBtn' => 'Click <b>Export Customizations</b> to create a package containing customizations made in Studio for specific modules.',
         ),
+
 
 
     ),
@@ -658,8 +659,8 @@ $mod_strings = array(
     'LBL_JS_VALIDATE_REL_LABEL' => 'Label - please add a label that will be displayed above the subpanel',
 
 //CONFIRM
-    'LBL_CONFIRM_FIELD_DELETE' => "Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts."
-        . "\\n\\nDo you wish to continue?",
+    'LBL_CONFIRM_FIELD_DELETE' => 'Deleting this custom field will delete both the custom field and all the data related to the custom field in the database. The field will be no longer appear in any module layouts. \\n\\nDo you wish to continue?',
+
     'LBL_CONFIRM_RELATIONSHIP_DELETE' => 'Are you sure you wish to delete this relationship?',
     'LBL_CONFIRM_RELATIONSHIP_DEPLOY' => 'This will make this relationship permanent. Are you sure you wish to deploy this relationship?',
     'LBL_CONFIRM_DONT_SAVE' => 'Changes have been made since you last saved, would you like to save?',
@@ -672,9 +673,9 @@ $mod_strings = array(
     'LBL_POPHELP_IMPORTABLE' => '<b>Yes</b>: The field will be included in an import operation.<br><b>No</b>: The field will not be included in an import.<br><b>Required</b>: A value for the field must be provided in any import.',
     'LBL_POPHELP_IMAGE_WIDTH' => 'Enter a number for Width, as measured in pixels.<br> The uploaded image will be scaled to this Width.',
     'LBL_POPHELP_IMAGE_HEIGHT' => 'Enter a number for the Height, as measured in pixels.<br> The uploaded image will be scaled to this Height.',
-    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.'
-,
+    'LBL_POPHELP_DUPLICATE_MERGE' => '<b>Enabled</b>: The field will appear in the Merge Duplicates feature, but will not be available to use for the filter conditions in the Find Duplicates feature.<br><b>Disabled</b>: The field will not appear in the Merge Duplicates feature, and will not be available to use for the filter conditions in the Find Duplicates feature.',
     'LBL_POPHELP_GLOBAL_SEARCH' => 'Select to use this field when searching for records using the Global Search on this module.',
+
 //Revert Module labels
     'LBL_RESET' => 'Reset',
     'LBL_RESET_MODULE' => 'Reset Module',
@@ -722,7 +723,7 @@ $mod_strings = array(
         'image' => 'Image',
     ),
     'labelTypes' => array(
-        "" => "Frequently used labels",
+        "frequently_used" => "Frequently used labels",
         "all" => "All Labels",
     ),
 
@@ -730,10 +731,10 @@ $mod_strings = array(
 
     'LBL_ILLEGAL_FIELD_VALUE' => "Drop down key cannot contain quotes.",
     'LBL_CONFIRM_SAVE_DROPDOWN' => "You are selecting this item for removal from the dropdown list. Any dropdown fields using this list with this item as a value will no longer display the value, and the value will no longer be able to be selected from the dropdown fields. Are you sure you want to continue?",
-    'LBL_POPHELP_VALIDATE_US_PHONE' => "Select to validate this field for the entry of a 10-digit<br>" .
-        "phone number, with allowance for the country code 1, and<br>" .
-        "to apply a U.S. format to the phone number when the record<br>" .
-        "is saved. The following format will be applied: (xxx) xxx-xxxx.",
+    'LBL_POPHELP_VALIDATE_US_PHONE' => 'Select to validate this field for the entry of a 10-digit phone number,<br>with allowance for the country code 1,<br>and to apply a U.S. format to the phone number when the record is saved.<br> The following format will be applied: (xxx) xxx-xxxx.',
+
+
+
     'LBL_ALL_MODULES' => 'All Modules',
     'LBL_RELATED_FIELD_ID_NAME_LABEL' => '{0} (related {1} ID)',
 );

@@ -48,16 +48,34 @@ class CalendarDisplay {
 	 */
 	public $activity_colors = array(
 		'Meetings' => array(
-			'border' => '#1C5FBD',
-			'body' => '#D2E5FC',
+			'border' => '#87719C',
+			'body' => '#6B5171',
+			'text' => '#E5E5E5'
 		),
 		'Calls' => array(
-			'border' => '#DE4040',
-			'body' => '#FCDCDC',
+			'border' => '#487166',
+			'body' => '#72B3A1',
+			'text' => '#E5E5E5'
 		),
 		'Tasks' => array(
-			'border' => '#015900',
-			'body' => '#B1F5AE',
+			'border' => '#515A71',
+			'body' => '#707C9C',
+			'text' => '#E5E5E5'
+		),
+		'FP_events' => array(
+			'border' => '#C29B8A',
+			'body' => '#7D6459',
+			'text' => '#E5E5E5'
+		),
+		'Project' => array(
+			'border' => '#699DC9',
+			'body' => '#557FA3',
+			'text' => '#E5E5E5'
+		),
+		'ProjectTask' => array(
+			'border' => '#83C489',
+			'body' => '#659769',
+			'text' => '#E5E5E5'
 		),
 	);
 	/**

@@ -35,11 +35,13 @@ CAL.destroy_ui = function (id) {
         CAL.dd_registry[id].unreg();
     delete CAL.dd_registry[id];
 }
+
 CAL.basic.remove = function (item) {
     if (typeof CAL.basic.items[item.user_id] == 'undefined')
         CAL.basic.items[item.user_id] = new Object();
     delete CAL.basic.items[item.user_id][item.record];
 }
+
 CAL.basic.add = function (item) {
     if (typeof CAL.basic.items[item.user_id] == 'undefined')
         CAL.basic.items[item.user_id] = new Object();
@@ -49,63 +51,11 @@ CAL.basic.add = function (item) {
 CAL.init_edit_dialog = function (params) {
     CAL.editDialog = false;
     var rd = CAL.get("cal-edit");
-    var content = CAL.get("edit-dialog-content");
-    if (CAL.dashlet && rd) {
-        document.getElementById("content").appendChild(rd);
-    }
-    rd.style.width = params.width + "px";
-    content.style.height = params.height + "px";
-    content.style.overflow = "auto";
-    content.style.padding = "0";
-    CAL.editDialog = new YAHOO.widget.Dialog("cal-edit", {
-        draggable: true,
-        visible: false,
-        modal: true,
-        close: true,
-        y: 1,
-        zIndex: 10
-    });
-    var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-        fn: function () {
-            CAL.editDialog.cancel();
-        }
-    });
-    CAL.editDialog.cfg.queueProperty("keylisteners", listeners);
-    CAL.editDialog.cancelEvent.subscribe(function (e, a, o) {
-        CAL.close_edit_dialog();
-    });
-    rd.style.display = "block";
-    CAL.editDialog.render();
-    rd.style.overflow = "auto";
-    rd.style.overflowX = "hidden";
-    rd.style.outline = "0 none";
-    rd.style.height = "auto";
 }
 CAL.open_edit_dialog = function (params) {
-    document.getElementById("form_content").innerHTML = "";
-    CAL.editDialog.center();
-    CAL.editDialog.show();
-    var nodes = CAL.query("#cal-tabs li a");
-    CAL.each(nodes, function (i, v) {
-        YAHOO.util.Event.on(nodes[i], 'click', function () {
-            CAL.select_tab(this.getAttribute("tabname"));
-        });
-    });
-    stay_on_tab = false
-    if (typeof params != "undefined" && typeof params.stay_on_tab != "undefined" && params.stay_on_tab)
-        stay_on_tab = true;
-    if (!stay_on_tab) {
-        var nodes_li = CAL.query("#cal-tabs li");
-        CAL.each(nodes_li, function (j, v) {
-            CAL.dom.removeClass(nodes_li[j], "selected");
-            if (j == 0)
-                CAL.dom.addClass(nodes_li[j], "selected");
-        });
-        var nodes = CAL.query(".yui-nav");
-        CAL.each(nodes, function (i, v) {
-            nodes[i].style.overflowX = "visible";
-        });
-    }
+    // Open modal dialog
+    $('.modal-cal-edit').modal('show');
+    console.log('open_edit_dialog');
 }
 CAL.close_edit_dialog = function () {
     CAL.reset_edit_dialog();
@@ -153,21 +103,7 @@ CAL.reset_repeat_form = function () {
     CAL.get("edit_all_recurrences_block").style.display = "none";
     CAL.get("cal-repeat-block").style.display = "none";
 }
-CAL.select_tab = function (tid) {
-    var nodes_li = CAL.query("#cal-tabs li");
-    CAL.each(nodes_li, function (j, v) {
-        CAL.dom.removeClass(nodes_li[j], "selected");
-    });
-    CAL.dom.addClass(CAL.get(tid + "-link").parentNode, "selected");
-    var nodes = CAL.query("#cal-tabs .yui-content");
-    CAL.each(nodes, function (i, v) {
-        nodes[i].style.display = "none";
-    });
-    var nodes = CAL.query("#cal-tabs #" + tid);
-    CAL.each(nodes, function (i, v) {
-        nodes[i].style.display = "block";
-    });
-}
+CAL.select_tab = function (tid) {}
 CAL.fill_repeat_data = function () {
     if (CAL.enable_repeat && (CAL.get("current_module").value == "Meetings" || CAL.get("current_module").value == "Calls")) {
         if (repeat_type = document.forms['CalendarRepeatForm'].repeat_type.value) {
@@ -234,17 +170,10 @@ CAL.fill_repeat_tab = function (data) {
         CAL.get("repeat_until_input").value = data.default_repeat_until;
 }
 CAL.repeat_tab_handle = function (module_name) {
-    if (!CAL.enable_repeat)
-        return;
-    CAL.reset_repeat_form();
-    if (module_name == "Meetings" || module_name == "Calls") {
-        CAL.get("tab_repeat").style.display = "";
-    } else {
-        CAL.get("tab_repeat").style.display = "none";
-    }
     clear_all_errors();
     toggle_repeat_type();
 }
+
 CAL.GR_update_user = function (user_id) {
     var callback = {
         success: function (o) {
@@ -274,30 +203,11 @@ CAL.GR_update_focus = function (module, record) {
         YAHOO.util.Connect.asyncRequest('POST', url, callback, false);
     }
 }
+
 CAL.toggle_settings = function () {
-    var sd = CAL.get("settings_dialog");
-    if (!CAL.settingsDialog) {
-        CAL.settingsDialog = new YAHOO.widget.Dialog("settings_dialog", {
-            fixedcenter: true,
-            draggable: false,
-            visible: false,
-            modal: true,
-            close: true
-        });
-        var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-            fn: function () {
-                CAL.settingsDialog.cancel();
-            }
-        });
-        CAL.settingsDialog.cfg.queueProperty("keylisteners", listeners);
-    }
-    CAL.settingsDialog.cancelEvent.subscribe(function (e, a, o) {
-        CAL.get("form_settings").reset();
-    });
-    sd.style.display = "block";
-    CAL.settingsDialog.render();
-    CAL.settingsDialog.show();
+    $('.modal-calendar-settings').modal('toggle')
 }
+
 CAL.fill_invitees = function () {
     CAL.get("user_invitees").value = "";
     CAL.get("contact_invitees").value = "";
@@ -478,7 +388,7 @@ CAL.load_create_form = function (params) {
                 res = eval("(" + o.responseText + ")");
             } catch (err) {
                 alert(CAL.lbl_error_loading);
-                CAL.editDialog.cancel();
+               $('.modal-cal-edit').modal('hide');
                 ajaxStatus.hideStatus();
                 return;
             }
@@ -606,6 +516,7 @@ CAL.dialog_create = function (date, end_date, user_id) {
        CAL.load_create_form(CAL.current_params);
    }
 }
+
 CAL.dialog_save = function () {
     CAL.disable_buttons();
     ajaxStatus.showStatus(SUGAR.language.get('app_strings', 'LBL_SAVING'));
@@ -622,7 +533,7 @@ CAL.dialog_save = function () {
                 res = eval("(" + o.responseText + ")");
             } catch (err) {
                 alert(CAL.lbl_error_saving);
-                CAL.editDialog.cancel();
+               $('.modal-cal-edit').modal('hide');
                 ajaxStatus.hideStatus();
                 return;
             }
@@ -635,7 +546,7 @@ CAL.dialog_save = function () {
                     CAL.enable_buttons();
                     return;
                 }
-                CAL.editDialog.cancel();
+               $('.modal-cal-edit').modal('hide');
                 CAL.update_vcal();
 
                 var newEvent = new Object();
@@ -725,7 +636,7 @@ CAL.dialog_remove = function () {
     };
     var url = "index.php?module=Calendar&action=Remove&sugar_body_only=true";
     YAHOO.util.Connect.asyncRequest('POST', url, callback, CAL.toURI(data));
-    CAL.editDialog.cancel();
+   $('.modal-cal-edit').modal('hide');
 }
 CAL.refresh = function () {
     var callback = {
@@ -767,27 +678,7 @@ CAL.clear_additional_details = function (id) {
         SUGAR.util.additionalDetailsCalls[id] = undefined;
 }
 CAL.toggle_shared_edit = function () {
-    var sd = CAL.get("shared_cal_edit");
-    if (!CAL.sharedDialog) {
-        CAL.sharedDialog = new YAHOO.widget.Dialog("shared_cal_edit", {
-            fixedcenter: true,
-            draggable: false,
-            visible: false,
-            modal: true,
-            close: true
-        });
-        var listeners = new YAHOO.util.KeyListener(document, {keys: 27}, {
-            fn: function () {
-                CAL.sharedDialog.cancel();
-            }
-        });
-        CAL.sharedDialog.cfg.queueProperty("keylisteners", listeners);
-    }
-    CAL.sharedDialog.cancelEvent.subscribe(function (e, a, o) {
-    });
-    sd.style.display = "block";
-    CAL.sharedDialog.render();
-    CAL.sharedDialog.show();
+    $('.modal-calendar-user-list').modal('toggle');
 }
 CAL.goto_date_call = function () {
     var date_string = CAL.get("goto_date").value;
@@ -796,26 +687,15 @@ CAL.goto_date_call = function () {
     window.location.href = "index.php?module=Calendar&view=" + CAL.view + "&day=" + date_arr[1] + "&month=" + date_arr[0] + "&year=" + date_arr[2];
 }
 CAL.check_forms = function () {
-    if (!(check_form('CalendarEditView') && cal_isValidDuration())) {
-        CAL.select_tab("cal-tab-1");
-        return false;
-    }
+    //
     if (CAL.enable_repeat && CAL.get("edit_all_recurrences").value != "") {
         lastSubmitTime = lastSubmitTime - 2001;
-        if (!check_form('CalendarRepeatForm')) {
-            CAL.select_tab("cal-tab-3");
-            return false;
-        }
     }
     return true;
 }
 CAL.toURI = function (a) {
     t = [];
     for (x in a) {
-        //if (!(a[x].constructor.toString().indexOf('Array') == -1)) {
-        //    for (i in a[x])
-        //        t.push(x + "[]=" + encodeURIComponent(a[x][i]));
-        //} else
             t.push(x + "=" + encodeURIComponent(a[x]));
     }
     return t.join("&");
@@ -928,9 +808,6 @@ $(document).ready(function() {
 
     function get_cal(i, all_events){
         $('#calendar' + i).fullCalendar({
-            //left: 'prev,next today',
-            //center: 'title',
-            //right: 'month,basicWeek,basicDay'
             header: {
                 left: '',
                 center: '',
@@ -983,8 +860,6 @@ $(document).ready(function() {
                     //this is a full day aevent. @todo we need to add the end date here.
                     data.allDay = true;
                     data.enddatetime = event.start.add(1, 'days').format(global_datetime_format);
-                   // date.enddatetime = "";
-                   // alert("Test");
                 }
                 var url = "index.php?module=Calendar&action=Reschedule&sugar_body_only=true";
 

@@ -54,7 +54,7 @@
 					</tr>
 		<tr>
 			<td  colspan="3"><label class="wizard-step-info">{$MOD.LBL_STEP_INFO_CAMPAIGN_HEADER} </label></td>
-			<td colspan="1">&nbsp;</td>
+			<td colspan="1" class="emptyField">&nbsp;</td>
 		</tr>
 		<!--
 		<tr><td class="datalabel" colspan="3">{$MOD.LBL_WIZARD_HEADER_MESSAGE}<br></td><td>&nbsp;</td></tr>
@@ -92,7 +92,7 @@
 					</tr>
 					-->
 
-					<tr>
+					<tr class="emptyRow">
 						<td width="15%"><span sugar='slot9'>&nbsp;</span></span sugar='slot'></td>
 						<td width="35%" ><span sugeeear='slot9b'>&nbsp;</span sugar='slot'></td>
 						<td ><span sugar='slot10'>&nbsp;</span sugar='slot'></td>
@@ -120,8 +120,8 @@
 							<tr>
 								<th colspan="4" align="left" ><h4>{$MOD.LBL_WIZ_NEWSLETTER_TITLE_STEP2}</h4></th>
 							</tr>
-							<tr><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td>&nbsp;</td></tr>
-							<tr><td class="datalabel" colspan="4">&nbsp;</td></tr>
+							<tr class="emptyRow"><td class="wizard-step-info" colspan="3"><label>{$MOD.LBL_WIZARD_BUDGET_MESSAGE}</label></td><td>&nbsp;</td></tr>
+							<tr class="emptyRow"><td class="datalabel" colspan="4">&nbsp;</td></tr>
 							<tr>
 								<td scope="col"><span sugar='slot14'>{$MOD.LBL_CAMPAIGN_BUDGET}</span sugar='slot'></td>
 								<td ><span sugar='slot14b'><input type="text" size="10" maxlength="15" id="budget" name="wiz_step2_budget" title="{$MOD.LBL_CAMPAIGN_BUDGET}" value="{$CAMP_BUDGET}"></span sugar='slot'></td>
@@ -139,7 +139,7 @@
 								<td><span sugar='slot18b'><select title='{$MOD.LBL_CURRENCY}' name='wiz_step2_currency_id' id='currency_id'   onchange='ConvertItems(this.options[selectedIndex].value);'>{$CURRENCY}</select></span sugar='slot'></td>
 								<td scope="col"><span sugar='slot17'>{$MOD.LBL_CAMPAIGN_IMPRESSIONS}</span sugar='slot'></td>
 								<td ><span sugar='slot17b'><input type="text" size="10" maxlength="15" id="impressions" name="wiz_step2_impressions" title="{$MOD.LBL_CAMPAIGN_IMPRESSIONS}" value="{$CAMP_IMPRESSIONS}"></span sugar='slot'></td></tr>
-							<tr>
+							<tr class="emptyRow">
 								<td scope="col"><span sugar='slot18'>&nbsp;</span sugar='slot'></td>
 								<td><span sugar='slot18b'>&nbsp;</td>
 								<td scope="col"><span sugar='slot19'>&nbsp;</span sugar='slot'></td>

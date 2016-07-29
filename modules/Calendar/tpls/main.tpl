@@ -170,7 +170,7 @@
             if(document.getElementById('empty-search-message')) {
                 document.getElementById('empty-search-message').style.display = 'none';
             }
-            CAL.editDialog.cancel();
+//            CAL.editDialog.cancel();
 		});
 		YAHOO.util.Event.on("btn-full-form","click",function(){
 			CAL.full_form();
@@ -190,43 +190,38 @@
 		cal_loaded = null;
 	});
 </script>
-			
-<div id="cal-edit" style="display: none;">
-	
-	<div class="hd"><span id="title-cal-edit"></span></div>
-	<div class="bd" id="edit-dialog-content">
-		<div id="cal-tabs" class="yui-navset yui-navset-top yui-content" style="height: auto; padding: 0 2px;">
-			<ul class="yui-nav">
-				<li id="tab_general"><a tabname="cal-tab-1" id="cal-tab-1-link"><em>{$MOD.LBL_GENERAL_TAB}</em></a></li>
-				<li id="tab_invitees"><a tabname="cal-tab-2" id="cal-tab-2-link"><em>{$MOD.LBL_PARTICIPANTS_TAB}</em></a></li>
-				{if $enable_repeat}
-				<li id="tab_repeat"><a tabname="cal-tab-3" id="cal-tab-3-link"><em>{$MOD.LBL_REPEAT_TAB}</em></a></li>
-				{/if}
-			</ul>
-			<div id="cal-tab-1" class="yui-content">
-				{include file=$form}
-			</div>				
-			<div id="cal-tab-2" class="yui-content">
-				<div class="h3Row" id="scheduler"></div>
+
+<div class="modal fade modal-cal-edit" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+				<h4 class="modal-title" id="title-cal-edit"></h4>
 			</div>
-			{if $enable_repeat}
-			<div id="cal-tab-3" class="yui-content">
-				{include file=$repeat}
+			<div class="modal-body">
+				<!--->
+				<div class="container-fluid">
+						{sugar_include type="smarty" file=$form}
+						<div id="scheduler"></div>
+					{if $enable_repeat}
+						{sugar_include type="smarty" file=$repeat}
+					{/if}
+				</div>
+				<!--->
 			</div>
-			{/if}
-		</div>
-	</div>	
-	<div id="cal-edit-buttons" class="ft">
-		<button id="btn-save" class="button" type="button">{$MOD.LBL_SAVE_BUTTON}</button>
-		<button id="btn-cancel" class="button" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>
-		<button id="btn-delete" class="button" type="button">{$MOD.LBL_DELETE_BUTTON}</button>
-		<button id="btn-send-invites" class="button" type="button">{$MOD.LBL_SEND_INVITES}</button>
-		<button id="btn-full-form" class="button" type="button">{$APP.LBL_FULL_FORM_BUTTON_LABEL}</button>
-	</div>
+			<div class="modal-footer">
+				<button id="btn-save" class="button" type="button">{$MOD.LBL_SAVE_BUTTON}</button>
+				<button id="btn-cancel" class="button" type="button" data-dismiss="modal">{$MOD.LBL_CANCEL_BUTTON}</button>
+				<button id="btn-delete" class="button" type="button">{$MOD.LBL_DELETE_BUTTON}</button>
+				<button id="btn-send-invites" class="button" type="button">{$MOD.LBL_SEND_INVITES}</button>
+				<button id="btn-full-form" class="button" type="button">{$APP.LBL_FULL_FORM_BUTTON_LABEL}</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
 </div>
 
 {if $settings}
-{include file=$settings}
+{sugar_include type="smarty" file=$settings}
 {/if}
 	
 <script type="text/javascript">	

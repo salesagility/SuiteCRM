@@ -37,7 +37,6 @@
  * display the words  "Powered by SugarCRM" and "Supercharged by SuiteCRM".
  */
 
-
 var jscolor = {
 
 
