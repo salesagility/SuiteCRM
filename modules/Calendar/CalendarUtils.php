@@ -87,11 +87,8 @@ class CalendarUtils {
 	 * @param SugarBean $bean
 	 * @return array
 	 */
-	static function get_time_data(SugarBean $bean){
+	static function get_time_data(SugarBean $bean, $start_field = "date_start", $end_field = "date_end"){
 					$arr = array();
-
-					$start_field = "date_start";
-					$end_field = "date_end";
 
 					if($bean->object_name == 'Task')
 						$start_field = $end_field = "date_due";
@@ -100,13 +97,29 @@ class CalendarUtils {
 					if(empty($bean->$end_field))
 						$bean->$end_field = $bean->$start_field;
 
-					$timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$start_field,new DateTimeZone('UTC'))->format('U');
+					if($bean->field_defs[ $start_field ]['type'] == "date"){
+						$timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(),$bean->$start_field,new DateTimeZone('UTC'))->format('U');
+					}else{
+						$timestamp = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$start_field,new DateTimeZone('UTC'))->format('U');
+					}
 					$arr['timestamp'] = $timestamp;
 					$arr['time_start'] = $GLOBALS['timedate']->fromTimestamp($arr['timestamp'])->format($GLOBALS['timedate']->get_time_format());
-					$date_start = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$start_field,new DateTimeZone('UTC'));
+
+					if($bean->field_defs[ $start_field ]['type'] == "date") {
+						$date_start = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(), $bean->$start_field, new DateTimeZone('UTC'));
+					}else{
+						$date_start = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(), $bean->$start_field, new DateTimeZone('UTC'));
+					}
+
 					$arr['ts_start'] = $date_start->get("-".$date_start->format("H")." hours -".$date_start->format("i")." minutes -".$date_start->format("s")." seconds")->format('U');
 					$arr['offset'] = $date_start->format('H') * 3600 + $date_start->format('i') * 60;
-					$date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$end_field,new DateTimeZone('UTC'));
+
+					if($bean->field_defs[ $start_field ]['type'] == "date") {
+						$date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_format(),$bean->$end_field,new DateTimeZone('UTC'));
+					}else{
+						$date_end = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$bean->$end_field,new DateTimeZone('UTC'));
+					}
+
 					if($bean->object_name != 'Task')
 						$date_end->modify("-1 minute");
 					$arr['ts_end'] = $date_end->get("+1 day")->get("-".$date_end->format("H")." hours -".$date_end->format("i")." minutes -".$date_end->format("s")." seconds")->format('U');
@@ -157,7 +170,7 @@ class CalendarUtils {
 				'access' => 'yes',
 				'type' => strtolower($bean->object_name),
 				'module_name' => $bean->module_dir,
-				'user_id' => $GLOBALS['current_user']->id,
+				'user_id' => $bean->assigned_user_id,
 				'detail' => 1,
 				'edit' => 1,
 				'name' => $bean->name,
@@ -204,7 +217,7 @@ class CalendarUtils {
 	 		}else
 	 			$date_start = $bean->date_start;
 
-	 		$date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format(),$date_start);
+	 		$date = SugarDateTime::createFromFormat($GLOBALS['timedate']->get_date_time_format() ,$date_start);
 		 	$arr = array_merge($arr,array(
 		 		'current_dow' => $date->format("w"),
 		 		'default_repeat_until' => $date->get("+1 Month")->format($GLOBALS['timedate']->get_date_format()),
