@@ -204,7 +204,9 @@ CAL.GR_update_focus = function (module, record) {
     }
 }
 
-CAL.toggle_settings = function () {}
+CAL.toggle_settings = function () {
+    $('.modal-calendar-settings').modal('toggle')
+}
 
 CAL.fill_invitees = function () {
     CAL.get("user_invitees").value = "";
@@ -676,6 +678,7 @@ CAL.clear_additional_details = function (id) {
         SUGAR.util.additionalDetailsCalls[id] = undefined;
 }
 CAL.toggle_shared_edit = function () {
+    $('.modal-calendar-user-list').modal('toggle');
 }
 CAL.goto_date_call = function () {
     var date_string = CAL.get("goto_date").value;

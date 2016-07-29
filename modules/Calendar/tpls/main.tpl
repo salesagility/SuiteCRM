@@ -220,24 +220,6 @@
 	</div><!-- /.modal-dialog -->
 </div>
 
-
-{*<div id="cal-edit" style="display: none;">*}
-	{**}
-	{*<div class="hd"><span id="title-cal-edit"></span></div>*}
-	{*<div class="bd" id="edit-dialog-content">*}
-		{*<div id="cal-tabs" class="yui-navset yui-navset-top yui-content" style="height: auto; padding: 0 2px;">*}
-
-		{*</div>*}
-	{*</div>	*}
-	{*<div id="cal-edit-buttons" class="ft">*}
-		{*<button id="btn-save" class="button" type="button">{$MOD.LBL_SAVE_BUTTON}</button>*}
-		{*<button id="btn-cancel" class="button" type="button">{$MOD.LBL_CANCEL_BUTTON}</button>*}
-		{*<button id="btn-delete" class="button" type="button">{$MOD.LBL_DELETE_BUTTON}</button>*}
-		{*<button id="btn-send-invites" class="button" type="button">{$MOD.LBL_SEND_INVITES}</button>*}
-		{*<button id="btn-full-form" class="button" type="button">{$APP.LBL_FULL_FORM_BUTTON_LABEL}</button>*}
-	{*</div>*}
-{*</div>*}
-
 {if $settings}
 {sugar_include type="smarty" file=$settings}
 {/if}

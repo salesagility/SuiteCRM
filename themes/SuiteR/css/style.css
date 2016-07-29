@@ -5184,5 +5184,14 @@ table tr#delegates_search {
     background:#FAFAFA !important;
 }
 
+/* fix schedule bar popup on calendar */
+.ui-front, .ui-dialog {
+    z-index: 1100 !important;
+}
+
+.panel-heading {
+    padding-bottom: 25px;
+}
+
 /* End SuiteCRM Responsive/Bootstrap additional CSS */
 /* End Global CSS */
