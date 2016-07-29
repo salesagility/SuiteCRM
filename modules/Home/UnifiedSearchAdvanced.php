@@ -310,7 +310,7 @@ class UnifiedSearchAdvanced {
                 //add inner joins back into the where clause
                 $params = array('custom_select' => "");
                 foreach($innerJoins as $field=>$def) {
-                    if (isset ($def['db_field'])) {
+                    if (isset($def['db_field'])) {
                       foreach($def['db_field'] as $dbfield)
                           $where_clauses[] = $dbfield . " LIKE '" . $GLOBALS['db']->quote($this->query_string) . "%'";
                           $params['custom_select'] .= ", $dbfield";
