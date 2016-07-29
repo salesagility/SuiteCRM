@@ -304,6 +304,7 @@ function getEditFieldHTML($module, $fieldname, $aow_field, $view = 'EditView', $
 function saveField($field, $id, $module, $value)
 {
 
+    global $current_user;
     $bean = BeanFactory::getBean($module, $id);
 
     if (is_object($bean) && $bean->id != "") {
@@ -321,7 +322,16 @@ function saveField($field, $id, $module, $value)
             $bean->$field = $value;
         }
 
-        $bean->save();
+        $check_notify = FALSE;
+
+        if (isset( $bean->fetched_row['assigned_user_id'])) {
+            $old_assigned_user_id = $bean->fetched_row['assigned_user_id'];
+            if (!empty($value) && ($old_assigned_user_id != $value) && ($value != $current_user->id)) {
+                $check_notify = TRUE;
+            }
+        }
+
+        $bean->save($check_notify);
         return getDisplayValue($bean, $field);
     } else {
         return false;
@@ -465,7 +475,7 @@ function formatDisplayValue($bean, $value, $vardef, $method = "save")
 
             $value .= getFieldValueFromModule($fieldName,$vardef['ext2'],$record);
 
-        }else if(!empty($vardef['rname'])){
+        } else if(!empty($vardef['rname']) || $vardef['name'] == "related_doc_name") {
             $value .= getFieldValueFromModule($fieldName,$vardef['module'],$record);
 
         } else {

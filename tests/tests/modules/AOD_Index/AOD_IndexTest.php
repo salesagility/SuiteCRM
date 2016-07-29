@@ -154,6 +154,7 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
         $expected = array(
                 'AM_ProjectTemplates' => 'AM_ProjectTemplates',
                 'AM_TaskTemplates' => 'AM_TaskTemplates',
+				'AOBH_BusinessHours' => 'AOBH_BusinessHours',
                 'AOK_KnowledgeBase' => 'AOK_KnowledgeBase',
                 'AOK_Knowledge_Base_Categories' => 'AOK_Knowledge_Base_Categories',
                 'AOP_Case_Events' => 'AOP_Case_Events',
@@ -186,8 +187,9 @@ class AOD_IndexTest extends PHPUnit_Framework_TestCase
                 'ProjectTask' => 'ProjectTask',
                 'ProspectLists' => 'ProspectList',
                 'Prospects' => 'Prospect',
+                'Spots' => 'Spots',
                 'Tasks' => 'Task',
-                'TemplateSectionLine' => 'TemplateSectionLine'
+                'TemplateSectionLine' => 'TemplateSectionLine',
         );
 
         $aod_index = new AOD_Index();

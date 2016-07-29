@@ -226,8 +226,7 @@ class AOR_ReportTest extends PHPUnit_Framework_TestCase
         $this->assertSame($expected, $actual);
 
         //test with type relationship and verify that it retunrs expected results
-        $expected = array('join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),
-                           'select' => array('`accounts_contacts`.id AS \'accounts_contacts_id\''), );
+        $expected = array('join' => array('accounts_contacts' => "LEFT JOIN accounts_contacts `accounts|accounts_contacts` ON `accounts`.id=`accounts|accounts_contacts`.account_id AND `accounts|accounts_contacts`.deleted=0\n\nLEFT JOIN contacts `accounts_contacts` ON `accounts_contacts`.id=`accounts|accounts_contacts`.contact_id AND `accounts_contacts`.deleted=0\n"),);
         $actual = $aor_Report->build_report_query_join('contacts', 'accounts_contacts', 'accounts', new Account(), 'relationship', array());
         $this->assertSame($expected, $actual);
     }

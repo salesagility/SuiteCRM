@@ -78,9 +78,16 @@ require_once('include/entryPoint.php');
 //check to see if the script files need to be rebuilt, add needed variables to request array
 $_REQUEST['root_directory'] = getcwd();
 $_REQUEST['js_rebuild_concat'] = 'rebuild';
+
+//Set whether the install is silent or not
+$silentInstall = true;
+
+//Todo, check if there is an instance where goto is not set, but a silent install is in place
 if(isset($_REQUEST['goto']) && $_REQUEST['goto'] != 'SilentInstall') {
     require_once('jssource/minify.php');
+    $silentInstall = false;
 }
+
 
 $timedate = TimeDate::getInstance();
 // cn: set php.ini settings at entry points
@@ -730,6 +737,9 @@ EOQ;
         create_writable_dir(sugar_cached('xml'));
         create_writable_dir(sugar_cached('include/javascript'));
         recursive_make_writable(sugar_cached('modules'));
+
+        // public dir
+        recursive_make_writable('./public');
 
         // check whether we're getting this request from a command line tool
         // we want to output brief messages if we're outputting to a command line tool

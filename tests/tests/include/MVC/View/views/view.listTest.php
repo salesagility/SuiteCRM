@@ -54,7 +54,7 @@ class ViewListTest extends PHPUnit_Framework_TestCase
         $view->module = 'Users';
         $GLOBALS['module'] = 'Users';
         $_REQUEST['Users2_USER_offset'] = 1;
-        $_REQUEST['current_query_by_page'] = base64_encode(serialize(array('key' => 'value')));
+        $_REQUEST['current_query_by_page'] = htmlentities(json_encode(array('key' => 'value')));
         $view->bean = new User();
 
         ob_start();
