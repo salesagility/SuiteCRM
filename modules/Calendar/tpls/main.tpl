@@ -201,23 +201,10 @@
 			<div class="modal-body">
 				<!--->
 				<div class="container-fluid">
-					<ul class="nav nav-tabs">
-						<li id="tab_general" role="presentation" class="active"><a href="#cal-tab-1" tabname="cal-tab-1" id="cal-tab-1-link" data-toggle="tab">{$MOD.LBL_GENERAL_TAB}</a></li>
-						<li id="tab_invitees" role="presentation"><a href="#cal-tab-2" tabname="cal-tab-2" id="cal-tab-2-link" data-toggle="tab">{$MOD.LBL_PARTICIPANTS_TAB}</a></li>
-						{if $enable_repeat}
-							<li id="tab_repeat" role="presentation"><a href="#cal-tab-3" tabname="cal-tab-3" id="cal-tab-3-link" data-toggle="tab">{$MOD.LBL_REPEAT_TAB}</a></li>
-						{/if}
-					</ul>
-					<div id="cal-tab-1" class="tab-pane fade in">
 						{sugar_include type="smarty" file=$form}
-					</div>
-					<div id="cal-tab-2" class="tab-pane fade">
 						<div id="scheduler"></div>
-					</div>
 					{if $enable_repeat}
-						<div id="cal-tab-3" class="tab-pane fade">
-							{sugar_include type="smarty" file=$repeat}
-						</div>
+						{sugar_include type="smarty" file=$repeat}
 					{/if}
 				</div>
 				<!--->

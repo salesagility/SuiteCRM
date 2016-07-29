@@ -5532,6 +5532,13 @@ a[id^=grouptab]:visited, a[id^=grouptab]:active {
     border: 1px solid #cccccc;
 }
 
+
+
+/* fix schedule bar popup on calendar */
+.ui-front, .ui-dialog {
+    z-index: 1100 !important;
+}
+
 @media (max-width: 768px) {
     .View {
         border: 1px solid #cccccc;
