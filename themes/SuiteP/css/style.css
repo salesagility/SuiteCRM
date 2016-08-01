@@ -2210,7 +2210,7 @@ table.dateTime {
     font-style: italic;
 }
 
-#parent_name {
+#parent_name, .sqsEnabled {
     display: block;
     clear: both;
     margin-top: 8px;
