@@ -50,14 +50,15 @@ class SpotsController extends SugarController
 
     //These are the file paths for the cached results of the spot data sets
     protected $spotFilePath = 'cache/modules/Spots/';
-    protected $accountsFilName = 'accounts.json';
-    protected $servicesFileName = 'service.json';
-    protected $salesFileName = 'sales.json';
-    protected $leadsFileName = 'leads.json';
-    protected $marketingsFileName = 'marketing.json';
-    protected $marketingActivitiesFileName = 'marketingActivity.json';
-    protected $activitiesFileName = 'activities.json';
-    protected $quotesFileName = 'quotes.json';
+    protected $accountsFilName = 'accounts';
+    protected $servicesFileName = 'service';
+    protected $salesFileName = 'sales';
+    protected $leadsFileName = 'leads';
+    protected $marketingsFileName = 'marketing';
+    protected $marketingActivitiesFileName = 'marketingActivity';
+    protected $activitiesFileName = 'activities';
+    protected $quotesFileName = 'quotes';
+    protected $fileSuffix = 'json';
 
     //This is when to consider a data file as stale and replace it (should not be an issue if the scheduler is running)
     //This is the time in seconds, so an hour is 3600
@@ -124,8 +125,9 @@ class SpotsController extends SugarController
      */
     public function action_getAccountsSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->accountsFilName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -164,10 +166,10 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_TYPE'] = $row['account_type'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY'] = $row['industry'];
-            $x->$mod_strings['LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY'] = $row['billing_address_country'];
+            $x->LBL_AN_ACCOUNTS_ACCOUNT_NAME = $row['accountName'];
+            $x->LBL_AN_ACCOUNTS_ACCOUNT_TYPE = $row['account_type'];
+            $x->LBL_AN_ACCOUNTS_ACCOUNT_INDUSTRY = $row['industry'];
+            $x->LBL_AN_ACCOUNTS_ACCOUNT_BILLING_COUNTRY = $row['billing_address_country'];
             $returnArray[] = $x;
         }
         file_put_contents($filepath, json_encode($returnArray));
@@ -180,8 +182,9 @@ EOF;
      */
     public function action_getLeadsSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->leadsFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -263,15 +266,15 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_LEADS_ASSIGNED_USER'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_LEADS_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_LEADS_LEAD_SOURCE'] = $row['leadSource'];
-            $x->$mod_strings['LBL_AN_LEADS_CAMPAIGN_NAME'] = $row['campaignName'];
-            $x->$mod_strings['LBL_AN_LEADS_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_LEADS_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_LEADS_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_LEADS_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_LEADS_DAY'] = $row['day'];
+            $x->LBL_AN_LEADS_ASSIGNED_USER = $row['assignedUser'];
+            $x->LBL_AN_LEADS_STATUS = $row['status'];
+            $x->LBL_AN_LEADS_LEAD_SOURCE = $row['leadSource'];
+            $x->LBL_AN_LEADS_CAMPAIGN_NAME = $row['campaignName'];
+            $x->LBL_AN_LEADS_YEAR = $row['year'];
+            $x->LBL_AN_LEADS_QUARTER = $row['quarter'];
+            $x->LBL_AN_LEADS_MONTH = $row['month'];
+            $x->LBL_AN_LEADS_WEEK = $row['week'];
+            $x->LBL_AN_LEADS_DAY = $row['day'];
 
             $returnArray[] = $x;
         }
@@ -285,8 +288,9 @@ EOF;
      */
     public function action_getSalesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->salesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -388,22 +392,22 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_SALES_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_SALES_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_SALES_ASSIGNED_USER'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_SALES_OPPORTUNITY_TYPE'] = $row['opportunity_type'];
-            $x->$mod_strings['LBL_AN_SALES_LEAD_SOURCE'] = $row['lead_source'];
-            $x->$mod_strings['LBL_AN_SALES_AMOUNT'] = $row['amount'];
-            $x->$mod_strings['LBL_AN_SALES_STAGE'] = $row['sales_stage'];
-            $x->$mod_strings['LBL_AN_SALES_PROBABILITY'] = $row['probability'];
-            $x->$mod_strings['LBL_AN_SALES_DATE'] = $row['date_closed'];
+            $x->LBL_AN_SALES_ACCOUNT_NAME = $row['accountName'];
+            $x->LBL_AN_SALES_OPPORTUNITY_NAME = $row['opportunityName'];
+            $x->LBL_AN_SALES_ASSIGNED_USER = $row['assignedUser'];
+            $x->LBL_AN_SALES_OPPORTUNITY_TYPE = $row['opportunity_type'];
+            $x->LBL_AN_SALES_LEAD_SOURCE = $row['lead_source'];
+            $x->LBL_AN_SALES_AMOUNT = $row['amount'];
+            $x->LBL_AN_SALES_STAGE = $row['sales_stage'];
+            $x->LBL_AN_SALES_PROBABILITY = $row['probability'];
+            $x->LBL_AN_SALES_DATE = $row['date_closed'];
 
-            $x->$mod_strings['LBL_AN_SALES_QUARTER'] = $row['salesQuarter'];
-            $x->$mod_strings['LBL_AN_SALES_MONTH'] = $row['salesMonth'];
-            $x->$mod_strings['LBL_AN_SALES_WEEK'] = $row['salesWeek'];
-            $x->$mod_strings['LBL_AN_SALES_DAY'] = $row['salesDay'];
-            $x->$mod_strings['LBL_AN_SALES_YEAR'] = $row['salesYear'];
-            $x->$mod_strings['LBL_AN_SALES_CAMPAIGN'] = $row['campaign'];
+            $x->LBL_AN_SALES_QUARTER = $row['salesQuarter'];
+            $x->LBL_AN_SALES_MONTH = $row['salesMonth'];
+            $x->LBL_AN_SALES_WEEK = $row['salesWeek'];
+            $x->LBL_AN_SALES_DAY = $row['salesDay'];
+            $x->LBL_AN_SALES_YEAR = $row['salesYear'];
+            $x->LBL_AN_SALES_CAMPAIGN = $row['campaign'];
 
             $returnArray[] = $x;
         }
@@ -417,8 +421,9 @@ EOF;
      */
     public function action_getServiceSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->servicesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -506,17 +511,17 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_SERVICE_ACCOUNT_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_SERVICE_STATE'] = $row['state'];
-            $x->$mod_strings['LBL_AN_SERVICE_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_SERVICE_PRIORITY'] = $row['priority'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_DAY'] = $row['day'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_WEEK'] = $row['week'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_MONTH'] = $row['month'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_QUARTER'] = $row['quarter'];
-            $x->$mod_strings['LBL_AN_SERVICE_CREATED_YEAR'] = $row['year'];
-            $x->$mod_strings['LBL_AN_SERVICE_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_SERVICE_ASSIGNED_TO'] = $row['assignedUser'];
+            $x->LBL_AN_SERVICE_ACCOUNT_NAME = $row['name'];
+            $x->LBL_AN_SERVICE_STATE = $row['state'];
+            $x->LBL_AN_SERVICE_STATUS = $row['status'];
+            $x->LBL_AN_SERVICE_PRIORITY = $row['priority'];
+            $x->LBL_AN_SERVICE_CREATED_DAY = $row['day'];
+            $x->LBL_AN_SERVICE_CREATED_WEEK = $row['week'];
+            $x->LBL_AN_SERVICE_CREATED_MONTH = $row['month'];
+            $x->LBL_AN_SERVICE_CREATED_QUARTER = $row['quarter'];
+            $x->LBL_AN_SERVICE_CREATED_YEAR = $row['year'];
+            $x->LBL_AN_SERVICE_CONTACT_NAME = $row['contactName'];
+            $x->LBL_AN_SERVICE_ASSIGNED_TO = $row['assignedUser'];
 
             $returnArray[] = $x;
         }
@@ -530,8 +535,9 @@ EOF;
      */
     public function action_getActivitiesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->activitiesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -653,10 +659,10 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_ACTIVITIES_TYPE'] = $row['type'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_STATUS'] = $row['status'];
-            $x->$mod_strings['LBL_AN_ACTIVITIES_ASSIGNED_TO'] = $row['assignedUser'];
+            $x->LBL_AN_ACTIVITIES_TYPE = $row['type'];
+            $x->LBL_AN_ACTIVITIES_NAME = $row['name'];
+            $x->LBL_AN_ACTIVITIES_STATUS = $row['status'];
+            $x->LBL_AN_ACTIVITIES_ASSIGNED_TO = $row['assignedUser'];
 
             $returnArray[] = $x;
         }
@@ -670,8 +676,9 @@ EOF;
      */
     public function action_getMarketingSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingsFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -762,16 +769,16 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETING_STATUS'] = $row['campaignStatus'];
-            $x->$mod_strings['LBL_AN_MARKETING_TYPE'] = $row['campaignType'];
-            $x->$mod_strings['LBL_AN_MARKETING_BUDGET'] = $row['campaignBudget'];
-            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_COST'] = $row['campaignExpectedCost'];
-            $x->$mod_strings['LBL_AN_MARKETING_EXPECTED_REVENUE'] = $row['campaignExpectedRevenue'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_AMOUNT'] = $row['opportunityAmount'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
-            $x->$mod_strings['LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_MARKETING_ACCOUNT_NAME'] = $row['accountsName'];
+            $x->LBL_AN_MARKETING_STATUS = $row['campaignStatus'];
+            $x->LBL_AN_MARKETING_TYPE = $row['campaignType'];
+            $x->LBL_AN_MARKETING_BUDGET = $row['campaignBudget'];
+            $x->LBL_AN_MARKETING_EXPECTED_COST = $row['campaignExpectedCost'];
+            $x->LBL_AN_MARKETING_EXPECTED_REVENUE = $row['campaignExpectedRevenue'];
+            $x->LBL_AN_MARKETING_OPPORTUNITY_NAME = $row['opportunityName'];
+            $x->LBL_AN_MARKETING_OPPORTUNITY_AMOUNT = $row['opportunityAmount'];
+            $x->LBL_AN_MARKETING_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'];
+            $x->LBL_AN_MARKETING_OPPORTUNITY_ASSIGNED_TO = $row['assignedUser'];
+            $x->LBL_AN_MARKETING_ACCOUNT_NAME = $row['accountsName'];
 
             $returnArray[] = $x;
         }
@@ -785,8 +792,9 @@ EOF;
      */
     public function action_getMarketingActivitySpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->marketingActivitiesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -829,11 +837,11 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME'] = $row['name'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE'] = $row['activity_date'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE'] = $row['activity_type'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_TYPE'] = $row['related_type'];
-            $x->$mod_strings['LBL_AN_MARKETINGACTIVITY_RELATED_ID'] = $row['related_id'];
+            $x->LBL_AN_MARKETINGACTIVITY_CAMPAIGN_NAME = $row['name'];
+            $x->LBL_AN_MARKETINGACTIVITY_ACTIVITY_DATE = $row['activity_date'];
+            $x->LBL_AN_MARKETINGACTIVITY_ACTIVITY_TYPE = $row['activity_type'];
+            $x->LBL_AN_MARKETINGACTIVITY_RELATED_TYPE = $row['related_type'];
+            $x->LBL_AN_MARKETINGACTIVITY_RELATED_ID = $row['related_id'];
 
             $returnArray[] = $x;
         }
@@ -847,8 +855,9 @@ EOF;
      */
     public function action_getQuotesSpotsData()
     {
+        $language = $GLOBALS['current_language'];
         $userId = $_SESSION['authenticated_user_id'];
-        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName;
+        $fileLocation = $this->spotFilePath.$userId.'_'.$this->quotesFileName .'_' . $language . '.'. $this->fileSuffix;
         if (file_exists($fileLocation) && (time() - filemtime($fileLocation) < $this->spotsStaleTime)) {
             echo file_get_contents($fileLocation);
         } else {
@@ -992,30 +1001,30 @@ EOF;
 
         while ($row = $db->fetchByAssoc($result)) {
             $x = new stdClass();
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_NAME'] = $row['opportunityName'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_TYPE'] = $row['opportunityType'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE'] = $row['opportunityLeadSource'];
-            $x->$mod_strings['LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE'] = $row['opportunitySalesStage'];
-            $x->$mod_strings['LBL_AN_QUOTES_ACCOUNT_NAME'] = $row['accountName'];
-            $x->$mod_strings['LBL_AN_QUOTES_CONTACT_NAME'] = $row['contactName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_NAME'] = $row['productName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TYPE'] = $row['itemType'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_CATEGORY'] = $row['categoryName'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_QTY'] = $row['productQty'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_LIST_PRICE'] = $row['productListPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_SALE_PRICE'] = $row['productPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_COST_PRICE'] = $row['productCostPrice'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE'] = $row['productDiscount'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT'] = $row['discountAmount'];
-            $x->$mod_strings['LBL_AN_QUOTES_ITEM_TOTAL'] = $row['productTotal'];
-            $x->$mod_strings['LBL_AN_QUOTES_GRAND_TOTAL'] = $row['grandTotal'];
-            $x->$mod_strings['LBL_AN_QUOTES_ASSIGNED_TO'] = $row['assignedUser'];
-            $x->$mod_strings['LBL_AN_QUOTES_DATE_CREATED'] = $row['dateCreated'];
-            $x->$mod_strings['LBL_AN_QUOTES_DAY_CREATED'] = $row['dateCreatedDay'];
-            $x->$mod_strings['LBL_AN_QUOTES_WEEK_CREATED'] = $row['dateCreatedWeek'];
-            $x->$mod_strings['LBL_AN_QUOTES_MONTH_CREATED'] = $row['dateCreatedMonth'];
-            $x->$mod_strings['LBL_AN_QUOTES_QUARTER_CREATED'] = $row['dateCreatedQuarter'];
-            $x->$mod_strings['LBL_AN_QUOTES_YEAR_CREATED'] = $row['dateCreatedYear'];
+            $x->LBL_AN_QUOTES_OPPORTUNITY_NAME = $row['opportunityName'];
+            $x->LBL_AN_QUOTES_OPPORTUNITY_TYPE = $row['opportunityType'];
+            $x->LBL_AN_QUOTES_OPPORTUNITY_LEAD_SOURCE = $row['opportunityLeadSource'];
+            $x->LBL_AN_QUOTES_OPPORTUNITY_SALES_STAGE = $row['opportunitySalesStage'];
+            $x->LBL_AN_QUOTES_ACCOUNT_NAME = $row['accountName'];
+            $x->LBL_AN_QUOTES_CONTACT_NAME = $row['contactName'];
+            $x->LBL_AN_QUOTES_ITEM_NAME = $row['productName'];
+            $x->LBL_AN_QUOTES_ITEM_TYPE = $row['itemType'];
+            $x->LBL_AN_QUOTES_ITEM_CATEGORY = $row['categoryName'];
+            $x->LBL_AN_QUOTES_ITEM_QTY = $row['productQty'];
+            $x->LBL_AN_QUOTES_ITEM_LIST_PRICE = $row['productListPrice'];
+            $x->LBL_AN_QUOTES_ITEM_SALE_PRICE = $row['productPrice'];
+            $x->LBL_AN_QUOTES_ITEM_COST_PRICE = $row['productCostPrice'];
+            $x->LBL_AN_QUOTES_ITEM_DISCOUNT_PRICE = $row['productDiscount'];
+            $x->LBL_AN_QUOTES_ITEM_DISCOUNT_AMOUNT = $row['discountAmount'];
+            $x->LBL_AN_QUOTES_ITEM_TOTAL = $row['productTotal'];
+            $x->LBL_AN_QUOTES_GRAND_TOTAL = $row['grandTotal'];
+            $x->LBL_AN_QUOTES_ASSIGNED_TO = $row['assignedUser'];
+            $x->LBL_AN_QUOTES_DATE_CREATED = $row['dateCreated'];
+            $x->LBL_AN_QUOTES_DAY_CREATED = $row['dateCreatedDay'];
+            $x->LBL_AN_QUOTES_WEEK_CREATED = $row['dateCreatedWeek'];
+            $x->LBL_AN_QUOTES_MONTH_CREATED = $row['dateCreatedMonth'];
+            $x->LBL_AN_QUOTES_QUARTER_CREATED = $row['dateCreatedQuarter'];
+            $x->LBL_AN_QUOTES_YEAR_CREATED = $row['dateCreatedYear'];
 
             $returnArray[] = $x;
         }
