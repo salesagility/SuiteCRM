@@ -4365,8 +4365,14 @@ fieldset[disabled] .btn-primary.active {
     visibility: collapse !important;
 }
 
+#ConvertLead .label {
+    text-align: left;
+}
+
 #EditView_tabs .edit .button,
+#ConvertLead .edit .button,
 #EditView_tabs .id-ff-remove,
+#ConvertLead .id-ff-remove,
 #EditView_tabs .edit [type="button"],
 #conditionLines [type="button"],
 #actionLines [type="button"],
@@ -4617,6 +4623,10 @@ table#lineItems tr td table thead tr td table tbody tr td {
     clear: both;
 }
 
+
+.row {
+    margin-bottom: 8px;
+}
 
 
 @media (min-width: 922px) {
@@ -5664,6 +5674,7 @@ li.recentlinks_topedit, li.recentlinks_topedit > a {
     height: auto;
 
 }
+
 
 li.recentlinks_topedit > a {
     padding: 0 15px 0 15px !important;
@@ -8448,6 +8459,7 @@ div.list-view-rounded-corners > table th:last-of-type {
         }
     }
     /* TipTip CSS - Version 1.2 */
+
     #tiptip_holder {
         display: none;
         position: absolute;
