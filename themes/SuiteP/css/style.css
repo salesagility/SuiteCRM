@@ -3088,9 +3088,7 @@ ul.nav-tabs > li:first-of-type > a:hover {
     margin: 0 2px 0 0;
 }
 
-ul.nav-tabs > li:only-child {
-    float: right;
-}
+
 
 ul.nav-tabs > li > a:hover {
     background-color: #BFCAD3;
